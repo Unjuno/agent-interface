@@ -143,3 +143,11 @@ capture may be rejected even if the physical effect had already happened.
 This does not authenticate the clock, impose a hard deadline, or make callback
 execution concurrent or durable. Malformed returns that stop or raise during
 local validation do not require an execution-finished clock sample.
+
+Returned observations are validated and copied before the supplied observation
+clock callback. Later callback edits cannot rebind the retained predicates or
+capture metadata used for branch selection and effect verification. The upper
+capture bound is sampled after local validation, so it is a consistency check
+against that sample rather than an authenticated instant of adapter return.
+Malformed observations keep their existing refusal/validation semantics; a
+validation exception can occur before the clock callback is invoked.

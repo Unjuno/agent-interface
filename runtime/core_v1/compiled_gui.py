@@ -235,8 +235,9 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.
             return finish("SAFE_YIELD", "association_changed")
-        observed_ns = clock()
         observation, refusal = _observation(raw, interface, previous_sequence)
+        # Retain validated observation fields before the supplied clock callback.
+        observed_ns = clock()
         if refusal:
             return finish("SAFE_YIELD", refusal)
         if (observation["captured_ns"] > observed_ns or

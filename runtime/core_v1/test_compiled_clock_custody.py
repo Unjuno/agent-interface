@@ -5,6 +5,26 @@ from runtime.core_v1.test_compiled_gui import Driver, interface
 
 
 class ClockCustodyTests(unittest.TestCase):
+    def test_clock_cannot_replace_observed_predicate_before_branch_selection(self):
+        driver = Driver()
+        original = driver.observe
+        retained = []
+        def observe(payload):
+            result = original(payload)
+            retained.append(result)
+            return result
+        def clock():
+            if retained:
+                retained[-1]['predicates']['phase'] = 2
+            return 0
+        receipt = run(interface(), {'observe': observe, 'admit': driver.admit,
+            'execute': driver.execute, 'verify_effect': driver.verify,
+            'cancelled': lambda: False, 'journal': driver.journal}, clock=clock)
+        self.assertEqual(receipt['outcome'], 'TASK_SUCCEEDED')
+        self.assertEqual(receipt['completed_transitions'], 2)
+        self.assertEqual(len(driver.calls['execute']), 2)
+        self.assertEqual([o['predicates']['phase'] for o in receipt['observations']], [0, 1, 2])
+
     def test_clock_cannot_rewrite_returned_terminal_or_release(self):
         for mutation in ('refs', 'status', 'release', 'verified', 'keys', 'buttons'):
             with self.subTest(mutation=mutation):
