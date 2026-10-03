@@ -51,6 +51,11 @@ Child directory names are retained provenance, not a canonical architecture tree
   one; independent construction custody passed, no key/click input and no
   first-character/public-client/migration-benefit qualification.
 
+- [Tk first-character #5260 A04 immutable-ready successor](tk_firstchar_5260_a04_wslc_20261003/REPORT.md)
+  — new48-row scoped method evidence:38 exact/10 nonexact saves, readiness
+  custody48/48; all10 initialh receipts in decoy before target FocusIn.
+  Not a public-client/default-wait/visual/performance/resource qualification.
+
 ## Preserved older Draft publications
 
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
