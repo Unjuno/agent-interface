@@ -1,0 +1,24 @@
+"""Capture one named ordinary check with actual typed exit and complete streams."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess,sys
+ROOT=Path(__file__).resolve().parent.parent
+R=ROOT/'work/agent-interface';W=ROOT/'work/primary-stream-lifecycle-v3'
+NODE=Path('/opt/homebrew/Cellar/node/26.7.0/bin/node')
+def now():return datetime.now(timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+label=sys.argv[1];selection=sys.argv[2:];out=W/label;out.mkdir(parents=True,exist_ok=False)
+case=out/'cases';case.mkdir()
+env=os.environ.copy();env['PRIMARY_STDIO_STARTUP_EVIDENCE']=str(case)
+pins=[]
+for path in sorted((R/'runtime/host_v1').glob('*.mjs'))+[R/'runtime/integration_checks/host_timing.py',Path(__file__)]:
+    b=path.read_bytes();pins.append({'path':str(path),'bytes':len(b),'sha256':sha(b)})
+argv=[str(NODE),'--test','--test-concurrency=1','--test-reporter=tap',*selection]
+freeze={'frozen_utc':now(),'argv':argv,'cwd':str(R),'node_binary_sha256':sha(NODE.read_bytes()),'node_version':subprocess.check_output([str(NODE),'--version']).decode().strip(),'owned_evidence_directory':str(case),'source_pins':pins,'native_formal_producer_or_auditor':False,'limits':'Controlled builtin mkdir completion hook in an isolated child; not actual OS stdin device failure.'}
+(out/'FREEZE.json').write_text(json.dumps(freeze,indent=2)+'\n')
+start=now();p=subprocess.run(argv,cwd=R,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE);end=now()
+(out/'stdout.txt').write_bytes(p.stdout);(out/'stderr.txt').write_bytes(p.stderr)
+unchanged=all(sha(Path(x['path']).read_bytes())==x['sha256'] for x in pins)
+receipt={'started_utc':start,'ended_utc':end,'actual_exit_code':p.returncode,'argv':argv,'cwd':str(R),'stdout_bytes':len(p.stdout),'stdout_sha256':sha(p.stdout),'stderr_bytes':len(p.stderr),'stderr_sha256':sha(p.stderr),'source_pins_unchanged_after':unchanged}
+(out/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps(receipt));print(p.stdout.decode(),end='');print(p.stderr.decode(),end='',file=sys.stderr);sys.exit(p.returncode)

@@ -91,7 +91,6 @@ export async function runPrimaryStdio(config,{input=process.stdin,output=process
       if(failure)throw failure;
       exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
         expectations:config.expectations??[],options:config.primaryOptions??{}});
-      if(failure)throw failure;
       await emit(output,{schema,status:'ready',state:exchange.state()});
       if(failure)throw failure;
       await servePrimaryLines({exchange,input,output});

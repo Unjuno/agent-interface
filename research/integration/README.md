@@ -6,6 +6,7 @@ Child directories are retained integration studies. Their existence does not imp
 
 - [Primary input-error ownership](primary_input_error_57_20261003_01a0ff53/README.md) — one Interface listener repair; eight native Node stream histories and independent audit, preserving pending results and normal EOF. Inert exchange only, with no native input/release, task or efficiency claim.
 - [Primary stream lifecycle ownership](primary_stream_lifecycle_57_20261003_01a0ff53/README.md) — whole-owner ready/terminal stream repair; first unhandled failures, actual private relay exit/pending-response records and eight saved-data controls retained. Configured owner API only; no executed CLI/backend/task or efficiency claim.
+- [Primary startup readiness boundary](primary_startup_ready_57_20261003_01a0ff53/README.md) — retained known-fault ready counterexample and one-line repair,19 affected/22 combined methods, real public CLI EBADF with original inert relay exit. First fixture/descriptor failures stay retained; no native backend/task, hard deadline or efficiency claim.
 
 
 ## Composition path

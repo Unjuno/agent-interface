@@ -222,13 +222,6 @@ function startupExchangeProbe(injectFailure) {
   // A separate process confines the builtin-promise boundary hook to this test.
   // The real mkdir completes; only then inject the owned input error, while
   // createPrimaryExchange is still awaiting that same promise. No host mocking.
-  const fixture=[
-    "const fs=require('node:fs');let bytes=0;",
-    "fs.writeFileSync(process.argv[1],JSON.stringify({pid:process.pid,ppid:process.ppid})+'\\n',{flag:'wx'});",
-    "process.stdin.on('data',x=>{bytes+=x.length;});",
-    "process.on('exit',code=>fs.writeFileSync(process.argv[2],JSON.stringify({pid:process.pid,code,bytes})+'\\n',{flag:'wx'}));",
-    'process.stdin.resume();',
-  ].join('\n');
   const source=`(async()=>{
     const fs=require('node:fs'),fsp=require('node:fs/promises');
     const {syncBuiltinESMExports}=require('node:module');
@@ -255,7 +248,7 @@ function startupExchangeProbe(injectFailure) {
     syncBuiltinESMExports();
     if((await import('node:fs/promises')).mkdir!==fsp.mkdir)
       throw Error('startup boundary hook was not bound to the actual named builtin');
-    const fixture=${JSON.stringify(fixture)};
+    const fixture="const fs=require('node:fs');let bytes=0;fs.writeFileSync(process.argv[1],JSON.stringify({pid:process.pid,ppid:process.ppid})+'\\n',{flag:'wx'});process.stdin.on('data',x=>{bytes+=x.length;});process.on('exit',code=>fs.writeFileSync(process.argv[2],JSON.stringify({pid:process.pid,code,bytes})+'\\n',{flag:'wx'}));process.stdin.resume();";
     const config={host:{command:process.execPath,args:['-e',fixture,join(root,'fixture-start.json'),join(root,'fixture-exit.json')],evidenceDirectory:join(root,'host')},route:'guarded-local',exchangeDirectory:join(root,'exchange')};
     try {await module.runPrimaryStdio(config,{input,output});}
     catch(error){if(error!==fault)throw error;errorObserved=true;}
