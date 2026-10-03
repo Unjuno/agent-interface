@@ -68,3 +68,23 @@ in original streams; enforcement and memory/speed improvements are unproven.
 Only owned short-lived private containers/processes were used; peers untouched.
 Full roadmap remains open. CI/review/PR/main delivery evidence belongs in the
 subsequent GitHub delivery comment, not a rewritten first-result ledger.
+
+## Additive delivery-review correction
+
+Read-only reviewer Pasteur verified the original72 bytes and first H_FAIL,
+then identified an important preservation-verifier gap: jointly replacing an
+original cache artifact, its RETENTION entry and SHA256SUMS could still PASS.
+The new regression reproduced that PASS (RED); delivery code now pins
+RETENTION SHA256 38249f51b8310b9bf16c35d0779563711a1ea1010a7c382ce5c2b3d4cbd935a3
+before relying on its contents (GREEN). RETENTION itself remains unchanged.
+
+A minor independent-join gap was also addressed additively: all three outer
+attempt bindings must equal receipts; all four app argv must bind the private
+script/output/case/token; each model call starts after the previous finish.
+Five focused copied-record corruption cells catch those joins. A further
+manifest control first failed because nested SHA256SUMS names were excluded;
+only the root manifest is now exempt. Both parsers' three-only and single
+optional usage variants are characterization tests, no parser modification.
+The suite now has21 tests; final platform/CI totals are recorded in delivery.
+Only post-run verifier/tests/docs/SHA256SUMS changed. Frozen19 source hashes,
+original72 files, first answer/error/verdict and consumed allocation did not.

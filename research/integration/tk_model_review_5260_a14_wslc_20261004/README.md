@@ -31,16 +31,20 @@ python -B verify_packet.py
 ```
 
 The data-only verifier returns `PASS_RETAINED_H_FAIL_ONLY`, not H_PASS.
-It checks all 72 original retained files against RETENTION, nineteen frozen
+It checks all 72 original retained files against hash-anchored RETENTION, nineteen frozen
 source hashes, eleven byte-identical inherited A13 files, all four semantic
 audits, the original audit hash and reconstruction, all three outer process
-receipts/bindings, and complete SHA256SUMS coverage. Original A13 STOP is untouched.
+receipts/bindings, outer attempt bindings, app argv, serial model-call order
+and complete SHA256SUMS coverage. Original A13 STOP is untouched.
 Header tampering, lost streams, hypothesis promotion, model authority, every
 row's clock corruption and unsafe/duplicate/incomplete manifests are tested.
+Coordinated artifact + RETENTION + outer-manifest replacement is rejected;
+nested files named SHA256SUMS cannot disappear from coverage. Both parsers
+also exercise required-three-only and each optional usage field independently.
 
-Seventeen tests pass with a private Linux Xvfb/Openbox display. Without an actual
-private Linux display the single construction test is explicitly skipped;
-Windows has 16 PASS + 1 SKIP. CI is data-only and uses the same explicit skip.
+The suite contains 21 tests. A private Linux Xvfb/Openbox display is required
+for the single construction test; without it that test is explicitly skipped.
+CI is data-only and uses the same explicit skip.
 The display construction test is a separate temporary hzx/zx fixture, not a
 formal A14 row or model call. No revalidator launches the formal allocation.
 

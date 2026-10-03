@@ -11,6 +11,7 @@ ALLOCATION = '5260-a14-wslc-model-review02-20261004'
 FREEZE_SHA = '91339f436ce0501ce3c5c4f738f1e710efdde44a33e8d03ce4ca9870a301b1fd'
 RAW_SHA = '392acfccb737608e80f516bfa59f8b1d0cf02d01defd37d944b80c26463fe605'
 FIRST_SHA = 'd62845b0c781be6f712eb620ad2401c2a80bdfc8712a8f5033b76cba86f76c81'
+RETENTION_SHA = '38249f51b8310b9bf16c35d0779563711a1ea1010a7c382ce5c2b3d4cbd935a3'
 
 
 def manifest_errors(root, lines):
@@ -34,9 +35,39 @@ def manifest_errors(root, lines):
         except OSError:
             errors.append('manifest_missing:' + name)
     actual = {p.relative_to(root).as_posix() for p in root.rglob('*')
-              if p.is_file() and p.name != 'SHA256SUMS' and '__pycache__' not in p.parts}
+              if p.is_file() and p != root / 'SHA256SUMS' and '__pycache__' not in p.parts}
     if actual != seen:
         errors.append('incomplete_manifest')
+    return errors
+
+
+def delivery_join_errors(root):
+    """Stronger post-run joins; do not change the original frozen method."""
+    root = Path(root); retained = root / 'retained'; errors = []
+    for role in ('candidate', 'model', 'auditor'):
+        directory = retained / ('review01-' + role + '-launch')
+        attempt = json.loads((directory / 'attempt.json').read_bytes())
+        receipt = json.loads((directory / 'receipt.json').read_bytes())
+        if attempt['binding'] != receipt['binding']:
+            errors.append(role + ':attempt_binding')
+    fixture = json.loads((root / 'fixture.json').read_bytes())
+    raw = json.loads((retained / 'review01-candidate-data/candidate_stdout.json').read_bytes())
+    for index, (row, case) in enumerate(zip(raw['rows'], fixture['cases'])):
+        argv = row['app_argv']
+        if (len(argv) != 6 or argv[:4] != ['/usr/bin/python3', '-B',
+                '/experiment/app.py', f'/out/row-{index:03d}']
+                or json.loads(argv[4]) != case
+                or argv[5] != fixture['allocation'] + f':row-{index:03d}'):
+            errors.append('app_argv')
+    previous_finish = None
+    for index in range(4):
+        path = retained / f'review01-model-data/row-{index:03d}/receipt.json'
+        receipt = json.loads(path.read_bytes())
+        start = datetime.fromisoformat(receipt['started_utc'])
+        end = datetime.fromisoformat(receipt['finished_utc'])
+        if previous_finish is not None and start < previous_finish:
+            errors.append('serial_model_order')
+        previous_finish = end
     return errors
 
 
@@ -45,6 +76,8 @@ def check_packet(root=ROOT):
     try:
         errors.extend(manifest_errors(root, (root / 'SHA256SUMS').read_text().splitlines()))
         retained = root / 'retained'
+        if sha(root / 'RETENTION.json') != RETENTION_SHA:
+            errors.append('retention_hash')
         retention = json.loads((root / 'RETENTION.json').read_bytes())
         if retention['source_commit'] != SOURCE or retention['allocation'] != ALLOCATION:
             errors.append('retention_header')
@@ -93,6 +126,7 @@ def check_packet(root=ROOT):
                 errors.append(role + ':source_binding')
         if datetime.fromisoformat(receipts['model']['finished_utc']) > datetime.fromisoformat(receipts['auditor']['started_utc']):
             errors.append('auditor_phase_order')
+        errors.extend(delivery_join_errors(root))
         observations = first['observations']
         sums = {}
         for observation in observations:

@@ -15,7 +15,7 @@ def rewrite_manifest(root):
     # Test-only custody corruption helper: do not let a stale outer manifest
     # hide whether independent inner evidence checks actually catch the break.
     entries = sorted(p for p in root.rglob('*') if p.is_file()
-                     and p.name != 'SHA256SUMS' and '__pycache__' not in p.parts)
+                     and p != root / 'SHA256SUMS' and '__pycache__' not in p.parts)
     (root / 'SHA256SUMS').write_text(''.join(
         hashlib.sha256(p.read_bytes()).hexdigest() + '  ' +
         p.relative_to(root).as_posix() + '\n' for p in entries))
@@ -50,6 +50,47 @@ class RetainedTests(unittest.TestCase):
                 value[key] = 'wrong'; path.write_text(json.dumps(value))
                 rewrite_manifest(root)
                 self.assertIn('retention_header', check(root)['errors'])
+
+    def test_coordinated_artifact_and_manifest_edit_cannot_replace_original(self):
+        check = self.verifier()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / 'packet'; shutil.copytree(ROOT, root)
+            name = 'review01-candidate-data/row-000/cache/fontconfig/CACHEDIR.TAG'
+            path = root / 'retained' / name
+            path.write_bytes(path.read_bytes() + b'not original\n')
+            retention_path = root / 'RETENTION.json'
+            retention = json.loads(retention_path.read_bytes())
+            retention['original_files_sha256'][name] = hashlib.sha256(path.read_bytes()).hexdigest()
+            retention_path.write_text(json.dumps(retention))
+            rewrite_manifest(root)
+            self.assertIn('retention_hash', check(root)['errors'])
+
+    def test_delivery_process_joins_catch_binding_argv_and_parallel_calls(self):
+        self.verifier()
+        import verify_packet
+        self.assertTrue(hasattr(verify_packet, 'delivery_join_errors'),
+                        'independent delivery process joins missing')
+        from verify_packet import delivery_join_errors
+        self.assertEqual(delivery_join_errors(ROOT), [])
+        controls = [
+            ('review01-candidate-launch/attempt.json', 'binding', None, 'candidate:attempt_binding'),
+            ('review01-model-launch/attempt.json', 'binding', None, 'model:attempt_binding'),
+            ('review01-auditor-launch/attempt.json', 'binding', None, 'auditor:attempt_binding'),
+            ('review01-candidate-data/candidate_stdout.json', 'app_argv', 2, 'app_argv'),
+            ('review01-model-data/row-001/receipt.json', 'started_utc', None, 'serial_model_order')]
+        for name, field, index, error in controls:
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary) / 'packet'; shutil.copytree(ROOT, root)
+                path = root / 'retained' / name; value = json.loads(path.read_bytes())
+                if field == 'binding':
+                    value['binding']['source_commit'] = 'wrong'
+                elif field == 'app_argv':
+                    value['rows'][index]['app_argv'][2] = '/experiment/foreign.py'
+                else:
+                    previous = json.loads((root / 'retained/review01-model-data/row-000/receipt.json').read_bytes())
+                    value['started_utc'] = previous['started_utc']
+                path.write_text(json.dumps(value))
+                self.assertIn(error, delivery_join_errors(root))
 
     def test_missing_original_stream_is_rejected(self):
         check = self.verifier()
@@ -102,6 +143,29 @@ class RetainedTests(unittest.TestCase):
             for name in ('../proof', '/proof', 'C:/proof', 'a\\proof', 'SHA256SUMS'):
                 with self.subTest(name=name):
                     self.assertIn('unsafe_manifest', manifest_errors(root, [digest + '  ' + name]))
+
+    def test_nested_file_named_sha256sums_is_not_exempt_from_coverage(self):
+        self.verifier()
+        from verify_packet import manifest_errors
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary); (root / 'nested').mkdir()
+            (root / 'nested/SHA256SUMS').write_bytes(b'unlisted data')
+            self.assertIn('incomplete_manifest', manifest_errors(root, []))
+
+    def test_required_three_and_each_known_optional_field_in_both_parsers(self):
+        from model_contract import parse
+        from audit import model_value
+        rows = [json.loads(line) for line in
+                (ROOT / 'retained/review01-model-data/row-000/stdout.bin').read_bytes().splitlines()]
+        for optional in ({}, {'cache_write_input_tokens': 0},
+                         {'reasoning_output_tokens': 2},
+                         {'cache_write_input_tokens': 0, 'reasoning_output_tokens': 2}):
+            usage = {'input_tokens': 30, 'cached_input_tokens': 10, 'output_tokens': 4, **optional}
+            changed = json.loads(json.dumps(rows))
+            changed[-1]['usage'] = usage
+            for parser in (parse, model_value):
+                with self.subTest(optional=optional, parser=parser.__name__):
+                    self.assertEqual(parser(changed)['usage'], usage)
 
 
 if __name__ == '__main__':
