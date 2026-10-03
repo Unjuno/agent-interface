@@ -286,3 +286,5 @@ test('guarded primary rejects persistent target tools locally',async()=>{
   assert.equal(calls,0);
   await assert.rejects(caller.call('interface_guarded_observe',{}),/trial stopped/);
 });
+
+import './test_primary_mint_sparse.mjs';

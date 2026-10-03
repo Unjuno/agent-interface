@@ -75,7 +75,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     async mint(...values) {
       const [alias, sourceSequence, point, regionSize] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
-        value.every(Number.isSafeInteger);
+        Array.from(value).every(Number.isSafeInteger);
       if (route !== 'guarded-local' || values.length !== 4 ||
           typeof alias !== 'string' || !alias.trim() ||
           !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
