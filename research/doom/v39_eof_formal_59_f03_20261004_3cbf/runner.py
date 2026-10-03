@@ -1,5 +1,6 @@
 """Prospective four-cell pipe notification protocol; never reuse prior output."""
 import hashlib
+import builtins
 import json
 from pathlib import Path
 import queue
@@ -11,6 +12,35 @@ import time
 
 PACKAGES = Path(__file__).resolve().parent.parent
 CASES = ('baseline_eof', 'candidate_eof', 'candidate_events_eof', 'candidate_json')
+PINS = {
+    'candidate': '2b569e6697720bef1f9d0381af6bc4876770132f26e418f697f136c40fc8a1a1',
+    'helper': '8359de6a8c714eabc08e88b6d22d51935be23fc3cfde5663fdc85bf44d1d1ae0',
+}
+
+
+def load_factories(candidate_bytes, helper_bytes):
+    """Compile hash-checked bytes; do not resolve the mutable module cache or pyc."""
+    if hashlib.sha256(candidate_bytes).hexdigest() != PINS['candidate']:
+        raise ValueError('candidate source pin')
+    if hashlib.sha256(helper_bytes).hexdigest() != PINS['helper']:
+        raise ValueError('helper source pin')
+    helper = type(sys)('_f03_pinned_probe')
+    helper.__file__ = '<frozen-F01-probe-bytes>'
+    exec(compile(helper_bytes, helper.__file__, 'exec'), helper.__dict__)
+    candidate = type(sys)('_f03_pinned_candidate')
+    candidate.__file__ = '<frozen-F02-candidate-bytes>'
+    namespace = dict(vars(builtins))
+    import_function = builtins.__import__
+
+    def pinned_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if name == 'probe' and level == 0:
+            return helper
+        return import_function(name, globals, locals, fromlist, level)
+
+    namespace['__import__'] = pinned_import
+    candidate.__dict__['__builtins__'] = namespace
+    exec(compile(candidate_bytes, candidate.__file__, 'exec'), candidate.__dict__)
+    return helper.factory, candidate.factory
 
 
 def write(path, value):
@@ -48,10 +78,9 @@ def run(output):
         hashes = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in pins.items()}
         if hashes != require:
             raise ValueError('source pins')
-        # Never execute dependency imports before source validation and STOP retention.
-        sys.path.insert(0, str(PACKAGES / 'v39_eof_59_f02_20261004_3cbf'))
-        from candidate import factory as candidate_factory
-        from probe import factory as baseline_factory
+        candidate_bytes = pins['candidate'].read_bytes()
+        helper_bytes = pins['helper'].read_bytes()
+        baseline_factory, candidate_factory = load_factories(candidate_bytes, helper_bytes)
         with tarfile.open(archive, 'r:gz') as source:
             code = source.extractfile('research/doom/v39_reader_signal_59_e02_20261004_3cbf/source/v39-candidate.py.txt').read()
     except (Exception, KeyboardInterrupt) as error:
