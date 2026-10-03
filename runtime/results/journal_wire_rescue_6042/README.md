@@ -15,5 +15,15 @@ Historical PID absence/cleanup is not newly observed by this rescue. No source,
 formal/native trial, container or process was replayed. Missing outer auditor
 stream capture and public path projection limits remain as originally recorded.
 
-Local CI, content review and main integration are pending; original source ref
+Local workflow replay at `ca8b5482c4` exited 0: 43 steps, failures=[];
+full output is `local-ci.log`. This is not hosted CI/full native/runtime evidence.
+Content review and main integration are pending; original source ref
 remains until verified integration/archive/dependency retirement checks.
+
+Fresh review readback identifies one explicit eligible content approval,
+not the required quorum of two:
+https://github.com/Unjuno/agent-interface/pull/7048#issuecomment-5970411309
+The approval is scoped to original exact inert content; it explicitly does not
+certify this rescue/current-main combination, sender handoff, platform authority
+or production adoption. Original proposal and active sender ownership remain:
+https://github.com/Unjuno/agent-interface/pull/7048#issuecomment-5969170482
