@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`native_wsl2_migration_6389_t0_20261002/STOP.md`](native_wsl2_migration_6389_t0_20261002/STOP.md) — #6389 retrospective custody of #6434: original runtime-parity/contention STOP, formal measurement/auditor 0/0/0; later v2 preparation and #6618 repair remain separate, no host release or migration result.
+
 - [`conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md) — #6838 A01: eight candidate rows retained, original auditor stopped with recursion failure; supplemental A03 raw-only audit later reconciled, without erasing this execution HOLD.
 - [`conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md) — #6841 A02 audit-only attempt: HOLD at the mutation-control gate because one layer relabel was a no-op; no output or retry.
 - [`conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md`](conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md) — #6843 A03 supplemental raw-only audit: 8/8 rows and truth labels reconciled; five actual mutations rejected; finite synthetic 2-D scope only.
@@ -546,6 +548,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multistate_stop_recovery_5593_t0_20261002_01/`](multistate_stop_recovery_5593_t0_20261002_01/)
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
 - [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
+- [`native_wsl2_migration_6389_t0_20261002/`](native_wsl2_migration_6389_t0_20261002/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
