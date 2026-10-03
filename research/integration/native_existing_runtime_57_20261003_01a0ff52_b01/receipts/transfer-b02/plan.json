@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orbctl",
+    "run",
+    "-m",
+    "unjuno-57-5884-debian-a02-20261003",
+    "-u",
+    "root",
+    "/bin/bash",
+    "-c",
+    "test ! -e /home/study/57-existing-b01/driver-b02.py && cat > /home/study/57-existing-b01/driver-b02.py && chown study:study /home/study/57-existing-b01/driver-b02.py"
+  ],
+  "timeout_seconds": 30,
+  "stdin_sha256": "c5757f49f97a35440f7a17a0e257354dc17ca6ab92793243d2469d03974b22cd",
+  "started_utc": "2026-10-03T14:04:51.407252+00:00"
+}
