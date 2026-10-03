@@ -1,7 +1,6 @@
-"""One fresh native observation, with a detached return snapshot before cleanup."""
+"""One fresh native observation, independent of input dispatch or task scoring."""
 from __future__ import annotations
 
-import copy
 import uuid
 from runtime.selector_v1 import BackendUnavailable, open_session
 
@@ -62,7 +61,7 @@ def _observe(targets, *, target, frame, region, capture_directory=None,
             if not callable(configure):
                 raise ValueError("CAPTURE_ARTIFACTS_UNSUPPORTED")
             configure(capture_directory)
-        row.update(status="returned", observation=copy.deepcopy(reader(target, frame, region)))
+        row.update(status="returned", observation=reader(target, frame, region))
     except Exception as error:
         row.update(status="observation_failed", error=repr(error))
     finally:
