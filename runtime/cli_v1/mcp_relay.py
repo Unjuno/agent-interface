@@ -42,6 +42,8 @@ class Relay:
 
     async def request(self, line):
         try:
+            if isinstance(line, (bytes, bytearray)):
+                line = line.decode('utf-8')
             request = json.loads(line, object_pairs_hook=_unique_object, parse_float=_finite_float,
                                  parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
             if not isinstance(request, dict) or set(request) != {'id', 'tool', 'arguments'}:
@@ -83,7 +85,8 @@ async def serve(server_args):
             await client.initialize()
             relay = Relay(client)
             while True:
-                line = await asyncio.to_thread(sys.stdin.readline)
+                # Pipe bytes use the protocol encoding, independently of locale.
+                line = await asyncio.to_thread(getattr(sys.stdin, 'buffer', sys.stdin).readline)
                 if not line:
                     break
                 response = await relay.request(line)

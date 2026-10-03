@@ -1,10 +1,90 @@
-import asyncio,json,os,sys,tempfile,unittest
+import asyncio,io,json,os,sys,tempfile,unittest
 from pathlib import Path
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock,patch
 from mcp.types import CallToolResult,ImageContent,TextContent
 from runtime.cli_v1.mcp_relay import Relay,PUBLIC_TOOLS
 
 class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
+    async def test_serve_preserves_utf8_wire_despite_text_stream_encoding(self):
+        from runtime.cli_v1 import mcp_relay as module
+        duplicate = r'{"id":1,"tool":"interface_validate","arguments":{"program":{"\ud83d\ude00":1,"' + '\U0001f600' + '":2}}}\n'
+        arguments = {'program': {'text': '\u65e5\u672c\u8a9e\U0001f600', '\U0001f600': [1, '\u00e9']}}
+        valid = json.dumps({'id':1,'tool':'interface_validate','arguments':arguments}, ensure_ascii=False) + '\n'
+        invalid = b'{"id":2,"tool":"interface_clock","arguments":{"text":"\x80"}}\n'
+        clock = b'{"id":2,"tool":"interface_clock","arguments":{}}\n'
+        wire = (duplicate + valid).encode('utf-8') + invalid + clock
+        for encoding in ['cp932', 'latin-1']:
+            with self.subTest(encoding=encoding):
+                client = AsyncMock()
+                client.call_tool.return_value = CallToolResult(content=[TextContent(type='text',text='\u65e5\u672c\u8a9e\U0001f600')])
+                context = AsyncMock()
+                context.__aenter__.return_value = client
+                transport = AsyncMock()
+                transport.__aenter__.return_value = (object(), object())
+                stdin = io.TextIOWrapper(io.BytesIO(wire), encoding=encoding, errors='surrogateescape')
+                stdout = io.StringIO()
+                try:
+                    with patch.object(module, 'stdio_client', return_value=transport), \
+                         patch.object(module, 'ClientSession', return_value=context), \
+                         patch.object(module.sys, 'stdin', stdin), patch.object(module.sys, 'stdout', stdout):
+                        await module.serve(['--explicit-mocked-server'])
+                    rows = [json.loads(line) for line in stdout.getvalue().splitlines()]
+                finally:
+                    stdin.close()
+                self.assertEqual(len(rows), 4)
+                self.assertEqual((rows[0]['status'],rows[0]['dispatched'],rows[0]['next_id']), ('refused',False,1))
+                self.assertEqual((rows[1]['status'],rows[1]['next_id']), ('returned',2))
+                self.assertEqual((rows[2]['status'],rows[2]['dispatched'],rows[2]['next_id']), ('refused',False,2))
+                self.assertEqual((rows[3]['status'],rows[3]['next_id']), ('returned',3))
+                self.assertEqual(rows[1]['result'], client.call_tool.return_value.model_dump(mode='json'))
+                self.assertEqual(client.call_tool.await_count, 2)
+                self.assertEqual(client.call_tool.await_args_list[0].args, ('interface_validate',arguments))
+                self.assertEqual(client.call_tool.await_args_list[1].args, ('interface_clock',{}))
+
+    async def test_bytes_require_utf8_before_dispatch_and_id_consumption(self):
+        text = '{"id":1,"tool":"interface_clock","arguments":{}}'
+        for wire in [text.encode('utf-16'), text.encode('utf-32'),
+                     b'{"id":1,"tool":"interface_clock","arguments":{"text":"\x80"}}']:
+            with self.subTest(wire_prefix=wire[:4]):
+                client = AsyncMock();relay = Relay(client)
+                client.call_tool.return_value = CallToolResult(content=[])
+                row = await relay.request(wire)
+                self.assertEqual((row['status'],row['dispatched'],row['next_id']), ('refused',False,1))
+                client.call_tool.assert_not_awaited()
+                valid = await relay.request(text.encode('utf-8'))
+                self.assertEqual((valid['status'],valid['next_id']), ('returned',2))
+                client.call_tool.assert_awaited_once_with('interface_clock',{})
+
+    async def test_unicode_bytes_keep_sdk_uncertainty_and_never_replay(self):
+        client = AsyncMock();relay = Relay(client)
+        client.call_tool.side_effect = OSError('distinct SDK failure after acceptance')
+        arguments = {'text': '\u65e5\u672c\u8a9e\U0001f600', '\U0001f600': '\u00e9'}
+        wire = json.dumps({'id':1,'tool':'interface_validate','arguments':arguments},ensure_ascii=False).encode('utf-8')
+        row = await relay.request(wire)
+        self.assertEqual((row['status'],row['next_id']), ('unknown_requires_reconciliation',2))
+        client.call_tool.assert_awaited_once_with('interface_validate',arguments)
+        repeated = await relay.request(wire)
+        self.assertEqual((repeated['status'],repeated['dispatched'],repeated['next_id']), ('refused',False,2))
+        bad = await relay.request(b'{"id":2,"tool":"interface_clock","arguments":{"text":"\x80"}}')
+        self.assertEqual((bad['status'],bad['next_id']), ('refused',2))
+        self.assertEqual(client.call_tool.await_count,1)
+
+    async def test_serve_keeps_already_decoded_text_stream_compatibility(self):
+        from runtime.cli_v1 import mcp_relay as module
+        arguments = {'text': '\u65e5\u672c\u8a9e\U0001f600'}
+        stdin = io.StringIO(json.dumps({'id':1,'tool':'interface_validate','arguments':arguments},ensure_ascii=False)+'\n')
+        stdout = io.StringIO();client = AsyncMock()
+        client.call_tool.return_value = CallToolResult(content=[])
+        context = AsyncMock();context.__aenter__.return_value = client
+        transport = AsyncMock();transport.__aenter__.return_value = (object(),object())
+        with patch.object(module,'stdio_client',return_value=transport), \
+             patch.object(module,'ClientSession',return_value=context), \
+             patch.object(module.sys,'stdin',stdin),patch.object(module.sys,'stdout',stdout):
+            await module.serve(['--explicit-mocked-server'])
+        row = json.loads(stdout.getvalue())
+        self.assertEqual((row['status'],row['next_id']), ('returned',2))
+        client.call_tool.assert_awaited_once_with('interface_validate',arguments)
+
     async def test_exact_content_duplicate_and_ambiguous_failure(self):
         client=AsyncMock()
         result=CallToolResult(content=[TextContent(type='text',text='{"status":"completed"}'),ImageContent(type='image',data='YWJj',mimeType='image/png')])
