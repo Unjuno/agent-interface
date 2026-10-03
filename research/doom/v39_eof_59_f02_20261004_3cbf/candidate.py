@@ -1,0 +1,20 @@
+"""Research successor of exact E02 reader/wait; not full controller adoption."""
+import sys
+import ast
+import hashlib
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'v39_os_pipe_59_f01_20261004_3cbf'))
+from probe import factory as historical_factory
+
+
+def factory(source):
+    if hashlib.sha256(source).hexdigest() != 'dca770e5e0c532b301b12032c9532bd5fae602947caff4fff21bde60634a57f1':
+        raise ValueError('exact E02 candidate source required')
+    tree = ast.parse(source)
+    main = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == 'main')
+    reader = next(node for node in main.body if isinstance(node, ast.FunctionDef) and node.name == 'reader')
+    protected = reader.body[0]
+    if not isinstance(protected, ast.Try) or len(protected.body) != 1 or not isinstance(protected.body[0], ast.For):
+        raise ValueError('unexpected reader structure')
+    protected.body.extend(ast.parse('raise EOFError("session stdout closed before another expected event")').body)
+    return historical_factory(ast.unparse(ast.fix_missing_locations(tree)).encode())
