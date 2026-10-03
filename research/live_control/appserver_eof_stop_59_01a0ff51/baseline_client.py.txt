@@ -72,7 +72,8 @@ class CodexAppServerClient:
                 if remaining <= 0:
                     raise TimeoutError(f"app-server request timed out: {method}")
                 if self._closed:
-                    raise AppServerError(f"app-server closed during {method}: stderr not drained")
+                    detail = self.process.stderr.read().strip()
+                    raise AppServerError(f"app-server closed during {method}: {detail}")
                 self._condition.wait(remaining)
             response = self._responses.pop(identifier)
         if "error" in response:
@@ -97,7 +98,8 @@ class CodexAppServerClient:
                 if remaining <= 0:
                     raise TimeoutError("app-server notification timed out")
                 if self._closed:
-                    raise AppServerError("app-server closed while waiting: stderr not drained")
+                    detail = self.process.stderr.read().strip()
+                    raise AppServerError(f"app-server closed while waiting: {detail}")
                 self._condition.wait(remaining)
 
     def initialize(self, name="agent-interface", version="1"):
