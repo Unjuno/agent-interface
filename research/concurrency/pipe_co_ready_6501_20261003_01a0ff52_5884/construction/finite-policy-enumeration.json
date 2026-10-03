@@ -1,0 +1,42 @@
+{
+  "enumeration": [
+    {
+      "ready": [],
+      "control_priority": null,
+      "first_ready": null
+    },
+    {
+      "ready": [
+        "data"
+      ],
+      "control_priority": "data",
+      "first_ready": "data"
+    },
+    {
+      "ready": [
+        "control"
+      ],
+      "control_priority": "control",
+      "first_ready": "control"
+    },
+    {
+      "ready": [
+        "data",
+        "control"
+      ],
+      "control_priority": "control",
+      "first_ready": "data"
+    },
+    {
+      "ready": [
+        "control",
+        "data"
+      ],
+      "control_priority": "control",
+      "first_ready": "control"
+    }
+  ],
+  "control_priority_zero_data_if_control_ready": true,
+  "first_ready_has_data_control_counterexample": true,
+  "scope": "pure finite algebra; does not establish actual macOS returned readiness order"
+}
