@@ -31,16 +31,12 @@ candidate retains a CLOSING entry there; the comparator drops it. The early
 rejoin is the sole intervention that exposes overlap: measured peak is two
 versus one. These are four authored schedules, not prevalence/rate samples.
 
-The original [v1 auditor](audit.py) covers strict event schema/types, contiguous
-order, selected identities, balance and completion/count checks. All eight rows
-match the prospective [decision table](PLAN.md); its eight predeclared controls
-reject. Independent reviews then found five accepted causal/caller-role
-contradictions. V1 is preserved as historical evidence and has incomplete
-automated causal coverage. [Standalone v2](audit_v2.py) repairs the prior completed
-wrapper, preceding unserved request and named caller-role joins, plus recorded
-platform/UTC bounds. [Audit correction](AUDIT-v2.md) preserves the first RED and
-all original bytes and distinguishes raw-only repair from experimental replay.
-The original observed lifetime contrast remains unchanged. Raw SHA-256:
+The independent [auditor](audit.py) imports no mechanism, producer, fixture or
+runtime. It reconstructs every event's strict JSON schema/types, contiguous order,
+caller and producer identity, attach/detach balance, callable enter/exit, wrapper
+and Future completion, registry handback and final cleanup. All eight rows match
+the prospective [decision table](PLAN.md); all eight effective copied-data
+corruptions are rejected. Raw SHA-256:
 `179bf58c8cb3f42f439cd376c9a56dc18e413c60e96953055770a403f4ffe0e1`.
 See [raw](evidence/raw.json), [audit](evidence/audit.json), and actual
 [matrix](evidence/matrix.receipt.json)/[audit](evidence/audit.receipt.json) UTC/exit receipts.
@@ -62,8 +58,8 @@ From this package directory, read-only reproduction of the retained audit can us
 an unused output path:
 
 ```text
-python -B audit_v2.py evidence/raw.json NEW_AUDIT.json
-python -B -m unittest -v test_audit_v2
+python -B audit.py evidence/raw.json NEW_AUDIT.json
+python -B -m unittest -v test_mechanism
 ```
 
 Do not replay this frozen eight-row run as a new allocation. Future changed
