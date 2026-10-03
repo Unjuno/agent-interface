@@ -6,6 +6,7 @@ reacquisition.  Every repair model result must be checked against one later
 observation before ordinary final revalidation and execution.
 """
 import copy
+import math
 import time
 import uuid
 
@@ -28,6 +29,18 @@ LOCAL_EXECUTION_YIELD_REASONS = {
     "budget_exhausted", "delivery_uncertain", "execution_failed", "execution_refused",
 }
 
+
+def _aggregate_cost(costs, attempted_calls):
+    """Return a total only when all attempts have a representable numeric sum."""
+    if len(costs) != attempted_calls:
+        return None
+    try:
+        total = sum(costs)
+    except OverflowError:
+        return None
+    if isinstance(total, float) and not math.isfinite(total):
+        return None
+    return total
 
 class ModelFailure(RuntimeError):
     def __init__(self, message, *, call_id=None, usage=None,
@@ -62,6 +75,10 @@ def _usage(value):
     for key, amount in value.items():
         if type(amount) is not int or amount < 0:
             raise ValueError(f"nonnegative integer usage required for {key}")
+    for subset, total in (("cached_input_tokens", "input_tokens"),
+                          ("reasoning_output_tokens", "output_tokens")):
+        if subset in value and total in value and value[subset] > value[total]:
+            raise ValueError(f"usage subset {subset} exceeds {total}")
     return copy.deepcopy(value)
 
 
@@ -269,16 +286,23 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
             ended = clock()
             attempt.update(status="failed", completed_ns=ended,
                            call_id=getattr(error, "call_id", None),
-                           usage=_usage(getattr(error, "usage", None)),
-                           visible_images_submitted=_optional_count(
-                               getattr(error, "visible_images_submitted", None),
-                               "visible_images_submitted"),
-                           wait_ns=_optional_count(getattr(error, "wait_ns", None), "wait_ns"),
                            error=repr(error))
+            metadata_error = None
+            try:
+                attempt.update(usage=_usage(getattr(error, "usage", None)),
+                               visible_images_submitted=_optional_count(
+                                   getattr(error, "visible_images_submitted", None),
+                                   "visible_images_submitted"),
+                               wait_ns=_optional_count(getattr(error, "wait_ns", None), "wait_ns"))
+            except ValueError as invalid_metadata:
+                metadata_error = invalid_metadata
+                attempt["error"] += "; invalid failure accounting: " + repr(invalid_metadata)
             stages[name] = {"status": "failed", "reason": repr(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
             emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
+            if metadata_error is not None:
+                raise ValueError("invalid model failure accounting") from error
             raise
         ended = clock()
         attempt.update(status="completed", completed_ns=ended,
@@ -334,7 +358,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                       "model_wait_ns": (sum(row["wait_ns"] for row in attempts)
                           if wait_coverage == len(attempts) else None),
                       "model_wait_coverage": wait_coverage,
-                      "cost": sum(costs) if len(costs) == len(model_calls) else None,
+                      "cost": _aggregate_cost(costs, len(attempts)),
                       "cached_input_semantics": "subset of input_tokens; never added to input total"},
                   "phase_timings": phases,
                   "input_authority": ("none" if execution_progress is not None and
