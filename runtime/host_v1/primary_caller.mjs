@@ -142,6 +142,10 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       try { reply = await host.sendPresented(tool, args, sinks); }
       catch (error) { stop('transport or presentation failure'); throw error; }
       try {
+        if (reply?.status === 'unknown_requires_reconciliation') {
+          stop('relay delivery uncertain; reconciliation required');
+          return reply;
+        }
         if (reply.result.isError === true && !expected) {
           stop('unexpected MCP refusal');
           return reply; // Framework errors may contain free text, not typed JSON.

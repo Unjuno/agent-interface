@@ -286,3 +286,19 @@ test('guarded primary rejects persistent target tools locally',async()=>{
   assert.equal(calls,0);
   await assert.rejects(caller.call('interface_guarded_observe',{}),/trial stopped/);
 });
+
+const original={id:1,tool:'interface_validate',status:'unknown_requires_reconciliation',error:'Connection closed',recovery:'Inspect the same allocation/request. Do not replay input.',next_id:2};
+test('retained uncertain relay response returns unchanged and stops subsequent dispatch',async()=>{
+ let calls=0;const presented=[];
+ const closed={result:{isError:false,content:[{type:'text',text:'{"status":"closed"}'}]}};
+ const host={sendPresented:async(tool,args,sinks)=>{calls++;const reply=tool==='interface_close'?closed:original;await sinks.text(reply);return reply;}};
+ const caller=createPrimaryCaller(host,'guarded-local',{text:async row=>presented.push(row)});
+ let response,error;
+ try{response=await caller.call('interface_validate',{});}catch(e){error=e;}
+ assert.equal(error,undefined,'uncertain envelope must not require a secondary extraction TypeError');
+ assert.equal(response,original);assert.deepEqual(presented,[original]);assert.ok(caller.state().stopped);
+ await assert.rejects(caller.call('interface_guarded_input',{alias:'field',interaction:'click'}),/stopped/);
+ assert.equal(calls,1);
+ assert.equal(await caller.call('interface_close',{}),closed);
+ assert.equal(calls,2);assert.ok(caller.state().stopped);
+});
