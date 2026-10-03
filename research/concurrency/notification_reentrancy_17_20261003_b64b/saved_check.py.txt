@@ -1,0 +1,70 @@
+"""Independent literal saved-row reduction; no subject or collector import."""
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+
+SRC=Path('/src'); OUT=Path('/out')
+def require(condition,label):
+    if not condition: raise AssertionError(label)
+def canonical(v): return json.dumps(v,sort_keys=True,ensure_ascii=True,separators=(',',':'))
+def same(a,b,label): require(canonical(a)==canonical(b),label)
+def value(token): return {'method':'fixture/notice','params':{'token':token,'meaning':'保持 café','rich_intent':'M'*1025,'integer':37}}
+def check(row,arm,mode):
+    same([row['arm'],row['mode']],[arm,mode],'cell identity')
+    b=(SRC/(arm+'.py')).read_bytes();same([row['source_bytes'],row['source_sha256'],row['source_unchanged']],[len(b),hashlib.sha256(b).hexdigest(),True],'source pin')
+    require(type(row['driver_pid']) is int and row['driver_pid']>0,'producer PID')
+    same(row['initial_identities'],['A','B'],'initial identities')
+    for k in ['A','B']: require(type(row['object_ids'][k]) is int and row['object_ids'][k]>0,'actual identity integer')
+    require(row['object_ids']['A']!=row['object_ids']['B'],'distinct object identities')
+    same(row['original_values'],{'A':value('A'),'B':value('B')},'full rich original values')
+    if mode=='healthy':
+        calls=['A'];inner=[];remaining=['B'];outer={'error_type':None,'returned_identity':'A','returned_value':value('A')}
+    elif arm=='baseline' and mode=='reentrant-true':
+        calls=['A'];inner=['A'];remaining=[];outer={'error_type':None,'returned_identity':'A','returned_value':value('A')}
+    elif arm=='baseline':
+        calls=['A'];inner=['A'];remaining=['B'];outer={'error_type':'RuntimeError','error_text':'deque mutated during iteration','returned_identity':None,'returned_value':None}
+    else:
+        calls=['A','B'] if mode=='reentrant-true' else ['A','B','B'];inner=['A'];remaining=['B']
+        outer={'error_type':'TimeoutError','error_text':'app-server notification timed out','returned_identity':None,'returned_value':None}
+    trace=[{'event':'callback','identity':'A','queue':['A','B']}]
+    if inner: trace.append({'event':'nested_return','identity':'A','queue':['B']})
+    trace += [{'event':'callback','identity':'B','queue':['B']} for x in calls[1:]]
+    same(row['callback_calls'],calls,'literal callback order')
+    same(row['nested_return_identities'],inner,'nested exact return')
+    same(row['remaining_identities'],remaining,'unrelated notification retained/lost')
+    same(row['remaining_values'],[value(k) for k in remaining],'full remaining payloads')
+    same(row['outer'],outer,'outer result or first exception')
+    same(row['trace'],trace,'complete ordered callback/nested trace')
+    same([row['constructors_invoked'],row['native_peers_created'],row['reader_threads_created']],[0,0,0],'constructor-free boundary')
+    same(row['terminal'],{'owned_condition_acquirable':True,'active_thread_count':1},'terminal owned condition/thread state')
+records={};positive=[]
+for arm in ['baseline','outside']:
+    for mode in ['healthy','reentrant-true','reentrant-false']:
+        key=arm+'-'+mode;row=json.loads((OUT/(key+'.json')).read_text());check(row,arm,mode);records[key]=row;positive.append(key)
+require(len({r['driver_pid'] for r in records.values()})==1,'one six-cell producer')
+mutations=[
+ ('unrelated-notification-restored','baseline-reentrant-true',lambda r:r.update(remaining_identities=['B'],remaining_values=[value('B')])),
+ ('nested-return-hidden','baseline-reentrant-true',lambda r:r.update(nested_return_identities=[])),
+ ('duplicate-return-hidden','baseline-reentrant-true',lambda r:r['outer'].update(returned_identity='B',returned_value=value('B'))),
+ ('baseline-first-exception-relabelled','baseline-reentrant-false',lambda r:r['outer'].update(error_type='TimeoutError')),
+ ('outside-false-success','outside-reentrant-true',lambda r:r.update(outer={'error_type':None,'returned_identity':'A','returned_value':value('A')})),
+ ('rich-payload-truncated','outside-healthy',lambda r:r['outer']['returned_value']['params'].update(rich_intent='M'*1024)),
+ ('unrelated-remaining-meaning-loss','outside-reentrant-false',lambda r:r['remaining_values'][0]['params'].update(meaning='保持 cafe')),
+ ('callback-order-loss','outside-reentrant-false',lambda r:r['callback_calls'].pop()),
+ ('nested-queue-contradiction','baseline-reentrant-true',lambda r:r['trace'][1].update(queue=[])),
+ ('identity-alias','outside-healthy',lambda r:r['object_ids'].update(B=r['object_ids']['A'])),
+ ('source-replaced','baseline-healthy',lambda r:r.update(source_sha256='0'*64)),
+ ('leftover-reader','outside-reentrant-true',lambda r:r['terminal'].update(active_thread_count=2))]
+negative=[];directory=OUT/'copied-negatives';directory.mkdir()
+for label,key,change in mutations:
+    row=copy.deepcopy(records[key]);before=canonical(row);change(row);require(before!=canonical(row),'effective corruption')
+    (directory/(label+'.json')).write_text(json.dumps(row,sort_keys=True,indent=2)+'\n')
+    arm,mode=key.split('-',1)
+    try:check(row,arm,mode)
+    except AssertionError as e:negative.append({'name':label,'case':key,'changed':True,'refused':True,'reason':str(e)})
+    else:raise AssertionError('accepted corruption '+label)
+result={'status':'PASS_SAVED_REENTRANCY_BOUNDARY','saved_only':True,'auditor_pid':os.getpid(),'positive_cells':positive,'effective_copied_refusals':negative,'source_or_collector_replay':False}
+with (OUT/'AUDIT.json').open('x') as f:f.write(json.dumps(result,sort_keys=True,indent=2)+'\n')
+print(json.dumps({'status':result['status'],'cells':len(positive),'copied_refusals':len(negative),'auditor_pid':os.getpid()}))

@@ -1,0 +1,74 @@
+"""Six new ordinary constructor-free actual-method cells; no subprocess peers."""
+import datetime as dt
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import sys
+import threading
+from collections import deque
+
+ROOT = Path('/src')
+OUT = Path('/out')
+
+def write(name, data):
+    with (OUT/name).open('x') as f:
+        f.write(json.dumps(data, sort_keys=True, indent=2, ensure_ascii=True)+'\n')
+
+def value(token):
+    return {'method':'fixture/notice', 'params': {'token':token, 'meaning':'保持 café', 'rich_intent':'M'*1025, 'integer':37}}
+
+def label(x, a, b):
+    if x is a: return 'A'
+    if x is b: return 'B'
+    raise AssertionError('unknown object identity')
+
+def one(arm, mode):
+    source = ROOT/(arm+'.py'); image = source.read_bytes()
+    start = dt.datetime.now(dt.timezone.utc).isoformat()
+    spec = importlib.util.spec_from_file_location('reentry_'+arm, source)
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    a, b = value('A'), value('B')
+    client = module.CodexAppServerClient.__new__(module.CodexAppServerClient)
+    client._condition = threading.Condition()
+    client._notifications = deque([a,b]); client._closed=False
+    calls, inner, trace = [], [], []
+    def queue(): return [label(x,a,b) for x in client._notifications]
+    def predicate(x):
+        token = label(x,a,b); calls.append(token)
+        trace.append({'event':'callback','identity':token,'queue':queue()})
+        if x is a and mode!='healthy':
+            require = client.wait_notification(lambda item:item is a, timeout=0)
+            inner.append(label(require,a,b))
+            trace.append({'event':'nested_return','identity':label(require,a,b),'queue':queue()})
+            return mode=='reentrant-true'
+        return x is a
+    try:
+        answer=client.wait_notification(predicate,timeout=0)
+        outcome={'error_type':None,'returned_identity':label(answer,a,b),'returned_value':answer}
+    except Exception as e:
+        outcome={'error_type':type(e).__name__,'error_text':str(e),'returned_identity':None,'returned_value':None}
+    row={'arm':arm,'mode':mode,'driver_pid':os.getpid(),'started_utc':start,
+         'ended_utc':dt.datetime.now(dt.timezone.utc).isoformat(),
+         'source_bytes':len(image),'source_sha256':hashlib.sha256(image).hexdigest(),
+         'source_unchanged':source.read_bytes()==image,'initial_identities':['A','B'],
+         'object_ids':{'A':id(a),'B':id(b)}, 'original_values':{'A':a,'B':b},
+         'callback_calls':calls,'nested_return_identities':inner,'trace':trace,'outer':outcome,
+         'remaining_identities':queue(),'remaining_values':list(client._notifications),
+         'constructors_invoked':0,'native_peers_created':0,'reader_threads_created':0,
+         'terminal': {'owned_condition_acquirable':client._condition.acquire(timeout=0),
+                      'active_thread_count':threading.active_count()}}
+    if row['terminal']['owned_condition_acquirable']: client._condition.release()
+    write(arm+'-'+mode+'.json',row)
+    if not row['source_unchanged'] or not row['terminal']['owned_condition_acquirable'] or row['terminal']['active_thread_count']!=1:
+        raise AssertionError('first unexpected source/resource failure')
+    return {'arm':arm,'mode':mode,'outer_error':outcome['error_type'],
+            'outer_identity':outcome['returned_identity'],'nested':inner,'remaining':queue()}
+
+rows=[]
+for arm in ['baseline','outside']:
+    for mode in ['healthy','reentrant-true','reentrant-false']:
+        rows.append(one(arm,mode))
+write('driver-summary.json',{'driver_pid':os.getpid(),'python':sys.version,'cells':rows})
+print(json.dumps({'cells':rows,'driver_pid':os.getpid()},sort_keys=True))
