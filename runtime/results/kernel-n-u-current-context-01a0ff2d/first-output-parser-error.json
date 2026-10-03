@@ -1,0 +1,12 @@
+{
+  "actual_first_commands": "nominal_only1method exit1/one expected assertion; uncertainty_only1method exit1/one expected assertion; joint56methods exit0/no skips",
+  "cause": "Windows raw stderr uses CRLF; literal LF-only final OK delimiter test did not recognize it",
+  "error": "AssertionError at strict LF-only OK marker",
+  "first_script_preserved": "work/kernel-nominal-uncertainty-context-v3/run.first.py.txt",
+  "formal_replayed": false,
+  "kind": "ordinary result-parser error after three actual commands finished",
+  "original_stdout_stderr_receipts_changed": false,
+  "repair": "accept documented CRLF or LF for the exact standalone OK marker; strict count/exit/error/semantic gates unchanged; reverify three original logs/receipts/unchanged source without executing them again; run only the as-yet-unexecuted optimized command",
+  "wrapper_command": "python.exe -B -X utf8 work/kernel-nominal-uncertainty-context-v3/run.py",
+  "wrapper_exit_code": 1
+}

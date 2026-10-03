@@ -1,0 +1,15 @@
+test_refused_nominal_receipt_and_cleanup_preserve_possible_effect (runtime.kernel.test_nominal_cancel_effect.JointRefusalRecoveryTests.test_refused_nominal_receipt_and_cleanup_preserve_possible_effect) ... FAIL
+
+======================================================================
+FAIL: test_refused_nominal_receipt_and_cleanup_preserve_possible_effect (runtime.kernel.test_nominal_cancel_effect.JointRefusalRecoveryTests.test_refused_nominal_receipt_and_cleanup_preserve_possible_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PRIVATE_WORKSPACE>\work\kernel-nominal-uncertainty-context-v3\uncertainty_only-02\runtime\kernel\test_nominal_cancel_effect.py", line 16, in test_refused_nominal_receipt_and_cleanup_preserve_possible_effect
+    with self.assertRaises(ContractError):flow.record_execution(shaped(execution()))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
