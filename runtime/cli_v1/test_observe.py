@@ -103,6 +103,37 @@ class ObserveTests(unittest.TestCase):
 
 
 
+    def test_snapshot_failure_preserves_primary_error_and_session_ownership(self):
+        for owned in (False, True):
+            for close_fails in (False, True):
+                with self.subTest(owned=owned, close_fails=close_fails):
+                    fault = OSError("snapshot unavailable")
+                    backend = SimpleNamespace(
+                        observe_read_only=mock.Mock(return_value={"value": [1]}),
+                        close=mock.Mock(side_effect=OSError("close") if close_fails else None))
+                    session = SimpleNamespace(backend=backend, recovery_required=True)
+                    with mock.patch("runtime.cli_v1.observe.open_session", return_value=session) as opened, \
+                            mock.patch("runtime.cli_v1.observe.copy.deepcopy", side_effect=fault):
+                        row = (self.call() if owned else observe_in_session(
+                            session, target="fixture", frame="window_client", region=[0, 0, 400, 180]))
+                    self.assertEqual(row["status"], "observation_failed")
+                    self.assertEqual(row["error"], "OSError('snapshot unavailable')")
+                    self.assertNotIn("observation", row)
+                    self.assertFalse(row["side_effect_authority"])
+                    self.assertFalse(row["input_dispatched"])
+                    self.assertTrue(session.recovery_required)
+                    backend.observe_read_only.assert_called_once_with("fixture", "window_client", [0, 0, 400, 180])
+                    if owned:
+                        opened.assert_called_once()
+                        backend.close.assert_called_once()
+                    else:
+                        opened.assert_not_called()
+                        backend.close.assert_not_called()
+                    if owned and close_fails:
+                        self.assertEqual(row["cleanup_error"], "OSError('close')")
+                    else:
+                        self.assertNotIn("cleanup_error", row)
+
     def test_owned_cleanup_cannot_rewrite_returned_observation(self):
         for fails in (False, True):
             with self.subTest(cleanup_failure=fails):

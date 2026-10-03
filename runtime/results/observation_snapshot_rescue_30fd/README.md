@@ -27,3 +27,28 @@ threshold2; current read finds no CONTENT_APPROVE. No nomination/old vote/this
 same-agent technical review counted. Exact composition/current-tree nonauthor
 review and live checks/rules/rights/accepted sender remain separate gates.
 Source branch remains intact; no main merge or science parent closure.
+
+Fresh full native runner: candidate protocol448tests/4failures/6errors/5skips;
+baseline445tests/same4failures/6errors/5skips. Both harness205tests/31errors.
+All41ordered FAIL/ERROR headers identical; full logs retain every name/traceback.
+This is header parity, not full-suite PASS or equality of underlying failures.
+Current ordinary local tests have full unittest output, not a separate outer
+PID/UTC/authenticated receipt or native Windows source applicability certificate.
+
+Parallel scope read: open7244 affects Win32 backend/capture-artifact paths;
+6934 has no runtime paths in returned file page. Neither pending source copied.
+Search result27 open observation-related PRs is navigation, not exhaustive proof
+of no unpublished collision. Fresh main coupling remains required at adoption.
+
+Read-only nonvoting technical review at a2890452b found no Critical/Important
+issue for ordinary quiescent nested JSON returns. Minor copy-failure coverage
+added as one new method/four ownership+cleanup subcases. Injected copy failure
+must retain primary error/no observation, capture once/owned cleanup once,
+supplied session unclosed/recovery unchanged even when owned close also fails.
+Normal16 and optimized16 methods PASS. All three original added ASTs preserved;
+removing those plus the one characterization method restores all current-main
+test ASTs. Runtime implementation unchanged by this follow-up.
+
+Intake local Analysis Index CI at a2890452b exits0:43steps/failures=[];
+full intake-local-ci.log retained. Not every repository workflow or full native
+suite PASS. Technical advisory contributes zero E3 approval/application votes.
