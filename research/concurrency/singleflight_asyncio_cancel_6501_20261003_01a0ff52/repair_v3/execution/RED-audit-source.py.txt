@@ -1,0 +1,7 @@
+"""Unimplemented v3: v2 delegate solely for preserved failing regressions."""
+import importlib.util
+from pathlib import Path
+spec = importlib.util.spec_from_file_location('held_v2', Path(__file__).resolve().parents[1]/'repair_v2/audit_v2.py')
+legacy = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(legacy)
+check = legacy.check

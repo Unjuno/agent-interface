@@ -1,0 +1,111 @@
+diff --git a/runtime/core_v1/contract.py b/runtime/core_v1/contract.py
+index 10786d3..c6b16b9 100644
+--- a/runtime/core_v1/contract.py
++++ b/runtime/core_v1/contract.py
+@@ -313,6 +313,9 @@ def admit_program(
+     try:
+         validate_program(program)
+         validate_backend_manifest(manifest)
++        _bounded_int(now_ns, "now_ns", 0, 2**63 - 1)
++        _bounded_int(current_observation_seq, "current_observation_seq", 0, 2**63 - 1)
++        _bounded_int(current_binding_revision, "current_binding_revision", 0, 2**63 - 1)
+     except ContractError:
+         return Admission(False, "INVALID_PROGRAM", tuple())
+ 
+diff --git a/runtime/core_v1/test_admission_current_evidence.py b/runtime/core_v1/test_admission_current_evidence.py
+new file mode 100644
+index 0000000..b65f36a
+--- /dev/null
++++ b/runtime/core_v1/test_admission_current_evidence.py
+@@ -0,0 +1,91 @@
++"""Current evidence must be bounded exact integers before admission.
++
++Removing any one of the three current-evidence checks must fail this suite.
++No backend is constructed and no input is emitted.
++"""
++from copy import deepcopy
++import unittest
++
++from runtime.core_v1.contract import (
++    Admission, KNOWN_CAPABILITIES, admit_program, capability_manifest,
++)
++
++
++def request():
++    return {
++        'schema': 'agent-interface/program-v1', 'program_id': 'evidence-test',
++        'source': {'observation_seq': 1, 'binding_revision': 1},
++        'authority': {'lease_id': 'test-only', 'expires_at_ns': 100},
++        'terminal': {'release_all_required': True}, 'ops': [{'op': 'release_all'}],
++    }
++
++
++def manifest():
++    return capability_manifest('test-only', 'linux', 'no-device', KNOWN_CAPABILITIES)
++
++
++class CurrentEvidenceAdmissionTests(unittest.TestCase):
++    def admit(self, **changes):
++        args = dict(now_ns=99, current_observation_seq=1, current_binding_revision=1)
++        args.update(changes)
++        return admit_program(request(), manifest(), **args)
++
++    def test_nonfinite_time_cannot_bypass_lease_expiry(self):
++        for value in (float('nan'), float('inf'), -float('inf')):
++            with self.subTest(value=value):
++                self.assertEqual(self.admit(now_ns=value), Admission(False, 'INVALID_PROGRAM', ()))
++
++    def test_bool_and_float_cannot_impersonate_current_generations(self):
++        for field in ('current_observation_seq', 'current_binding_revision'):
++            for value in (True, 1.0):
++                with self.subTest(field=field, value=value):
++                    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
++
++    def test_each_current_scalar_rejects_wrong_type_and_range(self):
++        bad = [None, False, True, '1', [], {}, 0.0, 1.0, -1, 2**63,
++               float('nan'), float('inf'), -float('inf')]
++        for field in ('now_ns', 'current_observation_seq', 'current_binding_revision'):
++            for value in bad:
++                with self.subTest(field=field, value=repr(value)):
++                    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
++
++    def test_exact_integer_time_retains_existing_expiry_boundary(self):
++        for now, accepted, error in [(0, True, None), (99, True, None),
++                                     (100, True, None), (101, False, 'LEASE_EXPIRED'),
++                                     (2**63-1, False, 'LEASE_EXPIRED')]:
++            with self.subTest(now=now):
++                result = self.admit(now_ns=now)
++                self.assertEqual((result.accepted, result.error), (accepted, error))
++
++    def test_exact_integer_generation_endpoints_remain_admissible(self):
++        for number in (0, 1, 2**63-1):
++            with self.subTest(number=number):
++                row = request()
++                row['source'] = {'observation_seq': number, 'binding_revision': number}
++                result = admit_program(row, manifest(), now_ns=0,
++                                       current_observation_seq=number, current_binding_revision=number)
++                self.assertTrue(result.accepted)
++
++    def test_valid_context_preserves_freshness_refusal_precedence(self):
++        cases = [({'now_ns': 101, 'current_observation_seq': 2, 'current_binding_revision': 2}, 'LEASE_EXPIRED'),
++                 ({'current_observation_seq': 2, 'current_binding_revision': 2}, 'STALE_OBSERVATION'),
++                 ({'current_binding_revision': 2}, 'STALE_BINDING')]
++        for changes, error in cases:
++            with self.subTest(changes=changes):
++                self.assertEqual(self.admit(**changes).error, error)
++
++    def test_invalid_context_precedes_otherwise_expired_request(self):
++        self.assertEqual(self.admit(now_ns=101, current_binding_revision=True),
++                         Admission(False, 'INVALID_PROGRAM', ()))
++
++    def test_rejected_context_does_not_modify_request_or_manifest(self):
++        row, profile = request(), manifest()
++        before = deepcopy((row, profile))
++        result = admit_program(row, profile, now_ns=float('nan'),
++                               current_observation_seq=1, current_binding_revision=1)
++        self.assertEqual(result, Admission(False, 'INVALID_PROGRAM', ()))
++        self.assertEqual((row, profile), before)
++
++
++if __name__ == '__main__':
++    unittest.main()

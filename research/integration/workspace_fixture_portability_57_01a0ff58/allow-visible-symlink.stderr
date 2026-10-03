@@ -1,0 +1,42 @@
+test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) ... 
+  test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='a') ... FAIL
+  test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='README.md') ... FAIL
+  test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='missing') ... FAIL
+  test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='link') ... FAIL
+
+======================================================================
+FAIL: test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='a')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<validation>\allow-visible-symlink\test_workspace_git_tree.py", line 145, in test_symlink_entries_fail_closed
+    self.assertEqual(code,2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='README.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<validation>\allow-visible-symlink\test_workspace_git_tree.py", line 145, in test_symlink_entries_fail_closed
+    self.assertEqual(code,2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<validation>\allow-visible-symlink\test_workspace_git_tree.py", line 145, in test_symlink_entries_fail_closed
+    self.assertEqual(code,2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_symlink_entries_fail_closed (test_workspace_git_tree.CommittedTreeTests.test_symlink_entries_fail_closed) (target='link')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<validation>\allow-visible-symlink\test_workspace_git_tree.py", line 145, in test_symlink_entries_fail_closed
+    self.assertEqual(code,2)
+AssertionError: 0 != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 0.918s
+
+FAILED (failures=4)

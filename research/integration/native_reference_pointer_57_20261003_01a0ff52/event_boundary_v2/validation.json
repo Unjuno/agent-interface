@@ -1,0 +1,132 @@
+[
+  {
+    "name": "native-final-matrix",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/matrix.py",
+      "runtime/cli_v1/receipt_references.py",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/fixtures.json",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/native-final-raw.json"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790990979019679000,
+    "ended_utc_ns": 1790990979083286000,
+    "exit_code": 0,
+    "log": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/native-final-matrix.log"
+  },
+  {
+    "name": "native-final-audit",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/audit.py",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/native-final-raw.json",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/fixtures.json",
+      "runtime/cli_v1/receipt_references.py",
+      "--require-clean"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790990979083316000,
+    "ended_utc_ns": 1790990979124860000,
+    "exit_code": 0,
+    "log": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/native-final-audit.log"
+  },
+  {
+    "name": "final-cli-suite",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "unittest",
+      "-v",
+      "runtime.cli_v1.test_attempt",
+      "runtime.cli_v1.test_cli",
+      "runtime.cli_v1.test_review",
+      "runtime.cli_v1.test_observe",
+      "runtime.cli_v1.test_golden_v3",
+      "runtime.cli_v1.test_receipt",
+      "runtime.cli_v1.test_receipt_motor_state",
+      "runtime.selector_v1.test_selector",
+      "runtime.motor_state_v1.test_adapter",
+      "runtime.cli_v1.test_native_reference_pointer",
+      "runtime.cli_v1.test_public_presentation",
+      "runtime.cli_v1.test_public_summary"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790990979124885000,
+    "ended_utc_ns": 1790990981167981000,
+    "exit_code": 0,
+    "log": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/final-cli-suite.log"
+  },
+  {
+    "name": "final-optimized-regressions",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_native_reference_pointer",
+      "runtime.cli_v1.test_receipt",
+      "runtime.cli_v1.test_review"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790990981168009000,
+    "ended_utc_ns": 1790990982284880000,
+    "exit_code": 0,
+    "log": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/final-optimized-regressions.log"
+  },
+  {
+    "name": "event-audit-controls",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790990982284904000,
+    "ended_utc_ns": 1790990982363460000,
+    "exit_code": 0,
+    "log": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/event-audit-controls.log"
+  },
+  {
+    "name": "event-optimized-audit-controls",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-O",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790990982363488000,
+    "ended_utc_ns": 1790990982440692000,
+    "exit_code": 0,
+    "log": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/event-optimized-audit-controls.log"
+  },
+  {
+    "name": "final-compile",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "compileall",
+      "-q",
+      "runtime/cli_v1/receipt_references.py",
+      "runtime/cli_v1/test_native_reference_pointer.py",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790990982440720000,
+    "ended_utc_ns": 1790990982476431000,
+    "exit_code": 0,
+    "log": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/final-compile.log"
+  }
+]

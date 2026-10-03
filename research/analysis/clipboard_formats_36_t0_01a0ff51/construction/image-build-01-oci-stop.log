@@ -1,0 +1,21 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  2.048kB
+Step 1/5 : FROM ubuntu:24.04
+24.04: Pulling from library/ubuntu
+90812e242c93: Pulling fs layer
+90812e242c93: Download complete
+d840120f5ea1: Download complete
+90812e242c93: Pull complete
+Digest: sha256:a853f94d226358a79c740cfc7bce0c289748f3fe3488d921d038ccd752c61b60
+Status: Downloaded newer image for ubuntu:24.04
+ ---> a853f94d2263
+Step 2/5 : ENV DEBIAN_FRONTEND=noninteractive QT_QPA_PLATFORM=offscreen QT_LOGGING_RULES="qt.qpa.*=false" PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1
+ ---> Running in cd6582ac80e6
+ ---> Removed intermediate container cd6582ac80e6
+ ---> 1aad3f96ea50
+Step 3/5 : RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pyqt5 && rm -r /var/lib/apt/lists/*
+ ---> Running in 5182973d6672
+failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error setting cgroup config for procHooks process: bpf_prog_query(BPF_CGROUP_DEVICE) failed: operation not permitted
