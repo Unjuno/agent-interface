@@ -1,5 +1,9 @@
 # Retained predicate-retry evidence rescue
 
+Latest main merged cleanly at 14ceb784b. Fresh normal/-O verification again
+checks99 targets and reproduces the committed saved reports byte-for-byte.
+Local CI43 again exits0 failures=[]; full transcript is merged-local-ci.log.
+
 Source: a0e0d8da7c920ed0bc0079bedf5f9d7b7c7d8ecb,
 research/17-predicate-retry-deadline-b64b. Original packet is preserved
 byte-for-byte in research/concurrency/predicate_retry_deadline_17_20261003_b64b.
