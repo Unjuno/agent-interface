@@ -27,10 +27,13 @@ class InterruptControl(unittest.TestCase):
                         listing = subprocess.check_output(['ps', '-axo', 'ppid=,pid='], text=True)
                         children = [int(line.split()[1]) for line in listing.splitlines()
                                     if line.split() and int(line.split()[0]) == process.pid]
-                    if children:
+                    tasks = Path('/proc') / str(process.pid) / 'task'
+                    reader_started = not tasks.exists() or len(list(tasks.iterdir())) >= 2
+                    if children and reader_started:
                         break
                     time.sleep(.01)
                 self.assertTrue(children, 'no actual child observed before interrupt')
+                self.assertTrue(reader_started, 'reader thread not observed before interrupt')
                 os.kill(process.pid, signal.SIGINT)
                 stdout, stderr = process.communicate(timeout=5)
                 self.assertEqual(process.returncode, 1, stderr)
