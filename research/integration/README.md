@@ -120,3 +120,5 @@ Historical and superseded integration paths remain in place when their exact nam
 - [Inkscape first-motion #4388](inkscape_first_motion_f2a6_v1/RECOVERY_STATUS.md): the ten-file preformal source is preserved; Issue #4388 reports the completed eight-case scoped result, but the formal raw archive was not verified after its 17-fragment publication attempt. This source-only preservation does not independently verify the reported result; retain the Issue and original branch for exact-byte recovery.
 
 - [Retired primary stream source #6919 and independent reviews](../recovery/retired_primary_stream_source_20261004/README.md) — 649 exact archive files plus full source/review histories; failed constructions and V2 CONTENT_HOLD retained, current runtime unchanged, no adoption or transfer of #6979 application authority.
+
+- [Retired primary review supplements #6919](../recovery/retired_primary_review_supplements_20261004/README.md) — 324 exact review files and two source histories; Windows output-pipe witnesses and the original accepted-transport FAIL retained, no old vote transfer or current runtime adoption.
