@@ -27,8 +27,10 @@ are not public/hardware attestation or atomic focus-plus-input guarantees.
 
 Construction now includes a live cooperative app, actual shared guarded native
 input/file-effect tests, and a once-only host subprocess custody primitive.
+Current continuation also includes the real standalone file exchange and a
+Windows-host/WSLc-live-app construction run; see FILE_EXCHANGE_CONSTRUCTION.md.
 Fixed review fixtures and synthetic subprocess event streams are not real
-model answers. The full live host driver, paired comparison, conditional model
+model answers. The complete conditional paired driver, paired comparison, conditional model
 recovery and independent formal raw audit are still absent. No A15 source
 freeze/allocation or actual model request has occurred.
 No H_PASS/STOP/PASS_RESEARCH conclusion may be inferred from these tests.

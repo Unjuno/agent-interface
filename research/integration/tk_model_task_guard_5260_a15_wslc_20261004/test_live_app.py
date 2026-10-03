@@ -264,6 +264,59 @@ class LiveAppConstructionTests(unittest.TestCase):
     def test_malformed_repair_effect_yields_without_sequence_access(self):
         self.repair_effect_control(True)
 
+    def test_external_host_response_then_new_shared_admission_and_file(self):
+        external = os.environ.get('A15_EXCHANGE_ROOT')
+        if not external:
+            self.skipTest('Explicit owned host exchange required; not a provider test')
+        import hashlib
+        import io
+        import shutil
+        from file_exchange import ExchangeClient
+        session = self.task_session()
+        initial = self.request('snapshot', 'external-image-baseline')['snapshot']
+        source = session.owner.bridge.observe()
+        # Exact RGB handoff from this actual shared native capture.
+        image = session.owner.bridge.history[source['sequence']][1]
+        png = io.BytesIO()
+        image.save(png, format='PNG')
+        client = ExchangeClient(Path(external)/'exchange', allocation='construction-only',
+            freeze_sha256='f'*64, slots=['pair-000-first'])
+        client.submit('pair-000-first', image=png.getvalue(),
+            prompt=b'Construction-only synthetic host response; no provider call.\n')
+        deadline = time.monotonic()+40
+        receipt = None
+        while receipt is None and time.monotonic() < deadline:
+            receipt = client.receive('pair-000-first')
+            if receipt is None:
+                self.assertIsNone(self.process.poll(), 'App died while awaiting host')
+                time.sleep(0.01)
+        self.assertIsNotNone(receipt, 'Owned host response deadline')
+        self.assertEqual(receipt['status'], 'returned', receipt)
+        plan = session.admit(receipt['reply']['parsed']['answer'],
+            image_sequence=initial['sequence'], response_seen_ns=receipt['response_seen_ns'])
+        self.assertEqual(plan['status'], 'PLAN_SAVE', plan)
+        self.assertGreater(session.snapshots[-1]['reply']['snapshot']['started_ns'],
+                           receipt['response_seen_ns'])
+        outcome = session.apply(plan)
+        self.assertEqual(outcome['status'], 'SAVE_DISPATCHED', outcome)
+        effect = self.read_later('task_result.json')
+        self.assertEqual(effect['text'], 'qmd')
+        self.assertEqual(effect['pid'], self.process.pid)
+        self.assertEqual(effect['token'], self.token)
+        # Retain construction originals before normal temporary cleanup.
+        self.close_app()
+        session.close()
+        retained = Path(external)/'live-originals'
+        shutil.copytree(self.out, retained)
+        value = dict(schema='a15-cross-host-construction-v1', model_calls=0,
+            receipt=receipt, initial_snapshot=initial, source=source,
+            png_sha256=hashlib.sha256(png.getvalue()).hexdigest(),
+            plan=plan, outcome=outcome, file=effect,
+            file_sha256=hashlib.sha256((retained/'task_result.json').read_bytes()).hexdigest())
+        with (Path(external)/'cross-host-result.json').open('x') as stream:
+            json.dump(value, stream, sort_keys=True)
+            stream.write('\n')
+
 
 if __name__ == '__main__':
     unittest.main()
