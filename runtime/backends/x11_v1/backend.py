@@ -14,7 +14,9 @@ from Xlib.ext import xtest
 from runtime.core_v1.contract import OFFICE_FLOOR, WINDOW_ACTIVATE, capability_manifest, validate_backend_manifest
 
 BUTTON_MAP = {"left": 1, "middle": 2, "right": 3, "x1": 8, "x2": 9}
-BUTTON_MASKS = {1: X.Button1Mask, 2: X.Button2Mask, 3: X.Button3Mask}
+BUTTON_MASKS = {1: X.Button1Mask, 2: X.Button2Mask, 3: X.Button3Mask,
+                4: X.Button4Mask, 5: X.Button5Mask}
+SCROLL_BUTTON_NAMES = {4: "wheel_up", 5: "wheel_down"}
 
 
 class X11BackendError(RuntimeError):
@@ -40,6 +42,7 @@ class X11Backend:
         }
         self.held_keycodes: dict[str, int] = {}
         self.held_buttons: set[str] = set()
+        self.held_scroll_buttons: set[int] = set()
         self.emissions = 0
         self.capture_artifacts = None
 
@@ -320,9 +323,16 @@ class X11Backend:
         buttons = [4] * max(0, -dy) + [5] * max(0, dy)
         buttons += [6] * max(0, -dx) + [7] * max(0, dx)
         for number in buttons:
+            if number in SCROLL_BUTTON_NAMES:
+                # Never acquire an already down wheel button. Record ownership
+                # before the uncertain send boundary, including post-effect faults.
+                if self.root.query_pointer().mask & BUTTON_MASKS[number]:
+                    raise X11BackendError("scroll button is already down")
+                self.held_scroll_buttons.add(number)
             xtest.fake_input(self.d, X.ButtonPress, number)
+            self.emissions += 1
             xtest.fake_input(self.d, X.ButtonRelease, number)
-            self.emissions += 2
+            self.emissions += 1
         self.d.sync()
 
     def take_capture_rgb(self, artifact):
@@ -375,7 +385,7 @@ class X11Backend:
 
     def _physical_buttons_down(self) -> list[str]:
         mask = self.root.query_pointer().mask
-        reverse = {1: "left", 2: "middle", 3: "right"}
+        reverse = {1: "left", 2: "middle", 3: "right", **SCROLL_BUTTON_NAMES}
         return sorted(reverse[n] for n, bit in BUTTON_MASKS.items() if mask & bit)
 
     def release_all(self) -> dict[str, Any]:
@@ -386,6 +396,9 @@ class X11Backend:
         for button in list(self.held_buttons):
             xtest.fake_input(self.d, X.ButtonRelease, BUTTON_MAP[button])
             self.emissions += 1
+        for number in sorted(self.held_scroll_buttons):
+            xtest.fake_input(self.d, X.ButtonRelease, number)
+            self.emissions += 1
         self.d.sync()
         keys = self._physical_keys_down(tracked)
         buttons = self._physical_buttons_down()
@@ -393,6 +406,8 @@ class X11Backend:
         # explicit recovery must still know which releases it owes.
         self.held_keycodes = {name: code for name, code in tracked.items() if name in keys}
         self.held_buttons.intersection_update(buttons)
+        self.held_scroll_buttons.intersection_update(
+            number for number, name in SCROLL_BUTTON_NAMES.items() if name in buttons)
         return {
             "keys_down": keys,
             "buttons_down": buttons,

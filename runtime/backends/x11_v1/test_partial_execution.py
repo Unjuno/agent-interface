@@ -59,6 +59,7 @@ class PartialExecutionTests(unittest.TestCase):
                     backend.root = mock.Mock()
                     backend.held_keycodes = {}
                     backend.held_buttons = set()
+                    backend.held_scroll_buttons = set()
                     backend.emissions = 0
                     backend.preflight = mock.Mock()
                     backend._refresh_keyboard_mapping = mock.Mock(return_value=False)
@@ -105,6 +106,7 @@ class PartialExecutionTests(unittest.TestCase):
         backend.emissions = 0
         backend.held_keycodes = {'w': 38}
         backend.held_buttons = {'left'}
+        backend.held_scroll_buttons = set()
         backend._physical_keys_down = mock.Mock(side_effect=[OSError('readback lost'), []])
         backend._physical_buttons_down = mock.Mock(return_value=[])
         with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:
@@ -124,6 +126,7 @@ class PartialExecutionTests(unittest.TestCase):
         backend.emissions = 0
         backend.held_keycodes = {'w': 38, 's': 39}
         backend.held_buttons = {'left', 'right'}
+        backend.held_scroll_buttons = set()
         backend._physical_keys_down = mock.Mock(side_effect=[['w'], []])
         backend._physical_buttons_down = mock.Mock(side_effect=[['left'], []])
         with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:

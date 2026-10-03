@@ -10,6 +10,7 @@ class MappingBoundaryTests(unittest.TestCase):
         backend=object.__new__(X11Backend)
         events=[];physical=set();emitted=[];mapping={'code':25,'modifier':1}
         backend.held_keycodes={};backend.held_buttons=set();backend.emissions=0
+        backend.held_scroll_buttons = set()
         backend.d=mock.Mock();backend.root=mock.Mock()
         backend.d.pending_events.side_effect=lambda:len(events)
         backend.d.next_event.side_effect=lambda:events.pop(0)
