@@ -2,7 +2,9 @@
 
 This standard-library prototype moves the qualified #57 role controller into a
 normal Python package. It replaces experiment-path module loading with relative
-imports. Function/class bodies are unchanged; source line endings become LF.
+imports. The line-parameter guard uses the document parser's `splitlines`
+grammar; all other function/class bodies retain the qualified version. Source
+line endings become LF.
 It does not automatically start a browser, model, native input, or experiment.
 
 ```python
@@ -35,7 +37,7 @@ resending the action. Set `reuse_label=False` for the one-fresh-inference replan
 baseline. A returned label or Save call is not independent on-disk success.
 There is no atomicity guarantee against outside writers.
 
-Run the fourteen public-state regressions from repository root:
+Run the eighteen public-state regressions from repository root:
 
 ```text
 python -I research/live_control/test_finite_role_recovery.py -v
@@ -49,6 +51,10 @@ the simple replan baseline. They send no native input and call no model. Their
 assertions use unittest and remain active under optimized Python.
 Initial target/body mismatch also refuses before a subject call. Typed stale
 errors after replacement or Save cannot authorize recovery after input.
+The line-parameter checks refuse CR/LF and all eight additional Python line
+boundaries in every parameter, including at the start/end. Unicode, spaces,
+and tabs retain exact forward/reverse behavior. Malformed new-person values
+must stop the controller before replacement or Save.
 
 Before repository delivery, a copied package ran in a new dedicated stock
 JupyterLab environment: three exact saved effects; a fourth case changed again

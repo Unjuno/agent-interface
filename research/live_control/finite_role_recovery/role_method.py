@@ -2,7 +2,7 @@
 def apply_role(document, role_label, old_person, new_person):
     if any(type(v) is not str or not v for v in (document,role_label,old_person,new_person)):
         return {'outcome':'REFUSE','reason':'invalid_input'}
-    if any('\r' in v or '\n' in v or '：' in v for v in (role_label,old_person,new_person)):
+    if any(v.splitlines()!=[v] or '：' in v for v in (role_label,old_person,new_person)):
         return {'outcome':'REFUSE','reason':'invalid_line_parameter'}
     lines=document.splitlines(keepends=True)
     if not lines or any(not line.endswith('\r\n') for line in lines):

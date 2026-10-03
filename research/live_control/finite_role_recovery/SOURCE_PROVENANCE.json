@@ -32,10 +32,11 @@
       "path": "role_method.py",
       "origin": "qualified role-method.py",
       "measured_package_sha256": "06f506501aac6d9d4635da1571857fa4e1522c70bb50f48b765570d115f1cd77",
-      "repository_image_sha256": "06f506501aac6d9d4635da1571857fa4e1522c70bb50f48b765570d115f1cd77",
-      "projection": "CRLF source line endings to LF only; Python AST unchanged"
+      "repository_image_sha256": "7474742666a8c3abcbc2bc9227e3c74ef0b29011f368e2ebb03951f49039dc65",
+      "projection": "Source CRLF normalized to LF, plus intentional line-parameter grammar guard repair; not AST-identical to measured package",
+      "previous_repository_image_sha256": "06f506501aac6d9d4635da1571857fa4e1522c70bb50f48b765570d115f1cd77"
     }
   ],
-  "scope": "Package source identity only; not a complete public native/model evidence capsule",
+  "scope": "Package source identity and explicit guard repair only; old formal/native results do not qualify repaired guard or constitute a full public capsule",
   "formal_result": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5973271804"
 }
