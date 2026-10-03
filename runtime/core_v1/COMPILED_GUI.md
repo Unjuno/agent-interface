@@ -14,6 +14,20 @@ or failed effects, uncertain input and exhausted budgets yield with their
 completed prefix. Symbols do not grant authority or contain executable points.
 Raw evidence and receipt persistence remain the adapters' responsibility.
 
+Each returned effect-verdict dictionary is copied after exact-shape validation
+and before checking its status and successful evidence reference. A later journal
+callback cannot rebind those fields through its retained return object. This is
+dictionary custody; failed/unavailable references are not generally scalar-type
+validated, and copying does not authenticate a witness or physical task effect.
+
+Cancellation is cooperative: the runtime consults the adapter at loop entry and
+before admitting or dispatching another action. The final completion branch does
+not poll again after its observation, effect verification or branch journal.
+Cancellation latched there can therefore coexist with `TASK_SUCCEEDED` when no
+further input is required. This is the existing policy for checking cancellation,
+not a guarantee that cancellation wins until the terminal receipt. A caller needing that stronger
+termination policy must qualify it separately; completed effects are not undone.
+
 An admission return is copied after exact builtin-dictionary field validation
 and before eligibility/freshness checks. Accepted fields are builtin scalars;
 later callback-local edits to the returned dictionary cannot rebind the checked

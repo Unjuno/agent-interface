@@ -267,6 +267,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 "observation": copy.deepcopy(observation),
             })
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
+            effect = effect.copy()
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
             if effect["status"] == "succeeded":
