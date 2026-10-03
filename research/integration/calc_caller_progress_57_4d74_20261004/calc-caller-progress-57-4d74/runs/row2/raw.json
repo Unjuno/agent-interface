@@ -1,0 +1,1242 @@
+{
+  "adapter_calls": [
+    "execute",
+    "verify"
+  ],
+  "caller_events": [
+    {
+      "event": "stage_started",
+      "stage": "reuse_revalidate",
+      "started_ns": 15331400867
+    },
+    {
+      "ended_ns": 15331409533,
+      "event": "stage_completed",
+      "stage": "reuse_revalidate"
+    },
+    {
+      "event": "stage_started",
+      "stage": "final_revalidate",
+      "started_ns": 15331418206
+    },
+    {
+      "ended_ns": 15331422488,
+      "event": "stage_completed",
+      "stage": "final_revalidate"
+    },
+    {
+      "event": "stage_started",
+      "stage": "execute",
+      "started_ns": 15331428304
+    },
+    {
+      "ended_ns": 15936095204,
+      "event": "stage_completed",
+      "stage": "execute"
+    },
+    {
+      "event": "stage_started",
+      "stage": "verify_effect",
+      "started_ns": 15936113721
+    },
+    {
+      "ended_ns": 15936118822,
+      "event": "stage_completed",
+      "stage": "verify_effect"
+    },
+    {
+      "attempted_calls": 0,
+      "event": "adaptive_route_finished",
+      "outcome": "TASK_NOT_VERIFIED",
+      "reason": "unavailable",
+      "repair_path": "none"
+    }
+  ],
+  "caller_result": {
+    "accounting": {
+      "attempted_calls": 0,
+      "cached_input_semantics": "subset of input_tokens; never added to input total",
+      "completed_calls": 0,
+      "cost": 0,
+      "duplicate_call_ids": [],
+      "model_wait_coverage": 0,
+      "model_wait_ns": 0,
+      "usage_coverage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "usage_totals": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "visible_image_coverage": 0,
+      "visible_images_submitted": 0
+    },
+    "attempt_ledger": [],
+    "cache_update": {
+      "window_id": 6291969
+    },
+    "coarse_origin": "caller_provided",
+    "comparison": {
+      "class": "warm_reuse",
+      "comparable_to_full_cold": false,
+      "omitted_stages": [
+        "observe_source",
+        "coarse_model",
+        "acquire_anchor",
+        "anchor_model"
+      ]
+    },
+    "delivery": "confirmed",
+    "execution_progress": {
+      "status": "completed"
+    },
+    "input_authority": "consumed_by_recorded_execute_stage",
+    "model_call_ledger": [],
+    "outcome": "TASK_NOT_VERIFIED",
+    "phase_timings": [
+      {
+        "elapsed_ns": 8666,
+        "ended_ns": 15331409533,
+        "stage": "reuse_revalidate",
+        "started_ns": 15331400867
+      },
+      {
+        "elapsed_ns": 4282,
+        "ended_ns": 15331422488,
+        "stage": "final_revalidate",
+        "started_ns": 15331418206
+      },
+      {
+        "elapsed_ns": 604666900,
+        "ended_ns": 15936095204,
+        "stage": "execute",
+        "started_ns": 15331428304
+      },
+      {
+        "elapsed_ns": 5101,
+        "ended_ns": 15936118822,
+        "stage": "verify_effect",
+        "started_ns": 15936113721
+      }
+    ],
+    "reason": "unavailable",
+    "repair_path": "none",
+    "repair_trace": [
+      {
+        "stage": "reuse_revalidate",
+        "status": "revalidated"
+      }
+    ],
+    "route": "reuse",
+    "selected_target": {
+      "window_id": 6291969
+    },
+    "stages": {
+      "acquire_anchor": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "acquire_expansion": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "anchor_model": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "coarse_model": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "execute": {
+        "reason": null,
+        "status": "completed"
+      },
+      "expanded_model": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "final_revalidate": {
+        "reason": null,
+        "status": "completed"
+      },
+      "local_repair": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "observe_source": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "post_model_observe": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "post_model_revalidate": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "reuse_revalidate": {
+        "reason": null,
+        "status": "completed"
+      },
+      "verify_effect": {
+        "reason": null,
+        "status": "completed"
+      }
+    },
+    "task_effect": "unavailable"
+  },
+  "caller_spec": {
+    "cached_target": {
+      "window_id": 6291969
+    },
+    "coarse_origin": "caller_provided",
+    "local_repair_on": [],
+    "provided_coarse": null,
+    "repair_on": [],
+    "route": "reuse",
+    "session_id": "CALC-CALLER-PROGRESS-57-4D74-P01-20261004-retention",
+    "target": "known Calc numeric row"
+  },
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "cleanup_physical": {
+    "buttons": 0,
+    "end_ns": 15940471650,
+    "keys": [],
+    "start_ns": 15940214378
+  },
+  "cleanup_release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 15940211918,
+    "verified": true
+  },
+  "ended_ns": 15980406185,
+  "errors": [],
+  "events": [],
+  "execution_projection": {
+    "caller_decision": {
+      "status": "completed"
+    },
+    "native_receipt_sha256": "b8aeda8048c7f26095cf9d7c5b5b5a03e0937555f01c13a76c8a54588dbb91cc"
+  },
+  "initial": {
+    "end_ns": 15320863544,
+    "image": {
+      "artifact": {
+        "bytes": 57330,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/images/dcd9cdc75f87438f8993d7c044852d70.png",
+        "sha256": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+        "source_raw_sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+        "timing_ns": {
+          "converted": 15287059910,
+          "encoded": 15314957177,
+          "hashed": 15320589342,
+          "started": 15284436500,
+          "written": 15318401268
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 15281900445,
+      "capture_started_ns": 15264068433,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+      "target": "owned",
+      "width": 1280
+    },
+    "physical": {
+      "buttons": 0,
+      "end_ns": 15321259495,
+      "keys": [],
+      "start_ns": 15320864541
+    },
+    "start_ns": 15264036458
+  },
+  "initial_document_sha256": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+  "last_window_tree": [
+    {
+      "id": 4194404,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194405,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194406,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194407,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194413,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194408,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194409,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194414,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194410,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194411,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194412,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194415,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194422,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194423,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194424,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194425,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194426,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194429,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194430,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194431,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194432,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194433,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194434,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194435,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194416,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194417,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194418,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194419,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194420,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194421,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194427,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194428,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194436,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194437,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194438,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194439,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194440,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194441,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194442,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194443,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194444,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194445,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194446,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194447,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194448,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194449,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194450,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194451,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194452,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194453,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194454,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194455,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194456,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194458,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194459,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194460,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194461,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194462,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194463,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194464,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194465,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194466,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194467,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194468,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194470,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194471,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194472,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194473,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194474,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194475,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194476,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194477,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194478,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194479,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194480,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291969,
+      "map_state": 2,
+      "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+    },
+    {
+      "id": 4194399,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194386,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194387,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194388,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194389,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194390,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194391,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194392,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194393,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194394,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194395,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194396,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194397,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194398,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194400,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194401,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194402,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194403,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194318,
+      "map_state": 2,
+      "title": "Openbox"
+    },
+    {
+      "id": 6291457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291467,
+      "map_state": 0,
+      "title": "VCL ImplGetDefaultWindow"
+    },
+    {
+      "id": 6291469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 8388609,
+      "map_state": 0,
+      "title": ""
+    }
+  ],
+  "result": "LIVE_CALLER_RETURNED_EFFECT_UNSCORED",
+  "schema": "calc-heldout-row-v1",
+  "source_hashes": {
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "caller_main.py": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca",
+    "caller_retention.py": "f90818a5e8e725316c4c2dc331967e2f410583710f2050370984c74850c5d542",
+    "driver_once.py": "603aaaafeb2726cd74c347da1fac33e11156254b218d82775bf1971d040d1260",
+    "producer.py": "1247e5c7fa982aa406865fed1700c1714c22cece1a5a63bd09cfa7c418729a4a",
+    "saved_oracle.py": "92def4221091e3d788ce24340d7a3f0f6e2e4dbe9b732164dc97605975f6de0d",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+  },
+  "spec": {
+    "arm": "retention",
+    "click_wait_ms": 0,
+    "index": 1,
+    "route": "keyboard"
+  },
+  "started_ns": 11151007381,
+  "target": {
+    "id": 6291969,
+    "map_state": 2,
+    "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+  },
+  "tasks": [
+    {
+      "a": 101,
+      "b": 103,
+      "click_wait_ms": 0,
+      "end_ns": 15886070172,
+      "image": {
+        "end_ns": 15925557657,
+        "image": {
+          "artifact": {
+            "bytes": 60131,
+            "height": 800,
+            "mime_type": "image/png",
+            "path": "/out/images/ad6a257afa5a4586b25907c2ee7c6c98.png",
+            "sha256": "70bf9e1c0f492813bc7dc144844282239ee1d96e41846dfd1977ea1f8772780d",
+            "source_raw_sha256": "5cbaa545dbc84607d075ad42b870f5d79027aec52701f20f438973b1cdcd1482",
+            "timing_ns": {
+              "converted": 15898750489,
+              "encoded": 15919551247,
+              "hashed": 15925394513,
+              "started": 15896861580,
+              "written": 15922389422
+            },
+            "width": 1280
+          },
+          "bytes": 4096000,
+          "capture_ended_ns": 15894697328,
+          "capture_started_ns": 15886075465,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 6291969,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "sha256": "5cbaa545dbc84607d075ad42b870f5d79027aec52701f20f438973b1cdcd1482",
+          "target": "owned",
+          "width": 1280
+        },
+        "physical": {
+          "buttons": 0,
+          "end_ns": 15925892648,
+          "keys": [],
+          "start_ns": 15925558803
+        },
+        "start_ns": 15886071073
+      },
+      "label": "task",
+      "physical": {
+        "buttons": 0,
+        "end_ns": 15932073733,
+        "keys": [],
+        "start_ns": 15931683158
+      },
+      "program": {
+        "authority": {
+          "expires_at_ns": 25331447128,
+          "lease_id": "owned-calc-click-text-diagnostic"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "owned"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "Home"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Down"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "0"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "TAB"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "0"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "3"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "TAB"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "="
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "A"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "*"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "B"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "ENTER"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "s"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 300
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "task",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "receipt": {
+        "admission": "accepted",
+        "execution": {
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ],
+          "emissions": 46,
+          "ended_ns": 15886050647,
+          "observations": [],
+          "program_emissions": 46,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 15886047606,
+              "verified": true
+            }
+          ],
+          "started_ns": 15333340036,
+          "waits": [
+            {
+              "completed": true,
+              "ended_ns": 15355261166,
+              "kind": "fixed_delay",
+              "operation_index": 4,
+              "requested_ms": 20,
+              "started_ns": 15335164301,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15375866528,
+              "kind": "fixed_delay",
+              "operation_index": 6,
+              "requested_ms": 20,
+              "started_ns": 15355707773,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15396547407,
+              "kind": "fixed_delay",
+              "operation_index": 8,
+              "requested_ms": 20,
+              "started_ns": 15376417568,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15417638966,
+              "kind": "fixed_delay",
+              "operation_index": 11,
+              "requested_ms": 20,
+              "started_ns": 15397539408,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15438266688,
+              "kind": "fixed_delay",
+              "operation_index": 13,
+              "requested_ms": 20,
+              "started_ns": 15418151169,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15458896149,
+              "kind": "fixed_delay",
+              "operation_index": 15,
+              "requested_ms": 20,
+              "started_ns": 15438775218,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15479977112,
+              "kind": "fixed_delay",
+              "operation_index": 18,
+              "requested_ms": 20,
+              "started_ns": 15459872280,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15500806838,
+              "kind": "fixed_delay",
+              "operation_index": 20,
+              "requested_ms": 20,
+              "started_ns": 15480704971,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15521526265,
+              "kind": "fixed_delay",
+              "operation_index": 22,
+              "requested_ms": 20,
+              "started_ns": 15501413055,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15542528950,
+              "kind": "fixed_delay",
+              "operation_index": 24,
+              "requested_ms": 20,
+              "started_ns": 15522416636,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15563501652,
+              "kind": "fixed_delay",
+              "operation_index": 26,
+              "requested_ms": 20,
+              "started_ns": 15543298105,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15584222609,
+              "kind": "fixed_delay",
+              "operation_index": 28,
+              "requested_ms": 20,
+              "started_ns": 15564104941,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 15885452616,
+              "kind": "fixed_delay",
+              "operation_index": 31,
+              "requested_ms": 300,
+              "started_ns": 15585288605,
+              "update_observed": null
+            }
+          ]
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "saved_sha256": "89334258d3b5d927af20b508771736ac3c2513e9c50ea6f983aca2ea9eafe02e",
+      "start_ns": 15331448443,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "terminal": [
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 255,
+      "name": "Calc",
+      "pid": 15
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "openbox",
+      "pid": 12
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "Xvfb",
+      "pid": 8
+    }
+  ]
+}
