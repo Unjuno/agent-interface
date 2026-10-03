@@ -10,8 +10,11 @@
 - Candidate once8writers/exit0; separate auditor once/exit0; same source
   binding between roles. Method/induced-phase Hpass only, no historical cause.
 - Scoped CPU released; no further A06 container/writer/input replay planned.
-- New retained completeness/count/scope tests RED then2GREEN;14 totaltests,
-  14 corrupt raw copies rejected. No original file/source/result changed.
+- New retained completeness/count/scope tests RED then2GREEN; PR review
+  busy-overlap regression RED thenGREEN.15 totaltests and15 corrupt raw
+  copies rejected. All4 actual busy phases overlap/are fully contained.
+  Original frozen auditor/source/raw/first result are unchanged; new
+  readonly gate strengthens qualification without producer/container replay.
 - Metadata extraction kept UTC strings as text; no PowerShell datetime
   conversion of original receipts. Manifest covers every raw and helper file.
 - Stronger readonly route check binds mounted receipt/read bytes and unique

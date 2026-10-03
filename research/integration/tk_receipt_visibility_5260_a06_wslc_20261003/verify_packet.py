@@ -54,6 +54,24 @@ def run_errors(run,audit):
         errors.append('run:expired_count_type')
     return errors
 
+def busy_phase_errors(row):
+    if row.get('load')!='cpu_busy':
+        return []
+    try:
+        worker=json.loads(row['worker_stdout'])
+        start,end=worker['start_ns'],worker['end_ns']
+        phase_start=row['writer']['stamp_ns']
+        phase_end=row['reader']['first_read_finished_ns']
+        if (any(type(value) is not int or value<=0 for value in
+                (start,end,phase_start,phase_end,row['worker_pid'])) or
+                type(row['worker_exit']) is not int or row['worker_exit']!=0):
+            return ['busy_phase_types']
+        if start>=end or phase_start>=phase_end or min(end,phase_end)<=max(start,phase_start):
+            return ['busy_worker_no_phase_overlap']
+    except (KeyError,TypeError,ValueError):
+        return ['busy_phase_missing']
+    return []
+
 def route_errors(raw,data):
     errors=[];temporary=set()
     for index,row in enumerate(raw['rows']):
@@ -91,6 +109,7 @@ def stream_errors(directory,receipt):
 
 def corruptions(raw_path,data,source):
     raw=json.loads(Path(raw_path).read_bytes())
+    busy=next(i for i,row in enumerate(raw['rows']) if row['load']=='cpu_busy')
     changes={
       'schema':lambda x:x.update(schema='bad'),
       'missing_row':lambda x:x['rows'].pop(),
@@ -106,13 +125,16 @@ def corruptions(raw_path,data,source):
       'payload_token':lambda x:x['rows'][0]['payload'].update(token='other'),
       'missing_attempts':lambda x:x['rows'][0].update(attempts=[]),
       'wrong_route':lambda x:x['rows'][0].update(live_path='/other/receipt.json'),
+      'busy_before_phase':lambda x:x['rows'][busy].update(worker_stdout=json.dumps({
+          'start_ns':1,'end_ns':x['rows'][busy]['writer']['stamp_ns']-1})),
     }
     rejected={}
     with tempfile.TemporaryDirectory(prefix='5260-a06-retained-controls-') as directory:
         for name,change in changes.items():
             value=copy.deepcopy(raw);change(value)
             path=Path(directory)/(name+'.json');path.write_text(json.dumps(value),encoding='utf-8')
-            try:rejected[name]=bool(inspect(path,data,source)['errors']+route_errors(value,data))
+            try:rejected[name]=bool(inspect(path,data,source)['errors']+route_errors(value,data)+
+                                   [e for row in value['rows'] for e in busy_phase_errors(row)])
             except (KeyError,TypeError,ValueError,IndexError,OSError):rejected[name]=True
     return rejected
 
@@ -122,6 +144,15 @@ def main():
     data=ROOT/'results/construction01-candidate-data';raw_path=data/'candidate_stdout.json'
     raw=json.loads(raw_path.read_bytes());audit=inspect(raw_path,data,ROOT)
     errors.extend('raw:'+e for e in audit['errors']);errors.extend(route_errors(raw,data))
+    overlaps={}
+    for row in raw['rows']:
+        errors.extend('load:'+e for e in busy_phase_errors(row))
+        if row['load']=='cpu_busy':
+            worker=json.loads(row['worker_stdout'])
+            overlaps[str(row['index'])]=min(worker['end_ns'],row['reader']['first_read_finished_ns'])-max(
+                worker['start_ns'],row['writer']['stamp_ns'])
+    if run.get('busy_phase_overlap_ns')!=overlaps:
+        errors.append('run:busy_phase_overlap')
     audit_path=ROOT/'results/construction01-auditor-launch/stdout.bin'
     if json.loads(audit_path.read_bytes())!=audit:errors.append('audit_reconstruction')
     errors.extend(run_errors(run,audit))
@@ -162,4 +193,3 @@ def main():
     return 1 if errors else 0
 
 if __name__=='__main__':raise SystemExit(main())
-

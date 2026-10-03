@@ -2,7 +2,7 @@ import hashlib
 from pathlib import Path
 import tempfile
 import unittest
-from verify_packet import manifest_errors, run_errors
+from verify_packet import manifest_errors, run_errors, busy_phase_errors
 
 
 class RetainedTests(unittest.TestCase):
@@ -27,6 +27,22 @@ class RetainedTests(unittest.TestCase):
         for field,value in [('candidate_invocations',True),('hypothesis','GENERAL_PASS'),
                             ('rows',9),('scope','A05_cause')]:
             self.assertTrue(run_errors({**run,field:value},audit))
+
+    def test_busy_worker_must_overlap_writer_to_first_read(self):
+        import copy
+        import json
+        row={'load':'cpu_busy','writer':{'stamp_ns':200},
+             'reader':{'first_read_finished_ns':300},
+             'worker_exit':0,'worker_pid':17,
+             'worker_stdout':json.dumps({'start_ns':100,'end_ns':400})}
+        self.assertEqual(busy_phase_errors(row),[])
+        for start,end in ((1,199),(301,400),(1,200),(300,400),(250,250)):
+            changed=copy.deepcopy(row)
+            changed['worker_stdout']=json.dumps({'start_ns':start,'end_ns':end})
+            self.assertTrue(busy_phase_errors(changed))
+        for field,value in (('start_ns',True),('end_ns',None)):
+            worker={'start_ns':100,'end_ns':400};worker[field]=value
+            self.assertTrue(busy_phase_errors({**row,'worker_stdout':json.dumps(worker)}))
 
 
 if __name__=='__main__':unittest.main()

@@ -33,7 +33,8 @@ not make admission atomic with the app.
 Source frozen at7c22db138e7a82dfd86522e132e34f1f14bdd9bc, FREEZE readback
 viaGitHubMCP MATCH before invocation. All8 frozen source/plan/test hashes
 remain unchanged.12 tests before input-free construction;2 new retained
-tests RED(missing verifier) then GREEN,14 current tests pass.14 temporary
+tests RED(missing verifier) then GREEN; review adds one busy-overlap test,
+15 current tests pass.15 temporary
 raw corruptions rejected by readonly validation; original source/raw/streams
 unchanged. Stronger post-outcome route checker also binds HOST receipt.json
 to retained read bytes and checks private/tmp unique path syntax.
@@ -44,6 +45,15 @@ original receipt.json and read bytes both remain. These are source/path/
 file custody, not privileged focus/sensor/authority evidence. Independent
 auditor imports neither candidate nor writer implementation. Author self-
 review is distinct from raw audit and required GitHub code review/CI.
+
+PR review found the frozen auditor did not require busy-child overlap.
+Its consumed source/audit remain unchanged. A new readonly typed overlap
+gate is RED->GREEN and rejects before/after/boundary-only/invalid clocks.
+The four actual busy windows overlap writer-stamp-to-first-read by
+102879487/121809879/100565360/114178585ns, respectively rows2/4/5/7; they
+contain those entire four measured phases. Extra raw-copy before-phase
+worker control is rejected. This is interval custody, not cap enforcement
+or quantified CPU load. All8 frozen source hashes remain unchanged.
 
 Same cachedWSLc image217851fe68e7/linuxamd64/Python3.13.5; networknone/
 sourceRO/candidateinputRO/uid65534/requestCPU0.5/512M. Both WSL swap-limit
