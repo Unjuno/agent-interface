@@ -87,8 +87,12 @@ class RuntimeClient:
         self.journal = Path(self.temporary.name) / "journal.jsonl"
         try:
             self.endpoint = read_endpoint(self.process.stdout, timeout=endpoint_timeout)
+            initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
+                                   {"events": ["observation"], "timeout": 30})
+            self.ready = first(initial["reply"]["records"], "ready")
+            initialize(self.journal, initial["continuation"])
         except BaseException as primary:
-            # Endpoint acquisition precedes observations/input. Stop only the
+            # Startup has not returned to the caller. Stop only the
             # directly owned launcher; no descendant/global cleanup is claimed.
             try:
                 if self.process.poll() is None:
@@ -113,10 +117,6 @@ class RuntimeClient:
                         if hasattr(primary, "add_note"):
                             primary.add_note(label + " failed: " + repr(cleanup_error))
             raise
-        initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
-                               {"events": ["observation"], "timeout": 30})
-        self.ready = first(initial["reply"]["records"], "ready")
-        initialize(self.journal, initial["continuation"])
         return self
 
     def call(self, spec):

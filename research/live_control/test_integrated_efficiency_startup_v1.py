@@ -66,4 +66,27 @@ class CleanupTests(unittest.TestCase):
     if client.errors is not None:client.errors.close()
     if client.temporary is not None:client.temporary.cleanup()
 
+
+import subprocess
+import sys
+class StartupFailures(unittest.TestCase):
+ def exercise(self,stage):
+  original=subprocess.Popen
+  def launch(args,**kw):return original([sys.executable,'-u','-c','import time; print(\'{"socket":"/unused/q04.sock"}\',flush=True); time.sleep(20)'],**kw)
+  reply={'reply':{'records':[{'event':'ready'}]},'continuation':{}}
+  with tempfile.TemporaryDirectory(prefix='q04-regression-') as root:
+   c=m.RuntimeClient(pathlib.Path(root)/'client',1)
+   target={'request':'request_once','ready':'first','journal':'initialize'}[stage]
+   try:
+    with patch.object(m.subprocess,'Popen',side_effect=launch),patch.object(m,'request_once',return_value=reply),patch.object(m,target,side_effect=RuntimeError('primary-'+stage)):
+     with self.assertRaisesRegex(RuntimeError,'primary-'+stage):c.start(endpoint_timeout=1)
+    self.assertIsNotNone(c.process.poll(),'owned child survives failed startup')
+    self.assertTrue(c.process.stdout.closed)
+    self.assertTrue(c.errors.closed)
+    self.assertFalse(pathlib.Path(c.temporary.name).exists())
+   finally:c.close()
+ def test_request_failure(self):self.exercise('request')
+ def test_ready_failure(self):self.exercise('ready')
+ def test_journal_failure(self):self.exercise('journal')
+
 if __name__=='__main__':unittest.main(verbosity=2)
