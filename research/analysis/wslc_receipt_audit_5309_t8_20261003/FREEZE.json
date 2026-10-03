@@ -1,0 +1,64 @@
+{
+  "schema": "wslc-retained-receipt-audit-5309-t8-v1",
+  "issue": 6990,
+  "predecessor_issue": 6975,
+  "predecessor_pr": 6983,
+  "allocation_id": "WSLC-RECEIPT-5309-T8-20261003-01",
+  "status": "FROZEN_PRE_VALIDATION",
+  "main_sha": "e54128b7ed4bfe1cd39177fa6c7d1a7c1c45d462",
+  "branch": "research/wslc-receipt-audit-5309-t8-20261003",
+  "input": {
+    "path": "research/analysis/wslc_retained_audit_5309_t7_20261003/audit.stdout.json",
+    "local_snapshot": "inputs/audit.stdout.json",
+    "sha256": "604fc18e94e80f6aa941623b8854ffad88043e16e5058db89aa45449ba97489f",
+    "git_blob_sha1": "39741cbea3f705d52611d82e4f431ec9e1d5b583",
+    "bytes": 306
+  },
+  "expected_receipt": {
+    "status": "PASS_T6_INDEPENDENT_FINITE_ORACLE",
+    "rows": 432,
+    "unique_cases": 432,
+    "independent_row_matches": 432,
+    "semantic_sha256": "a7bd0adc9485df7161b7ce85c27b1dc58fad71ee2fee9cfe081cc61337b0e193",
+    "failed_probe_task_fallback_wrong_target": 27,
+    "failed_probe_yield_wrong_target": 0,
+    "authority_grants": 0,
+    "errors": []
+  },
+  "validator": {
+    "path": "verify_receipt.py",
+    "sha256": "9ec9d7947481891c778c4acd9a9e08da12039b4670df8e8354d0dbf488ba7f2a",
+    "git_blob_sha1": "2473026229f64f9724587da2f3fcc47eba6ed289"
+  },
+  "tests": {
+    "path": "test_verify_receipt.py",
+    "sha256": "097f151f71b80f2790baf4b64a09bb083477424969aaa746de320e399c099d71",
+    "git_blob_sha1": "fdafbe8a77b4bf4a81342751f8b33cffa4b49a05",
+    "observed_before_formal_cli_validation": "8 tests passed"
+  },
+  "formal_validation": {
+    "command": ["python", "-B", "verify_receipt.py", "inputs/audit.stdout.json"],
+    "host_python": "3.12.10",
+    "stdlib_only": true,
+    "retained_receipt_cli_validations_max": 1,
+    "candidate_invocations": 0,
+    "wslc_invocations": 0,
+    "docker_invocations": 0,
+    "retries": 0,
+    "stdout_destination": "stage-output/verified_receipt.json",
+    "stderr_destination": "stage-output/validator.stderr.txt"
+  },
+  "decision": {
+    "pass": "PASS_RETAINED_RECEIPT_SCHEMA_AUDIT only if exact input bytes match SHA-256, exact schema and all frozen values match, the formal CLI emits that status, mutation tests pass, and predecessor records remain untouched",
+    "failure": "retain STOP/FAIL; no retry; never amend or reinterpret T7's formal STOP"
+  },
+  "scope_limits": [
+    "offline receipt validation only",
+    "not a WSLc portability rerun",
+    "not a Docker or native WSL comparison",
+    "does not retroactively satisfy T7's frozen host verifier gate",
+    "no speed, memory, OOM, GUI, model, or application claim",
+    "does not modify Issue #5309 or T6 artifacts"
+  ]
+}
+
