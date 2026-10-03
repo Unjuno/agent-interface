@@ -5,6 +5,14 @@ successor under the existing #6067, not permission to rerun A01/A02/B01/C01.
 Canonical `docs/CURRENT_GOAL.md` and the full ROADMAP remain governing. No
 task/model/safety or full-roadmap completion follows from this finite assay.
 
+First public freeze62598c2's host runner stopped BEFORE any guest preflight,
+consumed marker or native launch: its nested host output correctly triggered
+the protected-source guard. First trace, original freeze and46-file source tar
+are retained in prelaunch-01. A new explicitly named readiness-v2-FREEZE.json
+must use external host raw/audit paths and a fresh guest stage. The guard is
+unchanged. Native allocation remains unconsumed; host prelaunch attempts are
+counted separately, and the ineligible old command must never be re-used.
+
 ## H / T / D / C / U
 
 - H: at equal eight captures, both declared diversified schedules reduce wholly

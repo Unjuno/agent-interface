@@ -15,6 +15,14 @@ CONTROL_NAMES={'wait_bool','cpu_false','missing_wait','post_after_paint','source
 SUPPLEMENTAL_SOURCE={'README.md','STATUS_SNAPSHOT.md','test_audit_commands.py','test_audit_state.py','test_cell_validation.py',
                      'test_custody_mode.py','test_decision.py','test_freeze_bytes.py','test_protocol.py','test_qualification.py',
                      'test_saved_controls.py','test_tree_custody.py'}
+SUPPLEMENTAL_SOURCE.add('test_output_layout.py')
+
+def freeze_filename(mode,name=None):
+    need(mode in ('readiness','formal'),'closed freeze mode')
+    name=name or mode+'-FREEZE.json'
+    need(type(name) is str and re.fullmatch(mode+r'(-v[1-9][0-9]*)?-FREEZE\.json',name) is not None,
+         'closed explicit stage freeze filename')
+    return name
 
 def cases_for(mode, fixture):
     check_fixture_plan(fixture)

@@ -33,7 +33,8 @@ def validate(raw,freeze,here):
     admit_launch(normalize_launch(launch,freeze),freeze)
     consumed=ref.read(raw/'consumed.json');after=ref.read(raw/'post_source.json')
     admit_transport(consumed,launch,ref.read(raw/'copy.json'),after,freeze)
-    pin_names=list(pins)+[freeze['mode']+'-FREEZE.json']
+    from protocol import freeze_filename
+    pin_names=list(pins)+[freeze_filename(freeze['mode'],freeze.get('freeze_file'))]
     if freeze['mode']=='formal':pin_names.append('readiness-RESULT.json')
     expected={freeze['guest_source']+'/'+n:hashlib.sha256((here/n).read_bytes()).hexdigest() for n in pin_names}
     actual={line.split()[1]:line.split()[0] for line in consumed['readiness']['guest_sha256']['stdout'].splitlines()}

@@ -32,7 +32,9 @@ def main():
     from audit_commands import admit_audit_commands,admit_freeze_bytes
     admit_audit_commands(f)
     here=Path(__file__).resolve().parent
-    admit_freeze_bytes(a.freeze.read_bytes(),(here/(f['mode']+'-FREEZE.json')).read_bytes())
+    from protocol import freeze_filename
+    freeze_file=freeze_filename(f['mode'],f.get('freeze_file'))
+    admit_freeze_bytes(a.freeze.read_bytes(),(here/freeze_file).read_bytes())
     from evidence import admit_launch,admit_transport
     from mount_adapter import normalize_launch,guard_output
     guard_output(raw,out,Path(__file__).resolve().parent)
@@ -50,7 +52,7 @@ def main():
     ref.need(staged['exit_code']==0,'stage full immutable raw wrapper')
     staged_raw,receipts=probe(f['guest_wrapper'],'pre-raw');write(out/'pre-raw-custody.json',receipts)
     assert_manifest(staged_raw,host_raw,'host to guest full raw identity')
-    source_names=list(f['source_sha256'])+[f['mode']+'-FREEZE.json']
+    source_names=list(f['source_sha256'])+[freeze_file]
     if f['mode']=='formal':source_names.append('readiness-RESULT.json')
     host_source={n:hashlib.sha256((here/n).read_bytes()).hexdigest() for n in source_names}
     guest_source,receipts=probe(f['guest_source'],'pre-source');write(out/'pre-source-custody.json',receipts)

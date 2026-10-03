@@ -26,7 +26,9 @@ def transport_commands(source, output, out, pin_names, mode):
             'inspect_command':['orbctl','run','-m',VM,'-u','root','docker','inspect','--format','{{json .}}','phase-effect-6067-a03-'+mode+'-3cbf'],
             'copy_command':['orbctl','run','-m',VM,'cp','-a',output+'/result','/mnt/mac'+str((out/'record').resolve())]}
 
-def command(source, output, mode):
+def command(source, output, mode,freeze_file=None):
+    from protocol import freeze_filename
+    freeze_file=freeze_filename(mode,freeze_file)
     return ['orbctl','run','-m',VM,'-u','root','docker','run','--pull=never',
             '--name','phase-effect-6067-a03-'+mode+'-3cbf','--label','owner=3cbf',
             '--label','stage='+mode,'--user','501:501','--cpus','1',
@@ -35,7 +37,7 @@ def command(source, output, mode):
             '--security-opt','no-new-privileges','--tmpfs','/tmp:rw,nosuid,size=64m',
             '--mount','type=bind,src='+source+',dst=/src,readonly',
             '--mount','type=bind,src='+output+',dst=/out',IMAGE,
-            'python3','-B','/src/producer.py','--mode',mode,'--freeze','/src/'+mode+'-FREEZE.json','--out','/out/result' ]
+            'python3','-B','/src/producer.py','--mode',mode,'--freeze','/src/'+freeze_file,'--out','/out/result' ]
 
 def main():
     ap = argparse.ArgumentParser()
@@ -43,12 +45,15 @@ def main():
     ap.add_argument('--guest-output', required=True)
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--mode',choices=('readiness','formal'),required=True)
+    ap.add_argument('--freeze-file')
     a = ap.parse_args()
     from mount_adapter import guard_output
     guard_output(HERE.parent/'source_deadline_probe_6067_b01_20261003_3cbf',a.out,HERE)
     mode=a.mode
-    args = command(a.guest_source, a.guest_output, mode)
-    freeze = json.loads((HERE/(mode+'-FREEZE.json')).read_text())
+    from protocol import freeze_filename
+    freeze_file=freeze_filename(mode,a.freeze_file)
+    args = command(a.guest_source, a.guest_output, mode,freeze_file)
+    freeze = json.loads((HERE/freeze_file).read_text())
     from protocol import admit_stage
     readiness_bytes=(HERE/'readiness-RESULT.json').read_bytes() if mode=='formal' else None
     pins={name:hashlib.sha256((HERE/name).read_bytes()).hexdigest() for name in freeze['source_sha256']}
@@ -57,7 +62,7 @@ def main():
     for name, digest in freeze['source_sha256'].items():
         if hashlib.sha256((HERE/name).read_bytes()).hexdigest() != digest:
             raise ValueError('host source pin: '+name)
-    pin_names = list(freeze['source_sha256']) + [mode+'-FREEZE.json']
+    pin_names = list(freeze['source_sha256']) + [freeze_file]
     if mode=='formal':pin_names.append('readiness-RESULT.json')
     commands=transport_commands(a.guest_source,a.guest_output,a.out,pin_names,mode)
     for k,v in commands.items():

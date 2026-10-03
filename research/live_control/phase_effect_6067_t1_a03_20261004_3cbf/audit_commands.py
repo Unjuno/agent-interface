@@ -5,10 +5,12 @@ import reference as ref
 
 def commands(f):
     mode=f['mode'];ref.need(mode in ('readiness','formal'),'closed audit mode')
+    from protocol import freeze_filename
+    freeze_file=freeze_filename(mode,f.get('freeze_file'))
     prefix=['orbctl','run','-m',VM]
     name='phase-effect-6067-a03-'+mode+'-3cbf-audit'
     argv=['python3','-B','/src/saved_audit.py','--raw','/raw','--out','/out/result',
-          '--freeze','/src/'+mode+'-FREEZE.json']
+          '--freeze','/src/'+freeze_file]
     launch=prefix+['-u','root','docker','run','--pull=never','--name',name,'--label','owner=3cbf',
          '--label','stage='+mode+'-saved-audit','--user','501:501','--cpus','1','--memory','512m',
          '--memory-swap','512m','--pids-limit','64','--network','none','--read-only','--cap-drop','ALL',
