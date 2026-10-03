@@ -27,12 +27,12 @@ def validate(row: Any) -> tuple[bool, str]:
     if not isinstance(row.get("held_keys"), list) or not isinstance(row.get("held_buttons"), list):
         return False, "held"
     ack = row.get("input_ack")
-    if not isinstance(ack, dict) or not isinstance(ack.get("id"), str) or not isinstance(ack.get("status"), str) or ack["status"] not in {"ACKED", "PENDING", "UNKNOWN"}:
+    if not isinstance(ack, dict) or not isinstance(ack.get("id"), str) or ack.get("status") not in {"ACKED", "PENDING", "UNKNOWN"}:
         return False, "input_ack"
     release = row.get("release")
-    if not isinstance(release, dict) or not isinstance(release.get("status"), str) or release["status"] not in ALLOWED_RELEASE or type(release.get("retained")) is not bool:
+    if not isinstance(release, dict) or release.get("status") not in ALLOWED_RELEASE or type(release.get("retained")) is not bool:
         return False, "release"
-    if not isinstance(row.get("uncertainty"), str) or row["uncertainty"] not in ALLOWED_UNCERTAINTY:
+    if row.get("uncertainty") not in ALLOWED_UNCERTAINTY:
         return False, "uncertainty"
     events = row.get("events")
     if not isinstance(events, list):
