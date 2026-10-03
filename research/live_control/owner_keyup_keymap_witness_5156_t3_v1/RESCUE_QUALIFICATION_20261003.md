@@ -16,7 +16,10 @@ branch does not replace current-main documentation.
 - **T:** At the exact source head, reran its README-prescribed synthetic/unit
   suite from an isolated archive using CPython 3.12.13: 35/35 passed. Verified
   all 11 retained per-run SHA256SUMS manifests. The source package's own
-  whitespace diff is clean.
+  whitespace diff is clean. The first rescue-PR analysis-index run failed
+  before test execution because its sparse checkout omitted this package's
+  working directory; the checkout is now extended by the exact package path
+  and requires a clean rerun.
 - **D:** The immutable `construction-cli-11` record is a synthetic candidate
   plus separate raw-only auditor construction. It records 25 synthetic raw
   rows / 9 keymap snapshots and `PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY`; this is

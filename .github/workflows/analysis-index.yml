@@ -26,6 +26,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             research/analysis
+            research/live_control/owner_keyup_keymap_witness_5156_t3_v1
       - name: Restore the frozen workflow source for provenance tests
         run: |
           git fetch --no-tags --depth=1 origin e2e434dd07e1034c5c4303982a0b1ec33ea35cfd
