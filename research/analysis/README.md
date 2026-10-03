@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`RESCUE_STATUS_6035_20261003.md`](RESCUE_STATUS_6035_20261003.md) — Issue #6035 A01/A02 frozen synthetic crossover protocols and terminal pre-candidate STOP records rescued from closed branches; zero formal invocations and no model/interface claim.
 - [`fault_exposure_6539_t0_20261002/RESCUE_STATUS.md`](fault_exposure_6539_t0_20261002/RESCUE_STATUS.md) — Issue #6539 frozen package rescued from PR #6697; paired-twin identifiability check retained, formal allocation still unassigned, and launch remains HOLD because the frozen CLI receipt path has a static `seeds` binding defect.
 - [`native_wsl2_migration_6389_t0_20261002/STOP.md`](native_wsl2_migration_6389_t0_20261002/STOP.md) — #6389 retrospective custody of #6434: original runtime-parity/contention STOP, formal measurement/auditor 0/0/0; later v2 preparation and #6618 repair remain separate, no host release or migration result.
 
