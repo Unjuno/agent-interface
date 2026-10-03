@@ -5,7 +5,7 @@ Allocation PHASE-DEADLINE-6067-D01-20261003-3CBF; owner01a0b98d-3cbf-7710-b1a4-2
 Prospective source a8d818756b7778ac0f98fbb7b37a6269e593520d; public freeze f8258e38c5ae226432eddd8b8742bbaf0be28d80; freeze SHA256e879fc2b1892cb9a4219f43aae1009a1fb0ee798bbdcce007d84e5cc5f737827.
 Public [freeze comment](https://github.com/Unjuno/agent-interface/issues/6067#issuecomment-5969119210) precedes diagnostic execution.
 One producer/exit0; all16 fresh serial dark cells/128 native32×32 images retained.
-Official independent saved-byte auditor once/exit0, after all native containers terminal;12 saved-actual-raw controls REJECTED.
+Official independent saved-byte auditor once/exit0, after all native containers terminal;12 saved-only corruption controls REJECTED (eight frame mutations plus four JSON/type/plan checks).
 Producer start observed2026-10-03 12:24:03UTC; terminal observed12:24:33UTC. Actual individual terminal timestamps are raw/d*/launch.json.
 Official auditor actual container2026-10-03T12:25:10.689249335Z to12:25:10.863005912Z.
 No native retry, replacement, threshold change, input, model call or scientific pulse cell.
@@ -45,7 +45,7 @@ Private Docker engine is owned; physical host exclusivity is not claimed.
 
 - raw/: complete16cell native source/capture/wait journals, all1024pixels/frame withSHA, independent source/observer/window/epoch joins, child logs/readiness/PIDs/exits, actual cgroups and full Docker inspect.
 - audit/RESULT.json: independent arithmetic/custody result and all128derivedrows.
-- audit/controls.json:12effective actual-frame mutations; the mutations remain separate from native raw. Literal already-late/no-sleep frame also has12effective controls.
+- audit/controls.json:12effective saved-only corruption controls, including eight frame mutations and four JSON/type/plan checks; all remain separate from native raw. Literal already-late/no-sleep frame also has12effective controls. The frozen prospective README's "saved-actual-raw" shorthand must not be read as twelve frame mutations.
 - setup/: before/after matching18sourcepins and exactfreezehash, readonlysource/no writable files, cachedimage, single producer/auditor commands and terminal/runtime/retention receipts.
 - construction/: excluded8nativeframes, initial red→green scaffolding logs, allreview regressions preserved. Construction timing, code construction and science are distinct.
 - review/PREEXECUTION.md: initial/follow-up findings and final exact-source readiness. No native operation or write by reviewer.
@@ -77,7 +77,7 @@ Closed Issue/merged PR/component PASS counts are not a percentage of product com
 H: Own-leaf throttling necessary for >10ms late instrumented waits? **Unresolved**, because no such wait reproduced.
 T: exact finite16cell/128frame diagnostic executed once; immutable A01 STOP unchanged.
 D: allprospective native/sleep/counter/clock/pixel/source/runtime data retained.
-C: independent audit1, actual-raw corruptions12, pure17methods, source/runtime/delivery verification; reviewed fixes before execution.
+C: independent audit1, saved-only corruption controls12 (eight actual-frame mutations), pure17methods, source/runtime/delivery verification; reviewed fixes before execution.
 U: raretails, ancestor/host delay, missing enabledschedstat state, instrumentationobservereffect, source-qualified pulse utility, model/liveeffect.
 
 Next useful work is a separately named prospective T1allocation on this owning native host with per-deadline telemetry and independently checked source-qualified pulse windows. It must retain the original A01 STOP and this diagnostic HOLD, fix its scope/budget/source before firstrun, reject timing-invalid pulse records rather than replacing them, and receive independent review.
