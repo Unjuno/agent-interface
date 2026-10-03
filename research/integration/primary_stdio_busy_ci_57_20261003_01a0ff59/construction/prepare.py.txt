@@ -1,0 +1,61 @@
+import datetime,hashlib,json,re,subprocess
+from pathlib import Path
+
+p=Path(__file__).resolve().parent;repo=p.parent/'primary-stdio-bound/repo'
+v1='f497a9fabcb1393d6858da057475a8e2c4abd2e3'
+base='cb13a10dce358649458f5aea00947b8aa43fc5b8'
+workflow='.github/workflows/native-mcp-v1.yml'
+test='runtime/host_v1/test_primary_stdio_backpressure.mjs'
+git=lambda *a:subprocess.check_output(['git','-C',str(repo),*a])
+assert git('rev-parse','HEAD').decode().strip()==v1
+assert git('status','--porcelain')==b''
+main=git('rev-parse','origin/main').decode().strip()
+original=git('show',v1+':'+workflow)
+assert git('show',main+':'+workflow)==original
+scope=[]
+for number in [6919,6879,6874,6900,6434]:
+    ref='refs/review/'+str(number)
+    assert git('show',ref+':'+workflow)==original,number
+    scope.append({'pr':number,'head':git('rev-parse',ref).decode().strip(),'workflow_equal_v1':True})
+lines=original.decode('utf-8').splitlines()
+command=next(x.strip().removeprefix('run: ') for x in lines if 'run: node --test ' in x)
+assert command.split()[:2]==['node','--test']
+assert test not in command.split()[2:]
+replacement=command+' '+test
+candidate=original.replace(command.encode(),replacement.encode(),1)
+assert candidate.count(test.encode())==1
+target=repo/workflow
+if target.exists():assert target.read_bytes()==original
+else:target.parent.mkdir(parents=True,exist_ok=True)
+target.write_bytes(candidate)
+assert candidate.replace((' '+test).encode(),b'',1)==original
+old_pkg='research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'
+old_paths=git('ls-tree','-r','--name-only',v1,'--',old_pkg).decode().splitlines()
+assert len(old_paths)==125
+for path in old_paths:
+    assert (repo/path).read_bytes()==git('show',v1+':'+path),path
+source_paths=sorted(set(command.split()[2:]+[test]+git('ls-tree','-r','--name-only',v1,'--','runtime/host_v1').decode().splitlines()+[
+    'research/live_control/native_relay_client_v1.mjs','research/live_control/relay_host_timeline_v1.mjs','runtime/integration_checks/host_timing.py']))
+pins=[]
+for path in source_paths:
+    data=git('show',v1+':'+path)
+    assert (repo/path).read_bytes()==data,path
+    pins.append({'path':path,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data)})
+runtime=json.loads((p/'node22/download-receipt.json').read_text(encoding='utf-8'))
+node=p/'node22/node.exe'
+version= subprocess.check_output([str(node),'--version']).decode().strip()
+assert version==runtime['version']
+r={'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'author':'01a0ff59-2f23-7ff0-ba99-cc5cb8d494fc',
+    'v1_head':v1,'v1_review_base':base,'observed_main':main,'workflow_path':workflow,
+    'old_command':command,'new_command':replacement,'added_file':test,
+    'old_workflow_sha256':hashlib.sha256(original).hexdigest(),'new_workflow_sha256':hashlib.sha256(candidate).hexdigest(),
+    'unchanged_old_package_files':125,'only_workflow_edit':'One filename append; every other byte identical.',
+    'node22_runtime':runtime,'source_pins':pins,'overlap_git_checks':scope,
+    'ordinary_verification':'Execute exact proposed Node selection on Windows Node22; do not rerun original child-pipe/science producer or unchanged Python/native integration step.',
+    'scope':'CI source/test selection only; no new native input/model/backend/resource/deadline guarantee.',
+    'main_write':False}
+(p/'FREEZE.json').write_text(json.dumps(r,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+(p/'workflow-before.yml').write_bytes(original)
+(p/'workflow-after.yml').write_bytes(candidate)
+print(json.dumps({'observed_main':main,'old_files':len(command.split()[2:]),'new_files':len(replacement.split()[2:]),
+                  'old_package_unchanged':125,'node22':version,'source_pins':len(pins),'main_write':False}))

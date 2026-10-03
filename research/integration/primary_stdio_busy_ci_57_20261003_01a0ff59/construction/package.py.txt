@@ -1,0 +1,100 @@
+import datetime, hashlib, json, re, subprocess
+from pathlib import Path
+
+p = Path(__file__).resolve().parent
+repo = p.parent / 'primary-stdio-bound/repo'
+old_leaf = 'research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'
+leaf = 'research/integration/primary_stdio_busy_ci_57_20261003_01a0ff59'
+a = repo / leaf
+git = lambda *args: subprocess.check_output(['git', '-C', str(repo), *args])
+sha = lambda data: hashlib.sha256(data).hexdigest()
+freeze = json.loads((p / 'FREEZE.json').read_text(encoding='utf-8'))
+v1 = freeze['v1_head']
+assert git('rev-parse', 'HEAD').decode().strip() == v1
+assert git('status', '--porcelain').decode().splitlines() == [' M ' + freeze['workflow_path']]
+assert (repo / freeze['workflow_path']).read_bytes() == (p / 'workflow-after.yml').read_bytes()
+assert (p / 'workflow-after.yml').read_bytes().replace((' ' + freeze['added_file']).encode(), b'', 1) == (p / 'workflow-before.yml').read_bytes()
+old_paths = git('ls-tree', '-r', '--name-only', v1, '--', old_leaf).decode().splitlines()
+assert len(old_paths) == 125
+for path in old_paths:
+    assert (repo / path).read_bytes() == git('show', v1 + ':' + path), path
+for row in freeze['source_pins']:
+    assert sha((repo / row['path']).read_bytes()) == row['sha256'], row['path']
+raw = p / 'exact-ci-node22'
+private_receipt = (raw / 'receipt.json').read_bytes()
+receipt = json.loads(private_receipt)
+assert receipt['exit_code'] == 0 and receipt['source_pins_unchanged_after'] is True
+stdout, stderr = (raw / 'stdout.txt').read_bytes(), (raw / 'stderr.txt').read_bytes()
+assert sha(stdout) == receipt['stdout_sha256'] and sha(stderr) == receipt['stderr_sha256']
+tap = stdout.decode('utf-8')
+for label, expected in [('tests', 190), ('pass', 190), ('fail', 0), ('cancelled', 0), ('skipped', 0), ('todo', 0)]:
+    assert re.search(r'^# ' + label + ' ' + str(expected) + r'$', tap, re.M), label
+test_source = (repo / freeze['added_file']).read_text(encoding='utf-8')
+test_names = re.findall(r"test\('([^']+)'", test_source)
+assert len(test_names) == 3
+for name in test_names:
+    assert len(re.findall(r'^ok \d+ - ' + re.escape(name) + '$', tap, re.M)) == 1, name
+assert receipt['test_files'] == freeze['new_command'].split()[2:]
+assert len(receipt['test_files']) == 14
+assert not re.search(r'C:\\Users\\|/Users/|Authorization:|gh[opusr]_[A-Za-z0-9]', tap)
+a.mkdir(parents=True, exist_ok=False)
+(a / '.gitattributes').write_bytes(b'* -text\nexact-ci-node22/stdout.txt whitespace=-blank-at-eol,cr-at-eol\nexact-ci-node22/stderr.txt whitespace=-blank-at-eol,cr-at-eol\n')
+for source, target in [
+    (p / 'FREEZE.json', 'FREEZE.json'),
+    (p / 'workflow-before.yml', 'workflow-before.yml.txt'),
+    (p / 'workflow-after.yml', 'workflow-after.yml.txt'),
+    (p / 'node22/download-receipt.json', 'node22-download-receipt.json'),
+    (raw / 'stdout.txt', 'exact-ci-node22/stdout.txt'),
+    (raw / 'stderr.txt', 'exact-ci-node22/stderr.txt'),
+    *[(p / (name + '.py'), 'construction/' + name + '.py.txt') for name in ['download_node22', 'prepare', 'run_selection', 'package']],
+]:
+    target_path = a / target
+    target_path.parent.mkdir(parents=True, exist_ok=True)
+    target_path.write_bytes(source.read_bytes())
+public_receipt = dict(receipt)
+public_receipt['argv'] = ['<private-workspace>/work/primary-stdio-ci-v2/node22/node.exe', *receipt['argv'][1:]]
+public_receipt['public_derivation'] = 'Only author workspace executable pathname replaced; all command arguments, UTC, exit and stream hashes retained. Original receipt remains private.'
+(a / 'exact-ci-node22/receipt.json').write_text(json.dumps(public_receipt, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+provenance = {
+    'created_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'v1_head': v1,
+    'old_package_paths_unchanged': len(old_paths),
+    'old_package_manifest_sha256': sha((repo / old_leaf / 'SHA256SUMS').read_bytes()),
+    'original_private_receipt_sha256': sha(private_receipt),
+    'derived_public_receipt_sha256': sha((a / 'exact-ci-node22/receipt.json').read_bytes()),
+    'stdout_stderr': 'Original full bytes, unchanged',
+    'source_pins_verified': len(freeze['source_pins']),
+    'test_files': 14,
+    'tests': 190,
+    'pass': 190,
+    'fail': 0,
+    'new_regressions_observed_exactly_once': test_names,
+    'child_runtime': 'Selected fixture child commands use process.execPath. relay_client forwards that configured command to spawn; no PATH-based replacement for those children.',
+    'source_closure': 'Whole host_v1 subtree, selected live_control modules and host_timing helper pinned in FREEZE. No production/source/test change after the retained selection.',
+    'inertness': 'Separate research/integration leaf; construction and workflow copies end .txt; metadata/logs are data. Existing native-mcp sparse checkout excludes this leaf. No runner/import/discovery entry added.',
+    'formal_or_original_probe_reexecuted': False,
+    'main_written': False,
+    'limits': 'Ordinary Windows/Node22 engineering selection. No hosted Ubuntu, Python/native step, OS input/release/effect, model, GPU, container, WSLc, throughput/latency or permanent-stall guarantee.',
+}
+(a / 'PROVENANCE.json').write_text(json.dumps(provenance, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+readme = '''# Primary stdio busy-bound CI selection follow-up
+
+Parent #57 / existing PR #6902 / author worker 01a0ff59-2f23-7ff0-ba99-cc5cb8d494fc / FINAL-v5.
+
+The Native MCP Node command explicitly selected 13 modules and omitted the three new busy-output regressions. Append only `runtime/host_v1/test_primary_stdio_backpressure.mjs`, yielding the 14-file command retained in `FREEZE.json`. Every other workflow byte is unchanged: paths/triggers, sparse checkout, permissions, Ubuntu runner, timeout, Python/Node versions, Python integration step and artifact handling.
+
+The exact proposed file list ran once as an ordinary engineering check on Windows with privately extracted official Node v22.23.3. The archive SHA256 matched its official SHASUMS256 entry before extraction. All 190 tests passed (exit 0), including each of the three named new regressions once. Selected inert relay children use the same `process.execPath`. The 26 prospective source pins match before and after. The full original stdout/stderr and UTC/exit receipt are retained; only the executable's private workspace pathname is replaced in the public receipt, with original/derived hashes in PROVENANCE. The Node archive/binary and upstream license stay private and are not redistributed.
+
+This is the workflow's exact proposed Node *selection* on Windows, not an execution of the GitHub-hosted Ubuntu/Python job. The earlier v1 190-test check used two selected live_control modules plus the host `test_*.mjs` wildcard. It was broader local discovery, not the old explicit hosted command. That historical receipt/proposal remains unchanged; this paragraph corrects its description.
+
+All 125 files in `../primary_stdio_busy_bound_57_20261003_01a0ff59/` and the three original runtime/document/test blobs are preserved at v1 head f497a9fabcb1393d6858da057475a8e2c4abd2e3. Its RED failures, original audit false acceptance, first setup/publication failures and raw evidence stay retained. No original CLI/child-pipe comparison or consumed formal allocation was replayed. This separate additive leaf has its own manifest; the original manifest is not rewritten.
+
+The production guard still bounds at most one outstanding busy reply, waits for the same committed command and uses its original cleanup. A synchronous burst may deliberately produce owner exit 2 even with responsive output; missing overload reply requires original request/result reconciliation. This does not bound all byte sizes, guarantee a permanent-stall deadline, establish downstream consumption, physical input release/task effect or performance gain. The separate #6919 input-reader repair and public-relay integration owner keep their existing scopes; this follow-up adds neither of them.
+
+This archive is inert. Copied workflows and construction scripts end `.txt`, this leaf is outside native-mcp sparse test paths, and no import/test-discovery/workflow reference executes it. `SHA256SUMS` covers every other file. Dynamic proposal digest, votes and exact-current-base/head/tree application records belong to PR comments, outside this source tree. New head/source/CI scope requires its own fixed committee epoch and two explicit nonauthor content approvals, followed by nonauthor current-tuple integration and actual send-time conditions. No main update is included.
+'''
+(a / 'README.md').write_text(readme, encoding='utf-8', newline='\n')
+files = sorted(x for x in a.rglob('*') if x.is_file())
+(a / 'SHA256SUMS').write_text(''.join(sha(x.read_bytes()) + '  ' + x.relative_to(a).as_posix() + '\n' for x in files), encoding='utf-8', newline='\n')
+assert len(list(a.rglob('*.mjs'))) == 0 and len(list(a.rglob('*.py'))) == 0 and len(list(a.rglob('*.yml'))) == 0
+print(json.dumps({'leaf': leaf, 'files': len(files) + 1, 'manifest_entries': len(files), 'manifest_sha256': sha((a / 'SHA256SUMS').read_bytes()), 'tests': 190, 'new_regressions': test_names, 'old_files_unchanged': 125}))

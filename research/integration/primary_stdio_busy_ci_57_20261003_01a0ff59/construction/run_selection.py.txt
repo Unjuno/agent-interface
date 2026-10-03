@@ -1,0 +1,29 @@
+import datetime,hashlib,json,subprocess,sys
+from pathlib import Path
+
+p=Path(__file__).resolve().parent;repo=p.parent/'primary-stdio-bound/repo'
+freeze=json.loads((p/'FREEZE.json').read_text(encoding='utf-8'))
+folder=p/'exact-ci-node22';folder.mkdir(exist_ok=False)
+for row in freeze['source_pins']:
+    assert hashlib.sha256((repo/row['path']).read_bytes()).hexdigest()==row['sha256'],row['path']
+node=p/'node22/node.exe'
+assert hashlib.sha256(node.read_bytes()).hexdigest()==freeze['node22_runtime']['node_exe_sha256']
+argv=[str(node),*freeze['new_command'].split()[1:]]
+start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+try:
+    run=subprocess.run(argv,cwd=repo,capture_output=True,timeout=90)
+    stdout,stderr,code=run.stdout,run.stderr,run.returncode
+except subprocess.TimeoutExpired as error:
+    stdout,stderr,code=error.stdout or b'',error.stderr or b'',124
+end=datetime.datetime.now(datetime.timezone.utc).isoformat()
+(folder/'stdout.txt').write_bytes(stdout);(folder/'stderr.txt').write_bytes(stderr)
+receipt={'argv':argv,'cwd':'private old-head source plus one workflow-file edit','started_utc':start,'ended_utc':end,'exit_code':code,
+    'stdout_sha256':hashlib.sha256(stdout).hexdigest(),'stderr_sha256':hashlib.sha256(stderr).hexdigest(),
+    'node22_runtime':freeze['node22_runtime']['version'],'test_files':freeze['new_command'].split()[2:],
+    'source_pins_unchanged_after':all(hashlib.sha256((repo/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in freeze['source_pins']),
+    'formal_or_original_probe':False,'limits':'Windows ordinary unit/fixture selection, not hosted Ubuntu or Python/native backend integration step.'}
+(folder/'receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+assert receipt['source_pins_unchanged_after']
+print(json.dumps({'exit_code':code,'stdout_tail':stdout.decode(errors='replace')[-1050:],
+    'stderr_tail':stderr.decode(errors='replace')[-250:],'node22':receipt['node22_runtime']}))
+sys.exit(code)
