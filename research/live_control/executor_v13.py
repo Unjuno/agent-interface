@@ -101,6 +101,21 @@ class Executor(Previous):
         status = "completed"; error = None; completed = 0; decision_reason = None
         release_batch_publication = None
         process_exception = None; process_traceback = None
+
+        def attach_release_batch_custody(release, cleanup_exception):
+            cleanup_publication = getattr(
+                cleanup_exception, "release_batch_publication", None
+            )
+            if release_batch_publication is not None:
+                release["release_batch_delivery"] = dict(release_batch_publication)
+                if (isinstance(cleanup_publication, dict) and
+                        cleanup_publication != release_batch_publication):
+                    release["release_batch_cleanup_delivery"] = dict(
+                        cleanup_publication
+                    )
+            elif isinstance(cleanup_publication, dict):
+                release["release_batch_delivery"] = dict(cleanup_publication)
+
         try:
             for index, step in enumerate(steps):
                 if lease.is_set(): raise Cancelled()
@@ -142,22 +157,15 @@ class Executor(Previous):
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
                 status = "failed"
-                publication = getattr(exc, "release_batch_publication", None)
-                if isinstance(publication, dict):
-                    release["release_batch_delivery"] = dict(publication)
+                if error is None:
+                    error = repr(exc)
+                attach_release_batch_custody(release, exc)
             except BaseException as exc:
                 release = {"verified": False, "error": repr(exc)}
                 status = "failed"
                 if error is None:
                     error = repr(exc)
-                publication = getattr(exc, "release_batch_publication", None)
-                if release_batch_publication is not None:
-                    release["release_batch_delivery"] = dict(release_batch_publication)
-                    if (isinstance(publication, dict) and
-                            publication != release_batch_publication):
-                        release["release_batch_cleanup_delivery"] = dict(publication)
-                elif isinstance(publication, dict):
-                    release["release_batch_delivery"] = dict(publication)
+                attach_release_batch_custody(release, exc)
                 if process_exception is None:
                     process_exception = exc
                     process_traceback = exc.__traceback__
