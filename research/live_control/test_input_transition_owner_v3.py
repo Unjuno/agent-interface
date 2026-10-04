@@ -51,6 +51,22 @@ class PriorLeaseCleanupInner(FakeInner):
         return None
 
 
+class ReleaseInner(FakeInner):
+    def call(self, operation, lease=None, key=None):
+        self.calls.append((operation, key))
+        if operation == 'down':
+            return {'event': 'input_admission', 'key': key}
+        if operation == 'release':
+            record = {'event': 'owner_release', 'reason': 'release',
+                      'verified': True, 'keys_down': [], 'buttons_down': [],
+                      'valid_until_ns': lease.deadline}
+            self.records.append(record)
+            return record
+        if operation == 'up':
+            return None
+        return None
+
+
 base = types.ModuleType('input_owner_v10')
 base.InputOwner = FakeInner
 sys.modules['input_owner_v10'] = base
@@ -70,6 +86,34 @@ class Lease:
 
 
 class Tests(unittest.TestCase):
+    def test_successful_release_prunes_admission_markers_for_lease(self):
+        owner = mod.InputOwner(':fake', _owner_cls=ReleaseInner)
+        lease = Lease(deadline=1000)
+        owner.call('down', lease, 'a')
+        owner.call('down', lease, 'b')
+        self.assertEqual(len(owner._admission_records), 2)
+
+        receipt = owner.call('release', lease)
+
+        self.assertTrue(receipt['verified'])
+        self.assertEqual(owner._admission_records, {})
+
+    def test_observed_expiry_cleanup_prunes_old_markers_before_next_admission(self):
+        owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
+        old_lease = Lease(deadline=1000)
+        owner._inner.result = {'event': 'input_admission', 'key': 'a'}
+        owner.call('down', old_lease, 'a')
+        owner._inner.records.append({
+            'event': 'owner_release', 'reason': 'expired', 'verified': True,
+            'keys_down': [], 'buttons_down': [], 'valid_until_ns': old_lease.deadline,
+        })
+
+        new_lease = Lease(deadline=2000)
+        owner.call('down', new_lease, 'b')
+
+        self.assertEqual(len(owner._admission_records), 1)
+        self.assertIn((id(new_lease), 'b'), owner._admission_records)
+
     def test_ordinary_up_has_only_inner_up_and_valid_receipt(self):
         owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
         lease = Lease(deadline=1000)

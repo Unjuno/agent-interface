@@ -74,6 +74,31 @@ class InputOwner:
             return None
         return list(records) if isinstance(records, (list, tuple)) else None
 
+    def _prune_completed_admissions(self, records):
+        """Forget markers once owner history proves their hold was released."""
+        if records is None:
+            return
+        completed = []
+        for index, record in enumerate(records):
+            if (isinstance(record, dict)
+                    and record.get("event") == "owner_release"
+                    and record.get("verified") is True
+                    and record.get("keys_down") == []
+                    and record.get("buttons_down") == []
+                    and type(record.get("valid_until_ns")) is int):
+                completed.append((index, record["valid_until_ns"]))
+        if not completed:
+            return
+        with self._admission_records_lock:
+            self._admission_records = {
+                admission_key: marker
+                for admission_key, marker in self._admission_records.items()
+                if not any(
+                    marker[0] <= index and marker[1] == deadline
+                    for index, deadline in completed
+                )
+            }
+
     def _admission_key(self, lease, key):
         try:
             hash(key)
@@ -85,12 +110,15 @@ class InputOwner:
         if operation not in ("up", "button_up"):
             records_before = (
                 self._records_snapshot()
-                if operation in ("down", "button_down") else None
+                if operation in ("down", "button_down", "release") else None
             )
+            self._prune_completed_admissions(records_before)
             started_ns = time.perf_counter_ns() if operation in ("release", "close") else None
             result = self._inner.call(operation, lease, key)
             returned_ns = time.perf_counter_ns() if started_ns is not None else None
             result = self._decorate(result, lease)
+            if operation == "release":
+                self._prune_completed_admissions(self._records_snapshot())
             admitted = (
                 operation == "down" and isinstance(result, dict)
                 and result.get("event") == "input_admission"
