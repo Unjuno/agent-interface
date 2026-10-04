@@ -1,10 +1,13 @@
 {
+  "archived_ocr_hashes_pinned": true,
   "archived_ocr_inputs_byte_identical_to_frozen_previews": false,
   "archived_ocr_inputs_pixel_identical_to_frozen_previews": true,
+  "audit_script_sha256": "d9b17381ece93a5f32563703d49090dce4dce134e2240e3dc621f225aea13d87",
   "candidate_preview_reconstructions": 3,
   "candidate_preview_reconstructions_match": true,
   "crop_manifest_sha256": "d92a334c9bd99b0ca603ba1cd3edfc07ec70b0e81b62c6623c6ab1116d759b4a",
-  "finished_utc": "2026-10-04T15:46:40.350920+00:00",
+  "expected_crop_entries": 6,
+  "finished_utc": "2026-10-04T16:03:11.479926+00:00",
   "frozen_preview_reconstructions": 3,
   "frozen_preview_reconstructions_match": true,
   "invocation": [
@@ -15,7 +18,6 @@
   "pinned_a05_source_revision": "58bcbb4c45501880db8782158ddd3add3b765984",
   "python": "3.12.14",
   "python_executable": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
-  "repository_head": "af6d0f9842a2377fba736d2d65643b02690f99d9",
   "rows": [
     {
       "archived_ocr_input_matches_preview_bytes": false,
@@ -170,6 +172,7 @@
   ],
   "schema": "a05_raw_crop_pixel_identity_audit_v1",
   "scope": "read-only crop reconstruction and pixel comparison; no OCR, GUI, provider, runtime, or formal allocation",
-  "started_utc": "2026-10-04T15:46:40.295176+00:00",
+  "source_commit_before_audit": "032d0a727bad596e87d09e8834514245bc41e8cb",
+  "started_utc": "2026-10-04T16:03:11.423965+00:00",
   "tesseract_invoked": false
 }
