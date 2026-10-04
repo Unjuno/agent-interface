@@ -1,0 +1,60 @@
+{
+  "experiment_id": "V39_ADAPTER_EDGE_CARDINALITY_A01",
+  "preregistered_at_utc": "2026-10-04T15:36:45Z",
+  "parent_issue": "https://github.com/Unjuno/agent-interface/issues/59",
+  "source_pr": "https://github.com/Unjuno/agent-interface/pull/7602",
+  "hypothesis": "input_edge_receipts must never pair or expose timing when an adapter DOWN or UP row is duplicated within the same identity group; exact-one cardinality is necessary so replayed or contradictory duplicate trace rows cannot be silently attributed to a single physical edge.",
+  "treatment": "Replay retained A01 unique DOWN/UP rows and five controlled duplicate variants: duplicate identical DOWN; duplicate identical UP; duplicate both; conflicting duplicate DOWN; conflicting duplicate UP. Run exact frozen input_edge_receipts extracted from controller source, then run a first-row-wins cardinality mutation control.",
+  "decision_rule": "PASS only if unique baseline yields exactly one adapter_edge_brackets_paired receipt with both intervals; each duplicate treatment yields exactly one adapter_edge_receipt_incomplete receipt with both intervals null; no case claims authority or application consumption and no raw intent token is emitted; weakened exact-one guard pairs duplicate cases, proving sensitivity. Any mismatch is FAIL; harness/runtime failure is STOP. No retries.",
+  "controls": "Same retained A01 raw rows; identical and contradictory duplicates; weakened cardinality guard negative control.",
+  "uncertainty": "One retained synthetic A01 fixture only; does not establish physical release, live X-server state, application consumption, game effect, threat response, recovery, or MAP01 completion.",
+  "source": {
+    "parent_head": "64c48e95425972bc04e61a41d219686c789cb6b6",
+    "controller_git_blob": "2c42c71985e3a8e16bba11cba3f99181798893d8",
+    "controller_sha256": "888c3a8f5ea682e0e63d4f63c71a737877829c5a893b427de118d1be958fba8a"
+  },
+  "input": {
+    "path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl",
+    "git_blob": "eacb735634d6c6761ba7fa39448e6d7d43e342d5",
+    "sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+  },
+  "candidate": {
+    "path": "src/candidate.py",
+    "sha256": "da1c6de36310b2e99c2b0c0e21f24365572f85ed38d2e27d4492366bccbd3f93"
+  },
+  "independent_auditor": {
+    "path": "src/audit.py",
+    "sha256": "1973d56c80924c38189c468d866fef907408397e2d64ee8fa90d17e22723d8de"
+  },
+  "image": {
+    "reference": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "platform": "linux/amd64",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "pull": "never"
+  },
+  "container_policy": {
+    "candidate_count_max": 1,
+    "auditor_count_max": 1,
+    "retry_count": 0,
+    "network": "none",
+    "cpus": "1",
+    "memory": "512M",
+    "source_mount": "read-only",
+    "candidate_output_mount": "writable distinct path",
+    "auditor_candidate_mount": "read-only",
+    "auditor_output_mount": "writable distinct path",
+    "cleanup": "--rm; verify no running study container after each phase"
+  },
+  "host_observation": {
+    "wslc": "3.0.1.0",
+    "active_session": "wslc-cli-junny",
+    "running_container_inventory": "empty immediately before freeze",
+    "windows_free_memory_kib": 9255604,
+    "cgroup_enforcement": "not assumed; candidate will record cpu.max, memory.max and memory.swap.max"
+  },
+  "commands": [
+    "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --name v39-cardinality-candidate-a01-20261005 --volume <experiment>/src:/src:ro --volume <experiment>/raw:/out:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/candidate.py",
+    "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --name v39-cardinality-auditor-a01-20261005 --volume <experiment>/src:/src:ro --volume <experiment>/raw:/candidate:ro --volume <experiment>/audit:/audit:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/audit.py"
+  ],
+  "main_head_at_freeze": "b47d4d0b053f6e7d88c37e24be81777aa28feb6a"
+}

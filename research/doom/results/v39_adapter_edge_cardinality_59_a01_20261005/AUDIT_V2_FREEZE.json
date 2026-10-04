@@ -1,0 +1,33 @@
+{
+  "audit_id": "V39_ADAPTER_EDGE_CARDINALITY_A01_AUDIT_V2",
+  "preregistered_at_utc": "2026-10-04T15:40:48Z",
+  "hypothesis": "A raw-only auditor that reconstructs each duplicate treatment directly from the retained A01 fixture will independently verify the candidate's cardinalities and detect a coherent saved-result corruption that falsely pairs duplicated rows.",
+  "treatment": "Read the immutable A01 candidate result and frozen input/source; reconstruct six case inputs; derive expected counts/status from the number of DOWN and UP records; verify baseline endpoints against raw; then challenge the verifier in-memory with one coherent duplicate-paired corruption.",
+  "decision_rule": "PASS only if original candidate JSON passes all raw-derived checks and the in-memory tampered duplicate result is rejected. No candidate or controller invocation is repeated.",
+  "scope": "Audit-only validation of V39_ADAPTER_EDGE_CARDINALITY_A01; no new treatment, source, live system, model, GUI, or input.",
+  "inputs": {
+    "candidate_sha256": "3e536fecee07a257f7d26fcc87a235d6212ba23f479f519f15cfb913c4238e60",
+    "source_sha256": "888c3a8f5ea682e0e63d4f63c71a737877829c5a893b427de118d1be958fba8a",
+    "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+  },
+  "auditor": {
+    "path": "audit-v2-src/audit.py",
+    "sha256": "1c624e07d15cfdabfa239c21304d45f6dea8f5ccf778af87df6e835400e7c9c6"
+  },
+  "image": {
+    "reference": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "platform": "linux/amd64",
+    "pull": "never"
+  },
+  "container": {
+    "count": 1,
+    "network": "none",
+    "cpus": "1",
+    "memory": "512M",
+    "source": "read-only",
+    "candidate-evidence": "read-only",
+    "audit-output": "writable distinct path",
+    "cleanup": "--rm"
+  },
+  "command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --name v39-cardinality-auditor-v2-a01-20261005 --volume <experiment>/src:/source:ro --volume <experiment>/raw:/evidence:ro --volume <experiment>/audit-v2-src:/src:ro --volume <experiment>/audit-v2:/audit-v2:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/audit.py"
+}

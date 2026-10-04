@@ -1,0 +1,394 @@
+{
+  "experiment": "V39_ADAPTER_EDGE_CARDINALITY_A01",
+  "source_commit": "64c48e95425972bc04e61a41d219686c789cb6b6",
+  "source_sha256": "888c3a8f5ea682e0e63d4f63c71a737877829c5a893b427de118d1be958fba8a",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "cases": {
+    "baseline_unique_pair": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 1
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_brackets_paired",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": 87811364887583,
+          "down_press_request_ns": 87811364891916,
+          "down_sync_return_ns": 87811364893458,
+          "down_edge_interval_ns": [
+            87811364890958,
+            87811364895916
+          ],
+          "up_release_request_ns": 87811364946750,
+          "up_sync_return_ns": 87811364948750,
+          "up_edge_interval_ns": [
+            87811364946333,
+            87811364949416
+          ],
+          "grants_input_authority": false,
+          "application_consumption_observed": false,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_down_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_receipt_incomplete",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": null,
+          "actuation_id_sha256": null,
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": null,
+          "down_press_request_ns": null,
+          "down_sync_return_ns": null,
+          "down_edge_interval_ns": null,
+          "up_release_request_ns": null,
+          "up_sync_return_ns": null,
+          "up_edge_interval_ns": null,
+          "grants_input_authority": null,
+          "application_consumption_observed": null,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_up_identical": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_receipt_incomplete",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": null,
+          "down_press_request_ns": null,
+          "down_sync_return_ns": null,
+          "down_edge_interval_ns": null,
+          "up_release_request_ns": null,
+          "up_sync_return_ns": null,
+          "up_edge_interval_ns": null,
+          "grants_input_authority": null,
+          "application_consumption_observed": null,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_both_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 2
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_receipt_incomplete",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": null,
+          "actuation_id_sha256": null,
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": null,
+          "down_press_request_ns": null,
+          "down_sync_return_ns": null,
+          "down_edge_interval_ns": null,
+          "up_release_request_ns": null,
+          "up_sync_return_ns": null,
+          "up_edge_interval_ns": null,
+          "grants_input_authority": null,
+          "application_consumption_observed": null,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_down_conflicting": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_receipt_incomplete",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": null,
+          "actuation_id_sha256": null,
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": null,
+          "down_press_request_ns": null,
+          "down_sync_return_ns": null,
+          "down_edge_interval_ns": null,
+          "up_release_request_ns": null,
+          "up_sync_return_ns": null,
+          "up_edge_interval_ns": null,
+          "grants_input_authority": null,
+          "application_consumption_observed": null,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_up_conflicting": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_receipt_incomplete",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": null,
+          "down_press_request_ns": null,
+          "down_sync_return_ns": null,
+          "down_edge_interval_ns": null,
+          "up_release_request_ns": null,
+          "up_sync_return_ns": null,
+          "up_edge_interval_ns": null,
+          "grants_input_authority": null,
+          "application_consumption_observed": null,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    }
+  },
+  "weakened_cardinality_mutation_control": {
+    "baseline_unique_pair": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 1
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_brackets_paired",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": 87811364887583,
+          "down_press_request_ns": 87811364891916,
+          "down_sync_return_ns": 87811364893458,
+          "down_edge_interval_ns": [
+            87811364890958,
+            87811364895916
+          ],
+          "up_release_request_ns": 87811364946750,
+          "up_sync_return_ns": 87811364948750,
+          "up_edge_interval_ns": [
+            87811364946333,
+            87811364949416
+          ],
+          "grants_input_authority": false,
+          "application_consumption_observed": false,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_down_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_brackets_paired",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": 87811364887583,
+          "down_press_request_ns": 87811364891916,
+          "down_sync_return_ns": 87811364893458,
+          "down_edge_interval_ns": [
+            87811364890958,
+            87811364895916
+          ],
+          "up_release_request_ns": 87811364946750,
+          "up_sync_return_ns": 87811364948750,
+          "up_edge_interval_ns": [
+            87811364946333,
+            87811364949416
+          ],
+          "grants_input_authority": false,
+          "application_consumption_observed": false,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_up_identical": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_brackets_paired",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": 87811364887583,
+          "down_press_request_ns": 87811364891916,
+          "down_sync_return_ns": 87811364893458,
+          "down_edge_interval_ns": [
+            87811364890958,
+            87811364895916
+          ],
+          "up_release_request_ns": 87811364946750,
+          "up_sync_return_ns": 87811364948750,
+          "up_edge_interval_ns": [
+            87811364946333,
+            87811364949416
+          ],
+          "grants_input_authority": false,
+          "application_consumption_observed": false,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_both_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 2
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_brackets_paired",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": 87811364887583,
+          "down_press_request_ns": 87811364891916,
+          "down_sync_return_ns": 87811364893458,
+          "down_edge_interval_ns": [
+            87811364890958,
+            87811364895916
+          ],
+          "up_release_request_ns": 87811364946750,
+          "up_sync_return_ns": 87811364948750,
+          "up_edge_interval_ns": [
+            87811364946333,
+            87811364949416
+          ],
+          "grants_input_authority": false,
+          "application_consumption_observed": false,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_down_conflicting": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_brackets_paired",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": 87811364887583,
+          "down_press_request_ns": 87811364891916,
+          "down_sync_return_ns": 87811364893458,
+          "down_edge_interval_ns": [
+            87811364890958,
+            87811364895916
+          ],
+          "up_release_request_ns": 87811364946750,
+          "up_sync_return_ns": 87811364948750,
+          "up_edge_interval_ns": [
+            87811364946333,
+            87811364949416
+          ],
+          "grants_input_authority": false,
+          "application_consumption_observed": false,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    },
+    "duplicate_up_conflicting": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipts": [
+        {
+          "status": "adapter_edge_brackets_paired",
+          "program_id_sha256": "d9f68f622561eea21c4f6b279956b6a0d4a4dd86147e8dbd51dcc8bd0c4f0d1e",
+          "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+          "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d",
+          "actuation_id_sha256": "76dde2825e713313ea63fcb2b289ded66f91e0632a8eb1b53b0bcbba8628f392",
+          "step": 2,
+          "key": "F8",
+          "input_admitted_ns": 87811364887583,
+          "down_press_request_ns": 87811364891916,
+          "down_sync_return_ns": 87811364893458,
+          "down_edge_interval_ns": [
+            87811364890958,
+            87811364895916
+          ],
+          "up_release_request_ns": 87811364946750,
+          "up_sync_return_ns": 87811364948750,
+          "up_edge_interval_ns": [
+            87811364946333,
+            87811364949416
+          ],
+          "grants_input_authority": false,
+          "application_consumption_observed": false,
+          "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+        }
+      ],
+      "receipt_count": 1
+    }
+  },
+  "resource_snapshot": {
+    "cpu_max": "100000 100000",
+    "memory_max": "536870912",
+    "memory_swap_max": "max",
+    "proc_swaps": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/dev/sdd                                partition\t16644092\t0\t\t-2"
+  }
+}
