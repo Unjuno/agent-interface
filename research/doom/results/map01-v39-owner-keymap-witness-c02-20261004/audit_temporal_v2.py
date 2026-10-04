@@ -14,7 +14,8 @@ def evaluate_temporal_binding(raw, cases):
     rows = []
     occurrences = raw.get("occurrences") if isinstance(raw.get("occurrences"), list) else []
     events = raw.get("events") if isinstance(raw.get("events"), list) else []
-    overall = len(occurrences) == cases.get("occurrences") == 2
+    overall = (len(occurrences) == cases.get("occurrences") == 2
+               and all(isinstance(event, dict) for event in events))
     for occurrence in occurrences:
         if not isinstance(occurrence, dict):
             rows.append({"ordered_within_down_interval": False,
@@ -62,12 +63,20 @@ def evaluate_temporal_binding(raw, cases):
 
 
 def build_report(raw, cases, freeze, started, environment):
-    parent_checks = parent_audit.evaluate(raw, cases, freeze, started, environment)
+    parent_error = None
+    try:
+        parent_checks = parent_audit.evaluate(raw, cases, freeze, started, environment)
+    except Exception as exc:
+        # Malformed retained evidence must produce a failing report, not abort
+        # before replacing a stale PASS report.
+        parent_checks = {}
+        parent_error = f"{type(exc).__name__}: {exc}"
     temporal = evaluate_temporal_binding(raw, cases)
     checks = {f"parent_{name}": passed for name, passed in parent_checks.items()}
+    checks["parent_evaluator_completed"] = parent_error is None
     checks["admission_timestamps_within_key_down_witness"] = temporal[
         "all_occurrences_temporally_bound"]
-    return {
+    report = {
         "schema": "map01-v39-owner-keymap-witness-audit-v2",
         "gate": PASS if all(checks.values()) else "FAIL_OR_HOLD_V39_KEYMAP_TEMPORAL_BINDING",
         "checks": checks,
@@ -81,6 +90,9 @@ def build_report(raw, cases, freeze, started, environment):
         },
         "admission_intervals": temporal["occurrences"],
     }
+    if parent_error is not None:
+        report["parent_evaluator_error"] = parent_error
+    return report
 
 
 def main():

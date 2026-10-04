@@ -22,9 +22,11 @@ admission before or after the down witness, acknowledgment after the post-down
 sample, a keymap sample at/after lease expiry, missing timestamps, duplicate
 admissions, cross-occurrence timestamps, empty evidence, and malformed rows. One regression
 also confirms the parent auditor accepts the fixture with missing timestamps
-while the supplemental temporal audit rejects it.
+while the supplemental temporal audit rejects it. A full-report regression
+confirms malformed events that crash the predecessor evaluator produce a
+failing report rather than aborting.
 
-Validation: 12 temporal mutation tests pass; the supplemental auditor passes
+Validation: 13 temporal mutation tests pass; the supplemental auditor passes
 all original checks plus the new temporal-binding check; byte-compilation and
 `git diff --check` pass. No candidate, X server, game, model, or allocation was
 run. This remains virtual-X11 construction evidence and does not establish

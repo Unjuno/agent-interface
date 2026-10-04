@@ -1,10 +1,12 @@
 """Mutation tests for C02 admission/keymap temporal binding."""
 import copy
+import json
 import tempfile
 import unittest
 from pathlib import Path
 
 import audit_temporal_v2 as audit_v2
+from audit_temporal_v2 import build_report
 from test_audit import make_fixture
 
 
@@ -93,6 +95,9 @@ class TemporalBindingTests(unittest.TestCase):
     def test_malformed_occurrence_or_event_fails_closed(self):
         _, raw, cases, _, _, _ = self._fixture()
         raw["events"].append(None)
+        result = audit_v2.evaluate_temporal_binding(raw, cases)
+        self.assertFalse(result["all_occurrences_temporally_bound"])
+        _, raw, cases, _, _, _ = self._fixture()
         raw["occurrences"][0] = None
         result = audit_v2.evaluate_temporal_binding(raw, cases)
         self.assertFalse(result["all_occurrences_temporally_bound"])
@@ -101,6 +106,24 @@ class TemporalBindingTests(unittest.TestCase):
         result = audit_v2.evaluate_temporal_binding(
             {"occurrences": [], "events": []}, {"occurrences": 2, "key": "w"})
         self.assertFalse(result["all_occurrences_temporally_bound"])
+
+    def test_full_report_fails_closed_on_malformed_parent_event(self):
+        temp, raw, cases, freeze, started, environment = self._fixture()
+        root = Path(temp.name)
+        previous_roots = (audit_v2.ROOT, audit_v2.parent_audit.ROOT)
+        audit_v2.ROOT = root
+        audit_v2.parent_audit.ROOT = root
+        self.addCleanup(setattr, audit_v2, "ROOT", previous_roots[0])
+        self.addCleanup(setattr, audit_v2.parent_audit, "ROOT", previous_roots[1])
+        raw["events"].append(None)
+        for name, value in (("FREEZE.json", freeze), ("ENVIRONMENT.json", environment),
+                            ("candidate.raw.json", raw), ("cases.json", cases)):
+            (root / name).write_text(json.dumps(value), encoding="utf-8")
+        report = build_report(raw, cases, freeze, started, environment)
+        self.assertFalse(report["checks"]["parent_evaluator_completed"])
+        self.assertFalse(report["checks"]["admission_timestamps_within_key_down_witness"])
+        self.assertEqual(report["gate"], "FAIL_OR_HOLD_V39_KEYMAP_TEMPORAL_BINDING")
+        self.assertIn("AttributeError", report["parent_evaluator_error"])
 
 
 if __name__ == "__main__":
