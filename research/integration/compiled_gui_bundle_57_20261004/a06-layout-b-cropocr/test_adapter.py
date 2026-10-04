@@ -195,7 +195,8 @@ class FakeClient:
 
 
 class ComposedLayoutBTests(unittest.TestCase):
-    def _run(self, ocr_outputs, *, initially_cancelled=False, cancel_on_check=False):
+    def _run(self, ocr_outputs, *, initially_cancelled=False, cancel_on_check=False,
+             cancel_callback=None):
         with tempfile.TemporaryDirectory() as directory:
             client = FakeClient(
                 [
@@ -217,7 +218,7 @@ class ComposedLayoutBTests(unittest.TestCase):
             task = {"task_id": "task-4", "token": "t991028-4", "layout": "B"}
             adapter = CompiledExecution(
                 client, task, {"field": "task-4-field", "submit": "task-4-submit"},
-                cancelled=lambda: client.cancelled,
+                cancelled=cancel_callback or (lambda: client.cancelled),
                 ocr_runner=runner,
             )
             return adapter.run(), client
@@ -253,6 +254,29 @@ class ComposedLayoutBTests(unittest.TestCase):
         self.assertEqual(result["receipt"]["reason"], "cancelled")
         self.assertEqual(client.sequence, 1)
         self.assertEqual(client.commands, [])
+
+    def test_cancellation_callback_failure_returns_prefix_receipt(self):
+        checks = 0
+
+        def cancel_callback():
+            nonlocal checks
+            checks += 1
+            if checks == 4:
+                raise RuntimeError("synthetic cancellation source unavailable")
+            return False
+
+        result, client = self._run(["", "t991028-4\n"], cancel_callback=cancel_callback)
+        receipt = result["receipt"]
+        self.assertEqual(receipt["outcome"], "RUNTIME_FAILED")
+        self.assertEqual(receipt["reason"], "execution_failed")
+        self.assertEqual(receipt["completed_transitions"], 1)
+        self.assertEqual(receipt["pending_effect"]["action"], "enter")
+        self.assertEqual(len(client.commands), 1)
+        self.assertEqual(client.commands[0]["command"]["steps"][0]["target_handle"],
+                         "task-4-field")
+        self.assertTrue(client.commands[0])
+        self.assertTrue(any(event["event"] == "cancellation_check_failed"
+                            for event in receipt["critical_events"]))
 
 
 if __name__ == "__main__":

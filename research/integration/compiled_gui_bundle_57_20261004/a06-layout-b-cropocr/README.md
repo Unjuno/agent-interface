@@ -2,7 +2,7 @@
 
 This versioned adapter preserves the historical layout-A crop and adds a separately pinned layout-B crop for the integrated-form task path. Layout B crops `(495, 541, 803, 577)`, converts to grayscale, and resizes to `1848 x 216` with Lanczos. Both paths use Tesseract PSM 7 and the frozen alphanumeric/hyphen whitelist. OCR errors become `unknown`; the compiled graph submits only when OCR output exactly equals the task token.
 
-`CompiledExecution` requires a caller-supplied cancellation callback and forwards its strict boolean result to the compiled core. The core can then yield before another observation or before admission/execution. Missing or malformed cancellation state is rejected rather than treated as `False`. The added synthetic tests cover cancellation before observation and after observation but before action dispatch; they do not establish cancellation behavior for a live client or GUI.
+`CompiledExecution` requires a caller-supplied cancellation callback and forwards its strict boolean result to the compiled core. The core can then yield before another observation or before admission/execution. Missing or malformed cancellation state is rejected rather than treated as `False`. If the callback raises or returns a non-boolean value during execution, the core returns a `RUNTIME_FAILED / execution_failed` receipt with the completed prefix and pending effect intact, and does not dispatch another action. The synthetic tests cover cancellation before observation, after observation but before action dispatch, and callback failure after a completed action; they do not establish cancellation behavior for a live client or GUI.
 
 ## Evidence and limits
 
