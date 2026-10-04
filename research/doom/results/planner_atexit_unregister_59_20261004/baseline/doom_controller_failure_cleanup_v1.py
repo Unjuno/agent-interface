@@ -117,8 +117,10 @@ class ControllerFailureCleanup:
                     bounded('child_stdin_close',child.stdin.close,.5)
             if attempt('child_poll_after',child.poll):
                 receipt['child_exit_code']=receipt['stages'][-1]['result']
-        bounded('planner_close',lambda:self.planner.close(timeout=1),1)
-        attempt('atexit_unregister',lambda:atexit.unregister(self.planner.close))
+        planner_closed,_,_=bounded(
+            'planner_close',lambda:self.planner.close(timeout=1),1)
+        if planner_closed:
+            attempt('atexit_unregister',lambda:atexit.unregister(self.planner.close))
         receipt['stdout_reader_retired']=False
         if self.reader is not None:
             attempt('stdout_reader_join',lambda:self.reader.join(timeout=5))

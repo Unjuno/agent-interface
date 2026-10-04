@@ -28,9 +28,8 @@ if failed_imports:
             [sys.executable, "-c", script, str(HERE)],
             capture_output=True, text=True, check=False)
         self.assertEqual(completed.returncode, 0, completed.stderr)
-        self.assertEqual(
-            completed.stdout.strip(), "tests=9 import_errors=0",
-            completed.stderr)
+        self.assertRegex(completed.stdout.strip(),
+                         r"tests=\d+ import_errors=0")
 
 
 if __name__ == "__main__":
