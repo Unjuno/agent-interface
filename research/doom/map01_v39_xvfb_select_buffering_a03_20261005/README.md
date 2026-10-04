@@ -24,3 +24,9 @@
 - A01 STOP and invalid A02 PASS-labelled output are documented separately in `evidence/PRIOR_ATTEMPTS.md`; neither is pooled into A03.
 
 This is a diagnostic follow-up, not a rerun or replacement of PR #7771's A03 allocation. That original STOP remains unchanged.
+
+## Audit identity correction (2026-10-05)
+
+The retained `evidence/AUDIT.json` is the original audit-v1 result and remains unchanged. Review found that audit-v1 accepted a mutation that changed both the claimed keycode and matching event detail while recomputing the raw digest. `evidence/AUDIT_EXPECTATIONS_V2.json` and `audit_v2.py` add a corrective, post-run identity contract: the frozen probe asks for keysym `a`, and this retained run reports keycode 38 and target window 2097152. These values were **not** part of the original preregistration freeze; this post-run correction does not upgrade the experiment's independence or scientific scope.
+
+`test_audit_v2.py` recomputes the digest over mutated raw bytes and confirms that changing the event keycode or target window fails the v2 identity check. The v2 report is `evidence/AUDIT_V2.json`. The original raw result, v1 auditor, and v1 report are preserved.
