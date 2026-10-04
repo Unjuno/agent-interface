@@ -42,6 +42,22 @@ class ProxyCloseTests(unittest.TestCase):
         self.assertEqual(samples, [True])
         self.assertEqual(inner.close_calls, 1)
 
+    def test_final_sample_sees_open_proxy_and_reentrant_close_is_suppressed(self):
+        inner = FakeGame()
+        observed = []
+        proxy = None
+
+        def sample():
+            observed.append(proxy.closed)
+            self.assertIsNone(proxy.close())
+
+        proxy = candidate._GameProxy(inner, sample)
+        proxy.initialized = True
+        self.assertEqual(proxy.close(), "closed")
+        self.assertEqual(observed, [False])
+        self.assertTrue(proxy.closed)
+        self.assertEqual(inner.close_calls, 1)
+
     def test_sample_failure_still_closes_game(self):
         sample_error = RuntimeError("final scorer sample failed")
         proxy, inner, _ = self.make_proxy(sample_error=sample_error)
