@@ -40,6 +40,7 @@ class Owner:
     def __init__(self, *, owned_after=None, owner_id='owner-1', sample_started=100,
                  ordinary=True, receipt_token='intent-1'):
         self.calls = []
+        self.records = []
         self.owned_after = [] if owned_after is None else list(owned_after)
         self.owner_id = owner_id
         self.sample_started = sample_started
@@ -86,7 +87,7 @@ def make_backend(held, owner=None, token='intent-1', with_context=True):
     return obj
 
 
-def actual_wrapper_batch_receipt():
+def actual_wrapper_batch_evidence(cleanup_during_up=False, prior_cleanup=False):
     wrapper_path = HERE.parent / 'live_control' / 'input_transition_owner_v3.py'
     underlying = types.ModuleType('input_owner_v10')
     underlying.InputOwner = object
@@ -100,9 +101,20 @@ def actual_wrapper_batch_receipt():
         def __init__(self, display_name):
             self.owner_id = 'composed-owner'
             self.owned = {'a'}
+            self.records = []
 
         def call(self, operation, lease=None, key=None):
             if operation == 'up':
+                if cleanup_during_up:
+                    self.owned.clear()
+                    self.records.append({
+                        'event': 'owner_release',
+                        'reason': 'cancelled',
+                        'verified': True,
+                        'verified_ns': time.perf_counter_ns(),
+                        'keys_down': [],
+                    })
+                    return None
                 self.owned.remove(key)
                 return None
             if operation == 'input_state':
@@ -114,12 +126,22 @@ def actual_wrapper_batch_receipt():
             raise AssertionError(operation)
 
     owner = wrapper.InputOwner('fake-display', _owner_cls=InnerOwner)
+    if prior_cleanup:
+        owner._inner.records.append({
+            'event': 'owner_release', 'reason': 'prior_cancelled',
+            'verified': True, 'verified_ns': time.perf_counter_ns() - 1_000_000,
+            'keys_down': [],
+        })
     obj = make_backend({'a'}, owner)
     obj.lease.deadline = time.perf_counter_ns() + 1_000_000_000
     obj.lease.cancel = threading.Event()
     obj.lease.focus_invalid = False
     obj.raw('a', False)
-    return obj.emitted[0]
+    return {'receipt': obj.emitted[0], 'owner_records': owner.records}
+
+
+def actual_wrapper_batch_receipt(cleanup_during_up=False):
+    return actual_wrapper_batch_evidence(cleanup_during_up)['receipt']
 
 
 class Tests(unittest.TestCase):
@@ -169,6 +191,33 @@ class Tests(unittest.TestCase):
         self.assertTrue(receipt['owner_sample_ordered_after_batch'])
         self.assertTrue(receipt['owner_transition_verified'])
         self.assertFalse(receipt['physical_verification_authoritative'])
+
+    def test_owner_cleanup_inside_up_call_is_not_verified_as_ordinary(self):
+        evidence = actual_wrapper_batch_evidence(cleanup_during_up=True)
+        receipt = evidence['receipt']
+        self.assertTrue(receipt['ordinary_release_candidate_at_request'])
+        self.assertTrue(receipt['owner_cleanup_log_available'])
+        self.assertTrue(receipt['owner_cleanup_overlapped_release_call'])
+        self.assertFalse(receipt['owner_transition_verified'])
+        self.assertFalse(receipt['ordinary_release_candidate'])
+        cleanup = evidence['owner_records'][0]
+        self.assertLessEqual(receipt['release_call_started_ns'], cleanup['verified_ns'])
+        self.assertLessEqual(cleanup['verified_ns'], receipt['release_call_returned_ns'])
+
+    def test_prior_owner_cleanup_does_not_poison_later_ordinary_release(self):
+        receipt = actual_wrapper_batch_evidence(prior_cleanup=True)['receipt']
+        self.assertTrue(receipt['owner_cleanup_log_available'])
+        self.assertFalse(receipt['owner_cleanup_overlapped_release_call'])
+        self.assertTrue(receipt['ordinary_release_candidate'])
+        self.assertTrue(receipt['owner_transition_verified'])
+
+    def test_missing_owner_cleanup_log_fails_closed(self):
+        obj = make_backend({'a'})
+        del obj.owner.records
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['owner_cleanup_log_available'])
+        self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
 
     def test_nonempty_owner_state_fails_closed(self):
         obj = make_backend({'a'}, Owner(owned_after=[38]))

@@ -77,6 +77,32 @@ class Backend(Previous):
             and all(type(row.get("owner_id")) is str and bool(row.get("owner_id"))
                     and row.get("owner_id") == owner_id for row in rows)
         )
+        owner_records = getattr(self.owner, "records", None)
+        cleanup_log_available = type(owner_records) is list
+        cleanup_times = [
+            record.get("verified_ns") for record in owner_records
+            if isinstance(record, dict) and record.get("event") == "owner_release"
+        ] if cleanup_log_available else []
+        for receipt in rows:
+            started = receipt.get("release_call_started_ns")
+            returned = receipt.get("release_call_returned_ns")
+            bracket_valid = (
+                type(started) is int and type(returned) is int and started <= returned
+            )
+            cleanup_overlapped = bool(
+                bracket_valid and any(
+                    type(verified_ns) is int and started <= verified_ns <= returned
+                    for verified_ns in cleanup_times
+                )
+            )
+            request_candidate = receipt.get("ordinary_release_candidate") is True
+            receipt["ordinary_release_candidate_at_request"] = request_candidate
+            receipt["owner_cleanup_log_available"] = cleanup_log_available
+            receipt["owner_cleanup_overlapped_release_call"] = cleanup_overlapped
+            receipt["ordinary_release_candidate"] = bool(
+                request_candidate and cleanup_log_available and bracket_valid
+                and not cleanup_overlapped
+            )
         # Missing identity on both sides is not a verified match.
         token_matches = (
             type(current_token) is str and bool(current_token)
@@ -88,7 +114,7 @@ class Backend(Previous):
         ordinary = all(row.get("ordinary_release_candidate") is True for row in rows)
         batch_verified = bool(
             rows and sample_ordered and owner_identity_matches and token_matches
-            and owner_empty and backend_ownership and ordinary
+            and cleanup_log_available and owner_empty and backend_ownership and ordinary
         )
         batch_size = len(rows)
         for position, receipt in enumerate(rows):
