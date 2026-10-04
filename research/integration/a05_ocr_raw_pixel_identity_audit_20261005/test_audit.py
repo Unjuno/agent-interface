@@ -21,8 +21,22 @@ class CropAuditInputTests(unittest.TestCase):
                 "source_revision": "58bcbb4c45501880db8782158ddd3add3b765984",
                 "entries": [],
             }), encoding="utf-8")
-            with patch.object(audit, "MANIFEST_PATH", manifest_path):
+            with (
+                patch.object(audit, "MANIFEST_PATH", manifest_path),
+                patch.object(audit, "EXPECTED_CROP_MANIFEST_SHA256",
+                             audit.sha256(manifest_path.read_bytes())),
+            ):
                 with self.assertRaisesRegex(ValueError, "expected crop entries"):
+                    audit.main()
+
+    def test_rejects_modified_manifest_even_when_entry_set_is_complete(self):
+        manifest = json.loads(audit.MANIFEST_PATH.read_text(encoding="utf-8"))
+        manifest["audit_note"] = "modified after freeze"
+        with tempfile.TemporaryDirectory() as directory:
+            manifest_path = Path(directory) / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            with patch.object(audit, "MANIFEST_PATH", manifest_path):
+                with self.assertRaisesRegex(ValueError, "unexpected crop manifest hash"):
                     audit.main()
 
     def test_rejects_reencoded_archived_ocr_input_with_same_pixels(self):

@@ -26,6 +26,9 @@ A05 = REPO / "research/integration/compiled_comparison_57_4d74_20261004/a05"
 READBACK = A05 / "independent-readback"
 PREVIEW_DIR = READBACK / "crop-previews"
 MANIFEST_PATH = PREVIEW_DIR / "manifest.json"
+EXPECTED_CROP_MANIFEST_SHA256 = (
+    "d92a334c9bd99b0ca603ba1cd3edfc07ec70b0e81b62c6623c6ab1116d759b4a"
+)
 OCR_SEQUENCES = {(1, 5): 124, (1, 6): 143, (2, 6): 150}
 EXPECTED_CROP_ENTRIES = {
     (block, task, crop)
@@ -51,7 +54,10 @@ def pixel_equal(left: Image.Image, right: Image.Image) -> bool:
 
 def main() -> dict:
     started = datetime.now(timezone.utc).isoformat()
-    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    manifest_bytes = MANIFEST_PATH.read_bytes()
+    if sha256(manifest_bytes) != EXPECTED_CROP_MANIFEST_SHA256:
+        raise ValueError("unexpected crop manifest hash")
+    manifest = json.loads(manifest_bytes)
     if manifest["source_revision"] != "58bcbb4c45501880db8782158ddd3add3b765984":
         raise ValueError("unexpected retained A05 source revision")
     entries = manifest.get("entries")
@@ -138,7 +144,7 @@ def main() -> dict:
             ["git", "-C", str(REPO), "rev-parse", "HEAD"], text=True
         ).strip(),
         "pinned_a05_source_revision": manifest["source_revision"],
-        "crop_manifest_sha256": sha256(MANIFEST_PATH.read_bytes()),
+        "crop_manifest_sha256": sha256(manifest_bytes),
         "audit_script_sha256": sha256(Path(__file__).resolve().read_bytes()),
         "expected_crop_entries": len(EXPECTED_CROP_ENTRIES),
         "archived_ocr_hashes_pinned": True,
