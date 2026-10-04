@@ -64,10 +64,12 @@ class BuilderTests(unittest.TestCase):
                        and n.name == 'session_command')
         env = dict(sys=sys, HERE=root / 'research/doom', MEASUREMENT_HERE=destination)
         exec(compile(ast.Module(body=[command], type_ignores=[]), '<session-command>', 'exec'), env)
-        args = types.SimpleNamespace(seed=59, load_fixture_manifest=Path('/fixtures/frozen.json'))
-        self.assertEqual(env['session_command'](args, Path('/out')), [sys.executable,
-            str(destination / 'session_measured_5ce3.py'), '--out', '/out', '--seed', '59',
-            '--timeout-seconds', '600', '--skill', '1', '--load-fixture-manifest', '/fixtures/frozen.json'])
+        output_dir = Path('/out')
+        manifest = Path('/fixtures/frozen.json')
+        args = types.SimpleNamespace(seed=59, load_fixture_manifest=manifest)
+        self.assertEqual(env['session_command'](args, output_dir), [sys.executable,
+            str(destination / 'session_measured_5ce3.py'), '--out', str(output_dir), '--seed', '59',
+            '--timeout-seconds', '600', '--skill', '1', '--load-fixture-manifest', str(manifest)])
 
     def test_composition_refuses_changed_session(self):
         compose = getattr(self.builder(), 'compose', None)
