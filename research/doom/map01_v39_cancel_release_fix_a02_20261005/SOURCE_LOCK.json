@@ -1,0 +1,39 @@
+{
+  "schema": "map01-v39-release-evidence-a02-source-lock-v1",
+  "repository": "Unjuno/agent-interface",
+  "base_main": "dccf55e264f434ca27f2948fe53be09919047819",
+  "main_refresh_assessment": "main advanced with an additive research record; all seven pinned implementation/test blobs were refetched at dccf55e and remain byte-identical",
+  "upstream_source_blobs": {
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "82aae20cec847e3766df2eb6ff5269506a74a2e4",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "9c5aa19c76199eff9a3defc2e87912a226d92353",
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py": "6c2f59d2c6e55d8fab2d5f43de96e333c7825ba5",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "f2bbae7e7ca436d28c42b18154a0bcfc19e809a0",
+    "research/live_control/executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1"
+  },
+  "predecessor": {
+    "pr": 7805,
+    "head_commit": "7a696dc085cad8a49eaae50d968bc6e8d28fb45e",
+    "branch": "research/59-v39-cancel-release-fix-a01-20261005",
+    "source_blobs": {
+      "input_owner_v13_candidate.py": "82d3881dd4064f58e847420bb336a70cd84ee307",
+      "bridge_v2_candidate.py": "ee1220cdc3d93d96aa1051c072ca7dceeb59c35d",
+      "test_cancel_release.py": "46661de56bb63bd0359757eb2b208b7b71bb874c"
+    }
+  },
+  "candidate_git_blobs": {
+    "input_owner_v13_before.py": "82d3881dd4064f58e847420bb336a70cd84ee307",
+    "bridge_v2_before.py": "ee1220cdc3d93d96aa1051c072ca7dceeb59c35d",
+    "input_owner_v13_candidate.py": "6c0624ea130b37eb2e90d2217c9044d7905e437c",
+    "bridge_v2_candidate.py": "7ba686c134c7d7b5144d3e10821562ef6b946576",
+    "test_cancel_release.py": "ad48b61f3b250a41b44448290b178467d17f7756",
+    "test_release_record_durability.py": "c9e8dde6b4b87818754d60c8d796ce336a3f9757"
+  },
+  "tested_runtime": {
+    "os": "Windows 11 Home 10.0.26300",
+    "python": "CPython 3.11.9",
+    "container_equivalent": false,
+    "display": "deterministic fake display; no X server"
+  }
+}
