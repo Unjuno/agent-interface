@@ -28,6 +28,11 @@ def dispatch_task_targets(*, coordinator, task_id: str, layout: str,
         raise DispatchStop("current coordinated task must be resolved before target input")
     if task_id not in {"A1", "A2", "A3", "B1", "B2", "B3"}:
         raise DispatchStop("unknown preregistered task id")
+    if coordinator.target_dispatch_started:
+        raise DispatchStop("target-dispatch attempt already consumed; no retry")
+    # Consume the task's one dispatch attempt before observation or receipt
+    # callbacks. Any uncertainty after this point is terminal for this task.
+    coordinator.target_dispatch_started = True
 
     results: list[dict] = []
     previous_sequence = coordinator.resolved_bundle.source_sequence

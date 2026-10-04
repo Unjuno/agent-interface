@@ -396,11 +396,12 @@ single compiled request is submitted. The caller must adapt the live socket's
 terminal result into a request-ID-matched receipt that confirms all inputs are
 released. Ambiguous or failed receipts stop the task without retry.
 
-Five host construction tests verify the two-point order, fresh sequence binding,
+Eight host construction tests verify the two-point order, fresh sequence binding,
 stale-geometry refusal before the affected dispatch, task-ID matching, and
-fail-closed handling of an unconfirmed release. One test exercises the real
-receipt builders and request compiler with synthetic observations. The full
-package suite passes 91/91; the inherited decision probe passes with 10
+fail-closed handling of stale socket clocks, mismatched/nonterminal/unreleased
+execution receipts, and repeated calls before lifecycle advance. One test
+exercises the real receipt builders and request compiler with synthetic
+observations. The full package suite passes 94/94; the inherited decision probe passes with 10
 controls. Submit and observation are host callbacks, so these tests do not
 connect a live Mindustry socket, capture real images, dispatch input, call a
 model, score a game task, produce an independent raw audit, or demonstrate

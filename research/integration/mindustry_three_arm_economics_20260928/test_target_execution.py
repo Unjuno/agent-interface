@@ -132,6 +132,72 @@ class TargetExecutionTests(unittest.TestCase):
             with self.assertRaisesRegex(DispatchStop, "terminal release receipt"):
                 self.run_dispatch(submit=submit)
         self.assertEqual(len(attempts), 1)
+        with self.assertRaisesRegex(DispatchStop, "already consumed"):
+            self.run_dispatch(submit=submit)
+        self.assertEqual(len(attempts), 1)
+
+    def test_request_receipt_must_match_id_and_be_terminal(self):
+        for receipt in (
+                {"request_id": "wrong", "terminal": True, "released": True},
+                {"request_id": "palette_point", "terminal": False,
+                 "released": True}):
+            with self.subTest(receipt=receipt):
+                self.setUp()
+                attempts = []
+
+                def submit(request):
+                    attempts.append(request)
+                    return {**receipt, "request_id": receipt["request_id"]}
+
+                with patch("target_execution_v1.compile_receipt_target_click",
+                           side_effect=lambda locator, clock, task_id, target, spec:
+                               {"id": target}):
+                    with self.assertRaisesRegex(DispatchStop,
+                                                "terminal release receipt"):
+                        self.run_dispatch(submit=submit)
+                self.assertEqual(len(attempts), 1)
+                with self.assertRaisesRegex(DispatchStop, "already consumed"):
+                    self.run_dispatch(submit=submit)
+                self.assertEqual(len(attempts), 1)
+
+    def test_consumed_dispatch_resets_only_after_lifecycle_advance(self):
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=lambda locator, clock, task_id, target, receipt:
+                       {"id": target}):
+            self.run_dispatch()
+            with self.assertRaisesRegex(DispatchStop, "already consumed"):
+                self.run_dispatch()
+        self.assertEqual(len(self.sent), 2)
+        self.coordinator.score(True)
+        self.coordinator.reset(True)
+        self.coordinator.advance()
+        self.assertFalse(self.coordinator.target_dispatch_started)
+
+    def test_clock_sequence_mismatch_stops_before_submit(self):
+        observations = iter((source(2),))
+        latest = {"sequence": 1}
+        sent = []
+
+        def observe():
+            value = next(observations)
+            latest["sequence"] = value["sequence"]
+            return value
+
+        def build(locator, target):
+            return build_palette_receipt(locator,
+                exact_dependencies=[{"sequence": 1, "box": [8, 8, 24, 24]}])
+
+        with self.assertRaisesRegex(DispatchStop, "socket sequence differs"):
+            dispatch_task_targets(
+                coordinator=self.coordinator, task_id="A1", layout="A",
+                observe=observe,
+                read_clock=lambda: {"sequence": latest["sequence"] + 1,
+                                    "runtime_ns": 102},
+                build_receipt=build,
+                submit=lambda request: sent.append(request))
+        self.assertEqual(sent, [])
+        with self.assertRaisesRegex(DispatchStop, "already consumed"):
+            self.run_dispatch()
 
     def test_task_mismatch_refuses_before_observation_or_dispatch(self):
         calls = []
