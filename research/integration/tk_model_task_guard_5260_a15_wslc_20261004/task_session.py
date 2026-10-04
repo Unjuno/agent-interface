@@ -62,7 +62,9 @@ class TaskSession:
         self._admitted = deepcopy(plan)
         (self.out/f'review-{uuid.uuid4().hex}.json').write_text(json.dumps({
             'review':review, 'image_sequence':image_sequence,
-            'response_seen_ns':response_seen_ns, 'snapshot':current, 'plan':plan},
+            'response_seen_ns':response_seen_ns, 'snapshot':current, 'plan':plan,
+            'checked_ns':now, 'minimum_sequence':minimum_sequence,
+            'maximum_age_ns':50_000_000},
             sort_keys=True)+'\n')
         return plan
 
@@ -78,14 +80,18 @@ class TaskSession:
         def verify(stage, native, image):
             boundary = time.monotonic_ns()
             current, nonce = self._snapshot('native-'+purpose)
+            checked = time.monotonic_ns()
+            minimum = self.sequence
             error = _snapshot_error(current, self.binding, nonce, self.sequence,
-                                    boundary, time.monotonic_ns(), 50_000_000)
+                                    boundary, checked, 50_000_000)
             if error is None and (current['target'] != expected_text or current['decoy']):
                 error = 'CURRENT_TASK_DEPENDENCY_CHANGED'
             if error is None and native['pointer_binding']['surface'] != self.binding['root_id']:
                 error = 'NATIVE_SURFACE_CHANGED'
             checks.append({'stage':stage, 'native_sequence':native['sequence'],
-                           'snapshot':deepcopy(current), 'error':error})
+                           'snapshot':deepcopy(current), 'error':error,
+                           'boundary_ns':boundary, 'checked_ns':checked,
+                           'minimum_sequence':minimum, 'maximum_age_ns':50_000_000})
             if error is None:
                 self.sequence = current['sequence']
             return error is None
@@ -130,10 +136,16 @@ class TaskSession:
             now = time.monotonic_ns()
             error = _snapshot_error(current, self.binding, nonce, self.sequence,
                                     call['finished_ns'], now, 50_000_000)
-            if error:
-                return result('YIELD', error)
             save_plan = verify_repair_effect(plan, current, request_nonce=nonce,
                 action_finished_ns=call['finished_ns'], now_ns=now)
+            with (self.out/('effect-validation-'+uuid.uuid4().hex+'.json')).open('x') as stream:
+                json.dump(dict(proposal=plan, snapshot=current, request_nonce=nonce,
+                    action_finished_ns=call['finished_ns'], checked_ns=now,
+                    minimum_sequence=self.sequence, maximum_age_ns=50_000_000,
+                    snapshot_error=error, save_plan=save_plan), stream, sort_keys=True)
+                stream.write('\n')
+            if error:
+                return result('YIELD', error)
             if save_plan['status'] != 'PLAN_SAVE':
                 return result('YIELD', save_plan['reason'])
             self.sequence = max(self.sequence, current['sequence'])

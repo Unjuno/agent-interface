@@ -74,6 +74,43 @@ class LivePairTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             pair.focus_recovery(correct, response_seen_ns=time.monotonic_ns())
 
+    def test_actual_admission_and_focus_prerequisite_retain_auditable_decision_clocks(self):
+        pair = self.pair(target='vkc')
+        review = dict(decision='NO_REPAIR', observed_target='vkc', observed_decoy='', prefix='')
+        pair.apps['guard'].request('drift', 'auditable-focus-clocks')
+        boundary = time.monotonic_ns()
+        self.assertEqual(pair.guard(review, response_seen_ns=boundary)['reason'], 'FOCUS_NOT_TARGET')
+        saved_review = json.loads(next((self.out/'guard/native').glob('review-*.json')).read_bytes())
+        self.assertIn('checked_ns', saved_review, 'Admission decision instant is not retained')
+        self.assertGreaterEqual(saved_review['checked_ns'], saved_review['snapshot']['completed_ns'])
+        self.assertEqual(saved_review['maximum_age_ns'], 50_000_000)
+        pair.focus_recovery(review, response_seen_ns=boundary)
+        prerequisite = json.loads((self.out/'focus-prerequisite.json').read_bytes())
+        self.assertGreater(prerequisite['boundary_ns'], boundary)
+        self.assertGreaterEqual(prerequisite['checked_ns'], prerequisite['snapshot']['completed_ns'])
+        self.assertEqual(prerequisite['maximum_age_ns'], 50_000_000)
+        self.assertIs(prerequisite['semantic_consistent'], True)
+
+    def test_method_auditor_accepts_actual_no_dispatch_native_focus_refusal(self):
+        from paired_audit import native_report
+        pair = self.pair(target='vkc')
+        session = pair.sessions['guard']
+        review = dict(decision='NO_REPAIR',observed_target='vkc',observed_decoy='',prefix='')
+        plan = session.admit(review,image_sequence=pair.initial['guard']['snapshot']['sequence'],
+                             response_seen_ns=time.monotonic_ns())
+        self.assertEqual(plan['status'],'PLAN_SAVE',plan)
+        pair.apps['guard'].request('drift','before-native-admission')
+        result = session.apply(plan)
+        self.assertEqual(result['status'],'YIELD',result)
+        self.assertIsNone(self.file('guard'))
+        report = result['native_calls'][0]['report']
+        raw = [json.loads(path.read_bytes()) for path in (self.out/'guard/native').glob('guarded-session-*/result-*.json')]
+        try:
+            execution = native_report(report,raw)
+        except (ValueError,KeyError) as error:
+            self.fail('Actual no-dispatch native refusal rejected by method auditor: '+str(error)+' '+json.dumps(report))
+        self.assertIsNone(execution)
+
     def test_guard_exception_after_actual_prefix_is_terminal_not_replayed(self):
         pair = self.pair()
         session = pair.sessions['guard']

@@ -151,3 +151,60 @@ U: Complete raw audit + prospective actual-provider comparison; independent
 review/CI/batched PR→main with evidence and parent issue decision, then owned-ref
 dependency/ancestor/lease cleanup. Keep #57/#59/full roadmap open until actual
 integration requirements are met. Do not substitute a transport/helper-only study.
+
+## Current independent saved-audit checkpoint (2026-10-04)
+
+The new stdlib/Pillow saved-only paired auditor is additive and does not import
+the producer, native runtime, process launcher or model-contract parser. It read
+the retained c02 packet without changing it and returned
+`METHOD_PASS_FINITE_LOCAL`, no audit gaps, four pairs and five synthetic CLI
+calls. File quality remains 2 exact / 1 unfinished / 1 wrong in control and
+3 exact / 1 unfinished in guard. c02 is still construction only: zero actual
+provider calls, no model-performance claim and no model identity attestation.
+Historical c01 remains `METHOD_INCOMPLETE`; no missing timestamps or source
+closure have been backfilled into that packet.
+
+The auditor’s WSLc mutation suite passed18/18. It includes original raw-response,
+seal, app nonce, native-program, callback-boundary, snapshot high-water, local
+closure, native Save timing, focus-prerequisite timing/semantics, lease-start,
+and refused-result relabeling checks. An earlier run during auditor edits had
+11 errors caused by a missing `purpose` assumption in control records and a
+missing historical `snapshot_error` field; those failures were retained in the
+working command output and corrected in source. Do not count that run as green.
+
+Review by Godel found several auditor gaps iteratively. Source fixes now allow
+producer-faithful refused and unfinished outcomes, reconstruct high-water and
+effect gates separately, join focus prerequisites to the app response and
+first-decision clocks, forbid Save after a rejected effect, and reconstruct
+decision result status. If an incomplete native execution crosses lease expiry,
+the packet is `METHOD_INCOMPLETE` because saved timing cannot prove the task
+phase ended before cleanup; an already-expired task start is rejected. A final
+independent rereview of this current source is pending. The c02 audit result and
+construction tests do not replace a prospective formal source freeze or actual
+provider comparison.
+
+After that checkpoint, further gaps were closed: direct `PLAN_SAVE` now requires
+exactly one Save and the producer's exact status/reason; denied focus results
+must be YIELD with no native calls and no task-completion claim. A refused guard
+outcome also cannot be relabelled as successful. Latest targeted mutation and
+packet tests passed3/3. The full scoped WSLc package suite then passed82 tests
+with one explicit skip (`test_live_app` requires an owned host exchange). An
+unscoped default unittest discovery initially selected unrelated workspace
+tests and failed outside this package; the explicit package-module run above is
+the applicable suite result. Independent rereview of the newest auditor snapshot
+is pending. Formal/provider work remains the next milestone.
+
+The next rereview identified contradictory outer/native status and missing
+initial prefix attempts as possible audit gaps. The auditor now requires the
+outer report status to equal the saved result status, and every `PLAN_PREFIX`
+must have one initial prefix call before an optional Save. The partial-focus
+final result also explicitly preserves `task_complete=false`. Current c02 plus
+the outer-status mutation passed2/2; the missing-prefix mutation passed in its
+targeted run. A further review identified the analogous control-arm
+prefix-before-Save transition. It now requires a completed/released prefix
+before the Save attempt; an unfinished prefix must terminate with one call and
+YIELD. A saved-report-derived mutation test passed1/1. The full scoped package
+run passed85 tests with one explicit owned-host-exchange skip after this fix.
+The final independent rereview found no actionable issue in this scoped saved
+audit branch. That source-only review is not an exhaustive false-pass proof or
+formal provider clearance.

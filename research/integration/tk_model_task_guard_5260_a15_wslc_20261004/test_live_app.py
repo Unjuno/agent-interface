@@ -257,6 +257,12 @@ class LiveAppConstructionTests(unittest.TestCase):
         self.assertFalse((self.out/'task_result.json').exists())
         self.assertEqual(len(high_water), 1)
         self.assertEqual(session.sequence, high_water[0])
+        validations = list(session.out.glob('effect-validation-*.json'))
+        self.assertEqual(len(validations),1,'Failed repair qualification lost its original decision clocks')
+        validation = json.loads(validations[0].read_bytes())
+        self.assertEqual(validation['save_plan']['status'],'YIELD')
+        self.assertEqual(validation['save_plan']['reason'],result['reason'])
+        self.assertEqual(validation['minimum_sequence'],high_water[0])
 
     def test_rejected_repair_effect_preserves_sequence_high_water(self):
         self.repair_effect_control(False)
