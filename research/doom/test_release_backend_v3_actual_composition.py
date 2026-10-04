@@ -3,6 +3,7 @@ import importlib
 import sys
 import types
 import unittest
+import time
 from pathlib import Path
 
 
@@ -266,6 +267,46 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     "event": "input_release_transition", "key": "b",
                     "error_type": "RuntimeError",
                 })
+
+    def test_executor_terminal_retains_actual_backend_delivery_positions(self):
+        error, _, _ = self._run(
+            emit_accept_then_raise=True, capture_publication_error=True,
+            sink_accept_before_raise=False, failure_position=1)
+        previous = sys.modules.get("executor_v13")
+        sys.path.insert(0, str(LIVE))
+        try:
+            executor_module = importlib.import_module("executor_v13")
+
+            class FailedPublicationBackend:
+                sequence = 1
+
+                def validate(self, steps):
+                    pass
+
+                def execute(self, step, cancel, identifier, index):
+                    raise error
+
+                def release_all(self):
+                    return {"verified": True}
+
+            events = []
+            executor = executor_module.Executor(FailedPublicationBackend(), events.append)
+            executor.submit("program-1", [{"op": "probe"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            executor.close()
+            terminal = next(row for row in events if row.get("event") == "terminal")
+            self.assertEqual(terminal["status"], "failed")
+            self.assertEqual(terminal["release_batch_publication"],
+                             error.release_batch_publication)
+        finally:
+            sys.path.remove(str(LIVE))
+            if previous is None:
+                sys.modules.pop("executor_v13", None)
+            else:
+                sys.modules["executor_v13"] = previous
 
 
 if __name__ == "__main__":
