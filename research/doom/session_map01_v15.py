@@ -41,15 +41,15 @@ def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.p
     raise RuntimeError('independent scorer could not obtain one-tic coherent sample')
 
 class _GameProxy:
-    def __init__(self,inner,final_sample):self._inner=inner;self._final_sample=final_sample;self.initialized=False;self.closed=False
+    def __init__(self,inner,final_sample):self._inner=inner;self._final_sample=final_sample;self.initialized=False;self.closed=False;self.closing=False
     def __getattr__(self,name):return getattr(self._inner,name)
     def init(self):
         result=self._inner.init();self.initialized=True;return result
     def close(self):
-        if self.closed:
+        if self.closed or self.closing:
             return None
         active_error = sys.exception()
-        self.closed = True
+        self.closing = True
         errors = []
         if self.initialized:
             try:
@@ -61,6 +61,9 @@ class _GameProxy:
         except BaseException as exc:
             errors.append(exc)
             result = None
+        finally:
+            self.closed = True
+            self.closing = False
         if active_error is not None and errors:
             raise BaseExceptionGroup(
                 'controller and game cleanup failed',
