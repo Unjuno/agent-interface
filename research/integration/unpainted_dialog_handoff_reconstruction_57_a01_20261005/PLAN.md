@@ -19,4 +19,4 @@
 - Parent question: Issue #57 desktop observation/decision handoff.
 - Input package: `research/live_control/results/recovery-assistant-01/`; raw inputs are SHA-256 pinned in `SHA256SUMS`.
 - Type: posthoc single-trajectory reconstruction; no live allocation consumed.
-- `analyze.py` is the reproducer; `RESULT.json` is generated output; `SHA256SUMS` pins all directly-read source artifacts and the analysis script.
+- `analyze.py` is the reproducer; `RESULT.json` is generated output; `SHA256SUMS` pins all directly-read source artifacts and the analysis, replay and audit scripts. `REPLAY_SHA256SUMS` pins the retained relay output.

@@ -1,7 +1,7 @@
 from __future__ import annotations
 import hashlib, json
 from pathlib import Path
-from PIL import Image, ImageChops
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE = ROOT / 'research/live_control/results/recovery-assistant-01'
@@ -63,8 +63,11 @@ def main():
         ia=Image.open(SOURCE / f"{a['sequence']:03}.png").convert('RGBA')
         ib=Image.open(SOURCE / f"{b['sequence']:03}.png").convert('RGBA')
         assert ia.size == ib.size
-        diff=ImageChops.difference(ia,ib)
-        pixels=sum(1 for px in diff.get_flattened_data() if px != (0,0,0,0))
+        left=ia.tobytes()
+        right=ib.tobytes()
+        stride=len(ia.getbands())
+        pixels=sum(left[offset:offset+stride] != right[offset:offset+stride]
+                    for offset in range(0,len(left),stride))
         count=ia.width*ia.height
         deltas.append({'from_sequence':a['sequence'],'to_sequence':b['sequence'],
                        'image_ready_delta_ms':round((b['image_ready_ns']-a['image_ready_ns'])/1e6,3),

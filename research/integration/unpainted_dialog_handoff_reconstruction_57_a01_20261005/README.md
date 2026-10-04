@@ -12,7 +12,7 @@ node --test research/integration/unpainted_dialog_handoff_reconstruction_57_a01_
 python research/integration/unpainted_dialog_handoff_reconstruction_57_a01_20261005/audit_replay.py
 ```
 
-The analysis validates pinned SHA-256 values for the JSON inputs and selected PNGs against `SHA256SUMS`, checks selected frame timestamps/focus flags, verifies the existing audit summary, computes image differences, and joins each response to its originating command and terminal record. Source trace and images remain unchanged.
+The analysis validates pinned SHA-256 values for the JSON inputs, selected PNGs and analysis/replay/audit scripts against `SHA256SUMS`, checks selected frame timestamps/focus flags, verifies the existing audit summary, computes pixel differences from decoded RGBA bytes, and joins each response to its originating command and terminal record. The byte-wise pixel count avoids newer Pillow-only APIs. Source trace and images remain unchanged.
 
 To create another retained raw run, set `HANDOFF_REPLAY_CAPTURE` to a new, nonexistent directory before running the Node test; it refuses to overwrite existing evidence. `REPLAY_SHA256SUMS` pins the retained run.
 
