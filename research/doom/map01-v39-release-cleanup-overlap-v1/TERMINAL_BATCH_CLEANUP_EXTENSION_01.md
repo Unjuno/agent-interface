@@ -24,6 +24,7 @@ cleanup record predating the current batch.
 
 ## D — Data and execution
 
+- Candidate Git revision: `81a528694fa59d195e91dab8703492abf04aea93`.
 - Baseline adapter at #7395 head: SHA-256
   `5478a4bde87f59db545818e30f31f0afb4934bb5851e441eebf8136b49639a0e`.
 - Baseline test at #7395 head: SHA-256
@@ -38,7 +39,8 @@ cleanup record predating the current batch.
 - `git diff --check`: PASS.
 - `python3 -B` source compilation: PASS.
 - Current container gate: STOP. Docker server reports OrbStack 29.4.0, but
-  read-only `docker ps` again fails on content blob
+  `docker version --format '{{.Server.Version}}'` succeeds and read-only
+  `docker ps --format '{{.ID}} {{.Image}} {{.Status}}'` fails on content blob
   `sha256:08e8b41ebd1476eff067939e0192d49e4014c21bab11a4d793429187e4242704`
   with `operation not supported`; image inventory and container execution were
   not attempted after that failure. No repair, pull, or live allocation ran.
