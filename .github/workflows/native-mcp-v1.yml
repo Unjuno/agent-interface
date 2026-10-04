@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - 'research/live_control/**'
+      - 'research/live_control/*'
       - 'runtime/cli_v1/**'
       - 'runtime/host_v1/**'
       - 'runtime/motor_state_v1/**'
@@ -15,8 +15,10 @@ on:
       - 'runtime/guarded_x11_v1/**'
       - '.github/workflows/native-mcp-v1.yml'
   push:
+    branches:
+      - main
     paths:
-      - 'research/live_control/**'
+      - 'research/live_control/*'
       - 'runtime/cli_v1/**'
       - 'runtime/host_v1/**'
       - 'runtime/motor_state_v1/**'
@@ -26,7 +28,6 @@ on:
       - 'runtime/integration_checks/**'
       - 'runtime/distribution_v2/**'
       - 'runtime/guarded_x11_v1/**'
-      - '.github/workflows/native-mcp-v1.yml'
 permissions:
   contents: read
 jobs:

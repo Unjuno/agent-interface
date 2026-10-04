@@ -1,0 +1,22 @@
+{
+  "schema": "batch-cancel-sync-a01-container-setup-stop-v1",
+  "time_observed_utc": "2026-10-04T07:38:59Z",
+  "context": "orbstack",
+  "daemon": "Docker Engine 29.4.0, linux/arm64; responsive to docker version and docker ps",
+  "attempts": [
+    {
+      "command": "docker image ls --digests --format '{{.Repository}}:{{.Tag}} {{.Digest}} {{.ID}}'",
+      "exit": 1,
+      "error": "containerd content blob sha256:22e459a4d5c99f66cecfe52cbb4f94ddff3f1f6788c6ad84a83fda24fafb002a could not be opened: operation not supported"
+    },
+    {
+      "command": "docker pull python:3.12-alpine",
+      "exit": 1,
+      "error": "containerd content blob sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b could not be opened: operation not supported"
+    }
+  ],
+  "candidate_invocations": 0,
+  "disposition": "STOP_CONTAINER_CONTENT_STORE_UNAVAILABLE",
+  "recovery_attempt": "none; do not restart daemon or prune while ownership of other container state is unknown",
+  "host_synthetic_fallback": "separately frozen below; not an OrbStack/container result"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "batch-cancel-sync-composition-a01-freeze-v1",
+  "allocation_id": "MAP01-V39-BATCH-CANCEL-SYNC-COMPOSE-A01-20261004-01",
+  "base_commit": "dae347cb8333f4469c89b076b0b466cc8bf6b960",
+  "candidate": "candidate/input_owner_v12_composed.py",
+  "candidate_sha256": "0153ce3269d10b5bb04b3526d548e055da206124c879b11b8c05f64acab6b6de",
+  "test": "tests/test_batch_cancel_sync_composition.py",
+  "test_sha256": "b5c771f3beab12f32fd8e8d09b411b11597854f78f095e5236ca3c1305464237",
+  "runner_sha256": "2808c362d24e31fa188d833420cc52f286f5dbc46149be3001c49c7c1aa8dd48",
+  "auditor_sha256": "8a1a8b233b98baaf453e51422cefac547e1084f6d07ae69d8912ca5f0d37790e",
+  "source_manifest_sha256": "c43058b92425517d13b0814508237482000030ede522f926f2876002d67c8a69",
+  "environment": {
+    "os": "macOS 27.0.1",
+    "architecture": "arm64",
+    "python": "CPython 3.14.5",
+    "backend": "Fake-Xlib; no real X server"
+  },
+  "command": "python3 -B run_a01.py",
+  "disposition_gate": "PLAN.md D section",
+  "retry": "none"
+}
