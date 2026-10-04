@@ -37,6 +37,7 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| v39 ammo-aware cover pair gate (#59) | [`v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md`](v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md) — ten-case paired-epoch construction PASS, audit 44/44; no current runtime integration or live behavior |
 | v39 ammo-aware renewable-cover successor (#59) | [`v39_ammo_cover_guard_59_a02_20261005/REPORT.md`](v39_ammo_cover_guard_59_a02_20261005/REPORT.md) — dual-signal construction `PASS` (24/24 audit checks); no controller integration or live evidence; paired epoch enforcement remains a prerequisite |
 | v39 ammo-aware renewable-cover boundary (#59) | [`v39_ammo_cover_guard_59_a01_20261005/REPORT.md`](v39_ammo_cover_guard_59_a01_20261005/REPORT.md) — synthetic current-source failure: zero ammo did not invalidate a notional fire-containing cover while the health guard remained valid; no live-game or input claim |
 | v39 F02 pipe-EOF construction predecessor (#59) | [`v39_eof_59_f02_20261004_3cbf/RESCUE_20261004.md`](v39_eof_59_f02_20261004_3cbf/RESCUE_20261004.md) — preserves construction RED/GREEN and repeated-wait history; F03 formal result is separate, and production integration remains unproved |
