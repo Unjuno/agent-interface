@@ -11,10 +11,10 @@
 ## Source and test identity
 
 - Defect reproduction head from PR #7685: `5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0`.
-- Corrective branch base after refreshing PR #7685: `6cedc4e5b1ee8012ad1d23afbd606e7207cf5679`; the pinned candidate source remained byte-identical across this rebase.
+- Corrective branch base after refreshing PR #7685: `6f17c27a282ec1afbbfdc97fcb6a77c6dfb70a31`; this squash-based parent update retains the equality-only defect and was merged before reapplying the narrow correction.
 - Parent `checkpoint_candidate.py` SHA-256: `c48c1a734ae32505d7adf000028e618b2d0cfe73a4aa969892b8aada6a6407f5`.
-- Candidate `checkpoint_candidate.py` SHA-256: `44d30af1f661ec2e4505c74241e716bd7c6aa6bbb9bd906799ccb82336219e91`.
-- Candidate `test_candidate.py` SHA-256: `a5866384ef73a06f16a77e3de0891db1d1e7dc29988cca2a310e4ef266df151e`.
+- Corrected `checkpoint_candidate.py` SHA-256: `37387861339edf94401068cb08b2ca48e922ddc16d8d373c8b3e504816549c96`.
+- Corrected `test_candidate.py` SHA-256: `a4516ce54656e50c97f5610aacee5ef9cad0ee82e7bdde09776d83217016f8ff`.
 - Runtime: bundled CPython 3.12.13.
 - API reference: [ViZDoom `DoomGame.get_episode_time`](https://vizdoom.farama.org/api/python/doom_game/), documented return type `int`.
 
