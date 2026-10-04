@@ -578,7 +578,9 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    return [sys.executable, str(HERE / "session_map01_v12.py"),
+    session = ("session_map01_v18.py" if getattr(args, "post_release_scorer_tail", False)
+               else "session_map01_v12.py")
+    return [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
@@ -703,6 +705,8 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
+    parser.add_argument("--post-release-scorer-tail", action="store_true",
+                        help="opt into a bounded scorer-only tail after verified final key-up")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
@@ -1234,6 +1238,9 @@ def main():
         score=wait(lambda r:r["event"]=="post_control_score")
         failure_cleanup.set_stage("session_reap")
         process.wait(timeout=20)
+        tail_path=runtime/"scorer-post-release-tail.json"
+        scorer_post_release_tail=(json.loads(tail_path.read_text(encoding="utf-8"))
+                                  if tail_path.is_file() else None)
         failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
@@ -1258,6 +1265,8 @@ def main():
                 reconciliation["sequence"]=sequence
                 typed_reconciliations.append(reconciliation)
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
+          "post_release_scorer_tail_enabled":args.post_release_scorer_tail,
+          "post_release_scorer_tail":scorer_post_release_tail,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
           "model_session_span":args.session_span,
