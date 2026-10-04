@@ -543,6 +543,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`kernel_receipt_capture_5225_integrity_v1/`](kernel_receipt_capture_5225_integrity_v1/)
 - [`kernel_receipt_time_5215_audit_successor_20260929/`](kernel_receipt_time_5215_audit_successor_20260929/)
 - [`label_control_ambiguity_6038_t0_v1/`](label_control_ambiguity_6038_t0_v1/)
+- [`latency_coverage_7709_t0_20261005/`](latency_coverage_7709_t0_20261005/)
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
