@@ -76,7 +76,7 @@ def main():
     print(json.dumps({'status': report['status'], 'report': str(out/'result.json')}))
     return 0 if passed else 1
 
+SUITES['protocol'].append('test_planner_schema_interrupt_custody_01a0ff2d')
+
 if __name__ == '__main__':
     raise SystemExit(main())
-
-SUITES['protocol'].append('test_planner_schema_interrupt_custody_01a0ff2d')
