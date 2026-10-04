@@ -1,0 +1,10 @@
+Command (fresh detached checkout at predecessor head):
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=research/live_control:research/doom python3 -B -m unittest -v research.live_control.test_input_owner_v12_batch_release_intervals research.live_control.test_input_owner_v12_explicit_up_cancel research.live_control.test_input_transition_owner_v4 research.live_control.test_executor_v13 research.doom.test_release_backend_v3_actual_composition
+
+Exit: 0
+Ran 16 tests in 0.221s
+OK
+
+All 16 named tests passed. This is an independent unit-test replay, not a
+physical-input or live allocation result. See PR #7529's source freeze for the
+exact test list; no candidate experiment was launched.

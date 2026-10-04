@@ -1,0 +1,27 @@
+{
+  "schema": "cancel-key-release-intervals-manifest-audit-v2",
+  "allocation": "CANCEL-KEY-RELEASE-INTERVALS-MANIFEST-AUDIT-V2-20261004-01",
+  "predecessor_head": "ebe86025e7f122f0a93b841cf41211bc50b715fe",
+  "manifest_entries": 20,
+  "verified_tracked_entries": 17,
+  "unmanifested_tracked_files": [
+    "AUDIT.json",
+    "FILES.sha256"
+  ],
+  "missing_generated_bytecode": [
+    "baseline/__pycache__/executor_v3.cpython-314.pyc",
+    "baseline/__pycache__/input_owner_v12.cpython-314.pyc",
+    "baseline/__pycache__/lease.cpython-314.pyc"
+  ],
+  "audit_errors": [],
+  "disposition": "PASS_MANIFEST_GAP_RECONCILED",
+  "candidate_rerun": false,
+  "independent_focused_test_replay": {
+    "tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 0.221
+  },
+  "scope": "manifest reconciliation and fake-Xlib unit construction only; no X server or physical input"
+}
