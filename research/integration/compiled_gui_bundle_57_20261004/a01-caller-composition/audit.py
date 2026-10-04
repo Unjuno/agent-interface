@@ -47,7 +47,7 @@ report={
              'candidate_effect_unavailable_execution_progress':candidate_progress,
              'main_source_sha256':main['source_sha256'],
              'candidate_source_sha256':candidate['source_sha256']},
- 'sha256':{p.name:sha(p) for p in (root/'run.py',root/'RUN-MAIN.json',root/'RUN-PR7330.json')},
+ 'sha256':{p.name:sha(p) for p in (root/'run.py',root/'audit.py',root/'audit-coverage-test.py',root/'RUN-MAIN.json',root/'RUN-PR7330.json')},
 }
 (root/'AUDIT.json').write_text(json.dumps(report,sort_keys=True,indent=2)+'\n')
 print(json.dumps(report,sort_keys=True,indent=2))
