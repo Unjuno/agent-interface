@@ -25,3 +25,5 @@ Current r135 replay A02 includes the expiry-exit regression (8/8 candidate tests
 A real ExecutorV3 expiry path is now covered over the fake display: the lease expires while F8 is held, InputOwner independently releases it, ExecutorV3 terminates as `expired` without setting the cancellation event, and the bridge emits one contextual `CONFIRMED_PHYSICAL_UP` before a verified-empty terminal. The regression failed against pre-fix candidate `518871e9` with zero up receipts and passes after unconditional draining. `executor-expiry-red.log` and `executor-expiry-green.log` retain the paired results.
 
 This raises the focused set to 9 and total source-audited receipts to 21. The r135 replay A03 record replays this expiry integration test on current main.
+
+The added real ExecutorV3 expiry-terminal regression was replayed on the same detached r135 main tree `16c74566b64f32d7fe035c7724bcfe3865863a91`: candidate 9/9, owner compatibility 10/10, bridge 2/2, the 21-receipt source audit, then-current SHA256 list, and full-PR `git diff --check` pass. Raw output is `current-main-r135-replay-a03.log`.
