@@ -1,0 +1,18 @@
+{
+  "schema": "v39-typed-health-window-a02-audit-v1",
+  "gate": "PASS_SCOPED",
+  "source_blob_identity_matches": true,
+  "raw_sha256_matches_candidate": true,
+  "expected_counts": {
+    "event_records": 634,
+    "typed_observations": 218,
+    "decisions": 6
+  },
+  "independent_method": "enumerate every ordered pair of downward transitions per wait and window; select earliest qualifying second transition",
+  "candidate_audit_slots": 42,
+  "matching_trigger_slots": 42,
+  "matching_transition_counts": true,
+  "matching_source_hashes": true,
+  "audit_v1_failure": "The first independent audit computed values but failed to emit output because Web Crypto was unavailable in that isolate (ReferenceError: crypto is not defined). Preserved; it contributes no audit PASS.",
+  "audit_v2_result": "Independent Node.js pair-enumeration matched candidate results exactly. This validates saved-trace calculation only."
+}
