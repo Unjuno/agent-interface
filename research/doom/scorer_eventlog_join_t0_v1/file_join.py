@@ -110,6 +110,87 @@ def _event_summary(events):
     }
 
 
+def _same_json_value(actual, expected):
+    """Compare JSON values without Python's bool/int equality coercion."""
+    if type(actual) is not type(expected):
+        return False
+    if isinstance(expected, dict):
+        return (actual.keys() == expected.keys()
+                and all(_same_json_value(actual[key], value)
+                        for key, value in expected.items()))
+    if isinstance(expected, list):
+        return (len(actual) == len(expected)
+                and all(_same_json_value(a, b) for a, b in zip(actual, expected)))
+    return actual == expected
+
+
+def _expected_scorer_events(samples):
+    """Independently reconstruct event rows from adjacent scorer samples."""
+    expected = []
+    previous = None
+
+    def add(observed_ns, kind, polarity, useful, before, after):
+        expected.append({
+            "schema": EVENT_SCHEMA,
+            "event_sequence": len(expected) + 1,
+            "observed_ns": observed_ns,
+            "kind": kind,
+            "polarity": polarity,
+            "useful": useful,
+            "controller_visible": False,
+            "before": before,
+            "after": after,
+        })
+
+    for sample in samples:
+        current = sample["payload"]
+        if current["map_exit"] and (not current["episode_finished"] or current["player_dead"]):
+            raise ValueError("scorer sample map-exit state is invalid")
+        if previous is None:
+            previous = current
+            continue
+
+        if previous["episode_finished"]:
+            state_keys = ("kill_count", "death_count", "episode_finished",
+                          "player_dead", "map_exit")
+            if any(current[key] != previous[key] for key in state_keys):
+                raise ValueError("terminal scorer state mutated within one run bundle")
+            previous = current
+            continue
+        if (current["kill_count"] < previous["kill_count"]
+                or current["death_count"] < previous["death_count"]
+                or (previous["map_exit"] and not current["map_exit"])):
+            raise ValueError("scorer counter or map-exit state regressed")
+
+        observed_ns = current["sample_ns"]
+        if current["kill_count"] > previous["kill_count"]:
+            add(observed_ns, "KILL_COUNT_INCREASE", "positive", True,
+                {"kill_count": previous["kill_count"]},
+                {"kill_count": current["kill_count"],
+                 "delta": current["kill_count"] - previous["kill_count"]})
+        if current["death_count"] > previous["death_count"]:
+            add(observed_ns, "DEATH_COUNT_INCREASE", "negative", False,
+                {"death_count": previous["death_count"]},
+                {"death_count": current["death_count"],
+                 "delta": current["death_count"] - previous["death_count"]})
+        if current["player_dead"] and not previous["player_dead"]:
+            add(observed_ns, "PLAYER_DEAD", "negative", False,
+                {"player_dead": False}, {"player_dead": True})
+        if current["map_exit"] and not previous["map_exit"]:
+            add(observed_ns, "MAP_EXIT", "positive", True,
+                {"map_exit": previous["map_exit"],
+                 "episode_finished": previous["episode_finished"]},
+                {"map_exit": True, "episode_finished": True})
+        elif current["episode_finished"] and not previous["episode_finished"]:
+            add(observed_ns, "EPISODE_FINISHED_NO_EXIT", "negative", False,
+                {"episode_finished": False},
+                {"episode_finished": True, "player_dead": current["player_dead"],
+                 "map_exit": False})
+        previous = current
+
+    return expected
+
+
 def _validate_bundle(root, research_root):
     events_path = _bundle_file(root, "events.jsonl")
     samples_path = _bundle_file(root, "scorer-samples.jsonl")
@@ -162,6 +243,8 @@ def _validate_bundle(root, research_root):
                 or row["observed_ns"] not in sample_times):
             raise ValueError("scorer event schema, sequence, or sample binding is invalid")
         previous_sequence = sequence
+    if not _same_json_value(scorer_events, _expected_scorer_events(samples)):
+        raise ValueError("scorer events do not match event-kind schema and sample transitions")
 
     if (summary.get("schema") != SUMMARY_SCHEMA
             or summary.get("controller_visible") is not False

@@ -1,6 +1,7 @@
 import hashlib
 import io
 import json
+import statistics
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -100,6 +101,41 @@ class RuntimeBundleJoinTests(unittest.TestCase):
         return classify_run_dir(self.run_dir, "recover-1", max_gap_ns=100,
                                 research_root=self.research)
 
+    def _write_progress_rows(self, samples, score_events):
+        _jsonl(self.run_dir / "scorer-samples.jsonl", samples)
+        _jsonl(self.run_dir / "scorer-events.jsonl", score_events)
+        times = [row["payload"]["sample_ns"] for row in samples]
+        intervals = [b - a for a, b in zip(times, times[1:])]
+        if intervals:
+            ordered = sorted(intervals)
+            interval_summary = {
+                "median": statistics.median(intervals) / 1e6,
+                "p95": ordered[min(len(ordered) - 1,
+                                    round(.95 * (len(ordered) - 1)))] / 1e6,
+                "max": max(intervals) / 1e6,
+            }
+        else:
+            interval_summary = None
+        useful = [row for row in score_events if row["useful"] is True]
+        _json(self.run_dir / "scorer-summary.json", {
+            "schema": "map01-independent-scorer-integration-v3",
+            "controller_visible": False,
+            "sample_count": len(samples),
+            "event_count": len(score_events),
+            "event_summary": {
+                "events": len(score_events),
+                "positive_useful_events": len(useful),
+                "negative_events": sum(row["polarity"] == "negative"
+                                        for row in score_events),
+                "first_useful_ns": min((row["observed_ns"] for row in useful),
+                                        default=None),
+                "kinds": [row["kind"] for row in score_events],
+            },
+            "scheduler": {"missed_sample_periods": 0},
+            "sample_interval_ms": interval_summary,
+            "zero_positive_events_allowed": True,
+        })
+
     def test_valid_single_directory_bundle_preserves_bounded_join(self):
         result = self._classify()
         self.assertEqual(result["decision"], "ADMISSION_BRACKETED_PROGRESS")
@@ -159,6 +195,69 @@ class RuntimeBundleJoinTests(unittest.TestCase):
         summary["event_summary"]["first_useful_ns"] = 110
         _json(path, summary)
         self._assert_invalid_bundle()
+
+    def test_scorer_event_rejects_non_object_before_state(self):
+        path = self.run_dir / "scorer-events.jsonl"
+        rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+        rows[0]["before"] = "not-an-object"
+        _jsonl(path, rows)
+        self._assert_invalid_bundle()
+
+    def test_kill_event_rejects_impossible_counter_delta(self):
+        path = self.run_dir / "scorer-events.jsonl"
+        rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+        rows[0]["before"] = {"kill_count": 1}
+        rows[0]["after"] = {"kill_count": 0, "delta": -1}
+        _jsonl(path, rows)
+        self._assert_invalid_bundle()
+
+    def test_progress_event_kinds_match_adjacent_samples(self):
+        samples = [_sample(110, 0), _sample(130, 1), _sample(140, 1),
+                   _sample(150, 1)]
+        samples[1]["payload"]["death_count"] = 1
+        samples[2]["payload"].update({"death_count": 1, "episode_finished": True,
+                                      "player_dead": True})
+        samples[3]["payload"].update({"death_count": 1, "episode_finished": True,
+                                      "player_dead": True})
+        score_events = [
+            {"schema": "independent-progress-event-v2", "event_sequence": 1,
+             "observed_ns": 130, "kind": "KILL_COUNT_INCREASE",
+             "polarity": "positive", "useful": True, "controller_visible": False,
+             "before": {"kill_count": 0}, "after": {"kill_count": 1, "delta": 1}},
+            {"schema": "independent-progress-event-v2", "event_sequence": 2,
+             "observed_ns": 130, "kind": "DEATH_COUNT_INCREASE",
+             "polarity": "negative", "useful": False, "controller_visible": False,
+             "before": {"death_count": 0}, "after": {"death_count": 1, "delta": 1}},
+            {"schema": "independent-progress-event-v2", "event_sequence": 3,
+             "observed_ns": 140, "kind": "PLAYER_DEAD",
+             "polarity": "negative", "useful": False, "controller_visible": False,
+             "before": {"player_dead": False}, "after": {"player_dead": True}},
+            {"schema": "independent-progress-event-v2", "event_sequence": 4,
+             "observed_ns": 140, "kind": "EPISODE_FINISHED_NO_EXIT",
+             "polarity": "negative", "useful": False, "controller_visible": False,
+             "before": {"episode_finished": False},
+             "after": {"episode_finished": True, "player_dead": True,
+                       "map_exit": False}},
+        ]
+        self._write_progress_rows(samples, score_events)
+        result = self._classify()
+        self.assertEqual(result["decision"], "ADMISSION_BRACKETED_PROGRESS", result)
+        self.assertIs(result["causal_attribution"], False)
+
+    def test_map_exit_event_matches_adjacent_samples(self):
+        samples = [_sample(110, 0), _sample(130, 0)]
+        samples[1]["payload"].update({"episode_finished": True, "map_exit": True})
+        score_events = [{
+            "schema": "independent-progress-event-v2", "event_sequence": 1,
+            "observed_ns": 130, "kind": "MAP_EXIT", "polarity": "positive",
+            "useful": True, "controller_visible": False,
+            "before": {"map_exit": False, "episode_finished": False},
+            "after": {"map_exit": True, "episode_finished": True},
+        }]
+        self._write_progress_rows(samples, score_events)
+        result = self._classify()
+        self.assertEqual(result["decision"], "ADMISSION_BRACKETED_PROGRESS")
+        self.assertIs(result["causal_attribution"], False)
 
     def test_missing_scorer_events_fails_closed(self):
         (self.run_dir / "scorer-events.jsonl").unlink()
