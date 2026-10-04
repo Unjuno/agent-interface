@@ -1,0 +1,63 @@
+test_completed_model_cancels_then_processes_late_policy (test_overlap_controller_v39_budget.BudgetTests.test_completed_model_cancels_then_processes_late_policy) ... ok
+test_completed_model_does_not_renew_late_terminal (test_overlap_controller_v39_budget.BudgetTests.test_completed_model_does_not_renew_late_terminal) ... FAIL
+test_empty_short_budget_returns_at_deadline (test_overlap_controller_v39_budget.BudgetTests.test_empty_short_budget_returns_at_deadline) ... FAIL
+test_fresh_terminal_wins_before_deadline (test_overlap_controller_v39_budget.BudgetTests.test_fresh_terminal_wins_before_deadline) ... ok
+test_late_policy_is_monitored_on_next_call (test_overlap_controller_v39_budget.BudgetTests.test_late_policy_is_monitored_on_next_call) ... FAIL
+test_late_terminal_remains_available_for_followup (test_overlap_controller_v39_budget.BudgetTests.test_late_terminal_remains_available_for_followup) ... FAIL
+test_pending_model_invalidates_before_matching_terminal (test_overlap_controller_v39_budget.BudgetTests.test_pending_model_invalidates_before_matching_terminal) ... ok
+test_unrelated_observation_does_not_restart_budget (test_overlap_controller_v39_budget.BudgetTests.test_unrelated_observation_does_not_restart_budget) ... FAIL
+
+======================================================================
+FAIL: test_completed_model_does_not_renew_late_terminal (test_overlap_controller_v39_budget.BudgetTests.test_completed_model_does_not_renew_late_terminal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\v39-queue-budget-repair-01a0ff2c\test_overlap_controller_v39_budget.py", line 116, in test_completed_model_does_not_renew_late_terminal
+    self.assertEqual([json.loads(x) for x in process.stdin.getvalue().splitlines()],[{'op':'cancel','id':'cover'}])
+AssertionError: Lists differ: [] != [{'op': 'cancel', 'id': 'cover'}]
+
+Second list contains 1 additional elements.
+First extra element 0:
+{'op': 'cancel', 'id': 'cover'}
+
+- []
++ [{'id': 'cover', 'op': 'cancel'}]
+
+======================================================================
+FAIL: test_empty_short_budget_returns_at_deadline (test_overlap_controller_v39_budget.BudgetTests.test_empty_short_budget_returns_at_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\v39-queue-budget-repair-01a0ff2c\test_overlap_controller_v39_budget.py", line 75, in test_empty_short_budget_returns_at_deadline
+    self.assertAlmostEqual(clock.value,.05)
+AssertionError: 0.1 != 0.05 within 7 places (0.05 difference)
+
+======================================================================
+FAIL: test_late_policy_is_monitored_on_next_call (test_overlap_controller_v39_budget.BudgetTests.test_late_policy_is_monitored_on_next_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\v39-queue-budget-repair-01a0ff2c\test_overlap_controller_v39_budget.py", line 92, in test_late_policy_is_monitored_on_next_call
+    with self.assertRaises(TimeoutError): wait(lambda r:True,timeout=.05)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_late_terminal_remains_available_for_followup (test_overlap_controller_v39_budget.BudgetTests.test_late_terminal_remains_available_for_followup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\v39-queue-budget-repair-01a0ff2c\test_overlap_controller_v39_budget.py", line 78, in test_late_terminal_remains_available_for_followup
+    with self.assertRaises(TimeoutError): wait(lambda r:r['event']=='terminal',timeout=.05)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_unrelated_observation_does_not_restart_budget (test_overlap_controller_v39_budget.BudgetTests.test_unrelated_observation_does_not_restart_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\v39-queue-budget-repair-01a0ff2c\test_overlap_controller_v39_budget.py", line 83, in test_unrelated_observation_does_not_restart_budget
+    with self.assertRaises(TimeoutError): wait(lambda r:r['event']=='terminal',timeout=.1)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.118s
+
+FAILED (failures=5)

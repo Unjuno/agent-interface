@@ -45,12 +45,22 @@ jobs:
         run: python -B -m unittest discover -s research/analysis -p 'test_analysis_checkout.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test batched finite research T0 packages
+        run: |
+          python -B -m unittest discover -s research/analysis/object_bound_context_capsules_7160_t0_20261004 -p 'test_*.py' -v
+          python -B -m unittest discover -s research/analysis/cue_triggered_intention_7162_t0_20261004 -p 'test_*.py' -v
+          python -B -m unittest discover -s research/analysis/provenance_memory_authority_7167_t0_20261004 -p 'test_*.py' -v
+          python -B -m unittest discover -s research/analysis/effect_safe_egraph_7462_t0_20261004 -p 'test_*.py' -v
+      - name: Test Issue #6617 revision-timed speech cutover T0
+        run: python -B -m unittest discover -s research/analysis/revision_timed_speech_effect_cutover_6617_t0_20261004 -p 'test_*.py' -v
       - name: Test Issue #7487 delayed GUI effect attribution T0 contract
         run: python -B -m unittest discover -s research/analysis/delayed_gui_effect_attribution_7487_t0_20261004 -p 'test_*.py' -v
       - name: Re-run Issue #7466 exploratory checkpoint construction and raw audit
         run: |
           python -B research/analysis/hazard_checkpoint_7466_t0_20261004/sim.py research/analysis/hazard_checkpoint_7466_t0_20261004
           python -B research/analysis/hazard_checkpoint_7466_t0_20261004/audit.py research/analysis/hazard_checkpoint_7466_t0_20261004/raw.jsonl
+      - name: Test Issue #7466 A03 sequential-evidence construction contract
+        run: python -B -m unittest discover -s research/analysis/hazard_checkpoint_7466_feedback_gate_a03_20261004 -p 'test_*.py' -v
       - name: Test Issue #6505 A01 retained auditor construction
         run: python -B -m unittest discover -s research/analysis/partial_order_audit_6505_orbstack_a01_20261003 -p 'test_*.py' -v
       - name: Verify Issue 6695 retained preparation-edit deadline frontier

@@ -26,6 +26,12 @@ class Executor(Previous):
             self.release_watch_stops.pop(identifier, None)
             raise
         with self.lock:
+            if self.active is None or self.active[0] != identifier:
+                # V12 may have completed this accepted intent synchronously
+                # when its admission callback reentered close().
+                stop.set()
+                self.release_watch_stops.pop(identifier, None)
+                return
             lease = self.active[1]
         watcher = threading.Thread(
             target=self._watch_release,
@@ -57,10 +63,13 @@ class Executor(Previous):
         with self.lock:
             if require_active and (self.active is None or self.active[0] != identifier):
                 return None
-            if identifier in self.published_release_ids:
+            if (identifier in self.release_publication_attempted_ids or
+                    identifier in self.published_release_ids):
                 return None
-            self.published_release_ids.add(identifier)
+            self.release_publication_attempted_ids.add(identifier)
             self.emit(event)
+            if identifier not in self.release_publication_errors:
+                self.published_release_ids.add(identifier)
         return event
 
     def _watch_release(self, identifier, lease, stop):
@@ -80,8 +89,29 @@ class Executor(Previous):
                        "matched": matched, "requested_ns": time.perf_counter_ns()})
             return matched
 
+    @staticmethod
+    def _preserve_release_batch_custody(release, worker_publication, cleanup_publication):
+        has_worker_publication = isinstance(worker_publication, dict)
+        if has_worker_publication:
+            release["release_batch_delivery"] = dict(worker_publication)
+        if (isinstance(cleanup_publication, dict)
+                and cleanup_publication != worker_publication):
+            field = ("release_batch_cleanup_delivery" if has_worker_publication
+                     else "release_batch_delivery")
+            release[field] = dict(cleanup_publication)
+
     def _run(self, identifier, steps, lease):
+        try:
+            self._run_with_watcher_cleanup(identifier, steps, lease)
+        finally:
+            stop = self.release_watch_stops.get(identifier)
+            if stop is not None:
+                stop.set()
+
+    def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
+        release_batch_publication = None
+        process_exception = None; process_traceback = None
         try:
             for index, step in enumerate(steps):
                 if lease.is_set(): raise Cancelled()
@@ -98,8 +128,14 @@ class Executor(Previous):
             status = "needs_decision"; decision_reason = str(exc) or None
         except Cancelled:
             status = "cancelled"
-        except Exception as exc:
+        except BaseException as exc:
             status = "failed"; error = repr(exc)
+            publication = getattr(exc, "release_batch_publication", None)
+            if isinstance(publication, dict):
+                release_batch_publication = dict(publication)
+            if not isinstance(exc, Exception):
+                process_exception = exc
+                process_traceback = exc.__traceback__
         finally:
             # An owner-originated focus/surface event is already available here.
             # For explicit cancellation, allow one owner polling interval before
@@ -109,11 +145,33 @@ class Executor(Previous):
             self._publish_cause_once(identifier, lease)
             try:
                 release = self.backend.release_all()
+                if release_batch_publication is not None:
+                    release = dict(release)
+                    cleanup_publication = release.get("release_batch_delivery")
+                    self._preserve_release_batch_custody(
+                        release, release_batch_publication, cleanup_publication
+                    )
                 if release.get("verified") is not True:
                     status = "failed"; error = "input release not verified"
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
                 status = "failed"
+                publication = getattr(exc, "release_batch_publication", None)
+                self._preserve_release_batch_custody(
+                    release, release_batch_publication, publication
+                )
+            except BaseException as exc:
+                release = {"verified": False, "error": repr(exc)}
+                status = "failed"
+                if error is None:
+                    error = repr(exc)
+                publication = getattr(exc, "release_batch_publication", None)
+                self._preserve_release_batch_custody(
+                    release, release_batch_publication, publication
+                )
+                if process_exception is None:
+                    process_exception = exc
+                    process_traceback = exc.__traceback__
             if status == "completed":
                 try:
                     if lease.is_set(): raise Cancelled()
@@ -132,16 +190,19 @@ class Executor(Previous):
             # terminal makes program_terminal_pending false.
             self._publish_cause_once(identifier, lease)
             with self.lock:
-                self.emit({"event": "terminal", "id": identifier, "status": status,
+                terminal = {"event": "terminal", "id": identifier, "status": status,
                            "error": error, "steps_completed": completed,
                            "release": release, "interruption": interruption,
                            "decision_reason": decision_reason,
                            "terminal_ns": time.perf_counter_ns(),
-                           "semantic_completion": "program status only; task scoring is separate"})
+                           "semantic_completion": "program status only; task scoring is separate"}
+                self.emit(terminal)
                 self.active = None
             stop = self.release_watch_stops.get(identifier)
             if stop is not None:
                 stop.set()
+        if process_exception is not None:
+            raise process_exception.with_traceback(process_traceback)
 
     def close(self):
         super().close()

@@ -1,0 +1,21 @@
+{
+  "audit": "saved-run consistency and cleanup audit; no child launch or signal sent",
+  "pid_state_at_audit": {
+    "exists": false,
+    "open_error": 87
+  },
+  "checks": {
+    "current_main_source_hash": true,
+    "recorded_source_hash_matches_file": true,
+    "win32_non_destructive_probe_named": true,
+    "descendant_live_before_close": true,
+    "default_close_raised_reader_timeout": true,
+    "descendant_live_after_close": true,
+    "reader_alive_after_close": true,
+    "stdout_open_after_close": true,
+    "cleanup_ended_reader": true,
+    "cleanup_removed_descendant": true,
+    "pid_absent_at_audit": true
+  },
+  "pass": true
+}

@@ -6,6 +6,7 @@ reacquisition.  Every repair model result must be checked against one later
 observation before ordinary final revalidation and execution.
 """
 import copy
+import math
 import time
 import uuid
 
@@ -25,9 +26,29 @@ LOCAL_EXECUTION_YIELD_REASONS = {
     "unknown_state", "ambiguous_state", "stale_observation", "stale_symbol",
     "missing_symbol", "association_changed", "authority_unavailable",
     "effect_failed", "effect_unavailable", "no_progress", "cancelled",
-    "budget_exhausted", "delivery_uncertain", "execution_failed",
+    "budget_exhausted", "delivery_uncertain", "execution_failed", "execution_refused",
 }
 
+
+def _error_text(error):
+    """Diagnostics must not replace a finalized failure or execution receipt."""
+    try:
+        return str.__str__(repr(error))
+    except BaseException:
+        return "<exception repr unavailable>"
+
+
+def _aggregate_cost(costs, attempted_calls):
+    """Return a total only when all attempts have a representable numeric sum."""
+    if len(costs) != attempted_calls:
+        return None
+    try:
+        total = sum(costs)
+    except OverflowError:
+        return None
+    if isinstance(total, float) and not math.isfinite(total):
+        return None
+    return total
 
 class ModelFailure(RuntimeError):
     def __init__(self, message, *, call_id=None, usage=None,
@@ -56,18 +77,30 @@ def _usage(value):
         return None
     if type(value) is not dict:
         raise ValueError("usage must be an object or unavailable")
+    if any(type(key) is not str for key in value):
+        raise ValueError("usage field names must be strings")
     unknown = set(value) - set(USAGE_FIELDS)
     if unknown:
         raise ValueError("unknown usage fields: " + ",".join(sorted(unknown)))
     for key, amount in value.items():
         if type(amount) is not int or amount < 0:
             raise ValueError(f"nonnegative integer usage required for {key}")
+    for subset, total in (("cached_input_tokens", "input_tokens"),
+                          ("reasoning_output_tokens", "output_tokens")):
+        if subset in value and total in value and value[subset] > value[total]:
+            raise ValueError(f"usage subset {subset} exceeds {total}")
     return copy.deepcopy(value)
 
 
 def _optional_count(value, name):
     if value is not None and (type(value) is not int or value < 0):
         raise ValueError(f"nonnegative integer or unavailable required for {name}")
+    return value
+
+
+def _optional_call_id(value):
+    if value is not None and (type(value) is not str or not value):
+        raise ValueError("nonempty failure call id or unavailable required")
     return value
 
 
@@ -86,6 +119,10 @@ def _model_result(value):
     if value["cost"] is not None and not isinstance(value["cost"], (int, float)):
         raise ValueError("cost must be numeric or unavailable")
     result = copy.deepcopy(value)
+    if type(result["cost"]) is bool:
+        result["cost"] = None
+    if isinstance(result["cost"], float) and not math.isfinite(result["cost"]):
+        result["cost"] = None
     result["usage"] = _usage(value["usage"])
     result["visible_images_submitted"] = _optional_count(
         value["visible_images_submitted"], "visible_images_submitted")
@@ -162,13 +199,35 @@ def _execution_decision(value):
         if set(value) != {"status"}:
             raise ValueError("legacy execution decision accepts status only")
         return copy.deepcopy(value)
-    if status != "safe_yield" or set(value) != {"status", "reason", "completed_actions"}:
+    fields = {"status", "reason", "completed_actions"}
+    if "input_dispatched" in value:
+        fields.add("input_dispatched")
+        if type(value["input_dispatched"]) is not bool:
+            raise ValueError("strict Boolean input_dispatched required")
+    if status != "safe_yield" or set(value) != fields:
         raise ValueError("exact safe_yield execution decision required")
     if value["reason"] not in LOCAL_EXECUTION_YIELD_REASONS:
         raise ValueError("unsupported local execution yield reason " + str(value["reason"]))
     if type(value["completed_actions"]) is not int or value["completed_actions"] < 0:
         raise ValueError("nonnegative completed_actions required")
+    if value.get("input_dispatched") is False and value["completed_actions"]:
+        raise ValueError("completed actions require dispatched input")
     return copy.deepcopy(value)
+
+
+def _effect_receipt(value):
+    """Keep small, retrievable evidence references while dropping raw evidence."""
+    decision = _decision(value, {"succeeded", "failed", "unavailable"})
+    receipt = {"status": decision["status"]}
+    limits = {"evidence_ref": 512, "evidence_digest": 256, "effect_scope": 256}
+    for field, limit in limits.items():
+        if field not in decision:
+            continue
+        item = decision[field]
+        if type(item) is not str or not item or len(item) > limit:
+            raise ValueError("invalid effect evidence " + field)
+        receipt[field] = item
+    return receipt
 
 
 def _validate_spec(spec):
@@ -211,21 +270,37 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
     attempts, model_calls, phases = [], [], []
     selected = cache_update = repair_path = None
     repair_trace = []
+    returned_execution = None
+    execute_invoked = False
 
     def emit(event): journal(copy.deepcopy(event))
 
     def local(name, payload):
+        nonlocal returned_execution, execute_invoked
         stages[name] = {"status": "started", "reason": None}
         started = clock(); emit({"event": "stage_started", "stage": name, "started_ns": started})
         try:
-            value = _require_callable(adapters, name)(copy.deepcopy(payload))
+            callback = _require_callable(adapters, name)
+            detached_payload = copy.deepcopy(payload)
+            if name == "execute":
+                # No returned receipt does not establish that input was never dispatched.
+                execute_invoked = True
+            value = callback(detached_payload)
         except Exception as error:
-            ended = clock(); stages[name] = {"status": "failed", "reason": repr(error)}
+            ended = clock(); stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
             emit({"event": "stage_failed", "stage": name, "ended_ns": ended,
-                  "error": repr(error)})
+                  "error": _error_text(error)})
             raise
+        if name == "execute":
+            # Detach the adapter return before auxiliary callbacks can change it.
+            value = copy.deepcopy(value)
+            try:
+                returned_execution = _execution_decision(value)
+            except ValueError:
+                # Preserve downstream validation of the original malformed value.
+                pass
         ended = clock(); stages[name] = {"status": "completed", "reason": None}
         phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                        "elapsed_ns": ended-started})
@@ -245,17 +320,24 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         except Exception as error:
             ended = clock()
             attempt.update(status="failed", completed_ns=ended,
-                           call_id=getattr(error, "call_id", None),
-                           usage=_usage(getattr(error, "usage", None)),
-                           visible_images_submitted=_optional_count(
-                               getattr(error, "visible_images_submitted", None),
-                               "visible_images_submitted"),
-                           wait_ns=_optional_count(getattr(error, "wait_ns", None), "wait_ns"),
-                           error=repr(error))
-            stages[name] = {"status": "failed", "reason": repr(error)}
+                           call_id=None,
+                           error=_error_text(error))
+            stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
-            emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
+            metadata_error = None
+            try:
+                for field in ("call_id", "usage", "visible_images_submitted", "wait_ns"):
+                    try:
+                        value = getattr(error, field, None)
+                        attempt[field] = (_optional_call_id(value) if field == "call_id" else
+                                          _usage(value) if field == "usage" else _optional_count(value, field))
+                    except ValueError as invalid_metadata:
+                        metadata_error = invalid_metadata
+            finally:
+                emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
+            if metadata_error is not None:
+                raise ValueError("invalid model failure accounting") from error
             raise
         ended = clock()
         attempt.update(status="completed", completed_ns=ended,
@@ -270,7 +352,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         return result
 
     def finish(outcome, reason, *, task_effect=None, delivery=None,
-               execution_progress=None):
+               execution_progress=None, effect_receipt=None):
         for row in stages.values():
             if row["status"] == "not_reached": row.update(status="skipped", reason="branch_not_reached")
         call_ids = [row["call_id"] for row in attempts if row["call_id"] is not None]
@@ -295,6 +377,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                           ["observe_source", "coarse_model", "acquire_anchor", "anchor_model"],
                           "comparable_to_full_cold": False}
         result = {"outcome": outcome, "reason": reason, "task_effect": task_effect,
+                  "effect_receipt": copy.deepcopy(effect_receipt),
                   "delivery": delivery, "execution_progress": copy.deepcopy(execution_progress),
                   "selected_target": copy.deepcopy(selected), "cache_update": copy.deepcopy(cache_update),
                   "repair_path": repair_path, "route": spec["route"],
@@ -311,18 +394,46 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                       "model_wait_ns": (sum(row["wait_ns"] for row in attempts)
                           if wait_coverage == len(attempts) else None),
                       "model_wait_coverage": wait_coverage,
-                      "cost": sum(costs) if len(costs) == len(model_calls) else None,
+                      "cost": _aggregate_cost(costs, len(attempts)),
                       "cached_input_semantics": "subset of input_tokens; never added to input total"},
                   "phase_timings": phases,
                   "input_authority": ("none" if execution_progress is not None and
                       execution_progress.get("status") == "safe_yield" and
-                      execution_progress.get("completed_actions") == 0 else
-                      "consumed_by_recorded_execute_stage" if stages["execute"]["status"] == "completed"
+                      delivery == "not_attempted" else
+                      "consumed_by_recorded_execute_stage" if execute_invoked or returned_execution is not None or
+                      stages["execute"]["status"] == "completed"
                       else "none")}
-        emit({"event": "adaptive_route_finished", "outcome": outcome,
-              "reason": reason, "repair_path": repair_path,
-              "attempted_calls": len(attempts)})
+        try:
+            emit({"event": "adaptive_route_finished", "outcome": outcome,
+                  "reason": reason, "repair_path": repair_path,
+                  "attempted_calls": len(attempts)})
+        except Exception as error:
+            result = copy.deepcopy(result)
+            if result["execution_progress"] is None and returned_execution is not None:
+                result["execution_progress"] = copy.deepcopy(returned_execution)
+            result.update(outcome="CALLER_FAILED", reason="terminal_journal_unavailable",
+                          finalized_outcome=outcome, finalized_reason=reason,
+                          terminal_journal_error=_error_text(error))
         return result
+
+    def execution_delivery(execution):
+        if execution["status"] != "safe_yield":
+            return "confirmed" if execution["status"] == "completed" else execution["status"]
+        if execution["reason"] in {"delivery_uncertain", "execution_failed"} and \
+                execution.get("input_dispatched") is not False:
+            return "delivery_uncertain"
+        if execution["completed_actions"]:
+            return "confirmed_partial"
+        return "delivery_uncertain" if execution.get("input_dispatched") is True else "not_attempted"
+
+    def failure(outcome, reason):
+        if returned_execution is None:
+            if execute_invoked:
+                return finish("CALLER_FAILED", reason, delivery="delivery_uncertain")
+            return finish(outcome, reason)
+        return finish("CALLER_FAILED", reason,
+                      delivery=execution_delivery(returned_execution),
+                      execution_progress=returned_execution)
 
     def stop(decision): return finish("SAFE_STOP", decision["status"])
 
@@ -399,19 +510,25 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         execution = _execution_decision(local("execute", {"target": selected, "check": revalidation}))
         if execution["status"] == "safe_yield":
             return finish("EXECUTION_INCOMPLETE", execution["reason"],
-                          delivery="confirmed_partial" if execution["completed_actions"] else "not_attempted",
+                          delivery=execution_delivery(execution),
                           execution_progress=execution)
         if execution["status"] != "completed":
             return finish("EXECUTION_INCOMPLETE", execution["status"],
                           delivery=execution["status"], execution_progress=execution)
-        effect = _decision(local("verify_effect", execution), {"succeeded", "failed", "unavailable"})
+        effect_receipt = _effect_receipt(local("verify_effect", execution))
+        effect = {"status": effect_receipt["status"]}
         if effect["status"] != "succeeded":
             return finish("TASK_NOT_VERIFIED", effect["status"], task_effect=effect["status"],
-                          delivery="confirmed")
+                          delivery="confirmed", execution_progress=execution,
+                          effect_receipt=effect_receipt)
         return finish("TASK_SUCCEEDED", "verified_effect", task_effect="succeeded",
-                      delivery="confirmed", execution_progress=execution)
+                      delivery="confirmed", execution_progress=execution,
+                      effect_receipt=effect_receipt)
     except ModelFailure as error:
-        return finish("TASK_DEFERRED" if error.typed_status == "DEFERRED_UPSTREAM"
-                      else "CALLER_FAILED", error.typed_status.lower())
+        status = getattr(error, "typed_status", None)
+        if type(status) is not str or status not in {"DEFERRED_UPSTREAM", "FAILED_UPSTREAM", "FAILED_OUTPUT"}:
+            return failure("CALLER_FAILED", "invalid_model_failure_status")
+        return failure("TASK_DEFERRED" if status == "DEFERRED_UPSTREAM"
+                       else "CALLER_FAILED", status.lower())
     except Exception as error:
-        return finish("CALLER_FAILED", repr(error))
+        return failure("CALLER_FAILED", _error_text(error))
