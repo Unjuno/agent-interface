@@ -1,0 +1,26 @@
+..E.
+======================================================================
+ERROR: test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives (__main__.Tests.test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<BASELINE_WORKTREE>\research\doom\test_session_map01_v13.py", line 32, in test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives
+    try:candidate.main()
+        ^^^^^^^^^^^^^^^^
+  File "<BASELINE_WORKTREE>\research\doom\session_map01_v13.py", line 67, in main
+    try:base.main()
+        ^^^^^^^^^^^
+  File "<BASELINE_WORKTREE>\research\doom\test_session_map01_v13.py", line 24, in base_main
+    for line in base.sys.stdin:
+                ^^^^^^^^^^^^^^
+  File "<BASELINE_WORKTREE>\research\doom\map01_scorer_stdio_adapter_v1.py", line 59, in __next__
+    if not self.loop.wait_readable(self.fd,timeout):continue
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<BASELINE_WORKTREE>\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10093] �A�v���P�[�V������ WSAStartup ���Ăяo���Ă��Ȃ����A�܂��� WSAStartup �����s���܂����B
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.083s
+
+FAILED (errors=1)

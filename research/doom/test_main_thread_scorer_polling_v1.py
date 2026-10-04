@@ -1,8 +1,9 @@
 import os
 import threading
+import time
 import unittest
 
-from main_thread_scorer_polling_v1 import MainThreadScorerPolling
+from main_thread_scorer_polling_v1 import MainThreadScorerPolling, _wait_readable
 
 
 class FakeClock:
@@ -34,6 +35,25 @@ class ScriptedIO:
 
 
 class PollingTests(unittest.TestCase):
+    def test_real_pipe_wait_handles_timeout_data_and_eof(self):
+        read_fd, write_fd = os.pipe()
+
+        def delayed_write_and_close():
+            time.sleep(0.02)
+            os.write(write_fd, b"x")
+            os.close(write_fd)
+
+        writer = threading.Thread(target=delayed_write_and_close)
+        writer.start()
+        try:
+            self.assertFalse(_wait_readable(read_fd, 0.002))
+            self.assertTrue(_wait_readable(read_fd, 1.0))
+            self.assertEqual(os.read(read_fd, 1), b"x")
+            self.assertTrue(_wait_readable(read_fd, 1.0))
+        finally:
+            writer.join(timeout=1.0)
+            os.close(read_fd)
+
     def test_periodic_sampling_without_commands(self):
         clock = FakeClock()
         io = ScriptedIO(clock, [])

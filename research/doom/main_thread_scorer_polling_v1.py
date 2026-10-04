@@ -9,8 +9,10 @@ no controller/event emitter in this module.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import ctypes
 import os
 import select
+import stat
 import time
 from typing import Callable, Any
 
@@ -21,8 +23,45 @@ ReadFn = Callable[[int, int], bytes]
 
 
 def _wait_readable(fd: int, timeout_s: float) -> bool:
+    if os.name == "nt":
+        return _wait_readable_windows_pipe(fd, timeout_s)
     ready, _, _ = select.select([fd], [], [], timeout_s)
     return bool(ready)
+
+
+def _wait_readable_windows_pipe(fd: int, timeout_s: float) -> bool:
+    """Wait for redirected Windows stdin without passing a pipe to Winsock."""
+    if stat.S_ISREG(os.fstat(fd).st_mode):
+        return True
+
+    import msvcrt
+    from ctypes import wintypes
+
+    handle = msvcrt.get_osfhandle(fd)
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    peek = kernel32.PeekNamedPipe
+    peek.argtypes = (
+        wintypes.HANDLE, ctypes.c_void_p, wintypes.DWORD, ctypes.c_void_p,
+        ctypes.POINTER(wintypes.DWORD), ctypes.c_void_p,
+    )
+    peek.restype = wintypes.BOOL
+
+    deadline = time.monotonic() + max(0.0, timeout_s)
+    while True:
+        available = wintypes.DWORD()
+        if peek(handle, None, 0, None, ctypes.byref(available), None):
+            if available.value:
+                return True
+        else:
+            error = ctypes.get_last_error()
+            if error == 109:  # ERROR_BROKEN_PIPE: let os.read observe EOF.
+                return True
+            raise OSError(error, ctypes.FormatError(error))
+
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            return False
+        time.sleep(min(remaining, 0.001))
 
 
 @dataclass(frozen=True)

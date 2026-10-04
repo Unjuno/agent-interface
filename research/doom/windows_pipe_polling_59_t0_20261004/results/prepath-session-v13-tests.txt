@@ -1,0 +1,14 @@
+..F.
+======================================================================
+FAIL: test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives (__main__.Tests.test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INTERMEDIATE_WORKTREE>\research\doom\test_session_map01_v13.py", line 40, in test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives
+    sources=json.loads((out/'sources.json').read_text());self.assertIn('doom/main_thread_scorer_polling_v1.py',sources);self.assertIn('doom/doom_retained_input_backend_v3.py',sources);self.assertIn('doom/independent_progress_clock_v2.py',sources);self.assertIn('live_control/input_transition_owner_v3.py',sources)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'doom/main_thread_scorer_polling_v1.py' not found in {'doom\\doom_retained_input_backend_v3.py': 'cad7de4769e574f78663e8351a8c2f8c714d51dfa7f9c41bcfb9716f06bef309', 'doom\\independent_progress_clock_v2.py': '3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613', 'doom\\main_thread_scorer_polling_v1.py': 'c19690d90fc072a669c52a27dc3ed447eb5afe3ab961d829044583ee9ec714e8', 'doom\\map01_scorer_stdio_adapter_v1.py': '626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab', 'doom\\session_map01_v13.py': '1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98', 'live_control\\input_transition_owner_v3.py': '5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6'}
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.138s
+
+FAILED (failures=1)
