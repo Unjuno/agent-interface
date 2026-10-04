@@ -1,0 +1,20 @@
+{
+  "schema": "issue59-v39-paired-frame-a03-freeze-v1",
+  "base_commit": "e561b25b700680df4e6ffd2b92faf1dde1682ef7",
+  "frozen_before_successful_probe": true,
+  "source_path": "research/live_control/observable_signal_guard_v2.py",
+  "source_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "input_and_candidate_sha256": {
+    "audit.py": "5416fb39b8ec335a0b17a7a37d48aab227ec87a8e5d1a52a49fc704400fa0dce",
+    "paired_guard.py": "67284be3336fd096c89ea8d1e9803db7f1941eed5415a1ff33ca0e730adfac65",
+    "probe.py": "89e038120769cd6558d5378046e3b13cdb0359e60e7d460854e4c7bb6e330bfe",
+    "fixture.json": "2d6cc878c5f6996f1184d5ec2ed6ce508163106033a3f3eba7741755e2f6c4a1"
+  },
+  "runtime": "CPython 3.11.9 on Windows host; stdlib only; no isolation claim",
+  "successful_probe_invocations": 1,
+  "auditor_invocations": 2,
+  "formal_live_allocation_invocations": 0,
+  "retry_limit": "construction probe once successful; auditor correction allowed and preserved after initial 25/26 mismatch",
+  "decision_gate": "Coherent positive pair preserves; incoherent sequence/capture/binding fails closed; coherent zero ammo invalidates; independent raw-fixture audit passes.",
+  "scope": "synthetic construction only; no controller, game, model, GUI, OS input, physical release, or task effect"
+}
