@@ -1,0 +1,55 @@
+{
+  "study": "Issue #59 current-main V13-to-V4 release-batch contract bridge construction A01",
+  "protocol_version": 2,
+  "run_id": "current-main-a01",
+  "frozen_at_utc": "2026-10-04T07:34:18Z",
+  "source_main_base": "dae347cb8333f4469c89b076b0b466cc8bf6b960",
+  "source_files_sha256": {
+    "audit_v13_v4_backend_bridge.py": "be9cc413b8bcf1b8af797edfb0877c8ddc5d338e94b4f73194f6107776d7e6fc",
+    "backend-v3-pr7449-exact.py": "b8ac1b90f932f78bb4424d641e577ceb3527709c181771f9fcbf94ec6ffde4f9",
+    "doom_owner_thread_release_batch_backend_v1.py": "a9e109f07dbfdefbf33e87840528c4e24195b2d435782d92f0880049721d0b7d",
+    "input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "input_owner_v13.py": "358042e5f082185538c06f57b91075d04898f38f4aae768c2bc7bbb54f5db569",
+    "input_owner_v13_v4_bridge.py": "049ba3b9e058c833d66052f051563ad9552b0a8468f8cff8c75fc1df976a4fd1",
+    "input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+    "preflight_current_source.py": "221301ffd277de48911fd840d1a82aced192eee772da816ddaecbefaf13d8b8e",
+    "test_transition_v4_rpc_bridge.py": "5a9b5df1e222839767b61024b4c98def3cd6cddd7555bda10ae723b71fb46ae6"
+  },
+  "source_git_blobs": {
+    "input_transition_owner_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "input_transition_owner_v4.py": "02c23c34e9382650a46e80d75fe49d5409153b75",
+    "input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56",
+    "input_owner_v13.py": "f10f2d05dcaa63c35b51c8f38b737753574b8fa0",
+    "doom_owner_thread_release_batch_backend_v1.py": "93be5c2d05d946d43a7f063008e591dd66de2779",
+    "backend-v3-pr7449-exact.py": "43f28640ada8d3efe1f7b59408184ffda39ba3a2"
+  },
+  "source_revisions": {
+    "main_transition_v4_change": "f746e59a56e1795f05795045cc846b9b50df4acf",
+    "main_release_batch_backend_change": "663c94629268e15e096d40f74b7416f94bdc5677",
+    "PR7449_backend_v3_source": "915c46d7f448003d82dd002d6e9fb34141e2712a"
+  },
+  "H": "Current-main V13 returns an input_release_rpc dict that current-main V3 rejects before current-main V4 can join the exact owner-thread key-up receipt. A narrow adapter can consume the RPC receipt, return None across the V3 contract boundary, and attach only a matching identity/token/interval receipt to the V4 transition; invalid or missing RPC evidence must fail closed.",
+  "T": "Reproduce direct current-main V13-to-V4 failure with deterministic fake V10 key-up call; run exact current-main V3/V4/V11/V13 plus current-main release-batch backend through bridge for valid and wrong-token receipts; compare the retained PR7449 backend source; audit the saved valid row independently.",
+  "D": {
+    "test_gate": "PASS only if direct composition raises the current V3 non-None payload assertion; bridge preserves valid V4/key-up join; wrong/missing RPC receipt makes ordinary_release_candidate false; current-main backend marks valid owner transition true and invalid token false; saved-row audit passes 18 checks.",
+    "host_qualification": "The repo governing invariant calls for WSLc on eligible local CPU construction. WSLc is unavailable, so a native Windows Python PASS is explicitly host-limited and is not accepted as WSLc-qualified Issue evidence.",
+    "fail_handling": "Preserve failures; no retry after freeze."
+  },
+  "C": "A wrapper-level synthetic result can fail to transfer to the complete session import graph, concurrent calls, actual X11 state, application effect, or live input authority.",
+  "U": "Fake V10 owner call and state sample; synthetic receipt rows; no X server, physical input, app, game, model, scorer, matched recovery, or live allocation.",
+  "execution": {
+    "platform": "native Windows CPython 3.13.14",
+    "wslc_available": false,
+    "wslc_expected_path": "C:/Program Files/WSL/wslc.exe",
+    "container_used": false,
+    "network_used_by_run": false
+  },
+  "argv": [
+    "py -3.13 preflight_current_source.py ../FREEZE.json",
+    "py -3.13 -m unittest -v test_transition_v4_rpc_bridge",
+    "py -3.13 audit_v13_v4_backend_bridge.py ../runs/a01/trace.json"
+  ],
+  "trace_env": "BRIDGE_TRACE_OUTPUT=../runs/a01/trace.json",
+  "retries": 0
+}
