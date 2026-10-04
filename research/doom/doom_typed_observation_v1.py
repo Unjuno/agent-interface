@@ -64,6 +64,7 @@ def extract_typed_observation(frame, metadata, readers, clock=time.perf_counter_
 def build_action_snapshot(event, contract):
     digest = event.get("frame_rgb_sha256") if type(event) is dict else None
     frame_size = event.get("frame_size") if type(event) is dict else None
+    sequence = event.get("sequence") if type(event) is dict else None
     capture_ns = event.get("capture_ns") if type(event) is dict else None
     started_ns = event.get("typed_extraction_started_ns") if type(event) is dict else None
     ready_ns = event.get("typed_ready_ns") if type(event) is dict else None
@@ -79,6 +80,7 @@ def build_action_snapshot(event, contract):
             any(character not in "0123456789abcdef" for character in digest) or
             type(frame_size) is not list or len(frame_size) != 2 or
             any(type(value) is not int or value <= 0 for value in frame_size) or
+            type(sequence) is not int or sequence < 1 or
             type(capture_ns) is not int or type(started_ns) is not int or
             type(ready_ns) is not int or not capture_ns <= started_ns <= ready_ns or
             type(elapsed_ms) not in (int, float) or
@@ -88,17 +90,20 @@ def build_action_snapshot(event, contract):
     if not required or not required <= SUPPORTED or set(event.get("signals", {})) != SUPPORTED:
         raise ValueError("complete typed health/ammo event required")
     signals = {}
-    for name in sorted(required):
+    for name in sorted(SUPPORTED):
         row = event["signals"][name]
         if (type(row) is not dict or row.get("signal_id") != name or
+                type(row.get("sequence")) is not int or
+                type(row.get("capture_ns")) is not int or
                 row.get("sequence") != event.get("sequence") or
                 row.get("capture_ns") != event.get("capture_ns") or
                 row.get("binding") != event.get("pointer_binding") or
                 row.get("status") not in ("observed", "unknown") or
                 (row.get("status") == "unknown" and row.get("value") is not None)):
             raise ValueError("typed signal must bind the exact early epoch")
-        signals[name] = {"status": row["status"], "value": row["value"]}
-    return {"format": SNAPSHOT_FORMAT, "sequence": event["sequence"],
+        if name in required:
+            signals[name] = {"status": row["status"], "value": row["value"]}
+    return {"format": SNAPSHOT_FORMAT, "sequence": sequence,
             "capture_ns": event["capture_ns"],
             "binding": event["pointer_binding"], "signals": signals}
 
