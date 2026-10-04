@@ -38,6 +38,7 @@ class AcknowledgedSampler:
         row = {"schema": "scorer-client-update-v1", "run_id": self.run_id,
                "sample_sequence": self.sequence, "controller_visible": False,
                "status": "UPDATE_UNAVAILABLE"}
+        operation_error = None
         try:
             if game.is_episode_finished():
                 if self.last is None or not self.last.episode_finished:
@@ -75,11 +76,21 @@ class AcknowledgedSampler:
                 producer)
             row.update(status=producer["observation_status"], sample=result.as_dict())
         except BaseException as error:
+            operation_error = error
             row.update(status="UPDATE_UNAVAILABLE", error_type=type(error).__name__,
                        error=str(error))
-            raise
         finally:
             # No retry after an ambiguous evidence-sink exception.
-            self.emit(row)
+            try:
+                self.emit(row)
+            except BaseException as sink_error:
+                if operation_error is None:
+                    raise
+                raise BaseExceptionGroup(
+                    "scorer update and evidence sidecar both failed",
+                    [operation_error, sink_error],
+                )
+        if operation_error is not None:
+            raise operation_error.with_traceback(operation_error.__traceback__)
         self.last = result
         return result

@@ -112,6 +112,22 @@ class AcknowledgedScorerTests(unittest.TestCase):
         self.assertEqual((game.calls, len(attempts)), (1, 1))
         self.assertIsNone(sampler.last)
 
+    def test_sidecar_failure_preserves_ambiguous_update_failure(self):
+        game = Game(failure=True)
+        def fail_sidecar(row):
+            raise OSError('sidecar write failed')
+        sampler = AcknowledgedSampler(sample, 'run-a', fail_sidecar, clock_ns=lambda: 10)
+
+        with self.assertRaises(BaseExceptionGroup) as raised:
+            sampler(game, None, 10)
+
+        self.assertEqual(
+            [(type(error), str(error)) for error in raised.exception.exceptions],
+            [(OSError, 'update failed'), (OSError, 'sidecar write failed')],
+        )
+        self.assertEqual(game.calls, 1)
+        self.assertIsNone(sampler.last)
+
     def test_session_installs_sampler_and_restores_on_failure(self):
         original = session.previous._coherent_progress_sample
         with tempfile.TemporaryDirectory() as directory:
