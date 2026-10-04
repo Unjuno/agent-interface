@@ -31,6 +31,8 @@ python -B audit.py > raw/AUDIT.stdout.json
 
 The retained `raw/RAW.json` is the one candidate output. `raw/AUDIT.json` and `raw/AUDIT.stdout.json` are the one independent audit result. `SHA256SUMS` binds the freeze, source snapshots, runner, auditor, and raw outputs. This establishes only a deterministic construction/evidence-custody defect in incomplete telemetry publication. It does not establish that physical release failed or characterize production sink persistence semantics.
 
-## Next action
+On 2026-10-05, the auditor was replayed against the preserved raw solely to check package integrity after this report's follow-up-status correction. Its stdout exactly matched the original saved audit; this extra invocation is separately retained as `POSTCHECK.json` and `raw/POSTCHECK_AUDIT_REPLAY.stdout.json` and is not counted as the frozen A01 audit.
 
-The incomplete-publisher branch is not covered by PR #7635's current completed-batch custody record. Keep this finding attached to Issue #59 and ask its author to incorporate the distinct cleanup-path regression/metadata before the stacked source is used for the live allocation. Do not infer live readiness from this construction result.
+## Follow-up status
+
+After A01, PR #7635 advanced from the frozen pre-fix head `bf57eb60009867bfa36243a9b48e37bd576682c7` to `ddff6ebf8cea186accaae5dca98750ac16bb6a4b`. Its updated source now maintains a per-position ledger during incomplete publication and its tests cover a position-1 failure in both sink-acceptance modes, including propagation to ExecutorV13 terminal. This supersedes the defect on that PR branch; PR #7635 remains a draft source-repair path at the time of this note. A01 remains evidence of the defect on its frozen inputs, and does not imply the repair is merged to main or that live readiness is established.
