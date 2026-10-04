@@ -105,6 +105,64 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertTrue(all(not row["physical_verification_authoritative"]
                             for row in receipts))
 
+    def test_input_edge_receipt_joins_repeated_same_key_by_admission_position(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        pairs = []
+        for source_step in (0, 2):
+            admission = next(row for row in source
+                             if row.get("event") == "input_admission" and
+                             row.get("step") == source_step)
+            release = next(row for row in source
+                           if row.get("event") == "input_release_transition" and
+                           row.get("step") == source_step)
+            pair = [json.loads(json.dumps(row)) for row in (admission, release)]
+            for row in pair:
+                row.update(id="repeat-key-program", step=7, key="d",
+                           admission_position=len(pairs))
+            pairs.append(pair)
+
+        receipts = controller.input_edge_receipts(
+            [row for pair in pairs for row in pair])
+
+        self.assertEqual([row["status"] for row in receipts], ["paired", "paired"])
+        self.assertEqual([row["admission_position"] for row in receipts], [0, 1])
+
+        pairs[1][1].pop("admission_position")
+        incomplete = controller.input_edge_receipts(
+            [row for pair in pairs for row in pair])
+        self.assertCountEqual([row["status"] for row in incomplete],
+                              ["paired", "admission_without_release",
+                               "release_without_admission"])
+
+        pairs[1][1]["admission_position"] = None
+        invalid = controller.input_edge_receipts(
+            [row for pair in pairs for row in pair])
+        self.assertEqual(sum(row["status"] == "paired" for row in invalid), 1)
+        self.assertEqual(invalid[0]["status"], "identity_unavailable")
+        self.assertEqual(invalid[0]["event"], "input_release_transition")
+
+    def test_adapter_edge_receipt_joins_repeated_cycles_by_actuation_id(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        pairs = []
+        for cycle in range(2):
+            pair = [json.loads(json.dumps(row)) for row in source]
+            actuation_id = f"test-owner:g{cycle + 1}:F8"
+            for row in pair:
+                data = row["physical_key_measurement"]
+                data["actuation_id"] = actuation_id
+                data["adapter_edge"]["actuation_id"] = actuation_id
+            pairs.extend(pair)
+
+        receipts = controller.input_edge_receipts(pairs)
+
+        self.assertEqual([row["status"] for row in receipts],
+                         ["adapter_edge_brackets_paired"] * 2)
+        self.assertEqual(len({row["actuation_id_sha256"] for row in receipts}), 2)
+
     def test_retained_v39_trace_with_unscoped_admissions_stays_unpaired(self):
         retained = (HERE / "results" / "map01-v39-coast-liveness-live-01" /
                     "runtime" / "events.jsonl")

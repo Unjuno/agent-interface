@@ -785,8 +785,11 @@ def input_edge_receipts(events):
                     "scope": "adapter edge bracket unpaired; source event identity incomplete",
                 })
                 continue
-            bucket = adapter_grouped.setdefault((identifier, step, key, token),
-                                                {"down": [], "up": []})
+            actuation_id = (adapter_edge.get("actuation_id")
+                            if type(adapter_edge) is dict else None)
+            bucket = adapter_grouped.setdefault(
+                (identifier, step, key, token, actuation_id),
+                {"down": [], "up": []})
             # Outer event type and nested edge label are both part of the
             # receipt identity. Do not let one release event supply a press.
             bucket[expected_edge].append(event)
@@ -809,12 +812,24 @@ def input_edge_receipts(events):
                 "scope": "per-key timing unpaired; source event identity incomplete",
             })
             continue
-        group_key = (identifier, step, key, token)
+        has_admission_position = "admission_position" in event
+        admission_position = event.get("admission_position")
+        if (has_admission_position and
+                (type(admission_position) is not int or admission_position < 0)):
+            invalid.append({
+                "status": "identity_unavailable",
+                "event": event["event"],
+                "step": step,
+                "key": key,
+                "scope": "per-key timing unpaired; admission position is invalid",
+            })
+            continue
+        group_key = (identifier, step, key, token, admission_position)
         bucket = grouped.setdefault(group_key, {"admission": [], "release": []})
         bucket["admission" if event["event"] == "input_admission" else "release"].append(event)
 
     receipts = list(invalid)
-    for (identifier, step, key, token), bucket in adapter_grouped.items():
+    for (identifier, step, key, token, actuation_id), bucket in adapter_grouped.items():
         downs, ups = bucket["down"], bucket["up"]
         down = downs[0] if len(downs) == 1 else None
         up = ups[0] if len(ups) == 1 else None
@@ -946,8 +961,8 @@ def input_edge_receipts(events):
             "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
             "owner_id_sha256": (hashlib.sha256(down_owner.encode("utf-8")).hexdigest()
                                 if type(down_owner) is str else None),
-            "actuation_id_sha256": (hashlib.sha256(down_actuation.encode("utf-8")).hexdigest()
-                                    if type(down_actuation) is str else None),
+            "actuation_id_sha256": (hashlib.sha256(actuation_id.encode("utf-8")).hexdigest()
+                                    if type(actuation_id) is str else None),
             "step": step,
             "key": key,
             "input_admitted_ns": (down.get("admitted_ns") if complete else None),
@@ -966,7 +981,7 @@ def input_edge_receipts(events):
             "scope": ("InputOwner v12 X-server keymap sampling brackets; no application "
                       "receipt, physical dwell claim, or task-benefit claim"),
         })
-    for (identifier, step, key, token), bucket in grouped.items():
+    for (identifier, step, key, token, admission_position), bucket in grouped.items():
         admissions = bucket["admission"]
         releases = bucket["release"]
         admission = admissions[0] if len(admissions) == 1 else None
@@ -1015,6 +1030,7 @@ def input_edge_receipts(events):
             "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
             "step": step,
             "key": key,
+            "admission_position": admission_position,
             "admitted_ns": admitted_ns if type(admitted_ns) is int else None,
             "input_ack_ns": input_ack_ns if type(input_ack_ns) is int else None,
             "release_call_started_ns": release_started_ns if type(release_started_ns) is int else None,
