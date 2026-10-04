@@ -1,6 +1,8 @@
 """Journaled synchronous client for the Codex app-server JSONL protocol."""
 from collections import deque
 import json
+import os
+import signal
 import subprocess
 import threading
 import time
@@ -14,9 +16,15 @@ class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
-        self.process = process_factory(
-            command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, text=True, encoding="utf-8", bufsize=1)
+        self._owns_process_group = os.name == "posix" and process_factory is subprocess.Popen
+        process_options = {
+            "cwd": cwd, "stdin": subprocess.PIPE, "stdout": subprocess.PIPE,
+            "stderr": subprocess.PIPE, "text": True, "encoding": "utf-8",
+            "bufsize": 1,
+        }
+        if self._owns_process_group:
+            process_options["start_new_session"] = True
+        self.process = process_factory(command, **process_options)
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
@@ -137,15 +145,38 @@ class CodexAppServerClient:
 
     def close(self, timeout=5):
         if self.process.poll() is None:
-            self.process.terminate()
+            if self._owns_process_group:
+                try:
+                    os.killpg(self.process.pid, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
+            else:
+                self.process.terminate()
             try:
                 self.process.wait(timeout=timeout)
             except subprocess.TimeoutExpired:
-                self.process.kill()
+                if self._owns_process_group:
+                    try:
+                        os.killpg(self.process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                else:
+                    self.process.kill()
                 self.process.wait(timeout=timeout)
         self._reader.join(timeout=timeout)
         if self._reader.is_alive():
-            raise TimeoutError("app-server reader close timed out")
+            if self._owns_process_group:
+                try:
+                    os.killpg(self.process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                self._reader.join(timeout=timeout)
+            if self._reader.is_alive():
+                raise TimeoutError("app-server reader close timed out")
+        for stream_name in ("stdin", "stdout", "stderr"):
+            stream = getattr(self.process, stream_name, None)
+            if stream is not None and not stream.closed:
+                stream.close()
         if self._journal is not None and not self._journal.closed:
             if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
                 raise TimeoutError("app-server journal close timed out")
