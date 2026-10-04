@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 errors = []
 
 def sha256(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 lock = json.loads((ROOT / "SOURCE_LOCK.json").read_text(encoding="utf-8"))
 for relative, expected in lock["packaged_sha256"].items():
