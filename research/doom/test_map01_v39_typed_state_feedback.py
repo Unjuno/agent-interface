@@ -357,23 +357,32 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
     def test_action_receipt_has_join_key_for_per_key_timing_and_state_capture(self):
         before = observation(83, 100)
         before.update({"image": "before.png", "step": 0})
-        after = observation(89, 200)
-        after.update({"image": "after.png", "step": 0, "capture_ms": 1.0})
+        first = observation(89, 200)
+        first.update({"image": "first.png", "step": 0, "capture_ms": 0.5})
+        last = observation(90, 300)
+        last.update({"image": "last.png", "step": 0, "capture_ms": 0.5})
         typed = [typed_observation(83, 100, 91, 45),
-                 typed_observation(89, 200, 91, 44)]
-        typed[0]["step"] = 0
-        typed[1]["step"] = 0
-        with patch.object(controller, "descriptor", side_effect=["before", "after"]), \
+                 typed_observation(89, 200, 91, 44),
+                 typed_observation(90, 300, 80, 42)]
+        for row in typed:
+            row["step"] = 0
+        with patch.object(controller, "descriptor", side_effect=["before", "last"]), \
              patch.object(controller, "normalized_mae", return_value=0.1):
             receipts = controller.effect_receipts(
-                [{"action": "fire", "extent": "pulse"}], before, [after], 100,
-                typed_observations=typed)
+                [{"action": "fire", "extent": "pulse"}], before,
+                [first, last], 100, typed_observations=typed)
 
         receipt = receipts[0]
         self.assertEqual(receipt["program_id_sha256"],
                          hashlib.sha256(b"program-1").hexdigest())
         self.assertEqual(receipt["executor_step"], 0)
+        self.assertEqual(receipt["after_sequence"], 90)
+        self.assertEqual(receipt["effect_observed_ns"], 300)
+        self.assertEqual(receipt["feedback_sequence"], 89)
         self.assertEqual(receipt["feedback_capture_ns"], 200)
+        self.assertEqual(receipt["plan_accept_to_first_capture_ms"], 0.0001)
+        self.assertEqual(receipt["plan_accept_to_last_capture_ms"], 0.0002)
+        self.assertEqual(receipt["state_feedback"]["to_sequence"], 89)
         self.assertEqual(receipt["state_feedback"]["signals"]["ammo"]["delta"], -1)
 
 
