@@ -61,6 +61,40 @@ class ExecutorV13Tests(unittest.TestCase):
             "error_type": "OSError",
         })
 
+    def test_baseexception_with_batch_custody_is_terminal_failure(self):
+        publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "keyboard-interrupt",
+            "step": 0, "size": 1,
+            "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
+        }
+
+        class PublicationInterruptBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error = KeyboardInterrupt("release telemetry sink stopped")
+                error.release_batch_publication = publication
+                raise error
+
+        events = []
+        thread_errors = []
+        previous_excepthook = threading.excepthook
+        threading.excepthook = lambda args: thread_errors.append(args.exc_value)
+        executor = Executor(PublicationInterruptBackend(), events.append)
+        try:
+            executor.submit("keyboard-interrupt", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            terminal = next(row for row in events if row.get("event") == "terminal")
+            self.assertEqual(terminal["status"], "failed")
+            self.assertEqual(terminal["error"], "KeyboardInterrupt('release telemetry sink stopped')")
+            self.assertEqual(terminal["release"]["release_batch_delivery"], publication)
+            self.assertEqual(len(thread_errors), 1)
+            self.assertIsInstance(thread_errors[0], KeyboardInterrupt)
+        finally:
+            executor.close()
+            threading.excepthook = previous_excepthook
+
     def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
         backend = Backend()
         events = []
