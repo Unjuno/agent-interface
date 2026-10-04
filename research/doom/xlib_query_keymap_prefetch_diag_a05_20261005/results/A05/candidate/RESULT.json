@@ -1,5 +1,14 @@
 {
   "allocation_id": "MAP01-V39-XLIB-QUERY-PREFETCH-A05-20261005-02",
+  "auditor_follow_up": {
+    "v1_limitation": "The original raw-only auditor passed a consistent in-memory mutation that changed fixture keycode and all matching event details from 38 to 39.",
+    "v1_retained_audit_unchanged": true,
+    "v2_expected_keycode": 38,
+    "v2_result": "../POSTHOC-AUDIT-V2.json",
+    "v2_source": "../posthoc/audit_v2.py",
+    "v2_status": "PASS_SOURCE_PINNED_QUEUE_PREFETCH",
+    "v2_tests": "3/3 pass, including the consistent keycode-39 mutation being rejected; retained candidate was not rerun."
+  },
   "auditor_status": "PASS_QUEUE_PREFETCH_DIAGNOSTIC",
   "bundle_sha256": "c4d0edb8755b58edb2dfd19f0a2a19e8508212184018906b569953ccf3faf4a1",
   "checks_passed": 16,
