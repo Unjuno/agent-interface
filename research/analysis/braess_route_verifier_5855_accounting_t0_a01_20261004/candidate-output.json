@@ -1,0 +1,372 @@
+{
+  "allocation": "BRAESS-QUEUE-ACCOUNTING-5855-T0-20261004-A01",
+  "candidate_diagnostics": {
+    "baseline_complete_only_mean": 3.5,
+    "duplicate_terminal_receipt_rows": 2,
+    "route_added_complete_only_mean": 1.0,
+    "route_added_offered_count": 4,
+    "route_added_verified_count": 2
+  },
+  "matched_pair_same_offers": true,
+  "schema": "braess-queue-conservation-a01-v1",
+  "source_main": "9dc383a89043deb6199c847196498d867ba6bb75",
+  "traces": [
+    {
+      "events": [
+        {
+          "event_id": "matched-baseline-offer-0",
+          "kind": "offer",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-start-0-1",
+          "kind": "start",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "event_id": "matched-baseline-offer-1",
+          "kind": "offer",
+          "task_id": "t1",
+          "tick": 1
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-verified-0",
+          "kind": "verified",
+          "receipt_id": "matched-baseline-receipt-0",
+          "task_id": "t0",
+          "tick": 2
+        },
+        {
+          "event_id": "matched-baseline-offer-2",
+          "kind": "offer",
+          "task_id": "t2",
+          "tick": 2
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-start-1-1",
+          "kind": "start",
+          "task_id": "t1",
+          "tick": 2
+        },
+        {
+          "event_id": "matched-baseline-offer-3",
+          "kind": "offer",
+          "task_id": "t3",
+          "tick": 3
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-verified-1",
+          "kind": "verified",
+          "receipt_id": "matched-baseline-receipt-1",
+          "task_id": "t1",
+          "tick": 4
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-start-2-1",
+          "kind": "start",
+          "task_id": "t2",
+          "tick": 4
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-verified-2",
+          "kind": "verified",
+          "receipt_id": "matched-baseline-receipt-2",
+          "task_id": "t2",
+          "tick": 6
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-start-3-1",
+          "kind": "start",
+          "task_id": "t3",
+          "tick": 6
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-baseline-verified-3",
+          "kind": "verified",
+          "receipt_id": "matched-baseline-receipt-3",
+          "task_id": "t3",
+          "tick": 8
+        },
+        {
+          "event_id": "matched-baseline-horizon",
+          "kind": "horizon",
+          "tick": 10
+        }
+      ],
+      "horizon": 10,
+      "initial_pending": 0,
+      "name": "matched-baseline",
+      "window_kind": "finite"
+    },
+    {
+      "events": [
+        {
+          "event_id": "matched-route-added-offer-0",
+          "kind": "offer",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-route-added-start-0-1",
+          "kind": "start",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-route-added-verified-0",
+          "kind": "verified",
+          "receipt_id": "matched-route-added-receipt-0",
+          "task_id": "t0",
+          "tick": 1
+        },
+        {
+          "event_id": "matched-route-added-offer-1",
+          "kind": "offer",
+          "task_id": "t1",
+          "tick": 1
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-route-added-start-1-1",
+          "kind": "start",
+          "task_id": "t1",
+          "tick": 1
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-route-added-verified-1",
+          "kind": "verified",
+          "receipt_id": "matched-route-added-receipt-1",
+          "task_id": "t1",
+          "tick": 2
+        },
+        {
+          "event_id": "matched-route-added-offer-2",
+          "kind": "offer",
+          "task_id": "t2",
+          "tick": 2
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "matched-route-added-start-2-1",
+          "kind": "start",
+          "task_id": "t2",
+          "tick": 2
+        },
+        {
+          "event_id": "matched-route-added-offer-3",
+          "kind": "offer",
+          "task_id": "t3",
+          "tick": 3
+        },
+        {
+          "event_id": "matched-route-added-horizon",
+          "kind": "horizon",
+          "tick": 10
+        }
+      ],
+      "horizon": 10,
+      "initial_pending": 0,
+      "name": "matched-route-added",
+      "window_kind": "finite"
+    },
+    {
+      "events": [
+        {
+          "event_id": "retry-offer",
+          "kind": "offer",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "retry-start-1",
+          "kind": "start",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "retry-failure-event",
+          "kind": "attempt_failed",
+          "receipt_id": "retry-failure-1",
+          "task_id": "t0",
+          "tick": 1
+        },
+        {
+          "attempt_id": 2,
+          "event_id": "retry-start-2",
+          "kind": "start",
+          "task_id": "t0",
+          "tick": 1
+        },
+        {
+          "attempt_id": 2,
+          "event_id": "retry-terminal-event-1",
+          "kind": "verified",
+          "receipt_id": "retry-terminal-1",
+          "task_id": "t0",
+          "tick": 2
+        },
+        {
+          "attempt_id": 2,
+          "event_id": "retry-terminal-event-duplicate",
+          "kind": "verified",
+          "receipt_id": "retry-terminal-1",
+          "task_id": "t0",
+          "tick": 2
+        },
+        {
+          "event_id": "retry-horizon",
+          "kind": "horizon",
+          "tick": 3
+        }
+      ],
+      "horizon": 3,
+      "initial_pending": 0,
+      "name": "duplicate-retry-receipt",
+      "window_kind": "finite"
+    },
+    {
+      "events": [
+        {
+          "event_id": "transient-startup-offer-0",
+          "kind": "offer",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "transient-startup-start-0-1",
+          "kind": "start",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "event_id": "transient-startup-offer-1",
+          "kind": "offer",
+          "task_id": "t1",
+          "tick": 1
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "transient-startup-verified-0",
+          "kind": "verified",
+          "receipt_id": "transient-startup-receipt-0",
+          "task_id": "t0",
+          "tick": 2
+        },
+        {
+          "event_id": "transient-startup-offer-2",
+          "kind": "offer",
+          "task_id": "t2",
+          "tick": 2
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "transient-startup-start-1-1",
+          "kind": "start",
+          "task_id": "t1",
+          "tick": 2
+        },
+        {
+          "event_id": "transient-startup-horizon",
+          "kind": "horizon",
+          "tick": 3
+        }
+      ],
+      "horizon": 3,
+      "initial_pending": 0,
+      "name": "transient-startup",
+      "window_kind": "transient"
+    },
+    {
+      "events": [
+        {
+          "event_id": "stable-periodic-control-offer-0",
+          "kind": "offer",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "stable-periodic-control-start-0-1",
+          "kind": "start",
+          "task_id": "t0",
+          "tick": 0
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "stable-periodic-control-verified-0",
+          "kind": "verified",
+          "receipt_id": "stable-periodic-control-receipt-0",
+          "task_id": "t0",
+          "tick": 1
+        },
+        {
+          "event_id": "stable-periodic-control-offer-1",
+          "kind": "offer",
+          "task_id": "t1",
+          "tick": 2
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "stable-periodic-control-start-1-1",
+          "kind": "start",
+          "task_id": "t1",
+          "tick": 2
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "stable-periodic-control-verified-1",
+          "kind": "verified",
+          "receipt_id": "stable-periodic-control-receipt-1",
+          "task_id": "t1",
+          "tick": 3
+        },
+        {
+          "event_id": "stable-periodic-control-offer-2",
+          "kind": "offer",
+          "task_id": "t2",
+          "tick": 4
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "stable-periodic-control-start-2-1",
+          "kind": "start",
+          "task_id": "t2",
+          "tick": 4
+        },
+        {
+          "attempt_id": 1,
+          "event_id": "stable-periodic-control-verified-2",
+          "kind": "verified",
+          "receipt_id": "stable-periodic-control-receipt-2",
+          "task_id": "t2",
+          "tick": 5
+        },
+        {
+          "event_id": "stable-periodic-control-horizon",
+          "kind": "horizon",
+          "tick": 6
+        }
+      ],
+      "horizon": 6,
+      "initial_pending": 0,
+      "name": "stable-periodic-control",
+      "window_kind": "stable_fixture"
+    }
+  ]
+}
