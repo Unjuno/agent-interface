@@ -24,7 +24,8 @@ from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
     reconcile_artifact)
-from doom_action_validity_contract_v1 import build_contract as build_action_contract
+from doom_action_validity_contract_v1 import (
+    bindings_equal_exact, build_contract as build_action_contract)
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
 from codex_app_server_client_v2 import CodexAppServerClient
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
@@ -477,7 +478,8 @@ def prepare_action_admission(receipt, action, authored, source_health,
     if "ammo" in required:
         if (current_ammo["sequence"] != current_health["sequence"] or
                 current_ammo["capture_ns"] != current_health["capture_ns"] or
-                current_ammo["binding"] != current_health["binding"]):
+                not bindings_equal_exact(current_ammo["binding"],
+                                         current_health["binding"])):
             raise ValueError("current health and ammo must share one observation epoch")
         current["ammo"] = {"status": current_ammo["status"],
                            "value": current_ammo["value"]}
