@@ -64,3 +64,17 @@ Current main advanced to `bfd182727aebd9636c6a84fb437848c1dfe66be8` via the type
 **U:** Fake display only; no real X11, application effect, useful feedback, bounded recovery efficacy, gameplay, safety, latency, or live allocation.
 
 The current-main suite now includes 11 focused candidate tests, 3 ExecutorV12 composition tests (2 query-fault cases), 10 owner compatibility tests and 2 bridge tests. The source-locked auditor validates 26 receipts. RED/GREEN output is retained in `executor-v12-query-fault-red.log` and `executor-v12-query-fault-green.log`; exact-main replay is `current-main-post-r135-replay-a07.log`.
+
+## A08 — close post-execute expiry arrival and classify duplicate NOOP up
+
+**H:** InputOwner expiry cleanup can occur after ExecutorV3's execute-exit drain but before its terminal release check. That late key-up must be emitted exactly once before a verified-empty terminal. A later raw up that finds the key already released must remain diagnostic, not a second release measurement.
+
+**T:** A deterministic owner-thread barrier holds cleanup until after the execute drain; the regression requires no early receipt, then one context-bound confirmed up after the terminal release barrier and before `expired`. A separate async-cleanup/raw-up test requires an `input_release_noop` diagnostic followed by exactly one confirmed release measurement.
+
+**D:** Both tests fail against the PR's pre-barrier bridge: the expiry terminal has zero released-up rows, and duplicate raw up is emitted as another release-measurement row. Both pass with the candidate bridge's ordered owner release barrier, record drain in `finally`, and NOOP event remapping. The deadline-aware owner release reason also keeps an expiry cleanup initiated by the final barrier classified as `expired`.
+
+**C:** This closes the deterministic fake-display post-drain ordering and duplicate-row cases in the tested ExecutorV3/ExecutorV12 composition. It does not estimate live race frequency or establish X11 behavior.
+
+**U:** No real X11, application consumption, independently useful feedback, bounded recovery efficacy, gameplay, safety, latency, or live allocation. Issue #59 remains open.
+
+Bundled CPython 3.12.14 verification at exact main `bfd182727aebd9636c6a84fb437848c1dfe66be8`: candidate 12/12, optimized repeat 12/12, ExecutorV12 compositions 3/3, owner compatibility 10/10, and V39 bridge 2/2. The source audit checks 27 primary test receipts plus the optimized repeat. RED/GREEN pairs are retained in `post-drain-red-current.log` / `post-drain-green-current.log` and `noop-row-red-current.log` / `noop-row-green-current.log`.

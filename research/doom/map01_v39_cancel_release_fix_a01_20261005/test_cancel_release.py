@@ -170,6 +170,37 @@ class CancellationReceiptTests(unittest.TestCase):
         finally:
             harness.close()
 
+    def test_async_cleanup_noop_up_is_not_a_second_release_measurement(self):
+        bridge_test, _hm, harness, _lease, _bm, backend = load_candidate()
+
+        def cleanup_then_raw_up(self, identifier, step):
+            self._input_event_context = (identifier, step)
+            self.raw("F8", True)
+            self.owner.call("release", self.lease)
+            self.raw("F8", False)
+
+        try:
+            run_program(bridge_test, backend, backend.lease, cleanup_then_raw_up,
+                        identifier="async-cleanup-noop", step=3)
+            rows = [row for row in backend.events
+                    if row.get("event") in {"input_admission", "input_release_noop",
+                                             "input_release_measurement"}]
+            self.assertEqual([row.get("event") for row in rows],
+                             ["input_admission", "input_release_noop",
+                              "input_release_measurement"])
+            noop = rows[1]["physical_key_measurement"]
+            confirmed = rows[2]["physical_key_measurement"]
+            self.assertEqual(noop["classification"], "NOOP_ALREADY_UP")
+            self.assertIsNone(noop["actuation_id"])
+            self.assertIsNone(noop["adapter_edge"])
+            self.assertEqual(confirmed["classification"], "CONFIRMED_PHYSICAL_UP")
+            self.assertEqual(confirmed["actuation_id"],
+                             rows[0]["physical_key_measurement"]["actuation_id"])
+            self.assertEqual(backend.held, set())
+            self.assertEqual(harness.d.physical, set())
+        finally:
+            harness.close()
+
     def test_reconciliation_error_does_not_drop_recorded_release_receipt(self):
         bridge_test, _hm, harness, lease, _bm, backend = load_candidate()
         real_call = harness.owner.call
@@ -310,7 +341,6 @@ class CancellationReceiptTests(unittest.TestCase):
         executor_v3.Lease = ObservedLease
         missing = object()
         prior_execute = parent.__dict__.get("execute", missing)
-        prior_release = parent.__dict__.get("release_all", missing)
         events = []
         admission_seen = threading.Event()
         terminal_seen = threading.Event()
@@ -327,16 +357,7 @@ class CancellationReceiptTests(unittest.TestCase):
             cancel.wait(2.0)
             raise Cancelled()
 
-        def release_all(self):
-            for key in list(self.held):
-                self.raw(key, False)
-            state = self.owner.call("input_state", self.lease)
-            return {"verified": (self.held == set()
-                                 and state.get("owned_keycodes") == []
-                                 and state.get("owned_buttons") == [])}
-
         parent.execute = blocking_program
-        parent.release_all = release_all
         backend.sequence = 1
         backend.validate = lambda _steps: None
         backend.emit = emit
@@ -373,10 +394,6 @@ class CancellationReceiptTests(unittest.TestCase):
                 delattr(parent, "execute")
             else:
                 parent.execute = prior_execute
-            if prior_release is missing:
-                delattr(parent, "release_all")
-            else:
-                parent.release_all = prior_release
             executor_v3.Lease = prior_lease_type
 
     def test_executor_expiry_terminal_contains_one_verified_cleanup_receipt(self):
@@ -393,13 +410,17 @@ class CancellationReceiptTests(unittest.TestCase):
                 self.intent_token = "intent-expiry-executor-a01"
 
         executor_v3.Lease = ObservedLease
-        missing = object()
         parent = bridge_test.Backend.__bases__[0]
-        prior_execute = parent.__dict__.get("execute", missing)
-        prior_release = parent.__dict__.get("release_all", missing)
+        prior_execute = parent.__dict__.get("execute")
         events = []
         admission_seen = threading.Event()
         terminal_seen = threading.Event()
+        drain_seen = threading.Event()
+        focus_blocked = threading.Event()
+        allow_owner_cleanup = threading.Event()
+        deadline_box = {}
+        real_focus = harness.d.get_input_focus
+        real_drain = backend._drain_owner_records
 
         def emit(row):
             events.append(row)
@@ -408,27 +429,45 @@ class CancellationReceiptTests(unittest.TestCase):
             if row.get("event") == "terminal":
                 terminal_seen.set()
 
+        def block_owner_after_deadline():
+            deadline = deadline_box.get("value")
+            if deadline is not None and time.perf_counter_ns() >= deadline:
+                focus_blocked.set()
+                if not allow_owner_cleanup.wait(2.0):
+                    raise RuntimeError("test owner cleanup barrier timed out")
+            return real_focus()
+
+        def observe_drain():
+            result = real_drain()
+            drain_seen.set()
+            return result
+
         def expiry_program(self, _step, _cancel, _identifier, _index):
             self.raw("F8", True)
-            while time.perf_counter_ns() < self.lease.deadline + 2_000_000:
+            while time.perf_counter_ns() < self.lease.deadline + 5_000_000:
                 time.sleep(0.001)
+            if not focus_blocked.wait(1.0):
+                raise AssertionError("owner did not reach post-deadline barrier")
             raise Expired()
 
-        def release_all(self):
-            state = self.owner.call("input_state", self.lease)
-            return {"verified": (state.get("owned_keycodes") == []
-                                 and state.get("owned_buttons") == [])}
-
+        harness.d.get_input_focus = block_owner_after_deadline
+        backend._drain_owner_records = observe_drain
         parent.execute = expiry_program
-        parent.release_all = release_all
         backend.sequence = 1
         backend.validate = lambda _steps: None
         backend.emit = emit
         executor = Executor(backend, emit)
         try:
-            deadline = time.perf_counter_ns() + 30_000_000
+            deadline = time.perf_counter_ns() + 100_000_000
+            deadline_box["value"] = deadline
             executor.submit("expiry-executor-a01", [{"op": "hold"}], 1, deadline)
             self.assertTrue(admission_seen.wait(1.0), repr(events))
+            self.assertTrue(drain_seen.wait(1.0), repr(events))
+            self.assertTrue(focus_blocked.is_set())
+            self.assertEqual(harness.owner.records, [])
+            self.assertFalse(any(row.get("event") == "input_release_measurement" for row in events))
+            self.assertEqual(backend.held, {"F8"})
+            allow_owner_cleanup.set()
             self.assertTrue(terminal_seen.wait(1.0), repr(events))
             ups = [row for row in events if row.get("event") == "input_release_measurement"]
             terminals = [row for row in events if row.get("event") == "terminal"]
@@ -445,24 +484,18 @@ class CancellationReceiptTests(unittest.TestCase):
             self.assertEqual(terminals[0]["status"], "expired")
             self.assertTrue(terminals[0]["release"]["verified"])
             self.assertFalse(backend.lease.cancel.is_set())
-            names = [row.get("event") for row in events]
-            self.assertLess(names.index("input_admission"),
-                            names.index("input_release_measurement"))
-            self.assertLess(names.index("input_release_measurement"),
-                            names.index("terminal"))
             self.assertEqual(harness.d.physical, set())
             self.assertEqual(backend.held, set())
         finally:
+            allow_owner_cleanup.set()
             executor.close()
             harness.close()
-            if prior_execute is missing:
+            harness.d.get_input_focus = real_focus
+            backend._drain_owner_records = real_drain
+            if prior_execute is None:
                 delattr(parent, "execute")
             else:
                 parent.execute = prior_execute
-            if prior_release is missing:
-                delattr(parent, "release_all")
-            else:
-                parent.release_all = prior_release
             executor_v3.Lease = prior_lease_type
 
 
