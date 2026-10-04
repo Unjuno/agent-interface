@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "construction_scope_and_no_live_allocation": true,
+    "exact_frozen_base": true,
+    "latest_result_matches_run03": true,
+    "run-02:events_and_delivered_byte_identical": true,
+    "run-02:nested_owner_keyup_receipt_preserved": true,
+    "run-02:one_explicit_owner_keyup_record": true,
+    "run-02:one_release_transition": true,
+    "run-02:raw_log_and_score_files_present": true,
+    "run-02:release_batch_identity_preserved": true,
+    "run-02:session_emit_timestamp_added": true,
+    "run-02:verified_empty_owner_cleanup_serialized": true,
+    "run-03:events_and_delivered_byte_identical": true,
+    "run-03:nested_owner_keyup_receipt_preserved": true,
+    "run-03:one_explicit_owner_keyup_record": true,
+    "run-03:one_release_transition": true,
+    "run-03:raw_log_and_score_files_present": true,
+    "run-03:release_batch_identity_preserved": true,
+    "run-03:session_emit_timestamp_added": true,
+    "run-03:verified_empty_owner_cleanup_serialized": true,
+    "run02_and_run03_release_semantics_match": true,
+    "source_git_blob:research/doom/doom_typed_release_backend_v3.py": true,
+    "source_git_blob:research/doom/session_map01_v12.py": true,
+    "source_sha256:research/doom/doom_typed_release_backend_v3.py": true,
+    "source_sha256:research/doom/session_map01_v12.py": true
+  },
+  "pass": true,
+  "schema": "map01-v39-session-callback-emission-audit-v1",
+  "scope": "saved-output/source audit; fake X11, VizDoom, executor and owner only"
+}
