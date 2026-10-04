@@ -199,7 +199,14 @@ def run(output, journal=None):
             row['fatal'] = repr(error)
             row['fatal_type'] = type(error).__name__
         finally:
-            finalize_cell(output, rows, case, row, child, thread, journal)
+            try:
+                finalize_cell(output, rows, case, row, child, thread, journal)
+            except KeyboardInterrupt as error:
+                if row in rows:
+                    raise
+                row['fatal'] = repr(error)
+                row['fatal_type'] = type(error).__name__
+                finalize_cell(output, rows, case, row, child, thread, journal)
         if row['gate'] is not True:
             break
     summary = {'cases': [row['case'] for row in rows], 'retries': 0, 'model_calls': 0,

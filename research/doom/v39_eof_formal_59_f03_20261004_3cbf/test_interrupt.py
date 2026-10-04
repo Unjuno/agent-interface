@@ -11,6 +11,30 @@ import unittest
 
 
 class InterruptControl(unittest.TestCase):
+    def test_sigint_before_finalizer_masks_retains_stop(self):
+        with tempfile.TemporaryDirectory() as name:
+            output = Path(name) / 'output'
+            code = (
+                'import os,signal,sys; import runner; original=runner.finalize_cell; sent=False\n'
+                'def interrupt_at_entry(*args,**kwargs):\n'
+                ' global sent\n'
+                ' if not sent:\n'
+                '  sent=True; os.kill(os.getpid(),signal.SIGINT)\n'
+                ' return original(*args,**kwargs)\n'
+                'runner.finalize_cell=interrupt_at_entry\n'
+                'sys.exit(runner.run(__import__("pathlib").Path(sys.argv[1])))\n')
+            process = subprocess.run([sys.executable, '-B', '-c', code, str(output)],
+                                     capture_output=True, text=True)
+            self.assertEqual(process.returncode, 1, process.stderr)
+            self.assertTrue((output / 'baseline_eof.json').exists(), process.stderr)
+            self.assertTrue((output / 'SUMMARY.json').exists(), process.stderr)
+            row = json.loads((output / 'baseline_eof.json').read_text())
+            summary = json.loads((output / 'SUMMARY.json').read_text())
+            self.assertEqual(row['fatal_type'], 'KeyboardInterrupt')
+            self.assertEqual(summary['cases'], ['baseline_eof'])
+            self.assertEqual(summary['stop_reason'], 'KeyboardInterrupt')
+            self.assertEqual(summary['verdict'], 'STOP_FIRST_UNEXPECTED_CELL')
+
     def test_row_file_write_failure_leaves_external_journal_record(self):
         with tempfile.TemporaryDirectory() as name:
             output = Path(name) / 'output'
