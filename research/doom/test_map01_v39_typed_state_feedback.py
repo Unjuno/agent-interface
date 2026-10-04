@@ -721,6 +721,89 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertEqual(result["status"], "unavailable")
                 self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
 
+    def test_feedback_refuses_non_string_program_identity_aliases(self):
+        cases = ((1, True), (True, 1), (1, 1.0))
+
+        for observation_id, typed_id in cases:
+            with self.subTest(observation_id=observation_id, typed_id=typed_id):
+                before = observation(0, 100)
+                before_row = typed_observation(0, 100, 91, 45)
+                after = observation(1, 200)
+                after["id"] = observation_id
+                after_row = typed_observation(1, 200, 91, 44)
+                after_row["id"] = typed_id
+
+                result = controller.action_state_feedback(
+                    before, after, [before_row, after_row])
+
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
+
+    def test_feedback_refuses_boolean_integer_alias_across_capture_bindings(self):
+        def fresh_binding():
+            return {"focus": 1, "surface": 1,
+                    "geometry": [0, 0, 640, 480]}
+
+        before = observation(0, 100)
+        after = observation(1, 200)
+        before["pointer_binding"] = fresh_binding()
+        after_binding = fresh_binding()
+        after_binding["focus"] = True
+        after["pointer_binding"] = after_binding
+        before_row = typed_observation(0, 100, 91, 45, binding=fresh_binding())
+        after_row = typed_observation(1, 200, 91, 44, binding=after_binding)
+
+        result = controller.action_state_feedback(
+            before, after, [before_row, after_row])
+
+        self.assertEqual(result["status"], "unavailable")
+        self.assertEqual(result["reason"], "typed_signal_binding_mismatch")
+
+    def test_feedback_refuses_boolean_integer_aliases_in_nested_bindings(self):
+        cases = (
+            ("typed_top_level_focus", "typed_top", ("focus",), True,
+             "typed_frame_identity_mismatch"),
+            ("observation_top_level_focus", "observation", ("focus",), True,
+             "typed_frame_identity_mismatch"),
+            ("typed_signal_focus", "typed_signal", ("focus",), True,
+             "typed_signal_unavailable"),
+            ("typed_top_level_focus_float", "typed_top", ("focus",), 1.0,
+             "typed_frame_identity_mismatch"),
+            ("observation_nested_geometry", "observation", ("geometry", 0), False,
+             "typed_frame_identity_mismatch"),
+        )
+
+        for name, target, path, alias, reason in cases:
+            with self.subTest(name=name):
+                before = observation(0, 100)
+                after = observation(1, 200)
+                def fresh_binding():
+                    return {"focus": 1, "surface": 1,
+                            "geometry": [0, 0, 640, 480]}
+                before["pointer_binding"] = fresh_binding()
+                after["pointer_binding"] = fresh_binding()
+                before_row = typed_observation(
+                    0, 100, 91, 45, binding=fresh_binding())
+                after_row = typed_observation(
+                    1, 200, 91, 44, binding=fresh_binding())
+                after_row["pointer_binding"] = fresh_binding()
+                for signal in after_row["signals"].values():
+                    signal["binding"] = fresh_binding()
+                binding = (after_row["pointer_binding"] if target.startswith("typed")
+                           else after["pointer_binding"])
+                if target == "typed_signal":
+                    binding = after_row["signals"]["health"]["binding"]
+                node = binding
+                for component in path[:-1]:
+                    node = node[component]
+                node[path[-1]] = alias
+
+                result = controller.action_state_feedback(
+                    before, after, [before_row, after_row])
+
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"], reason)
+
     def test_feedback_refuses_typed_event_schema_and_top_level_binding_mismatch(self):
         before, after = observation(83, 100), observation(89, 200)
         wrong_schema = typed_observation(89, 200, 91, 44)
