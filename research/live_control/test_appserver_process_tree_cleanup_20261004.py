@@ -30,6 +30,12 @@ class AppServerProcessTreeCleanupTests(unittest.TestCase):
         except ProcessLookupError:
             return False
 
+    def assert_pid_stopped(self, pid, timeout=3):
+        deadline = time.monotonic() + timeout
+        while self.pid_exists(pid) and time.monotonic() < deadline:
+            time.sleep(.01)
+        self.assertFalse(self.pid_exists(pid))
+
     @unittest.skipUnless(os.name == 'posix', 'POSIX process-group ownership only')
     def test_close_retires_inherited_stdout_descendant_after_leader_exit(self):
         with tempfile.TemporaryDirectory(prefix='appserver-tree-close-') as temporary:
@@ -70,7 +76,7 @@ pathlib.Path(sys.argv[1]).write_text(str(child.pid), encoding="ascii")
                 client.close(timeout=.1)
 
                 self.assertEqual(client.process.returncode, 0)
-                self.assertFalse(self.pid_exists(grandchild_pid))
+                self.assert_pid_stopped(grandchild_pid)
                 self.assertFalse(client._reader.is_alive())
                 self.assertTrue(client.process.stdin.closed)
                 self.assertTrue(client.process.stdout.closed)
@@ -190,7 +196,7 @@ time.sleep(30)
                 client.close(timeout=.1)
 
                 self.assertEqual(client.process.returncode, -signal.SIGTERM)
-                self.assertFalse(self.pid_exists(grandchild_pid))
+                self.assert_pid_stopped(grandchild_pid)
                 self.assertFalse(client._reader.is_alive())
                 self.assertTrue(client.process.stdin.closed)
                 self.assertTrue(client.process.stdout.closed)
