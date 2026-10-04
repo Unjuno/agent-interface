@@ -29,3 +29,9 @@ expected_line = ("PASS cycles=64 verified_cancel_cleanup=64 key_events=128 "
 if exit_code != "0" or raw.strip() != expected_line:
     raise SystemExit("FAIL retained probe receipt")
 print("PASS raw output and exit receipt")
+
+for line in (HERE / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
+    expected_hash, path = line.split("  ", 1)
+    if digest(repo / path) != expected_hash:
+        raise SystemExit(f"FAIL manifest hash: {path}")
+print("PASS manifest hashes")
