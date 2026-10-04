@@ -1,3 +1,4 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
 test_current_action_admission_rejects_float_epoch_metadata (builtins.AdmissionEpochTypeRegression.test_current_action_admission_rejects_float_epoch_metadata) ... 
   test_current_action_admission_rejects_float_epoch_metadata (builtins.AdmissionEpochTypeRegression.test_current_action_admission_rejects_float_epoch_metadata) (field='sequence', alias=4.0) ... FAIL
   test_current_action_admission_rejects_float_epoch_metadata (builtins.AdmissionEpochTypeRegression.test_current_action_admission_rejects_float_epoch_metadata) (field='capture_ns', alias=40.0) ... FAIL
@@ -10,6 +11,7 @@ Traceback (most recent call last):
 AssertionError: ValueError not raised
 
 ======================================================================
+CASE_SUMMARY tests=1 failures=2 errors=0
 FAIL: test_current_action_admission_rejects_float_epoch_metadata (builtins.AdmissionEpochTypeRegression.test_current_action_admission_rejects_float_epoch_metadata) (field='capture_ns', alias=40.0)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
@@ -17,7 +19,6 @@ Traceback (most recent call last):
 AssertionError: ValueError not raised
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.002s
+Ran 1 test in 0.003s
 
 FAILED (failures=2)
-CASE_SUMMARY tests=1 failures=2 errors=0
