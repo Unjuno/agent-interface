@@ -139,7 +139,8 @@ def main():
         "started_ns": time.perf_counter_ns(),
         "platform": platform.platform(), "python": sys.version,
         "support_root": str(support), "model_calls": 0,
-        "network": "container --network none",
+        "execution_route": freeze["execution_route"],
+        "network_isolation": freeze["network_isolation"],
         "scope": "current-v39 backend and executor on private Xvfb; no game/task",
     }, indent=2) + "\n", encoding="utf-8")
 

@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import symtable
 import tempfile
+import types
 import unittest
 from unittest import mock
 
@@ -88,6 +89,71 @@ class CandidateNetworkReceiptTests(unittest.TestCase):
         for name, value in expected.items():
             self.assertEqual(row[name], value)
         self.assertFalse(row["candidate_completed"])
+
+    def test_main_records_execution_route_from_the_freeze_before_session_start(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            package = root / "research/doom/map01-v39-per-key-release-live-t0-20261004"
+            package.mkdir(parents=True)
+            out = root / "out"
+            out.mkdir()
+            freeze = {
+                "allocation_id": "MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01",
+                "runtime_environment_sha256": "fixture-env-sha",
+                "source_support_sha256": "fixture-support-sha",
+                "output_root": "out",
+                "execution_route": "direct process in isolated OrbStack Ubuntu/arm64 guest",
+                "network_isolation": "unshare -n",
+            }
+            (package / "FREEZE.json").write_text(json.dumps(freeze), encoding="utf-8")
+            receipt = {
+                "network_interfaces": ["ip6tnl0", "lo", "sit0", "tunl0"],
+                "network_link_states": {
+                    "ip6tnl0": "DOWN", "lo": "DOWN", "sit0": "DOWN", "tunl0": "DOWN",
+                },
+                "network_ipv4_routes": "",
+                "network_ipv6_routes": "",
+            }
+
+            class Backend:
+                pass
+            Backend.__module__ = "doom_typed_release_backend_v3"
+            class Executor:
+                pass
+            Executor.__module__ = "executor_v12"
+
+            def fail_session_setup():
+                raise RuntimeError("stop before creating an X11 session")
+
+            runtime = types.ModuleType("session_map01_v12")
+            runtime.Backend = Backend
+            runtime.Executor = Executor
+            runtime.suite = types.SimpleNamespace(Session=fail_session_setup)
+            xlib = types.ModuleType("Xlib")
+            xlib.__path__ = []
+            xlib.XK = types.SimpleNamespace(string_to_keysym=lambda _name: 1)
+            xdisplay = types.ModuleType("Xlib.display")
+            xdisplay.Display = object
+
+            with mock.patch.object(candidate, "ROOT", root), \
+                    mock.patch.object(candidate, "PACKAGE", package), \
+                    mock.patch.object(candidate, "verify_frozen", return_value=receipt), \
+                    mock.patch.object(candidate, "install_support", return_value=root / "support"), \
+                    mock.patch.dict(sys.modules, {
+                        "Xlib": xlib, "Xlib.display": xdisplay,
+                        "session_map01_v12": runtime,
+                    }), \
+                    mock.patch.object(sys, "argv", [str(HERE / "candidate.py"),
+                                                     "--out", str(out)]):
+                exit_code = candidate.main()
+
+            started_path = out / "candidate_started.json"
+            self.assertTrue(started_path.is_file())
+            started = json.loads(started_path.read_text(encoding="utf-8"))
+            self.assertEqual(started.get("execution_route"), freeze["execution_route"])
+            self.assertEqual(started.get("network_isolation"), freeze["network_isolation"])
+            self.assertFalse((out / "x11-display.txt").exists())
+            self.assertEqual(exit_code, 2)
 
     def test_nonempty_route_stops_before_returning_a_network_receipt(self):
         with self.assertRaisesRegex(RuntimeError, "STOP_NETWORK_NAMESPACE"):
