@@ -4,7 +4,9 @@
     "queued acceptance is drained before cancellation terminal",
     "cancel for cover-0 is sent",
     "terminal reports cancelled with verified empty keys/buttons",
-    "latest observation updates to sequence 99"
+    "latest observation updates to sequence 99",
+    "renewal invalidation interrupts matching planner turn",
+    "renewal cover cancellation has verified empty keys/buttons"
   ],
   "audit_result": {
     "candidate_sha256": "0e1183a26cb0f816dcde97bb80f63f436ae306fd356a2ccef160e9ba5fe2add4",
@@ -43,10 +45,11 @@
     {
       "command": "python -m unittest research.doom.test_map01_overlap_controller_v40_unknown_source -v",
       "exit_code": 0,
-      "tests_passed": 9
+      "stdout_log": "research/doom/v40_admission_invalidation_59_t2_20261004/test-output.txt",
+      "tests_passed": 10
     },
     {
-      "command": "python -m py_compile research/doom/map01_overlap_controller_v40.py research/doom/test_map01_overlap_controller_v40_unknown_source.py",
+      "command": "python -m py_compile research/doom/map01_overlap_controller_v40.py research/doom/test_map01_overlap_controller_v40_unknown_source.py research/doom/v40_admission_invalidation_59_t2_20261004/audit_admission_path.py",
       "exit_code": 0
     },
     {
@@ -71,6 +74,11 @@
       "decision": "FAIL_ADMISSION_PATH_STRUCTURE",
       "exit_code": 1,
       "expected_exit_code": 1
+    },
+    {
+      "command": "python -m unittest research.doom.test_map01_overlap_controller_v40_unknown_source.Map01V40UnknownSourceTests.test_queued_renewal_invalidation_interrupts_and_releases_cover -v",
+      "exit_code": 0,
+      "tests_passed": 1
     }
   ],
   "disposition": "PASS_CONSTRUCTION_REGRESSION",
@@ -78,10 +86,17 @@
     "platform": "Windows-10-10.0.26300-SP0",
     "python": "3.11.9"
   },
-  "fifo_case": [
-    "observation(sequence=99)",
-    "accepted(id=cover-0)",
-    "terminal(cancelled, verified empty)"
+  "fifo_cases": [
+    [
+      "observation(sequence=99)",
+      "accepted(id=cover-0)",
+      "terminal(cancelled, verified empty)"
+    ],
+    [
+      "observation(sequence=101)",
+      "accepted(id=cover-0-renew-1)",
+      "terminal(cancelled, verified empty)"
+    ]
   ],
   "identity_gate_after_patch": {
     "candidate_sha256": "0e1183a26cb0f816dcde97bb80f63f436ae306fd356a2ccef160e9ba5fe2add4",
@@ -105,5 +120,5 @@
   "schema": "map01-v40-admission-invalidation-construction-v1",
   "scope": "deterministic host-side event-queue construction only; no session runtime, game, model, GUI, OS input, formal allocation, or task-effect claim",
   "test_source": "research/doom/test_map01_overlap_controller_v40_unknown_source.py",
-  "test_source_sha256": "e70e514b4486bb9169c8f100bd244813653e1c2803d6958dbfb4deacc2eeb082"
+  "test_source_sha256": "b6fb60b74c3275b92a66f9ccc59e02a1f553875f3c02062c2dc98fb0b0b56373"
 }

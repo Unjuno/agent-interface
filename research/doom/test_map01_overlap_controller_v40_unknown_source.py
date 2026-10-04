@@ -196,6 +196,66 @@ class Map01V40UnknownSourceTests(unittest.TestCase):
         self.assertTrue(controller.terminal_release_verified(released))
         self.assertTrue(incoming.empty())
 
+    def test_queued_renewal_invalidation_interrupts_and_releases_cover(self):
+        self.require_candidate()
+
+        class Process:
+            def __init__(self):
+                self.stdin = io.StringIO()
+
+            @staticmethod
+            def poll():
+                return None
+
+        class Monitor:
+            event_types = {"observation"}
+
+            def observe(self, row):
+                return {"status": "hard_change", "sequence": row["sequence"]}
+
+        class Planner:
+            def __init__(self):
+                self.interrupted = []
+
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"turn_id": handle, "interrupted": True}
+
+        incoming = queue.Queue()
+        observation = {"event": "observation", "sequence": 101}
+        accepted = {"event": "accepted", "id": "cover-0-renew-1"}
+        terminal = {"event": "terminal", "id": "cover-0-renew-1",
+                    "status": "cancelled", "release": {
+                        "verified": True, "keys_down": [], "buttons_down": []}}
+        for event in (observation, accepted, terminal):
+            incoming.put(event)
+        process = Process()
+        planner = Planner()
+        handle = "turn-4"
+        latest = []
+
+        def wait(predicate, timeout=40, observation_monitor=None):
+            return controller.wait_for_event(
+                incoming, process, predicate, timeout,
+                observation_monitor=observation_monitor,
+                on_observation=latest.append,
+            )
+
+        boundary = controller.wait_for_cover_acceptance(
+            wait, "cover-0-renew-1", Monitor())
+        self.assertEqual(boundary["event"], "policy_invalidation")
+        self.assertEqual(boundary["invalidation"]["sequence"], 101)
+        planner_interrupt, released = controller.cancel_invalidated_cover(
+            planner, handle, process, wait, "cover-0-renew-1")
+        self.assertEqual(planner.interrupted, [handle])
+        self.assertEqual(planner_interrupt, {"turn_id": handle, "interrupted": True})
+        self.assertEqual(released, terminal)
+        self.assertEqual(json.loads(process.stdin.getvalue()),
+                         {"op": "cancel", "id": "cover-0-renew-1"})
+        self.assertEqual(latest, [observation])
+        self.assertTrue(controller.terminal_release_verified(released))
+        self.assertTrue(incoming.empty())
+
     def test_unknown_source_after_finish_eof_still_collects_score(self):
         self.require_candidate()
         events = []
