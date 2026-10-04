@@ -1,5 +1,6 @@
 """Session custody fence; all native effects mocked."""
 import types,unittest
+from unittest.mock import patch
 from runtime.backends.win32_v1.backend import Win32Backend
 from runtime.core_v1.contract import SCHEMA_PROGRAM
 class SessionCustody(unittest.TestCase):
@@ -20,6 +21,40 @@ class SessionCustody(unittest.TestCase):
         b,s=self.make();self.state=1
         self.assertEqual(self.dispatch(s,[dict(op='release_all')])['status'],'completed');self.assertEqual(b.held_keys,{})
         self.assertEqual(self.dispatch(s,[dict(op='key_state',key='S',down=True),dict(op='release_all')])['status'],'completed');self.assertIn((ord('S'),True),self.sends)
+
+    def test_unverified_key_up_aborts_remaining_ops_in_same_program(self):
+        b,s=self.make();self.state=0;b.held_keys={}
+        events=[]
+        b.manifest=lambda:{'capabilities':{}}
+        b.preflight=lambda program:None
+        b.text=lambda value:events.append(('text',value))
+        accepted=types.SimpleNamespace(accepted=True,error=None,required_capabilities=[])
+        with patch.object(m,'admit_program',return_value=accepted):
+            r=self.dispatch(s,[dict(op='key_state',key='SHIFT',down=True),
+                               dict(op='key_state',key='SHIFT',down=False),
+                               dict(op='text',text='SHOULD NOT SEND'),
+                               dict(op='release_all')])
+        self.assertEqual(r['status'],'release_unverified')
+        self.assertEqual(events,[])
+        self.assertEqual(self.sends,[(16,True),(16,False),(16,False)])
+        self.assertEqual(b.held_keys,{'SHIFT':16})
+
+    def test_unverified_chord_completion_aborts_remaining_ops(self):
+        b,s=self.make();self.state=0;b.held_keys={}
+        events=[]
+        b.manifest=lambda:{'capabilities':{}}
+        b.preflight=lambda program:None
+        b.text=lambda value:events.append(('text',value))
+        accepted=types.SimpleNamespace(accepted=True,error=None,required_capabilities=[])
+        with patch.object(m,'admit_program',return_value=accepted):
+            r=self.dispatch(s,[dict(op='key_chord',keys=['CTRL','S']),
+                               dict(op='text',text='SHOULD NOT SEND'),
+                               dict(op='release_all')])
+        self.assertEqual(r['status'],'release_unverified')
+        self.assertEqual(events,[])
+        self.assertEqual(self.sends,[(17,True),(83,True),(83,False),(17,False),
+                                     (17,False),(83,False)])
+        self.assertEqual(b.held_keys,{'CTRL':17,'S':83})
 
 from runtime.backends.win32_v1 import session as m
 if __name__=='__main__':unittest.main(verbosity=2)

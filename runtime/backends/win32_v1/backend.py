@@ -493,6 +493,19 @@ class Win32Backend:
                     releases.append(self.release_all())
                 else:
                     raise Win32BackendError(f"unsupported op {kind}")
+                release_attempt = (
+                    kind == "key_chord"
+                    or (kind == "key_state" and not op["down"])
+                    or (kind == "pointer_button" and not op["down"])
+                    or kind == "release_all"
+                )
+                if release_attempt and (self.held_keys or self.held_buttons):
+                    # An unconfirmed UP ends this program's task effects. Try
+                    # cleanup once more, retain custody, and let the session
+                    # report release_unverified without sending later ops.
+                    if kind != "release_all":
+                        releases.append(self.release_all())
+                    break
         except Exception:
             releases.append(self.release_all())
             raise
