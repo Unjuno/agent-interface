@@ -145,7 +145,8 @@ def main():
         bridge_module = importlib.util.module_from_spec(bridge_spec)
         bridge_spec.loader.exec_module(bridge_module)
         selected_backend = bridge_module.Backend
-        source_paths.extend((PERKEY_BRIDGE, PERKEY_OWNER))
+        source_paths.extend((PERKEY_BRIDGE, PERKEY_OWNER,
+                             HERE.parent / "live_control/executor_v3.py"))
     for path in source_paths:
         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
