@@ -1,0 +1,282 @@
+{
+  "schema": "v16-source-epoch-probe-a01-result-v1",
+  "status": "PASS_COUNTEREXAMPLE",
+  "main_commit": "5c52cc4c08e96312338228ae5a566c2436eabc37",
+  "python": "3.11.9",
+  "checks": {
+    "different_underlying_current_state": true,
+    "same_reported_samples": true,
+    "same_client_update_rows": true,
+    "same_progress_clock_events": true,
+    "stale_world_claims_current_update": true,
+    "stale_source_epoch_is_not_present": true
+  },
+  "fresh_current_kills": 2,
+  "stale_world_current_kills": 3,
+  "fresh_reported_samples": [
+    {
+      "schema": "independent-progress-sample-v2",
+      "sample_ns": 30,
+      "kill_count": 0,
+      "death_count": 0,
+      "episode_finished": false,
+      "player_dead": false,
+      "map_exit": false,
+      "producer": {
+        "run_id": "fixed-current-run",
+        "sample_sequence": 1,
+        "update_sequence": 1,
+        "observation_status": "UPDATE_RETURNED",
+        "tic_before": 1,
+        "tic_after": 2,
+        "update_started_ns": 10,
+        "update_returned_ns": 20
+      }
+    },
+    {
+      "schema": "independent-progress-sample-v2",
+      "sample_ns": 60,
+      "kill_count": 2,
+      "death_count": 0,
+      "episode_finished": false,
+      "player_dead": false,
+      "map_exit": false,
+      "producer": {
+        "run_id": "fixed-current-run",
+        "sample_sequence": 2,
+        "update_sequence": 2,
+        "observation_status": "UPDATE_RETURNED",
+        "tic_before": 2,
+        "tic_after": 3,
+        "update_started_ns": 40,
+        "update_returned_ns": 50
+      }
+    }
+  ],
+  "stale_reported_samples": [
+    {
+      "schema": "independent-progress-sample-v2",
+      "sample_ns": 30,
+      "kill_count": 0,
+      "death_count": 0,
+      "episode_finished": false,
+      "player_dead": false,
+      "map_exit": false,
+      "producer": {
+        "run_id": "fixed-current-run",
+        "sample_sequence": 1,
+        "update_sequence": 1,
+        "observation_status": "UPDATE_RETURNED",
+        "tic_before": 1,
+        "tic_after": 2,
+        "update_started_ns": 10,
+        "update_returned_ns": 20
+      }
+    },
+    {
+      "schema": "independent-progress-sample-v2",
+      "sample_ns": 60,
+      "kill_count": 2,
+      "death_count": 0,
+      "episode_finished": false,
+      "player_dead": false,
+      "map_exit": false,
+      "producer": {
+        "run_id": "fixed-current-run",
+        "sample_sequence": 2,
+        "update_sequence": 2,
+        "observation_status": "UPDATE_RETURNED",
+        "tic_before": 2,
+        "tic_after": 3,
+        "update_started_ns": 40,
+        "update_returned_ns": 50
+      }
+    }
+  ],
+  "fresh_client_update_rows": [
+    {
+      "schema": "scorer-client-update-v1",
+      "run_id": "fixed-current-run",
+      "sample_sequence": 1,
+      "controller_visible": false,
+      "status": "UPDATE_RETURNED",
+      "tic_before": 1,
+      "update_started_ns": 10,
+      "update_returned_ns": 20,
+      "tic_after": 2,
+      "sample": {
+        "schema": "independent-progress-sample-v2",
+        "sample_ns": 30,
+        "kill_count": 0,
+        "death_count": 0,
+        "episode_finished": false,
+        "player_dead": false,
+        "map_exit": false,
+        "producer": {
+          "run_id": "fixed-current-run",
+          "sample_sequence": 1,
+          "update_sequence": 1,
+          "observation_status": "UPDATE_RETURNED",
+          "tic_before": 1,
+          "tic_after": 2,
+          "update_started_ns": 10,
+          "update_returned_ns": 20
+        }
+      }
+    },
+    {
+      "schema": "scorer-client-update-v1",
+      "run_id": "fixed-current-run",
+      "sample_sequence": 2,
+      "controller_visible": false,
+      "status": "UPDATE_RETURNED",
+      "tic_before": 2,
+      "update_started_ns": 40,
+      "update_returned_ns": 50,
+      "tic_after": 3,
+      "sample": {
+        "schema": "independent-progress-sample-v2",
+        "sample_ns": 60,
+        "kill_count": 2,
+        "death_count": 0,
+        "episode_finished": false,
+        "player_dead": false,
+        "map_exit": false,
+        "producer": {
+          "run_id": "fixed-current-run",
+          "sample_sequence": 2,
+          "update_sequence": 2,
+          "observation_status": "UPDATE_RETURNED",
+          "tic_before": 2,
+          "tic_after": 3,
+          "update_started_ns": 40,
+          "update_returned_ns": 50
+        }
+      }
+    }
+  ],
+  "stale_client_update_rows": [
+    {
+      "schema": "scorer-client-update-v1",
+      "run_id": "fixed-current-run",
+      "sample_sequence": 1,
+      "controller_visible": false,
+      "status": "UPDATE_RETURNED",
+      "tic_before": 1,
+      "update_started_ns": 10,
+      "update_returned_ns": 20,
+      "tic_after": 2,
+      "sample": {
+        "schema": "independent-progress-sample-v2",
+        "sample_ns": 30,
+        "kill_count": 0,
+        "death_count": 0,
+        "episode_finished": false,
+        "player_dead": false,
+        "map_exit": false,
+        "producer": {
+          "run_id": "fixed-current-run",
+          "sample_sequence": 1,
+          "update_sequence": 1,
+          "observation_status": "UPDATE_RETURNED",
+          "tic_before": 1,
+          "tic_after": 2,
+          "update_started_ns": 10,
+          "update_returned_ns": 20
+        }
+      }
+    },
+    {
+      "schema": "scorer-client-update-v1",
+      "run_id": "fixed-current-run",
+      "sample_sequence": 2,
+      "controller_visible": false,
+      "status": "UPDATE_RETURNED",
+      "tic_before": 2,
+      "update_started_ns": 40,
+      "update_returned_ns": 50,
+      "tic_after": 3,
+      "sample": {
+        "schema": "independent-progress-sample-v2",
+        "sample_ns": 60,
+        "kill_count": 2,
+        "death_count": 0,
+        "episode_finished": false,
+        "player_dead": false,
+        "map_exit": false,
+        "producer": {
+          "run_id": "fixed-current-run",
+          "sample_sequence": 2,
+          "update_sequence": 2,
+          "observation_status": "UPDATE_RETURNED",
+          "tic_before": 2,
+          "tic_after": 3,
+          "update_started_ns": 40,
+          "update_returned_ns": 50
+        }
+      }
+    }
+  ],
+  "fresh_progress_clock_events": [
+    {
+      "schema": "independent-progress-event-v2",
+      "event_sequence": 1,
+      "observed_ns": 60,
+      "kind": "KILL_COUNT_INCREASE",
+      "polarity": "positive",
+      "useful": true,
+      "controller_visible": false,
+      "before": {
+        "kill_count": 0
+      },
+      "after": {
+        "kill_count": 2,
+        "delta": 2
+      }
+    }
+  ],
+  "stale_progress_clock_events": [
+    {
+      "schema": "independent-progress-event-v2",
+      "event_sequence": 1,
+      "observed_ns": 60,
+      "kind": "KILL_COUNT_INCREASE",
+      "polarity": "positive",
+      "useful": true,
+      "controller_visible": false,
+      "before": {
+        "kill_count": 0
+      },
+      "after": {
+        "kill_count": 2,
+        "delta": 2
+      }
+    }
+  ],
+  "both_emitted_sample_kills": [
+    0,
+    2
+  ],
+  "wrapper_run_id": "fixed-current-run",
+  "wrapper_update_sequence": 2,
+  "progress_clock_events": [
+    {
+      "schema": "independent-progress-event-v2",
+      "event_sequence": 1,
+      "observed_ns": 60,
+      "kind": "KILL_COUNT_INCREASE",
+      "polarity": "positive",
+      "useful": true,
+      "controller_visible": false,
+      "before": {
+        "kill_count": 0
+      },
+      "after": {
+        "kill_count": 2,
+        "delta": 2
+      }
+    }
+  ],
+  "interpretation": "V16 records an acknowledged client update and labels the sampled value with that wrapper run, but the accepted sample API contains no identity proving which producer epoch supplied the counters. Identical fresh/stale histories remain indistinguishable.",
+  "scope": "Synthetic source-level identifiability construction; does not show the real engine returns stale counters and does not qualify runtime freshness or gameplay."
+}
