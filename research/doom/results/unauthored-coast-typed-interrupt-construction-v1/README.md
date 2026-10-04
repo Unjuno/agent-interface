@@ -18,4 +18,4 @@ From the repository root, with research Python dependencies available:
     python -m unittest research.doom.test_unauthored_coast_liveness_v1 -v
     python -m unittest research.doom.test_map01_overlap_controller_v40 -v
 
-Observed construction result: compile exit 0; 9/9 monitor/handoff tests and 3/3 controller integration tests pass.
+Observed construction result: compile exit 0; 9/9 monitor/handoff tests and 3/3 controller integration tests pass. The exact command output is retained in construction-run.txt. audit_construction.py independently checks the frozen IDs, recorded exits/test counts, source identity, and scope text; its result is AUDIT.json (PASS).
