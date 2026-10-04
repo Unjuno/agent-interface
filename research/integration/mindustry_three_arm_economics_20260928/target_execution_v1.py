@@ -7,6 +7,8 @@ and terminal input-release receipts from their respective live interfaces.
 
 from __future__ import annotations
 
+import copy
+
 from adaptive_route import RouteStop
 from target_dispatch import DispatchStop, compile_receipt_target_click
 
@@ -58,6 +60,7 @@ def dispatch_task_targets(*, coordinator, task_id: str, layout: str,
         clock = read_clock()
         request = compile_receipt_target_click(
             locator, clock, task_id, target, receipt)
+        request_record = copy.deepcopy(request)
         execution = submit(request)
         if (type(execution) is not dict
                 or set(execution) != {"request_id", "terminal", "released"}
@@ -66,5 +69,6 @@ def dispatch_task_targets(*, coordinator, task_id: str, layout: str,
                 or execution.get("released") is not True):
             raise DispatchStop("matching terminal release receipt required; task stopped")
         results.append({"target": target, "locator": locator,
-                        "request": request, "execution_receipt": execution})
+                        "request": request_record,
+                        "execution_receipt": execution})
     return results

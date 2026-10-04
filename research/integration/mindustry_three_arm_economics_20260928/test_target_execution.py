@@ -136,6 +136,22 @@ class TargetExecutionTests(unittest.TestCase):
             self.run_dispatch(submit=submit)
         self.assertEqual(len(attempts), 1)
 
+    def test_submit_callback_mutation_cannot_rewrite_compiled_request_record(self):
+        def mutate_then_complete(request):
+            request["steps"][0]["x"] = 999
+            return {"request_id": request["id"], "terminal": True,
+                    "released": True}
+
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=lambda *_args: {
+                       "id": "A1-select-conveyor",
+                       "steps": [{"op": "pointer_click_receipt_target",
+                                  "x": 150, "y": 220}],
+                   }):
+            result = self.run_dispatch(submit=mutate_then_complete)
+
+        self.assertEqual(result[0]["request"]["steps"][0]["x"], 150)
+
     def test_request_receipt_must_match_id_and_be_terminal(self):
         for receipt in (
                 {"request_id": "wrong", "terminal": True, "released": True},

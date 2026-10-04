@@ -387,8 +387,8 @@ remains in force.
 
 ## Fresh-locator → target-dispatch composition (host construction, 2026-10-04)
 
-The branch was rebased and the host checks rerun on
-`785044278d1959a6a1acb93a0ef0e01480950223`:
+The branch includes current main through
+`68e0378362b5ce6775f253064eaad63a2da6cda9`:
 `target_execution_v1.py` composes the existing `ArmCoordinator` fresh-locator
 check and receipt-bound `target_dispatch.py` compiler for the two ordered
 Mindustry task points. Each point requires a newer observation, current layout
@@ -402,10 +402,13 @@ stale-geometry refusal before the affected dispatch, task-ID matching, and
 fail-closed handling of stale socket clocks, mismatched/nonterminal/unreleased
 execution receipts, and repeated calls before lifecycle advance. One test
 exercises the real receipt builders and request compiler with synthetic
-observations. The full package suite passes 94/94; the inherited decision
-probe passes with 10 controls. Submit and observation are host callbacks, so
-these tests do not connect a live Mindustry socket, capture real images, dispatch input, call a
-model, score a game task, produce an independent raw audit, or demonstrate
+observations. A mutation control showed that a submit callback could otherwise
+rewrite the retained compiled-request object after returning; dispatch now
+deep-copies that record before invoking the callback. The target-dispatch tests
+pass 9/9, the full package suite passes 95/95, and the inherited decision probe
+passes with 10 controls. Submit and observation are host callbacks, so these
+tests do not connect a live Mindustry socket, capture real images, dispatch
+input, call a model, score a game task, produce an independent raw audit, or demonstrate
 three-arm execution/economics. The actual live adapters, full runner, and
 allocation remain unimplemented. No game, model, Docker command, workflow, or
 formal allocation was invoked; the #5130 resource gate remains controlling.
