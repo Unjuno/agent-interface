@@ -19,6 +19,75 @@ def index_blob(path: str) -> bytes:
                           check=True, capture_output=True).stdout
 
 
+def head_blob(path: str) -> bytes:
+    return subprocess.run(["git", "show", f"HEAD:{path}"], cwd=REPO,
+                          check=True, capture_output=True).stdout
+
+
+def frozen_blobs_match(expected: str | None, blobs: tuple[bytes, ...]) -> bool:
+    return bool(expected) and all(hashlib.sha256(blob).hexdigest() == expected for blob in blobs)
+
+
+def manifest_bytes_match(expected_sha256: str, blobs: tuple[bytes, ...], sidecar_sha256: str) -> bool:
+    hashes = [hashlib.sha256(blob).hexdigest() for blob in blobs]
+    return len(set(hashes)) == 1 and hashes[0] == expected_sha256 == sidecar_sha256
+
+
+def verify_frozen_sources(freeze: dict) -> list[dict]:
+    """Bind imported semantics and fixture bytes to the formal source freeze."""
+    checks = []
+    for name in ("audit.py", "fixture.json"):
+        path = ROOT / name
+        rel = path.relative_to(REPO).as_posix()
+        expected = freeze.get("sha256", {}).get(name)
+        hashes = {
+            "worktree_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "index_sha256": hashlib.sha256(index_blob(rel)).hexdigest(),
+            "head_sha256": hashlib.sha256(head_blob(rel)).hexdigest(),
+        }
+        checks.append({"path": name, "freeze_sha256": expected, **hashes,
+                       "matches_freeze": frozen_blobs_match(expected, (path.read_bytes(), index_blob(rel), head_blob(rel)))})
+    return checks
+
+
+def verify_review03_manifest() -> tuple[list[dict], list[str]]:
+    """Verify manifest bytes and every sealed worktree/index/HEAD blob."""
+    manifest_path = ROOT / "results/review-correction-03/REVIEW_SHA256SUMS.txt"
+    sidecar_path = ROOT / "results/review-correction-03/REVIEW_SHA256SUMS.sha256"
+    manifest_rel = manifest_path.relative_to(REPO).as_posix()
+    manifest_bytes = manifest_path.read_bytes()
+    manifest_blobs = (manifest_bytes, index_blob(manifest_rel), head_blob(manifest_rel))
+    manifest_hashes = [hashlib.sha256(blob).hexdigest() for blob in manifest_blobs]
+    sidecar_hash = sidecar_path.read_text(encoding="ascii").split()[0]
+    errors = []
+    if not manifest_bytes_match(sidecar_hash, manifest_blobs, sidecar_hash):
+        errors.append("review-correction-03 manifest or its sidecar is not sealed identically")
+
+    checks = []
+    for line in manifest_bytes.decode("utf-8").splitlines():
+        expected, rel = line.split("  ", 1)
+        path = ROOT / rel
+        git_path = path.relative_to(REPO).as_posix()
+        hashes = {
+            "worktree_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "index_sha256": hashlib.sha256(index_blob(git_path)).hexdigest(),
+            "head_sha256": hashlib.sha256(head_blob(git_path)).hexdigest(),
+        }
+        ok = all(value == expected for value in hashes.values())
+        checks.append({"path": rel, "manifest_sha256": expected, **hashes,
+                       "matches_manifest": ok})
+        if not ok:
+            errors.append(f"review-correction-03 manifest does not seal all bytes: {rel}")
+    return checks, errors
+
+
+def write_recheck(result: dict) -> int:
+    out = ROOT / "results/review-correction-04/RECHECK.json"
+    out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="")
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return 0 if result.get("disposition") == "PASS_ADDITIVE_SINCERE_METADATA_AND_BLOB_RECHECK" else 1
+
+
 def reconstructed_sincere_id(indices, reporter, orders, reports):
     full_ids = {pref_key(row["preference"]): row["report_id"]
                 for row in reports if row["label"] == "full"}
@@ -44,6 +113,29 @@ def sincere_metadata_mismatches(document, orders, reports):
 
 def main() -> int:
     fixture_path = ROOT / "fixture.json"
+    errors: list[str] = []
+    freeze = json.loads((ROOT / "FREEZE.json").read_text(encoding="utf-8"))
+    source_checks = verify_frozen_sources(freeze)
+    if not all(check["matches_freeze"] for check in source_checks):
+        errors.append("audit.py or fixture.json does not match the formal source freeze")
+    manifest_checks, manifest_errors = verify_review03_manifest()
+    errors.extend(manifest_errors)
+    if errors:
+        return write_recheck({
+            "schema": "preference-manipulation-7678-t0-sincere-report-recheck-v1",
+            "allocation": freeze.get("allocation"),
+            "candidate_or_formal_auditor_rerun": False,
+            "formal_allocation_disposition": "HOLD",
+            "historical_review_correction_03_claim_status": "NOT_RECONFIRMED_UNTIL_THIS_RECHECK_PASSES",
+            "independently_recomputed_manipulation_summary_after_metadata_validation": None,
+            "review_correction_03_manifest_file_count": len(manifest_checks),
+            "review_correction_03_manifest_mismatch_count": sum(not row["matches_manifest"] for row in manifest_checks),
+            "formal_freeze_source_checks": source_checks,
+            "errors": errors,
+            "disposition": "HOLD_RECHECK_ERRORS",
+            "manifest_checks": manifest_checks,
+        })
+
     fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
     raw = json.loads((ROOT / "results/formal-01/candidate-output.json").read_text(encoding="utf-8"))
     orders = rank_vector_orders(sorted(fixture["routes"]))
@@ -52,7 +144,6 @@ def main() -> int:
         pref_key(row["preference"]): row["report_id"]
         for row in reports if row["label"] == "full"
     }
-    errors: list[str] = []
     if not candidate_domain_matches(raw, fixture, orders, reports):
         errors.append("independent order/report/world domain mismatch")
     seen = set()
@@ -93,24 +184,6 @@ def main() -> int:
                            else "EXHAUSTIVE_NULL_FOR_DECLARED_SET_UTILITY"),
         }
 
-    manifest_path = ROOT / "results/review-correction-03/REVIEW_SHA256SUMS.txt"
-    manifest_checks = []
-    for line in manifest_path.read_text(encoding="utf-8").splitlines():
-        expected, rel = line.split("  ", 1)
-        payload = (ROOT / rel).read_bytes()
-        work_hash = hashlib.sha256(payload).hexdigest()
-        try:
-            staged = index_blob((ROOT / rel).relative_to(REPO).as_posix())
-            staged_hash = hashlib.sha256(staged).hexdigest()
-        except (subprocess.CalledProcessError, ValueError) as exc:
-            staged_hash = None
-            errors.append(f"index blob unavailable: {rel}: {exc}")
-        manifest_checks.append({"path": rel, "manifest_sha256": expected,
-                                "worktree_sha256": work_hash, "index_sha256": staged_hash,
-                                "matches_manifest": expected == work_hash == staged_hash})
-        if expected != work_hash or expected != staged_hash:
-            errors.append(f"review-correction-03 manifest does not seal worktree and index bytes: {rel}")
-
     result = {
         "schema": "preference-manipulation-7678-t0-sincere-report-recheck-v1",
         "allocation": fixture["allocation"],
@@ -124,14 +197,12 @@ def main() -> int:
         "independently_recomputed_manipulation_summary_after_metadata_validation": corrected_summary,
         "review_correction_03_manifest_file_count": len(manifest_checks),
         "review_correction_03_manifest_mismatch_count": sum(not r["matches_manifest"] for r in manifest_checks),
+        "formal_freeze_source_checks": source_checks,
         "errors": errors,
         "disposition": "PASS_ADDITIVE_SINCERE_METADATA_AND_BLOB_RECHECK" if not errors else "HOLD_RECHECK_ERRORS",
         "manifest_checks": manifest_checks,
     }
-    out = ROOT / "results/review-correction-04/RECHECK.json"
-    out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="")
-    print(json.dumps(result, indent=2, sort_keys=True))
-    return 0 if not errors else 1
+    return write_recheck(result)
 
 if __name__ == "__main__":
     raise SystemExit(main())
