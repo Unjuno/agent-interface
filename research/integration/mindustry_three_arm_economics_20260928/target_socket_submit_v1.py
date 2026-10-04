@@ -162,6 +162,8 @@ class TargetSocketSubmitter:
         if response.get("status") != "boundary" or len(terminals) != 1:
             raise SocketSubmitStop("matching terminal action boundary required")
         terminal = terminals[0]
+        if terminal.get("status") != "completed":
+            raise SocketSubmitStop("matching terminal must report completed action")
         release = terminal.get("release")
         if type(release) is not dict or release.get("verified") is not True:
             raise SocketSubmitStop("matching terminal must verify input release")
