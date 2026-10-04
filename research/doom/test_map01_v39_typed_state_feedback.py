@@ -180,6 +180,24 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipts[0]["down_edge_interval_ns"])
                 self.assertIsNone(receipts[0]["up_edge_interval_ns"])
 
+    def test_measurement_edge_discriminator_must_match_outer_and_nested_edge(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+
+        for row_index, contradictory_edge in ((0, "up"), (1, "down")):
+            events = json.loads(json.dumps(template))
+            events[row_index]["physical_key_measurement"]["edge"] = contradictory_edge
+
+            with self.subTest(row_index=row_index,
+                              contradictory_edge=contradictory_edge):
+                receipt = controller.input_edge_receipts(events)[0]
+
+                self.assertEqual(receipt["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
