@@ -208,3 +208,11 @@ run passed85 tests with one explicit owned-host-exchange skip after this fix.
 The final independent rereview found no actionable issue in this scoped saved
 audit branch. That source-only review is not an exhaustive false-pass proof or
 formal provider clearance.
+
+Before the formal allocation, a task-design review added the row's exact
+requested text and decision policy to each real-model prompt; the same row
+prompt is retained for changed-evidence recovery, and the independent auditor
+reconstructs it from the frozen plan. A producer/auditor byte-equality test and
+the historical c02 audit passed. The complete scoped WSLc suite after this
+change passed86 tests with one explicit owned-host-exchange skip. This qualifies
+the experiment harness, not the model hypothesis.

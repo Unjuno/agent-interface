@@ -22,6 +22,21 @@ def local_sources():
             for name in LOCAL_SOURCES]
 
 
+def task_prompt(plan, row):
+    prompt=plan['prompt']
+    if plan.get('formal_allocation') is True:
+        prompt += ('\nRequested target value (exact text): '
+            + json.dumps(row['wanted'], ensure_ascii=False)
+            + '\nRead the target and decoy literally from the attached image. Choose NO_REPAIR '
+            'only when the target already equals the requested value and the decoy is empty. '
+            'Choose INSERT_PREFIX only when the nonempty target is the exact suffix of the '
+            'requested value and the missing leading prefix is exactly one character. Never '
+            'edit the decoy or invent replacement text. Choose REFUSE when the target is empty, '
+            'the decoy is nonempty, or the image is ambiguous. Report the observed target and '
+            'decoy exactly as seen; return only the required JSON object.')
+    return prompt.encode('utf-8')
+
+
 def publish(path, value):
     with Path(path).open('x', encoding='utf-8') as stream:
         json.dump(value, stream, sort_keys=True)
@@ -70,7 +85,7 @@ def run(plan_path, output, exchange):
                 pair = LivePair(out/row['id'], wanted=row['wanted'], initial_target=row['target'],
                     initial_decoy=row['decoy'], freeze_sha256=freeze_sha256,
                     display_name=os.environ['DISPLAY'])
-                result = run_pair(pair, client, row['id'], prompt=plan['prompt'].encode('utf-8'),
+                result = run_pair(pair, client, row['id'], prompt=task_prompt(plan,row),
                     focus_drift=row['focus_drift'], response_timeout_seconds=plan['response_timeout_seconds'])
                 results.append(dict(id=row['id'], cli_calls=result['cli_calls']))
             finally:

@@ -84,6 +84,16 @@ class CompletePairedAuditTests(unittest.TestCase):
         self.assertEqual(result['cli_calls'],5)
         self.assertIs(result['provider_performance_claim'],False)
 
+    def test_formal_task_prompt_binds_target_in_producer_and_independent_auditor(self):
+        plan=json.loads((self.root/'plan.json').read_bytes())
+        plan['formal_allocation']=True
+        row=plan['rows'][1]
+        producer=importlib.import_module('paired_study')
+        prompt=producer.task_prompt(plan,row)
+        self.assertEqual(prompt,self.module.expected_task_prompt(plan,row))
+        self.assertIn(b'Requested target value (exact text): "wdr"',prompt)
+        self.assertIn(b'Choose INSERT_PREFIX only when the nonempty target is the exact suffix',prompt)
+
     def test_partial_final_local_closure_is_not_complete(self):
         path = self.root/'candidate/study-result.json'
         value = json.loads(path.read_bytes())

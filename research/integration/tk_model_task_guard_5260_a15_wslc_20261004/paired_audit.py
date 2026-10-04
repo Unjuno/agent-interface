@@ -234,6 +234,21 @@ def semantic_reason(answer,current,wanted):
             else 'PREFIX_NOT_TASK_REPAIR')
 
 
+def expected_task_prompt(plan,row):
+    prompt=plan['prompt']
+    if plan.get('formal_allocation') is True:
+        prompt += ('\nRequested target value (exact text): '
+            + json.dumps(row['wanted'], ensure_ascii=False)
+            + '\nRead the target and decoy literally from the attached image. Choose NO_REPAIR '
+            'only when the target already equals the requested value and the decoy is empty. '
+            'Choose INSERT_PREFIX only when the nonempty target is the exact suffix of the '
+            'requested value and the missing leading prefix is exactly one character. Never '
+            'edit the decoy or invent replacement text. Choose REFUSE when the target is empty, '
+            'the decoy is nonempty, or the image is ambiguous. Report the observed target and '
+            'decoy exactly as seen; return only the required JSON object.')
+    return prompt.encode('utf-8')
+
+
 def native_report(report, raw_results):
     result = report['result']
     check(report['task_success'] is None and report['replay_allowed'] is False,'NATIVE_REPORT_AUTHORITY')
@@ -403,7 +418,8 @@ def audit(root):
             scored = score_arm(pair/arm/'app',wanted=schedule['wanted'],initial_decoy=schedule['decoy'])
             quality[arm][scored['quality']]+=1
         check(image_blobs['control']==image_blobs['guard']==first['image']
-              and initial['image_identical'] is True and first['prompt']==plan['prompt'].encode(),'IMAGE_PAIRED_FIRST_JOIN')
+              and initial['image_identical'] is True
+              and first['prompt']==expected_task_prompt(plan,schedule),'IMAGE_PAIRED_FIRST_JOIN')
         check(app_data['control'][0]['pid']!=app_data['guard'][0]['pid']
               and app_data['control'][0]['token']!=app_data['guard'][0]['token'],'APP_PAIR_IDENTITY_COLLISION')
         check(read(pair/'close.json')['errors']==[],'APP_CLEANUP_FAILED')
@@ -461,7 +477,7 @@ def audit(root):
             check(paired['recovery']==recovery['client']==read(pair/'recovery-model.json'),'GUARD_RECOVERY_RESPONSE_JOIN')
             source,blob = capture(root,pair/'guard','recovery',app_data['guard'][0])
             check(blob==recovery['image'] and source['capture_ns']>receipt_clock,'IMAGE_RECOVERY_CHANGED_EVIDENCE')
-            check(recovery['prompt'].startswith(plan['prompt'].encode()+b'\nChanged-evidence recovery, not a retry:'),
+            check(recovery['prompt'].startswith(expected_task_prompt(plan,schedule)+b'\nChanged-evidence recovery, not a retry:'),
                   'PROCESS_RECOVERY_PROMPT_JOIN')
             discrepancy = json.loads(recovery['prompt'].splitlines()[-1])
             check(discrepancy['first_answer']==answer and discrepancy['capture_source']==source
