@@ -41,7 +41,17 @@ class SessionSelectionTests(unittest.TestCase):
             base.vd = types.SimpleNamespace(DoomGame=object)
             base.sys = sys
             telemetry = types.ModuleType("doom_owner_thread_release_batch_backend_v1")
-            telemetry.Backend = type("SelectedBackend", (), {})
+            backend_run_ids = []
+
+            class SelectedBackend:
+                def __init__(self, session, out, emit, signal_readers, *, run_id=None):
+                    backend_run_ids.append(run_id)
+
+            telemetry.Backend = SelectedBackend
+            original_backend = type("OriginalBackend", (), {})
+            original_executor = type("OriginalExecutor", (), {})
+            base.Backend = original_backend
+            base.Executor = original_executor
             conflicting = types.ModuleType("doom_typed_release_backend_v3")
             conflicting.Backend = type("ConflictingBackend", (), {})
             names = {
@@ -53,21 +63,31 @@ class SessionSelectionTests(unittest.TestCase):
                                 "doom_typed_release_backend_v3": conflicting,
                                 "doom_owner_thread_release_batch_backend_v1": telemetry})
             try:
+                def construct_selected_backend():
+                    self.assertIs(base.Executor, ReleaseOrderedExecutor)
+                    base.Backend(object(), out, lambda row: None, {})
+                    if len(backend_run_ids) == 3:
+                        raise RuntimeError("session failed")
+
                 with patch.object(candidate, "MainThreadScorerStdin") as polling, \
                      patch.object(candidate, "ScorerFileSink") as sink:
-                    with patch.object(base, "main", return_value=None, create=True) as run_base:
+                    with patch.object(base, "main", side_effect=construct_selected_backend, create=True) as run_base:
                         oldargv, oldstdin = sys.argv, sys.stdin
                         sys.argv = ["session", "--out", str(out)]
                         try:
+                            candidate.main(run_id="run-A")
+                            self.assertIs(base.Backend, original_backend)
+                            self.assertIs(base.Executor, original_executor)
+                            self.assertEqual(backend_run_ids, ["run-A"])
                             candidate.main()
-                            self.assertFalse(hasattr(base, "Backend"))
-                            self.assertFalse(hasattr(base, "Executor"))
-                            candidate.main()
+                            with self.assertRaisesRegex(RuntimeError, "session failed"):
+                                candidate.main(run_id="run-B")
                         finally:
                             sys.argv, sys.stdin = oldargv, oldstdin
-                    self.assertFalse(hasattr(base, "Backend"))
-                    self.assertFalse(hasattr(base, "Executor"))
-                    self.assertEqual(run_base.call_count, 2)
+                    self.assertIs(base.Backend, original_backend)
+                    self.assertIs(base.Executor, original_executor)
+                    self.assertEqual(backend_run_ids, ["run-A", None, "run-B"])
+                    self.assertEqual(run_base.call_count, 3)
                 manifest = json.loads((out / "sources.json").read_text(encoding="utf-8"))
                 manifest = {name.replace("\\", "/"): value
                             for name, value in manifest.items()}
