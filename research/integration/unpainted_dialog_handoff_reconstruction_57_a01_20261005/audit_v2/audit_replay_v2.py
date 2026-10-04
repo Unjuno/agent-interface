@@ -52,6 +52,7 @@ def audit_bindings() -> dict:
 
             require(review["reply_sha256"] == reply_sha, f"{run_id} attempt {attempt}: review reply digest mismatch")
             require(review["tool"] == reply["tool"], f"{run_id} attempt {attempt}: review tool mismatch")
+            require(review["relay_id"] == reply["id"], f"{run_id} attempt {attempt}: review relay id mismatch")
             require(review["call_id"] == call_id, f"{run_id} attempt {attempt}: review call id mismatch")
             require(review["source_sequence"] == sequence, f"{run_id} attempt {attempt}: review sequence mismatch")
             require(review["observation_id"] == observation_id, f"{run_id} attempt {attempt}: review observation id mismatch")
@@ -61,7 +62,7 @@ def audit_bindings() -> dict:
             require(receipt_images[0]["mime_type"] == images[0]["mimeType"], f"{run_id} attempt {attempt}: review image MIME mismatch")
             require(receipt_images[0]["sha256"] == image_sha, f"{run_id} attempt {attempt}: review image digest mismatch")
 
-            for kind in ("reply_available", "presentation_callbacks_completed", "review_recorded"):
+            for kind in ("reply_available", "presentation_started", "presentation_callbacks_completed", "review_recorded"):
                 matches = [event for event in events if event.get("kind") == kind and event.get("attempt") == attempt]
                 require(len(matches) == 1, f"{run_id} attempt {attempt}: expected one {kind} event")
                 event = matches[0]
@@ -69,7 +70,7 @@ def audit_bindings() -> dict:
                 if kind == "review_recorded":
                     require(event.get("call_id") == call_id, f"{run_id} attempt {attempt}: {kind} call id mismatch")
                 elif kind == "reply_available":
-                    require(event.get("tool") == review["tool"] and event.get("relay_id") == review["relay_id"],
+                    require(event.get("tool") == review["tool"] and event.get("relay_id") == reply["id"],
                             f"{run_id} attempt {attempt}: reply availability attribution mismatch")
                 if kind == "review_recorded":
                     require(event.get("source_sequence") == sequence, f"{run_id} attempt {attempt}: review event sequence mismatch")
