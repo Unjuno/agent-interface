@@ -48,5 +48,7 @@ jobs:
         run: python -m unittest discover -s runtime/guarded_win32_v1 -t . -v
       - name: Run frozen pure helpers
         run: python -m unittest -v runtime.backends.win32_v1.test_integration.PureWin32HelperTests
+      - name: Run session recovery classification
+        run: python -m unittest -v runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests
       - name: Run frozen native Win32 integration
         run: python -m unittest -v runtime.backends.win32_v1.test_integration.Win32IntegrationTests
