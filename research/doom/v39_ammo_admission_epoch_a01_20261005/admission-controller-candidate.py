@@ -583,13 +583,10 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    command = [sys.executable, str(HERE / "session_map01_v12.py"),
-               "--out", str(runtime), "--seed", str(args.seed),
-               "--timeout-seconds", "600", "--skill", "1",
-               "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
-    if getattr(args, "per_key_input_measurement", False):
-        command.append("--per-key-input-measurement")
-    return command
+    return [sys.executable, str(HERE / "session_map01_v12.py"),
+            "--out", str(runtime), "--seed", str(args.seed),
+            "--timeout-seconds", "600", "--skill", "1",
+            "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
 
 
 def validate_action(action):
@@ -609,18 +606,14 @@ def validate_action(action):
 
 
 def begin_model_turn(planner, root, image, effect_memory, source_health, source_ammo,
-                     prior_soft_event_summary, output_schema,
-                     prior_state_feedback=None):
+                     prior_soft_event_summary, output_schema):
     prompt_text = ("Select the next bounded MAP01 action from the new temporal sheet.\n"
                    + f"Current locally verified health: {source_health}.\n"
                    + f"Current locally verified ammo: {source_ammo}.\n"
                    + "Newest typed soft event from the preceding control interval: "
                    + json.dumps(prior_soft_event_summary, separators=(",", ":")) + "\n"
                    + "Previous no-visible-effect actions: "
-                   + json.dumps(effect_memory, separators=(",", ":")) + "\n"
-                   + "Previous action-interval public HUD evidence (observed after action; "
-                   + "not causal or beneficial evidence): "
-                   + json.dumps(prior_state_feedback or [], separators=(",", ":")) + "\n")
+                   + json.dumps(effect_memory, separators=(",", ":")) + "\n")
     (root / "prompt.txt").write_text(prompt_text)
     return planner.begin_turn(prompt_text, output_schema=output_schema,
                               image_path=win(image))
@@ -670,408 +663,25 @@ def compile_cover(commands):
     return steps
 
 
-def action_state_feedback(before, after, typed_observations):
-    """Compare public HUD values only across source-bound typed captures."""
-    def read(observation):
-        if (type(observation.get("sequence")) is not int or
-                type(observation.get("capture_ns")) is not int or
-                type(observation.get("step")) is not int):
-            return None, "typed_frame_identity_mismatch"
-        matches = [row for row in typed_observations
-                   if type(row) is dict and row.get("event") == "typed_observation" and
-                   row.get("sequence") == observation.get("sequence")]
-        if len(matches) != 1:
-            return None, "typed_frame_missing_or_ambiguous"
-        row = matches[0]
-        frame_hash = observation.get("frame_rgb_sha256")
-        if (row.get("schema") != "doom-typed-observation-v1" or
-                row.get("pointer_binding") != observation.get("pointer_binding") or
-                type(row.get("sequence")) is not int or
-                type(row.get("capture_ns")) is not int or
-                type(row.get("step")) is not int or
-                row.get("capture_ns") != observation.get("capture_ns") or
-                row.get("id") != observation.get("id") or
-                row.get("step") != observation.get("step") or
-                type(frame_hash) is not str or len(frame_hash) != 64 or
-                any(char not in "0123456789abcdef" for char in frame_hash) or
-                row.get("frame_rgb_sha256") != frame_hash):
-            return None, "typed_frame_identity_mismatch"
-        signals = row.get("signals")
-        binding = observation.get("pointer_binding")
-        if (type(binding) is not dict or type(signals) is not dict or
-                set(signals) != {"health", "ammo"}):
-            return None, "typed_signal_unavailable"
-        normalized = {}
-        wad_sha256 = None
-        for name in ("health", "ammo"):
-            signal = signals.get(name)
-            if (type(signal) is not dict or signal.get("status") != "observed" or
-                    signal.get("signal_id") != name or
-                    type(signal.get("value")) is not int or
-                    type(signal.get("sequence")) is not int or
-                    signal.get("sequence") != observation.get("sequence") or
-                    type(signal.get("capture_ns")) is not int or
-                    signal.get("capture_ns") != observation.get("capture_ns") or
-                    signal.get("binding") != binding):
-                return None, "typed_signal_unavailable"
-            lower, upper = (1, 200) if name == "health" else (0, 999)
-            if not lower <= signal["value"] <= upper:
-                return None, "typed_signal_unavailable"
-            signal_wad = signal.get("wad_sha256")
-            if (type(signal_wad) is not str or len(signal_wad) != 64 or
-                    any(char not in "0123456789abcdef" for char in signal_wad)):
-                return None, "typed_signal_unavailable"
-            if wad_sha256 is not None and signal_wad != wad_sha256:
-                return None, "typed_signal_binding_mismatch"
-            wad_sha256 = signal_wad
-            normalized[name] = signal["value"]
-        return {"binding": binding, "wad_sha256": wad_sha256,
-                "signals": normalized}, None
-
-    previous, reason = read(before)
-    if previous is None:
-        return {"status": "unavailable", "reason": reason}
-    current, reason = read(after)
-    if current is None:
-        return {"status": "unavailable", "reason": reason}
-    if (after["sequence"] <= before["sequence"] or
-            after["capture_ns"] <= before["capture_ns"]):
-        return {"status": "unavailable", "reason": "typed_frame_order_invalid"}
-    if (current["binding"] != previous["binding"] or
-            current["wad_sha256"] != previous["wad_sha256"]):
-        return {"status": "unavailable", "reason": "typed_signal_binding_mismatch"}
-    return {
-        "status": "observed",
-        "from_sequence": before["sequence"],
-        "to_sequence": after["sequence"],
-        "signals": {
-            name: {"before": previous["signals"][name],
-                   "after": current["signals"][name],
-                   "delta": current["signals"][name] - previous["signals"][name]}
-            for name in ("health", "ammo")},
-        "scope": "public HUD transition observed after action; not causal or beneficial evidence",
-    }
-
-
-def input_edge_receipts(events):
-    """Project legacy owner receipts and measured X-adapter edge brackets separately."""
-    grouped = {}
-    adapter_grouped = {}
-    invalid = []
-    for event in events:
-        if type(event) is not dict:
-            continue
-        event_name = event.get("event")
-        measurement = event.get("physical_key_measurement")
-        adapter_edge = (measurement.get("adapter_edge")
-                        if type(measurement) is dict else None)
-        adapter_candidate = (
-            event_name == "input_release_measurement" or
-            (event_name == "input_admission" and type(measurement) is dict))
-        if adapter_candidate:
-            edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
-            expected_edge = ("down" if event_name == "input_admission" else "up")
-            identifier, step, key, token = (event.get("id"), event.get("step"),
-                                            event.get("key"), event.get("intent_token"))
-            if (type(identifier) is not str or not identifier or
-                    type(step) is not int or step < 0 or
-                    type(key) is not str or not key or
-                    type(token) is not str or not token):
-                invalid.append({
-                    "status": "identity_unavailable",
-                    "event": event_name,
-                    "step": step if type(step) is int else None,
-                    "key": key if type(key) is str else None,
-                    "scope": "adapter edge bracket unpaired; source event identity incomplete",
-                })
-                continue
-            bucket = adapter_grouped.setdefault((identifier, step, key, token),
-                                                {"down": [], "up": []})
-            # Outer event type and nested edge label are both part of the
-            # receipt identity. Do not let one release event supply a press.
-            bucket[expected_edge].append(event)
-            continue
-        if event_name not in ("input_admission", "input_release_transition"):
-            continue
-        identifier = event.get("id")
-        step = event.get("step")
-        key = event.get("key")
-        token = event.get("intent_token")
-        if (type(identifier) is not str or not identifier or
-                type(step) is not int or step < 0 or
-                type(key) is not str or not key or
-                type(token) is not str or not token):
-            invalid.append({
-                "status": "identity_unavailable",
-                "event": event["event"],
-                "step": step if type(step) is int else None,
-                "key": key if type(key) is str else None,
-                "scope": "per-key timing unpaired; source event identity incomplete",
-            })
-            continue
-        group_key = (identifier, step, key, token)
-        bucket = grouped.setdefault(group_key, {"admission": [], "release": []})
-        bucket["admission" if event["event"] == "input_admission" else "release"].append(event)
-
-    receipts = list(invalid)
-    for (identifier, step, key, token), bucket in adapter_grouped.items():
-        downs, ups = bucket["down"], bucket["up"]
-        down = downs[0] if len(downs) == 1 else None
-        up = ups[0] if len(ups) == 1 else None
-
-        def edge_of(row):
-            data = row.get("physical_key_measurement") if row else None
-            return data.get("adapter_edge") if type(data) is dict else None
-
-        def valid_interval(value):
-            return (type(value) is list and len(value) == 2 and
-                    all(type(item) is int for item in value) and value[0] <= value[1])
-
-        def bracket_matches(data, edge, edge_name, status):
-            bracket = data.get("bracket") if type(data) is dict else None
-            interval_name = ("physical_down_interval" if edge_name == "down"
-                             else "physical_up_interval")
-            return (
-                type(bracket) is dict and type(edge) is dict and
-                bracket.get("key") == edge.get("key") and
-                bracket.get("owner_id") == edge.get("owner_id") and
-                bracket.get("intent_token") == edge.get("intent_token") and
-                bracket.get(interval_name) == edge.get("interval") and
-                bracket.get("status") == status and
-                bracket.get("grants_input_authority") is False and
-                bracket.get("application_consumption_observed") is False)
-
-        def admission_window_matches(row, data):
-            pre = data.get("pre_sample") if type(data) is dict else None
-            admitted_ns = row.get("admitted_ns") if type(row) is dict else None
-            return (
-                type(pre) is dict and type(admitted_ns) is int and
-                type(pre.get("started_ns")) is int and
-                admitted_ns <= pre["started_ns"])
-
-        def sample_window_matches(data, row, edge_name):
-            pre = data.get("pre_sample") if type(data) is dict else None
-            post = data.get("post_sample") if type(data) is dict else None
-            pre_down, post_down = (False, True) if edge_name == "down" else (True, False)
-
-            def valid_sample(sample, expected_down):
-                return (
-                    type(sample) is dict and sample.get("available") is True and
-                    sample.get("down") is expected_down and sample.get("error") is None and
-                    type(sample.get("started_ns")) is int and
-                    type(sample.get("finished_ns")) is int and
-                    sample["started_ns"] <= sample["finished_ns"])
-
-            request_name = "press_request_ns" if edge_name == "down" else "release_request_ns"
-            request_ns = data.get(request_name) if type(data) is dict else None
-            sync_ns = data.get("sync_return_ns") if type(data) is dict else None
-            if (not valid_sample(pre, pre_down) or not valid_sample(post, post_down) or
-                    type(request_ns) is not int or type(sync_ns) is not int or
-                    pre["finished_ns"] > request_ns or request_ns > sync_ns or
-                    sync_ns > post["started_ns"] or
-                    edge_name == "down" and (type(row.get("input_ack_ns")) is not int or
-                                                  row.get("input_ack_ns") != sync_ns) or
-                    edge_name == "up" and data.get("release_attempted") is not True):
-                return False
-            bracket = data.get("bracket")
-            interval_name = "physical_down_interval" if edge_name == "down" else "physical_up_interval"
-            return (type(bracket) is dict and
-                    bracket.get(interval_name) == [pre["finished_ns"], post["finished_ns"]])
-
-        down_data = down.get("physical_key_measurement") if down else None
-        up_data = up.get("physical_key_measurement") if up else None
-        down_edge, up_edge = edge_of(down), edge_of(up)
-        down_interval = down_edge.get("interval") if type(down_edge) is dict else None
-        up_interval = up_edge.get("interval") if type(up_edge) is dict else None
-        down_actuation = down_edge.get("actuation_id") if type(down_edge) is dict else None
-        up_actuation = up_edge.get("actuation_id") if type(up_edge) is dict else None
-        down_owner = down_edge.get("owner_id") if type(down_edge) is dict else None
-        up_owner = up_edge.get("owner_id") if type(up_edge) is dict else None
-        no_application_consumption_conflict = all(
-            type(row) is dict and
-            ("application_consumption_observed" not in row or
-             row.get("application_consumption_observed") is False)
-            for row in (
-                down, up, down_data, up_data, down_edge, up_edge,
-                down_data.get("bracket") if type(down_data) is dict else None,
-                up_data.get("bracket") if type(up_data) is dict else None,
-                down_data.get("pre_sample") if type(down_data) is dict else None,
-                down_data.get("post_sample") if type(down_data) is dict else None,
-                up_data.get("pre_sample") if type(up_data) is dict else None,
-                up_data.get("post_sample") if type(up_data) is dict else None))
-        complete = (
-            len(downs) == 1 and len(ups) == 1 and
-            type(down_data) is dict and type(up_data) is dict and
-            type(down_edge) is dict and type(up_edge) is dict and
-            down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
-            down_data.get("edge") == "down" and up_data.get("edge") == "up" and
-            down_data.get("classification") == "CONFIRMED_PHYSICAL_DOWN" and
-            up_data.get("classification") == "CONFIRMED_PHYSICAL_UP" and
-            down_data.get("identity_status") == "MINTED" and
-            up_data.get("identity_status") == "RETIRED" and
-            down_data.get("actuation_id") == down_edge.get("actuation_id") and
-            up_data.get("actuation_id") == up_edge.get("actuation_id") and
-            down_data.get("grants_input_authority") is False and
-            up_data.get("grants_input_authority") is False and
-            down_edge.get("status") == "CONFIRMED_PHYSICAL_DOWN" and
-            up_edge.get("status") == "CONFIRMED_PHYSICAL_UP" and
-            valid_interval(down_interval) and valid_interval(up_interval) and
-            down_interval[1] < up_interval[0] and
-            type(down_actuation) is str and bool(down_actuation) and
-            down_actuation == up_actuation and
-            type(down_owner) is str and bool(down_owner) and down_owner == up_owner and
-            all(row.get("id") == identifier and row.get("step") == step and
-                row.get("key") == key and row.get("intent_token") == token and
-                row.get("owner_id") == down_owner and
-                row.get("grants_input_authority",
-                        row["physical_key_measurement"].get("grants_input_authority")) is False
-                for row in (down, up)) and
-            all(edge.get("key") == key and edge.get("intent_token") == token and
-                edge.get("actuation_id") == down_actuation and
-                edge.get("owner_id") == down_owner and
-                edge.get("grants_input_authority") is False
-                for edge in (down_edge, up_edge)) and
-            down_data.get("application_consumption_observed") is False and
-            up_data.get("application_consumption_observed") is False and
-            no_application_consumption_conflict and
-            bracket_matches(down_data, down_edge, "down", "CONFIRMED_PHYSICAL_DOWN") and
-            bracket_matches(up_data, up_edge, "up", "CONFIRMED_PHYSICAL_UP") and
-            admission_window_matches(down, down_data) and
-            sample_window_matches(down_data, down, "down") and
-            sample_window_matches(up_data, up, "up"))
-        receipts.append({
-            "status": "adapter_edge_brackets_paired" if complete else
-                      "adapter_edge_receipt_incomplete",
-            "program_id_sha256": hashlib.sha256(identifier.encode("utf-8")).hexdigest(),
-            "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
-            "owner_id_sha256": (hashlib.sha256(down_owner.encode("utf-8")).hexdigest()
-                                if type(down_owner) is str else None),
-            "actuation_id_sha256": (hashlib.sha256(down_actuation.encode("utf-8")).hexdigest()
-                                    if type(down_actuation) is str else None),
-            "step": step,
-            "key": key,
-            "input_admitted_ns": (down.get("admitted_ns") if complete else None),
-            "down_press_request_ns": (down_data.get("press_request_ns")
-                                      if complete else None),
-            "down_sync_return_ns": (down_data.get("sync_return_ns")
-                                    if complete else None),
-            "down_edge_interval_ns": down_interval if complete else None,
-            "up_release_request_ns": (up_data.get("release_request_ns")
-                                      if complete else None),
-            "up_sync_return_ns": (up_data.get("sync_return_ns")
-                                  if complete else None),
-            "up_edge_interval_ns": up_interval if complete else None,
-            "grants_input_authority": False if complete else None,
-            "application_consumption_observed": False if complete else None,
-            "scope": ("InputOwner v12 X-server keymap sampling brackets; no application "
-                      "receipt, physical dwell claim, or task-benefit claim"),
-        })
-    for (identifier, step, key, token), bucket in grouped.items():
-        admissions = bucket["admission"]
-        releases = bucket["release"]
-        admission = admissions[0] if len(admissions) == 1 else None
-        release = releases[0] if len(releases) == 1 else None
-        owner = release.get("owner_thread_keyup_receipt") if release else None
-        admitted_ns = admission.get("admitted_ns") if admission else None
-        input_ack_ns = admission.get("input_ack_ns") if admission else None
-        release_started_ns = release.get("release_call_started_ns") if release else None
-        release_returned_ns = release.get("release_call_returned_ns") if release else None
-        keyup_started_ns = owner.get("owner_keyrelease_started_ns") if type(owner) is dict else None
-        sync_returned_ns = owner.get("owner_sync_returned_ns") if type(owner) is dict else None
-
-        if len(admissions) > 1 or len(releases) > 1:
-            status = "ambiguous_input_edges"
-        elif admission is None:
-            status = "release_without_admission"
-        elif release is None:
-            status = "admission_without_release"
-        elif (release.get("operation") != "up" or type(owner) is not dict or
-              owner.get("event") != "owner_explicit_keyup" or
-              owner.get("key") != key or owner.get("intent_token") != token or
-              owner.get("server_sync_completed") is not True or
-              release.get("owner_thread_keyup_verified") is not True or
-              release.get("owner_thread_keyup_history_complete") is not True or
-              type(admitted_ns) is not int or type(input_ack_ns) is not int or
-              input_ack_ns < admitted_ns or
-              type(release_started_ns) is not int or type(release_returned_ns) is not int or
-              type(keyup_started_ns) is not int or type(sync_returned_ns) is not int or
-              keyup_started_ns < input_ack_ns or
-              release_started_ns < input_ack_ns or
-              keyup_started_ns < release_started_ns or
-              sync_returned_ns < keyup_started_ns or
-              release_returned_ns < sync_returned_ns):
-            status = "release_receipt_incomplete"
-        else:
-            status = "paired"
-
-        def delta_ms(start, end):
-            if type(start) is int and type(end) is int and end >= start:
-                return round((end - start) / 1_000_000, 6)
-            return None
-
-        receipts.append({
-            "status": status,
-            "program_id_sha256": hashlib.sha256(identifier.encode("utf-8")).hexdigest(),
-            "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
-            "step": step,
-            "key": key,
-            "admitted_ns": admitted_ns if type(admitted_ns) is int else None,
-            "input_ack_ns": input_ack_ns if type(input_ack_ns) is int else None,
-            "release_call_started_ns": release_started_ns if type(release_started_ns) is int else None,
-            "owner_keyrelease_started_ns": (keyup_started_ns
-                                             if type(keyup_started_ns) is int else None),
-            "owner_sync_returned_ns": (sync_returned_ns
-                                        if type(sync_returned_ns) is int else None),
-            "release_call_returned_ns": release_returned_ns if type(release_returned_ns) is int else None,
-            "admitted_to_owner_keyup_start_ms": (delta_ms(admitted_ns, keyup_started_ns)
-                                                  if status == "paired" else None),
-            "input_ack_to_owner_keyup_start_ms": (delta_ms(input_ack_ns, keyup_started_ns)
-                                                  if status == "paired" else None),
-            "server_sync_completed": (owner.get("server_sync_completed") is True
-                                      if type(owner) is dict else False),
-            "owner_thread_keyup_verified": (release.get("owner_thread_keyup_verified") is True
-                                             if release else False),
-            "owner_keyup_history_complete": (release.get("owner_thread_keyup_history_complete") is True
-                                              if release else False),
-            "physical_verification_authoritative": (
-                release.get("physical_verification_authoritative") is True
-                if release else False),
-            "scope": ("owner admission-to-keyup-request timing; server synchronization only, "
-                      "not physical key-down duration or task benefit"),
-        })
-    return receipts
-
-
-def effect_receipts(commands, before, observations, accepted_ns,
-                    typed_observations=()):
+def effect_receipts(commands, before, observations, accepted_ns):
     previous=descriptor(Path(before["image"]));receipts=[]
-    previous_observation = before
     for index,command in enumerate(commands):
         samples=[row for row in observations if row["step"]==index]
         if not samples:
             raise RuntimeError(f"hold step {index} produced no effect observation")
-        feedback_observation=samples[0]
         observation=samples[-1]
         current=descriptor(Path(observation["image"]));mae=normalized_mae(previous,current)
         receipts.append({"action":command["action"],"extent":command["extent"],
           "result":"no_visible_effect" if mae<=0.015 else "visible_change",
           "normalized_mae":mae,"no_visible_effect_threshold_lte":0.015,
-          "program_id_sha256":(hashlib.sha256(observation["id"].encode("utf-8")).hexdigest()
-                               if type(observation.get("id")) is str else None),
-          "executor_step":observation.get("step"),
           "after_sequence":observation["sequence"],
           "effect_observed_ns":observation["capture_ns"],
-          "feedback_sequence":feedback_observation["sequence"],
-          "feedback_capture_ns":feedback_observation["capture_ns"],
           "samples":len(samples),
           "plan_accept_to_first_capture_ms":(samples[0]["capture_ns"]-accepted_ns)/1e6,
           "plan_accept_to_last_capture_ms":(observation["capture_ns"]-accepted_ns)/1e6,
           "capture_ms_total":sum(row["capture_ms"] for row in samples),
-          "scope":"viewport pixels only",
-          "state_feedback":action_state_feedback(
-              previous_observation, feedback_observation, typed_observations)})
+          "scope":"viewport pixels only"})
         previous=current
-        previous_observation = observation
     return receipts
 
 
@@ -1098,8 +708,6 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
-    parser.add_argument("--per-key-input-measurement", action="store_true",
-                        help="load the source-hashed A01 per-key X-adapter measurement bridge")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
@@ -1233,12 +841,6 @@ def main():
             prior_receipts=[] if not decisions else decisions[-1].get("effect_receipts",[])
             effect_memory=[row["action"] for row in prior_receipts
                            if row["result"]=="no_visible_effect"]
-            prior_state_feedback=[{
-                "action":row["action"],"extent":row["extent"],
-                "viewport_result":row["result"],
-                "state_feedback":row.get("state_feedback",{
-                    "status":"unavailable","reason":"not_recorded"})}
-                for row in prior_receipts]
             prior_soft_event_summary=latest_soft_event_summary(decisions)
             image=model_root/"temporal-sheet.png"
             prior=[Path(row["source_image"]) for row in decisions]
@@ -1248,7 +850,7 @@ def main():
             planner_handle=begin_model_turn(
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
-                prior_soft_event_summary,output_schema,prior_state_feedback)
+                prior_soft_event_summary,output_schema)
             planner_interrupt=None
             with ThreadPoolExecutor(max_workers=1) as pool:
                 future=pool.submit(planner.await_turn,planner_handle,90)
@@ -1488,7 +1090,7 @@ def main():
                                if row.get("event")=="observation" and row.get("id")==identifier]
                 completed=len(commands) if not invalidated else terminal["steps_completed"]
                 receipts=(effect_receipts(commands[:completed],before,observations,
-                                          accepted["accepted_ns"],all_events)
+                                          accepted["accepted_ns"])
                           if completed else [])
                 records=[]
                 for local_index,(command,receipt) in enumerate(zip(commands[:completed],receipts)):
@@ -1660,7 +1262,6 @@ def main():
                     typed,full,{"health":signal_reader,"ammo":ammo_reader})
                 reconciliation["sequence"]=sequence
                 typed_reconciliations.append(reconciliation)
-        per_key_input_receipts = input_edge_receipts(all_events)
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
@@ -1668,15 +1269,6 @@ def main():
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
-          "state_feedback_contract":"compare hash-bound typed public health/ammo values at exact before/after action observations and expose the observed transition in the next planner prompt as correlation only; never infer a hit or benefit",
-          "input_edge_receipt_contract":("legacy input_release_transition rows pair per-key admissions "
-              "with exact owner-thread key-up receipts; optional A01 adapter rows pair X-server "
-              "down/up keymap sampling brackets by program, step, key, intent and actuation. "
-              "These are distinct evidence types; neither establishes application consumption or task benefit"),
-          "input_measurement_backend":"input-owner-v12-perkey-bridge" if args.per_key_input_measurement else "typed-release-v1-default",
-          "input_edge_receipts":per_key_input_receipts,
-          "input_edge_receipt_statuses":dict(Counter(
-              row["status"] for row in per_key_input_receipts)),
           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
           "final_action_admission_contract":"historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
           "running_action_contract":"the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",

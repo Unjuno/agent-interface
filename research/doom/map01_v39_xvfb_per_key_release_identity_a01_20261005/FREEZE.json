@@ -1,0 +1,62 @@
+{
+  "auditor_sha256": "5b6bd3780a3d68d44e02206c17ef3e3d70c06e71e96690d70b31386e7e164e3b",
+  "candidate_sha256": "0cef6a0a6d4d287e001ad193788423e5744d697839f95e5208d98b7b29294f13",
+  "cycles": 10,
+  "environment": {
+    "dependencies": [
+      "xvfb",
+      "python3-xlib"
+    ],
+    "display": ":117",
+    "guest": "fresh private OrbStack Ubuntu Noble arm64",
+    "network": "isolated",
+    "python": "3",
+    "xvfb": "640x480x24"
+  },
+  "executor_identifier": "xvfb-per-key-a01",
+  "executor_step": 7,
+  "gate": "PASS_METHOD_SCOPED requires raw-only auditor all checks true; any mismatch FAIL; setup/cleanup/evidence gaps STOP; no candidate retry.",
+  "pattern": [
+    {
+      "down": true,
+      "key": "a"
+    },
+    {
+      "down": false,
+      "key": "a"
+    },
+    {
+      "down": true,
+      "key": "a"
+    },
+    {
+      "down": false,
+      "key": "a"
+    },
+    {
+      "down": true,
+      "key": "a"
+    },
+    {
+      "down": true,
+      "key": "space"
+    },
+    {
+      "down": false,
+      "key": "space"
+    },
+    {
+      "down": false,
+      "key": "a"
+    }
+  ],
+  "preregistration_sha256": "eaf25bfa09a70f621307f8a7848b7bdbaf3a8929bc167290fec4909bbadb5e67",
+  "schema": "map01-v39-xvfb-per-key-release-freeze-a01-v1",
+  "scope": "construction only: exact backend raw path and InputOwner/XTEST key transitions to one Xvfb client; no game, model, physical input, or task effect.",
+  "source_sha256": {
+    "doom_retained_input_backend_v4.py": "15fb70b754f3355821e4d95e37307cbd71b09a6145885982546afbdbaf4108eb",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_transition_owner_v3.py": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078"
+  },
+  "test_audit_sha256": "d640c1d2ebf1607986049b5391ef372cba8e74072119888b349096444d0bd0e6"
+}
