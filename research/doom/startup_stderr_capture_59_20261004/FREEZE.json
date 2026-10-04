@@ -32,8 +32,12 @@
   },
   "followup_01": {
     "question": "Does the regression enforce controller Popen wiring, not only helper behavior?",
+    "baseline_commit": "f2aa59c8bac88f0091eb24c4f462f55a72303d2f",
     "wait_test_path": "research/doom/test_overlap_controller_v39_wait.py",
     "wait_test_sha256": "5b03d66cac8bf5b407684c6b5db1ba31c8f39c7a8687d2c747910fd0e169ebcf",
+    "baseline_output": "out/followup-01-baseline-wiring.txt",
+    "baseline_exit": "out/followup-01-baseline-wiring-exit.txt",
+    "expected_baseline_exit": 1,
     "test_output": "out/followup-01-tests.txt",
     "test_exit": "out/followup-01-tests-exit.txt",
     "compile_exit": "out/followup-01-compile-exit.txt",

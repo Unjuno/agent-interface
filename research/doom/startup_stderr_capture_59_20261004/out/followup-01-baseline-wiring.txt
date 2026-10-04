@@ -1,0 +1,14 @@
+test_controller_connects_file_sink_to_child_stderr (test_overlap_controller_v39_wait.WaitTests.test_controller_connects_file_sink_to_child_stderr) ... FAIL
+
+======================================================================
+FAIL: test_controller_connects_file_sink_to_child_stderr (test_overlap_controller_v39_wait.WaitTests.test_controller_connects_file_sink_to_child_stderr)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-stderr-capture\research\doom\test_overlap_controller_v39_wait.py", line 83, in test_controller_connects_file_sink_to_child_stderr
+    self.assertTrue(opens_sink, "controller must create the file-backed stderr sink")
+AssertionError: False is not true : controller must create the file-backed stderr sink
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (failures=1)

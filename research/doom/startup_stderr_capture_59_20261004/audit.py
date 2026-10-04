@@ -51,6 +51,9 @@ def main():
     assert (out / "diff-check-exit.txt").read_text().strip() == "0"
     followup = freeze["followup_01"]
     assert sha256(REPO / followup["wait_test_path"]) == followup["wait_test_sha256"]
+    baseline_wiring = (PACKET / followup["baseline_output"]).read_text(encoding="utf-8")
+    assert "must create the file-backed stderr sink" in baseline_wiring
+    assert (PACKET / followup["baseline_exit"]).read_text(encoding="utf-8").strip() == str(followup["expected_baseline_exit"])
     followup_tests = (PACKET / followup["test_output"]).read_text(encoding="utf-8")
     assert "Ran 11 tests" in followup_tests and "OK" in followup_tests
     for key in ("test_exit", "compile_exit", "diff_check_exit"):
