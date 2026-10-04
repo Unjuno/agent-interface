@@ -1,5 +1,9 @@
+import sys
 import unittest
+from pathlib import Path
 
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent / "live_control"))
 from unauthored_coast_liveness_v1 import (
     UnauthoredCoastMonitor, invalidation_handoff_sequence,
     wait_for_fresh_observation)
