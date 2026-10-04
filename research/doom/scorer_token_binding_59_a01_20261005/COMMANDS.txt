@@ -1,0 +1,13 @@
+Source and case preflight:
+  git rev-parse HEAD
+  sha256sum research/doom/scorer_eventlog_join_t0_v1/candidate.py
+  sha256sum research/doom/scorer_eventlog_join_t0_v1/file_join.py
+  python3 --version
+  docker info --format 'Server={{.ServerVersion}} OS={{.OperatingSystem}} CPUs={{.NCPU}} Mem={{.MemTotal}} Root={{.DockerRootDir}}'
+  docker image inspect python:3.12-slim --format '{{.Id}} {{index .RepoDigests 0}}'
+
+Frozen candidate invocation (to run once after FREEZE.json is written):
+  python3 research/doom/scorer_token_binding_59_a01_20261005/run_a01.py
+
+Independent raw-only audit (after the candidate invocation):
+  python3 research/doom/scorer_token_binding_59_a01_20261005/audit_a01.py

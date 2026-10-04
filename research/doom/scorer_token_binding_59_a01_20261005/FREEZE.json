@@ -1,0 +1,42 @@
+{
+  "schema": "scorer-intent-token-binding-freeze-v1",
+  "allocation_id": "SCORER-INTENT-TOKEN-BINDING-59-A01-20261005-01",
+  "frozen_at_utc": "2026-10-04T16:34:24Z",
+  "issue": 59,
+  "parent_pr": 7664,
+  "parent_head": "a2f85482c6968f9caa9dcbca017bd452b8a2c3b3",
+  "hypothesis": "For the current V15 scorer event shape, id alone is insufficient: accepted and input_admission rows with conflicting or missing intent_token must not establish admission-bracketed progress.",
+  "test": "One frozen standard-library runner: pinned baseline mismatch counterexample; matched-token positive control; successor mismatch and missing-token negatives; independent raw-only auditor.",
+  "decision_gate": {
+    "pass": "Baseline returns ADMISSION_BRACKETED_PROGRESS for the mismatched-token case; successor preserves the matching-token positive, rejects mismatched and missing input tokens, and independent audit passes.",
+    "fail": "Any baseline/candidate disposition differs from the declared per-case expectation, or raw audit/source hashes fail.",
+    "hold": "Frozen parent head/source files differ, or required case/source artifacts are absent before invocation."
+  },
+  "cases": [
+    "baseline_mismatched_token",
+    "candidate_matched_token",
+    "candidate_mismatched_token",
+    "candidate_missing_admission_token"
+  ],
+  "candidate_invocations_allowed": 1,
+  "retry_limit": 0,
+  "runtime": {
+    "platform": "macOS-27.0.1-arm64",
+    "python": "3.14.5",
+    "containerized": false,
+    "docker_server": "29.4.0 / OrbStack",
+    "docker_image_inspection": "STOP: containerd content blob unavailable; see ENVIRONMENT_STOP.txt"
+  },
+  "scope": "Deterministic JSONL identity-gate construction only; no game, model, GUI, OS input, or live allocation.",
+  "source_sha256": {
+    "parent_candidate.py": "23727e925c3e27a171592b0a831ab29572647bc0309cb6f10b8d81c8104aa049",
+    "parent_file_join.py": "6e9b5fcfbe72d466c5f519b923fef01642fe0cf85bb78fa119fd9a1fed707d5f",
+    "candidate_v2.py": "cbee527b35d8e03c1579cc2cbd2ae2ccd84894f1c82319d83ac82c5d076a6327",
+    "cases.json": "bb972d29427c75dcd188b9fecbb7cc233026efc4260a2b4eb3677ebf891bbbdb",
+    "run_a01.py": "34764fd41281381ed6bd2c9b9c2d32baa1ccce4010d519b5861c65ea8920672b",
+    "audit_a01.py": "c8ef32eeaae4eb323c6c5ef461493b832c3c1d818138acc9d65256f8ae55fac0",
+    "README.md": "aa882458f65a5eb2f38a5926d79963e4a8d21500f4738637549d83abee337a6e",
+    "COMMANDS.txt": "81ebce5bae448a8a409535119b460a2c18214029203ca52e0bcb742f0e8a39ae",
+    "ENVIRONMENT_STOP.txt": "91be88bdee8fa02ca93914cb061a3ea5372b58fc1709bd8ef53b2476e65e620f"
+  }
+}

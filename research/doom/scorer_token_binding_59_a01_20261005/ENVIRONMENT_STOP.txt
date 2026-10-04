@@ -1,0 +1,8 @@
+Container preflight STOP — no container was started.
+
+The read-only Docker image inspection failed before an image could be pinned:
+
+  $ docker image inspect python:3.12-slim --format '{{.Id}} {{index .RepoDigests 0}}'
+  Error response from daemon: rpc error: code = Unknown desc = blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported
+
+`docker ps` returned exit 0 with no listed containers, but this is not treated as an allocation or as proof that the engine is healthy. No pull, build, install, container start, or game/input process was attempted. The bounded standard-library test is therefore host-only and carries no container-pass claim.

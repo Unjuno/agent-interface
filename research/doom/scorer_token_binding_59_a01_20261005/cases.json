@@ -1,0 +1,29 @@
+{
+  "schema": "scorer-intent-token-binding-cases-v1",
+  "intent_id": "recover-1",
+  "max_gap_ns": 100,
+  "events": {
+    "matched_token": [
+      {"event": "accepted", "id": "recover-1", "accepted_ns": 100, "intent_token": "token-A"},
+      {"event": "input_admission", "id": "recover-1", "key": "space", "admitted_ns": 120, "input_ack_ns": 121, "intent_token": "token-A"}
+    ],
+    "mismatched_token": [
+      {"event": "accepted", "id": "recover-1", "accepted_ns": 100, "intent_token": "token-A"},
+      {"event": "input_admission", "id": "recover-1", "key": "space", "admitted_ns": 120, "input_ack_ns": 121, "intent_token": "token-B"}
+    ],
+    "missing_admission_token": [
+      {"event": "accepted", "id": "recover-1", "accepted_ns": 100, "intent_token": "token-A"},
+      {"event": "input_admission", "id": "recover-1", "key": "space", "admitted_ns": 120, "input_ack_ns": 121}
+    ]
+  },
+  "samples": [
+    {"scheduled_ns": 108, "sample_started_ns": 109, "sample_finished_ns": 111, "missed_periods_before": 0, "payload": {"schema": "independent-progress-sample-v2", "sample_ns": 110, "kill_count": 0, "death_count": 0, "episode_finished": false, "player_dead": false, "map_exit": false}, "controller_visible": false},
+    {"scheduled_ns": 128, "sample_started_ns": 129, "sample_finished_ns": 131, "missed_periods_before": 0, "payload": {"schema": "independent-progress-sample-v2", "sample_ns": 130, "kill_count": 1, "death_count": 0, "episode_finished": false, "player_dead": false, "map_exit": false}, "controller_visible": false}
+  ],
+  "expected": {
+    "baseline_mismatched_token": "ADMISSION_BRACKETED_PROGRESS",
+    "candidate_matched_token": "ADMISSION_BRACKETED_PROGRESS",
+    "candidate_mismatched_token": "POST_CANCELLATION_COOCCURRENCE",
+    "candidate_missing_admission_token": "POST_CANCELLATION_COOCCURRENCE"
+  }
+}
