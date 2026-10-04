@@ -8,6 +8,7 @@
     "wait_test_git_blob": "66fbecb5dd80b64c0ca9a229b91e0ab0efa85a44"
   },
   "candidate": {
+    "verification_commit": "39c2583d71ffc5aa5d453999ef322bcf5efa5340",
     "controller_path": "research/doom/map01_overlap_controller_v39.py",
     "controller_sha256": "6839246999450f2090ccc2fc2221c9339da68992a4939d6c6106c2c90836b455",
     "wait_test_path": "research/doom/test_overlap_controller_v39_wait.py",
@@ -28,5 +29,14 @@
     "candidate_tests": "focused V39 wait and controller modules pass 10/10",
     "exact_stderr_bytes": true,
     "no_stopped_run_replay": true
+  },
+  "followup_01": {
+    "question": "Does the regression enforce controller Popen wiring, not only helper behavior?",
+    "wait_test_path": "research/doom/test_overlap_controller_v39_wait.py",
+    "wait_test_sha256": "5b03d66cac8bf5b407684c6b5db1ba31c8f39c7a8687d2c747910fd0e169ebcf",
+    "test_output": "out/followup-01-tests.txt",
+    "test_exit": "out/followup-01-tests-exit.txt",
+    "compile_exit": "out/followup-01-compile-exit.txt",
+    "diff_check_exit": "out/followup-01-diff-check-exit.txt"
   }
 }

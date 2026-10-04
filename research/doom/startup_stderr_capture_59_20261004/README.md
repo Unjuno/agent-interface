@@ -13,3 +13,9 @@
 The focused baseline regressions failed on the exact main source: there was no file-backed child stderr sink, and the early-exit message claimed stderr was not drained. The candidate uses `stderr.txt` as the child's file descriptor, so the parent wait loop never drains a stderr pipe. The synthetic child wrote 256 KiB before its stdout readiness line without blocking; both that output and an early-exit traceback were byte-exact in the file. The runner's early-exit exception now points to `stderr.txt`.
 
 The candidate wait and V39 controller modules pass 10/10; Python compilation and `git diff --check` pass. Baseline and candidate outputs are in `out/`; `audit.py` independently checks the baseline source pin, expected red failures, candidate exit/test counts, and evidence hashes in `FILES.sha256`. Checks cover only this source-level diagnostic path and the existing V39 wait/controller regressions.
+
+## Follow-up 01 — launch wiring regression
+
+After reviewing the first result, I found that the subprocess test exercised the file-sink helper but did not assert that V39 passes that sink to its actual `subprocess.Popen` call. The follow-up adds an AST regression that requires one V39 launch, an `open_child_stderr_capture(...)` assignment to `stderr_capture`, and `stderr=stderr_capture`. This is a construction-level wiring check; it does not launch the V39 game session. The original 10-test raw output remains unchanged.
+
+The updated wait/controller suites pass 11/11. Python compilation and `git diff --check` pass. The exact outputs are in `out/followup-01-*`; `FREEZE.json` records the new test-source hash, and `audit.py` checks this follow-up while validating the original 10-test candidate source from its retained Git commit.

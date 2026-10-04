@@ -68,6 +68,30 @@ def extract_wait(process, rows):
 
 
 class WaitTests(unittest.TestCase):
+    def test_controller_connects_file_sink_to_child_stderr(self):
+        tree = ast.parse(SOURCE.read_bytes())
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        opens_sink = any(
+            isinstance(node, ast.Assign) and
+            any(isinstance(target, ast.Name) and target.id == "stderr_capture"
+                for target in node.targets) and
+            isinstance(node.value, ast.Call) and
+            isinstance(node.value.func, ast.Name) and
+            node.value.func.id == "open_child_stderr_capture"
+            for node in ast.walk(main))
+        self.assertTrue(opens_sink, "controller must create the file-backed stderr sink")
+        launches = [node for node in ast.walk(main)
+                    if isinstance(node, ast.Call) and
+                    isinstance(node.func, ast.Attribute) and
+                    isinstance(node.func.value, ast.Name) and
+                    node.func.value.id == "subprocess" and node.func.attr == "Popen"]
+        self.assertEqual(len(launches), 1)
+        stderr_arg = next((keyword.value for keyword in launches[0].keywords
+                           if keyword.arg == "stderr"), None)
+        self.assertIsInstance(stderr_arg, ast.Name)
+        self.assertEqual(stderr_arg.id, "stderr_capture")
+
     def test_startup_stderr_is_saved_without_a_child_pipe(self):
         tree = ast.parse(SOURCE.read_bytes())
         helper = next((node for node in tree.body
