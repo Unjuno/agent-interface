@@ -6,7 +6,37 @@
     "terminal reports cancelled with verified empty keys/buttons",
     "latest observation updates to sequence 99"
   ],
+  "audit_result": {
+    "candidate_sha256": "0e1183a26cb0f816dcde97bb80f63f436ae306fd356a2ccef160e9ba5fe2add4",
+    "checks": {
+      "acceptance_wait_forwards_monitor": true,
+      "initial_invalidation_cancels_and_continues_before_planner": true,
+      "not_started_admission_is_accounted": true,
+      "renewal_invalidation_uses_planner_cancel_path": true,
+      "submit_path_uses_selected_validity_monitor": true,
+      "unplanned_cancel_requires_verified_empty_release": true
+    },
+    "decision": "PASS_ADMISSION_PATH_STRUCTURE",
+    "failed_checks": [],
+    "schema": "map01-v40-admission-path-audit-v1",
+    "scope": "read-only AST/source audit; no child session, game, model, GUI, input, or task-effect validation"
+  },
+  "audit_source": "research/doom/v40_admission_invalidation_59_t2_20261004/audit_admission_path.py",
+  "audit_source_sha256": "ffebd1d415738279de896c11363ad116f6b1d53e884dac83dc35af98d153f433",
   "base_commit": "90b857e4ef1cf2d19b7560843da20723f7b4ad85",
+  "baseline_control": {
+    "commit": "90b857e4ef1cf2d19b7560843da20723f7b4ad85",
+    "decision": "FAIL_ADMISSION_PATH_STRUCTURE",
+    "failed_checks": [
+      "acceptance_wait_forwards_monitor",
+      "submit_path_uses_selected_validity_monitor",
+      "initial_invalidation_cancels_and_continues_before_planner",
+      "renewal_invalidation_uses_planner_cancel_path",
+      "unplanned_cancel_requires_verified_empty_release",
+      "not_started_admission_is_accounted"
+    ],
+    "source_sha256": "79033d42786d5c1327727dfd57e0cda5e6d08bc9f5f931241c4b4ae4a33f94c9"
+  },
   "candidate_source": "research/doom/map01_overlap_controller_v40.py",
   "candidate_source_sha256": "0e1183a26cb0f816dcde97bb80f63f436ae306fd356a2ccef160e9ba5fe2add4",
   "commands": [
@@ -26,6 +56,19 @@
     {
       "command": "python research/doom/v40_candidate_identity_59_t1_20261004/verify_identity.py",
       "decision": "FAIL_SOURCE_IDENTITY",
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "checks_passed": 6,
+      "command": "python research/doom/v40_admission_invalidation_59_t2_20261004/audit_admission_path.py research/doom/map01_overlap_controller_v40.py research/doom/v40_admission_invalidation_59_t2_20261004/admission-audit.json",
+      "decision": "PASS_ADMISSION_PATH_STRUCTURE",
+      "exit_code": 0
+    },
+    {
+      "checks_failed": 6,
+      "command": "python audit_admission_path.py <git-show source from 90b857e4ef1cf2d19b7560843da20723f7b4ad85> baseline-audit.json",
+      "decision": "FAIL_ADMISSION_PATH_STRUCTURE",
       "exit_code": 1,
       "expected_exit_code": 1
     }
@@ -56,7 +99,8 @@
   "limitations": [
     "The test injects monitor output and child events; it does not execute the actual child runtime or test application effect.",
     "The original T0 audit and T1 FAIL_SOURCE_IDENTITY record remain unchanged and do not bind this modified source.",
-    "Issue #59 live threat-exposure allocation remains unassigned; no live run was performed."
+    "Issue #59 live threat-exposure allocation remains unassigned; no live run was performed.",
+    "The AST audit is a separate structural check with an old-source negative control; it is not a separate-human review or a runtime oracle."
   ],
   "schema": "map01-v40-admission-invalidation-construction-v1",
   "scope": "deterministic host-side event-queue construction only; no session runtime, game, model, GUI, OS input, formal allocation, or task-effect claim",

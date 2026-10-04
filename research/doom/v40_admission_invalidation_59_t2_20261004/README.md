@@ -16,7 +16,9 @@
 
 V40 now passes its `ObservableSignalPolicyMonitor` into initial and renewal cover-acceptance waits. An invalidation during first admission triggers cancellation and requires a verified empty terminal before the loop can reach planner startup. Renewal admission invalidation uses the existing planner interrupt/cancel/release path. Decision accounting records `not_started` for final action admission when no planner turn occurred.
 
-`RESULT.json` binds this result to the exact candidate and test SHA-256 values, base commit, environment, and commands. `test-output.txt`, `compile-output.txt`, `diff-check-output.txt`, and `exit-codes.txt` preserve command evidence. The prior T0 record and T1 `FAIL_SOURCE_IDENTITY` result are retained unchanged; this result does not repair or supersede their source identity claim.
+A separate read-only AST audit passes all six admission-path checks against the current candidate. The same auditor run against the exact V40 source from prior PR head `90b857e4ef1cf2d19b7560843da20723f7b4ad85` fails all six checks, including monitor forwarding and cancellation-before-planning. This negative control verifies that the audit distinguishes the prior path from the repair; it establishes source structure only.
+
+`RESULT.json` binds this result to the exact candidate, test, and audit-script SHA-256 values, base commit, environment, and commands. `test-output.txt`, `compile-output.txt`, `diff-check-output.txt`, audit outputs, and exit-code files preserve command evidence. The prior T0 record and T1 `FAIL_SOURCE_IDENTITY` result are retained unchanged; this result does not rewrite or supersede those historical records.
 
 After this source change, the T1 read-only identity verifier was run again. It returned the expected exit code 1 and `FAIL_SOURCE_IDENTITY`: the candidate is now `0e1183a26cb0f816dcde97bb80f63f436ae306fd356a2ccef160e9ba5fe2add4`, while the preserved T0 audit and README still identify the earlier `961eadb2…` source. The output is retained in `identity-output.txt`; repairing that provenance gate remains separate from this regression result.
 
