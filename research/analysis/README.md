@@ -335,6 +335,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cache_epoch_monitor_execution_2928_v1/`](cache_epoch_monitor_execution_2928_v1/)
 - [`cache_partial_effect_replay_boundary_2928_v1/`](cache_partial_effect_replay_boundary_2928_v1/)
 - [`cache_session_binding_caller_2928_v1/`](cache_session_binding_caller_2928_v1/)
+- [`caller_custody_union_20261004/`](caller_custody_union_20261004/)
 - [`caller_two_tier_stage_dominance_v1/`](caller_two_tier_stage_dominance_v1/)
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
 - [`causal_attribution_5323_t0_v1/`](causal_attribution_5323_t0_v1/)
