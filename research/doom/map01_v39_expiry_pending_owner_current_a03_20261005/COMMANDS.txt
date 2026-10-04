@@ -1,0 +1,30 @@
+preflight_no_input:
+  python3 -B -m py_compile research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/preflight.py research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/run_candidate.py research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/audit.py research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/run_candidate_a04.py research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/audit_a04.py research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/candidate_source/input_owner_v13_candidate.py research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/candidate_source/bridge_v2_candidate.py research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/candidate_source/bridge_v3_probe.py
+  python3 -B research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/preflight.py
+
+prepare_one_shot_output_mount:
+  mkdir -p research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/results/formal_01
+
+formal_candidate_exactly_once_in_orbstack:
+  docker run --rm --platform linux/arm64 --network none --cpus=1 --memory=1g --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --volume /private/tmp/agent-interface-59-executor-v12-a01/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005:/work:ro --volume /private/tmp/agent-interface-59-executor-v12-a01/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/results/formal_01:/work/results/formal_01:rw --workdir /work python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python3 -B run_candidate.py
+
+formal_01_outcome:
+  STOP_CONSTRUCTION_RUNNER_ROOT_LAYOUT; candidate was not invoked; see STOP_A03.txt
+
+formal_a04_candidate_exactly_once_with_repository_root_mount:
+  docker run --rm --platform linux/arm64 --network none --cpus=1 --memory=1g --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --volume /private/tmp/agent-interface-59-executor-v12-a01:/workspace:ro --volume /private/tmp/agent-interface-59-executor-v12-a01/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/results/formal_02:/workspace/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/results/formal_02:rw --workdir /workspace/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005 python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python3 -B run_candidate_a04.py
+
+formal_a04_container_preflight_no_input:
+  docker run --rm --platform linux/arm64 --network none --cpus=1 --memory=1g --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --volume /private/tmp/agent-interface-59-executor-v12-a01:/workspace:ro --workdir /workspace/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005 python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python3 -B preflight.py
+
+independent_raw_only_audit_after_candidate:
+  python3 -B research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/audit.py
+
+independent_a04_raw_only_audit_after_candidate:
+  python3 -B research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/audit_a04.py
+
+local_ci_after_run:
+  (cd research/doom && python3 -B -m unittest -v map01_v39_perkey_bridge_a01.test_bridge)
+  (cd research && python3 -B -m unittest -v test_check_workspace_index && python3 -B check_workspace_index.py --git-tree)
+  python3 -B .github/check_public_navigation.py
+  git diff --check
