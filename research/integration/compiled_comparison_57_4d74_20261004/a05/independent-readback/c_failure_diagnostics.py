@@ -73,8 +73,11 @@ visual_review = [
 ]
 crop_boundary_probe = {
     "frozen_layout_b_box_xyxy": [499, 544, 799, 573],
-    "candidate_padded_box_xyxy": [493, 542, 805, 579],
-    "candidate_box_status": "visual crop preview only; OCR was not rerun",
+    "detected_input_field_box_xyxy": [495, 541, 803, 577],
+    "candidate_padded_box_xyxy": [493, 539, 805, 579],
+    "candidate_box_status": "machine-checked crop geometry and visual preview only; OCR was not rerun",
+    "frozen_crop_contains_detected_field": False,
+    "candidate_crop_contains_detected_field": True,
     "previews": [
         {
             "block": item["block"],
