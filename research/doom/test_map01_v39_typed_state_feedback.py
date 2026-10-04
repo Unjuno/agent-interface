@@ -553,6 +553,31 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(result["signals"]["ammo"],
                          {"before": 45, "after": 45, "delta": 0})
 
+    def test_feedback_rejects_noninteger_step_aliases_on_observation_and_typed_row(self):
+        for mutation in ("observation", "typed_row", "both"):
+            for invalid_step in (True, 1.0):
+                before = observation(83, 100)
+                after = observation(89, 200)
+                before["step"] = 0
+                after["step"] = 1
+                before_typed = typed_observation(83, 100, 91, 45)
+                after_typed = typed_observation(89, 200, 90, 44)
+                before_typed["step"] = 0
+                after_typed["step"] = 1
+                if mutation in ("observation", "both"):
+                    after["step"] = invalid_step
+                if mutation in ("typed_row", "both"):
+                    after_typed["step"] = invalid_step
+
+                with self.subTest(mutation=mutation,
+                                  invalid_step=invalid_step):
+                    result = controller.action_state_feedback(
+                        before, after, [before_typed, after_typed])
+
+                    self.assertEqual(result["status"], "unavailable")
+                    self.assertEqual(result["reason"],
+                                     "typed_frame_identity_mismatch")
+
     def test_feedback_refuses_typed_frame_with_mismatched_capture_time(self):
         before = observation(83, 100)
         after = observation(89, 200)
