@@ -1,12 +1,10 @@
 """Telemetry-only wrapper for InputOwner v10 ordinary release RPCs.
 
-The V10 owner performs X11 KeyRelease followed by ``d.sync()`` for ordinary
-``up`` operations and returns ``None``. This opt-in wrapper carries the key as a
-``str`` subclass so the owner thread can record its own request-to-sync interval
-without changing V10's ordinary return contract or adding another sync. The
-existing caller-side RPC interval remains available to measure queue plus owner
-latency. Neither interval is a hardware-state timestamp or proves application
-consumption.
+V10 keeps returning None for ordinary release calls. For explicit key-up only,
+this wrapper passes a string-compatible telemetry key so the owner thread can
+record the existing KeyRelease-to-XSync interval without another sync. The
+caller-side interval remains available for queue plus owner latency. Neither
+interval is a hardware-state timestamp or proof of application consumption.
 """
 from __future__ import annotations
 
@@ -16,6 +14,7 @@ from input_owner_v10 import InputOwner as Previous, _OwnerReleaseTimingKey
 
 
 RELEASE_OPS = frozenset({"up", "button_up"})
+
 
 
 class InputOwner(Previous):
@@ -54,4 +53,3 @@ class InputOwner(Previous):
             "application_consumption_observed": False,
             "grants_input_authority": False,
         }
-
