@@ -1,0 +1,5 @@
+test_post_sample_cancel_release_is_published_before_cancel_terminal ... ok
+Ran 1 test in 0.002s
+OK
+POST_SAMPLE_PUBLICATION_ORDER sample_false_ns=101831095295333 cancel_visible_ns=101831095307916 fake_keyup_ns=101831095318875 owner_reason=cancelled release_published_ns=101831095368916 terminal=cancelled terminal_ns=101831095390750
+Assertions: cancel sampled false < cancel visible < fake KeyRelease; verified cancellation receipt has empty key/button sets; receipt publication precedes cancelled terminal.

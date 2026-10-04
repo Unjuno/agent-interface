@@ -1,0 +1,21 @@
+{
+  "experiment": "map01-v39-cancel-release-cause-postsample-c05-20261004",
+  "repository": "Unjuno/agent-interface",
+  "parent_pr": 7440,
+  "parent_commit": "ad7d44e5a90bc3ac6f4dce4a5a017c7c819657de",
+  "candidate_commit": "99b7d130742b4e884709a862bc074d15e6b42ac9",
+  "test_path": "research/live_control/test_executor_owner_cancel_cause_postsample_v1.py",
+  "test_sha256": "6195b0469dccbf48fa3ab204e54b401dacd27ffd9dcf7f1657d45e64ff641f3d",
+  "fixture_path": "research/live_control/test_executor_owner_cancel_cause_v1.py",
+  "fixture_sha256": "e196095fcb84b21e10c48fecf155b2c4ba699d09b3299f168f069bb4d7574cea",
+  "parent_owner_sha256": "662f28840bd9a84a51611a2da23681c5fec53d2b6ab00b78675a9380855c8077",
+  "candidate_owner_sha256": "7cc6b3bcac201624992657203cbb9459120956ad65c1fb6e56e4ac85aafad8f2",
+  "schedule": "cancel becomes visible after false cause sample and before fake KeyRelease",
+  "candidate_test": "PASS 1/1; exit 0",
+  "parent_test": "EXPECTED FAIL; exit 1; missing standalone input_released receipt",
+  "candidate_compile": "PASS; exit 0",
+  "diff_check": "PASS; exit 0",
+  "execution_environment": "host macOS arm64, Python 3.14.5; container not run",
+  "container_stop_reason": "OrbStack Docker daemon lacked python:3.14; no pull/build attempted",
+  "claims_excluded": ["race frequency", "physical input release", "live X11/game behavior", "model/task effect", "human-tempo safety", "end-to-end realtime-control success"]
+}
