@@ -10,7 +10,9 @@ historical report, event stream, or original failure diagnosis.
 The machine-readable result is
 [`timeline-v1.json`](results/map01-astra-attempt-v1/timeline-v1.json). Rebuild
 it with `python research/doom/analyze_map01_astra_timeline_v1.py` and verify it
-with `python research/doom/audit_map01_astra_timeline_v1.py`.
+with `python research/doom/audit_map01_astra_timeline_v1.py`. The independent
+row audit is mutation-tested by
+`python -m unittest research.doom.test_map01_astra_timeline_v1`.
 
 The 13 intervals account for 528 of the 530 raw observations; two initial
 observations precede the first model-start boundary. They include all 46
