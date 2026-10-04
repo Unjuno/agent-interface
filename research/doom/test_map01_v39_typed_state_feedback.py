@@ -193,19 +193,31 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(controller.input_edge_receipts(template)[0]["status"],
                          "adapter_edge_brackets_paired")
 
-        for row_index, contradictory_edge in ((0, "up"), (1, "down")):
-            events = json.loads(json.dumps(template))
-            events[row_index]["physical_key_measurement"]["edge"] = contradictory_edge
+        for row_index, correct_edge in ((0, "down"), (1, "up")):
+            mutations = (
+                ("opposite", "up" if correct_edge == "down" else "down"),
+                ("missing", None),
+                ("null", "null"),
+                ("unknown", "sideways"),
+                ("capitalized", correct_edge.upper()),
+            )
+            for mutation, value in mutations:
+                events = json.loads(json.dumps(template))
+                measurement = events[row_index]["physical_key_measurement"]
+                if mutation == "missing":
+                    measurement.pop("edge")
+                else:
+                    measurement["edge"] = value
 
-            with self.subTest(row_index=row_index,
-                              contradictory_edge=contradictory_edge):
-                receipts = controller.input_edge_receipts(events)
+                with self.subTest(row_index=row_index, correct_edge=correct_edge,
+                                  mutation=mutation):
+                    receipts = controller.input_edge_receipts(events)
 
-                self.assertEqual(len(receipts), 1)
-                self.assertEqual(receipts[0]["status"],
-                                 "adapter_edge_receipt_incomplete")
-                self.assertIsNone(receipts[0]["down_edge_interval_ns"])
-                self.assertIsNone(receipts[0]["up_edge_interval_ns"])
+                    self.assertEqual(len(receipts), 1)
+                    self.assertEqual(receipts[0]["status"],
+                                     "adapter_edge_receipt_incomplete")
+                    self.assertIsNone(receipts[0]["down_edge_interval_ns"])
+                    self.assertIsNone(receipts[0]["up_edge_interval_ns"])
 
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
