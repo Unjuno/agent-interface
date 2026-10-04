@@ -1,0 +1,56 @@
+{
+  "allocation": "6389-wsl2-vs-wslc-native-suite-a04-20261004",
+  "branch": "research/wsl2-wslc-migration-6389-a04-20261004",
+  "base_main_sha": "8094af4631fc7bc5d92990e5151d5e89477ee39f",
+  "source_paths": [
+    "runtime/integration_checks/native.py",
+    "runtime/integration_checks/",
+    "runtime/cli_v1/",
+    "runtime/host_v1/",
+    "runtime/motor_state_v1/",
+    "runtime/selector_v1/",
+    "runtime/core_v1/",
+    "runtime/backends/",
+    "runtime/distribution_v2/",
+    "runtime/guarded_x11_v1/",
+    "research/live_control/ top-level files"
+  ],
+  "source_files": {
+    "runtime/integration_checks/native.py": {
+      "git_blob": "d70fa82b1b29c4a384a95348697431ec3d28d2a0",
+      "windows_checkout_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d"
+    },
+    "runtime/integration_checks/Dockerfile": {
+      "git_blob": "f1464e51c2cc4e493c439f93fc049ccfe6221590",
+      "windows_checkout_sha256": "8a37c726cbb18b778397f4a7405a14ab533c5df7f442933a295e80a0579a892e"
+    },
+    "research/live_control/requirements-native-mcp.txt": {
+      "windows_checkout_sha256": "4fe75062c5d424bbc86a8cd58c63ab19aeffe4f0a0e100022252c8032e12ee5b"
+    }
+  },
+  "native_runtime": {
+    "distribution": "Ubuntu WSL2",
+    "python_executable": "/tmp/agent-interface-mcp-venv/bin/python",
+    "python_version": "3.12.3",
+    "both_suites_use_same_interpreter": true,
+    "dependencies": "Pillow 10.2.0; numpy 1.26.4; python-xlib 0.33"
+  },
+  "wslc_runtime": {
+    "cli_version": "3.0.1.0",
+    "image_tag_for_inventory": "agent-interface/native-suite-wslc-a08:20261004",
+    "local_image_id": "sha256:1b4a8bd7c0fe372cc0cafa74af433b8ae1f73f1bee0f11a028f126b08b2c128a",
+    "platform": "linux/amd64",
+    "python_version": "3.12.14",
+    "network": "none",
+    "source_mount": "read-only /src",
+    "output_mount": "fresh writable /out",
+    "cpu_request": 1,
+    "memory_request": "512M; enforcement unverified"
+  },
+  "schedule": ["native,wslc", "wslc,native", "native,wslc"],
+  "candidate_invocations_per_arm": 3,
+  "auditor_invocations": 1,
+  "retry_count": 0,
+  "external_output_path": "C:/Users/junny/Documents/Codex/m6389-a04-results-20261004",
+  "formal_status": "not_run"
+}
