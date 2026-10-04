@@ -100,7 +100,7 @@ class CancelReleasePublicationTest(unittest.TestCase):
     def setUpClass(cls):
         install_fake_xlib()
         from executor_v12 import Executor
-        from input_owner_v11 import InputOwner
+        from input_owner_v12 import InputOwner
         cls.Executor, cls.InputOwner = Executor, InputOwner
 
     def test_cancel_while_key_held_publishes_receipt_before_terminal(self):
