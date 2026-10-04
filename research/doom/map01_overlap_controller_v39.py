@@ -476,6 +476,11 @@ def prepare_action_admission(receipt, action, authored, source_health,
     current = {"health": {"status": current_health["status"],
                           "value": current_health["value"]}}
     if "ammo" in required:
+        if any(type(signal[field]) is not int
+               for signal in (current_health, current_ammo)
+               for field in ("sequence", "capture_ns")):
+            raise ValueError(
+                "current health and ammo epoch metadata must be exact integers")
         if (current_ammo["sequence"] != current_health["sequence"] or
                 current_ammo["capture_ns"] != current_health["capture_ns"] or
                 not bindings_equal_exact(current_ammo["binding"],
