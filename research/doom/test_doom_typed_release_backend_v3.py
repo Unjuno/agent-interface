@@ -24,6 +24,11 @@ class Parent:
             self.raw(key, False)
         return 'ok'
 
+    def release_all(self):
+        for key in list(self.held):
+            self.raw(key, False)
+        return {'verified': True, 'keys_down': [], 'buttons_down': []}
+
 parent = types.ModuleType('doom_typed_release_backend_v1')
 parent.Backend = Parent
 parent.suite = object()
@@ -116,14 +121,13 @@ def make_backend(held, owner=None, token='intent-1', with_context=True):
 
 
 class Tests(unittest.TestCase):
-    def test_backend_is_the_retained_v3_adapter_with_only_current_base_import(self):
-        previous = (HERE / 'doom_retained_input_backend_v3.py').read_text(encoding='utf-8')
+    def test_backend_uses_current_release_base_and_transition_owner(self):
         candidate = (HERE / 'doom_typed_release_backend_v3.py').read_text(encoding='utf-8')
-        expected = previous.replace(
-            'from doom_typed_coast_backend_v1 import Backend as Previous, suite',
-            'from doom_typed_release_backend_v1 import Backend as Previous, suite')
-        self.assertNotEqual(expected, previous)
-        self.assertEqual(candidate, expected)
+        self.assertIn(
+            'from doom_typed_release_backend_v1 import Backend as Previous, suite',
+            candidate)
+        self.assertIn('from input_transition_owner_v3 import InputOwner', candidate)
+        self.assertNotIn('from doom_typed_coast_backend_v1 import', candidate)
 
     def test_current_v39_session_selects_and_hashes_the_successor_backend(self):
         session = (HERE / 'session_map01_v12.py').read_text(encoding='utf-8')
@@ -208,6 +212,53 @@ class Tests(unittest.TestCase):
         self.assertEqual(obj.owner.calls, [('up', 'a')])
         self.assertEqual(obj.emitted, [])
         self.assertEqual(obj.held, set())
+
+    def test_two_key_release_batch_survives_successful_step_boundary(self):
+        obj = make_backend({'a', 'space'}, with_context=False)
+        obj.execute({'keys': ['a']}, None, 'p', 0)
+        self.assertEqual(obj.emitted, [])
+        self.assertEqual(obj.held, {'space'})
+
+        obj.execute({'keys': ['space']}, None, 'p', 1)
+
+        rows = [r for r in obj.emitted if r.get('event') == 'input_release_transition']
+        self.assertEqual([row['key'] for row in rows], ['a', 'space'])
+        self.assertEqual([row['release_batch_step'] for row in rows], [0, 1])
+        self.assertEqual([row['release_batch_position'] for row in rows], [0, 1])
+        samples = [op for op in obj.owner.calls if op[0] == 'input_state']
+        self.assertEqual(samples, [('input_state', None)])
+
+    def test_new_program_does_not_inherit_previous_program_receipts(self):
+        obj = make_backend({'a', 'space'}, with_context=False)
+        obj.execute({'keys': ['a']}, None, 'p', 0)
+        obj.execute({'keys': ['space']}, None, 'q', 0)
+
+        rows = [r for r in obj.emitted if r.get('event') == 'input_release_transition']
+        self.assertEqual([row['key'] for row in rows], ['space'])
+        self.assertEqual([row['release_batch_identifier'] for row in rows], ['q'])
+        self.assertEqual([row['release_batch_step'] for row in rows], [0])
+
+    def test_final_release_all_flushes_buffered_program_rows(self):
+        obj = make_backend({'a', 'space'}, with_context=False)
+        obj.execute({'keys': ['a']}, None, 'p', 0)
+        self.assertEqual(obj.emitted, [])
+
+        release = obj.release_all()
+
+        rows = [r for r in obj.emitted if r.get('event') == 'input_release_transition']
+        self.assertEqual(release['verified'], True)
+        self.assertEqual([row['key'] for row in rows], ['a', 'space'])
+        self.assertEqual([row['release_batch_step'] for row in rows], [0, 0])
+        self.assertEqual(sum(op[0] == 'input_state' for op in obj.owner.calls), 1)
+
+    def test_later_step_exception_discards_prior_buffered_rows(self):
+        obj = make_backend({'a', 'space', 'd'}, with_context=False)
+        obj.execute({'keys': ['a']}, None, 'p', 0)
+        with self.assertRaisesRegex(RuntimeError, 'synthetic partial release'):
+            obj.execute({'mode': 'partial_raise', 'keys': ['space']}, None, 'p', 1)
+
+        self.assertFalse(hasattr(obj._release_batch, 'context'))
+        self.assertEqual(obj.emitted, [])
 
     def test_execute_discards_partial_batch_after_exception(self):
         obj = make_backend({'a', 'd'}, with_context=False)

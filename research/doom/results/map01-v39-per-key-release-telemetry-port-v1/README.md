@@ -1,24 +1,34 @@
-# Current v39 per-key release telemetry port — construction HOLD
+# Current v39 per-key release telemetry port — construction corrected, native HOLD
 
-This additive port brings the retained v13 non-staggering per-key release
-adapter onto the exact backend selected by the retained v39 source closure.
-`session_map01_v12.py` now selects `doom_typed_release_backend_v3.py`; that
-adapter differs from `doom_retained_input_backend_v3.py` only in inheriting the
-current `doom_typed_release_backend_v1` base. Its release owner remains the
-current `InputOwner v10` wrapped by `input_transition_owner_v3`.
+This additive port brings per-key release transitions onto the backend selected
+by the retained v39 source closure. `session_map01_v12.py` selects
+`doom_typed_release_backend_v3.py`; the release owner is current `InputOwner
+v10` wrapped by `input_transition_owner_v3`.
+
+The first adapter candidate, frozen in `FREEZE.json`, buffered and flushed
+receipts only within one `execute(step, ...)` call. Review reproduced a missing
+receipt when the same held-key batch was released across successful executor
+steps. That original source and its outputs remain unchanged as historical
+evidence. The follow-up correction is in `SPLIT_STEP_FIX_01.md`: successful
+steps of one program now share a release buffer until the held-key set is empty;
+each receipt retains its own step number. Exceptions still discard buffered
+partial measurements, and a different program identifier cannot inherit them.
 
 ## H / T / D / C / U
 
-- **H:** Current v39 can retain a caller-timed per-key explicit-up bracket while
-  preserving the tested non-staggering batch rule: complete all explicit key
-  ups, take one owner-state sample, then publish the per-key records.
-- **T:** Check the exact current-v39 runtime source closure, prove the adapter
-  is a one-import change from the previously tested v3 backend, and run the
-  candidate batch tests plus the retained backend/owner construction suites.
-- **D — `PASS_CONSTRUCTION / HOLD_NATIVE_VALIDATION`:** 14 candidate tests,
-  11 retained adapter tests, and 8 retained owner-wrapper tests pass (33 total).
-  The selected session names and hashes the candidate adapter and its transition
-  wrapper. Python byte-compilation and `git diff --check` pass.
+- **H:** Current v39 retains per-key explicit-up brackets for each executor
+  program, including when its key releases span multiple successful steps, and
+  takes one empty-owner sample before publishing that complete batch.
+- **T:** Reproduce the split-step loss against the frozen candidate, preserve a
+  multi-step regression, fix buffering without allowing partial exception
+  receipts to verify, and run candidate, retained adapter and owner suites.
+- **D — `PASS_CONSTRUCTION / HOLD_NATIVE_VALIDATION`:** 18 candidate tests,
+  11 retained adapter tests, and 8 retained owner-wrapper tests pass (37 total).
+  The new regression first failed on the frozen candidate with actual output
+  containing only the final key (`space`), then passed with both keys in order,
+  a single post-batch owner sample and per-receipt step numbers. Exception
+  cleanup remains fail-closed. Python byte-compilation and `git diff --check`
+  pass.
 - **C:** A successful owner call bracket and post-batch owned-keycode sample do
   not continuously observe physical key state or prove application consumption.
   The adapter adds one owner-state sample after a completed release batch and
