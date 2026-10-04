@@ -838,6 +838,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`skill_registry_topk_starvation_751_t0_20261002/`](skill_registry_topk_starvation_751_t0_20261002/)
 - [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
 - [`slack_reclamation_7778_dispatch_sensitivity_t0_20261005/`](slack_reclamation_7778_dispatch_sensitivity_t0_20261005/)
+- [`slack_reclamation_7778_t0_20261005/`](slack_reclamation_7778_t0_20261005/)
 - [`soft_revisit_bias_5756_t0_orbstack_a03_20261003/`](soft_revisit_bias_5756_t0_orbstack_a03_20261003/)
 - [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`soft_revisit_bias_6442_supplemental_audit_v1/`](soft_revisit_bias_6442_supplemental_audit_v1/)
