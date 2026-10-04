@@ -432,7 +432,8 @@ def action_state_feedback(before, after, typed_observations):
     def read(observation):
         if (type(observation.get("sequence")) is not int or
                 type(observation.get("capture_ns")) is not int or
-                type(observation.get("step")) is not int):
+                type(observation.get("step")) is not int or
+                observation.get("step") < 0):
             return None, "typed_frame_identity_mismatch"
         matches = [row for row in typed_observations
                    if type(row) is dict and row.get("event") == "typed_observation" and
@@ -445,7 +446,7 @@ def action_state_feedback(before, after, typed_observations):
                 row.get("pointer_binding") != observation.get("pointer_binding") or
                 type(row.get("sequence")) is not int or
                 type(row.get("capture_ns")) is not int or
-                type(row.get("step")) is not int or
+                type(row.get("step")) is not int or row.get("step") < 0 or
                 row.get("capture_ns") != observation.get("capture_ns") or
                 row.get("id") != observation.get("id") or
                 row.get("step") != observation.get("step") or

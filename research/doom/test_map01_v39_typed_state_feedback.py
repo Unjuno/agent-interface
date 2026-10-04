@@ -556,7 +556,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 "signal_id": name, "sequence": 89, "capture_ns": 200,
                 "binding": BINDING, "status": "observed", "value": value}
 
-        for invalid_step in (True, 1.0):
+        for invalid_step in (True, 1.0, -1):
             with self.subTest(invalid_step=invalid_step):
                 malformed = dict(event, step=invalid_step)
 
@@ -594,7 +594,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
 
     def test_feedback_rejects_noninteger_step_aliases_on_observation_and_typed_row(self):
         for mutation in ("observation", "typed_row", "both"):
-            for invalid_step in (True, 1.0):
+            for invalid_step in (True, 1.0, -1):
                 before = observation(83, 100)
                 after = observation(89, 200)
                 before["step"] = 0
