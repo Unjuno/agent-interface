@@ -121,6 +121,14 @@ class Executor(Previous):
             publication = getattr(exc, "release_batch_publication", None)
             if isinstance(publication, dict):
                 release_batch_publication = dict(publication)
+        except BaseException as exc:
+            # Preserve process-level interruption semantics while preventing
+            # the finally block from publishing a false completed terminal.
+            status = "failed"; error = repr(exc)
+            publication = getattr(exc, "release_batch_publication", None)
+            if isinstance(publication, dict):
+                release_batch_publication = dict(publication)
+            raise
         finally:
             # An owner-originated focus/surface event is already available here.
             # For explicit cancellation, allow one owner polling interval before
