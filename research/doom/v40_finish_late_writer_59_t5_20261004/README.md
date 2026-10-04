@@ -17,3 +17,14 @@
 The writer records when write+flush completes. `finish_sent` is assigned only by the caller after confirming that timestamp is at or before the monotonic deadline. A full-length completion after timeout remains flagged as late, triggers/retains owned-child retirement, and cannot become a graceful-success receipt.
 
 `baseline-output.txt` preserves the first failing exact-head regression. `candidate-suite-output.txt`, compile/diff outputs, `RESULT.json`, and `SHA256SUMS` bind the repaired source and 12/12 focused suite. The earlier T4 pipe-backpressure result remains unchanged in its own package.
+
+
+## Integrity follow-up (2026-10-05)
+
+A fresh manifest check found that 13 of 14 entries matched, while the retained
+`audit-output.txt` hash in `SHA256SUMS` did not match the committed bytes. The
+manifest entry is corrected to SHA-256
+`e05a824118e5e78e11111ae3d4bec7a226ccdd854f3b07c9fff61eb6409333e3`. The
+output, candidate, tests, result, and first outcomes are unchanged. The
+independent T5 audit still passes; this correction repairs package integrity
+metadata only.
