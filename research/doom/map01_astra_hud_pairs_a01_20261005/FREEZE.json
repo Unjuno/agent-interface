@@ -1,0 +1,98 @@
+{
+  "schema": "map01-astra-hud-pairs-a01-freeze",
+  "base_main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "hypothesis": "The frozen one-way health-ROI guard invalidates exactly when manual health labels differ across any ordered pair in the retained 13-frame trajectory.",
+  "test": "Enumerate all 169 ordered pairs including self-pair controls; compare guard disposition against manual health-label inequality.",
+  "decision": "PASS_SCOPED iff 169/169 pair classifications match and every outcome preserves no-authority/no-success fields; otherwise FAIL_MISMATCH.",
+  "control": "Three deterministic unit controls: changed ROI invalidates, outside-ROI pixel changes do not invalidate unchanged-health pair, incorrect expected label raises.",
+  "scope": "Posthoc still-frame pixel separability only; no candidate, model, game, X server, OS input, or live allocation.",
+  "resource": "local CPU and image decoding only; no container or GPU.",
+  "inputs": {
+    "research/doom/results/map01-astra-attempt-v1/report.json": {
+      "bytes": 67434,
+      "sha256": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frame-manifest.json": {
+      "bytes": 1880,
+      "sha256": "e0cbb11901cedaae1283d228593307c0e771a51a31b21e7bb1de8db0650d2935"
+    },
+    "research/doom/results/map01-astra-attempt-v1/failure-analysis-v1.json": {
+      "bytes": 22752,
+      "sha256": "b5383b9407198cd88e9aec712018965a27081701812619e9aeb84ba3e042e1ca"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/00.png": {
+      "bytes": 123806,
+      "sha256": "d17b0cdb63c7a9b64513c512553cd7012890ee8d5588c8ce149f268329cfba71"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/01.png": {
+      "bytes": 158337,
+      "sha256": "e5370c4cc21b4cdc4ad2211bf13b7af268d04904a693991fbcc1368c64d9d1f1"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/02.png": {
+      "bytes": 67029,
+      "sha256": "ab866d22079953994ac4d2b2a96841f3d99beb1a4f79ddfcef8af42a54011f41"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/03.png": {
+      "bytes": 206465,
+      "sha256": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/04.png": {
+      "bytes": 73904,
+      "sha256": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/05.png": {
+      "bytes": 172726,
+      "sha256": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/06.png": {
+      "bytes": 48223,
+      "sha256": "5813b591566221a3753f9e6f1261907cd5289e0aaa987c4728987c959e331fc6"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/07.png": {
+      "bytes": 48250,
+      "sha256": "c56a2542b3dea4f863a87ff0387ae756d2922768cd43432f8bf0501365bed95a"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/08.png": {
+      "bytes": 152368,
+      "sha256": "76ee920671ef35600b631af08202dbffae09d5b7dd4487d90d418568c07e7866"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/09.png": {
+      "bytes": 158682,
+      "sha256": "762030fb454865797cfe6dbb526a6ab1297d36e05cb4ab413c2c7b0a2646cace"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/10.png": {
+      "bytes": 82118,
+      "sha256": "9f0c6ec5fd0be82ea60ec8790e4f83d34f6d4ddb183dbffef17f15b5714a83c0"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/11.png": {
+      "bytes": 47073,
+      "sha256": "6df9a66e2d658b95003ff776f105082329a9dbbb704eeedf926adc0c33459a31"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/12.png": {
+      "bytes": 143207,
+      "sha256": "066db883b20bfd57270a87258eadd38cc816364d246c16db5ae586a01c14b366"
+    }
+  },
+  "code": {
+    "research/live_control/policy_invalidation_guard_v1.py": {
+      "bytes": 5278,
+      "sha256": "29cacb1bb71cb19b36b32ccc6d0cc657d6034121a4920a65bd1f4d6a224016fe"
+    },
+    "research/doom/analyze_map01_astra_failure_v1.py": {
+      "bytes": 8786,
+      "sha256": "4417edc41ee3b4bcec5db1311c98122bea63d5586b78994e97350a6534084145"
+    },
+    "research/doom/map01_astra_hud_pairs_a01_20261005/pairwise_probe.py": {
+      "bytes": 5818,
+      "sha256": "f8c2d643539bb0bd4b7bcf92466aed5fbfb899c5f4a48dafa30ac5589c299d89"
+    },
+    "research/doom/map01_astra_hud_pairs_a01_20261005/test_pairwise_probe.py": {
+      "bytes": 1364,
+      "sha256": "a2e1b736e2beb787b1fa2261dcf49c61ed51009e8f0cf86850ee430595900f3b"
+    },
+    "research/doom/map01_astra_hud_pairs_a01_20261005/README.md": {
+      "bytes": 2734,
+      "sha256": "f3fda22d1143824e96cc1532c533a4ad8bc741ab5b3f50a1e57efc653977bc54"
+    }
+  }
+}

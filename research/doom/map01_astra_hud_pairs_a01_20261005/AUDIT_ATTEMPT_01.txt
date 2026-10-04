@@ -1,0 +1,6 @@
+Command: python research/doom/map01_astra_hud_pairs_a01_20261005/audit_pairwise_result.py
+Disposition: FAIL_AUDIT_CONSTRUCTION
+First observed exception: ValueError: RGB source image required
+Cause: auditor passed (frame, spec, ...) while PolicyInvalidationGuard requires (spec, frame, ...).
+AUDIT.json was not emitted. The pairwise probe source, frozen inputs, pairs.jsonl, and RESULT.json were not changed by this failed audit construction.
+No candidate, game, model, X server, container, OS input, or live allocation ran.
