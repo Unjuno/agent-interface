@@ -56,5 +56,23 @@ class SessionCustody(unittest.TestCase):
                                      (17,False),(83,False)])
         self.assertEqual(b.held_keys,{'CTRL':17,'S':83})
 
+    def test_unverified_button_up_aborts_remaining_ops(self):
+        b,s=self.make();self.state=0;b.held_keys={}
+        events=[]
+        b.manifest=lambda:{'capabilities':{}}
+        b.preflight=lambda program:None
+        b.text=lambda value:events.append(('text',value))
+        b._send=lambda item:self.sends.append(('mouse',))
+        accepted=types.SimpleNamespace(accepted=True,error=None,required_capabilities=[])
+        with patch.object(m,'admit_program',return_value=accepted):
+            r=self.dispatch(s,[dict(op='pointer_button',button='left',down=True),
+                               dict(op='pointer_button',button='left',down=False),
+                               dict(op='text',text='SHOULD NOT SEND'),
+                               dict(op='release_all')])
+        self.assertEqual(r['status'],'release_unverified')
+        self.assertEqual(events,[])
+        self.assertEqual(self.sends,[('mouse',),('mouse',),('mouse',)])
+        self.assertEqual(b.held_buttons,{'left'})
+
 from runtime.backends.win32_v1 import session as m
 if __name__=='__main__':unittest.main(verbosity=2)
