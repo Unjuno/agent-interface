@@ -1,0 +1,33 @@
+{
+  "schema": "doom-controller-finish-pipe-text-mode-followup-freeze-v1",
+  "allocation": "MAP01-CONTROLLER-FINISH-PIPE-FOLLOWUP-01-20261005",
+  "parent_baseline": "../FREEZE.json; original baseline and false-pass audit remain immutable",
+  "hypothesis": "With text-mode stdin, the frozen synchronous finish write blocks on a full child pipe until the owned child is killed.",
+  "run_policy": "one corrected baseline invocation; preserve first exit/output; no retry",
+  "environment": {
+    "runtime": "WSLc 3.0.1.0",
+    "image": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+    "network": "none",
+    "user": "65534:65534",
+    "cpus_requested": 1,
+    "memory_requested": "512m",
+    "stdin_mode": "text=True",
+    "kernel_swap_or_cgroup_enforcement": "not inferred from the requested limit"
+  },
+  "expected": {
+    "blocked_after_barrier": true,
+    "child_alive_at_barrier": true,
+    "planner_closed_at_barrier": false,
+    "finish_send_error_after_probe_kill": "BrokenPipeError",
+    "scope": "constructed synchronous pipe-write boundary only"
+  },
+  "sha256": {
+    "preregistration": "40c398c8e7adbaa94f131e69818ff5b2fde5e995f9f09300b30ead497e7b616f",
+    "probe": "8f57d9f58d09b0e23e0c6bf254ad251f53f1445ec934c0eb0d508aad95bc71d1",
+    "runner": "9a015fd86f18b2d3eac64880f06a34934c169a37480689bd043f90558680465a",
+    "auditor": "732344da87b1eb04029f5daf8c2d54d7a95198e50a4ea281c47b7deb2cf37543",
+    "source": "7844cd558e453408a0b5aa46b860b53cf9afab9d47ccccaf7b61db2e90b42bb6",
+    "checked_repair_runner": "3561c77cfa76183e9e6488883f1bd980c4e2664270174022369121979977dfca",
+    "runner_contract_test": "11e5da37be525e054698efed79178325589dc01c8966fd7e7971d20b0c38fa8f"
+  }
+}
