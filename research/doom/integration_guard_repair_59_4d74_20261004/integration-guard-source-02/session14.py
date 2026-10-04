@@ -41,69 +41,13 @@ def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.p
     raise RuntimeError('independent scorer could not obtain one-tic coherent sample')
 
 class _GameProxy:
-    def __init__(self, inner, final_sample):
-        self._inner = inner
-        self._final_sample = final_sample
-        self.initialized = False
-        self.closing = False
-        self.closed = False
-        self._close_error = None
-
-    def __getattr__(self, name):
-        return getattr(self._inner, name)
-
+    def __init__(self,inner,final_sample):self._inner=inner;self._final_sample=final_sample;self.initialized=False;self.closed=False
+    def __getattr__(self,name):return getattr(self._inner,name)
     def init(self):
-        result = self._inner.init()
-        self.initialized = True
-        return result
-
+        result=self._inner.init();self.initialized=True;return result
     def close(self):
-        if self.closing:
-            return None
-        if self.closed:
-            if self._close_error is not None:
-                raise self._close_error
-            return None
-
-        # Preserve a controller error already unwinding through the session's
-        # finally block if either scorer sampling or game cleanup also fails.
-        active_error = sys.exception()
-        self.closing = True
-        sample_error = None
-        game_close_error = None
-        result = None
-        if self.initialized:
-            try:
-                # sample_game() requires the proxy to remain initialized/open.
-                self._final_sample()
-            except BaseException as error:
-                sample_error = error
-
-        self.closed = True
-        try:
-            result = self._inner.close()
-        except BaseException as error:
-            game_close_error = error
-            self._close_error = error
-        finally:
-            self.closing = False
-
-        cleanup_errors = [error for error in (sample_error, game_close_error)
-                          if error is not None]
-        if cleanup_errors and active_error is not None:
-            self._close_error = BaseExceptionGroup(
-                "session and game-close cleanup failed",
-                [active_error, *cleanup_errors],
-            )
-            raise self._close_error
-        if len(cleanup_errors) == 1:
-            self._close_error = cleanup_errors[0]
-            raise self._close_error
-        if len(cleanup_errors) > 1:
-            self._close_error = BaseExceptionGroup(
-                "final scorer sample and game close both failed", cleanup_errors)
-            raise self._close_error
-        return result
+        if self.initialized and not self.closed:self._final_sample()
+        self.closed=True;return self._inner.close()
 
 def main():
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
