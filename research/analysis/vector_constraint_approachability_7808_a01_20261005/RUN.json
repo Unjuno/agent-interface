@@ -1,0 +1,66 @@
+{
+  "schema": "vca7808-run-v1",
+  "allocation": "VCA-7808-WSLC-A01-20261005",
+  "base_commit": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "freeze_sha256": "05E2F1F58D35E1B81910517DC2307A5E679ED2953CE0C327D1D2667EA7D65C0E",
+  "environment": {
+    "runtime": "WSLc 3.0.1.0",
+    "image": "python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "python": "3.12.15",
+    "cpus_configured": 1,
+    "memory_configured": "128m",
+    "network": "none",
+    "pull_policy": "never",
+    "gpu": false
+  },
+  "resource_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "enforcement_note": "Configured memory was not treated as proof of cgroup memory or swap enforcement.",
+  "formal_runs": [
+    {
+      "role": "candidate",
+      "invocation": 1,
+      "exit_code": 0,
+      "command": "python -B candidate.py --fixture fixture.json --output candidate.raw.json",
+      "stdout": "{\"schema\": \"vca7808-candidate-v1\", \"cases\": 4, \"policies_per_case\": 3}"
+    },
+    {
+      "role": "independent_auditor",
+      "invocation": 1,
+      "exit_code": 0,
+      "command": "python -B audit.py --fixture fixture.json --candidate candidate.raw.json --output audit.raw.json",
+      "stdout": "{\"disposition\": \"PASS_METHOD_SCOPED\", \"errors\": [], \"cases\": 4}"
+    }
+  ],
+  "formal_invocation_counts": {
+    "candidate": 1,
+    "auditor": 1,
+    "retries": 0
+  },
+  "construction_tests": {
+    "host": "PASS 5/5",
+    "wslc": "PASS 5/5"
+  },
+  "dispositions": {
+    "method": "PASS_METHOD_SCOPED",
+    "hypothesis": "SUPPORTED_ON_FROZEN_FEASIBLE_SEQUENCE_ONLY"
+  },
+  "audit_errors": [],
+  "outputs": {
+    "candidate.raw.json": "20CBC89DAC755BB955A5719DDEF01E90F249A0ECBD4F7952843D60F284398F28",
+    "audit.raw.json": "E7F5ABB69B18FC4C0E6C5213B9F84E1C3F1A5B22BB34C83C69F85DB64516A9F9"
+  },
+  "post_freeze_source_changes": false,
+  "delivery_branch_base_commit": "dccf55e264f434ca27f2948fe53be09919047819",
+  "main_advance_since_freeze": {
+    "commits_ahead": 6,
+    "changed_paths": 36,
+    "current_goal_blob_unchanged": "31a49df0c77f15660364f6b25b5aa493f2d23c09",
+    "analysis_index_blob_unchanged": "6bf04bf379f2cb5f480be88049e4b89fcaf27a0d",
+    "package_path_absent": true,
+    "issue_7808_open": true,
+    "issue_7808_comments": 0,
+    "matching_branch_found": false
+  }
+}
+
