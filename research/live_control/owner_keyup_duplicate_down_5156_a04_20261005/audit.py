@@ -19,6 +19,12 @@ def sha(path):
 for path, expected in freeze["sha256"].items():
     if sha(path) != expected:
         errors.append("frozen source mismatch: " + path)
+for source, expected in freeze.get("current_main_blobs", {}).items():
+    actual = __import__("subprocess").check_output(
+        ["git", "show", freeze["main_commit"] + ":" + source], cwd=HERE.parents[3]
+    )
+    if hashlib.sha1(actual).hexdigest() != expected:
+        errors.append("frozen main blob mismatch: " + source)
 
 
 def inspect(doc):
