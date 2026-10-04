@@ -64,12 +64,14 @@ existing output. The integration control injects that adapter into the frozen
 actions through one persistent cursor, and its temporary JSONL trace contains
 24 alternating prepared-request/response records. The raw-v2 and independent
 dispatch audits accept all 18 tasks/36 dispatches as construction-only.
-Arbitrary caller-supplied sinks still carry a durability obligation. A
-separate regression passes through a real local AF_UNIX socket under WSL using
-a synthetic server; the Windows Python runtime skips this one test because it
-does not expose AF_UNIX. The test verifies wire framing and adapter receipt,
-but does not launch the actual bridge process or validate live images,
-Mindustry input, or task effects. A read-only
+Arbitrary caller-supplied sinks still carry a durability obligation. Two
+regressions pass under WSL using real local AF_UNIX sockets: one targets a
+synthetic server, and one targets the actual `stopped_socket_v2` server while
+replacing only its runtime child with a pipe-backed fake. The latter verifies
+bridge request admission, cursor selection, once-only pipe forwarding, and
+the terminal response/command receipt. Windows skips both tests because its
+Python runtime does not expose AF_UNIX. The interactive runtime child, live
+images, Mindustry input, and task effects remain unverified. A read-only
 re-audit of the retained capture
 still returns `PASS_CONSTRUCTION_ONLY` plus `PASS_SYNTHETIC_DISPATCH_JOIN`
 (18 tasks/36 dispatches), with `source_identity_verified=false`; all four

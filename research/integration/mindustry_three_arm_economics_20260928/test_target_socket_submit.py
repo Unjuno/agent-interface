@@ -355,6 +355,123 @@ class TargetSocketSubmitTests(unittest.TestCase):
             self.assertEqual([row["event"] for row in journal],
                              ["submit_prepared", "socket_response"])
 
+    @unittest.skipUnless(hasattr(socket, "AF_UNIX"),
+                         "host Python does not provide AF_UNIX")
+    def test_submit_adapter_interoperates_with_stopped_socket_v2_server(self):
+        import contextlib
+        import io
+        import os
+        import sys
+        import time
+
+        live = Path(__file__).resolve().parents[2] / "live_control"
+        live_path = str(live)
+        inserted_live_path = live_path not in sys.path
+        if inserted_live_path:
+            sys.path.insert(0, live_path)
+        import stopped_socket_v2 as bridge
+
+        processes = []
+        bridge_errors = []
+        bridge_output = io.StringIO()
+
+        class FakeRuntime:
+            """Pipe-backed test child; never starts the interactive runtime."""
+
+            def __init__(self, *_args, **_kwargs):
+                child_input, parent_input = os.pipe()
+                parent_output, child_output = os.pipe()
+                self.stdin = os.fdopen(parent_input, "wb", buffering=0)
+                self.stdout = os.fdopen(parent_output, "rb", buffering=0)
+                self.worker = threading.Thread(
+                    target=self._consume, args=(child_input, child_output),
+                    daemon=True)
+                self.worker.start()
+                processes.append(self)
+
+            @staticmethod
+            def _consume(input_fd, output_fd):
+                with os.fdopen(input_fd, "rb") as commands, \
+                        os.fdopen(output_fd, "wb", buffering=0) as events:
+                    for line in commands:
+                        command = json.loads(line.decode("utf-8"))
+                        record = {"event": "terminal", "id": command["id"],
+                                  "status": "completed",
+                                  "release": {"verified": True}}
+                        events.write((json.dumps(record) + "\n").encode("utf-8"))
+                        if command["op"] == "finish":
+                            break
+
+            def wait(self):
+                self.worker.join(timeout=5)
+                if self.worker.is_alive():
+                    raise TimeoutError("fake runtime did not receive finish")
+                return 0
+
+            def close(self):
+                if not self.stdin.closed:
+                    self.stdin.close()
+                self.worker.join(timeout=3)
+
+        def run_bridge():
+            try:
+                with patch.object(bridge.subprocess, "Popen", FakeRuntime), \
+                        patch.object(sys, "argv", ["stopped_socket_v2.py", "serve"]), \
+                        contextlib.redirect_stdout(bridge_output):
+                    bridge.main()
+            except BaseException as error:
+                bridge_errors.append(error)
+
+        server_thread = threading.Thread(target=run_bridge, daemon=True)
+        server_thread.start()
+        try:
+            deadline = time.monotonic() + 3
+            observation = None
+            while time.monotonic() < deadline:
+                lines = bridge_output.getvalue().splitlines()
+                if lines:
+                    observation = json.loads(lines[0])
+                    break
+                if bridge_errors:
+                    raise bridge_errors[0]
+                time.sleep(0.01)
+            self.assertIsNotNone(observation, "bridge did not publish its socket")
+            self.assertEqual(observation["event"], "observation_socket")
+
+            journal = []
+            submitter = TargetSocketSubmitter(
+                observation["socket"], timeout_s=2, trace_sink=journal.append)
+            result = submitter(self.command())
+            self.assertEqual(result, {"request_id": "A1-select-conveyor",
+                                      "terminal": True, "released": True})
+            self.assertEqual(submitter.cursor, 1)
+
+            finish_id = "finish-local-bridge"
+            finish = {"after": submitter.cursor, "events": ["terminal"],
+                      "timeout": 2, "action_id": finish_id,
+                      "request_id": finish_id,
+                      "command": {"op": "finish", "id": finish_id}}
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
+                client.settimeout(3)
+                client.connect(observation["socket"])
+                client.sendall((json.dumps(finish) + "\n").encode("utf-8"))
+                with client.makefile("rb") as response_stream:
+                    finish_response = json.loads(
+                        response_stream.readline().decode("utf-8"))
+            self.assertEqual(finish_response["command_receipt"]["state"],
+                             "stdin_flushed")
+            self.assertEqual(finish_response["status"], "boundary")
+            self.assertEqual(journal[-1]["event"], "socket_response")
+        finally:
+            if processes:
+                processes[0].close()
+            server_thread.join(timeout=5)
+            if inserted_live_path:
+                sys.path.remove(live_path)
+
+        self.assertFalse(server_thread.is_alive(), "bridge server did not exit")
+        self.assertEqual(bridge_errors, [])
+
     def test_transport_exception_consumes_action_without_retry(self):
         calls = []
         journal = []
