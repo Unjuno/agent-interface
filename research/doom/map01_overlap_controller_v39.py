@@ -608,6 +608,7 @@ def input_edge_receipts(events):
             down_edge.get("status") == "CONFIRMED_PHYSICAL_DOWN" and
             up_edge.get("status") == "CONFIRMED_PHYSICAL_UP" and
             valid_interval(down_interval) and valid_interval(up_interval) and
+            down_interval[1] < up_interval[0] and
             type(down_actuation) is str and bool(down_actuation) and
             down_actuation == up_actuation and
             type(down_owner) is str and bool(down_owner) and down_owner == up_owner and
