@@ -1,0 +1,22 @@
+test_final_release_all_flushes_buffered_program_rows (test_doom_typed_release_backend_v3.Tests.test_final_release_all_flushes_buffered_program_rows) ... FAIL
+
+======================================================================
+FAIL: test_final_release_all_flushes_buffered_program_rows (test_doom_typed_release_backend_v3.Tests.test_final_release_all_flushes_buffered_program_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-7385-cleanup-nPiykd/research/doom/test_doom_typed_release_backend_v3.py", line 358, in test_final_release_all_flushes_buffered_program_rows
+    self.assertEqual([row['key'] for row in rows], ['a'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['a']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'a'
+
+- []
++ ['a']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

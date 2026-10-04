@@ -38,6 +38,18 @@ cleanup record predating the current batch.
 - `python3 -B -m unittest -v test_overlap_controller_v39_wait`: **7/7 PASS**.
 - `git diff --check`: PASS.
 - `python3 -B` source compilation: PASS.
+- Exact-parent RED: `python3 -B
+  research/doom/map01-v39-release-cleanup-overlap-v1/run_terminal_cleanup_parent_red.py`
+  loads backend source at `b17d492a`, runs the terminal flush regression, and
+  observes the expected `[] != ['a']` assertion (1 failure, 0 errors). Its
+  script exits 0 only for that exact expected failure; raw output and JSON
+  receipt are retained.
+- Candidate rerun: `python3 -B
+  research/doom/map01-v39-release-cleanup-overlap-v1/run_terminal_cleanup_candidate.py`
+  retained stdout/stderr for all 42 tests. The separate
+  `audit_terminal_cleanup_candidate.py` rechecks source hashes, raw-log hashes,
+  exact suite counts, terminal summaries, exits, and the parent RED receipt:
+  **PASS**.
 - Current container gate: STOP. Docker server reports OrbStack 29.4.0, but
   `docker version --format '{{.Server.Version}}'` succeeds and read-only
   `docker ps --format '{{.ID}} {{.Image}} {{.Status}}'` fails on content blob
@@ -49,6 +61,8 @@ cleanup record predating the current batch.
   product failures.
 - Candidate refreshed onto #7395 after discovering parallel malformed-log and
   bracket coverage on the same backend; combined tests retain both sets.
+- Retained run records: `CANDIDATE_RUN.json`, `PARENT_RED.json`, and
+  `RAW_*_TESTS.txt` / `RAW_PARENT_TERMINAL_RED.txt`.
 
 ## C — Conclusion
 

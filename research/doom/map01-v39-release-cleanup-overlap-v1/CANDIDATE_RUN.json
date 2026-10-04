@@ -1,0 +1,59 @@
+{
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "runs": [
+    {
+      "audited_candidate_pass": true,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_doom_typed_release_backend_v3"
+      ],
+      "expected_tests": 27,
+      "name": "backend",
+      "raw_file": "RAW_BACKEND_TESTS.txt",
+      "raw_sha256": "c16949a59fb1599f36d21202a4524524c2fbaaa70b1a60fb855b02f4f49bb79a",
+      "returncode": 0
+    },
+    {
+      "audited_candidate_pass": true,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_input_transition_owner_v3"
+      ],
+      "expected_tests": 8,
+      "name": "owner",
+      "raw_file": "RAW_OWNER_TESTS.txt",
+      "raw_sha256": "35d70a82f5940040765fa7680aecaed574e9cc96fe08356ad2729bb949a6459b",
+      "returncode": 0
+    },
+    {
+      "audited_candidate_pass": true,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_overlap_controller_v39_wait"
+      ],
+      "expected_tests": 7,
+      "name": "wait",
+      "raw_file": "RAW_WAIT_TESTS.txt",
+      "raw_sha256": "7b873214a0b5793997b57455f54b5ad168281aabc905ec7976bf9fcf28599a86",
+      "returncode": 0
+    }
+  ],
+  "schema": "terminal-cleanup-candidate-run-v1",
+  "source_sha256": {
+    "backend": "895fd4c5edbb09e2f843ddc20a74d569d4196c9aba9654c870f0dafadd11d4d6",
+    "backend_tests": "1cba55ec4b37fd697baaabc8690935004ec88bf30c640f1c8e124225294eba5d"
+  }
+}
