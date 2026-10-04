@@ -418,3 +418,11 @@ model, score a game task, produce an independent raw audit, or demonstrate
 three-arm execution/economics. The actual live adapters, full runner, and
 allocation remain unimplemented. No game, model, Docker command, workflow, or
 formal allocation was invoked; the #5130 resource gate remains controlling.
+
+## Three-arm dispatch + lifecycle raw reconstruction (host construction, 2026-10-04)
+
+After refreshing the branch through current `origin/main` `d22c094a4a2e2292333479573c2eb446c345e1b9`, the private-channel fixture now drives each task through `ArmCoordinator`, two synthetic target-dispatch callbacks, and then the fake-mod lifecycle capture. `assemble_raw_from_private_channels` joins those captured dispatches to the event-level task schedule, including both point admissions/releases and the persistent A3→B1 stale-reference refusal/repair, before the independent raw-v2 auditor evaluates the assembled bytes.
+
+A new immutable construction capture is in `construction/raw_target_dispatch_lifecycle_20261004_01/`. `raw-events.json` SHA-256 is `cbddc8c0d431f451f85317631db5abcc5193deb525375e869e16d61351b2913a`; the auditor returned `PASS_CONSTRUCTION_ONLY`, no audit errors, `RETAIN` as the synthetic evaluator disposition, break-even task 2, 18 reset reconstructions, and 3 geometry transitions. The capture explicitly reports `source_identity_verified=false`: its artifact/model/container/game identity fields are synthetic sentinels, and the result is not live-source verification or an economics experiment. This extends the synthetic raw reconstruction boundary to include the target-dispatch lifecycle; callback effects remain simulated.
+
+On merge base `d22c094a4a2e2292333479573c2eb446c345e1b9`, the focused private-channel tests pass 5/5, the complete package passes 97/97, the inherited efficiency probe passes with 10 controls, and `git diff --check` passes. The exact six sparse-checkout support files were materialized from the checked-out Git blobs only for these local checks. No Docker, Actions workflow, Mindustry process, socket, model call, task input, or formal allocation was used; the #5130 shared-resource gate remains in force. See `RAW_TARGET_DISPATCH_CONSTRUCTION.md` for the H/T/D/C/U and scope.

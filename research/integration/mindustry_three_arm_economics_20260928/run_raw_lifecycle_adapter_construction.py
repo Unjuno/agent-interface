@@ -36,7 +36,9 @@ def main() -> int:
         "disposition": result["evaluation"]["disposition"],
         "break_even_task": result["evaluation"]["observed_break_even_task"],
         "lifecycle": result["lifecycle"],
-        "scope": "synthetic task events plus exercised fake-mod private protocol; no live game"},
+        "scope": ("synthetic three-arm task events with ArmCoordinator routes, "
+                  "two-target dispatch callbacks, fake-mod private lifecycle, "
+                  "and independent raw reconstruction; no live game")},
         sort_keys=True))
     return 0 if result["audit"] == "PASS_CONSTRUCTION_ONLY" else 1
 
