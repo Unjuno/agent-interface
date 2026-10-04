@@ -14,17 +14,20 @@ The repair tracks stable partial nested-identity signatures across complete grou
 
 **D.** Pre-repair source should expose one paired timing receipt in each case. Repaired source passes only if every implicated adapter receipt is incomplete and both timing intervals are null. A false pair is FAIL_OPEN.
 
-**C.** Incomplete identities cannot always be joined narrowly. Partial signatures may conservatively invalidate other events sharing the surviving owner/actuation/key/token components; when no component is usable, all adapter groups in that stream are invalidated.
+**C.** Incomplete identities cannot always be joined narrowly. Partial signatures may conservatively invalidate other events sharing the surviving owner/actuation/key/token components; when no component is usable, all adapter groups in that event stream are invalidated.
 
 **U.** One retained synthetic fixture and deterministic source projector only. No live X-server state, physical release, application consumption, useful task effect, threat response, recovery benefit, or MAP01 outcome is established.
 
 ## Results
 
-- A09: frozen baseline and pre-repair composition each exposed paired timing in 8/8 cases; repaired source exposed 0/8.
+- A09: frozen baseline and pre-fix composition each exposed paired timing in 8/8 cases; repaired source exposed 0/8.
 - A10: pre-A10 source exposed paired timing in 8/8 cases; repaired source exposed 0/8.
 - Independent raw replay: 54 checks, PASS across all 16 repaired cases.
-- The full `test_map01_v39_typed_state_feedback` module passes 40/40; Python 3.11 byte-compilation and `git diff --check` pass.
+- The full `test_map01_v39_typed_state_feedback` module passes 40/40 on the branch and on the current-main merge tree.
+- Python 3.11 byte-compilation and `git diff --check` pass.
 
-The exact A09 and A10 freezes and pre-repair source snapshots are retained here. The raw fixture and A08 baseline remain at their original paths under `../map01_v39_perkey_bridge_a01/` and `../v39_adapter_nested_identity_taint_59_a08_20261005/`. `run_replay.py` and `audit_replay.py` reproduce the combined result on a checkout containing these files.
+The exact A09 and A10 freezes and pre-repair source snapshots are retained here. The raw fixture and A08 baseline remain at their original paths under `../map01_v39_perkey_bridge_a01/` and `../v39_adapter_nested_identity_taint_59_a08_20261005/`. `run_replay.py` and `audit_replay.py` reproduce the combined result on a checkout containing these files. `CURRENT_MAIN_INTEGRATION.json` plus its replay and suite logs record the current-main merge result.
 
-This package is based on PR #7690 head `5f7cbe25ffedc20e5a16241f661fcc06bbf714cd`. Current-main composition must be revalidated independently before merge; this evidence does not grant or consume a live #59 allocation.
+The merge-tree package-verifier run has one expected failure: its PR-branch source pin differs from the composed current-main controller hash. The pinned branch package itself passes its 30 checks. Keep immutable experiment-source verification separate from current-main integration verification.
+
+This package is based on PR #7690 head `5f7cbe25ffedc20e5a16241f661fcc06bbf714cd`. Current-main composition was revalidated at main `c837ad535eed085d95744ad0a9680535a5bb7143`; this evidence does not grant or consume a live #59 allocation.

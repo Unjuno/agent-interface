@@ -5,10 +5,26 @@
   "candidate_source_sha256": "e50fe5bd2d0f66798ba17a3d4e439bb18cd8532ecdb92d4ac41a7f4202bbe390",
   "candidate_test_sha256": "885e772dcf3e93807013a539a27a6daeb38a0eab0cfd20a7852166fd9f98d98b",
   "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
-  "full_suite": {"command": "python -B -m unittest research.doom.test_map01_v39_typed_state_feedback -v", "tests": 40, "result": "PASS"},
-  "audit": {"command": "python -B research/doom/v39_adapter_partial_identity_taint_59_a09_a10_20261005/audit_replay.py", "checks": 54, "result": "PASS"},
+  "full_suite": {
+    "command": "python -B -m unittest research.doom.test_map01_v39_typed_state_feedback -v",
+    "tests": 40,
+    "result": "PASS"
+  },
+  "audit": {
+    "command": "python -B research/doom/v39_adapter_partial_identity_taint_59_a09_a10_20261005/audit_replay.py",
+    "checks": 54,
+    "result": "PASS"
+  },
   "py_compile": "PASS",
   "git_diff_check": "PASS",
   "live_allocation": "none",
-  "scope": "synthetic adapter projector only"
+  "scope": "synthetic adapter projector only",
+  "current_main_integration": {
+    "main": "c837ad535eed085d95744ad0a9680535a5bb7143",
+    "merge_tree": "84425b9db92f3fe05c543cf0029d83f82e198a1d",
+    "composed_controller_sha256": "38cd0eac5592008901dc52415b30cb55df32811218c6af0e6483920f68ef712e",
+    "full_suite_tests": 40,
+    "replay_audit_checks": 54,
+    "result": "PASS"
+  }
 }
