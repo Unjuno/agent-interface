@@ -596,6 +596,34 @@ def input_edge_receipts(events):
                 bracket.get("grants_input_authority") is False and
                 bracket.get("application_consumption_observed") is False)
 
+        def sample_window_matches(data, row, edge_name):
+            pre = data.get("pre_sample") if type(data) is dict else None
+            post = data.get("post_sample") if type(data) is dict else None
+            pre_down, post_down = (False, True) if edge_name == "down" else (True, False)
+
+            def valid_sample(sample, expected_down):
+                return (
+                    type(sample) is dict and sample.get("available") is True and
+                    sample.get("down") is expected_down and sample.get("error") is None and
+                    type(sample.get("started_ns")) is int and
+                    type(sample.get("finished_ns")) is int and
+                    sample["started_ns"] <= sample["finished_ns"])
+
+            request_name = "press_request_ns" if edge_name == "down" else "release_request_ns"
+            request_ns = data.get(request_name) if type(data) is dict else None
+            sync_ns = data.get("sync_return_ns") if type(data) is dict else None
+            if (not valid_sample(pre, pre_down) or not valid_sample(post, post_down) or
+                    type(request_ns) is not int or type(sync_ns) is not int or
+                    pre["finished_ns"] > request_ns or request_ns > sync_ns or
+                    sync_ns > post["started_ns"] or
+                    edge_name == "down" and row.get("input_ack_ns") != sync_ns or
+                    edge_name == "up" and data.get("release_attempted") is not True):
+                return False
+            bracket = data.get("bracket")
+            interval_name = "physical_down_interval" if edge_name == "down" else "physical_up_interval"
+            return (type(bracket) is dict and
+                    bracket.get(interval_name) == [pre["finished_ns"], post["finished_ns"]])
+
         down_data = down.get("physical_key_measurement") if down else None
         up_data = up.get("physical_key_measurement") if up else None
         down_edge, up_edge = edge_of(down), edge_of(up)
@@ -640,7 +668,9 @@ def input_edge_receipts(events):
             down_data.get("application_consumption_observed") is False and
             up_data.get("application_consumption_observed") is False and
             bracket_matches(down_data, down_edge, "down", "CONFIRMED_PHYSICAL_DOWN") and
-            bracket_matches(up_data, up_edge, "up", "CONFIRMED_PHYSICAL_UP"))
+            bracket_matches(up_data, up_edge, "up", "CONFIRMED_PHYSICAL_UP") and
+            sample_window_matches(down_data, down, "down") and
+            sample_window_matches(up_data, up, "up"))
         receipts.append({
             "status": "adapter_edge_brackets_paired" if complete else
                       "adapter_edge_receipt_incomplete",
