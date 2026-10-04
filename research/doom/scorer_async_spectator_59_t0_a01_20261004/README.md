@@ -22,7 +22,7 @@ The saved raw record is audited by the separate `audit.py` implementation. It ch
 
 ## Reproduction
 
-The measured run used the native CPython 3.14.5 venv and the exact wheel `vizdoom-1.3.0-cp314-cp314-macosx_14_0_arm64.whl` (SHA-256 in `freeze.json`), downloaded from PyPI with `pip download --only-binary=:all: --no-deps --platform macosx_27_0_arm64 --implementation cp --python-version 314 --abi cp314 vizdoom==1.3.0`. The wheel's bundled `freedoom2.wad` SHA-256 is pinned in the freeze. NumPy 2.5.2 came from the host's system-site-packages; gymnasium/pygame wrappers were not installed or used.
+The measured run used the native CPython 3.14.5 venv and the exact wheel `vizdoom-1.3.0-cp314-cp314-macosx_14_0_arm64.whl` (SHA-256 in `FREEZE.json`), downloaded from PyPI with `pip download --only-binary=:all: --no-deps --platform macosx_27_0_arm64 --implementation cp --python-version 314 --abi cp314 vizdoom==1.3.0`. The wheel's bundled `freedoom2.wad` SHA-256 is pinned in the freeze. NumPy 2.5.2 came from the host's system-site-packages; gymnasium/pygame wrappers were not installed or used.
 
 Run command (a new run must use a new allocation ID; do not replay this retained A01):
 
@@ -32,3 +32,10 @@ Run command (a new run must use a new allocation ID; do not replay this retained
 ```
 
 The current runtime interpretation follows the official [ViZDoom DoomGame API](https://vizdoom.farama.org/api/python/doom_game/) and [GameState API](https://vizdoom.farama.org/api/python/game_state/): an acknowledged `advance_action(..., update_state=True)` updates state; a `GameState` contains game variables and a `tic`. The observed 10-tic jump does not establish why passive time remained unchanged.
+
+
+## Supplemental candidate snapshot contract
+
+`candidate_snapshot.py` and `test_candidate_snapshot.py` are a construction-level candidate, added after the retained A01 runtime measurement. Eight local unit tests pass, including the observed 1→11 endpoint interval and fail-closed cases for unchanged snapshots, endpoint mismatch, malformed variables, duplicate names, booleans and nonfinite values. A coherent refreshed snapshot may span multiple tics, but the controller reply remains status-only and the record explicitly grants no input authority.
+
+This candidate qualifies snapshot coherence only. A01 had unchanged KILLCOUNT and DEATHCOUNT values, so it does not establish changed-score freshness, task effect, invalidation recovery, controller integration, planner resumption, bounded recovery, or a live MAP01 outcome. The candidate tests do not rerun ViZDoom and do not alter the frozen experiment source or raw result.
