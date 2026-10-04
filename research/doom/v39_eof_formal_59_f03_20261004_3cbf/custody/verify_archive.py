@@ -6,6 +6,8 @@ import re
 import tarfile
 from pathlib import Path
 
+from freeze_lineage_v1 import verify_lineage
+
 HERE = Path(__file__).resolve().parent
 ARCHIVE = HERE / "f03-final-freeze-40b57f74f4.tar"
 FREEZE_MANIFEST = HERE / "freeze-manifests" / "PRELAUNCH_FREEZE-fe2dbe361940.md"
@@ -46,6 +48,7 @@ def verify(archive: Path = ARCHIVE) -> dict:
         raise ValueError(f"outer archive hash mismatch: {observed_archive_hash}")
 
     observed_members = {}
+    member_bytes = {}
     with tarfile.open(archive, mode="r:") as bundle:
         for member in bundle.getmembers():
             if member.isdir():
@@ -55,13 +58,19 @@ def verify(archive: Path = ARCHIVE) -> dict:
             stream = bundle.extractfile(member)
             if stream is None:
                 raise ValueError(f"unreadable archive member: {member.name}")
-            observed_members[member.name] = sha256(stream.read())
+            member_data = stream.read()
+            member_bytes[member.name] = member_data
+            observed_members[member.name] = sha256(member_data)
 
     if observed_members != expected_members:
         raise ValueError("archive member set or member hash mismatch")
+    lineage = verify_lineage("predecessor", member_bytes)
+    if observed_archive_hash != lineage["archive_sha256_from_manifest"]:
+        raise ValueError("archive digest does not match the authenticated freeze manifest")
     return {"archive_sha256": observed_archive_hash,
             "archive_size_bytes": len(archive_bytes),
             "member_count": len(observed_members),
+            "freeze_lineage": lineage,
             "freeze_manifest_source_commit": EXPECTED_FREEZE_COMMIT,
             "freeze_manifest_source_tree": EXPECTED_FREEZE_TREE,
             "freeze_manifest_git_blob": EXPECTED_FREEZE_BLOB_SHA1,

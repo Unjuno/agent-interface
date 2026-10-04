@@ -7,13 +7,13 @@ Date: 2026-10-04. This additive custody record preserves two exact source archiv
 - Archive: `f03-formal-freeze-6d8387caa8.tar`
 - Size: 1,720,320 bytes
 - SHA-256: `786dafda0057e809b5b5f32488899a544e07ad856323d0f635017681704b6344`
-- Frozen manifest source: final-freeze commit `43f9a0008bf75da19865cfdea2898d1b896fbbc3`; tree/source commit `6d8387caa8a004ebbdadc377e499b85b3b3a10db`
+- Frozen manifest source: final-freeze commit `43f9a0008bf75da19865cfdea2898d1b896fbbc3`; declared source commit `6d8387caa8a004ebbdadc377e499b85b3b3a10db`, tree `338afba37b8c9fe28fe410ec56a5c0788c96e614`
 - Member check: exactly eight regular files; every SHA-256 matches the current freeze manifest; no symlinks or other special entries
 - Historical manifest snapshot: [`PRELAUNCH_FREEZE-43f9a0008bf7.md`](freeze-manifests/PRELAUNCH_FREEZE-43f9a0008bf7.md), copied byte-for-byte from [`PRELAUNCH_FREEZE.md` at commit `43f9a0008bf75da19865cfdea2898d1b896fbbc3`](https://github.com/Unjuno/agent-interface/blob/43f9a0008bf75da19865cfdea2898d1b896fbbc3/research/doom/v39_eof_formal_59_f03_20261004_3cbf/PRELAUNCH_FREEZE.md)
 - Manifest commit tree: `2a8c0d1858d237eb0405101e137b39909dff4c5e`; source file Git blob: `526a5a066d3bcc5f348b5415cfebc3e53eea706a`; snapshot SHA-256: `4f3abb18ddd8fa0d2248531fa0381d542fe740a4863310100c5820dde5767da1`
 - Verifier: `verify_final_archive.py`
 
-The bytes were copied unchanged from `/tmp/f03-formal-freeze-6d8387caa8.tar`; the verifier validates the manifest snapshot against its historical Git blob identity, reads the archive and member hashes from that snapshot, and checks the archive without extracting files. The GitHub commit and contents APIs resolve the source. This current final archive supersedes the predecessor below for any future review, while neither archive by itself authorizes launch.
+The bytes were copied unchanged from `/tmp/f03-formal-freeze-6d8387caa8.tar`; the verifier validates the manifest snapshot against its historical Git blob identity, reads the archive and member hashes from that snapshot, and checks the archive without extracting files. `GIT_OBJECT_WITNESS.json` retains the raw manifest commits and relevant Git trees; the verifier checks each object's Git ID, binds each manifest blob to its manifest commit tree, and checks each archive member's Git blob ID against the declared source tree. The final source commit object `6d8387caa8a004ebbdadc377e499b85b3b3a10db` remains unavailable from the public Git object API; its declared source tree `338afba37b8c9fe28fe410ec56a5c0788c96e614` is present and all eight retained archive members match its tree blobs. This verifies the frozen tree contents while leaving the source-commit-to-tree relation unverified. `test_freeze_lineage_v1.py` passes its exact-byte and three corruption controls. This current final archive supersedes the predecessor below for any future review, while neither archive by itself authorizes launch.
 
 ## Predecessor freeze
 
