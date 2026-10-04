@@ -1,6 +1,16 @@
 # #57 compiled GUI bundle: composition and acceptance gate
 
-Status: composition decision and requirement map; no new allocation or efficiency claim.
+Status: this document began as a pre-A05 composition plan. The current verified result and remaining gates are recorded below; historical planning detail is retained after that update.
+
+## Current evidence update (2026-10-04; main `a2f6b60`)
+
+PR #7413 is merged to main with a complete two-block/four-arm 48-task WSLc comparison. A/B/D each score 12/12 exact submissions; fixed-template compiled C scores 9/12 and safely refuses three OCR/effect mismatches. Its C candidate is rejected for this fixture. The report finds B uses 66.66% less task input+output than fresh-grounding A and is 10.95% faster after preflight wait; C costs 0.39% more task input+output than B, is 27.04% slower, and misses three tasks. D is a known-form control with unavailable prior human setup cost. These results do not qualify a general efficiency or human-tempo claim.
+
+Separate direct-model-contract allocation #7422 r02 completed all 48 tasks. A/B/D each score 12/12; C scores 10/12, with nine graph/caller task successes and three effect-failed outcomes. Two task-4 OCR misses safely stop before Submit. A third row submits the exact value and is credited by the independent scorer, while its model-authored postcondition also requires `target_valid=true` and the graph reports `effect_failed`; whether that predicate is over-specified after submission remains unresolved. Human setup cost is unavailable, all-arm correctness is false, and the scientific efficiency gate is false. Preserve the separate r01 STOP and earlier failed allocations; do not regrade or pool them.
+
+Exploratory A03’s Tesseract/RapidOCR union covered all six task/arm cases only on A02’s already-inspected token set. A targeted transfer replay against r02 task-4’s new tokens found RapidOCR still misread both leading `t` characters, so that union is not a reliable transfer route. A separate macOS Vision A04 diagnostic exactly read both retained pre-submit task-4 images (`t991078-4`, `t991079-4`) at confidence 1.0; request times were 217 ms and 50 ms after crop processing. This is a two-case, failure-selected, retrospective result without source-frame controls or subsequent effect evidence. Apple Vision is macOS-specific and is not directly portable to r02’s WSLc comparison host. A04 therefore identifies a platform-bound OCR lead, not a qualification or a fix for the rejected Linux candidate.
+
+PR #7413 is present on main, but its GitHub review list is empty; a fresh-context review comment exists, while the required fixed committee and two source-bound explicit approvals/application evidence remain unverified in the available record. Do not treat the merge itself as approval. Parent #57/#56 and the broader computer-control transfer/coverage goals remain open.
 
 ## Pinned candidate
 
@@ -15,7 +25,7 @@ Integration source baseline: `13bab54ea6d91978247ecc1b70e5060db752367a` (main ch
 
 Exclude learned/local models, semantic-delta proposals, image-reference transport, KV reuse, provider-specific async inference and unrelated input/wait-policy changes from the first comparison. They either add independent variables or are not needed to test the #56/#57 hypothesis. Retain the real baseline's existing batching/programmatic abilities. Do not attribute the already measured persistent-vs-ephemeral P01 result to compiled symbols.
 
-## Existing evidence and next comparison
+## Historical evidence inventory and initial comparison plan (pre-A05)
 
 The saved live-05 pair (`research/live_control/results/compiled-gui-interface-live-05/`) passed its one-call-per-case schema/grounding, positive two-transition local continuation, changed-surface submit refusal, release/raw-evidence and clean-exit gates. It is a two-case Linux/X11 Chromium mechanics result with gpt-5.6-luna/low and caller v2; the pair contains two fresh cold sessions, no warm reuse, no baseline, no rate, and no causal savings estimate. Its frozen runner also has a stale opaque session-scope label. Preserve it as scoped evidence; do not replay it.
 
@@ -43,7 +53,10 @@ The source-fit audit found that no existing runner is eligible unchanged. At cur
 
 Keep the existing #56 second-domain replication in sequence after the first complete integrated report. The newly identified Calc adapter gap is real for that later replication, but the current evidence does not make it a prerequisite for the first Chromium comparison; solving it now would delay the named first-domain acceptance gate. Do not count the existing Calc self-use report as replication evidence.
 
-## Requirement-to-test map (current evidence)
+## Historical requirement-to-test map (before A05 and r02)
+
+The map below records what was known when this plan was written; its remaining-work entries are superseded by the current evidence update above where stated. The parent gates, broader transfer requirements, and review/application uncertainty remain open.
+
 
 | Requirement | Integrated enforcement point | Existing regression/evidence | Current disposition |
 |---|---|---|---|
@@ -55,11 +68,11 @@ Keep the existing #56 second-domain replication in sequence after the first comp
 | Independent task effect, collateral, completed prefix, evidence identity/retrieval and privacy | task-specific independent scorer + caller receipt and raw evidence registry | live-05 independent POST scorer and saved raw frames; caller receipt/effect tests | Positive/changed scoped evidence; privacy/redaction and end-to-end caller receipt composition need explicit matrix cases. |
 | #12/#46 comparison integrity | frozen arms and independent scorer | P01 (#7181) audits its own six-task plain/ephemeral/persistent arms | Does not cover the compiled bundle or its cold/warm/repair economics. |
 
-## Immediate gates
+## Historical immediate gates (pre-A05; do not use as the current work queue)
 
 1. Obtain independent review of PR #7330's current-main caller composition; the local checks above are author-side evidence and cannot substitute for that review. The #7330 head also lacks #7289's exact-boolean cost guard: its `isinstance(cost, (int, float))` accepts `True`/`False` as 1/0. I40 verified a scratch-only overlay with the #7289 guard and both boolean regression cases (72 selected tests, normal and `-O`); the PR branch remains untouched and this boundary must be resolved before adoption. Preserve source PRs #7289/#7310 and their historical results.
 2. Independently review the A01–A03 composed test boundary, then test schema-preflight handoff and evidence custody through the outer caller. A01–A03 cover warm execution, cold accounting, no-target abstention, failed model usage missingness, local/model repair, post-model changed-state stop and effect receipt custody.
 3. Build and locally audit the prospective composed six-task runner/protocol; A04 is only its form-graph adapter seam. Preserve the #56 fixture/scorer, map its six phase positions to the four arms, and reconcile every model and preflight attempt before any allocation.
 4. Proceed to the frozen live comparison only after that runner passes its composed local gates and the #57 live/resource gate is current and available. A component pass or saved live-05 result is not a substitute.
 
-Disposition now: **HOLD pending full six-task runner composition, phase-complete matched comparison, and an independent non-author review of this PR**. The task-1 adapter witness is now retained and locally audited on main; it does not satisfy the integrated milestone. The latest Mac OrbStack `docker ps --filter status=running` returned no running containers; image inventory still fails reading a content blob (`operation not supported`), and WSLc is absent. No container was started. The next action is to qualify the compiled adapter on both frozen layouts and a full cold caller path, then bind it into the prospective #56 arms with cold acquisition, warm reuse, invalidation, repair and the matched deterministic keyboard route; do not treat task-1 success as benchmark completion.
+Historical disposition when this plan was written: **HOLD pending full six-task runner composition, phase-complete matched comparison, and an independent non-author review of this PR**. This is superseded by the current evidence update at the top. The task-1 adapter witness is now retained and locally audited on main; it does not satisfy the integrated milestone. The latest Mac OrbStack `docker ps --filter status=running` returned no running containers; image inventory still fails reading a content blob (`operation not supported`), and WSLc is absent. No container was started. The next action is to qualify the compiled adapter on both frozen layouts and a full cold caller path, then bind it into the prospective #56 arms with cold acquisition, warm reuse, invalidation, repair and the matched deterministic keyboard route; do not treat task-1 success as benchmark completion.
