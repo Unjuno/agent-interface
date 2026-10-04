@@ -9,14 +9,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "live_control"))
 from doom_typed_observation_v1 import (
     SCHEMA,
     build_action_snapshot,
+    extract_typed_observation,
 )
 from action_validity_admission_v1 import CONTRACT_FORMAT
+from PIL import Image
 
 
 class TypedObservationEpochExactTests(unittest.TestCase):
     def setUp(self):
-        self.binding = {"focus": 10, "surface": 10,
-                        "geometry": [0, 0, 100, 100]}
+        self.binding = {"focus": 1, "surface": 1,
+                        "geometry": [1, 1, 100, 100]}
         self.event = {
             "event": "typed_observation",
             "schema": SCHEMA,
@@ -79,6 +81,138 @@ class TypedObservationEpochExactTests(unittest.TestCase):
                     "source": {"signals": {"health": {}}}}
         with self.assertRaises(ValueError):
             build_action_snapshot(event, contract)
+
+    def test_boolean_and_float_aliases_in_top_level_binding_are_rejected(self):
+        for key in ("focus", "surface", "geometry"):
+            for alias in (True, 1.0):
+                with self.subTest(key=key, alias=alias):
+                    event = copy.deepcopy(self.event)
+                    if key == "geometry":
+                        event["pointer_binding"][key][0] = alias
+                    else:
+                        event["pointer_binding"][key] = alias
+                    with self.assertRaises(ValueError):
+                        build_action_snapshot(event, self.contract)
+
+    def test_boolean_and_float_aliases_in_signal_bindings_are_rejected(self):
+        for signal in ("health", "ammo"):
+            for key in ("focus", "surface", "geometry"):
+                for alias in (True, 1.0):
+                    with self.subTest(signal=signal, key=key, alias=alias):
+                        event = copy.deepcopy(self.event)
+                        if key == "geometry":
+                            event["signals"][signal]["binding"][key][0] = alias
+                        else:
+                            event["signals"][signal]["binding"][key] = alias
+                        with self.assertRaises(ValueError):
+                            build_action_snapshot(event, self.contract)
+
+    def test_extraction_rejects_nested_binding_aliases_before_reader_calls(self):
+        class Reader:
+            def __init__(self, signal_id):
+                self.signal_id = signal_id
+                self.called = False
+
+            def read_frame(self, observation, frame):
+                self.called = True
+                return {
+                    "format": "observable-signal-v1",
+                    "status": "observed",
+                    "signal_id": self.signal_id,
+                    "value": 100,
+                    "sequence": observation["sequence"],
+                    "capture_ns": observation["capture_ns"],
+                    "binding": observation["pointer_binding"],
+                    "wad_sha256": "b" * 64,
+                }
+
+        for key in ("focus", "surface", "geometry"):
+            with self.subTest(key=key):
+                metadata = {
+                    "id": "frame-1", "step": 1, "sequence": 1,
+                    "capture_ns": 1,
+                    "pointer_binding": copy.deepcopy(self.binding),
+                }
+                if key == "geometry":
+                    metadata["pointer_binding"][key][0] = True
+                else:
+                    metadata["pointer_binding"][key] = True
+                readers = {name: Reader(name) for name in ("health", "ammo")}
+                with self.assertRaises(ValueError):
+                    extract_typed_observation(
+                        Image.new("RGB", (2, 2)), metadata, readers,
+                        clock=iter((2, 3)).__next__)
+                self.assertFalse(any(reader.called for reader in readers.values()))
+
+    def test_extraction_rejects_reader_epoch_aliases(self):
+        class Reader:
+            def __init__(self, signal_id, field=None, alias=None):
+                self.signal_id = signal_id
+                self.field = field
+                self.alias = alias
+
+            def read_frame(self, observation, frame):
+                result = {
+                    "format": "observable-signal-v1",
+                    "status": "observed",
+                    "signal_id": self.signal_id,
+                    "value": 100,
+                    "sequence": observation["sequence"],
+                    "capture_ns": observation["capture_ns"],
+                    "binding": copy.deepcopy(observation["pointer_binding"]),
+                    "wad_sha256": "b" * 64,
+                }
+                if self.signal_id == "health" and self.field:
+                    result[self.field] = self.alias
+                return result
+
+        for field in ("sequence", "capture_ns"):
+            for alias in (True, 1.0):
+                with self.subTest(field=field, alias=alias):
+                    metadata = {
+                        "id": "frame-1", "step": 1, "sequence": 1,
+                        "capture_ns": 1,
+                        "pointer_binding": copy.deepcopy(self.binding),
+                    }
+                    readers = {
+                        "health": Reader("health", field, alias),
+                        "ammo": Reader("ammo"),
+                    }
+                    with self.assertRaises(ValueError):
+                        extract_typed_observation(
+                            Image.new("RGB", (2, 2)), metadata, readers,
+                            clock=iter((2, 3)).__next__)
+
+    def test_extraction_rejects_reader_binding_aliases(self):
+        class Reader:
+            def __init__(self, signal_id):
+                self.signal_id = signal_id
+
+            def read_frame(self, observation, frame):
+                binding = copy.deepcopy(observation["pointer_binding"])
+                if self.signal_id == "health":
+                    binding["focus"] = True
+                return {
+                    "format": "observable-signal-v1",
+                    "status": "observed",
+                    "signal_id": self.signal_id,
+                    "value": 100,
+                    "sequence": observation["sequence"],
+                    "capture_ns": observation["capture_ns"],
+                    "binding": binding,
+                    "wad_sha256": "b" * 64,
+                }
+
+        metadata = {
+            "id": "frame-1", "step": 1, "sequence": 1,
+            "capture_ns": 1,
+            "pointer_binding": copy.deepcopy(self.binding),
+        }
+        readers = {name: Reader(name) for name in ("health", "ammo")}
+        with self.assertRaises(ValueError):
+            extract_typed_observation(
+                Image.new("RGB", (2, 2)), metadata, readers,
+                clock=iter((2, 3)).__next__)
 
 
 if __name__ == "__main__":
