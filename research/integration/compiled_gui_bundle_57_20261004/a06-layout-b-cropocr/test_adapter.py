@@ -255,26 +255,51 @@ class ComposedLayoutBTests(unittest.TestCase):
         self.assertEqual(client.sequence, 1)
         self.assertEqual(client.commands, [])
 
-    def test_cancellation_callback_failure_returns_prefix_receipt(self):
-        checks = 0
+    def test_cancellation_callback_failure_stops_at_each_dispatch_boundary(self):
+        for failing_check, expected_observations, expected_transitions in (
+            (1, 0, 0),  # Before the first observation.
+            (2, 1, 0),  # After branch selection, before admission.
+            (3, 1, 0),  # After admission, before input dispatch.
+            (4, 1, 1),  # After one completed action, before a new observation.
+        ):
+            with self.subTest(failing_check=failing_check):
+                checks = 0
 
-        def cancel_callback():
-            nonlocal checks
-            checks += 1
-            if checks == 4:
-                raise RuntimeError("synthetic cancellation source unavailable")
-            return False
+                def cancel_callback():
+                    nonlocal checks
+                    checks += 1
+                    if checks == failing_check:
+                        raise RuntimeError("synthetic cancellation source unavailable")
+                    return False
 
-        result, client = self._run(["", "t991028-4\n"], cancel_callback=cancel_callback)
+                result, client = self._run(
+                    ["", "t991028-4\n"], cancel_callback=cancel_callback
+                )
+                receipt = result["receipt"]
+                self.assertEqual(receipt["outcome"], "RUNTIME_FAILED")
+                self.assertEqual(receipt["reason"], "execution_failed")
+                self.assertEqual(receipt["completed_transitions"], expected_transitions)
+                self.assertEqual(len(receipt["observations"]), expected_observations)
+                self.assertEqual(len(client.commands), expected_transitions)
+                if expected_transitions:
+                    self.assertEqual(receipt["pending_effect"]["action"], "enter")
+                else:
+                    self.assertIsNone(receipt["pending_effect"])
+                self.assertTrue(any(event["event"] == "cancellation_check_failed"
+                                    for event in receipt["critical_events"]))
+                if client.commands:
+                    self.assertEqual(
+                        client.commands[0]["command"]["steps"][0]["target_handle"],
+                        "task-4-field",
+                    )
+
+    def test_malformed_cancellation_callback_returns_runtime_failure_receipt(self):
+        result, client = self._run([""], cancel_callback=lambda: 0)
         receipt = result["receipt"]
-        self.assertEqual(receipt["outcome"], "RUNTIME_FAILED")
-        self.assertEqual(receipt["reason"], "execution_failed")
-        self.assertEqual(receipt["completed_transitions"], 1)
-        self.assertEqual(receipt["pending_effect"]["action"], "enter")
-        self.assertEqual(len(client.commands), 1)
-        self.assertEqual(client.commands[0]["command"]["steps"][0]["target_handle"],
-                         "task-4-field")
-        self.assertTrue(client.commands[0])
+        self.assertEqual((receipt["outcome"], receipt["reason"]),
+                         ("RUNTIME_FAILED", "execution_failed"))
+        self.assertEqual(receipt["completed_transitions"], 0)
+        self.assertEqual(client.commands, [])
         self.assertTrue(any(event["event"] == "cancellation_check_failed"
                             for event in receipt["critical_events"]))
 
