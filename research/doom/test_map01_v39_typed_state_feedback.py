@@ -755,6 +755,37 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipts[0]["down_edge_interval_ns"])
                 self.assertIsNone(receipts[0]["up_edge_interval_ns"])
 
+    def test_input_edge_receipt_rejects_unknown_outer_adapter_rows(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        down = next(row for row in template if row.get("event") == "input_admission")
+        up = next(row for row in template
+                  if row.get("event") == "input_release_measurement")
+
+        baseline = controller.input_edge_receipts([down, up])
+        self.assertEqual(len(baseline), 1)
+        self.assertEqual(baseline[0]["status"], "adapter_edge_brackets_paired")
+
+        def unknown_outer(row):
+            copied = json.loads(json.dumps(row))
+            copied["event"] = "future_adapter_event"
+            return copied
+
+        cases = (
+            ("unknown_duplicate_down", [down, unknown_outer(down), up]),
+            ("unknown_duplicate_up", [down, up, unknown_outer(up)]),
+            ("unknown_only_measurement", [unknown_outer(down)]),
+        )
+        for name, events in cases:
+            with self.subTest(case=name):
+                receipts = controller.input_edge_receipts(events)
+                self.assertEqual(len(receipts), 1)
+                self.assertEqual(receipts[0]["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipts[0]["down_edge_interval_ns"])
+                self.assertIsNone(receipts[0]["up_edge_interval_ns"])
+
 
 if __name__ == "__main__":
     unittest.main()

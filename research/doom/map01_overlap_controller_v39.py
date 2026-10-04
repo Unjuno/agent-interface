@@ -520,11 +520,17 @@ def input_edge_receipts(events):
         measurement = event.get("physical_key_measurement")
         adapter_edge = (measurement.get("adapter_edge")
                         if type(measurement) is dict else None)
+        supported_adapter_outer = event_name in (
+            "input_admission", "input_release_measurement")
         adapter_candidate = (
             event_name == "input_release_measurement" or
-            (event_name == "input_admission" and type(measurement) is dict))
+            (event_name == "input_admission" and
+             "physical_key_measurement" in event) or
+            (not supported_adapter_outer and
+             "physical_key_measurement" in event))
         if adapter_candidate:
             edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
+            unsupported_outer = not supported_adapter_outer
             expected_edge = ("down" if event_name == "input_admission" else "up")
             identifier, step, key, token = (event.get("id"), event.get("step"),
                                             event.get("key"), event.get("intent_token"))
@@ -541,10 +547,14 @@ def input_edge_receipts(events):
                 })
                 continue
             bucket = adapter_grouped.setdefault((identifier, step, key, token),
-                                                {"down": [], "up": []})
+                                                {"down": [], "up": [],
+                                                 "unsupported": []})
             # Outer event type and nested edge label are both part of the
             # receipt identity. Do not let one release event supply a press.
-            bucket[expected_edge].append(event)
+            if unsupported_outer:
+                bucket["unsupported"].append(event)
+            else:
+                bucket[expected_edge].append(event)
             continue
         if event_name not in ("input_admission", "input_release_transition"):
             continue
@@ -655,7 +665,7 @@ def input_edge_receipts(events):
                 up_data.get("pre_sample") if type(up_data) is dict else None,
                 up_data.get("post_sample") if type(up_data) is dict else None))
         complete = (
-            len(downs) == 1 and len(ups) == 1 and
+            not bucket["unsupported"] and len(downs) == 1 and len(ups) == 1 and
             type(down_data) is dict and type(up_data) is dict and
             type(down_edge) is dict and type(up_edge) is dict and
             down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
