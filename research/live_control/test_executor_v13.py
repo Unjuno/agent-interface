@@ -74,6 +74,34 @@ class ExecutorV13Tests(unittest.TestCase):
         self.assertIsNone(executor.active)
         self.assertFalse(backend.started.is_set())
 
+    def test_reentrant_close_terminal_delivery_unknown_stays_fail_closed(self):
+        backend = Backend()
+        events = []
+        executor = None
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "accepted":
+                try:
+                    executor.close()
+                except OSError:
+                    pass
+            elif event.get("event") == "terminal":
+                raise OSError("terminal acknowledgement lost")
+
+        executor = Executor(backend, emit)
+        with self.assertRaisesRegex(RuntimeError, "delivery is unknown"):
+            executor.submit("reentrant-close-terminal-error", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+        self.assertEqual(sum(row.get("event") == "terminal" for row in events), 1)
+        self.assertEqual(executor.terminal_publication_errors[
+            "reentrant-close-terminal-error"]["status"], "delivery_unknown")
+        self.assertIsNotNone(executor.active)
+        self.assertFalse(backend.started.is_set())
+        with self.assertRaisesRegex(ValueError, "closed or busy"):
+            executor.submit("must-stay-blocked", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+
     def run_reason(self, reason):
         events = []; backend = Backend(reason); executor = Executor(backend, events.append)
         executor.submit("p", [{"op": "pointer_drag"}], 1,
