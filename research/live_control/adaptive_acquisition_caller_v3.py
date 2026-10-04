@@ -215,6 +215,21 @@ def _execution_decision(value):
     return copy.deepcopy(value)
 
 
+def _effect_receipt(value):
+    """Keep small, retrievable evidence references while dropping raw evidence."""
+    decision = _decision(value, {"succeeded", "failed", "unavailable"})
+    receipt = {"status": decision["status"]}
+    limits = {"evidence_ref": 512, "evidence_digest": 256, "effect_scope": 256}
+    for field, limit in limits.items():
+        if field not in decision:
+            continue
+        item = decision[field]
+        if type(item) is not str or not item or len(item) > limit:
+            raise ValueError("invalid effect evidence " + field)
+        receipt[field] = item
+    return receipt
+
+
 def _validate_spec(spec):
     required = {"target", "route", "coarse_origin", "provided_coarse",
                 "cached_target", "local_repair_on", "repair_on", "session_id"}
@@ -337,7 +352,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         return result
 
     def finish(outcome, reason, *, task_effect=None, delivery=None,
-               execution_progress=None):
+               execution_progress=None, effect_receipt=None):
         for row in stages.values():
             if row["status"] == "not_reached": row.update(status="skipped", reason="branch_not_reached")
         call_ids = [row["call_id"] for row in attempts if row["call_id"] is not None]
@@ -362,6 +377,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                           ["observe_source", "coarse_model", "acquire_anchor", "anchor_model"],
                           "comparable_to_full_cold": False}
         result = {"outcome": outcome, "reason": reason, "task_effect": task_effect,
+                  "effect_receipt": copy.deepcopy(effect_receipt),
                   "delivery": delivery, "execution_progress": copy.deepcopy(execution_progress),
                   "selected_target": copy.deepcopy(selected), "cache_update": copy.deepcopy(cache_update),
                   "repair_path": repair_path, "route": spec["route"],
@@ -499,12 +515,15 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         if execution["status"] != "completed":
             return finish("EXECUTION_INCOMPLETE", execution["status"],
                           delivery=execution["status"], execution_progress=execution)
-        effect = _decision(local("verify_effect", execution), {"succeeded", "failed", "unavailable"})
+        effect_receipt = _effect_receipt(local("verify_effect", execution))
+        effect = {"status": effect_receipt["status"]}
         if effect["status"] != "succeeded":
             return finish("TASK_NOT_VERIFIED", effect["status"], task_effect=effect["status"],
-                          delivery="confirmed", execution_progress=execution)
+                          delivery="confirmed", execution_progress=execution,
+                          effect_receipt=effect_receipt)
         return finish("TASK_SUCCEEDED", "verified_effect", task_effect="succeeded",
-                      delivery="confirmed", execution_progress=execution)
+                      delivery="confirmed", execution_progress=execution,
+                      effect_receipt=effect_receipt)
     except ModelFailure as error:
         status = getattr(error, "typed_status", None)
         if type(status) is not str or status not in {"DEFERRED_UPSTREAM", "FAILED_UPSTREAM", "FAILED_OUTPUT"}:
