@@ -1,0 +1,13 @@
+# Issue #7728 Windows counter cross-check A01
+
+**Disposition: `PASS_COUNTER_ORACLE_MATCH` for the Windows host sampled on 2026-10-04 UTC.** The Windows Energy Metering Interface (EMI) v2 package channel and the host's `Energy Meter(RAPL_Package0_PKG)\Energy` performance counter reported compatible cumulative values in one frozen, unprivileged bracket.
+
+The pre-registered run read the EMI channels, sampled the Performance Counter once, and read EMI again. EMI declared channel `RAPL_Package0_PKG` with unit code 0 (picowatt-hours). The direct readings were `718676780634444` before and `718691313952222` after; the raw `NumberOfItems64` counter sample was `718691170585277`, within that interval. EMI time advanced by 26,912,157 units of 100 ns. The independent auditor returned `PASS_COUNTER_ORACLE_MATCH`; it also rejected all three preregistered mutations (wrong unit, removed target channel, and out-of-bracket counter).
+
+The one candidate invocation was `run_preflight.ps1`; the one independent result audit was `audit_preflight.py`. Exact source hashes, SDK header hash, and base commit are in `FREEZE.json` and `SHA256SUMS`. The sanitized raw bracket is retained in `raw-preflight.json`, with its audit in `audit.json` and post-run hashes in `OUTPUT_SHA256SUMS`.
+
+This only establishes sensor-counter identity and unit compatibility on this Windows host/OS instance. The earlier host snapshot was busy (about 91% total CPU), and this bracket itself shows host package activity; there was no idle baseline, route, application, model, GUI, or task run. No process attribution, energy-per-effect measure, task-boundary repeatability, non-inferiority, or T1 eligibility is established. It does not alter the separate macOS `HOLD_ENERGY_SENSOR_UNAVAILABLE` result in #7728. A later Windows T0 must begin with a separately preregistered quiet-host protocol and independent effect scoring.
+
+Construction checks before freeze: three synthetic auditor tests passed, PowerShell parsing passed, and the C# probe compiled. No privilege escalation or workload was used.
+
+The ABI and unit interpretation were checked against Microsoft's [Energy Meter Interface documentation](https://learn.microsoft.com/en-us/windows-hardware/drivers/powermeter/energy-meter-interface), [channel measurement structure](https://learn.microsoft.com/en-us/windows/win32/api/emi/ns-emi-emi_channel_measurement_data), and [measurement-unit enumeration](https://learn.microsoft.com/en-us/windows/win32/api/emi/ne-emi-emi_measurement_unit), plus the locally installed Windows SDK `emi.h` whose hash is in the freeze.
