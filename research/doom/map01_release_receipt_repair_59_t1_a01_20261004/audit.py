@@ -40,6 +40,8 @@ def audit():
     assert result["fixture"] == fixture
     for path, expected in result["candidate_worktree_sha256"].items():
         assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected
+    oracle = freeze["integration_oracle"]
+    assert result["candidate_worktree_sha256"][oracle["path"]] == oracle["sha256"]
     unit = json.loads((HERE / "V11_UNIT_TEST.json").read_text(encoding="utf-8-sig"))
     assert unit["status"] == "PASS" and unit["tests"] == 12
     assert unit["failures"] == 0 and unit["errors"] == 0
@@ -81,6 +83,16 @@ def audit():
     assert counts["key_release_requests"] == 1
     assert counts["button_release_requests"] == 0
     assert counts["sync_calls"] == 3
+    typed = result["typed_backend_integration"]
+    assert [row["step"] for row in typed["events"]] == [0, 1, 2, 3]
+    typed_releases = [row for row in typed["events"]
+                      if row["event"] == "input_release_rpc"]
+    assert [row["release_applied"] for row in typed_releases] == [True, False]
+    assert [row["step"] for row in typed_releases] == [2, 3]
+    assert typed["counts"] == {"key_release_requests": 1, "sync_calls": 3}
+    assert len(typed["reconciled_intervals"]) == 1
+    assert typed["reconciled_intervals"][0]["keys"] == ["A", "W"]
+    assert typed["reconciled_intervals"][0]["keycode"] == 77
     sys.path.insert(0, str(ROOT / "research/doom"))
     from map01_feedback_release_contract_v1 import reconcile_key_intervals
     owner_id = alias["release_receipts"][0]["owner_id"]
@@ -109,6 +121,7 @@ def audit():
             "candidate applied key releases match request and sync counts",
             "candidate no-op receipts have no release interval or false success",
             "saved candidate receipts reconcile to one aliased physical interval",
+            "actual V11-to-typed-backend-to-oracle path joins across release-step provenance",
             "synthetic scope only",
         ],
     }

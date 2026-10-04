@@ -17,7 +17,9 @@ claims. Run the checked-out V11 owner contracts and typed backend provenance
 contracts under the same FakeDisplay stubs. The typed backend's inherited
 session superclass is stubbed because its import closure requires VizDoom on
 this Windows host; the actual typed backend class and release forwarding method
-are exercised by those tests.
+are exercised by those tests. Also run its actual `raw` method with V11 and feed
+the emitted rows to the reconciliation oracle, with admissions at program steps
+0/1 and release calls at steps 2/3.
 
 **D:** The hypothesis reproduces if the baseline reports successful release
 and sync on alias and repeated-up no-ops with zero added calls. The candidate
@@ -43,8 +45,7 @@ aliased key-up, repeated key-up, and unheld button-up. Each added zero release
 requests and zero sync calls. The candidate preserved injective and first
 aliased release identity and reported each applied request/sync. Checked-out
 V10 ordinary key-up and button-up return values remained `None`; admission
-receipts gained the resolved keycode. Six V11 owner tests and six typed backend
-contract tests pass against the checked-out sources. For the
+receipts gained the resolved keycode. Six V11 owner tests and six typed backend contract tests pass against the checked-out sources. An integrated V10/V11/typed-backend run joins admissions at steps 0/1 to applied/no-op release calls at steps 2/3 and reconciles one keycode-77 physical interval. For the
 second aliased key-up, repeated key-up, and unheld button-up, it reported
 `release_applied=false`, both operation flags false, and
 `release_transition_interval_ns=null`, while retaining `call_interval_ns`.

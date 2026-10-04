@@ -17,12 +17,14 @@ SCORE_FIELDS = ("map_exit", "episode_finished", "player_dead", "death_count",
 def reconcile_key_intervals(events):
     """Join ordinary release brackets and batch cleanup intervals by identity.
 
-    The release transition is interval-censored between caller start/return;
-    it is never treated as an exact physical key-up timestamp. Ordinary up
-    receipts need evidence that a key release was actually applied and carry
-    the resolved keycode. Cancellation intervals use resolved X keycodes and
-    collapse aliases into one physical key group. Missing identity falls back
-    only to the broad verified-owner censoring bound.
+    Release-event steps identify the operation's program step and need not
+    match the earlier admission step. An applied ordinary up closes all open
+    admissions for the same intent, program, owner, and resolved keycode. The
+    release transition is interval-censored between caller start/return; it is
+    never treated as an exact physical key-up timestamp. No-op receipts carry
+    call metadata only and do not close an admission. Cancellation intervals
+    use resolved X keycodes and collapse aliases into one physical key group.
+    Missing identity falls back only to the broad verified-owner censoring bound.
     """
     opens = defaultdict(list)
     admissions = defaultdict(list)
@@ -63,6 +65,12 @@ def reconcile_key_intervals(events):
             operation = row.get("operation")
             release_applied = row.get("release_applied")
             if (operation not in ("up", "button_up") or
+                    not isinstance(token, str) or not token or
+                    type(row.get("id")) is not str or not row["id"] or
+                    type(row.get("step")) is not int or row["step"] < 0 or
+                    (operation == "up" and
+                     (type(row.get("payload")) is not str or not row["payload"])) or
+                    type(row.get("owner_id")) is not str or not row["owner_id"] or
                     type(call_interval) is not list or len(call_interval) != 2 or
                     any(type(value) is not int for value in call_interval) or
                     call_interval[0] > call_interval[1] or
@@ -100,10 +108,15 @@ def reconcile_key_intervals(events):
                       row.get("x11_sync_completed_before_return") is not release_applied):
                     errors.append("invalid_or_unmatched_release_rpc")
                 else:
-                    history = admissions.get(key, [])
+                    symbol_history = [item for admission_key, rows in admissions.items()
+                                      if admission_key[0] == token and
+                                      admission_key[1] == row.get("id") and
+                                      admission_key[3] == row.get("payload")
+                                      for item in rows]
                     if (type(row.get("keycode")) is not int or row["keycode"] <= 0 or
-                            (history and (row["keycode"] != history[-1].get("keycode") or
-                                          row.get("owner_id") != history[-1]["owner_id"]))):
+                            (symbol_history and
+                             (row["keycode"] != symbol_history[-1].get("keycode") or
+                              row.get("owner_id") != symbol_history[-1]["owner_id"]))):
                         errors.append("invalid_or_unmatched_release_rpc")
                     elif (release_applied and
                           (interval != call_interval or row.get("interval_width_ns") != end-start)):
@@ -117,8 +130,6 @@ def reconcile_key_intervals(events):
                                  (row["keycode"] != opened[0].get("keycode") or
                                   row.get("owner_id") != opened[0]["owner_id"]))):
                             errors.append("invalid_or_unmatched_release_rpc")
-                    elif not opened:
-                        errors.append("invalid_or_unmatched_release_rpc")
                     else:
                         opened_rows = []
                         for pending_key in list(opens):
@@ -134,17 +145,17 @@ def reconcile_key_intervals(events):
                                     opens[pending_key] = retained
                                 else:
                                     del opens[pending_key]
-                        if not any(pending_key == key for pending_key, _ in opened_rows):
+                        if not opened_rows:
                             errors.append("invalid_or_unmatched_release_rpc")
                         elif start < min(item["ack_ns"] for _, item in opened_rows):
                             errors.append("release_rpc_precedes_key_ack")
                         else:
                             opened_rows.sort(key=lambda pair: (pair[1]["ack_ns"], pair[0][3]))
-                            _, first_row = opened_rows[0]
+                            first_key, first_row = opened_rows[0]
                             names = sorted({item["key"] for _, item in opened_rows})
                             if len(opened_rows) == 1:
                                 intervals.append({"intent_token": key[0], "id": key[1],
-                                                  "step": key[2], "key": first_row["key"],
+                                                  "step": first_key[2], "key": first_row["key"],
                                                   "ack_ns": first_row["ack_ns"],
                                                   "release_transition_interval_ns": interval,
                                                   "occupancy_lower_ns": start-first_row["ack_ns"],

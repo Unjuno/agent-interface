@@ -125,14 +125,14 @@ class FeedbackReleaseContractTests(unittest.TestCase):
                   "operation": "up", "grants_input_authority": False,
                   "continuous_physical_state_sampled": False,
                   "application_consumption_observed": False}
-        applied = dict(common, step=0, payload="W", keycode=77,
+        applied = dict(common, step=2, payload="W", keycode=77,
                        call_started_ns=350, call_returned_ns=360,
                        call_interval_ns=[350, 360], call_interval_width_ns=10,
                        release_transition_interval_ns=[350, 360], interval_width_ns=10,
                        release_applied=True, x11_release_request_issued=True,
                        x11_sync_completed_before_return=True,
                        x11_release_and_sync_completed_before_return=True)
-        noop = dict(common, step=1, payload="A", keycode=77,
+        noop = dict(common, step=3, payload="A", keycode=77,
                     call_started_ns=370, call_returned_ns=380,
                     call_interval_ns=[370, 380], call_interval_width_ns=10,
                     release_transition_interval_ns=None, interval_width_ns=None,
@@ -265,8 +265,8 @@ class FeedbackReleaseContractTests(unittest.TestCase):
                          "continuous_physical_state_sampled": False,
                          "application_consumption_observed": False,
                          "grants_input_authority": False}
-        with self.assertRaisesRegex(ValueError, "invalid_or_unmatched_release_rpc"):
-            reconcile_key_intervals([admitted, wrong_step_release])
+        step_differs_from_admission = reconcile_key_intervals([admitted, wrong_step_release])
+        self.assertEqual(step_differs_from_admission[0]["step"], 0)
         wrong_program_release = dict(wrong_step_release, id="different-program", step=0)
         with self.assertRaisesRegex(ValueError, "invalid_or_unmatched_release_rpc"):
             reconcile_key_intervals([admitted, wrong_program_release])

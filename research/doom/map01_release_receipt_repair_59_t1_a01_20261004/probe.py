@@ -6,6 +6,7 @@ it never opens a real X display or sends OS input.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import subprocess
 import sys
@@ -285,6 +286,68 @@ def run_legacy_compatibility(fixture):
         owner.close()
 
 
+def load_typed_backend():
+    previous = types.ModuleType("doom_typed_release_backend_v1")
+    class Previous:
+        def execute(self, *_args, **_kwargs):
+            return None
+    previous.Backend = Previous
+    previous.suite = object()
+    sys.modules[previous.__name__] = previous
+    path = ROOT / "research/doom/doom_typed_release_backend_v2.py"
+    name = "doom_typed_release_backend_v2_probe"
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = types.ModuleType(name)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module.Backend
+
+
+def run_typed_backend_integration(fixture):
+    fixture.KEYMAP = {ord("W"): 77, ord("A"): 77}
+    fixture.SERVER["down"].clear()
+    counts = {"key_release_requests": 0, "sync_calls": 0}
+    xlib = sys.modules["Xlib"]
+    xtest = sys.modules["Xlib.ext.xtest"]
+    fake_input = xtest.fake_input
+    original_sync = fixture.FakeDisplay.sync
+
+    def counted_input(display, event, code, **kwargs):
+        if event == xlib.X.KeyRelease:
+            counts["key_release_requests"] += 1
+        return fake_input(display, event, code, **kwargs)
+
+    def counted_sync(display):
+        counts["sync_calls"] += 1
+        return original_sync(display)
+
+    xtest.fake_input = counted_input
+    fixture.FakeDisplay.sync = counted_sync
+    backend_type = load_typed_backend()
+    backend = object.__new__(backend_type)
+    backend.owner = sys.modules["input_owner_v11"].InputOwner(":fake")
+    backend.lease = fixture.Lease()
+    backend.held = set()
+    backend._input_event_context = None
+    backend.events = []
+    backend.emit = backend.events.append
+    try:
+        for step, key, down in ((0, "W", True), (1, "A", True),
+                                (2, "W", False), (3, "A", False)):
+            backend._input_event_context = ("typed-plan", step)
+            backend.raw(key, down)
+        sys.path.insert(0, str(ROOT / "research/doom"))
+        from map01_feedback_release_contract_v1 import reconcile_key_intervals
+        intervals = reconcile_key_intervals(backend.events)
+        return {"events": backend.events, "reconciled_intervals": intervals,
+                "counts": dict(counts),
+                "scope": "actual checked-out V10/V11 and typed-backend raw method; fake Xlib only"}
+    finally:
+        backend.owner.close()
+        xtest.fake_input = fake_input
+        fixture.FakeDisplay.sync = original_sync
+
+
 def main():
     v10 = pinned(V10_PATH, V10_BLOB)
     v11 = pinned(V11_PATH, V11_BLOB)
@@ -307,6 +370,7 @@ def main():
     legacy_compatibility = run_legacy_compatibility(fixture)
     injective = run_arm(fixture, candidate_owner, {"W": 87, "A": 65}, ["W", "A"])
     aliased = run_arm(fixture, candidate_owner, {"W": 77, "A": 77}, ["W", "A"])
+    typed_backend = run_typed_backend_integration(fixture)
     return {
         "schema": "map01-v11-release-receipt-repair-probe-v1",
         "source_commit": COMMIT,
@@ -316,8 +380,13 @@ def main():
         "candidate_worktree_sha256": {
             V10_PATH: hashlib.sha256((ROOT / V10_PATH).read_bytes()).hexdigest(),
             V11_PATH: hashlib.sha256((ROOT / V11_PATH).read_bytes()).hexdigest(),
+            "research/doom/doom_typed_release_backend_v2.py": hashlib.sha256(
+                (ROOT / "research/doom/doom_typed_release_backend_v2.py").read_bytes()).hexdigest(),
+            "research/doom/map01_feedback_release_contract_v1.py": hashlib.sha256(
+                (ROOT / "research/doom/map01_feedback_release_contract_v1.py").read_bytes()).hexdigest(),
         },
         "legacy_v10_compatibility": legacy_compatibility,
+        "typed_backend_integration": typed_backend,
         "baseline_aliased": baseline,
         "candidate_injective": injective,
         "candidate_aliased": aliased,

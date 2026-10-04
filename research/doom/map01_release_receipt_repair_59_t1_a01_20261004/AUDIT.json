@@ -1,17 +1,18 @@
 {
-  "status": "PASS_SCOPED",
   "schema": "map01-v11-release-receipt-repair-audit-v1",
+  "status": "PASS_SCOPED",
   "checks": [
     "artifact SHA256 inventory",
     "pinned V10/V11 source blobs",
     "pinned fake-Xlib fixture blob",
-    "checked-out V10/V11/backend/test source hashes",
+    "checked-out V10/V11/backend/test/oracle source hashes",
     "legacy V10 up/button-up return values remain None",
     "12 V11 and typed backend contract tests pass against checked-out sources",
     "baseline false-success key/button no-op receipts",
     "candidate applied key releases match request and sync counts",
     "candidate no-op receipts have no release interval or false success",
     "saved candidate receipts reconcile to one aliased physical interval",
+    "actual V10/V11/typed-backend/oracle integration reconciles step 0/1 admissions to step 2/3 releases",
     "synthetic scope only"
   ]
 }
