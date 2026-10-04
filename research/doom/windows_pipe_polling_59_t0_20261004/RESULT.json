@@ -30,5 +30,23 @@
   "live_calls": 0,
   "formal_allocations": 0,
   "controller_game_calls_stay_on_caller_thread": true,
-  "task_effect_claim": false
+  "task_effect_claim": false,
+  "baseline_poller_tests": {
+    "exit": 1,
+    "errors": 1,
+    "failure": "WinError 10093 on redirected pipe",
+    "count": 12
+  },
+  "baseline_session_v13_tests": {
+    "exit": 1,
+    "errors": 1,
+    "failure": "WinError 10093 on redirected pipe",
+    "count": 4
+  },
+  "intermediate_session_v13_tests": {
+    "failures": 1,
+    "exit": 1,
+    "failure": "native Windows path separators in source manifest",
+    "count": 4
+  }
 }

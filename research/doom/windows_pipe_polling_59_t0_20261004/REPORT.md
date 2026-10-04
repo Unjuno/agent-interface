@@ -9,8 +9,12 @@ across Windows and POSIX hosts.
 
 **T.** On Windows 11 / CPython 3.12.10, run the real anonymous-pipe timeout,
 delayed-data and EOF tests; the full poller same-thread test; the v13 session
-composition tests; and the scorer-adapter tests. The pre-change path failed at
-`select.select` with WinError 10093. The Windows implementation now polls
+composition tests; and the scorer-adapter tests. Against unmodified baseline
+`0757ae3d71`, the poller suite ran 12 tests and errored on the real-pipe case
+with WinError 10093; the v13 suite also errored at the pipe wait. After the
+pipe fix but before path normalization, the v13 suite reached its assertions
+and failed because Windows manifest keys used backslashes. The Windows
+implementation now polls
 `PeekNamedPipe` at 1 ms intervals, returns readiness at data or broken-pipe EOF,
 and leaves reads and game/scorer calls on the caller thread. V13 source keys use
 `Path.as_posix()` for cross-platform stability.
@@ -45,7 +49,7 @@ python -m py_compile research/doom/main_thread_scorer_polling_v1.py research/doo
 git diff --check
 ```
 
-Command outputs, Python version, and platform identity are in `results/`; local
+Baseline, intermediate, and final command outputs, Python version, and platform identity are in `results/`; local
 user and checkout paths are redacted in the retained broad-suite log.
 The relevant API supports the read end of an anonymous pipe and reports bytes
 available without consuming them; see Microsoft's [`PeekNamedPipe` reference](https://learn.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpipeapi-peeknamedpipe).

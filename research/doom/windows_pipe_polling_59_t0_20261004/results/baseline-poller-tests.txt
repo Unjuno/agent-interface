@@ -1,0 +1,20 @@
+.........E..
+======================================================================
+ERROR: test_real_pipe_eof_and_same_thread (__main__.PollingTests.test_real_pipe_eof_and_same_thread)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<BASELINE_WORKTREE>\research\doom\test_main_thread_scorer_polling_v1.py", line 173, in test_real_pipe_eof_and_same_thread
+    stats = loop.run(
+            ^^^^^^^^^
+  File "<BASELINE_WORKTREE>\research\doom\main_thread_scorer_polling_v1.py", line 125, in run
+    if not self.wait_readable(fd, timeout_s):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<BASELINE_WORKTREE>\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10093] �A�v���P�[�V������ WSAStartup ���Ăяo���Ă��Ȃ����A�܂��� WSAStartup �����s���܂����B
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.002s
+
+FAILED (errors=1)
