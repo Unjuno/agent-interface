@@ -1,0 +1,26 @@
+{
+  "schema": "map01-v39-owner-keymap-admission-temporal-audit-evidence-v1",
+  "predecessor_pr": 7355,
+  "predecessor_head": "6ed0235da58ad849fc07daf75ce49a88ad46d407",
+  "predecessor_raw_path": "research/doom/results/map01-v39-owner-keymap-witness-c02-20261004/candidate.raw.json",
+  "predecessor_raw_git_blob": "7791917cabb4afba923a675a86b81f94d22356e8",
+  "legacy_evaluator": {
+    "baseline_backend_receipts_bind_each_occurrence": true,
+    "post_down_admission_mutation_backend_receipts_bind_each_occurrence": true,
+    "overall_baseline_checks": true,
+    "overall_mutated_checks": true,
+    "mutation": "for each admission, set admitted_ns and input_ack_ns after its own post_down.sample_finished_ns"
+  },
+  "successor_evaluator": {
+    "immutable_raw": "PASS",
+    "same_post_down_mutation": "REJECT",
+    "focused_tests": "5/5 PASS",
+    "commands": [
+      "python -m unittest discover -s research/doom/results/map01-v39-owner-keymap-admission-temporal-audit-v1 -p 'test_*.py' -v",
+      "python -m py_compile research/doom/results/map01-v39-owner-keymap-admission-temporal-audit-v1/audit_admission.py research/doom/results/map01-v39-owner-keymap-admission-temporal-audit-v1/test_admission.py",
+      "git diff --check"
+    ]
+  },
+  "container_gate": "STOP: Docker image listing failed on containerd blob sha256:2775a09d208ff0d7c1f50490c45b62db929e87ba1dcbc3f2132ac71a704bcdd3 with operation not supported; no container run or repair",
+  "scope": "host-side auditor contract and retained synthetic C02 record only; no candidate, Xvfb, GUI, game, model, physical-key, task-effect, recovery, or live-threat experiment"
+}
