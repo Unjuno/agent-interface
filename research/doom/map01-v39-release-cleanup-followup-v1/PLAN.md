@@ -13,3 +13,5 @@
 Parent commit: `2834209601483503a316863cf9964c9f966cede5` (the exact PR #7385 head before this repair).
 
 The predecessor package's source digest is retained in its original `SHA256SUMS`; this follow-up leaves that package untouched.
+
+After the stacked parent advanced, the three regressions were rerun against its exact new head `90e65c932a8a487d9657713e5a243cba25125c4f`; all three still failed before the repair. The follow-up branch was rebased onto that head, and the candidate suites were rerun there.
