@@ -8,16 +8,16 @@
     "research/doom/test_doom_typed_release_backend_v3.py"
   ],
   "claim": "timestamped verified owner cleanup inside an explicit key-up caller bracket must refuse ordinary per-key release verification",
-  "runtime": "WSLc",
+  "runtime": "initial WSLc construction, then read-only/log successor checks and the execute-path follow-up on Windows host CPU",
   "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
   "image_repo_digest": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
   "limits": {"network": "none", "cpus": 1, "memory": "512M accepted", "swap": "unavailable per WSL warning"},
   "formal_or_live_allocation": false,
-  "outcome": "baseline false-positive reproduced; candidate suite passed 21/21; adjacent wrapper/backend suites passed 29/29; initial WSLc log audit was superseded after review found it did not bind terminal summaries to exit receipts; corrected host-side audit passed 9/9 and audit mutation tests passed 5/5",
+  "outcome": "the exact PR #7378 baseline fails the cleanup regression driven through Backend.execute and the parent executor stub; the updated host candidate passes 21/21 and the owner wrapper suite passes 8/8; original WSLc lower-boundary candidate is preserved; corrected host audit passes 12/12 and audit mutation tests pass 5/5",
   "scope_limits": [
     "synthetic deterministic owner and adapter test",
     "the inherited backend suite includes synthetic base-class cases; this result does not claim every inherited case is reachable through an admitted v39 program",
-    "no owner-thread queue scheduling reproduction",
+    "owner cleanup is injected by a deterministic fake owner; this does not reproduce actual owner-thread queue scheduling",
     "no X11, game, physical release timing, task-effect, model, or performance claim",
     "no live allocation started or retried"
   ]

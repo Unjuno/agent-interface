@@ -77,6 +77,7 @@ class Owner:
         self.receipt_token = receipt_token
         self.records = []
         self.cleanup_ns = cleanup_ns
+        self.explicit_key_release_requests = []
         self.release_index = 0
         self.closed = False
 
@@ -95,6 +96,8 @@ class Owner:
                     'event': 'owner_release', 'verified': True,
                     'reason': 'cancelled', 'verified_ns': self.cleanup_ns,
                 })
+            else:
+                self.explicit_key_release_requests.append(key)
             return {
                 'event': 'input_release_transition', 'operation': 'up', 'key': key,
                 'owner_id': self.owner_id, 'intent_token': self.receipt_token,
@@ -208,13 +211,16 @@ class Tests(unittest.TestCase):
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
 
     def test_cleanup_inside_explicit_release_bracket_is_not_ordinary(self):
-        obj = make_backend({'a'}, Owner(cleanup_ns=7))
-        obj.raw('a', False)
+        owner = Owner(cleanup_ns=7)
+        obj = make_backend({'a'}, owner, with_context=False)
+        obj.execute({'keys': ['a']}, None, 'p', 0)
         row = obj.emitted[0]
         self.assertTrue(row['ordinary_release_candidate'] is False)
         self.assertTrue(row['owner_cleanup_records_available'])
         self.assertTrue(row['owner_cleanup_overlapped_release_call'])
         self.assertFalse(row['owner_transition_verified'])
+        self.assertEqual(owner.explicit_key_release_requests, [])
+        self.assertEqual([record['event'] for record in owner.records], ['owner_release'])
 
     def test_cleanup_outside_explicit_release_bracket_keeps_ordinary_release(self):
         obj = make_backend({'a'}, Owner(cleanup_ns=4))

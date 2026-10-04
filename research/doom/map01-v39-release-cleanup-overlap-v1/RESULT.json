@@ -1,12 +1,12 @@
 {
   "schema": "map01-v39-release-cleanup-overlap-result-v1",
   "baseline": {"sha": "fbed929f629dabaa9ae752019d0ee7151d4d2298", "regression": "failed as expected: cleanup overlap was left ordinary"},
-  "candidate": {"backend_tests": "21/21 pass", "adjacent_wrapper_and_backend_tests": "29/29 pass"},
-  "audit": "corrected host-side retained-log audit 9/9 exit 0; auditor mutation tests 5/5; initial WSLc string-check audit preserved as superseded",
+  "candidate": {"execute_path_host_backend_tests": "21/21 pass", "owner_transition_wrapper_host_tests": "8/8 pass", "earlier_wslc_raw_boundary_tests": "21/21 pass at the lower raw() boundary, source hash retained"},
+  "audit": "corrected host-side retained-log audit 12/12 exit 0; auditor mutation tests 5/5; initial WSLc string-check audit preserved as superseded",
   "environment_warning": "swap limit unsupported; accepted memory cap does not prove swap isolation",
   "decision": "adopt cleanup-overlap demotion in current-v39 typed release telemetry; remain synthetic construction evidence",
   "not_claimed": ["owner-thread scheduling", "X11 or live MAP01", "physical release timing", "task effect", "model or GPU performance", "safety or product reliability"],
-  "suite_scope_note": "The inherited 21-test backend suite includes synthetic base-class cases; this result does not claim every inherited case is reachable through an admitted v39 program.",
+  "suite_scope_note": "The execute-path test uses a deterministic stub parent executor and fake owner. It reaches Backend.execute -> inherited execute -> Backend.raw but does not reproduce the actual owner thread or a live v39 task. The inherited suite includes synthetic base-class cases.",
   "audit_scope_note": "The initial WSLc auditor only searched for expected pass text and was insufficient; the follow-up auditor requires a unique terminal unittest summary plus separately retained exit receipts and rejects contradictory summary/exit mutations.",
   "allocation": "no live allocation invoked or retried"
 }

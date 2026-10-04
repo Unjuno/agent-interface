@@ -1,0 +1,23 @@
+{
+  "parent_source_commit": "fbed929f629dabaa9ae752019d0ee7151d4d2298",
+  "original_wslc_run": {
+    "source_test_sha256": "fc731c73bd17bad42168de9bc3f902d5a8106a3c3da7f5ca9893d345161b8d21",
+    "receipt": "results/RAW_CANDIDATE_WSLC_DIRECT_BOUNDARY.txt",
+    "exit_receipt": "results/CANDIDATE_WSLC_EXIT.txt",
+    "scope": "21 tests at Backend.raw boundary before execute-path regression refinement"
+  },
+  "host_execute_path_followup": {
+    "source_test_sha256": "eb7c6db10369e843b82f76fb26e8ce266c3334994e2e58546513f8986fd69e65",
+    "python": "3.11.9 Windows AMD64",
+    "candidate_receipt": "results/RAW_CANDIDATE.txt",
+    "candidate_exit": "results/CANDIDATE_EXIT.txt",
+    "baseline_receipt": "results/RAW_BASELINE.txt",
+    "baseline_exit": "results/BASELINE_EXIT.txt",
+    "scope": "Backend.execute -> inherited executor stub -> Backend.raw with a fake owner; no actual owner thread or X11"
+  },
+  "owner_wrapper_host_followup": {
+    "receipt": "results/RAW_OWNER_WRAPPER_HOST.txt",
+    "exit_receipt": "results/OWNER_WRAPPER_EXIT.txt",
+    "tests": 8
+  }
+}

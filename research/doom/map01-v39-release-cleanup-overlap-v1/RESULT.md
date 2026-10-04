@@ -1,23 +1,23 @@
 # Result
 
 The exact PR #7378 parent source (`fbed929f629dabaa9ae752019d0ee7151d4d2298`)
-fails the new cleanup-overlap regression: `ordinary_release_candidate` remains
-true when a verified cleanup release timestamp is inside the explicit `up`
-bracket. The candidate demotes that row and refuses owner-transition
-verification. A cleanup timestamp outside the bracket keeps the positive
-ordinary-release result; unavailable cleanup records fail closed.
+fails the cleanup-overlap regression when driven through `Backend.execute`, its
+inherited executor method, and `Backend.raw`: the deterministic fake owner
+records verified cleanup inside the explicit `up` bracket but emits no explicit
+key-release command. The baseline leaves `ordinary_release_candidate=true`; the
+candidate demotes it and refuses owner-transition verification. A cleanup
+timestamp outside the bracket preserves the positive ordinary-release result;
+missing cleanup records fail closed.
 
-The current-v39 backend test module passed 21/21 tests in WSLc. Combined with
-the adjacent `input_transition_owner_v3` suite, 29/29 passed. The first auditor
-reported seven string checks on retained output, but review found that it did
-not reject a contradictory failure summary or compare an exit receipt; its raw
-output is preserved as superseded. The corrected host-side auditor requires
-one terminal unittest summary and matching exit receipts; it passes 9/9 checks,
-and its five mutation tests pass. The inherited backend suite includes
-synthetic base-class tests; this result does not claim every inherited case is
-reachable through an admitted v39 program. WSLc emitted its known warning
-that swap limits are unsupported; accepted memory limits do not establish swap
-isolation.
+The current host-side execution-path suite passes 21/21, and the current host
+owner-transition wrapper suite passes 8/8. An earlier WSLc run of the lower
+`Backend.raw` boundary passed 21/21 and is retained with its original source
+hash and swap/cgroup warning. The prior combined 29/29 run and first string-only
+audit are preserved as historical receipts; the inherited suite includes
+synthetic base-class cases, so those totals do not mean every case is reachable
+through admitted v39 programs. The corrected host-side auditor parses one
+terminal summary and retained exit receipts for each run, passes 12/12
+retained-log checks with exit 0, and has five passing mutation tests.
 
 This establishes a deterministic telemetry-classification boundary in the
 adapter. It does not establish owner-thread queue scheduling, live input or

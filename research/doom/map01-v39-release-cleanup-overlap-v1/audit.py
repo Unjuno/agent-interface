@@ -28,8 +28,14 @@ def terminal_run_matches(log, expected_tests, exit_text, *, passed):
 def audit_retained():
     baseline = (RESULTS / "RAW_BASELINE.txt").read_text(encoding="utf-8")
     candidate = (RESULTS / "RAW_CANDIDATE.txt").read_text(encoding="utf-8")
+    owner_wrapper = (RESULTS / "RAW_OWNER_WRAPPER_HOST.txt").read_text(encoding="utf-8")
+    baseline_direct = (RESULTS / "RAW_BASELINE_DIRECT_BOUNDARY.txt").read_text(encoding="utf-8")
+    candidate_wslc = (RESULTS / "RAW_CANDIDATE_WSLC_DIRECT_BOUNDARY.txt").read_text(encoding="utf-8")
     adjacent = (RESULTS / "RAW_ADJACENT.txt").read_text(encoding="utf-8")
     candidate_exit = (RESULTS / "CANDIDATE_EXIT.txt").read_text(encoding="utf-8")
+    owner_wrapper_exit = (RESULTS / "OWNER_WRAPPER_EXIT.txt").read_text(encoding="utf-8")
+    candidate_wslc_exit = (RESULTS / "CANDIDATE_WSLC_EXIT.txt").read_text(encoding="utf-8")
+    baseline_direct_exit = (RESULTS / "BASELINE_DIRECT_EXIT.txt").read_text(encoding="utf-8")
     adjacent_exit = (RESULTS / "ADJACENT_EXIT.txt").read_text(encoding="utf-8")
     baseline_exit = (RESULTS / "BASELINE_EXIT.txt").read_text(encoding="utf-8")
     baseline_exit_match = re.fullmatch(
@@ -42,14 +48,29 @@ def audit_retained():
             and "FAILED (failures=1)" in baseline
             and "ordinary_release_candidate'] is False" in baseline
         ),
-        "candidate_suite_passes_21_exit_zero": terminal_run_matches(
+        "execute_path_candidate_passes_21_exit_zero": terminal_run_matches(
             candidate, 21, candidate_exit, passed=True),
+        "owner_wrapper_passes_8_exit_zero": terminal_run_matches(
+            owner_wrapper, 8, owner_wrapper_exit, passed=True),
+        "direct_boundary_parent_reproduces_false_positive": (
+            terminal_run_matches(baseline_direct, 1, "exit=1", passed=False)
+            and "ordinary_release_candidate'] is False" in baseline_direct
+            and baseline_direct_exit.strip() == "expected regression failure; observed exit=1"
+        ),
+        "original_wslc_direct_boundary_candidate_passes": terminal_run_matches(
+            candidate_wslc, 21, candidate_wslc_exit, passed=True),
         "adjacent_suites_pass_29_exit_zero": terminal_run_matches(
             adjacent, 29, adjacent_exit, passed=True),
-        "inside_bracket_case_passes": "test_cleanup_inside_explicit_release_bracket_is_not_ordinary" in candidate,
+        "cleanup_case_exercises_execute_path": (
+            "test_cleanup_inside_explicit_release_bracket_is_not_ordinary" in candidate
+            and "test_cleanup_inside_explicit_release_bracket_is_not_ordinary" in
+            (HERE.parents[2] / "research/doom/test_doom_typed_release_backend_v3.py").read_text(encoding="utf-8")
+            and "self.assertEqual(owner.explicit_key_release_requests, [])" in
+            (HERE.parents[2] / "research/doom/test_doom_typed_release_backend_v3.py").read_text(encoding="utf-8")
+        ),
         "outside_bracket_control_passes": "test_cleanup_outside_explicit_release_bracket_keeps_ordinary_release" in candidate,
         "missing_log_case_passes": "test_missing_cleanup_log_fails_closed" in candidate,
-        "swap_limit_warning_retained": "does not support swap limit" in candidate,
+        "swap_limit_warning_retained": "does not support swap limit" in candidate_wslc,
         "contradictory_failure_summary_rejected": not terminal_run_matches(
             candidate + "\nFAILED (failures=1)\n", 21, candidate_exit, passed=True),
         "contradictory_nonzero_exit_rejected": not terminal_run_matches(
