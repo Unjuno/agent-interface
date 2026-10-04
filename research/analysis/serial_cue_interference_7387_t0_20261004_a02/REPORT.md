@@ -2,7 +2,7 @@
 
 Disposition: **PASS_METHOD_SCOPED** for one finite, authored synthetic image-deck construction. The lag-by-task-demand model hypothesis remains **untested**.
 
-The A02 candidate ran once in WSLc and emitted 144 matched cue trials, 288 paired presentations, 16 isolated controls and 1,280 unique PPM images. A separately invoked frozen raw-only auditor ran once and returned `ok=true`, `errors=[]`, independently reconstructing all rows and image pixels. Both invocations exited 0; retries=0. The exact freeze and run record are [FREEZE.json](FREEZE.json) and [RUN.md](RUN.md); all generated output and transcripts are retained under [formal_01](formal_01/).
+The A02 candidate ran once in WSLc and emitted 144 matched cue trials, 288 paired presentations, 16 isolated controls and 1,280 PPM image files. A separately invoked frozen raw-only auditor ran once and returned `ok=true`, `errors=[]`, independently reconstructing all rows and image pixels. The 1,280 file paths contain five distinct pixel payloads (one blank frame and four glyphs), so this is not 1,280 distinct stimuli. Both invocations exited 0; retries=0. The exact freeze and run record are [FREEZE.json](FREEZE.json) and [RUN.md](RUN.md); all generated output and transcripts are retained under [formal_01](formal_01/).
 
 The first A01 allocation remains a terminal output-directory STOP and contributes no data. A02 changed only candidate handling of an existing empty output mount and used a fresh output path. Preformal A02 construction checks passed 3/3. The separately frozen base candidate/auditor mutation suite passed a clean control and four corruptions (5/5 total). Construction failures and their repair chronology are retained in the respective READMEs.
 
