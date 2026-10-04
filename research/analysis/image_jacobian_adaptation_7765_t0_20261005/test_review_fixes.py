@@ -36,6 +36,12 @@ class ReviewFixTests(unittest.TestCase):
                 self.assertEqual(result["status"], "HOLD_AUDIT_OR_OUTCOME")
                 self.assertFalse(result["pair_grid_complete"])
 
+    def test_unhashable_pair_identifier_returns_hold(self):
+        result = audit_rows([{"condition": [], "seed": 0, "arm": "fixed_gain"}])
+        self.assertEqual(result["status"], "HOLD_AUDIT_OR_OUTCOME")
+        self.assertEqual(result["errors"], ["PAIR_GRID_INCOMPLETE_OR_DUPLICATE"])
+        self.assertFalse(result["pair_grid_complete"])
+
 
 if __name__ == "__main__":
     unittest.main()

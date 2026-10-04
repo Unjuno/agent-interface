@@ -15,11 +15,12 @@ def audit_rows(rows):
     try:
         got = [(row.get("condition"), row.get("seed"), row.get("arm"))
                for row in rows]
+        got_set = set(got)
     except (AttributeError, TypeError):
         return {"status": "HOLD_AUDIT_OR_OUTCOME",
                 "errors": ["PAIR_GRID_INCOMPLETE_OR_DUPLICATE"],
                 "rows": None, "pair_grid_complete": False}
-    if set(got) != expected or len(got) != len(expected):
+    if got_set != expected or len(got) != len(expected):
         return {"status": "HOLD_AUDIT_OR_OUTCOME",
                 "errors": ["PAIR_GRID_INCOMPLETE_OR_DUPLICATE"],
                 "rows": len(got), "pair_grid_complete": False}
