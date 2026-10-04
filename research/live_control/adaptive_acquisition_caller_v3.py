@@ -119,6 +119,8 @@ def _model_result(value):
     if value["cost"] is not None and not isinstance(value["cost"], (int, float)):
         raise ValueError("cost must be numeric or unavailable")
     result = copy.deepcopy(value)
+    if type(result["cost"]) is bool:
+        result["cost"] = None
     if isinstance(result["cost"], float) and not math.isfinite(result["cost"]):
         result["cost"] = None
     result["usage"] = _usage(value["usage"])
