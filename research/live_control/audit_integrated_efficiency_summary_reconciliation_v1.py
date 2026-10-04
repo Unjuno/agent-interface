@@ -24,18 +24,12 @@ def read(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def git_digest(repo: Path, relative_path: str) -> str | None:
-    result = subprocess.run(["git", "show", f"HEAD:{relative_path}"], cwd=repo,
+def git_digest(repo: Path, revision: str, relative_path: str) -> str | None:
+    result = subprocess.run(["git", "show", f"{revision}:{relative_path}"], cwd=repo,
                             capture_output=True)
     if result.returncode:
         return None
     return hashlib.sha256(result.stdout).hexdigest()
-
-
-def file_digest(path: Path) -> str | None:
-    if not path.is_file():
-        return None
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def main() -> int:
@@ -49,13 +43,23 @@ def main() -> int:
     summary = read(SUMMARY)
     raw_by_id = {}
     duplicate_raw_ids = []
+    raw_event_mismatches = []
     for path in sorted((OUT / "model-calls").rglob("result.json")):
         row = read(path)
         call_id = row.get("call_id")
         if not call_id or call_id in raw_by_id:
             duplicate_raw_ids.append(str(path.relative_to(OUT)))
             continue
+        event_path = path.parent / "model" / "events.jsonl"
+        events = [json.loads(line) for line in event_path.read_text(encoding="utf-8").splitlines()]
+        started = [event for event in events if event.get("type") == "thread.started"]
+        completed = [event for event in events if event.get("type") == "turn.completed"]
+        event_usage = completed[0].get("usage") if len(completed) == 1 else None
+        if (len(started) != 1 or started[0].get("thread_id") != call_id
+                or event_usage != row.get("usage")):
+            raw_event_mismatches.append(call_id)
         raw_by_id[call_id] = {"usage": row.get("usage"),
+                              "event_usage": event_usage,
                               "path": str(path.relative_to(OUT))}
 
     totals = {field: 0 for field in FIELDS}
@@ -65,6 +69,25 @@ def main() -> int:
     mismatched_report_totals = []
     for arm in ARMS:
         preflight = trace["preflight_calls"][arm]
+        gate = read(OUT / "preflight" / arm / "gate" / "gate-report.json")
+        gate_result = gate["results"][0]["result"] if len(gate.get("results", [])) == 1 else {}
+        preflight_event_path = (OUT / "preflight" / arm / "gate" /
+                                "plain-form-grounding" / "model-call" / "events.jsonl")
+        if arm != "plain":
+            preflight_event_path = (OUT / "preflight" / arm / "gate" /
+                                    "compiled-form-grounding" / "model-call" / "events.jsonl")
+        preflight_events = [json.loads(line) for line in
+                            preflight_event_path.read_text(encoding="utf-8").splitlines()]
+        preflight_started = [event for event in preflight_events
+                             if event.get("type") == "thread.started"]
+        preflight_completed = [event for event in preflight_events
+                               if event.get("type") == "turn.completed"]
+        if (gate_result.get("usage") != preflight["usage"]
+                or len(preflight_started) != 1
+                or preflight_started[0].get("thread_id") != preflight["call_id"]
+                or len(preflight_completed) != 1
+                or preflight_completed[0].get("usage") != preflight["usage"]):
+            raw_event_mismatches.append(preflight["call_id"])
         calls = [preflight]
         calls.extend(call for task in trace["arms"][arm]
                      for call in task["model_calls"])
@@ -75,10 +98,11 @@ def main() -> int:
             call_ids.append(call_id)
             arm_ids.append(call_id)
             usage = call["usage"]
-            if call["stage"] != "schema_preflight":
-                raw = raw_by_id.get(call_id)
-                if raw is None or raw["usage"] != usage:
-                    mismatched_calls.append(call_id)
+        if call["stage"] != "schema_preflight":
+            raw = raw_by_id.get(call_id)
+            if (raw is None or raw["usage"] != usage
+                    or raw["event_usage"] != usage):
+                mismatched_calls.append(call_id)
             for field in FIELDS:
                 arm_totals[field] += usage[field]
                 totals[field] += usage[field]
@@ -114,11 +138,15 @@ def main() -> int:
         "research/integration/compiled_comparison_57_4d74_20261004/source/research/live_control",
         "research/integration/planner_contract_56_4d74_20261004/source/research/live_control",
     )
+    current_main_commit = subprocess.check_output(
+        ["git", "rev-parse", "origin/main"], cwd=root, text=True).strip()
     pin_status = {}
     for name, expected in pins.items():
-        candidates = {"current_main": file_digest(HERE / name)}
+        candidates = {"origin_main": git_digest(root, "origin/main",
+                                                f"research/live_control/{name}")}
         for index, candidate_root in enumerate(archived_prefixes, start=1):
-            candidates[f"archive_{index}"] = git_digest(root, f"{candidate_root}/{name}")
+            candidates[f"archive_{index}"] = git_digest(root, "origin/main",
+                                                        f"{candidate_root}/{name}")
         pin_status[name] = {
             "expected_sha256": expected,
             "available_sha256": candidates,
@@ -131,6 +159,7 @@ def main() -> int:
         "schema": "integrated_efficiency_summary_reconciliation_v1",
         "study": "integrated-efficiency-live-01",
         "summary_source_main_commit": summary.get("source_main_commit"),
+        "checked_main_commit": current_main_commit,
         "trace_usage_totals": totals,
         "raw_result_plus_preflight_usage_totals": expected_from_raw,
         "prior_audit_usage_totals": prior_audit["actual_usage_totals"],
@@ -138,6 +167,7 @@ def main() -> int:
         "trace_call_count_including_preflights": len(call_ids),
         "trace_call_ids_unique": len(call_ids) == len(set(call_ids)),
         "raw_duplicate_ids": duplicate_raw_ids,
+        "raw_event_usage_or_thread_mismatches": raw_event_mismatches,
         "raw_usage_join_mismatches": mismatched_calls,
         "per_arm": per_arm,
         "legacy_summary_matches_report": summary_input == report_input,
@@ -152,6 +182,7 @@ def main() -> int:
         RESULT.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(output, indent=2))
     complete = (len(raw_by_id) == 14 and not duplicate_raw_ids
+                and not raw_event_mismatches
                 and not mismatched_calls and len(call_ids) == len(set(call_ids))
                 and not mismatched_report_totals
                 and expected_from_raw == totals == prior_audit["actual_usage_totals"])

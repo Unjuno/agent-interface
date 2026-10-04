@@ -4,7 +4,7 @@ This is an additive, read-only post-run reconciliation of `integrated-efficiency
 
 ## Reconciled usage
 
-`audit_integrated_efficiency_summary_reconciliation_v1.py` joins the 14 retained model `result.json` records to the call IDs and usage in `trace.json`, adds the three fresh schema-preflight usage records, and compares the totals with the retained `audit.json`. The raw-record join has 14/14 records, no call-ID duplicates, and no usage mismatches. The 17 total attempts are unique. Recomputed totals match the retained audit:
+`audit_integrated_efficiency_summary_reconciliation_v1.py` joins all 14 retained model `result.json` records to their `events.jsonl` `thread.started` IDs and `turn.completed` usage, then joins the three schema-preflight gate reports and model event streams. All 14/14 model event/result/trace joins and 3/3 preflight gate/event/trace joins agree, with no duplicate or mismatched call IDs. The 17 total attempts are unique. Recomputed totals match the retained `audit.json`:
 
 | Provider-reported usage field | Total |
 |---|---:|
@@ -14,7 +14,7 @@ This is an additive, read-only post-run reconciliation of `integrated-efficiency
 | Output tokens | 2,435 |
 | Reasoning output tokens (subset of output) | 837 |
 
-The detailed report and audit give final cumulative input tokens of 63,128 plain, 63,779 ephemeral, and 26,563 persistent. Those values include each arm's preflight. The task-level `report.json` retains each attempted stage's input/output and usage fields.
+The detailed report and audit give final cumulative input tokens of 63,128 plain, 63,779 ephemeral, and 26,563 persistent. Those values include each arm's preflight. The task-level `report.json` retains each attempted stage's input/output and usage fields. The reconciliation identifies the checked repository tip as `edd067a9c4553799b8e3aab8350f8eb5e13b5ed7`.
 
 The separate `integrated-efficiency-live-01-summary.json` has the same study name, seed, and source-main label, but reports 131,517 / 136,473 / 56,403 input tokens. These exceed the detailed report by 68,389 / 72,694 / 29,840 respectively. The differences do not reconcile to the 4,864 cached-input subset total. The summary file is preserved unchanged and should not be used as an input-token result unless its provenance and arithmetic are resolved. The more detailed trace/report/audit agree with one another on the totals above; this reconciliation does not infer why the standalone summary differs.
 
