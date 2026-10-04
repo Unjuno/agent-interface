@@ -1,0 +1,51 @@
+{
+  "decision": "RETAIN_SCOPED_LEDGER_REPAIR_PENDING_NONAUTHOR_REVIEW",
+  "base_sha": "636986a804a6004cd047db7e8cc5e62c02d585d8",
+  "kind": "ordinary inert-API engineering checks",
+  "runs": [
+    {
+      "label": "firstRED",
+      "exit_code": 1,
+      "started_utc": "2026-10-03T06:41:18.208509+00:00",
+      "ended_utc": "2026-10-03T06:41:18.333900+00:00",
+      "original_receipt_sha256": "ef9c0fa36247ed373c4c680930a38d1300304014a8bb10a9b59e17d12b2a70f9"
+    },
+    {
+      "label": "baselineRED",
+      "exit_code": 1,
+      "started_utc": "2026-10-03T06:41:42.826315+00:00",
+      "ended_utc": "2026-10-03T06:41:42.981310+00:00",
+      "original_receipt_sha256": "453442bf36ca7e099b94194adf6f7594d78c21442b046d678cb7536b3dc84b87"
+    },
+    {
+      "label": "firstGREEN",
+      "exit_code": 0,
+      "started_utc": "2026-10-03T06:42:06.937140+00:00",
+      "ended_utc": "2026-10-03T06:42:07.100097+00:00",
+      "original_receipt_sha256": "7bf134ba5693b4441a57fdbca8774f491e39a24c537395ad5b2a338d9c366d13"
+    },
+    {
+      "label": "optimizedGREEN",
+      "exit_code": 0,
+      "started_utc": "2026-10-03T06:42:41.587700+00:00",
+      "ended_utc": "2026-10-03T06:42:41.911688+00:00",
+      "original_receipt_sha256": "a634fedca8352893b649bf08ef284292ce0c28a69d12e1abe7c92f869aa3728c"
+    }
+  ],
+  "first_setup": "firstRED: missing exported platform_probe dependency, 3 loader/helper outcomes, 1 import error",
+  "first_complete_baseline": "9 methods, 5 failures, no errors/skips; persistent fake OS down yielded second verified true/session completed",
+  "candidate": "9 methods pass normally and optimized; no skips",
+  "native_api_calls": 0,
+  "gui_input_or_focus_calls": 0,
+  "model_calls": 0,
+  "formal_producer_or_allocations": 0,
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "os": "Windows-10-10.0.26300-SP0",
+  "limits": [
+    "WinDLL and production constructor explicitly forbidden; actual methods use inert API objects and mocked sleep",
+    "No physical release, general recovery, ownership fencing, deadline, efficiency or live task-effect proof",
+    "Only already tracked obligations at release_all entry; other explicit-UP tracking and interleaving input remain outside repair",
+    "GetAsyncKeyState observations cannot identify another actor using the same key or prove durable neutral state",
+    "No legacy native fixture/hosted CI run; historic freeze/result remain source-attributed and immutable"
+  ]
+}

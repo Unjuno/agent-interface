@@ -1,0 +1,49 @@
+{
+  "schema": "owner-keyup-timestamp-order-freeze-v3",
+  "allocation": "OWNER-KEYUP-TIMESTAMP-ORDER-5156-T4-20261004-01",
+  "issue": 5156,
+  "predecessors": [
+    "OWNER-KEYUP-TIMESTAMP-ORDER-5156-T1-20261004-01: STOP_MAIN_ADVANCED_BEFORE_CANDIDATE; candidate=0; auditor=0; retry=0",
+    "OWNER-KEYUP-TIMESTAMP-ORDER-5156-T2-20261004-01: STOP_AUDITOR_CLASSIFICATION_BUG; candidate=1; auditor=1 exit 1; retry=0",
+    "OWNER-KEYUP-TIMESTAMP-ORDER-5156-T3-20261004-01: STOP_AUDIT_MUTATION_SENSITIVITY; candidate=1; auditor=1 exit 1; retry=0"
+  ],
+  "main_commit": "2f72c6474167f93a2e1a6e2b8a497a1a8a6d266a",
+  "source_path": "research/doom/analyze_map01_direct_retained_input_v1.py",
+  "source_git_blob": "f3d5fe315df8f4296351f1a5fc666d50ecaa6745",
+  "source_sha256": "163a32ce20516bdfc034eb4c6659141e53e3ef11b8526372042fb5e9d509e63a",
+  "artifacts": {
+    "README.md": "d856991a14aca7ccd2baa49ecd3e3b5ce71380cf340c18faf988751f9cd7c450",
+    "cases.json": "2988247ef0a123fc12aaa9496bf576764ef975022ad6ec74b37db954e9a35343",
+    "candidate.py": "718da3f41b7dded85845c905df5f1ab7b4d29b17b838dc2992b18fedbba658d5",
+    "audit.py": "9e805939b4c1b71529e79c79d6e8e76e4f64f22cd245eb39e00e3cdd65e61ca6",
+    "preflight/test_auditor_classification.py": "a58c3b99333e3b3e1a870656e651a8f7bde38a2f691de096ea70130794c5b47c"
+  },
+  "preflight": {
+    "auditor_classifier_tests": "5/5 PASS",
+    "formal_candidate_invocations": 0,
+    "formal_auditor_invocations": 0
+  },
+  "cases": ["ordinary_order", "all_equal_boundary", "ack_before_admission", "release_return_before_start"],
+  "candidate_max": 1,
+  "auditor_max": 1,
+  "retry_max": 0,
+  "execution": {
+    "runtime": "host Python 3.14.5; standard library only",
+    "container": false,
+    "gui": false,
+    "x11": false,
+    "input": false,
+    "game": false,
+    "model": false,
+    "provider": false,
+    "gpu": false,
+    "network": false
+  },
+  "decision": {
+    "ready_order": "admitted_ns <= input_ack_ns <= release_call_started_ns <= release_call_returned_ns",
+    "positive_controls": 2,
+    "new_negative_controls": 2,
+    "integrity_and_hypothesis_disposition_separate": true,
+    "auditor_mutations": 4
+  }
+}

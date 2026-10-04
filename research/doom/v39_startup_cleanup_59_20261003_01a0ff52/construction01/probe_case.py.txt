@@ -1,0 +1,113 @@
+"""Execute exact v39 main with explicit inert boundary substitutes."""
+import argparse
+import ast
+import atexit
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import threading
+import time
+import types
+
+ROOT = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser()
+parser.add_argument('case',choices=('normal','missing_fixture','outer_cleanup'))
+parser.add_argument('--output',type=Path,required=True)
+arg = parser.parse_args()
+arg.output.mkdir()
+pins = json.loads((ROOT/'SOURCE.json').read_text())
+for path,digest in pins['sha256'].items():
+    if hashlib.sha256((ROOT/'source'/Path(path).name).read_bytes()).hexdigest()!=digest:
+        raise RuntimeError('source changed: '+path)
+source = ROOT/'source/map01_overlap_controller_v39.py'
+owned, clients, readers, calls = [], [], [], []
+def unexpected(*args,**kwargs):
+    raise RuntimeError('out-of-scope imported boundary was called')
+class Client:
+    def __init__(self,*args,**kwargs):
+        self.close_count=0; clients.append(self); calls.append('client_acquired')
+    def initialize(self): calls.append('client_initialize')
+    def close(self): self.close_count+=1; calls.append('client_close')
+class Planner:
+    def __init__(self,*args,**kwargs): self.thread_id='inert-planner-thread'
+    def start_session(self): calls.append('planner_start')
+class NumberReader:
+    def __init__(self,*args,**kwargs): pass
+    def read(self,*args,**kwargs): return unexpected(*args,**kwargs)
+
+core = {'argparse','atexit','collections','concurrent.futures','hashlib','json',
+        'queue','subprocess','sys','threading','time','pathlib'}
+for node in ast.parse(source.read_bytes()).body:
+    if not isinstance(node,ast.ImportFrom) or node.module in core: continue
+    fake = types.ModuleType(node.module)
+    for item in node.names:
+        value = {'CodexAppServerClient':Client,'PersistentPlannerAdapter':Planner,
+                 'DoomStatusNumberReader':NumberReader}.get(item.name,unexpected)
+        if item.name.isupper(): value='inert_'+item.name
+        setattr(fake,item.name,value)
+    sys.modules[node.module]=fake
+subject = types.ModuleType('exact_v39_subject');subject.__file__=str(source)
+exec(compile(source.read_bytes(),str(source),'exec'),subject.__dict__)
+
+trace = arg.output/'child-events.jsonl'
+def spawn(_argv,**kwargs):
+    process = subprocess.Popen([sys.executable,'-B',str(ROOT/'session_child.py'),
+        'normal' if arg.case=='normal' else 'missing_fixture',str(trace)],**kwargs)
+    owned.append(process);calls.append('session_acquired');return process
+def make_thread(*args,**kwargs):
+    thread=threading.Thread(*args,**kwargs);readers.append(thread);return thread
+subject.subprocess=types.SimpleNamespace(Popen=spawn,PIPE=subprocess.PIPE)
+subject.threading=types.SimpleNamespace(Thread=make_thread)
+# WSL path translation is outside this native subprocess protocol test.
+subject.win=lambda path:str(path)
+sys.argv=['exact-v39','--out',str(arg.output/'controller'),'--iterations','0',
+    '--model','inert-not-invoked','--effort','low',
+    '--load-fixture-manifest',str(arg.output/'unused-fixture.json')]
+
+def cleanup():
+    for process in owned:
+        if process.stdin and not process.stdin.closed: process.stdin.close()
+        try: process.wait(timeout=1)
+        except subprocess.TimeoutExpired:
+            process.terminate()
+            try: process.wait(timeout=1)
+            except subprocess.TimeoutExpired: process.kill();process.wait(timeout=1)
+        for stream in (process.stdout,process.stderr):
+            if stream and not stream.closed: stream.close()
+    for thread in readers: thread.join(timeout=1)
+    for client in clients:
+        atexit.unregister(client.close)
+        if not client.close_count:client.close()
+    calls.append('external_cleanup_done')
+
+result={'case':arg.case,'source':pins,'pid':os.getpid(),
+        'plan_sha256':hashlib.sha256((ROOT/'PLAN.json').read_bytes()).hexdigest()}
+try:
+    try:
+        if arg.case=='outer_cleanup':
+            try:subject.main()
+            finally:cleanup()
+        else:subject.main()
+        result['main_outcome']='returned'
+    except Exception as exc:
+        result['main_outcome']='raised';result['exception_type']=type(exc).__name__
+        result['exception_message']=str(exc)
+    result['at_main_return']={'session_poll':[p.poll() for p in owned],
+        'client_close_count':[c.close_count for c in clients],
+        'reader_alive':[t.is_alive() for t in readers],
+        'commands':[r.get('command') for r in
+          (json.loads(line) for line in trace.read_text().splitlines()) if r['event']=='command'],
+        'calls':list(calls),'observed_ns':time.perf_counter_ns()}
+finally:
+    cleanup()
+    result['after_external_cleanup']={'session_poll':[p.poll() for p in owned],
+        'client_close_count':[c.close_count for c in clients],
+        'reader_alive':[t.is_alive() for t in readers],'calls':list(calls)}
+    result['child_events']=[json.loads(line) for line in trace.read_text().splitlines()]
+    (arg.output/'result.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'case':arg.case,'main_outcome':result['main_outcome'],
+                  'at_main_return':result['at_main_return'],
+                  'after_external_cleanup':result['after_external_cleanup']}))

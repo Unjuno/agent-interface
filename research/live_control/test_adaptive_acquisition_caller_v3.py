@@ -94,6 +94,31 @@ class CallerV3Test(unittest.TestCase):
         self.assertEqual(result["accounting"]["attempted_calls"], 0)
         self.assertNotIn("local_repair", calls)
 
+    def test_effect_evidence_reference_survives_outer_receipt(self):
+        reference = "registry://effects/task-17"
+        registry = {reference: {"pixels": "synthetic-raw-frame"}}
+        verification = {"status": "succeeded", "evidence_ref": reference,
+                        "evidence_digest": "sha256:fixture", "effect_scope": "form-submit",
+                        "raw_evidence": registry[reference]}
+        mapping = adapters(reuse="revalidated")
+        mapping["verify_effect"] = lambda payload: verification
+        result = self.run_case(spec(), mapping)
+        self.assertEqual(result["outcome"], "TASK_SUCCEEDED")
+        self.assertEqual(result["effect_receipt"], {
+            "status": "succeeded", "evidence_ref": reference,
+            "evidence_digest": "sha256:fixture", "effect_scope": "form-submit"})
+        self.assertNotIn("raw_evidence", result["effect_receipt"])
+        self.assertEqual(registry[result["effect_receipt"]["evidence_ref"]],
+                         {"pixels": "synthetic-raw-frame"})
+
+    def test_malformed_effect_evidence_reference_fails_closed(self):
+        mapping = adapters(reuse="revalidated")
+        mapping["verify_effect"] = lambda payload: {
+            "status": "succeeded", "evidence_ref": {"raw": "not-a-reference"}}
+        result = self.run_case(spec(), mapping)
+        self.assertEqual(result["outcome"], "CALLER_FAILED")
+        self.assertIn("evidence_ref", result["reason"])
+
     def test_cold_anchor_path_preserves_full_accounting(self):
         cold = {"target": "Save", "route": "cold",
             "coarse_origin": "model_produced", "provided_coarse": None,

@@ -7,6 +7,12 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
+
+Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.
+
+Retained C01 callback-custody profile and versioned audit correction: [compiled custody v4 cycles](compiled_custody_v4_cycles_C01_20261003_01a0ff35/README.md). Original v1 missed27 complete callback-schedule corruptions; v2 preserves all original timing/raw/results and rejects those copies. `CPU_SECONDS_UNRESOLVED` remains, and counter reads outside wall endpoints are not subtracted or converted. Fresh [saved-data rescue checks](../../runtime/results/compiled_custody_rescue_5775/README.md) are not a measurement replay, clock calibration, practical efficiency or adoption certificate.
+
 ```mermaid
 flowchart LR
     C[Scoped component evidence]

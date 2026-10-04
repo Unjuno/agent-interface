@@ -1,0 +1,150 @@
+"""Resource cleanup regressions without importing VD/X11 or granting input."""
+import ast
+import json
+import shutil
+import tempfile
+import types
+import unittest
+from pathlib import Path
+
+
+def actual_cleanup():
+    source = Path(__file__).with_name('session_map01_v12.py')
+    tree = ast.parse(source.read_bytes(), filename=str(source))
+    main = next(node for node in tree.body
+                if isinstance(node, ast.FunctionDef) and node.name == 'main')
+    cleanup = next(node for node in reversed(main.body)
+                   if isinstance(node, ast.Try) and node.finalbody).finalbody
+    # Execute the actual main finally block, without the engine setup/input body.
+    function = ast.FunctionDef(
+        name='cleanup', args=ast.arguments(posonlyargs=[],
+            args=[ast.arg(arg=name) for name in ('executor', 'backend', 'game', 'session', 'args')],
+            vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+        body=cleanup, decorator_list=[])
+    wrapper = ast.fix_missing_locations(ast.Module(body=[function], type_ignores=[]))
+    namespace = {'json': json, 'shutil': shutil}
+    exec(compile(wrapper, str(source), 'exec'), namespace)
+    return namespace['cleanup']
+
+
+class CleanupTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        root = Path(self.temp.name)
+        self.out = root / 'out'
+        self.out.mkdir()
+        self.session_tmp = root / 'session'
+        self.session_tmp.mkdir()
+        (self.session_tmp / 'doom.ini').write_text('private config fixture\n')
+        self.calls = []
+        self.errors = {}
+        self.cleanup = actual_cleanup()
+
+        class Resource:
+            def __init__(resource, name):
+                resource.name = name
+
+            def close(resource):
+                self.calls.append(resource.name)
+                if resource.name in self.errors:
+                    raise self.errors[resource.name]
+
+        self.executor = Resource('executor')
+        self.backend = Resource('backend')
+        self.backend.owner = types.SimpleNamespace(records=[{'explicit_test_owner': True}])
+        self.game = Resource('game')
+        self.session = Resource('session')
+        self.session.tmp = self.session_tmp
+
+    def run_cleanup(self):
+        self.cleanup(self.executor, self.backend, self.game, self.session,
+                     types.SimpleNamespace(out=self.out))
+
+    def check_all_attempted(self):
+        self.assertEqual(self.calls, ['executor', 'backend', 'game', 'session'])
+
+    def test_normal_order_and_records(self):
+        self.run_cleanup()
+        self.check_all_attempted()
+        self.assertEqual(json.loads((self.out / 'owner-events.json').read_text()),
+                         self.backend.owner.records)
+        self.assertEqual((self.out / 'doom.ini').read_text(), 'private config fixture\n')
+        self.assertFalse(self.session_tmp.exists())
+
+    def test_actual_owner_record_write_refusal_still_closes_later_resources(self):
+        (self.out / 'owner-events.json').mkdir()
+        with self.assertRaises(OSError) as caught:
+            self.run_cleanup()
+        self.assertEqual(Path(caught.exception.filename), self.out / 'owner-events.json')
+        self.check_all_attempted()
+        self.assertFalse(self.session_tmp.exists())
+
+    def test_backend_close_error_still_records_and_closes_later_resources(self):
+        error = RuntimeError('backend-close-sentinel')
+        self.errors['backend'] = error
+        with self.assertRaises(RuntimeError) as caught:
+            self.run_cleanup()
+        self.assertIs(caught.exception, error)
+        self.check_all_attempted()
+        self.assertEqual(json.loads((self.out / 'owner-events.json').read_text()),
+                         self.backend.owner.records)
+
+    def test_executor_close_error_still_attempts_other_resources(self):
+        error = RuntimeError('executor-close-sentinel')
+        self.errors['executor'] = error
+        with self.assertRaises(RuntimeError) as caught:
+            self.run_cleanup()
+        self.assertIs(caught.exception, error)
+        self.check_all_attempted()
+
+    def test_game_close_error_still_closes_session(self):
+        error = RuntimeError('game-close-sentinel')
+        self.errors['game'] = error
+        with self.assertRaises(RuntimeError) as caught:
+            self.run_cleanup()
+        self.assertIs(caught.exception, error)
+        self.check_all_attempted()
+        self.assertFalse(self.session_tmp.exists())
+
+    def test_actual_config_copy_refusal_still_closes_session(self):
+        (self.out / 'doom.ini').mkdir()
+        with self.assertRaises(OSError):
+            self.run_cleanup()
+        self.check_all_attempted()
+        self.assertFalse(self.session_tmp.exists())
+
+    def test_session_close_failure_preserves_its_temporary_directory(self):
+        error = RuntimeError('session-close-sentinel')
+        self.errors['session'] = error
+        with self.assertRaises(RuntimeError) as caught:
+            self.run_cleanup()
+        self.assertIs(caught.exception, error)
+        self.check_all_attempted()
+        self.assertTrue(self.session_tmp.exists())
+
+    def test_multiple_failures_remain_in_exception_context(self):
+        backend_error = RuntimeError('backend-close-sentinel')
+        game_error = RuntimeError('game-close-sentinel')
+        self.errors.update(backend=backend_error, game=game_error)
+        (self.out / 'owner-events.json').mkdir()
+        with self.assertRaises(RuntimeError) as caught:
+            self.run_cleanup()
+        self.assertIs(caught.exception, game_error)
+        chain = []
+        current = caught.exception
+        while current is not None:
+            chain.append(current)
+            current = current.__context__
+        self.assertIn(backend_error, chain)
+        self.assertTrue(any(isinstance(error, OSError) for error in chain))
+        self.check_all_attempted()
+
+    def test_partial_setup_closes_only_acquired_resources(self):
+        self.cleanup(None, None, None, self.session, types.SimpleNamespace(out=self.out))
+        self.assertEqual(self.calls, ['session'])
+        self.assertFalse(self.session_tmp.exists())
+
+
+if __name__ == '__main__':
+    unittest.main()

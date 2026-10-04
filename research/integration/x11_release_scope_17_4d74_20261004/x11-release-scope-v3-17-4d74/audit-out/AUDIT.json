@@ -1,0 +1,43 @@
+{
+  "errors": [],
+  "rows": [
+    {
+      "cell": "neutral",
+      "before_keys": [],
+      "after_keys": [],
+      "scoped_verified": true,
+      "release_window_ns": 568034
+    },
+    {
+      "cell": "owned_shift",
+      "before_keys": [
+        50
+      ],
+      "after_keys": [],
+      "scoped_verified": true,
+      "release_window_ns": 367948
+    },
+    {
+      "cell": "foreign_c",
+      "before_keys": [
+        54
+      ],
+      "after_keys": [
+        54
+      ],
+      "scoped_verified": true,
+      "release_window_ns": 289449
+    },
+    {
+      "cell": "overlap_shift",
+      "before_keys": [
+        50
+      ],
+      "after_keys": [],
+      "scoped_verified": true,
+      "release_window_ns": 260362
+    }
+  ],
+  "disposition": "PASS_RELEASE_SCOPE_BOUNDARY",
+  "scope": "Private XTEST server-keyboard state only. Scoped receipt not global neutral, overlapping same key not per-client ownership. No input authority/game usefulness/hardware/deadline/race generalization."
+}

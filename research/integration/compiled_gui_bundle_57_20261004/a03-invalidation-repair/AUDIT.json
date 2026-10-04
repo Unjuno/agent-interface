@@ -1,0 +1,25 @@
+{
+  "assertions": {
+    "changed_post_model_evidence_stops_before_execute": true,
+    "local_repair_then_compiled_execution": true,
+    "main_and_candidate_agree_on_gate_outcomes": true,
+    "model_repair_accounted_then_revalidated_then_compiled_execution": true
+  },
+  "scope": "synthetic cached-target invalidation, local/model repair and post-model change through compiled runtime; no GUI, physical input, provider or efficiency claim",
+  "sha256": {
+    "RUN-MAIN.json": "4f6bc62ba3c3f9c211b422d7e672291876f764d910fb4972b66de78a8fb89f8c",
+    "RUN-PR7330.json": "87d386fb43836b0ddf692832bc0b97e2da6ac223a0e6f998dc536e30b40abfc4",
+    "run.py": "6e10c59ace239a095beb89960ae33333f27fe3556c3946368280eb9301697fed"
+  },
+  "source_sha256": {
+    "candidate": {
+      "caller": "e9be73955d849a8d627450752a4b6b97a410cdd08e9424746d954e23015a654d",
+      "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
+    },
+    "main": {
+      "caller": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca",
+      "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
+    }
+  },
+  "status": "PASS_SCOPED_INVALIDATION_REPAIR_COMPOSITION"
+}
