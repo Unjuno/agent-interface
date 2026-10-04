@@ -672,6 +672,7 @@ def input_edge_receipts(events):
               type(release_started_ns) is not int or type(release_returned_ns) is not int or
               type(keyup_started_ns) is not int or type(sync_returned_ns) is not int or
               keyup_started_ns < input_ack_ns or
+              release_started_ns < input_ack_ns or
               keyup_started_ns < release_started_ns or
               sync_returned_ns < keyup_started_ns or
               release_returned_ns < sync_returned_ns):

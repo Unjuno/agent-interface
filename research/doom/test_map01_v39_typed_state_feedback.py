@@ -202,6 +202,50 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "release_receipt_incomplete")
         self.assertIsNone(receipt["input_ack_to_owner_keyup_start_ms"])
 
+    def test_input_edge_receipt_allows_owner_lock_wait_after_release_wrapper_starts(self):
+        events = [
+            {"event": "input_admission", "id": "program-1", "step": 0,
+             "key": "Up", "intent_token": "token", "admitted_ns": 100,
+             "input_ack_ns": 110},
+            {"event": "input_release_transition", "id": "program-1", "step": 0,
+             "key": "Up", "intent_token": "token", "operation": "up",
+             "release_call_started_ns": 150, "release_call_returned_ns": 220,
+             "owner_thread_keyup_receipt": {"event": "owner_explicit_keyup",
+                 "key": "Up", "intent_token": "token",
+                 "owner_keyrelease_started_ns": 180,
+                 "owner_sync_returned_ns": 200,
+                 "server_sync_completed": True},
+             "owner_thread_keyup_verified": True,
+             "owner_thread_keyup_history_complete": True},
+        ]
+
+        receipt = controller.input_edge_receipts(events)[0]
+
+        self.assertEqual(receipt["status"], "paired")
+        self.assertEqual(receipt["input_ack_to_owner_keyup_start_ms"], 0.00007)
+
+    def test_input_edge_receipt_rejects_release_wrapper_before_input_ack(self):
+        events = [
+            {"event": "input_admission", "id": "program-1", "step": 0,
+             "key": "Up", "intent_token": "token", "admitted_ns": 100,
+             "input_ack_ns": 110},
+            {"event": "input_release_transition", "id": "program-1", "step": 0,
+             "key": "Up", "intent_token": "token", "operation": "up",
+             "release_call_started_ns": 105, "release_call_returned_ns": 220,
+             "owner_thread_keyup_receipt": {"event": "owner_explicit_keyup",
+                 "key": "Up", "intent_token": "token",
+                 "owner_keyrelease_started_ns": 180,
+                 "owner_sync_returned_ns": 200,
+                 "server_sync_completed": True},
+             "owner_thread_keyup_verified": True,
+             "owner_thread_keyup_history_complete": True},
+        ]
+
+        receipt = controller.input_edge_receipts(events)[0]
+
+        self.assertEqual(receipt["status"], "release_receipt_incomplete")
+        self.assertIsNone(receipt["input_ack_to_owner_keyup_start_ms"])
+
     def test_input_edge_receipt_requires_all_sync_and_owner_history_confirmations(self):
         for server_sync, verified, history in product((None, False, True), repeat=3):
             events = [
