@@ -14,6 +14,14 @@
 
 ## Verification record
 
+A raw cross-check of merged PR #7570 at source main commit
+`156312eb6b733edf0c6ac47903c52016efe9da31` found 115 V12 event rows and
+10 private owner-event rows with no explicit `run_id` or `session_id`, while
+all 284 scorer client-update rows shared one scorer `run_id`. The bundle's
+common directory and timestamps do not supply an explicit identity join. This
+is evidence for the missing runtime wiring, not evidence that this proposed
+source change has already run in a game session.
+
 On 2026-10-04, these local commands passed:
 
 - `cd research/doom && python -B -m unittest -v test_session_identity_v1` — 11/11
