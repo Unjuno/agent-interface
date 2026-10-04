@@ -152,6 +152,70 @@ class TargetExecutionTests(unittest.TestCase):
 
         self.assertEqual(result[0]["request"]["steps"][0]["x"], 150)
 
+    def test_persistent_a3_to_b1_repair_dispatches_under_new_geometry(self):
+        coordinator = ArmCoordinator("persistent")
+        sequence = 0
+        model_tasks = []
+        requests = []
+
+        def observation(width):
+            nonlocal sequence
+            sequence += 1
+            return source(sequence, width)
+
+        def compile_request(locator, _clock, task_id, target, _receipt):
+            request = {"id": f"{task_id}-{target}",
+                       "expected_sequence": locator["validated_sequence"]}
+            requests.append((target, request))
+            return request
+
+        def finish_task():
+            coordinator.score(True)
+            coordinator.reset(True)
+            coordinator.advance()
+
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=compile_request):
+            for task_id in ("A1", "A2", "A3", "B1"):
+                task = coordinator.lifecycle.current
+                width = 1280 if task.layout == "A" else 1216
+                model_call = lambda _image, current=task_id: (
+                    model_tasks.append(current) or candidate())
+                resolved = coordinator.resolve(
+                    observation(width), width, 760, slots(), model_call)
+                latest_sequence = {"value": sequence}
+
+                def fresh_observation():
+                    value = observation(width)
+                    latest_sequence["value"] = value["sequence"]
+                    return value
+
+                targets = dispatch_task_targets(
+                    coordinator=coordinator, task_id=task_id, layout=task.layout,
+                    observe=fresh_observation,
+                    read_clock=lambda: {"sequence": latest_sequence["value"],
+                                        "runtime_ns": 100 + latest_sequence["value"]},
+                    build_receipt=lambda _locator, target: {"target": target},
+                    submit=lambda request: {"request_id": request["id"],
+                                            "terminal": True, "released": True})
+                self.assertEqual(len(targets), 2)
+                self.assertEqual(resolved["task"].task_id, task_id)
+                if task_id != "B1":
+                    finish_task()
+
+        b1 = coordinator.task_records[-1]
+        self.assertEqual(b1["task_id"], "B1")
+        self.assertEqual(b1["layout"], "B")
+        self.assertEqual(b1["route"], "repair")
+        self.assertEqual(b1["old_reference_status"], "stale")
+        self.assertEqual(b1["old_reference_pointer_admissions"], 0)
+        self.assertEqual(model_tasks, ["A1", "B1"])
+        self.assertEqual([row[0] for row in requests[-2:]],
+                         ["palette_point", "target_point"])
+        self.assertTrue(all(row[1]["expected_sequence"] >
+                            coordinator.resolved_bundle.source_sequence
+                            for row in requests[-2:]))
+
     def test_request_receipt_must_match_id_and_be_terminal(self):
         for receipt in (
                 {"request_id": "wrong", "terminal": True, "released": True},
