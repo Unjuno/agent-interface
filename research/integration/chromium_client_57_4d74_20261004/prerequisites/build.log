@@ -1,0 +1,10 @@
+Dockerfile:1
+--------------------
+   1 | >>> FROM sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55
+   2 |     USER root
+   3 |     RUN apt-get update && apt-get install -y --no-install-recommends chromium && rm -rf /var/lib/apt/lists/*
+--------------------
+ERROR: failed to solve: sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55: pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+
+エラー コード: E_FAIL
+このエラーが予期しないものである場合は、既存の問題を検索するか、https://github.com/microsoft/WSL/issues で新しい問題を提出することを検討してください。

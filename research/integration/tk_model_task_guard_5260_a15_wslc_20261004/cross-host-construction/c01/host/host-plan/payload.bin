@@ -1,0 +1,24 @@
+{
+  "directory": "C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-x20/_research_5260_a15_crosshost_20261004_c01/exchange",
+  "custody_directory": "C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-x20/_research_5260_a15_crosshost_20261004_c01/host",
+  "allocation": "construction-only",
+  "freeze_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "executable_sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+  "plans": {
+    "pair-000-first": {
+      "argv": [
+        "C:/Users/junny/AppData/Local/Programs/Python/Python312/python.exe",
+        "-B",
+        "-c",
+        "import sys,time; from pathlib import Path; prompt=sys.stdin.buffer.read(); image=Path(sys.argv[sys.argv.index('--image')+1]).read_bytes(); assert image.startswith(b'\\x89PNG\\r\\n\\x1a\\n'); assert prompt==b'Construction-only synthetic host response; no provider call.\\n'; time.sleep(2.8); sys.stdout.write(\"{\\\"type\\\":\\\"thread.started\\\",\\\"thread_id\\\":\\\"construction-cross-host-not-provider\\\"}\\n{\\\"type\\\":\\\"item.completed\\\",\\\"item\\\":{\\\"type\\\":\\\"agent_message\\\",\\\"text\\\":\\\"{\\\\\\\"decision\\\\\\\":\\\\\\\"NO_REPAIR\\\\\\\",\\\\\\\"observed_target\\\\\\\":\\\\\\\"qmd\\\\\\\",\\\\\\\"observed_decoy\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"prefix\\\\\\\":\\\\\\\"\\\\\\\"}\\\"}}\\n{\\\"type\\\":\\\"turn.completed\\\",\\\"usage\\\":{\\\"input_tokens\\\":3,\\\"cached_input_tokens\\\":0,\\\"output_tokens\\\":2}}\\n\")",
+        "--image",
+        "C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-x20/_research_5260_a15_crosshost_20261004_c01/exchange/pair-000-first/image/payload.png",
+        "--output-schema",
+        "C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-x20/_research_6003_a01_20261003/research/integration/tk_model_review_5260_a14_wslc_20261004/response.schema.json"
+      ],
+      "schema_sha256": "52f5e43ef60a0312a4aa9c9ed8fb1f165eeb81b531eba04a6212aec36a2088ab",
+      "timeout_seconds": 5
+    }
+  },
+  "deadline_seconds": 60
+}

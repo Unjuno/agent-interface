@@ -1,0 +1,23 @@
+[
+  "run",
+  "--rm",
+  "--network",
+  "none",
+  "--cpus",
+  "1",
+  "--memory",
+  "512M",
+  "--user",
+  "65534:65534",
+  "--name",
+  "fanout-5272-4d74-audit",
+  "--volume",
+  "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\fanout-cancellation-5272-4d74-c02:/study:ro",
+  "--workdir",
+  "/study",
+  "--env",
+  "PYTHONDONTWRITEBYTECODE=1",
+  "sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55",
+  "python",
+  "audit.py"
+]

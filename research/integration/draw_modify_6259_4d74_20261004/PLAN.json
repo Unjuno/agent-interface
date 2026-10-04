@@ -1,0 +1,7 @@
+{
+  "H": "actual Draw XModifyListener notifications may expose separate-writer setPosition changes across split reads",
+  "T": "two fresh docs stable/mutated F01 schedule; register after setup; capture count before readA and after readB; require no change for acceptance",
+  "D": "changed count in mutated, unchanged stable, reject splitfalsegoal; separate unchanged effect auditor; first FAIL/HOLD retained without retry",
+  "C": "CPU1 memory512MiB networknone user65534 pinnedbab4dc0d no model",
+  "U": "callback timing/coverage specific measured operation only; not monotonic authenticated generation across all mutations, atomicity, hiddeneffects or futurewriters"
+}

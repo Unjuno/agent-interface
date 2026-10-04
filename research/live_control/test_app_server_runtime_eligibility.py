@@ -50,7 +50,7 @@ class RuntimeEligibilityTests(unittest.TestCase):
                     self.assertFalse(client._reader.is_alive())
                     factory.assert_called_once_with(['inert'], cwd=None, stdin=module.subprocess.PIPE,
                                                     stdout=module.subprocess.PIPE, stderr=module.subprocess.PIPE,
-                                                    text=True, encoding='utf-8', bufsize=1)
+                                                    text=True, encoding='utf-8', errors='strict', bufsize=1)
                     self.assertFalse(client._send_uncertain)
                 finally:
                     client.close(timeout=.5)
