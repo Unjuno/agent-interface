@@ -516,7 +516,6 @@ def input_edge_receipts(events):
     adapter_actuation_conflicts = set()
     adapter_partial_identity_groups = {}
     adapter_partial_identity_conflicts = set()
-    adapter_unattributed_identity_conflict = False
     invalid = []
 
     def partial_identity_signatures(adapter_edge):
@@ -526,19 +525,13 @@ def input_edge_receipts(events):
         token = adapter_edge.get("intent_token")
         owner = adapter_edge.get("owner_id")
         actuation = adapter_edge.get("actuation_id")
-        owner_valid = type(owner) is str and bool(owner)
-        actuation_valid = type(actuation) is str and bool(actuation)
-        key_valid = type(key) is str and bool(key)
-        token_valid = type(token) is str and bool(token)
-        signatures = set()
-        if owner_valid and actuation_valid:
-            signatures.add(("owner-actuation", owner, actuation))
-        if not key_valid or not token_valid:
-            return signatures
-        signatures.add(("key-token", key, token))
-        if owner_valid:
+        if (type(key) is not str or not key or
+                type(token) is not str or not token):
+            return ()
+        signatures = {("key-token", key, token)}
+        if type(owner) is str and owner:
             signatures.add(("owner-key-token", owner, key, token))
-        if actuation_valid:
+        if type(actuation) is str and actuation:
             signatures.add(("actuation-key-token", actuation, key, token))
         return signatures
 
@@ -585,11 +578,8 @@ def input_edge_receipts(events):
                         type(nested_token) is str and nested_token):
                     adapter_actuation_conflicts.add(
                         (nested_owner, nested_actuation, nested_key, nested_token))
-                partial_signatures = partial_identity_signatures(adapter_edge)
-                if partial_signatures:
-                    adapter_partial_identity_conflicts.update(partial_signatures)
-                else:
-                    adapter_unattributed_identity_conflict = True
+                adapter_partial_identity_conflicts.update(
+                    partial_identity_signatures(adapter_edge))
                 invalid.append({
                     "status": "identity_unavailable",
                     "event": event_name,
@@ -625,10 +615,7 @@ def input_edge_receipts(events):
                     adapter_partial_identity_groups.setdefault(
                         signature, set()).add(group_key)
             else:
-                if partial_signatures:
-                    adapter_partial_identity_conflicts.update(partial_signatures)
-                else:
-                    adapter_unattributed_identity_conflict = True
+                adapter_partial_identity_conflicts.update(partial_signatures)
             if nested_key != key or nested_token != token:
                 bucket["invalid"] = True
                 if (type(nested_key) is str and nested_key and
@@ -673,9 +660,6 @@ def input_edge_receipts(events):
     for signature in adapter_partial_identity_conflicts:
         for group_key in adapter_partial_identity_groups.get(signature, ()):
             adapter_grouped[group_key]["invalid"] = True
-    if adapter_unattributed_identity_conflict:
-        for bucket in adapter_grouped.values():
-            bucket["invalid"] = True
 
     # A copied nested actuation under different outer identifiers is an
     # identity conflict. Invalidate every implicated group so the unmodified

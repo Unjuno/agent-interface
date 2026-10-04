@@ -1,0 +1,247 @@
+{
+  "experiment": "V39_ADAPTER_INCOMPLETE_NESTED_FINGERPRINT_SPLIT_A09",
+  "freeze_sha256": "92fc199ac4da9a432f111aaf2549da84d97cab3f9cb472f44ac835092c14be0e",
+  "composed_source_sha256": "a4d16387f8118e54b9fb5bff1cb9cadd6bcd542e8b5cd273a09697f856518d4c",
+  "test_sha256": "3eedc5482066e42950bdbdee66bced3f0057ded859658c63f0408b98001cd0f5",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "baseline_source_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "case_count": 8,
+  "baseline_false_pair_cases": 8,
+  "candidate_false_pair_cases": 8,
+  "candidate_disposition": "FAIL_OPEN_COUNTEREXAMPLE",
+  "cases": [
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "owner_id",
+      "nested_value": null,
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    },
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "owner_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    },
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "actuation_id",
+      "nested_value": null,
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    },
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "actuation_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "owner_id",
+      "nested_value": null,
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "owner_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "actuation_id",
+      "nested_value": null,
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "actuation_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      },
+      "candidate": {
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "adapter_receipts": 2,
+        "paired_with_timing": [
+          true
+        ],
+        "identity_unavailable": false
+      }
+    }
+  ],
+  "scope": "eight deterministic mutations of one retained synthetic adapter pair; exact AST projector only"
+}
