@@ -33,6 +33,7 @@ class CleanupBeforeUpInner(FakeInner):
         if operation == 'up':
             self.records.append({'event': 'owner_release', 'reason': 'cancelled',
                                  'verified': True,
+                                 'verified_ns': 120,
                                  'valid_until_ns': lease.deadline})
             return None
         return None
@@ -43,7 +44,8 @@ class PriorLeaseCleanupInner(FakeInner):
         self.calls.append((operation, key))
         if operation == 'down':
             self.records.append({'event': 'owner_release', 'reason': 'expired',
-                                 'verified': True, 'valid_until_ns': 5})
+                                 'verified': True, 'verified_ns': 4,
+                                 'valid_until_ns': 5})
             return {'event': 'input_admission', 'key': key,
                     'admitted_ns': 80, 'input_ack_ns': 90}
         if operation == 'up':
@@ -55,10 +57,12 @@ class ReleaseInner(FakeInner):
     def call(self, operation, lease=None, key=None):
         self.calls.append((operation, key))
         if operation == 'down':
-            return {'event': 'input_admission', 'key': key}
+            return {'event': 'input_admission', 'key': key,
+                    'admitted_ns': 80, 'input_ack_ns': 90}
         if operation == 'release':
             record = {'event': 'owner_release', 'reason': 'release',
-                      'verified': True, 'keys_down': [], 'buttons_down': [],
+                      'verified': True, 'verified_ns': 120,
+                      'keys_down': [], 'buttons_down': [],
                       'valid_until_ns': lease.deadline}
             self.records.append(record)
             return record
@@ -101,11 +105,13 @@ class Tests(unittest.TestCase):
     def test_observed_expiry_cleanup_prunes_old_markers_before_next_admission(self):
         owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
         old_lease = Lease(deadline=1000)
-        owner._inner.result = {'event': 'input_admission', 'key': 'a'}
+        owner._inner.result = {'event': 'input_admission', 'key': 'a',
+                               'admitted_ns': 80}
         owner.call('down', old_lease, 'a')
         owner._inner.records.append({
             'event': 'owner_release', 'reason': 'expired', 'verified': True,
-            'keys_down': [], 'buttons_down': [], 'valid_until_ns': old_lease.deadline,
+            'verified_ns': 90, 'keys_down': [], 'buttons_down': [],
+            'valid_until_ns': old_lease.deadline,
         })
 
         new_lease = Lease(deadline=2000)
@@ -208,3 +214,5 @@ class Tests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
+
+

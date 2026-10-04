@@ -85,8 +85,10 @@ class InputOwner:
                     and record.get("verified") is True
                     and record.get("keys_down") == []
                     and record.get("buttons_down") == []
-                    and type(record.get("valid_until_ns")) is int):
-                completed.append((index, record["valid_until_ns"]))
+                    and type(record.get("valid_until_ns")) is int
+                    and type(record.get("verified_ns")) is int):
+                completed.append((index, record["valid_until_ns"],
+                                  record["verified_ns"]))
         if not completed:
             return
         with self._admission_records_lock:
@@ -94,8 +96,12 @@ class InputOwner:
                 admission_key: marker
                 for admission_key, marker in self._admission_records.items()
                 if not any(
-                    marker[0] <= index and marker[1] == deadline
-                    for index, deadline in completed
+                    isinstance(marker, tuple) and len(marker) == 3
+                    and type(marker[0]) is int and type(marker[1]) is int
+                    and type(marker[2]) is int
+                    and marker[0] <= index and marker[1] == deadline
+                    and release_ns >= marker[2]
+                    for index, deadline, release_ns in completed
                 )
             }
 
@@ -130,9 +136,11 @@ class InputOwner:
                 admission_key = self._admission_key(lease, key)
                 if admission_key is not None and records_before is not None:
                     deadline = getattr(lease, "deadline", None) if lease is not None else None
-                    with self._admission_records_lock:
-                        self._admission_records[admission_key] = (
-                            len(records_before), deadline)
+                    admitted_ns = result.get("admitted_ns")
+                    if type(deadline) is int and type(admitted_ns) is int:
+                        with self._admission_records_lock:
+                            self._admission_records[admission_key] = (
+                                len(records_before), deadline, admitted_ns)
             if isinstance(result, dict) and result.get("event") == "owner_release":
                 result.setdefault("release_call_started_ns", started_ns)
                 result.setdefault("release_call_returned_ns", returned_ns)
@@ -159,10 +167,11 @@ class InputOwner:
         )
         owner_cleanup_intervened = False
         if owner_release_history_complete:
-            record_index, admitted_deadline = admission_marker
+            record_index, admitted_deadline, admitted_ns = admission_marker
             if (type(record_index) is not int or record_index < 0
                     or record_index > len(records_after)
-                    or type(admitted_deadline) is not int):
+                    or type(admitted_deadline) is not int
+                    or type(admitted_ns) is not int):
                 owner_release_history_complete = False
             else:
                 for record in records_after[record_index:]:
@@ -171,10 +180,13 @@ class InputOwner:
                         break
                     if record.get("event") == "owner_release":
                         cleanup_deadline = record.get("valid_until_ns")
-                        if type(cleanup_deadline) is not int:
+                        cleanup_ns = record.get("verified_ns")
+                        if (type(cleanup_deadline) is not int
+                                or type(cleanup_ns) is not int):
                             owner_release_history_complete = False
                             break
-                        if cleanup_deadline == admitted_deadline:
+                        if (cleanup_deadline == admitted_deadline
+                                and cleanup_ns >= admitted_ns):
                             owner_cleanup_intervened = True
 
         ordinary_release_candidate = (
@@ -206,3 +218,5 @@ class InputOwner:
                 "owner/X11 state sample or telemetry publication occurs inside this call"
             ),
         }
+
+
