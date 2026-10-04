@@ -9,6 +9,8 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #17: [notification identity R03 arrival-before-wait evidence](concurrency/notification_identity_r03_17_20261004_b64b/RESCUE_20261004.md) — preserves R01/R02/R03 evidence and failures as inert archive; active client patch is excluded, and all FINAL-v5 vote/applicability/application gates remain open.
 - Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
 
+- Issue #5156: [owner-thread per-key KeyRelease instrumentation A02](live_control/owner_keyup_instrumentation_5156_a02_20261005/evidence/OUTCOME.md) - five fake-Xlib cases passed independent audit and all eight corruption controls were rejected; A01 auditor failure remains retained, and no live X11 or game authority follows.
+
 - Issue #7709 T1: [retained-trace feasibility audit](analysis/latency_regime_coverage_7709_t1_feasibility_20261005/REPORT.md) — one fixed-order model-visible pair only; 1,051 archived files independently hash-checked; HOLD for insufficient independent runs.
 
 - Issue #7728 T0: [client energy-counter eligibility](analysis/client_energy_per_effect_7728_t0_20261005/REPORT.md) — unprivileged macOS probe requires superuser; estimated power/process proxy is not a joule counter; HOLD, no GUI task/route run.
