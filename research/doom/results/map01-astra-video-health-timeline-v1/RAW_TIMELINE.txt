@@ -1,0 +1,38 @@
+source_sha256=201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4
+frames=780 fps=10.0 dimensions=640x560
+health_transitions=30
+gross_health_point_loss_by_window={"active_hold_inference": 13, "coast_inference": 100, "no_model_call_pending": 11}
+event time_interval health_before -> health_after model_call cover
+01 46.8-47.0s 100->96 [4] ['active_hold']
+02 54.6-54.8s 96->94 [4] ['active_hold']
+03 56.2-56.4s 94->87 [4] ['active_hold']
+04 56.8-57.0s 87->84 [] []
+05 60.2-60.4s 84->83 [5] ['coast']
+06 62.0-62.2s 83->77 [5] ['coast']
+07 63.4-63.6s 77->74 [5] ['coast']
+08 65.0-65.2s 74->68 [5] ['coast']
+09 67.2-67.4s 68->67 [5] ['coast']
+10 71.2-71.4s 67->60 [5] ['coast']
+11 71.8-72.0s 60->84 [] []
+12 73.8-74.0s 84->78 [6] ['coast']
+13 76.8-77.0s 78->71 [6] ['coast']
+14 80.2-80.4s 71->64 [6] ['coast']
+15 81.4-81.6s 64->57 [6] ['coast']
+16 82.4-82.6s 57->53 [6] ['coast']
+17 85.0-85.2s 53->52 [7] ['coast']
+18 87.2-87.4s 52->49 [7] ['coast']
+19 98.8-99.0s 49->42 [8] ['coast']
+20 101.0-101.2s 42->39 [8] ['coast']
+21 103.6-103.8s 39->32 [8] ['coast']
+22 106.2-106.4s 32->26 [8] ['coast']
+23 106.8-107.0s 26->22 [] []
+24 109.2-109.4s 22->21 [9] ['coast']
+25 111.2-111.4s 21->15 [9] ['coast']
+26 114.0-114.2s 15->12 [9] ['coast']
+27 116.0-116.2s 12->11 [9] ['coast']
+28 121.0-121.2s 11->10 [10] ['coast']
+29 123.4-123.6s 10->4 [10] ['coast']
+30 140.4-140.6s 4->0 [] []
+PASS_VIDEO_HEALTH_TIMELINE
+
+Pillow=10.4.0 numpy=2.4.6 av=18.1.0

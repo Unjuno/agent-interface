@@ -1,0 +1,34 @@
+{
+  "command": "python -B research/doom/results/map01-astra-video-health-timeline-v1/run_timeline_v2.py",
+  "exit_code": 0,
+  "file_sha256": [
+    {
+      "path": "run_timeline.py",
+      "sha256": "6818d5c746c6b4098dc2712a67e136723bbb4d745b892394910c3a2d97ffa30e"
+    },
+    {
+      "path": "run_timeline_v2.py",
+      "sha256": "215501b552082c5b3671fea72c414c5383f7eee9c308974618dbb25b6c3b8ec3"
+    },
+    {
+      "path": "TIMELINE.json",
+      "sha256": "b73c720ba9c56430a5db9895a74e34b9a844befc647baaa1582bae9d59021755"
+    },
+    {
+      "path": "RAW_TIMELINE.txt",
+      "sha256": "0aa24cfd41a2b7909ee425bcbeb0378d049d692cc115d09ca412e965c30f3530"
+    }
+  ],
+  "result": "PASS_VIDEO_HEALTH_TIMELINE",
+  "revision_note": "RUN01 failed after extraction due to an aggregation-key mismatch. RUN02 changes only key mapping from active_hold/coast to the aggregate labels; thresholds, crop, annotations and model-window calculations are unchanged. RUN01 failure and crop hashes remain preserved. This is an offline post-hoc analysis, not an allocation retry.",
+  "run_id": "MAP01-ASTRA-VIDEO-HEALTH-TIMELINE-A01-RUN02",
+  "runtime": {
+    "Pillow": "10.4.0",
+    "av": "18.1.0",
+    "numpy": "2.4.6",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "schema": "map01-astra-video-health-timeline-run-record-v1",
+  "source_main": "8094af4631fc7bc5d92990e5151d5e89477ee39f",
+  "source_video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4"
+}
