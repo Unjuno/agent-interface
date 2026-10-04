@@ -68,6 +68,19 @@ class Backend(Previous):
             self.emit(row)
 
     def _finish_incomplete_release_batch(self, context, error, disposition):
+        if context.get("publication_error_type") is not None:
+            publication = context.get("publication_failure")
+            if isinstance(publication, dict):
+                try:
+                    error.release_batch_publication = dict(publication)
+                except (AttributeError, TypeError):
+                    pass
+            context["rows"].clear()
+            try:
+                del self._release_batch.context
+            except AttributeError:
+                pass
+            return
         try:
             self._publish_incomplete_release_batch(
                 context, error, disposition=disposition
@@ -268,4 +281,23 @@ class Backend(Previous):
                 self.emit(row)
             except BaseException as exc:
                 context["publication_error_type"] = type(exc).__name__
+                context["publication_failure"] = {
+                    "status": "delivery_unknown",
+                    "identifier": context.get("identifier"),
+                    "step": context.get("step"),
+                    "size": size,
+                    "position": row.get("release_batch_position"),
+                    "confirmed_positions": list(
+                        context.get("publication_confirmed_positions", ())
+                    ),
+                    "not_attempted_positions": list(range(
+                        row.get("release_batch_position", 0) + 1, size
+                    )),
+                    "event": row.get("event"),
+                    "key": row.get("key"),
+                    "error_type": type(exc).__name__,
+                }
                 raise
+            context.setdefault("publication_confirmed_positions", []).append(
+                row.get("release_batch_position")
+            )

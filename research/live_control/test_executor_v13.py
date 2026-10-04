@@ -31,6 +31,36 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_terminal_preserves_release_batch_sink_delivery_uncertainty(self):
+        class PublicationFailureBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error = OSError("release sink acknowledgement lost")
+                error.release_batch_publication = {
+                    "status": "delivery_unknown", "identifier": identifier,
+                    "step": index, "size": 2, "position": 1,
+                    "confirmed_positions": [0], "not_attempted_positions": [],
+                    "event": "input_release_transition", "key": "b",
+                    "error_type": "OSError",
+                }
+                raise error
+
+        events = []
+        executor = Executor(PublicationFailureBackend(), events.append)
+        executor.submit("sink-failure", [{"op": "pointer_drag"}], 1,
+                        time.perf_counter_ns() + 1_000_000_000)
+        deadline = time.monotonic() + 1
+        while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+            time.sleep(.002)
+        executor.close()
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["release_batch_publication"], {
+            "status": "delivery_unknown", "identifier": "sink-failure",
+            "step": 0, "size": 2, "position": 1,
+            "confirmed_positions": [0], "not_attempted_positions": [],
+            "event": "input_release_transition", "key": "b",
+            "error_type": "OSError",
+        })
+
     def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
         backend = Backend()
         events = []

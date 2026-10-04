@@ -99,6 +99,7 @@ class Executor(Previous):
 
     def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
+        release_batch_publication = None
         try:
             for index, step in enumerate(steps):
                 if lease.is_set(): raise Cancelled()
@@ -117,6 +118,9 @@ class Executor(Previous):
             status = "cancelled"
         except Exception as exc:
             status = "failed"; error = repr(exc)
+            publication = getattr(exc, "release_batch_publication", None)
+            if isinstance(publication, dict):
+                release_batch_publication = dict(publication)
         finally:
             # An owner-originated focus/surface event is already available here.
             # For explicit cancellation, allow one owner polling interval before
@@ -149,12 +153,15 @@ class Executor(Previous):
             # terminal makes program_terminal_pending false.
             self._publish_cause_once(identifier, lease)
             with self.lock:
-                self.emit({"event": "terminal", "id": identifier, "status": status,
+                terminal = {"event": "terminal", "id": identifier, "status": status,
                            "error": error, "steps_completed": completed,
                            "release": release, "interruption": interruption,
                            "decision_reason": decision_reason,
                            "terminal_ns": time.perf_counter_ns(),
-                           "semantic_completion": "program status only; task scoring is separate"})
+                           "semantic_completion": "program status only; task scoring is separate"}
+                if release_batch_publication is not None:
+                    terminal["release_batch_publication"] = release_batch_publication
+                self.emit(terminal)
                 self.active = None
             stop = self.release_watch_stops.get(identifier)
             if stop is not None:
