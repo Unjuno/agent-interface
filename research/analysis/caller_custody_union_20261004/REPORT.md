@@ -6,8 +6,8 @@ task-effect qualification.
 
 ## Lineage and scope
 
-- Base: `origin/main` `63980603e4bb6e4b128ed07af3bf7023bc2d4734` (refreshed 2026-10-04).
-- Refreshed successor head before this report correction: `f488c2fb49db741a176e0a1f719a793023b0e727`.
+- Base: `origin/main` `4c2fe6cbd4218306bcb203cf04258b0f9a322213` (refreshed 2026-10-04; includes the latest saved key-release evidence).
+- Refreshed successor head before this report correction: `8c8ca5fcfa989f9147085830159b754fe5b747d2`.
 - Source PR #7494 (`rescue/caller-composed-5156-20261004`) and source PR #7330
   (`fix/caller-current-main-composition-i76`) were merged locally as separate
   parents without textual conflicts. Both source PRs and their branches remain
