@@ -532,6 +532,74 @@ raise RuntimeError('injected controller failure')
             if process.stdin is not None and not process.stdin.closed:
                 process.stdin.close()
 
+    def test_late_finish_writer_success_does_not_claim_delivery(self):
+        self.require_candidate()
+
+        class Stdin:
+            def __init__(self):
+                self.closed = False
+                self.started = threading.Event()
+                self.release = threading.Event()
+                self.written = []
+
+            def write(self, value):
+                self.started.set()
+                if not self.release.wait(2):
+                    raise TimeoutError("test writer was not released")
+                self.written.append(value)
+                return len(value)
+
+            @staticmethod
+            def flush():
+                return None
+
+            def close(self):
+                self.closed = True
+
+        class Process:
+            def __init__(self):
+                self.stdin = Stdin()
+                self.exit_code = None
+
+            def poll(self):
+                return self.exit_code
+
+            def terminate(self):
+                self.exit_code = -15
+                self.stdin.release.set()
+
+            def kill(self):
+                self.exit_code = -9
+                self.stdin.release.set()
+
+            def wait(self, timeout=None):
+                self.stdin.release.set()
+                return self.exit_code
+
+        process = Process()
+
+        def wait_for_score(_predicate, timeout=40):
+            time.sleep(timeout)
+            raise TimeoutError("no score after finish delivery timeout")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            custody = controller.ControllerSessionCustody(
+                process=process, wait_for_event=wait_for_score, events=[],
+                reader_thread=None, output_dir=Path(tmp),
+                finish_timeout=.01, process_timeout=.05,
+            )
+            custody.finish(reason="late_writer_success_test")
+            receipt = json.loads(
+                (Path(tmp) / "controller-cleanup.json").read_text())
+            self.assertTrue(process.stdin.started.is_set())
+            self.assertEqual(process.stdin.written, ['{"op":"finish"}\n'])
+            self.assertFalse(receipt["finish_sent"])
+            self.assertTrue(receipt["finish_send_timeout"])
+            self.assertTrue(receipt["finish_write_completed_after_timeout"])
+            self.assertTrue(receipt["child_termination_requested"])
+            self.assertFalse(receipt["score_observed"])
+            self.assertEqual(receipt["process_exit"], -15)
+
 
 if __name__ == "__main__":
     unittest.main()

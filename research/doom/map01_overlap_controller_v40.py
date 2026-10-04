@@ -130,7 +130,10 @@ class ControllerSessionCustody:
         self._receipt = None
         self._finish_writer = None
         self._finish_writer_error = None
+        self._finish_deadline_ns = None
+        self._finish_writer_completed_ns = None
         self.finish_send_timeout = False
+        self.finish_write_completed_after_timeout = False
         self.child_termination_requested = False
         self.child_kill_requested = False
 
@@ -139,13 +142,17 @@ class ControllerSessionCustody:
         if self.finish_sent:
             return True
         if self._finish_writer is None:
+            self._finish_deadline_ns = (time.monotonic_ns() +
+                                        int(max(0, self.finish_timeout) * 1e9))
             def send_finish():
                 try:
                     if self.process.stdin is None or self.process.stdin.closed:
                         raise BrokenPipeError("child stdin is unavailable")
                     self.process.stdin.write('{"op":"finish"}\n')
                     self.process.stdin.flush()
-                    self.finish_sent = True
+                    self._finish_writer_completed_ns = time.monotonic_ns()
+                    if self._finish_writer_completed_ns > self._finish_deadline_ns:
+                        self.finish_write_completed_after_timeout = True
                 except BaseException as error:
                     self._finish_writer_error = error
 
@@ -158,8 +165,16 @@ class ControllerSessionCustody:
                 errors.append({"step": "start_finish_writer", "error": repr(error)})
                 return False
         self._finish_writer.join(timeout=max(0, self.finish_timeout))
-        if self.finish_sent:
+        completed_ns = self._finish_writer_completed_ns
+        if completed_ns is not None and completed_ns <= self._finish_deadline_ns:
+            self.finish_sent = True
             return True
+        if completed_ns is not None:
+            self.finish_send_timeout = True
+            self.finish_write_completed_after_timeout = True
+            errors.append({"step": "finish_send_timeout",
+                           "error": "writer completed after its delivery deadline"})
+            return False
         if self._finish_writer.is_alive():
             self.finish_send_timeout = True
             errors.append({"step": "finish_send_timeout",
@@ -257,6 +272,8 @@ class ControllerSessionCustody:
             "reason": reason,
             "finish_sent": self.finish_sent,
             "finish_send_timeout": self.finish_send_timeout,
+            "finish_write_completed_after_timeout":
+                self.finish_write_completed_after_timeout,
             "child_termination_requested": self.child_termination_requested,
             "child_kill_requested": self.child_kill_requested,
             "score_observed": self._score is not None,

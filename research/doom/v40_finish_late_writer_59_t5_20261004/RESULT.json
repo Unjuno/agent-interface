@@ -1,0 +1,38 @@
+{
+  "schema": "map01-v40-late-finish-writer-t5-v1",
+  "disposition": "PASS_LATE_COMPLETION_NOT_CLAIMED",
+  "baseline_disposition": "FAIL_LATE_COMPLETION_CLAIMED_SENT",
+  "base_commit": "a2ad677c78aab119eed65884af8848103a292b8c",
+  "baseline_controller_sha256": "bb828303a2c97865e63600e7ad80d913e1870e21bde7fcd314438155073bfa66",
+  "candidate_controller_sha256": "ba10e886b6d701b48e16f5085cd741d52729dec87d62bff22b6ae6893fff0c56",
+  "candidate_test_sha256": "b0aa152840c9cd4313acffb4687208b1d2f9da63565162948fad470965b18224",
+  "environment": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "commands": [
+    {
+      "command": "run_baseline.py late-writer regression at a2ad677",
+      "exit_code": 1
+    },
+    {
+      "command": "focused V40 candidate suite",
+      "exit_code": 0
+    },
+    {
+      "command": "py_compile candidate/tests/audit",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "candidate_tests_passed": 12,
+  "late_completion_not_claimed_as_sent": true,
+  "scope": "deterministic child-pipe ordering construction; no game/model/GUI/input/formal allocation",
+  "limitations": [
+    "A late full-payload write return proves neither child receipt nor processing after its deadline.",
+    "No graceful post-control score or application-level input release is claimed after timeout."
+  ]
+}
