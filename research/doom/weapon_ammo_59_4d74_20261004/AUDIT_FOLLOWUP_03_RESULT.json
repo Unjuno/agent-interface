@@ -1,0 +1,48 @@
+{
+  "audit_id": "weapon-ammo-audit-followup-03",
+  "base_commit": "367df9288913ee142a216403c740e4072c13d7c3",
+  "dependency_pr": 7631,
+  "dependency_head_branch": "research/7627-audit-hardening-a01-20261004",
+  "frozen_inputs": {
+    "00-coast/events.jsonl": "6a48212dedb620eed58262bf3c9e1cc7a3f640edc3d481b3dbc8d6ed5e1cdcf7",
+    "00-coast/scorer-last-action.jsonl": "f725a92e6a4618f9b6495ac186fd56679f53a70076e265eeaf51bc0fb85c6220"
+  },
+  "source_hashes": {
+    "audit_weapon_ammo_followup_02.py": "07d4f45a5b848bd96946fbf0801546ec2582eb9b60585c13344567efc6d9f5d4",
+    "test_audit_weapon_ammo_followup_02.py": "b01e30838b408d58b29e7232db8f9e2f7a7fce8ead6a17da6ad364f5b8d23005",
+    "audit_weapon_ammo_followup_03.py": "59ff4a71eb7d7562b35c5d097abb0ff4d4fe4bd5517307a879d5aa0454c1a0da",
+    "test_audit_weapon_ammo_followup_03.py": "52a13af831e1c4be70b04b224546a8718c7e37b472009cad7722c6b5363e253a"
+  },
+  "tests": {
+    "command": "python3 -m unittest -v test_audit_weapon_ammo_followup_01.py test_audit_weapon_ammo_followup_02.py test_audit_weapon_ammo_followup_03.py",
+    "count": 16,
+    "failed": 0,
+    "passed": 16,
+    "new_mutation_controls": {
+      "nearest_tic_mismatch": "HOLD_AUDIT_CHECK_FAILED",
+      "nearest_reversed_sample_bounds": "HOLD_AUDIT_CHECK_FAILED",
+      "nearest_nonfinite_variable": "HOLD_AUDIT_CHECK_FAILED",
+      "retained_fixture": "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED"
+    }
+  },
+  "decision": "PASS_SYNTHETIC_NEAREST_SAMPLE_COHERENCE_GATE",
+  "local_checks": {
+    "py_compile": "PASS",
+    "git_diff_check": "PASS",
+    "retained_followup_03_audit": "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED"
+  },
+  "container": {
+    "disposition": "STOP_CONTAINERD_IMAGE_INVENTORY_UNAVAILABLE",
+    "docker_server_version": "29.4.0",
+    "failure": "image listing failed: containerd content blob open returned operation not supported",
+    "host_validation_only": true
+  },
+  "scope": "Synthetic mutations and post-result audit hardening for one retained fixture; no new game, model, GUI, input, or live allocation.",
+  "unresolved": [
+    "simultaneous HUD/API truth",
+    "damage exposure and recovery efficacy",
+    "useful feedback and controller trust/adoption",
+    "live threat control and MAP01 completion",
+    "container execution on this host"
+  ]
+}
