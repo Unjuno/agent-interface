@@ -30,4 +30,3 @@ python -m unittest discover -s research/doom/map01_v39_cancel_cleanup_audit_v2_a
 The audit command prints a one-line JSON report; redirect it to `AUDIT_V2.json`. `test_audit_v2.py` covers the baseline and seven raw-digest-recomputed corruptions.
 
 No candidate, X server, container, model, game, or input run occurred for this audit repair. The current `main` base observed before work was `a9352dc53c783f1501046d762bc36c34bc6ab480`.
-
