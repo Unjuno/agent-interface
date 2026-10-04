@@ -1,9 +1,11 @@
 """Construction tests for the candidate's frozen network receipt handoff."""
+import builtins
 import hashlib
 import importlib.util
 import json
 from pathlib import Path
 import sys
+import symtable
 import tempfile
 import unittest
 from unittest import mock
@@ -16,6 +18,18 @@ spec.loader.exec_module(candidate)
 
 
 class CandidateNetworkReceiptTests(unittest.TestCase):
+    def test_main_has_no_unbound_global_references(self):
+        source = (HERE / "candidate.py").read_text(encoding="utf-8")
+        module = symtable.symtable(source, str(HERE / "candidate.py"), "exec")
+        main = next(table for table in module.get_children()
+                    if table.get_name() == "main")
+        module_names = set(module.get_identifiers())
+        unbound = [symbol.get_name() for symbol in main.get_symbols()
+                   if symbol.is_referenced() and symbol.is_global()
+                   and symbol.get_name() not in module_names
+                   and not hasattr(builtins, symbol.get_name())]
+        self.assertEqual(unbound, [])
+
     def _verify(self, *, ipv4_routes=""):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
