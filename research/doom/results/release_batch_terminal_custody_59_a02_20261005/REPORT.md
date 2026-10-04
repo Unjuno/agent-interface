@@ -12,7 +12,7 @@ The frozen parent was PR #7635 head `dd5e7fa4b26c66fe1de3bfa24152ad8e4e8a9cfd` (
 2. Worker `OSError` with ledger A followed by verified cleanup returning ledger B: terminal retains both ledgers with the same field split and reports the worker error.
 3. A completed `program-1` publishes its three release receipts and clears its thread-local context; a later context-free `release_all()` must not return `program-1`'s cached ledger.
 
-All three tests failed against the frozen parent. After the candidate repair, the ExecutorV13 suite passed 13/13 and the release-backend composition suite passed 11/11 (24/24 combined). All four affected Python files compiled, and `git -c core.whitespace=cr-at-eol diff --check` passed. `GREEN_OUTPUT.txt`, `COMPILE_OUTPUT.txt`, and `SHA256SUMS` retain the exact output and tested source/test hashes; `RED_OUTPUT.txt` retains the expected pre-fix failures.
+All three custody regressions failed against the frozen parent. After the candidate repair, the ExecutorV13 suite passed 13/13 and the release-backend composition suite passed 11/11 (24/24 combined). The release-sink regression now sweeps all three positions under both accept-before-raise and reject-before-raise, asserting confirmed/unknown/not-attempted custody and no retry. All four affected Python files compiled, and `git -c core.whitespace=cr-at-eol diff --check` passed. `GREEN_OUTPUT.txt`, `COMPILE_OUTPUT.txt`, and `SHA256SUMS` retain the exact output and tested source/test hashes; `RED_OUTPUT.txt` retains the expected pre-fix failures.
 
 ## Change and limits
 

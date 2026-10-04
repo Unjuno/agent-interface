@@ -288,30 +288,50 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual(releases[0]["release_batch_disposition"], "release_all_exception")
 
     def test_accept_then_raise_does_not_duplicate_release_batch_rows(self):
-        for accepted in (False, True):
-            with self.subTest(sink_accept_before_raise=accepted):
-                error, attempts, emitted = self._run(
-                    emit_accept_then_raise=True, capture_publication_error=True,
-                    sink_accept_before_raise=accepted, failure_position=1)
-                release_attempts = [row for row in attempts
-                                    if row.get("event") == "input_release_transition"]
-                self.assertEqual([row["release_batch_position"] for row in release_attempts],
-                                 [0, 1, 2])
-                release_emitted = [row for row in emitted
-                                   if row.get("event") == "input_release_transition"]
-                self.assertEqual([row["release_batch_position"] for row in release_emitted],
-                                 [0] + ([1] if accepted else []) + [2])
-                self.assertFalse(release_emitted[-1]["release_batch_complete"])
-                self.assertEqual(str(error), "sink failed after accepting release row")
-                self.assertEqual(getattr(error, "release_batch_publication", None), {
-                    "schema": "release-batch-delivery-v1",
-                    "identifier": "program-1", "step": 0, "size": 3,
-                    "positions": [
-                        {"position": 0, "step": 0, "key": "a", "state": "confirmed"},
-                        {"position": 1, "step": 0, "key": "b", "state": "unknown"},
-                        {"position": 2, "step": 0, "key": "c", "state": "confirmed_incomplete"},
-                    ],
-                })
+        for failure_position in range(3):
+            for accepted in (False, True):
+                with self.subTest(failure_position=failure_position,
+                                  sink_accept_before_raise=accepted):
+                    error, attempts, emitted = self._run(
+                        emit_accept_then_raise=True, capture_publication_error=True,
+                        sink_accept_before_raise=accepted,
+                        failure_position=failure_position)
+                    release_attempts = [row for row in attempts
+                                        if row.get("event") == "input_release_transition"]
+                    self.assertEqual([row["release_batch_position"]
+                                      for row in release_attempts], [0, 1, 2])
+                    release_emitted = [row for row in emitted
+                                       if row.get("event") == "input_release_transition"]
+                    expected_emitted = (
+                        list(range(failure_position))
+                        + ([failure_position] if accepted else [])
+                        + list(range(failure_position + 1, 3))
+                    )
+                    self.assertEqual([row["release_batch_position"]
+                                      for row in release_emitted], expected_emitted)
+                    self.assertEqual(sum(row["release_batch_position"] == failure_position
+                                         for row in release_emitted), int(accepted))
+                    self.assertTrue(all(row.get("release_batch_complete") is False
+                                        for row in release_emitted
+                                        if row["release_batch_position"] > failure_position))
+                    self.assertEqual(str(error), "sink failed after accepting release row")
+                    expected_states = [
+                        "confirmed" if position < failure_position else
+                        "unknown" if position == failure_position else
+                        "confirmed_incomplete"
+                        for position in range(3)
+                    ]
+                    ledger = getattr(error, "release_batch_publication", None)
+                    self.assertEqual(ledger, {
+                        "schema": "release-batch-delivery-v1",
+                        "identifier": "program-1", "step": 0, "size": 3,
+                        "positions": [
+                            {"position": position, "step": 0,
+                             "key": ("a", "b", "c")[position],
+                             "state": expected_states[position]}
+                            for position in range(3)
+                        ],
+                    })
 
     def test_executor_terminal_retains_actual_backend_delivery_positions(self):
         error, _, _ = self._run(
