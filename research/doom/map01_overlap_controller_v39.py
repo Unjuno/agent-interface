@@ -997,6 +997,27 @@ def input_edge_receipts(events):
         release_returned_ns = release.get("release_call_returned_ns") if release else None
         admission_owner_id = (admission.get("owner_id")
                               if type(admission) is dict else None)
+        owner_keyup_admission_id = (
+            owner.get("admission_id") if type(owner) is dict else None)
+        admission_id_surfaces = (admission, release, owner)
+        explicit_admission_id_present = any(
+            type(row) is dict and "admission_id" in row
+            for row in admission_id_surfaces)
+        admission_id_value = (admission.get("admission_id")
+                              if type(admission) is dict else None)
+        release_admission_id = (release.get("admission_id")
+                                if type(release) is dict else None)
+        explicit_admission_id_matches = (
+            type(admission_id_value) is str
+            and bool(admission_id_value)
+            and release_admission_id == admission_id_value
+            and owner_keyup_admission_id == admission_id_value)
+        admission_identity_matches = (
+            type(release) is dict and (
+                (release.get("admission_identity_status") == "matched_explicit_id"
+                 and explicit_admission_id_matches)
+                if explicit_admission_id_present else
+                release.get("admission_identity_status") == "matched"))
         keyup_started_ns = (owner.get("owner_keyup_started_ns")
                             if v11_contract and type(owner) is dict else
                             (owner.get("owner_keyrelease_started_ns")
@@ -1012,7 +1033,7 @@ def input_edge_receipts(events):
             owner_verified = (
                 release.get("owner_keyup_join") == "MATCHED_EXPLICIT_KEYUP" and
                 release.get("owner_transition_verified") is True and
-                release.get("admission_identity_status") == "matched" and
+                admission_identity_matches and
                 release.get("admission_position") == admission_position and
                 release.get("ordinary_release_candidate") is True)
             owner_contract_valid = (

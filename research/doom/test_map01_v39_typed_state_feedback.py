@@ -225,6 +225,69 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                                for row in projected if "admission_position" in row}
                 self.assertNotEqual(by_position[0]["status"], "paired")
 
+    def test_v11_explicit_admission_id_must_match_all_raw_surfaces(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        admission = next(row for row in source
+                         if row.get("event") == "input_admission" and
+                         row.get("step") == 0)
+        release = next(row for row in source
+                       if row.get("event") == "input_release_transition" and
+                       row.get("step") == 0)
+        admission, release = [json.loads(json.dumps(row))
+                              for row in (admission, release)]
+        admission_id = "owner-7:admission:4"
+        admission.update(id="v11-explicit-id-program", step=4,
+                         admission_position=0, admission_id=admission_id,
+                         admission_sequence=4)
+        owner = release.pop("owner_thread_keyup_receipt")
+        for name in ("owner_thread_keyup_verified",
+                     "owner_thread_keyup_history_complete"):
+            release.pop(name, None)
+        owner_receipt = {
+            "event": "owner_keyup", "schema": "owner-keyup-v11",
+            "owner_id": owner["owner_id"], "intent_token": owner["intent_token"],
+            "key": owner["key"], "reason": "explicit_up",
+            "admission_id": admission_id,
+            "owner_keyup_started_ns": owner["owner_keyrelease_started_ns"],
+            "owner_sync_returned_ns": owner["owner_sync_returned_ns"],
+            "xsync_completed": True, "sync_error": None,
+            "physical_verification_authoritative": False,
+            "grants_input_authority": False,
+        }
+        release.update(
+            id="v11-explicit-id-program", step=4, admission_position=0,
+            admission_id=admission_id, admission_identity_status="matched_explicit_id",
+            owner_keyup_join="MATCHED_EXPLICIT_KEYUP",
+            owner_release_history_complete=True, owner_cleanup_intervened=False,
+            ordinary_release_candidate=True, owner_keyup_receipt=owner_receipt)
+
+        receipt = controller.input_edge_receipts([admission, release])[0]
+
+        self.assertEqual(receipt["status"], "paired")
+        self.assertEqual(receipt["admission_position"], 0)
+        self.assertEqual(receipt["admitted_ns"], admission["admitted_ns"])
+        self.assertIsNotNone(receipt["admitted_to_owner_keyup_start_ms"])
+
+        for surface in ("admission", "release", "owner"):
+            changed = json.loads(json.dumps([admission, release]))
+            target = {"admission": changed[0], "release": changed[1],
+                      "owner": changed[1]["owner_keyup_receipt"]}[surface]
+            target["admission_id"] = "owner-7:admission:5"
+            with self.subTest(surface=surface):
+                projected = controller.input_edge_receipts(changed)
+                self.assertEqual(projected[0]["status"], "release_receipt_incomplete")
+                self.assertIsNone(projected[0]["admitted_to_owner_keyup_start_ms"])
+
+        forged_summary = json.loads(json.dumps([admission, release]))
+        forged_summary[1]["admission_identity_status"] = "matched"
+        forged_summary[1]["owner_keyup_receipt"]["admission_id"] = (
+            "owner-7:admission:999")
+        projected = controller.input_edge_receipts(forged_summary)
+        self.assertEqual(projected[0]["status"], "release_receipt_incomplete")
+        self.assertIsNone(projected[0]["admitted_to_owner_keyup_start_ms"])
+
     def test_retained_v39_trace_with_unscoped_admissions_stays_unpaired(self):
         retained = (HERE / "results" / "map01-v39-coast-liveness-live-01" /
                     "runtime" / "events.jsonl")
