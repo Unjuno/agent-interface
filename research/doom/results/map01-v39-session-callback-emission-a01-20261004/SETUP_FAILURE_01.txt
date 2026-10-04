@@ -1,0 +1,5 @@
+Attempt 01 (harness setup only; preserved): imported the exact session module without first registering the loaded backend module as `doom_typed_release_backend_v3` in `sys.modules`.
+
+Observed error: `ModuleNotFoundError: No module named 'doom_typed_release_backend_v3'` at session-module import. The session `main()` was not called, no `--out` directory was created, and no owner/game/X11 operation occurred. This is an isolated harness wiring failure; it is not a product result or formal allocation.
+
+Repair: register the already-loaded exact backend module under the module name used by the session's import, then run capture `run-02` once. No candidate or live allocation had started before the repair.
