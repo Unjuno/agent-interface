@@ -400,8 +400,8 @@ class PairedCoverGuardTests(unittest.TestCase):
                                       binding=binding)
                 current_ammo[field] = alias
                 with patch.object(controller, "build_action_contract",
-                                  return_value=contract), \\
-                     patch.object(controller, "evaluate_action_validity") as evaluate, \\
+                                  return_value=contract), \
+                     patch.object(controller, "evaluate_action_validity") as evaluate, \
                      patch.object(controller, "record_action_validity") as record:
                     with self.assertRaisesRegex(
                             ValueError, "epoch metadata must be exact integers"):
@@ -415,9 +415,9 @@ class PairedCoverGuardTests(unittest.TestCase):
                               binding=binding)
         validity = {"status": "VALID_CURRENT"}
         with patch.object(controller, "build_action_contract",
-                          return_value=contract), \\
+                          return_value=contract), \
              patch.object(controller, "evaluate_action_validity",
-                          return_value=validity) as evaluate, \\
+                          return_value=validity) as evaluate, \
              patch.object(controller, "record_action_validity",
                           return_value=validity):
             result = controller.prepare_action_admission(
