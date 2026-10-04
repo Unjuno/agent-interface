@@ -1,0 +1,58 @@
+{
+  "application_effect_observed": false,
+  "authority_granted": false,
+  "bridge_emitted_release_adapter_edge": null,
+  "bridge_event_types": [
+    "input_admission",
+    "input_release_measurement"
+  ],
+  "fake_physical_keys_after_cleanup": [],
+  "owner_cleanup_actuation_id": "abc8c294853d467c840a72d6e462249c:g1:F8",
+  "owner_cleanup_classification": "CONFIRMED_PHYSICAL_UP",
+  "owner_cleanup_key": "F8",
+  "owner_cleanup_measurement_count": 1,
+  "owner_cleanup_verified": true,
+  "projected_receipts": [
+    {
+      "actuation_id_sha256": "51dd99497b12812615a348554f5d7cead1072c60801c7bf5c3e94e73b30a37a6",
+      "application_consumption_observed": null,
+      "down_edge_interval_ns": null,
+      "down_press_request_ns": null,
+      "down_sync_return_ns": null,
+      "grants_input_authority": null,
+      "input_admitted_ns": null,
+      "intent_token_sha256": "e79907b658a63226a394d7313327e9639411f607332ebe3025244fe8e4218742",
+      "key": "F8",
+      "owner_id_sha256": "fd44a73e741350ab9facd23aefa47e13070f90d74a94d4e776c79146c871f264",
+      "program_id_sha256": "58ef13aea50366f8c09b6a7819857f6eb70c4056d232d1db1802b261c5df9cc3",
+      "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim",
+      "status": "adapter_edge_receipt_incomplete",
+      "step": 0,
+      "up_edge_interval_ns": null,
+      "up_release_request_ns": null,
+      "up_sync_return_ns": null
+    },
+    {
+      "actuation_id_sha256": null,
+      "application_consumption_observed": null,
+      "down_edge_interval_ns": null,
+      "down_press_request_ns": null,
+      "down_sync_return_ns": null,
+      "grants_input_authority": null,
+      "input_admitted_ns": null,
+      "intent_token_sha256": "e79907b658a63226a394d7313327e9639411f607332ebe3025244fe8e4218742",
+      "key": "F8",
+      "owner_id_sha256": null,
+      "program_id_sha256": "58ef13aea50366f8c09b6a7819857f6eb70c4056d232d1db1802b261c5df9cc3",
+      "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim",
+      "status": "adapter_edge_receipt_incomplete",
+      "step": 0,
+      "up_edge_interval_ns": null,
+      "up_release_request_ns": null,
+      "up_sync_return_ns": null
+    }
+  ],
+  "run_id": "MAP01-V39-CLEANUP-TELEMETRY-BRIDGE-A01-20261005",
+  "scope": "Host-side fake-display construction. No live GUI, game, OS input, model, task effect, recovery, threat response, or MAP01 progress.",
+  "status": "PENDING_INDEPENDENT_AUDIT"
+}
