@@ -1,6 +1,7 @@
 # Analytical research
 
-- [Issue #7411 user-anchored minimum worthwhile benefit T0](benefit_threshold_7411_t0_20261005/REPORT.md) — synthetic method PASS only; lower-50th-percentile crossing brackets contain both planted strata, while correctness regression is ineligible and sparse support remains UNKNOWN. No human preference or route-benefit claim.
+- [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
+
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
 - [Issue #7387 A02 method result](serial_cue_interference_7387_t0_20261004_a02/REPORT.md) — WSLc candidate and raw-only auditor each ran once; 144 trials, 288 presentations, 16 isolated controls and 1,280 image files (five distinct pixel payloads) independently reconstructed; `PASS_METHOD_SCOPED`; model hypothesis remains untested.
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
@@ -308,7 +309,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
-- [`benefit_threshold_7411_t0_20261005/`](benefit_threshold_7411_t0_20261005/)
 - [`benign_error_recovery_scope_6469_t0_20261002_v1/`](benign_error_recovery_scope_6469_t0_20261002_v1/)
 - [`blackstart_allwindow_trace_5970_t6_20261002/`](blackstart_allwindow_trace_5970_t6_20261002/)
 - [`blackstart_causal_cut_5970_t0_20261001/`](blackstart_causal_cut_5970_t0_20261001/)
@@ -443,6 +443,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
 - [`escrow_optional_budget_6156_t0_20261002/`](escrow_optional_budget_6156_t0_20261002/)
 - [`evaluation_cue_reactivity_6413_t0_wslc_20261003/`](evaluation_cue_reactivity_6413_t0_wslc_20261003/)
+- [`event_memory_7161_t0_20261005/`](event_memory_7161_t0_20261005/)
 - [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
 - [`evidence_compute_calibration_identifiability_r3_v1/`](evidence_compute_calibration_identifiability_r3_v1/)
 - [`evidence_compute_decision_lattice_r2_v1/`](evidence_compute_decision_lattice_r2_v1/)
@@ -495,6 +496,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_proposal_risk_6143_t0_20261002/`](guard_proposal_risk_6143_t0_20261002/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
+- [`hazard_checkpoint_7466_adaptive_cost_a02_20261004/`](hazard_checkpoint_7466_adaptive_cost_a02_20261004/)
+- [`hazard_checkpoint_7466_feedback_gate_a03_20261004/`](hazard_checkpoint_7466_feedback_gate_a03_20261004/)
 - [`hazard_checkpoint_7466_t0_20261004/`](hazard_checkpoint_7466_t0_20261004/)
 - [`hazard_discretionary_capture_6086_t0_20261002/`](hazard_discretionary_capture_6086_t0_20261002/)
 - [`hazard_discretionary_capture_6086_t0_v1/`](hazard_discretionary_capture_6086_t0_v1/)
@@ -510,6 +513,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
+- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/) — Issue #7470 A02 harness diagnostic: 24 arbitrary pairings audited across null/planted plants; does not meet the later circular-shift design clarification. A01 prelaunch STOP preserved.
+- [`inference_disturbance_coupling_7470_t0_a03_20261004/`](inference_disturbance_coupling_7470_t0_a03_20261004/) — Issue #7470 A03: four intact-sequence phase rotations audited; planted phase sensitivity detected, but explicit period-to-period seam transition is omitted, so not full clarification conformance.
+- [`inference_disturbance_coupling_7470_t0_a04_20261004/`](inference_disturbance_coupling_7470_t0_a04_20261004/) — Issue #7470 A04: explicit seam and 8/8 trajectories audited, but frozen centered-correlation formula has extra 1/n normalization; not an Issue-level PASS.
+- [`inference_disturbance_coupling_7470_t0_a05_20261004/`](inference_disturbance_coupling_7470_t0_a05_20261004/) — Issue #7470 A05: standard Pearson fixture, four intact circular shifts, two periods with explicit seam; 8/8 reconstructed and 3/3 mutations rejected; finite method-scoped pass only.
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/)
 - [`integrated_decision_scope_57_t0_v1/`](integrated_decision_scope_57_t0_v1/)
@@ -813,6 +820,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`soft_revisit_bias_5756_t0_orbstack_a03_20261003/`](soft_revisit_bias_5756_t0_orbstack_a03_20261003/)
 - [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`soft_revisit_bias_6442_supplemental_audit_v1/`](soft_revisit_bias_6442_supplemental_audit_v1/)
+- [`source_bound_conflict_cores_7501_provenance_a02_20261005/`](source_bound_conflict_cores_7501_provenance_a02_20261005/)
+- [`source_bound_conflict_cores_7501_scaling_a01_20261005/`](source_bound_conflict_cores_7501_scaling_a01_20261005/)
 - [`source_bound_conflict_cores_7501_t0_20261004/`](source_bound_conflict_cores_7501_t0_20261004/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
 - [`source_window_type_boundary_4782_v1/`](source_window_type_boundary_4782_v1/)

@@ -31,3 +31,17 @@ class Catalogue(unittest.TestCase):
         selected=capture_cli();loaded=imported();self.record('coverage_once',selected,loaded);self.assertEqual(selected.count('test_adaptive_acquisition_cost_coverage'),1)
     def test_cli_keeps_existing_eof_suite(self):
         selected=capture_cli();loaded=imported();self.record('eof_once',selected,loaded);self.assertEqual(selected.count('test_app_server_eof_stop'),1)
+
+    def test_cli_selects_caller_refusal_dispatch_and_uncertain_tail_once(self):
+        selected = capture_cli()
+        loaded = imported()
+        modules = (
+            'test_adaptive_acquisition_caller_refusal_v3',
+            'test_adaptive_acquisition_caller_dispatch_v3',
+            'test_adaptive_acquisition_caller_uncertain_tail_v3',
+        )
+        for module in modules:
+            with self.subTest(module=module):
+                self.assertEqual(selected.count(module), 1)
+                self.assertEqual(loaded['protocol'].count(module), 1)
+                self.assertEqual(sum(suite.count(module) for suite in loaded.values()), 1)
