@@ -1,0 +1,29 @@
+{
+  "schema": "v39-context-release-composition-freeze-v1",
+  "attempt": "A01",
+  "frozen_at_local": "2026-10-05 Asia/Tokyo",
+  "base_main": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "components": {
+    "pr_7602": "4c0123339e43bd80333118a32bc1ce625b79ff3f",
+    "pr_7750": "4c7ab51a4512015a70e0e9ab90510b256b8b9cfd",
+    "pr_7769": "905816607eef1552b5e8073d95db1975de00776d"
+  },
+  "composition_order": ["main", "pr_7602", "pr_7750", "pr_7769"],
+  "synthetic_composition_commit": "0c2b763799101527ab4a0105aa13cb54ba090086",
+  "synthetic_composition_tree": "22615a96e2166619933cd7fb375fc612ec30579d",
+  "environment": {
+    "host": "Windows 11 desktop; source extracted from Git tree",
+    "python": "CPython 3.11.9",
+    "live_resources_used": false
+  },
+  "commands": [
+    "git merge-tree --write-tree origin/main refs/remotes/pr/7602",
+    "git merge-tree --write-tree <main+7602-merge-commit> refs/remotes/pr/7750",
+    "git merge-tree --write-tree <main+7602+7750-merge-commit> refs/remotes/pr/7769",
+    "py -3.11 -m unittest research.doom.test_map01_v39_typed_state_feedback -v",
+    "py -3.11 -m unittest discover -s research/live_control/owner_keyup_admission_id_5156_a03_20261005 -p 'test_*.py' -v",
+    "py -3.11 -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v"
+  ],
+  "decision": "All three merges conflict-free; each focused suite must exit 0 and report all tests passing. Otherwise retain FAIL_COMPOSITION or HOLD_CONSTRUCTION per PROTOCOL.md.",
+  "scope": "Offline source-composition and focused fake/source-level tests only; no live game, planner, GUI, X server, OS input, useful-feedback, recovery, efficacy, or MAP01 claim."
+}
