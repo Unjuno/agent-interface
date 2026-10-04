@@ -19,6 +19,7 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #7470 A02 harness diagnostic: [formal report](analysis/inference_disturbance_coupling_7470_t0_a02_20261004/REPORT.md) — 24 arbitrary assignments / 48 trajectories independently reconstructed, but the later circular-shift design clarification is not met; no Issue-level PASS claimed.
 - Issue #7470 A03 circular-phase successor: [formal report](analysis/inference_disturbance_coupling_7470_t0_a03_20261004/REPORT.md) — four intact rotations audited; planted phase effect detected, but period-to-period seam transition remains untested, so the clarification is not fully satisfied.
 - Issue #7470 A04 circular-phase + seam successor: [formal report](analysis/inference_disturbance_coupling_7470_t0_a04_20261004/REPORT.md) — seam-inclusive trajectories audited, but preregistered correlation statistic has an extra 1/n factor; no Issue-level PASS claimed.
+- Issue #7470 A05 corrected circular-phase + seam successor: [formal report](analysis/inference_disturbance_coupling_7470_t0_a05_20261004/REPORT.md) — correct Pearson values, intact periods, explicit seam, independent audit 8/8 and mutations 3/3; method-scoped only.
 
 - Issue #6533 frame-qualified collateral T0: [`analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md`](analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md) — OrbStack synthetic method pass; 44/44 independently reconstructed, aggregate checker-byte reduction with a small-fixture regression; no real GUI/product claim.
 
