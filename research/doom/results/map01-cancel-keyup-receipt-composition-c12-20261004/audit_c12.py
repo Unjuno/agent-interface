@@ -13,6 +13,29 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def has_expected_initial_failure(output: str) -> bool:
+    """Bind the retained error to the documented publication-control failure."""
+    if ("Ran 7 tests" not in output
+            or "FAILED (errors=1)" not in output):
+        return False
+    error = re.search(
+        r"^ERROR: test_cancelled_release_is_published_before_terminal "
+        r"\(candidate\.live_control\.test_executor_owner_cancel_cause_v1\."
+        r"ExecutorOwnerCancelCauseTests\.test_cancelled_release_is_published_before_terminal\)\n"
+        r"(?P<traceback>.*?^StopIteration$)",
+        output,
+        re.MULTILINE | re.DOTALL,
+    )
+    if error is None:
+        return False
+    traceback = error.group("traceback")
+    return (
+        'released = next(row for row in events if row["event"] == "input_released")'
+        in traceback
+        and re.search(r"^StopIteration$", traceback, re.MULTILINE) is not None
+    )
+
+
 def main() -> None:
     pins = json.loads((ROOT / "SOURCE_PINS.json").read_text(encoding="utf-8"))
     errors = []
@@ -50,7 +73,7 @@ def main() -> None:
         errors.append("isolated_publication_control_not_clean")
     if control_exit != "0":
         errors.append(f"publication_control_exit:{control_exit}")
-    if "Ran 7 tests" not in initial or "FAILED (errors=1)" not in initial or "StopIteration" not in initial:
+    if not has_expected_initial_failure(initial):
         errors.append("initial_combined_process_failure_not_retained_as_documented")
     if initial_exit != "1":
         errors.append(f"initial_combined_process_exit:{initial_exit}")
