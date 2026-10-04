@@ -12,7 +12,7 @@ Date: 2026-10-04 JST. This is host-only synthetic construction under #5130, not 
 
 ## Retained capture and validation
 
-The immutable capture is `construction/raw_target_dispatch_lifecycle_20261004_01/`:
+The first immutable capture is `construction/raw_target_dispatch_lifecycle_20261004_01/`:
 
 - Raw event SHA-256: `cbddc8c0d431f451f85317631db5abcc5193deb525375e869e16d61351b2913a`.
 - Raw-v2 result: `PASS_CONSTRUCTION_ONLY`, `errors=[]`, synthetic evaluator `RETAIN`, break-even task 2.
@@ -21,6 +21,16 @@ The immutable capture is `construction/raw_target_dispatch_lifecycle_20261004_01
 - Focused private-channel tests: 5/5; full package suite: 97/97; inherited decision probe: 10 controls passed; `git diff --check`: passed.
 - The branch was based on current main `d22c094a4a2e2292333479573c2eb446c345e1b9` when checked.
 
-The run command is `python research/integration/mindustry_three_arm_economics_20260928/run_raw_lifecycle_adapter_construction.py raw_target_dispatch_lifecycle_20261004_01`. The capture directory is immutable; any later construction run must use a new basename.
+The first run command is `python research/integration/mindustry_three_arm_economics_20260928/run_raw_lifecycle_adapter_construction.py raw_target_dispatch_lifecycle_20261004_01`. That capture predates the persisted dispatch-sidecar audit described below and remains unchanged.
+
+### Independent dispatch/raw join control (2026-10-04)
+
+The raw-v2 auditor verifies admission/release joins but does not retain target names or each compiled request's expected observation sequence. The additive `audit_target_dispatch_capture.py` therefore independently joins a retained dispatch sidecar to raw task events. It verifies exactly 18 tasks and 36 ordered palette/world dispatches, each request's expected sequence against a newer raw observation, terminal/released request-ID binding, input feedback/release rows, and the persistent B1 stale-refusal/repair relation. Six tests include five negative mutations: reversed target order, stale request sequence, missing release, an admitted old B1 reference, and malformed raw observation input.
+
+The updated runner writes `target-dispatch-events.json` and `dispatch-audit.json` beside the raw-v2 capture. Its latest immutable output is `construction/raw_target_dispatch_lifecycle_20261004_03/`; the printed disposition is `PASS_CONSTRUCTION_ONLY`, the sidecar audit is `PASS_SYNTHETIC_DISPATCH_JOIN` for 18 tasks/36 dispatches, and source identity remains false. Reproduction command: `python research/integration/mindustry_three_arm_economics_20260928/run_raw_lifecycle_adapter_construction.py raw_target_dispatch_lifecycle_20261004_03`.
+
+The committed `SHA256SUMS` covers all four result files. Raw SHA-256 is `814b5dd83cfe7d963914020db02588a8604548c6e82b4db66493cb88ae1ef8bf`; target-dispatch sidecar SHA-256 is `b3c1eaf0b5093374ee8463cade2217a3197aff938ea968a98e3df7554a48ca66`.
+
+On that source, the dedicated join mutation suite passes 6/6 and the full package suite passes 103/103; inherited decision probe passes with 10 controls. A fresh read-only sidecar audit exactly matches the retained `dispatch-audit.json`. This second audit is a host-side synthetic integrity check, not live evidence or source authentication. All model/game/socket/compiler/reset callbacks remain simulated.
 
 No Docker operation, Actions workflow, Mindustry process, socket, model call, task input, or formal allocation was performed. The #5130 named-slot and sibling-container gate remains active. Actual live adapters and formal results remain open.

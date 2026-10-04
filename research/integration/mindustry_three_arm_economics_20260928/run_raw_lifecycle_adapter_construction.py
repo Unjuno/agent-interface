@@ -12,6 +12,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 from raw_allocation_audit_v2 import audit  # noqa: E402
+from audit_target_dispatch_capture import audit as audit_dispatch  # noqa: E402
 from test_private_benchmark_channel import assemble_raw_from_private_channels  # noqa: E402
 
 
@@ -25,7 +26,13 @@ def main() -> int:
     output = HERE / "construction" / capture_name
     output.mkdir(parents=True, exist_ok=False)
     with tempfile.TemporaryDirectory() as temp:
-        raw = assemble_raw_from_private_channels(Path(temp))
+        dispatch_path = output / "target-dispatch-events.json"
+        raw = assemble_raw_from_private_channels(Path(temp), dispatch_path)
+    dispatch_capture = json.loads(dispatch_path.read_text(encoding="utf-8"))
+    dispatch_result = audit_dispatch(raw, dispatch_capture)
+    (output / "dispatch-audit.json").write_text(
+        json.dumps(dispatch_result, sort_keys=True, indent=2) + "\n",
+        encoding="utf-8")
     raw_bytes = (json.dumps(raw, sort_keys=True, indent=2) + "\n").encode()
     result = audit(raw_bytes)
     (output / "raw-events.json").write_bytes(raw_bytes)
@@ -36,6 +43,7 @@ def main() -> int:
         "disposition": result["evaluation"]["disposition"],
         "break_even_task": result["evaluation"]["observed_break_even_task"],
         "lifecycle": result["lifecycle"],
+        "dispatch_audit": dispatch_result,
         "scope": ("synthetic three-arm task events with ArmCoordinator routes, "
                   "two-target dispatch callbacks, fake-mod private lifecycle, "
                   "and independent raw reconstruction; no live game")},

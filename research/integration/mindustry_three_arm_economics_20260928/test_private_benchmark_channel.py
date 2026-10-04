@@ -163,7 +163,8 @@ def run_complete_fake_channel(root: Path, arm: str) -> dict:
             "dispatch_capture": dispatch_capture}
 
 
-def assemble_raw_from_private_channels(root: Path) -> dict:
+def assemble_raw_from_private_channels(root: Path,
+                                       dispatch_output: Path | None = None) -> dict:
     capture = {arm: run_complete_fake_channel(root / arm, arm)
                for arm in ("plain", "ephemeral", "persistent")}
     raw = raw_v2()
@@ -259,6 +260,13 @@ def assemble_raw_from_private_channels(root: Path) -> dict:
                 rows["score_checked_ns"][task_id],
                 *ns_values(raw["arms"][arm][index])) + 1
         raw = attach_private_lifecycle(raw, arm, rows)
+    if dispatch_output is not None:
+        dispatch_output.parent.mkdir(parents=True, exist_ok=True)
+        dispatch_output.write_text(json.dumps({
+            "schema": "mindustry_target_dispatch_capture_v1",
+            "arms": {arm: captured["dispatch_capture"]
+                     for arm, captured in capture.items()},
+        }, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     return raw
 
 
