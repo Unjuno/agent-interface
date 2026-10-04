@@ -42,6 +42,9 @@ def main():
  if not all(type(row.get('id')) is str and type(row.get('step')) is int and isinstance(row.get('keys'),list) and type(row.get('input_ack_ns')) is int for row in held): raise SystemExit('STOP_HELD_ACK_SHAPE')
  if result['owner_release_records']['verified_empty_count']!=13 or keyup_events or keyup_owner: raise SystemExit('STOP_RELEASE_SHAPE_CHANGED')
  if result['observations']['semantic_completion_values']!={'unknown':218}: raise SystemExit('STOP_FEEDBACK_SHAPE_CHANGED')
- (HERE/'audit.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+ # This evidence tree is pinned byte-for-byte with -text attributes. Emit CRLF
+ # explicitly so regenerated output and SHA256SUMS are stable on every OS.
+ rendered=json.dumps(result,sort_keys=True,indent=2)+'\n'
+ (HERE/'audit.json').write_bytes(rendered.replace('\n','\r\n').encode('utf-8'))
  print(json.dumps({'status':result['status'],'events':len(events),'input_admission':len(admissions),'keys_held':len(held),'owner_release':len(owner_release),'direct_key_up_events':len(keyup_events)+len(keyup_owner),'observation_semantics':result['observations']['semantic_completion_values']},sort_keys=True))
 if __name__=='__main__': main()
