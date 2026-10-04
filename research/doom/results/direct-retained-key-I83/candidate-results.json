@@ -1,0 +1,81 @@
+{
+  "schema": "map01-retained-input-key-boundary-candidate-I83-v1",
+  "source_sha256": "62bc822f2922f12a1a271407217107675a4df0d402bc6bbf261a3e33b05790d8",
+  "results": [
+    {
+      "case": "valid_pair_control",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "invalid_admission_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "missing_key_admission_after_valid_pair",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "invalid_admission_count": 1,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case": "null_key_admission_after_valid_pair",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "invalid_admission_count": 1,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    }
+  ]
+}

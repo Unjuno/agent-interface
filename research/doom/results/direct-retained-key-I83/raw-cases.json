@@ -1,0 +1,82 @@
+{
+  "schema": "map01-retained-input-key-boundary-input-I83-v1",
+  "source_sha256": "1e989803aacb6186036b7cba0fe33523b7ad6ad81c01bc5346b4e7710df6727a",
+  "cases": [
+    {
+      "case": "valid_pair_control",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "t",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "t",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case": "missing_key_admission_after_valid_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "t",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "t",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        },
+        {
+          "event": "input_admission",
+          "intent_token": "orphan",
+          "admitted_ns": 200,
+          "input_ack_ns": 210
+        }
+      ]
+    },
+    {
+      "case": "null_key_admission_after_valid_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "t",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "t",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        },
+        {
+          "event": "input_admission",
+          "intent_token": "orphan",
+          "key": null,
+          "admitted_ns": 200,
+          "input_ack_ns": 210
+        }
+      ]
+    }
+  ]
+}

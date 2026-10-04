@@ -16,17 +16,13 @@ def analyze(events):
     invalid_admissions = []
     for row in events:
         event = row.get("event")
-        if event == "input_admission":
-            key = row.get("key")
+        if event == "input_admission" and row.get("key") is not None:
             token = row.get("intent_token")
-            if key is None:
-                invalid_admissions.append(row)
-                continue
             if token is None:
                 invalid_admissions.append(row)
-                pending[(None, key)].append(row)
+                pending[(None, row["key"])].append(row)
                 continue
-            pending[(token, key)].append(row)
+            pending[(token, row["key"])].append(row)
         elif event == "input_release_transition" and row.get("operation") == "up":
             token = row.get("intent_token")
             key = row.get("key")

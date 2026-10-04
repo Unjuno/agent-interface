@@ -1,0 +1,24 @@
+test_missing_or_null_key_admission_invalidates_complete_trace (test_analyze_map01_direct_retained_input_v1.Tests.test_missing_or_null_key_admission_invalidates_complete_trace) ... 
+  test_missing_or_null_key_admission_invalidates_complete_trace (test_analyze_map01_direct_retained_input_v1.Tests.test_missing_or_null_key_admission_invalidates_complete_trace) (key_state='absent') ... FAIL
+  test_missing_or_null_key_admission_invalidates_complete_trace (test_analyze_map01_direct_retained_input_v1.Tests.test_missing_or_null_key_admission_invalidates_complete_trace) (key_state='null') ... FAIL
+
+======================================================================
+FAIL: test_missing_or_null_key_admission_invalidates_complete_trace (test_analyze_map01_direct_retained_input_v1.Tests.test_missing_or_null_key_admission_invalidates_complete_trace) (key_state='absent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\outputs\pr7356-key-boundary-I83\test_analyze_map01_direct_retained_input_v1.py", line 161, in test_missing_or_null_key_admission_invalidates_complete_trace
+    self.assertFalse(result["measurement_ready"], result)
+AssertionError: True is not false : {'schema': 'map01-direct-retained-input-v1', 'measurement_ready': True, 'hold_count': 1, 'unmatched_admission_count': 0, 'invalid_release_count': 0, 'invalid_admission_count': 0, 'holds': [{'intent_token': 't', 'key': 'Up', 'retained_lower_ms': 2e-05, 'retained_upper_ms': 4e-05, 'censor_width_ms': 2e-05, 'source_events': ['input_admission', 'input_release_transition']}], 'decision': 'PASS: direct bounded release evidence available'}
+
+======================================================================
+FAIL: test_missing_or_null_key_admission_invalidates_complete_trace (test_analyze_map01_direct_retained_input_v1.Tests.test_missing_or_null_key_admission_invalidates_complete_trace) (key_state='null')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\outputs\pr7356-key-boundary-I83\test_analyze_map01_direct_retained_input_v1.py", line 161, in test_missing_or_null_key_admission_invalidates_complete_trace
+    self.assertFalse(result["measurement_ready"], result)
+AssertionError: True is not false : {'schema': 'map01-direct-retained-input-v1', 'measurement_ready': True, 'hold_count': 1, 'unmatched_admission_count': 0, 'invalid_release_count': 0, 'invalid_admission_count': 0, 'holds': [{'intent_token': 't', 'key': 'Up', 'retained_lower_ms': 2e-05, 'retained_upper_ms': 4e-05, 'censor_width_ms': 2e-05, 'source_events': ['input_admission', 'input_release_transition']}], 'decision': 'PASS: direct bounded release evidence available'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=2)

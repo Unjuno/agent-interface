@@ -143,6 +143,25 @@ class Tests(unittest.TestCase):
         self.assertEqual(result["invalid_release_count"], 1)
         self.assertEqual(result["unmatched_admission_count"], 1)
 
+    def test_missing_or_null_key_admission_invalidates_complete_trace(self):
+        for key_state in ("absent", "null"):
+            with self.subTest(key_state=key_state):
+                events = [
+                    {"event": "input_admission", "intent_token": "t", "key": "Up",
+                     "admitted_ns": 100, "input_ack_ns": 110},
+                    {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+                     "key": "Up", "release_call_started_ns": 130,
+                     "release_call_returned_ns": 140, "owner_transition_verified": True},
+                    {"event": "input_admission", "intent_token": "orphan",
+                     "admitted_ns": 200, "input_ack_ns": 210},
+                ]
+                if key_state == "null":
+                    events[-1]["key"] = None
+                result = candidate.analyze(events)
+                self.assertFalse(result["measurement_ready"], result)
+                self.assertEqual(result["hold_count"], 1)
+                self.assertEqual(result["invalid_admission_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
