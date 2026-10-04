@@ -18,6 +18,7 @@ class Executor(Previous):
         self.published_release_ids = set()
         self.release_publication_errors = {}
         self.terminal_publication_errors = {}
+        self.admission_publication_errors = {}
 
     def _emit_with_release_barrier(self, event):
         if type(event) is dict and event.get("event") == "terminal":
@@ -62,11 +63,20 @@ class Executor(Previous):
                 target=self._run, args=(identifier, copied, lease), daemon=False)
             self.active = (identifier, lease, worker)
             self.used_ids.add(identifier)
-            self.emit({"event": "accepted", "id": identifier,
-                       "steps": len(copied), "program_sha256": attestation,
-                       "intent_token": lease.intent_token,
-                       "valid_until_ns": valid_until_ns,
-                       "accepted_ns": time.perf_counter_ns()})
+            try:
+                self.emit({"event": "accepted", "id": identifier,
+                           "steps": len(copied), "program_sha256": attestation,
+                           "intent_token": lease.intent_token,
+                           "valid_until_ns": valid_until_ns,
+                           "accepted_ns": time.perf_counter_ns()})
+            except Exception as exc:
+                # The sink may have accepted the event before losing its ack.
+                # Keep the slot occupied, but do not start input without a
+                # confirmed admission publication.
+                self.admission_publication_errors[identifier] = {
+                    "status": "delivery_unknown",
+                    "error": {"type": type(exc).__name__}}
+                raise
             worker.start()
 
     def _publish_release(self, identifier, lease):
@@ -127,7 +137,16 @@ class Executor(Previous):
             return matched
 
     def close(self):
-        super().close()
+        # A failed accepted-event publication leaves the fail-closed active
+        # slot's worker unstarted. The base close path unconditionally joins
+        # it, which raises RuntimeError for that state.
+        with self.lock:
+            self.closed = True
+            job = self.active
+            if job is not None:
+                job[1].set()
+        if job is not None and job[2].ident is not None:
+            job[2].join()
         for watcher in self.release_watchers:
             watcher.join()
 

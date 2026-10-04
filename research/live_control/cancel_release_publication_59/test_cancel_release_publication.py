@@ -273,6 +273,42 @@ class CancelReleasePublicationTest(unittest.TestCase):
             executor.close()
             owner.close()
 
+    def test_accepted_event_emitter_failure_keeps_submission_fail_closed_and_closes(self):
+        SERVER["down"].clear()
+        owner = self.InputOwner(None)
+        backend = Backend(owner)
+        accepted = []
+
+        def emit(event):
+            if event.get("event") == "accepted":
+                accepted.append(event)
+                raise OSError("accepted sink acknowledgement lost")
+
+        executor = self.Executor(backend, emit)
+        try:
+            with self.assertRaisesRegex(OSError, "accepted sink acknowledgement lost"):
+                executor.submit("accepted-emitter-unavailable", [{"op": "hold_w_until_cancel"}], 1,
+                                time.perf_counter_ns() + 10_000_000_000)
+            self.assertEqual(len(accepted), 1)
+            self.assertIsNotNone(executor.active)
+            self.assertIsNone(executor.active[2].ident)
+            self.assertIsNone(backend.admission)
+            self.assertFalse(backend.held)
+            self.assertFalse(SERVER["down"])
+            self.assertEqual(
+                executor.admission_publication_errors["accepted-emitter-unavailable"]["status"],
+                "delivery_unknown")
+            with self.assertRaisesRegex(ValueError, "closed or busy"):
+                executor.submit("must-not-run-after-unknown-acceptance",
+                                [{"op": "hold_w_until_cancel"}], 1,
+                                time.perf_counter_ns() + 10_000_000_000)
+            # Shutdown must tolerate a fail-closed slot whose worker never started.
+            executor.close()
+            self.assertTrue(executor.closed)
+            self.assertFalse(executor.active[2].is_alive())
+        finally:
+            owner.close()
+
     def test_accept_then_raise_release_delivery_is_not_retried(self):
         SERVER["down"].clear()
         owner = self.InputOwner(None)

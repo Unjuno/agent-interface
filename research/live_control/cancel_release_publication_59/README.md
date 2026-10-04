@@ -37,3 +37,11 @@ The above describes the earlier candidate at commit `52f62d96ab`. PR head `619ee
 That head still retries an `input_released` event if the sink accepts it and then raises before acknowledging: `published_release_ids` is set only after the sink returns. The new `test_accept_then_raise_release_delivery_is_not_retried` failed first on `619ee0eeb4` with two attempts. The candidate adds an attempt-ID guard before calling the sink; on any exception the terminal retains `delivery_unknown` and the event is not retried. This prevents the duplicate early-release event rejected by `RunningActionGuardV3`.
 
 The five-test suite passed 30/30 process runs (150 executions), and the current client-guard suite passed 4/4, including explicit rejection of a duplicate early-release receipt; `py_compile` and `git diff --check` passed. Candidate SHA-256: `executor_v12.py` `86bbd0b25530c8d0a2c153ac0d4fa70047cb5febc92253e60585ba0be9485c9e`; `test_cancel_release_publication.py` `358052551acf3cc7c0c4efca58bb054eb4d9a4e0d7e6bd3e6ff562e4ad6d1f24`.
+
+### Accepted-event sink failure follow-up
+
+The next regression injects an `OSError` while the external sink handles the initial `accepted` event. Before this follow-up, `submit()` had already retained an active tuple but had not started its worker; `close()` then raised `RuntimeError` while joining that unstarted thread. The candidate records admission publication as `delivery_unknown`, leaves the executor busy (so uncertain admission cannot be followed by another program), and makes `close()` skip the join only for a worker whose `ident` is still `None`. It does not start input when admission publication fails.
+
+The focused suite passes 6/6, including the accepted-sink failure test; the V13 executor and running-action guard suites pass 7/7. `py_compile` and `git diff --check` pass. This remains fake-Xlib/executor-state construction; no production transport, physical input, application effect, game, or allocation was exercised.
+
+The discovered executor regression suite also passes 16/16. Final SHA-256: `executor_v12.py` `c7273b9e5dc7b2ab3513bcafc2898177b453c3c7e47aa8ee0a23c03f987e2f65`; `test_cancel_release_publication.py` `4b8e523f502b77173a40624bcbaf589bc051c56b4021ba2f5699c3ab64b35d05`.
