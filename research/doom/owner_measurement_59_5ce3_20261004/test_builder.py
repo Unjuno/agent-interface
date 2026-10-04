@@ -69,7 +69,7 @@ class BuilderTests(unittest.TestCase):
         args = types.SimpleNamespace(seed=59, load_fixture_manifest=manifest)
         self.assertEqual(env['session_command'](args, output_dir), [sys.executable,
             str(destination / 'session_measured_5ce3.py'), '--out', str(output_dir), '--seed', '59',
-            '--timeout-seconds', '600', '--skill', '1', '--load-fixture-manifest', str(manifest)])
+            '--timeout-seconds', '600', '--skill', '1', '--load-fixture-manifest', str(manifest.resolve())])
 
     def test_composition_refuses_changed_session(self):
         compose = getattr(self.builder(), 'compose', None)
