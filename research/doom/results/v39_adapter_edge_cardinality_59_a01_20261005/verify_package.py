@@ -43,8 +43,10 @@ ck(b["status"]=="FROZEN_BEFORE_RUN","A02B preregistration status")
 ck(b["base_pr_head"]=="a7f9e9e3c4bd31199bde3a14761783ead619ad08","A02B current parent identity")
 ck(sha(source)==b["source"]["sha256"],"A02B controller snapshot SHA256")
 ck(sha(test)==b["test"]["sha256"],"A02B exact proposed test snapshot SHA256")
-ck(sha(REPO/"research/doom/test_map01_v39_typed_state_feedback.py")==b["test"]["sha256"],"A02B live branch test SHA256")
-ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==b["source"]["sha256"],"A02B live branch controller SHA256")
+a05_path=REPO/"research/doom/v39_adapter_event_type_boundary_59_a05_20261005/A05_RESULT.json"
+a05=json.loads(a05_path.read_text(encoding="utf-8"))
+ck(sha(REPO/"research/doom/test_map01_v39_typed_state_feedback.py")==a05["test_sha256"],"A05 live branch test SHA256")
+ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==a05["candidate_source_sha256"],"A05 live branch controller SHA256")
 ck(sha(runner)==b["runner"]["sha256"],"A02B runner SHA256")
 for snapshot,key in ((source,"source"),(test,"test")):
     blob=subprocess.check_output(["git","-C",str(REPO),"hash-object","--no-filters",str(snapshot)],text=True).strip()

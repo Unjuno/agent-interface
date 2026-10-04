@@ -755,6 +755,61 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipts[0]["down_edge_interval_ns"])
                 self.assertIsNone(receipts[0]["up_edge_interval_ns"])
 
+    def test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        down = next(row for row in template if row.get("event") == "input_admission")
+        up = next(row for row in template
+                  if row.get("event") == "input_release_measurement")
+
+        def unknown_event(row):
+            duplicate = json.loads(json.dumps(row))
+            duplicate["event"] = "future_input_edge_event"
+            return duplicate
+
+        cases = (
+            ("duplicate_down_unknown_kind", [down, unknown_event(down), up]),
+            ("duplicate_up_unknown_kind", [down, up, unknown_event(up)]),
+            ("down_unknown_kind", [unknown_event(down), up]),
+            ("up_unknown_kind", [down, unknown_event(up)]),
+        )
+        for name, rows in cases:
+            with self.subTest(case=name):
+                receipts = controller.input_edge_receipts(
+                    json.loads(json.dumps(rows)))
+                self.assertEqual(len(receipts), 1)
+                self.assertEqual(receipts[0]["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipts[0]["down_edge_interval_ns"])
+                self.assertIsNone(receipts[0]["up_edge_interval_ns"])
+
+    def test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        down = next(row for row in template if row.get("event") == "input_admission")
+        up = next(row for row in template
+                  if row.get("event") == "input_release_measurement")
+        legacy_up = json.loads(json.dumps(up))
+        legacy_up["event"] = "input_release_transition"
+
+        cases = (
+            ("duplicate_up_as_legacy_transition", [down, up, legacy_up]),
+            ("only_legacy_transition_up", [down, legacy_up]),
+        )
+        for name, rows in cases:
+            with self.subTest(case=name):
+                receipts = controller.input_edge_receipts(
+                    json.loads(json.dumps(rows)))
+                adapter_receipts = [row for row in receipts
+                                    if row.get("status", "").startswith("adapter_edge_")]
+                self.assertEqual(len(adapter_receipts), 1)
+                self.assertEqual(adapter_receipts[0]["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(adapter_receipts[0]["down_edge_interval_ns"])
+                self.assertIsNone(adapter_receipts[0]["up_edge_interval_ns"])
+
 
 if __name__ == "__main__":
     unittest.main()
