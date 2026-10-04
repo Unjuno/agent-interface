@@ -1,0 +1,41 @@
+{
+  "auditor_path": "research/doom/results/absolute_pair_useful_effect_audit_20261005_a03/audit_typed_observations.py",
+  "auditor_sha256": "7176b9deb828e567ec6730bb3fac10cedeabb1969f66f0b0492344a730552020",
+  "cells": [
+    "00-coast",
+    "01-pulse",
+    "02-pulse",
+    "03-coast",
+    "04-coast",
+    "05-pulse"
+  ],
+  "inputs": {
+    "00-coast": {
+      "events_sha256": "421da1a42c80932a1a0187b5857d3be940d0921853a0113bf3b4d92079176dde",
+      "result_sha256": "102bc3f06d7c872d510458b3eff086b4bded0db5d8e0ad50411dedfcae0decc0"
+    },
+    "01-pulse": {
+      "events_sha256": "cb26d8ecf6aaf76cc7ffa2fa29c7e4dfedb45000f54c6867af4cde4fcb3b035c",
+      "result_sha256": "c563f16cd65b3e4210718858ae978abbbda6f3690f95aef547a4b1898a5edf25"
+    },
+    "02-pulse": {
+      "events_sha256": "2d682b781a2d791a765a0208fedc0362e22b73b453f4b8a68f52cf43fbb139ba",
+      "result_sha256": "88333e30f75bfe670b5d9386c2e20ef59c5ef21a4abd41b21f4eeff6f239e1b8"
+    },
+    "03-coast": {
+      "events_sha256": "160b92373c99d299ee3eed61496245c53f5dbad83696ff71c3cec0d48071644b",
+      "result_sha256": "02cc22833a7a9aa97464917bc6f402c1544f3b81337b1176190b921afa66b961"
+    },
+    "04-coast": {
+      "events_sha256": "e41cfa19996d318c80fd43bdd6ced706e30ed3f463c3c80b3f5eec1a60f53df7",
+      "result_sha256": "cf690316c8bcfc4ed61947a60d5f60a52805294df446314ce1f3aceed421a438"
+    },
+    "05-pulse": {
+      "events_sha256": "4ad3d39d6fa538a13253e882670fdbc5ac4390d7ffd0bcacb775afb37887906c",
+      "result_sha256": "3040dd198891b6efbf285fa2ee1aaea4a74165c1cf20d69ff36f81e9d711aaf4"
+    }
+  },
+  "main_commit": "d12d451ae5e7661adc3b261403196b1af72e2851",
+  "schema": "absolute-window-typed-state-audit-freeze-v1",
+  "window_rule": "Use each frozen RESULT.json [window_start_ns, window_end_ns) interval; require exactly 600000000 ns."
+}
