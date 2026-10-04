@@ -1,5 +1,5 @@
 {
-  "audit": "PASS_SCOPED_V16_FULLMAIN_NO_ACTION",
+  "audit": "PASS_SCOPED_V16_LIFECYCLE",
   "construction01": {
     "exit_code": 0,
     "finish_delivered": false,
@@ -19,5 +19,21 @@
   },
   "errors": [],
   "manifest_files": 108,
-  "scope": "No-action protocol composition only; no gameplay, admitted input, per-key physical release timing, independent positive feedback, threat response, recovery, or task-effect qualification."
+  "one_hold": {
+    "accepted": 1,
+    "frame_changed": true,
+    "identity_join_verified": true,
+    "input_admissions": 1,
+    "manifest_files": 65,
+    "owner_keyup_rows": 1,
+    "owner_sync_completed": true,
+    "physical_edge_measurement_present": false,
+    "physical_release_authoritative": false,
+    "positive_useful_events": 0,
+    "release_transition_follows_owner_sync": true,
+    "release_transitions": 1,
+    "scorer_samples": 17,
+    "verified_empty_owner_release": true
+  },
+  "scope": "Two no-action and one single-hold protocol records only; no gameplay qualification, physical per-key release timing, positive useful feedback, threat response, recovery, or causal task-effect qualification."
 }
