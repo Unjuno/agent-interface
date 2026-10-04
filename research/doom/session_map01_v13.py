@@ -25,7 +25,7 @@ def _merge_sources(out):
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
     additions=[HERE/'session_map01_v13.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_retained_input_backend_v3.py',RESEARCH/'live_control/input_transition_owner_v3.py']
-    for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
+    for source in additions:data[source.relative_to(RESEARCH).as_posix()]=_sha(source)
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
 def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.perf_counter_ns,attempts=3):
