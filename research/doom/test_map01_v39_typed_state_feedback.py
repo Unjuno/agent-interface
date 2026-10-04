@@ -247,6 +247,21 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         intervals = [(start, end) for start in endpoints for end in endpoints
                      if start <= end]
         paired = incomplete = 0
+
+        def set_interval(row, edge_name, start, finish):
+            measurement = row["physical_key_measurement"]
+            measurement["adapter_edge"]["interval"] = [start, finish]
+            interval_name = ("physical_down_interval" if edge_name == "down"
+                             else "physical_up_interval")
+            measurement["bracket"][interval_name] = [start, finish]
+            measurement["pre_sample"].update(started_ns=start, finished_ns=start)
+            measurement["post_sample"].update(started_ns=start, finished_ns=finish)
+            request_name = "press_request_ns" if edge_name == "down" else "release_request_ns"
+            measurement[request_name] = start
+            measurement["sync_return_ns"] = start
+            if edge_name == "down":
+                row["input_ack_ns"] = start
+
         for down_start, down_end in intervals:
             for up_start, up_end in intervals:
                 events = json.loads(json.dumps(template))
@@ -254,10 +269,8 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                             if row.get("event") == "input_admission")
                 up = next(row for row in events
                           if row.get("event") == "input_release_measurement")
-                down["physical_key_measurement"]["adapter_edge"]["interval"] = [
-                    down_start, down_end]
-                up["physical_key_measurement"]["adapter_edge"]["interval"] = [
-                    up_start, up_end]
+                set_interval(down, "down", down_start, down_end)
+                set_interval(up, "up", up_start, up_end)
 
                 receipt = controller.input_edge_receipts(events)[0]
                 strictly_ordered = down_end < up_start
@@ -279,7 +292,6 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                         self.assertIsNone(receipt["up_edge_interval_ns"])
 
         self.assertEqual((paired, incomplete), (15, 85))
-
     def test_input_edge_receipt_pairs_per_key_admission_and_server_keyup_without_secrets(self):
         token = "ephemeral-intent-token"
         events = [
