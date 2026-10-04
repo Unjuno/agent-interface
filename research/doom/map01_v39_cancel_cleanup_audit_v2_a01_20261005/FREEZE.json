@@ -1,0 +1,43 @@
+{
+  "base_main_sha": "a9352dc53c783f1501046d762bc36c34bc6ab480",
+  "disposition_rule": "Baseline raw/result must pass; every corruption control must fail after raw_sha256 is recomputed.",
+  "inputs_and_sources": {
+    "AUDIT_V2.json": {
+      "bytes": 406,
+      "sha256": "4458f53ee08cc30760ab90e7a6cbc177b342cc8d6690bf93d5f4d84933b338ff"
+    },
+    "CHECKS.txt": {
+      "bytes": 1063,
+      "sha256": "3053a1a5aca9b04311c2c80eaa1c22eb361dba55945b640eccf11b1b609a8161"
+    },
+    "README.md": {
+      "bytes": 3099,
+      "sha256": "91b46499a2a0699db3c905df1e16dbb783d9247849a162bdeb52d90983e780cb"
+    },
+    "RESULT.json": {
+      "bytes": 660,
+      "sha256": "063015f77f8ac6c94752b6f397a51ec4dfa74cc2715a5795ae163cd70d0cfcca"
+    },
+    "audit_v2.py": {
+      "bytes": 9706,
+      "sha256": "691391ff81e3c9177488738bdd01edaeb8cbd955df45d095b4e705fac9870457"
+    },
+    "candidate-events.jsonl": {
+      "bytes": 4982,
+      "sha256": "36b60282cfc2a7c328cdb7c62ec0d37b029808dc7cf2f6e327d0fd954fd3c99d"
+    },
+    "test_audit_v2.py": {
+      "bytes": 3280,
+      "sha256": "2befa38d6389184927fc6815c561697fcd2078ce20d570c360c44166d66b56be"
+    }
+  },
+  "schema": "map01-v39-cancel-cleanup-audit-v2-a01-freeze",
+  "scope": "retrospective saved-result audit repair only; no candidate or live/game/input invocation",
+  "upstream_legacy_auditor": {
+    "git_blob": "3e2ba06f9cf1f2f33afad92ec911e3c9e2cc9165",
+    "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a03.py",
+    "sha256": "b9b2bd5551be629a4ba949697aa5f9fa380df57c98a8c951f22c320925288a96"
+  },
+  "upstream_pr": 7769,
+  "upstream_pr_head": "32d67fa285d23f01235ade98168a3a5fe7422a48"
+}
