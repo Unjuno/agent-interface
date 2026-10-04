@@ -430,7 +430,8 @@ def compile_cover(commands):
 def action_state_feedback(before, after, typed_observations):
     """Compare public HUD values only across source-bound typed captures."""
     def read(observation):
-        if (type(observation.get("sequence")) is not int or
+        if (type(observation.get("id")) is not str or not observation.get("id") or
+                type(observation.get("sequence")) is not int or
                 type(observation.get("capture_ns")) is not int or
                 type(observation.get("step")) is not int or
                 observation.get("step") < 0):
@@ -446,6 +447,7 @@ def action_state_feedback(before, after, typed_observations):
                 row.get("pointer_binding") != observation.get("pointer_binding") or
                 type(row.get("sequence")) is not int or
                 type(row.get("capture_ns")) is not int or
+                type(row.get("id")) is not str or not row.get("id") or
                 type(row.get("step")) is not int or row.get("step") < 0 or
                 row.get("capture_ns") != observation.get("capture_ns") or
                 row.get("id") != observation.get("id") or
