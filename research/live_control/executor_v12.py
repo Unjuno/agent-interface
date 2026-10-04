@@ -11,8 +11,18 @@ from lease_release_v1 import Lease
 class Executor(Previous):
     def __init__(self, backend, emit):
         super().__init__(backend, emit)
+        self._external_emit = emit
+        self.emit = self._emit_with_release_barrier
         self.release_watchers = []
         self.published_release_ids = set()
+
+    def _emit_with_release_barrier(self, event):
+        if type(event) is dict and event.get("event") == "terminal":
+            active = self.active
+            if active is not None and active[0] == event.get("id"):
+                cause = active[1].interruption_snapshot()
+                self._publish_release_cause(active[0], active[1], cause)
+        self._external_emit(event)
 
     def submit(self, identifier, steps, expected_sequence, valid_until_ns):
         with self.lock:
@@ -42,6 +52,9 @@ class Executor(Previous):
 
     def _publish_release(self, identifier, lease):
         cause = lease.wait_interruption(2.0)
+        self._publish_release_cause(identifier, lease, cause)
+
+    def _publish_release_cause(self, identifier, lease, cause):
         if cause is None:
             return
         record = cause.get("record")
@@ -86,3 +99,4 @@ class Executor(Previous):
         super().close()
         for watcher in self.release_watchers:
             watcher.join()
+
