@@ -443,7 +443,7 @@ Calls through one submitter instance are serialized across the complete socket
 exchange so concurrent actions cannot reuse an old event cursor or overlap
 input operations. The focused socket-submit suite passes 14/14 and the full
 package passes 117/117 after refreshing through current `main`
-`faee077c88842763b5e5e9ae26aa07bbd9c1a73b`. Ten sparse-checkout support blobs
+`0db425b379f9438bf6b13c95dce1b763750b06d5`. Ten sparse-checkout support blobs
 were materialized from that Git tree only for the full test run and removed
 afterward. Python compilation and `git diff --check` also pass. A fresh
 read-only recomputation after this main refresh of
