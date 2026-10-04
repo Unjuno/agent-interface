@@ -1,0 +1,27 @@
+{
+  "schema": "map01-v39-a02-audit-successor-mutation-result-v1",
+  "predecessor_auditor": {
+    "command": "python3 test_mutation_gate.py inputs/audit_a02_original.py",
+    "exit_code": 1,
+    "unchanged_raw_accepted": true,
+    "mutations_false_accepted": [
+      "wrong emitted step",
+      "wrong emitted intent_token",
+      "wrong emitted owner_id",
+      "emitted physical-up classification changed to UNKNOWN",
+      "receipt moved after terminal",
+      "expired owner buttons_down changed to [1]"
+    ]
+  },
+  "successor_auditor": {
+    "command": "python3 test_mutation_gate.py audit_successor.py",
+    "exit_code": 0,
+    "tests_passed": 7,
+    "positive_unchanged_raw": "accepted",
+    "negative_mutations": 6,
+    "negative_mutations_rejected": 6
+  },
+  "formal_candidate_execution_count": 0,
+  "retries": 0
+}
+

@@ -1,0 +1,30 @@
+{
+  "schema": "map01-v39-a02-audit-successor-run-v1",
+  "source_main": "dccf55e264f434ca27f2948fe53be09919047819",
+  "raw_input_sha256": "7a1a85a1cc07971b2bf6aa5e1d62541305b9fe8b55482fe46506d90b90db8b4f",
+  "environment": {
+    "os": "macOS",
+    "python": "CPython 3.14.5",
+    "container": "not started; OrbStack content-store STOP"
+  },
+  "invocations": [
+    {
+      "command": "python3 test_mutation_gate.py inputs/audit_a02_original.py",
+      "exit_code": 1,
+      "meaning": "expected RED: original audit accepted all six corrupted fixtures"
+    },
+    {
+      "command": "python3 audit_successor.py",
+      "exit_code": 0,
+      "meaning": "raw-only stronger audit accepted unchanged A02 output"
+    },
+    {
+      "command": "python3 test_mutation_gate.py audit_successor.py",
+      "exit_code": 0,
+      "tests": "7/7"
+    }
+  ],
+  "candidate_executions": 0,
+  "retries": 0,
+  "scope": "Host-only offline audit construction; not a container run or runtime experiment"
+}
