@@ -185,7 +185,6 @@ class Backend(Previous):
             isinstance(records_since_first_release, list)
             and counts_valid
             and all(isinstance(record, dict) for record in records_since_first_release)
-            and explicit_records == explicit_receipts
         )
         if records_valid:
             for record in records_since_first_release:
@@ -194,7 +193,6 @@ class Backend(Previous):
                 if record.get("event") != "owner_release":
                     records_valid = False
                     break
-                cleanup_records.append(record)
                 if not (
                     type(record.get("verified_ns")) is int
                     and record.get("verified") is True
@@ -204,6 +202,9 @@ class Backend(Previous):
                 ):
                     records_valid = False
                     break
+                cleanup_records.append(record)
+        if explicit_records != explicit_receipts:
+            records_valid = False
         brackets_valid = all(
             type(row.get("release_call_started_ns")) is int
             and type(row.get("release_call_returned_ns")) is int
