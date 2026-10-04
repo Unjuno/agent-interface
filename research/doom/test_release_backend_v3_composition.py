@@ -201,7 +201,14 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "step failed after release"):
                 backend.execute({"key": "a", "raise": True}, None, "program-8", 0)
             self.assertFalse(hasattr(backend._release_batch, "context"))
-            self.assertEqual(emitted, [])
+            self.assertEqual(len(emitted), 1)
+            release = emitted[0]
+            self.assertEqual(release["event"], "input_release_transition")
+            self.assertEqual((release["id"], release["step"]), ("program-8", 0))
+            self.assertTrue(release["owner_thread_keyup_verified"])
+            self.assertFalse(release["owner_transition_verified"])
+            self.assertFalse(release["release_batch_complete"])
+            self.assertEqual(release["release_batch_disposition"], "step_exception")
         finally:
             sys.path.remove(str(HERE))
             sys.modules.pop("doom_typed_release_backend_v3", None)

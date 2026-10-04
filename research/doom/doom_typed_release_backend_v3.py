@@ -26,8 +26,18 @@ class Backend(Previous):
         self._release_batch.context = context
         try:
             result = super().execute(step, cancel, identifier, index)
-        except BaseException:
-            context["rows"].clear()
+        except BaseException as exc:
+            try:
+                self._publish_incomplete_release_batch(context, exc)
+            except BaseException as publish_exc:
+                add_note = getattr(exc, "add_note", None)
+                if callable(add_note):
+                    add_note(
+                        "incomplete release telemetry publication failed: "
+                        + type(publish_exc).__name__
+                    )
+            finally:
+                context["rows"].clear()
             try:
                 del self._release_batch.context
             except AttributeError:
@@ -42,6 +52,29 @@ class Backend(Previous):
             except AttributeError:
                 pass
         return result
+
+    def _publish_incomplete_release_batch(self, context, error):
+        """Keep observed per-key up receipts when a later step operation fails."""
+        rows = context["rows"]
+        size = len(rows)
+        for position, row in enumerate(rows):
+            row.update({
+                "release_batch_schema": "input-release-batch-v3",
+                "release_batch_size": size,
+                "release_batch_position": position,
+                "release_batch_complete": False,
+                "release_batch_disposition": "step_exception",
+                "release_batch_error_type": type(error).__name__,
+                "owner_sample_after_batch_available": False,
+                "owner_transition_verified": False,
+                "owner_thread_keyup_verified_after_batch": False,
+                "physical_verification_authoritative": False,
+                "measurement_contract_v3": (
+                    "explicit per-key up receipt retained before a later step exception; "
+                    "the release batch is incomplete and unverified"
+                ),
+            })
+            self.emit(row)
 
     def release_all(self):
         result = super().release_all()
@@ -185,6 +218,7 @@ class Backend(Previous):
                 "release_batch_schema": "input-release-batch-v3",
                 "release_batch_size": size,
                 "release_batch_position": position,
+                "release_batch_complete": True,
                 "owner_sample_after_started_ns": sample_started,
                 "owner_sample_after_finished_ns": sample_finished,
                 "owner_sample_ordered_after_batch": sample_ordered,
