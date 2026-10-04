@@ -1,4 +1,4 @@
-"""Typed DOOM backend composing v2 attribution with owner-thread release batches."""
+"""Owner-thread DOOM release-batch backend composing v2 attribution with per-key receipts."""
 from __future__ import annotations
 
 import threading

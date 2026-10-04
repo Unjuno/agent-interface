@@ -19,7 +19,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
         old_base = sys.modules.get("doom_typed_release_backend_v2")
         sys.modules["doom_typed_release_backend_v2"] = base
         sys.path.insert(0, str(HERE))
-        import doom_typed_release_backend_v3 as candidate
+        import doom_owner_thread_release_batch_backend_v1 as candidate
         return candidate, previous_owner, old_base
 
     def test_release_batch_preserves_backend_v2_program_step_provenance(self):
@@ -130,7 +130,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
             self.assertEqual((release["id"], release["step"]), ("program-7", 3))
         finally:
             sys.path.remove(str(HERE))
-            sys.modules.pop("doom_typed_release_backend_v3", None)
+            sys.modules.pop("doom_owner_thread_release_batch_backend_v1", None)
             if previous_base is None:
                 sys.modules.pop("doom_typed_release_backend_v2", None)
             else:
@@ -213,7 +213,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
             self.assertEqual(release["release_batch_disposition"], "step_exception")
         finally:
             sys.path.remove(str(HERE))
-            sys.modules.pop("doom_typed_release_backend_v3", None)
+            sys.modules.pop("doom_owner_thread_release_batch_backend_v1", None)
             if previous_base is None:
                 sys.modules.pop("doom_typed_release_backend_v2", None)
             else:

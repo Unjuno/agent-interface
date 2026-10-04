@@ -38,14 +38,14 @@ class SessionSelectionTests(unittest.TestCase):
             base = types.ModuleType("session_map01_v12")
             base.vd = types.SimpleNamespace(DoomGame=object)
             base.sys = sys
-            telemetry = types.ModuleType("doom_typed_release_backend_v3")
+            telemetry = types.ModuleType("doom_owner_thread_release_batch_backend_v1")
             telemetry.Backend = type("SelectedBackend", (), {})
             names = {
                 "session_map01_v12": sys.modules.get("session_map01_v12"),
-                "doom_typed_release_backend_v3": sys.modules.get("doom_typed_release_backend_v3"),
+                "doom_owner_thread_release_batch_backend_v1": sys.modules.get("doom_owner_thread_release_batch_backend_v1"),
             }
             sys.modules.update({"session_map01_v12": base,
-                                "doom_typed_release_backend_v3": telemetry})
+                                "doom_owner_thread_release_batch_backend_v1": telemetry})
             try:
                 with patch.object(candidate, "MainThreadScorerStdin") as polling, \
                      patch.object(candidate, "ScorerFileSink") as sink:
@@ -62,7 +62,7 @@ class SessionSelectionTests(unittest.TestCase):
                 manifest = {name.replace("\\", "/"): value
                             for name, value in manifest.items()}
                 for name in (
-                    "doom/doom_typed_release_backend_v3.py",
+                    "doom/doom_owner_thread_release_batch_backend_v1.py",
                     "doom/doom_typed_release_backend_v2.py",
                     "live_control/input_transition_owner_v4.py",
                     "live_control/input_transition_owner_v3.py",

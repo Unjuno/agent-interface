@@ -24,7 +24,7 @@ def _merge_sources(out):
     path=Path(out)/'sources.json'
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
-    additions=[HERE/'session_map01_v14.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_typed_release_backend_v3.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
+    additions=[HERE/'session_map01_v14.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
@@ -53,7 +53,7 @@ def main():
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
     if timeout_seconds<10:raise ValueError('timeout must leave scoring slack')
     import session_map01_v12 as base
-    from doom_typed_release_backend_v3 import Backend as TelemetryBackend
+    from doom_owner_thread_release_batch_backend_v1 import Backend as TelemetryBackend
     holder={};sink=ScorerFileSink(out)
     def sample_game():
         game=holder.get('game')

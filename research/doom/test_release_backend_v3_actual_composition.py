@@ -122,7 +122,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         backend_base.suite = object()
         prior = {name: sys.modules.get(name) for name in (
             "input_owner_v12", "input_transition_owner_v3", "input_transition_owner_v4",
-            "doom_typed_release_backend_v2", "doom_typed_release_backend_v3",
+            "doom_typed_release_backend_v2", "doom_owner_thread_release_batch_backend_v1",
         )}
         for path in (str(LIVE), str(HERE)):
             sys.path.insert(0, path)
@@ -131,7 +131,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         sys.modules["doom_typed_release_backend_v2"] = backend_base
         try:
             owner_v4 = importlib.import_module("input_transition_owner_v4")
-            backend = importlib.import_module("doom_typed_release_backend_v3")
+            backend = importlib.import_module("doom_owner_thread_release_batch_backend_v1")
             # Ensure the backend imports the real wrapper implementation under test.
             self.assertIs(backend.InputOwner, owner_v4.InputOwner)
             candidate = backend.Backend(types.SimpleNamespace(name="display"), None,
