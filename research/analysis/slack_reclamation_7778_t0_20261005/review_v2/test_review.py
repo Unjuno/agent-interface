@@ -35,4 +35,19 @@ row = next(x for x in m["rows"] if x["trace_id"] == "burst_at_replenishment" and
 row["soft_service"] = 0
 r = run(m)
 assert r["disposition"] == "FAIL_AUDIT", r["disposition"]
-print("review-v2 regression checks: 2/2 rejected; baseline PASS_METHOD_SCOPED")
+# The static comparator may not idle ready soft work on an unreserved tick.
+m = copy.deepcopy(base)
+for row in m["rows"]:
+    if row["policy"] != "STATIC_RESERVATION" or row["trace_id"] not in aud.P["positive_slack_traces"]:
+        continue
+    trace = next(t for t in inputs["traces"] if t["trace_id"] == row["trace_id"])
+    jobs_by_id = {j["id"]: j for j in trace["jobs"]}
+    for event in row["events"]:
+        job_id = event["action"]
+        if job_id is not None and jobs_by_id[job_id]["class"] == "soft":
+            event["action"] = None
+            row["remaining"][job_id] += 1
+            row["soft_service"] -= 1
+r = run(m)
+assert r["disposition"] == "FAIL_AUDIT", r["disposition"]
+print("review-v2 regression checks: 3/3 rejected; baseline PASS_METHOD_SCOPED")

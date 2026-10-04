@@ -1,6 +1,6 @@
 # PR review correction — Issue #7778 T0
 
-The original frozen auditor had two gaps: eligible slack-stealing rows could report less than the independent maximum-service oracle and still pass; `UNKNOWN_OVERLOAD` rows returned before checking reported terminal remaining work and optional service. The original raw files and `formal_01/audit.json` are preserved without modification.
+The frozen auditor had three review gaps: it accepted a safe but suboptimal slack result, skipped terminal-metric validation for `UNKNOWN_OVERLOAD`, and allowed `STATIC_RESERVATION` rows to idle ready soft work while serving as the gain comparator. The original raw files and `formal_01/audit.json` are preserved unchanged.
 
 ## Corrective audit
 
@@ -17,4 +17,4 @@ wslc run --rm --pull never --network none --cpus 1 -e OUTPUT_DIR=/out -v "${PWD}
 wslc run --rm --pull never --network none --cpus 1 -v "${PWD}:/src:ro" -v "${PWD}\review_v2:/out" -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B review_v2/test_review.py
 ```
 
-Observed: baseline corrective audit PASS; regression checks 2/2 rejected. The original run's missing dispatch-overhead sensitivity still limits the result to the zero-overhead synthetic method scope and remains an Issue-level follow-up.
+Observed: baseline corrective audit PASS; all three planted audit mutations rejected. Dispatch-overhead sensitivity was examined in a separate T0b allocation and its result is recorded separately on Issue #7778; this package remains the zero-overhead T0 result.

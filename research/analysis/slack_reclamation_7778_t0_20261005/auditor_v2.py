@@ -151,6 +151,20 @@ def validate_row(trace, row):
         if e["reserved"] != (t % P["reservation_period"] == 0):
             return False, "RESERVATION_PHASE"
         action = e["action"]
+        if policy == "STATIC_RESERVATION":
+            ready_control = [j for j in jobs
+                             if j["id"] in known_control and rem[j["id"]] > 0]
+            ready_soft = [j for j in jobs
+                          if j["class"] == "soft" and j["release"] <= t
+                          and rem[j["id"]] > 0]
+            if e["reserved"]:
+                expected_static = (min(ready_control, key=lambda x: (x["deadline"], x["id"]))["id"]
+                                   if ready_control else None)
+            else:
+                expected_static = (min(ready_soft, key=lambda x: (x["deadline"], x["id"]))["id"]
+                                   if ready_soft else None)
+            if action != expected_static:
+                return False, "STATIC_WORK_CONSERVING_ACTION"
         if action is not None:
             if not isinstance(action, str) or action not in rem:
                 return False, "UNKNOWN_ACTION"
