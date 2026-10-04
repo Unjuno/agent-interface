@@ -30,6 +30,10 @@ candidate = HERE / "wslc-candidate"
 baseline_out = (baseline / "BASELINE_WSL_OUTPUT.txt").read_text(encoding="utf-8")
 candidate_out = (candidate / "CANDIDATE_WSL_OUTPUT.txt").read_text(encoding="utf-8")
 windows_out = (HERE / "WINDOWS_TEST_OUTPUT.txt").read_text(encoding="utf-8")
+matrix = HERE / "wslc-matrix"
+matrix_out = (matrix / "MATRIX_WSL_OUTPUT.txt").read_text(encoding="utf-8")
+windows_matrix = HERE / "windows-matrix"
+windows_matrix_out = (windows_matrix / "MATRIX_WINDOWS_OUTPUT.txt").read_text(encoding="utf-8")
 
 require(read_exit(baseline, "BASELINE_WSL_EXIT_CODE.txt") == 1,
         "frozen parent mutation tests did not exit 1")
@@ -46,6 +50,12 @@ require(read_exit(HERE, "WINDOWS_TEST_EXIT_CODE.txt") == 0,
         "candidate Windows suite did not exit 0")
 require("Ran 12 tests" in windows_out and windows_out.rstrip().endswith("OK"),
         "candidate Windows suite is not 12/12 OK")
+require(read_exit(matrix, "MATRIX_WSL_EXIT_CODE.txt") == 0 and
+        matrix_out.count("... ok") == 2 and matrix_out.rstrip().endswith("OK"),
+        "expanded WSLc first/middle/last acceptance matrix did not pass")
+require(read_exit(windows_matrix, "MATRIX_WINDOWS_EXIT_CODE.txt") == 0 and
+        "Ran 12 tests" in windows_matrix_out and windows_matrix_out.rstrip().endswith("OK"),
+        "expanded Windows backend suite is not 12/12 OK")
 
 parent_blob = subprocess.run(
     ["git", "rev-parse", f"{PARENT}:research/doom/doom_owner_thread_release_batch_backend_v1.py"],
@@ -90,4 +100,4 @@ for method in publish_methods:
 for path in (SOURCE, TESTS):
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     print(f"SHA256 {path.relative_to(ROOT)} {digest}")
-print("PASS_AUDIT parent-red=2/2 candidate-wslc=12/12 candidate-windows=12/12")
+print("PASS_AUDIT parent-red=2/2 candidate-wslc=12/12 candidate-windows=12/12 matrix-wslc=12-cases")

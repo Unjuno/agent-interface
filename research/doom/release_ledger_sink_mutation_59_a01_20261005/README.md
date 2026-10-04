@@ -24,6 +24,10 @@ The exact parent fails both added regressions. Complete publication returns posi
 
 The backend suite excludes `test_executor_terminal_retains_actual_backend_delivery_positions`, which imports an additional executor dependency omitted from this sparse worktree. The changed backend and both complete/incomplete publication paths are covered by the 11 executed tests. The earlier exploratory command that attempted the full module is retained in the session output but is not counted as a pass.
 
+## Independent review follow-up — 2026-10-05
+
+An independent exact-head review swept sink mutation across first/middle/last positions and fail-before-accept plus accept-then-raise outcomes. I retained that 12-case matrix in the two parameterized regressions. The full focused backend suite passes 12/12 on Windows Python 3.11; the two matrix tests pass on pinned WSLc Python 3.12. WSLc output is retained in `wslc-matrix/`. The initial WSLc invocation from the task-root path failed to locate the sparse checkout, and the corrected invocation from the repository worktree passed; only the corrected run is evidence.
+
 ## Reproduction
 
 From the repository root on the candidate branch:
@@ -33,3 +37,5 @@ python -m unittest research.doom.test_release_backend_v3_actual_composition.Actu
 ```
 
 Raw WSLc parent failures are in `wslc-baseline/`; candidate output and exit code are in `wslc-candidate/`. Windows candidate output and exit code are beside this README. Run `python audit.py` from this directory to independently check the retained outcomes, source mutation points, parent blob, and hashes.
+
+Run the expanded WSLc matrix from `/research/doom` with `python -m unittest test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger -v`.
