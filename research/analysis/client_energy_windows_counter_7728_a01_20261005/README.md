@@ -9,4 +9,5 @@ This is the Windows-host-specific A01 follow-up. It does not change the macOS se
 - `audit_preflight.py`, `audit.json` — independent raw-output audit and mutation controls.
 - `OUTPUT_SHA256SUMS` — post-run hashes for retained raw and audit output.
 - `REPORT.md` — result and bounded interpretation.
+- `PROVENANCE_DEVIATION.md` — post-publication runner-byte mismatch; the measurement result is retained, but exact source custody is on HOLD.
 - `CONSTRUCTION.md`, `test_audit_preflight.py` — pre-freeze source and synthetic checks.

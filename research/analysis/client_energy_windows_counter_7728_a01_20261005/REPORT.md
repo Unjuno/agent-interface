@@ -1,6 +1,6 @@
 # Issue #7728 Windows counter cross-check A01
 
-**Disposition: `PASS_COUNTER_ORACLE_MATCH` for the Windows host sampled on 2026-10-04 UTC.** The Windows Energy Metering Interface (EMI) v2 package channel and the host's `Energy Meter(RAPL_Package0_PKG)\Energy` performance counter reported compatible cumulative values in one frozen, unprivileged bracket.
+**Instrument result: `PASS_COUNTER_ORACLE_MATCH` for the Windows host sampled on 2026-10-04 UTC. Evidence custody: `HOLD_RUNNER_SOURCE_BYTES_UNRECOVERED`.** The Windows Energy Metering Interface (EMI) v2 package channel and the host's `Energy Meter(RAPL_Package0_PKG)\Energy` performance counter reported compatible cumulative values in one unprivileged bracket.
 
 The pre-registered run read the EMI channels, sampled the Performance Counter once, and read EMI again. EMI declared channel `RAPL_Package0_PKG` with unit code 0 (picowatt-hours). The direct readings were `718676780634444` before and `718691313952222` after; the raw `NumberOfItems64` counter sample was `718691170585277`, within that interval. EMI time advanced by 26,912,157 units of 100 ns. The independent auditor returned `PASS_COUNTER_ORACLE_MATCH`; it also rejected all three preregistered mutations (wrong unit, removed target channel, and out-of-bracket counter).
 
@@ -11,3 +11,5 @@ This only establishes sensor-counter identity and unit compatibility on this Win
 Construction checks before freeze: three synthetic auditor tests passed, PowerShell parsing passed, and the C# probe compiled. No privilege escalation or workload was used.
 
 The ABI and unit interpretation were checked against Microsoft's [Energy Meter Interface documentation](https://learn.microsoft.com/en-us/windows-hardware/drivers/powermeter/energy-meter-interface), [channel measurement structure](https://learn.microsoft.com/en-us/windows/win32/api/emi/ns-emi-emi_channel_measurement_data), and [measurement-unit enumeration](https://learn.microsoft.com/en-us/windows/win32/api/emi/ne-emi-emi_measurement_unit), plus the locally installed Windows SDK `emi.h` whose hash is in the freeze.
+
+Post-publication verification found that the Git blob for `run_preflight.ps1` does not match the frozen local source hash. The pre-run source check had passed before the single invocation, but the exact runner bytes are not recoverable from the committed tree; see `PROVENANCE_DEVIATION.md`. The raw measurement and audit remain retained, while the evidence package is not a fully reproducible source-bound run. No probe was rerun.
