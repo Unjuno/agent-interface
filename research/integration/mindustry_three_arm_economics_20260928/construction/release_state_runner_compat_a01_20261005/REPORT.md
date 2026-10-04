@@ -17,3 +17,5 @@ Capture a04 exercises this source-shaped record end-to-end: 12 actions per arm, 
 The live producer source is present under `research/live_control`: the Mindustry child selects `mindustry_receipt_session_v1.Backend`, which inherits the `session_v5.release_all` path and returns the `input_owner_v10` record through `executor_v3`. `PRODUCER-CONTRACT-REVIEW.md` records the source path. This code was inspected but never executed against X11/game input; runtime behavior remains unverified. The separate #5130 formal Docker slot is still unassigned.
 
 After refreshing to main d12d451, the package passed 123 tests before the producer-envelope additions. The later 124-test verification against the same main is recorded separately in `PRODUCER-COMPAT-VALIDATION.json`. POST-MAIN-VALIDATION.json and its logs record this later validation separately from the earlier runner capture.
+
+The repository advanced again to main c99d93a while this PR was being prepared. After merging it, all 124 tests passed in both modes and source-shaped capture a05 passed both construction audits. `LATEST-MAIN-VALIDATION.json` preserves these results and verifies all retained capture manifests.
