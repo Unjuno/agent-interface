@@ -1,0 +1,19 @@
+{
+  "schema": "owner-keyup-timestamp-order-run-v1",
+  "allocation": "OWNER-KEYUP-TIMESTAMP-ORDER-5156-T5-20261005-01",
+  "host": "Windows local Python construction environment",
+  "python": "3.11.9",
+  "resource_usage": {"x11": 0, "game": 0, "gui": 0, "model": 0, "gpu": 0, "os_input": 0, "container": 0, "retries": 0},
+  "commands": [
+    {"command": "python research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/run_candidate.py --source research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/baseline/analyze_map01_direct_retained_input_v1.py --phase baseline --out research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/output/baseline_raw.json", "exit_code": 0},
+    {"command": "python research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/audit.py --cases research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/cases.json --raw research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/output/baseline_raw.json --source research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/baseline/analyze_map01_direct_retained_input_v1.py --phase baseline --out research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/output/baseline_audit.json", "exit_code": 0, "disposition": "FAIL_TIMESTAMP_ORDER_NEGATIVE_ACCEPTED"},
+    {"command": "python research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/run_candidate.py --source research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/repaired/analyze_map01_direct_retained_input_v1.py --phase repaired --out research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/output/repaired_raw.json", "exit_code": 0},
+    {"command": "python research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/audit.py --cases research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/cases.json --raw research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/output/repaired_raw.json --source research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/repaired/analyze_map01_direct_retained_input_v1.py --phase repaired --out research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/output/repaired_audit.json", "exit_code": 0, "disposition": "PASS_ORDER_GATE_CONSTRUCTION_SCOPED"},
+    {"command": "python -B -m unittest research.doom.test_analyze_map01_direct_retained_input_v1 -v", "exit_code": 0, "result": "5/5 passed"},
+    {"command": "python -B -m unittest discover -s research/analysis/owner_keyup_timestamp_order_5156_t5_20261005 -p 'test*.py' -v", "exit_code": 0, "result": "4/4 independent-auditor tests passed, including two mutation controls"},
+    {"command": "python -B -m py_compile research/doom/analyze_map01_direct_retained_input_v1.py research/doom/test_analyze_map01_direct_retained_input_v1.py research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/run_candidate.py research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/audit.py research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/test_audit.py", "exit_code": 0},
+    {"command": "git diff --check", "exit_code": 0},
+    {"command": "PowerShell SHA256SUMS verification over all tracked package files except SHA256SUMS itself and ignored bytecode cache", "exit_code": 0, "verified_entries": 14}
+  ],
+  "scope": "construction evidence for offline timestamp-order classification only; no live X11 fixture allocation or MAP01 run"
+}
