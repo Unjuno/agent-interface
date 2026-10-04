@@ -15,6 +15,7 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "results" / "integrated-efficiency-live-01"
 SUMMARY = HERE / "results" / "integrated-efficiency-live-01-summary.json"
 RESULT = HERE / "results" / "integrated-efficiency-live-01-summary-reconciliation-v1.json"
+FROZEN_SOURCE_ARCHIVE = HERE / "results" / "integrated-efficiency-live-01-frozen-source-v1"
 ARMS = ("plain", "ephemeral", "persistent")
 FIELDS = ("input_tokens", "cached_input_tokens", "cache_write_input_tokens",
           "output_tokens", "reasoning_output_tokens")
@@ -98,11 +99,11 @@ def main() -> int:
             call_ids.append(call_id)
             arm_ids.append(call_id)
             usage = call["usage"]
-        if call["stage"] != "schema_preflight":
-            raw = raw_by_id.get(call_id)
-            if (raw is None or raw["usage"] != usage
-                    or raw["event_usage"] != usage):
-                mismatched_calls.append(call_id)
+            if call["stage"] != "schema_preflight":
+                raw = raw_by_id.get(call_id)
+                if (raw is None or raw["usage"] != usage
+                        or raw["event_usage"] != usage):
+                    mismatched_calls.append(call_id)
             for field in FIELDS:
                 arm_totals[field] += usage[field]
                 totals[field] += usage[field]
@@ -141,12 +142,18 @@ def main() -> int:
     current_main_commit = subprocess.check_output(
         ["git", "rev-parse", "origin/main"], cwd=root, text=True).strip()
     pin_status = {}
+    frozen_source_manifest = read(FROZEN_SOURCE_ARCHIVE / "SOURCE_MANIFEST.json")
+    archived_sources = {row["name"]: row for row in frozen_source_manifest["files"]}
     for name, expected in pins.items():
         candidates = {"origin_main": git_digest(root, "origin/main",
                                                 f"research/live_control/{name}")}
         for index, candidate_root in enumerate(archived_prefixes, start=1):
             candidates[f"archive_{index}"] = git_digest(root, "origin/main",
                                                         f"{candidate_root}/{name}")
+        archived = archived_sources.get(name)
+        if archived:
+            source_bytes = (FROZEN_SOURCE_ARCHIVE / archived["archive_file"]).read_bytes()
+            candidates["frozen_source_archive_v1"] = hashlib.sha256(source_bytes).hexdigest()
         pin_status[name] = {
             "expected_sha256": expected,
             "available_sha256": candidates,
@@ -175,8 +182,17 @@ def main() -> int:
         "cached_input_semantics": "cached_input_tokens are reported as a subset of input_tokens and are not added to input totals",
         "pinned_source_hashes_all_reavailable": all(row["exact_copy_available"] for row in pin_status.values()),
         "pinned_source_hash_status": pin_status,
+        "frozen_source_archive": {
+            "commit": frozen_source_manifest["source_commit"],
+            "source_count": frozen_source_manifest["source_count"],
+            "total_bytes": frozen_source_manifest["total_bytes"],
+            "all_preregistered_hashes_match_archive": all(
+                archived_sources.get(name, {}).get("sha256") == expected
+                for name, expected in pins.items()),
+            "proves_execution_checkout_identity": False,
+        },
         "historical_allocation_disposition": prior_audit["disposition"],
-        "independent_replay_disposition": "HOLD_SUMMARY_AND_FROZEN_SOURCE_RECONCILIATION",
+        "independent_replay_disposition": "HOLD_LEGACY_SUMMARY_MISMATCH",
     }
     if args.write:
         RESULT.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
@@ -186,8 +202,9 @@ def main() -> int:
                 and not mismatched_calls and len(call_ids) == len(set(call_ids))
                 and not mismatched_report_totals
                 and expected_from_raw == totals == prior_audit["actual_usage_totals"])
-    # Exit 2 deliberately records a reproducible HOLD when retained summaries or
-    # frozen source bytes do not reconcile. It never changes the historical result.
+    # Exit 2 deliberately records a reproducible HOLD when retained summaries do
+    # not reconcile. Exact source bytes are now preserved separately; neither the
+    # result nor this check proves which checkout the original run used.
     return 0 if complete and output["legacy_summary_matches_report"] \
         and output["pinned_source_hashes_all_reavailable"] else 2
 
