@@ -687,6 +687,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
 - [`priority_inheritance_5370_t7_composition_20261002_01/`](priority_inheritance_5370_t7_composition_20261002_01/)
 - [`priority_inheritance_nested_5370_t6_20261001/`](priority_inheritance_nested_5370_t6_20261001/)
+- [`privacy_conditional_kernel_5420_t0_20261004/`](privacy_conditional_kernel_5420_t0_20261004/)
 - [`privacy_discovery_6549_t0_v1/`](privacy_discovery_6549_t0_v1/)
 - [`private_witness_boundary_6498_t0_20261002_v1/`](private_witness_boundary_6498_t0_20261002_v1/)
 - [`probabilistic_automaton_censor_bounds_r1_v1/`](probabilistic_automaton_censor_bounds_r1_v1/)
