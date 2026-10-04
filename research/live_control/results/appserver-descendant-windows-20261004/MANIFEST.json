@@ -1,6 +1,6 @@
 {
   "format": "agent-interface-evidence-capsule-v1",
-  "created_utc": "2026-10-04T01:07:40.613570+00:00",
+  "created_utc": "2026-10-04T01:13:52.879925+00:00",
   "source_read_snapshot": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
   "evidence_branch_base": "853a867fb554c04d8f1223f9525f9eaf7d2792b6",
   "source_path": "research/live_control/codex_app_server_client_v2.py",
@@ -8,8 +8,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 9089,
-      "sha256": "718c04ba71dadab5bcd097cd92adcd101aac63d4fe93f035e258bc1849497ad6"
+      "bytes": 10327,
+      "sha256": "1a53d0d82d257946b7b5857e422efd8e110992ec163c354624489573e66b49e5"
     },
     {
       "path": "codex_app_server_client_v2.py",
@@ -175,7 +175,42 @@
       "path": "factory-failure-audit.json",
       "bytes": 609,
       "sha256": "7174eea4112806fe37a6d2cd6d3335d0899c7502cadc6bb45cd72dbab88f60ae"
+    },
+    {
+      "path": "test_factory_cleanup_failures.py",
+      "bytes": 5470,
+      "sha256": "d54f6c69851bcf4171580776433897ec6065fbcfda7d2123053de3678541bcd8"
+    },
+    {
+      "path": "factory-cleanup-a01.json",
+      "bytes": 885,
+      "sha256": "17564c62886f7a153c1bd21309da3ac9a91482d04382bba7ec93d657bd6732ba"
+    },
+    {
+      "path": "windows_job_popen_factory_candidate.py",
+      "bytes": 7977,
+      "sha256": "9ef41033916eb02ee8e7583a9a2ddbf4818399e053b2902da9df5cd6d3d8701c"
+    },
+    {
+      "path": "test_factory_cleanup_failures_v2.py",
+      "bytes": 5608,
+      "sha256": "1f921d1a84f5153294e63088e0952668e4a4b392d2f82da68a00e7b1a152d613"
+    },
+    {
+      "path": "factory-cleanup-a02.json",
+      "bytes": 1019,
+      "sha256": "df3c9ae3c54fb04c135c2d15e6e2632106d41089a54f60e9c4d33b1b8a1e2d96"
+    },
+    {
+      "path": "audit_factory_cleanup_failures.py",
+      "bytes": 2633,
+      "sha256": "db382903926d26adf715090e93a5fa3a18c021d385a727634bdbd323c0b1d3bf"
+    },
+    {
+      "path": "factory-cleanup-audit.json",
+      "bytes": 740,
+      "sha256": "2b4a73f4557f6f18d90e5fb9feb4150cbdc88a09364fee8f5789afc6baf78ffe"
     }
   ],
-  "scope": "Windows Python 3.12.10 synthetic client subprocess/pipe boundary, experimental Job Object process-factory composition, normal/timeout pipe-close checks and injected startup/assignment/resume failures; no model, game, GUI or task effect"
+  "scope": "Windows Python 3.12.10 synthetic client subprocess/pipe boundary, experimental Job Object process-factory composition, normal/timeout pipe-close checks and injected startup/assignment/resume/cleanup failures; no model, game, GUI or task effect"
 }
