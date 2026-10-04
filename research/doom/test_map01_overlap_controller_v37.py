@@ -12,6 +12,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "live_control"))
 import map01_overlap_controller_v37 as controller
+import map01_overlap_controller_v39 as current_controller
 from persistent_planner_adapter_v2 import _validate_schema, PlannerProtocolError
 from running_action_guard_v1 import RunningActionGuard
 from running_action_guard_v2 import RunningActionGuardV2
@@ -97,7 +98,7 @@ class Map01OverlapControllerV36Tests(unittest.TestCase):
         for current_health, current_ammo in ((201, 46), (79, 1000)):
             with self.subTest(health=current_health, ammo=current_ammo):
                 with self.assertRaisesRegex(ValueError, "outside its declared domain"):
-                    controller.prepare_action_admission(
+                    current_controller.prepare_action_admission(
                         initial_receipt(), candidate,
                         candidate["action_validity"][0],
                         signal("health", 85, 1, 100),
