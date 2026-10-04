@@ -1,0 +1,103 @@
+{
+  "dominance": {
+    "disposition": "ROBUST_A",
+    "eligible": [
+      "A",
+      "B"
+    ],
+    "evaluated_pairs": 784,
+    "winner_counts": {
+      "A": 784
+    },
+    "fixed_equal_aggregate": {
+      "mix": [
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "weights": [
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "scores": {
+        "A": "4/3",
+        "B": "7/3"
+      },
+      "winner": "A"
+    }
+  },
+  "crossed_tradeoff": {
+    "disposition": "MIXED_OR_TIED_REGION",
+    "eligible": [
+      "A",
+      "B"
+    ],
+    "evaluated_pairs": 784,
+    "winner_counts": {
+      "A": 288,
+      "B": 288,
+      "TIE": 208
+    },
+    "fixed_equal_aggregate": {
+      "mix": [
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "weights": [
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "scores": {
+        "A": "25/9",
+        "B": "25/9"
+      },
+      "winner": "TIE"
+    }
+  },
+  "task_mix_reversal": {
+    "disposition": "MIXED_OR_TIED_REGION",
+    "eligible": [
+      "A",
+      "B"
+    ],
+    "evaluated_pairs": 28,
+    "winner_counts": {
+      "A": 12,
+      "B": 12,
+      "TIE": 4
+    },
+    "fixed_equal_aggregate": null
+  },
+  "value_weight_reversal": {
+    "disposition": "MIXED_OR_TIED_REGION",
+    "eligible": [
+      "A",
+      "B"
+    ],
+    "evaluated_pairs": 28,
+    "winner_counts": {
+      "A": 12,
+      "B": 12,
+      "TIE": 4
+    },
+    "fixed_equal_aggregate": null
+  },
+  "missing_stratum": {
+    "disposition": "HOLD_UNIDENTIFIED_OUTCOME",
+    "eligible": [
+      "A",
+      "B"
+    ],
+    "evaluated_pairs": 343,
+    "missing_pairs": 441
+  },
+  "hard_gate": {
+    "disposition": "HOLD_FEWER_THAN_TWO_ELIGIBLE_ROUTES",
+    "eligible": [
+      "B"
+    ]
+  }
+}

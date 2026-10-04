@@ -1,0 +1,145 @@
+{
+  "status": "PASS_METHOD_SCOPED",
+  "grid_denominator": 6,
+  "simplex_points_per_domain": 28,
+  "candidate_comparison": "all fixture dispositions and exact winner counts agree",
+  "fixture_audit": {
+    "dominance": {
+      "disposition": "ROBUST_A",
+      "eligible": [
+        "A",
+        "B"
+      ],
+      "winner_counts": {
+        "A": 784
+      },
+      "evaluated_pairs": 784,
+      "missing_pairs": 0,
+      "fixed_equal_aggregate": {
+        "disposition": "A",
+        "scores": {
+          "A": "4/3",
+          "B": "7/3"
+        },
+        "eligible": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    "crossed_tradeoff": {
+      "disposition": "MIXED_OR_TIED_REGION",
+      "eligible": [
+        "A",
+        "B"
+      ],
+      "winner_counts": {
+        "TIE": 208,
+        "A": 288,
+        "B": 288
+      },
+      "evaluated_pairs": 784,
+      "missing_pairs": 0,
+      "fixed_equal_aggregate": {
+        "disposition": "TIE",
+        "scores": {
+          "A": "25/9",
+          "B": "25/9"
+        },
+        "eligible": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    "task_mix_reversal": {
+      "disposition": "MIXED_OR_TIED_REGION",
+      "eligible": [
+        "A",
+        "B"
+      ],
+      "winner_counts": {
+        "TIE": 4,
+        "B": 12,
+        "A": 12
+      },
+      "evaluated_pairs": 28,
+      "missing_pairs": 0,
+      "fixed_equal_aggregate": {
+        "disposition": "TIE",
+        "scores": {
+          "A": "25/9",
+          "B": "25/9"
+        },
+        "eligible": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    "value_weight_reversal": {
+      "disposition": "MIXED_OR_TIED_REGION",
+      "eligible": [
+        "A",
+        "B"
+      ],
+      "winner_counts": {
+        "TIE": 4,
+        "B": 12,
+        "A": 12
+      },
+      "evaluated_pairs": 28,
+      "missing_pairs": 0,
+      "fixed_equal_aggregate": {
+        "disposition": "TIE",
+        "scores": {
+          "A": "8/3",
+          "B": "8/3"
+        },
+        "eligible": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    "missing_stratum": {
+      "disposition": "HOLD_UNIDENTIFIED_OUTCOME",
+      "eligible": [
+        "A",
+        "B"
+      ],
+      "winner_counts": {},
+      "evaluated_pairs": 343,
+      "missing_pairs": 441,
+      "fixed_equal_aggregate": {
+        "disposition": "HOLD_UNIDENTIFIED_OUTCOME",
+        "eligible": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    "hard_gate": {
+      "disposition": "HOLD_FEWER_THAN_TWO_ELIGIBLE_ROUTES",
+      "eligible": [
+        "B"
+      ],
+      "winner_counts": {},
+      "evaluated_pairs": 0,
+      "missing_pairs": 0,
+      "fixed_equal_aggregate": {
+        "disposition": "HOLD_FEWER_THAN_TWO_ELIGIBLE_ROUTES",
+        "eligible": [
+          "B"
+        ]
+      }
+    }
+  },
+  "mutation_checks": {
+    "dominance_cell_reversal": true,
+    "task_stratum_latency_flip": true,
+    "weight_domain_restriction": true,
+    "hard_gate_passed": true,
+    "missing_cell_filled": true
+  }
+}
