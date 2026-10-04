@@ -49,6 +49,21 @@ class DoomActionValidityContractTests(unittest.TestCase):
             build_contract(command, authored(), signal("health", 85),
                            signal("ammo", 47, sequence=2))
 
+    def test_out_of_domain_signal_values_are_not_admitted_as_action_sources(self):
+        command = [{"action": "retreat_fire", "extent": "short"}]
+        for health, ammo in ((0, 47), (201, 47), (85, 1000)):
+            with self.subTest(health=health, ammo=ammo):
+                with self.assertRaisesRegex(ValueError, "source signal"):
+                    build_contract(command, authored(), signal("health", health),
+                                   signal("ammo", ammo))
+
+    def test_health_and_ammo_domain_maxima_are_inclusive(self):
+        contract = build_contract(
+            [{"action": "retreat_fire", "extent": "short"}],
+            authored(ammo=200), signal("health", 200), signal("ammo", 999))
+        self.assertEqual(contract["source"]["signals"]["health"]["value"], 200)
+        self.assertEqual(contract["source"]["signals"]["ammo"]["value"], 999)
+
     def test_semantic_omission_and_spurious_dependency_fail_closed(self):
         with self.assertRaises(ValueError):
             build_contract([{"action": "fire", "extent": "pulse"}], authored(ammo=0),

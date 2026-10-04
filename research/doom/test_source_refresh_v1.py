@@ -47,13 +47,13 @@ class SourceRefreshTests(unittest.TestCase):
         with self.assertRaises(SourceRefreshRefused): self.run_refresh(h,observation(1,health=0,ammo=47))
         self.assertEqual(h.commands,[])
     def test_invalid_observed_numbers_refuse_before_submission(self):
-        for health,ammo in [(-1,47),(97,-1),(True,47),(97,'bad')]:
+        for health,ammo in [(-1,47),(201,47),(97,-1),(97,1000),(True,47),(97,'bad')]:
             with self.subTest(health=health,ammo=ammo):
                 h=Harness([observation(2,health=97,ammo=47)])
                 with self.assertRaises(SourceRefreshRefused): self.run_refresh(h,observation(1,health=health,ammo=ammo))
                 self.assertEqual(h.commands,[])
     def test_invalid_observed_refresh_stops_before_later_positive_frame(self):
-        for health,ammo in [(0,47),(97,-1),(97,'bad')]:
+        for health,ammo in [(0,47),(201,47),(97,-1),(97,1000),(97,'bad')]:
             with self.subTest(health=health,ammo=ammo):
                 h=Harness([observation(2,health=health,ammo=ammo),observation(3,health=97,ammo=47)])
                 with self.assertRaises(SourceRefreshRefused): self.run_refresh(h)

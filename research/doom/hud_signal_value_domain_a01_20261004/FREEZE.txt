@@ -1,0 +1,23 @@
+Freeze: MAP01 HUD signal value-domain guard A01
+Date: 2026-10-04 (Asia/Tokyo)
+Repository: Unjuno/agent-interface
+Base: origin/main 63980603e4bb6e4b128ed07af3bf7023bc2d4734
+Base Git blobs:
+  research/doom/doom_source_refresh_v1.py 6b5add0fa29865de64afcfa1da4a272d9a216e8d
+  research/doom/doom_action_validity_contract_v1.py 52165815c724133e65f7f5ccc6be93585bf3857a
+  research/doom/test_source_refresh_v1.py aba7fc2e2c1de14d1a56d5dd7c0fc4dadfd45f37
+  research/doom/test_doom_action_validity_contract_v1.py edbf9b1dcd4256f7feed0e114eef96171d2b4bef
+Changed-file SHA-256:
+  research/doom/doom_signal_value_domain_v1.py 4FD5332DE5BD7AD535A24BC42CDDA069FF56F359E16FD0CA11816E294B122FA3
+  research/doom/doom_source_refresh_v1.py F3A9C66BC069A98B3240F5256810123E4F61931FD648E03B3E564AEDEC545743
+  research/doom/doom_action_validity_contract_v1.py BE48F52D3833DE32C635BD116DA07C8E5D5CB47E06DC8ED3F5525B066E5DBBDD
+  research/doom/test_doom_signal_value_domain_v1.py 94643E1C4E15A05439196335036509E11C4258D5ABCBE27ACB8288D61104C864
+  research/doom/test_source_refresh_v1.py 9F7AB809728672ACC665849916F57EBD20D99CFC54557E8E8D86F3761DF155C1
+  research/doom/test_doom_action_validity_contract_v1.py C8035C327F643C55A4CC54AF90053F596387CDB86DD546B6090792A0330B0337
+  research/doom/hud_signal_value_domain_a01_20261004/REPORT.md D6C84AC755559C4871374351BF1FC35217C828A169FB39D0A345345624985766
+  research/doom/hud_signal_value_domain_a01_20261004/TEST_OUTPUT.txt D3AE31A5619330E9EFCF840337B5946DC08BBDBA2CE0EA2493EFE6B4861CB5F7
+Test command (run from research/doom):
+  python -m unittest test_doom_signal_value_domain_v1 test_source_refresh_v1 test_doom_action_validity_contract_v1 test_controller_failure_cleanup_v1 test_map01_overlap_controller_v39 -v
+Result: PASS, 29 tests; Python byte-compilation PASS; git diff --check PASS.
+Scope: deterministic CPU-only synthetic signal values; no game, model, GPU, GUI, network, or live input.
+Live allocation: none; this is not an #59 threat-control result.
