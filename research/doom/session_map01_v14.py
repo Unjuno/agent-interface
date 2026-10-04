@@ -1,8 +1,8 @@
-"""MAP01 v14: additive per-key release telemetry around session v12.
+"""MAP01 v14: bind v13 measurement composition to the current v40 controller.
 
-This measurement-only composition selects typed release backend v2, which
-records program/step-bound admission and interval-censored ordinary key-up
-receipts. The underlying session and controller policies remain unchanged.
+The delegated v13 runner supplies the retained v3 release-transition backend
+and independent progress scorer. This layer adds v40 provenance while leaving
+the v39 controller policy and session command semantics unchanged.
 """
 from __future__ import annotations
 
@@ -39,8 +39,6 @@ def _merge_sources(out: Path) -> None:
     additions = (
         HERE / "session_map01_v14.py",
         HERE / "map01_overlap_controller_v40.py",
-        HERE / "doom_typed_release_backend_v2.py",
-        RESEARCH / "live_control/input_owner_v11.py",
     )
     for source in additions:
         sources[str(source.relative_to(RESEARCH)).replace("\\", "/")] = _sha(source)
@@ -50,15 +48,10 @@ def _merge_sources(out: Path) -> None:
 
 def main() -> None:
     out = Path(_option("--out"))
-    import session_map01_v12 as base
-    from doom_typed_release_backend_v2 import Backend as TelemetryBackend
-
-    original_backend = base.Backend
-    base.Backend = TelemetryBackend
+    import session_map01_v13 as measured
     try:
-        base.main()
+        measured.main()
     finally:
-        base.Backend = original_backend
         _merge_sources(out)
 
 

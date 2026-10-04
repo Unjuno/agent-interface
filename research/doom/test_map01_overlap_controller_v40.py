@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from types import ModuleType, SimpleNamespace
+from types import ModuleType
 from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
@@ -22,25 +22,27 @@ class V40CompositionTests(unittest.TestCase):
         self.assertEqual(command[command.index("--out") + 1], "runtime")
         self.assertIn("--load-fixture-manifest", command)
 
-    def test_session_composes_v2_and_binds_its_sources(self):
+    def test_session_uses_v13_feedback_and_binds_release_sources(self):
         with tempfile.TemporaryDirectory() as directory:
             out = Path(directory)
-            (out / "sources.json").write_text("{}", encoding="utf-8")
-            base = ModuleType("session_map01_v12")
-            base.Backend = object
-            base.main = lambda: self.assertIs(base.Backend, telemetry.Backend)
-            base.vd = SimpleNamespace()
-            telemetry = ModuleType("doom_typed_release_backend_v2")
-            telemetry.Backend = type("TelemetryBackend", (), {})
-            with patch.dict(sys.modules, {
-                    "session_map01_v12": base,
-                    "doom_typed_release_backend_v2": telemetry}), \
+            prior_sources = {
+                "doom/session_map01_v13.py": "v13",
+                "doom/doom_retained_input_backend_v3.py": "release-v3",
+                "live_control/input_transition_owner_v3.py": "owner-v3",
+            }
+            (out / "sources.json").write_text(json.dumps(prior_sources),
+                                              encoding="utf-8")
+            pipeline = ModuleType("session_map01_v13")
+            pipeline.main = lambda: None
+            with patch.dict(sys.modules, {"session_map01_v13": pipeline}), \
                     patch.object(sys, "argv", ["session", "--out", str(out)]):
                 session.main()
-            self.assertIs(base.Backend, object)
             sources = json.loads((out / "sources.json").read_text())
-            self.assertIn("doom/doom_typed_release_backend_v2.py", sources)
-            self.assertIn("live_control/input_owner_v11.py", sources)
+            self.assertEqual(sources["doom/session_map01_v13.py"], "v13")
+            self.assertEqual(sources["doom/doom_retained_input_backend_v3.py"],
+                             "release-v3")
+            self.assertEqual(sources["live_control/input_transition_owner_v3.py"],
+                             "owner-v3")
             self.assertIn("doom/map01_overlap_controller_v40.py", sources)
 
 
