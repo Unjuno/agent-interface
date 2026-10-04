@@ -2,11 +2,13 @@
   "schema": "map01-v39-cleanup-followup-v1",
   "parent_commit": "2834209601483503a316863cf9964c9f966cede5",
   "refreshed_parent_commit": "90e65c932a8a487d9657713e5a243cba25125c4f",
+  "current_parent_7399_commit": "f63f673538690fe6d6661a22d894cf1c061d3385",
   "classification": "construction_only",
   "parent_regressions": {
     "expected_failures": 3,
     "initial_observed_failures": 3,
     "refreshed_observed_failures": 3,
+    "current_parent_malformed_bracket_failures": 1,
     "exit": 1
   },
   "candidate": {
@@ -14,9 +16,11 @@
     "adjacent_owner_tests": {"passed": 8, "exit": 0},
     "rebase_backend_tests": {"passed": 24, "exit": 0},
     "rebase_adjacent_owner_tests": {"passed": 8, "exit": 0},
+    "current_parent_backend_tests": {"passed": 26, "exit": 0},
+    "current_parent_adjacent_owner_tests": {"passed": 8, "exit": 0},
     "py_compile": "pass",
     "diff_check": "pass",
-    "independent_audit_checks": 10
+    "independent_audit_checks": 14
   },
   "scope": {
     "physical_x11_release": "not_tested",

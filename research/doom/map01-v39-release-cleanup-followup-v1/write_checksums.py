@@ -14,6 +14,7 @@ paths = [
     "research/doom/map01-v39-release-cleanup-followup-v1/RESULT.json",
     "research/doom/map01-v39-release-cleanup-followup-v1/PARENT_SOURCE_SHA256.txt",
     "research/doom/map01-v39-release-cleanup-followup-v1/LATEST_PARENT.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/CURRENT_PARENT_7399.txt",
     "research/doom/map01-v39-release-cleanup-followup-v1/audit.py",
     "research/doom/map01-v39-release-cleanup-followup-v1/write_checksums.py",
     "research/doom/map01-v39-release-cleanup-followup-v1/results/RAW_PARENT_RED.txt",
@@ -32,6 +33,14 @@ paths = [
     "research/doom/map01-v39-release-cleanup-followup-v1/results/REBASED_BACKEND_EXIT.txt",
     "research/doom/map01-v39-release-cleanup-followup-v1/results/RAW_REBASED_OWNER_TESTS.txt",
     "research/doom/map01-v39-release-cleanup-followup-v1/results/REBASED_OWNER_EXIT.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/RAW_7399_PARENT_RED.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/7399_PARENT_RED_EXIT.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/RAW_7399_BACKEND_TESTS.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/7399_BACKEND_EXIT.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/RAW_7399_OWNER_TESTS.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/7399_OWNER_EXIT.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/RAW_CURRENT_STATIC.txt",
+    "research/doom/map01-v39-release-cleanup-followup-v1/results/CURRENT_STATIC_EXIT.txt",
 ]
 lines = [
     f"{hashlib.sha256((REPO / rel).read_bytes()).hexdigest()}  {rel}"
