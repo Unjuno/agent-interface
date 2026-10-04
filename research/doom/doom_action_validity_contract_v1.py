@@ -8,6 +8,21 @@ FIELDS = {"critical_health_minimum", "maximum_health_loss",
           "minimum_ammo", "max_current_age_ms"}
 
 
+def bindings_equal_exact(left, right):
+    """Compare complete action bindings after rejecting Python type aliases."""
+    expected = {"focus", "surface", "geometry"}
+
+    def valid(binding):
+        return (type(binding) is dict and set(binding) == expected and
+                type(binding["focus"]) is int and
+                type(binding["surface"]) is int and
+                type(binding["geometry"]) is list and
+                len(binding["geometry"]) == 4 and
+                all(type(value) is int for value in binding["geometry"]))
+
+    return valid(left) and valid(right) and left == right
+
+
 def _observed(signal, signal_id):
     if (type(signal) is not dict or signal.get("format") != "observable-signal-v1" or
             signal.get("status") != "observed" or signal.get("signal_id") != signal_id or
@@ -51,7 +66,7 @@ def build_contract(commands, authored, health_signal, ammo_signal=None):
         ammo = _observed(ammo_signal, "ammo")
         if (ammo["sequence"] != health["sequence"] or
                 ammo["capture_ns"] != health["capture_ns"] or
-                ammo["binding"] != health["binding"]):
+                not bindings_equal_exact(ammo["binding"], health["binding"])):
             raise ValueError("health and ammo must share one observation epoch")
         signals["ammo"] = {"status": "observed", "value": ammo["value"]}
         predicates.append({"signal_id": "ammo", "operator": "minimum",

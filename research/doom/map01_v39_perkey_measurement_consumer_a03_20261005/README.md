@@ -48,3 +48,13 @@ reproduction, use a separate temporary copy at the exact pinned base commit,
 generate a new freeze there, and compare its input/source identities before
 running. The retained audit and normal/optimized tests can be rerun read-only.
 A01/A02 failures remain preserved historical outcomes.
+
+## Checksum integrity follow-up
+
+The initial committed checksum list named two ignored test-log paths that were
+absent from the PR tree. The original FREEZE, candidate, audit, RESULT, AUDIT,
+and exit-status artifacts remain unchanged. This follow-up removes the missing
+log references, records fresh normal and optimized regression transcripts as
+`.txt` files, and adds a separate regression that checks all checksum paths
+resolve. Only the 11-test regression suite was rerun; candidate and independent
+audit invocations were not repeated.
