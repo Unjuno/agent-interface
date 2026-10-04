@@ -1,0 +1,4052 @@
+{
+  "claim": "persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 3,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/out/episode/runtime/001.png",
+      "model_image": "/out/episode/decision-0/temporal-sheet.png",
+      "model_image_sha256": "3aaf613c05cc131905b2de038c1a5cabf1e00568b45bfeb07e0b42a08ad9f5e6",
+      "action": {
+        "assessment": "Active; a distant threat is visible ahead in the corridor. Engage while advancing cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "fire",
+            "extent": "pulse"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "signal_id": "health",
+            "critical_health_minimum": 35,
+            "maximum_health_loss": 12,
+            "max_source_age_ms": 30000
+          }
+        ],
+        "action_validity": [
+          {
+            "critical_health_minimum": 50,
+            "maximum_health_loss": 8,
+            "minimum_ammo": 1,
+            "max_current_age_ms": 700
+          }
+        ]
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 10543,
+          "inputTokens": 10237,
+          "cachedInputTokens": 8960,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 306,
+          "reasoningOutputTokens": 154
+        },
+        "last": {
+          "totalTokens": 10543,
+          "inputTokens": 10237,
+          "cachedInputTokens": 8960,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 306,
+          "reasoningOutputTokens": 154
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 6782284369,
+      "prior_soft_event_summary": null,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "advance_fire",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.07873093681917212,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 28,
+          "effect_observed_ns": 18032969754,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 34.357234,
+          "plan_accept_to_last_capture_ms": 417.704117,
+          "capture_ms_total": 14.705639999999999,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 4,
+      "effect_observation_capture_ms": 14.705639999999999,
+      "execution_trace": [
+        {
+          "id": "plan-0-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "advance_fire",
+            "extent": "short"
+          },
+          "accepted_ns": 17615265637,
+          "terminal_ns": 18126435974,
+          "receipt": {
+            "action": "advance_fire",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.07873093681917212,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 28,
+            "effect_observed_ns": 18032969754,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 34.357234,
+            "plan_accept_to_last_capture_ms": 417.704117,
+            "capture_ms_total": 14.705639999999999,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 14.705639999999999
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a1064e-0456-7530-9884-43dfaf83eb61",
+      "planner_turn_id": "01a1064e-1c7b-7222-864a-534cbde8fdff",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_terminal_observed_ns": 17499097561,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "INPUT_ADMITTED",
+        "reason": "fresh_executor_acceptance_after_action_validation",
+        "planner_terminal": {
+          "turn_id": "01a1064e-1c7b-7222-864a-534cbde8fdff",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 17499097561
+        },
+        "policy_invalidation": null,
+        "controller_decided_ns": 17557201502,
+        "input_authority_admitted": true,
+        "executor_admission": {
+          "event": "accepted",
+          "id": "plan-0-primary-0-0",
+          "accepted_ns": 17615265637
+        },
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": {
+          "format": "action-validity-admission-v1",
+          "status": "VALID_CURRENT",
+          "reason": "all_authored_observable_predicates_hold",
+          "action_may_proceed_to_executor_admission": true,
+          "requires_new_decision": false,
+          "grants_input_authority": false,
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+            "source": {
+              "sequence": 1,
+              "capture_ns": 10305046460,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 97
+                },
+                "ammo": {
+                  "status": "observed",
+                  "value": 48
+                }
+              }
+            },
+            "max_current_age_ms": 700,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 50
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 8
+              },
+              {
+                "signal_id": "ammo",
+                "operator": "minimum",
+                "value": 1
+              }
+            ]
+          },
+          "snapshot": {
+            "format": "action-admission-snapshot-v1",
+            "sequence": 24,
+            "capture_ns": 17394108142,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 97
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 48
+              }
+            }
+          },
+          "controller_decided_ns": 17582199852,
+          "checks": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "expected": 50,
+              "observed": 97,
+              "passed": true
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "expected": 8,
+              "observed": 97,
+              "passed": true
+            },
+            {
+              "signal_id": "ammo",
+              "operator": "minimum",
+              "expected": 1,
+              "observed": 48,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "running_action_guard": {
+        "schema": "running-action-guard-v3",
+        "state": "COMPLETED",
+        "planner_action": {
+          "commands": [
+            {
+              "action": "advance_fire",
+              "extent": "short"
+            }
+          ],
+          "contingencies": [],
+          "action_validity": [
+            {
+              "critical_health_minimum": 50,
+              "maximum_health_loss": 8,
+              "minimum_ammo": 1,
+              "max_current_age_ms": 700
+            }
+          ]
+        },
+        "planner_action_fingerprint": "097beef40daf0350ed15b6439ab6b11b7e02e624706384503844f31bb5d62b0b",
+        "compiler_identity": "map01_overlap_controller_v38.compile_commands",
+        "historical_first_admission": {
+          "event": "accepted",
+          "id": "plan-0-primary-0-0",
+          "accepted_ns": 17615265637
+        },
+        "program_bindings": [
+          {
+            "planner_action_fingerprint": "097beef40daf0350ed15b6439ab6b11b7e02e624706384503844f31bb5d62b0b",
+            "compiler_identity": "map01_overlap_controller_v38.compile_commands",
+            "program_fingerprint": "2d8ad4e397cf5bc64a37df74a25efe54c0963676cb24fdb2e87112b031e119c2",
+            "program": {
+              "role": "primary",
+              "semantic_commands": [
+                {
+                  "action": "advance_fire",
+                  "extent": "short"
+                }
+              ],
+              "command_indices": [
+                0
+              ],
+              "contingency_after": null,
+              "compiled_steps": [
+                {
+                  "op": "hold",
+                  "keys": [
+                    "Up",
+                    "Shift_L",
+                    "space"
+                  ],
+                  "duration_ms": 350
+                }
+              ]
+            },
+            "submit": {
+              "command": {
+                "op": "submit",
+                "id": "plan-0-primary-0-0",
+                "expected_sequence": 24,
+                "valid_until_ns": 42582810023,
+                "steps": [
+                  {
+                    "op": "hold",
+                    "keys": [
+                      "Up",
+                      "Shift_L",
+                      "space"
+                    ],
+                    "duration_ms": 350
+                  }
+                ]
+              },
+              "sent_ns": 17582810023
+            },
+            "accepted": {
+              "event": "accepted",
+              "id": "plan-0-primary-0-0",
+              "steps": 1,
+              "program_sha256": "efbc1a0bdbbe8fd96003d7b1d69afc21e36dfcfb13ab129e921cb2d364006ff1",
+              "accepted_ns": 17615265637
+            },
+            "branch_evidence": null
+          }
+        ],
+        "running_validity": {
+          "schema": "running-action-guard-v1",
+          "state": "COMPLETED",
+          "action": [
+            {
+              "action": "advance_fire",
+              "extent": "short"
+            }
+          ],
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+            "source": {
+              "sequence": 1,
+              "capture_ns": 10305046460,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 97
+                },
+                "ammo": {
+                  "status": "observed",
+                  "value": 48
+                }
+              }
+            },
+            "max_current_age_ms": 700,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 50
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 8
+              },
+              {
+                "signal_id": "ammo",
+                "operator": "minimum",
+                "value": 1
+              }
+            ]
+          },
+          "active_program": null,
+          "program_admissions": [
+            {
+              "event": "accepted",
+              "id": "plan-0-primary-0-0",
+              "accepted_ns": 17615265637
+            }
+          ],
+          "program_terminals": [
+            {
+              "event": "terminal",
+              "id": "plan-0-primary-0-0",
+              "status": "completed",
+              "error": null,
+              "steps_completed": 1,
+              "release": {
+                "event": "owner_release",
+                "reason": "release",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 18126365607,
+                "valid_until_ns": 42582810023,
+                "intent_token": "5036b71bf6f4406998e0a7d1a7131f80",
+                "release_call_started_ns": 18125927360,
+                "release_call_returned_ns": 18126415340
+              },
+              "interruption": null,
+              "decision_reason": null,
+              "terminal_ns": 18126435974,
+              "semantic_completion": "program status only; task scoring is separate",
+              "emit_ns": 18126437745
+            }
+          ],
+          "validity_checks": [
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 10305046460,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 24,
+                "capture_ns": 17394108142,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  },
+                  "ammo": {
+                    "status": "observed",
+                    "value": 48
+                  }
+                }
+              },
+              "controller_decided_ns": 17582199852,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 48,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 10305046460,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 25,
+                "capture_ns": 17649622871,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 48
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  }
+                }
+              },
+              "controller_decided_ns": 17672152593,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 48,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 10305046460,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 26,
+                "capture_ns": 17794899850,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 48
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  }
+                }
+              },
+              "controller_decided_ns": 17812579248,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 48,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 10305046460,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 27,
+                "capture_ns": 17926414989,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 47
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  }
+                }
+              },
+              "controller_decided_ns": 17943115800,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 47,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 10305046460,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 28,
+                "capture_ns": 18032969754,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 47
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  }
+                }
+              },
+              "controller_decided_ns": 18050059925,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 47,
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "invalidation": null,
+          "cancellation": null,
+          "current_input_authority": false,
+          "physical_input_may_be_down": false,
+          "physical_release_verified": true,
+          "requires_new_decision": false,
+          "grants_input_authority": false
+        },
+        "invalidation": null,
+        "cancellation": null,
+        "current_input_authority": false,
+        "physical_input_may_be_down": false,
+        "physical_release_verified": true,
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "authority_semantics": "root current_input_authority is authoritative; historical_first_admission records only the first past Executor acceptance",
+        "active_intent": null,
+        "early_physical_releases": [],
+        "program_terminal_pending": false
+      },
+      "running_action_invalidation": null,
+      "partial_execution": null,
+      "action_refresh_program_ids": [],
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 10716927863,
+      "controller_model_ended_ns": 17499212232,
+      "model_image_to_plan_accept_ns": 7310219177,
+      "fresh_observation_to_plan_accept_ns": 221157495,
+      "fresh_sequence_at_plan": 24,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 97,
+          "maximum_health_loss": 0,
+          "hard_minimum": 97,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 97,
+          "sequence": 1,
+          "capture_ns": 10305046460,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.3586387434554974
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false,
+        "monitor_mode": "unauthored_coast_no_policy"
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "plan_terminal": "completed",
+      "model_action_discarded": false,
+      "remaining_action_discarded": false
+    },
+    {
+      "iteration": 1,
+      "source_image": "/out/episode/runtime/028.png",
+      "model_image": "/out/episode/decision-1/temporal-sheet.png",
+      "model_image_sha256": "7560f18c2f880d22e01e52da14e7f18f5a3a8b18218d80f9fdcec74f66dbd53a",
+      "action": {
+        "assessment": "Active; the view has shifted and a hostile remains visible ahead. Fire while making a short lateral correction.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "fire",
+            "extent": "pulse"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "fire",
+            "extent": "pulse"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "signal_id": "health",
+            "critical_health_minimum": 35,
+            "maximum_health_loss": 12,
+            "max_source_age_ms": 30000
+          }
+        ],
+        "action_validity": [
+          {
+            "critical_health_minimum": 50,
+            "maximum_health_loss": 8,
+            "minimum_ammo": 1,
+            "max_current_age_ms": 700
+          }
+        ]
+      },
+      "effect_memory": [],
+      "usage": {
+        "total": {
+          "totalTokens": 21844,
+          "inputTokens": 21305,
+          "cachedInputTokens": 18944,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 539,
+          "reasoningOutputTokens": 222
+        },
+        "last": {
+          "totalTokens": 11301,
+          "inputTokens": 11068,
+          "cachedInputTokens": 9984,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 233,
+          "reasoningOutputTokens": 68
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 4892811590,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a1064e-0456-7530-9884-43dfaf83eb61",
+      "planner_turn_id": "01a1064e-3b26-7163-aa11-5e491b8f7ef6",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_terminal_observed_ns": 23448945667,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_ACTION_NOT_CURRENT",
+        "reason": "REJECTED_PREDICATE",
+        "planner_terminal": {
+          "turn_id": "01a1064e-3b26-7163-aa11-5e491b8f7ef6",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 23448945667
+        },
+        "policy_invalidation": null,
+        "controller_decided_ns": 23499703290,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": {
+          "format": "action-validity-admission-v1",
+          "status": "REJECTED_PREDICATE",
+          "reason": "health_max_decrease_from_source_failed",
+          "action_may_proceed_to_executor_admission": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "ae9755553145fe92c197a3fc106d2ee9200215e3c598e2f0fcb8152ef3bc144b",
+            "source": {
+              "sequence": 28,
+              "capture_ns": 18032969754,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 97
+                },
+                "ammo": {
+                  "status": "observed",
+                  "value": 47
+                }
+              }
+            },
+            "max_current_age_ms": 700,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 50
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 8
+              },
+              {
+                "signal_id": "ammo",
+                "operator": "minimum",
+                "value": 1
+              }
+            ]
+          },
+          "snapshot": {
+            "format": "action-admission-snapshot-v1",
+            "sequence": 46,
+            "capture_ns": 23293733705,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 84
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 47
+              }
+            }
+          },
+          "controller_decided_ns": 23519043049,
+          "checks": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "expected": 50,
+              "observed": 84,
+              "passed": true
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "expected": 8,
+              "observed": 84,
+              "passed": false
+            }
+          ]
+        }
+      },
+      "action_source_signals": {
+        "health": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 97,
+          "sequence": 28,
+          "capture_ns": 18032969754,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.3586387434554974
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "ammo": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "ammo",
+          "value": 47,
+          "sequence": 28,
+          "capture_ns": 18032969754,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 7,
+              "best_score": 0.060526315789473685,
+              "second_score": 0.05204460966542751
+            },
+            {
+              "slot": 1,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.2905759162303665
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.34554973821989526
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        }
+      },
+      "action_current_signals": {
+        "health": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 84,
+          "sequence": 46,
+          "capture_ns": 23293733705,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9328358208955224,
+              "second_score": 0.34430379746835443
+            },
+            {
+              "slot": 2,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.29842931937172773
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "ammo": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "ammo",
+          "value": 47,
+          "sequence": 46,
+          "capture_ns": 23293733705,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 7,
+              "best_score": 0.060526315789473685,
+              "second_score": 0.05204460966542751
+            },
+            {
+              "slot": 1,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.2905759162303665
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.34554973821989526
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        }
+      },
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 18556302193,
+      "controller_model_ended_ns": 23449113783,
+      "cover_program_ids": [
+        "cover-1"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 97,
+          "maximum_health_loss": 0,
+          "hard_minimum": 97,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 97,
+          "sequence": 28,
+          "capture_ns": 18032969754,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.3586387434554974
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false,
+        "monitor_mode": "unauthored_coast_no_policy"
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "model_action_discarded": true,
+      "discard_reason": "action_not_current",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/out/episode/runtime/046.png",
+      "model_image": "/out/episode/decision-2/temporal-sheet.png",
+      "model_image_sha256": "ff5b76a595874e84fb9e91b96b2c1eac92be9336f58f007c8e70c06690e6ea6d",
+      "action": {
+        "assessment": "Active; health has dropped and a hostile is close on the upper ledge. Retreat while firing to create distance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "fire",
+            "extent": "pulse"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "signal_id": "health",
+            "critical_health_minimum": 35,
+            "maximum_health_loss": 10,
+            "max_source_age_ms": 30000
+          }
+        ],
+        "action_validity": [
+          {
+            "critical_health_minimum": 55,
+            "maximum_health_loss": 6,
+            "minimum_ammo": 1,
+            "max_current_age_ms": 500
+          }
+        ]
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 33872,
+          "inputTokens": 33131,
+          "cachedInputTokens": 28928,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 741,
+          "reasoningOutputTokens": 256
+        },
+        "last": {
+          "totalTokens": 12028,
+          "inputTokens": 11826,
+          "cachedInputTokens": 9984,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 202,
+          "reasoningOutputTokens": 34
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 4771133945,
+      "prior_soft_event_summary": null,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "retreat_fire",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.1112826797385621,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 68,
+          "effect_observed_ns": 29136445749,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 30.226124,
+          "plan_accept_to_last_capture_ms": 351.074796,
+          "capture_ms_total": 14.056165,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 4,
+      "effect_observation_capture_ms": 14.056165,
+      "execution_trace": [
+        {
+          "id": "plan-2-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "retreat_fire",
+            "extent": "short"
+          },
+          "accepted_ns": 28785370953,
+          "terminal_ns": 29241349903,
+          "receipt": {
+            "action": "retreat_fire",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.1112826797385621,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 68,
+            "effect_observed_ns": 29136445749,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 30.226124,
+            "plan_accept_to_last_capture_ms": 351.074796,
+            "capture_ms_total": 14.056165,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 14.056165
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a1064e-0456-7530-9884-43dfaf83eb61",
+      "planner_turn_id": "01a1064e-4fff-71e3-b40d-6a87351f1615",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_terminal_observed_ns": 28676147349,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "INPUT_ADMITTED",
+        "reason": "fresh_executor_acceptance_after_action_validation",
+        "planner_terminal": {
+          "turn_id": "01a1064e-4fff-71e3-b40d-6a87351f1615",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 28676147349
+        },
+        "policy_invalidation": null,
+        "controller_decided_ns": 28751967239,
+        "input_authority_admitted": true,
+        "executor_admission": {
+          "event": "accepted",
+          "id": "plan-2-primary-0-0",
+          "accepted_ns": 28785370953
+        },
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": {
+          "format": "action-validity-admission-v1",
+          "status": "VALID_CURRENT",
+          "reason": "all_authored_observable_predicates_hold",
+          "action_may_proceed_to_executor_admission": true,
+          "requires_new_decision": false,
+          "grants_input_authority": false,
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+            "source": {
+              "sequence": 46,
+              "capture_ns": 23293733705,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 84
+                },
+                "ammo": {
+                  "status": "observed",
+                  "value": 47
+                }
+              }
+            },
+            "max_current_age_ms": 500,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 55
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 6
+              },
+              {
+                "signal_id": "ammo",
+                "operator": "minimum",
+                "value": 1
+              }
+            ]
+          },
+          "snapshot": {
+            "format": "action-admission-snapshot-v1",
+            "sequence": 64,
+            "capture_ns": 28651984503,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 84
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 47
+              }
+            }
+          },
+          "controller_decided_ns": 28773576389,
+          "checks": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "expected": 55,
+              "observed": 84,
+              "passed": true
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "expected": 6,
+              "observed": 84,
+              "passed": true
+            },
+            {
+              "signal_id": "ammo",
+              "operator": "minimum",
+              "expected": 1,
+              "observed": 47,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "running_action_guard": {
+        "schema": "running-action-guard-v3",
+        "state": "COMPLETED",
+        "planner_action": {
+          "commands": [
+            {
+              "action": "retreat_fire",
+              "extent": "short"
+            }
+          ],
+          "contingencies": [],
+          "action_validity": [
+            {
+              "critical_health_minimum": 55,
+              "maximum_health_loss": 6,
+              "minimum_ammo": 1,
+              "max_current_age_ms": 500
+            }
+          ]
+        },
+        "planner_action_fingerprint": "af720e7b2415a3873b0a4a82f385270e3469fa6e586531609cea35d3706dff75",
+        "compiler_identity": "map01_overlap_controller_v38.compile_commands",
+        "historical_first_admission": {
+          "event": "accepted",
+          "id": "plan-2-primary-0-0",
+          "accepted_ns": 28785370953
+        },
+        "program_bindings": [
+          {
+            "planner_action_fingerprint": "af720e7b2415a3873b0a4a82f385270e3469fa6e586531609cea35d3706dff75",
+            "compiler_identity": "map01_overlap_controller_v38.compile_commands",
+            "program_fingerprint": "165a36100f4d72bd92946234c10c44604bba07c04cb1af0dc2c1de5541f0e9a3",
+            "program": {
+              "role": "primary",
+              "semantic_commands": [
+                {
+                  "action": "retreat_fire",
+                  "extent": "short"
+                }
+              ],
+              "command_indices": [
+                0
+              ],
+              "contingency_after": null,
+              "compiled_steps": [
+                {
+                  "op": "hold",
+                  "keys": [
+                    "Down",
+                    "space"
+                  ],
+                  "duration_ms": 300
+                }
+              ]
+            },
+            "submit": {
+              "command": {
+                "op": "submit",
+                "id": "plan-2-primary-0-0",
+                "expected_sequence": 64,
+                "valid_until_ns": 53774032029,
+                "steps": [
+                  {
+                    "op": "hold",
+                    "keys": [
+                      "Down",
+                      "space"
+                    ],
+                    "duration_ms": 300
+                  }
+                ]
+              },
+              "sent_ns": 28774032029
+            },
+            "accepted": {
+              "event": "accepted",
+              "id": "plan-2-primary-0-0",
+              "steps": 1,
+              "program_sha256": "caf84b8bc9b4db1a1e9927555b06aa994e694c1ded8d1eb1cb1b789c335788f0",
+              "accepted_ns": 28785370953
+            },
+            "branch_evidence": null
+          }
+        ],
+        "running_validity": {
+          "schema": "running-action-guard-v1",
+          "state": "COMPLETED",
+          "action": [
+            {
+              "action": "retreat_fire",
+              "extent": "short"
+            }
+          ],
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+            "source": {
+              "sequence": 46,
+              "capture_ns": 23293733705,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 84
+                },
+                "ammo": {
+                  "status": "observed",
+                  "value": 47
+                }
+              }
+            },
+            "max_current_age_ms": 500,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 55
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 6
+              },
+              {
+                "signal_id": "ammo",
+                "operator": "minimum",
+                "value": 1
+              }
+            ]
+          },
+          "active_program": null,
+          "program_admissions": [
+            {
+              "event": "accepted",
+              "id": "plan-2-primary-0-0",
+              "accepted_ns": 28785370953
+            }
+          ],
+          "program_terminals": [
+            {
+              "event": "terminal",
+              "id": "plan-2-primary-0-0",
+              "status": "completed",
+              "error": null,
+              "steps_completed": 1,
+              "release": {
+                "event": "owner_release",
+                "reason": "release",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 29241283945,
+                "valid_until_ns": 53774032029,
+                "intent_token": "6321d0c02d5349e9be74e0df29f4e020",
+                "release_call_started_ns": 29240857029,
+                "release_call_returned_ns": 29241328394
+              },
+              "interruption": null,
+              "decision_reason": null,
+              "terminal_ns": 29241349903,
+              "semantic_completion": "program status only; task scoring is separate",
+              "emit_ns": 29241351698
+            }
+          ],
+          "validity_checks": [
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+                "source": {
+                  "sequence": 46,
+                  "capture_ns": 23293733705,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 84
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 47
+                    }
+                  }
+                },
+                "max_current_age_ms": 500,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 55
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 6
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 64,
+                "capture_ns": 28651984503,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "health": {
+                    "status": "observed",
+                    "value": 84
+                  },
+                  "ammo": {
+                    "status": "observed",
+                    "value": 47
+                  }
+                }
+              },
+              "controller_decided_ns": 28773576389,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 55,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 6,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 47,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+                "source": {
+                  "sequence": 46,
+                  "capture_ns": 23293733705,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 84
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 47
+                    }
+                  }
+                },
+                "max_current_age_ms": 500,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 55
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 6
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 65,
+                "capture_ns": 28815597077,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 47
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 84
+                  }
+                }
+              },
+              "controller_decided_ns": 28831406661,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 55,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 6,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 47,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+                "source": {
+                  "sequence": 46,
+                  "capture_ns": 23293733705,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 84
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 47
+                    }
+                  }
+                },
+                "max_current_age_ms": 500,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 55
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 6
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 66,
+                "capture_ns": 28925963366,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 47
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 84
+                  }
+                }
+              },
+              "controller_decided_ns": 28940684161,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 55,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 6,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 47,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+                "source": {
+                  "sequence": 46,
+                  "capture_ns": 23293733705,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 84
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 47
+                    }
+                  }
+                },
+                "max_current_age_ms": 500,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 55
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 6
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 67,
+                "capture_ns": 29042529312,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 46
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 84
+                  }
+                }
+              },
+              "controller_decided_ns": 29060936164,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 55,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 6,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 46,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+                "source": {
+                  "sequence": 46,
+                  "capture_ns": 23293733705,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 84
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 47
+                    }
+                  }
+                },
+                "max_current_age_ms": 500,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 55
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 6
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 68,
+                "capture_ns": 29136445749,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 46
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 84
+                  }
+                }
+              },
+              "controller_decided_ns": 29157385541,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 55,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 6,
+                  "observed": 84,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 46,
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "invalidation": null,
+          "cancellation": null,
+          "current_input_authority": false,
+          "physical_input_may_be_down": false,
+          "physical_release_verified": true,
+          "requires_new_decision": false,
+          "grants_input_authority": false
+        },
+        "invalidation": null,
+        "cancellation": null,
+        "current_input_authority": false,
+        "physical_input_may_be_down": false,
+        "physical_release_verified": true,
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "authority_semantics": "root current_input_authority is authoritative; historical_first_admission records only the first past Executor acceptance",
+        "active_intent": null,
+        "early_physical_releases": [],
+        "program_terminal_pending": false
+      },
+      "running_action_invalidation": null,
+      "partial_execution": null,
+      "action_refresh_program_ids": [],
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 23905138665,
+      "controller_model_ended_ns": 28676272610,
+      "model_image_to_plan_accept_ns": 5491637248,
+      "fresh_observation_to_plan_accept_ns": 133386450,
+      "fresh_sequence_at_plan": 64,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-2"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 84,
+          "maximum_health_loss": 0,
+          "hard_minimum": 84,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 84,
+          "sequence": 46,
+          "capture_ns": 23293733705,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9328358208955224,
+              "second_score": 0.34430379746835443
+            },
+            {
+              "slot": 2,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.29842931937172773
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false,
+        "monitor_mode": "unauthored_coast_no_policy"
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "plan_terminal": "completed",
+      "model_action_discarded": false,
+      "remaining_action_discarded": false
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 18948162726,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 29321179481
+  },
+  "model_session_span": 3,
+  "model_session_ids": [
+    "01a1064e-0456-7530-9884-43dfaf83eb61"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "soft_event_context_contract": "expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
+  "final_action_admission_contract": "historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
+  "running_action_contract": "the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
+  "typed_observation_contract": "health/ammo and RGB SHA-256 are extracted from the captured in-memory frame and emitted before transport/artifact publication; every retained full observation must later match epoch, binding, RGB hash and both signal values",
+  "typed_observations": 68,
+  "typed_artifact_reconciliations": [
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "19e13ee1965a87584e5b96a0d588039569f2a38dfb73f3e211b1b613b9e44b70",
+      "artifact_rgb_sha256": "19e13ee1965a87584e5b96a0d588039569f2a38dfb73f3e211b1b613b9e44b70",
+      "artifact": "/out/episode/runtime/001.png",
+      "sequence": 1
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "443c92ea7900264abb08d51e4423731aa7c14b35346da8560b7843afbac3e11f",
+      "artifact_rgb_sha256": "443c92ea7900264abb08d51e4423731aa7c14b35346da8560b7843afbac3e11f",
+      "artifact": "/out/episode/runtime/002.png",
+      "sequence": 2
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f8f44bb73c341e3ed8fc3f7dafc77e332281c508ef704ef3353780028edd8d80",
+      "artifact_rgb_sha256": "f8f44bb73c341e3ed8fc3f7dafc77e332281c508ef704ef3353780028edd8d80",
+      "artifact": "/out/episode/runtime/003.png",
+      "sequence": 3
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "341f653bc757fdc6f6c205754c7556e6821caa09618499af4c2420cd65a377fc",
+      "artifact_rgb_sha256": "341f653bc757fdc6f6c205754c7556e6821caa09618499af4c2420cd65a377fc",
+      "artifact": "/out/episode/runtime/004.png",
+      "sequence": 4
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "695904f544fc1d801bff9a1dc765fe75b304fc37d45edcd939aba9d74e42a6d9",
+      "artifact_rgb_sha256": "695904f544fc1d801bff9a1dc765fe75b304fc37d45edcd939aba9d74e42a6d9",
+      "artifact": "/out/episode/runtime/005.png",
+      "sequence": 5
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "cb423c62c1fd66bc07837830af0c75c572edc249f643138f8d14a68971669b7d",
+      "artifact_rgb_sha256": "cb423c62c1fd66bc07837830af0c75c572edc249f643138f8d14a68971669b7d",
+      "artifact": "/out/episode/runtime/006.png",
+      "sequence": 6
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "60122b818330077994cd53165b6b1ec7748f69d5f3f961bedaa5f63ce4e2fc68",
+      "artifact_rgb_sha256": "60122b818330077994cd53165b6b1ec7748f69d5f3f961bedaa5f63ce4e2fc68",
+      "artifact": "/out/episode/runtime/007.png",
+      "sequence": 7
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d451d7ba4a131c2af98c2e897e4319bdee766445b5099d87fe6536caa77b62ee",
+      "artifact_rgb_sha256": "d451d7ba4a131c2af98c2e897e4319bdee766445b5099d87fe6536caa77b62ee",
+      "artifact": "/out/episode/runtime/008.png",
+      "sequence": 8
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f049b50e6a30c2f018cba255ccde595e8bb8fa05b2add8ba8e62eaea32b1142c",
+      "artifact_rgb_sha256": "f049b50e6a30c2f018cba255ccde595e8bb8fa05b2add8ba8e62eaea32b1142c",
+      "artifact": "/out/episode/runtime/009.png",
+      "sequence": 9
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "9f530b3b2839b7f2a684544a4f0f9d95128c35c0a00fa4269432b351ad018d8d",
+      "artifact_rgb_sha256": "9f530b3b2839b7f2a684544a4f0f9d95128c35c0a00fa4269432b351ad018d8d",
+      "artifact": "/out/episode/runtime/010.png",
+      "sequence": 10
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "a7d1b83cdaec486070780c292a818465ebd495c63c2c860c52e932992b14ceb6",
+      "artifact_rgb_sha256": "a7d1b83cdaec486070780c292a818465ebd495c63c2c860c52e932992b14ceb6",
+      "artifact": "/out/episode/runtime/011.png",
+      "sequence": 11
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "47a911e8df30959c204f52dbf5a152ab558e6f374ade742c9beaf9d9cc1eb03c",
+      "artifact_rgb_sha256": "47a911e8df30959c204f52dbf5a152ab558e6f374ade742c9beaf9d9cc1eb03c",
+      "artifact": "/out/episode/runtime/012.png",
+      "sequence": 12
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "275fc1ce88ec0129618c81038e4847b042f4e73d26accb668ccfc24fc226fc07",
+      "artifact_rgb_sha256": "275fc1ce88ec0129618c81038e4847b042f4e73d26accb668ccfc24fc226fc07",
+      "artifact": "/out/episode/runtime/013.png",
+      "sequence": 13
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d32990323589630adbf62fa6ad99a2c88ee45925149968792659be83cdb9c15a",
+      "artifact_rgb_sha256": "d32990323589630adbf62fa6ad99a2c88ee45925149968792659be83cdb9c15a",
+      "artifact": "/out/episode/runtime/014.png",
+      "sequence": 14
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "771aefcd95ac6eb3c992d2fc81e5e678fadd70a1598b9587bb8483a4a381ea6f",
+      "artifact_rgb_sha256": "771aefcd95ac6eb3c992d2fc81e5e678fadd70a1598b9587bb8483a4a381ea6f",
+      "artifact": "/out/episode/runtime/015.png",
+      "sequence": 15
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5c008d164b4e880299a75fc11ec242550d9a114f353e8472c8e8ea621b4d458c",
+      "artifact_rgb_sha256": "5c008d164b4e880299a75fc11ec242550d9a114f353e8472c8e8ea621b4d458c",
+      "artifact": "/out/episode/runtime/016.png",
+      "sequence": 16
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f86817f46090b5bad989a535b6df75ed4d4096f02cfefdbcd96ab0d9c2801797",
+      "artifact_rgb_sha256": "f86817f46090b5bad989a535b6df75ed4d4096f02cfefdbcd96ab0d9c2801797",
+      "artifact": "/out/episode/runtime/017.png",
+      "sequence": 17
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "84b6b84e86cb403510ea14b46cea45c6eabc7a8b4be015ed4404d5a09a4c4545",
+      "artifact_rgb_sha256": "84b6b84e86cb403510ea14b46cea45c6eabc7a8b4be015ed4404d5a09a4c4545",
+      "artifact": "/out/episode/runtime/018.png",
+      "sequence": 18
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "0376ffb891345a1a9609d3ccc5642b2f19d22340686ccd3e0f4d7288f09cdd79",
+      "artifact_rgb_sha256": "0376ffb891345a1a9609d3ccc5642b2f19d22340686ccd3e0f4d7288f09cdd79",
+      "artifact": "/out/episode/runtime/019.png",
+      "sequence": 19
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5dc9b770eebe6beea330e07fc25f28bf3f9b177ee1d3b687bdc125c548556380",
+      "artifact_rgb_sha256": "5dc9b770eebe6beea330e07fc25f28bf3f9b177ee1d3b687bdc125c548556380",
+      "artifact": "/out/episode/runtime/020.png",
+      "sequence": 20
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4244c88c9b257071b30c58b616b0a6e1b8cb818f59f214254a62cbcbe541299b",
+      "artifact_rgb_sha256": "4244c88c9b257071b30c58b616b0a6e1b8cb818f59f214254a62cbcbe541299b",
+      "artifact": "/out/episode/runtime/021.png",
+      "sequence": 21
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "cfb58fa57079d008b94a9d500933f1a3e3c8f79dc4fa4b9aff23036f6a7585cf",
+      "artifact_rgb_sha256": "cfb58fa57079d008b94a9d500933f1a3e3c8f79dc4fa4b9aff23036f6a7585cf",
+      "artifact": "/out/episode/runtime/022.png",
+      "sequence": 22
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5a7481ba14d48b17ad7960111edebf655238d729a805c60fde46cf65682b0acc",
+      "artifact_rgb_sha256": "5a7481ba14d48b17ad7960111edebf655238d729a805c60fde46cf65682b0acc",
+      "artifact": "/out/episode/runtime/023.png",
+      "sequence": 23
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5dbf28fce7865ef9a9e9f7cfe254708e05967ba6a952c9e6d2645ad20020d88c",
+      "artifact_rgb_sha256": "5dbf28fce7865ef9a9e9f7cfe254708e05967ba6a952c9e6d2645ad20020d88c",
+      "artifact": "/out/episode/runtime/024.png",
+      "sequence": 24
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "38b590a6fe929b98dd55b7057cd5913312f77ddc1e51c72ff55bdf567d228fbc",
+      "artifact_rgb_sha256": "38b590a6fe929b98dd55b7057cd5913312f77ddc1e51c72ff55bdf567d228fbc",
+      "artifact": "/out/episode/runtime/025.png",
+      "sequence": 25
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "7ba868bd49ce982d896fafffa296a44b04f5caefa527c6156706c92ab07c7259",
+      "artifact_rgb_sha256": "7ba868bd49ce982d896fafffa296a44b04f5caefa527c6156706c92ab07c7259",
+      "artifact": "/out/episode/runtime/026.png",
+      "sequence": 26
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6f20448d596c04817f760e3487e98fd73033fdeceb0be44cee1fbcdb3d81c2a0",
+      "artifact_rgb_sha256": "6f20448d596c04817f760e3487e98fd73033fdeceb0be44cee1fbcdb3d81c2a0",
+      "artifact": "/out/episode/runtime/027.png",
+      "sequence": 27
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "870441c06e092fc1a673906bf5425b68b7d650455a4ce9238085ded1ad52915e",
+      "artifact_rgb_sha256": "870441c06e092fc1a673906bf5425b68b7d650455a4ce9238085ded1ad52915e",
+      "artifact": "/out/episode/runtime/028.png",
+      "sequence": 28
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "87ff7ca968c1b7da9ad4ffd56f6f511b12edcb234116d7def17dc00c25f8a54d",
+      "artifact_rgb_sha256": "87ff7ca968c1b7da9ad4ffd56f6f511b12edcb234116d7def17dc00c25f8a54d",
+      "artifact": "/out/episode/runtime/029.png",
+      "sequence": 29
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d38e7a0d26e9f2875ffcb9ee478f7ed7ee91db8a5d8d832a7d18fc5fd9c9f851",
+      "artifact_rgb_sha256": "d38e7a0d26e9f2875ffcb9ee478f7ed7ee91db8a5d8d832a7d18fc5fd9c9f851",
+      "artifact": "/out/episode/runtime/030.png",
+      "sequence": 30
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "ff78f57892bb065bdb9fae11da17700bc03e57843b02519c2f0c829d9e8dcc81",
+      "artifact_rgb_sha256": "ff78f57892bb065bdb9fae11da17700bc03e57843b02519c2f0c829d9e8dcc81",
+      "artifact": "/out/episode/runtime/031.png",
+      "sequence": 31
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "8f72fec3d08321c09a92367a20a560bae7a10519bd20ce49f0f39036706989fb",
+      "artifact_rgb_sha256": "8f72fec3d08321c09a92367a20a560bae7a10519bd20ce49f0f39036706989fb",
+      "artifact": "/out/episode/runtime/032.png",
+      "sequence": 32
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "a4a1a7cc88226321d7dd8ccbde00c7e2d9c5b32597917392504ca859905086d3",
+      "artifact_rgb_sha256": "a4a1a7cc88226321d7dd8ccbde00c7e2d9c5b32597917392504ca859905086d3",
+      "artifact": "/out/episode/runtime/033.png",
+      "sequence": 33
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "ade9379ed619cc3454e6aeca7e8ebf3a645142aba0ce6bf6da6321eb199ee4d5",
+      "artifact_rgb_sha256": "ade9379ed619cc3454e6aeca7e8ebf3a645142aba0ce6bf6da6321eb199ee4d5",
+      "artifact": "/out/episode/runtime/034.png",
+      "sequence": 34
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "b2ff7f36bf3837296e4b1f2791fd8b61d676a7545574993f6dd2cd9112f94c20",
+      "artifact_rgb_sha256": "b2ff7f36bf3837296e4b1f2791fd8b61d676a7545574993f6dd2cd9112f94c20",
+      "artifact": "/out/episode/runtime/035.png",
+      "sequence": 35
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6e14635c8523203a2cf9b7c5d77768d90cb61a3e8f11ecc6c03f7e62bf8d8362",
+      "artifact_rgb_sha256": "6e14635c8523203a2cf9b7c5d77768d90cb61a3e8f11ecc6c03f7e62bf8d8362",
+      "artifact": "/out/episode/runtime/036.png",
+      "sequence": 36
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f6da7f2095734a042529ff6c979a14509596b7cca27494c269145a96d33777e4",
+      "artifact_rgb_sha256": "f6da7f2095734a042529ff6c979a14509596b7cca27494c269145a96d33777e4",
+      "artifact": "/out/episode/runtime/037.png",
+      "sequence": 37
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "22c25cfe678d74d214670ecfb15cd731bb6ee8800f9eabf2bba8b0056aff44cf",
+      "artifact_rgb_sha256": "22c25cfe678d74d214670ecfb15cd731bb6ee8800f9eabf2bba8b0056aff44cf",
+      "artifact": "/out/episode/runtime/038.png",
+      "sequence": 38
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6035197b1cf6a7c9ea979d8d142a4c1b4a6c6653959620d9c016454db285ead5",
+      "artifact_rgb_sha256": "6035197b1cf6a7c9ea979d8d142a4c1b4a6c6653959620d9c016454db285ead5",
+      "artifact": "/out/episode/runtime/039.png",
+      "sequence": 39
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "100831970cb65506b8cb48ffb1f8cec0ff731abc0e441730d75bbb9e3f7fca3c",
+      "artifact_rgb_sha256": "100831970cb65506b8cb48ffb1f8cec0ff731abc0e441730d75bbb9e3f7fca3c",
+      "artifact": "/out/episode/runtime/040.png",
+      "sequence": 40
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "77404c6b86d8a94a5185b06b3e387dea1d2b54b256fc60b8efd729071aee4f16",
+      "artifact_rgb_sha256": "77404c6b86d8a94a5185b06b3e387dea1d2b54b256fc60b8efd729071aee4f16",
+      "artifact": "/out/episode/runtime/041.png",
+      "sequence": 41
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "13902afc7dcc8cdec2e67ae830480076a3d0af410c4068d0c4b603c9a1965830",
+      "artifact_rgb_sha256": "13902afc7dcc8cdec2e67ae830480076a3d0af410c4068d0c4b603c9a1965830",
+      "artifact": "/out/episode/runtime/042.png",
+      "sequence": 42
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "644d12df6b5920d930dc480235677d8e14952a8774807c42e86b7d324f745b8c",
+      "artifact_rgb_sha256": "644d12df6b5920d930dc480235677d8e14952a8774807c42e86b7d324f745b8c",
+      "artifact": "/out/episode/runtime/043.png",
+      "sequence": 43
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "7e6b56b4326558959faa39c9b9b752947e78c429e529b8a82fb083c06296b2ae",
+      "artifact_rgb_sha256": "7e6b56b4326558959faa39c9b9b752947e78c429e529b8a82fb083c06296b2ae",
+      "artifact": "/out/episode/runtime/044.png",
+      "sequence": 44
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "43dd87215b5c19e9211de74d8da7e820a910dabb72edbcd3b5c4b1d1b2912f1c",
+      "artifact_rgb_sha256": "43dd87215b5c19e9211de74d8da7e820a910dabb72edbcd3b5c4b1d1b2912f1c",
+      "artifact": "/out/episode/runtime/045.png",
+      "sequence": 45
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "dc2fa35cca4b7c52090e7c3156f834bf145e9fb492ebf3d5f7bcfceff6239db1",
+      "artifact_rgb_sha256": "dc2fa35cca4b7c52090e7c3156f834bf145e9fb492ebf3d5f7bcfceff6239db1",
+      "artifact": "/out/episode/runtime/046.png",
+      "sequence": 46
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "9af38d1476589b91cb8cd5ba5a1484ba98178488373aa9930d9e24bff98ac8d7",
+      "artifact_rgb_sha256": "9af38d1476589b91cb8cd5ba5a1484ba98178488373aa9930d9e24bff98ac8d7",
+      "artifact": "/out/episode/runtime/047.png",
+      "sequence": 47
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d5ba49c8c774c47258e629d713904e9038bb436788bf45861e07279843bc5a2c",
+      "artifact_rgb_sha256": "d5ba49c8c774c47258e629d713904e9038bb436788bf45861e07279843bc5a2c",
+      "artifact": "/out/episode/runtime/048.png",
+      "sequence": 48
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "3d767858ae96295253753914f10725d81db062fb0e7ddebc033f3d734d33809d",
+      "artifact_rgb_sha256": "3d767858ae96295253753914f10725d81db062fb0e7ddebc033f3d734d33809d",
+      "artifact": "/out/episode/runtime/049.png",
+      "sequence": 49
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f1e17199c24fb4068e55dca5c98dec31dfedf49369f24ea49655bc41a50c5af8",
+      "artifact_rgb_sha256": "f1e17199c24fb4068e55dca5c98dec31dfedf49369f24ea49655bc41a50c5af8",
+      "artifact": "/out/episode/runtime/050.png",
+      "sequence": 50
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "3b23bf02e9ef4adae0cd71d492808912e3d48d87124eb33bf766b38acd6a9da8",
+      "artifact_rgb_sha256": "3b23bf02e9ef4adae0cd71d492808912e3d48d87124eb33bf766b38acd6a9da8",
+      "artifact": "/out/episode/runtime/051.png",
+      "sequence": 51
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "79e28e70fba5e15f5572d95d486a2fabb3b647f86cc73e49143ae8820171d4ad",
+      "artifact_rgb_sha256": "79e28e70fba5e15f5572d95d486a2fabb3b647f86cc73e49143ae8820171d4ad",
+      "artifact": "/out/episode/runtime/052.png",
+      "sequence": 52
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "96e92df5df6e73ed9843c6d989364d440b2053527ee3111708936854ac0ccca0",
+      "artifact_rgb_sha256": "96e92df5df6e73ed9843c6d989364d440b2053527ee3111708936854ac0ccca0",
+      "artifact": "/out/episode/runtime/053.png",
+      "sequence": 53
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "07a3d43558c05876fa7e0039fe3d4f284d7fbaa3890045c9af94a5394e8e1686",
+      "artifact_rgb_sha256": "07a3d43558c05876fa7e0039fe3d4f284d7fbaa3890045c9af94a5394e8e1686",
+      "artifact": "/out/episode/runtime/054.png",
+      "sequence": 54
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "e130cae3d86827486eb55bb20393f153ea7969a14bb0ec019fe1574685eace66",
+      "artifact_rgb_sha256": "e130cae3d86827486eb55bb20393f153ea7969a14bb0ec019fe1574685eace66",
+      "artifact": "/out/episode/runtime/055.png",
+      "sequence": 55
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "c15391cfccb997d4be5ed3803e76d9deb05847dae35c672816711b3bde8bd062",
+      "artifact_rgb_sha256": "c15391cfccb997d4be5ed3803e76d9deb05847dae35c672816711b3bde8bd062",
+      "artifact": "/out/episode/runtime/056.png",
+      "sequence": 56
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4ad8ae65a50a76defc6baa407c3a614a9515c4ecda91369026f425ee0e11ab9f",
+      "artifact_rgb_sha256": "4ad8ae65a50a76defc6baa407c3a614a9515c4ecda91369026f425ee0e11ab9f",
+      "artifact": "/out/episode/runtime/057.png",
+      "sequence": 57
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "098549901eb3b52a04f00ed9632086d8ac6e445b93f1c68ad828052af99f0786",
+      "artifact_rgb_sha256": "098549901eb3b52a04f00ed9632086d8ac6e445b93f1c68ad828052af99f0786",
+      "artifact": "/out/episode/runtime/058.png",
+      "sequence": 58
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "118b227065f2c946682eca675d04efb4de89618e0d38a29cd3f6d3d8b8acb217",
+      "artifact_rgb_sha256": "118b227065f2c946682eca675d04efb4de89618e0d38a29cd3f6d3d8b8acb217",
+      "artifact": "/out/episode/runtime/059.png",
+      "sequence": 59
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "37b842885e7330f0ec9e8ed5315627db3b0dc73e64bab70bd277c0e7bf91bfdc",
+      "artifact_rgb_sha256": "37b842885e7330f0ec9e8ed5315627db3b0dc73e64bab70bd277c0e7bf91bfdc",
+      "artifact": "/out/episode/runtime/060.png",
+      "sequence": 60
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "ebe99a0cb923d1c5672db9a3344b47166e4d553f3a9f09bf0837f191737db1bf",
+      "artifact_rgb_sha256": "ebe99a0cb923d1c5672db9a3344b47166e4d553f3a9f09bf0837f191737db1bf",
+      "artifact": "/out/episode/runtime/061.png",
+      "sequence": 61
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "436414d2e3fa8a56409615d597e7fa6e341753ab1da4bbb17f1a6a7cf8e3fcb4",
+      "artifact_rgb_sha256": "436414d2e3fa8a56409615d597e7fa6e341753ab1da4bbb17f1a6a7cf8e3fcb4",
+      "artifact": "/out/episode/runtime/062.png",
+      "sequence": 62
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "9425dffbdade4c29b5b62fd33a75ea7d01b92f287038f9b7b58c28e669c5ee2e",
+      "artifact_rgb_sha256": "9425dffbdade4c29b5b62fd33a75ea7d01b92f287038f9b7b58c28e669c5ee2e",
+      "artifact": "/out/episode/runtime/063.png",
+      "sequence": 63
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4289e9b1cfdfba4ddc55bff338df9bd80214f212760e67f75a559a4897d7de73",
+      "artifact_rgb_sha256": "4289e9b1cfdfba4ddc55bff338df9bd80214f212760e67f75a559a4897d7de73",
+      "artifact": "/out/episode/runtime/064.png",
+      "sequence": 64
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "ed7b8d7074131869510be9413eeeb78fa7bfcb90885955cc54cf6be1e319893c",
+      "artifact_rgb_sha256": "ed7b8d7074131869510be9413eeeb78fa7bfcb90885955cc54cf6be1e319893c",
+      "artifact": "/out/episode/runtime/065.png",
+      "sequence": 65
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "af13f2eca776e7ecbd5ca2746365010dca52e08d0491879612c0842bd173324d",
+      "artifact_rgb_sha256": "af13f2eca776e7ecbd5ca2746365010dca52e08d0491879612c0842bd173324d",
+      "artifact": "/out/episode/runtime/066.png",
+      "sequence": 66
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "21a8a3ba8634a024641ebc86051909e96df4b826d63eef7cb0ea8ad02d6a2e65",
+      "artifact_rgb_sha256": "21a8a3ba8634a024641ebc86051909e96df4b826d63eef7cb0ea8ad02d6a2e65",
+      "artifact": "/out/episode/runtime/067.png",
+      "sequence": 67
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "74526106f892e36d5b46535f9fb69c67dc3d9da1ea32811574f53ad3c769f5f7",
+      "artifact_rgb_sha256": "74526106f892e36d5b46535f9fb69c67dc3d9da1ea32811574f53ad3c769f5f7",
+      "artifact": "/out/episode/runtime/068.png",
+      "sequence": 68
+    }
+  ],
+  "typed_artifact_reconciled": 68,
+  "typed_artifact_reconciliation_failures": 0,
+  "typed_capture_to_ready_ms": [
+    8.878743,
+    16.473172,
+    7.54342,
+    6.975225,
+    8.263762,
+    7.294871,
+    8.288825,
+    9.489842,
+    7.081034,
+    23.674778,
+    11.547521,
+    6.804642,
+    7.078848,
+    8.597001,
+    7.293008,
+    7.9897,
+    6.726447,
+    6.761691,
+    7.979433,
+    7.236709,
+    7.884184,
+    7.320457,
+    7.194162,
+    7.99456,
+    11.874249,
+    8.073788,
+    7.715442,
+    8.46443,
+    8.698176,
+    10.624493,
+    7.217319,
+    7.828118,
+    8.057607,
+    8.832094,
+    7.812327,
+    7.998685,
+    7.167577,
+    6.960025,
+    7.219112,
+    7.137194,
+    7.188031,
+    7.573844,
+    7.578764,
+    6.493104,
+    7.244314,
+    7.853598,
+    8.43588,
+    8.967517,
+    8.174561,
+    8.372745,
+    7.669962,
+    6.952869,
+    6.874903,
+    7.389598,
+    8.919903,
+    8.230174,
+    7.772821,
+    7.924494,
+    10.070583,
+    9.157477,
+    8.0429,
+    8.182843,
+    8.517851,
+    12.491522,
+    7.830173,
+    7.593084,
+    9.701131,
+    11.207333
+  ],
+  "typed_ready_to_emit_ms": [
+    2.840112,
+    4.036821,
+    4.35335,
+    2.857366,
+    2.493629,
+    2.791188,
+    2.898414,
+    3.062776,
+    2.659232,
+    6.014042,
+    3.179624,
+    2.500588,
+    2.450521,
+    2.982745,
+    2.573626,
+    2.593978,
+    2.385992,
+    2.509162,
+    2.594947,
+    2.559238,
+    2.780661,
+    2.582972,
+    2.521296,
+    2.839623,
+    4.795317,
+    4.547681,
+    2.837239,
+    3.101823,
+    2.677076,
+    2.583022,
+    2.736231,
+    2.842437,
+    2.821721,
+    3.138882,
+    2.63588,
+    2.880469,
+    2.60269,
+    2.424965,
+    2.454086,
+    2.469912,
+    2.612022,
+    2.420177,
+    2.595592,
+    2.375097,
+    2.624866,
+    2.926674,
+    2.826669,
+    2.965941,
+    2.474452,
+    2.808187,
+    3.477001,
+    2.533254,
+    2.500338,
+    2.549664,
+    3.094159,
+    2.638014,
+    2.94872,
+    3.428878,
+    2.97862,
+    2.755455,
+    2.636257,
+    2.721799,
+    3.005351,
+    4.681324,
+    2.606053,
+    2.582516,
+    3.252331,
+    3.755184
+  ],
+  "typed_capture_to_artifact_ready_ms": [
+    59.92346,
+    115.923859,
+    73.178851,
+    62.109144,
+    60.481549,
+    60.648479,
+    65.01029,
+    87.761399,
+    64.346595,
+    142.551759,
+    70.766964,
+    56.547635,
+    62.08104,
+    66.077862,
+    59.978366,
+    66.329466,
+    58.040142,
+    53.421395,
+    59.21377,
+    59.447585,
+    61.119323,
+    59.045222,
+    64.224207,
+    98.085048,
+    85.26388,
+    72.218574,
+    82.287911,
+    83.837229,
+    105.509823,
+    106.524374,
+    56.89494,
+    56.915122,
+    57.440549,
+    56.363344,
+    50.86765,
+    49.057944,
+    57.465115,
+    52.889756,
+    53.545153,
+    52.869696,
+    48.228504,
+    48.20909,
+    49.071212,
+    55.604257,
+    55.655823,
+    50.497556,
+    55.085102,
+    106.948335,
+    49.293181,
+    50.862454,
+    49.564777,
+    53.341595,
+    49.917169,
+    47.412449,
+    53.499121,
+    46.653733,
+    56.908871,
+    61.249136,
+    58.735496,
+    54.882674,
+    50.639196,
+    51.080001,
+    51.562394,
+    63.950945,
+    52.751237,
+    56.954011,
+    70.574585,
+    92.598773
+  ],
+  "typed_emit_to_artifact_ready_ms": [
+    48.204605,
+    95.413866,
+    61.282081,
+    52.276553,
+    49.724158,
+    50.56242,
+    53.823051,
+    75.208781,
+    54.606329,
+    112.862939,
+    56.039819,
+    47.242405,
+    52.551671,
+    54.498116,
+    50.111732,
+    55.745788,
+    48.927703,
+    44.150542,
+    48.63939,
+    49.651638,
+    50.454478,
+    49.141793,
+    54.508749,
+    87.250865,
+    68.594314,
+    59.597105,
+    71.73523,
+    72.270976,
+    94.134571,
+    93.316859,
+    46.94139,
+    46.244567,
+    46.561221,
+    44.392368,
+    40.419443,
+    38.17879,
+    47.694848,
+    43.504766,
+    43.871955,
+    43.26259,
+    38.428451,
+    38.215069,
+    38.896856,
+    46.736056,
+    45.786643,
+    39.717284,
+    43.822553,
+    95.014877,
+    38.644168,
+    39.681522,
+    38.417814,
+    43.855472,
+    40.541928,
+    37.473187,
+    41.485059,
+    35.785545,
+    46.18733,
+    49.895764,
+    45.686293,
+    42.969742,
+    39.960039,
+    40.175359,
+    40.039192,
+    46.778099,
+    42.315011,
+    46.778411,
+    57.621123,
+    77.636256
+  ],
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 0,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 2,
+  "action_refresh_programs": 0,
+  "running_action_invalidations": 0,
+  "running_action_revocations": 0,
+  "running_action_intersegment_rejections": 0,
+  "running_action_program_bindings": 2,
+  "historical_first_executor_admissions": 2,
+  "current_input_authority_true_at_decision_close": 0,
+  "extra_program_admissions_vs_one_bundle": 0,
+  "effect_receipt_commands": 2,
+  "effect_observation_samples": 8,
+  "effect_observation_capture_ms": 28.761805,
+  "game_continued_during_model_calls": true,
+  "runtime_fixture": {
+    "manifest": "/study/fixture-input/fixture.json",
+    "manifest_sha256": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+    "save": "/study/fixture-input/save.png",
+    "save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "before_load_tic": 89,
+    "after_load_tic": 1366,
+    "source_episode_tic": 1366,
+    "setup_input_contract": "fixture state reached through the same X11 Executor and recorded OS-input/coast programs; save is setup-only"
+  },
+  "fixture_contract": "hash/IWAD/engine/map/skill checked before load; measured control begins after load; fixture grants no action authority",
+  "planner_contract": "one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
+  "planner_turns": 3,
+  "planner_interruption_requests": 0,
+  "planner_interrupted_completions": 0,
+  "planner_ineligible_answers": 0,
+  "policy_invalidation_contract": "authored cover health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; unauthored empty coast has no policy to invalidate and does not interrupt a pending answer on damage; exact observations and fresh immediate action validity remain mandatory; this never grants input authority or proves success",
+  "policy_invalidations": 0,
+  "cover_validity_soft_events": 0,
+  "cover_validity_admission_rejections": 0,
+  "model_actions_discarded": 1,
+  "historical_final_action_admission_statuses": {
+    "INPUT_ADMITTED": 2,
+    "REJECTED_ACTION_NOT_CURRENT": 1
+  },
+  "cover_programs": 3,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 2,
+  "model_authored_cover_validity_envelopes": 2,
+  "model_wall_seconds": 16.446229904
+}
