@@ -1,0 +1,61 @@
+{
+  "allocation": "MAP01-PER-KEY-OCCUPANCY-COMPLETENESS-A01-20261005",
+  "status": "PASS_METHOD_SCOPED",
+  "selected_main": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "input_artifact_source_main": "6cd70ad4bfad74e11658057bf024918bffb24add",
+  "question": "Whether the retained per-key ledger detects omission of an expected action-key interval",
+  "legacy_candidate_unit_tests": {
+    "passed": 4,
+    "failed": 0,
+    "main_branch_copy_revalidation": "4 passed, 0 failed; exit 0",
+    "cases": [
+      "complete_inventory_preserves_bounds",
+      "retained_ledger_accepts_dropped_key_row",
+      "completeness_wrapper_rejects_dropped_key_row",
+      "invalid_expected_inventory_fails_closed"
+    ]
+  },
+  "independent_audit_status": "PASS_METHOD_SCOPED",
+  "independent_audit_version": "v3 (v2 retained as historical; v3 enforces frozen input and source pins)",
+  "independent_audit_checks_passed": 8,
+  "audit_v3_unit_tests": {
+    "passed": 7,
+    "failed": 0,
+    "cases": [
+      "canonical_bytes_and_source_match_freeze",
+      "changed_raw_bytes_fail_frozen_digest",
+      "changed_audit_source_fails_frozen_digest",
+      "duplicate_or_invalid_inventory_fails_closed",
+      "report_writer_uses_canonical_crlf_bytes",
+      "archived_v2_source_matches_its_historical_freeze",
+      "retired_v2_entrypoint_cannot_report_pass"
+    ]
+  },
+  "main_branch_copy_audit_revalidation": "PASS_METHOD_SCOPED; exit 0",
+  "legacy_complete": {
+    "status": "BOUNDED",
+    "bounds_ns": {
+      "SPACE": [32, 50],
+      "W": [70, 90]
+    }
+  },
+  "legacy_space_row_omitted": {
+    "status": "BOUNDED",
+    "reported_keys": ["W"]
+  },
+  "completeness_wrapper_complete": {
+    "status": "BOUNDED",
+    "bounds_ns": {
+      "SPACE": [32, 50],
+      "W": [70, 90]
+    }
+  },
+  "completeness_wrapper_space_row_omitted": {
+    "status": "UNKNOWN",
+    "reason": "expected_key_inventory_mismatch"
+  },
+  "expected_key_inventory": ["SPACE", "W"],
+  "environment": "Windows host; Python 3.12; standard library only",
+  "game_or_shared_resources_used": false,
+  "scope_limit": "Synthetic event-row deletion only; no live input occupancy, application delivery, useful feedback, recovery, task effect, MAP01 efficacy, or speed claim"
+}
