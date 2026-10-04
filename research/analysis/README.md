@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #7728 Windows sensor cross-check A02](client_energy_windows_counter_7728_a02_20261005/REPORT.md) — six raw package-energy samples matched the frozen EMI v2 endpoints; instrument-level PASS with a documented stale-main freeze deviation, busy host, and no task/T1 claim.
+
 - [Issue #7728 Windows sensor cross-check A01](client_energy_windows_counter_7728_a01_20261005/REPORT.md) — Windows EMI v2 package energy and one raw `NumberOfItems64` sample agreed within a frozen bracket; sensor identity only, with no route/T1 claim.
 
 - [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
@@ -372,6 +374,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`client_energy_per_effect_7728_t0_20261005/`](client_energy_per_effect_7728_t0_20261005/)
 - [`client_energy_windows_counter_7728_a01_20261005/`](client_energy_windows_counter_7728_a01_20261005/)
+- [`client_energy_windows_counter_7728_a02_20261005/`](client_energy_windows_counter_7728_a02_20261005/)
 - [`clipboard_formats_36_t0_01a0ff51/`](clipboard_formats_36_t0_01a0ff51/)
 - [`clipboard_formats_36_x11_transfer_01a0ff51/`](clipboard_formats_36_x11_transfer_01a0ff51/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)

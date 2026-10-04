@@ -1,0 +1,37 @@
+{
+  "status": "PASS_SIX_SAMPLE_COUNTER_ORACLE_MATCH",
+  "issue": 7728,
+  "target_domain": "RAPL_Package0_PKG",
+  "unit": "picowatt-hours",
+  "counter_sample_count": 6,
+  "energy_raw_first": "723609618665000",
+  "energy_raw_last": "723637170789166",
+  "emi_energy_before": "723597543189722",
+  "emi_energy_after": "723637173754444",
+  "emi_energy_delta": "39630564722",
+  "emi_time_delta_100ns": "72701864",
+  "counter_interval_min_delta": "5237121112",
+  "counter_interval_max_delta": "5795677777",
+  "distinct_counter_interval_deltas": 5,
+  "cpu_samples": 6,
+  "cpu_mean_percent": 81.629,
+  "cpu_min_percent": 72.311,
+  "cpu_max_percent": 96.24,
+  "counter_bracketed": true,
+  "route_or_effect_claim": false,
+  "negative_controls": [
+    {
+      "name": "wrong-unit",
+      "rejected": true
+    },
+    {
+      "name": "out-of-bracket-sample",
+      "rejected": true
+    },
+    {
+      "name": "dropped-energy-sample",
+      "rejected": true
+    }
+  ],
+  "negative_controls_passed": true
+}

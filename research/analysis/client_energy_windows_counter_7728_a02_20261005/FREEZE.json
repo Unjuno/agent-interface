@@ -1,0 +1,48 @@
+{
+  "schema": "issue7728-windows-energy-counter-freeze-v1",
+  "issue": 7728,
+  "experiment": "A02",
+  "platform": "Windows",
+  "base_commit": "02e0b19838ef87dba421480154314fa07b00a386",
+  "frozen_utc": "2026-10-04T19:18:54.3881035Z",
+  "candidate": "run_a02.ps1",
+  "auditor": "audit_a02.py",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "sdk_header": {
+    "path": "Windows Kits 10.0.22621.0/shared/emi.h",
+    "sha256": "7c9e06256a91f7d2b0f77fac8fc6fe04934fbc615147ce1945a0fba7bb25c305"
+  },
+  "sources": [
+    {
+      "path": "PREREGISTRATION.md",
+      "sha256": "7071d1c7be534a63a1cebfbc5e3c2a7eca83c7fcbb103d9eff892f5db210068e"
+    },
+    {
+      "path": "CONSTRUCTION.md",
+      "sha256": "32539bf0893f38ebb6ac1d0ad2b69937cffd7bfcb76e92adf73bddf094919989"
+    },
+    {
+      "path": "README.md",
+      "sha256": "b3d0ed094a24495c77a51a993b1f4718afbbd82500fe688f962b9b784a7b2070"
+    },
+    {
+      "path": "emi_probe.cs",
+      "sha256": "8072e36e049805f7e256a5d5208e28f10fd4071edd3ef83fef0a9c46eaaac613"
+    },
+    {
+      "path": "run_a02.ps1",
+      "sha256": "5026c89ebcb429c275aa3abbeb05db3a08f73e468c6cceb19090c9057b3de455"
+    },
+    {
+      "path": "audit_a02.py",
+      "sha256": "2565efbf99f50ce851e672c79bab2291668f1e64d3bfbcb16f4e8403f4ee43ea"
+    },
+    {
+      "path": "test_audit_a02.py",
+      "sha256": "cca7bf90cf927aa8b5a86bccda66a9c4c93b68a6229197a2200a8b503393f668"
+    }
+  ],
+  "privilege_escalation": false,
+  "workload_or_route": false
+}
