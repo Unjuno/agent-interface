@@ -14,10 +14,14 @@ For the 38 associated rows, the interval from per-key `input_ack_ns` to the same
 
 This refines the intentionally broad A04 heuristic in draft PR #7671: later event order plus key membership alone produces ambiguous candidates, while adding same-step context yields a scoped association on this one serialized trace. It does not establish a runtime-authored foreign key or guarantee that the inference transfers to overlapping/concurrent programs.
 
+## Saved-result audit repair
+
+Independent review found that the first audit version recomputed candidate receipt positions and cardinalities but did not compare all emitted values. In disposable copies, it accepted a corrupted acknowledgement-gap median, a corrupted per-admission gap, and an incorrect admission count while leaving the frozen raw stream unchanged. The repaired auditor independently reconstructs every emitted row, gap statistic, count, status, source identity, and scope-limit field, then compares the complete JSON structure using type-preserving canonical serialization. The raw `RESULT.json` and frozen source are unchanged. Three regression mutations that passed the old auditor now fail closed; the unmodified result continues to pass.
+
 ## H / T / D / C / U
 
 - **H:** One retained v39 trace has per-key admission records without explicit program/step identifiers, plus aggregate per-step `keys_held` records.
-- **T:** Read the exact hash-pinned stream from the frozen commit; reconstruct active hold-step scope from ordered `step_started`, `step_completed`, cancellation, and terminal records; require same key, same id/step, later receipt, and monotonic acknowledgement time; independently reimplement with a raw-stream state machine. Five synthetic boundary tests cover grouped admissions, canceled steps, duplicate receipts, stale contexts, and receipts after cancellation.
+- **T:** Read the exact hash-pinned stream from the frozen commit; reconstruct active hold-step scope from ordered `step_started`, `step_completed`, cancellation, and terminal records; require same key, same id/step, later receipt, and monotonic acknowledgement time; independently reimplement with a raw-stream state machine. Five analysis boundary tests cover grouped admissions, canceled steps, duplicate receipts, stale contexts, and receipts after cancellation. Four saved-result audit tests preserve the valid result and reject corrupted aggregate statistics, per-row timing, and admission counts.
 - **D:** Descriptive result: 38/39 admissions associate with one same-step aggregate receipt; the known cancellation-racing Down admission has none. This gate was not preregistered before exploratory counting and is not presented as a formal allocation result.
 - **C:** Event serialization and step-start boundaries explain the associations. A future concurrent writer, missing/reordered log row, or runtime event-emission change could invalidate the inferred scope. An aggregate acknowledgement does not show when every individual key became physically held.
 - **U:** Exact per-key release/key-up time, physical keyboard state, independent useful feedback onset, causal task effect, bounded recovery benefit, matched-condition performance, and MAP01 success remain unmeasured.
@@ -32,4 +36,4 @@ python research/doom/v39_admission_step_context_a05_20261005/audit.py
 python -m unittest discover -s research/doom/v39_admission_step_context_a05_20261005 -v
 ```
 
-The first command writes `RESULT.json`; the second independently reconstructs and writes `AUDIT.json`. The raw input is read with `git show` from the frozen commit and is not modified.
+The first command writes `RESULT.json`; the second independently reconstructs and writes `AUDIT.json`, comparing every saved result field with its raw-derived value. The raw input is read with `git show` from the frozen commit and is not modified. The nine tests passed after the audit repair.
