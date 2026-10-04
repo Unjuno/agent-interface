@@ -1,5 +1,5 @@
-$ErrorActionPreference='Stop'
 param([string]$Trace='research/doom/results/map01-v39-coast-liveness-live-01')
+$ErrorActionPreference='Stop'
 $manifest=Get-Content -Raw -LiteralPath (Join-Path $Trace 'retention-manifest.json') | ConvertFrom-Json
 $files=@{}; foreach($f in $manifest.files){$files[$f.path]=$f}
 $eventPath=Join-Path $Trace 'runtime/events.jsonl'; $reportPath=Join-Path $Trace 'report.json'
