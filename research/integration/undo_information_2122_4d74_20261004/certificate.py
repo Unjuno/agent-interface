@@ -1,0 +1,6 @@
+import pathlib,json,hashlib
+R=pathlib.Path(__file__).resolve().parent;raw=json.loads((R/'raw.json').read_text(encoding='utf-8-sig'));reopen=json.loads((R/'reopen-audit.json').read_text(encoding='utf-8-sig'));rows=[]
+for r in raw['rows']:
+    e=next(e for e in r['events'] if e['stage']=='before_undo');view={k:e[k] for k in ['A1','B1','titles','undo_possible','locked']};b=json.dumps(view,sort_keys=True,separators=(',',':')).encode();endpoint=next(x for x in reopen['rows'] if x['case']==r['case']);rows.append({'scorer_world':r['case'],'visible_view':view,'visible_sha256':hashlib.sha256(b).hexdigest(),'verified_after':endpoint['reopened_cells'],'saved_sha256':endpoint['sha256']})
+valid=len(rows)==2 and rows[0]['visible_sha256']==rows[1]['visible_sha256'] and reopen['errors']==[] and reopen['parent_exit']==0
+print(json.dumps({'rows':rows,'decision':'SUPPORT_UNCHANGED_VIEW_UNDO_BOUND' if valid else 'HOLD','policy_family':['UNDO','DECLINE'],'formula':'For any common visible-view Undo probability p in [0,1], protected loss probability in the hidden_attached world is p. Zero protected-loss for every compatible world implies p=0.','limits':'Not a population rate; authored attribution. Additional informative provenance, target-edit or SAVE_AS_NEW outside family. No model invocation.'},indent=2));raise SystemExit(not valid)

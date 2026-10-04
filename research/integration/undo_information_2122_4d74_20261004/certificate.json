@@ -1,0 +1,47 @@
+{
+  "rows": [
+    {
+      "scorer_world": "single_visible",
+      "visible_view": {
+        "A1": "OWNED",
+        "B1": "PROTECTED",
+        "titles": [
+          "Input"
+        ],
+        "undo_possible": true,
+        "locked": false
+      },
+      "visible_sha256": "63bae76d0fd08c4e89c9f0ba54ccdf764ee2c51814157bede9f7fb14243ae3af",
+      "verified_after": [
+        "",
+        "PROTECTED"
+      ],
+      "saved_sha256": "06cad0e8c6eb8cb41574043f743818a9429b16107e6be68fd1fd2dd61dfbbf18"
+    },
+    {
+      "scorer_world": "hidden_attached",
+      "visible_view": {
+        "A1": "OWNED",
+        "B1": "PROTECTED",
+        "titles": [
+          "Input"
+        ],
+        "undo_possible": true,
+        "locked": false
+      },
+      "visible_sha256": "63bae76d0fd08c4e89c9f0ba54ccdf764ee2c51814157bede9f7fb14243ae3af",
+      "verified_after": [
+        "",
+        ""
+      ],
+      "saved_sha256": "f234426ef4341de9271374d8caa5d758a2d057d9193c7f377e741e0dc2f306bc"
+    }
+  ],
+  "decision": "SUPPORT_UNCHANGED_VIEW_UNDO_BOUND",
+  "policy_family": [
+    "UNDO",
+    "DECLINE"
+  ],
+  "formula": "For any common visible-view Undo probability p in [0,1], protected loss probability in the hidden_attached world is p. Zero protected-loss for every compatible world implies p=0.",
+  "limits": "Not a population rate; authored attribution. Additional informative provenance, target-edit or SAVE_AS_NEW outside family. No model invocation."
+}
