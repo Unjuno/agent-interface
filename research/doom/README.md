@@ -37,6 +37,9 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| v39 ammo-aware cover pair gate (#59) | [`v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md`](v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md) — ten-case paired-epoch construction PASS, audit 44/44; no current runtime integration or live behavior |
+| v39 ammo-aware renewable-cover successor (#59) | [`v39_ammo_cover_guard_59_a02_20261005/REPORT.md`](v39_ammo_cover_guard_59_a02_20261005/REPORT.md) — dual-signal construction `PASS` (24/24 audit checks); no controller integration or live evidence; paired epoch enforcement remains a prerequisite |
+| v39 ammo-aware renewable-cover boundary (#59) | [`v39_ammo_cover_guard_59_a01_20261005/REPORT.md`](v39_ammo_cover_guard_59_a01_20261005/REPORT.md) — synthetic current-source failure: zero ammo did not invalidate a notional fire-containing cover while the health guard remained valid; no live-game or input claim |
 | v39 F02 pipe-EOF construction predecessor (#59) | [`v39_eof_59_f02_20261004_3cbf/RESCUE_20261004.md`](v39_eof_59_f02_20261004_3cbf/RESCUE_20261004.md) — preserves construction RED/GREEN and repeated-wait history; F03 formal result is separate, and production integration remains unproved |
 | v39 F03 formal-run construction/custody history (#59) | [`v39_eof_formal_59_f03_20261004_3cbf/RESCUE_20261004.md`](v39_eof_formal_59_f03_20261004_3cbf/RESCUE_20261004.md) — preserves preflight, construction fixes, STOPs, and independent-review limits; formal result remains the separate #7373 record |
 | v39 remaining queue-budget construction (#7084) | [`results/v39-queue-budget-01a0ff2c/RESCUE_20261004.md`](results/v39-queue-budget-01a0ff2c/RESCUE_20261004.md) — deterministic source-bound tests and preserved first failure; no live, platform, or integration claim |
@@ -373,3 +376,6 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [Native pipe/scorer known terminal and causal-audit limits](scorer_native_input_effect_59_20261003_b64b/CAUSAL_AUDIT_LIMIT_NOTE.md) — original 16-row result preserved with seven known V2 causal-order omissions; no runtime adoption or complete-audit claim.
 - [v39 v10 fake-Xlib keymap-witness source-compatibility probe](map01-v39-keymap-witness-fake-xlib-v1/README.md) — two repeated W occurrences pass through the exact v39 owner/wrapper call path with synthetic 32-byte keymap witnesses; 12 saved-result checks pass. Fake server only; no Xvfb, physical key, application, or task-effect evidence.
 - [Historical v13 release-telemetry composition STOP](results/map01-v13-release-telemetry-composition-t0-20261004-01/RUN_RESULT.md) — the frozen WSLc run retained the Pillow import failure; component tests passed but the typed backend composition remained unverified. No retry or dependency install; not live-input or gameplay evidence.
+# Issue #59 retained v39 ammo-timeline posthoc package
+
+[`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.

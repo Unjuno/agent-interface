@@ -1,0 +1,20 @@
+[
+  {
+    "attempt": "development-01",
+    "argv": "python -m unittest research.integration.coordinate_grounding_gate_57_a01_20261004.test_coordinate_grounding -v",
+    "disposition": "STOP_SETUP_IMPORT_ERROR",
+    "observation": "FlatTargetRefused was imported from handles.py, but current source defines it in handles_texture.py. No probe cases ran."
+  },
+  {
+    "attempt": "development-02",
+    "argv": "python -m unittest research.integration.coordinate_grounding_gate_57_a01_20261004.test_coordinate_grounding -v",
+    "disposition": "FAIL_TEST_FIXTURE",
+    "observation": "7/8 tests passed. Duplicate patch was outside the configured search radius; stale test advanced only 3ms against a 1500ms freshness bound. Both fixture parameters were corrected before final run."
+  },
+  {
+    "attempt": "development-03",
+    "argv": "python -m research.integration.coordinate_grounding_gate_57_a01_20261004.freeze",
+    "disposition": "STOP_FREEZE_REPRESENTATION_MISMATCH",
+    "observation": "Git blob bytes use LF while the clean Windows worktree presents CRLF. Freeze now records and verifies both representations separately."
+  }
+]
