@@ -126,6 +126,47 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertIsNone(receipt["down_edge_interval_ns"])
         self.assertIsNone(receipt["up_edge_interval_ns"])
 
+    def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        endpoints = range(4)
+        intervals = [(start, end) for start in endpoints for end in endpoints
+                     if start <= end]
+        paired = incomplete = 0
+        for down_start, down_end in intervals:
+            for up_start, up_end in intervals:
+                events = json.loads(json.dumps(template))
+                down = next(row for row in events
+                            if row.get("event") == "input_admission")
+                up = next(row for row in events
+                          if row.get("event") == "input_release_measurement")
+                down["physical_key_measurement"]["adapter_edge"]["interval"] = [
+                    down_start, down_end]
+                up["physical_key_measurement"]["adapter_edge"]["interval"] = [
+                    up_start, up_end]
+
+                receipt = controller.input_edge_receipts(events)[0]
+                strictly_ordered = down_end < up_start
+                with self.subTest(down=(down_start, down_end),
+                                  up=(up_start, up_end)):
+                    if strictly_ordered:
+                        paired += 1
+                        self.assertEqual(receipt["status"],
+                                         "adapter_edge_brackets_paired")
+                        self.assertEqual(receipt["down_edge_interval_ns"],
+                                         [down_start, down_end])
+                        self.assertEqual(receipt["up_edge_interval_ns"],
+                                         [up_start, up_end])
+                    else:
+                        incomplete += 1
+                        self.assertEqual(receipt["status"],
+                                         "adapter_edge_receipt_incomplete")
+                        self.assertIsNone(receipt["down_edge_interval_ns"])
+                        self.assertIsNone(receipt["up_edge_interval_ns"])
+
+        self.assertEqual((paired, incomplete), (15, 85))
+
     def test_input_edge_receipt_pairs_per_key_admission_and_server_keyup_without_secrets(self):
         token = "ephemeral-intent-token"
         events = [
