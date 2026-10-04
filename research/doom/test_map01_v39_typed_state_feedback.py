@@ -136,7 +136,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         paired = incomplete = 0
         for down_start, down_end in intervals:
             for up_start, up_end in intervals:
-                events = copy.deepcopy(template)
+                events = json.loads(json.dumps(template))
                 down = next(row for row in events
                             if row.get("event") == "input_admission")
                 up = next(row for row in events
