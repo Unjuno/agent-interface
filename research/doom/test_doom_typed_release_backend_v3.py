@@ -161,6 +161,7 @@ class Tests(unittest.TestCase):
             'from doom_typed_release_backend_v1 import Backend as Previous, suite',
             candidate)
         self.assertIn('from input_transition_owner_v4 import InputOwner', candidate)
+        self.assertEqual(candidate.count('"owner_thread_keyup_verified_after_batch": owner_keyup_verified'), 1)
         self.assertNotIn('from doom_typed_coast_backend_v1 import', candidate)
 
     def test_current_v39_session_selects_and_hashes_the_successor_backend(self):

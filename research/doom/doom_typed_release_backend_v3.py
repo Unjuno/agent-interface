@@ -235,7 +235,6 @@ class Backend(Previous):
                 "owned_keycodes_after_batch": owned_after,
                 "owner_transition_verified": batch_verified,
                 "owner_thread_keyup_verified_after_batch": owner_keyup_verified,
-                "owner_thread_keyup_verified_after_batch": owner_keyup_verified,
                 "physical_verification_authoritative": False,
                 "measurement_contract_v3": (
                     "all explicit key-up calls in this backend-held batch complete before "
