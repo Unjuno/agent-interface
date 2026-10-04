@@ -137,6 +137,33 @@ class Tests(unittest.TestCase):
         self.assertEqual([row["key"] for row in rows], ["a", "a"])
         self.assertEqual(log, [("down", "a"), ("down", "a")])
 
+    def test_admission_context_joins_per_key_release_independent_of_order(self):
+        log = []
+        owner = Owner(log)
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.raw("a", True)
+        obj.raw("b", True)
+        obj.raw("b", False)
+        obj.raw("a", False)
+
+        admissions = {
+            (row["id"], row["step"], row["key"]): row["admission_position"]
+            for row in rows if row.get("event") == "input_admission"
+        }
+        releases = {
+            (row["release_batch_identifier"], row["release_batch_step"], row["key"]):
+                row["release_batch_position"]
+            for row in rows if row.get("event") == "input_release_transition"
+        }
+
+        self.assertEqual(set(admissions), set(releases))
+        self.assertEqual(admissions, {("p1", 0, "a"): 0, ("p1", 0, "b"): 1})
+        self.assertEqual(releases, {("p1", 0, "b"): 0, ("p1", 0, "a"): 1})
+        self.assertNotEqual(admissions, releases)
+
     def run_release(self, owner, lease=None, held=("a",)):
         obj = make_backend(set(held), owner, lease)
         rows = []
