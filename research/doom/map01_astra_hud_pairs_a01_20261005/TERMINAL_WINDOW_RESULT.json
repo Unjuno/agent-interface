@@ -1,0 +1,64 @@
+{
+  "schema": "map01-astra-terminal-window-v1",
+  "disposition": "PASS_POSTHOC_CLOCK_RECONSTRUCTION",
+  "decision_before": 11,
+  "decision_terminal": 12,
+  "observed_health_labels_manual": [
+    4,
+    0
+  ],
+  "observation_sequences": [
+    459,
+    498,
+    501,
+    504
+  ],
+  "capture_ns": {
+    "459": 11943145721474,
+    "498": 11954619760159,
+    "501": 11954974776998,
+    "504": 11955303871989
+  },
+  "timing_ms": {
+    "precall_capture_to_model_start": 383.153206,
+    "controller_model_start_to_end": 10692.805184,
+    "controller_end_to_terminal_capture": 1082.192125,
+    "action_accept_to_terminal_capture": 1054.068059,
+    "precall_capture_to_terminal_capture": 12158.150515
+  },
+  "reported_model_ns": 10613874802,
+  "actions": [
+    {
+      "action": "backward",
+      "extent": "short"
+    },
+    {
+      "action": "turn_left",
+      "extent": "short"
+    },
+    {
+      "action": "turn_left",
+      "extent": "short"
+    }
+  ],
+  "selected_frame_sha256": {
+    "11": "6df9a66e2d658b95003ff776f105082329a9dbbb704eeedf926adc0c33459a31",
+    "12": "066db883b20bfd57270a87258eadd38cc816364d246c16db5ae586a01c14b366"
+  },
+  "interpretation": "The next retained exact observation with a manually transcribed health label is 0 after the three-command response. An enemy is visually present in selected terminal frame 12; selected frame 11 faces a close wall without a visible enemy. Intermediate image bytes are missing, so the time health reached 0, threat onset, and damage cause are unknown.",
+  "limits": [
+    "posthoc single-run reconstruction, not a prospective allocation",
+    "health labels and visual scene descriptions are manual transcriptions of selected frames",
+    "capture clocks establish endpoint timing only; absent intermediate PNG bytes prevent health-ROI re-evaluation",
+    "no causal attribution to model latency, action choice, threat, or damage source",
+    "no safe reaction, recovery, physical input, or MAP01 success established"
+  ],
+  "input_sha256": {
+    "research/doom/results/map01-astra-attempt-v1/report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "research/doom/results/map01-astra-attempt-v1/frame-manifest.json": "e0cbb11901cedaae1283d228593307c0e771a51a31b21e7bb1de8db0650d2935",
+    "research/doom/results/map01-astra-attempt-v1/failure-analysis-v1.json": "b5383b9407198cd88e9aec712018965a27081701812619e9aeb84ba3e042e1ca",
+    "research/doom/results/map01-astra-attempt-v1/frames/11.png": "6df9a66e2d658b95003ff776f105082329a9dbbb704eeedf926adc0c33459a31",
+    "research/doom/results/map01-astra-attempt-v1/frames/12.png": "066db883b20bfd57270a87258eadd38cc816364d246c16db5ae586a01c14b366"
+  }
+}
