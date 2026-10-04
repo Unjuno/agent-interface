@@ -873,6 +873,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
 - [`verifier_exposure_5941_t0_v2_20261001/`](verifier_exposure_5941_t0_v2_20261001/)
 - [`verifier_metastability_5375_t0_20261001_a1/`](verifier_metastability_5375_t0_20261001_a1/)
+- [`version_crossing_artifact_survival_6611_t0_20261004/`](version_crossing_artifact_survival_6611_t0_20261004/)
 - [`version_crossing_artifact_survival_6611_t0_v1/`](version_crossing_artifact_survival_6611_t0_v1/)
 - [`version_defined_intervention_6691_a02_20261003/`](version_defined_intervention_6691_a02_20261003/)
 - [`version_defined_intervention_6691_t0_20261002/`](version_defined_intervention_6691_t0_20261002/)
