@@ -14,6 +14,7 @@ ck(sha(H/"A10_PRETEST_TEST.py")==freeze10["a09_test_sha256"],"A10 pretest test s
 ck(replay["A09"]["baseline_false_pairs"]==8 and replay["A09"]["pre_fix_false_pairs"]==8 and replay["A09"]["repaired_false_pairs"]==0,"A09 red/green matrix")
 ck(replay["A10"]["pre_fix_false_pairs"]==8 and replay["A10"]["repaired_false_pairs"]==0,"A10 red/green matrix")
 ck(audit["audit"]=="PASS" and audit["checks"]==54 and audit["recomputed_mutations"]==16,"independent replay audit")
+ck(audit["candidate_test_sha256"]==freeze11["candidate_test_sha256"],"A09/A10 auditor binds pre-A11 test snapshot")
 ck(sha(H/"A11_TEST_PRE_ADDITION.py")==freeze11["candidate_test_sha256"],"A11 pre-test source snapshot")
 ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==freeze11["candidate_source_sha256"],"A11 candidate source pin")
 ck(sha(H/"A11_FREEZE.json")==a11["freeze_sha256"],"A11 freeze binding")
