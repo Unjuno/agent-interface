@@ -913,6 +913,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
 - [`unseen_failure_mode_yield_5665_t1_v1/`](unseen_failure_mode_yield_5665_t1_v1/)
 - [`user_relative_benefit_6593_t0_v1/`](user_relative_benefit_6593_t0_v1/)
+- [`vector_constraint_approachability_7808_a01_20261005/`](vector_constraint_approachability_7808_a01_20261005/)
 - [`verification_ir_alias_boundary_5504_a01_20261003/`](verification_ir_alias_boundary_5504_a01_20261003/)
 - [`verifier_cascade_capacity_5375_t0a2_20261002/`](verifier_cascade_capacity_5375_t0a2_20261002/)
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
