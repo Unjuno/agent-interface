@@ -7,6 +7,24 @@ from doom_typed_release_backend_v2 import Backend as Previous, suite
 from input_transition_owner_v4 import InputOwner
 
 
+class ReleaseBatchPublicationError(OSError):
+    """A release receipt crossed a sink boundary with unknown delivery status."""
+
+    def __init__(self, identifier, position, size, published_positions, cause):
+        self.batch_identifier = identifier
+        self.batch_position = position
+        self.batch_size = size
+        self.published_positions = tuple(published_positions)
+        self.delivery_status = "unknown"
+        self.sink_error_type = type(cause).__name__
+        super().__init__(
+            "release batch delivery unknown: "
+            f"identifier={identifier!r}, position={position}, size={size}, "
+            f"previously_published_positions={self.published_positions!r}, "
+            f"sink_error={self.sink_error_type}: {cause}"
+        )
+
+
 class Backend(Previous):
     """Opt-in release composition; controller and default backend are unchanged."""
 
@@ -260,6 +278,7 @@ class Backend(Previous):
             if terminal_cleanup_verified is not None:
                 row["release_batch_finalized_by_terminal_cleanup"] = True
                 row["terminal_cleanup_verified"] = terminal_cleanup_verified
+        published_positions = []
         while rows:
             # Mark delivery attempt before crossing the sink boundary. If a
             # sink accepts a row and then raises, execute() must not retry it.
@@ -268,4 +287,18 @@ class Backend(Previous):
                 self.emit(row)
             except BaseException as exc:
                 context["publication_error_type"] = type(exc).__name__
-                raise
+                if not isinstance(exc, Exception):
+                    add_note = getattr(exc, "add_note", None)
+                    if callable(add_note):
+                        add_note(
+                            "release batch delivery unknown: "
+                            f"identifier={context['identifier']!r}, "
+                            f"position={row['release_batch_position']}, size={size}, "
+                            f"previously_published_positions={tuple(published_positions)!r}"
+                        )
+                    raise
+                raise ReleaseBatchPublicationError(
+                    context["identifier"], row["release_batch_position"], size,
+                    published_positions, exc,
+                ) from exc
+            published_positions.append(row["release_batch_position"])
