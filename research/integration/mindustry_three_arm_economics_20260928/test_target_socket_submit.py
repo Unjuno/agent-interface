@@ -489,7 +489,9 @@ class TargetSocketSubmitTests(unittest.TestCase):
                         command = json.loads(line.decode("utf-8"))
                         record = {"event": "terminal", "id": command["id"],
                                   "status": "completed",
-                                  "release": {"verified": True}}
+                                  "release": {"verified": True,
+                                              "keys_down": [],
+                                              "buttons_down": []}}
                         events.write((json.dumps(record) + "\n").encode("utf-8"))
                         if command["op"] == "finish":
                             break
@@ -699,6 +701,30 @@ class TargetSocketSubmitTests(unittest.TestCase):
         ])
         self.assertEqual([row["action_id"] for row in wire_requests], [
             "A1-select-conveyor", "A1-place-conveyor"])
+
+    def test_terminal_status_gate_is_independent_of_verified_release(self):
+        for status in ("failed", "cancelled", "expired", "needs_decision", None):
+            with self.subTest(status=status):
+                response = success("A1-select-conveyor")
+                terminal = response["records"][0]
+                if status is None:
+                    del terminal["status"]
+                else:
+                    terminal["status"] = status
+                submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                                  trace_sink=test_trace_sink)
+                submitter._exchange = lambda _request: response
+                with self.assertRaisesRegex(SocketSubmitStop,
+                                            "report completed action"):
+                    submitter(self.command())
+
+        response = success("A1-select-conveyor")
+        response["records"][0]["release"]["verified"] = False
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: response
+        with self.assertRaises(SocketSubmitStop):
+            submitter(self.command())
 
 
 if __name__ == "__main__":
