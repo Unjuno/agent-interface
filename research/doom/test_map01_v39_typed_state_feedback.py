@@ -203,6 +203,37 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipt["down_edge_interval_ns"])
                 self.assertIsNone(receipt["up_edge_interval_ns"])
 
+    def test_application_consumption_claim_must_not_contradict_adapter_projection(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        baseline = controller.input_edge_receipts(template)[0]
+        self.assertEqual(baseline["status"], "adapter_edge_brackets_paired")
+
+        layers = ("event", "measurement", "adapter_edge", "bracket")
+        for row_index in range(2):
+            for layer in layers:
+                events = json.loads(json.dumps(template))
+                row = events[row_index]
+                if layer == "event":
+                    row["application_consumption_observed"] = True
+                elif layer == "measurement":
+                    row["physical_key_measurement"][
+                        "application_consumption_observed"] = True
+                elif layer == "adapter_edge":
+                    row["physical_key_measurement"]["adapter_edge"][
+                        "application_consumption_observed"] = True
+                else:
+                    row["physical_key_measurement"]["bracket"][
+                        "application_consumption_observed"] = True
+
+                with self.subTest(row_index=row_index, layer=layer):
+                    receipt = controller.input_edge_receipts(events)[0]
+                    self.assertEqual(receipt["status"],
+                                     "adapter_edge_receipt_incomplete")
+                    self.assertIsNone(receipt["down_edge_interval_ns"])
+                    self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_pair_requires_consistent_samples_and_request_timing(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
@@ -250,6 +281,20 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                               "up_edge_interval_ns"):
                     self.assertIsNone(receipt[field])
 
+    def test_adapter_edge_pairs_reject_interval_conflicting_with_owner_bracket(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        for event_name in ("input_admission", "input_release_measurement"):
+            events = json.loads(json.dumps(template))
+            row = next(row for row in events if row.get("event") == event_name)
+            row["physical_key_measurement"]["adapter_edge"]["interval"] = [1, 2]
+            receipt = controller.input_edge_receipts(events)[0]
+            with self.subTest(event=event_name):
+                self.assertEqual(receipt["status"], "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
@@ -271,7 +316,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             measurement[request_name] = start
             measurement["sync_return_ns"] = start
             if edge_name == "down":
-                row["admitted_ns"] = start - 1
+                row["admitted_ns"] = start
                 row["input_ack_ns"] = start
 
         for down_start, down_end in intervals:
