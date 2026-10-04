@@ -46,8 +46,23 @@ class _GameProxy:
     def init(self):
         result=self._inner.init();self.initialized=True;return result
     def close(self):
-        if self.initialized and not self.closed:self._final_sample()
-        self.closed=True;return self._inner.close()
+        sample_error = None
+        try:
+            if self.initialized and not self.closed:
+                self._final_sample()
+        except BaseException as exc:
+            sample_error = exc
+        finally:
+            self.closed = True
+        try:
+            result = self._inner.close()
+        except BaseException as close_error:
+            if sample_error is not None:
+                raise sample_error from close_error
+            raise
+        if sample_error is not None:
+            raise sample_error
+        return result
 
 def main():
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
@@ -70,3 +85,4 @@ def main():
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
         sink.finalize(polling.stats());_merge_sources(out)
 if __name__=='__main__':main()
+
