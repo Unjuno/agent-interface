@@ -2,7 +2,7 @@ import hashlib, json
 from pathlib import Path
 root=Path(__file__).resolve().parent
 main=json.loads((root/'RUN-MAIN.json').read_text()); cand=json.loads((root/'RUN-PR7330.json').read_text())
-expected={'main_caller':'8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca','candidate_caller':'983d22edfd1232a42765804688e990249887723f849220fae6407f58a04dca8c','compiled':'d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014'}
+expected={'main_caller':'8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca','candidate_caller':'e9be73955d849a8d627450752a4b6b97a410cdd08e9424746d954e23015a654d','compiled':'d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014'}
 assert main['source_sha256']=={'caller':expected['main_caller'],'compiled':expected['compiled']}
 assert cand['source_sha256']=={'caller':expected['candidate_caller'],'compiled':expected['compiled']}
 for label,x in [('main',main),('candidate',cand)]:

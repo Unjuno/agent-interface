@@ -11,20 +11,20 @@
         {
           "event": "stage_started",
           "stage": "reuse_revalidate",
-          "started_ns": 87389072545916
+          "started_ns": 89057930194800
         },
         {
-          "ended_ns": 87389072565875,
+          "ended_ns": 89057930232600,
           "event": "stage_completed",
           "stage": "reuse_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "acquire_expansion",
-          "started_ns": 87389072570333
+          "started_ns": 89057930241400
         },
         {
-          "ended_ns": 87389072590750,
+          "ended_ns": 89057930280600,
           "event": "stage_completed",
           "stage": "acquire_expansion"
         },
@@ -35,7 +35,7 @@
           "error": null,
           "event": "model_attempt_started",
           "stage": "expanded_model",
-          "started_ns": 87389072592833,
+          "started_ns": 89057930283800,
           "status": "started",
           "usage": null,
           "visible_images_submitted": null,
@@ -44,11 +44,11 @@
         {
           "attempt_id": "a03-changed_after_model-attempt",
           "call_id": "a03-model-changed_after_model",
-          "completed_ns": 87389072631041,
+          "completed_ns": 89057930414200,
           "error": null,
           "event": "model_attempt_finished",
           "stage": "expanded_model",
-          "started_ns": 87389072592833,
+          "started_ns": 89057930283800,
           "status": "completed",
           "usage": {
             "cache_write_input_tokens": 0,
@@ -63,20 +63,20 @@
         {
           "event": "stage_started",
           "stage": "post_model_observe",
-          "started_ns": 87389072659166
+          "started_ns": 89057930469400
         },
         {
-          "ended_ns": 87389072679291,
+          "ended_ns": 89057930507500,
           "event": "stage_completed",
           "stage": "post_model_observe"
         },
         {
           "event": "stage_started",
           "stage": "post_model_revalidate",
-          "started_ns": 87389072681583
+          "started_ns": 89057930511400
         },
         {
-          "ended_ns": 87389072703583,
+          "ended_ns": 89057930551400,
           "event": "stage_completed",
           "stage": "post_model_revalidate"
         },
@@ -229,10 +229,10 @@
           {
             "attempt_id": "a03-changed_after_model-attempt",
             "call_id": "a03-model-changed_after_model",
-            "completed_ns": 87389072631041,
+            "completed_ns": 89057930414200,
             "error": null,
             "stage": "expanded_model",
-            "started_ns": 87389072592833,
+            "started_ns": 89057930283800,
             "status": "completed",
             "usage": {
               "cache_write_input_tokens": 0,
@@ -258,6 +258,7 @@
           ]
         },
         "delivery": null,
+        "effect_receipt": null,
         "execution_progress": null,
         "input_authority": "none",
         "model_call_ledger": [
@@ -376,34 +377,34 @@
         "outcome": "SAFE_STOP",
         "phase_timings": [
           {
-            "elapsed_ns": 19959,
-            "ended_ns": 87389072565875,
+            "elapsed_ns": 37800,
+            "ended_ns": 89057930232600,
             "stage": "reuse_revalidate",
-            "started_ns": 87389072545916
+            "started_ns": 89057930194800
           },
           {
-            "elapsed_ns": 20417,
-            "ended_ns": 87389072590750,
+            "elapsed_ns": 39200,
+            "ended_ns": 89057930280600,
             "stage": "acquire_expansion",
-            "started_ns": 87389072570333
+            "started_ns": 89057930241400
           },
           {
-            "elapsed_ns": 38208,
-            "ended_ns": 87389072631041,
+            "elapsed_ns": 130400,
+            "ended_ns": 89057930414200,
             "stage": "expanded_model",
-            "started_ns": 87389072592833
+            "started_ns": 89057930283800
           },
           {
-            "elapsed_ns": 20125,
-            "ended_ns": 87389072679291,
+            "elapsed_ns": 38100,
+            "ended_ns": 89057930507500,
             "stage": "post_model_observe",
-            "started_ns": 87389072659166
+            "started_ns": 89057930469400
           },
           {
-            "elapsed_ns": 22000,
-            "ended_ns": 87389072703583,
+            "elapsed_ns": 40000,
+            "ended_ns": 89057930551400,
             "stage": "post_model_revalidate",
-            "started_ns": 87389072681583
+            "started_ns": 89057930511400
           }
         ],
         "reason": "association_changed",
@@ -650,8 +651,8 @@
               "reason": "method_complete"
             }
           ],
-          "elapsed_ns": 99791,
-          "ended_ns": 87389071984416,
+          "elapsed_ns": 160400,
+          "ended_ns": 89057929195400,
           "format": "compiled-gui-runtime-receipt-v1",
           "frontier_model_resumptions": 0,
           "input_authority": "admission_per_action_only",
@@ -661,7 +662,7 @@
           "method_version": "1",
           "observations": [
             {
-              "captured_ns": 87389071886958,
+              "captured_ns": 89057929038000,
               "evidence_digest": "a03-d1",
               "evidence_ref": "a03-frame-1",
               "predicates": {
@@ -672,7 +673,7 @@
               "sequence": 1
             },
             {
-              "captured_ns": 87389071923916,
+              "captured_ns": 89057929096400,
               "evidence_digest": "a03-d2",
               "evidence_ref": "a03-frame-2",
               "predicates": {
@@ -683,7 +684,7 @@
               "sequence": 2
             },
             {
-              "captured_ns": 87389071964250,
+              "captured_ns": 89057929158700,
               "evidence_digest": "a03-d3",
               "evidence_ref": "a03-frame-3",
               "predicates": {
@@ -699,7 +700,7 @@
           "raw_evidence_retention": "adapter_responsibility_unverified",
           "reason": "method_complete",
           "session_scope": "private-test-double",
-          "started_ns": 87389071884625,
+          "started_ns": 89057929035000,
           "transitions": [
             {
               "action": "edit",
@@ -737,50 +738,50 @@
         {
           "event": "stage_started",
           "stage": "reuse_revalidate",
-          "started_ns": 87389071711750
+          "started_ns": 89057928696800
         },
         {
-          "ended_ns": 87389071734916,
+          "ended_ns": 89057928736800,
           "event": "stage_completed",
           "stage": "reuse_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "local_repair",
-          "started_ns": 87389071742041
+          "started_ns": 89057928745200
         },
         {
-          "ended_ns": 87389071768208,
+          "ended_ns": 89057928788100,
           "event": "stage_completed",
           "stage": "local_repair"
         },
         {
           "event": "stage_started",
           "stage": "final_revalidate",
-          "started_ns": 87389071794708
+          "started_ns": 89057928832700
         },
         {
-          "ended_ns": 87389071814166,
+          "ended_ns": 89057928897300,
           "event": "stage_completed",
           "stage": "final_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "execute",
-          "started_ns": 87389071818375
+          "started_ns": 89057928910000
         },
         {
-          "ended_ns": 87389071993208,
+          "ended_ns": 89057929207800,
           "event": "stage_completed",
           "stage": "execute"
         },
         {
           "event": "stage_started",
           "stage": "verify_effect",
-          "started_ns": 87389071997416
+          "started_ns": 89057929213800
         },
         {
-          "ended_ns": 87389071999916,
+          "ended_ns": 89057929218400,
           "event": "stage_completed",
           "stage": "verify_effect"
         },
@@ -923,6 +924,9 @@
           ]
         },
         "delivery": "confirmed",
+        "effect_receipt": {
+          "status": "succeeded"
+        },
         "execution_progress": {
           "status": "completed"
         },
@@ -931,34 +935,34 @@
         "outcome": "TASK_SUCCEEDED",
         "phase_timings": [
           {
-            "elapsed_ns": 23166,
-            "ended_ns": 87389071734916,
+            "elapsed_ns": 40000,
+            "ended_ns": 89057928736800,
             "stage": "reuse_revalidate",
-            "started_ns": 87389071711750
+            "started_ns": 89057928696800
           },
           {
-            "elapsed_ns": 26167,
-            "ended_ns": 87389071768208,
+            "elapsed_ns": 42900,
+            "ended_ns": 89057928788100,
             "stage": "local_repair",
-            "started_ns": 87389071742041
+            "started_ns": 89057928745200
           },
           {
-            "elapsed_ns": 19458,
-            "ended_ns": 87389071814166,
+            "elapsed_ns": 64600,
+            "ended_ns": 89057928897300,
             "stage": "final_revalidate",
-            "started_ns": 87389071794708
+            "started_ns": 89057928832700
           },
           {
-            "elapsed_ns": 174833,
-            "ended_ns": 87389071993208,
+            "elapsed_ns": 297800,
+            "ended_ns": 89057929207800,
             "stage": "execute",
-            "started_ns": 87389071818375
+            "started_ns": 89057928910000
           },
           {
-            "elapsed_ns": 2500,
-            "ended_ns": 87389071999916,
+            "elapsed_ns": 4600,
+            "ended_ns": 89057929218400,
             "stage": "verify_effect",
-            "started_ns": 87389071997416
+            "started_ns": 89057929213800
           }
         ],
         "reason": "verified_effect",
@@ -1201,8 +1205,8 @@
               "reason": "method_complete"
             }
           ],
-          "elapsed_ns": 80292,
-          "ended_ns": 87389072444833,
+          "elapsed_ns": 151800,
+          "ended_ns": 89057930022500,
           "format": "compiled-gui-runtime-receipt-v1",
           "frontier_model_resumptions": 0,
           "input_authority": "admission_per_action_only",
@@ -1212,7 +1216,7 @@
           "method_version": "1",
           "observations": [
             {
-              "captured_ns": 87389072366125,
+              "captured_ns": 89057929872900,
               "evidence_digest": "a03-d1",
               "evidence_ref": "a03-frame-1",
               "predicates": {
@@ -1223,7 +1227,7 @@
               "sequence": 1
             },
             {
-              "captured_ns": 87389072394666,
+              "captured_ns": 89057929930000,
               "evidence_digest": "a03-d2",
               "evidence_ref": "a03-frame-2",
               "predicates": {
@@ -1234,7 +1238,7 @@
               "sequence": 2
             },
             {
-              "captured_ns": 87389072427583,
+              "captured_ns": 89057929990800,
               "evidence_digest": "a03-d3",
               "evidence_ref": "a03-frame-3",
               "predicates": {
@@ -1250,7 +1254,7 @@
           "raw_evidence_retention": "adapter_responsibility_unverified",
           "reason": "method_complete",
           "session_scope": "private-test-double",
-          "started_ns": 87389072364541,
+          "started_ns": 89057929870700,
           "transitions": [
             {
               "action": "edit",
@@ -1288,20 +1292,20 @@
         {
           "event": "stage_started",
           "stage": "reuse_revalidate",
-          "started_ns": 87389072088208
+          "started_ns": 89057929376500
         },
         {
-          "ended_ns": 87389072108083,
+          "ended_ns": 89057929415300,
           "event": "stage_completed",
           "stage": "reuse_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "acquire_expansion",
-          "started_ns": 87389072112916
+          "started_ns": 89057929422500
         },
         {
-          "ended_ns": 87389072132916,
+          "ended_ns": 89057929460200,
           "event": "stage_completed",
           "stage": "acquire_expansion"
         },
@@ -1312,7 +1316,7 @@
           "error": null,
           "event": "model_attempt_started",
           "stage": "expanded_model",
-          "started_ns": 87389072135083,
+          "started_ns": 89057929463500,
           "status": "started",
           "usage": null,
           "visible_images_submitted": null,
@@ -1321,11 +1325,11 @@
         {
           "attempt_id": "a03-model_repair-attempt",
           "call_id": "a03-model-model_repair",
-          "completed_ns": 87389072176125,
+          "completed_ns": 89057929537300,
           "error": null,
           "event": "model_attempt_finished",
           "stage": "expanded_model",
-          "started_ns": 87389072135083,
+          "started_ns": 89057929463500,
           "status": "completed",
           "usage": {
             "cache_write_input_tokens": 0,
@@ -1340,50 +1344,50 @@
         {
           "event": "stage_started",
           "stage": "post_model_observe",
-          "started_ns": 87389072204875
+          "started_ns": 89057929592300
         },
         {
-          "ended_ns": 87389072225291,
+          "ended_ns": 89057929630800,
           "event": "stage_completed",
           "stage": "post_model_observe"
         },
         {
           "event": "stage_started",
           "stage": "post_model_revalidate",
-          "started_ns": 87389072227583
+          "started_ns": 89057929635700
         },
         {
-          "ended_ns": 87389072253291,
+          "ended_ns": 89057929679800,
           "event": "stage_completed",
           "stage": "post_model_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "final_revalidate",
-          "started_ns": 87389072284333
+          "started_ns": 89057929731900
         },
         {
-          "ended_ns": 87389072303791,
+          "ended_ns": 89057929771300,
           "event": "stage_completed",
           "stage": "final_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "execute",
-          "started_ns": 87389072307166
+          "started_ns": 89057929777300
         },
         {
-          "ended_ns": 87389072452666,
+          "ended_ns": 89057930033600,
           "event": "stage_completed",
           "stage": "execute"
         },
         {
           "event": "stage_started",
           "stage": "verify_effect",
-          "started_ns": 87389072456208
+          "started_ns": 89057930038900
         },
         {
-          "ended_ns": 87389072458291,
+          "ended_ns": 89057930042700,
           "event": "stage_completed",
           "stage": "verify_effect"
         },
@@ -1536,10 +1540,10 @@
           {
             "attempt_id": "a03-model_repair-attempt",
             "call_id": "a03-model-model_repair",
-            "completed_ns": 87389072176125,
+            "completed_ns": 89057929537300,
             "error": null,
             "stage": "expanded_model",
-            "started_ns": 87389072135083,
+            "started_ns": 89057929463500,
             "status": "completed",
             "usage": {
               "cache_write_input_tokens": 0,
@@ -1655,6 +1659,9 @@
           ]
         },
         "delivery": "confirmed",
+        "effect_receipt": {
+          "status": "succeeded"
+        },
         "execution_progress": {
           "status": "completed"
         },
@@ -1775,52 +1782,52 @@
         "outcome": "TASK_SUCCEEDED",
         "phase_timings": [
           {
-            "elapsed_ns": 19875,
-            "ended_ns": 87389072108083,
+            "elapsed_ns": 38800,
+            "ended_ns": 89057929415300,
             "stage": "reuse_revalidate",
-            "started_ns": 87389072088208
+            "started_ns": 89057929376500
           },
           {
-            "elapsed_ns": 20000,
-            "ended_ns": 87389072132916,
+            "elapsed_ns": 37700,
+            "ended_ns": 89057929460200,
             "stage": "acquire_expansion",
-            "started_ns": 87389072112916
+            "started_ns": 89057929422500
           },
           {
-            "elapsed_ns": 41042,
-            "ended_ns": 87389072176125,
+            "elapsed_ns": 73800,
+            "ended_ns": 89057929537300,
             "stage": "expanded_model",
-            "started_ns": 87389072135083
+            "started_ns": 89057929463500
           },
           {
-            "elapsed_ns": 20416,
-            "ended_ns": 87389072225291,
+            "elapsed_ns": 38500,
+            "ended_ns": 89057929630800,
             "stage": "post_model_observe",
-            "started_ns": 87389072204875
+            "started_ns": 89057929592300
           },
           {
-            "elapsed_ns": 25708,
-            "ended_ns": 87389072253291,
+            "elapsed_ns": 44100,
+            "ended_ns": 89057929679800,
             "stage": "post_model_revalidate",
-            "started_ns": 87389072227583
+            "started_ns": 89057929635700
           },
           {
-            "elapsed_ns": 19458,
-            "ended_ns": 87389072303791,
+            "elapsed_ns": 39400,
+            "ended_ns": 89057929771300,
             "stage": "final_revalidate",
-            "started_ns": 87389072284333
+            "started_ns": 89057929731900
           },
           {
-            "elapsed_ns": 145500,
-            "ended_ns": 87389072452666,
+            "elapsed_ns": 256300,
+            "ended_ns": 89057930033600,
             "stage": "execute",
-            "started_ns": 87389072307166
+            "started_ns": 89057929777300
           },
           {
-            "elapsed_ns": 2083,
-            "ended_ns": 87389072458291,
+            "elapsed_ns": 3800,
+            "ended_ns": 89057930042700,
             "stage": "verify_effect",
-            "started_ns": 87389072456208
+            "started_ns": 89057930038900
           }
         ],
         "reason": "verified_effect",
@@ -1991,7 +1998,7 @@
   },
   "schema": "compiled-caller-composition-a03-v1",
   "source_sha256": {
-    "caller": "983d22edfd1232a42765804688e990249887723f849220fae6407f58a04dca8c",
+    "caller": "e9be73955d849a8d627450752a4b6b97a410cdd08e9424746d954e23015a654d",
     "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
   }
 }

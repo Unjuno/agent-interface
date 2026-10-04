@@ -6,10 +6,10 @@
         {
           "event": "stage_started",
           "stage": "observe_source",
-          "started_ns": 87120613978375
+          "started_ns": 89057826579400
         },
         {
-          "ended_ns": 87120613980666,
+          "ended_ns": 89057826583500,
           "event": "stage_completed",
           "stage": "observe_source"
         },
@@ -20,7 +20,7 @@
           "error": null,
           "event": "model_attempt_started",
           "stage": "coarse_model",
-          "started_ns": 87120613982500,
+          "started_ns": 89057826586500,
           "status": "started",
           "usage": null,
           "visible_images_submitted": null,
@@ -29,11 +29,11 @@
         {
           "attempt_id": "a02-model_failure-1",
           "call_id": "a02-failed",
-          "completed_ns": 87120613993041,
+          "completed_ns": 89057826602800,
           "error": "ModelFailure('synthetic upstream failure')",
           "event": "model_attempt_finished",
           "stage": "coarse_model",
-          "started_ns": 87120613982500,
+          "started_ns": 89057826586500,
           "status": "failed",
           "usage": null,
           "visible_images_submitted": 1,
@@ -79,10 +79,10 @@
           {
             "attempt_id": "a02-model_failure-1",
             "call_id": "a02-failed",
-            "completed_ns": 87120613993041,
+            "completed_ns": 89057826602800,
             "error": "ModelFailure('synthetic upstream failure')",
             "stage": "coarse_model",
-            "started_ns": 87120613982500,
+            "started_ns": 89057826586500,
             "status": "failed",
             "usage": null,
             "visible_images_submitted": 1,
@@ -97,22 +97,23 @@
           "omitted_stages": []
         },
         "delivery": null,
+        "effect_receipt": null,
         "execution_progress": null,
         "input_authority": "none",
         "model_call_ledger": [],
         "outcome": "CALLER_FAILED",
         "phase_timings": [
           {
-            "elapsed_ns": 2291,
-            "ended_ns": 87120613980666,
+            "elapsed_ns": 4100,
+            "ended_ns": 89057826583500,
             "stage": "observe_source",
-            "started_ns": 87120613978375
+            "started_ns": 89057826579400
           },
           {
-            "elapsed_ns": 10541,
-            "ended_ns": 87120613993041,
+            "elapsed_ns": 16300,
+            "ended_ns": 89057826602800,
             "stage": "coarse_model",
-            "started_ns": 87120613982500
+            "started_ns": 89057826586500
           }
         ],
         "reason": "failed_upstream",
@@ -183,10 +184,10 @@
         {
           "event": "stage_started",
           "stage": "observe_source",
-          "started_ns": 87120613917750
+          "started_ns": 89057826481100
         },
         {
-          "ended_ns": 87120613920250,
+          "ended_ns": 89057826485700,
           "event": "stage_completed",
           "stage": "observe_source"
         },
@@ -197,7 +198,7 @@
           "error": null,
           "event": "model_attempt_started",
           "stage": "coarse_model",
-          "started_ns": 87120613922083,
+          "started_ns": 89057826488800,
           "status": "started",
           "usage": null,
           "visible_images_submitted": null,
@@ -206,11 +207,11 @@
         {
           "attempt_id": "a02-no_match-1",
           "call_id": "a02-no-match",
-          "completed_ns": 87120613942916,
+          "completed_ns": 89057826526800,
           "error": null,
           "event": "model_attempt_finished",
           "stage": "coarse_model",
-          "started_ns": 87120613922083,
+          "started_ns": 89057826488800,
           "status": "completed",
           "usage": {
             "cache_write_input_tokens": 0,
@@ -285,10 +286,10 @@
           {
             "attempt_id": "a02-no_match-1",
             "call_id": "a02-no-match",
-            "completed_ns": 87120613942916,
+            "completed_ns": 89057826526800,
             "error": null,
             "stage": "coarse_model",
-            "started_ns": 87120613922083,
+            "started_ns": 89057826488800,
             "status": "completed",
             "usage": {
               "cache_write_input_tokens": 0,
@@ -309,6 +310,7 @@
           "omitted_stages": []
         },
         "delivery": null,
+        "effect_receipt": null,
         "execution_progress": null,
         "input_authority": "none",
         "model_call_ledger": [
@@ -337,16 +339,16 @@
         "outcome": "SAFE_STOP",
         "phase_timings": [
           {
-            "elapsed_ns": 2500,
-            "ended_ns": 87120613920250,
+            "elapsed_ns": 4600,
+            "ended_ns": 89057826485700,
             "stage": "observe_source",
-            "started_ns": 87120613917750
+            "started_ns": 89057826481100
           },
           {
-            "elapsed_ns": 20833,
-            "ended_ns": 87120613942916,
+            "elapsed_ns": 38000,
+            "ended_ns": 89057826526800,
             "stage": "coarse_model",
-            "started_ns": 87120613922083
+            "started_ns": 89057826488800
           }
         ],
         "reason": "no_match",
@@ -482,8 +484,8 @@
               "reason": "method_complete"
             }
           ],
-          "elapsed_ns": 108500,
-          "ended_ns": 87120613791583,
+          "elapsed_ns": 154600,
+          "ended_ns": 89057826288200,
           "format": "compiled-gui-runtime-receipt-v1",
           "frontier_model_resumptions": 0,
           "input_authority": "admission_per_action_only",
@@ -493,7 +495,7 @@
           "method_version": "1",
           "observations": [
             {
-              "captured_ns": 87120613686166,
+              "captured_ns": 89057826136300,
               "evidence_digest": "d1",
               "evidence_ref": "frame-1",
               "predicates": {
@@ -504,7 +506,7 @@
               "sequence": 1
             },
             {
-              "captured_ns": 87120613728583,
+              "captured_ns": 89057826191400,
               "evidence_digest": "d2",
               "evidence_ref": "frame-2",
               "predicates": {
@@ -515,7 +517,7 @@
               "sequence": 2
             },
             {
-              "captured_ns": 87120613770416,
+              "captured_ns": 89057826253400,
               "evidence_digest": "d3",
               "evidence_ref": "frame-3",
               "predicates": {
@@ -531,7 +533,7 @@
           "raw_evidence_retention": "adapter_responsibility_unverified",
           "reason": "method_complete",
           "session_scope": "private-test-double",
-          "started_ns": 87120613683083,
+          "started_ns": 89057826133600,
           "transitions": [
             {
               "action": "enter",
@@ -569,10 +571,10 @@
         {
           "event": "stage_started",
           "stage": "observe_source",
-          "started_ns": 87120613401708
+          "started_ns": 89057825702500
         },
         {
-          "ended_ns": 87120613415333,
+          "ended_ns": 89057825717300,
           "event": "stage_completed",
           "stage": "observe_source"
         },
@@ -583,7 +585,7 @@
           "error": null,
           "event": "model_attempt_started",
           "stage": "coarse_model",
-          "started_ns": 87120613423000,
+          "started_ns": 89057825722900,
           "status": "started",
           "usage": null,
           "visible_images_submitted": null,
@@ -592,11 +594,11 @@
         {
           "attempt_id": "a02-positive-1",
           "call_id": "a02-coarse",
-          "completed_ns": 87120613464166,
+          "completed_ns": 89057825778800,
           "error": null,
           "event": "model_attempt_finished",
           "stage": "coarse_model",
-          "started_ns": 87120613423000,
+          "started_ns": 89057825722900,
           "status": "completed",
           "usage": {
             "cache_write_input_tokens": 0,
@@ -611,10 +613,10 @@
         {
           "event": "stage_started",
           "stage": "acquire_anchor",
-          "started_ns": 87120613477875
+          "started_ns": 89057825801800
         },
         {
-          "ended_ns": 87120613481791,
+          "ended_ns": 89057825807900,
           "event": "stage_completed",
           "stage": "acquire_anchor"
         },
@@ -625,7 +627,7 @@
           "error": null,
           "event": "model_attempt_started",
           "stage": "anchor_model",
-          "started_ns": 87120613484333,
+          "started_ns": 89057825811000,
           "status": "started",
           "usage": null,
           "visible_images_submitted": null,
@@ -634,11 +636,11 @@
         {
           "attempt_id": "a02-positive-2",
           "call_id": "a02-anchor",
-          "completed_ns": 87120613548916,
+          "completed_ns": 89057825922300,
           "error": null,
           "event": "model_attempt_finished",
           "stage": "anchor_model",
-          "started_ns": 87120613484333,
+          "started_ns": 89057825811000,
           "status": "completed",
           "usage": {
             "cache_write_input_tokens": 0,
@@ -653,30 +655,30 @@
         {
           "event": "stage_started",
           "stage": "final_revalidate",
-          "started_ns": 87120613580916
+          "started_ns": 89057825973400
         },
         {
-          "ended_ns": 87120613602375,
+          "ended_ns": 89057826017600,
           "event": "stage_completed",
           "stage": "final_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "execute",
-          "started_ns": 87120613607583
+          "started_ns": 89057826024400
         },
         {
-          "ended_ns": 87120613828708,
+          "ended_ns": 89057826358000,
           "event": "stage_completed",
           "stage": "execute"
         },
         {
           "event": "stage_started",
           "stage": "verify_effect",
-          "started_ns": 87120613833208
+          "started_ns": 89057826363800
         },
         {
-          "ended_ns": 87120613836333,
+          "ended_ns": 89057826369000,
           "event": "stage_completed",
           "stage": "verify_effect"
         },
@@ -862,10 +864,10 @@
           {
             "attempt_id": "a02-positive-1",
             "call_id": "a02-coarse",
-            "completed_ns": 87120613464166,
+            "completed_ns": 89057825778800,
             "error": null,
             "stage": "coarse_model",
-            "started_ns": 87120613423000,
+            "started_ns": 89057825722900,
             "status": "completed",
             "usage": {
               "cache_write_input_tokens": 0,
@@ -880,10 +882,10 @@
           {
             "attempt_id": "a02-positive-2",
             "call_id": "a02-anchor",
-            "completed_ns": 87120613548916,
+            "completed_ns": 89057825922300,
             "error": null,
             "stage": "anchor_model",
-            "started_ns": 87120613484333,
+            "started_ns": 89057825811000,
             "status": "completed",
             "usage": {
               "cache_write_input_tokens": 0,
@@ -994,6 +996,9 @@
           "omitted_stages": []
         },
         "delivery": "confirmed",
+        "effect_receipt": {
+          "status": "succeeded"
+        },
         "execution_progress": {
           "status": "completed"
         },
@@ -1138,46 +1143,46 @@
         "outcome": "TASK_SUCCEEDED",
         "phase_timings": [
           {
-            "elapsed_ns": 13625,
-            "ended_ns": 87120613415333,
+            "elapsed_ns": 14800,
+            "ended_ns": 89057825717300,
             "stage": "observe_source",
-            "started_ns": 87120613401708
+            "started_ns": 89057825702500
           },
           {
-            "elapsed_ns": 41166,
-            "ended_ns": 87120613464166,
+            "elapsed_ns": 55900,
+            "ended_ns": 89057825778800,
             "stage": "coarse_model",
-            "started_ns": 87120613423000
+            "started_ns": 89057825722900
           },
           {
-            "elapsed_ns": 3916,
-            "ended_ns": 87120613481791,
+            "elapsed_ns": 6100,
+            "ended_ns": 89057825807900,
             "stage": "acquire_anchor",
-            "started_ns": 87120613477875
+            "started_ns": 89057825801800
           },
           {
-            "elapsed_ns": 64583,
-            "ended_ns": 87120613548916,
+            "elapsed_ns": 111300,
+            "ended_ns": 89057825922300,
             "stage": "anchor_model",
-            "started_ns": 87120613484333
+            "started_ns": 89057825811000
           },
           {
-            "elapsed_ns": 21459,
-            "ended_ns": 87120613602375,
+            "elapsed_ns": 44200,
+            "ended_ns": 89057826017600,
             "stage": "final_revalidate",
-            "started_ns": 87120613580916
+            "started_ns": 89057825973400
           },
           {
-            "elapsed_ns": 221125,
-            "ended_ns": 87120613828708,
+            "elapsed_ns": 333600,
+            "ended_ns": 89057826358000,
             "stage": "execute",
-            "started_ns": 87120613607583
+            "started_ns": 89057826024400
           },
           {
-            "elapsed_ns": 3125,
-            "ended_ns": 87120613836333,
+            "elapsed_ns": 5200,
+            "ended_ns": 89057826369000,
             "stage": "verify_effect",
-            "started_ns": 87120613833208
+            "started_ns": 89057826363800
           }
         ],
         "reason": "verified_effect",
@@ -1335,7 +1340,7 @@
   },
   "schema": "compiled-caller-composition-a02-v1",
   "source_sha256": {
-    "caller": "983d22edfd1232a42765804688e990249887723f849220fae6407f58a04dca8c",
+    "caller": "e9be73955d849a8d627450752a4b6b97a410cdd08e9424746d954e23015a654d",
     "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
   }
 }
