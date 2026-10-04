@@ -15,7 +15,7 @@ def source(path):
     raw=subprocess.run(["git","cat-file","blob",oid],cwd=ROOT,check=True,capture_output=True).stdout
     return oid,raw
 
-manifest={"schema":"a03-context-crop-inputs-v1","source_pr_head":REF,"source_runtime_main_snapshot":"02953aa83d62e69a787de7732bf172f3f8ef8e1c","source_main_tip_checked":"4c2fe6cbd4218306bcb203cf04258b0f9a322213","cases":[]}
+manifest={"schema":"a03-context-crop-inputs-v1","source_pr_head":REF,"source_runtime_main_snapshot":"02953aa83d62e69a787de7732bf172f3f8ef8e1c","source_main_tip_checked":"fe5a9dddf11f0351eb65001f1a1ddb867e8a5012","cases":[]}
 for task,name in [(2,"029.png"),(3,"054.png"),(4,"079.png"),(5,"105.png"),(6,"134.png")]:
     answer_path=f"{A14}/task-{task}/answer.json"
     prompt_path=f"{A14}/task-{task}/PROMPT.txt"

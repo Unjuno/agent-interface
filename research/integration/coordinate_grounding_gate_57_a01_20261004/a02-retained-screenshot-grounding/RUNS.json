@@ -2,7 +2,7 @@
   "schema": "a02-run-record-v1",
   "observed_at_utc": "2026-10-04 11:10:29 UTC",
   "repository_commit_before_a02": "bac9b066480abbe76d850559323206eac73ce38c",
-  "checked_main_tip": "63980603e4bb6e4b128ed07af3bf7023bc2d4734",
+  "checked_main_tip": "fe5a9dddf11f0351eb65001f1a1ddb867e8a5012",
   "host": "Windows 10; Python 3.11.9; CPU-only local offline replay",
   "source_runtime_snapshot": "02953aa83d62e69a787de7732bf172f3f8ef8e1c",
   "input_source_pr_head": "e8f7c02cb98d849312a4889fa4d52ec424088732",
@@ -54,5 +54,12 @@
     "command": "python -m research.integration.coordinate_grounding_gate_57_a01_20261004.run",
     "exit_code": 0,
     "expected_suite_exception": "The adjacent suite is recorded in the parent package as STOP_MISSING_PYTHON_XLIB if Python Xlib remains unavailable."
+  },
+  "base_revalidation": {
+    "observed_at_utc": "2026-10-04 11:29:00 UTC",
+    "source_runtime_files_unchanged_from_snapshot": true,
+    "replayed_tests": "PASS",
+    "independent_audit": "PASS",
+    "scope": "Offline retained-input replay; no model, GUI, or input."
   }
 }

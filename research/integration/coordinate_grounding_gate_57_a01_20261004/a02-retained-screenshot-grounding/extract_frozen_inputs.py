@@ -49,7 +49,7 @@ manifest = {
     "schema": "a02-retained-screenshot-grounding-inputs-v1",
     "source_pr_head": REF,
     "source_main_snapshot": "02953aa83d62e69a787de7732bf172f3f8ef8e1c",
-    "source_main_tip_checked": "63980603e4bb6e4b128ed07af3bf7023bc2d4734",
+    "source_main_tip_checked": "fe5a9dddf11f0351eb65001f1a1ddb867e8a5012",
     "source_visual_review": {
         "path": review_path,
         "git_blob": review_oid,
