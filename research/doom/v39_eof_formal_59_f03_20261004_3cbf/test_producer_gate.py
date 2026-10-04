@@ -3,12 +3,23 @@ import copy
 import json
 from pathlib import Path
 import unittest
+import signal
+import threading
+from runner import sigint_blocked_reader
 import tempfile
 import runner
 from runner import expected
 
 
 class ProducerGateControls(unittest.TestCase):
+    def test_reader_worker_blocks_sigint_during_cleanup(self):
+        observed = []
+        thread = threading.Thread(target=lambda: sigint_blocked_reader(
+            lambda: observed.append(signal.SIGINT in signal.pthread_sigmask(signal.SIG_BLOCK, set()))))
+        thread.start(); thread.join(2)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(observed, [True])
+
     def row(self):
         lines = (Path(__file__).parent / 'methods/RUNNER-CONSTRUCTION.log').read_text().splitlines()
         row = next(json.loads(line) for line in lines if line.startswith('{')

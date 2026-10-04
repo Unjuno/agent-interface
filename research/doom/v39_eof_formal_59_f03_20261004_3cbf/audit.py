@@ -27,7 +27,7 @@ def check_directory(directory):
     require(all(row.get('gate') is True for row in rows), 'producer gates')
     summary = json.loads((directory / 'SUMMARY.json').read_text())
     require(summary == {'cases': cases, 'retries': 0, 'model_calls': 0,
-                        'verdict': 'PASS_SCOPED_PIPE_NOTIFICATION'}, 'summary consistency')
+                        'verdict': 'FOUR_CELL_GATES_TRUE_AWAITING_EXIT'}, 'summary consistency')
     require(type(summary['retries']) is int and type(summary['model_calls']) is int, 'integer counters')
     return 'VERIFIED_SAVED_PIPE_RECORD'
 

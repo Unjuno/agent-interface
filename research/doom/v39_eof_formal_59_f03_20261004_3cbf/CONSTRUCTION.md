@@ -11,8 +11,10 @@ rawstdoutfiveJSONlines+State retainedmethods/RUNNER-CONSTRUCTION.log.
 BaselineEOF bothwaitsTimeoutError/deadreader/livechild; candidateEOF bothtyped
 EOFcause; candidateevents deliveredready/terminal thenbothtypedEOFcause;
 candidateJSON bothtypedJSONcause. Allownedcleanup exit-15/faults[]/fatalnull.
-Everycellloggedsourcepins. Outputlabel PASS_SCOPED_PIPE_NOTIFICATION is runner's
-constructionlabel ONLY, notformal/scientific/productionapproval.
+Everycellloggedsourcepins. Historicallabel PASS_SCOPED_PIPE_NOTIFICATION is
+only a construction artifact; current producer summary uses
+FOUR_CELL_GATES_TRUE_AWAITING_EXIT. A qualified research result requires
+native exit0 and a separate saved-data audit.
 
 Formalnativeallocation0/savedofficialauditor0/model0. Nooldallocationreplay.
 Stillrequiresindependentsaved-audit/rawcustody/exportgate/receiptfreeze/full

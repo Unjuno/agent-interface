@@ -48,6 +48,14 @@ def write(path, value):
     path.write_text(json.dumps(value, sort_keys=True) + '\n')
 
 
+def sigint_blocked_reader(reader):
+    previous_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
+    try:
+        reader()
+    finally:
+        signal.pthread_sigmask(signal.SIG_SETMASK, previous_mask)
+
+
 def expected(case, row):
     if row.get('cleanup_child_alive') is not False or row.get('cleanup_reader_alive') is not False:
         return False
@@ -64,7 +72,7 @@ def expected(case, row):
             and row['events'] == ([{'event': 'ready'}, {'event': 'terminal'}] if case == 'candidate_events_eof' else []))
 
 
-def finalize_cell(output, rows, case, row, child, thread):
+def finalize_cell(output, rows, case, row, child, thread, journal):
     """Defer SIGINT only across owned cleanup and durable row/STOP writes."""
     old_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
     try:
@@ -106,6 +114,9 @@ def finalize_cell(output, rows, case, row, child, thread):
         row['cleanup_reader_alive'] = thread.is_alive() if thread is not None else None
         row['end_ns'] = time.perf_counter_ns()
         row['gate'] = expected(case, row) if row['fatal'] is None else False
+        if journal is not None:
+            journal.write('F03_CELL_RECORD ' + json.dumps(row, sort_keys=True) + '\n')
+            journal.flush()
         write(output / (case + '.json'), row)
         rows.append(row)
         # A checkpoint protects the first STOP if SIGINT is pending when the
@@ -119,7 +130,7 @@ def finalize_cell(output, rows, case, row, child, thread):
         signal.pthread_sigmask(signal.SIG_SETMASK, old_mask)
 
 
-def run(output):
+def run(output, journal=None):
     output.mkdir(exist_ok=False)
     archive = PACKAGES / 'v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz'
     pins = {
@@ -160,7 +171,7 @@ def run(output):
             row['child_pid'] = child.pid
             factory = baseline_factory if case == 'baseline_eof' else candidate_factory
             reader, wait, events = factory(code)(child, queue.Queue())
-            thread = threading.Thread(target=reader, name='f03-reader'); thread.start()
+            thread = threading.Thread(target=sigint_blocked_reader, args=(reader,), name='f03-reader'); thread.start()
             if case == 'candidate_events_eof':
                 row['ready'] = wait(lambda event: event['event'] == 'ready', timeout=1)
                 row['reader_alive_after_ready'] = thread.is_alive()
@@ -182,11 +193,11 @@ def run(output):
             row['fatal'] = repr(error)
             row['fatal_type'] = type(error).__name__
         finally:
-            finalize_cell(output, rows, case, row, child, thread)
+            finalize_cell(output, rows, case, row, child, thread, journal)
         if row['gate'] is not True:
             break
     summary = {'cases': [row['case'] for row in rows], 'retries': 0, 'model_calls': 0,
-               'verdict': 'PASS_SCOPED_PIPE_NOTIFICATION' if len(rows) == 4 and all(row['gate'] for row in rows) else 'STOP_FIRST_UNEXPECTED_CELL'}
+               'verdict': 'FOUR_CELL_GATES_TRUE_AWAITING_EXIT' if len(rows) == 4 and all(row['gate'] for row in rows) else 'STOP_FIRST_UNEXPECTED_CELL'}
     if rows and rows[-1].get('fatal_type'):
         summary['stop_reason'] = rows[-1]['fatal_type']
     elif rows and rows[-1]['cleanup_faults']:
@@ -196,8 +207,8 @@ def run(output):
         write(output / 'SUMMARY.json', summary)
     finally:
         signal.pthread_sigmask(signal.SIG_SETMASK, old_mask)
-    return 0 if summary['verdict'] == 'PASS_SCOPED_PIPE_NOTIFICATION' else 1
+    return 0 if summary['verdict'] == 'FOUR_CELL_GATES_TRUE_AWAITING_EXIT' else 1
 
 
 if __name__ == '__main__':
-    sys.exit(run(Path(sys.argv[1])))
+    sys.exit(run(Path(sys.argv[1]), journal=sys.stdout))

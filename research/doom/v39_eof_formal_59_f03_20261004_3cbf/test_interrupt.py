@@ -11,6 +11,27 @@ import unittest
 
 
 class InterruptControl(unittest.TestCase):
+    def test_row_file_write_failure_leaves_external_journal_record(self):
+        with tempfile.TemporaryDirectory() as name:
+            output = Path(name) / 'output'
+            code = (
+                'import sys; import runner; original=runner.write\n'
+                'def write(path,value):\n'
+                ' if path.name=="baseline_eof.json": raise OSError("injected row storage failure")\n'
+                ' original(path,value)\n'
+                'runner.write=write\n'
+                'runner.run(__import__("pathlib").Path(sys.argv[1]),journal=sys.stdout)\n')
+            process = subprocess.run([sys.executable, '-B', '-c', code, str(output)],
+                                     capture_output=True, text=True)
+            self.assertNotEqual(process.returncode, 0)
+            records = [line for line in process.stdout.splitlines() if line.startswith('F03_CELL_RECORD ')]
+            self.assertEqual(len(records), 1)
+            row = json.loads(records[0].removeprefix('F03_CELL_RECORD '))
+            self.assertEqual(row['case'], 'baseline_eof')
+            self.assertTrue(row['gate'])
+            self.assertIn('injected row storage failure', process.stderr)
+            self.assertFalse((output / 'SUMMARY.json').exists())
+
     def test_sigint_after_child_start_retains_stop(self):
         with tempfile.TemporaryDirectory() as name:
             output = Path(name) / 'output'

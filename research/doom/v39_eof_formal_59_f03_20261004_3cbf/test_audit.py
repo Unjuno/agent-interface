@@ -22,7 +22,7 @@ class AuditControls(unittest.TestCase):
             (root / (row['case'] + '.json')).write_text(json.dumps(row))
         (root / 'SUMMARY.json').write_text(json.dumps({
             'cases': [row['case'] for row in rows], 'retries': 0, 'model_calls': 0,
-            'verdict': 'PASS_SCOPED_PIPE_NOTIFICATION'}))
+            'verdict': 'FOUR_CELL_GATES_TRUE_AWAITING_EXIT'}))
 
     def test_complete_saved_directory(self):
         with tempfile.TemporaryDirectory() as name:
