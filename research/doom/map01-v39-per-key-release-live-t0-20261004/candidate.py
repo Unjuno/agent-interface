@@ -4,6 +4,8 @@ import hashlib
 import json
 import os
 import platform
+import socket
+import subprocess
 import sys
 import tarfile
 import threading
@@ -11,7 +13,7 @@ import time
 from pathlib import Path
 
 
-ROOT = Path("/repo")
+ROOT = Path(os.environ.get("V39_TELEMETRY_ROOT", "/repo")).resolve()
 PACKAGE = ROOT / "research/doom/map01-v39-per-key-release-live-t0-20261004"
 
 
@@ -30,8 +32,23 @@ def verify_frozen(freeze):
         path = (ROOT / name).resolve()
         if not path.is_file() or sha256(path) != expected:
             raise RuntimeError("STOP_SOURCE_DRIFT:" + name)
-    if freeze["image_id"] != os.environ.get("V39_TELEMETRY_IMAGE_ID"):
-        raise RuntimeError("STOP_IMAGE_ID")
+    environment_path = PACKAGE / "ENVIRONMENT.json"
+    if sha256(environment_path) != freeze["runtime_environment_sha256"]:
+        raise RuntimeError("STOP_RUNTIME_ENVIRONMENT_HASH")
+    environment = json.loads(environment_path.read_text(encoding="utf-8"))
+    if environment.get("python_version") != sys.version or \
+            environment.get("platform") != platform.platform():
+        raise RuntimeError("STOP_RUNTIME_ENVIRONMENT_DRIFT")
+    if environment.get("python_packages") != subprocess.check_output(
+            [sys.executable, "-m", "pip", "freeze", "--all"], text=True).strip():
+        raise RuntimeError("STOP_PYTHON_PACKAGE_DRIFT")
+    dpkg_format = "-f=" + "$" + "{binary:Package}=" + "$" + "{Version}\\n"
+    if environment.get("dpkg_packages") != subprocess.check_output(
+            ["dpkg-query", "-W", dpkg_format], text=True).strip():
+        raise RuntimeError("STOP_OS_PACKAGE_DRIFT")
+    interfaces = sorted(name for _index, name in socket.if_nameindex())
+    if interfaces != ["lo"]:
+        raise RuntimeError("STOP_NETWORK_NAMESPACE:" + repr(interfaces))
 
 
 def install_support(path, expected_sha):
@@ -60,7 +77,12 @@ def install_support(path, expected_sha):
         if not target.is_file() or target.stat().st_size != row.get("bytes") or \
                 sha256(target) != row.get("sha256"):
             raise RuntimeError("STOP_SUPPORT_MEMBER_HASH:" + name)
-    sys.path[:0] = [str(root / "research/observation_tiles"), str(root)]
+    sys.path[:0] = [
+        str(root / "research/observation_tiles"),
+        str(root / "research/observation_gating"),
+        str(root / "research/real_apps_v1"),
+        str(root),
+    ]
     return root
 
 
@@ -72,6 +94,8 @@ def main():
     if not out.is_dir() or any(out.iterdir()):
         raise RuntimeError("STOP_OUTPUT_NOT_EMPTY")
     freeze = json.loads((PACKAGE / "FREEZE.json").read_text(encoding="utf-8"))
+    if out != (ROOT / freeze["output_root"]).resolve():
+        raise RuntimeError("STOP_OUTPUT_ROOT_MISMATCH")
     verify_frozen(freeze)
     support = install_support(PACKAGE / "source-support.tar.gz",
                               freeze["source_support_sha256"])
@@ -141,6 +165,8 @@ def main():
     session = backend = executor = None
     candidate = {"allocation_id": freeze["allocation_id"],
                  "candidate_completed": False, "model_calls": 0,
+                 "runtime_environment_sha256": freeze["runtime_environment_sha256"],
+                 "network_interfaces": interfaces,
                  "trials": [], "cleanup": {}, "issues": []}
     exit_code = 2
     try:
@@ -252,6 +278,8 @@ def main():
                 candidate["issues"].append("session_close:" + repr(exc))
         candidate["candidate_completed"] = (
             candidate["candidate_completed"] and not candidate["issues"])
+        if not candidate["candidate_completed"]:
+            exit_code = 2
         candidate["candidate_finished_ns"] = time.perf_counter_ns()
         event_path = out / "events.jsonl"
         candidate["events_sha256"] = sha256(event_path) if event_path.exists() else None

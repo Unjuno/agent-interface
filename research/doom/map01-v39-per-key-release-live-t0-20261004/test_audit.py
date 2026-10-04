@@ -18,7 +18,8 @@ def keymap(keys, down):
 
 def fixture():
     freeze = {"runtime_sources_sha256": {}, "sha256": {},
-              "image_id": "sha256:image", "source_support_sha256": "support",
+              "runtime_environment_sha256": "environment",
+              "source_support_sha256": "support",
               "support_archive_path": "source-support.tar.gz"}
     events = []
     observers = []
@@ -72,6 +73,8 @@ def fixture():
     raw = b"".join(json.dumps(row, sort_keys=True).encode() + b"\n" for row in events)
     candidate = {
         "candidate_completed": True, "model_calls": 0,
+        "runtime_environment_sha256": "environment",
+        "network_interfaces": ["lo"],
         "backend_class": "doom_typed_release_backend_v3.Backend",
         "executor_class": "executor_v12.Executor", "owner_id": owner,
         "runtime_source_hashes": {}, "trials": trials,

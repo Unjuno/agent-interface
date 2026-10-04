@@ -9,11 +9,11 @@ Allocation: `MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01`.
   hold. In each batch, all key-up calls finish before one owner-state sample
   and before telemetry publication; an independent XQueryKeymap observer sees
   each tested key down during the hold and up after terminal cleanup.
-- **T:** On a fresh isolated Xvfb/Openbox display, instantiate the current v39
+- **T:** In the task-owned isolated OrbStack Ubuntu/arm64 guest, instantiate the current v39
   session backend and its current executor with the real InputOwner v10 wrapped
   by `input_transition_owner_v3`. Run one 600 ms `space` hold, then one 600 ms
-  `Up`+`space` hold. No model/provider, game, task scoring, user desktop, or
-  network is used. Capture the candidate events and independent 32-byte
+  `Up`+`space` hold on a fresh Xvfb/Openbox display. No model/provider, game,
+  task scoring, user desktop, or network is used. Capture candidate events and independent 32-byte
   XQueryKeymap snapshots; run one separate stdlib-only raw auditor afterward.
 - **D:** `PASS_X11_TELEMETRY_ADAPTER_SCOPED` requires both candidate programs to
   complete; admission identity to match each expected key; every requested key
@@ -34,8 +34,12 @@ Allocation: `MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01`.
   here, and occupancy analysis remains gated on the independently reviewed
   parser repair.
 
-The prospective freeze must bind current `main`, the v39 runtime entry and
-dependency tree, this runner/auditor, the source-support archive, image digest,
-input program, output root, commands, and the one-candidate/one-auditor stopping
+Docker preflight could pull the pinned base but could not start a build step:
+the OrbStack LXC guest denies `bpf_prog_query(BPF_CGROUP_DEVICE)`. The selected
+route is the same task-owned isolated VM directly, with `unshare -n` for both
+candidate and auditor, rather than claiming a container run. The freeze binds
+the full guest and Python package receipt, current `main`, the v39 runtime
+entry and dependency tree, this runner/auditor, source-support archive, input
+program, output root, commands, and the one-candidate/one-auditor stopping
 rule before candidate invocation. A failed/STOP candidate is retained as the
 first outcome and is not retried.

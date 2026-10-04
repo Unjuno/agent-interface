@@ -37,6 +37,11 @@ def evaluate_checks(freeze, candidate, events, observer_rows):
     checks = {}
     checks["candidate_completed"] = candidate.get("candidate_completed") is True
     checks["zero_model_calls"] = candidate.get("model_calls") == 0
+    checks["runtime_environment_matches_freeze"] = (
+        candidate.get("runtime_environment_sha256") ==
+        freeze.get("runtime_environment_sha256"))
+    checks["network_namespace_has_loopback_only"] = (
+        candidate.get("network_interfaces") == ["lo"])
     checks["current_v39_backend_selected"] = (
         candidate.get("backend_class") == "doom_typed_release_backend_v3.Backend" and
         candidate.get("executor_class") == "executor_v12.Executor")
@@ -189,17 +194,18 @@ def audit_paths(freeze_path, candidate_path, events_path, observer_path, owner_p
         encoding="utf-8").splitlines() if line]
     candidate["events_bytes"] = event_bytes
     candidate["owner_events"] = json.loads(Path(owner_path).read_text(encoding="utf-8"))
+    root = Path(os.environ.get("V39_TELEMETRY_ROOT", "/repo")).resolve()
     hashes = {}
     for name, expected in freeze.get("sha256", {}).items():
-        path = Path("/repo") / name
+        path = root / name
         hashes[name] = path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == expected
-    candidate["container_image_id"] = os.environ.get("V39_TELEMETRY_IMAGE_ID")
     report = evaluate(freeze, candidate, events, observer_rows)
     report["checks"]["frozen_files_match"] = bool(hashes) and all(hashes.values())
-    report["checks"]["container_image_match"] = (
-        candidate["container_image_id"] == freeze.get("image_id"))
+    report["checks"]["runtime_environment_receipt_hash"] = (
+        hashlib.sha256((root / freeze["runtime_environment_path"]).read_bytes()).hexdigest()
+        == freeze.get("runtime_environment_sha256"))
     report["checks"]["support_archive_hash"] = (
-        hashlib.sha256((Path("/repo") / freeze["support_archive_path"]).read_bytes()).hexdigest()
+        hashlib.sha256((root / freeze["support_archive_path"]).read_bytes()).hexdigest()
         == freeze.get("source_support_sha256"))
     report["gate"] = "PASS_X11_TELEMETRY_ADAPTER_SCOPED" if all(
         report["checks"].values()) else "FAIL_OR_HOLD_TELEMETRY_GATE"
