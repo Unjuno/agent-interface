@@ -27,6 +27,11 @@ jobs:
           sparse-checkout: |
             research/analysis
             research/live_control/owner_keyup_keymap_witness_5156_t3_v1
+            research/integration/core_admission_composition_57_20261003_01a0ff59
+            research/integration/pr6863_review_rescue_20261003
+            research/integration/pr6863_review_20261003_01a0ff58
+            research/integration/teardown_witness_review_rescue_20261003
+            research/integration/owner_keyup_teardown_witness_5156_01a0ff58
       - name: Restore the frozen workflow source for provenance tests
         run: |
           git fetch --no-tags --depth=1 origin e2e434dd07e1034c5c4303982a0b1ec33ea35cfd
@@ -36,14 +41,48 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Test sparse-checkout archival dependency closure
+        run: python -B -m unittest discover -s research/analysis -p 'test_analysis_checkout.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test batched finite research T0 packages
+        run: |
+          python -B -m unittest discover -s research/analysis/object_bound_context_capsules_7160_t0_20261004 -p 'test_*.py' -v
+          python -B -m unittest discover -s research/analysis/cue_triggered_intention_7162_t0_20261004 -p 'test_*.py' -v
+          python -B -m unittest discover -s research/analysis/provenance_memory_authority_7167_t0_20261004 -p 'test_*.py' -v
+          python -B -m unittest discover -s research/analysis/effect_safe_egraph_7462_t0_20261004 -p 'test_*.py' -v
+      - name: Test Issue #6617 revision-timed speech cutover T0
+        run: python -B -m unittest discover -s research/analysis/revision_timed_speech_effect_cutover_6617_t0_20261004 -p 'test_*.py' -v
+      - name: Test Issue #7487 delayed GUI effect attribution T0 contract
+        run: python -B -m unittest discover -s research/analysis/delayed_gui_effect_attribution_7487_t0_20261004 -p 'test_*.py' -v
+      - name: Re-run Issue #7466 exploratory checkpoint construction and raw audit
+        run: |
+          python -B research/analysis/hazard_checkpoint_7466_t0_20261004/sim.py research/analysis/hazard_checkpoint_7466_t0_20261004
+          python -B research/analysis/hazard_checkpoint_7466_t0_20261004/audit.py research/analysis/hazard_checkpoint_7466_t0_20261004/raw.jsonl
       - name: Test Issue #6505 A01 retained auditor construction
         run: python -B -m unittest discover -s research/analysis/partial_order_audit_6505_orbstack_a01_20261003 -p 'test_*.py' -v
+      - name: Verify Issue 6695 retained preparation-edit deadline frontier
+        run: python -B -m unittest discover -s research/analysis/reversibility_deadline_frontier_6695_a01_20261003_01a0ff52 -p 'test_*.py' -v
+      - name: Verify retained four-arm core admission composition
+        run: python -B -m unittest discover -s research/integration/core_admission_composition_57_20261003_01a0ff59 -p 'test_archival.py' -v
+      - name: Verify historical compiled-sequence review and auditor counterexamples
+        run: python -B -m unittest discover -s research/integration/pr6863_review_rescue_20261003 -p 'test_archival.py' -v
+      - name: Verify historical teardown witness review and type counterexamples
+        run: python -B -m unittest discover -s research/integration/teardown_witness_review_rescue_20261003 -p 'test_archival.py' -v
+      - name: Verify archived S05 WSLc image-gate preparation
+        run: python -B -m unittest discover -s research/analysis/looming_visual_assumption_gate_5905_s05_wslc_20261003 -p 'test_*.py' -v
+      - name: Verify Issue 6219 hash-bound publication recovery
+        run: python -B -m unittest discover -s research/analysis/amendment_effect_6219_publication_recovery_20261003 -p 'test_*.py' -v
+      - name: Test Issue 6219 recovered original construction fixture
+        run: python -B -m unittest discover -s research/analysis/amendment_effect_6219_publication_recovery_20261003/decoded_material -p 'test_method.py' -v
+      - name: Verify Issue 6061 archived construction only
+        run: python -B -m unittest discover -s research/analysis/intermittent_control_6061_t0_20261003 -p 'test_*.py' -v
       - name: Test retained Issue 6645 A02 construction
         run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0b_orbstack_20261003 -p 'test_*.py' -v
       - name: Verify retained Issue 6645 A03 archive
         run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0c_orbstack_20261003 -p 'test_*.py' -v
+      - name: Verify retained Issue 5694 A03 scientific HOLD
+        run: python -B -m unittest discover -s research/analysis/exogenous_opportunity_5694_first_failed_boundary_a03_20261002 -p 'test_*.py' -v
       - name: Test Issue #6808 S06 photometric invariance construction
         run: python -B -m unittest discover -s research/analysis/looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003 -p 'test_*.py' -v
       - name: Test #6749 corrected prefix-stability successor construction

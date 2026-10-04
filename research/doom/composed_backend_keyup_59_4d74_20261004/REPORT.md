@@ -1,0 +1,7 @@
+# Exact composed explicit-keyup cancellation supplement
+
+H: Cancellation accepted during explicit key-up XSync must not qualify as an ordinary release in the owner wrapper/batch consumer.
+T: Exact1116bc5b76f9360556e4da447e4f561383419c10 Git source; source06 dependency staging plus the five exact public f746 delta files. FREEZE pins every staged member and actual once-only WSLc argv. Same frozen dependency source a9 ancestry elsewhere; only five public source/test files differ, no historical replacement.
+D: Eight tests PASS/exit0: actual owner thread/fake Xlib cancel-during-keyup, live receipt history join, and six batch composition contracts including partial cleanup, ambiguous sink acknowledgment/no duplicate and wrong-key refusal. Source selection/date is not native authority proof.
+C: Construction software evidence only, fake server/owner effects, no physical input/GUI/game/model/useful task/per-key physical release/full session qualification. This is a separate current-composition invocation, not replay/regrading of peer historical formal allocations or prior import STOPs. Raw stderr/stdout/exit preserved. Git source and previous manifests remain reachable through main/PR ancestry; original mount paths/image availability limit reproduction.
+U: Nonroot/network-disabled cached CPU-only WSLc, no CPU/memory caps requested and no enforcement claim; no shared live game/GPU allocation.

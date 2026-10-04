@@ -1,0 +1,35 @@
+{
+  "study": "5442-owned-browser-endpoint-01a0ff58-run01",
+  "worker": "01a0ff58-2d0b-7eb1-8b33-c8b69e63563a",
+  "frozen_utc": "2026-10-03T03:20:30.637427+00:00",
+  "main_reference": "6da2b492b9c2a9d76e5c54d35a0ae50b7b49edde",
+  "files": {
+    "app.py": "56aa38ea34abcae4e0bcc5650563d3a53d0729b5aff7d68475bb0f1edf881091",
+    "observer.py": "1f3b5386c093177d1e50c58b8cf766bc763951a87e9a3eea81f096df7c8a22df",
+    "auditor.py": "cc2ad31f32c251000ee96804ac18404efc9325c93562f3497cc9e0746b62b3be",
+    "actor.js": "2f519a08c7f58d83a2cd01b80339315d9516d53d9dec9a2adde8a5b620ea29e3",
+    "scenarios.json": "f7baaad1f1870235e1a04ecb0c7ed417023fd0954b4dbedb50a4ab4aec690e1f",
+    "PLAN.md": "aec7a5b81504080a4e1c4bcc5a52d0c938bbddda25f6078d165458fa91c6732c",
+    "VARIABLES.md": "335afdefa481d8227e45d01e310c18a97145679b2eb5e7fdc83c09154981bc30",
+    "UI_PROTOCOL.md": "99454c25fca475f26f8c8b0c54e3cfb9801c0fd56d2b567c1611d5d2a87061f2",
+    "capture_prestate.py": "4c6543bb08536e71b361c1ccebc2af6cffbd93eddce5651bed0221085438d653",
+    "run_recorded.py": "05ceb4498e3bc5af7df2d859fa901660ccaa95af590689a7a10f163cbbd15a53",
+    "construction_check.py": "050a7b92805197d7a5e11e921d8bcb84c7df3a223564cd8e7620ea1f8c03b660",
+    "freeze_source.py": "2c92315829e4942cce3b467c3feeba6458d9465f41241bf60a072670fb354960"
+  },
+  "environment": {
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "sqlite": "3.45.1",
+    "browser": "owned hidden Codex in-app browser2/tab1",
+    "UI_api": "mcp__cua_repl DOM-only"
+  },
+  "primary_out": "run-01",
+  "initial_operations": 8,
+  "repair_operations_max": 6,
+  "resources": "one own Python HTTPServer, one own DOM-only tab, stdlib SQLite; graphics unmeasured",
+  "allocation": "distinct ordinary application-bound construction, not T7/T8 formal replay",
+  "model_configuration": "coordinating assistant settings not measured; no experimental model API call",
+  "stop_rule": "no primary retry/reset/restart; HOLD preserves first partial evidence",
+  "D": "PASS_APPLICATION_ENDPOINT_SCOPED iff 8 accepted UI/HTTP submits, 2 confirmed/6 UNKNOWN initial, 6 fresh repairs confirmed, exact joins and negative controls pass"
+}

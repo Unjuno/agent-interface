@@ -1,0 +1,73 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, os, subprocess, sys
+
+root = Path(__file__).resolve().parents[1]
+out = root/'outputs/measurement-count-01a0ff2c'
+assert not (out/'MATRIX_PLAN.json').exists()
+cells = []
+def add(name, scheduler):
+    cells.append({'cell_id':name, 'summary':{'controller_visible':False, 'scheduler':scheduler}})
+for name, count in [('valid-integer-zero',0), ('count-false',False), ('count-float-zero',0.0),
+                    ('count-positive',1), ('count-negative',-1), ('count-true',True),
+                    ('count-float-one',1.0), ('count-string-zero','0'), ('count-null',None),
+                    ('count-list',[]), ('count-object',{})]:
+    add(name, {'missed_sample_periods':count})
+add('count-missing', {'other':0})
+for name, scheduler in [('scheduler-null',None), ('scheduler-false',False),
+                         ('scheduler-true',True), ('scheduler-list-nonempty',[0]),
+                         ('scheduler-string','unknown'), ('scheduler-object-empty',{}),
+                         ('scheduler-list-empty',[])]:
+    add(name, scheduler)
+assert len(cells) == 19
+runner = root/'work/measurement_count_matrix.py'
+plan = {'kind':'ordinary constructed full-audit characterization, not formal allocation',
+        'created_utc':datetime.now(timezone.utc).isoformat(), 'cells':cells,
+        'runner_sha256':hashlib.sha256(runner.read_bytes()).hexdigest(),
+        'decision':'only valid-integer-zero may PASS; all others audit FAIL without exception',
+        'expected_before':{'pass':3, 'reject':13, 'exception':3},
+        'expected_after':{'pass':1, 'reject':18, 'exception':0},
+        'source_sha256':{mode:{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((out/(mode+'-source')).glob('*.py'))} for mode in ('before','after')}}
+plan_path = out/'MATRIX_PLAN.json'
+plan_path.write_text(json.dumps(plan, indent=2)+'\n', encoding='utf-8', newline='\n')
+env = os.environ.copy()
+env.pop('PYTHONPATH',None)
+env.update(PYTHONHASHSEED='0', PYTHONNOUSERSITE='1', PYTHONDONTWRITEBYTECODE='1')
+for mode in ('before','after'):
+    source = out/(mode+'-source')
+    (source/'measurement_count_matrix.py').write_bytes(runner.read_bytes())
+    argv = [sys.executable, '-B', 'measurement_count_matrix.py', str(plan_path), str(out/(mode+'.jsonl'))]
+    r = {'argv':argv, 'cwd':str(source), 'started_utc':datetime.now(timezone.utc).isoformat()}
+    proc = subprocess.Popen(argv, cwd=source, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    r['pid'] = proc.pid
+    stdout, stderr = proc.communicate(timeout=60)
+    (out/(mode+'-matrix.stdout.log')).write_bytes(stdout)
+    (out/(mode+'-matrix.stderr.log')).write_bytes(stderr)
+    r.update(exit=proc.returncode, ended_utc=datetime.now(timezone.utc).isoformat(),
+             stdout_sha256=hashlib.sha256(stdout).hexdigest(), stderr_sha256=hashlib.sha256(stderr).hexdigest())
+    (out/(mode+'-matrix-receipt.json')).write_text(json.dumps(r, indent=2)+'\n', encoding='utf-8', newline='\n')
+    assert proc.returncode == 0, stderr.decode(errors='replace')
+# A separate ID-bound decision table uses retained JSON rows, imports no tested
+# auditor/analyzer/fixture, and does not derive expectations from observed PASS.
+checks = {}
+for mode in ('before','after'):
+    rows = [json.loads(line) for line in (out/(mode+'.jsonl')).read_text(encoding='utf-8').splitlines()]
+    assert [r['cell_id'] for r in rows] == [c['cell_id'] for c in cells]
+    for row, cell in zip(rows,cells):
+        assert row['summary'] == cell['summary']
+    groups = {'pass':[], 'reject':[], 'exception':[]}
+    for row in rows:
+        group = 'exception' if 'exception' in row else 'pass' if row['result']['pass'] else 'reject'
+        groups[group].append(row['cell_id'])
+        if group == 'reject':
+            assert row['result']['failures'] == ['scorer scheduler missed sample periods'], row
+    assert {k:len(v) for k,v in groups.items()} == plan['expected_'+mode]
+    if mode == 'before':
+        assert groups['pass'] == ['valid-integer-zero','count-false','count-float-zero']
+        assert groups['exception'] == ['scheduler-true','scheduler-list-nonempty','scheduler-string']
+    else:
+        assert groups['pass'] == ['valid-integer-zero']
+        assert not groups['exception']
+    checks[mode] = groups
+(out/'MATRIX_CHECK.json').write_text(json.dumps({'decision_table_match':True, 'rows_per_source':19, 'groups':checks}, indent=2)+'\n', encoding='utf-8', newline='\n')
+print(json.dumps({mode:{k:len(v) for k,v in groups.items()} for mode,groups in checks.items()}))

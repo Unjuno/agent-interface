@@ -1,0 +1,14 @@
+test_release_publication_finishes_before_terminal (__main__.ReleasePublicationOrderTests.test_release_publication_finishes_before_terminal) ... FAIL
+
+======================================================================
+FAIL: test_release_publication_finishes_before_terminal (__main__.ReleasePublicationOrderTests.test_release_publication_finishes_before_terminal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\pr59-cancel-cause-stack\research\live_control\test_executor_release_publication_order_v1.py", line 74, in test_release_publication_finishes_before_terminal
+    self.assertFalse(
+AssertionError: True is not false : terminal was emitted while the cancel-release publisher was gated
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=1)

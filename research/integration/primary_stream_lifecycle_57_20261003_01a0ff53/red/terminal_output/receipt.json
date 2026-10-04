@@ -1,0 +1,30 @@
+{
+  "scenario": "terminal_output",
+  "argv": [
+    "/opt/homebrew/bin/node",
+    "<owner-work>/lifecycle_probe.mjs",
+    "terminal_output",
+    "work/primary-stream-lifecycle-v2/baseline",
+    "<owner-work>/red/terminal_output"
+  ],
+  "started_utc": "2026-10-03T04:29:01.875367+00:00",
+  "exit_code": 1,
+  "ended_utc": "2026-10-03T04:29:01.980250+00:00",
+  "timed_out": false,
+  "stdout_sha256": "af0a6347b27c11c447a893592a760ccce79cfbdcbf4640c41620e0dd2637fb52",
+  "stderr_sha256": "e7836f1d85b59d152b3c891a8e2d715e5eeab5a6a67980b422b814ec9a8a1368",
+  "fixture.started.json": {
+    "pid": 60302,
+    "ppid": 60298
+  },
+  "fixture.exit.json": {
+    "pid": 60302,
+    "code": 0,
+    "bytes": 0
+  },
+  "host/exit.json": {
+    "code": 0,
+    "signal": null
+  },
+  "fixture_pid_absent": true
+}

@@ -1,0 +1,61 @@
+{
+  "id": "kernel-effect-start-5156-C01-20261003",
+  "created_utc": "2026-10-03T05:13:14.576743+00:00",
+  "scope": "ordinary construction, no historical formal allocation replay",
+  "base": "316ac44b24d4ac29c1942d2fee51f1c0599855b1",
+  "main_observed_before_matrix": "9c26e204c0475bee30919e3d0e6681f393078ef1",
+  "source_sha256": {
+    "baseline": {
+      "__init__": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+      "contracts": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+      "backend": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b",
+      "lifecycle": "f819d50dee48ae2834b1ec3902cf79def0b17e4e913d734aa8fae375cd07664c"
+    },
+    "candidate": {
+      "__init__": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+      "contracts": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+      "backend": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b",
+      "lifecycle": "bc5c76c4b8af48421d31844b05ba0e41a48a26c01b49eaa58bae1b3c1fc049d8"
+    }
+  },
+  "inputs_sha256": {
+    "MATRIX_PLAN.md": "0fc639be1c6cd74a9d14370f18c34ba6fdc9ba7e1905bc660857dddda74fc19b",
+    "PLAN.md": "1fddc1f31944172c7930a992c5b8f54da022938598a7c4c824e3c1039691eefa",
+    "SETUP_NOTES.md": "9205b6263373061a2b0d291ffdbc826405582f5443ff38260ffb52c415fba9fe",
+    "SOURCE.json": "b75f12ce25806cab27d090cd5a232e1b57bdbf933876d2c6c8a4f60f9a671759",
+    "TDD_FREEZE.json": "6f291c3bad5cb6f7e34d8d2d022fbe5e1f0cdcbeb31f05ee385da987a83f20fd",
+    "audit.py": "7ccb10ff2f3a5f24c58a983b26ec49470cf2e684faa9c4cc5ed96bee53bfca3a",
+    "fixture.json": "66ef2b0f93dd07985dddc379bf4ee59477dd2122bb38934d17c2dfe2e7204ee5",
+    "matrix.py": "d068437fff243128f722349aaba2d8d9293170060cf06ff44a7183c605739ace",
+    "retained/baseline-working/README.md.txt": "daa63974be8da1a07abe486b5fe134c05fc3cc0a0501f07f5800536c840ed0cc",
+    "retained/baseline-working/__init__.py.txt": "58efbeebecc33c3d7bcd204712ba788cba26c22acbe1757d1ec74837bb1a3fae",
+    "retained/baseline-working/backend.py.txt": "72a814f8c20be50bd17b58980f242da9f4d0b6ccfda8d5b21df96fcc46fbcfef",
+    "retained/baseline-working/contracts.py.txt": "7d3b4866389650a0faf89f118b99aba86b11b60963b49ed6389e988ed68eda87",
+    "retained/baseline-working/lifecycle.py.txt": "455bfd66b9b690f32652224024222f7401ddb293ce079487ec304a8291b34343",
+    "retained/baseline-working/test_backend_contract.py.txt": "adaa69db2a16937894815fd15ef1532dc3861bed6c7c39fee17a3bdafc3a26d2",
+    "retained/baseline-working/test_cancel_release_epoch.py.txt": "4ff1cda448962a83c23c344a2174b0253b13f02f28fad0b1a3963b06b143bb07",
+    "retained/baseline-working/test_execution_begin_epoch.py.txt": "1ec590103a24f53884b5f613c2f8b03cd073d25dc1d53a4be53a3f19864345b2",
+    "retained/baseline-working/test_kernel.py.txt": "a4a662b02b65091f515bd71b201e0c7e136f4e593d9585b59e54069c3df990dd",
+    "retained/baseline-working/test_release_epoch.py.txt": "68798fa1b33ff12a7d70ce889e86c7931540e67946c3918be688ee473520bbd4",
+    "retained/candidate-kernel/__init__.py.txt": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+    "retained/candidate-kernel/backend.py.txt": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b",
+    "retained/candidate-kernel/contracts.py.txt": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+    "retained/candidate-kernel/lifecycle.py.txt": "bc5c76c4b8af48421d31844b05ba0e41a48a26c01b49eaa58bae1b3c1fc049d8",
+    "retained/capture-effect-start.py.txt": "0ab67d8fe50c65798dc6ee8d24dc7d20837c7473d0eed7951354598587689f36",
+    "retained/kernel/README.md.txt": "b09e8739721fb024dc3c0196cb9a3c903640609a124ec59f82d5653d0c883dff",
+    "retained/kernel/__init__.py.txt": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+    "retained/kernel/backend.py.txt": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b",
+    "retained/kernel/contracts.py.txt": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+    "retained/kernel/lifecycle.py.txt": "f819d50dee48ae2834b1ec3902cf79def0b17e4e913d734aa8fae375cd07664c",
+    "retained/kernel/test_backend_contract.py.txt": "9cad9eed0f698253484ba532ffe60754a41eb58ed687607b5fca80116e334fad",
+    "retained/kernel/test_cancel_release_epoch.py.txt": "4abd13dc39d9e9eaf0a3ae3d6acbac85ec9b4121fb5e262349d74a313c30cc21",
+    "retained/kernel/test_execution_begin_epoch.py.txt": "aea2d812dc9c9d36823f8532f985e0730906737baafa1482641656a5b993647a",
+    "retained/kernel/test_kernel.py.txt": "e49d3260e84edc9e95eb0690a92d6ca5ee87681e8dde854d5058ac75e37118e0",
+    "retained/kernel/test_release_epoch.py.txt": "2fc5025733afbf030d388b8f271f3e3bfb5baa6725e0de2e7afa18c130906bf6",
+    "retained/runtime-kernel-v1.yml.txt": "8b9c20bba712cd8854cb38db238b916101fe7d3c46f69a94e018c4a913de2571",
+    "retained/test_effect_start_epoch.py.txt": "d647810c95d0acdf993328c6f97843ef5db873da734e0a572b9440b80e5a0707"
+  },
+  "expected_rows": 180,
+  "controls": 8,
+  "qualification": "C01 prospective freeze; first TDD baseline remains post-run identity only."
+}

@@ -1,0 +1,127 @@
+"""Publish only inert review proof on an owned reference outside author source."""
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent;ws=root.parent.parent;repo=root.parent/'agent-interface'
+public=ws/'outputs/review-6923';public.mkdir(exist_ok=False)
+p=json.loads((root/'PROPOSAL.json').read_bytes());head=p['head_sha']
+prefix='research/reviews/nominal_records_6923_45e9';ref='refs/heads/research/review-nominal-records-6923-45e9-20261003'
+originals=[]
+def sha(b):return hashlib.sha256(b).hexdigest()
+def add(source,relative):
+ before=source.read_bytes();after=before
+ for text in (str(ws),os.environ['USERPROFILE']):
+  after=after.replace(text.replace('\\','\\\\').encode(),b'<REVIEWER_PRIVATE_PATH>')
+  after=after.replace(text.encode(),b'<REVIEWER_PRIVATE_PATH>')
+ dest=public/relative;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(after)
+ originals.append({'path':relative,'original_sha256':sha(before),'public_sha256':sha(after),
+  'private_prefix_redacted':before!=after,'original_retained':source.read_bytes()==before})
+for name in ('EXPORT.json','PROPOSAL.json','COMPARE_FILES.json','FIRST_READER_FAILURE.json','READER_V2_RECEIPT.json','reader-v2.stdout.txt','reader-v2.stderr.txt'):
+ add(root/name,name)
+for folder in ('checks','retained-audit-v2','current-application'):
+ for file in sorted((root/folder).rglob('*'),key=lambda f:f.relative_to(root).as_posix()):
+  if file.is_file():add(file,file.relative_to(root).as_posix())
+for name in ('independent.py','capture.py','audit_retained.py','audit_retained-first.py.txt','prepare-current.py','publish.py'):
+ add(root/name,'tools/'+name+('' if name.endswith('.txt') else '.txt'))
+add(ws/'work/export_review6923.py','tools/export_review6923.py.txt')
+(public/'PROVENANCE.json').write_text(json.dumps({'created_utc':datetime.now(timezone.utc).isoformat(),'artifacts':originals,
+ 'public_derivatives':'Only reviewer private path prefixes redacted; exact original/public hashes distinguished; originals retained privately.',
+ 'first_reader_failure':'Counter(mapping) used outcome strings as counts. First source and diagnostic metadata retained; original tool output in conversation, no separate first process UTC/full streams captured. Corrected reader uses Counter(list(mapping)); no live tests repeated.',
+ 'preparation_tool_failure':'Initial apply_patch was rejected for an omitted plus in the Add File hunk; no file/reference/runtime mutation. Corrected patch then applied.',
+ 'author_archive':'Exact38 changed blobs/34 artifact hashes/11 source and workflow pins verified; author private original bytes not available here.17 public-path derivatives bound to original hash claims, retention remains author attested.'},indent=2)+'\n',encoding='utf-8')
+(public/'README.md').write_text('''# Nominated nonauthor review of PR #6923
+
+Actual existing worker01a0ff2e-17a3-70a1-908e-0d6dd78c45e9, FINAL-v5.
+Prospective nomination5965486572 and fresh acceptance5966195553 precede this
+distinct content decision. Repository Unjuno/agent-interface;
+epoch6923-20261003-01a0ff2d-eb8e-v1;
+digest0bb92940998a498177652729c777a491d6f9778115176dabc2724c00e6a4e47a;
+headb84aa6a1260128bd70e2cbe1598a9c80b55f75ee;
+content base3e93df3755b8ae8e2e063ed8f61524989e4bf3df.
+Proposal canonical digest and complete38-file canonical API comparison digest
+b3367262307feea4d80e4bf25acaa0c1bde86693350246554766158c9620b831
+match. All34 artifact manifest entries,47 exact head source/archive/config
+images and11 candidate Python/workflow pins match Git blobs and SHA256.
+
+The functional delta is exactly12 lifecycle lines: six nominal instance guards
+before submitted record field access at binding, authority, accepted begin,
+execution receipt, effect receipt and active cancellation release. Observation
+already had its guard. Accepted-begin/receipt-start/cancellation-release bounds,
+constructors, backend behavior and workflow remain. Trusted subclasses are
+permitted; hostile overrides, mutations, concurrency and clock authenticity are
+explicitly outside this boundary. This repair does not adopt separately owned
+missing-receipt uncertainty6894 or effect-start6936, or establish actual effect.
+
+Actual reviewer Windows CPython3.12.10 inputs/environment/commands were frozen
+before execution. Exact-head7 nominal methods pass. A separately written own
+literal14-case oracle imports no author test helpers:7 field traps reject with
+ContractError before any submitted record field read and preserve every state
+value/object identity; nominal and trusted-subclass positive pipelines pass;
+typed stale binding, expiry equality, prebegin execution receipt and prebegin
+cancellation release retain refusal/state identity; trusted subclass cancellation
+passes. No registry/backend factory, native GUI/input, model or producer is called.
+Class metadata allowed by isinstance is distinct from submitted record fields.
+Actual UTC/exits/full stdout/stderr and source/binary hashes are in checks.
+
+A read-only retained-data auditor reconciles9 complete author process records,
+all50 exact candidate method identities, retained normal50/-O50 GREEN, original
+5FAIL+1ERROR/observation PASS, and6 effective single-guard omissions with only
+their corresponding failure/error. Each inert omission source is exactly one
+declared two-line deletion, joined to source/hash/outcome records. Eight altered
+in-memory copies reject without relying on checksum mismatch: wrong source/config
+pin, reversed UTC, omitted-O argv, masked guard failure, wrong omission source,
+renamed first failure summary, missing GREEN method and fabricated formal
+provenance. No author50 deck, omission source or old/formal allocation is replayed.
+17 public path derivatives match their published bytes and original stdout hash
+claims. Author private original bytes are inaccessible to this reviewer; original
+retention remains author attested, not recovered or independently proven here.
+
+First reader used Counter(mapping) and stopped on outcome strings being treated
+as counts. First source/diagnostic metadata and conversation output retained;
+exact first process UTC/full separated streams were not captured. Corrected
+reader uses Counter(list(mapping)); actual v2 UTC/exits/full streams retained.
+No source/raw/frozen outcome or live test changed. Initial Add File patch also
+failed syntactic validation before any file mutation; corrected patch applied.
+
+Actual named nonauthor applicability preparation:
+main4cd7649777c8a042d486b2058fd1bcbc18a90727 plus exact head yields
+treebf211646fcc4e87595c2d8b865302fd0d849e711, conflict free.
+Merge base equals fixed content base. Exact38 delta and47 source/archive/config
+images match. Complete576 intervening paths were checked; used kernel/workflow/
+runtime package closure changes are zero, and parsed import closure matches the
+declared pure kernel/standard-library scope. Thus actual7+14 evidence applies
+to that named composition without a repeated whole deck solely for inert drift.
+No main reference/merge commit/application lock was created. This is preparation
+for this tuple, not authority over future main. Eventual two eligible decisions,
+actual sender rules/checks/identity/ownership/cancellation and one expected-old
+forward application/readback remain the author's separate finite step.
+
+No actionable content defect was found within the stated scope. This supports
+one explicit assigned nonauthor content approval; actual vote remains external
+on GitHub. Other acceptance/outside-committee reviews are not converted to votes,
+and shared-login comments do not imply distinct-user GitHub APPROVE. No physical
+release/effect, real backend/GUI/model/task success, latency/efficiency, hosted CI,
+GPU/WSLc/container/resource ownership, common N/deadline or full-goal completion
+claim. Primary Git index and author source/raw remain unchanged. All published
+tools are inert .py.txt and public derivatives retain distinct original hashes.
+''',encoding='utf-8',newline='\n')
+(public/'.gitattributes').write_text('* -text\n',encoding='utf-8')
+items=sorted((f for f in public.rglob('*') if f.is_file()),key=lambda f:f.relative_to(public).as_posix())
+(public/'SHA256SUMS').write_text(''.join(sha(f.read_bytes())+'  '+f.relative_to(public).as_posix()+'\n' for f in items),encoding='utf-8',newline='\n')
+for r in json.loads((root/'EXPORT.json').read_bytes())['blobs']:assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+index=root/'publication.index';assert not index.exists();primary=(repo/'.git/index').read_bytes()
+env=dict(os.environ,GIT_INDEX_FILE=str(index),GIT_NO_LAZY_FETCH='1')
+def git(*a,data=None):return subprocess.check_output(['git',*a],cwd=repo,env=env,input=data)
+assert subprocess.run(['git','show-ref','--verify','--quiet',ref],cwd=repo).returncode==1
+git('read-tree',head);paths=[]
+for f in sorted((f for f in public.rglob('*') if f.is_file()),key=lambda f:f.relative_to(public).as_posix()):
+ path=prefix+'/'+f.relative_to(public).as_posix();b=f.read_bytes();oid=git('hash-object','-w','--stdin',data=b).decode().strip()
+ assert git('cat-file','blob',oid)==b;git('update-index','--add','--cacheinfo','100644',oid,path);paths.append(path)
+assert git('diff','--cached','--name-only',head).decode().splitlines()==paths
+git('diff','--cached','--check','--',prefix+'/README.md')
+tree=git('write-tree','--missing-ok').decode().strip()
+commit=git('commit-tree',tree,'-p',head,data=b'review(#6923): retain independent nominal record evidence [skip ci]\n').decode().strip()
+git('update-ref',ref,commit,'0'*40);assert primary==(repo/'.git/index').read_bytes()
+record={'branch':ref,'commit':commit,'tree':tree,'prefix':prefix,'parent_reviewed_head':head,'files':len(paths),
+ 'bytes':sum(f.stat().st_size for f in public.rglob('*') if f.is_file()),'primary_index_unchanged':True,'status':'local commit; not yet pushed'}
+(ws/'outputs/review-6923-publication.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8');print(json.dumps(record))

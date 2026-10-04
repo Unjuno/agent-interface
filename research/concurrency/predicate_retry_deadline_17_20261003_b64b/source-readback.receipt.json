@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orb",
+    "run",
+    "-m",
+    "research-6695-docker-01a0ff52",
+    "-u",
+    "root",
+    "python3",
+    "-c",
+    "import pathlib,hashlib,json,sys;r=pathlib.Path(sys.argv[1]);print(json.dumps({str(p.relative_to(r)):{'bytes':len(p.read_bytes()),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in r.rglob('*') if p.is_file()},sort_keys=True))",
+    "/var/tmp/predicate-retry-a01-b64b-src"
+  ],
+  "utc_start": "2026-10-03T11:27:06.675972+00:00",
+  "utc_end": "2026-10-03T11:27:06.718722+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "bytes": 3533,
+    "sha256": "f11bf5938c40573afdea586796596c91ae34178ceee3bd6d64940a9cea6de77f"
+  },
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

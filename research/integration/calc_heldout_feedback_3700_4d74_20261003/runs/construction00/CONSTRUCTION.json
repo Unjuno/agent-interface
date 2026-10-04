@@ -1,0 +1,69 @@
+{
+  "document_initial_sha256": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+  "ended_ns": 22989188132,
+  "errors": [
+    "Traceback (most recent call last):\n  File \"/src/construction.py\", line 46, in <module>\n    if now()>deadline or lo.poll() is not None:raise RuntimeError('Calc readiness failed')\n                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Calc readiness failed\n"
+  ],
+  "formal_rows": 0,
+  "processes": [
+    {
+      "argv": [
+        "Xvfb",
+        ":141",
+        "-screen",
+        "0",
+        "1280x800x24",
+        "-nolisten",
+        "tcp",
+        "-ac"
+      ],
+      "name": "Xvfb",
+      "pid": 8
+    },
+    {
+      "argv": [
+        "openbox",
+        "--sm-disable"
+      ],
+      "name": "openbox",
+      "pid": 12
+    },
+    {
+      "argv": [
+        "libreoffice",
+        "-env:UserInstallation=file:///out/profile",
+        "--calc",
+        "--nologo",
+        "--norestore",
+        "--nodefault",
+        "--nofirststartwizard",
+        "/out/heldout-construction.fods"
+      ],
+      "name": "Calc",
+      "pid": 15
+    }
+  ],
+  "schema": "calc-readiness-construction-v1",
+  "started_ns": 2660070749,
+  "task_inputs": 0,
+  "terminal": [
+    {
+      "cleanup": "process group TERM; parent waited",
+      "exit_code": 255,
+      "name": "Calc",
+      "pid": 15
+    },
+    {
+      "cleanup": "process group TERM; parent waited",
+      "exit_code": 0,
+      "name": "openbox",
+      "pid": 12
+    },
+    {
+      "cleanup": "process group TERM; parent waited",
+      "exit_code": 0,
+      "name": "Xvfb",
+      "pid": 8
+    }
+  ]
+}

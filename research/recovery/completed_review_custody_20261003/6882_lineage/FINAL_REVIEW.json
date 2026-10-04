@@ -1,0 +1,295 @@
+{
+  "actual_base": "a96283aceb2d4e72aabd592a9b94fd60397d5622",
+  "actual_tree": "7960472f217c62c8052830bc0412a2cb0bbfc517",
+  "applicability": "All imported lineage/default/core source and test dependencies remain exact; four separate receipt-pointer decoder/test paths are unimported. Reuse the recorded 8 normal/O,12 normal/O,76 core results only for this scoped tuple. No full current CLI, kernel, foreign-platform or hosted-CI claim. Actual later apply record/rules/CAS remain author-owned and separate.",
+  "changed_or_added_allowlist_paths_since_test": [
+    "runtime/cli_v1/receipt_references.py",
+    "runtime/cli_v1/test_event_reference_marker.py",
+    "runtime/cli_v1/test_native_reference_pointer.py",
+    "runtime/cli_v1/test_receipt_pointer_escapes.py"
+  ],
+  "checked_at_utc": "2026-10-03T03:52:31.523891+00:00",
+  "current_allowlist_files": 68,
+  "default_raw_sha256": {
+    "normal": "4b11e7bff1379a8bb92272db340486d611511d8280c0dd1b2bf409c6f65c4762",
+    "optimized": "4b11e7bff1379a8bb92272db340486d611511d8280c0dd1b2bf409c6f65c4762"
+  },
+  "execution_receipts": {
+    "current-core": {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/core_v1",
+        "-p",
+        "test*.py",
+        "-v"
+      ],
+      "command_redaction": "Private absolute worker-work prefix replaced in public receipt; command arguments otherwise exact.",
+      "cwd": "work\\review-6882-7772\\source",
+      "ended_at_utc": "2026-10-03T03:44:02.315699+00:00",
+      "environment_overrides": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "logs": {
+        "stderr": {
+          "bytes": 10664,
+          "sha256": "ec89d02392e0095d4a1f657512dadc3d49e2b53ef2b8e3d2f99ff138bc1b7596"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "returncode": 0,
+      "started_at_utc": "2026-10-03T03:44:02.181119+00:00"
+    },
+    "default-normal": {
+      "command": [
+        "python",
+        "check_default_path.py"
+      ],
+      "command_redaction": "Private absolute worker-work prefix replaced in public receipt; command arguments otherwise exact.",
+      "cwd": "work\\review-6882-7772",
+      "ended_at_utc": "2026-10-03T03:44:01.602401+00:00",
+      "environment_overrides": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "logs": {
+        "stderr": {
+          "bytes": 823,
+          "sha256": "b0646e9ae7c65639cae6733bd1569edd4240ada41a670f6125bfd7cc97dbe89e"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "returncode": 1,
+      "started_at_utc": "2026-10-03T03:44:01.434016+00:00"
+    },
+    "default-v2-normal": {
+      "command": [
+        "python",
+        "check_default_path_v2.py"
+      ],
+      "command_redaction": "Private absolute worker-work prefix replaced in public receipt; command arguments otherwise exact.",
+      "cwd": "work\\review-6882-7772",
+      "ended_at_utc": "2026-10-03T03:49:18.033198+00:00",
+      "environment_overrides": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "logs": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 69,
+          "sha256": "a11d2ac7c06122312865c2ab1a637df8c00f36cf3593b577d20aaf4950b3c9d4"
+        }
+      },
+      "returncode": 0,
+      "started_at_utc": "2026-10-03T03:49:17.878838+00:00"
+    },
+    "default-v2-optimized": {
+      "command": [
+        "python",
+        "-O",
+        "check_default_path_v2.py"
+      ],
+      "command_redaction": "Private absolute worker-work prefix replaced in public receipt; command arguments otherwise exact.",
+      "cwd": "work\\review-6882-7772",
+      "ended_at_utc": "2026-10-03T03:49:18.875970+00:00",
+      "environment_overrides": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "logs": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 72,
+          "sha256": "0ab39e87f98831c8770cb48411272efe448ee382ed1be8837906f4e8f6b59a35"
+        }
+      },
+      "returncode": 0,
+      "started_at_utc": "2026-10-03T03:49:18.614955+00:00"
+    },
+    "focused-normal": {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.cli_v1.test_lineage_freshness",
+        "runtime.cli_v1.test_lineage_json_identity"
+      ],
+      "command_redaction": "Private absolute worker-work prefix replaced in public receipt; command arguments otherwise exact.",
+      "cwd": "work\\review-6882-7772\\source",
+      "ended_at_utc": "2026-10-03T03:43:46.274070+00:00",
+      "environment_overrides": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "logs": {
+        "stderr": {
+          "bytes": 1548,
+          "sha256": "68a1ef5d0041fa8a199eab9bc33022a517e18870ba97f7b87c0449ac9f301b28"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "returncode": 0,
+      "started_at_utc": "2026-10-03T03:43:46.170204+00:00"
+    },
+    "focused-optimized": {
+      "command": [
+        "python",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.cli_v1.test_lineage_freshness",
+        "runtime.cli_v1.test_lineage_json_identity"
+      ],
+      "command_redaction": "Private absolute worker-work prefix replaced in public receipt; command arguments otherwise exact.",
+      "cwd": "work\\review-6882-7772\\source",
+      "ended_at_utc": "2026-10-03T03:43:46.946902+00:00",
+      "environment_overrides": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "logs": {
+        "stderr": {
+          "bytes": 1548,
+          "sha256": "68a1ef5d0041fa8a199eab9bc33022a517e18870ba97f7b87c0449ac9f301b28"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "returncode": 0,
+      "started_at_utc": "2026-10-03T03:43:46.852359+00:00"
+    },
+    "reference": {
+      "command": [
+        "python",
+        "reference.py"
+      ],
+      "command_redaction": "Private absolute worker-work prefix replaced in public receipt; command arguments otherwise exact.",
+      "cwd": "work\\review-6882-7772",
+      "ended_at_utc": "2026-10-03T03:43:45.574000+00:00",
+      "environment_overrides": {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "logs": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1758,
+          "sha256": "7909e4b53582a0e2fba5365a391ba7455ea17321bad47bfa76f0c5d7ec431808"
+        }
+      },
+      "returncode": 0,
+      "started_at_utc": "2026-10-03T03:43:45.463528+00:00"
+    }
+  },
+  "first_reviewer_failure": "Wrong program schema fixture; preserved exit1, unchanged expected decisions; schema-only v2 repair and separate output name frozen before ordinary rerun.",
+  "head": "263c56e552eb3f50d65099d34798548ebbd485f8",
+  "original_head_files_unchanged": 26,
+  "original_source_files_unchanged": 65,
+  "proposal_digest": "6e5033e87d7cee9e4b0c3daa946ff3b04113bcc2eb79502c0b72d7532645c9fb",
+  "raw_reference": {
+    "controls": [
+      {
+        "control": "missing",
+        "copy_sha256": "39fb6f7353e58aebad77459f959d05a18e32b1d33d804c41d2ddbd6eda60b12e",
+        "reason": "row count",
+        "rejected": true
+      },
+      {
+        "control": "duplicate",
+        "copy_sha256": "f997ab74c55be2080af8099eeffada0314b5d50d6c79415d3dc954ec3acced75",
+        "reason": "ordered arm/case coverage",
+        "rejected": true
+      },
+      {
+        "control": "input-hash",
+        "copy_sha256": "8d97d2780f0415c23d6f6167f0bae93477b1a680da80fd57fb888567936bc671",
+        "reason": "input bytes",
+        "rejected": true
+      },
+      {
+        "control": "dispatch-bool",
+        "copy_sha256": "ffeed133313b4111ff3ef70ca2eb79682100af7782fd2371a4dc009b44d81341",
+        "reason": "dispatch count",
+        "rejected": true
+      },
+      {
+        "control": "input-mutation",
+        "copy_sha256": "f8a7187fae6dbce9b0857b6857c1b61adccb3312cdf0f3ced2a181f30602fef3",
+        "reason": "input mutation",
+        "rejected": true
+      },
+      {
+        "control": "wrong-verdict",
+        "copy_sha256": "f898168e15e9239268505d924632feb236b0fb8eb555288d82fdaa608356c21f",
+        "reason": "source-specific result: candidate/corrupt-program-digest",
+        "rejected": true
+      },
+      {
+        "control": "dispatch-float",
+        "copy_sha256": "4d05744412ed94d996c7ce058ba51879f067c5e9b63ca4460ad914ff2e91b601",
+        "reason": "dispatch count",
+        "rejected": true
+      },
+      {
+        "control": "backend-bool",
+        "copy_sha256": "3a97c66a6ec614d7a9b0e790bd44f96579fc29f7b19ce0390615ff80971289b3",
+        "reason": "backend count",
+        "rejected": true
+      }
+    ],
+    "dispatches": {
+      "baseline": 43,
+      "candidate": 15
+    },
+    "ordered_rows": 232,
+    "raw_sha256": "75290970d25670e30a45a2e0341c7e98c29e0367a3ea5bd9ddce63dd8bfecde6",
+    "reference_scope": "Finite canonical parsed JSON; float identity uses IEEE bits including signed zero. No runtime/producer/author-oracle import or execution.",
+    "semantic_mismatch_counts": {
+      "baseline": 28,
+      "candidate": 0
+    },
+    "source_specific_matches": {
+      "baseline": 116,
+      "candidate": 116
+    }
+  },
+  "same_26_changed_blobs": true,
+  "scope": "Parsed finite JSON identity only; no original producer/formal allocation/native input/backend construction, shared resource, apply lock or main request.",
+  "tested_base": "403a21a6951662401925835fbc70670bab84b457",
+  "tested_tree": "0b0346c384c23e9f7f992e23f094404ce44b189d",
+  "worker": "01a0ff58-7772-7312-9c2a-459f38d6734d"
+}

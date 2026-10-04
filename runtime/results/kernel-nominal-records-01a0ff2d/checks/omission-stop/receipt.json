@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "<LOCAL_PYTHON_ROOT>\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "runtime.kernel.test_nominal_types",
+    "-v"
+  ],
+  "corresponding_test_detected": true,
+  "cwd": "<PRIVATE_WORKSPACE>\\work\\kernel-type-promotion-01a0ff2d\\mutants\\stop",
+  "effective": true,
+  "end_utc": "2026-10-03T03:02:15.992153+00:00",
+  "exit_code": 1,
+  "formal_allocation_replayed": false,
+  "name": "stop",
+  "outcomes": {
+    "test_authority_shape_cannot_bypass_action_validation": "ok",
+    "test_binding_shape_cannot_bypass_digest_validation": "ok",
+    "test_effect_shape_cannot_bypass_evidence_validation": "ok",
+    "test_execution_shape_cannot_bypass_interval_validation": "ok",
+    "test_observation_type_control": "ok",
+    "test_request_shape_cannot_bypass_nonempty_action_validation": "ok",
+    "test_stop_shape_cannot_assert_verified_release": "ERROR"
+  },
+  "source_sha256": "e7eaa557a556b7a57f16864049a27b06b7377e46d5aef1687ff4dc91cd0f610f",
+  "start_utc": "2026-10-03T03:02:15.777330+00:00",
+  "stdout_sha256": "435bc49171611b63b1ff071816a3bc3b026af96d30abdd1717a3b05d094d85c2",
+  "unrelated_failures_or_errors": 0
+}

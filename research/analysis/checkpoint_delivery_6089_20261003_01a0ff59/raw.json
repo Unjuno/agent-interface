@@ -1,0 +1,3376 @@
+{
+  "cases_sha256": "3be74990e81266823f5dc64b35b0a0e0c2995944b1816f280de7d4e1c854e9bd",
+  "kind": "new ordinary known-checkpoint representation assay, not historical formal replay",
+  "owner_thread_id": 32916,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "rows": [
+    {
+      "arm": "legacy",
+      "case_id": "k0__empty",
+      "context": "k0",
+      "encoding": "empty",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__empty",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "58d7da5ff486dc491e3807d171347c27b6280d1db20c72cf356d8e56101e01e1",
+      "input_unchanged": true,
+      "original_case_sha256": "58d7da5ff486dc491e3807d171347c27b6280d1db20c72cf356d8e56101e01e1",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__empty",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "FRESH_CHECKPOINT",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "NO_LOSS_CONTROL",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k0__empty",
+      "context": "k0",
+      "encoding": "empty",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__empty",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "4fb439787c697564c637fe1544f6a110cf430fd6091f4fd73c3e8fdc0c62fa02",
+      "input_unchanged": true,
+      "original_case_sha256": "58d7da5ff486dc491e3807d171347c27b6280d1db20c72cf356d8e56101e01e1",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__empty",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "BOUND_EXCEEDED_STOP_AT_FROZEN_DEADLINE",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": {
+          "disposition": "OUT_OF_BOUND_NOT_CERTIFIED",
+          "held_steps_if_illegally_continued": 7,
+          "misses": 1,
+          "safe": true
+        }
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "k0__missing",
+      "context": "k0",
+      "encoding": "missing",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__missing",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "b4d80501844a026b74987bd3c155c4206cb99fcbdfd3986e5b258e1f196bb83d",
+      "input_unchanged": true,
+      "original_case_sha256": "b4d80501844a026b74987bd3c155c4206cb99fcbdfd3986e5b258e1f196bb83d",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__missing",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "BOUND_EXCEEDED_STOP_AT_FROZEN_DEADLINE",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": {
+          "disposition": "OUT_OF_BOUND_NOT_CERTIFIED",
+          "held_steps_if_illegally_continued": 7,
+          "misses": 1,
+          "safe": true
+        }
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k0__missing",
+      "context": "k0",
+      "encoding": "missing",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__missing",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "b4d80501844a026b74987bd3c155c4206cb99fcbdfd3986e5b258e1f196bb83d",
+      "input_unchanged": true,
+      "original_case_sha256": "b4d80501844a026b74987bd3c155c4206cb99fcbdfd3986e5b258e1f196bb83d",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__missing",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "BOUND_EXCEEDED_STOP_AT_FROZEN_DEADLINE",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": {
+          "disposition": "OUT_OF_BOUND_NOT_CERTIFIED",
+          "held_steps_if_illegally_continued": 7,
+          "misses": 1,
+          "safe": true
+        }
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "k0__fresh",
+      "context": "k0",
+      "encoding": "fresh",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 0,
+            "generation": 5,
+            "kind": "FRESH"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__fresh",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "4e10a0b05e1f06253b6dc82dfffa20bcaf4170f479e6eba2c6759b2522916954",
+      "input_unchanged": true,
+      "original_case_sha256": "4e10a0b05e1f06253b6dc82dfffa20bcaf4170f479e6eba2c6759b2522916954",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__fresh",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "FRESH_CHECKPOINT",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "NO_LOSS_CONTROL",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k0__fresh",
+      "context": "k0",
+      "encoding": "fresh",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 0,
+            "generation": 5,
+            "kind": "FRESH"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__fresh",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "4e10a0b05e1f06253b6dc82dfffa20bcaf4170f479e6eba2c6759b2522916954",
+      "input_unchanged": true,
+      "original_case_sha256": "4e10a0b05e1f06253b6dc82dfffa20bcaf4170f479e6eba2c6759b2522916954",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__fresh",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "FRESH_CHECKPOINT",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "NO_LOSS_CONTROL",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "k0__stale",
+      "context": "k0",
+      "encoding": "stale",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 1,
+            "generation": 4,
+            "kind": "STALE_OLD_GENERATION"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__stale",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "2cbcfd1d680473d5f76ffeaaae7f6af873078666450d57955e75b600e8d338fb",
+      "input_unchanged": true,
+      "original_case_sha256": "2cbcfd1d680473d5f76ffeaaae7f6af873078666450d57955e75b600e8d338fb",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__stale",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "BOUND_EXCEEDED_STOP_AT_FROZEN_DEADLINE",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": {
+          "disposition": "OUT_OF_BOUND_NOT_CERTIFIED",
+          "held_steps_if_illegally_continued": 7,
+          "misses": 1,
+          "safe": true
+        }
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k0__stale",
+      "context": "k0",
+      "encoding": "stale",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 1,
+            "generation": 4,
+            "kind": "STALE_OLD_GENERATION"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k0__stale",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 0,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "2cbcfd1d680473d5f76ffeaaae7f6af873078666450d57955e75b600e8d338fb",
+      "input_unchanged": true,
+      "original_case_sha256": "2cbcfd1d680473d5f76ffeaaae7f6af873078666450d57955e75b600e8d338fb",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k0__stale",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "BOUND_EXCEEDED_STOP_AT_FROZEN_DEADLINE",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": true
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 5
+        },
+        "stress": {
+          "disposition": "OUT_OF_BOUND_NOT_CERTIFIED",
+          "held_steps_if_illegally_continued": 7,
+          "misses": 1,
+          "safe": true
+        }
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "k1_boundary__empty",
+      "context": "k1_boundary",
+      "encoding": "empty",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__empty",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "da3149fc78934d0088ac707761bcbbfb1ee45b1229976a39b8f5d999604602c1",
+      "input_unchanged": true,
+      "original_case_sha256": "da3149fc78934d0088ac707761bcbbfb1ee45b1229976a39b8f5d999604602c1",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__empty",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "FRESH_CHECKPOINT",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "NO_LOSS_CONTROL",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k1_boundary__empty",
+      "context": "k1_boundary",
+      "encoding": "empty",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__empty",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "ecd2f39025ab206e08d87af4363553170ee5ade30fc90616d334d56b6eef0f90",
+      "input_unchanged": true,
+      "original_case_sha256": "da3149fc78934d0088ac707761bcbbfb1ee45b1229976a39b8f5d999604602c1",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__empty",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "UNSAFE_OPTIMISTIC_EXTENSION",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "IN_BOUND_ERASURE_PATTERN",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "k1_boundary__missing",
+      "context": "k1_boundary",
+      "encoding": "missing",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__missing",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "d30780b4c6d29b4ccef009b16b644e60c7521ffeaebbbe3e8452dadbeb438199",
+      "input_unchanged": true,
+      "original_case_sha256": "d30780b4c6d29b4ccef009b16b644e60c7521ffeaebbbe3e8452dadbeb438199",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__missing",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "UNSAFE_OPTIMISTIC_EXTENSION",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "IN_BOUND_ERASURE_PATTERN",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k1_boundary__missing",
+      "context": "k1_boundary",
+      "encoding": "missing",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__missing",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "d30780b4c6d29b4ccef009b16b644e60c7521ffeaebbbe3e8452dadbeb438199",
+      "input_unchanged": true,
+      "original_case_sha256": "d30780b4c6d29b4ccef009b16b644e60c7521ffeaebbbe3e8452dadbeb438199",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__missing",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "UNSAFE_OPTIMISTIC_EXTENSION",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "IN_BOUND_ERASURE_PATTERN",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "k1_boundary__fresh",
+      "context": "k1_boundary",
+      "encoding": "fresh",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [
+          {
+            "age": 0,
+            "generation": 5,
+            "kind": "FRESH"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__fresh",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "4a5bf4921d230c8df310a0a8239c3d5a953cfe1d7ebdba8b21728fa75f118baf",
+      "input_unchanged": true,
+      "original_case_sha256": "4a5bf4921d230c8df310a0a8239c3d5a953cfe1d7ebdba8b21728fa75f118baf",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__fresh",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "FRESH_CHECKPOINT",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "NO_LOSS_CONTROL",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k1_boundary__fresh",
+      "context": "k1_boundary",
+      "encoding": "fresh",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [
+          {
+            "age": 0,
+            "generation": 5,
+            "kind": "FRESH"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__fresh",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "4a5bf4921d230c8df310a0a8239c3d5a953cfe1d7ebdba8b21728fa75f118baf",
+      "input_unchanged": true,
+      "original_case_sha256": "4a5bf4921d230c8df310a0a8239c3d5a953cfe1d7ebdba8b21728fa75f118baf",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__fresh",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "SAFE_IN_THIS_FIXTURE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "safe": true
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "FRESH_CHECKPOINT",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "NO_LOSS_CONTROL",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "k1_boundary__stale",
+      "context": "k1_boundary",
+      "encoding": "stale",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [
+          {
+            "age": 1,
+            "generation": 4,
+            "kind": "STALE_OLD_GENERATION"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__stale",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "abca692b6368e6ef8b56901b1cc93aa99868ad6327e946982472f9d9a25da72c",
+      "input_unchanged": true,
+      "original_case_sha256": "abca692b6368e6ef8b56901b1cc93aa99868ad6327e946982472f9d9a25da72c",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__stale",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "UNSAFE_OPTIMISTIC_EXTENSION",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "IN_BOUND_ERASURE_PATTERN",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "k1_boundary__stale",
+      "context": "k1_boundary",
+      "encoding": "stale",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "checkpoint_events": [
+          {
+            "age": 1,
+            "generation": 4,
+            "kind": "STALE_OLD_GENERATION"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "k1_boundary__stale",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": false
+      },
+      "evaluated_case_sha256": "abca692b6368e6ef8b56901b1cc93aa99868ad6327e946982472f9d9a25da72c",
+      "input_unchanged": true,
+      "original_case_sha256": "abca692b6368e6ef8b56901b1cc93aa99868ad6327e946982472f9d9a25da72c",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "k1_boundary__stale",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "UNSAFE_OPTIMISTIC_EXTENSION",
+          "held_steps_before_release": 7,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "RELEASED_ON_ABSENT_OR_STALE",
+          "held_steps_before_release": 6,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": true
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "IN_BOUND_ERASURE_PATTERN",
+          "disposition": "ROBUST_LOSS_HORIZON",
+          "horizon_table": [
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 0
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 0
+                }
+              ],
+              "horizon": 0,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 4
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 6
+                }
+              ],
+              "horizon": 1,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 6
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 8
+                }
+              ],
+              "horizon": 2,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 8
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 10
+                }
+              ],
+              "horizon": 3,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 10
+                },
+                {
+                  "first_unsafe_step": null,
+                  "misses": 1,
+                  "safe": true,
+                  "worst_position": 12
+                }
+              ],
+              "horizon": 4,
+              "safe_for_all_loss_patterns": true
+            },
+            {
+              "checks": [
+                {
+                  "first_unsafe_step": null,
+                  "misses": 0,
+                  "safe": true,
+                  "worst_position": 12
+                },
+                {
+                  "first_unsafe_step": 7,
+                  "misses": 1,
+                  "safe": false,
+                  "worst_position": 14
+                }
+              ],
+              "horizon": 5,
+              "safe_for_all_loss_patterns": false
+            }
+          ],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 4
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "invalidated__empty",
+      "context": "invalidated",
+      "encoding": "empty",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__empty",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "4f80908b5093ca144195b63b1608374aab56241a545c9a8c3138687faa82c8a8",
+      "input_unchanged": true,
+      "original_case_sha256": "4f80908b5093ca144195b63b1608374aab56241a545c9a8c3138687faa82c8a8",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__empty",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": true,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "invalidated__empty",
+      "context": "invalidated",
+      "encoding": "empty",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__empty",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "681680bed013111761578635be0d6659b02233753468d13d460094316a9b4aad",
+      "input_unchanged": true,
+      "original_case_sha256": "4f80908b5093ca144195b63b1608374aab56241a545c9a8c3138687faa82c8a8",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__empty",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "invalidated__missing",
+      "context": "invalidated",
+      "encoding": "missing",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__missing",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "63a5c5294c568b946333d91adf9ac43117b256fde3c8b8194d6bcc6813b5144e",
+      "input_unchanged": true,
+      "original_case_sha256": "63a5c5294c568b946333d91adf9ac43117b256fde3c8b8194d6bcc6813b5144e",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__missing",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "invalidated__missing",
+      "context": "invalidated",
+      "encoding": "missing",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__missing",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "63a5c5294c568b946333d91adf9ac43117b256fde3c8b8194d6bcc6813b5144e",
+      "input_unchanged": true,
+      "original_case_sha256": "63a5c5294c568b946333d91adf9ac43117b256fde3c8b8194d6bcc6813b5144e",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__missing",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "invalidated__fresh",
+      "context": "invalidated",
+      "encoding": "fresh",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 0,
+            "generation": 5,
+            "kind": "FRESH"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__fresh",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "bc6d6fa8ea56d8f10d133de056babc814a09005552e8a624d0fc6ef7654dbbcd",
+      "input_unchanged": true,
+      "original_case_sha256": "bc6d6fa8ea56d8f10d133de056babc814a09005552e8a624d0fc6ef7654dbbcd",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__fresh",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": true,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "invalidated__fresh",
+      "context": "invalidated",
+      "encoding": "fresh",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 0,
+            "generation": 5,
+            "kind": "FRESH"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__fresh",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "bc6d6fa8ea56d8f10d133de056babc814a09005552e8a624d0fc6ef7654dbbcd",
+      "input_unchanged": true,
+      "original_case_sha256": "bc6d6fa8ea56d8f10d133de056babc814a09005552e8a624d0fc6ef7654dbbcd",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__fresh",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": true,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": true,
+          "release_on_missing_or_stale": false,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 0,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "legacy",
+      "case_id": "invalidated__stale",
+      "context": "invalidated",
+      "encoding": "stale",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 1,
+            "generation": 4,
+            "kind": "STALE_OLD_GENERATION"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__stale",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "e6122a0eef8fb20cd7eae89cc9eca6dcf20b3461685b07454546d25da1a4d00f",
+      "input_unchanged": true,
+      "original_case_sha256": "e6122a0eef8fb20cd7eae89cc9eca6dcf20b3461685b07454546d25da1a4d00f",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__stale",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    },
+    {
+      "arm": "explicit_absence",
+      "case_id": "invalidated__stale",
+      "context": "invalidated",
+      "encoding": "stale",
+      "evaluated_case": {
+        "action": 1,
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "checkpoint_events": [
+          {
+            "age": 1,
+            "generation": 4,
+            "kind": "STALE_OLD_GENERATION"
+          }
+        ],
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "id": "invalidated__stale",
+        "initial_states": [
+          0
+        ],
+        "loss_bound_supported": true,
+        "max_consecutive_misses": 1,
+        "max_horizon": 5,
+        "max_receipt_age": 0,
+        "observation_interval": 1,
+        "release_lag": 1,
+        "source_generation": 5,
+        "target_invalidated": true
+      },
+      "evaluated_case_sha256": "e6122a0eef8fb20cd7eae89cc9eca6dcf20b3461685b07454546d25da1a4d00f",
+      "input_unchanged": true,
+      "original_case_sha256": "e6122a0eef8fb20cd7eae89cc9eca6dcf20b3461685b07454546d25da1a4d00f",
+      "output": {
+        "base_no_loss_horizon": 5,
+        "case_id": "invalidated__stale",
+        "policy_a_optimistic": {
+          "assumes_checkpoint_success": true,
+          "disposition": "INVALIDATED",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "safe": false
+        },
+        "policy_b_release_on_absence": {
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "held_steps_before_release": 0,
+          "receipt_was_usable": false,
+          "release_on_missing_or_stale": true,
+          "safe": false
+        },
+        "policy_c_loss_robust": {
+          "actual_consecutive_misses": 1,
+          "actual_status": "YIELD_INVALIDATED_TARGET",
+          "disposition": "YIELD_INVALIDATED_TARGET",
+          "horizon_table": [],
+          "safe_for_all_declared_patterns": true,
+          "selected_horizon": 0
+        },
+        "stress": null
+      },
+      "owner_thread_id": 32916,
+      "retained_audit": {
+        "errors": [],
+        "rows": 1,
+        "status": "PASS_METHOD_SCOPED"
+      }
+    }
+  ],
+  "schema": "checkpoint-delivery-raw-v1",
+  "source_map_sha256": "40bf5014a1cb751a659e865850b17a049a19361df817f1c7a8e92aa3def3e8c6"
+}

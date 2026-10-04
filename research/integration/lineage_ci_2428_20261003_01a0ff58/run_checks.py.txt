@@ -1,0 +1,61 @@
+"""Ordinary local commands for a CI-routing patch; no historical fixture replay."""
+from datetime import datetime, timezone
+import hashlib, json, os, re, shlex, subprocess, sys
+from pathlib import Path
+task=Path(__file__).resolve().parent; repo=task.parent/'agent-interface'
+out=task/'first-checks'; out.mkdir()
+cache=out/'fresh-empty-pycache-prefix'; cache.mkdir()
+env=dict(os.environ,PYTHONPYCACHEPREFIX=str(cache),PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1')
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def require(ok,why):
+    if not ok: raise ValueError(why)
+def git(*args): return subprocess.check_output(['git',*args],cwd=repo)
+base='fb556b3d8bf5bae54a1f23b89fe2c2b5a2685df7'
+require(git('rev-parse','HEAD').decode().strip()==base,'local repair base')
+workflow=(repo/'.github/workflows/runtime-cli-v1.yml').read_text()
+matches=re.findall(r'^\s+run: (python -m unittest .*)$',workflow,re.MULTILINE)
+require(len(matches)==1,'one real CLI unit command')
+argv=shlex.split(matches[0]); argv[0]=sys.executable
+require(argv[-2:]==['runtime.cli_v1.test_lineage_freshness','runtime.cli_v1.test_lineage_json_identity'],'two maintained modules')
+prior=git('show',base+':.github/workflows/runtime-cli-v1.yml').decode()
+prior_command=re.findall(r'^\s+run: (python -m unittest .*)$',prior,re.MULTILINE)[0]
+require(workflow==prior.replace(prior_command,matches[0]),'only existing CLI selection changed')
+archive=repo/'research/integration/lineage_ci_2428_20261003_01a0ff58'
+require((archive/'PRIOR_WORKFLOW.yml.txt').read_bytes()==git('show',base+':.github/workflows/cli-v1-lineage-freshness-2428.yml'),'exact inert legacy workflow')
+require(not (repo/'.github/workflows/cli-v1-lineage-freshness-2428.yml').exists(),'obsolete automatic fixture job removed')
+preserved=['runtime/cli_v1/lineage.py','runtime/cli_v1/test_lineage_freshness.py','runtime/cli_v1/test_lineage_json_identity.py',
+           'research/integration/cli_v1_lineage_freshness_2428_v1/test_lineage.py']
+pins=[]
+for name in preserved:
+    data=(repo/name).read_bytes(); require(data==git('show',base+':'+name),'source/test historical preservation')
+    pins.append({'path':name,'bytes':len(data),'sha256':sha(data),'git_blob':git('rev-parse',base+':'+name).decode().strip()})
+records=[]
+def run(name,args):
+    start=datetime.now(timezone.utc).isoformat()
+    p=subprocess.run(args,cwd=repo,env=env,capture_output=True,timeout=90)
+    end=datetime.now(timezone.utc).isoformat()
+    (out/(name+'.stdout.bin')).write_bytes(p.stdout); (out/(name+'.stderr.bin')).write_bytes(p.stderr)
+    row={'command_id':name,'public_argv':['python',*args[1:]],'started_utc':start,'finished_utc':end,'native_exit':p.returncode,
+         'stdout_sha256':sha(p.stdout),'stderr_sha256':sha(p.stderr)}
+    (out/(name+'.receipt.json')).write_text(json.dumps(row,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+    records.append(row); print(json.dumps(row,sort_keys=True),flush=True)
+    return p
+normal=run('updated-workflow-unit-command',argv)
+if normal.returncode!=0:
+    print(normal.stderr.decode(errors='replace')); raise SystemExit(normal.returncode)
+optimized=run('maintained-focused-optimized',[sys.executable,'-O','-m','unittest','-v',*argv[-2:]])
+if optimized.returncode!=0:
+    print(optimized.stderr.decode(errors='replace')); raise SystemExit(optimized.returncode)
+compiled=run('existing-compile-command',[sys.executable,'-m','compileall','-q','runtime/cli_v1','runtime/host_v1','runtime/motor_state_v1','runtime/selector_v1'])
+if compiled.returncode!=0: raise SystemExit(compiled.returncode)
+normal_summary=re.search(r'Ran (\d+) tests? in ([\d.]+)s',normal.stderr.decode())
+focused_summary=re.search(r'Ran (\d+) tests? in ([\d.]+)s',optimized.stderr.decode())
+require(normal_summary is not None and focused_summary is not None,'actual unittest totals')
+require(int(focused_summary.group(1))==8,'maintained three freshness/five identity methods')
+record={'base':base,'interpreter':sys.version,'commands':records,'unchanged_source_pins':pins,
+        'actual_workflow_unit_methods':int(normal_summary.group(1)),'focused_optimized_methods':int(focused_summary.group(1)),
+        'private_cache_environment':['fresh exclusive PYTHONPYCACHEPREFIX','PYTHONDONTWRITEBYTECODE=1','PYTHONNOUSERSITE=1'],
+        'historical_fixture_or_formal_invocations':0,'native_gui_model_or_container_invocations':0,
+        'scope':'ordinary current Windows/Python3.11 source verification; not hosted matrix/Python3.12 or old historical audit PASS'}
+(out/'CHECKS.json').write_text(json.dumps(record,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({k:v for k,v in record.items() if k not in ('commands','unchanged_source_pins')},sort_keys=True))

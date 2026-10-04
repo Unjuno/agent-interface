@@ -1,0 +1,36 @@
+param([switch]$InspectMetadata,[string]$RecordRoot=$PSScriptRoot)
+$ErrorActionPreference='Stop'
+function Utf8CustodyHash([byte[]]$Bytes){[Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($Bytes)).ToLowerInvariant()}
+$specs=@(
+ [pscustomobject]@{name='AUTHOR';ids=@(5970745250,5970749684);count=46;gzip_bytes=60074;gzip_hash='905726bd5c8452cc4a6f04506e518d6b7232edd73722b10756469b3ed35044cc';json_bytes=219692;json_hash='aa19af0635060560e1a74f1ce990b033faa52e82badf337773322ec2dec671f7'},
+ [pscustomobject]@{name='U02';ids=@(5971176513);count=32;gzip_bytes=32946;gzip_hash='1adadcfc6cccd70d4776f0da20605694d28c6a959e100ef75d212962b37e927b';json_bytes=893081;json_hash='0404951c15bb5e88a244d90279958b4704adc480db64964661e7509767937c7a'},
+ [pscustomobject]@{name='U03';ids=@(5971236765,5971237043);count=28;gzip_bytes=51397;gzip_hash='6bdbb1cc6099e796370d3f4de71d2b77c6ca229908abf270f1b95be0d44a4b6d';json_bytes=223809;json_hash='e455b3fbaea8fd0ee0da99e453f9809490d5efc8201709a4642bb2587c598b34'},
+ [pscustomobject]@{name='REVIEWER';ids=@(5971647626,5971647850,5971648074,5971648267);count=25;gzip_bytes=104432;gzip_hash='ce1145f6abfa673149d540656430be2bd7ed7e2dca938f6a87b577646258ef0b';json_bytes=199329;json_hash='556d12a3febc9b5425e727752f5226aaa9e2f8491d45e6e2067b0b8fa0c3040c'}
+)
+$proofs=foreach($spec in $specs){
+ $blocks=[Collections.Generic.List[string]]::new();$comments=[Collections.Generic.List[object]]::new()
+ foreach($id in $spec.ids){
+  $record=Get-Content -Raw -LiteralPath "$RecordRoot/utf8-7131-comment-$id.json"|ConvertFrom-Json
+  if($record.id -ne $id -or $record.html_url -cne "https://github.com/Unjuno/agent-interface/pull/7131#issuecomment-$id"){throw 'Comment identity differs'}
+  $fences=[regex]::Matches($record.body,'(?s)```(?:base64|text)\r?\n(.*?)\r?\n```');if($fences.Count -ne 1){throw 'Fence census differs'};$blocks.Add($fences[0].Groups[1].Value)
+  $body=[Text.UTF8Encoding]::new($false,$true).GetBytes($record.body);$comments.Add([pscustomobject]@{id=$id;body_utf8_bytes=$body.Length;body_sha256=(Utf8CustodyHash $body);created_at=$record.created_at;updated_at=$record.updated_at})
+ }
+ $encoded=($blocks -join '') -replace '\s','';$compressed=[Convert]::FromBase64String($encoded)
+ if([Convert]::ToBase64String($compressed) -cne $encoded -or $compressed.Length -ne $spec.gzip_bytes -or (Utf8CustodyHash $compressed) -cne $spec.gzip_hash){throw 'Compressed image differs'}
+ $inputStream=[IO.MemoryStream]::new($compressed,$false);$gzip=[IO.Compression.GZipStream]::new($inputStream,[IO.Compression.CompressionMode]::Decompress);$outStream=[IO.MemoryStream]::new()
+ try{$buffer=[byte[]]::new(8192);while(($n=$gzip.Read($buffer,0,$buffer.Length)) -gt 0){if($outStream.Length+$n -gt $spec.json_bytes){throw 'Decode bound exceeded'};$outStream.Write($buffer,0,$n)};$decoded=$outStream.ToArray()}finally{$gzip.Dispose();$inputStream.Dispose();$outStream.Dispose()}
+ if($decoded.Length -ne $spec.json_bytes -or (Utf8CustodyHash $decoded) -cne $spec.json_hash){throw 'Decoded image differs'}
+ $payload=[Text.UTF8Encoding]::new($false,$true).GetString($decoded)|ConvertFrom-Json -AsHashtable
+ if($payload.files -isnot [Collections.IDictionary] -or $payload.files.Count -ne $spec.count){throw 'Files census differs'}
+ $members=foreach($entry in $payload.files.GetEnumerator()){
+  $name=$entry.Key;$file=$entry.Value
+  if($name -isnot [string] -or [string]::IsNullOrWhiteSpace($name) -or [IO.Path]::IsPathRooted($name) -or $name -match '(^|[\\/])\.\.([\\/]|$)' -or $name -match ':'){throw 'Unsafe member name'}
+  if($file.bytes -is [bool] -or $file.bytes -isnot [ValueType] -or $file.bytes -lt 0 -or $file.bytes -gt $spec.json_bytes -or $file.sha256 -notmatch '^[0-9a-f]{64}$' -or $file.b64 -isnot [string]){throw 'Invalid member declarations'}
+  $raw=[Convert]::FromBase64String($file.b64);if([Convert]::ToBase64String($raw) -cne $file.b64 -or $raw.Length -ne $file.bytes -or (Utf8CustodyHash $raw) -cne $file.sha256){throw "Member differs: $name"}
+  [pscustomobject]@{name=$name;bytes=$raw.Length;sha256=$file.sha256}
+ }
+ $projections=if($payload.ContainsKey('projections')){$payload.projections}else{$payload.original_public_projections}
+ foreach($projection in @($projections)){if($null -eq $projection){continue};$path=if($projection.ContainsKey('path')){$projection.path}else{$projection.file};if(!$payload.files.Contains($path) -or $projection.original_sha256 -notmatch '^[0-9a-f]{64}$' -or $projection.public_sha256 -cne $payload.files[$path].sha256){throw 'Projection image binding differs'};if($projection.ContainsKey('public_bytes') -and $projection.public_bytes -ne $payload.files[$path].bytes){throw 'Projection length differs'}}
+ [pscustomobject]@{packet=$spec.name;source_comments=@($comments);gzip_bytes=$compressed.Length;gzip_sha256=(Utf8CustodyHash $compressed);json_bytes=$decoded.Length;json_sha256=(Utf8CustodyHash $decoded);members_checked=@($members).Count;members=if($InspectMetadata){@($members|Select-Object name)}else{@($members)};format=$payload.format;public_projections=$projections;explicit_exclusion=$payload.explicit_exclusion;files_extracted=0;archived_programs_executed=0;remote_writes=0}
+}
+$proofs|ConvertTo-Json -Depth 8

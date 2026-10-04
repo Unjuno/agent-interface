@@ -1,0 +1,27 @@
+{
+  "formal_candidate_invocations": 0,
+  "reviewed_head": "ee38cf1765f465706c9e0355ae41ef31ca4ba057",
+  "kind": "engineering repair and read-only supplemental replay",
+  "source_files": [
+    {
+      "sha256": "8312dbd812e711bea62f7b33b275c102c259767da3658844f1a6dbd83e4ba6fc",
+      "path": "audit_v1.py"
+    },
+    {
+      "sha256": "db3898e246c0d7f741481f01cb4ee575d3a0c81d811c42d6e85e4db9b97f9a43",
+      "path": "test_supplemental.py"
+    },
+    {
+      "sha256": "fa148c118eabd772538f9f60e165029b362e6650ce527d4f65a0b52ca1c72fd6",
+      "path": "PROTOCOL.md"
+    }
+  ],
+  "policy_version": "FINAL-v5",
+  "command": "python -B audit_v1.py --input retained-raw.jsonl --output supplemental-audit.json",
+  "frozen_utc": "2026-10-03T00:47:28.0689199Z",
+  "base_main_sha": "11f1bae6f8dbfd280b6ccbd0def0bc23fa5da68d",
+  "run_id": "REVIEW-6442-SUPPLEMENTAL-V1-01a0ff2c",
+  "input_repository_path": "research/analysis/soft_revisit_bias_5756_t0_orbstack_a03_20261003/candidate/raw.jsonl",
+  "input_sha256": "c13a98c8b5840697b410e093f4132b9f9b314c8893d1cf6f32a4b889924edbfa",
+  "container_invocations": 0
+}

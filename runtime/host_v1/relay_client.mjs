@@ -84,6 +84,7 @@ export async function createRelayClient({ command, args, evidenceDirectory,
     journal.catch(fail);
   });
   const reader = createInterface({ input: child.stdout, crlfDelay: Infinity });
+  reader.on('error', fail);
   reader.on('line', line => {
     // Serialize persistence before releasing the result to the caller.
     const attempt = current;

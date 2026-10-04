@@ -1,0 +1,20 @@
+import hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parent;prefix='research/integration/caller_refusal_57_20261003_5156/'
+private=str(root.parent.parent.resolve());public=[];manifest=[]
+for p in sorted(root.iterdir()):
+    if not p.is_file() or p.name.startswith('PUBLIC_') or p.name=='PUBLICATION.json':continue
+    if p.name=='test_adaptive_acquisition_caller_refusal_v3.py':continue
+    original=p.read_bytes();text=original.decode('utf-8-sig')
+    text=text.replace(private,'<owned-workspace>').replace(private.replace('\\','\\\\'),'<owned-workspace>')
+    name=p.name+'.txt' if p.suffix=='.py' else p.name
+    data=text.encode('utf-8');path=prefix+name
+    public.append({'path':path,'content':text})
+    manifest.append({'local_path':p.name,'public_path':path,'original_bytes':len(original),'original_sha256':hashlib.sha256(original).hexdigest(),'public_bytes':len(data),'public_sha256':hashlib.sha256(data).hexdigest(),'public_git_blob':hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()})
+for name in ['adaptive_acquisition_caller_v3.py','test_adaptive_acquisition_caller_refusal_v3.py']:
+    p=root/'candidate/research/live_control'/name;data=p.read_bytes();path='research/live_control/'+name
+    public.append({'path':path,'content':data.decode()});manifest.append({'local_path':'candidate/'+path,'public_path':path,'original_bytes':len(data),'original_sha256':hashlib.sha256(data).hexdigest(),'public_bytes':len(data),'public_sha256':hashlib.sha256(data).hexdigest(),'public_git_blob':hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()})
+text=json.dumps({'kind':'public-projection-not-historical-rewrite','private_prefix_replaced':'<owned-workspace>','members':manifest},indent=2)+'\n'
+(root/'PUBLIC_MANIFEST.json').write_text(text,encoding='utf-8');public.append({'path':prefix+'PUBLIC_MANIFEST.json','content':text})
+(root/'PUBLIC_UPLOAD.json').write_text(json.dumps(public,ensure_ascii=True),encoding='utf-8')
+print(json.dumps({'files':len(public),'bytes':sum(len(x['content'].encode()) for x in public)}))

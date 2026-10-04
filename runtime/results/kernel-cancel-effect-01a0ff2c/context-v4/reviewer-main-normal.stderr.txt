@@ -1,0 +1,35 @@
+test_current_explicit_occurrence_after_stale_none_refusal_controls_outcome (__main__.JointBoundaryTests.test_current_explicit_occurrence_after_stale_none_refusal_controls_outcome) ... ok
+test_expired_begin_does_not_create_uncertain_execution (__main__.JointBoundaryTests.test_expired_begin_does_not_create_uncertain_execution) ... ok
+test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility (__main__.JointBoundaryTests.test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility) ... 
+  test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility (__main__.JointBoundaryTests.test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility) (origin=0) ... FAIL
+  test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility (__main__.JointBoundaryTests.test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility) (origin=9007199254741009) ... FAIL
+  test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility (__main__.JointBoundaryTests.test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility) (origin=1000000000000000000000017) ... FAIL
+
+======================================================================
+FAIL: test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility (__main__.JointBoundaryTests.test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility) (origin=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<review-task>\test_review6894_joint.py", line 68, in test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility
+    self.assertTrue(result.effect_occurred)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility (__main__.JointBoundaryTests.test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility) (origin=9007199254741009)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<review-task>\test_review6894_joint.py", line 68, in test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility
+    self.assertTrue(result.effect_occurred)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility (__main__.JointBoundaryTests.test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility) (origin=1000000000000000000000017)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<review-task>\test_review6894_joint.py", line 68, in test_refused_stale_none_then_lost_receipt_cancel_preserves_possibility
+    self.assertTrue(result.effect_occurred)
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=3)

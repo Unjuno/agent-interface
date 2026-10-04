@@ -1,0 +1,47 @@
+import datetime,hashlib,json,os,pathlib,platform,re,subprocess,sys
+root=pathlib.Path(__file__).resolve().parent
+out=root.parents[1]/'outputs/review-6939-01a0ff2d-v1'
+test=root/'independent_boundaries.py'
+sources={
+ 'baseline':root/'projection/runtime/results/compiled-literal-unknown-01a0ff35/source/baseline-compiled_gui.py.txt',
+ 'candidate':root/'projection/runtime/core_v1/compiled_gui.py',
+ 'composed':root/'composed-compiled_gui.py'}
+specs=[
+ ('baseline-one','baseline',False,['LiteralBoundaryTests.test_matching_multi_predicate_literal'],1,1),
+ ('candidate-eight','candidate',False,['LiteralBoundaryTests'],0,8),
+ ('candidate-eight-optimized','candidate',True,['LiteralBoundaryTests'],0,8),
+ ('composed-nine','composed',False,['LiteralBoundaryTests','ComposedReferenceTests'],0,9)]
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+pins={str(p.relative_to(root)):sha(p) for p in [test,pathlib.Path(__file__),*sources.values()]}
+freeze={'actual_frozen_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'test_hashes':pins,
+ 'python':sys.version,'platform':platform.platform(),'specs':specs,'type':'ordinary independent source review, not author suite/producer/formal replay'}
+freeze_path=out/'INDEPENDENT_FREEZE.json'
+if freeze_path.exists():raise RuntimeError('freeze already exists')
+freeze_path.write_text(json.dumps(freeze,indent=2)+'\n',encoding='utf-8')
+receipts=[]
+for label,variant,optimized,selected,expected_exit,count in specs:
+    raw=out/(label+'.raw.json')
+    receipt_path=out/(label+'.receipt.json')
+    if raw.exists() or receipt_path.exists():raise RuntimeError('executed/unknown target '+label)
+    argv=[sys.executable,'-B','-X','utf8']+(['-O'] if optimized else [])+[str(test),variant,*selected,'-v']
+    intent={'argv':argv,'cwd':str(root),'expected_exit':expected_exit,'expected_methods':count,
+      'source_sha256':sha(sources[variant]),'test_sha256':sha(test),'raw_target':str(raw)}
+    (out/(label+'.intent.json')).write_text(json.dumps(intent,indent=2)+'\n',encoding='utf-8')
+    env=os.environ.copy();env['REVIEW_RAW']=str(raw)
+    started=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    child=subprocess.run(argv,cwd=root,env=env,capture_output=True,timeout=30)
+    ended=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    for kind,data in [('stdout',child.stdout),('stderr',child.stderr)]:(out/(label+'.'+kind+'.txt')).write_bytes(data)
+    receipt={**intent,'started_utc':started,'ended_utc':ended,'exit_code':child.returncode,
+      'stdout_sha256':hashlib.sha256(child.stdout).hexdigest(),'stderr_sha256':hashlib.sha256(child.stderr).hexdigest(),
+      'raw_sha256':sha(raw) if raw.exists() else None,'source_test_wrapper_unchanged':all(sha(root/p)==h for p,h in pins.items())}
+    receipt_path.write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+    receipts.append(receipt)
+    methods=re.search(rb'Ran (\d+) tests?',child.stderr)
+    if child.returncode!=expected_exit or not methods or int(methods.group(1))!=count:raise RuntimeError('unexpected first result '+label)
+    if not receipt['source_test_wrapper_unchanged']:raise RuntimeError('source changed')
+    if expected_exit==0 and re.search(rb'(?m)^OK\r?$',child.stderr) is None:raise RuntimeError('missing OK')
+    if expected_exit==1 and b'FAILED (failures=1)' not in child.stderr:raise RuntimeError('baseline discrimination failed')
+    print(json.dumps({'label':label,'methods':count,'exit':child.returncode,'rows':len(json.loads(raw.read_text())['rows'])}),flush=True)
+result={'freeze_sha256':sha(freeze_path),'receipts':receipts,'scope':'trusted inert callbacks/synthetic clock only; no task effect, physical input/release, actual timing/efficiency or applied Git tree certificate'}
+(out/'INDEPENDENT_RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')

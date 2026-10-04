@@ -1,0 +1,70 @@
+{
+  "unit": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197",
+      "-p",
+      "test_repair.py",
+      "-v"
+    ],
+    "pid": 806,
+    "started_utc": "2026-10-03T11:55:23.064084+00:00",
+    "ended_utc": "2026-10-03T11:55:23.205872+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_all_seven_hash_guards (test_repair.RepairTests.test_all_seven_hash_guards) ... ok\ntest_image_joins_independently_of_hash_gate (test_repair.RepairTests.test_image_joins_independently_of_hash_gate) ... ok\ntest_intact_cli_result_shape (test_repair.RepairTests.test_intact_cli_result_shape) ... ok\ntest_raw_checker_rejects_effective_copies (test_repair.RepairTests.test_raw_checker_rejects_effective_copies) ... ok\ntest_saved_rows_and_pins (test_repair.RepairTests.test_saved_rows_and_pins) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.015s\n\nOK\n"
+  },
+  "unit_optimized": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "-O",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197",
+      "-p",
+      "test_repair.py",
+      "-v"
+    ],
+    "pid": 807,
+    "started_utc": "2026-10-03T11:55:23.205897+00:00",
+    "ended_utc": "2026-10-03T11:55:23.613040+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_all_seven_hash_guards (test_repair.RepairTests.test_all_seven_hash_guards) ... ok\ntest_image_joins_independently_of_hash_gate (test_repair.RepairTests.test_image_joins_independently_of_hash_gate) ... ok\ntest_intact_cli_result_shape (test_repair.RepairTests.test_intact_cli_result_shape) ... ok\ntest_raw_checker_rejects_effective_copies (test_repair.RepairTests.test_raw_checker_rejects_effective_copies) ... ok\ntest_saved_rows_and_pins (test_repair.RepairTests.test_saved_rows_and_pins) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.014s\n\nOK\n"
+  },
+  "raw_only": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/verify_repair.py"
+    ],
+    "pid": 808,
+    "started_utc": "2026-10-03T11:55:23.613061+00:00",
+    "ended_utc": "2026-10-03T11:55:23.644477+00:00",
+    "exit_code": 0,
+    "stdout": "{\"candidate_imported\": false, \"legacy_false_accepts\": 6, \"rows\": 18, \"status\": \"PASS_SAVED_DATA_REPAIR_SCOPED\", \"v2_negative_rejections\": 17}\n",
+    "stderr": ""
+  },
+  "raw_only_optimized": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "-O",
+      "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/verify_repair.py"
+    ],
+    "pid": 809,
+    "started_utc": "2026-10-03T11:55:23.644490+00:00",
+    "ended_utc": "2026-10-03T11:55:23.749148+00:00",
+    "exit_code": 0,
+    "stdout": "{\"candidate_imported\": false, \"legacy_false_accepts\": 6, \"rows\": 18, \"status\": \"PASS_SAVED_DATA_REPAIR_SCOPED\", \"v2_negative_rejections\": 17}\n",
+    "stderr": ""
+  }
+}

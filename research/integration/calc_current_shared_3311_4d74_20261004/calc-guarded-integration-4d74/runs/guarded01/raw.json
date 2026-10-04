@@ -1,0 +1,682 @@
+{
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "cleanup_physical": {
+    "buttons": 0,
+    "end_ns": 47100961355,
+    "keys": [],
+    "start_ns": 47100740948
+  },
+  "cleanup_release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 47100737794,
+    "verified": true
+  },
+  "ended_ns": 47133166848,
+  "errors": [
+    "Traceback (most recent call last):\n  File \"/src/guarded_construction.py\", line 69, in <module>\n    reference=g.mint_reference('A1-primary',observation['sequence'],[proposal['x'],proposal['y']],region_size=(90,14));raw['reference']=reference\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/sources/runtime/guarded_x11_v1/bridge.py\", line 248, in mint_reference\n    result = self.store.mint(alias, \"window_content\", box, observation, image,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/sources/runtime/guarded_x11_v1/handles.py\", line 21, in mint\n    raise ValueError(\"target alias must match [a-z][a-z0-9_]{0,31}\")\nValueError: target alias must match [a-z][a-z0-9_]{0,31}\n"
+  ],
+  "events": [],
+  "initial_document_sha256": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+  "initial_guarded": {
+    "binding_revision": 0,
+    "capture_ns": 7436538854,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 57330,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/guarded/images/21adfcbadfb04dbfa411122f014393a5.png",
+        "sha256": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+        "source_raw_sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+        "timing_ns": {
+          "converted": 7448858759,
+          "encoded": 7479114991,
+          "hashed": 7485392409,
+          "started": 7446479063,
+          "written": 7483270542
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 7444348739,
+      "capture_started_ns": 7436538854,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+      "target": "owned",
+      "width": 1280
+    },
+    "observation_id": "7d954067f3e7475fba3daa26855dc61b",
+    "pointer_binding": {
+      "focus": 6291969,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ],
+      "surface": 6291969
+    },
+    "sequence": 1,
+    "timing_ns": {
+      "artifact_verified": 7492575302,
+      "binding_checked": 7489750776,
+      "decoded": 7492580977,
+      "public_returned": 7485523887,
+      "started": 7436204034
+    }
+  },
+  "last_window_tree": [
+    {
+      "id": 4194404,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194405,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194406,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194407,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194413,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194408,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194409,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194414,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194410,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194411,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194412,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194415,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194422,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194423,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194424,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194425,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194426,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194429,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194430,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194431,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194432,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194433,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194434,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194435,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194416,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194417,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194418,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194419,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194420,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194421,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194427,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194428,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194436,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194437,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194438,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194439,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194440,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194441,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194442,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194443,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194444,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194445,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194446,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194447,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194448,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194449,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194450,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194451,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194452,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194453,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194454,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194455,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194456,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194458,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194459,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194460,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194461,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194462,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194463,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194464,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194465,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194466,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194467,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194468,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194470,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194471,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194472,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194473,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194474,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194475,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194476,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194477,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194478,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194479,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194480,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291969,
+      "map_state": 2,
+      "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+    },
+    {
+      "id": 4194399,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194386,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194387,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194388,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194389,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194390,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194391,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194392,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194393,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194394,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194395,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194396,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194397,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194398,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194400,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194401,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194402,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194403,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194318,
+      "map_state": 2,
+      "title": "Openbox"
+    },
+    {
+      "id": 6291457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291467,
+      "map_state": 0,
+      "title": "VCL ImplGetDefaultWindow"
+    },
+    {
+      "id": 6291469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 8388609,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291993,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291998,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292003,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292018,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292026,
+      "map_state": 0,
+      "title": ""
+    }
+  ],
+  "proposal": {
+    "artifact_sha256": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+    "source_sequence": 1,
+    "x": 80,
+    "y": 151
+  },
+  "schema": "calc-heldout-row-v1",
+  "source_hashes": {
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "guarded_construction.py": "e263fc49ae829bf56b9d2636a17b0cb22c41cc567dea53428d2414d5a9af7217",
+    "saved_oracle.py": "92def4221091e3d788ce24340d7a3f0f6e2e4dbe9b732164dc97605975f6de0d",
+    "sources/runtime/backends/quartz_v1/__init__.py": "6184cb0c7d87edb25dc12ccfec87a4ae15f367c278e39246b38c2ec5c655c906",
+    "sources/runtime/backends/quartz_v1/backend.py": "a265b6501f5de3cc3e9fce7c037e36db39716f7dbaac5f5bdc69289081d85866",
+    "sources/runtime/backends/quartz_v1/session.py": "bd8fee0f5d36fce746d97a998ffd77f6b9b16f83d067a0009799614f3c2a35bd",
+    "sources/runtime/backends/win32_v1/__init__.py": "0a21627e9fd4e50a9418335422d45d9ae89f598678ca0ddccc1edc7a4ef5a12b",
+    "sources/runtime/backends/win32_v1/backend.py": "4cf87d6cecab9a84c4e9cdce83adbe8b58f93227eb64526740c029342bbdd6dd",
+    "sources/runtime/backends/win32_v1/session.py": "7e81a5b5cec01dc43da7a0ff4acebd0dd33bd67b9dd7c600ced431f61166af77",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/cli_v1/__init__.py": "8832365589e82ecba394d10ae11a381f146edfb68b981551ccbae8b95e4ac967",
+    "sources/runtime/cli_v1/api.py": "47d4413b5633b334e21e158ffe5c4155b5ec3f24dd7c942f1e7ba91361632ca6",
+    "sources/runtime/cli_v1/observe.py": "1f7a27c2355955fd13708c26c68bab4f3a167578f8d24a2a19d7c87722bd052a",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/compiled_gui.py": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "sources/runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+    "sources/runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+    "sources/runtime/guarded_x11_v1/bridge.py": "0a0675709f2f2e7210ba92fb657c61e860ac1fef2126ef4006bf88699d556e71",
+    "sources/runtime/guarded_x11_v1/frames.py": "cb6aefeaa4e9a41b4f4b9ca532e24106025247e39e7c7ee026ddc242a7cbb05b",
+    "sources/runtime/guarded_x11_v1/handles.py": "b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7",
+    "sources/runtime/guarded_x11_v1/handles_base.py": "ba9d16c97c5adfa355033c16276bc247c92c039b7081f08d7c20f656d824eb33",
+    "sources/runtime/guarded_x11_v1/handles_texture.py": "b78d09aa2cbd2e5bfa3a33567bb4038f5eabbb3dd138627a675583bc27f30774",
+    "sources/runtime/guarded_x11_v1/history.py": "c03f294f8ce26dc09bfe63809fce05ff330aa0b111c6566039fec0587a5661ca",
+    "sources/runtime/selector_v1/__init__.py": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881",
+    "sources/runtime/selector_v1/selector.py": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+  },
+  "spec": {
+    "index": 0
+  },
+  "started_ns": 3855092314,
+  "target": {
+    "id": 6291969,
+    "map_state": 2,
+    "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+  },
+  "terminal": [
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 255,
+      "name": "Calc",
+      "pid": 15
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "openbox",
+      "pid": 12
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "Xvfb",
+      "pid": 8
+    }
+  ]
+}

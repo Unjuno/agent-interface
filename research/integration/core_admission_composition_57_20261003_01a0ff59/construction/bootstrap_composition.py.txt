@@ -1,0 +1,58 @@
+"""Export exact Git bytes and compose two disjoint core repairs privately."""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+ROOT = Path(__file__).resolve().parent / "agent-interface"
+PACKAGE = ROOT / "research/integration/core_admission_composition_57_20261003_01a0ff59"
+MAIN = "3116528f3abe0fec72cfc1b5b2b5b4b05538512e"
+BASE = "11f1bae6f8dbfd280b6ccbd0def0bc23fa5da68d"
+ENUM = "5821ec3adaa01a44a13011bdf1f069b716441981"
+SCALAR = "abd318643112150d073a242926494145c6461e33"
+
+def git(*args):
+    return subprocess.check_output(["git", *args], cwd=ROOT)
+
+def blob(ref, path):
+    return git("show", ref + ":" + path)
+
+def write(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+
+path = "runtime/core_v1/contract.py"
+assert blob(MAIN, path) == blob(BASE, path), "intervening main changed contract"
+refs = {"main": MAIN, "enum": ENUM, "scalar": SCALAR}
+source_info = {}
+for arm, ref in refs.items():
+    data = blob(ref, path)
+    target = PACKAGE / "sources" / (arm + ".py")
+    write(target, data)
+    source_info[arm] = {"ref": ref, "path": path,
+                        "blob": git("rev-parse", ref + ":" + path).decode().strip(),
+                        "sha256": hashlib.sha256(data).hexdigest()}
+merged = subprocess.run(["git", "merge-file", "-p", str(PACKAGE / "sources/enum.py"),
+                         str(PACKAGE / "sources/main.py"), str(PACKAGE / "sources/scalar.py")],
+                        cwd=ROOT, capture_output=True)
+assert merged.returncode == 0, merged.stderr.decode()
+write(PACKAGE / "sources/combined.py", merged.stdout)
+source_info["combined"] = {"method": "git merge-file enum main scalar; exit 0",
+                            "sha256": hashlib.sha256(merged.stdout).hexdigest()}
+files = git("ls-tree", "-r", "--name-only", MAIN, "runtime/core_v1").decode().splitlines()
+suite = ROOT.parent / "composition-suite"
+for item in files:
+    if item.endswith(".py"):
+        write(suite / item, blob(MAIN, item))
+write(suite / path, merged.stdout)
+for ref, test in [(ENUM, "test_manifest_enum_types.py"),
+                  (SCALAR, "test_admission_current_evidence.py")]:
+    item = "runtime/core_v1/" + test
+    data = blob(ref, item)
+    write(suite / item, data)
+    write(PACKAGE / "regressions" / test, data)
+    source_info[test] = {"ref": ref, "path": item,
+                        "blob": git("rev-parse", ref + ":" + item).decode().strip(),
+                        "sha256": hashlib.sha256(data).hexdigest()}
+write(PACKAGE / "SOURCE_MANIFEST.json", (json.dumps(source_info, indent=2) + "\n").encode())
+print(json.dumps({"package": str(PACKAGE), "suite": str(suite), "sources": source_info}, indent=2))

@@ -1,0 +1,3 @@
+# Independent PR7173 review and current-base coupling
+
+Strict base64-decode, gunzip and verify MANIFEST/member lengths/SHA256 before reading. Scripts are inert source/data; never execute received producers. Original complete13-member source proof and own reader/source images retained, plus actual current-base helper13 and adopted release ledger14 test sources/full process streams/receipts. This supports scoped content review and the specified observed-base composition only. Not an operator appointment, actual full apply tuple/platform/mandatory conditions/cancellation certificate, physical native/GUI/input/task/economic proof or future-main approval.

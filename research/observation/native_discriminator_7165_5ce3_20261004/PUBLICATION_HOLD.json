@@ -1,0 +1,13 @@
+{
+  "status": "HOLD_GITHUB_SECONDARY_RATE_LIMIT",
+  "scientific_status_unchanged": "FAIL_SINGLE_CUE_IDENTITY_SAFETY",
+  "failed_content_writes": [
+    {"kind": "pre-freeze seventh-cohort clarification", "http_status": 403, "message": "GitHub secondary rate limit, temporarily blocked from content creation"},
+    {"kind": "new first-result comment after local execution and cooldown", "http_status": 403, "message": "GitHub secondary rate limit, temporarily blocked from content creation"}
+  ],
+  "identical_write_retries": 0,
+  "pr_creation_attempts": 0,
+  "merge_attempts": 0,
+  "read_only_rate_limit": {"core_remaining": 3053, "search_remaining": 30, "checked_utc": "2026-10-03T17:54:37Z", "interpretation": "Remaining ordinary quota does not prove secondary limit is cleared."},
+  "next_gate": "Preserve reviewed source/raw/branch/hash evidence. After confirmed cooldown, reconcile remote Issue/PR/head first, publish first result once, create and attach a reviewable PR only if permitted, then verify fresh-main/review/check/rules/expected-head before merge. Never repeat native allocation to repair publication."
+}

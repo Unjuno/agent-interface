@@ -36,6 +36,7 @@ Never overwrite a committed retained allocation. Use a distinct allocation/resul
 
 ## Recent measurement evidence
 
+- [Issue #59 startup-stderr custody diagnostic T0](issue59_startup_stderr_custody_t0_20261004/REPORT.md) — OrbStack synthetic child-process method PASS: early-exit stderr preserved, 256 KiB stream completed, timeout stayed bounded, and 4/4 raw mutations rejected; no diagnosis of the retained controller STOP or live-control claim.
 - [MAP01 measurement-integration live-03](map01_measurement_integration_live_03/README.md) — one GitHub-hosted no-model telemetry allocation; measurement and terminal-score audits pass, but the episode did not finish or exit MAP01. Triggered by an archival-tag push; not recovery-vs-coast efficacy and not the WSLc allocation.
 
 ## Related navigation

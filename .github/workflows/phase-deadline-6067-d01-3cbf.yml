@@ -1,0 +1,34 @@
+name: Phase deadline 6067 D01 retained diagnosis
+on:
+  pull_request:
+    paths:
+      - 'research/live_control/phase_deadline_diagnostic_6067_d01_20261003_3cbf/**'
+      - '.github/workflows/phase-deadline-6067-d01-3cbf.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/live_control/phase_deadline_diagnostic_6067_d01_20261003_3cbf/**'
+      - '.github/workflows/phase-deadline-6067-d01-3cbf.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  saved-diagnosis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read-only exact historical source custody
+        run: git fetch --no-tags --depth=1 origin 48ce12d529c1a9127e46eda4b33bcaaa278129a2 a8d818756b7778ac0f98fbb7b37a6269e593520d ba47d7dec3342144e1676c0036cf9e5db7d3c7ed f8258e38c5ae226432eddd8b8742bbaf0be28d80
+      - name: Pure construction regressions
+        working-directory: research/live_control/phase_deadline_diagnostic_6067_d01_20261003_3cbf
+        run: python -B -m unittest discover -s . -p 'test_*.py' -v
+      - name: Verify retained raw, independent result and effective controls
+        working-directory: research/live_control/phase_deadline_diagnostic_6067_d01_20261003_3cbf
+        run: python -B saved_verify.py
+      - name: Verify public source, runtime receipts and auditor admission
+        working-directory: research/live_control/phase_deadline_diagnostic_6067_d01_20261003_3cbf
+        run: python -B delivery_verify.py --git
