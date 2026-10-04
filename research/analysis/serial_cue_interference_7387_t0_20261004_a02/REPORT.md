@@ -16,3 +16,4 @@ WSLc warned that cgroup/swap limits are unsupported or unavailable. Requested `-
 - `python -B check_workspace_index.py --git-tree` from `research/`: 159 top-level directories reachable.
 - `git diff --check`: PASS. These repository checks validate packaging/navigation, not model-facing hypothesis or live integration.
 - An initial analysis-index `--write` in this sparse checkout displaced one manually authored #7371 custody note that had been placed inside the generated block. The PR diff exposed it; the note was restored in the manual navigation section, the generated block now only carries retained directories, and the index check passes without other directory removals.
+- Read-only Git-object comparison verified all 1,303 tracked files under the two #7387 evidence directories are byte-identical to the local frozen sources, invocation transcripts, raw output, and audit. In particular, all 1,280 PPM Git blobs match their formal raw bytes exactly.
