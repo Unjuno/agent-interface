@@ -1,0 +1,38 @@
+{
+  "allocation": "MAP01-V39-BRIDGE-ATTRIBUTION-COMPOSITION-A03",
+  "base": {
+    "bridge_events_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+    "bridge_source_path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl",
+    "main_bridge_commit": "3eca051c4f561a72a29566aaefcea2923071263a",
+    "parent_adapter_sha256": "a6d6dcec7ba99a4d83ec38cd4f05cfec13b26eb8d8531066f2dd237ddf73a29e",
+    "pr_7552_head": "9c9da2698019f6c4d52c95a398093b57ad51f37a"
+  },
+  "candidate_adapter_sha256": "03b49b2547950b4d07ede4f926902b6b57dde989ce93f4198e90d8e35530a038",
+  "candidate_sources": {
+    "adapter.py": {
+      "sha256": "03b49b2547950b4d07ede4f926902b6b57dde989ce93f4198e90d8e35530a038"
+    },
+    "audit.py": {
+      "sha256": "c59c1978bfe7a9b1dee793923718575690881e9d5b0c1977431ff0020e2a31b1"
+    },
+    "run_composition.py": {
+      "sha256": "7beaded243039021d930fa07d16bec272e849513880d2bd1b7d7b7c811fc4a08"
+    },
+    "test_bridge_composition.py": {
+      "sha256": "55fba78c2733d21fd36d441c8256e1923391dc4f07d3a5324fcbd52d19230aad"
+    }
+  },
+  "decision": {
+    "fail": "any control is labeled unique, a candidate interval extends beyond the guaranteed-held bracket, or authority/consumption is promoted",
+    "pass": "one normalized verified per-key receipt, TEMPORALLY_UNIQUE for the covered bracket, causal attribution NOT_ESTABLISHED; all three controls remain unresolved"
+  },
+  "hypothesis": "The V15 attribution adapter can accept the merged v39 bridge's nested confirmed physical down/up measurements and conservatively identify an intent only when the scorer detection bracket lies inside the definitely-held interval.",
+  "issue": 59,
+  "prior_outcomes": [
+    "STOP_A01_no_output_persisted",
+    "STOP_A02_output_write_failure"
+  ],
+  "schema": "map01-v39-bridge-attribution-composition-freeze-v1",
+  "scope": "Synthetic source composition only. Bridge events originate from the retained fake X display fixture; scorer state changes and timestamps are deterministic synthetic fixtures. No GUI, live X server, game, model, OS input, task effect, recovery, or performance claim.",
+  "test": "Use the exact retained two-row fake-X bridge stream; generate controller-invisible scorer samples through the frozen ProgressClock at deterministic times bounded by down-interval upper and up-interval lower; apply the adapter. Controls mismatch actuation identity, unconfirm the up edge, and omit the up row."
+}

@@ -41,6 +41,8 @@ def _normalize_samples(rows):
 
 
 def _verified_up(row, down, identity):
+    if row.get("event") == "input_release_measurement":
+        return _verified_bridge_up(row, down, identity)
     receipt=row.get("owner_thread_keyup_receipt")
     if not isinstance(receipt, dict):
         return None, False
@@ -77,6 +79,59 @@ def _verified_up(row, down, identity):
     if row.get("release_batch_finalized_by_terminal_cleanup") is True:
         complete = complete and row.get("terminal_cleanup_verified") is True
     return (sync_ns if _integer(sync_ns) else None), bool(complete)
+
+
+def _bridge_edge(row, expected_edge, expected_status):
+    measurement = row.get("physical_key_measurement")
+    if not isinstance(measurement, dict):
+        return None
+    edge = measurement.get("adapter_edge")
+    if not isinstance(edge, dict):
+        return None
+    interval = edge.get("interval")
+    if (edge.get("edge") != expected_edge or edge.get("status") != expected_status
+        or edge.get("grants_input_authority") is not False
+        or measurement.get("grants_input_authority") is not False
+        or measurement.get("application_consumption_observed") is not False
+        or not isinstance(interval, list) or len(interval) != 2
+        or not all(_integer(value) for value in interval) or interval[1] < interval[0]):
+        return None
+    return edge, interval
+
+
+def _bridge_down_start(down):
+    parsed = _bridge_edge(down, "down", "CONFIRMED_PHYSICAL_DOWN")
+    if parsed is None:
+        return down.get("admitted_ns")
+    return parsed[1][1]
+
+
+def _verified_bridge_up(row, down, identity):
+    down_parsed = _bridge_edge(down, "down", "CONFIRMED_PHYSICAL_DOWN")
+    up_parsed = _bridge_edge(row, "up", "CONFIRMED_PHYSICAL_UP")
+    if down_parsed is None or up_parsed is None:
+        return None, False
+    down_edge, down_interval = down_parsed
+    up_edge, up_interval = up_parsed
+    shared_actuation = down_edge.get("actuation_id")
+    complete = (
+        row.get("event") == "input_release_measurement"
+        and _identity(row) == identity
+        and _identity(down) == identity
+        and isinstance(shared_actuation, str) and bool(shared_actuation)
+        and up_edge.get("actuation_id") == shared_actuation
+        and down_edge.get("owner_id") == identity[0]
+        and up_edge.get("owner_id") == identity[0]
+        and down_edge.get("intent_token") == identity[1]
+        and up_edge.get("intent_token") == identity[1]
+        and down_edge.get("key") == identity[4]
+        and up_edge.get("key") == identity[4]
+        and down_interval[1] <= up_interval[0]
+    )
+    # Use only the interval known to be held: after the latest possible down
+    # and before the earliest possible up. This avoids turning measurement
+    # uncertainty into extra attributed occupancy.
+    return (up_interval[0] if complete else None), bool(complete)
 
 
 def _unresolved(rows, reason):
@@ -133,7 +188,7 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
                 integrity.append("duplicate_input_admission")
                 continue
             downs[identity]=row
-        elif kind=="input_release_transition":
+        elif kind in ("input_release_transition", "input_release_measurement"):
             release_count+=1
             identity=_identity(row)
             if identity is None:
@@ -146,6 +201,8 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
 
     release_batches=defaultdict(list)
     for identity,row in ups.items():
+        if row.get("event") == "input_release_measurement":
+            continue
         batch_id=row.get("release_batch_identifier")
         batch_step=row.get("release_batch_step")
         size=row.get("release_batch_size")
@@ -184,7 +241,7 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
             unverified+=1
         intervals.append({
             "intent_token":identity[1], "key":identity[4],
-            "admitted_ns":down["admitted_ns"], "release_sync_ns":release_ns,
+            "admitted_ns":_bridge_down_start(down), "release_sync_ns":release_ns,
             "release_verified":verified,
         })
 
