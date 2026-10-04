@@ -63,7 +63,9 @@ class AcknowledgedSampler:
         self.sequence += 1
         row = {"schema": "scorer-client-update-v1", "run_id": self.run_id,
                "sample_sequence": self.sequence, "controller_visible": False,
-               "status": "UPDATE_UNAVAILABLE"}
+               "status": "UPDATE_UNAVAILABLE",
+               "update_status": "UPDATE_NOT_ATTEMPTED",
+               "sample_status": "SAMPLE_NOT_ATTEMPTED"}
         try:
             if game.is_episode_finished():
                 if self.last is not None and self.last.episode_finished:
@@ -71,20 +73,25 @@ class AcknowledgedSampler:
                     producer = copy.deepcopy(self.last.producer)
                     producer.update(sample_sequence=self.sequence,
                                     observation_status="TERMINAL_REPEAT_NO_UPDATE")
+                    row["update_status"] = "TERMINAL_REPEAT_NO_UPDATE"
                 elif self.external_ack is not None and self.external_ack['tic_after'] == int(game.get_episode_time()):
                     producer = {**self.external_ack, "sample_sequence": self.sequence,
                                 "observation_status": "EXTERNAL_UPDATE_RETURNED"}
+                    row["update_status"] = "EXTERNAL_UPDATE_RETURNED"
                 else:
                     raise RuntimeError("terminal state has no acknowledged sample")
             else:
                 before = int(game.get_episode_time())
-                row.update(tic_before=before, update_started_ns=self.clock_ns())
+                row.update(update_status="UPDATE_IN_PROGRESS", tic_before=before,
+                           update_started_ns=self.clock_ns())
                 external_before = self.external_ack
                 game.advance_action(1, True)
-                row["update_returned_ns"] = self.clock_ns()
+                row.update(update_status="UPDATE_RETURNED",
+                           update_returned_ns=self.clock_ns())
                 after = int(game.get_episode_time())
                 row["tic_after"] = after
                 if after <= before:
+                    row["update_status"] = "UPDATE_RETURNED_NO_TIC_ADVANCE"
                     raise RuntimeError("acknowledged update did not advance episode tic")
                 if self.external_ack is external_before:
                     self.update_sequence += 1
@@ -94,6 +101,9 @@ class AcknowledgedSampler:
                             "tic_before": before, "tic_after": after,
                             "update_started_ns": row["update_started_ns"],
                             "update_returned_ns": row["update_returned_ns"]}
+                row["update_status"] = "UPDATE_RETURNED"
+            row["producer"] = copy.deepcopy(producer)
+            row["sample_status"] = "SAMPLE_IN_PROGRESS"
             sample = self.sample_fn(game, variables, timeout_seconds, **kwargs)
             sample.validate()
             if int(game.get_episode_time()) != producer["tic_after"]:
@@ -106,11 +116,24 @@ class AcknowledgedSampler:
                 sample.sample_ns, sample.kill_count, sample.death_count,
                 sample.episode_finished, sample.player_dead, sample.map_exit,
                 producer)
-            row.update(status=producer["observation_status"], sample=result.as_dict())
+            row.update(status=producer["observation_status"],
+                       sample_status="SAMPLE_RETURNED", sample=result.as_dict())
         except BaseException as error:
             self._failure = error
-            row.update(status="UPDATE_UNAVAILABLE", error_type=type(error).__name__,
-                       error=str(error))
+            sample_started = row["sample_status"] == "SAMPLE_IN_PROGRESS"
+            update_failed = row["update_status"] in {
+                "UPDATE_NOT_ATTEMPTED", "UPDATE_IN_PROGRESS",
+                "UPDATE_RETURNED_NO_TIC_ADVANCE",
+            }
+            if update_failed and row["update_status"] != "UPDATE_RETURNED_NO_TIC_ADVANCE":
+                row["update_status"] = "UPDATE_UNAVAILABLE"
+            update_unavailable = update_failed
+            row.update(
+                status="SAMPLE_UNAVAILABLE" if sample_started or not update_unavailable
+                else "UPDATE_UNAVAILABLE",
+                sample_status="SAMPLE_UNAVAILABLE" if sample_started
+                else "SAMPLE_NOT_ATTEMPTED",
+                error_type=type(error).__name__, error=str(error))
             raise
         finally:
             # No retry after an ambiguous evidence-sink exception.
