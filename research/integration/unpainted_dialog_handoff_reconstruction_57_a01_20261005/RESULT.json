@@ -80,6 +80,68 @@
       "png_bytes": 71081
     }
   ],
+  "request_to_image_handoffs": [
+    {
+      "request_id": "cells",
+      "frame_sequence": 6,
+      "request_mode": "input_program",
+      "request_received_ns": 39123852466,
+      "image_ready_ns": 39622963779,
+      "request_to_image_ready_ms": 499.111,
+      "program_terminal_ns": 39644285897,
+      "image_ready_to_terminal_ms": 21.322,
+      "terminal_status": "completed",
+      "release_verified": true,
+      "steps": 5,
+      "next_command": "clock",
+      "image_ready_to_next_command_ms": 8480.295
+    },
+    {
+      "request_id": "dialog-view",
+      "frame_sequence": 7,
+      "request_mode": "observe",
+      "request_received_ns": 55578124394,
+      "image_ready_ns": 55657545885,
+      "request_to_image_ready_ms": 79.421,
+      "program_terminal_ns": 55675541196,
+      "image_ready_to_terminal_ms": 17.995,
+      "terminal_status": "completed",
+      "release_verified": true,
+      "steps": 1,
+      "next_command": "submit",
+      "image_ready_to_next_command_ms": 6949.283
+    },
+    {
+      "request_id": "confirm",
+      "frame_sequence": 8,
+      "request_mode": "input_program",
+      "request_received_ns": 62606828984,
+      "image_ready_ns": 62703365854,
+      "request_to_image_ready_ms": 96.537,
+      "program_terminal_ns": 62729617975,
+      "image_ready_to_terminal_ms": 26.252,
+      "terminal_status": "completed",
+      "release_verified": true,
+      "steps": 1,
+      "next_command": "submit",
+      "image_ready_to_next_command_ms": 8477.225
+    },
+    {
+      "request_id": "recover-view",
+      "frame_sequence": 9,
+      "request_mode": "observe",
+      "request_received_ns": 71180590720,
+      "image_ready_ns": 71260437116,
+      "request_to_image_ready_ms": 79.846,
+      "program_terminal_ns": 71277406484,
+      "image_ready_to_terminal_ms": 16.969,
+      "terminal_status": "completed",
+      "release_verified": true,
+      "steps": 1,
+      "next_command": "finish",
+      "image_ready_to_next_command_ms": 6005.98
+    }
+  ],
   "adjacent_deltas": [
     {
       "from_sequence": 6,
@@ -121,5 +183,5 @@
     "useful_feedback_onset_identified": false,
     "default_wait_or_sensor_adoption": false
   },
-  "interpretation": "Sequence 6 had a format-dialog window in context but its image was unpainted; sequence 7 visibly painted the dialog. Sequence 8 still showed the dialog and had mismatching capture-time focus samples after the Return action. Timing intervals are image-ready timestamp differences, not causal attribution or useful-feedback latency."
+  "interpretation": "Sequence 6 had a format-dialog window in context but its image was unpainted; sequence 7 visibly painted the dialog. Sequence 8 still showed the dialog and had mismatching capture-time focus samples after the Return action. Request-to-image-ready values are host-side elapsed intervals; gaps between requests mix reasoning, orchestration and other activity. Neither identifies useful-feedback onset or causal latency."
 }
