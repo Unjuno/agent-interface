@@ -6,10 +6,11 @@ This offline construction test found a completeness gap in the retained per-key 
 
 - `PREREGISTRATION.md` records H/T/D/C/U and decision rules.
 - `FREEZE.json` binds the selected current-main reference, source blobs, raw bytes, candidate, test, and preregistration hashes before the candidate tests ran.
-- `audit_v2.py` and `AUDIT_V2_FREEZE.json` bind the independent audit to the unchanged raw fixture before audit execution. It imports neither candidate nor legacy implementation.
-- `audit-result-v2.json` is the independent audit output. The earlier `audit-result.json` is retained as audit v1; v2 strengthens it by also reconstructing the legacy omission acceptance.
+- `audit_v2.py` and `AUDIT_V2_FREEZE.json` are retained as historical audit artifacts. Review found that v2 reported, but did not enforce, its raw-fixture digest and hard-coded the expected inventory.
+- `audit_v3.py` and `AUDIT_V3_FREEZE.json` are the active independent audit. Before reconstruction, v3 enforces both frozen SHA-256 pins and validates the unique, non-empty expected-key inventory loaded from the freeze. It imports neither candidate nor legacy implementation. `test_audit_v3.py` exercises raw-byte tampering, source tampering, and invalid inventories.
+- `audit-result-v3.json` is the active audit output; it passed eight checks. `audit-result-v2.json` remains unchanged as historical evidence, while `audit-result.json` remains audit v1.
 - `ledger.py` and `raw.json` are exact copies of the retained main artifacts. `SOURCE_BLOBS.json` binds their repository blob IDs at selected main.
-- `COMMANDS.txt` records the executed commands. Candidate tests returned exit 0 (4/4 passed); audit v2 returned exit 0 (`PASS_METHOD_SCOPED`).
+- `COMMANDS.txt` records the executed commands. Candidate tests returned exit 0 (4/4 passed); v3 audit tests plus candidate tests returned exit 0 (8/8 passed); audit v3 returned exit 0 (`PASS_METHOD_SCOPED`).
 - `test-output-integration.txt`, `audit-output-integration.txt`, and their exit-code files record a second validation after copying the package onto the clean main-based handoff branch; it again returned 4/4 and `PASS_METHOD_SCOPED`.
 
 ## H/T/D/C/U

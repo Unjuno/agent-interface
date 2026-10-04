@@ -1,2 +1,6 @@
 python -m unittest -v test_candidate.py
 python audit_v2.py
+python -m unittest -v test_audit_v3.py test_candidate.py
+python audit_v3.py
+python -m unittest -v test_audit_v3.py test_candidate.py
+python audit_v3.py

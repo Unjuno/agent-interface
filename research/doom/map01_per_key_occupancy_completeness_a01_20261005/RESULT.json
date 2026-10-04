@@ -16,7 +16,18 @@
     ]
   },
   "independent_audit_status": "PASS_METHOD_SCOPED",
-  "independent_audit_checks_passed": 5,
+  "independent_audit_version": "v3 (v2 retained as historical; v3 enforces frozen input and source pins)",
+  "independent_audit_checks_passed": 8,
+  "audit_v3_unit_tests": {
+    "passed": 4,
+    "failed": 0,
+    "cases": [
+      "canonical_bytes_and_source_match_freeze",
+      "changed_raw_bytes_fail_frozen_digest",
+      "changed_audit_source_fails_frozen_digest",
+      "duplicate_or_invalid_inventory_fails_closed"
+    ]
+  },
   "main_branch_copy_audit_revalidation": "PASS_METHOD_SCOPED; exit 0",
   "legacy_complete": {
     "status": "BOUNDED",
