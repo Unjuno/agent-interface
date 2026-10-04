@@ -1,0 +1,24 @@
+{
+  "schema": "map01-feedback-occupancy-a04-audit-followup-freeze-v1",
+  "experiment_id": "MAP01-A04-AUDIT-SUMMARY-CORRUPTION-A01-20261005",
+  "main_commit": "52d2c7a7b6f4854d9d9de43d001a1d8ebfbfaacf",
+  "parent_pr": 7671,
+  "parent_commit": "8150b0f67a2efe3c55aa006e1ca72415a23d1304",
+  "candidate_blob": "f23f29b93bb0a21f29aaa16b3424d782ed2eb5a2",
+  "original_auditor_blob": "36e240ad0b593146ce98b7c570b834b8f260a152",
+  "candidate_sha256": "9d7969e912cbb8cd7139d1a97f3e2676040326232868d82e02741613398b8a02",
+  "original_auditor_sha256": "21a459fb6dc43f1279a02dbd9a5cab4985bfbd727ee01ec40d81ab51cb2bdb8c",
+  "input_path": "research/doom/results/v39-control-telemetry-gap-audit-20261004/events.jsonl",
+  "input_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "run_type": "local_deterministic_audit_corruption_test",
+  "candidate_runs": 1,
+  "original_auditor_pristine_runs": 1,
+  "summary_corruptions": [
+    {"field": "unique", "original": 6, "mutated": 0},
+    {"field": "ambiguous", "original": 33, "mutated": 0},
+    {"field": "unmatched", "original": 0, "mutated": 39}
+  ],
+  "container_calls": 0,
+  "live_calls": 0,
+  "retry": false
+}

@@ -1,0 +1,1353 @@
+{
+  "ambiguous": 33,
+  "candidate_count_histogram": {
+    "1": 6,
+    "10": 1,
+    "2": 4,
+    "3": 5,
+    "4": 4,
+    "5": 4,
+    "6": 4,
+    "7": 4,
+    "8": 4,
+    "9": 3
+  },
+  "counts": {
+    "admissions": 39,
+    "aggregate_holds": 28,
+    "events": 634
+  },
+  "decision": "PASS_HEURISTIC_NONUNIQUENESS_SCOPED",
+  "limitations": [
+    "A candidate row is not an identity proof.",
+    "Only raw event order plus key membership is used.",
+    "No undocumented runtime-order invariant is assumed.",
+    "No physical release, useful task feedback, causal effect, recovery, or live result is inferred."
+  ],
+  "rows": [
+    {
+      "candidate_count": 1,
+      "candidate_event_indices": [
+        73
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-0-primary-0-1",
+          0
+        ]
+      ],
+      "event_index": 70,
+      "input_ack_ns": 55510744604148,
+      "key": "Up"
+    },
+    {
+      "candidate_count": 1,
+      "candidate_event_indices": [
+        73
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-0-primary-0-1",
+          0
+        ]
+      ],
+      "event_index": 71,
+      "input_ack_ns": 55510759204722,
+      "key": "Shift_L"
+    },
+    {
+      "candidate_count": 10,
+      "candidate_event_indices": [
+        73,
+        125,
+        177,
+        308,
+        346,
+        398,
+        456,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-0-primary-0-1",
+          0
+        ],
+        [
+          "cover-1",
+          2
+        ],
+        [
+          "cover-1",
+          6
+        ],
+        [
+          "plan-3-primary-0-1",
+          0
+        ],
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "plan-4-primary-0-1",
+          0
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 72,
+      "input_ack_ns": 55510771476289,
+      "key": "space"
+    },
+    {
+      "candidate_count": 9,
+      "candidate_event_indices": [
+        85,
+        112,
+        164,
+        333,
+        385,
+        437,
+        493,
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-0-primary-0-1",
+          1
+        ],
+        [
+          "cover-1",
+          1
+        ],
+        [
+          "cover-1",
+          5
+        ],
+        [
+          "cover-4",
+          1
+        ],
+        [
+          "cover-4",
+          5
+        ],
+        [
+          "cover-4",
+          9
+        ],
+        [
+          "cover-5",
+          1
+        ],
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 84,
+      "input_ack_ns": 55511304658887,
+      "key": "a"
+    },
+    {
+      "candidate_count": 9,
+      "candidate_event_indices": [
+        100,
+        152,
+        321,
+        373,
+        425,
+        466,
+        481,
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          0
+        ],
+        [
+          "cover-1",
+          4
+        ],
+        [
+          "cover-4",
+          0
+        ],
+        [
+          "cover-4",
+          4
+        ],
+        [
+          "cover-4",
+          8
+        ],
+        [
+          "plan-4-primary-0-1",
+          1
+        ],
+        [
+          "cover-5",
+          0
+        ],
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 99,
+      "input_ack_ns": 55511897917993,
+      "key": "d"
+    },
+    {
+      "candidate_count": 8,
+      "candidate_event_indices": [
+        112,
+        164,
+        333,
+        385,
+        437,
+        493,
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          1
+        ],
+        [
+          "cover-1",
+          5
+        ],
+        [
+          "cover-4",
+          1
+        ],
+        [
+          "cover-4",
+          5
+        ],
+        [
+          "cover-4",
+          9
+        ],
+        [
+          "cover-5",
+          1
+        ],
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 111,
+      "input_ack_ns": 55512505878882,
+      "key": "a"
+    },
+    {
+      "candidate_count": 8,
+      "candidate_event_indices": [
+        125,
+        177,
+        308,
+        346,
+        398,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          2
+        ],
+        [
+          "cover-1",
+          6
+        ],
+        [
+          "plan-3-primary-0-1",
+          0
+        ],
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 123,
+      "input_ack_ns": 55512979444644,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 9,
+      "candidate_event_indices": [
+        125,
+        177,
+        308,
+        346,
+        398,
+        456,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          2
+        ],
+        [
+          "cover-1",
+          6
+        ],
+        [
+          "plan-3-primary-0-1",
+          0
+        ],
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "plan-4-primary-0-1",
+          0
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 124,
+      "input_ack_ns": 55512992997323,
+      "key": "space"
+    },
+    {
+      "candidate_count": 8,
+      "candidate_event_indices": [
+        152,
+        321,
+        373,
+        425,
+        466,
+        481,
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          4
+        ],
+        [
+          "cover-4",
+          0
+        ],
+        [
+          "cover-4",
+          4
+        ],
+        [
+          "cover-4",
+          8
+        ],
+        [
+          "plan-4-primary-0-1",
+          1
+        ],
+        [
+          "cover-5",
+          0
+        ],
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 151,
+      "input_ack_ns": 55515096898681,
+      "key": "d"
+    },
+    {
+      "candidate_count": 7,
+      "candidate_event_indices": [
+        164,
+        333,
+        385,
+        437,
+        493,
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          5
+        ],
+        [
+          "cover-4",
+          1
+        ],
+        [
+          "cover-4",
+          5
+        ],
+        [
+          "cover-4",
+          9
+        ],
+        [
+          "cover-5",
+          1
+        ],
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 163,
+      "input_ack_ns": 55515578274317,
+      "key": "a"
+    },
+    {
+      "candidate_count": 7,
+      "candidate_event_indices": [
+        177,
+        308,
+        346,
+        398,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          6
+        ],
+        [
+          "plan-3-primary-0-1",
+          0
+        ],
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 175,
+      "input_ack_ns": 55516118903833,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 8,
+      "candidate_event_indices": [
+        177,
+        308,
+        346,
+        398,
+        456,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-1",
+          6
+        ],
+        [
+          "plan-3-primary-0-1",
+          0
+        ],
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "plan-4-primary-0-1",
+          0
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 176,
+      "input_ack_ns": 55516133109039,
+      "key": "space"
+    },
+    {
+      "candidate_count": 6,
+      "candidate_event_indices": [
+        308,
+        346,
+        398,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-3-primary-0-1",
+          0
+        ],
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 306,
+      "input_ack_ns": 55531922893265,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 7,
+      "candidate_event_indices": [
+        308,
+        346,
+        398,
+        456,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-3-primary-0-1",
+          0
+        ],
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "plan-4-primary-0-1",
+          0
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 307,
+      "input_ack_ns": 55531936828861,
+      "key": "space"
+    },
+    {
+      "candidate_count": 7,
+      "candidate_event_indices": [
+        321,
+        373,
+        425,
+        466,
+        481,
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          0
+        ],
+        [
+          "cover-4",
+          4
+        ],
+        [
+          "cover-4",
+          8
+        ],
+        [
+          "plan-4-primary-0-1",
+          1
+        ],
+        [
+          "cover-5",
+          0
+        ],
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 320,
+      "input_ack_ns": 55532267448486,
+      "key": "d"
+    },
+    {
+      "candidate_count": 6,
+      "candidate_event_indices": [
+        333,
+        385,
+        437,
+        493,
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          1
+        ],
+        [
+          "cover-4",
+          5
+        ],
+        [
+          "cover-4",
+          9
+        ],
+        [
+          "cover-5",
+          1
+        ],
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 332,
+      "input_ack_ns": 55532939174983,
+      "key": "a"
+    },
+    {
+      "candidate_count": 5,
+      "candidate_event_indices": [
+        346,
+        398,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 344,
+      "input_ack_ns": 55533472467579,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 6,
+      "candidate_event_indices": [
+        346,
+        398,
+        456,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          2
+        ],
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "plan-4-primary-0-1",
+          0
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 345,
+      "input_ack_ns": 55533483587153,
+      "key": "space"
+    },
+    {
+      "candidate_count": 6,
+      "candidate_event_indices": [
+        373,
+        425,
+        466,
+        481,
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          4
+        ],
+        [
+          "cover-4",
+          8
+        ],
+        [
+          "plan-4-primary-0-1",
+          1
+        ],
+        [
+          "cover-5",
+          0
+        ],
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 372,
+      "input_ack_ns": 55535605756429,
+      "key": "d"
+    },
+    {
+      "candidate_count": 5,
+      "candidate_event_indices": [
+        385,
+        437,
+        493,
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          5
+        ],
+        [
+          "cover-4",
+          9
+        ],
+        [
+          "cover-5",
+          1
+        ],
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 384,
+      "input_ack_ns": 55536113215596,
+      "key": "a"
+    },
+    {
+      "candidate_count": 4,
+      "candidate_event_indices": [
+        398,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 396,
+      "input_ack_ns": 55536671838699,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 5,
+      "candidate_event_indices": [
+        398,
+        456,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          6
+        ],
+        [
+          "plan-4-primary-0-1",
+          0
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 397,
+      "input_ack_ns": 55536681977504,
+      "key": "space"
+    },
+    {
+      "candidate_count": 5,
+      "candidate_event_indices": [
+        425,
+        466,
+        481,
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          8
+        ],
+        [
+          "plan-4-primary-0-1",
+          1
+        ],
+        [
+          "cover-5",
+          0
+        ],
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 424,
+      "input_ack_ns": 55538773330224,
+      "key": "d"
+    },
+    {
+      "candidate_count": 4,
+      "candidate_event_indices": [
+        437,
+        493,
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-4",
+          9
+        ],
+        [
+          "cover-5",
+          1
+        ],
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 436,
+      "input_ack_ns": 55539306247040,
+      "key": "a"
+    },
+    {
+      "candidate_count": 3,
+      "candidate_event_indices": [
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 449,
+      "input_ack_ns": 55539824580162,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 4,
+      "candidate_event_indices": [
+        456,
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-4-primary-0-1",
+          0
+        ],
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 455,
+      "input_ack_ns": 55539928785334,
+      "key": "space"
+    },
+    {
+      "candidate_count": 4,
+      "candidate_event_indices": [
+        466,
+        481,
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "plan-4-primary-0-1",
+          1
+        ],
+        [
+          "cover-5",
+          0
+        ],
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 465,
+      "input_ack_ns": 55540333385852,
+      "key": "d"
+    },
+    {
+      "candidate_count": 3,
+      "candidate_event_indices": [
+        481,
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          0
+        ],
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 480,
+      "input_ack_ns": 55540960344369,
+      "key": "d"
+    },
+    {
+      "candidate_count": 3,
+      "candidate_event_indices": [
+        493,
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          1
+        ],
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 492,
+      "input_ack_ns": 55541606355519,
+      "key": "a"
+    },
+    {
+      "candidate_count": 3,
+      "candidate_event_indices": [
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 504,
+      "input_ack_ns": 55542142560744,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 3,
+      "candidate_event_indices": [
+        506,
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          2
+        ],
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 505,
+      "input_ack_ns": 55542154761243,
+      "key": "space"
+    },
+    {
+      "candidate_count": 2,
+      "candidate_event_indices": [
+        533,
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          4
+        ],
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 532,
+      "input_ack_ns": 55544287024372,
+      "key": "d"
+    },
+    {
+      "candidate_count": 2,
+      "candidate_event_indices": [
+        545,
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          5
+        ],
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 544,
+      "input_ack_ns": 55544791509589,
+      "key": "a"
+    },
+    {
+      "candidate_count": 2,
+      "candidate_event_indices": [
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 556,
+      "input_ack_ns": 55545298564123,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 2,
+      "candidate_event_indices": [
+        558,
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          6
+        ],
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 557,
+      "input_ack_ns": 55545311271783,
+      "key": "space"
+    },
+    {
+      "candidate_count": 1,
+      "candidate_event_indices": [
+        585
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          8
+        ]
+      ],
+      "event_index": 584,
+      "input_ack_ns": 55547443521370,
+      "key": "d"
+    },
+    {
+      "candidate_count": 1,
+      "candidate_event_indices": [
+        597
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          9
+        ]
+      ],
+      "event_index": 596,
+      "input_ack_ns": 55547951604936,
+      "key": "a"
+    },
+    {
+      "candidate_count": 1,
+      "candidate_event_indices": [
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 608,
+      "input_ack_ns": 55548470529609,
+      "key": "Down"
+    },
+    {
+      "candidate_count": 1,
+      "candidate_event_indices": [
+        610
+      ],
+      "candidate_id_steps": [
+        [
+          "cover-5",
+          10
+        ]
+      ],
+      "event_index": 609,
+      "input_ack_ns": 55548483447730,
+      "key": "space"
+    }
+  ],
+  "schema": "map01-admission-hold-candidate-count-a04-v1",
+  "source_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "unique": 0,
+  "unmatched": 0
+}
