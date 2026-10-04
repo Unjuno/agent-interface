@@ -11,7 +11,7 @@
 ## Source and test identity
 
 - Defect reproduction head from PR #7685: `5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0`.
-- Corrective branch base after refreshing PR #7685: `6f17c27a282ec1afbbfdc97fcb6a77c6dfb70a31`; this squash-based parent update retains the equality-only defect and was merged before reapplying the narrow correction.
+- Corrective branch base after refreshing PR #7685: `0f41da2e8f460477bf8d97733785547adb7b4a9d`; this force-updated parent retains the equality-only defect and was merged before reapplying the narrow correction.
 - Parent `checkpoint_candidate.py` SHA-256: `c48c1a734ae32505d7adf000028e618b2d0cfe73a4aa969892b8aada6a6407f5`.
 - Corrected `checkpoint_candidate.py` SHA-256: `37387861339edf94401068cb08b2ca48e922ddc16d8d373c8b3e504816549c96`.
 - Corrected `test_candidate.py` SHA-256: `a4516ce54656e50c97f5610aacee5ef9cad0ee82e7bdde09776d83217016f8ff`.
