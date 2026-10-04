@@ -12,4 +12,4 @@ The compatibility runner initially expected a V10 file beside the V12 fixture, w
 
 All tests use the repository's fake display. This package does not establish real X11 behavior, application consumption, useful feedback, bounded recovery efficacy, gameplay, MAP01 outcome, safety, latency, or live allocation. The candidate is not yet wired into a live MAP01 session.
 
-The complete candidate package was also replayed on a disposable overlay of current main `6750ab3843bdcd7eb221dedfb3dd0ae3f184f38d`; all 7/10/2 suites, the source audit, the 41-file package checksum set, and `git diff --check` passed. The raw command output is in `current-main-replay.log`. This verifies composition on that exact source tree only and remains fake-display evidence.
+The complete candidate package was also replayed on a disposable overlay of main at the prior replay `6750ab3843bdcd7eb221dedfb3dd0ae3f184f38d`; all 7/10/2 suites, the source audit, the 41-file package checksum set, and `git diff --check` passed. The raw command output is in `current-main-replay.log`. This verifies composition on that exact source tree only and remains fake-display evidence.
