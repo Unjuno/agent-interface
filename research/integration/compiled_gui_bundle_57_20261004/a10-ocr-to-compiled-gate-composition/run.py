@@ -88,7 +88,7 @@ def run_path(task: dict, observer_text: str, evidence_digest: str) -> dict:
             digest = hashlib.sha256((evidence_digest + "/submit-effect-unavailable").encode()).hexdigest()
         row = {
             "sequence": sequence,
-            "captured_ns": time.perf_counter_ns() - 1_000_000,
+            "captured_ns": time.perf_counter_ns(),
             "surface": "integrated-form",
             "predicates": predicates,
             "evidence_ref": evidence_ref,
