@@ -28,6 +28,7 @@ Status: preregistered against current main and current #7664 stack source before
 ```sh
 python research/doom/scorer_eventlog_join_t0_v1/file_join_bundle_a02_run.py
 python research/doom/scorer_eventlog_join_t0_v1/file_join_bundle_a02_audit.py
+python research/doom/scorer_eventlog_join_t0_v1/file_join_bundle_a02_audit_v2.py
 cd research/doom/scorer_eventlog_join_t0_v1
 python -m unittest test_file_join_bundle -v
 ```
@@ -41,5 +42,9 @@ The A01 output remains retained but is not promoted: its correction is in `FILE_
 The complete focused suite passed **18/18** tests (11 run-bundle tests plus 7 existing consumer/policy tests); Python 3.11 compilation and `git diff --check` passed. The tests and runner are local deterministic synthetic construction on Windows. No game, model, OS input, GPU, container, or live allocation ran.
 
 Before publication, main advanced to `c99d93a2c81945f0946173e48247bdd49e32a02a`. All seven required source Git blobs still match the A02 freeze and the stack parent, so the frozen source basis remains valid.
+
+The #7664 stack later advanced by force-push to `a2f85482c6968f9caa9dcbca017bd452b8a2c3b3` and added a seven-case same-directory metadata checker at `runtime_bundle_a01_20261005/`. That adjacent result addresses co-location and summary presence, but states that it does not validate full scorer/event source content. A02's distinct increment is hashing the complete seven-file producer/adapter dependency closure against the checkout and reconciling scheduler/sample intervals plus scorer event summaries. The seven frozen source Git blobs match at the refreshed `c99d93a` main and `a2f8548` stack head. The A02 candidate raw was not rerun; `file_join_bundle_a02_audit_v2.py` independently checks the retained raw against the original freeze and refreshed refs without requiring the force-pushed old stack commit to remain an ancestor.
+
+For the overlap check, the upstream A01's focused suite passed 9/9. Its tests exercise the stated metadata/source-policy and sample-count gate; A02 adds checks for actual source-file bytes and internal scorer event and timing summaries. The results remain separate and are not pooled.
 
 Disposition: **PASS, scoped to source-bound run-bundle consumer construction.** This closes the declared missing-sidecar/source-check for this consumer only. It does not make existing or future episode outputs self-authenticating; a producer-side immutable manifest of JSONL byte hashes is still needed before any live result is called authoritative. It does not advance the live #59 allocation gate by itself.
