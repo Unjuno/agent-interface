@@ -1,4 +1,5 @@
 import importlib.util
+from itertools import product
 import unittest
 from pathlib import Path
 
@@ -46,6 +47,70 @@ class Tests(unittest.TestCase):
         ]
         result = candidate.analyze(events)
         self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["invalid_release_count"], 1)
+
+    def test_timestamp_order_inversions_are_rejected(self):
+        def pair(admitted_ns, input_ack_ns, release_start_ns, release_return_ns):
+            return [
+                {"event": "input_admission", "intent_token": "t", "key": "a",
+                 "admitted_ns": admitted_ns, "input_ack_ns": input_ack_ns},
+                {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+                 "key": "a", "release_call_started_ns": release_start_ns,
+                 "release_call_returned_ns": release_return_ns,
+                 "owner_transition_verified": True},
+            ]
+
+        cases = {
+            "ack_before_admission": pair(200, 100, 300, 400),
+            "release_before_ack": pair(100, 200, 150, 250),
+            "release_before_admission": pair(100, 110, 50, 60),
+            "release_bracket_reversed": pair(100, 110, 130, 120),
+        }
+        for name, events in cases.items():
+            with self.subTest(name=name):
+                result = candidate.analyze(events)
+                self.assertFalse(result["measurement_ready"], result)
+                self.assertEqual(result["hold_count"], 0, result)
+                self.assertEqual(result["invalid_release_count"], 1, result)
+
+    def test_equal_adjacent_timestamp_boundaries_are_allowed(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "a",
+             "admitted_ns": 100, "input_ack_ns": 100},
+            {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+             "key": "a", "release_call_started_ns": 100,
+             "release_call_returned_ns": 100, "owner_transition_verified": True},
+        ]
+        result = candidate.analyze(events)
+        self.assertTrue(result["measurement_ready"], result)
+        self.assertEqual(result["holds"][0]["retained_lower_ms"], 0.0)
+        self.assertEqual(result["holds"][0]["retained_upper_ms"], 0.0)
+
+    def test_four_timestamp_ordering_exhaustive_small_domain(self):
+        for admitted_ns, input_ack_ns, release_start_ns, release_return_ns in product(range(4), repeat=4):
+            events = [
+                {"event": "input_admission", "intent_token": "t", "key": "a",
+                 "admitted_ns": admitted_ns, "input_ack_ns": input_ack_ns},
+                {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+                 "key": "a", "release_call_started_ns": release_start_ns,
+                 "release_call_returned_ns": release_return_ns,
+                 "owner_transition_verified": True},
+            ]
+            expected = admitted_ns <= input_ack_ns <= release_start_ns <= release_return_ns
+            with self.subTest(times=(admitted_ns, input_ack_ns, release_start_ns, release_return_ns)):
+                result = candidate.analyze(events)
+                self.assertEqual(result["measurement_ready"], expected, result)
+
+    def test_integer_booleans_are_rejected_as_timestamps(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "a",
+             "admitted_ns": False, "input_ack_ns": 1},
+            {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+             "key": "a", "release_call_started_ns": 2,
+             "release_call_returned_ns": 3, "owner_transition_verified": True},
+        ]
+        result = candidate.analyze(events)
+        self.assertFalse(result["measurement_ready"], result)
         self.assertEqual(result["invalid_release_count"], 1)
 
 

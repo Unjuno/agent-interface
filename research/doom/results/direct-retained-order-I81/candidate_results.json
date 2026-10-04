@@ -1,0 +1,3499 @@
+{
+  "schema": "map01-direct-retained-input-order-matrix-candidate-v1",
+  "candidate_source_sha256": "c0187d5a95751e340f66fbbb03fe9066899bdb9c795a3dcaf1fd3be291d13496",
+  "case_count": 256,
+  "results": [
+    {
+      "case_id": 0,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 0.0,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 1,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 2,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 3,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 3e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 4,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 5,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 6,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 7,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 8,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 9,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 10,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 2e-06,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 11,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 2e-06,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 12,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 13,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 14,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 15,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 3e-06,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 16,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 17,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 18,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 19,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 20,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 21,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 22,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 23,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 3e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 24,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 25,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 26,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 27,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 28,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 29,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 30,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 31,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 2e-06,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 32,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 33,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 34,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 35,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 36,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 37,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 38,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 39,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 40,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 41,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 42,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 43,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 3e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 44,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 45,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 46,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 47,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 48,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 49,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 50,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 51,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 52,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 53,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 54,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 55,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 56,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 57,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 58,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 59,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 60,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 61,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 62,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 63,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 3e-06,
+            "censor_width_ms": 3e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 64,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 65,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 66,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 67,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 68,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 69,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 70,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 71,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 72,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 73,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 74,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 75,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 76,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 77,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 78,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 79,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 80,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 81,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 82,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 83,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 84,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 85,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 0.0,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 86,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 87,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 88,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 89,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 90,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 91,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 92,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 93,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 94,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 95,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 2e-06,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 96,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 97,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 98,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 99,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 100,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 101,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 102,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 103,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 104,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 105,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 106,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 107,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 108,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 109,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 110,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 111,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 112,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 113,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 114,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 115,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 116,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 117,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 118,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 119,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 120,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 121,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 122,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 123,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 124,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 125,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 126,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 127,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 2e-06,
+            "censor_width_ms": 2e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 128,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 129,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 130,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 131,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 132,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 133,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 134,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 135,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 136,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 137,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 138,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 139,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 140,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 141,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 142,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 143,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 144,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 145,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 146,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 147,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 148,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 149,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 150,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 151,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 152,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 153,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 154,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 155,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 156,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 157,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 158,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 159,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 160,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 161,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 162,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 163,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 164,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 165,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 166,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 167,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 168,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 169,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 170,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 0.0,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 171,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 172,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 173,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 174,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 175,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 1e-06,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 176,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 177,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 178,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 179,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 180,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 181,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 182,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 183,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 184,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 185,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 186,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 187,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 188,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 189,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 190,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 191,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 1e-06,
+            "censor_width_ms": 1e-06,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case_id": 192,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 193,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 194,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 195,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 196,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 197,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 198,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 199,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 200,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 201,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 202,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 203,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 204,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 205,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 206,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 207,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 208,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 209,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 210,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 211,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 212,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 213,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 214,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 215,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 216,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 217,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 218,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 219,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 220,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 221,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 222,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 223,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 224,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 225,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 226,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 227,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 228,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 229,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 230,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 231,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 232,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 233,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 234,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 235,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 236,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 237,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 238,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 239,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 240,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 241,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 242,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 243,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 244,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 245,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 246,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 247,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 248,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 249,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 250,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 251,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 252,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 253,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 254,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case_id": 255,
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "a",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 0.0,
+            "censor_width_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    }
+  ]
+}

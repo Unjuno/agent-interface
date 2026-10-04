@@ -1,0 +1,14 @@
+CONSTRUCTION ATTEMPT 01 — REGRESSION-FIRST RED
+
+Command:
+python -m unittest -v test_analyze_map01_direct_retained_input_v1
+
+Source before repair: base commit 4ca1db66b6adcb4ea15fc3c744315ad39a87749e; direct analyzer blob f3d5fe315df8f4296351f1a5fc666d50ecaa6745.
+
+Result: 5 tests discovered; three old cases and equal-boundary case passed; the new timestamp-order test failed in all four subcases:
+- ack_before_admission: false PASS, lower/upper = 200/200 ns.
+- release_before_ack: false PASS, lower/upper = -50/150 ns.
+- release_before_admission: false PASS, lower/upper = -60/-40 ns.
+- release_bracket_reversed: false PASS, lower/upper = 20/20 ns.
+
+Suite exit: 1 (expected red before code change). No runtime, X11, GUI, game, model, input, or formal allocation ran.
