@@ -46,6 +46,7 @@ sys.modules.update({"Xlib":xlib,"Xlib.ext":ext,"Xlib.ext.xtest":xtest})
 from input_owner_v10 import InputOwner as Base
 from input_owner_v11 import InputOwner as Telemetry
 from input_owner_v13 import InputOwner
+from executor_v13 import Executor as ExecutorV13
 
 class Lease:
     def __init__(self):
@@ -103,5 +104,16 @@ class BatchReleaseTelemetryTests(unittest.TestCase):
         with patch.object(Base,"call",return_value=None), patch("input_owner_v11.time.perf_counter_ns",side_effect=[100,145]):
             receipt=owner.call("up",lease,"space")
         self.assertEqual(receipt["release_transition_interval_ns"],[100,145])
+
+    def test_executor_publication_keeps_per_key_intervals_nested(self):
+        record={"event":"owner_release","reason":"cancelled","verified":True,
+                "keys_down":[],"buttons_down":[],"verified_ns":30,
+                "key_release_intervals_ns":[{"keycode":97,"interval_ns":[10,20]}]}
+        executor=object.__new__(ExecutorV13)
+        event=executor._release_event("intent-v13",{"intent_token":"lease-v13","record":record})
+        self.assertEqual(event["event"],"input_released")
+        self.assertEqual(event["intent_token"],"lease-v13")
+        self.assertIs(event["owner_release"],record)
+        self.assertEqual(event["owner_release"]["key_release_intervals_ns"],record["key_release_intervals_ns"])
 
 if __name__=="__main__": unittest.main(verbosity=2)
