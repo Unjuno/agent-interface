@@ -649,7 +649,11 @@ def input_edge_receipts(events):
             for row in (
                 down, up, down_data, up_data, down_edge, up_edge,
                 down_data.get("bracket") if type(down_data) is dict else None,
-                up_data.get("bracket") if type(up_data) is dict else None))
+                up_data.get("bracket") if type(up_data) is dict else None,
+                down_data.get("pre_sample") if type(down_data) is dict else None,
+                down_data.get("post_sample") if type(down_data) is dict else None,
+                up_data.get("pre_sample") if type(up_data) is dict else None,
+                up_data.get("post_sample") if type(up_data) is dict else None))
         complete = (
             len(downs) == 1 and len(ups) == 1 and
             type(down_data) is dict and type(up_data) is dict and

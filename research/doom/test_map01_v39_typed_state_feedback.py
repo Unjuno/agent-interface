@@ -210,29 +210,32 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         baseline = controller.input_edge_receipts(template)[0]
         self.assertEqual(baseline["status"], "adapter_edge_brackets_paired")
 
-        layers = ("event", "measurement", "adapter_edge", "bracket")
+        layers = ("event", "measurement", "adapter_edge", "bracket",
+                  "pre_sample", "post_sample")
+        conflicting_values = (True, 1, 0, None, "false")
         for row_index in range(2):
             for layer in layers:
-                events = json.loads(json.dumps(template))
-                row = events[row_index]
-                if layer == "event":
-                    row["application_consumption_observed"] = True
-                elif layer == "measurement":
-                    row["physical_key_measurement"][
-                        "application_consumption_observed"] = True
-                elif layer == "adapter_edge":
-                    row["physical_key_measurement"]["adapter_edge"][
-                        "application_consumption_observed"] = True
-                else:
-                    row["physical_key_measurement"]["bracket"][
-                        "application_consumption_observed"] = True
+                for value in conflicting_values:
+                    events = json.loads(json.dumps(template))
+                    row = events[row_index]
+                    if layer == "event":
+                        row["application_consumption_observed"] = value
+                    elif layer == "measurement":
+                        row["physical_key_measurement"][
+                            "application_consumption_observed"] = value
+                    else:
+                        row["physical_key_measurement"][layer][
+                            "application_consumption_observed"] = value
 
-                with self.subTest(row_index=row_index, layer=layer):
-                    receipt = controller.input_edge_receipts(events)[0]
-                    self.assertEqual(receipt["status"],
-                                     "adapter_edge_receipt_incomplete")
-                    self.assertIsNone(receipt["down_edge_interval_ns"])
-                    self.assertIsNone(receipt["up_edge_interval_ns"])
+                    with self.subTest(row_index=row_index, layer=layer, value=value):
+                        receipt = controller.input_edge_receipts(events)[0]
+                        self.assertEqual(receipt["status"],
+                                         "adapter_edge_receipt_incomplete")
+                        for field in ("input_admitted_ns", "down_press_request_ns",
+                                      "down_sync_return_ns", "down_edge_interval_ns",
+                                      "up_release_request_ns", "up_sync_return_ns",
+                                      "up_edge_interval_ns"):
+                            self.assertIsNone(receipt[field])
 
     def test_adapter_pair_requires_consistent_samples_and_request_timing(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
