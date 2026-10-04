@@ -211,10 +211,15 @@ class BuilderTests(unittest.TestCase):
         import time
         import uuid
 
-        base_source = subprocess.check_output(
-            ['git', 'show', PIN + ':research/live_control/lease.py'], cwd=HERE)
-        cause_source = subprocess.check_output(
-            ['git', 'show', PIN + ':research/live_control/lease_cause_v1.py'], cwd=HERE)
+        if os.environ.get('OWNER_MEASUREMENT_SOURCE_ROOT'):
+            source_root = Path(os.environ['OWNER_MEASUREMENT_SOURCE_ROOT'])
+            base_source = (source_root / 'research/live_control/lease.py').read_bytes()
+            cause_source = (source_root / 'research/live_control/lease_cause_v1.py').read_bytes()
+        else:
+            base_source = subprocess.check_output(
+                ['git', 'show', PIN + ':research/live_control/lease.py'], cwd=HERE)
+            cause_source = subprocess.check_output(
+                ['git', 'show', PIN + ':research/live_control/lease_cause_v1.py'], cwd=HERE)
         base_tree = ast.parse(base_source)
         base_node = next(n for n in base_tree.body
                          if isinstance(n, ast.ClassDef) and n.name == 'Lease')
