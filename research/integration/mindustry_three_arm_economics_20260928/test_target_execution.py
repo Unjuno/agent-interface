@@ -216,6 +216,81 @@ class TargetExecutionTests(unittest.TestCase):
                             coordinator.resolved_bundle.source_sequence
                             for row in requests[-2:]))
 
+    def test_three_arm_task_schedules_compose_with_two_target_dispatches(self):
+        expected = {
+            "plain": (["cold"] * 6, [1] * 6),
+            "ephemeral": (["cold"] * 6, [1] * 6),
+            "persistent": (["cold", "reuse", "reuse", "repair", "reuse", "reuse"],
+                           [1, 0, 0, 1, 0, 0]),
+        }
+        task_model_calls = {}
+        dispatched = []
+
+        def compile_request(locator, _clock, task_id, target, _receipt):
+            request = {"id": f"{task_id}-{target}",
+                       "expected_sequence": locator["validated_sequence"]}
+            dispatched.append((target, request))
+            return request
+
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=compile_request):
+            for arm, (routes, calls) in expected.items():
+                coordinator = ArmCoordinator(arm)
+                sequence = 0
+                actual_model_tasks = []
+
+                for index in range(6):
+                    task = coordinator.lifecycle.current
+                    width = 1280 if task.layout == "A" else 1216
+                    sequence += 1
+                    initial = source(sequence, width)
+
+                    def model_call(_image, task_id=task.task_id):
+                        actual_model_tasks.append(task_id)
+                        return candidate()
+
+                    resolved = coordinator.resolve(
+                        initial, width, 760, slots(), model_call)
+                    latest_sequence = {"value": sequence}
+
+                    def observe():
+                        nonlocal sequence
+                        sequence += 1
+                        latest_sequence["value"] = sequence
+                        return source(sequence, width)
+
+                    targets = dispatch_task_targets(
+                        coordinator=coordinator, task_id=task.task_id,
+                        layout=task.layout, observe=observe,
+                        read_clock=lambda: {
+                            "sequence": latest_sequence["value"],
+                            "runtime_ns": 100 + latest_sequence["value"]},
+                        build_receipt=lambda _locator, target: {"target": target},
+                        submit=lambda request: {
+                            "request_id": request["id"], "terminal": True,
+                            "released": True})
+                    self.assertEqual(resolved["task"].task_id, task.task_id)
+                    self.assertEqual([row["target"] for row in targets],
+                                     ["palette_point", "target_point"])
+                    coordinator.score(True)
+                    coordinator.reset(True)
+                    coordinator.advance()
+
+                records = coordinator.task_records
+                self.assertEqual([row["route"] for row in records], routes)
+                self.assertEqual([row["model_calls"] for row in records], calls)
+                self.assertEqual(len(actual_model_tasks), sum(calls))
+                task_model_calls[arm] = actual_model_tasks
+
+        self.assertEqual(task_model_calls, {
+            "plain": ["A1", "A2", "A3", "B1", "B2", "B3"],
+            "ephemeral": ["A1", "A2", "A3", "B1", "B2", "B3"],
+            "persistent": ["A1", "B1"],
+        })
+        self.assertEqual(len(dispatched), 36)
+        self.assertEqual([row[0] for row in dispatched],
+                         ["palette_point", "target_point"] * 18)
+
     def test_request_receipt_must_match_id_and_be_terminal(self):
         for receipt in (
                 {"request_id": "wrong", "terminal": True, "released": True},

@@ -388,7 +388,7 @@ remains in force.
 ## Fresh-locator → target-dispatch composition (host construction, 2026-10-04)
 
 The branch includes current main through
-`f11ee9d051239094cf3679e19c80bd7deaed0564`:
+`446b2635c1ad3b7ed6c97b790c0a35b6fb58d7c3`:
 `target_execution_v1.py` composes the existing `ArmCoordinator` fresh-locator
 check and receipt-bound `target_dispatch.py` compiler for the two ordered
 Mindustry task points. Each point requires a newer observation, current layout
@@ -397,7 +397,7 @@ single compiled request is submitted. The caller must adapt the live socket's
 terminal result into a request-ID-matched receipt that confirms all inputs are
 released. Ambiguous or failed receipts stop the task without retry.
 
-Eight host construction tests verify the two-point order, fresh sequence binding,
+Eleven host construction tests verify the two-point order, fresh sequence binding,
 stale-geometry refusal before the affected dispatch, task-ID matching, and
 fail-closed handling of stale socket clocks, mismatched/nonterminal/unreleased
 execution receipts, and repeated calls before lifecycle advance. One test
@@ -405,14 +405,16 @@ exercises the real receipt builders and request compiler with synthetic
 observations. A mutation control showed that a submit callback could otherwise
 rewrite the retained compiled-request object after returning; dispatch now
 deep-copies that record before invoking the callback. The target-dispatch tests
-pass 10/10, the full package suite passes 96/96, and the inherited decision
+pass 11/11, the full package suite passes 97/97, and the inherited decision
 probe passes with 10 controls. A synthetic persistent-arm lifecycle walk now
 covers A1-A3 followed by the A3→B1 geometry change: the old reference is
 classified stale with zero admissions, one repair acquisition occurs, and the
 two B1 target requests bind to newer observations under layout B. Its scores,
-resets, compiler and socket are simulated callbacks. These tests do not connect
-a live Mindustry socket, capture real images, dispatch input, call a model,
-score a game task, produce an independent raw audit, or demonstrate
+resets, compiler and socket are simulated callbacks. A second control walks all
+three arms across all 18 tasks and 36 ordered point dispatches, checking the
+frozen cold/reuse/repair route and model-call schedules. These controls do not
+connect a live Mindustry socket, capture real images, dispatch input, call a
+model, score a game task, produce an independent raw audit, or demonstrate
 three-arm execution/economics. The actual live adapters, full runner, and
 allocation remain unimplemented. No game, model, Docker command, workflow, or
 formal allocation was invoked; the #5130 resource gate remains controlling.
