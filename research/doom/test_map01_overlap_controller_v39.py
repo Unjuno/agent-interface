@@ -44,6 +44,61 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(receipt["monitor_mode"], "authored_policy_guard")
         self.assertEqual(receipt["authored"], authored)
 
+    def test_cover_acceptance_wait_monitors_observations_before_planning(self):
+        monitor = object()
+        invalidation = {"reason": "health_below_floor"}
+        calls = []
+
+        def wait(predicate, observation_monitor):
+            calls.append(observation_monitor)
+            return {"event": "policy_invalidation", "invalidation": invalidation}
+
+        result = controller.wait_for_cover_acceptance(wait, "cover-0", monitor)
+        self.assertIs(calls[0], monitor)
+        self.assertEqual(result["invalidation"], invalidation)
+
+    def test_preplanning_invalidation_cancels_and_verifies_empty_release(self):
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+        process = Process()
+        result = controller.cancel_unplanned_invalidated_cover(
+            process, lambda predicate: terminal, "cover-0")
+        self.assertIs(result, terminal)
+        self.assertIn('"op": "cancel"', process.stdin.writes[0])
+
+    def test_running_renewal_invalidation_interrupts_and_verifies_release(self):
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+
+        terminal = {"event": "terminal", "id": "cover-1", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+        process, planner, handle = Process(), Planner(), object()
+        planner_interrupt, observed = controller.cancel_invalidated_cover(
+            planner, handle, process, lambda predicate: terminal, "cover-1")
+        self.assertEqual(planner.interrupted, [handle])
+        self.assertIs(observed, terminal)
+        self.assertEqual(planner_interrupt, {"status": "interrupted"})
+        self.assertIn('"op": "cancel"', process.stdin.writes[0])
+
 
 if __name__ == "__main__":
     unittest.main()

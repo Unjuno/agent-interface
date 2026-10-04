@@ -64,6 +64,17 @@ def extract_wait(process, rows):
     return scope["factory"](process, ScriptQueue(rows))
 
 
+def extract_cover_wait_helper():
+    tree = ast.parse(SOURCE.read_bytes())
+    helper = next(node for node in tree.body
+                  if isinstance(node, ast.FunctionDef) and
+                  node.name == "wait_for_cover_acceptance")
+    module = ast.fix_missing_locations(ast.Module(body=[helper], type_ignores=[]))
+    scope = {}
+    exec(compile(module, str(SOURCE), "exec"), scope)
+    return scope["wait_for_cover_acceptance"]
+
+
 class WaitTests(unittest.TestCase):
     def test_exited_session_does_not_enter_unbounded_stderr_read(self):
         process = Process(0)
@@ -102,6 +113,20 @@ class WaitTests(unittest.TestCase):
         result = wait(lambda row: True, observation_monitor=monitor)
         self.assertEqual(result["event"], "policy_invalidation")
         self.assertIs(result["invalidation"], invalidation)
+        self.assertIs(latest(), observation)
+
+    def test_cover_admission_returns_invalidation_before_queued_acceptance(self):
+        observation = {"event": "observation", "sequence": 8}
+        accepted = {"event": "accepted", "id": "cover-0"}
+        invalidation = {"reason": "hard_health_loss"}
+        monitor = types.SimpleNamespace(observe=lambda row: invalidation)
+        wait, latest = extract_wait(Process(None), [observation, accepted])
+        wait_for_acceptance = extract_cover_wait_helper()
+
+        result = wait_for_acceptance(wait, "cover-0", monitor)
+
+        self.assertEqual(result, {"event": "policy_invalidation",
+                                  "invalidation": invalidation})
         self.assertIs(latest(), observation)
 
     def test_running_invalidation_retains_typed_event_and_result(self):

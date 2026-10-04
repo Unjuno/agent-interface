@@ -156,6 +156,23 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     return planner_interrupt, terminal
 
 
+def wait_for_cover_acceptance(wait, identifier, monitor):
+    return wait(lambda row: row["event"] in ("accepted", "rejected") and
+                (row.get("id") == identifier or row["event"] == "rejected"),
+                observation_monitor=monitor)
+
+
+def cancel_unplanned_invalidated_cover(process, wait, cover_id):
+    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+    process.stdin.flush()
+    terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+    release = terminal.get("release", {})
+    if (terminal.get("status") != "cancelled" or release.get("verified") is not True or
+            release.get("buttons_down") != [] or release.get("keys_down") != []):
+        raise RuntimeError("invalidated cover before planning did not verify empty release")
+    return terminal
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -558,11 +575,26 @@ def main():
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
                 process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
-                accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"))
+                accepted=wait_for_cover_acceptance(wait,identifier,validity_monitor)
+                if accepted["event"] == "policy_invalidation":
+                    return accepted
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 cover_ids.append(identifier);return accepted
-            submit_cover(cover)
+            cover_acceptance=submit_cover(cover)
+            if cover_acceptance["event"] == "policy_invalidation":
+                terminal=cancel_unplanned_invalidated_cover(process,wait,cover)
+                cover_terminals.append(terminal)
+                decisions.append({"iteration":index,"cover_submit_attempts":[cover],
+                  "cover_program_ids":[],"cover_terminals":[terminal],
+                  "source_refresh":source_refresh,
+                  "cover_validity_admission":validity_admission,
+                  "cover_validity_soft_events":validity_monitor.soft_event_count,
+                  "cover_validity_latest_soft_event":validity_monitor.latest_soft_event,
+                  "policy_invalidation":cover_acceptance["invalidation"],
+                  "cover_terminal_before_plan":True,"plan_terminal":"not_started",
+                  "model_action_discarded":True,
+                  "discard_reason":"cover_invalidated_during_admission"})
+                continue
             model_root=args.out/f"decision-{index}"
             model_root.mkdir()
             action_source_observation=dict(latest)
@@ -609,6 +641,13 @@ def main():
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
+                    if next_accepted["event"] == "policy_invalidation":
+                        invalidation=next_accepted["invalidation"]
+                        current_cover=next_cover
+                        planner_interrupt,current_terminal=cancel_invalidated_cover(
+                            planner,planner_handle,process,current_cover)
+                        cover_terminals.append(current_terminal)
+                        break
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
@@ -1069,4 +1108,3 @@ def main():
           "model_wall_seconds":report["model_wall_seconds"]},indent=2))
 
 if __name__ == "__main__": main()
-
