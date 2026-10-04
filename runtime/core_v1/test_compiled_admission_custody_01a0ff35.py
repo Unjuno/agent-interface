@@ -106,13 +106,23 @@ class CompiledAdmissionReturnCustodyTests(unittest.TestCase):
                 self.assertEqual((result["outcome"], result["reason"]), ("SAFE_YIELD", "budget_exhausted"))
                 self.assertEqual((result["completed_transitions"], len(dispatch), len(driver.calls["execute"])), (stage - 1, stage - 1, stage - 1))
 
-    def test_original_cancellation_exception_propagates(self):
+    def test_cancellation_exception_retains_typed_prefix_after_local_clear(self):
         for stage in (1, 2):
             with self.subTest(stage=stage):
-                with self.assertRaisesRegex(RuntimeError, "post-admission cancellation unavailable"):
-                    self.exercise("clear", stage, "exception")
-                self.assertEqual(len(self.last_dispatch), stage - 1)
-                self.assertEqual(len(self.last_driver.calls["execute"]), stage - 1)
+                result, driver, returned, _, dispatch = self.exercise("clear", stage, "exception")
+                self.assertEqual((result["outcome"], result["reason"]),
+                                 ("RUNTIME_FAILED", "execution_failed"))
+                self.assertEqual(returned[stage - 1], {})
+                self.assertEqual((result["completed_transitions"], len(result["transitions"]),
+                                  len(dispatch), len(driver.calls["execute"])),
+                                 (stage - 1, stage - 1, stage - 1, stage - 1))
+                self.assertTrue(all(row["release_verified"] is True for row in result["transitions"]))
+                self.assertIsNone(result["pending_effect"])
+                self.assertEqual(result["critical_events"][-2], {
+                    "event": "cancellation_check_failed", "error_type": "RuntimeError"})
+                self.assertEqual(result["critical_events"][-1], {
+                    "event": "runtime_finished", "outcome": "RUNTIME_FAILED",
+                    "reason": "execution_failed", "completed_transitions": stage - 1})
 
     def test_initial_malformed_fields_still_reject_before_dispatch(self):
         cases = ({"authorization": None}, {"authorization": ""},

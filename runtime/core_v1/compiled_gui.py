@@ -186,7 +186,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         # The sink may format or retain its payload; keep receipt evidence private.
         journal(copy.deepcopy(row))
         if row["event"] in {"branch_selected", "admission_refused",
-                            "action_terminal", "effect_checked", "runtime_finished"}:
+                            "action_terminal", "effect_checked",
+                            "cancellation_check_failed", "runtime_finished"}:
             critical_events.append(row)
 
     def finish(outcome, reason):
@@ -223,9 +224,23 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     def expired():
         return clock() >= deadline
 
-    while True:
-        if adapters["cancelled"]():
+    def cancellation_stop():
+        try:
+            cancelled = adapters["cancelled"]()
+            if type(cancelled) is not bool:
+                raise TypeError("cancellation-state callback must return bool")
+        except Exception as error:
+            emit({"event": "cancellation_check_failed",
+                  "error_type": type(error).__name__})
+            return finish("RUNTIME_FAILED", "execution_failed")
+        if cancelled:
             return finish("SAFE_YIELD", "cancelled")
+        return None
+
+    while True:
+        stopped = cancellation_stop()
+        if stopped is not None:
+            return stopped
         if clock() >= deadline:
             return finish("SAFE_YIELD", "budget_exhausted")
         try:
@@ -235,6 +250,10 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.
             return finish("SAFE_YIELD", "association_changed")
+        except Exception:
+            # Adapter failures (for example an OCR timeout) invalidate this
+            # observation. Return the verified prefix and never infer a branch.
+            return finish("RUNTIME_FAILED", "observation_failed")
         observation, refusal = _observation(raw, interface, previous_sequence)
         # Retain validated observation fields before the supplied clock callback.
         observed_ns = clock()
@@ -317,8 +336,9 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
 
         if len(transitions) >= interface["method"]["max_transitions"]:
             return finish("SAFE_YIELD", "budget_exhausted")
-        if adapters["cancelled"]():
-            return finish("SAFE_YIELD", "cancelled")
+        stopped = cancellation_stop()
+        if stopped is not None:
+            return stopped
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
         action_name = branch["action"]
@@ -355,8 +375,9 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 type(admission["valid_until_ns"]) is not int or
                 admission["valid_until_ns"] <= clock()):
             raise ValueError("fresh revalidated admission required")
-        if adapters["cancelled"]():
-            return finish("SAFE_YIELD", "cancelled")
+        stopped = cancellation_stop()
+        if stopped is not None:
+            return stopped
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
         terminal = adapters["execute"]({
