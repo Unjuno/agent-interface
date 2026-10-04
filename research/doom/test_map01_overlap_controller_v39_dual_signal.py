@@ -1,4 +1,7 @@
 """Regression tests for paired health/ammo invalidation of fire cover."""
+import ast
+import inspect
+import queue
 import sys
 import time
 import unittest
@@ -34,6 +37,39 @@ class Reader:
 
     def read(self, row):
         return self.rows[row["sequence"]]
+
+
+class _WaitProcess:
+    def poll(self):
+        return None
+
+
+def _controller_wait_with_rows(rows):
+    """Execute the controller's exact nested wait() dispatch with queued rows."""
+    tree = ast.parse(inspect.getsource(controller))
+    waits = [node for node in ast.walk(tree)
+             if isinstance(node, ast.FunctionDef) and node.name == "wait"]
+    if len(waits) != 1:
+        raise AssertionError(f"expected one controller wait(), found {len(waits)}")
+    factory = ast.parse("""def make_wait(rows):
+    incoming = queue.Queue()
+    process = _WaitProcess()
+    latest = None
+    for row in rows:
+        incoming.put(row)
+""").body[0]
+    factory.body.extend([
+        waits[0],
+        ast.Return(value=ast.Name(id="wait", ctx=ast.Load())),
+    ])
+    namespace = {
+        "queue": queue,
+        "time": time,
+        "_WaitProcess": _WaitProcess,
+    }
+    tree = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
+    exec(compile(tree, "<controller-wait-dispatch>", "exec"), namespace)
+    return namespace["make_wait"](rows)
 
 
 class PairedCoverGuardTests(unittest.TestCase):
@@ -239,7 +275,6 @@ class PairedCoverGuardTests(unittest.TestCase):
         self.assertEqual(event["reason"], "signal_pair_epoch_mismatch")
 
     def test_full_observation_without_typed_companion_is_dispatched(self):
-        self.assertIn("observation", controller.DoomCoverSignalPairMonitor.event_types)
         source = observation()
         next_observation = observation(11, 1_100_000_000)
         health_rows = {10: signal("health", 100),
@@ -248,10 +283,14 @@ class PairedCoverGuardTests(unittest.TestCase):
                      11: signal("ammo", 0, 11, 1_100_000_000)}
         monitor, _ = self.make_monitor(health_rows, ammo_rows, source=source)
 
-        event = monitor.observe(next_observation)
+        wait = _controller_wait_with_rows([next_observation])
+        event = wait(lambda row: row["event"] == "observation",
+                     timeout=0.2, observation_monitor=monitor)
 
-        self.assertEqual(event["event"], "paired_signal_invalidation")
-        self.assertEqual(event["outcomes"]["ammo"]["reason"], "below_hard_minimum")
+        self.assertEqual(event["event"], "policy_invalidation")
+        self.assertEqual(event["invalidation"]["event"], "paired_signal_invalidation")
+        self.assertEqual(event["invalidation"]["outcomes"]["ammo"]["reason"],
+                         "below_hard_minimum")
 
     def test_typed_then_full_duplicate_epoch_is_processed_once(self):
         monitor, _ = self.make_monitor(
