@@ -1,0 +1,27 @@
+test_accepts_complete_cleanup_pinned_partial_stop_fixture (test_execution_closure.E05Closure.test_accepts_complete_cleanup_pinned_partial_stop_fixture) ... FAIL
+
+======================================================================
+FAIL: test_accepts_complete_cleanup_pinned_partial_stop_fixture (test_execution_closure.E05Closure.test_accepts_complete_cleanup_pinned_partial_stop_fixture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e05_20261004_3cbf/test_execution_closure.py", line 31, in test_accepts_complete_cleanup_pinned_partial_stop_fixture
+    result = audit(root, root / 'raw/native')
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e05_20261004_3cbf/audit.py", line 95, in audit
+    require(set(execution) == closure, 'execution closure')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e05_20261004_3cbf/audit.py", line 60, in require
+    raise ValueError(reason)
+ValueError: execution closure
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e05_20261004_3cbf/test_execution_closure.py", line 33, in test_accepts_complete_cleanup_pinned_partial_stop_fixture
+    self.fail('complete E05 cleanup closure rejected: ' + repr(exc))
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete E05 cleanup closure rejected: ValueError('execution closure')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.103s
+
+FAILED (failures=1)
