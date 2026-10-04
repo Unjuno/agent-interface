@@ -1,0 +1,31 @@
+{
+  "authorized_intents": 2,
+  "errors": [],
+  "mutation_controls": {
+    "drop_summary_sources": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "promote_application_text": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "resurrect_superseded_revision": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "trust_missing_source": {
+      "error_count": 2,
+      "rejected": true
+    }
+  },
+  "records_reconstructed": 10,
+  "scope": "finite synthetic provenance pipeline; no model or live security claim",
+  "status": "PASS_METHOD_SCOPED",
+  "transforms_checked": [
+    "store",
+    "summarize",
+    "consolidate_exact_duplicates",
+    "retrieve"
+  ]
+}
