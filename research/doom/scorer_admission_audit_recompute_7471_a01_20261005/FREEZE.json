@@ -1,0 +1,47 @@
+{
+  "C": "Deterministic synthetic JSON mutation and audit subprocess only; native Windows CPU/Python. No game, model, GUI, OS input, GPU, container, WSLc, or shared allocation.",
+  "D": "The baseline audit must pass. The audit defect is reproduced only if the frozen auditor also passes the mutated raw while an independent recomputation disagrees with its retained decision. Otherwise record HOLD/NOT_REPRODUCED; do not alter the merged package.",
+  "H": "The merged #7471 audit may accept a corrupted raw scorer sample because it checks the retained observed decision label but does not recompute that decision from the sample history.",
+  "T": "Run the exact frozen auditor once on unchanged committed raw.json and once on an isolated copy where only the positive sample score in bracketed_bounded_positive changes from 1 to 0; preserve the frozen expected/observed fields. Independently recompute the decision from each raw sample history.",
+  "U": [
+    "One raw mutation does not characterize all possible auditor gaps.",
+    "Admission-bracketed progress remains association, not event-time or causal attribution.",
+    "No runtime integration or live recovery efficacy is tested."
+  ],
+  "base_main": "decefbd53240cdac21633e0d3e66c7e3bec76722",
+  "decision": "PASS_AUDITOR_FALSE_PASS only on baseline pass + mutated old-auditor pass + independent recomputation mismatch.",
+  "execution": "One baseline audit invocation and one mutated-input audit invocation; no retry.",
+  "experiment_id": "scorer-admission-audit-recompute-7471-a01",
+  "frozen_sources": {
+    "audit.py": {
+      "git_blob": "c45342033e2c41fb82faf72a0e384f2496fc1ac6",
+      "path": "research/doom/scorer_admission_attribution_t0_v1/audit.py",
+      "sha256": "da0722271d944ae1e56543fa43bc892c57e165c7c898be32844c5ba702c210b1"
+    },
+    "candidate.py": {
+      "git_blob": "3a097172115b6d8c2cd482c37c80388b86404b25",
+      "path": "research/doom/scorer_admission_attribution_t0_v1/candidate.py",
+      "sha256": "fecf7be7abe7a36111ec2df171461eb225d5c951b37c8d979d0a2ce2d0e7f4b9"
+    },
+    "raw.json": {
+      "git_blob": "1ad99581113d0b95372cae416489c67935aff5bc",
+      "path": "research/doom/scorer_admission_attribution_t0_v1/raw.json",
+      "sha256": "e58f766039f1dfcb9413b039978ac60a3bff7fafb538e93458fb61f01fb9d9a3"
+    }
+  },
+  "independent_auditor_sha256": "715402b8adadba8e3866833cec14a72e82776a9b6d8c91964dfe89832b269dee",
+  "mutation": {
+    "field": "score",
+    "from": 1,
+    "preserve": [
+      "expected",
+      "observed"
+    ],
+    "row_id": "bracketed_bounded_positive",
+    "sample_index": 2,
+    "to": 0
+  },
+  "runner_sha256": "26f445659132fd1c65d902b363f747c2d2cbe7e6b116af1b299e7238271caf14",
+  "schema": "scorer-admission-audit-mutation-freeze-v1",
+  "source_commit": "decefbd53240cdac21633e0d3e66c7e3bec76722"
+}
