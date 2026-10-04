@@ -1,4 +1,5 @@
 """Adapter boundary regression tests for the existing compiled graph."""
+import subprocess
 import unittest
 from runtime.core_v1.compiled_gui import run
 
@@ -81,7 +82,7 @@ class CompiledBoundaryTests(unittest.TestCase):
   d=Driver();base=d.observe
   def observe(p):
    if not d.calls['observe']:return base(p)
-   d.record('observe',p);raise TimeoutError('OCR timed out')
+   d.record('observe',p);raise subprocess.TimeoutExpired('tesseract',5)
   d.observe=observe;r=d.run()
   self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','observation_failed'))
   self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')

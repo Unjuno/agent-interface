@@ -91,7 +91,11 @@ class CompiledX11Tests(unittest.TestCase):
         self.assertEqual(r['completed_transitions'],0); self.assertEqual(r['transitions'],[])
         self.assertEqual(r['observations'],[]); self.assertIsNone(r['pending_effect'])
         self.assertEqual([v for n,v in b.saved if n.endswith('-receipt.json')],[r])
-        self.assertFalse(any(n.endswith('-exception.json') for n,v in b.saved))
+        self.assertEqual([v for n,v in b.saved if n.endswith('-exception.json')],[{
+            'stage':'observation','error_type':'RuntimeError',
+            'error':repr(RuntimeError('native artifact identity mismatch')),
+            'replay_allowed':False,
+            'effect_status':'unknown; inspect retained bridge receipts before any new action'}])
 
     def test_top_level_native_release_is_retained_on_pre_execution_refusal(self):
         b=Bridge()
@@ -232,7 +236,11 @@ class CompiledX11Tests(unittest.TestCase):
         self.assertEqual(r['completed_transitions'],0); self.assertEqual(r['transitions'],[])
         self.assertEqual(r['observations'],[]); self.assertIsNone(r['pending_effect'])
         self.assertEqual([v for n,v in b.saved if n.endswith('-receipt.json')],[r])
-        self.assertFalse(any(n.endswith('-exception.json') for n,v in b.saved))
+        self.assertEqual([v for n,v in b.saved if n.endswith('-exception.json')],[{
+            'stage':'observation','error_type':'RuntimeError',
+            'error':repr(RuntimeError('perception failed')),
+            'replay_allowed':False,
+            'effect_status':'unknown; inspect retained bridge receipts before any new action'}])
     def test_wrong_initial_surface_rejects_before_capture(self):
         b=Bridge(); s=spec(); s['surface']='other'
         with self.assertRaises(ValueError): run(b,s,bindings(),perceive=perceive,verify_effect=verify)
