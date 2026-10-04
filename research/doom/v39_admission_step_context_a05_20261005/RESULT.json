@@ -1,0 +1,1057 @@
+{
+  "counts": {
+    "admissions": 39,
+    "aggregate_receipts": 28,
+    "ambiguous_same_step_receipt": 0,
+    "no_same_step_receipt": 1,
+    "unique_same_step_receipt": 38
+  },
+  "limits": [
+    "Association is a reconstruction from one event stream's preceding step-start context, matching key membership, order and monotonic acknowledgement times; it is not a runtime-authored foreign key.",
+    "One aggregate keys_held receipt can correspond to multiple per-key admissions in the same step; this does not give a separate acknowledgement time per key.",
+    "The unmatched Down admission at cancelled cover-4 step 10 has no aggregate keys_held receipt; its acknowledgement race does not establish held-state duration.",
+    "No per-key key-up, physical keyboard state, independent positive task effect, recovery benefit, matched comparison, or MAP01 success is measured."
+  ],
+  "rows": [
+    {
+      "ack_gap_ns": 38471932,
+      "admission_index": 70,
+      "admitted_ns": 55510744310481,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55510744604148,
+      "key": "Up",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 73,
+          "id": "plan-0-primary-0-1",
+          "input_ack_ns": 55510783076080,
+          "keys": [
+            "Shift_L",
+            "Up",
+            "space"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "plan-0-primary-0-1",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 69
+    },
+    {
+      "ack_gap_ns": 23871358,
+      "admission_index": 71,
+      "admitted_ns": 55510759020972,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55510759204722,
+      "key": "Shift_L",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 73,
+          "id": "plan-0-primary-0-1",
+          "input_ack_ns": 55510783076080,
+          "keys": [
+            "Shift_L",
+            "Up",
+            "space"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "plan-0-primary-0-1",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 69
+    },
+    {
+      "ack_gap_ns": 11599791,
+      "admission_index": 72,
+      "admitted_ns": 55510771248594,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55510771476289,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 73,
+          "id": "plan-0-primary-0-1",
+          "input_ack_ns": 55510783076080,
+          "keys": [
+            "Shift_L",
+            "Up",
+            "space"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "plan-0-primary-0-1",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 69
+    },
+    {
+      "ack_gap_ns": 8853053,
+      "admission_index": 84,
+      "admitted_ns": 55511304484301,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55511304658887,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 85,
+          "id": "plan-0-primary-0-1",
+          "input_ack_ns": 55511313511940,
+          "keys": [
+            "a"
+          ],
+          "step": 1
+        }
+      ],
+      "step_context": {
+        "id": "plan-0-primary-0-1",
+        "operation": "hold",
+        "step": 1
+      },
+      "step_context_index": 83
+    },
+    {
+      "ack_gap_ns": 13884247,
+      "admission_index": 99,
+      "admitted_ns": 55511897718899,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55511897917993,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 100,
+          "id": "cover-1",
+          "input_ack_ns": 55511911802240,
+          "keys": [
+            "d"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 98
+    },
+    {
+      "ack_gap_ns": 12237021,
+      "admission_index": 111,
+      "admitted_ns": 55512505585714,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55512505878882,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 112,
+          "id": "cover-1",
+          "input_ack_ns": 55512518115903,
+          "keys": [
+            "a"
+          ],
+          "step": 1
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 1
+      },
+      "step_context_index": 110
+    },
+    {
+      "ack_gap_ns": 23872062,
+      "admission_index": 123,
+      "admitted_ns": 55512979280132,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55512979444644,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 125,
+          "id": "cover-1",
+          "input_ack_ns": 55513003316706,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 2
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 2
+      },
+      "step_context_index": 122
+    },
+    {
+      "ack_gap_ns": 10319383,
+      "admission_index": 124,
+      "admitted_ns": 55512992829631,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55512992997323,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 125,
+          "id": "cover-1",
+          "input_ack_ns": 55513003316706,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 2
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 2
+      },
+      "step_context_index": 122
+    },
+    {
+      "ack_gap_ns": 10553872,
+      "admission_index": 151,
+      "admitted_ns": 55515096755542,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55515096898681,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 152,
+          "id": "cover-1",
+          "input_ack_ns": 55515107452553,
+          "keys": [
+            "d"
+          ],
+          "step": 4
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 4
+      },
+      "step_context_index": 150
+    },
+    {
+      "ack_gap_ns": 12770573,
+      "admission_index": 163,
+      "admitted_ns": 55515578098286,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55515578274317,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 164,
+          "id": "cover-1",
+          "input_ack_ns": 55515591044890,
+          "keys": [
+            "a"
+          ],
+          "step": 5
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 5
+      },
+      "step_context_index": 162
+    },
+    {
+      "ack_gap_ns": 26651270,
+      "admission_index": 175,
+      "admitted_ns": 55516118463126,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55516118903833,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 177,
+          "id": "cover-1",
+          "input_ack_ns": 55516145555103,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 6
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 6
+      },
+      "step_context_index": 174
+    },
+    {
+      "ack_gap_ns": 12446064,
+      "admission_index": 176,
+      "admitted_ns": 55516132882645,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55516133109039,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 177,
+          "id": "cover-1",
+          "input_ack_ns": 55516145555103,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 6
+        }
+      ],
+      "step_context": {
+        "id": "cover-1",
+        "operation": "hold",
+        "step": 6
+      },
+      "step_context_index": 174
+    },
+    {
+      "ack_gap_ns": 24637127,
+      "admission_index": 306,
+      "admitted_ns": 55531922546329,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55531922893265,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 308,
+          "id": "plan-3-primary-0-1",
+          "input_ack_ns": 55531947530392,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "plan-3-primary-0-1",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 305
+    },
+    {
+      "ack_gap_ns": 10701531,
+      "admission_index": 307,
+      "admitted_ns": 55531936554866,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55531936828861,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 308,
+          "id": "plan-3-primary-0-1",
+          "input_ack_ns": 55531947530392,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "plan-3-primary-0-1",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 305
+    },
+    {
+      "ack_gap_ns": 14193823,
+      "admission_index": 320,
+      "admitted_ns": 55532266997515,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55532267448486,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 321,
+          "id": "cover-4",
+          "input_ack_ns": 55532281642309,
+          "keys": [
+            "d"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 319
+    },
+    {
+      "ack_gap_ns": 13240426,
+      "admission_index": 332,
+      "admitted_ns": 55532938932735,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55532939174983,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 333,
+          "id": "cover-4",
+          "input_ack_ns": 55532952415409,
+          "keys": [
+            "a"
+          ],
+          "step": 1
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 1
+      },
+      "step_context_index": 331
+    },
+    {
+      "ack_gap_ns": 22173402,
+      "admission_index": 344,
+      "admitted_ns": 55533472299129,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55533472467579,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 346,
+          "id": "cover-4",
+          "input_ack_ns": 55533494640981,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 2
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 2
+      },
+      "step_context_index": 343
+    },
+    {
+      "ack_gap_ns": 11053828,
+      "admission_index": 345,
+      "admitted_ns": 55533483423592,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55533483587153,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 346,
+          "id": "cover-4",
+          "input_ack_ns": 55533494640981,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 2
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 2
+      },
+      "step_context_index": 343
+    },
+    {
+      "ack_gap_ns": 11481667,
+      "admission_index": 372,
+      "admitted_ns": 55535605606184,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55535605756429,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 373,
+          "id": "cover-4",
+          "input_ack_ns": 55535617238096,
+          "keys": [
+            "d"
+          ],
+          "step": 4
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 4
+      },
+      "step_context_index": 371
+    },
+    {
+      "ack_gap_ns": 14117612,
+      "admission_index": 384,
+      "admitted_ns": 55536113050399,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55536113215596,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 385,
+          "id": "cover-4",
+          "input_ack_ns": 55536127333208,
+          "keys": [
+            "a"
+          ],
+          "step": 5
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 5
+      },
+      "step_context_index": 383
+    },
+    {
+      "ack_gap_ns": 26435565,
+      "admission_index": 396,
+      "admitted_ns": 55536671655932,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55536671838699,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 398,
+          "id": "cover-4",
+          "input_ack_ns": 55536698274264,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 6
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 6
+      },
+      "step_context_index": 395
+    },
+    {
+      "ack_gap_ns": 16296760,
+      "admission_index": 397,
+      "admitted_ns": 55536681826662,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55536681977504,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 398,
+          "id": "cover-4",
+          "input_ack_ns": 55536698274264,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 6
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 6
+      },
+      "step_context_index": 395
+    },
+    {
+      "ack_gap_ns": 9851403,
+      "admission_index": 424,
+      "admitted_ns": 55538773178528,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55538773330224,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 425,
+          "id": "cover-4",
+          "input_ack_ns": 55538783181627,
+          "keys": [
+            "d"
+          ],
+          "step": 8
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 8
+      },
+      "step_context_index": 423
+    },
+    {
+      "ack_gap_ns": 10809138,
+      "admission_index": 436,
+      "admitted_ns": 55539306067136,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55539306247040,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 437,
+          "id": "cover-4",
+          "input_ack_ns": 55539317056178,
+          "keys": [
+            "a"
+          ],
+          "step": 9
+        }
+      ],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 9
+      },
+      "step_context_index": 435
+    },
+    {
+      "ack_gap_ns": null,
+      "admission_index": 449,
+      "admitted_ns": 55539824242850,
+      "association": "NO_SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55539824580162,
+      "interpretation": "admission lacks matching same-step aggregate receipt; do not infer acknowledged held state",
+      "key": "Down",
+      "same_program_cancel_observed": true,
+      "same_program_terminal_status": "cancelled",
+      "same_step_receipt_count": 0,
+      "same_step_receipts": [],
+      "step_context": {
+        "id": "cover-4",
+        "operation": "hold",
+        "step": 10
+      },
+      "step_context_index": 447
+    },
+    {
+      "ack_gap_ns": 12429354,
+      "admission_index": 455,
+      "admitted_ns": 55539928641261,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55539928785334,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 456,
+          "id": "plan-4-primary-0-1",
+          "input_ack_ns": 55539941214688,
+          "keys": [
+            "space"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "plan-4-primary-0-1",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 454
+    },
+    {
+      "ack_gap_ns": 12190403,
+      "admission_index": 465,
+      "admitted_ns": 55540333159709,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55540333385852,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 466,
+          "id": "plan-4-primary-0-1",
+          "input_ack_ns": 55540345576255,
+          "keys": [
+            "d"
+          ],
+          "step": 1
+        }
+      ],
+      "step_context": {
+        "id": "plan-4-primary-0-1",
+        "operation": "hold",
+        "step": 1
+      },
+      "step_context_index": 464
+    },
+    {
+      "ack_gap_ns": 10364857,
+      "admission_index": 480,
+      "admitted_ns": 55540960124679,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55540960344369,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 481,
+          "id": "cover-5",
+          "input_ack_ns": 55540970709226,
+          "keys": [
+            "d"
+          ],
+          "step": 0
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 0
+      },
+      "step_context_index": 479
+    },
+    {
+      "ack_gap_ns": 12438785,
+      "admission_index": 492,
+      "admitted_ns": 55541606196642,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55541606355519,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 493,
+          "id": "cover-5",
+          "input_ack_ns": 55541618794304,
+          "keys": [
+            "a"
+          ],
+          "step": 1
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 1
+      },
+      "step_context_index": 491
+    },
+    {
+      "ack_gap_ns": 21739526,
+      "admission_index": 504,
+      "admitted_ns": 55542142422829,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55542142560744,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 506,
+          "id": "cover-5",
+          "input_ack_ns": 55542164300270,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 2
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 2
+      },
+      "step_context_index": 503
+    },
+    {
+      "ack_gap_ns": 9539027,
+      "admission_index": 505,
+      "admitted_ns": 55542154498524,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55542154761243,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 506,
+          "id": "cover-5",
+          "input_ack_ns": 55542164300270,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 2
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 2
+      },
+      "step_context_index": 503
+    },
+    {
+      "ack_gap_ns": 12690084,
+      "admission_index": 532,
+      "admitted_ns": 55544286836776,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55544287024372,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 533,
+          "id": "cover-5",
+          "input_ack_ns": 55544299714456,
+          "keys": [
+            "d"
+          ],
+          "step": 4
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 4
+      },
+      "step_context_index": 531
+    },
+    {
+      "ack_gap_ns": 10588717,
+      "admission_index": 544,
+      "admitted_ns": 55544791334690,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55544791509589,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 545,
+          "id": "cover-5",
+          "input_ack_ns": 55544802098306,
+          "keys": [
+            "a"
+          ],
+          "step": 5
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 5
+      },
+      "step_context_index": 543
+    },
+    {
+      "ack_gap_ns": 34876502,
+      "admission_index": 556,
+      "admitted_ns": 55545298316796,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55545298564123,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 558,
+          "id": "cover-5",
+          "input_ack_ns": 55545333440625,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 6
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 6
+      },
+      "step_context_index": 555
+    },
+    {
+      "ack_gap_ns": 22168842,
+      "admission_index": 557,
+      "admitted_ns": 55545311035809,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55545311271783,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 558,
+          "id": "cover-5",
+          "input_ack_ns": 55545333440625,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 6
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 6
+      },
+      "step_context_index": 555
+    },
+    {
+      "ack_gap_ns": 12771051,
+      "admission_index": 584,
+      "admitted_ns": 55547443343798,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55547443521370,
+      "key": "d",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 585,
+          "id": "cover-5",
+          "input_ack_ns": 55547456292421,
+          "keys": [
+            "d"
+          ],
+          "step": 8
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 8
+      },
+      "step_context_index": 583
+    },
+    {
+      "ack_gap_ns": 13640057,
+      "admission_index": 596,
+      "admitted_ns": 55547951303249,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55547951604936,
+      "key": "a",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 597,
+          "id": "cover-5",
+          "input_ack_ns": 55547965244993,
+          "keys": [
+            "a"
+          ],
+          "step": 9
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 9
+      },
+      "step_context_index": 595
+    },
+    {
+      "ack_gap_ns": 26610337,
+      "admission_index": 608,
+      "admitted_ns": 55548470358279,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55548470529609,
+      "key": "Down",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 610,
+          "id": "cover-5",
+          "input_ack_ns": 55548497139946,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 10
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 10
+      },
+      "step_context_index": 607
+    },
+    {
+      "ack_gap_ns": 13692216,
+      "admission_index": 609,
+      "admitted_ns": 55548483294400,
+      "association": "SAME_STEP_AGGREGATE_ACK",
+      "input_ack_ns": 55548483447730,
+      "key": "space",
+      "same_step_receipt_count": 1,
+      "same_step_receipts": [
+        {
+          "event_index": 610,
+          "id": "cover-5",
+          "input_ack_ns": 55548497139946,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "step": 10
+        }
+      ],
+      "step_context": {
+        "id": "cover-5",
+        "operation": "hold",
+        "step": 10
+      },
+      "step_context_index": 607
+    }
+  ],
+  "same_step_ack_gap_ms": {
+    "max": 38.471932,
+    "median": 12.770812,
+    "min": 8.853053,
+    "n": 38
+  },
+  "schema": "map01-v39-admission-step-context-analysis-a05-v1",
+  "source_commit": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "source_path": "research/doom/results/v39-control-telemetry-gap-audit-20261004/events.jsonl",
+  "source_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "status": "PASS_STEP_CONTEXT_ASSOCIATION_SCOPED"
+}
