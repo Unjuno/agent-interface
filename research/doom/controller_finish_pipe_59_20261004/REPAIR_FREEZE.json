@@ -1,0 +1,18 @@
+{
+  "schema": "doom-controller-finish-pipe-repair-freeze-v1",
+  "parent_baseline": "FREEZE.json; baseline result is immutable",
+  "test": "test_cleanup_finish_pipe.py",
+  "expected_behavior": "A real blocked finish writer does not block cleanup indefinitely; the controller-owned cleanup terminates the child, closes the planner, preserves the primary exception and reports the bounded-send outcome without probe-owned kill.",
+  "barrier_seconds": 3.5,
+  "runtime": {
+    "image": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+    "network": "none",
+    "user": "65534:65534",
+    "cpus_requested": 1,
+    "memory_requested": "512m"
+  },
+  "red_candidate_sha256": "7844cd558e453408a0b5aa46b860b53cf9afab9d47ccccaf7b61db2e90b42bb6",
+  "green_candidate_sha256": "75cd15b04b8130a41ac769eb1020057cf0b3f8f8aefaef6a17d13aad720f5a4b",
+  "test_sha256": "df4eee52d41c7b9177d6307e41dc3d99cbc8e6d59f50028e7253192d914f4295",
+  "runner_sha256": "01e2474631fc782eb5df27eb814b437d72c68fee31b0f3d1ed89e87902ee8e09"
+}
