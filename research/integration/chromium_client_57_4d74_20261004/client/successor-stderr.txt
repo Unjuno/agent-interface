@@ -1,0 +1,11 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/evidence/probe.py", line 8, in <module>
+    client.start()
+  File "/source/research/live_control/integrated_efficiency_client_v1.py", line 55, in start
+    self.ready = first(initial["reply"]["records"], "ready")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/source/research/live_control/integrated_efficiency_client_v1.py", line 25, in first
+    return next(row for row in records if row.get("event") == event)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration

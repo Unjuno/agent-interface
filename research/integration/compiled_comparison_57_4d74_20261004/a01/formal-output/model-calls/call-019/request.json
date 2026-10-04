@@ -1,0 +1,44 @@
+{
+  "call_id": "call-019",
+  "arm": "C",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "field_point": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1279
+        },
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "submit_point": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1279
+        },
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "method": {
+        "type": "string",
+        "enum": [
+          "enter_exact_token_verify_then_submit"
+        ]
+      }
+    },
+    "required": [
+      "field_point",
+      "submit_point",
+      "method"
+    ],
+    "additionalProperties": false
+  },
+  "prompt": "Locate the visible editable Value field and Save button in this current screenshot. Give source-image pixel points, field point in the empty right half away from caret. Authorized token is t991065-4. Do not use tools. Return only the schema object. Declare method enter_exact_token_verify_then_submit; local runtime will require exact visible token and current Submit identity before activating Submit.",
+  "image_relative": "block-1/C/client/runtime/038.png",
+  "image_sha256": "cd722768a7862ad0b1e20580b1218d8bba39b1586aa98c8330546839692807c0"
+}
