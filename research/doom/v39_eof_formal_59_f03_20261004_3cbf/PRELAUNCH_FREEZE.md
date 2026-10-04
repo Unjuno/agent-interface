@@ -85,15 +85,42 @@ Before any start, save full `sudo -n docker inspect f03-pipe-native-formal-3cbf-
 ```
 set +e
 sudo -n docker start -a f03-pipe-native-formal-3cbf-20261004 > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native-stdout.log 2>&1
-rc=$?
-printf '%s\n' "$rc" > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native_exit.txt
-sudo -n docker inspect f03-pipe-native-formal-3cbf-20261004 > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native-final-inspect.json
-exit "$rc"
+start_rc=$?
+if ! sudo -n docker inspect f03-pipe-native-formal-3cbf-20261004 > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native-final-inspect.json; then echo FINAL_INSPECT_STOP >&2; exit 90; fi
+if ! test -s /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native-final-inspect.json; then echo FINAL_INSPECT_EMPTY_STOP >&2; exit 91; fi
+state=$(sudo -n docker inspect --format '{{.State.Status}}' f03-pipe-native-formal-3cbf-20261004)
+inspect_rc=$?
+if [ "$inspect_rc" -ne 0 ] || [ "$state" != exited ]; then echo NATIVE_NOT_EXITED_STOP >&2; exit 92; fi
+container_rc=$(sudo -n docker inspect --format '{{.State.ExitCode}}' f03-pipe-native-formal-3cbf-20261004)
+inspect_rc=$?
+if [ "$inspect_rc" -ne 0 ] || [ "$container_rc" != "$start_rc" ]; then echo EXIT_CODE_MISMATCH_STOP >&2; exit 93; fi
+oom=$(sudo -n docker inspect --format '{{.State.OOMKilled}}' f03-pipe-native-formal-3cbf-20261004)
+inspect_rc=$?
+if [ "$inspect_rc" -ne 0 ] || [ "$oom" != false ]; then echo OOM_OR_INSPECT_STOP >&2; exit 94; fi
+if ! printf '%s\n' "$start_rc" > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native-cli-exit.txt; then echo CLI_RECEIPT_STOP >&2; exit 95; fi
+if ! printf '%s\n' "$container_rc" > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native_exit.txt; then echo NATIVE_EXIT_RECEIPT_STOP >&2; exit 96; fi
+exit "$container_rc"
 ```
 
-Never restart or retry. Retain even a pre-exec failure. Only if native external exit is 0 and the four-cell output is complete, copy native data once to the initially empty export directory (`cp -a ROOT/native/data/. ROOT/export/`), compare exact relative filenames, bytes and SHA-256 native↔export, and save both inventories/receipts. Push the independent export to host and compare again. Nonzero or incomplete native output is a retained STOP and forbids auditor start.
+Never restart or retry. Retain even a pre-exec failure. Only if native external exit is 0 and the final inspect/exit receipts above are nonempty and consistent, copy native data once to the initially empty export directory:
 
-Only after the above success gate, require the retained external `ROOT/receipts/native_exit.txt` to contain exactly `0\n`. Create the auditor container once with the exact settings/mounts below (it is not created before candidate success):
+```
+cp -a /home/taka/f03-pipe-formal-3cbf-20261004/native/data/. /home/taka/f03-pipe-formal-3cbf-20261004/export/
+(cd /home/taka/f03-pipe-formal-3cbf-20261004/native/data && find . -type f -print0 | sort -z | xargs -0 sha256sum) > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native-data.SHA256
+(cd /home/taka/f03-pipe-formal-3cbf-20261004/export && find . -type f -print0 | sort -z | xargs -0 sha256sum) > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/export-data.SHA256
+diff -u /home/taka/f03-pipe-formal-3cbf-20261004/receipts/native-data.SHA256 /home/taka/f03-pipe-formal-3cbf-20261004/receipts/export-data.SHA256
+diff -r /home/taka/f03-pipe-formal-3cbf-20261004/native/data /home/taka/f03-pipe-formal-3cbf-20261004/export
+```
+
+Then run this exact independent completeness gate on the export; it checks only directory inventory and the runner's completion summary, not row semantics:
+
+```
+python3 -B -c 'import json,pathlib; d=pathlib.Path("/home/taka/f03-pipe-formal-3cbf-20261004/export"); expected={"SUMMARY.json","baseline_eof.json","candidate_eof.json","candidate_events_eof.json","candidate_json.json"}; names={p.name for p in d.iterdir()}; assert names==expected,(sorted(names),sorted(expected)); s=json.loads((d/"SUMMARY.json").read_text()); assert s.get("cases")==["baseline_eof","candidate_eof","candidate_events_eof","candidate_json"]; assert s.get("retries")==0 and s.get("model_calls")==0 and s.get("verdict")=="FOUR_CELL_GATES_TRUE_AWAITING_EXIT"; print("FOUR_CELL_INVENTORY_GATE_PASS")'
+```
+
+Save its stdout/exit status. Push the independent export to host and compare the same relative-path SHA-256 manifest again. Any copy, hash, inventory or summary mismatch is a retained STOP and forbids auditor creation/start. The saved-only auditor remains the independent row-semantics check.
+
+Only after the above copy/hash/inventory gate passes, require the retained external `ROOT/receipts/native_exit.txt` to contain exactly `0\n`. Create the auditor container once with the exact settings/mounts below (it is not created before candidate success):
 
 ```
 sudo -n docker create --name f03-pipe-auditor-formal-3cbf-20261004 --platform linux/arm64 --network none --cpus 1 --memory 1g --memory-swap 1g --pids-limit 128 --read-only --cap-drop ALL --security-opt no-new-privileges --user 501:501 --tmpfs /tmp:rw,nosuid,size=256m --workdir /input --mount type=bind,src=/home/taka/f03-formal-input-v6,dst=/input,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/input.tar,dst=/input.tar,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/input.SHA256,dst=/custody/input.SHA256,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/auditor-entry.sh,dst=/entry.sh,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/export,dst=/saved,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/audit,dst=/audit --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/receipts/native_exit.txt,dst=/receipt/native_exit.txt,readonly sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b /bin/sh /entry.sh
@@ -105,14 +132,24 @@ Save/inspect the auditor in `created` state with the same exact checks before it
 set +e
 sudo -n docker start -a f03-pipe-auditor-formal-3cbf-20261004 > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/auditor-stdout.log 2>&1
 rc=$?
-sudo -n docker inspect f03-pipe-auditor-formal-3cbf-20261004 > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/auditor-final-inspect.json
-exit "$rc"
+if ! sudo -n docker inspect f03-pipe-auditor-formal-3cbf-20261004 > /home/taka/f03-pipe-formal-3cbf-20261004/receipts/auditor-final-inspect.json; then echo AUDITOR_FINAL_INSPECT_STOP >&2; exit 90; fi
+if ! test -s /home/taka/f03-pipe-formal-3cbf-20261004/receipts/auditor-final-inspect.json; then echo AUDITOR_FINAL_INSPECT_EMPTY_STOP >&2; exit 91; fi
+state=$(sudo -n docker inspect --format '{{.State.Status}}' f03-pipe-auditor-formal-3cbf-20261004)
+inspect_rc=$?
+if [ "$inspect_rc" -ne 0 ] || [ "$state" != exited ]; then echo AUDITOR_NOT_EXITED_STOP >&2; exit 92; fi
+container_rc=$(sudo -n docker inspect --format '{{.State.ExitCode}}' f03-pipe-auditor-formal-3cbf-20261004)
+inspect_rc=$?
+if [ "$inspect_rc" -ne 0 ] || [ "$container_rc" != "$rc" ]; then echo AUDITOR_EXIT_CODE_MISMATCH_STOP >&2; exit 93; fi
+oom=$(sudo -n docker inspect --format '{{.State.OOMKilled}}' f03-pipe-auditor-formal-3cbf-20261004)
+inspect_rc=$?
+if [ "$inspect_rc" -ne 0 ] || [ "$oom" != false ]; then echo AUDITOR_OOM_OR_INSPECT_STOP >&2; exit 94; fi
+exit "$container_rc"
 ```
 
 The auditor entry script checks archive/member hashes, UID/GID, actual cgroups and native exit receipt before executing exactly once: `python3 -B /input/research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit_saved.py /saved /audit/AUDIT.json`. No producer is run in the auditor. Retain its full inspect, initial/final input and data hashes, audit SHA, original/export manifests and first outcomes. Any audit failure is retained unchanged; no second attempt.
 
 ## Remaining limits
 
-Independent review must inspect this exact launch bundle and confirm the final Issue #59 notice for archive digest `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5`. Immediately before formal container creation repeat all VM, running-container, container-name, output-root, host/guest archive and script/manifest hash checks above and preserve the output. Until the v6 setup preflight, final review, notice and immediate checks pass, do not create or start either formal container.
+Independent review must inspect this exact launch bundle. The v6 notice for archive digest `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5` is confirmed in Issue #59 comment `5975407670`. Immediately before formal container creation repeat all VM, running-container, container-name, output-root, host/guest archive and script/manifest hash checks above and preserve the output. Until final review and immediate checks pass, do not create or start either formal container.
 
 SIGINT construction proves first-child interruption retention, not interruption while reader active, repeated signals during cleanup, SIGKILL retention inside producer, corrupt module loading branches, restart/concurrentconsumer/shape, live GUI/input/game/model/integration/causal timing/physical safety/fullroadmap. Host contention and global resource bounds are unqualified. This bounded pipe experiment does not close Issue #59 or the full roadmap.
