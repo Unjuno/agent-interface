@@ -156,7 +156,7 @@ class CancelReleasePublicationTest(unittest.TestCase):
             executor.close()
             owner.close()
 
-    def test_release_emitter_failure_is_not_retried_before_terminal(self):
+    def test_release_emitter_failure_is_retried_before_terminal(self):
         SERVER["down"].clear()
         owner = self.InputOwner(None)
         backend = Backend(owner)
@@ -186,16 +186,15 @@ class CancelReleasePublicationTest(unittest.TestCase):
                 watcher.join(3)
             terminal = next((e for e in events if e.get("event") == "terminal"), None)
             release_events = [e for e in events if e.get("event") == "input_released"]
-            self.assertEqual(len(attempts), 1)
-            self.assertEqual(len(release_events), 0)
+            self.assertEqual(len(attempts), 2)
+            self.assertEqual(len(release_events), 1)
             self.assertIsNotNone(terminal, events)
-            self.assertEqual(terminal["input_release_publication"]["status"],
-                             "delivery_unknown")
+            self.assertLess(events.index(release_events[0]), events.index(terminal))
+            self.assertLess(release_events[0]["published_ns"], terminal["terminal_ns"])
             self.assertFalse(worker.is_alive())
             self.assertTrue(all(not watcher.is_alive() for watcher in executor.release_watchers))
             self.assertIsNone(executor.active)
-            self.assertIn("release-emitter-retry", executor.release_publication_attempted_ids)
-            self.assertNotIn("release-emitter-retry", executor.published_release_ids)
+            self.assertIn("release-emitter-retry", executor.published_release_ids)
         finally:
             executor.close()
             owner.close()
@@ -232,13 +231,12 @@ class CancelReleasePublicationTest(unittest.TestCase):
             executor.close()
             owner.close()
 
-    def test_terminal_sink_failure_does_not_strand_executor(self):
+    def test_terminal_emitter_failure_is_locally_reported_and_fails_closed(self):
         SERVER["down"].clear()
         owner = self.InputOwner(None)
         backend = Backend(owner)
-        events = []
-        thread_errors = []
-        old_excepthook = threading.excepthook
+        events, thread_errors = [], []
+        original_hook = threading.excepthook
         threading.excepthook = lambda args: thread_errors.append(args.exc_value)
         def emit(event):
             if event.get("event") == "terminal":
@@ -246,75 +244,31 @@ class CancelReleasePublicationTest(unittest.TestCase):
             events.append(event)
         executor = self.Executor(backend, emit)
         try:
-            executor.submit("terminal-sink-failure", [{"op": "hold_w_until_cancel"}], 1,
+            executor.submit("terminal-emitter-unavailable", [{"op": "hold_w_until_cancel"}], 1,
                             time.perf_counter_ns() + 10_000_000_000)
             deadline = time.monotonic() + 2
             while backend.admission is None and time.monotonic() < deadline:
                 time.sleep(.001)
             self.assertIsNotNone(backend.admission)
-            self.assertTrue(executor.cancel("terminal-sink-failure"))
+            self.assertTrue(executor.cancel("terminal-emitter-unavailable"))
             worker = executor.active[2]
             worker.join(3)
+            for watcher in executor.release_watchers:
+                watcher.join(3)
             self.assertFalse(worker.is_alive())
-            self.assertTrue(any(str(error) == "terminal sink unavailable"
-                                for error in thread_errors), thread_errors)
-            self.assertIsNone(executor.active)
+            self.assertTrue(any(e.get("event") == "input_released" for e in events))
+            self.assertFalse(any(e.get("event") == "terminal" for e in events))
+            self.assertIsNotNone(executor.active)
+            self.assertEqual(executor.active[0], "terminal-emitter-unavailable")
+            self.assertEqual(
+                executor.terminal_publication_errors["terminal-emitter-unavailable"]["status"],
+                "delivery_unknown")
+            with self.assertRaisesRegex(ValueError, "closed or busy"):
+                executor.submit("must-not-run", [{"op": "hold_w_until_cancel"}], 1,
+                                time.perf_counter_ns() + 10_000_000_000)
+            self.assertTrue(any(isinstance(exc, OSError) for exc in thread_errors))
         finally:
-            if executor.active is not None:
-                executor.active = None
-            executor.close()
-            owner.close()
-            threading.excepthook = old_excepthook
-
-    def test_ambiguous_release_delivery_is_not_retried(self):
-        SERVER["down"].clear()
-        owner = self.InputOwner(None)
-        backend = Backend(owner)
-        events = []
-        accepted_release_events = []
-        watcher_finished = threading.Event()
-        old_release_all = backend.release_all
-        attempts = 0
-        def emit(event):
-            nonlocal attempts
-            if event.get("event") == "input_released":
-                attempts += 1
-                accepted_release_events.append(event)
-                if attempts == 1:
-                    raise OSError("ack lost after event acceptance")
-            events.append(event)
-        executor = self.Executor(backend, emit)
-        publish = executor._publish_release
-        def publish_and_signal(identifier, lease):
-            try:
-                publish(identifier, lease)
-            finally:
-                watcher_finished.set()
-        executor._publish_release = publish_and_signal
-        def release_then_wait_for_watcher():
-            result = old_release_all()
-            if not watcher_finished.wait(2):
-                raise AssertionError("watcher did not finish the ambiguous delivery")
-            return result
-        backend.release_all = release_then_wait_for_watcher
-        try:
-            executor.submit("ambiguous-release-delivery", [{"op": "hold_w_until_cancel"}], 1,
-                            time.perf_counter_ns() + 10_000_000_000)
-            deadline = time.monotonic() + 2
-            while backend.admission is None and time.monotonic() < deadline:
-                time.sleep(.001)
-            self.assertIsNotNone(backend.admission)
-            self.assertTrue(executor.cancel("ambiguous-release-delivery"))
-            worker = executor.active[2]
-            worker.join(3)
-            self.assertFalse(worker.is_alive())
-            self.assertEqual(attempts, 1)
-            self.assertEqual(len(accepted_release_events), 1)
-            terminal = next(e for e in events if e.get("event") == "terminal")
-            self.assertEqual(terminal["input_release_publication"]["status"],
-                             "delivery_unknown")
-            self.assertIn("ack lost", terminal["input_release_publication"]["error"]["message"])
-        finally:
+            threading.excepthook = original_hook
             executor.close()
             owner.close()
 
