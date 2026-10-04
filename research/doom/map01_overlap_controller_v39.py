@@ -596,6 +596,14 @@ def input_edge_receipts(events):
                 bracket.get("grants_input_authority") is False and
                 bracket.get("application_consumption_observed") is False)
 
+        def admission_window_matches(row, data):
+            pre = data.get("pre_sample") if type(data) is dict else None
+            admitted_ns = row.get("admitted_ns") if type(row) is dict else None
+            return (
+                type(pre) is dict and type(admitted_ns) is int and
+                type(pre.get("started_ns")) is int and
+                admitted_ns <= pre["started_ns"])
+
         def sample_window_matches(data, row, edge_name):
             pre = data.get("pre_sample") if type(data) is dict else None
             post = data.get("post_sample") if type(data) is dict else None
@@ -616,7 +624,8 @@ def input_edge_receipts(events):
                     type(request_ns) is not int or type(sync_ns) is not int or
                     pre["finished_ns"] > request_ns or request_ns > sync_ns or
                     sync_ns > post["started_ns"] or
-                    edge_name == "down" and row.get("input_ack_ns") != sync_ns or
+                    edge_name == "down" and (type(row.get("input_ack_ns")) is not int or
+                                                  row.get("input_ack_ns") != sync_ns) or
                     edge_name == "up" and data.get("release_attempted") is not True):
                 return False
             bracket = data.get("bracket")
@@ -669,6 +678,7 @@ def input_edge_receipts(events):
             up_data.get("application_consumption_observed") is False and
             bracket_matches(down_data, down_edge, "down", "CONFIRMED_PHYSICAL_DOWN") and
             bracket_matches(up_data, up_edge, "up", "CONFIRMED_PHYSICAL_UP") and
+            admission_window_matches(down, down_data) and
             sample_window_matches(down_data, down, "down") and
             sample_window_matches(up_data, up, "up"))
         receipts.append({
@@ -682,7 +692,16 @@ def input_edge_receipts(events):
                                     if type(down_actuation) is str else None),
             "step": step,
             "key": key,
+            "input_admitted_ns": (down.get("admitted_ns") if complete else None),
+            "down_press_request_ns": (down_data.get("press_request_ns")
+                                      if complete else None),
+            "down_sync_return_ns": (down_data.get("sync_return_ns")
+                                    if complete else None),
             "down_edge_interval_ns": down_interval if complete else None,
+            "up_release_request_ns": (up_data.get("release_request_ns")
+                                      if complete else None),
+            "up_sync_return_ns": (up_data.get("sync_return_ns")
+                                  if complete else None),
             "up_edge_interval_ns": up_interval if complete else None,
             "grants_input_authority": False if complete else None,
             "application_consumption_observed": False if complete else None,
