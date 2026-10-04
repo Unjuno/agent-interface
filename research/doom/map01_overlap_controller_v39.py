@@ -747,7 +747,7 @@ def effect_receipts(commands, before, observations, accepted_ns,
           "state_feedback":action_state_feedback(
               previous_observation, feedback_observation, typed_observations)})
         previous=current
-        previous_observation = feedback_observation
+        previous_observation = observation
     return receipts
 
 
