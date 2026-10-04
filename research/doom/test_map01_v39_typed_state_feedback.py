@@ -685,6 +685,37 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipt["state_feedback"]["to_sequence"], 89)
         self.assertEqual(receipt["state_feedback"]["signals"]["ammo"]["delta"], -1)
 
+    def test_feedback_baseline_advances_to_previous_action_last_sample(self):
+        before = observation(0, 100)
+        before.update({"image": "before.png", "step": -1})
+        samples = []
+        typed = [typed_observation(0, 100, 100, 50)]
+        for sequence, step, capture_ns, health, ammo in (
+                (1, 0, 200, 99, 49),
+                (2, 0, 300, 70, 30),
+                (3, 1, 400, 70, 30),
+                (4, 1, 500, 70, 30)):
+            row = observation(sequence, capture_ns)
+            row.update({"image": f"sample-{sequence}.png", "step": step,
+                        "capture_ms": 0.5})
+            samples.append(row)
+            typed.append(typed_observation(sequence, capture_ns, health, ammo))
+            typed[-1]["step"] = step
+
+        with patch.object(controller, "descriptor",
+                          side_effect=["before", "step-0-last", "step-1-last"]), \
+                patch.object(controller, "normalized_mae", return_value=0.1):
+            receipts = controller.effect_receipts(
+                [{"action": "move", "extent": "hold"},
+                 {"action": "turn", "extent": "hold"}],
+                before, samples, 100, typed_observations=typed)
+
+        feedback = receipts[1]["state_feedback"]
+        self.assertEqual(feedback["from_sequence"], 2)
+        self.assertEqual(feedback["to_sequence"], 3)
+        self.assertEqual(feedback["signals"]["health"]["delta"], 0)
+        self.assertEqual(feedback["signals"]["ammo"]["delta"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
