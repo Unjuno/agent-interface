@@ -143,6 +143,19 @@ The current bottleneck must be evaluated across the complete primary-host loop: 
 
 Next integration priority: preserve this working path and measure bounded observation/decision handoffs, especially valid-but-unpainted and stale-dialog images. Do not expand unrelated experiments, develop sensors in this task, or adopt a wait default from these examples. #3700 remains HOLD_PRODUCTION_ADOPTION. Registered-host recovery, true useful-feedback onset and comparison accounting remain explicit gaps.
 
+**#57 bounded handoff checkpoint — 2026-10-05:** the [retained Calc dialog
+reconstruction and primary-host replay](../research/integration/unpainted_dialog_handoff_reconstruction_57_a01_20261005/README.md)
+joins images #006–#009 to their request/terminal records and replays the exact
+PNG bytes through the current `runtime/host_v1` caller/relay. The offline replay
+checks input → explicit observe → confirmation input → explicit observe, with
+two input dispatches, four source-bound reviews, and no interface task-success
+claim. Host request-to-image-ready spans were 79–97 ms for dialog/recovery
+observations, while next-command intervals were 6.0–8.5 s and remain mixed
+reasoning/orchestration time. This verifies a bounded handoff on retained
+evidence only; it does not supply live useful-feedback timing, second-domain
+transfer, or token/cost comparison, and does not change pacing or sensor policy.
+See PR #7740 and the corresponding #57 comment for review state.
+
 ---
 # Integration priority — 2026-09-19
 
