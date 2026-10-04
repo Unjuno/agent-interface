@@ -1,4 +1,5 @@
 """Regressions for source-bound HUD state feedback in V39 planner context."""
+import hashlib
 import sys
 import tempfile
 import unittest
@@ -47,6 +48,98 @@ class FakePlanner:
 
 
 class V39TypedStateFeedbackTests(unittest.TestCase):
+    def test_input_edge_receipt_pairs_per_key_admission_and_server_keyup_without_secrets(self):
+        token = "ephemeral-intent-token"
+        events = [
+            {"event": "input_admission", "id": "program-1", "step": 2,
+             "key": "d", "intent_token": token, "admitted_ns": 1_000_000,
+             "input_ack_ns": 1_100_000},
+            {"event": "input_release_transition", "id": "program-1", "step": 2,
+             "key": "d", "intent_token": token, "operation": "up",
+             "release_call_started_ns": 2_500_000,
+             "release_call_returned_ns": 2_800_000,
+             "owner_thread_keyup_receipt": {
+                 "event": "owner_explicit_keyup", "key": "d",
+                 "intent_token": token,
+                 "owner_keyrelease_started_ns": 2_600_000,
+                 "owner_sync_returned_ns": 2_700_000,
+                 "server_sync_completed": True,
+                 "physical_verification_authoritative": False},
+             "owner_thread_keyup_receipt_count": 1,
+             "owner_thread_keyup_history_complete": True,
+             "owner_thread_keyup_verified": True,
+             "physical_verification_authoritative": False},
+        ]
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual(len(receipts), 1)
+        receipt = receipts[0]
+        self.assertEqual(receipt["status"], "paired")
+        self.assertEqual(receipt["key"], "d")
+        self.assertEqual(receipt["step"], 2)
+        self.assertEqual(receipt["admitted_ns"], 1_000_000)
+        self.assertEqual(receipt["input_ack_ns"], 1_100_000)
+        self.assertEqual(receipt["owner_keyrelease_started_ns"], 2_600_000)
+        self.assertEqual(receipt["owner_sync_returned_ns"], 2_700_000)
+        self.assertEqual(receipt["input_ack_to_owner_keyup_start_ms"], 1.5)
+        self.assertTrue(receipt["server_sync_completed"])
+        self.assertFalse(receipt["physical_verification_authoritative"])
+        self.assertNotIn("ephemeral-intent-token", repr(receipts))
+        self.assertNotIn("owner_thread_keyup_receipt", receipt)
+
+    def test_input_edge_receipt_keeps_missing_release_unpaired(self):
+        receipts = controller.input_edge_receipts([{
+            "event": "input_admission", "id": "program-1", "step": 0,
+            "key": "space", "intent_token": "token", "admitted_ns": 100,
+            "input_ack_ns": 110,
+        }])
+
+        self.assertEqual(len(receipts), 1)
+        self.assertEqual(receipts[0]["status"], "admission_without_release")
+        self.assertIsNone(receipts[0]["owner_keyrelease_started_ns"])
+        self.assertIsNone(receipts[0]["input_ack_to_owner_keyup_start_ms"])
+
+    def test_input_edge_receipt_does_not_join_different_intent_tokens(self):
+        events = [
+            {"event": "input_admission", "id": "program-1", "step": 1,
+             "key": "Up", "intent_token": "token-a", "admitted_ns": 100,
+             "input_ack_ns": 110},
+            {"event": "input_release_transition", "id": "program-1", "step": 1,
+             "key": "Up", "intent_token": "token-b", "operation": "up",
+             "owner_thread_keyup_receipt": {"event": "owner_explicit_keyup",
+                 "key": "Up", "intent_token": "token-b",
+                 "owner_keyrelease_started_ns": 200,
+                 "owner_sync_returned_ns": 210,
+                 "server_sync_completed": True}},
+        ]
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual([row["status"] for row in receipts], [
+            "admission_without_release", "release_without_admission"])
+
+    def test_input_edge_receipt_does_not_derive_interval_outside_release_bracket(self):
+        events = [
+            {"event": "input_admission", "id": "program-1", "step": 0,
+             "key": "Up", "intent_token": "token", "admitted_ns": 100,
+             "input_ack_ns": 110},
+            {"event": "input_release_transition", "id": "program-1", "step": 0,
+             "key": "Up", "intent_token": "token", "operation": "up",
+             "release_call_started_ns": 250, "release_call_returned_ns": 290,
+             "owner_thread_keyup_receipt": {"event": "owner_explicit_keyup",
+                 "key": "Up", "intent_token": "token",
+                 "owner_keyrelease_started_ns": 240,
+                 "owner_sync_returned_ns": 260,
+                 "server_sync_completed": True},
+        }
+        ]
+
+        receipt = controller.input_edge_receipts(events)[0]
+
+        self.assertEqual(receipt["status"], "release_receipt_incomplete")
+        self.assertIsNone(receipt["input_ack_to_owner_keyup_start_ms"])
+
     def test_feedback_reports_exact_health_and_ammo_deltas_for_matching_frames(self):
         before = observation(83, 100)
         after = observation(89, 200)
@@ -162,6 +255,28 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         prompt, _ = planner.calls[0]
         self.assertIn('"ammo":{"before":45,"after":45,"delta":0}', prompt)
         self.assertIn("not causal or beneficial evidence", prompt)
+
+    def test_action_receipt_has_join_key_for_per_key_timing_and_state_capture(self):
+        before = observation(83, 100)
+        before.update({"image": "before.png", "step": 0})
+        after = observation(89, 200)
+        after.update({"image": "after.png", "step": 0, "capture_ms": 1.0})
+        typed = [typed_observation(83, 100, 91, 45),
+                 typed_observation(89, 200, 91, 44)]
+        typed[0]["step"] = 0
+        typed[1]["step"] = 0
+        with patch.object(controller, "descriptor", side_effect=["before", "after"]), \
+             patch.object(controller, "normalized_mae", return_value=0.1):
+            receipts = controller.effect_receipts(
+                [{"action": "fire", "extent": "pulse"}], before, [after], 100,
+                typed_observations=typed)
+
+        receipt = receipts[0]
+        self.assertEqual(receipt["program_id_sha256"],
+                         hashlib.sha256(b"program-1").hexdigest())
+        self.assertEqual(receipt["executor_step"], 0)
+        self.assertEqual(receipt["feedback_capture_ns"], 200)
+        self.assertEqual(receipt["state_feedback"]["signals"]["ammo"]["delta"], -1)
 
 
 if __name__ == "__main__":

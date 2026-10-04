@@ -503,6 +503,107 @@ def action_state_feedback(before, after, typed_observations):
     }
 
 
+def input_edge_receipts(events):
+    """Pair per-key owner admissions with key-up receipts without exposing tokens."""
+    grouped = {}
+    invalid = []
+    for event in events:
+        if type(event) is not dict or event.get("event") not in (
+                "input_admission", "input_release_transition"):
+            continue
+        identifier = event.get("id")
+        step = event.get("step")
+        key = event.get("key")
+        token = event.get("intent_token")
+        if (type(identifier) is not str or not identifier or
+                type(step) is not int or step < 0 or
+                type(key) is not str or not key or
+                type(token) is not str or not token):
+            invalid.append({
+                "status": "identity_unavailable",
+                "event": event["event"],
+                "step": step if type(step) is int else None,
+                "key": key if type(key) is str else None,
+                "scope": "per-key timing unpaired; source event identity incomplete",
+            })
+            continue
+        group_key = (identifier, step, key, token)
+        bucket = grouped.setdefault(group_key, {"admission": [], "release": []})
+        bucket["admission" if event["event"] == "input_admission" else "release"].append(event)
+
+    receipts = list(invalid)
+    for (identifier, step, key, token), bucket in grouped.items():
+        admissions = bucket["admission"]
+        releases = bucket["release"]
+        admission = admissions[0] if len(admissions) == 1 else None
+        release = releases[0] if len(releases) == 1 else None
+        owner = release.get("owner_thread_keyup_receipt") if release else None
+        admitted_ns = admission.get("admitted_ns") if admission else None
+        input_ack_ns = admission.get("input_ack_ns") if admission else None
+        release_started_ns = release.get("release_call_started_ns") if release else None
+        release_returned_ns = release.get("release_call_returned_ns") if release else None
+        keyup_started_ns = owner.get("owner_keyrelease_started_ns") if type(owner) is dict else None
+        sync_returned_ns = owner.get("owner_sync_returned_ns") if type(owner) is dict else None
+
+        if len(admissions) > 1 or len(releases) > 1:
+            status = "ambiguous_input_edges"
+        elif admission is None:
+            status = "release_without_admission"
+        elif release is None:
+            status = "admission_without_release"
+        elif (release.get("operation") != "up" or type(owner) is not dict or
+              owner.get("event") != "owner_explicit_keyup" or
+              owner.get("key") != key or owner.get("intent_token") != token or
+              type(admitted_ns) is not int or type(input_ack_ns) is not int or
+              input_ack_ns < admitted_ns or
+              type(release_started_ns) is not int or type(release_returned_ns) is not int or
+              type(keyup_started_ns) is not int or type(sync_returned_ns) is not int or
+              keyup_started_ns < input_ack_ns or
+              keyup_started_ns < release_started_ns or
+              sync_returned_ns < keyup_started_ns or
+              release_returned_ns < sync_returned_ns):
+            status = "release_receipt_incomplete"
+        else:
+            status = "paired"
+
+        def delta_ms(start, end):
+            if type(start) is int and type(end) is int and end >= start:
+                return round((end - start) / 1_000_000, 6)
+            return None
+
+        receipts.append({
+            "status": status,
+            "program_id_sha256": hashlib.sha256(identifier.encode("utf-8")).hexdigest(),
+            "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
+            "step": step,
+            "key": key,
+            "admitted_ns": admitted_ns if type(admitted_ns) is int else None,
+            "input_ack_ns": input_ack_ns if type(input_ack_ns) is int else None,
+            "release_call_started_ns": release_started_ns if type(release_started_ns) is int else None,
+            "owner_keyrelease_started_ns": (keyup_started_ns
+                                             if type(keyup_started_ns) is int else None),
+            "owner_sync_returned_ns": (sync_returned_ns
+                                        if type(sync_returned_ns) is int else None),
+            "release_call_returned_ns": release_returned_ns if type(release_returned_ns) is int else None,
+            "admitted_to_owner_keyup_start_ms": (delta_ms(admitted_ns, keyup_started_ns)
+                                                  if status == "paired" else None),
+            "input_ack_to_owner_keyup_start_ms": (delta_ms(input_ack_ns, keyup_started_ns)
+                                                  if status == "paired" else None),
+            "server_sync_completed": (owner.get("server_sync_completed") is True
+                                      if type(owner) is dict else False),
+            "owner_thread_keyup_verified": (release.get("owner_thread_keyup_verified") is True
+                                             if release else False),
+            "owner_keyup_history_complete": (release.get("owner_thread_keyup_history_complete") is True
+                                              if release else False),
+            "physical_verification_authoritative": (
+                release.get("physical_verification_authoritative") is True
+                if release else False),
+            "scope": ("owner admission-to-keyup-request timing; server synchronization only, "
+                      "not physical key-down duration or task benefit"),
+        })
+    return receipts
+
+
 def effect_receipts(commands, before, observations, accepted_ns,
                     typed_observations=()):
     previous=descriptor(Path(before["image"]));receipts=[]
@@ -516,8 +617,12 @@ def effect_receipts(commands, before, observations, accepted_ns,
         receipts.append({"action":command["action"],"extent":command["extent"],
           "result":"no_visible_effect" if mae<=0.015 else "visible_change",
           "normalized_mae":mae,"no_visible_effect_threshold_lte":0.015,
+          "program_id_sha256":(hashlib.sha256(observation["id"].encode("utf-8")).hexdigest()
+                               if type(observation.get("id")) is str else None),
+          "executor_step":observation.get("step"),
           "after_sequence":observation["sequence"],
           "effect_observed_ns":observation["capture_ns"],
+          "feedback_capture_ns":observation["capture_ns"],
           "samples":len(samples),
           "plan_accept_to_first_capture_ms":(samples[0]["capture_ns"]-accepted_ns)/1e6,
           "plan_accept_to_last_capture_ms":(observation["capture_ns"]-accepted_ns)/1e6,
@@ -1081,6 +1186,7 @@ def main():
                     typed,full,{"health":signal_reader,"ammo":ammo_reader})
                 reconciliation["sequence"]=sequence
                 typed_reconciliations.append(reconciliation)
+        per_key_input_receipts = input_edge_receipts(all_events)
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
@@ -1089,6 +1195,10 @@ def main():
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
           "state_feedback_contract":"compare hash-bound typed public health/ammo values at exact before/after action observations and expose the observed transition in the next planner prompt as correlation only; never infer a hit or benefit",
+          "input_edge_receipt_contract":"pair per-key input admission with exact owner-thread key-up receipts by program, step, key and intent token; retain only token/ID digests and observed timestamps; server synchronization is not physical key-down duration or task benefit",
+          "input_edge_receipts":per_key_input_receipts,
+          "input_edge_receipt_statuses":dict(Counter(
+              row["status"] for row in per_key_input_receipts)),
           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
           "final_action_admission_contract":"historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
           "running_action_contract":"the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
