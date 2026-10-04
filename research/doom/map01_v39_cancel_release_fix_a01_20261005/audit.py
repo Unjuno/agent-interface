@@ -17,7 +17,7 @@ for path,expected in lock['base_sha256'].items():
     assert hashlib.sha256(blob).hexdigest() == expected, path
 for path,expected in lock['candidate_sha256'].items():
     assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest() == expected, path
-suites=[('candidate-suite',8),('owner-compat-suite',10),('existing-bridge-suite',2)]
+suites=[('candidate-suite',9),('owner-compat-suite',10),('existing-bridge-suite',2)]
 for name,count in suites:
     log=(HERE/f'{name}.log').read_text()
     code=int((HERE/f'{name}.exit').read_text())
@@ -27,6 +27,7 @@ for name,count in suites:
     assert result['tests'][{'candidate-suite':'candidate_cancel_release','owner-compat-suite':'input_owner_v12_compatibility_on_v13','existing-bridge-suite':'existing_v39_bridge'}[name]]['exit'] == code
 assert result['disposition']=='PASS_CANDIDATE_MECHANICS'
 assert 'test_executor_cancel_terminal_contains_one_verified_cleanup_receipt' in (HERE/'candidate-suite.log').read_text()
+assert 'test_executor_expiry_terminal_contains_one_verified_cleanup_receipt' in (HERE/'candidate-suite.log').read_text()
 assert 'test_expired_program_exit_drains_owner_cleanup_without_cancel_event' in (HERE/'candidate-suite.log').read_text()
 assert result['scope'].startswith('Local fake-display')
-print('AUDIT_PASS_SOURCE_LOCK_AND_20_TEST_RECEIPTS')
+print('AUDIT_PASS_SOURCE_LOCK_AND_21_TEST_RECEIPTS')

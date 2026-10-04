@@ -321,6 +321,92 @@ class CancellationReceiptTests(unittest.TestCase):
                 parent.release_all = prior_release
             executor_v3.Lease = prior_lease_type
 
+    def test_executor_expiry_terminal_contains_one_verified_cleanup_receipt(self):
+        bridge_test, _hm, harness, _lease, _bm, backend = load_candidate()
+        import executor_v3
+        from lease import Expired
+        Executor = executor_v3.Executor
+        prior_lease_type = executor_v3.Lease
+
+        class ObservedLease(prior_lease_type):
+            def __init__(self, deadline):
+                super().__init__(deadline)
+                self.expected_focus = 42
+                self.intent_token = "intent-expiry-executor-a01"
+
+        executor_v3.Lease = ObservedLease
+        missing = object()
+        parent = bridge_test.Backend.__bases__[0]
+        prior_execute = parent.__dict__.get("execute", missing)
+        prior_release = parent.__dict__.get("release_all", missing)
+        events = []
+        admission_seen = threading.Event()
+        terminal_seen = threading.Event()
+
+        def emit(row):
+            events.append(row)
+            if row.get("event") == "input_admission":
+                admission_seen.set()
+            if row.get("event") == "terminal":
+                terminal_seen.set()
+
+        def expiry_program(self, _step, _cancel, _identifier, _index):
+            self.raw("F8", True)
+            while time.perf_counter_ns() < self.lease.deadline + 2_000_000:
+                time.sleep(0.001)
+            raise Expired()
+
+        def release_all(self):
+            state = self.owner.call("input_state", self.lease)
+            return {"verified": (state.get("owned_keycodes") == []
+                                 and state.get("owned_buttons") == [])}
+
+        parent.execute = expiry_program
+        parent.release_all = release_all
+        backend.sequence = 1
+        backend.validate = lambda _steps: None
+        backend.emit = emit
+        executor = Executor(backend, emit)
+        try:
+            deadline = time.perf_counter_ns() + 30_000_000
+            executor.submit("expiry-executor-a01", [{"op": "hold"}], 1, deadline)
+            self.assertTrue(admission_seen.wait(1.0), repr(events))
+            self.assertTrue(terminal_seen.wait(1.0), repr(events))
+            ups = [row for row in events if row.get("event") == "input_release_measurement"]
+            terminals = [row for row in events if row.get("event") == "terminal"]
+            downs = [row for row in events if row.get("event") == "input_admission"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            self.assertEqual(ups[0]["reason"], "expired")
+            self.assertEqual((ups[0]["id"], ups[0]["step"]),
+                             ("expiry-executor-a01", 0))
+            self.assertEqual(ups[0]["physical_key_measurement"]["actuation_id"],
+                             downs[0]["physical_key_measurement"]["actuation_id"])
+            self.assertEqual(len(terminals), 1)
+            self.assertEqual(terminals[0]["status"], "expired")
+            self.assertTrue(terminals[0]["release"]["verified"])
+            self.assertFalse(backend.lease.cancel.is_set())
+            names = [row.get("event") for row in events]
+            self.assertLess(names.index("input_admission"),
+                            names.index("input_release_measurement"))
+            self.assertLess(names.index("input_release_measurement"),
+                            names.index("terminal"))
+            self.assertEqual(harness.d.physical, set())
+            self.assertEqual(backend.held, set())
+        finally:
+            executor.close()
+            harness.close()
+            if prior_execute is missing:
+                delattr(parent, "execute")
+            else:
+                parent.execute = prior_execute
+            if prior_release is missing:
+                delattr(parent, "release_all")
+            else:
+                parent.release_all = prior_release
+            executor_v3.Lease = prior_lease_type
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
