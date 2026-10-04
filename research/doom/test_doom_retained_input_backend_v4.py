@@ -296,6 +296,74 @@ class Tests(unittest.TestCase):
         self.assertEqual(releases, {("p1", 0, "b"): 0, ("p1", 0, "a"): 1})
         self.assertNotEqual(admissions, releases)
 
+    def test_v12_physical_measurements_survive_v4_context_and_consumer_replay(self):
+        bridge_test_path = HERE / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
+        bridge_spec = importlib.util.spec_from_file_location(
+            "perkey_bridge_test_for_v4", bridge_test_path
+        )
+        bridge_test = importlib.util.module_from_spec(bridge_spec)
+        bridge_spec.loader.exec_module(bridge_test)
+        harness_module = bridge_test.load_v12_test_harness()
+        harness = harness_module.Harness(harness_module.owner_module)
+
+        try:
+            sys.modules["input_owner_v12"] = harness_module.owner_module
+            transition_path = (
+                HERE / "map01_attack_onset_phase_allocation_02_v1" / "source"
+                / "map01_v12_transition_owner.py"
+            )
+            transition_spec = importlib.util.spec_from_file_location(
+                "v12_transition_owner_for_v4", transition_path
+            )
+            transition_module = importlib.util.module_from_spec(transition_spec)
+            transition_spec.loader.exec_module(transition_module)
+            owner = transition_module.InputOwner.__new__(transition_module.InputOwner)
+            owner._inner = harness.owner
+
+            lease = harness_module.Lease(intent="intent-v39-a01")
+            lease.interruption_snapshot = lambda: None
+            obj = make_backend(set(), owner, lease)
+            rows = []
+            obj.emit = rows.append
+            obj.execute({"actions": [("F8", True), ("F8", False)]},
+                        None, "cover-7", 2)
+
+            down = next(row for row in rows if row.get("event") == "input_admission")
+            up = next(row for row in rows
+                      if row.get("event") == "input_release_transition")
+            self.assertEqual((down.get("owner_id"), down["id"], down["step"]),
+                             (owner.owner_id, "cover-7", 2))
+            self.assertEqual((up["owner_id"], up["id"], up["step"]),
+                             (owner.owner_id, "cover-7", 2))
+            self.assertEqual(down["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_DOWN")
+            self.assertEqual(up["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            self.assertEqual(down["physical_key_measurement"]["actuation_id"],
+                             up["physical_key_measurement"]["actuation_id"])
+            self.assertEqual(up["admission_position"], down["admission_position"])
+            self.assertTrue(up["owner_transition_verified"])
+            self.assertFalse(up["grants_input_authority"])
+            self.assertEqual(harness.d.physical, set())
+            self.assertEqual(obj.held, set())
+
+            consumer_path = (
+                HERE / "map01_v39_perkey_measurement_consumer_a03_20261005"
+                / "candidate.py"
+            )
+            consumer_spec = importlib.util.spec_from_file_location(
+                "perkey_consumer_a03_for_v4", consumer_path
+            )
+            consumer = importlib.util.module_from_spec(consumer_spec)
+            consumer_spec.loader.exec_module(consumer)
+            consumer_up = dict(up, event="input_release_measurement")
+            measured = consumer.reconstruct([down, consumer_up])
+            self.assertGreater(measured["hold_duration_lower_bound_ns"], 0)
+            self.assertFalse(measured["authority_granted"])
+            self.assertFalse(measured["application_effect_observed"])
+        finally:
+            harness.close()
+
     def run_release(self, owner, lease=None, held=("a",)):
         obj = make_backend(set(held), owner, lease)
         rows = []

@@ -88,6 +88,7 @@ class Backend(Previous):
                         and record.get("event") == "input_admission"
                         and context is not None):
                     record = dict(record)
+                    owner_id = getattr(self.owner, "owner_id", None)
                     admission_key_matches = (
                         type(key) is str
                         and type(record.get("key")) is str
@@ -101,6 +102,8 @@ class Backend(Previous):
                             "next_admission_position", 0
                         ),
                     })
+                    if type(owner_id) is str and owner_id:
+                        record.setdefault("owner_id", owner_id)
                     context["next_admission_position"] += 1
                     if admission_key_matches:
                         context.setdefault("admissions_by_key", {}).setdefault(
