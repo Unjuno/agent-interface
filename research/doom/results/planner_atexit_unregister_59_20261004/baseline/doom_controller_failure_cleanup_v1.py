@@ -117,8 +117,10 @@ class ControllerFailureCleanup:
                     bounded('child_stdin_close',child.stdin.close,.5)
             if attempt('child_poll_after',child.poll):
                 receipt['child_exit_code']=receipt['stages'][-1]['result']
-        bounded('planner_close',lambda:self.planner.close(timeout=1),1)
-        attempt('atexit_unregister',lambda:atexit.unregister(self.planner.close))
+        planner_closed,_,_=bounded(
+            'planner_close',lambda:self.planner.close(timeout=1),1)
+        if planner_closed:
+            attempt('atexit_unregister',lambda:atexit.unregister(self.planner.close))
         receipt['stdout_reader_retired']=False
         if self.reader is not None:
             attempt('stdout_reader_join',lambda:self.reader.join(timeout=5))
@@ -147,12 +149,8 @@ class ControllerFailureCleanup:
             type(row) is dict and row.get('event')=='post_control_score' for row in events)
         score_path=None if self.runtime is None else self.runtime/'score.json'
         owner_path=None if self.runtime is None else self.runtime/'owner-events.json'
-        receipt['score_file_present']=False
-        if score_path is not None and attempt('score_file_presence',score_path.is_file):
-            receipt['score_file_present']=receipt['stages'][-1]['result'] is True
-        receipt['owner_events_present']=False
-        if owner_path is not None and attempt('owner_events_presence',owner_path.is_file):
-            receipt['owner_events_present']=receipt['stages'][-1]['result'] is True
+        receipt['score_file_present']=score_path is not None and score_path.is_file()
+        receipt['owner_events_present']=owner_path is not None and owner_path.is_file()
         receipt['owner_events_closed']=False
         if receipt['owner_events_present']:
             try:
