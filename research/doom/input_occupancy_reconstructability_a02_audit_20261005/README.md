@@ -4,7 +4,7 @@
 
 **H.** The A01 summary fields for physical-down receipts, per-key up measurements, and actuation IDs can be independently recomputed from its frozen V38/V39 event streams; corrupted summary values must fail the audit.
 
-**T.** Recompute every material run-summary field from the frozen A01 result inputs: report, event stream, and owner ledger. Compare all recomputed counts and identity lists with the retained A01 `RESULT.json`. Mutation controls forge per-key down/up counts and IDs, forge owner-release counts, claim reconstructability without edge records, and use duplicate actuation IDs.
+**T.** Recompute every material run-summary field from the frozen A01 result inputs: report, event stream, and owner ledger. Compare all recomputed counts and identity lists with the retained A01 `RESULT.json`, requiring exact JSON value types recursively. Mutation controls forge per-key down/up counts and IDs, forge owner-release counts, claim reconstructability without edge records, use duplicate actuation IDs, and alias nested event count `1` with Boolean `true`.
 
 **D.** `PASS_RAW_DERIVED_AUDIT` requires the clean A01 result to match the raw-derived values exactly and all mutation controls to be rejected by non-empty audit errors. The old A01 `AUDIT.json` is not treated as authority for fields that it does not recompute.
 

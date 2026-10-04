@@ -15,6 +15,16 @@ def read_jsonl(path):
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
+def strict_equal(left, right):
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return left.keys() == right.keys() and all(strict_equal(left[key], right[key]) for key in left)
+    if type(left) is list:
+        return len(left) == len(right) and all(strict_equal(a, b) for a, b in zip(left, right))
+    return left == right
+
+
 def derive_run(report, events, owner_events):
     counts = Counter(row.get("event") for row in events)
     admissions = [row for row in events if row.get("event") == "input_admission"]
@@ -102,7 +112,7 @@ def audit_result(result, evidence):
         derived = derive_run(raw["report"], raw["events"], raw["owner_events"])
         for name, actual in derived.items():
             observed = current.get(name)
-            if type(observed) is not type(actual) or observed != actual:
+            if not strict_equal(observed, actual):
                 errors.append(f"{run}: {name} does not match frozen raw records")
         if not derived["exact_per_key_occupancy_reconstructable"]:
             expected_status = "FAIL_INSUFFICIENT_PER_KEY_EDGE_EVIDENCE"
