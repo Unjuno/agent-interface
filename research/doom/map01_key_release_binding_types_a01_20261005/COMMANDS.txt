@@ -1,0 +1,14 @@
+Source worktree: C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\pr7787-type-alias-a01
+Base commit: ac911a4e8b8c377a5b96c8974239c58b02918316 (PR #7787)
+Image: python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016
+Network: none; CPU: 1; memory: 512M (host warned memory limited without swap)
+
+WSLc commands (source mounted read-only at /src; unique output directory mounted at /out):
+1. `wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\pr7787-type-alias-a01,target=/src,readonly --mount type=bind,source=C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\pr7787-type-alias-a01\research\doom\map01_key_release_binding_types_a01_20261005\.tmp\a01,target=/out python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 /src/research/doom/map01_key_release_binding_types_a01_20261005/candidate.py /out` — exit 0
+2. Same flags and mounts, then `python3 /src/research/doom/map01_key_release_binding_types_a01_20261005/audit.py /out` — exit 0
+3. Same flags and mounts plus `--env PYTHONPYCACHEPREFIX=/out/pycache`, then `python3 -m py_compile /src/research/doom/map01_key_release_binding_types_a01_20261005/candidate.py /src/research/doom/map01_key_release_binding_types_a01_20261005/audit.py` — exit 0
+
+Host checks:
+4. python -m pytest research/doom/map01_key_release_binding_types_a01_20261005/test_type_aliases.py -q — exit 0, 5 passed (Python 3.11)
+5. python -m py_compile research/doom/map01_key_release_binding_types_a01_20261005/candidate.py research/doom/map01_key_release_binding_types_a01_20261005/audit.py research/doom/map01_key_release_binding_types_a01_20261005/test_type_aliases.py — exit 0
+6. python -m pytest -q — exit 1 during collection with 66 import/collection errors: missing/broken PIL.Image imports and modules/data omitted by this sparse worktree. The focused WSLc scope is unchanged.

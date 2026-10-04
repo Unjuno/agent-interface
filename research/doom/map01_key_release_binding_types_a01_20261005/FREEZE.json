@@ -1,0 +1,26 @@
+{
+  "schema": "map01-key-release-binding-types-freeze-v1",
+  "study_id": "map01-key-release-binding-types-a01-20261005",
+  "parent_contract": "PR #7787 / map01_key_release_binding_a01_20261005",
+  "source_commit": "ac911a4e8b8c377a5b96c8974239c58b02918316",
+  "source_branch": "research/59-key-release-binding-a01-20261005",
+  "candidate_baseline": "map01_key_release_binding_a01_20261005/candidate.py",
+  "candidate_baseline_sha256": "7558c5ce0d20d43a10aef8016fc1de7e947a688ea99d4f975abfbc28c686d5a4",
+  "cases": 6,
+  "mutations": [
+    "boolean_up_step",
+    "boolean_up_sequence",
+    "boolean_admission_sequence",
+    "float_release_sequence",
+    "admission_step_outside_execution"
+  ],
+  "decision": "Strict candidate and independent oracle must agree on baseline and every frozen mutation; baseline passes and each single fault fails with its frozen reason. Preserve v1 outputs as counterexamples.",
+  "environment": {
+    "runtime": "WSLc",
+    "image": "python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512M"
+  },
+  "scope": "synthetic JSON receipt contract only; no runtime, GUI, input, model, game, feedback, recovery, threat response, task effect, or safety claim"
+}
