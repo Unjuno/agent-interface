@@ -1,0 +1,26 @@
+test_real_sibling_import_receipt_and_unchanged_main_arguments (test_entry.EntryBoundary.test_real_sibling_import_receipt_and_unchanged_main_arguments) ... FAIL
+
+======================================================================
+FAIL: test_real_sibling_import_receipt_and_unchanged_main_arguments (test_entry.EntryBoundary.test_real_sibling_import_receipt_and_unchanged_main_arguments)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_entry_prep_59_e04_20261004_3cbf/test_entry.py", line 26, in test_real_sibling_import_receipt_and_unchanged_main_arguments
+    self.assertEqual(json.loads(result.stdout), [str(doom / 'session_map01_v12.py'), '--sentinel', 'literal'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['/private/var/folders/pz/8_nc5kp109z8f36jl0[90 chars]ral'] != ['/var/folders/pz/8_nc5kp109z8f36jl0172xzw00[82 chars]ral']
+
+First differing element 0:
+'/private/var/folders/pz/8_nc5kp109z8f36jl0[64 chars]2.py'
+'/var/folders/pz/8_nc5kp109z8f36jl0172xzw00[56 chars]2.py'
+
+- ['/private/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/tmpdspccb83/source/research/doom/session_map01_v12.py',
+?   --------
+
++ ['/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/tmpdspccb83/source/research/doom/session_map01_v12.py',
+   '--sentinel',
+   'literal']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.061s
+
+FAILED (failures=1)

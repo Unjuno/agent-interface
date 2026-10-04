@@ -282,8 +282,6 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
-        else:
-            self.held_keys.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:
@@ -315,8 +313,6 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
-        else:
-            self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
         for value, flag in ((dy, MOUSEEVENTF_WHEEL), (dx, MOUSEEVENTF_HWHEEL)):
@@ -339,6 +335,9 @@ class Win32Backend:
             if not mem_dc or not bitmap:
                 raise Win32BackendError("GDI allocation failed")
             old = self.gdi32.SelectObject(mem_dc, bitmap)
+            if not old or old == ctypes.c_void_p(-1).value:
+                old = None
+                raise Win32BackendError("GDI bitmap selection failed")
             if print_window:
                 if not self.user32.PrintWindow(source_hwnd, mem_dc, PW_CLIENTONLY):
                     raise Win32BackendError("PrintWindow failed")
@@ -447,8 +446,6 @@ class Win32Backend:
             item = INPUT(type=INPUT_MOUSE)
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
-        self.held_keys.clear()
-        self.held_buttons.clear()
         time.sleep(0.01)
         keys = sorted(name for name, vk in tracked_keys.items()
                       if self.user32.GetAsyncKeyState(vk) & 0x8000)
@@ -456,6 +453,12 @@ class Win32Backend:
                          if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
         if unicode_error is not None:
             raise unicode_error
+        # Retire obligations only after complete, successful neutral-state reads.
+        # Sending UP or an incomplete read is not evidence of neutrality.
+        for name in tracked_keys:
+            if name not in keys:
+                self.held_keys.pop(name, None)
+        self.held_buttons.difference_update(tracked_buttons - set(buttons))
         return {"keys_down": keys, "buttons_down": buttons,
                 "verified": not keys and not buttons,
                 "monotonic_ns": time.monotonic_ns()}

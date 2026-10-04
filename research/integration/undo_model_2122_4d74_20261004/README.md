@@ -1,0 +1,1 @@
+Read REPORT.md. Four actual model turns follow explicitly provided known-receipt decision rules, including positive UNDO and three refusals/rechecks. No model-driven Undo/app/task or model-value claim. Old actual sources/results not replayed.
