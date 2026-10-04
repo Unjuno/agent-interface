@@ -8,8 +8,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-FIXTURE = ROOT / "research/doom/map01_v39_cleanup_telemetry_bridge_a01_20261005"
-sys.path[:0] = [str(HERE), str(ROOT / "research/live_control")]
+SOURCE = HERE / "SOURCE"
+FIXTURE = SOURCE / "OWNER"
+sys.path[:0] = [str(HERE), str(SOURCE / "EXECUTOR")]
 
 
 def load(name, path):
@@ -42,12 +43,12 @@ def setup_imports():
 
 
 setup_imports()
-owner_source = load("input_owner_v13", FIXTURE / "SOURCE/input_owner_v13.py")
+owner_source = load("input_owner_v13", FIXTURE / "input_owner_v13.py")
 from bridge import Backend
 
 
 def harness():
-    source = load("v13_bridge_fixture", FIXTURE / "SOURCE/test_input_owner_v12.py")
+    source = load("v13_bridge_fixture", FIXTURE / "test_input_owner_v12.py")
     owner = owner_source
     h = source.Harness(owner)
     owner.XK.string_to_keysym = lambda value: 1 if value == "F8" else 0
@@ -94,6 +95,58 @@ class CleanupForwardingTests(unittest.TestCase):
             self.assertEqual(len([r for r in b.events if r.get("event") == "input_release_measurement"]), 1)
         finally:
             h.close()
+
+    def test_cleanup_published_during_down_call_keeps_admission_context(self):
+        aid = "owner:g1:F8"
+        cleanup = {"event": "owner_release", "verified": True,
+                   "per_key_release_measurements": [{
+                       "key": "F8", "actuation_id": aid,
+                       "classification": "CONFIRMED_PHYSICAL_UP",
+                       "bracket": {"key": "F8", "owner_id": "owner",
+                                   "intent_token": "tok",
+                                   "physical_up_interval": [10, 11]}}]}
+
+        class RacingOwner:
+            owner_id = "owner"
+
+            def __init__(self):
+                self.records = []
+
+            def call(self, operation, lease, key):
+                if operation == "down":
+                    # Deterministically model cancellation publication in the
+                    # return-to-caller window of the down operation.
+                    self.records.append(cleanup)
+                    return {"event": "input_admission", "owner_id": "owner",
+                            "intent_token": "tok", "key": key,
+                            "physical_key_measurement": {
+                                "actuation_id": aid, "classification": "ADMITTED"}}
+                return {"event": "input_release_measurement", "owner_id": "owner",
+                        "intent_token": "tok", "key": key,
+                        "physical_key_measurement": {
+                            "actuation_id": None, "classification": "NOOP_ALREADY_UP"}}
+
+        b = object.__new__(Backend)
+        b.owner, b.lease, b.held = RacingOwner(), types.SimpleNamespace(intent_token="tok"), set()
+        b._input_event_context = ("run-race", 2)
+        b._owner_records_cursor = 0
+        b._active_actuations, b._actuation_context = {}, {}
+        b.events, b.emit = [], None
+        b.emit = b.events.append
+
+        b.raw("F8", True)
+        b.raw("F8", False)
+
+        self.assertEqual([row["event"] for row in b.events],
+                         ["input_admission", "input_release_measurement"])
+        release = b.events[1]
+        self.assertEqual((release["id"], release["step"], release["intent_token"]),
+                         ("run-race", 2, "tok"))
+        self.assertEqual(release["physical_key_measurement"]["actuation_id"], aid)
+        self.assertEqual(release["physical_key_measurement"]["classification"],
+                         "CONFIRMED_PHYSICAL_UP")
+        self.assertEqual(release["owner_cleanup_record"], cleanup)
+        self.assertFalse(release["grants_input_authority"])
 
     def test_unmapped_cleanup_is_retained_without_projected_authority(self):
         b = object.__new__(Backend)

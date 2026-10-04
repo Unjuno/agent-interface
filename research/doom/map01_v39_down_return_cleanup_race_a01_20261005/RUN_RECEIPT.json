@@ -1,0 +1,46 @@
+{
+  "schema": "map01_v39_down_return_cleanup_race_a01_run_receipt_v1",
+  "run_id": "MAP01-V39-DOWN-RETURN-CLEANUP-RACE-A01-20261005",
+  "environment": {
+    "image": "python:3.12.11-slim",
+    "digest": "sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19d",
+    "network": "none",
+    "rootfs": "read-only",
+    "tmpfs": "/tmp 32 MiB",
+    "source_mount": "ephemeral test tree"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "research.doom.map01_v39_down_return_cleanup_race_a01_20261005.test_bridge",
+        "research.doom.map01_v39_down_return_cleanup_race_a01_20261005.test_teardown",
+        "research.doom.map01_v39_down_return_cleanup_race_a01_20261005.test_execute_context"
+      ],
+      "exit_code": 0,
+      "tests_passed": 5,
+      "tests_failed": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-O",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "research.doom.map01_v39_down_return_cleanup_race_a01_20261005.test_bridge",
+        "research.doom.map01_v39_down_return_cleanup_race_a01_20261005.test_teardown",
+        "research.doom.map01_v39_down_return_cleanup_race_a01_20261005.test_execute_context"
+      ],
+      "exit_code": 0,
+      "tests_passed": 5,
+      "tests_failed": 0
+    }
+  ],
+  "output_summary": "Both modes report all five named tests OK, including the deterministic cleanup-during-down-call race, async cancellation forwarding, unscoped diagnostic, close teardown and execute-finally drain."
+}

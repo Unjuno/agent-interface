@@ -1,0 +1,44 @@
+{
+  "schema": "map01_v39_down_return_cleanup_race_a01_result_v1",
+  "run_id": "MAP01-V39-DOWN-RETURN-CLEANUP-RACE-A01-20261005",
+  "status": "PASS_DETERMINISTIC_RACE_FIXED",
+  "previous_implementation": {
+    "event_order": [
+      "input_cleanup_unscoped",
+      "input_admission",
+      "NOOP_ALREADY_UP"
+    ],
+    "unscoped_cleanup_rows": 1,
+    "contextual_confirmed_up_rows": 0,
+    "noop_rows": 1
+  },
+  "tested_implementation": {
+    "event_order": [
+      "input_admission",
+      "input_release_measurement"
+    ],
+    "unscoped_cleanup_rows": 0,
+    "contextual_confirmed_up_rows": 1,
+    "noop_rows": 0,
+    "release_classification": "CONFIRMED_PHYSICAL_UP",
+    "actuation_id": "owner:g1:F8",
+    "context": [
+      "run-race",
+      2
+    ],
+    "authority_granted": false
+  },
+  "normal": {
+    "passed": 5,
+    "failed": 0
+  },
+  "optimized": {
+    "passed": 5,
+    "failed": 0
+  },
+  "candidate_source_sha256": {
+    "bridge.py": "d0c99f4856f23f8a8ddabb8fbf05e797f9fa2189d31752decd955987657a7d11",
+    "test_bridge.py": "236ca1d2507bf47417f31a67c5a3ba53ff1020f7e8e03668c7d4a7d14b6a422a"
+  },
+  "scope": "Deterministic owner stub + retained fake-display bridge/teardown/execute tests only."
+}

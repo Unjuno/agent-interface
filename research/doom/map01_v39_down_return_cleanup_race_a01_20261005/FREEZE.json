@@ -1,0 +1,31 @@
+{
+  "schema": "map01_v39_down_return_cleanup_race_a01_freeze_v1",
+  "run_id": "MAP01-V39-DOWN-RETURN-CLEANUP-RACE-A01-20261005",
+  "H": "Cleanup published during owner.call(down) must retain the returned admission actuation lineage.",
+  "T": "A deterministic owner stub publishes its confirmed-up cleanup row before returning the down admission; then invoke raw(up).",
+  "D": "PASS only if the admission is emitted first, then exactly one contextual matching confirmed-up receipt, with no unscoped cleanup or NOOP duplicate.",
+  "C": "One deterministic bridge/owner construction interleaving; no live event-frequency inference.",
+  "U": "Synthetic stub and fake-display fixtures only; no live X11, OS input, GUI/game, model, task effect, useful feedback, recovery benefit or MAP01 progress.",
+  "predecessor_commit": "2f57a50390b0d7bd2afd1d3184397cdb99ce91a4",
+  "intake_main_commit": "a15307dcde8ce05c9c4438cc1a41e929e641e108",
+  "owner_fixture_commit": "8c45935e065ec36f8d42b7d4e59224900d5a83d2",
+  "image": "python:3.12.11-slim",
+  "image_digest": "sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19d",
+  "container_controls": [
+    "--network none",
+    "--read-only",
+    "--tmpfs /tmp:rw,noexec,nosuid,size=32m"
+  ],
+  "source_sha256": {
+    "bridge.py": "d0c99f4856f23f8a8ddabb8fbf05e797f9fa2189d31752decd955987657a7d11",
+    "test_bridge.py": "236ca1d2507bf47417f31a67c5a3ba53ff1020f7e8e03668c7d4a7d14b6a422a",
+    "test_teardown.py": "9cfab28ad149940019072349dd3d852dbbc441d3b4b50d8edb9211bdd112b305",
+    "test_execute_context.py": "39fa118659c82663db20aab954e7c49ffe57a5ad38c375f0e4037e0f7997667a",
+    "SOURCE/BASELINE/bridge.py": "b14ec37323ae3f2510538326011c63a5253745521724613b0b573e902aabe377",
+    "SOURCE/BASELINE/test_bridge.py": "077241f3bce99dd62a31fd6f7b52d774755fa44a686c18d0afcba3650f9d101b",
+    "SOURCE/OWNER/input_owner_v13.py": "9c07b5143cbce965be709202377a311f25986f59963257faa9ee345d87e341ef",
+    "SOURCE/OWNER/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+    "SOURCE/EXECUTOR/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "SOURCE/EXECUTOR/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  }
+}
