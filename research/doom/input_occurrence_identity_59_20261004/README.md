@@ -14,6 +14,8 @@ The private construction adds `input_occurrence_id` and keycode to V12 `input_ad
 
 The reducer requires one non-empty shared `session_id` across scorer samples/events, admissions, normalized releases, and semantic action bindings. Every occurrence must have exactly one matching admission and release, and every admission must map to one session-bound SHA-256 action binding. A positive scorer transition is evaluated over `[previous_sample_ns, observed_sample_ns]`. It returns `SINGLE_POSSIBLE_INTENT_ENVELOPE` only when verified timing bounds strictly cover that entire bracket without endpoint ties. This does not establish one active occurrence, a held key, or causation. Multiple possible intents are `AMBIGUOUS`; other incomplete, tied, or unverified cases are `UNRESOLVED`.
 
+For possible-envelope timing, `admitted_ns` is the earliest bound: V12 records it before issuing XTest `KeyPress`, then records `input_ack_ns` after `d.sync()` returns. The later acknowledgment does not prove that input dispatch waited until the ACK; a scorer bracket that precedes the ACK but follows admission can still overlap the possible input envelope. A regression retains that case without claiming causation.
+
 This branch is stacked on draft PR #7533 at head `88cbb17c8661f94a9b7e89aba82af2eef8da6ae7`, which supplies the current-main per-key cancellation interval. The source manifest pins the common main snapshot `5d5748a85816297905ba16bbc0b342e41af22559`. No runtime session integration or main merge is claimed.
 
 ## Validation

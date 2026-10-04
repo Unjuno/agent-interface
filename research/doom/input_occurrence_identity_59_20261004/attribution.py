@@ -88,6 +88,11 @@ def attribute_positive_events(samples, events, admissions, releases, bindings):
     and the sample at which the event was observed. Admission-to-release/XSync
     bounds can describe only a possible input envelope. Strict coverage does
     not prove that a key remained down or caused the progress event.
+
+    V12 records admitted_ns before issuing XTest KeyPress and input_ack_ns
+    after XSync returns. The admission bound is therefore the earliest
+    possible dispatch time; the later ACK does not prove that dispatch waited
+    until acknowledgment.
     """
     session_id = _session_ids((
         ("sample", samples), ("event", events), ("admission", admissions),

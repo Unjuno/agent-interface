@@ -58,6 +58,21 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(result["status"], "UNRESOLVED")
         self.assertEqual(result["reason"], "no_complete_verified_intent_coverage")
 
+    def test_pre_ack_bracket_after_admission_remains_possible(self):
+        samples, events, admission, release, binding = fixture()
+        samples[1]["sample_ns"] = 150
+        events[0]["observed_ns"] = 150
+        admission["input_ack_ns"] = 180
+        release["owner_thread_keyup_receipt"]["owner_keyrelease_started_ns"] = 210
+        release["owner_thread_keyup_receipt"]["owner_sync_returned_ns"] = 220
+        result = attribute_positive_events(
+            samples, events, [admission], normalize_releases([release]),
+            [binding])[0]
+        self.assertEqual(result["detection_interval_ns"], [100, 150])
+        self.assertEqual(result["status"], "SINGLE_POSSIBLE_INTENT_ENVELOPE")
+        self.assertEqual(result["possible_occurrence_ids"], ["owner-a:9"])
+        self.assertEqual(result["causal_attribution"], "NOT_ESTABLISHED")
+
     def test_cross_session_rows_are_rejected(self):
         samples, events, admission, release, binding = fixture()
         events[0]["session_id"] = "session-b"
