@@ -1,8 +1,10 @@
 """Construction integration of the v39 typed backend and InputOwner v12."""
 from __future__ import annotations
 
+import ast
 import importlib.util
 import sys
+import time
 import types
 import unittest
 from pathlib import Path
@@ -88,6 +90,76 @@ def run_bridge():
 
 
 class PerKeyBridgeConstructionTests(unittest.TestCase):
+    def test_hold_cancellation_finally_emits_measured_matching_up(self):
+        session_path = LIVE_CONTROL / "session_v4.py"
+        source = ast.parse(session_path.read_bytes())
+        backend_class = next(
+            node for node in source.body
+            if isinstance(node, ast.ClassDef) and node.name == "Backend"
+        )
+        execute = next(
+            node for node in backend_class.body
+            if isinstance(node, ast.FunctionDef) and node.name == "execute"
+        )
+
+        class Cancelled(Exception):
+            pass
+
+        namespace = {
+            "Cancelled": Cancelled,
+            "DecisionRequired": type("DecisionRequired", (Exception,), {}),
+            "time": time,
+        }
+        exec(compile(ast.Module(body=[execute], type_ignores=[]),
+                     str(session_path) + "::Backend.execute", "exec"), namespace)
+
+        parent = Backend.__bases__[0]
+        original_execute = parent.__dict__.get("execute")
+        parent.execute = namespace["execute"]
+        harness = None
+        try:
+            owner_harness_module = load_v12_test_harness()
+            harness = owner_harness_module.Harness(owner_harness_module.owner_module)
+            lease = owner_harness_module.Lease(intent="intent-cancel-v39")
+            backend = object.__new__(Backend)
+            backend.owner = harness.owner
+            backend.lease = lease
+            backend.held = set()
+            backend._input_event_context = None
+            backend.events = []
+            backend.emit = backend.events.append
+            backend.snapshot = lambda identifier, step: lease.cancel.set()
+
+            with self.assertRaises(Cancelled):
+                backend.execute({"op": "hold", "keys": ["F8"],
+                                 "duration_ms": 5_000}, lease.cancel,
+                                "cancel-hold", 9)
+        finally:
+            if harness is not None:
+                harness.close()
+            if original_execute is None:
+                del parent.execute
+            else:
+                parent.execute = original_execute
+
+        admission = next(row for row in backend.events
+                         if row.get("event") == "input_admission")
+        release = next(row for row in backend.events
+                       if row.get("event") == "input_release_measurement")
+        down = admission["physical_key_measurement"]
+        up = release["physical_key_measurement"]
+        self.assertEqual((admission["id"], admission["step"],
+                          release["id"], release["step"]),
+                         ("cancel-hold", 9, "cancel-hold", 9))
+        self.assertEqual(down["classification"], "CONFIRMED_PHYSICAL_DOWN")
+        self.assertEqual(up["classification"], "CONFIRMED_PHYSICAL_UP")
+        self.assertEqual(up["identity_status"], "RETIRED")
+        self.assertEqual(up["actuation_id"], down["actuation_id"])
+        self.assertFalse(up["grants_input_authority"])
+        self.assertFalse(up["application_consumption_observed"])
+        self.assertEqual(backend.held, set())
+        self.assertEqual(harness.d.physical, set())
+
     def test_backend_emits_same_intent_per_key_verified_up_edge(self):
         result = run_bridge()
         events = result["events"]
