@@ -1,0 +1,32 @@
+{
+  "schema": "issue59-startup-stderr-capture-construction-v1",
+  "base_commit": "f2aa59c8bac88f0091eb24c4f462f55a72303d2f",
+  "baseline": {
+    "controller_path": "research/doom/map01_overlap_controller_v39.py",
+    "controller_git_blob": "0f3dfcada36520acb24fceaf26a4124c96e050b3",
+    "wait_test_path": "research/doom/test_overlap_controller_v39_wait.py",
+    "wait_test_git_blob": "66fbecb5dd80b64c0ca9a229b91e0ab0efa85a44"
+  },
+  "candidate": {
+    "controller_path": "research/doom/map01_overlap_controller_v39.py",
+    "controller_sha256": "6839246999450f2090ccc2fc2221c9339da68992a4939d6c6106c2c90836b455",
+    "wait_test_path": "research/doom/test_overlap_controller_v39_wait.py",
+    "wait_test_sha256": "067cdff255fd1039f24424fc68993ca4e6db78b1d17b36d32ed99ad0d0b2f99a"
+  },
+  "index_entry": {
+    "path": "research/doom/README.md",
+    "sha256": "4b83507af1c9eed5ed94b0e6cb470c5baf78908e7f9980b36a578a1a94e60b1c"
+  },
+  "environment": {
+    "host": "Windows local process construction",
+    "python": "3.11.9",
+    "live_game_or_model": false,
+    "input_allocation": false
+  },
+  "decision": {
+    "baseline_regression": "expected failure",
+    "candidate_tests": "focused V39 wait and controller modules pass 10/10",
+    "exact_stderr_bytes": true,
+    "no_stopped_run_replay": true
+  }
+}

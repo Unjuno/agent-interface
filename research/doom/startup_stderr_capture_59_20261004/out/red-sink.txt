@@ -1,0 +1,14 @@
+test_startup_stderr_is_saved_without_a_child_pipe (test_overlap_controller_v39_wait.WaitTests.test_startup_stderr_is_saved_without_a_child_pipe) ... FAIL
+
+======================================================================
+FAIL: test_startup_stderr_is_saved_without_a_child_pipe (test_overlap_controller_v39_wait.WaitTests.test_startup_stderr_is_saved_without_a_child_pipe)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-stderr-capture\research\doom\test_overlap_controller_v39_wait.py", line 76, in test_startup_stderr_is_saved_without_a_child_pipe
+    self.assertIsNotNone(
+AssertionError: unexpectedly None : v39 must open a file-backed child-stderr sink
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=1)

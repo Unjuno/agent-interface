@@ -1,0 +1,20 @@
+{
+  "baseline": [
+    "V39_WAIT_SOURCE=<baseline-v39-source-at-f2aa59c>",
+    "python -m unittest test_overlap_controller_v39_wait.WaitTests.test_startup_stderr_is_saved_without_a_child_pipe -v",
+    "python -m unittest test_overlap_controller_v39_wait.WaitTests.test_exited_session_does_not_enter_unbounded_stderr_read -v"
+  ],
+  "candidate": [
+    "python -m unittest test_overlap_controller_v39_wait test_map01_overlap_controller_v39 -v",
+    "python -m py_compile map01_overlap_controller_v39.py test_overlap_controller_v39_wait.py",
+    "git diff --check"
+  ],
+  "subprocess_fixture": {
+    "stderr_payload_bytes": 262144,
+    "first_child_stdout": "ready\\n after stderr write",
+    "second_child": "write startup traceback bytes, exit 1 before stdout readiness"
+  },
+  "network": false,
+  "container": false,
+  "model_or_game": false
+}
