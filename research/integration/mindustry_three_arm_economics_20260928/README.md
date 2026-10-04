@@ -384,3 +384,26 @@ model callbacks while both controls dispatch six. The complete host suite is
 86/86. No Java mod, Mindustry, real model, socket, or real task input was used.
 No Docker was used because the #5130/#5085 container assignment/release gate
 remains in force.
+
+## Fresh-locator → target-dispatch composition (host construction, 2026-10-04)
+
+At current main `0f71ca2ff9d4098c275d95f574addc5ced6b2661`,
+`target_execution_v1.py` composes the existing `ArmCoordinator` fresh-locator
+check and receipt-bound `target_dispatch.py` compiler for the two ordered
+Mindustry task points. Each point requires a newer observation, current layout
+binding, a target-specific image receipt, and a socket clock read before a
+single compiled request is submitted. The caller must adapt the live socket's
+terminal result into a request-ID-matched receipt that confirms all inputs are
+released. Ambiguous or failed receipts stop the task without retry.
+
+Five host construction tests verify the two-point order, fresh sequence binding,
+stale-geometry refusal before the affected dispatch, task-ID matching, and
+fail-closed handling of an unconfirmed release. One test exercises the real
+receipt builders and request compiler with synthetic observations. The full
+package suite passes 91/91; the inherited decision probe passes with 10
+controls. Submit and observation are host callbacks, so these tests do not
+connect a live Mindustry socket, capture real images, dispatch input, call a
+model, score a game task, produce an independent raw audit, or demonstrate
+three-arm execution/economics. The actual live adapters, full runner, and
+allocation remain unimplemented. No game, model, Docker command, workflow, or
+formal allocation was invoked; the #5130 resource gate remains controlling.
