@@ -285,3 +285,4 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Source-bound peer reviews
 
 - [`reviews/`](reviews/) — retained peer-review records; scoped reviews are not current-tree integration certificates or live experiment results.
+- [`native-suite-wslc-a08/`](native-suite-wslc-a08/) — Issue #7372 WSLc A08 bounded run; all 205 tests passed. cgroup/swap warning leaves memory enforcement and benefit unverified.
