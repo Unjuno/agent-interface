@@ -440,14 +440,13 @@ The adapter journals the full compiled request before transport, then journals
 the response before validation; a failure writing the pre-send record prevents
 the exchange, and ambiguous transport results remain one-shot with no retry.
 The focused socket-submit suite passes 13/13 after refreshing the branch
-through current `main` `510c98fe46889461dce2a4c0e14e261eaa47e8ed`; Python
+through current `main` `faee077c88842763b5e5e9ae26aa07bbd9c1a73b`; Python
 compilation and `git diff --check` also pass. The full package previously passed
 116/116 on the same implementation before that main merge, but a repeat was
 not completed in the sparse Windows checkout because required source/data
-blobs are absent. A fresh read-only recomputation of the retained raw-v2 and
-dispatch-sidecar audits on the refreshed branch exactly matches the committed
+blobs are absent. A fresh read-only recomputation after this main refresh of
+the retained raw-v2 and dispatch-sidecar audits exactly matches the committed
 audit JSON: `PASS_CONSTRUCTION_ONLY` with source identity false, and
 `PASS_SYNTHETIC_DISPATCH_JOIN` for 18 tasks/36 target dispatches. PR #7370 is
-open and Draft at head `af38f4637`. No live socket process, Mindustry input,
-model call, Docker operation, or formal allocation was used; the #5130 gate
-remains active.
+open and Draft. No live socket process, Mindustry input, model call, Docker
+operation, or formal allocation was used; the #5130 gate remains active.
