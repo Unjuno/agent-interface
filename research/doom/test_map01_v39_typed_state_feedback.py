@@ -79,6 +79,11 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                          [87811364890958, 87811364895916])
         self.assertEqual(receipt["up_edge_interval_ns"],
                          [87811364946333, 87811364949416])
+        self.assertEqual(receipt["input_admitted_ns"], 87811364887583)
+        self.assertEqual(receipt["down_press_request_ns"], 87811364891916)
+        self.assertEqual(receipt["down_sync_return_ns"], 87811364893458)
+        self.assertEqual(receipt["up_release_request_ns"], 87811364946750)
+        self.assertEqual(receipt["up_sync_return_ns"], 87811364948750)
         self.assertFalse(receipt["grants_input_authority"])
         self.assertFalse(receipt["application_consumption_observed"])
         self.assertIn("X-server", receipt["scope"])
@@ -242,6 +247,9 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             (0, "press_request_ns", 87811364890957),
             (0, "sync_return_ns", 87811364893751),
             (0, "input_ack_ns", 87811364893459),
+            (0, "input_ack_ns", True),
+            (0, "admitted_ns", "unavailable"),
+            (0, "admitted_ns", 87811364887959),
             (1, "pre_sample.available", False),
             (1, "pre_sample.down", False),
             (1, "post_sample.down", True),
@@ -257,7 +265,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             if "." in field:
                 name, nested = field.split(".", 1)
                 measurement[name][nested] = value
-            elif field == "input_ack_ns":
+            elif field in ("input_ack_ns", "admitted_ns"):
                 events[row_index][field] = value
             else:
                 measurement[field] = value
@@ -267,8 +275,11 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
 
                 self.assertEqual(receipt["status"],
                                  "adapter_edge_receipt_incomplete")
-                self.assertIsNone(receipt["down_edge_interval_ns"])
-                self.assertIsNone(receipt["up_edge_interval_ns"])
+                for field in ("input_admitted_ns", "down_press_request_ns",
+                              "down_sync_return_ns", "down_edge_interval_ns",
+                              "up_release_request_ns", "up_sync_return_ns",
+                              "up_edge_interval_ns"):
+                    self.assertIsNone(receipt[field])
 
     def test_adapter_edge_pairs_reject_interval_conflicting_with_owner_bracket(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
@@ -343,7 +354,6 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                         self.assertIsNone(receipt["up_edge_interval_ns"])
 
         self.assertEqual((paired, incomplete), (15, 85))
-
     def test_input_edge_receipt_pairs_per_key_admission_and_server_keyup_without_secrets(self):
         token = "ephemeral-intent-token"
         events = [
