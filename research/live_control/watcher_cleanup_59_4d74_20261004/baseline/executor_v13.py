@@ -90,14 +90,6 @@ class Executor(Previous):
             return matched
 
     def _run(self, identifier, steps, lease):
-        try:
-            self._run_with_watcher_cleanup(identifier, steps, lease)
-        finally:
-            stop = self.release_watch_stops.get(identifier)
-            if stop is not None:
-                stop.set()
-
-    def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
         try:
             for index, step in enumerate(steps):
