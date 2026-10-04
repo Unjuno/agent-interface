@@ -281,6 +281,12 @@ class Win32Backend:
         item.ki = KEYBDINPUT(vk, 0, 0 if down else KEYEVENTF_KEYUP, 0, 0)
         self._send(item)
 
+    def _key_is_down(self, vk: int) -> bool:
+        try:
+            return bool(self.user32.GetAsyncKeyState(vk) & 0x8000)
+        except Exception as error:
+            raise Win32BackendError(f"key state query failed for {vk}: {error}") from error
+
     def _send_unicode_unit(self, unit: int, down: bool) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
         flags = KEYEVENTF_UNICODE | (0 if down else KEYEVENTF_KEYUP)
@@ -292,6 +298,11 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
+        elif self._key_is_down(vk):
+            # Do not let later operations run while an explicit UP remains
+            # unresolved. The enclosing execute path will retain custody and
+            # attempt cleanup before returning the failure.
+            raise Win32BackendError(f"key UP unverified: {key}")
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:
@@ -323,6 +334,8 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
+        elif self._key_is_down(BUTTON_FLAGS[button][2]):
+            raise Win32BackendError(f"button UP unverified: {button}")
 
     def scroll(self, dx: int, dy: int) -> None:
         for value, flag in ((dy, MOUSEEVENTF_WHEEL), (dx, MOUSEEVENTF_HWHEEL)):
@@ -488,9 +501,9 @@ class Win32Backend:
             self._send(item)
         time.sleep(0.01)
         keys = sorted(name for name, vk in tracked_keys.items()
-                      if self.user32.GetAsyncKeyState(vk) & 0x8000)
+                      if self._key_is_down(vk))
         buttons = sorted(button for button in tracked_buttons
-                          if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
+                         if self._key_is_down(BUTTON_FLAGS[button][2]))
         # A sent UP is not neutral-state evidence. Keep unverified obligations;
         # an incomplete state read leaves the entire previous ledger intact.
         if unicode_error is not None:
