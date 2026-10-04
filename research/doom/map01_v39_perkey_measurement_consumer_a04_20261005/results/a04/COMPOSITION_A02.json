@@ -1,0 +1,38 @@
+{
+  "schema": "map01_v39_perkey_measurement_consumer_a04_composition_v1",
+  "snapshot": "A02",
+  "current_main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "parent_7602_sha": "4c0123339e43bd80333118a32bc1ce625b79ff3f",
+  "child_7751_sha": "5fdc47f37c79e65ae584c419b5cb453620d41c8b",
+  "combined_tree_sha": "30ac323382fc8f38cd802e027ed0e4fbf28e242f",
+  "current_main_is_ancestor": true,
+  "focused_modules": [
+    "test_map01_v39_typed_state_feedback",
+    "test_map01_overlap_controller_v39",
+    "test_overlap_controller_v39_wait",
+    "test_map01_v39_pair_wait_dispatch",
+    "test_source_refresh_v1",
+    "test_session_map01_v12_cleanup",
+    "test_map01_held_input_occupancy_fulltrace_v7",
+    "test_map01_held_input_occupancy_audit_v5"
+  ],
+  "focused_tests": 73,
+  "focused_exit_code": 0,
+  "a04_normal_tests": 4,
+  "a04_normal_exit_code": 0,
+  "a04_optimized_tests": 4,
+  "a04_optimized_exit_code": 0,
+  "independent_audit_disposition": "PASS_EXACT_OWNER_INTERVAL_BOUNDARY",
+  "compile_exit_code": 0,
+  "integrated_diff_check_exit_code": 0,
+  "logs": [
+    "composition-a02-command.txt",
+    "composition-a02-current-tree-tests.txt",
+    "composition-a02-a04-normal.txt",
+    "composition-a02-a04-optimized.txt",
+    "composition-a02-audit-console.txt",
+    "composition-a02-compile.exit",
+    "composition-a02-diff-check.exit"
+  ],
+  "scope": "offline source-contract and retained fake-display pair only; no live GUI, game, model, OS input, useful feedback, recovery, or MAP01 outcome"
+}

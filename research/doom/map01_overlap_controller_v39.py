@@ -672,6 +672,20 @@ def compile_cover(commands):
 
 def action_state_feedback(before, after, typed_observations):
     """Compare public HUD values only across source-bound typed captures."""
+    def same_typed_json(left, right):
+        if type(left) is not type(right):
+            return False
+        if type(left) is dict:
+            if (any(type(key) is not str for key in left) or
+                    any(type(key) is not str for key in right) or
+                    left.keys() != right.keys()):
+                return False
+            return all(same_typed_json(left[key], right[key]) for key in left)
+        if type(left) is list:
+            return (len(left) == len(right) and
+                    all(same_typed_json(a, b) for a, b in zip(left, right)))
+        return left == right
+
     def read(observation):
         if (type(observation.get("sequence")) is not int or
                 type(observation.get("capture_ns")) is not int or
@@ -685,11 +699,14 @@ def action_state_feedback(before, after, typed_observations):
         row = matches[0]
         frame_hash = observation.get("frame_rgb_sha256")
         if (row.get("schema") != "doom-typed-observation-v1" or
-                row.get("pointer_binding") != observation.get("pointer_binding") or
+                not same_typed_json(row.get("pointer_binding"),
+                                    observation.get("pointer_binding")) or
                 type(row.get("sequence")) is not int or
                 type(row.get("capture_ns")) is not int or
                 type(row.get("step")) is not int or
                 row.get("capture_ns") != observation.get("capture_ns") or
+                type(row.get("id")) is not str or
+                type(observation.get("id")) is not str or
                 row.get("id") != observation.get("id") or
                 row.get("step") != observation.get("step") or
                 type(frame_hash) is not str or len(frame_hash) != 64 or
@@ -712,7 +729,7 @@ def action_state_feedback(before, after, typed_observations):
                     signal.get("sequence") != observation.get("sequence") or
                     type(signal.get("capture_ns")) is not int or
                     signal.get("capture_ns") != observation.get("capture_ns") or
-                    signal.get("binding") != binding):
+                    not same_typed_json(signal.get("binding"), binding)):
                 return None, "typed_signal_unavailable"
             lower, upper = (1, 200) if name == "health" else (0, 999)
             if not lower <= signal["value"] <= upper:
@@ -737,7 +754,7 @@ def action_state_feedback(before, after, typed_observations):
     if (after["sequence"] <= before["sequence"] or
             after["capture_ns"] <= before["capture_ns"]):
         return {"status": "unavailable", "reason": "typed_frame_order_invalid"}
-    if (current["binding"] != previous["binding"] or
+    if (not same_typed_json(current["binding"], previous["binding"]) or
             current["wad_sha256"] != previous["wad_sha256"]):
         return {"status": "unavailable", "reason": "typed_signal_binding_mismatch"}
     return {
@@ -851,6 +868,7 @@ def input_edge_receipts(events):
                 bracket.get("key") == edge.get("key") and
                 bracket.get("owner_id") == edge.get("owner_id") and
                 bracket.get("intent_token") == edge.get("intent_token") and
+                valid_interval(bracket.get(interval_name)) and
                 bracket.get(interval_name) == edge.get("interval") and
                 bracket.get("status") == status and
                 bracket.get("grants_input_authority") is False and

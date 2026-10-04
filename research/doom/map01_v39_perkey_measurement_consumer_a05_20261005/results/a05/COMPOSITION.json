@@ -1,0 +1,29 @@
+{
+  "schema": "map01_v39_perkey_measurement_consumer_a05_composition_v1",
+  "current_main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "parent_7602_sha": "4c0123339e43bd80333118a32bc1ce625b79ff3f",
+  "child_7751_sha": "e09308376040e2158f4877b462730fd4c39a8549",
+  "combined_code_tree_sha": "d7c4b4637905bf2c6a380029acdbc761956931bf",
+  "current_main_is_ancestor": true,
+  "a05_source_freeze_sha256": "02a3be4028b77eacf0c5809c8b266dbf01a304bd938883bc7190761e13488860",
+  "retained_a03_input_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "reproduction": {
+    "a03_candidate_and_auditor_accept_up_float_alias": true,
+    "a03_candidate_and_auditor_accept_cross_row_bool_alias": true,
+    "exit_code": 0
+  },
+  "normal_tests": 4,
+  "normal_exit_code": 0,
+  "optimized_tests": 4,
+  "optimized_exit_code": 0,
+  "independent_audit_disposition": "PASS_EXACT_PAIR_IDENTITY_BOUNDARY",
+  "compile_exit_code": 0,
+  "logs": [
+    "a03-cross-row-step-alias-reproduction.json",
+    "tests-normal.txt",
+    "tests-optimized.txt",
+    "audit-console.txt",
+    "freeze-generation.txt"
+  ],
+  "scope": "offline exact identity typing only; retained fake-display pair; no live input or task-effect claim"
+}
