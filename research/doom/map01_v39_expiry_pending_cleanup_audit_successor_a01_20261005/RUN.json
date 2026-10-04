@@ -22,6 +22,22 @@
       "command": "python3 test_mutation_gate.py audit_successor.py",
       "exit_code": 0,
       "tests": "7/7"
+    },
+    {
+      "command": "python3 test_mutation_gate.py audit_successor.py (optimized-mode assertions enabled)",
+      "exit_code": 1,
+      "tests": "7 tests; six optimized-mode mutation subcases failed against original successor",
+      "meaning": "TDD RED: original assert-based audit accepted all six corrupted fixtures only under python -O"
+    },
+    {
+      "command": "python3 test_mutation_gate.py audit_successor.py (explicit invariant checks)",
+      "exit_code": 0,
+      "tests": "7/7; unchanged raw accepted in normal/-O; all six mutations rejected in normal/-O"
+    },
+    {
+      "command": "python3 -B -m py_compile audit_successor.py test_mutation_gate.py",
+      "exit_code": 0,
+      "meaning": "syntax/byte-compilation check"
     }
   ],
   "candidate_executions": 0,

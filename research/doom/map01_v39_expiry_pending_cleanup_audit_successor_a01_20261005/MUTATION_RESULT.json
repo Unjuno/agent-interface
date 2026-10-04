@@ -15,13 +15,14 @@
   },
   "successor_auditor": {
     "command": "python3 test_mutation_gate.py audit_successor.py",
+    "pre_fix_optimized_false_accepts": 6,
     "exit_code": 0,
     "tests_passed": 7,
-    "positive_unchanged_raw": "accepted",
+    "positive_unchanged_raw": "accepted in normal and optimized modes",
     "negative_mutations": 6,
-    "negative_mutations_rejected": 6
+    "negative_mutations_rejected_in_normal_mode": 6,
+    "negative_mutations_rejected_in_optimized_mode": 6
   },
   "formal_candidate_execution_count": 0,
   "retries": 0
 }
-
