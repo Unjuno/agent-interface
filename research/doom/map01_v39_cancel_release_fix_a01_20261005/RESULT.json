@@ -7,7 +7,8 @@
     "ordinary_up_still_emits_one_matching_receipt": true,
     "unavailable_samples_emit_unconfirmed_row_without_adapter_edge": true,
     "verified_owner_cleanup_reconciles_bridge_held_set": true,
-    "reconciliation_failure_preserves_recorded_release_measurement": true
+    "reconciliation_failure_preserves_recorded_release_measurement": true,
+    "expired_program_exit_drains_previously_recorded_owner_release": true
   },
   "disposition": "PASS_CANDIDATE_MECHANICS",
   "schema": "map01-v39-cancel-release-fix-result-v1",
@@ -15,7 +16,7 @@
   "source_commit": "16c74566b64f32d7fe035c7724bcfe3865863a91",
   "tests": {
     "candidate_cancel_release": {
-      "count": 7,
+      "count": 8,
       "exit": 0
     },
     "existing_v39_bridge": {

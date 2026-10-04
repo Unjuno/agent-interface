@@ -15,16 +15,17 @@ class Backend(Previous):
         try:
             return super().execute(step, cancel, identifier, index)
         finally:
-            if self.lease.cancel.is_set():
-                # This owner-thread request is ordered after cancellation cleanup.
-                try:
+            try:
+                if self.lease.cancel.is_set():
+                    # This owner-thread request is ordered after cancellation cleanup.
                     state = self.owner.call("input_state", self.lease)
-                finally:
-                    # Preserve already-recorded per-key evidence even when
-                    # state reconciliation itself fails.
-                    self._drain_owner_records()
-                if state.get("owned_keycodes") == [] and state.get("owned_buttons") == []:
-                    self.held.clear()
+                    if state.get("owned_keycodes") == [] and state.get("owned_buttons") == []:
+                        self.held.clear()
+            finally:
+                # Owner cleanup also occurs on expiry and other exits that do
+                # not set the cancellation event. Always preserve rows already
+                # recorded before execute returns or raises.
+                self._drain_owner_records()
 
     def _drain_owner_records(self):
         records = self.owner.records

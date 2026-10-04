@@ -199,6 +199,42 @@ class CancellationReceiptTests(unittest.TestCase):
         finally:
             harness.close()
 
+    def test_expired_program_exit_drains_owner_cleanup_without_cancel_event(self):
+        bridge_test, _hm, harness, lease, _bm, backend = load_candidate()
+        real_call = harness.owner.call
+        state_queries = []
+
+        def track_state_query(operation, *args, **kwargs):
+            if operation == "input_state":
+                state_queries.append(operation)
+            return real_call(operation, *args, **kwargs)
+
+        harness.owner.call = track_state_query
+
+        def expire_after_cleanup(self, identifier, step):
+            self._input_event_context = (identifier, step)
+            self.raw("F8", True)
+            self.owner.call("release", self.lease)
+            raise RuntimeError("Expired")
+
+        try:
+            with self.assertRaisesRegex(RuntimeError, "Expired"):
+                run_program(bridge_test, backend, lease, expire_after_cleanup,
+                            identifier="expired-cleanup", step=8)
+            ups = [row for row in backend.events
+                   if row.get("event") == "input_release_measurement"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual((ups[0]["id"], ups[0]["step"]),
+                             ("expired-cleanup", 8))
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            self.assertFalse(lease.cancel.is_set())
+            self.assertEqual(state_queries, [])
+            self.assertEqual(backend.held, set())
+            self.assertEqual(harness.d.physical, set())
+        finally:
+            harness.close()
+
 
     def test_executor_cancel_terminal_contains_one_verified_cleanup_receipt(self):
         bridge_test, _hm, harness, _lease, _bm, backend = load_candidate()
