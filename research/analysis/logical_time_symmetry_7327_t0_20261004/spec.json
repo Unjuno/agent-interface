@@ -1,0 +1,18 @@
+{
+  "schema": "logical-time-symmetry-v1",
+  "reference_period": "1",
+  "time_fields": ["reference_period", "observation_period", "input_hold", "release_lag", "deadline", "lease", "startup_delay", "horizon"],
+  "event_order": ["lease_expiry", "external_state", "observation", "hold_deadline", "deadline", "release"],
+  "scenarios": [
+    {"id":"null", "observation_period":"1", "input_hold":"6", "release_lag":"1/8", "deadline":"8", "lease":"7", "startup_delay":"0", "horizon":"8", "events":[]},
+    {"id":"slow_drift", "observation_period":"1", "input_hold":"6", "release_lag":"1/8", "deadline":"8", "lease":"7", "startup_delay":"0", "horizon":"8", "events":[{"at":"3", "state":"warning"}]},
+    {"id":"oscillation", "observation_period":"1", "input_hold":"6", "release_lag":"1/8", "deadline":"8", "lease":"7", "startup_delay":"0", "horizon":"8", "events":[{"at":"3/2", "state":"warning"},{"at":"5/2", "state":"safe"}]},
+    {"id":"near_cadence_reversal", "observation_period":"1", "input_hold":"6", "release_lag":"1/8", "deadline":"8", "lease":"7", "startup_delay":"0", "horizon":"8", "events":[{"at":"2", "state":"warning"},{"at":"3", "state":"safe"}]},
+    {"id":"abrupt_step", "observation_period":"1", "input_hold":"6", "release_lag":"1/8", "deadline":"8", "lease":"7", "startup_delay":"0", "horizon":"8", "events":[{"at":"1/2", "state":"hazard"}]},
+    {"id":"semantic_swap", "observation_period":"1", "input_hold":"6", "release_lag":"1/8", "deadline":"8", "lease":"7", "startup_delay":"0", "horizon":"8", "events":[{"at":"5/2", "state":"different_target"}]}
+  ],
+  "fixed_parameter_controls": ["startup_delay", "lease"],
+  "transform_factors": ["1/2", "1", "2"],
+  "limits": {"quantization_followup": "separate; not in this run", "live_gui": false, "model": false, "gpu": false, "network": false}
+}
+
