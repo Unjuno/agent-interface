@@ -54,9 +54,9 @@ class RaceCancel:
 
 
 class Lease:
-    def __init__(self):
+    def __init__(self, deadline=None):
         self.intent_token = "race-intent"
-        self.deadline = time.perf_counter_ns() + 5_000_000_000
+        self.deadline = deadline or time.perf_counter_ns() + 5_000_000_000
         self.cancel = threading.Event()
         self.expected_focus = 41
         self.focus_invalid = False
@@ -67,7 +67,7 @@ class Lease:
 
 
 class RealOwnerQueueInterleavingTests(unittest.TestCase):
-    def test_cancel_cleanup_before_up_dequeue_is_not_verified_transition(self):
+    def _run_cleanup_before_up(self, lease, cleanup_reason):
         names = (
             "Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
             "Xlib.ext", "Xlib.ext.xtest", "executor_v3", "input_owner_v10",
@@ -118,12 +118,12 @@ class RealOwnerQueueInterleavingTests(unittest.TestCase):
             wrapper_module = importlib.util.module_from_spec(wrapper_spec)
             wrapper_spec.loader.exec_module(wrapper_module)
 
-            lease = Lease()
             wrapper = wrapper_module.InputOwner(":fake")
             try:
                 admitted = wrapper.call("down", lease, "a")
                 self.assertEqual(admitted["event"], "input_admission")
-                lease.cancel = RaceCancel()
+                if cleanup_reason == "cancelled":
+                    lease.cancel = RaceCancel()
 
                 inner = wrapper._inner
                 original_call = inner.call
@@ -133,11 +133,12 @@ class RealOwnerQueueInterleavingTests(unittest.TestCase):
                         limit = time.monotonic() + 1
                         while not any(
                             record.get("event") == "owner_release"
-                            and record.get("reason") == "cancelled"
+                            and record.get("reason") == cleanup_reason
                             for record in inner.records
                         ):
                             if time.monotonic() >= limit:
-                                raise AssertionError("owner cleanup did not precede queued up")
+                                raise AssertionError(
+                                    f"{cleanup_reason} cleanup did not precede queued up")
                             threading.Event().wait(0.001)
                     return original_call(operation, call_lease, key)
 
@@ -155,6 +156,13 @@ class RealOwnerQueueInterleavingTests(unittest.TestCase):
                     sys.modules.pop(name, None)
                 else:
                     sys.modules[name] = module
+
+    def test_cancel_cleanup_before_up_dequeue_is_not_verified_transition(self):
+        self._run_cleanup_before_up(Lease(), "cancelled")
+
+    def test_expiry_cleanup_before_up_dequeue_is_not_verified_transition(self):
+        deadline = time.perf_counter_ns() + 100_000_000
+        self._run_cleanup_before_up(Lease(deadline=deadline), "expired")
 
 
 if __name__ == "__main__":
