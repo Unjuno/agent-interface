@@ -2,7 +2,7 @@
 
 Status: **PASS — opt-in source composition only; no session or live allocation ran.**
 
-Base: current `main` at `13bab54ea6d91978247ecc1b70e5060db752367a`.
+Base: current `main` at `2ed11c5552956499454e8a99acf5a2f374106d34`.
 
 ## Question and decision
 
