@@ -22,3 +22,10 @@ A second fake-Xlib experiment injected an accepted-then-raised per-key release r
 ## Test-isolation follow-up
 
 An independent review found that the fake-Xlib tests evicted cached owner/transition modules without restoring earlier entries. A sentinel regression failed against the original test, then both owner fixtures were updated to restore saved module entries. The ordered 18-test single-process follow-up passes with the new interval test before and after the adjacent transition, cancellation, batch, and V13 suites. Raw outcomes and hashes are retained under `module_cache_isolation/`. This repairs test isolation only and does not change the production behavior or construction-only scope.
+
+
+## Synthetic keymap-change follow-up
+
+A separate fake-Xlib probe tests whether a synthetic symbol-to-keycode map change breaks the admission-to-release identity join. With the resolved keycode retained at admission, remapping W after both keys were admitted preserved `[87, 65]` in both admissions and cancellation intervals; remapping W/A before the second admission produced `[87, 77]` on both sides. Both cancellation cleanups verified empty state. This supports the narrow claim that an already-held physical keycode remains stable for release across later map changes. A keymap epoch is still needed to interpret what symbol an admitted keycode represented.
+
+The probe loads pinned source at `1721f7cb2a47f53641bc7c93effe2a2b817013cd` and applies an in-memory-only receipt mutation. It is synthetic evidence: no real X server mapping delivery, keyboard layout, physical key, game effect, model, or recovery was tested. The source, result, and inner audit are under `keymap_epoch_stability/`; the parent audit verifies the frozen probe and inner audit result.

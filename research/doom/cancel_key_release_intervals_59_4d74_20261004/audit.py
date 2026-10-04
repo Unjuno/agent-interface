@@ -104,6 +104,17 @@ checks["partial_failure_audit_result"] = (
     partial_result.get("pass") is True
     and sha(partial_result_path) == partial_freeze["audit_result_sha256"]
 )
+keymap_root = ROOT / "keymap_epoch_stability"
+keymap_freeze = json.loads((keymap_root / "FREEZE.json").read_text())
+keymap_audit_path = keymap_root / "AUDIT.json"
+keymap_audit = json.loads(keymap_audit_path.read_text())
+checks["keymap_epoch_probe_sha256"] = (
+    sha(keymap_root / "probe.py") == keymap_freeze["probe_sha256"]
+)
+checks["keymap_epoch_audit_result"] = (
+    keymap_audit.get("pass") is True
+    and sha(keymap_audit_path) == keymap_freeze["audit_result_sha256"]
+)
 manifest = (ROOT / "FILES.sha256").read_text().splitlines()
 manifest_results = []
 for line in manifest:

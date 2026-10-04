@@ -1,0 +1,130 @@
+{
+  "arms": [
+    {
+      "admission_keycodes": [
+        87,
+        65
+      ],
+      "admissions": [
+        {
+          "admitted_ns": 113991082274875,
+          "event": "input_admission",
+          "input_ack_ns": 113991082277791,
+          "key": "W",
+          "keycode": 87,
+          "valid_until_ns": 113996082248541
+        },
+        {
+          "admitted_ns": 113991082321916,
+          "event": "input_admission",
+          "input_ack_ns": 113991082323666,
+          "key": "A",
+          "keycode": 65,
+          "valid_until_ns": 113996082248541
+        }
+      ],
+      "initial_map": {
+        "65": 65,
+        "87": 87
+      },
+      "map_history": [
+        {
+          "65": 65,
+          "87": 87
+        },
+        {
+          "65": 65,
+          "87": 77
+        }
+      ],
+      "reason": "cancelled",
+      "release_intervals": [
+        {
+          "interval_ns": [
+            113991085359708,
+            113991085363583
+          ],
+          "keycode": 87
+        },
+        {
+          "interval_ns": [
+            113991085362208,
+            113991085363583
+          ],
+          "keycode": 65
+        }
+      ],
+      "release_keycodes": [
+        87,
+        65
+      ],
+      "verified": true
+    },
+    {
+      "admission_keycodes": [
+        87,
+        77
+      ],
+      "admissions": [
+        {
+          "admitted_ns": 113991085636083,
+          "event": "input_admission",
+          "input_ack_ns": 113991085637166,
+          "key": "W",
+          "keycode": 87,
+          "valid_until_ns": 113996085622916
+        },
+        {
+          "admitted_ns": 113991085699625,
+          "event": "input_admission",
+          "input_ack_ns": 113991085700625,
+          "key": "A",
+          "keycode": 77,
+          "valid_until_ns": 113996085622916
+        }
+      ],
+      "initial_map": {
+        "65": 65,
+        "87": 87
+      },
+      "map_history": [
+        {
+          "65": 65,
+          "87": 87
+        },
+        {
+          "65": 77,
+          "87": 77
+        }
+      ],
+      "reason": "cancelled",
+      "release_intervals": [
+        {
+          "interval_ns": [
+            113991088722000,
+            113991088723541
+          ],
+          "keycode": 87
+        },
+        {
+          "interval_ns": [
+            113991088722875,
+            113991088723541
+          ],
+          "keycode": 77
+        }
+      ],
+      "release_keycodes": [
+        87,
+        77
+      ],
+      "verified": true
+    }
+  ],
+  "mutation": "add resolved keycode to input_admission in memory",
+  "schema": "cancel-key-release-keymap-epoch-probe-v1",
+  "scope": "fake Xlib; synthetic keysym remaps between admissions/cancel; no OS input",
+  "source_blob": "50887b03fa2931315caf8396ac99a47628396129",
+  "source_commit": "1721f7cb2a47f53641bc7c93effe2a2b817013cd",
+  "source_sha256": "d4104ffcf391e9becff572caf6b569b5e8e29e5537da6ff30416433de9962fb0"
+}
