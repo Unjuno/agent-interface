@@ -363,6 +363,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`claim_scoped_clip_trace_6536_t0_20261002/`](claim_scoped_clip_trace_6536_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
+- [`client_energy_per_effect_7728_t0_20261005/`](client_energy_per_effect_7728_t0_20261005/)
 - [`clipboard_formats_36_t0_01a0ff51/`](clipboard_formats_36_t0_01a0ff51/)
 - [`clipboard_formats_36_x11_transfer_01a0ff51/`](clipboard_formats_36_x11_transfer_01a0ff51/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)
@@ -513,10 +514,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
-- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/) — Issue #7470 A02 harness diagnostic: 24 arbitrary pairings audited across null/planted plants; does not meet the later circular-shift design clarification. A01 prelaunch STOP preserved.
-- [`inference_disturbance_coupling_7470_t0_a03_20261004/`](inference_disturbance_coupling_7470_t0_a03_20261004/) — Issue #7470 A03: four intact-sequence phase rotations audited; planted phase sensitivity detected, but explicit period-to-period seam transition is omitted, so not full clarification conformance.
-- [`inference_disturbance_coupling_7470_t0_a04_20261004/`](inference_disturbance_coupling_7470_t0_a04_20261004/) — Issue #7470 A04: explicit seam and 8/8 trajectories audited, but frozen centered-correlation formula has extra 1/n normalization; not an Issue-level PASS.
-- [`inference_disturbance_coupling_7470_t0_a05_20261004/`](inference_disturbance_coupling_7470_t0_a05_20261004/) — Issue #7470 A05: standard Pearson fixture, four intact circular shifts, two periods with explicit seam; 8/8 reconstructed and 3/3 mutations rejected; finite method-scoped pass only.
+- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a03_20261004/`](inference_disturbance_coupling_7470_t0_a03_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a04_20261004/`](inference_disturbance_coupling_7470_t0_a04_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a05_20261004/`](inference_disturbance_coupling_7470_t0_a05_20261004/)
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/)
 - [`integrated_decision_scope_57_t0_v1/`](integrated_decision_scope_57_t0_v1/)
@@ -543,6 +544,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`kernel_receipt_capture_5225_integrity_v1/`](kernel_receipt_capture_5225_integrity_v1/)
 - [`kernel_receipt_time_5215_audit_successor_20260929/`](kernel_receipt_time_5215_audit_successor_20260929/)
 - [`label_control_ambiguity_6038_t0_v1/`](label_control_ambiguity_6038_t0_v1/)
+- [`latency_regime_coverage_7709_t0_20261005/`](latency_regime_coverage_7709_t0_20261005/)
+- [`latency_regime_coverage_7709_t1_feasibility_20261005/`](latency_regime_coverage_7709_t1_feasibility_20261005/)
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
