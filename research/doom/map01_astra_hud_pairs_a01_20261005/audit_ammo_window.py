@@ -36,6 +36,10 @@ def main():
             mismatches.append({"kind":"right-source-link","decision":to_i})
         plan = left["execution_trace"][0]["id"]
         keys = [key for event in events if event.get("event")=="keys_held" and event.get("id")==plan for key in event.get("keys",[])]
+        terminals = [event for event in events if event.get("event")=="terminal" and event.get("id")==plan]
+        release = terminals[0].get("release") if len(terminals)==1 else None
+        if not isinstance(release,dict) or release.get("event")!="owner_release" or release.get("verified") is not True or release.get("buttons_down")!=[] or release.get("keys_down")!=[]:
+            mismatches.append({"kind":"owner-release-receipt","plan_id":plan})
         independently_built.append({
             "from_decision":from_i,
             "to_decision":to_i,
@@ -45,6 +49,16 @@ def main():
             "ammo_delta":manual_ammo[to_i]-manual_ammo[from_i],
             "commands":left["action"].get("commands",[]),
             "held_keys":keys,
+            "owner_release": {
+                "event":release.get("event") if release else None,
+                "reason":release.get("reason") if release else None,
+                "verified":release.get("verified") if release else None,
+                "buttons_down":release.get("buttons_down") if release else None,
+                "keys_down":release.get("keys_down") if release else None,
+                "verified_ns":release.get("verified_ns") if release else None,
+                "terminal_ns":terminals[0].get("terminal_ns") if len(terminals)==1 else None,
+                "capture_to_verified_release_ms":(release["verified_ns"]-observed[b]["capture_ns"])/1e6 if release and "verified_ns" in release else None,
+            },
             "plan_id":plan,
         })
     release_types=sorted({str(row.get("event")) for row in events if any(term in str(row.get("event","")).lower() for term in ("release","keyup","key_up"))})
@@ -62,6 +76,7 @@ def main():
             "compiled_commands":report["decisions"][row["from_decision"]]["compiled_commands"],
             "plan_id":row["plan_id"],
             "event_held_keys":row["held_keys"],
+            "owner_release":row["owner_release"],
             "controller_model_interval_ms":(report["decisions"][row["from_decision"]]["controller_model_ended_ns"]-report["decisions"][row["from_decision"]]["controller_model_started_ns"])/1e6,
             "controller_model_start_ns":report["decisions"][row["from_decision"]]["controller_model_started_ns"],
             "controller_model_end_ns":report["decisions"][row["from_decision"]]["controller_model_ended_ns"],
@@ -69,13 +84,14 @@ def main():
         } for row in independently_built
     ]:
         mismatches.append({"kind":"candidate-window-mismatch"})
-    if release_types != recorded["explicit_release_event_types_in_capture"]:
-        mismatches.append({"kind":"release-event-types"})
+    if recorded.get("standalone_release_event_type_count") != sum(1 for row in events if row.get("event")=="owner_release"):
+        mismatches.append({"kind":"standalone-release-count"})
     audit={
         "schema":"map01-astra-ammo-window-audit-v1",
         "disposition":"PASS_AUDITED_POSTHOC_JOIN_HOLD_CAUSAL_ATTRIBUTION" if not mismatches else "FAIL_AMMO_WINDOW_AUDIT",
         "ammo_windows_recomputed":independently_built,
-        "explicit_release_event_types_recomputed":release_types,
+        "nested_owner_release_receipts_recomputed":[row["owner_release"] for row in independently_built],
+        "standalone_release_event_type_count_recomputed":sum(1 for row in events if row.get("event")=="owner_release"),
         "mismatch_count":len(mismatches),
         "mismatches":mismatches,
         "scope":"independent report/event arithmetic and action-key joins only; HUD values and scene semantics remain manual",

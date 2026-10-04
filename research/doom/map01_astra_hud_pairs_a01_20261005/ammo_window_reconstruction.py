@@ -24,9 +24,8 @@ def reconstruct(report, events, failure, local_manifest, frame_manifest, image_r
         if PurePosixPath(observations[sequence]["image"]).name != expected:
             raise ValueError("EVENT_SOURCE_IMAGE_MISMATCH")
 
-    event_types = {row.get("event") for row in events}
-    release_events = sorted(name for name in event_types
-                            if "release" in str(name).lower() or "keyup" in str(name).lower() or "key_up" in str(name).lower())
+    terminal_by_id = {row.get("id"): row for row in events
+                      if row.get("event") == "terminal" and row.get("id")}
     windows = []
     ammo = failure["visual_transcription"]["ammo"]
     frame_rows = {row["iteration"]: row for row in frame_manifest}
@@ -35,6 +34,12 @@ def reconstruct(report, events, failure, local_manifest, frame_manifest, image_r
         plan_id = left["execution_trace"][0]["id"]
         key_rows = [row for row in events if row.get("event") == "keys_held" and row.get("id") == plan_id]
         held_keys = [key for row in key_rows for key in row.get("keys", [])]
+        terminal = terminal_by_id.get(plan_id)
+        release = terminal.get("release") if terminal else None
+        if not isinstance(release, dict) or release.get("event") != "owner_release":
+            raise ValueError("OWNER_RELEASE_RECEIPT_MISSING")
+        if release.get("verified") is not True or release.get("buttons_down") != [] or release.get("keys_down") != []:
+            raise ValueError("OWNER_RELEASE_RECEIPT_NOT_CLEAR")
         left_ammo, right_ammo = ammo[index], ammo[index + 1]
         windows.append({
             "from_decision": index,
@@ -48,6 +53,13 @@ def reconstruct(report, events, failure, local_manifest, frame_manifest, image_r
             "compiled_commands": left.get("compiled_commands", []),
             "plan_id": plan_id,
             "event_held_keys": held_keys,
+            "owner_release": {
+                "event": release["event"], "reason": release.get("reason"),
+                "verified": release["verified"], "buttons_down": release["buttons_down"],
+                "keys_down": release["keys_down"], "verified_ns": release["verified_ns"],
+                "terminal_ns": terminal["terminal_ns"],
+                "capture_to_verified_release_ms": (release["verified_ns"] - observations[right_sequence]["capture_ns"]) / 1e6,
+            },
             "controller_model_interval_ms": (left["controller_model_ended_ns"] - left["controller_model_started_ns"]) / 1e6,
             "controller_model_start_ns": left["controller_model_started_ns"],
             "controller_model_end_ns": left["controller_model_ended_ns"],
@@ -60,13 +72,13 @@ def reconstruct(report, events, failure, local_manifest, frame_manifest, image_r
         "windows": windows,
         "nonfire_window_ammo_drop": anomaly["ammo_delta"],
         "nonfire_window_has_space_in_held_events": "space" in anomaly["event_held_keys"],
-        "explicit_release_event_types_in_capture": release_events,
+        "standalone_release_event_type_count": sum(1 for row in events if row.get("event") == "owner_release"),
         "exact_intermediate_pngs_present": image_root_exists,
-        "interpretation": "The 11-count manual ammo decrease is bracketed by exact observation events whose corresponding model plan is non-firing and whose keys_held summaries contain only Down and Right. The raw event schema has no explicit key-release event type. This is an attribution gap, not proof of an input leak or stale fire.",
+        "interpretation": "Both plans have nested verified owner_release receipts with empty buttons_down and keys_down. Sequence 148 was captured 97.359 ms before plan 3 release verification, and sequence 211 was captured 91.107 ms before plan 4 release verification. These are controller/owner-side receipts, not physical OS key-up or game-state samples. The 11-count manual ammo decrease occurred across the decision-4 window, but its timing and cause remain unknown; this is not proof of an input leak or stale fire.",
         "limits": [
             "ammo labels are manual reads of selected frames, not typed runtime telemetry",
             "exact intermediate screenshot bytes are unavailable, so the count/time of individual shots is unknown",
-            "keys_held summaries and plan terminal events do not prove physical key-up",
+            "nested owner_release receipts document controller-side verification only; they do not prove physical OS key-up or actual game input state",
             "the interval spans planner latency and action execution; no causal attribution is possible",
             "single retained trajectory; no live experiment, recovery, task success, or MAP01 claim"
         ],
@@ -89,7 +101,7 @@ def main():
                          (REPO / manifest["retained_location"]).exists())
     result["input_sha256"] = pins["inputs"]
     (HERE / "AMMO_WINDOW_RESULT.json").write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"disposition": result["disposition"], "deltas": [row["ammo_delta"] for row in result["windows"]], "nonfire_window_keys": result["windows"][1]["event_held_keys"], "release_event_types": result["explicit_release_event_types_in_capture"]}, separators=(",", ":")))
+    print(json.dumps({"disposition": result["disposition"], "deltas": [row["ammo_delta"] for row in result["windows"]], "nonfire_window_keys": result["windows"][1]["event_held_keys"], "owner_release_verified": [row["owner_release"]["verified"] for row in result["windows"]], "capture_to_release_ms": [row["owner_release"]["capture_to_verified_release_ms"] for row in result["windows"]]}, separators=(",", ":")))
 
 
 if __name__ == "__main__":

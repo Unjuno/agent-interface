@@ -31,6 +31,16 @@
         "space",
         "space"
       ],
+      "owner_release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 11857935250078,
+        "terminal_ns": 11857935301839,
+        "capture_to_verified_release_ms": 97.359309
+      },
       "plan_id": "plan-3-primary-0-1"
     },
     {
@@ -60,10 +70,42 @@
         "Down",
         "Right"
       ],
+      "owner_release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 11871019981654,
+        "terminal_ns": 11871020119013,
+        "capture_to_verified_release_ms": 91.157326
+      },
       "plan_id": "plan-4-primary-0-1"
     }
   ],
-  "explicit_release_event_types_recomputed": [],
+  "nested_owner_release_receipts_recomputed": [
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 11857935250078,
+      "terminal_ns": 11857935301839,
+      "capture_to_verified_release_ms": 97.359309
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 11871019981654,
+      "terminal_ns": 11871020119013,
+      "capture_to_verified_release_ms": 91.157326
+    }
+  ],
+  "standalone_release_event_type_count_recomputed": 0,
   "mismatch_count": 0,
   "mismatches": [],
   "scope": "independent report/event arithmetic and action-key joins only; HUD values and scene semantics remain manual"
