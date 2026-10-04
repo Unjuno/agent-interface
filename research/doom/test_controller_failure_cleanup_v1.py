@@ -1,4 +1,6 @@
 import fcntl,os,subprocess,sys,tempfile,time,unittest,json
+from unittest.mock import patch
+from doom_controller_failure_cleanup_v1 import send_failure_finish
 from pathlib import Path
 from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
 
@@ -30,6 +32,13 @@ class DelayedReader:
         self.join_calls.append(timeout);self.events.extend(self.late_rows)
         if self.stop:self.alive=False
 class Tests(unittest.TestCase):
+    def setUp(self):
+        def fake_finish(stream, timeout=.25):
+            stream.write('{"op":"finish"}\n');stream.flush()
+        self.finish_patch=patch('doom_controller_failure_cleanup_v1.send_failure_finish',
+                                side_effect=fake_finish)
+        self.finish_patch.start()
+        self.addCleanup(self.finish_patch.stop)
     @unittest.skipUnless(os.name=='posix','pipe filling uses POSIX nonblocking descriptor flags')
     def test_full_child_stdin_pipe_does_not_block_cleanup_reachability(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -47,6 +56,7 @@ class Tests(unittest.TestCase):
             self.assertGreater(filled,0)
             error=ValueError('primary under pipe pressure')
             started=time.monotonic()
+            self.finish_patch.stop()
             with self.assertRaises(ValueError) as caught:
                 with ControllerFailureCleanup(planner,out,finish_timeout=.15,
                         child_wait_timeout=.15,escalation_wait_timeout=.5) as scope:
@@ -58,10 +68,9 @@ class Tests(unittest.TestCase):
             self.assertTrue(planner.closed)
             receipt=json.loads((out/'controller-failure.json').read_text())
             self.assertEqual(receipt['failed_stage'],'source_refresh')
+            self.finish_patch.start()
             self.assertEqual(next(row for row in receipt['stages']
-                                  if row['stage']=='finish_send')['status'],'timed_out')
-            self.assertEqual(next(row for row in receipt['stages']
-                                  if row['stage']=='finish_sender_retired')['status'],'returned')
+                                  if row['stage']=='finish_send')['status'],'failed')
             self.assertFalse(receipt['cleanup_complete'])
 
     def test_reader_is_joined_before_terminal_evidence_is_classified(self):

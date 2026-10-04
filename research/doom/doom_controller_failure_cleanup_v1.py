@@ -1,5 +1,33 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
-import atexit,json,threading
+import atexit,json,os,select,threading,time
+
+def send_failure_finish(stream, timeout=0.25):
+    """Attempt finish on an owned POSIX pipe without an unbounded flush.
+
+    This failure-only path cannot certify protocol delivery or input release.
+    Unsupported descriptors fail rather than falling back to a blocking write.
+    The caller must have exclusive ownership of the stream during teardown.
+    """
+    if os.name != 'posix':
+        raise NotImplementedError('bounded failure finish requires POSIX pipe')
+    fd=stream.fileno()
+    blocking=os.get_blocking(fd)
+    deadline=time.monotonic()+timeout
+    data=b'{"op":"finish"}\n'
+    os.set_blocking(fd,False)
+    try:
+        while data:
+            remaining=deadline-time.monotonic()
+            if remaining <= 0: raise TimeoutError('failure finish pipe deadline')
+            if not select.select([], [fd], [], remaining)[1]:
+                raise TimeoutError('failure finish pipe deadline')
+            try: written=os.write(fd,data)
+            except BlockingIOError: continue
+            if written <= 0: raise BrokenPipeError('failure finish made no progress')
+            data=data[written:]
+    finally:
+        os.set_blocking(fd,blocking)
+
 
 class ControllerFailureCleanup:
     def __init__(self, planner, out, finish_timeout=0.5,
@@ -64,9 +92,8 @@ class ControllerFailureCleanup:
         if child is not None:
             polled=attempt('child_poll_before',child.poll)
             if not polled or receipt['stages'][-1]['result'] is None:
-                def finish():
-                    child.stdin.write('{"op":"finish"}\n');child.stdin.flush()
-                finish_sent,_,finish_thread=bounded('finish_send',finish,self.finish_timeout)
+                finish_sent=attempt('finish_send',lambda:send_failure_finish(
+                    child.stdin,timeout=self.finish_timeout))
                 if finish_sent and self.event_wait is not None:
                     attempt('post_control_score_wait',lambda:self.event_wait(
                         lambda row: type(row) is dict and
@@ -78,18 +105,6 @@ class ControllerFailureCleanup:
                     if not attempt('terminated_wait',lambda:child.wait(timeout=self.escalation_wait_timeout)):
                         attempt('child_kill',child.kill)
                         attempt('killed_wait',lambda:child.wait(timeout=self.escalation_wait_timeout))
-                if finish_thread is not None:
-                    attempt('finish_sender_join',lambda:finish_thread.join(timeout=1))
-                    sender_alive=attempt('finish_sender_alive',finish_thread.is_alive)
-                    if not sender_alive:
-                        receipt['stages'].append({'stage':'finish_sender_retired',
-                                                  'status':'unknown'})
-                    elif receipt['stages'][-1]['result']:
-                        receipt['stages'].append({'stage':'finish_sender_retired',
-                                                  'status':'timed_out'})
-                    else:
-                        receipt['stages'].append({'stage':'finish_sender_retired',
-                                                  'status':'returned'})
                 if hasattr(child.stdin,'close'):
                     bounded('child_stdin_close',child.stdin.close,.5)
             if attempt('child_poll_after',child.poll):
