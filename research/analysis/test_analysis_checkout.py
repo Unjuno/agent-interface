@@ -17,6 +17,14 @@ class SparseCheckoutDependencies(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout)
         self.assertIn('Ran 2 tests', result.stdout)
 
+    def test_issue_7418_finite_contract(self):
+        package = ROOT / 'research/analysis/exception_preserving_skill_7418_t0_20261004'
+        result = subprocess.run(
+            ['python', '-B', '-m', 'unittest', 'discover', '-s', str(package),
+             '-p', 'test_*.py', '-v'], cwd=ROOT, text=True,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        self.assertEqual(result.returncode, 0, result.stdout)
+
     def test_ci_selects_archival_tests_and_their_original_data(self):
         # Use the index: CI restores a historical workflow into the worktree
         # for unrelated provenance tests, without changing the staged CI config.
