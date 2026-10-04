@@ -9,7 +9,9 @@ ordinary-release result; unavailable cleanup records fail closed.
 
 The current-v39 backend test module passed 21/21 tests in WSLc. Combined with
 the adjacent `input_transition_owner_v3` suite, 29/29 passed. The independent
-auditor passed 6/6 checks on retained raw output. WSLc emitted its known warning
+auditor passed 7/7 checks on retained raw output. The inherited backend suite
+includes synthetic base-class tests; this result does not claim every inherited
+case is reachable through an admitted v39 program. WSLc emitted its known warning
 that swap limits are unsupported; accepted memory limits do not establish swap
 isolation.
 
@@ -17,4 +19,3 @@ This establishes a deterministic telemetry-classification boundary in the
 adapter. It does not establish owner-thread queue scheduling, live input or
 physical release timing, task effect, product reliability, or any model/GPU
 claim. No live allocation was invoked or retried.
-

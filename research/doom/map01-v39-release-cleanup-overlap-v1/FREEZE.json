@@ -13,9 +13,10 @@
   "image_repo_digest": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
   "limits": {"network": "none", "cpus": 1, "memory": "512M accepted", "swap": "unavailable per WSL warning"},
   "formal_or_live_allocation": false,
-  "outcome": "baseline false-positive reproduced; candidate suite passed 21/21; adjacent wrapper/backend suites passed 29/29; independent raw-log audit passed 6/6",
+  "outcome": "baseline false-positive reproduced; candidate suite passed 21/21; adjacent wrapper/backend suites passed 29/29; independent raw-log audit passed 7/7",
   "scope_limits": [
     "synthetic deterministic owner and adapter test",
+    "the inherited backend suite includes synthetic base-class cases; this result does not claim every inherited case is reachable through an admitted v39 program",
     "no owner-thread queue scheduling reproduction",
     "no X11, game, physical release timing, task-effect, model, or performance claim",
     "no live allocation started or retried"

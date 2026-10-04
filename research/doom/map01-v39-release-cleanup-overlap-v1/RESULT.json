@@ -2,9 +2,10 @@
   "schema": "map01-v39-release-cleanup-overlap-result-v1",
   "baseline": {"sha": "fbed929f629dabaa9ae752019d0ee7151d4d2298", "regression": "failed as expected: cleanup overlap was left ordinary"},
   "candidate": {"backend_tests": "21/21 pass", "adjacent_wrapper_and_backend_tests": "29/29 pass"},
-  "audit": "6/6 raw-log checks pass in WSLc",
+  "audit": "7/7 raw-log checks pass in WSLc",
   "environment_warning": "swap limit unsupported; accepted memory cap does not prove swap isolation",
   "decision": "adopt cleanup-overlap demotion in current-v39 typed release telemetry; remain synthetic construction evidence",
   "not_claimed": ["owner-thread scheduling", "X11 or live MAP01", "physical release timing", "task effect", "model or GPU performance", "safety or product reliability"],
+  "suite_scope_note": "The inherited 21-test backend suite includes synthetic base-class cases; this result does not claim every inherited case is reachable through an admitted v39 program.",
   "allocation": "no live allocation invoked or retried"
 }
