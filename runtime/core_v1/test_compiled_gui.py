@@ -77,6 +77,15 @@ class CompiledBoundaryTests(unittest.TestCase):
   d=Driver('observe');r=self.stopped(d,0,0);self.assertEqual(d.calls['admit'],[]);self.assertEqual(len(r['observations']),1)
  def test_late_intermediate_observation_preserves_prefix_pending_effect(self):
   d=Driver('observe',2);r=self.stopped(d,1,1);self.assertEqual(r['pending_effect']['action'],'enter');self.assertEqual(d.calls['verify_effect'],[])
+ def test_observation_adapter_failure_returns_receipt_and_never_admits_next_action(self):
+  d=Driver();base=d.observe
+  def observe(p):
+   if not d.calls['observe']:return base(p)
+   d.record('observe',p);raise TimeoutError('OCR timed out')
+  d.observe=observe;r=d.run()
+  self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','observation_failed'))
+  self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')
+  self.assertEqual(len(d.calls['observe']),2);self.assertEqual(len(d.calls['admit']),1);self.assertEqual(len(d.calls['execute']),1)
  def test_late_final_observation_never_claims_completion(self):
   d=Driver('observe',3);r=self.stopped(d,2,2);self.assertEqual(r['pending_effect']['action'],'save')
  def test_late_admission_never_dispatches(self):self.stopped(Driver('admit'),0,0)
