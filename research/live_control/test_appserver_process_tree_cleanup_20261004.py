@@ -14,6 +14,17 @@ from codex_app_server_client_v2 import CodexAppServerClient
 class AppServerProcessTreeCleanupTests(unittest.TestCase):
     @staticmethod
     def pid_exists(pid):
+        # Linux keeps orphaned grandchildren as zombies until PID 1 reaps
+        # them. They no longer execute or hold pipes, although kill(pid, 0)
+        # still succeeds for them.
+        stat_path = Path(f"/proc/{pid}/stat")
+        try:
+            stat = stat_path.read_text(encoding="ascii")
+        except (FileNotFoundError, ProcessLookupError):
+            stat = None
+        if stat is not None:
+            state = stat.rsplit(")", 1)[-1].strip().split(maxsplit=1)[0]
+            return state != "Z"
         try:
             os.kill(pid, 0)
             return True
