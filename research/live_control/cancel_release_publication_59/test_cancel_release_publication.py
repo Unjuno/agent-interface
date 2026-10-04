@@ -194,6 +194,7 @@ class CancelReleasePublicationTest(unittest.TestCase):
             self.assertFalse(worker.is_alive())
             self.assertTrue(all(not watcher.is_alive() for watcher in executor.release_watchers))
             self.assertIsNone(executor.active)
+            self.assertIn("release-emitter-retry", executor.published_release_ids)
         finally:
             executor.close()
             owner.close()
@@ -220,10 +221,12 @@ class CancelReleasePublicationTest(unittest.TestCase):
             worker.join(3)
             terminal = next((e for e in events if e.get("event") == "terminal"), None)
             self.assertIsNotNone(terminal, events)
-            self.assertEqual(terminal["input_release_publication"]["status"], "failed")
+            self.assertEqual(terminal["input_release_publication"]["status"], "delivery_unknown")
             self.assertEqual(terminal["input_release_publication"]["error"]["type"], "OSError")
             self.assertFalse(worker.is_alive())
             self.assertIsNone(executor.active)
+            self.assertNotIn("release-emitter-unavailable", executor.published_release_ids)
+            self.assertNotIn("release-emitter-unavailable", executor.release_publication_errors)
         finally:
             executor.close()
             owner.close()
