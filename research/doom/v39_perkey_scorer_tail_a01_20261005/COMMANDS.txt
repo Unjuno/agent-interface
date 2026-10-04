@@ -4,11 +4,13 @@ Pre-run environment checks:
   Get-Command wslc.exe -ErrorAction SilentlyContinue
   wsl.exe -d Ubuntu -- bash -lc 'python3 --version'
 
-Linux WSL core construction suite (source checkout mounted read-write):
-  wsl.exe -d Ubuntu -- bash -lc 'cd /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-7/work/pr7662-audit-20261005/research/doom && python3 -m unittest -v test_map01_scorer_stdio_adapter_v3 test_map01_scorer_stdio_adapter_v1 test_map01_scorer_stdio_adapter_v2 test_session_map01_v18 test_session_map01_v19.MeasuredTailCompositionTests.test_backend_capture_keeps_raw_event_names_and_requires_empty_backend test_session_map01_v19.MeasuredTailCompositionTests.test_emit_failure_does_not_publish_candidate test_session_map01_v19.MeasuredTailCompositionTests.test_main_patches_session_backend_to_the_perkey_bridge test_session_map01_v19.MeasuredTailCompositionTests.test_measured_tail_runs_before_final_sample_and_records_boundary test_session_map01_v19.MeasuredTailCompositionTests.test_missing_candidate_skips_tail_but_keeps_final_sample'
+Run from repository root:
+  .\research\doom\v39_perkey_scorer_tail_a01_20261005\run.ps1
+  python research/doom/v39_perkey_scorer_tail_a01_20261005/audit.py
 
-Windows focused compatibility suite (PowerShell, from research/doom):
-  python -m unittest -v test_map01_scorer_stdio_adapter_v3 test_map01_scorer_stdio_adapter_v1 test_map01_scorer_stdio_adapter_v2 test_session_map01_v18 test_session_map01_v19 test_v39_tail_session_selection
+The runner computes the WSL mount path from this checkout, runs the Linux WSL
+core suite and Windows focused compatibility suite, and retains both complete
+outputs plus their exit codes in RESULT.json.
 
 Independent audit:
   python research/doom/v39_perkey_scorer_tail_a01_20261005/audit.py

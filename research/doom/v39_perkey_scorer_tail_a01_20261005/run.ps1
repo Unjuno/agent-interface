@@ -4,13 +4,18 @@ $repo = (Resolve-Path (Join-Path $package '..\..\..')).Path
 $doom = Join-Path $repo 'research\doom'
 $wslOut = Join-Path $package 'WSL_TEST_OUTPUT.txt'
 $windowsOut = Join-Path $package 'WINDOWS_TEST_OUTPUT.txt'
-$linuxCommand = 'cd /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-7/work/pr7662-audit-20261005/research/doom && python3 -m unittest -v test_map01_scorer_stdio_adapter_v3 test_map01_scorer_stdio_adapter_v1 test_map01_scorer_stdio_adapter_v2 test_session_map01_v18 test_session_map01_v19.MeasuredTailCompositionTests.test_backend_capture_keeps_raw_event_names_and_requires_empty_backend test_session_map01_v19.MeasuredTailCompositionTests.test_emit_failure_does_not_publish_candidate test_session_map01_v19.MeasuredTailCompositionTests.test_main_patches_session_backend_to_the_perkey_bridge test_session_map01_v19.MeasuredTailCompositionTests.test_measured_tail_runs_before_final_sample_and_records_boundary test_session_map01_v19.MeasuredTailCompositionTests.test_missing_candidate_skips_tail_but_keeps_final_sample'
-& wsl.exe -d Ubuntu -- bash -lc $linuxCommand *> $wslOut
+$drive = $doom.Substring(0, 1).ToLowerInvariant()
+$linuxDoom = "/mnt/$drive/" + $doom.Substring(3).Replace('\', '/')
+$linuxTests = 'python3 -m unittest -v test_map01_scorer_stdio_adapter_v3 test_map01_scorer_stdio_adapter_v1 test_map01_scorer_stdio_adapter_v2 test_session_map01_v18 test_session_map01_v19.MeasuredTailCompositionTests.test_backend_capture_keeps_raw_event_names_and_requires_empty_backend test_session_map01_v19.MeasuredTailCompositionTests.test_emit_failure_does_not_publish_candidate test_session_map01_v19.MeasuredTailCompositionTests.test_main_patches_session_backend_to_the_perkey_bridge test_session_map01_v19.MeasuredTailCompositionTests.test_measured_tail_runs_before_final_sample_and_records_boundary test_session_map01_v19.MeasuredTailCompositionTests.test_missing_candidate_skips_tail_but_keeps_final_sample'
+$linuxCommand = "cd '$linuxDoom' && $linuxTests"
+$wslLines = & wsl.exe -d Ubuntu -- bash -lc $linuxCommand 2>&1
 $wslExit = $LASTEXITCODE
+[System.IO.File]::WriteAllText($wslOut, (($wslLines | ForEach-Object { $_.ToString() }) -join "`n") + "`n", [System.Text.UTF8Encoding]::new($false))
 Push-Location $doom
 try {
-    & python -m unittest -v test_map01_scorer_stdio_adapter_v3 test_map01_scorer_stdio_adapter_v1 test_map01_scorer_stdio_adapter_v2 test_session_map01_v18 test_session_map01_v19 test_v39_tail_session_selection *> $windowsOut
+    $windowsLines = & python -m unittest -v test_map01_scorer_stdio_adapter_v3 test_map01_scorer_stdio_adapter_v1 test_map01_scorer_stdio_adapter_v2 test_session_map01_v18 test_session_map01_v19 test_v39_tail_session_selection 2>&1
     $windowsExit = $LASTEXITCODE
+    [System.IO.File]::WriteAllText($windowsOut, (($windowsLines | ForEach-Object { $_.ToString() }) -join "`n") + "`n", [System.Text.UTF8Encoding]::new($false))
 }
 finally {
     Pop-Location
