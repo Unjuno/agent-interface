@@ -198,6 +198,47 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipt["down_edge_interval_ns"])
                 self.assertIsNone(receipt["up_edge_interval_ns"])
 
+    def test_adapter_pair_requires_consistent_samples_and_request_timing(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        mutations = (
+            (0, "pre_sample.available", False),
+            (0, "pre_sample.down", True),
+            (0, "post_sample.down", False),
+            (0, "pre_sample.started_ns", 87811364890959),
+            (0, "pre_sample.finished_ns", 87811364891917),
+            (0, "press_request_ns", 87811364890957),
+            (0, "sync_return_ns", 87811364893751),
+            (0, "input_ack_ns", 87811364893459),
+            (1, "pre_sample.available", False),
+            (1, "pre_sample.down", False),
+            (1, "post_sample.down", True),
+            (1, "post_sample.finished_ns", 87811364949417),
+            (1, "release_request_ns", 87811364946332),
+            (1, "sync_return_ns", 87811364949001),
+            (1, "release_attempted", False),
+        )
+
+        for row_index, field, value in mutations:
+            events = json.loads(json.dumps(template))
+            measurement = events[row_index]["physical_key_measurement"]
+            if "." in field:
+                name, nested = field.split(".", 1)
+                measurement[name][nested] = value
+            elif field == "input_ack_ns":
+                events[row_index][field] = value
+            else:
+                measurement[field] = value
+
+            with self.subTest(row_index=row_index, field=field):
+                receipt = controller.input_edge_receipts(events)[0]
+
+                self.assertEqual(receipt["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
