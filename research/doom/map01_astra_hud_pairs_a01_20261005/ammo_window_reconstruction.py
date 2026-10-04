@@ -74,7 +74,7 @@ def reconstruct(report, events, failure, local_manifest, frame_manifest, image_r
         "nonfire_window_has_space_in_held_events": "space" in anomaly["event_held_keys"],
         "standalone_release_event_type_count": sum(1 for row in events if row.get("event") == "owner_release"),
         "exact_intermediate_pngs_present": image_root_exists,
-        "interpretation": "Both plans have nested verified owner_release receipts with empty buttons_down and keys_down. Sequence 148 was captured 97.359 ms before plan 3 release verification, and sequence 211 was captured 91.107 ms before plan 4 release verification. These are controller/owner-side receipts, not physical OS key-up or game-state samples. The 11-count manual ammo decrease occurred across the decision-4 window, but its timing and cause remain unknown; this is not proof of an input leak or stale fire.",
+        "interpretation": "Both plans have nested verified owner_release receipts with empty buttons_down and keys_down. Sequence 148 was captured 97.359 ms before plan 3 release verification, and sequence 211 was captured 91.157 ms before plan 4 release verification. These are controller/owner-side receipts, not physical OS key-up or game-state samples. The 11-count manual ammo decrease occurred across the decision-4 window, but its timing and cause remain unknown; this is not proof of an input leak or stale fire.",
         "limits": [
             "ammo labels are manual reads of selected frames, not typed runtime telemetry",
             "exact intermediate screenshot bytes are unavailable, so the count/time of individual shots is unknown",
