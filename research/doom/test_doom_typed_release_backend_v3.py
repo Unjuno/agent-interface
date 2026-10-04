@@ -311,6 +311,33 @@ class Tests(unittest.TestCase):
             self.assertFalse(obj.emitted[0]['owner_transition_verified'])
             self.assertFalse(obj.emitted[0]['release_call_bracket_valid'])
 
+    def test_missing_or_noninteger_release_bracket_fails_closed(self):
+        for field, value in (
+            ('release_call_started_ns', 'missing'),
+            ('release_call_returned_ns', 'missing'),
+            ('release_call_started_ns', None),
+            ('release_call_returned_ns', None),
+            ('release_call_started_ns', True),
+            ('release_call_returned_ns', True),
+        ):
+            with self.subTest(field=field, value=value):
+                obj = make_backend({'a'})
+                original_call = obj.owner.call
+                def malformed_call(op, lease=None, key=None):
+                    row = original_call(op, lease, key)
+                    if op == 'up':
+                        if value == 'missing':
+                            row.pop(field)
+                        else:
+                            row[field] = value
+                    return row
+                obj.owner.call = malformed_call
+                obj.raw('a', False)
+                self.assertEqual(len(obj.emitted), 1)
+                self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+                self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+                self.assertFalse(obj.emitted[0]['release_call_bracket_valid'])
+
     def test_intent_token_mismatch_fails_closed(self):
         obj = make_backend({'a'}, Owner(receipt_token='other'))
         obj.raw('a', False)
@@ -434,3 +461,4 @@ class Tests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
+
