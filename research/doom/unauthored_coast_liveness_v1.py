@@ -62,6 +62,18 @@ class UnauthoredCoastMonitor(ObservableSignalPolicyMonitor):
         super().__init__(guard, _TypedHealthExtractor())
 
 
+def invalidation_handoff_sequence(invalidation_sequence, latest_observation):
+    """Choose the paired frame sequence, or the next fresh one if malformed."""
+    if type(invalidation_sequence) is int and invalidation_sequence >= 0:
+        return invalidation_sequence
+    if (type(latest_observation) is not dict or
+            latest_observation.get("event") != "observation" or
+            type(latest_observation.get("sequence")) is not int or
+            latest_observation["sequence"] < 0):
+        raise ValueError("latest observation required to recover invalid sequence")
+    return latest_observation["sequence"] + 1
+
+
 def wait_for_fresh_observation(wait, invalidation_sequence, latest_observation=None):
     """Do not replan from a stale screenshot after early typed invalidation."""
     if type(invalidation_sequence) is not int or invalidation_sequence < 0:
