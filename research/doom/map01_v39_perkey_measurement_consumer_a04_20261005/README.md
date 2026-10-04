@@ -13,7 +13,12 @@ both edges, boolean aliases on both edges, a mismatching integer interval, and
 a malformed interval are rejected. Normal and optimized Python each pass all
 four regression methods. The independent audit verifies the A03 frozen source
 and input hashes remain unchanged and reconstructs the exact baseline pair.
-Commands, test transcripts, and audit output are in `results/a04/`.
+On the synthetic combined tree using current `main` `c520359`, parent #7602
+`c81512e`, and child `9a29196`, eight focused V39/controller/wait/source-refresh/
+retained-input modules pass 73/73. A04's four tests also pass in normal and
+optimized Python on that combined tree. Python compilation and integrated diff
+checks pass. Exact refs, command, transcripts, and audit output are in
+`results/a04/COMPOSITION.json` and the adjacent logs.
 
 This is only a consumer-boundary source-contract result. The pair comes from a
 fake-display harness; no live GUI, game, model, useful feedback, threat
