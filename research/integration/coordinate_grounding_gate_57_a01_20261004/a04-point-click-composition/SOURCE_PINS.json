@@ -1,0 +1,27 @@
+{
+  "schema": "a04-point-click-composition-source-pins-v1",
+  "source_commit": "02953aa83d62e69a787de7732bf172f3f8ef8e1c",
+  "point_validator": {
+    "path": "research/live_control/model_point_target_v1.py",
+    "git_blob": "45b3d57e7ef873e92e88107e7019d64376061216"
+  },
+  "source_mint_route_reference": {
+    "path": "research/live_control/session_v33.py",
+    "git_blob": "34e738489619967a0be95d0b90de58d6490455a7",
+    "executed": false,
+    "note": "The pinned Backend route was inspected as the source of the source-sequence, exact-patch, focus/surface, and fresh-mint ordering. This construction invokes the pinned validator and actual runtime TargetHandleStore.mint/resolve_point; it does not instantiate the X11 session Backend."
+  },
+  "legacy_adapter_reference": {
+    "path": "research/integration/planner_contract_56_4d74_20261004/r02/planner_contract_adapter.py",
+    "git_blob": "2f01a2f018a119b8b760f3ff5ccee979c950bee9",
+    "executed": false
+  },
+  "runtime_sources": {
+    "runtime/guarded_x11_v1/frames.py": "972daffee40a38d3effbd8155f3da133d664e445",
+    "runtime/guarded_x11_v1/handles.py": "45462cfa5da1a96e07df2a874670a3de23dab891",
+    "runtime/guarded_x11_v1/handles_base.py": "b22a0f9bef22638951307345549f72aa7f4596e6",
+    "runtime/guarded_x11_v1/handles_texture.py": "d72b9ba411eaeb8a63bb6519af9dc9bd415ca8f8"
+  },
+  "input_manifest": "INPUTS.json",
+  "retained_context_result": "../a03-context-crops/RESULT.json"
+}
