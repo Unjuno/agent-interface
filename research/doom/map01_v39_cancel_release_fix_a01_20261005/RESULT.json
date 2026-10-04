@@ -9,11 +9,12 @@
     "verified_owner_cleanup_reconciles_bridge_held_set": true,
     "reconciliation_failure_preserves_recorded_release_measurement": true,
     "expired_program_exit_drains_previously_recorded_owner_release": true,
-    "executor_v3_expiry_terminal_contains_confirmed_contextual_up_receipt": true
+    "executor_v3_expiry_terminal_contains_confirmed_contextual_up_receipt": true,
+    "executor_v12_expiry_terminal_contains_confirmed_contextual_up_receipt": true
   },
   "disposition": "PASS_CANDIDATE_MECHANICS",
   "schema": "map01-v39-cancel-release-fix-result-v1",
-  "scope": "Local fake-display owner and bridge candidate tests only. Candidate not wired into live MAP01 runtime.",
+  "scope": "Local fake-display owner/bridge and current-main ExecutorV12 composition tests only. Candidate not wired into live MAP01 runtime.",
   "source_commit": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
   "tests": {
     "candidate_cancel_release": {
@@ -26,6 +27,10 @@
     },
     "input_owner_v12_compatibility_on_v13": {
       "count": 10,
+      "exit": 0
+    },
+    "executor_v12_expiry_composition": {
+      "count": 1,
       "exit": 0
     }
   },
