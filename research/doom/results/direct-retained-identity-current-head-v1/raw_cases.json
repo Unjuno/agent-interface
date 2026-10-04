@@ -1,0 +1,489 @@
+{
+  "schema": "map01-direct-retained-token-key-cases-v1",
+  "cases": [
+    {
+      "case_id": "valid_nonempty_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "missing_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "null_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": null,
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": null,
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "empty_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "integer_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": 17,
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": 17,
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "boolean_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": true,
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": true,
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "list_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": [],
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": [],
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "dict_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": {},
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": {},
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "missing_key_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "null_key_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": null,
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": null,
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "empty_key_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": "",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": "",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "integer_key_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": 17,
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": 17,
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "boolean_key_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": true,
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": true,
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "list_key_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": [],
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": [],
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "dict_key_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": {},
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": {},
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "missing_token_release",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "mismatched_token",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "one",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "two",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    },
+    {
+      "case_id": "missing_key_admission_after_valid",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        },
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        }
+      ]
+    },
+    {
+      "case_id": "null_key_admission_after_valid",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        },
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": null,
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        }
+      ]
+    },
+    {
+      "case_id": "malformed_token_admission_after_valid",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        },
+        {
+          "event": "input_admission",
+          "intent_token": 17,
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        }
+      ]
+    },
+    {
+      "case_id": "malformed_key_admission_after_valid",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "token-a",
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        },
+        {
+          "event": "input_admission",
+          "intent_token": "token-a",
+          "key": 17,
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        }
+      ]
+    },
+    {
+      "case_id": "null_token_pair",
+      "events": [
+        {
+          "event": "input_admission",
+          "intent_token": null,
+          "key": "Up",
+          "admitted_ns": 100,
+          "input_ack_ns": 110
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": null,
+          "operation": "up",
+          "key": "Up",
+          "release_call_started_ns": 130,
+          "release_call_returned_ns": 140,
+          "owner_transition_verified": true
+        }
+      ]
+    }
+  ]
+}
