@@ -1,0 +1,5 @@
+H: Actual guarded input/observation/release adapters can execute the two-transition compiled graph on task-1 in the current Chromium fixture.
+T: One new session seed991058; explicit fixed points from previously inspected task-1 screenshot; runtime mints and freshly checks both references; bounded compiled core executes, then independent fixture evaluates. No model/caller v3 invoked yet.
+D: Core TASK_SUCCEEDED/two transitions, actual releases clear, independent exact task-1 submission. Full six-task evaluation will be false because only task-1 is allocated; do not call that full benchmark PASS.
+C: Fixed-point construction, whole-image-change intermediate cue can include unrelated pixels; this does not establish exact entered text. Saved-title is a runtime cue; retained append-only submission records decide exact correctness independently. No economics, transfer, model-value or caller-v3 claim.
+U: Preserve the first failure/stop without retrying this allocation. Different fixes require separate allocation/output. CPU1/memory1G/network-none/user65534. No GPU/provider or physical desktop.
