@@ -6,7 +6,6 @@ import os
 import subprocess
 import sys
 import tempfile
-import shutil
 from pathlib import Path
 from runtime.distribution_v2.build import build
 
@@ -15,8 +14,7 @@ class WorkerEffectCases(unittest.TestCase):
   root=Path(__file__).resolve().parents[2]
   with tempfile.TemporaryDirectory() as td:
    temp=Path(td);archive=temp/'runtime.pyz'
-   source=temp/'source';source.mkdir();shutil.copytree(root/'runtime',source/'runtime')
-   build(source,archive,temp/'manifest.json',temp/'sha256')
+   build(root,archive,temp/'manifest.json',temp/'sha256')
    code='''import json,sys,time
 sys.path.insert(0,sys.argv[1])
 from PIL import Image
