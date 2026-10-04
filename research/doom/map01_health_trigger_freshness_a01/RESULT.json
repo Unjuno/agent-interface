@@ -82,6 +82,11 @@
     }
   ],
   "v38_censoring_context": {
+    "decision_iteration": 2,
+    "source_sequence": 91,
+    "baseline_health": 85,
+    "planner_terminal_ns": 54894834592186,
+    "preterminal_below_baseline_count": 1,
     "selected_rows": [
       {
         "sequence": 91,
@@ -105,10 +110,10 @@
         "emit_ns": 54894905069486
       }
     ],
-    "planner_terminal_ns": 54894834592186,
-    "next_row_after_terminal": true,
+    "trigger_emit_to_terminal_ms": 119.635,
+    "next_row_capture_after_terminal": true,
     "single_below_baseline_health_row": true,
-    "note": "The single qualifying health sample is 119.635 ms before planner terminal; next selected sample is after terminal. Retained only as censoring context; not replayed or treated as a matched control."
+    "censoring_disposition": "SINGLE_SAMPLE_BEFORE_TERMINAL_NEXT_AFTER"
   },
   "scope": "Distinct sequence-matched captures with exact observation identity; not independent semantic evidence."
 }
