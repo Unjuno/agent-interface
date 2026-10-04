@@ -167,7 +167,11 @@ def build_interface(aliases: dict, scope: str) -> dict:
 
 
 class CompiledExecution:
-    """Bind layout OCR and checked client ports to the existing compiled core."""
+    """Bind layout OCR and checked client ports to the existing compiled core.
+
+    The caller must supply the current cancellation state; cancellation is never
+    assumed to be false when the adapter is constructed.
+    """
 
     def __init__(
         self,
@@ -175,18 +179,28 @@ class CompiledExecution:
         task: dict,
         aliases: dict,
         *,
+        cancelled: Callable[[], bool],
         tesseract: str = "tesseract",
         ocr_runner: Callable = subprocess.run,
     ) -> None:
+        if not callable(cancelled):
+            raise TypeError("a cancellation-state callback is required")
         self.client = client
         self.task = task
         self.aliases = aliases
+        self._cancelled_source = cancelled
         self.tesseract = tesseract
         self.ocr_runner = ocr_runner
         self.current = None
         self.authorizations = {}
         self.raw = []
         self.events = []
+
+    def _cancelled(self) -> bool:
+        value = self._cancelled_source()
+        if type(value) is not bool:
+            raise TypeError("cancellation-state callback must return bool")
+        return value
 
     def observe(self, payload: dict) -> dict:
         kind = {"empty": "field", "filled": "submit"}.get(payload["state"])
@@ -375,7 +389,7 @@ class CompiledExecution:
                 "admit": self.admit,
                 "execute": self.execute,
                 "verify_effect": self.verify,
-                "cancelled": lambda: False,
+                "cancelled": self._cancelled,
                 "journal": self.events.append,
             },
         )

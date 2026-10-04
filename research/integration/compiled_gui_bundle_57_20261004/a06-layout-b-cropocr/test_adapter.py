@@ -142,13 +142,15 @@ class CropOCRTests(unittest.TestCase):
 
 
 class FakeClient:
-    def __init__(self, images, root):
+    def __init__(self, images, root, *, cancel_on_check=False):
         self.images = iter(images)
         self.runtime = FIXTURE_ROOT
         self.root = root
         self.programs = []
         self.commands = []
         self.sequence = 0
+        self.cancelled = False
+        self.cancel_on_check = cancel_on_check
 
     def _observation(self):
         name, title = next(self.images)
@@ -161,9 +163,12 @@ class FakeClient:
         }
 
     def check(self, _alias, _offset, _request_id):
-        return {"eligible": True, "status": "VALID"}, {
+        result = {"eligible": True, "status": "VALID"}, {
             "observations": [self._observation()]
         }
+        if self.cancel_on_check:
+            self.cancelled = True
+        return result
 
     def submit(self, _name, _steps):
         return {"observations": [self._observation()]}
@@ -190,7 +195,7 @@ class FakeClient:
 
 
 class ComposedLayoutBTests(unittest.TestCase):
-    def _run(self, ocr_outputs):
+    def _run(self, ocr_outputs, *, initially_cancelled=False, cancel_on_check=False):
         with tempfile.TemporaryDirectory() as directory:
             client = FakeClient(
                 [
@@ -199,7 +204,9 @@ class ComposedLayoutBTests(unittest.TestCase):
                     ("083.png", "AI INTEGRATED SAVED"),
                 ],
                 Path(directory),
+                cancel_on_check=cancel_on_check,
             )
+            client.cancelled = initially_cancelled
             output_iter = iter(ocr_outputs)
 
             def runner(_args, **_kwargs):
@@ -210,6 +217,7 @@ class ComposedLayoutBTests(unittest.TestCase):
             task = {"task_id": "task-4", "token": "t991028-4", "layout": "B"}
             adapter = CompiledExecution(
                 client, task, {"field": "task-4-field", "submit": "task-4-submit"},
+                cancelled=lambda: client.cancelled,
                 ocr_runner=runner,
             )
             return adapter.run(), client
@@ -231,6 +239,20 @@ class ComposedLayoutBTests(unittest.TestCase):
         self.assertEqual(receipt["completed_transitions"], 1)
         self.assertEqual(len(client.commands), 1)
         self.assertEqual(receipt["reason"], "effect_failed")
+
+    def test_cancelled_before_observation_yields_without_client_work(self):
+        result, client = self._run([""], initially_cancelled=True)
+        self.assertEqual(result["receipt"]["outcome"], "SAFE_YIELD")
+        self.assertEqual(result["receipt"]["reason"], "cancelled")
+        self.assertEqual(client.sequence, 0)
+        self.assertEqual(client.commands, [])
+
+    def test_cancel_after_observation_prevents_action_dispatch(self):
+        result, client = self._run([""], cancel_on_check=True)
+        self.assertEqual(result["receipt"]["outcome"], "SAFE_YIELD")
+        self.assertEqual(result["receipt"]["reason"], "cancelled")
+        self.assertEqual(client.sequence, 1)
+        self.assertEqual(client.commands, [])
 
 
 if __name__ == "__main__":
