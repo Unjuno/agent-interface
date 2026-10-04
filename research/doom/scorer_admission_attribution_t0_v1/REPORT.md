@@ -12,6 +12,8 @@
 
 **U.** `ADMISSION_BRACKETED_PROGRESS` is not exact event-time attribution or causal evidence that recovery caused progress. The bounded sample may still follow other game events. Live instrumentation must provide a same-domain mapping for admission, first input, and scorer sample times; host AppServer and guest `perf_counter_ns` values cannot be compared directly. Current-main source-07 has only a post-control refresh; the separate owner’s checkpoint draft was not modified.
 
+**Relationship to concurrent integration evidence.** The owner's [PR #7472](https://github.com/Unjuno/agent-interface/pull/7472) independently tests that an accepted callback can hold the ExecutorV12 worker before first backend input while a synthetic baseline completes. It also finds that baseline-callback failure leaves the executor active with a backend lease and an unstarted worker. That lifecycle STOP needs an executor repair; this T0 does not change or duplicate it. The two results cover different gates: #7472 tests where a baseline can be acquired in executor order, while this T0 tests what scorer evidence is sufficient to classify as post-admission progress and rejects missed or overlong observation intervals. Neither establishes live useful recovery.
+
 ## Reproduction
 
 From the repository root:
