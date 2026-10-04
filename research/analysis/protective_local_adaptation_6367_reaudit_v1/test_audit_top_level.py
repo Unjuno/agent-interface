@@ -1,5 +1,6 @@
 import copy
 import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -8,6 +9,8 @@ from audit_top_level import audit_top_level
 
 ROOT = Path(__file__).parent
 FROZEN = ROOT.parent / "protective_local_adaptation_6367_t0_20261004"
+sys.path.insert(0, str(FROZEN))
+from auditor import audit as audit_frozen_v1
 
 
 class TopLevelReauditTests(unittest.TestCase):
@@ -36,6 +39,17 @@ class TopLevelReauditTests(unittest.TestCase):
             audit_top_level(self.fixture, self.events, report)["mismatches"],
             ["mechanism_attribution_eligible"],
         )
+
+    def test_reproduces_v1_blind_spot_and_catches_it_in_successor_audit(self):
+        report = copy.deepcopy(self.report)
+        report["decision"] = "DESCRIPTIVE_ALL_OFFER_TOTAL"
+        report["mechanism_attribution_eligible"] = True
+        original = audit_frozen_v1(self.fixture, self.events, report)
+        successor = audit_top_level(self.fixture, self.events, report)
+        self.assertEqual(original["status"], "PASS_AUDIT")
+        self.assertEqual(successor["status"], "FAIL_TOP_LEVEL_AUDIT")
+        self.assertEqual(set(successor["mismatches"]),
+                         {"decision", "mechanism_attribution_eligible"})
 
 
 if __name__ == "__main__":

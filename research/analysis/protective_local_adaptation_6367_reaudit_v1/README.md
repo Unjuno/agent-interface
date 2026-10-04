@@ -16,8 +16,12 @@ reconstruct the report's top-level `decision` or
   candidate or original auditor invocation.
 - **D:** Record exact input hashes and the supplemental audit output here.
 - **C:** The original frozen T0 inputs, source, candidate result, and original
-  audit output remain unchanged. The corrected check is a successor audit, not
-  a replacement claim about the original invocation.
+audit output remain unchanged. The corrected check is a successor audit, not
+a replacement claim about the original invocation.
+
+The regression suite also reproduces the original auditor's false PASS when
+both top-level fields are mutated, then confirms the successor audit rejects
+that same report.
 - **U:** This qualifies only report-disposition consistency for the finite
   synthetic method fixture. It does not establish live-control safety,
   efficacy, generality, or container-level behavior.
