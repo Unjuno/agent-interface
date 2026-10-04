@@ -29,6 +29,9 @@ def main() -> int:
         "cases.json": PKG / "cases.json",
         "run_a01.py": PKG / "run_a01.py",
         "audit_a01.py": PKG / "audit_a01.py",
+        "README.md": PKG / "README.md",
+        "COMMANDS.txt": PKG / "COMMANDS.txt",
+        "ENVIRONMENT_STOP.txt": PKG / "ENVIRONMENT_STOP.txt",
     }
     actual_hashes = {name: sha256(path) for name, path in tracked.items()}
     if actual_hashes != pinned:

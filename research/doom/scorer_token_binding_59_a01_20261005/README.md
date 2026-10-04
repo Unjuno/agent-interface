@@ -42,3 +42,5 @@ python3 research/doom/scorer_token_binding_59_a01_20261005/audit_a01.py
 ```
 
 The source freeze and first raw output are retained under `results/a01/`.
+
+Pre-candidate wrapper correction: the first invocation stopped at source preflight because the runner compared six hashes while the freeze pinned nine. Candidate invocation count remained zero and no raw result was produced. The wrapper now compares every frozen source entry; the corrected wrapper and freeze are committed before the single candidate invocation.
