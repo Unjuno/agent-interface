@@ -13,12 +13,14 @@ both edges, boolean aliases on both edges, a mismatching integer interval, and
 a malformed interval are rejected. Normal and optimized Python each pass all
 four regression methods. The independent audit verifies the A03 frozen source
 and input hashes remain unchanged and reconstructs the exact baseline pair.
-On the synthetic combined tree using current `main` `c520359`, parent #7602
-`c81512e`, and child `9a29196`, eight focused V39/controller/wait/source-refresh/
-retained-input modules pass 73/73. A04's four tests also pass in normal and
-optimized Python on that combined tree. Python compilation and integrated diff
-checks pass. Exact refs, command, transcripts, and audit output are in
-`results/a04/COMPOSITION.json` and the adjacent logs.
+The initial composition snapshot (`COMPOSITION.json`) passed on `main`
+`c520359`, parent #7602 `c81512e`, and child `9a29196`. After both parent and
+main advanced, snapshot A02 passed directly on the refreshed child tree, where
+main `86a2694` is an ancestor, parent #7602 is `4c01233`, and child is
+`5fdc47f`. Eight focused V39/controller/wait/source-refresh/retained-input
+modules pass 73/73. A04's four tests also pass in normal and optimized Python.
+Python compilation and integrated diff checks pass. Snapshot-specific refs,
+commands, transcripts, and audit output are retained under `results/a04/`.
 
 This is only a consumer-boundary source-contract result. The pair comes from a
 fake-display harness; no live GUI, game, model, useful feedback, threat
