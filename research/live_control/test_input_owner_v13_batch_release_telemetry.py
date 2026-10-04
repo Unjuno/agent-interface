@@ -85,6 +85,7 @@ class BatchReleaseTelemetryTests(unittest.TestCase):
                 self.assertLessEqual(start,end)
                 self.assertLessEqual(end,record["verified_ns"])
             self.assertTrue(record["verified"])
+        finally: owner.close()
 
     def test_explicit_up_keeps_existing_v11_release_interval_receipt(self):
         owner=InputOwner(":fake"); lease=Lease()
