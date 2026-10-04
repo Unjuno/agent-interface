@@ -1,0 +1,34 @@
+{
+  "allocation": "issue7505-mode-flap-t0-a01-20261004",
+  "frozen_at": "2026-10-04",
+  "repository": "Unjuno/agent-interface",
+  "source_base_sha": "2fbfc00f8e38f33d7d74fb7cc734fbf5b0a11ab0",
+  "local_branch": "research/mode-flap-7505-a01-20261004",
+  "source_sha256": {
+    "fixture.json": "929160d3e5bd771e248ed39bf170201ac199c402ce0dfc5b06ba002bc00ad1dc",
+    "candidate.py": "239e12fd0df69b7b62c1bdec7b943899411829ade41b570b097cd820c250d283",
+    "audit.py": "1b30ca9045c037b28eb082c4864c319e67f5aba49b53758e965a8eacebf6a141",
+    "PREREG.md": "3e683b955eb560d24fc9a9b1957ae24a38aabe65e8bb804b86f376837b6699cd"
+  },
+  "environment": {
+    "host_os": "Windows 11, build 10.0.26300.9457",
+    "wslc": "3.0.1.0",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "image_digest": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpu_limit_configured": 1,
+    "memory_limit_configured_mib": 256,
+    "source_mount": "read-only",
+    "output_mount": "separate read-write",
+    "root_filesystem": "ephemeral default; wslc run exposes no --read-only option",
+    "pids_limit": "unavailable in wslc run CLI",
+    "host_warning": "WSLc has warned in earlier experiments that cgroup/swap limit enforcement is unavailable; any warning emitted during this allocation will be preserved. Configured resource flags are not enforcement evidence."
+  },
+  "invocations": [
+    ["wslc", "run", "--rm", "--pull", "never", "--network", "none", "--cpus", "1", "--memory", "256M", "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", "--cidfile", "/out/candidate.cid", "--mount", "type=bind,source=<PACKAGE>,target=/work,readonly", "--mount", "type=bind,source=<FORMAL_A01>,target=/out", "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016", "python", "/work/candidate.py", "/work/fixture.json", "/out/raw.json"],
+    ["wslc", "run", "--rm", "--pull", "never", "--network", "none", "--cpus", "1", "--memory", "256M", "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", "--cidfile", "/out/auditor.cid", "--mount", "type=bind,source=<PACKAGE>,target=/work,readonly", "--mount", "type=bind,source=<FORMAL_A01>,target=/out", "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016", "python", "/work/audit.py", "/work/fixture.json", "/out/raw.json", "/out/audit.json"]
+  ],
+  "retry_policy": "exactly one candidate invocation and one separate auditor invocation; no retry within allocation",
+  "expected_outputs_absent_before_run": ["formal_a01/raw.json", "formal_a01/audit.json"]
+}

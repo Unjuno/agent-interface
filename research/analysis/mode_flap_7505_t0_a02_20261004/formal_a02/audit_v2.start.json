@@ -1,0 +1,33 @@
+{
+  "auditor_sha256": "26d3a933a7281a5c7c030fea3050090432ba28ea4abd629233de4fb317e50424",
+  "step": "postrun_raw_audit_v2",
+  "allocation": "issue7505-mode-flap-t0-a02-20261004",
+  "status": "STARTED",
+  "started_utc": "2026-10-04T07:21:21.9929071+00:00",
+  "raw_sha256": "405e0c14bbae201628ed32840eac2dbd069335a6191893fffc47debe017425b7",
+  "command": [
+    "wslc",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--cpus",
+    "1",
+    "--memory",
+    "256M",
+    "--tmpfs",
+    "/tmp:rw,noexec,nosuid,size=16m",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat\\issue7367-context-liveness-20261004\\repo\\research\\analysis\\mode_flap_7505_t0_a02_20261004,target=/work,readonly",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat\\issue7367-context-liveness-20261004\\repo\\research\\analysis\\mode_flap_7505_t0_a02_20261004\\formal_a02,target=/out",
+    "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "python",
+    "/work/audit_v2.py",
+    "/work/fixture.json",
+    "/out/raw.json",
+    "/out/audit_v2.json"
+  ]
+}
