@@ -93,6 +93,8 @@ class Executor(Previous):
                 raise
             finally:
                 self.admission_callback_ids.discard(identifier)
+            if identifier in self.terminal_publication_errors:
+                raise RuntimeError("terminal publication delivery is unknown")
             # The accepted-event callback is external code and may reenter
             # close() through this RLock. Do not start a worker after that
             # close has already returned; finish the accepted intent without
@@ -212,13 +214,21 @@ class Executor(Previous):
                 with self.lock:
                     if self.active is job:
                         self.active = None
-                self.emit({"event": "terminal", "id": job[0],
-                           "status": status, "error": error,
-                           "steps_completed": 0, "release": release,
-                           "interruption": job[1].interruption_snapshot(),
-                           "decision_reason": None,
-                           "terminal_ns": time.perf_counter_ns(),
-                           "semantic_completion": "program status only; task scoring is separate"})
+                try:
+                    self.emit({"event": "terminal", "id": job[0],
+                               "status": status, "error": error,
+                               "steps_completed": 0, "release": release,
+                               "interruption": job[1].interruption_snapshot(),
+                               "decision_reason": None,
+                               "terminal_ns": time.perf_counter_ns(),
+                               "semantic_completion": "program status only; task scoring is separate"})
+                except Exception:
+                    # Terminal delivery is ambiguous; restore the occupied
+                    # intent so no new input is admitted on uncertain state.
+                    with self.lock:
+                        if self.active is None:
+                            self.active = job
+                    raise
             elif job[2].ident is not None:
                 job[2].join()
         for watcher in self.release_watchers:
