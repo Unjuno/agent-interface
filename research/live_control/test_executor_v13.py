@@ -178,6 +178,62 @@ class ExecutorV13Tests(unittest.TestCase):
         self.assertEqual(escaped, [worker_error])
         self.assertIsNone(executor.active)
 
+    def test_worker_baseexception_and_cleanup_exception_preserve_both_ledgers(self):
+        worker_publication = {
+            "status": "delivery_unknown", "identifier": "mixed-custody",
+            "step": 0, "size": 1, "position": 0,
+            "event": "input_release_transition", "key": "a",
+        }
+        cleanup_publication = {
+            "status": "delivery_unknown", "identifier": "mixed-custody",
+            "step": 0, "size": 1, "position": 1,
+            "event": "input_release_transition", "key": "b",
+        }
+        worker_error = KeyboardInterrupt("worker interruption")
+        cleanup_error = RuntimeError("ordinary cleanup interruption")
+
+        class MixedInterruptedBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                worker_error.release_batch_publication = worker_publication
+                raise worker_error
+
+            def release_all(self):
+                cleanup_error.release_batch_publication = cleanup_publication
+                raise cleanup_error
+
+        backend = MixedInterruptedBackend()
+        events = []
+        terminal_received = threading.Event()
+        escaped = []
+        escaped_event = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        previous_hook = threading.excepthook
+        threading.excepthook = lambda args: (escaped.append(args.exc_value),
+                                             escaped_event.set())
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("mixed-custody", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            self.assertTrue(escaped_event.wait(1), "worker interruption did not propagate")
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(worker_error))
+        self.assertEqual(terminal["release"]["release_batch_delivery"], worker_publication)
+        self.assertEqual(terminal["release"]["release_batch_cleanup_delivery"], cleanup_publication)
+        self.assertEqual(terminal["release"]["error"], repr(cleanup_error))
+        self.assertEqual(escaped, [worker_error])
+        self.assertIsNone(executor.active)
+
     def test_cleanup_failure_without_ledger_preserves_step_custody(self):
         publication = {
             "schema": "release-batch-delivery-v1", "identifier": "cleanup-failure",
