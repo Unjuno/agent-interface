@@ -1,0 +1,30 @@
+command: python -B -m unittest test_doom_typed_release_backend_v3.Tests.test_two_key_release_batch_survives_successful_step_boundary -v
+exit_code: 1
+
+test_two_key_release_batch_survives_successful_step_boundary (test_doom_typed_release_backend_v3.Tests.test_two_key_release_batch_survives_successful_step_boundary) ... FAIL
+
+======================================================================
+FAIL: test_two_key_release_batch_survives_successful_step_boundary (test_doom_typed_release_backend_v3.Tests.test_two_key_release_batch_survives_successful_step_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\AppData\Local\Temp\pr7355-baseline-red-rn87sfwa\test_doom_typed_release_backend_v3.py", line 225, in test_two_key_release_batch_survives_successful_step_boundary
+    self.assertEqual([row['key'] for row in rows], ['a', 'space'])
+AssertionError: Lists differ: ['space'] != ['a', 'space']
+
+First differing element 0:
+'space'
+'a'
+
+Second list contains 1 additional elements.
+First extra element 1:
+'space'
+
+- ['space']
++ ['a', 'space']
+?  +++++
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

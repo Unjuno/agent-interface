@@ -14,21 +14,37 @@ class Backend(Previous):
 
     def execute(self, step, cancel, identifier, index):
         previous = getattr(self._release_batch, "context", None)
-        self._release_batch.context = {
-            "rows": [], "identifier": identifier, "step": index
-        }
+        if previous is not None and previous.get("identifier") == identifier:
+            context = previous
+        else:
+            # A new program cannot inherit incomplete telemetry from the prior
+            # program: its eventual sample would no longer bound that release batch.
+            context = {"rows": [], "identifier": identifier}
+        context["step"] = index
+        self._release_batch.context = context
         try:
-            return super().execute(step, cancel, identifier, index)
-        finally:
-            # Partial receipts from an exception/interruption are measurement-invalid
-            # and must never leak into the next executor step.
-            if previous is None:
-                try:
-                    del self._release_batch.context
-                except AttributeError:
-                    pass
-            else:
-                self._release_batch.context = previous
+            result = super().execute(step, cancel, identifier, index)
+        except BaseException:
+            # Partial receipts from an exception/interruption are invalid and
+            # must not leak into the next step/program.
+            context["rows"].clear()
+            try:
+                del self._release_batch.context
+            except AttributeError:
+                pass
+            raise
+
+        # Keep an incomplete release batch across successful steps of the same
+        # program. raw() clears rows only after the final held key is released,
+        # owner state is sampled, and the receipts are published.
+        if context["rows"]:
+            self._release_batch.context = context
+        else:
+            try:
+                del self._release_batch.context
+            except AttributeError:
+                pass
+        return result
 
     def raw(self, key, down):
         if down:
@@ -53,6 +69,8 @@ class Backend(Previous):
             raise AssertionError("v3 release wrapper did not return transition receipt")
         row = dict(row)
         row["backend_owned_before_release"] = was_backend_owned
+        row["release_batch_identifier"] = context["identifier"]
+        row["release_batch_step"] = context["step"]
         context["rows"].append(row)
 
         # Critical non-staggering invariant: do no sample and no publication
@@ -88,8 +106,6 @@ class Backend(Previous):
                 "release_batch_schema": "input-release-batch-v3",
                 "release_batch_size": batch_size,
                 "release_batch_position": position,
-                "release_batch_identifier": context["identifier"],
-                "release_batch_step": context["step"],
                 "owner_sample_after_started_ns": sample_started_ns,
                 "owner_sample_after_finished_ns": sample_finished_ns,
                 "owner_sample_ordered_after_batch": sample_ordered,
