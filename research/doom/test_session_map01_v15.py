@@ -114,6 +114,7 @@ class GameProxyLifecycleTests(unittest.TestCase):
 
         def final_sample():
             self.assertFalse(proxy.closed)
+            self.assertTrue(proxy.closing)
             events.append("final_sample")
             raise RuntimeError("final scorer sample failed")
 
@@ -135,17 +136,61 @@ class GameProxyLifecycleTests(unittest.TestCase):
         self.assertIsNone(proxy.close())
         self.assertEqual(events, ["init", "final_sample", "inner_close"])
 
-    def test_cleanup_error_keeps_scorer_error_as_cause(self):
+    def test_sample_and_cleanup_errors_are_both_grouped(self):
         events = []
         inner = self.InnerGame(events, OSError("underlying close failed"))
         proxy = candidate._GameProxy(
             inner, lambda: (_ for _ in ()).throw(RuntimeError("sample failed")))
         proxy.init()
-        with self.assertRaisesRegex(OSError, "underlying close failed") as raised:
+        with self.assertRaises(BaseExceptionGroup) as raised:
             proxy.close()
-        self.assertIsInstance(raised.exception.__cause__, RuntimeError)
-        self.assertEqual(str(raised.exception.__cause__), "sample failed")
+        self.assertEqual(
+            [(type(error), str(error)) for error in raised.exception.exceptions],
+            [(RuntimeError, "sample failed"), (OSError, "underlying close failed")],
+        )
         self.assertEqual(events, ["init", "inner_close"])
+
+    def test_reentrant_close_during_final_sample_does_not_repeat_cleanup(self):
+        events = []
+        inner = self.InnerGame(events)
+        proxy = None
+
+        def final_sample():
+            events.append("final_sample")
+            self.assertTrue(proxy.closing)
+            self.assertFalse(proxy.closed)
+            self.assertIsNone(proxy.close())
+
+        proxy = candidate._GameProxy(inner, final_sample)
+        proxy.init()
+        self.assertEqual(proxy.close(), "closed")
+        self.assertEqual(events, ["init", "final_sample", "inner_close"])
+
+    def test_session_unwind_preserves_controller_sample_and_close_errors(self):
+        events = []
+        inner = self.InnerGame(events, OSError("underlying close failed"))
+        proxy = candidate._GameProxy(
+            inner, lambda: (_ for _ in ()).throw(RuntimeError("sample failed")))
+        proxy.init()
+        with self.assertRaises(BaseExceptionGroup) as raised:
+            try:
+                raise ValueError("controller failed")
+            finally:
+                proxy.close()
+
+        def leaves(error):
+            if isinstance(error, BaseExceptionGroup):
+                return [leaf for child in error.exceptions for leaf in leaves(child)]
+            return [error]
+
+        messages = {(type(error), str(error)) for error in leaves(raised.exception)}
+        self.assertEqual(messages, {
+            (ValueError, "controller failed"),
+            (RuntimeError, "sample failed"),
+            (OSError, "underlying close failed"),
+        })
+        self.assertEqual(events, ["init", "inner_close"])
+        self.assertTrue(proxy.closed)
 
 
 if __name__ == "__main__":
