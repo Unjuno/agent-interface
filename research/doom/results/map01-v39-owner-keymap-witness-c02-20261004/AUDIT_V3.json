@@ -1,0 +1,49 @@
+{
+  "admission_intervals": [
+    {
+      "admitted_ns": 93393898338635,
+      "input_ack_ns": 93393898441677,
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:01",
+      "matching_admission_count": 1,
+      "ordered_within_down_interval": true,
+      "post_down_finished_ns": 93393898567261,
+      "post_down_started_ns": 93393898517053,
+      "pre_down_finished_ns": 93393898212092,
+      "valid_until_ns": 93401898178051
+    },
+    {
+      "admitted_ns": 93393899476850,
+      "input_ack_ns": 93393899519142,
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:02",
+      "matching_admission_count": 1,
+      "ordered_within_down_interval": true,
+      "post_down_finished_ns": 93393899607059,
+      "post_down_started_ns": 93393899568309,
+      "pre_down_finished_ns": 93393899382516,
+      "valid_until_ns": 93401899357057
+    }
+  ],
+  "checks": {
+    "admission_timestamps_within_key_down_witness": true,
+    "parent_backend_receipts_bind_each_occurrence": true,
+    "parent_evaluator_completed": true,
+    "parent_frozen_sources_match": true,
+    "parent_identity_and_single_candidate": true,
+    "parent_owner_empty_and_verified_close": true,
+    "parent_six_32_byte_keymap_witnesses_false_true_false": true,
+    "parent_started_receipt_and_frozen_environment": true,
+    "parent_two_unique_occurrence_tokens": true,
+    "parent_xvfb_tcp_and_process_cleanup": true
+  },
+  "failed_checks": [],
+  "gate": "PASS_V39_XVFB_KEYMAP_TEMPORAL_BINDING_V3_SCOPED",
+  "provenance": {
+    "auditor_sha256": "a68f8572d8a51c186f69d13b934e7ec81b49fbdacfc402b1c41bf73e4ad48606",
+    "candidate_raw_sha256": "80deae01ca6167c91c66e70d725be290b7959750dc1c76e1f344d9f18014e453",
+    "cases_sha256": "993916255d2e2e49fc352e1dfd5624dcb8986b18b532798c9f769c7a839e1ad5",
+    "parent_freeze_sha256": "d841dd4f27ba730dd7196782805d6eff48a98ea885b2bde37df7ef27d5a35e3e",
+    "temporal_v2_helper_sha256": "b3e00b8660789e72ae3b313ca0082e597b9af48e03e683f28643219e56c23a5b"
+  },
+  "schema": "map01-v39-owner-keymap-witness-audit-v3",
+  "scope": "virtual X11 server state and admission interval ordering only"
+}
