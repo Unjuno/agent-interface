@@ -163,11 +163,16 @@ class Backend(Previous):
                     cleanup_records_valid = False
                     break
         cleanup_overlaps = []
+        release_brackets_valid = []
         for row in rows:
             started = row.get("release_call_started_ns")
             returned = row.get("release_call_returned_ns")
+            bracket_valid = (
+                type(started) is int and type(returned) is int and started <= returned
+            )
+            release_brackets_valid.append(bracket_valid)
             overlaps = False
-            if cleanup_records_available:
+            if cleanup_records_available and bracket_valid:
                 overlaps = any(
                     isinstance(record, dict)
                     and record.get("event") == "owner_release"
@@ -181,13 +186,17 @@ class Backend(Previous):
             row["owner_cleanup_records_available"] = cleanup_records_available
             row["owner_cleanup_records_valid"] = cleanup_records_valid
             row["owner_cleanup_overlapped_release_call"] = overlaps
-            if overlaps or not cleanup_records_valid:
+            row["release_call_bracket_valid"] = bracket_valid
+            if overlaps or not cleanup_records_valid or not bracket_valid:
                 # A queued explicit up can arrive after cancellation cleanup has
                 # already released the key. Do not classify that as an ordinary
                 # per-key release, even if the wrapper's pre-call lease snapshot
                 # was still ordinary.
                 row["ordinary_release_candidate"] = False
-        ordinary = ordinary and cleanup_records_valid and not any(cleanup_overlaps)
+        ordinary = (
+            ordinary and cleanup_records_valid and all(release_brackets_valid)
+            and not any(cleanup_overlaps)
+        )
         cleanup_ok = terminal_cleanup_verified is not False
         if terminal_cleanup_verified is True:
             cleanup_ok = cleanup_ok and cleanup_records_valid and any(
