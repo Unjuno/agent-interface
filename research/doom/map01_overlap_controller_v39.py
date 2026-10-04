@@ -610,6 +610,7 @@ def input_edge_receipts(events):
             type(down_data) is dict and type(up_data) is dict and
             type(down_edge) is dict and type(up_edge) is dict and
             down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
+            down_data.get("edge") == "down" and up_data.get("edge") == "up" and
             down_data.get("classification") == "CONFIRMED_PHYSICAL_DOWN" and
             up_data.get("classification") == "CONFIRMED_PHYSICAL_UP" and
             down_data.get("identity_status") == "MINTED" and
