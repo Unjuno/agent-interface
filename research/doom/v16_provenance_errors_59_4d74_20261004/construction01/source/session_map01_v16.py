@@ -48,30 +48,18 @@ def main():
     sampler = AcknowledgedSampler(original, run_id, emit)
     previous._coherent_progress_sample = sampler
     previous._GameProxy = lambda inner, final_sample: ObservedGameProxy(inner, final_sample, sampler)
-    session_error = None
     try:
         return previous.main()
-    except BaseException as error:
-        session_error = error
-        raise
     finally:
         previous._coherent_progress_sample = original
         previous._GameProxy = original_proxy
-        try:
-            sources = out / 'sources.json'
-            if sources.exists():
-                data = json.loads(sources.read_text(encoding='utf-8'))
-                for name in ('session_map01_v16.py', 'acknowledged_scorer_v1.py'):
-                    path = Path(__file__).parent / name
-                    data['doom/' + name] = hashlib.sha256(path.read_bytes()).hexdigest()
-                sources.write_text(json.dumps(data, indent=2, sort_keys=True) + '\n', encoding='utf-8')
-        except BaseException as provenance_error:
-            if session_error is not None:
-                raise BaseExceptionGroup(
-                    "session and source provenance finalization failed",
-                    [session_error, provenance_error]) from None
-            raise
-
+        sources = out / 'sources.json'
+        if sources.exists():
+            data = json.loads(sources.read_text(encoding='utf-8'))
+            for name in ('session_map01_v16.py', 'acknowledged_scorer_v1.py'):
+                path = Path(__file__).parent / name
+                data['doom/' + name] = hashlib.sha256(path.read_bytes()).hexdigest()
+            sources.write_text(json.dumps(data, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':
