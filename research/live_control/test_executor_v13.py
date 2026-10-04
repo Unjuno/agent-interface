@@ -31,6 +31,47 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_base_exception_fails_terminal_before_propagating_publication_custody(self):
+        publication = {
+            "status": "delivery_unknown", "identifier": "interrupt-failure",
+            "step": 0, "size": 2, "position": 1,
+            "confirmed_positions": [0], "not_attempted_positions": [],
+            "event": "input_release_transition", "key": "b",
+            "error_type": "OSError",
+        }
+        error = KeyboardInterrupt("process-level interruption")
+
+        class InterruptedBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error.release_batch_publication = publication
+                raise error
+
+        events = []
+        escaped = []
+        escaped_event = threading.Event()
+        executor = Executor(InterruptedBackend(), events.append)
+        previous_hook = threading.excepthook
+        def capture_process_exception(args):
+            escaped.append(args.exc_value)
+            escaped_event.set()
+        threading.excepthook = capture_process_exception
+        try:
+            executor.submit("interrupt-failure", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            self.assertTrue(escaped_event.wait(max(0, deadline - time.monotonic())))
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertIn("KeyboardInterrupt", terminal["error"])
+        self.assertEqual(terminal["release"]["release_batch_delivery"], publication)
+        self.assertEqual(escaped, [error])
+
     def test_terminal_preserves_release_batch_sink_delivery_uncertainty(self):
         class PublicationFailureBackend(Backend):
             def execute(self, step, lease, identifier, index):

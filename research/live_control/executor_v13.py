@@ -100,6 +100,7 @@ class Executor(Previous):
     def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
         release_batch_publication = None
+        process_exception = None; process_traceback = None
         try:
             for index, step in enumerate(steps):
                 if lease.is_set(): raise Cancelled()
@@ -116,11 +117,14 @@ class Executor(Previous):
             status = "needs_decision"; decision_reason = str(exc) or None
         except Cancelled:
             status = "cancelled"
-        except Exception as exc:
+        except BaseException as exc:
             status = "failed"; error = repr(exc)
             publication = getattr(exc, "release_batch_publication", None)
             if isinstance(publication, dict):
                 release_batch_publication = dict(publication)
+            if not isinstance(exc, Exception):
+                process_exception = exc
+                process_traceback = exc.__traceback__
         finally:
             # An owner-originated focus/surface event is already available here.
             # For explicit cancellation, allow one owner polling interval before
@@ -170,6 +174,8 @@ class Executor(Previous):
             stop = self.release_watch_stops.get(identifier)
             if stop is not None:
                 stop.set()
+        if process_exception is not None:
+            raise process_exception.with_traceback(process_traceback)
 
     def close(self):
         super().close()
