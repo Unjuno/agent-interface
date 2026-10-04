@@ -21,7 +21,7 @@ The four source programs were frozen before execution. The availability reconstr
 
 Results: window 42/42 slots independently matched; availability 84/84 slots independently matched. All six wait classifications are retained in every slot: window grid has 21 no-policy and 21 authored-policy slots; availability has 42 per clock, with 28 no-policy and 14 authored-policy per clock. Availability trigger tallies across both clocks: 14 no-policy triggers / 28 no-policy non-triggers; 16 authored-policy triggers / 26 authored-policy non-triggers. The window grid duplicates capture-clock evidence and is not an additional independent episode.
 
-Both replay outputs recomputed the pinned report/events raw SHA-256 values and expected source counts. Candidate and audit did not agree through shared candidate helper code: auditor uses separate all-pairs enumeration. This only verifies reproducibility/consistency of the stored calculations, not truth of the candidate rule or its usefulness.
+Manifest verification log: the first checksum pass used a slash-containing branch ref in a raw-content URL and returned HTTP 404, so it computed no valid file hashes; no artifact was modified. The check was rerun pinned to immutable commit d2a6b01dd9a263c604e24587c4294ef1ab37a2b7 and all 9/9 manifest entries matched. Both replay outputs recomputed the pinned report/events raw SHA-256 values and expected source counts. Candidate and audit did not agree through shared candidate helper code: auditor uses separate all-pairs enumeration. This only verifies reproducibility/consistency of the stored calculations, not truth of the candidate rule or its usefulness.
 
 ## Preservation
 
