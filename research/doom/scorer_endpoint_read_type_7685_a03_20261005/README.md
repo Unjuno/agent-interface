@@ -10,7 +10,8 @@
 
 ## Source and test identity
 
-- Parent PR #7685 head: `5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0`.
+- Defect reproduction head from PR #7685: `5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0`.
+- Corrective branch base after refreshing PR #7685: `6cedc4e5b1ee8012ad1d23afbd606e7207cf5679`; the pinned candidate source remained byte-identical across this rebase.
 - Parent `checkpoint_candidate.py` SHA-256: `c48c1a734ae32505d7adf000028e618b2d0cfe73a4aa969892b8aada6a6407f5`.
 - Candidate `checkpoint_candidate.py` SHA-256: `44d30af1f661ec2e4505c74241e716bd7c6aa6bbb9bd906799ccb82336219e91`.
 - Candidate `test_candidate.py` SHA-256: `a5866384ef73a06f16a77e3de0891db1d1e7dc29988cca2a310e4ef266df151e`.
@@ -19,6 +20,6 @@
 
 ## Verification
 
-The TDD regression first failed on the parent candidate for both `float` and `bool`: both returned `REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING` instead of `UNKNOWN`. After the production guard required `type(tic_after_read) is int` before equality comparison, the focused regression passed both cases and the full scorer endpoint candidate suite passed 8/8.
+The TDD regression first failed on the parent candidate for both `float` and `bool`: both returned `REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING` instead of `UNKNOWN`. After the production guard required `type(tic_after_read) is int` before equality comparison, the focused regression passed both cases. On the refreshed stacked head, the full scorer endpoint composition suite passed 16/16.
 
 `py_compile` passed for the candidate and its test module; `git diff --check` passed. The existing positive one-tic and multi-tic controls remain green. This correction only prevents non-integer endpoint aliases; it does not establish scorer freshness, useful task feedback, or live controller behavior.
