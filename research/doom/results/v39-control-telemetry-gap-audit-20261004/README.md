@@ -22,3 +22,5 @@ All inputs are byte-for-byte files from public main commit `0ba1ef384965267c38a1
 
 Run `python -B audit.py` to recompute `audit.json` from these saved bytes. The script verifies each input digest before analysis. The next useful instrumentation revision should bind a stable occurrence/intent/program-step ID through each key's admission and release bracket, preserve per-key monotonic request/sync clocks, and label server-keymap witnesses as server-state evidence. The matched live experiment must separately preregister an independent task-effect feedback predicate and bounded-recovery decision rule.
 Integrity: `SHA256SUMS.txt` covers the six analysis inputs/code/result files. Verify with `python -B verify_manifest.py`.
+
+The generated JSON uses explicit CRLF bytes so rerunning the audit preserves its pinned SHA-256 on macOS, Linux, and Windows.
