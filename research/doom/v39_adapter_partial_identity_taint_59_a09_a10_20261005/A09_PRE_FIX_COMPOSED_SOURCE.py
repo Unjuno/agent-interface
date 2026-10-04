@@ -514,34 +514,7 @@ def input_edge_receipts(events):
     adapter_grouped = {}
     adapter_actuation_groups = {}
     adapter_actuation_conflicts = set()
-    adapter_partial_identity_groups = {}
-    adapter_partial_identity_conflicts = set()
-    adapter_unattributed_identity_conflict = False
     invalid = []
-
-    def partial_identity_signatures(adapter_edge):
-        if type(adapter_edge) is not dict:
-            return ()
-        key = adapter_edge.get("key")
-        token = adapter_edge.get("intent_token")
-        owner = adapter_edge.get("owner_id")
-        actuation = adapter_edge.get("actuation_id")
-        owner_valid = type(owner) is str and bool(owner)
-        actuation_valid = type(actuation) is str and bool(actuation)
-        key_valid = type(key) is str and bool(key)
-        token_valid = type(token) is str and bool(token)
-        signatures = set()
-        if owner_valid and actuation_valid:
-            signatures.add(("owner-actuation", owner, actuation))
-        if not key_valid or not token_valid:
-            return signatures
-        signatures.add(("key-token", key, token))
-        if owner_valid:
-            signatures.add(("owner-key-token", owner, key, token))
-        if actuation_valid:
-            signatures.add(("actuation-key-token", actuation, key, token))
-        return signatures
-
     for event in events:
         if type(event) is not dict:
             continue
@@ -585,11 +558,6 @@ def input_edge_receipts(events):
                         type(nested_token) is str and nested_token):
                     adapter_actuation_conflicts.add(
                         (nested_owner, nested_actuation, nested_key, nested_token))
-                partial_signatures = partial_identity_signatures(adapter_edge)
-                if partial_signatures:
-                    adapter_partial_identity_conflicts.update(partial_signatures)
-                else:
-                    adapter_unattributed_identity_conflict = True
                 invalid.append({
                     "status": "identity_unavailable",
                     "event": event_name,
@@ -616,19 +584,6 @@ def input_edge_receipts(events):
                 fingerprint = (nested_owner, nested_actuation,
                                nested_key, nested_token)
                 adapter_actuation_groups.setdefault(fingerprint, set()).add(group_key)
-            partial_signatures = partial_identity_signatures(adapter_edge)
-            if (type(nested_owner) is str and nested_owner and
-                    type(nested_actuation) is str and nested_actuation and
-                    type(nested_key) is str and nested_key and
-                    type(nested_token) is str and nested_token):
-                for signature in partial_signatures:
-                    adapter_partial_identity_groups.setdefault(
-                        signature, set()).add(group_key)
-            else:
-                if partial_signatures:
-                    adapter_partial_identity_conflicts.update(partial_signatures)
-                else:
-                    adapter_unattributed_identity_conflict = True
             if nested_key != key or nested_token != token:
                 bucket["invalid"] = True
                 if (type(nested_key) is str and nested_key and
@@ -665,17 +620,6 @@ def input_edge_receipts(events):
         group_key = (identifier, step, key, token)
         bucket = grouped.setdefault(group_key, {"admission": [], "release": []})
         bucket["admission" if event["event"] == "input_admission" else "release"].append(event)
-
-    # If an incomplete nested identity shares a stable partial signature with
-    # complete rows, invalidate every implicated group. This prevents a split
-    # outer id/step from hiding a malformed duplicate behind a missing actuation
-    # component.
-    for signature in adapter_partial_identity_conflicts:
-        for group_key in adapter_partial_identity_groups.get(signature, ()):
-            adapter_grouped[group_key]["invalid"] = True
-    if adapter_unattributed_identity_conflict:
-        for bucket in adapter_grouped.values():
-            bucket["invalid"] = True
 
     # A copied nested actuation under different outer identifiers is an
     # identity conflict. Invalidate every implicated group so the unmodified
@@ -982,6 +926,7 @@ def main():
         journal_path=args.out / "planner-protocol.jsonl")
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
+        failure_cleanup.set_stage("planner_initialize")
         planner_client.initialize()
         planner = PersistentPlannerAdapter(
             planner_client, model=args.model, effort=args.effort, cwd=win(REPO),
@@ -997,11 +942,16 @@ def main():
         failure_cleanup.track(process)
         incoming = queue.Queue()
         all_events = []
+        reader_errors = []
         def reader():
-            for line in process.stdout:
-                row = json.loads(line); all_events.append(row); incoming.put(row)
-        threading.Thread(target=reader, daemon=True).start()
+            try:
+                for line in process.stdout:
+                    row = json.loads(line); all_events.append(row); incoming.put(row)
+            except BaseException as error:
+                reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
+        reader_thread = threading.Thread(target=reader, daemon=True)
+        reader_thread.start()
         def wait(predicate, timeout=40, observation_monitor=None):
             nonlocal latest
             end = time.monotonic() + timeout
@@ -1026,6 +976,8 @@ def main():
                                 "invalidation":invalidation}
                 if predicate(row): return row
             raise TimeoutError()
+        failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
+        failure_cleanup.set_stage("session_startup")
         ready = wait(lambda r:r["event"] == "ready")
         runtime_fixture = ready.get("fixture")
         if runtime_fixture is None:
@@ -1035,6 +987,7 @@ def main():
         source_refreshes=[]
         program_admissions=0
         for index in range(args.iterations):
+            failure_cleanup.set_stage("source_refresh")
             if index and index % args.session_span == 0:
                 planner.start_session()
                 model_session_id=planner.thread_id
@@ -1047,12 +1000,17 @@ def main():
                     f"source-refresh-{index}")
             except SourceRefreshRefused as error:
                 source_refreshes.append(dict(error.receipt, iteration=index))
-                (args.out/"source-refreshes.json").write_text(
-                    json.dumps(source_refreshes,indent=2)+"\n")
+                try:
+                    (args.out/"source-refreshes.json").write_text(
+                        json.dumps(source_refreshes,indent=2)+"\n")
+                except BaseException as save_error:
+                    error.add_note(
+                        f"source refresh receipt write failed: {type(save_error).__name__}: {save_error}")
                 raise
             source_refreshes.append(dict(source_refresh, iteration=index))
             (args.out/"source-refreshes.json").write_text(
                 json.dumps(source_refreshes,indent=2)+"\n")
+            failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
             validity_monitor, validity_admission = build_cover_monitor(
                 signal_reader, latest, cover_validity_semantic, index)
@@ -1060,6 +1018,7 @@ def main():
             validity_monitor, validity_admission = select_cover_monitor(
                 validity_monitor, validity_admission, cover_semantic,
                 cover_policy_source_iteration)
+            failure_cleanup.set_stage("cover_program_compile")
             cover_steps=compile_cover(cover_semantic)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             def submit_cover(identifier):
@@ -1072,15 +1031,19 @@ def main():
                               (r.get("id")==identifier or r["event"]=="rejected"))
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 cover_ids.append(identifier);return accepted
+            failure_cleanup.set_stage("cover_program_admission")
             submit_cover(cover)
+            failure_cleanup.set_stage("decision_artifact_prepare")
             model_root=args.out/f"decision-{index}"
             model_root.mkdir()
             action_source_observation=dict(latest)
+            failure_cleanup.set_stage("action_source_health_ammo")
             source_health_signal=signal_reader.read(action_source_observation)
             source_ammo_signal=ammo_reader.read(action_source_observation)
             if (source_health_signal["status"] != "observed" or
                     source_ammo_signal["status"] != "observed"):
                 raise RuntimeError("action source health/ammo unavailable")
+            failure_cleanup.set_stage("planner_input_prepare")
             source_image=Path(action_source_observation["image"])
             invalidation_monitor=validity_monitor
             invalidation=None
@@ -1098,6 +1061,7 @@ def main():
             prior=[Path(row["source_image"]) for row in decisions]
             temporal_sheet(prior+[source_image],image)
             model_started_ns=time.perf_counter_ns()
+            failure_cleanup.set_stage("planner_turn")
             planner_handle=begin_model_turn(
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
@@ -1129,6 +1093,7 @@ def main():
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
                 planner_result=future.result()
+                failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
             model_ended_ns=time.perf_counter_ns()
             model_ns=model_ended_ns-model_started_ns
@@ -1250,6 +1215,7 @@ def main():
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
                   "terminal_candidate":True,"model_action_discarded":False})
                 break
+            failure_cleanup.set_stage("action_admission")
             fresh_before_plan=dict(latest)
             current_health_signal=signal_reader.read(fresh_before_plan)
             current_ammo_signal=ammo_reader.read(fresh_before_plan)
@@ -1282,6 +1248,7 @@ def main():
                 continue
             grounded_capture_ns=source_health_signal["capture_ns"]
             trace=[]
+            failure_cleanup.set_stage("action_guard_setup")
             running_guard=RunningActionGuardV3(
                 action,final_action_admission,compile_commands,
                 "map01_overlap_controller_v38.compile_commands")
@@ -1397,6 +1364,7 @@ def main():
             if not boundaries or boundaries[-1] != len(action["commands"])-1:
                 boundaries.append(len(action["commands"])-1)
             segment_start=0
+            failure_cleanup.set_stage("active_action_execution")
             for segment_end in boundaries:
                 segment_commands=action["commands"][segment_start:segment_end+1]
                 result=execute_segment(f"plan-{index}-primary-{segment_start}-{segment_end}",
@@ -1480,12 +1448,18 @@ def main():
                                 else "stopped_action_not_current"),
                "model_action_discarded":False,
                "remaining_action_discarded":running_action_receipt["state"]!=RUNNING_COMPLETED})
+        failure_cleanup.set_stage("session_finish")
         process.stdin.write('{"op":"finish"}\n');process.stdin.flush()
+        failure_cleanup.set_stage("final_score_wait")
         score=wait(lambda r:r["event"]=="post_control_score")
+        failure_cleanup.set_stage("session_reap")
         process.wait(timeout=20)
+        failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
+        failure_cleanup.set_stage("stderr_capture")
         (args.out/"stderr.txt").write_text(process.stderr.read())
+        failure_cleanup.set_stage("final_report_prepare")
         typed_events = {row["sequence"]:row for row in all_events
                         if row.get("event")=="typed_observation"}
         full_events = {row["sequence"]:row for row in all_events
@@ -1590,6 +1564,7 @@ def main():
               x["action"]["state"]=="active" and len(x["action"].get("next_cover_validity",[]))==1 and
               not x.get("model_action_discarded",False) for x in decisions),
           "model_wall_seconds":sum(x["model_ns"] for x in decisions)/1e9}
+        failure_cleanup.set_stage("report_write")
         (args.out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
         print(json.dumps({"iterations":len(decisions),"score":score,
           "model_wall_seconds":report["model_wall_seconds"]},indent=2))

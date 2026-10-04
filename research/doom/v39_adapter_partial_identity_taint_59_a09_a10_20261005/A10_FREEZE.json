@@ -1,0 +1,18 @@
+{
+  "a09_test_sha256": "ab2b9341aa4beadc640cdbebb7f92ed04e158e1e2194cc45be8d9e4e4538fd77",
+  "comparator": "A08 retained baseline projector, current A09-repaired projector, same retained A01 DOWN/UP rows",
+  "a09_source_sha256": "443a1f04880977d48498a344c95dcd2e97b34f215520a33577fb80ed89255c92",
+  "experiment": "V39_ADAPTER_MALFORMED_NESTED_KEY_TOKEN_SPLIT_A10",
+  "treatments": [
+    "outer id or step changed; nested key null/list",
+    "outer id or step changed; nested intent_token null/list"
+  ],
+  "decision": "Against the exact frozen A09-repaired projector and A08 baseline, all eight mutations should return no paired adapter receipt with exposed intervals. A paired original interval is FAIL_OPEN. Candidate/source/test and retained fixture hashes are checked before execution.",
+  "base_pr_head": "5f7cbe25ffedc20e5a16241f661fcc06bbf714cd",
+  "preregistered_local": "2026-10-05",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "uncertainty": "One synthetic fixture; deterministic AST projector only; no live or task-effect evidence.",
+  "branch": "research/59-a09-partial-identity-taint-20261005",
+  "hypothesis": "Malformed nested key or intent_token may leave no partial signature while a copied outer id/step splits the duplicate away from the original complete group, preserving paired timing.",
+  "execution": "Host-only source regression; no container, network, model, GUI, game, OS input, GPU, retry, or formal allocation."
+}

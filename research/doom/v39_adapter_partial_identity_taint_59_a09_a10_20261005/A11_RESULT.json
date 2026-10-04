@@ -1,0 +1,110 @@
+{
+  "experiment": "V39_ADAPTER_INVALID_OUTER_ID_STEP_WITH_NESTED_IDENTITY_A11",
+  "freeze_sha256": "c1ce17c702593e5fa30d4870469e766b5fa0c86aa6e518b44695a74c325fcd6d",
+  "source_sha256": "e50fe5bd2d0f66798ba17a3d4e439bb18cd8532ecdb92d4ac41a7f4202bbe390",
+  "test_sha256": "885e772dcf3e93807013a539a27a6daeb38a0eab0cfd20a7852166fd9f98d98b",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "cases": [
+    {
+      "outer_field": "id",
+      "value": null,
+      "baseline": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_brackets_paired"
+        ],
+        "paired_timing_count": 1,
+        "adapter_receipts": 1,
+        "all_incomplete": false,
+        "all_intervals_null": false
+      },
+      "candidate": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "paired_timing_count": 0,
+        "adapter_receipts": 1,
+        "all_incomplete": true,
+        "all_intervals_null": true
+      }
+    },
+    {
+      "outer_field": "id",
+      "value": [
+        "bad"
+      ],
+      "baseline": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_brackets_paired"
+        ],
+        "paired_timing_count": 1,
+        "adapter_receipts": 1,
+        "all_incomplete": false,
+        "all_intervals_null": false
+      },
+      "candidate": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "paired_timing_count": 0,
+        "adapter_receipts": 1,
+        "all_incomplete": true,
+        "all_intervals_null": true
+      }
+    },
+    {
+      "outer_field": "step",
+      "value": true,
+      "baseline": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_brackets_paired"
+        ],
+        "paired_timing_count": 1,
+        "adapter_receipts": 1,
+        "all_incomplete": false,
+        "all_intervals_null": false
+      },
+      "candidate": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "paired_timing_count": 0,
+        "adapter_receipts": 1,
+        "all_incomplete": true,
+        "all_intervals_null": true
+      }
+    },
+    {
+      "outer_field": "step",
+      "value": 1.0,
+      "baseline": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_brackets_paired"
+        ],
+        "paired_timing_count": 1,
+        "adapter_receipts": 1,
+        "all_incomplete": false,
+        "all_intervals_null": false
+      },
+      "candidate": {
+        "statuses": [
+          "identity_unavailable",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "paired_timing_count": 0,
+        "adapter_receipts": 1,
+        "all_incomplete": true,
+        "all_intervals_null": true
+      }
+    }
+  ],
+  "baseline_false_pair_count": 4,
+  "candidate_false_pair_count": 0,
+  "candidate_closed_count": 4
+}

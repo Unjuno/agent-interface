@@ -1,0 +1,231 @@
+{
+  "audit": "PASS",
+  "checks": 19,
+  "errors": [],
+  "experiment": "V39_ADAPTER_INCOMPLETE_NESTED_FINGERPRINT_SPLIT_A09",
+  "prerequisite_result": "FAIL_OPEN_COUNTEREXAMPLE",
+  "candidate_source_sha256": "e50fe5bd2d0f66798ba17a3d4e439bb18cd8532ecdb92d4ac41a7f4202bbe390",
+  "candidate_test_sha256": "20ef35b593884fdd10d5cfd794489f96c49c3a466de3f948e460dfdaf600e94b",
+  "baseline_source_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "case_count": 8,
+  "cases": [
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "owner_id",
+      "nested_value": null,
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    },
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "owner_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    },
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "actuation_id",
+      "nested_value": null,
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    },
+    {
+      "outer_field": "id",
+      "outer_value": "copied-program",
+      "nested_field": "actuation_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "owner_id",
+      "nested_value": null,
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "owner_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "actuation_id",
+      "nested_value": null,
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    },
+    {
+      "outer_field": "step",
+      "outer_value": 99,
+      "nested_field": "actuation_id",
+      "nested_value": [
+        "bad"
+      ],
+      "baseline": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_brackets_paired",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": false,
+        "all_intervals_null": false,
+        "paired_timing_count": 1
+      },
+      "repaired_candidate": {
+        "adapter_receipts": 2,
+        "statuses": [
+          "adapter_edge_receipt_incomplete",
+          "adapter_edge_receipt_incomplete"
+        ],
+        "all_incomplete": true,
+        "all_intervals_null": true,
+        "paired_timing_count": 0
+      }
+    }
+  ],
+  "scope": "independent AST projector replay of eight frozen malformed-nested-identity mutations over one synthetic retained pair"
+}

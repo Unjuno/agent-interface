@@ -1,0 +1,22 @@
+{
+  "decision": "Run exact projector from composed current-main tree and frozen A08 baseline on each mutation. Record any complete timing receipt. Candidate PASS only if it emits no paired receipt with either interval non-null for every mutation; false pair is a bounded counterexample. No candidate source edits or formal/live allocation.",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "preregistered_local": "2026-10-05",
+  "pr_head": "5f7cbe25ffedc20e5a16241f661fcc06bbf714cd",
+  "composed_tree": "cedb382fa432b0a2df8d66317eb0fd198579bd0d",
+  "experiment": "V39_ADAPTER_INCOMPLETE_NESTED_FINGERPRINT_SPLIT_A09",
+  "hypothesis": "When a duplicate adapter DOWN has malformed nested owner_id or actuation_id and its outer id or step changes, the projector may lack the actuation fingerprint needed to taint the original pair and could still expose paired timing.",
+  "composed_commit": "3c0d4aadc42c4d72cf72e412268040181c1f96af",
+  "treatments": [
+    "duplicate DOWN with outer id changed and nested actuation_id null/list",
+    "duplicate DOWN with outer id changed and nested owner_id null/list",
+    "same four nested identity mutations with outer step changed"
+  ],
+  "uncertainty": "One synthetic fixture; deterministic projector only. No live X-server, physical release, application consumption, task effect, threat response, recovery or MAP01 result.",
+  "current_main": "e561b25b700680df4e6ffd2b92faf1dde1682ef7",
+  "composed_source_sha256": "a4d16387f8118e54b9fb5bff1cb9cadd6bcd542e8b5cd273a09697f856518d4c",
+  "execution": "Host-only bounded regression; no container, model, GUI, game, OS input, GPU, network, or retry.",
+  "test_sha256": "3eedc5482066e42950bdbdee66bced3f0057ded859658c63f0408b98001cd0f5",
+  "frozen_a08_baseline_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "comparator": "Exact projector function AST; retained A01 DOWN/UP fixture; baseline source retained by A08"
+}

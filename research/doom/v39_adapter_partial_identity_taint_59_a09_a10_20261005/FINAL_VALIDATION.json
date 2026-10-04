@@ -1,0 +1,37 @@
+{
+  "branch": "research/59-a09-partial-identity-taint-20261005",
+  "base_commit": "5f7cbe25ffedc20e5a16241f661fcc06bbf714cd",
+  "python": "3.11.9",
+  "candidate_source_sha256": "e50fe5bd2d0f66798ba17a3d4e439bb18cd8532ecdb92d4ac41a7f4202bbe390",
+  "candidate_test_sha256": "e04f106572c4e827847f05849a8520970b5b3c4252afea1c67e2f0d0b2c9cb42",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "full_suite": {
+    "command": "python -B -m unittest research.doom.test_map01_v39_typed_state_feedback -v",
+    "tests": 41,
+    "result": "PASS"
+  },
+  "audit": {
+    "command": "python -B research/doom/v39_adapter_partial_identity_taint_59_a09_a10_20261005/audit_replay.py",
+    "checks": 54,
+    "result": "PASS"
+  },
+  "py_compile": "PASS",
+  "git_diff_check": "PASS",
+  "live_allocation": "none",
+  "scope": "synthetic adapter projector only",
+  "current_main_integration": {
+    "main": "c837ad535eed085d95744ad0a9680535a5bb7143",
+    "merge_tree": "84425b9db92f3fe05c543cf0029d83f82e198a1d",
+    "composed_controller_sha256": "38cd0eac5592008901dc52415b30cb55df32811218c6af0e6483920f68ef712e",
+    "full_suite_tests": 40,
+    "replay_audit_checks": 54,
+    "result": "PASS",
+    "status": "pre-A11 (40 tests); refresh after A11 test addition"
+  },
+  "A11": {
+    "baseline_false_pairs": 4,
+    "candidate_false_pairs": 0,
+    "independent_audit_checks": 13,
+    "result": "PASS"
+  }
+}
