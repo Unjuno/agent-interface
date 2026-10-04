@@ -1,0 +1,45 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 114, in <module>
+    try:main()
+        ^^^^^^
+  File "/study/comparison_runner.py", line 107, in main
+    with RuntimeClient(root/'client',block['seed'],chromium='/usr/bin/chromium') as client:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/integrated_efficiency_client_capacity_v3.py", line 205, in __enter__
+    return self.start()
+           ^^^^^^^^^^^^
+  File "/study/integrated_efficiency_client_capacity_v3.py", line 53, in start
+    self.endpoint = json.loads(self.process.stdout.readline())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 114, in <module>
+    try:main()
+        ^^^^^^
+  File "/study/comparison_runner.py", line 107, in main
+    with RuntimeClient(root/'client',block['seed'],chromium='/usr/bin/chromium') as client:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/integrated_efficiency_client_capacity_v3.py", line 205, in __enter__
+    return self.start()
+           ^^^^^^^^^^^^
+  File "/study/integrated_efficiency_client_capacity_v3.py", line 53, in start
+    self.endpoint = json.loads(self.process.stdout.readline())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
