@@ -28,19 +28,23 @@ screen observation's step, sequence, capture time, binding, frame digest,
 focus checks, typed-ready time, and retained image. HUD signals must be
 observed, correctly typed, bound to that same capture, and carry a well-formed
 common WAD digest. The API comparison sample must be a coherent neutral sample
-between the initial HUD capture and the scoring window start; the allowed
-offset therefore derives from that retained pre-window interval
-(362,926,866 ns), rather than selecting an arbitrary distant sample. Both that
+between the initial HUD capture and the scoring window start. The coherent API
+timeline must also bracket the HUD capture, rejecting a scorer timeline and
+scoring window shifted wholly away from it. The selected comparison row itself
+must have ordered timestamps, a stable TIC, and finite variables. Both that
 comparison row and every scoring-window row must contain a finite numeric zero
 action vector matching the nine unique recorded buttons. The audit also checks
 selected-slot ammo agreement and clean child/reader/rescue fields.
 
-The mutation suite passed 9/9 cases, including a pinned `FILES.json` digest check and rejection of a modified raw `RESULT.json`: committed-layout baseline, unobserved
+The mutation suite passed 11/11 cases, including a pinned `FILES.json` digest check and rejection of a modified raw `RESULT.json`: committed-layout baseline, unobserved
 signal rejection, signal capture-time mismatch, typed/screen observation
 divergence, non-neutral pre-window comparison row, malformed and wrong-width
-window action vectors, and a shifted HUD timestamp with no eligible pre-window
-API sample. The audit verifies the fixed manifest hash and byte count/SHA-256 of
-the result, final record, event log, scorer log, and retained comparison image. Commands:
+window action vectors, and a shifted HUD timestamp with no eligible pre-window API sample, a shifted
+scorer timeline and window, and an unstable comparison-row TIC. The audit verifies the fixed manifest hash and byte count/SHA-256 of
+the result, final record, event log, scorer log, and retained comparison image.
+Timeline bracketing does not impose a maximum age within the bracket: the
+retained comparison offset is 240,412,225 ns, but this is an observed value,
+not a validated upper bound for future evidence. Commands:
 
 ```text
 python3 audit_weapon_ammo_followup_01.py

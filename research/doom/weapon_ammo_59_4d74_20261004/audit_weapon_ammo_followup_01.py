@@ -65,6 +65,18 @@ def neutral_action(row: dict[str, Any]) -> bool:
     )
 
 
+def coherent_sample(row: dict[str, Any]) -> bool:
+    variables = row.get("variables")
+    return (
+        isinstance(row.get("sample_started_ns"), int)
+        and isinstance(row.get("sample_returned_ns"), int)
+        and row["sample_started_ns"] <= row["sample_returned_ns"]
+        and row.get("tic_before") == row.get("tic_after")
+        and isinstance(variables, dict)
+        and all(finite_number(value) for value in variables.values())
+    )
+
+
 def audit(root: Path, *, verify_raw_integrity: bool = True) -> dict[str, Any]:
     # The committed package stores 00-coast directly. Accept the pre-publication
     # runner layout too, so this audit can be run against either retained form.
@@ -186,6 +198,13 @@ def audit(root: Path, *, verify_raw_integrity: bool = True) -> dict[str, Any]:
     checks["HUD_signals_validly_bound_to_initial_capture"] = signal_meta_ok
 
     max_hud_api_offset_ns = window_start - initial["capture_ns"]
+    coherent_rows = [row for row in rows if row.get("coherent_tic")]
+    checks["api_timeline_brackets_hud_capture"] = (
+        any(row.get("sample_returned_ns", -1) <= initial["capture_ns"] for row in coherent_rows)
+        and any(row.get("sample_started_ns", -1) >= initial["capture_ns"] for row in coherent_rows)
+    )
+    if not checks["api_timeline_brackets_hud_capture"]:
+        return {"disposition": "HOLD_API_TIMELINE_DOES_NOT_BRACKET_CAPTURE", "checks": checks}
     prewindow_rows = [
         row
         for row in rows
@@ -198,6 +217,7 @@ def audit(root: Path, *, verify_raw_integrity: bool = True) -> dict[str, Any]:
     if not checks["prewindow_comparison_sample_exists"]:
         return {"disposition": "HOLD_NO_PREWINDOW_COMPARISON_SAMPLE", "checks": checks}
     near = min(prewindow_rows, key=lambda row: abs(row["sample_returned_ns"] - initial["capture_ns"]))
+    checks["comparison_sample_finite_and_ordered"] = coherent_sample(near)
     comparison_offset_ns = near["sample_returned_ns"] - initial["capture_ns"]
     checks["comparison_sample_neutral"] = neutral_action(near)
     checks["comparison_offset_bounded_by_prefire_interval"] = (
@@ -248,7 +268,7 @@ def audit(root: Path, *, verify_raw_integrity: bool = True) -> dict[str, Any]:
         "hud_api_differences": differences,
         "nearest_api_offset_ns": near["sample_returned_ns"] - initial["capture_ns"],
         "maximum_hud_api_offset_ns": max_hud_api_offset_ns,
-        "limits": "Near-time selected-fixture binding only; not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
+        "limits": "Selected-fixture binding only; the retained nearest sample offset is observed, but no maximum sample age within the timeline bracket is established. Not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
     }
 
 

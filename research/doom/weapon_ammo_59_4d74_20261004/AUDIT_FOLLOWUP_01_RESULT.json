@@ -4,10 +4,12 @@
     "checks": {
       "HUD_API_values_agree": true,
       "HUD_signals_validly_bound_to_initial_capture": true,
+      "api_timeline_brackets_hud_capture": true,
       "capture_binding_well_formed": true,
       "clean_child_and_reader_exit": true,
       "coherent_samples_finite_and_ordered": true,
       "comparison_offset_bounded_by_prefire_interval": true,
+      "comparison_sample_finite_and_ordered": true,
       "comparison_sample_neutral": true,
       "initial_frame_digest_well_formed": true,
       "no_external_rescue": true,
@@ -30,7 +32,7 @@
       "ammo": 48.0,
       "health": 97.0
     },
-    "limits": "Near-time selected-fixture binding only; not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
+    "limits": "Selected-fixture binding only; the retained nearest sample offset is observed, but no maximum sample age within the timeline bracket is established. Not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
     "matching_slot_ammo": 48.0,
     "maximum_hud_api_offset_ns": 362926866,
     "nearest_api_offset_ns": 240412225,
@@ -41,16 +43,16 @@
   "audit_id": "weapon-ammo-audit-followup-01",
   "base_commit": "af6d0f9842a2377fba736d2d65643b02690f99d9",
   "followup_files": {
-    "AUDIT_FOLLOWUP_01.md": "0492926cfaa57810d5e7da85e49c98a7b866517c7a5c5d6e7ee83c73e9c2d7a4",
-    "audit_weapon_ammo_followup_01.py": "7913d692903e2bc43ffe043c5166618b339fe059152d24845cec3d88e56e4426",
-    "test_audit_weapon_ammo_followup_01.py": "5f724f774f3b3f5e38ab0e55de10f8a3b1e19097ea4a1d00c8c3c6779808aeeb"
+    "AUDIT_FOLLOWUP_01.md": "8f189ab4303a15c0a84c190def4b12a6fe21b84d0f05beb8d9b9d1c92fa8fcca",
+    "audit_weapon_ammo_followup_01.py": "65c23b2696a73fd11680c3937a93c6e7669666bd692f1b77ae61bf12d7cd18af",
+    "test_audit_weapon_ammo_followup_01.py": "6d9669d17f647fcbe1ed1a833a90f87feda739524872a101aa9168fb928e7617"
   },
   "original_files_manifest_sha256": "ce54ec199bd9e3940b9b6b366670afb2372ba0d07dba61207d1a19a5b2c6c996",
-  "scope": "Post-result audit repair and mutation test; not a prospectively frozen independent auditor or new game allocation.",
+  "scope": "Post-result audit repair and mutation test; not a prospectively frozen independent auditor or new game allocation. Timeline bracketing does not establish a maximum age within the bracket or simultaneous HUD/API truth.",
   "tests": {
     "command": "python3 -m unittest -v test_audit_weapon_ammo_followup_01.py",
-    "count": 9,
+    "count": 11,
     "failed": 0,
-    "passed": 9
+    "passed": 11
   }
 }

@@ -162,6 +162,35 @@ class WeaponAmmoAuditFollowupTests(unittest.TestCase):
             self.assertEqual(report["disposition"], "HOLD_AUDIT_CHECK_FAILED")
             self.assertFalse(report["checks"]["window_samples_neutral"])
 
+    def test_unstable_comparison_sample_cannot_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = compact_fixture(Path(temporary))
+            path, rows = read_rows(root)
+            near = prewindow_comparison_row(root, rows)
+            near["tic_after"] = near["tic_before"] + 1
+            write_jsonl(path, rows)
+            report = audit(root, verify_raw_integrity=False)
+            self.assertEqual(report["disposition"], "HOLD_AUDIT_CHECK_FAILED")
+            self.assertFalse(report["checks"]["comparison_sample_finite_and_ordered"])
+
+    def test_shifted_scorer_timeline_and_window_cannot_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = compact_fixture(Path(temporary))
+            result_path = root / "00-coast" / "RESULT.json"
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+            result["window_start_ns"] += 1_000_000_000_000
+            result["window_end_ns"] += 1_000_000_000_000
+            write_json(result_path, result)
+            path, rows = read_rows(root)
+            for row in rows:
+                if row.get("coherent_tic"):
+                    row["sample_started_ns"] += 1_000_000_000_000
+                    row["sample_returned_ns"] += 1_000_000_000_000
+            write_jsonl(path, rows)
+            report = audit(root, verify_raw_integrity=False)
+            self.assertEqual(report["disposition"], "HOLD_API_TIMELINE_DOES_NOT_BRACKET_CAPTURE")
+            self.assertFalse(report["checks"]["api_timeline_brackets_hud_capture"])
+
     def test_shifted_hud_time_cannot_select_a_distant_sample(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = compact_fixture(Path(temporary))
@@ -172,8 +201,8 @@ class WeaponAmmoAuditFollowupTests(unittest.TestCase):
                 signal["capture_ns"] = initial["capture_ns"]
             write_jsonl(path, events)
             report = audit(root, verify_raw_integrity=False)
-            self.assertEqual(report["disposition"], "HOLD_NO_PREWINDOW_COMPARISON_SAMPLE")
-            self.assertFalse(report["checks"]["prewindow_comparison_sample_exists"])
+            self.assertEqual(report["disposition"], "HOLD_API_TIMELINE_DOES_NOT_BRACKET_CAPTURE")
+            self.assertFalse(report["checks"]["api_timeline_brackets_hud_capture"])
 
 
 if __name__ == "__main__":
