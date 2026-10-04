@@ -27,21 +27,7 @@ class Backend(Previous):
         try:
             result = super().execute(step, cancel, identifier, index)
         except BaseException as exc:
-            try:
-                self._publish_incomplete_release_batch(context, exc)
-            except BaseException as publish_exc:
-                add_note = getattr(exc, "add_note", None)
-                if callable(add_note):
-                    add_note(
-                        "incomplete release telemetry publication failed: "
-                        + type(publish_exc).__name__
-                    )
-            finally:
-                context["rows"].clear()
-            try:
-                del self._release_batch.context
-            except AttributeError:
-                pass
+            self._finish_incomplete_release_batch(context, exc, "step_exception")
             raise
 
         if context["rows"]:
@@ -53,8 +39,8 @@ class Backend(Previous):
                 pass
         return result
 
-    def _publish_incomplete_release_batch(self, context, error):
-        """Keep observed per-key up receipts when a later step operation fails."""
+    def _publish_incomplete_release_batch(self, context, error, *, disposition):
+        """Keep observed per-key up receipts when later cleanup cannot finish."""
         rows = context["rows"]
         size = len(rows)
         for position, row in enumerate(rows):
@@ -63,7 +49,7 @@ class Backend(Previous):
                 "release_batch_size": size,
                 "release_batch_position": position,
                 "release_batch_complete": False,
-                "release_batch_disposition": "step_exception",
+                "release_batch_disposition": disposition,
                 "release_batch_error_type": type(error).__name__,
                 "owner_sample_after_batch_available": False,
                 "owner_transition_verified": False,
@@ -76,9 +62,41 @@ class Backend(Previous):
             })
             self.emit(row)
 
+    def _finish_incomplete_release_batch(self, context, error, disposition):
+        try:
+            self._publish_incomplete_release_batch(
+                context, error, disposition=disposition
+            )
+        except BaseException as publish_exc:
+            add_note = getattr(error, "add_note", None)
+            if callable(add_note):
+                add_note(
+                    "incomplete release telemetry publication failed: "
+                    + type(publish_exc).__name__
+                )
+        finally:
+            context["rows"].clear()
+            try:
+                del self._release_batch.context
+            except AttributeError:
+                pass
+
     def release_all(self):
-        result = super().release_all()
         context = getattr(self._release_batch, "context", None)
+        try:
+            result = super().release_all()
+        except BaseException as exc:
+            if context is not None:
+                if context["rows"]:
+                    self._finish_incomplete_release_batch(
+                        context, exc, "release_all_exception"
+                    )
+                else:
+                    try:
+                        del self._release_batch.context
+                    except AttributeError:
+                        pass
+            raise
         if context is not None and context["rows"]:
             self._publish_release_batch(
                 context,
