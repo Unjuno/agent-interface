@@ -1,5 +1,9 @@
 # V39 typed-health short-window replay A02
 
+## Review reconstruction clarification
+
+The historical A02 `result.json` is a curated derived summary, not the stdout emitted by `candidate.mjs`; it does not preserve the complete 42-slot sweep. It remains byte-for-byte unchanged. The output reconstructed by rerunning the frozen candidate is stored separately at [window_candidate_reconstruction.json](../v39_typed_health_review_reconstruction_a01/window_candidate_reconstruction.json), labeled as a reconstruction rather than historical stdout. The separate all-pairs auditor output is [window_independent_audit_reconstruction.json](../v39_typed_health_review_reconstruction_a01/window_independent_audit_reconstruction.json). Both cover 42 slots and independently agree on all trigger sequences/timing fields. Full availability candidate/auditor sources and 84-slot outputs are in the same additive A01 reconstruction package. See its [README](../v39_typed_health_review_reconstruction_a01/README.md) and [manifest](../v39_typed_health_review_reconstruction_a01/FILES.sha256).
+
 ## Why this follows A01
 
 A01 was frozen but STOPped before candidate evaluation because its Node command failed to split JSONL. That exact STOP is preserved at `v39_typed_health_window_a01/runner-stop.json`; A01 is not relabeled or replaced. A02 froze a parser-safe successor before its sole candidate replay, against the same immutable v39 source blobs.
