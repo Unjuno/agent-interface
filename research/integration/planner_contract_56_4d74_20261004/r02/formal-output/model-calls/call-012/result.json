@@ -1,0 +1,140 @@
+{
+  "requested_model": "gpt-5.6-luna",
+  "requested_effort": "low",
+  "thread_ids": [
+    "01a10500-27b5-7b71-a6f4-2b3a9e55a0d7"
+  ],
+  "exit": 0,
+  "timeout": false,
+  "wait_ns": 15468196400,
+  "visible_images_submitted": 1,
+  "usage": {
+    "input_tokens": 14007,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 525,
+    "reasoning_output_tokens": 213
+  },
+  "parse_errors": [],
+  "tool_items": [],
+  "output": {
+    "field_point": [
+      270,
+      400
+    ],
+    "submit_point": [
+      376,
+      401
+    ],
+    "contract": {
+      "interface_id": "observation_fixture_value_save",
+      "symbols": [
+        {
+          "name": "value_field",
+          "role": "field"
+        },
+        {
+          "name": "save_button",
+          "role": "submit"
+        }
+      ],
+      "actions": [
+        {
+          "name": "enter_authorized_token",
+          "target_symbol": "value_field",
+          "operation": "enter_token",
+          "expected_effect": [
+            {
+              "predicate": "exact_token_visible",
+              "value": true
+            }
+          ]
+        },
+        {
+          "name": "save_value",
+          "target_symbol": "save_button",
+          "operation": "submit_form",
+          "expected_effect": [
+            {
+              "predicate": "exact_saved_title",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "method": {
+        "name": "enter_and_save_authorized_value",
+        "version": "1.0",
+        "initial_state": "enter",
+        "max_transitions": 3,
+        "max_runtime_ms": 10000,
+        "states": [
+          {
+            "name": "enter",
+            "branches": [
+              {
+                "when": [
+                  {
+                    "predicate": "target_valid",
+                    "value": true
+                  }
+                ],
+                "outcome": "action",
+                "action": "enter_authorized_token",
+                "next_state": "submit",
+                "reason": null
+              }
+            ]
+          },
+          {
+            "name": "submit",
+            "branches": [
+              {
+                "when": [
+                  {
+                    "predicate": "target_valid",
+                    "value": true
+                  },
+                  {
+                    "predicate": "exact_token_visible",
+                    "value": true
+                  }
+                ],
+                "outcome": "action",
+                "action": "save_value",
+                "next_state": "verify",
+                "reason": null
+              }
+            ]
+          },
+          {
+            "name": "verify",
+            "branches": [
+              {
+                "when": [
+                  {
+                    "predicate": "exact_saved_title",
+                    "value": true
+                  }
+                ],
+                "outcome": "complete",
+                "action": null,
+                "next_state": null,
+                "reason": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "value_crop": [
+      120,
+      394,
+      331,
+      408
+    ]
+  },
+  "transport_ok": true,
+  "image_sha256": "ff35767c241a124d48aeba6c051c3eb87276e24859571cb8e6d443d98a92eb1d",
+  "schema_sha256": "1b79d332398ea3e9d816c4982c441a34b4536a79d4fc0be2a9fac7457876d964"
+}
