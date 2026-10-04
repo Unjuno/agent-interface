@@ -1,0 +1,9 @@
+{
+  "run_id": "MAP01-V39-CANCEL-EXECUTOR-V12-COMPOSITION-A01-FORMAL-01-20261005",
+  "status": "STOP_PRECONDITION",
+  "candidate_execution_started": false,
+  "candidate_output_created": false,
+  "error": "FileNotFoundError: runner resolved repository root as /private/tmp and could not load research/doom/map01_v39_perkey_bridge_a01/test_bridge.py",
+  "note": "An audit.json was later accidentally emitted into this directory by a path bug while auditing formal_04. It is not a formal_01 result; it is byte-identical to formal_04/audit.json (SHA-256 2baa953f6e9f777f61856de648680043cecad246d7db2bbc193d63ae4c6b9f07). The canonical audit remains under formal_04.",
+  "retry_policy": "do not reuse formal_01; any corrected attempt requires a fresh identity and output path"
+}
