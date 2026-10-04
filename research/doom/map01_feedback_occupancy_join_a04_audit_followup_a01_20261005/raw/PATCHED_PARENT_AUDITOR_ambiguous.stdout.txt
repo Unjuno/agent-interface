@@ -1,0 +1,23 @@
+{
+  "schema": "map01-admission-hold-candidate-count-a04-independent-audit-v1",
+  "pass": false,
+  "checks": {
+    "pinned_source_matches": true,
+    "source_counts_match": true,
+    "all_row_candidates_match_independent_reconstruction": true,
+    "histogram_reconciles": true,
+    "ambiguous_admissions_present": true,
+    "top_level_summary_matches_reconstruction": false,
+    "result_decision_matches_gate": true
+  },
+  "counts": {
+    "events": 634,
+    "admissions": 39,
+    "aggregate_holds": 28
+  },
+  "summary": {
+    "unique": 6,
+    "ambiguous": 33,
+    "unmatched": 0
+  }
+}

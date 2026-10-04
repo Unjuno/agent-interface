@@ -2,11 +2,18 @@
 """Regression coverage for A04 summary-field consistency."""
 import sys
 import unittest
+import importlib.util
 from pathlib import Path
 
 PKG = Path(__file__).resolve().parent
 sys.path.insert(0, str(PKG))
 from audit_v2 import audit
+
+PARENT_AUDIT_PATH = (PKG.parents[0] / "map01_feedback_occupancy_join_a04_20261005"
+                     / "audit.py")
+PARENT_SPEC = importlib.util.spec_from_file_location("patched_parent_audit", PARENT_AUDIT_PATH)
+PATCHED_PARENT_AUDIT = importlib.util.module_from_spec(PARENT_SPEC)
+PARENT_SPEC.loader.exec_module(PATCHED_PARENT_AUDIT)
 
 
 class SummaryFieldAuditTests(unittest.TestCase):
@@ -34,6 +41,25 @@ class SummaryFieldAuditTests(unittest.TestCase):
                     (PKG / "corruptions" / case_name / "RESULT.json").read_text(
                         encoding="utf-8").find(f'\"{field}\": {expected_value}') >= 0,
                     True)
+
+    def test_repaired_parent_auditor_rejects_each_summary_corruption(self):
+        pristine = PATCHED_PARENT_AUDIT.audit(PKG / "RESULT.json")
+        self.assertTrue(pristine["pass"], pristine)
+        self.assertTrue(pristine["checks"]["top_level_summary_matches_reconstruction"])
+        for case_name in ("unique", "ambiguous", "unmatched"):
+            with self.subTest(field=case_name):
+                report = PATCHED_PARENT_AUDIT.audit(
+                    PKG / "corruptions" / case_name / "RESULT.json")
+                self.assertFalse(report["pass"], report)
+                self.assertFalse(report["checks"][
+                    "top_level_summary_matches_reconstruction"])
+                self.assertEqual(report["summary"],
+                                 {"unique": 6, "ambiguous": 33, "unmatched": 0})
+
+    def test_repaired_parent_auditor_rejects_boolean_summary_value(self):
+        self.assertFalse(PATCHED_PARENT_AUDIT.summary_matches(
+            {"unique": True, "ambiguous": 33, "unmatched": 0},
+            {"unique": 1, "ambiguous": 33, "unmatched": 0}))
 
 
 if __name__ == "__main__":
