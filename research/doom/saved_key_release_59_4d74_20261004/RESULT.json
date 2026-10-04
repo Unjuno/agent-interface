@@ -1,0 +1,123 @@
+{
+  "disposition": "PASS_IDENTITY_BOUND_SERVER_SYNC_BRACKETS_SCOPED",
+  "admission_count": 10,
+  "release_count": 10,
+  "joins": [
+    {
+      "id": "plan-0-primary-0-1",
+      "step": 0,
+      "key": "space",
+      "owner_keyrelease_started_ns": 18638862163,
+      "owner_sync_returned_ns": 18639029045,
+      "release_call_started_ns": 18638783223,
+      "release_call_returned_ns": 18639113772,
+      "native_release_bracket_ns": 166882,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "plan-0-primary-0-1",
+      "step": 1,
+      "key": "a",
+      "owner_keyrelease_started_ns": 19090235662,
+      "owner_sync_returned_ns": 19090720345,
+      "release_call_started_ns": 19090070704,
+      "release_call_returned_ns": 19090786583,
+      "native_release_bracket_ns": 484683,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "cover-1",
+      "step": 0,
+      "key": "d",
+      "owner_keyrelease_started_ns": 19828235129,
+      "owner_sync_returned_ns": 19828413966,
+      "release_call_started_ns": 19828147521,
+      "release_call_returned_ns": 19828473261,
+      "native_release_bracket_ns": 178837,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "cover-1",
+      "step": 1,
+      "key": "space",
+      "owner_keyrelease_started_ns": 20113456184,
+      "owner_sync_returned_ns": 20113630195,
+      "release_call_started_ns": 20113413728,
+      "release_call_returned_ns": 20113706371,
+      "native_release_bracket_ns": 174011,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "cover-1",
+      "step": 2,
+      "key": "a",
+      "owner_keyrelease_started_ns": 20641906688,
+      "owner_sync_returned_ns": 20642104269,
+      "release_call_started_ns": 20641822799,
+      "release_call_returned_ns": 20642181649,
+      "native_release_bracket_ns": 197581,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "cover-1",
+      "step": 4,
+      "key": "d",
+      "owner_keyrelease_started_ns": 22935538536,
+      "owner_sync_returned_ns": 22935691860,
+      "release_call_started_ns": 22935419373,
+      "release_call_returned_ns": 22935747828,
+      "native_release_bracket_ns": 153324,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "cover-1",
+      "step": 5,
+      "key": "space",
+      "owner_keyrelease_started_ns": 23144990766,
+      "owner_sync_returned_ns": 23145143330,
+      "release_call_started_ns": 23144944628,
+      "release_call_returned_ns": 23145201356,
+      "native_release_bracket_ns": 152564,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "cover-1",
+      "step": 6,
+      "key": "a",
+      "owner_keyrelease_started_ns": 23648078260,
+      "owner_sync_returned_ns": 23648271177,
+      "release_call_started_ns": 23647880975,
+      "release_call_returned_ns": 23648331313,
+      "native_release_bracket_ns": 192917,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "plan-2-primary-0-1",
+      "step": 0,
+      "key": "d",
+      "owner_keyrelease_started_ns": 31959675448,
+      "owner_sync_returned_ns": 31959835189,
+      "release_call_started_ns": 31959589568,
+      "release_call_returned_ns": 31959895071,
+      "native_release_bracket_ns": 159741,
+      "physical_or_application_release_identified": false
+    },
+    {
+      "id": "plan-2-primary-0-1",
+      "step": 1,
+      "key": "space",
+      "owner_keyrelease_started_ns": 32163060534,
+      "owner_sync_returned_ns": 32163307383,
+      "release_call_started_ns": 32163014055,
+      "release_call_returned_ns": 32163381391,
+      "native_release_bracket_ns": 246849,
+      "physical_or_application_release_identified": false
+    }
+  ],
+  "per_key_exact_physical_release": "UNIDENTIFIED",
+  "useful_task_feedback": "NOT_TESTED_BY_THIS_AUDIT",
+  "raw_sha256": {
+    "controller-recovery-01/episode/runtime/events.jsonl": "1345efb54720aca6a6d83c73e57bf523daaafdce5f088c841dfae09b6a5677d0",
+    "controller-recovery-01/episode/runtime/owner-events.json": "52bef36fd215f6b122ddc3944d431fd9fa634f5e404a7bbc1bb14aa1473acdb6"
+  }
+}
