@@ -35,7 +35,7 @@ class ReviewReceiptBindingTests(unittest.TestCase):
             )
             with tarfile.open(fileobj=io.BytesIO(archive.stdout), mode="r:") as bundle:
                 bundle.extractall(root)
-            shutil.copytree(PACKAGE / "audit_v2", package / "audit_v2")
+            shutil.copytree(PACKAGE / "audit_v2", package / "audit_v2", dirs_exist_ok=True)
 
             source_manifest = package / "SHA256SUMS"
             source_rows = source_manifest.read_text(encoding="ascii").splitlines()
