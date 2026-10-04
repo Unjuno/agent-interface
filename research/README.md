@@ -11,6 +11,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 - Issue #7709 T1: [retained-trace feasibility audit](analysis/latency_regime_coverage_7709_t1_feasibility_20261005/REPORT.md) — one fixed-order model-visible pair only; 1,051 archived files independently hash-checked; HOLD for insufficient independent runs.
 
+- Issue #7728 T0: [client energy-counter eligibility](analysis/client_energy_per_effect_7728_t0_20261005/REPORT.md) — unprivileged macOS probe requires superuser; estimated power/process proxy is not a joule counter; HOLD, no GUI task/route run.
+
 - Issue #57: [incomplete-frame byte-frontier A01](integration/frame_byte_frontier_57_20261003_45e9/REPORT.md) — eight-cell construction PASS preserved; production cap and typed-stop integration remain HOLD, with current-main custody checks in [`RESCUE_20261004.md`](integration/frame_byte_frontier_57_20261003_45e9/RESCUE_20261004.md).
 - Issue #6526 C03: [WAL snapshot/write recovery boundary](integration/wal_snapshot_recovery_6526_01a0ff58_c03/REPORT.md) — six native compatibility cells preserved; original audit PASS and its SQL-copy gap remain alongside the separately versioned V2 audit that rejects all eight effective controls. No runtime recovery policy or task authority follows.
 
