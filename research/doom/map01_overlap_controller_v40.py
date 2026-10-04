@@ -24,7 +24,8 @@ from doom_typed_observation_v1 import (
     reconcile_artifact)
 from doom_action_validity_contract_v1 import build_contract as build_action_contract
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
-from unauthored_coast_liveness_v1 import UnauthoredCoastMonitor, wait_for_fresh_observation
+from unauthored_coast_liveness_v1 import (UnauthoredCoastMonitor,
+    invalidation_handoff_sequence, wait_for_fresh_observation)
 from codex_app_server_client_v2 import CodexAppServerClient
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 from final_action_admission_v2 import (
@@ -573,7 +574,8 @@ def main():
                     invalidation=boundary["invalidation"]
                     planner_interrupt,current_terminal=cancel_invalidated_cover(
                         planner,planner_handle,process,wait,current_cover,
-                        required_observation_sequence=invalidation.get("sequence"),
+                        required_observation_sequence=invalidation_handoff_sequence(
+                            invalidation.get("sequence"), latest),
                         latest_observation=lambda: latest)
                     cover_terminals.append(current_terminal)
                     break
