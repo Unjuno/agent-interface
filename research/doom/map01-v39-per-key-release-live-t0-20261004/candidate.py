@@ -55,7 +55,10 @@ def verify_frozen(freeze):
     }
     ipv4_routes = subprocess.check_output(["ip", "route"], text=True).strip()
     ipv6_routes = subprocess.check_output(["ip", "-6", "route"], text=True).strip()
-    if interfaces != allowed_interfaces or set(link_states) != set(allowed_interfaces) or +            any(state != "DOWN" for state in link_states.values()) or +            ipv4_routes or ipv6_routes:
+    if (interfaces != allowed_interfaces or
+            set(link_states) != set(allowed_interfaces) or
+            any(state != "DOWN" for state in link_states.values()) or
+            ipv4_routes or ipv6_routes):
         raise RuntimeError("STOP_NETWORK_NAMESPACE:" + repr(interfaces))
 
 

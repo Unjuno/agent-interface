@@ -43,3 +43,15 @@ entry and dependency tree, this runner/auditor, source-support archive, input
 program, output root, commands, and the one-candidate/one-auditor stopping
 rule before candidate invocation. A failed/STOP candidate is retained as the
 first outcome and is not retried.
+
+## Frozen allocation outcome
+
+Allocation MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01 invoked one
+candidate. It exited 1 during the frozen network precondition because a
+malformed line continuation applied unary + to a string. The failure occurred
+before Session() creation, so no X server process or input action started. The
+exact traceback and source hash are in results/<allocation-id>/. The harness
+was repaired afterward and construction tests pass, but the frozen allocation
+is STOP; its candidate is not rerun and the raw-only auditor is not invoked
+after the nonzero candidate exit. No live telemetry or task-effect claim
+follows from this outcome.
