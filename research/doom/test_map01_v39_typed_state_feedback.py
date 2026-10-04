@@ -13,6 +13,7 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import map01_overlap_controller_v39 as controller
+from perkey_measurement_source_closure_v1 import with_per_key_measurement_sources
 
 
 WAD_SHA256 = "a" * 64
@@ -52,6 +53,14 @@ class FakePlanner:
 
 
 class V39TypedStateFeedbackTests(unittest.TestCase):
+    def test_per_key_manifest_pins_transitive_executor_dependency_only_when_opted_in(self):
+        base = [HERE / "session_map01_v12.py"]
+        default_paths = with_per_key_measurement_sources(base, HERE, False)
+        measured_paths = with_per_key_measurement_sources(base, HERE, True)
+        self.assertEqual(default_paths, base)
+        self.assertEqual(measured_paths[:1], base)
+        self.assertIn(HERE.parent / "live_control" / "executor_v3.py", measured_paths)
+        self.assertEqual(len(measured_paths), 4)
     def test_session_command_forwards_per_key_measurement_only_when_opted_in(self):
         args = SimpleNamespace(seed=7, load_fixture_manifest=HERE / "fixture.json",
                                per_key_input_measurement=True)
