@@ -1,6 +1,6 @@
 {
-  "allocation": "MAP01-KEY-RELEASE-BINDING-A02-20261005",
-  "frozen_main": "220e7643c5f4d26f2e91ac9b5994dc466591f58a",
+  "allocation": "MAP01-KEY-RELEASE-BINDING-A03-20261005",
+  "frozen_main": "a38c61334ff5dbd7d17269467c26f74e9ad4a84f",
   "method": "synthetic CPU-only construction discriminator",
   "image": {
     "ref": "python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
@@ -13,14 +13,17 @@
   "source_read_only": true,
   "inputs": {
     "CONSTRUCTION_ATTEMPT_01.json": "f16397b6f8d9d13bfde492ec26c4f7c6a7e5026e2df3c63127de0a52a608eb26",
+    "CONSTRUCTION_ATTEMPT_02.json": "571b57c585daafac16a791f9c34291cc98efbc18d2058c6cdabf9dd21c91e846",
+    "candidate-output-a02.json": "a175caf87efa91faae5f1bb61a8eba8158400c5de770abaeda2dc8e7d0998811",
+    "audit-output-a02.json": "ef0afa798de9809e2c55c16965fe1f96604758ef196d721fb7388a7cd830427d",
     "PREREGISTRATION.md": "f3d33ccbdd4c5678fed9844221a1c0064e4e5a1ca812a284b914cd1a0ec6cc38",
-    "fixture.json": "0515578e00b03e2ba04cc2932f85bc1d7f9658f914d802371a6ea430cb0df99e",
-    "candidate.py": "f87ec7466c0e83606fe42a7c3c6781381f47216707c96ad319b79058fbe70ad8",
-    "audit.py": "a1be56d1c21d1e8bb81667065815f2f70a0846a935f75c81997b8787db01ab4b"
+    "fixture.json": "b269e4f88733891f865f6005e5aef07c35b2c888ce0ff50524f43cc782142d18",
+    "candidate.py": "7558c5ce0d20d43a10aef8016fc1de7e947a688ea99d4f975abfbc28c686d5a4",
+    "audit.py": "f7298258a3b2f624dd179225990927efa84bd057c99460e38da43a6b63f94295"
   },
   "planned_commands": [
-    "python3 /src/research/doom/map01_key_release_binding_a01_20261005/candidate.py /out",
-    "python3 /src/research/doom/map01_key_release_binding_a01_20261005/audit.py /out",
+    "python3 /src/research/doom/map01_key_release_binding_a01_20261005/candidate.py /out/a03",
+    "python3 /src/research/doom/map01_key_release_binding_a01_20261005/audit.py /out/a03",
     "PYTHONPYCACHEPREFIX=/out/pycache python3 -m py_compile /src/research/doom/map01_key_release_binding_a01_20261005/candidate.py /src/research/doom/map01_key_release_binding_a01_20261005/audit.py"
   ]
 }

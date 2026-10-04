@@ -57,22 +57,21 @@ def mutate(case, fault):
 
 def main():
     fixture = json.loads((HERE / "fixture.json").read_text(encoding="utf-8"))
-    cases = [("baseline", fixture, fixture["expected"])]
+    cases = [("baseline", fixture, fixture["expected"]["status"], fixture["expected"]["class"])]
     for mutation in fixture["mutations"]:
-        cases.append((mutation["name"], mutate(fixture, mutation["fault"]),
-                      {"status": "FAIL", "class": mutation["fault"]}))
+        cases.append((mutation["name"], mutate(fixture, mutation["fault"]), "FAIL", mutation["expected_reason"]))
     rows = []
-    for name, case, expected in cases:
+    for name, case, expected_status, expected_reason in cases:
         status, reason = reduce(case)
         rows.append({"name": name, "status": status, "reason": reason,
-                     "expected_status": expected["status"],
-                     "expected_class": expected["class"]})
+                     "expected_status": expected_status,
+                     "expected_reason": expected_reason})
     report = {"schema": "map01-key-release-binding-candidate-v1", "cases": rows}
     output_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "candidate-output.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2, sort_keys=True))
-    return 0 if all(r["status"] == r["expected_status"] and r["reason"] == r["expected_class"] for r in rows) else 1
+    return 0 if all(r["status"] == r["expected_status"] and r["reason"] == r["expected_reason"] for r in rows) else 1
 
 
 if __name__ == "__main__":

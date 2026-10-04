@@ -5,11 +5,11 @@
   "releases": [{"execution_id": "exec-1", "outcome": "empty_verified", "seq": 3}],
   "expected": {"status": "PASS", "class": "complete"},
   "mutations": [
-    {"name": "duplicate_admission_id", "fault": "duplicate_admission_id"},
-    {"name": "cross_execution_up", "fault": "cross_execution_up"},
-    {"name": "up_before_admission", "fault": "up_before_admission"},
-    {"name": "missing_per_key_up", "fault": "missing_per_key_up"},
-    {"name": "duplicate_up", "fault": "duplicate_up"},
-    {"name": "release_not_empty_verified", "fault": "release_not_empty_verified"}
+    {"name": "duplicate_admission_id", "fault": "duplicate_admission_id", "expected_reason": "duplicate_or_invalid_admission_id"},
+    {"name": "cross_execution_up", "fault": "cross_execution_up", "expected_reason": "unbound_or_cross_execution_up"},
+    {"name": "up_before_admission", "fault": "up_before_admission", "expected_reason": "up_before_admission_or_unconfirmed"},
+    {"name": "missing_per_key_up", "fault": "missing_per_key_up", "expected_reason": "missing_per_key_up"},
+    {"name": "duplicate_up", "fault": "duplicate_up", "expected_reason": "duplicate_up"},
+    {"name": "release_not_empty_verified", "fault": "release_not_empty_verified", "expected_reason": "release_not_empty_or_out_of_order"}
   ]
 }

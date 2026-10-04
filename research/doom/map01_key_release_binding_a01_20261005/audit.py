@@ -39,15 +39,20 @@ def main():
     fixture = json.loads(fixture_bytes)
     output_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE
     candidate = json.loads((output_dir / "candidate-output.json").read_text(encoding="utf-8"))
-    expected_names = ["baseline"] + [m["name"] for m in fixture["mutations"]]
+    expected_cases = [("baseline", fixture, fixture["expected"]["status"], fixture["expected"]["class"], True)]
+    expected_cases += [(m["name"], _mutated(fixture, m["name"]), "FAIL", m["expected_reason"], False)
+                       for m in fixture["mutations"]]
     checks = []
-    for row, name in zip(candidate.get("cases", []), expected_names):
-        baseline = name == "baseline"
-        expected_status, expected_class = expected_for(fixture if baseline else _mutated(fixture, name), baseline)
+    for row, (name, case, declared_status, declared_reason, baseline) in zip(candidate.get("cases", []), expected_cases):
+        expected_status, expected_reason = expected_for(case, baseline)
         checks.append({"name_matches": row.get("name") == name,
                        "status_matches_independent_oracle": row.get("status") == expected_status,
-                       "class_matches_independent_oracle": row.get("reason") == expected_class})
-    valid = (len(candidate.get("cases", [])) == len(expected_names) and len(checks) == len(expected_names)
+                       "reason_matches_independent_oracle": row.get("reason") == expected_reason,
+                       "declared_status_matches_oracle": declared_status == expected_status,
+                       "declared_reason_matches_oracle": declared_reason == expected_reason,
+                       "candidate_expectation_matches_frozen_declaration":
+                           row.get("expected_status") == declared_status and row.get("expected_reason") == declared_reason})
+    valid = (len(candidate.get("cases", [])) == len(expected_cases) and len(checks) == len(expected_cases)
              and all(all(c.values()) for c in checks))
     report = {"status": "PASS" if valid else "FAIL_AUDIT", "case_count": len(checks),
               "checks": checks, "fixture_sha256": hashlib.sha256(fixture_bytes).hexdigest(),
