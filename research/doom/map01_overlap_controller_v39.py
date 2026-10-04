@@ -542,10 +542,9 @@ def input_edge_receipts(events):
                 continue
             bucket = adapter_grouped.setdefault((identifier, step, key, token),
                                                 {"down": [], "up": []})
-            if edge_name in ("down", "up"):
-                bucket[edge_name].append(event)
-            else:
-                bucket[expected_edge].append(event)
+            # Outer event type and nested edge label are both part of the
+            # receipt identity. Do not let one release event supply a press.
+            bucket[expected_edge].append(event)
             continue
         if event_name not in ("input_admission", "input_release_transition"):
             continue
