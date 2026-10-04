@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "C:/Program Files/WSL/wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--user",
+    "65534:65534",
+    "--cpus",
+    "1",
+    "--memory",
+    "512m",
+    "--workdir",
+    "/out",
+    "-v",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\terminal-epoch-01\\source:/source:ro",
+    "-v",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\fixture-input:/wad:ro",
+    "-v",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\terminal-epoch-01\\out:/out:rw",
+    "-e",
+    "PYTHONPATH=/source",
+    "-e",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "-e",
+    "HOME=/tmp",
+    "-e",
+    "SDL_VIDEODRIVER=dummy",
+    "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+    "python3",
+    "/source/probe.py"
+  ],
+  "source_commit": "c09842a0ef49827bca07fb08461afd83ab37b885",
+  "members": {
+    "independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "probe.py": "e5f5c9de796697af9290a82bd2d3148355da3319de3b396233e678adebbf883b",
+    "session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+  },
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}
