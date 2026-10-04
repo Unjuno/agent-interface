@@ -1,0 +1,12 @@
+{
+  "schema": "inference-disturbance-coupling-circular-seam-v1",
+  "issue": 7470,
+  "latency_period": [1, 2, 3, 4],
+  "disturbance_period": [0, 1, 2, 3],
+  "periods": 2,
+  "action_cap": 1,
+  "envelope_max": 6,
+  "null_gain": 0,
+  "interaction_gain": 0.25,
+  "seam": "transition from event 3 of period 0 to event 0 of period 1 is executed by the same state update as every other event"
+}

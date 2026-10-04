@@ -1,0 +1,52 @@
+{
+  "old": {
+    "outcome": "CALLER_FAILED",
+    "reason": "TypeError(\"'NoneType' object is not subscriptable\")",
+    "target": {
+      "grounding": {
+        "field_point": [
+          285,
+          400
+        ],
+        "submit_point": [
+          376,
+          400
+        ]
+      },
+      "source": {
+        "image": "fixture.png",
+        "sequence": 1
+      },
+      "aliases": null,
+      "model_call_id": "synthetic-handoff"
+    },
+    "usage": "synthetic unavailable; no model or GUI used"
+  },
+  "fixed": {
+    "outcome": "TASK_SUCCEEDED",
+    "reason": "verified_effect",
+    "target": {
+      "grounding": {
+        "field_point": [
+          285,
+          400
+        ],
+        "submit_point": [
+          376,
+          400
+        ]
+      },
+      "source": {
+        "image": "fixture.png",
+        "sequence": 1
+      },
+      "aliases": {
+        "field": "fixture_field",
+        "submit": "fixture_submit"
+      },
+      "model_call_id": "synthetic-handoff",
+      "mint_records": []
+    },
+    "usage": "synthetic unavailable; no model or GUI used"
+  }
+}

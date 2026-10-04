@@ -1,0 +1,15 @@
+{
+  "artifact": "MAP01 health-trigger fresh-frame identity reconstruction A01",
+  "status": "posthoc analysis of completed runs; not preregistration",
+  "hypothesis": "The consecutive typed-health rows previously cited as v39 d2/d3 debounce triggers correspond to distinct fresh captured frames and exact same-sequence observation records.",
+  "test": "Verify exact SHA-256 of v38/v39 reports and raw events; for v39 d2 sequences 81/82 and d3 sequences 103/104, compare typed and exact observation id, sequence, capture timestamp and RGB frame hash; check monotonic capture/emission and distinct adjacent frame hashes. For v38 d2, derive the planner terminal and model start from report decision iteration 2, derive the health baseline from the exact observation matching its source image, count below-baseline typed rows emitted before terminal, and select the next typed row from raw events. The independent auditor must recompute and compare every stored censor-context field.",
+  "decision": "PASS_SCOPED if all four v39 rows have same-sequence exact observation identity, monotonic capture/emission, and each pair has distinct frame hashes. FAIL on any mismatch. HOLD if required raw evidence is missing.",
+  "competing_explanations": ["Different RGB captures may depict unchanged state.", "Two captures can share systematic OCR error or extraction bias.", "Distinct image hashes establish capture identity, not statistical or semantic independence."],
+  "uncertainty": ["This is one posthoc stochastic trace pair, with no repeated independent run.", "No false-trigger rate, detector quality, useful effect, safety, or policy correctness is established.", "The v38 comparison is censored before a second below-baseline sample and is not a matched control.", "No live game, model, GUI, input, container, or allocation was used in this analysis."],
+  "source_sha256": {
+    "v38_events": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3",
+    "v38_report": "7fa222f9b273ee10ad1ed3e24b8f7f234f46cc137265a90d70c6073981602f58",
+    "v39_events": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "v39_report": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687"
+  }
+}

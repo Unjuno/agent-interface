@@ -1,0 +1,28 @@
+{
+  "allocation_id": "TASK-MEMORY-RETRIEVAL-7166-T0-HOST-A03-20261004",
+  "completed_observed_at_utc": "2026-10-04T03:54:40Z",
+  "candidate": {
+    "command": "python3 -I research/analysis/task_memory_retrieval_7166_t0_host_a03_20261004/candidate.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "cases": 72,
+    "stdout_sha256": "not separately hashed at capture; exact stdout is preserved in candidate.stdout.txt",
+    "output": "candidate.json",
+    "output_sha256": "3fca6123c690ff1dcb5fb9af9922dfeb5a169f09e61d42b9e4c4b3cbae880cb5"
+  },
+  "auditor": {
+    "command": "python3 -I research/analysis/task_memory_retrieval_7166_t0_host_a03_20261004/auditor.py",
+    "invocations": 1,
+    "exit_code": 1,
+    "rows": 72,
+    "base_audit": "PASS",
+    "mutation_controls_rejected": 5,
+    "mutation_controls_total": 6,
+    "failed_control": "wrong_label",
+    "output": "audit.json",
+    "output_sha256": "b5d834dfe05f33b5ad0b16b8c9b24d92012be908d0266bfd21b08a6f5e67854e"
+  },
+  "allocation_disposition": "FAIL_METHOD",
+  "retries": 0,
+  "notes": "The wrong_label mutator resets the first current-only row's NONE label to NONE, so it creates no corruption. This is a real frozen-auditor mutation-control failure. The formal auditor was not rerun and no source or result was altered after the run."
+}

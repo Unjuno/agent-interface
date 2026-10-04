@@ -1,0 +1,10 @@
+Dockerfile:1
+--------------------
+   1 | >>> FROM sha256:4ebbb04fd31e2833ac6c66ddbb9a03351904f34716e55d45d220d28553004601
+   2 |     RUN python3 -m pip install --no-cache-dir vizdoom==1.3.0
+   3 |     
+--------------------
+ERROR: failed to solve: sha256:4ebbb04fd31e2833ac6c66ddbb9a03351904f34716e55d45d220d28553004601: pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+
+エラー コード: E_FAIL
+このエラーが予期しないものである場合は、既存の問題を検索するか、https://github.com/microsoft/WSL/issues で新しい問題を提出することを検討してください。

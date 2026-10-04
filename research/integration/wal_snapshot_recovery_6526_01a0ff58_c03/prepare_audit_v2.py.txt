@@ -1,0 +1,21 @@
+import ast,pathlib
+P=pathlib.Path(__file__).resolve().parent
+s=(P/'audit.py').read_text(encoding='utf-8')
+old="            actor=event['actor'];sql=event['sql'];before=active[actor];priorchanges=changes[actor];expected_error=None;expected_return=[];rowcount=-1"
+new=old+"""
+            declared={'begin':'BEGIN','snapshot':'SELECT revision FROM counter WHERE id=1','writer_begin':'BEGIN IMMEDIATE','writer_update':'UPDATE counter SET revision=revision+1 WHERE id=1','writer_commit':'COMMIT','first_update':'UPDATE counter SET revision=revision+1 WHERE id=1','planned_repeat':'UPDATE counter SET revision=revision+1 WHERE id=1','reset':'ROLLBACK','new_begin':'BEGIN','new_update':'UPDATE counter SET revision=revision+1 WHERE id=1','diagnostic_commit':'COMMIT'}
+            check(sql==declared[event['label']], 'exact declared SQL by label')"""
+if s.count(old)!=1:raise ValueError('unique interpreter splice')
+s=s.replace(old,new)
+old="(P/'COPIED_CONTROLS.json').write_text"
+new="""for witness in json.loads((P/'SQL_CONTROL_WITNESS.json').read_text(encoding='utf-8'))['witnesses']:
+    try:verify(witness['record'])
+    except ValueError:controls.append({'label':witness['kind'],'refused':True,'record':witness['record']});continue
+    raise RuntimeError('SQL scope witness accepted')
+(P/'COPIED_CONTROLS_V2.json').write_text"""
+if s.count(old)!=1:raise ValueError('unique controls splice')
+s=s.replace(old,new).replace("(P/'AUDIT_RESULT.json')","(P/'AUDIT_RESULT_V2.json')")
+ast.parse(s);(P/'audit_v2.py').write_text(s,encoding='utf-8')
+wrapper=P/'run_audit_v2.py';(P/'run_audit_v2_first.py.txt').write_bytes(wrapper.read_bytes())
+w=wrapper.read_text(encoding='utf-8').replace("directory=P/'command-audit-v2';","directory=P/'command-audit-v2-repaired';")
+wrapper.write_text(w,encoding='utf-8');print('new reader exact SQL gates; first source/failed empty wrapper directory preserved')
