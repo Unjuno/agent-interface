@@ -1,0 +1,2956 @@
+Warning: truncated output (original token count: 20297)
+Total output lines: 3747
+
+{
+  "case_order": [
+    "feasible_tradeoff",
+    "infeasible_target",
+    "delayed_missing_feedback",
+    "single_extreme_episode"
+  ],
+  "fixture_sha256": "32aa2b6b969b113700a0b5f95df1c75aafc293b54a8a2a1d7df2a36efea1d193",
+  "policies": {
+    "delayed_missing_feedback": {
+      "blackwell": {
+        "complete_feedback": false,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "fast",
+            "row": 0,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "fast",
+            "row": 1,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "fast",
+            "row": 2,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "fast",
+            "row": 3,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "fast",
+            "row": 4,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "fast",
+            "row": 5,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "fast",
+            "row": 8,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "fast",
+            "row": 9,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "fast",
+            "row": 10,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "fast",
+            "row": 11,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          2.0,
+          2.0
+        ],
+        "observed_mean": null,
+        "steps": [
+          {
+            "context": "x",
+            "feedback_before": [],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 0
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 1
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 2
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 3
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 4
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 5
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 7
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 8
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 9
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8,
+              9
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 10
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8,
+              9,
+              10
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 11
+          }
+        ],
+        "target_claim": "UNKNOWN_INCOMPLETE_FEEDBACK",
+        "unknown_feedback_rows": [
+          7
+        ],
+        "verified_useful_count": 10
+      },
+      "independent_freeze": {
+        "complete_feedback": false,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "conservative",
+            "row": 0,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "conservative",
+            "row": 1,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "conservative",
+            "row": 2,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "conservative",
+            "row": 3,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "conservative",
+            "row": 4,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "conservative",
+            "row": 5,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "conservative",
+            "row": 8,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "conservative",
+            "row": 9,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "conservative",
+            "row": 10,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "conservative",
+            "row": 11,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          0.2,
+          0.2
+        ],
+        "observed_mean": null,
+        "steps": [
+          {
+            "context": "x",
+            "feedback_before": [],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 0
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 1
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 2
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 3
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 4
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 5
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 7
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 8
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 9
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8,
+              9
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 10
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8,
+              9,
+              10
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 11
+          }
+        ],
+        "target_claim": "UNKNOWN_INCOMPLETE_FEEDBACK",
+        "unknown_feedback_rows": [
+          7
+        ],
+        "verified_useful_count": 0
+      },
+      "scalar": {
+        "complete_feedback": false,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "conservative",
+            "row": 0,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "conservative",
+            "row": 1,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "conservative",
+            "row": 2,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "conservative",
+            "row": 3,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "conservative",
+            "row": 4,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "conservative",
+            "row": 5,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "conservative",
+            "row": 8,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "conservative",
+            "row": 9,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "conservative",
+            "row": 10,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "conservative",
+            "row": 11,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          0.2,
+          0.2
+        ],
+        "observed_mean": null,
+        "steps": [
+          {
+            "context": "x",
+            "feedback_before": [],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 0
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 1
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 2
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 3
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 4
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 5
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 7
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 8
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 9
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8,
+              9
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 10
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              3,
+              4,
+              2,
+              6,
+              5,
+              8,
+              9,
+              10
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 11
+          }
+        ],
+        "target_claim": "UNKNOWN_INCOMPLETE_FEEDBACK",
+        "unknown_feedback_rows": [
+          7
+        ],
+        "verified_useful_count": 0
+      }
+    },
+    "feasible_tradeoff": {
+      "blackwell": {
+        "complete_feedback": true,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "fast",
+            "row": 0,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "fast",
+            "row": 1,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 3,
+            "route": "fast",
+            "row": 2,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "fast",
+            "row": 3,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "fast",
+            "row": 4,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "fast",
+            "row": 5,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "fast",
+            "row": 6,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "fast",
+            "row": 7,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "fast",
+            "row": 8,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "fast",
+            "row": 9,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "fast",
+            "row": 10,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "fast",
+            "row": 11,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          2.0,
+          2.0
+        ],
+        "observed_mean": [
+          1.0999999999999999,
+          1.0999999999999999
+        ],
+        "steps": [
+          {
+            "context": "x",
+            "feedback_before": [],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 0
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 1
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 2
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 3
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 4
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 5
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 6
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 7
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 8
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 9
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 10
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 11
+          }
+        ],
+        "target_claim": "WITHIN_TARGET",
+        "unknown_feedback_rows": [],
+        "verified_useful_count": 12
+      },
+      "independent_freeze": {
+        "complete_feedback": true,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "conservative",
+            "row": 0,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "conservative",
+            "row": 1,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 3,
+            "route": "conservative",
+            "row": 2,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "conservative",
+            "row": 3,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "conservative",
+            "row": 4,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "conservative",
+            "row": 5,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "conservative",
+            "row": 7,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "conservative",
+            "row": 8,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "conservative",
+            "row": 9,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "conservative",
+            "row": 10,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "conservative",
+            "row": 11,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          0.2,
+          0.2
+        ],
+        "observed_mean": [
+          0.20000000000000004,
+          0.20000000000000004
+        ],
+        "steps": [
+          {
+            "context": "x",
+            "feedback_befo…4297 tokens truncated…,
+          {
+            "received_tick": 2,
+            "route": "conservative",
+            "row": 1,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 3,
+            "route": "conservative",
+            "row": 2,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "conservative",
+            "row": 3,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "conservative",
+            "row": 4,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "conservative",
+            "row": 5,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "conservative",
+            "row": 7,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          0.2,
+          0.2
+        ],
+        "observed_mean": [
+          0.2,
+          0.2
+        ],
+        "steps": [
+          {
+            "context": "z",
+            "feedback_before": [],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 0
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 1
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 2
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 3
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 4
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 5
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 7
+          }
+        ],
+        "target_claim": "OUTSIDE_TARGET",
+        "unknown_feedback_rows": [],
+        "verified_useful_count": 0
+      },
+      "scalar": {
+        "complete_feedback": true,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "conservative",
+            "row": 0,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "conservative",
+            "row": 1,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 3,
+            "route": "conservative",
+            "row": 2,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "conservative",
+            "row": 3,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "conservative",
+            "row": 4,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "conservative",
+            "row": 5,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "conservative",
+            "row": 7,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          0.2,
+          0.2
+        ],
+        "observed_mean": [
+          0.2,
+          0.2
+        ],
+        "steps": [
+          {
+            "context": "z",
+            "feedback_before": [],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 0
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 1
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 2
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 3
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 4
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 5
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "z",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 7
+          }
+        ],
+        "target_claim": "OUTSIDE_TARGET",
+        "unknown_feedback_rows": [],
+        "verified_useful_count": 0
+      }
+    },
+    "single_extreme_episode": {
+      "blackwell": {
+        "complete_feedback": true,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "fast",
+            "row": 0,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "fast",
+            "row": 1,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 3,
+            "route": "fast",
+            "row": 2,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "fast",
+            "row": 3,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "fast",
+            "row": 4,
+            "useful_verified": true,
+            "vector": [
+              2.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "fast",
+            "row": 5,
+            "useful_verified": true,
+            "vector": [
+              10.0,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "fast",
+            "row": 7,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "conservative",
+            "row": 8,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "fast",
+            "row": 9,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "conservative",
+            "row": 10,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "fast",
+            "row": 11,
+            "useful_verified": true,
+            "vector": [
+              0.2,
+              2.0
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          10.0,
+          2.0
+        ],
+        "observed_mean": [
+          1.4666666666666668,
+          0.9500000000000001
+        ],
+        "steps": [
+          {
+            "context": "x",
+            "feedback_before": [],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 0
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 1
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 2
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 3
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "forecast": [
+              2.0,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 4
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 5
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 7
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 8
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 9
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 10
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "forecast": [
+              0.2,
+              2.0
+            ],
+            "hard_gate_pass": true,
+            "route": "fast",
+            "row": 11
+          }
+        ],
+        "target_claim": "OUTSIDE_TARGET",
+        "unknown_feedback_rows": [],
+        "verified_useful_count": 9
+      },
+      "independent_freeze": {
+        "complete_feedback": true,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "conservative",
+            "row": 0,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "conservative",
+            "row": 1,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 3,
+            "route": "conservative",
+            "row": 2,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "conservative",
+            "row": 3,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "conservative",
+            "row": 4,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "conservative",
+            "row": 5,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "conservative",
+            "row": 7,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "conservative",
+            "row": 8,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "conservative",
+            "row": 9,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "conservative",
+            "row": 10,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "conservative",
+            "row": 11,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          0.2,
+          0.2
+        ],
+        "observed_mean": [
+          0.20000000000000004,
+          0.20000000000000004
+        ],
+        "steps": [
+          {
+            "context": "x",
+            "feedback_before": [],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 0
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 1
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 2
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 3
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 4
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 5
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 7
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 8
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 9
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 10
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 11
+          }
+        ],
+        "target_claim": "WITHIN_TARGET",
+        "unknown_feedback_rows": [],
+        "verified_useful_count": 0
+      },
+      "scalar": {
+        "complete_feedback": true,
+        "feedback": [
+          {
+            "received_tick": 1,
+            "route": "conservative",
+            "row": 0,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 2,
+            "route": "conservative",
+            "row": 1,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 3,
+            "route": "conservative",
+            "row": 2,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 4,
+            "route": "conservative",
+            "row": 3,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 5,
+            "route": "conservative",
+            "row": 4,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 6,
+            "route": "conservative",
+            "row": 5,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 7,
+            "route": "conservative",
+            "row": 6,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 8,
+            "route": "conservative",
+            "row": 7,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 9,
+            "route": "conservative",
+            "row": 8,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 10,
+            "route": "conservative",
+            "row": 9,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 11,
+            "route": "conservative",
+            "row": 10,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "received_tick": 12,
+            "route": "conservative",
+            "row": 11,
+            "useful_verified": false,
+            "vector": [
+              0.2,
+              0.2
+            ]
+          }
+        ],
+        "max_observed_single_episode": [
+          0.2,
+          0.2
+        ],
+        "observed_mean": [
+          0.20000000000000004,
+          0.20000000000000004
+        ],
+        "steps": [
+          {
+            "context": "x",
+            "feedback_before": [],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 0
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 1
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 2
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 3
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 4
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 5
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 6
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 7
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 8
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 9
+          },
+          {
+            "context": "x",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 10
+          },
+          {
+            "context": "y",
+            "feedback_before": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "forecast": [
+              0.2,
+              0.2
+            ],
+            "hard_gate_pass": true,
+            "route": "conservative",
+            "row": 11
+          }
+        ],
+        "target_claim": "WITHIN_TARGET",
+        "unknown_feedback_rows": [],
+        "verified_useful_count": 0
+      }
+    }
+  },
+  "schema": "vca7808-candidate-v1"
+}
+
