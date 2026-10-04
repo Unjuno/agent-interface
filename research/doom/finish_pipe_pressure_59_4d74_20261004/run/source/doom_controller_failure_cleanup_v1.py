@@ -1,32 +1,5 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
-import atexit,json,os,select,time
-
-def send_failure_finish(stream, timeout=0.25):
-    """Attempt finish on an owned POSIX pipe without an unbounded flush.
-
-    This failure-only path cannot certify protocol delivery or input release.
-    Unsupported descriptors fail rather than falling back to a blocking write.
-    The caller must have exclusive ownership of the stream during teardown.
-    """
-    if os.name != 'posix':
-        raise NotImplementedError('bounded failure finish requires POSIX pipe')
-    fd=stream.fileno()
-    blocking=os.get_blocking(fd)
-    deadline=time.monotonic()+timeout
-    data=b'{"op":"finish"}\n'
-    os.set_blocking(fd,False)
-    try:
-        while data:
-            remaining=deadline-time.monotonic()
-            if remaining <= 0: raise TimeoutError('failure finish pipe deadline')
-            if not select.select([], [fd], [], remaining)[1]:
-                raise TimeoutError('failure finish pipe deadline')
-            try: written=os.write(fd,data)
-            except BlockingIOError: continue
-            if written <= 0: raise BrokenPipeError('failure finish made no progress')
-            data=data[written:]
-    finally:
-        os.set_blocking(fd,blocking)
+import atexit,json
 
 class ControllerFailureCleanup:
     def __init__(self, planner, out):
@@ -53,7 +26,9 @@ class ControllerFailureCleanup:
         if child is not None:
             polled=attempt('child_poll_before',child.poll)
             if not polled or receipt['stages'][-1]['result'] is None:
-                attempt('finish_send',lambda:send_failure_finish(child.stdin))
+                def finish():
+                    child.stdin.write('{"op":"finish"}\n');child.stdin.flush()
+                attempt('finish_send',finish)
                 if not attempt('child_wait',lambda:child.wait(timeout=5)):
                     attempt('child_terminate',child.terminate)
                     if not attempt('terminated_wait',lambda:child.wait(timeout=1)):
