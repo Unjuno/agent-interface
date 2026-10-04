@@ -27,6 +27,16 @@ READBACK = A05 / "independent-readback"
 PREVIEW_DIR = READBACK / "crop-previews"
 MANIFEST_PATH = PREVIEW_DIR / "manifest.json"
 OCR_SEQUENCES = {(1, 5): 124, (1, 6): 143, (2, 6): 150}
+EXPECTED_CROP_ENTRIES = {
+    (block, task, crop)
+    for block, task in ((1, 5), (1, 6), (2, 6))
+    for crop in ("frozen", "candidate")
+}
+OCR_INPUT_SHA256 = {
+    (1, 5): "cfa028089883adf5c705df8fa36f1da19b249d0d459993dcdbe7edb370af59eb",
+    (1, 6): "749a67248052644317ad0f98c7fdf6962e862e9dbbc8f972719d4b988fd27c4a",
+    (2, 6): "356b8d3a900e8e6bfbba1b1ce455291801e29d46939efc3d2afe40125f15fbb7",
+}
 
 
 def sha256(data: bytes) -> str:
@@ -44,9 +54,18 @@ def main() -> dict:
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     if manifest["source_revision"] != "58bcbb4c45501880db8782158ddd3add3b765984":
         raise ValueError("unexpected retained A05 source revision")
+    entries = manifest.get("entries")
+    actual_entries = {
+        (entry.get("block"), entry.get("task"), entry.get("crop"))
+        for entry in entries
+    } if isinstance(entries, list) else set()
+    if (not isinstance(entries, list)
+            or len(entries) != len(EXPECTED_CROP_ENTRIES)
+            or actual_entries != EXPECTED_CROP_ENTRIES):
+        raise ValueError("manifest must contain exactly the expected crop entries")
 
     rows = []
-    for entry in manifest["entries"]:
+    for entry in entries:
         source_path = REPO / entry["source_path"]
         preview_path = READBACK / entry["output"]
         source_bytes = source_path.read_bytes()
@@ -91,11 +110,14 @@ def main() -> dict:
                 f"formal-output/block-{entry['block']}/C/client/ocr-{sequence}.png"
             )
             ocr_bytes = ocr_path.read_bytes()
+            ocr_digest = sha256(ocr_bytes)
+            if ocr_digest != OCR_INPUT_SHA256[(entry["block"], entry["task"])]:
+                raise ValueError(f"archived OCR input hash mismatch: {ocr_path}")
             with Image.open(io.BytesIO(ocr_bytes)) as ocr_image:
                 ocr_pixels = ocr_image.convert("RGB")
             row.update({
                 "archived_ocr_input_path": str(ocr_path.relative_to(REPO)),
-                "archived_ocr_input_sha256": sha256(ocr_bytes),
+                "archived_ocr_input_sha256": ocr_digest,
                 "archived_ocr_input_size": list(ocr_pixels.size),
                 "archived_ocr_input_matches_preview_pixels": pixel_equal(
                     ocr_pixels, preview
@@ -112,11 +134,14 @@ def main() -> dict:
         "schema": "a05_raw_crop_pixel_identity_audit_v1",
         "started_utc": started,
         "finished_utc": datetime.now(timezone.utc).isoformat(),
-        "repository_head": subprocess.check_output(
+        "source_commit_before_audit": subprocess.check_output(
             ["git", "-C", str(REPO), "rev-parse", "HEAD"], text=True
         ).strip(),
         "pinned_a05_source_revision": manifest["source_revision"],
         "crop_manifest_sha256": sha256(MANIFEST_PATH.read_bytes()),
+        "audit_script_sha256": sha256(Path(__file__).resolve().read_bytes()),
+        "expected_crop_entries": len(EXPECTED_CROP_ENTRIES),
+        "archived_ocr_hashes_pinned": True,
         "python": platform.python_version(),
         "python_executable": sys.executable,
         "invocation": [sys.executable,

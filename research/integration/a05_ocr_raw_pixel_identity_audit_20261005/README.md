@@ -12,11 +12,12 @@ rerun any A05 arm.
   previews are pixel-identical to their archived runtime OCR inputs.
 - **T:** reconstruct all three frozen and all three padded candidates from
   source frames pinned to revision `58bcbb4c45501880db8782158ddd3add3b765984`;
-  check source and preview SHA-256 values, then compare decoded RGB pixels for
-  each frozen preview against its archived OCR input.
+  require the exact six expected `(block, task, crop)` entries; check source,
+  preview, and historically pinned archived-OCR SHA-256 values; then compare
+  decoded RGB pixels for each frozen preview against its archived OCR input.
 - **D:** PASS only if all six preview files reconstruct byte-for-byte and each
   archived OCR input is pixel-identical to its frozen preview. PNG serialization
-  bytes may differ if decoded pixels match.
+bytes may differ if decoded pixels match.
 - **C:** a Pillow version difference, color-mode conversion, or resize behavior
   could change reconstructed pixels; a preview manifest may also identify a
   different source than the archived OCR input.
@@ -48,5 +49,6 @@ python research/integration/a05_ocr_raw_pixel_identity_audit_20261005/audit.py
 ```
 
 The command writes `AUDIT.json`. The pinned source hashes, preview hashes,
-decoded pixel comparisons, runtime versions, and command bounds are recorded
-there. `SHA256SUMS` covers this package.
+archived OCR hashes, decoded pixel comparisons, and runtime versions are
+recorded there. Two regressions reject a truncated/duplicated manifest and a
+same-pixel OCR image with different bytes. `SHA256SUMS` covers this package.
