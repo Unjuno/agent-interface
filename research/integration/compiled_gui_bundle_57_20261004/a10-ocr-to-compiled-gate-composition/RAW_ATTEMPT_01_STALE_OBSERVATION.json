@@ -1,0 +1,2461 @@
+{
+  "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+  "cases": [
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "6dcc7c750b833cc02570589fd1e5337d98791e46fc8b8b5f96766daf776d132b",
+      "effect_verdicts": [],
+      "expected": "t991073-5",
+      "observations": [
+        {
+          "captured_ns": 105065202281291,
+          "evidence_digest": "7b6d2ad685bc9341c5976b7feb16841bd2df5f7aa609b639b3436de980a335da",
+          "evidence_ref": "failure-b1-t5/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065202334375,
+          "evidence_digest": "3b2fb779ae537dec837b2f6b7d318b645a6384ca376a190ec081d8ce9460a926",
+          "evidence_ref": "failure-b1-t5/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "7fed7300a789f67f095e0be793f877fd0a1262540dc53f711ee2d6dd177414e0",
+      "observer_exact_match": true,
+      "observer_text": "t991073-5\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b1-t5/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 79375,
+        "ended_ns": 105065203343083,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b1-t5",
+        "latest_evidence_ref": "failure-b1-t5/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065202281291,
+            "evidence_digest": "7b6d2ad685bc9341c5976b7feb16841bd2df5f7aa609b639b3436de980a335da",
+            "evidence_ref": "failure-b1-t5/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065203263708,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b1-t5/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "4abaa062c4a73c7d739fe6bfef856ae37f6f0bda5326732a764183c67b7ab9cd",
+      "task_id": "failure-b1-t5",
+      "unique_action_ids": true,
+      "variant": "frozen"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "ed0dd718fb689599bdabae99950cbf4b3bf3550254c77b62b7f78cc10e3b6aba",
+      "effect_verdicts": [],
+      "expected": "t991073-5",
+      "observations": [
+        {
+          "captured_ns": 105065202452541,
+          "evidence_digest": "0529bac53c4f6aded2b04a0e179ef98061526d3fc8ebf2154cf20f6a455e8387",
+          "evidence_ref": "failure-b1-t5/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065202492333,
+          "evidence_digest": "ec85cce120b5c7a7fc21ced8906a7a1971379d959b6ce8ecd494c964f4f05f7e",
+          "evidence_ref": "failure-b1-t5/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "c3bb2d2c61decacff51ba2ef70e022f094cb07e265a2746d19e2c9d875d1dcff",
+      "observer_exact_match": true,
+      "observer_text": "t991073-5\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b1-t5/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 49042,
+        "ended_ns": 105065203499083,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b1-t5",
+        "latest_evidence_ref": "failure-b1-t5/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065202452541,
+            "evidence_digest": "0529bac53c4f6aded2b04a0e179ef98061526d3fc8ebf2154cf20f6a455e8387",
+            "evidence_ref": "failure-b1-t5/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065203450041,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b1-t5/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "4abaa062c4a73c7d739fe6bfef856ae37f6f0bda5326732a764183c67b7ab9cd",
+      "task_id": "failure-b1-t5",
+      "unique_action_ids": true,
+      "variant": "candidate"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": null,
+      "effect_verdicts": [],
+      "expected": "t991073-5",
+      "observations": [
+        {
+          "captured_ns": 105065202592666,
+          "evidence_digest": "0393c68bc6000732ef78ddca86fc6809194f7e4853cda5926e9cc99da6a85e89",
+          "evidence_ref": "failure-b1-t5/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065202627250,
+          "evidence_digest": "2289f5c411d5ee6ceed76d5e27b1d3bafee21e2838ab9b375bc3be8d08c56653",
+          "evidence_ref": "failure-b1-t5/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "969548b337512f62631eed721d1a2d2e4919e395caabb55939b79768d7620726",
+      "observer_exact_match": false,
+      "observer_text": "991073-5\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b1-t5/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 42209,
+        "ended_ns": 105065203633250,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b1-t5",
+        "latest_evidence_ref": "failure-b1-t5/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065202592666,
+            "evidence_digest": "0393c68bc6000732ef78ddca86fc6809194f7e4853cda5926e9cc99da6a85e89",
+            "evidence_ref": "failure-b1-t5/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065203591041,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b1-t5/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "4abaa062c4a73c7d739fe6bfef856ae37f6f0bda5326732a764183c67b7ab9cd",
+      "task_id": "failure-b1-t5",
+      "unique_action_ids": true,
+      "variant": "original_recorded"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "6e7791dedaabba49fa28205b23dfdee960977031b2bd7fa0de862900dc43aac9",
+      "effect_verdicts": [],
+      "expected": "t991073-6",
+      "observations": [
+        {
+          "captured_ns": 105065202722708,
+          "evidence_digest": "01fc99865973ef4a2ce183cbb99ce39855ba70f2f6fe73bbaf00995875f300b8",
+          "evidence_ref": "failure-b1-t6/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065202754291,
+          "evidence_digest": "7936dd99b8ef38bb9b75ee0b3c9ecea6617c69c6f7abed04e7762890eba0a921",
+          "evidence_ref": "failure-b1-t6/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "3d7fc0af030bf9d38e4bf9fccb1db41fb70b6a59992342f06db854f1d622f6c2",
+      "observer_exact_match": true,
+      "observer_text": "t991073-6\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b1-t6/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 38583,
+        "ended_ns": 105065203759958,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b1-t6",
+        "latest_evidence_ref": "failure-b1-t6/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065202722708,
+            "evidence_digest": "01fc99865973ef4a2ce183cbb99ce39855ba70f2f6fe73bbaf00995875f300b8",
+            "evidence_ref": "failure-b1-t6/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065203721375,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b1-t6/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "2fce53c538dca90012952147a20ef0efd7b0ead6e067971778e12fed0caf6b26",
+      "task_id": "failure-b1-t6",
+      "unique_action_ids": true,
+      "variant": "frozen"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "741c2fe6742c1a2bc004b404f7501d5ff23d78266300d18fd0c3cca4bf92803f",
+      "effect_verdicts": [],
+      "expected": "t991073-6",
+      "observations": [
+        {
+          "captured_ns": 105065202913125,
+          "evidence_digest": "74f0930a6fe953fc4975d6a9d6af558029a391a2d66f55ca9674ab24dcbd52b9",
+          "evidence_ref": "failure-b1-t6/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065202946458,
+          "evidence_digest": "7430c68605fdc30bcd7d2b6b136f6723202a17f74ec57257a7d09d328ac30679",
+          "evidence_ref": "failure-b1-t6/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "7cb015261fc481707dc35853cb375df92237c175c86c78bb6ced617c12885103",
+      "observer_exact_match": true,
+      "observer_text": "t991073-6\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b1-t6/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 41083,
+        "ended_ns": 105065203952583,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b1-t6",
+        "latest_evidence_ref": "failure-b1-t6/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065202913125,
+            "evidence_digest": "74f0930a6fe953fc4975d6a9d6af558029a391a2d66f55ca9674ab24dcbd52b9",
+            "evidence_ref": "failure-b1-t6/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065203911500,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b1-t6/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "2fce53c538dca90012952147a20ef0efd7b0ead6e067971778e12fed0caf6b26",
+      "task_id": "failure-b1-t6",
+      "unique_action_ids": true,
+      "variant": "candidate"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": null,
+      "effect_verdicts": [],
+      "expected": "t991073-6",
+      "observations": [
+        {
+          "captured_ns": 105065203039958,
+          "evidence_digest": "0f8f89689b8b631a1983c97d2c0c2300b1e845178350196c6690e742591d06f9",
+          "evidence_ref": "failure-b1-t6/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203071083,
+          "evidence_digest": "3bde39ec3e4f5ac7478c333e02f1acd55335a4ae9c73353fa36dfdbde3ea67e3",
+          "evidence_ref": "failure-b1-t6/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "8db1bded591c9e4ae11c505c5bfd30b65b9543b6ee89196a710e6c9ef4722f46",
+      "observer_exact_match": false,
+      "observer_text": "991073-6\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b1-t6/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 38250,
+        "ended_ns": 105065204076958,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b1-t6",
+        "latest_evidence_ref": "failure-b1-t6/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203039958,
+            "evidence_digest": "0f8f89689b8b631a1983c97d2c0c2300b1e845178350196c6690e742591d06f9",
+            "evidence_ref": "failure-b1-t6/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204038708,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b1-t6/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "2fce53c538dca90012952147a20ef0efd7b0ead6e067971778e12fed0caf6b26",
+      "task_id": "failure-b1-t6",
+      "unique_action_ids": true,
+      "variant": "original_recorded"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "77283471243761362828f36e7bcb05d10aee3a3fbbdbf9a8cb41fea76d20b15c",
+      "effect_verdicts": [],
+      "expected": "t991074-6",
+      "observations": [
+        {
+          "captured_ns": 105065203162750,
+          "evidence_digest": "ccd97cd60668c49e173929d2c5ddfb408f604bde53cb21ee80e4adce4929fe24",
+          "evidence_ref": "failure-b2-t6/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203193333,
+          "evidence_digest": "071c50af75b7ecc578bdefc48b4044372d212cc85e5be6c15ed58add01ef0cbf",
+          "evidence_ref": "failure-b2-t6/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "b1afa5f28beb234f7b832dc81cc87649a7849e783f05fb9d64f5b8e312481239",
+      "observer_exact_match": true,
+      "observer_text": "t991074-6\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b2-t6/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 37583,
+        "ended_ns": 105065204199166,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b2-t6",
+        "latest_evidence_ref": "failure-b2-t6/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203162750,
+            "evidence_digest": "ccd97cd60668c49e173929d2c5ddfb408f604bde53cb21ee80e4adce4929fe24",
+            "evidence_ref": "failure-b2-t6/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204161583,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b2-t6/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "166cd642ffe36474773d592118ddcd08c0202ce722948bdc1747068a02e262f5",
+      "task_id": "failure-b2-t6",
+      "unique_action_ids": true,
+      "variant": "frozen"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "785dbf2d6c3869a1adbe33783b7a1cc2711d2fe3110b09f0cecae207535eabe1",
+      "effect_verdicts": [],
+      "expected": "t991074-6",
+      "observations": [
+        {
+          "captured_ns": 105065203286708,
+          "evidence_digest": "0309bf9b63360689059acbddfe37112b127e6d560087c2522b49c0208d2dd7d9",
+          "evidence_ref": "failure-b2-t6/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203317291,
+          "evidence_digest": "bbb4032a5516759450e042b75a27253695cc9a0763f5e7994eb5c2e6e3452331",
+          "evidence_ref": "failure-b2-t6/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "e00ea8b884f384c0313d21e2c8b55064b65286143ffcf9174496c8a9b8a3d751",
+      "observer_exact_match": true,
+      "observer_text": "t991074-6\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b2-t6/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 37458,
+        "ended_ns": 105065204322958,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b2-t6",
+        "latest_evidence_ref": "failure-b2-t6/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203286708,
+            "evidence_digest": "0309bf9b63360689059acbddfe37112b127e6d560087c2522b49c0208d2dd7d9",
+            "evidence_ref": "failure-b2-t6/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204285500,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b2-t6/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "166cd642ffe36474773d592118ddcd08c0202ce722948bdc1747068a02e262f5",
+      "task_id": "failure-b2-t6",
+      "unique_action_ids": true,
+      "variant": "candidate"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": null,
+      "effect_verdicts": [],
+      "expected": "t991074-6",
+      "observations": [
+        {
+          "captured_ns": 105065203406583,
+          "evidence_digest": "7f7c3db656ff00f9393b57a83a8ac2cb729970795fe1b6140cafd74af6b49b37",
+          "evidence_ref": "failure-b2-t6/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203437250,
+          "evidence_digest": "57095513b4b1dd300fd8ccb87eb18c96ef5f9e23748157fab97ba3686b396454",
+          "evidence_ref": "failure-b2-t6/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "82fcbe3904ea54335f94cf3985ba67798314be892806d6ffc766027d3f3c355d",
+      "observer_exact_match": false,
+      "observer_text": "991074-6\n",
+      "original_task_outcome": "EXECUTION_INCOMPLETE",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "failure-b2-t6/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 37583,
+        "ended_ns": 105065204443041,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-failure-b2-t6",
+        "latest_evidence_ref": "failure-b2-t6/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203406583,
+            "evidence_digest": "7f7c3db656ff00f9393b57a83a8ac2cb729970795fe1b6140cafd74af6b49b37",
+            "evidence_ref": "failure-b2-t6/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204405458,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "failure-b2-t6/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "166cd642ffe36474773d592118ddcd08c0202ce722948bdc1747068a02e262f5",
+      "task_id": "failure-b2-t6",
+      "unique_action_ids": true,
+      "variant": "original_recorded"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "78058aae2e731a23bdf4984e9dcd7081b091832fb7656a3589b6bcad12b22efd",
+      "effect_verdicts": [],
+      "expected": "t991073-4",
+      "observations": [
+        {
+          "captured_ns": 105065203527708,
+          "evidence_digest": "55cf470af11714054246e12590a8a3c1951fb01bfcd7b1cd61c39ded7032ea3d",
+          "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203558291,
+          "evidence_digest": "44a4fc12627413667b2247435ae673ca6e6c969de61612d2f78599bd64deb693",
+          "evidence_ref": "positive-nearmiss-control-b1-t4/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "a730bae7e315694595049b804de564d8f6b7995053b0e6bd8176d318df9c3473",
+      "observer_exact_match": false,
+      "observer_text": "1991073-4\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 37375,
+        "ended_ns": 105065204563958,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-nearmiss-control-b1-t4",
+        "latest_evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203527708,
+            "evidence_digest": "55cf470af11714054246e12590a8a3c1951fb01bfcd7b1cd61c39ded7032ea3d",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204526583,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "430b107eee1172c512e6163a3c0c41f959259a3518880da611715824698af301",
+      "task_id": "positive-nearmiss-control-b1-t4",
+      "unique_action_ids": true,
+      "variant": "frozen"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "021a9c373b2fbf12dd412c600e442581c680d2737d1a1d3b3ef192f20a356566",
+      "effect_verdicts": [],
+      "expected": "t991073-4",
+      "observations": [
+        {
+          "captured_ns": 105065203649500,
+          "evidence_digest": "b199065d887d406c723837690a0c43dd290d3f952cac857159fa6e0fb69c8969",
+          "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203679291,
+          "evidence_digest": "aa724293773fa403c61ec3fbc05e6b751c8859faaa371321a3129ea687705a48",
+          "evidence_ref": "positive-nearmiss-control-b1-t4/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "e1744ee140faefd114c57faf62ab15fd23101fd3ea8886e1ee6c5b5273ffc296",
+      "observer_exact_match": true,
+      "observer_text": "t991073-4\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 36375,
+        "ended_ns": 105065204684833,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-nearmiss-control-b1-t4",
+        "latest_evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203649500,
+            "evidence_digest": "b199065d887d406c723837690a0c43dd290d3f952cac857159fa6e0fb69c8969",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204648458,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "430b107eee1172c512e6163a3c0c41f959259a3518880da611715824698af301",
+      "task_id": "positive-nearmiss-control-b1-t4",
+      "unique_action_ids": true,
+      "variant": "candidate"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": null,
+      "effect_verdicts": [],
+      "expected": "t991073-4",
+      "observations": [
+        {
+          "captured_ns": 105065203769333,
+          "evidence_digest": "dc426f7514a6a25995e9623dd65689517ffb7d4da73a684f88bde992067c2530",
+          "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203801041,
+          "evidence_digest": "d380b3fda4c59ebe8ed5f25a871b2a87cc77359774af7f4a5edeb5abf0e8d2b1",
+          "evidence_ref": "positive-nearmiss-control-b1-t4/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "ef2a8e2951f291d9d8103a0474b79dd7c7a4b82d141092adb1b4333b862cdfad",
+      "observer_exact_match": true,
+      "observer_text": "t991073-4\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 38584,
+        "ended_ns": 105065204806750,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-nearmiss-control-b1-t4",
+        "latest_evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203769333,
+            "evidence_digest": "dc426f7514a6a25995e9623dd65689517ffb7d4da73a684f88bde992067c2530",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204768166,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-nearmiss-control-b1-t4/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "430b107eee1172c512e6163a3c0c41f959259a3518880da611715824698af301",
+      "task_id": "positive-nearmiss-control-b1-t4",
+      "unique_action_ids": true,
+      "variant": "original_recorded"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "059ce7ddc376d60deec044356ff9f527abeaa95c5b09f9d405c201aa61cb0400",
+      "effect_verdicts": [],
+      "expected": "t991074-4",
+      "observations": [
+        {
+          "captured_ns": 105065203892791,
+          "evidence_digest": "70e36d114ec726feafdfaf745abbfa20e198796eadd8d359dc7b458bcc324537",
+          "evidence_ref": "positive-b2-t4/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065203923541,
+          "evidence_digest": "46ef62b1e3f714602d02feb5f4bfe7af3d4bc28fa39bf868adae5a55298bc0b8",
+          "evidence_ref": "positive-b2-t4/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "1908d12d957d813aa0f4b50e2ed802e942f151566864fa90d20abe05892d8f05",
+      "observer_exact_match": false,
+      "observer_text": "1991074-4\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-b2-t4/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 37625,
+        "ended_ns": 105065204929333,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-b2-t4",
+        "latest_evidence_ref": "positive-b2-t4/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065203892791,
+            "evidence_digest": "70e36d114ec726feafdfaf745abbfa20e198796eadd8d359dc7b458bcc324537",
+            "evidence_ref": "positive-b2-t4/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065204891708,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-b2-t4/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "6a2ad63866c607b53902662fb4f4f68ce1d5e5caf0d39dcdbb11cbe27a9b645f",
+      "task_id": "positive-b2-t4",
+      "unique_action_ids": true,
+      "variant": "frozen"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "2f8b94148eb083e6f777dd5725354d68e7ca243088911eceb1a1942f70c8760e",
+      "effect_verdicts": [],
+      "expected": "t991074-4",
+      "observations": [
+        {
+          "captured_ns": 105065204180791,
+          "evidence_digest": "7cd14e48eee2f4c874f527f406c4c01a5a948daef23099027ea6503f00f9a681",
+          "evidence_ref": "positive-b2-t4/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065204228166,
+          "evidence_digest": "c3676150e183ff60d4a833ab77e54295a04ac0410c7b2c8de350fa1b64b08cf3",
+          "evidence_ref": "positive-b2-t4/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "0e53dedf4af9b0836b3a90135980bd200a33a7c3ae699a2155de84c66f1ed975",
+      "observer_exact_match": true,
+      "observer_text": "t991074-4\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-b2-t4/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 60417,
+        "ended_ns": 105065205235625,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-b2-t4",
+        "latest_evidence_ref": "positive-b2-t4/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065204180791,
+            "evidence_digest": "7cd14e48eee2f4c874f527f406c4c01a5a948daef23099027ea6503f00f9a681",
+            "evidence_ref": "positive-b2-t4/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065205175208,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-b2-t4/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "6a2ad63866c607b53902662fb4f4f68ce1d5e5caf0d39dcdbb11cbe27a9b645f",
+      "task_id": "positive-b2-t4",
+      "unique_action_ids": true,
+      "variant": "candidate"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": null,
+      "effect_verdicts": [],
+      "expected": "t991074-4",
+      "observations": [
+        {
+          "captured_ns": 105065204344875,
+          "evidence_digest": "21ac26967fc394a91f3eb19bc222d99f955f78fbccc1d8a2e67691a598dc66ff",
+          "evidence_ref": "positive-b2-t4/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065204380291,
+          "evidence_digest": "baaf9e576ef50c9d98f113ff5604609946a34034b60e968ad9a9a21ee3bd48db",
+          "evidence_ref": "positive-b2-t4/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "ee19f7275c2b84ec6327dee608bfea2224be252d6e41a9a57d9ffef24a6e9dfa",
+      "observer_exact_match": true,
+      "observer_text": "t991074-4\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-b2-t4/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 43625,
+        "ended_ns": 105065205386666,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-b2-t4",
+        "latest_evidence_ref": "positive-b2-t4/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065204344875,
+            "evidence_digest": "21ac26967fc394a91f3eb19bc222d99f955f78fbccc1d8a2e67691a598dc66ff",
+            "evidence_ref": "positive-b2-t4/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065205343041,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-b2-t4/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "6a2ad63866c607b53902662fb4f4f68ce1d5e5caf0d39dcdbb11cbe27a9b645f",
+      "task_id": "positive-b2-t4",
+      "unique_action_ids": true,
+      "variant": "original_recorded"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "cbcc94d684a3b9d9f61b7452328886c900b2f03de023d7bc70fd664a6932d978",
+      "effect_verdicts": [],
+      "expected": "t991074-5",
+      "observations": [
+        {
+          "captured_ns": 105065204483833,
+          "evidence_digest": "b117e230535a3fd47b035be673283e235d852e2a881ecc84cd488e473e07f19b",
+          "evidence_ref": "positive-b2-t5/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065204518458,
+          "evidence_digest": "f4076bc823ce1036e977a90ccb23daa0b0aa04e13a41764877cce5ea5908fd26",
+          "evidence_ref": "positive-b2-t5/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "426fe4132479b4deacc48c896bfdc554d70d0226313b01654302797d36a281ef",
+      "observer_exact_match": true,
+      "observer_text": "t991074-5\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-b2-t5/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 42125,
+        "ended_ns": 105065205524333,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-b2-t5",
+        "latest_evidence_ref": "positive-b2-t5/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065204483833,
+            "evidence_digest": "b117e230535a3fd47b035be673283e235d852e2a881ecc84cd488e473e07f19b",
+            "evidence_ref": "positive-b2-t5/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065205482208,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-b2-t5/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "335d48c26ec9d22ba0a23b64417405c76c2a41b84eed0d287e08d88163eeb325",
+      "task_id": "positive-b2-t5",
+      "unique_action_ids": true,
+      "variant": "frozen"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": "12f7b89fca7bacac93e3c8b16dba7d820adbd681f903be5594fe12bf86407eb8",
+      "effect_verdicts": [],
+      "expected": "t991074-5",
+      "observations": [
+        {
+          "captured_ns": 105065204613958,
+          "evidence_digest": "a02832926846a3f53aa2dc873d8d521be2749bbef7dcd04e869041fdc334cebb",
+          "evidence_ref": "positive-b2-t5/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065204645500,
+          "evidence_digest": "d0708f233dbb2fcdc42613747b84bb2d6bacb3bef1967cf3b3716603293469a0",
+          "evidence_ref": "positive-b2-t5/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "aa3984ff1125c43442e0e9ce7ee0feabdcab2ae6f343d3cbbbff3d135952f4b1",
+      "observer_exact_match": true,
+      "observer_text": "t991074-5\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-b2-t5/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 38750,
+        "ended_ns": 105065205651416,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-b2-t5",
+        "latest_evidence_ref": "positive-b2-t5/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065204613958,
+            "evidence_digest": "a02832926846a3f53aa2dc873d8d521be2749bbef7dcd04e869041fdc334cebb",
+            "evidence_ref": "positive-b2-t5/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065205612666,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-b2-t5/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "335d48c26ec9d22ba0a23b64417405c76c2a41b84eed0d287e08d88163eeb325",
+      "task_id": "positive-b2-t5",
+      "unique_action_ids": true,
+      "variant": "candidate"
+    },
+    {
+      "a09_raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+      "actions": [
+        "enter_exact_token"
+      ],
+      "crop_sha256": null,
+      "effect_verdicts": [],
+      "expected": "t991074-5",
+      "observations": [
+        {
+          "captured_ns": 105065204738625,
+          "evidence_digest": "dd0fa2ec9443ddca389a02bfe7a6e1be0c83fe669769eadff46aefdd87b30601",
+          "evidence_ref": "positive-b2-t5/empty",
+          "predicates": {
+            "field_pixels_changed": false,
+            "field_target_present": true,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 1,
+          "surface": "integrated-form"
+        },
+        {
+          "captured_ns": 105065204770083,
+          "evidence_digest": "b2eae06c7e62766220551218bd240e3f68c7d3f84a62198b88028dde451d8a7e",
+          "evidence_ref": "positive-b2-t5/retained-field-frame",
+          "predicates": {
+            "field_pixels_changed": true,
+            "field_target_present": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false,
+            "submit_target_present": true
+          },
+          "sequence": 2,
+          "surface": "integrated-form"
+        }
+      ],
+      "observer_evidence_digest": "eb68d50f65186159e895e37b7311518e027f88d3162d6ad5fa557637eef0a863",
+      "observer_exact_match": true,
+      "observer_text": "t991074-5\n",
+      "original_task_outcome": "TASK_SUCCEEDED",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "positive-b2-t5/empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "stale_observation"
+          }
+        ],
+        "elapsed_ns": 38542,
+        "ended_ns": 105065205775958,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "a10-positive-b2-t5",
+        "latest_evidence_ref": "positive-b2-t5/empty",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 105065204738625,
+            "evidence_digest": "dd0fa2ec9443ddca389a02bfe7a6e1be0c83fe669769eadff46aefdd87b30601",
+            "evidence_ref": "positive-b2-t5/empty",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "mock-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "stale_observation",
+        "session_scope": "a10-retained-test-double",
+        "started_ns": 105065205737416,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "mock-action-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "positive-b2-t5/empty",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_receipts": [
+        {
+          "action_id": "mock-action-1",
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        }
+      ],
+      "source_sha256": "335d48c26ec9d22ba0a23b64417405c76c2a41b84eed0d287e08d88163eeb325",
+      "task_id": "positive-b2-t5",
+      "unique_action_ids": true,
+      "variant": "original_recorded"
+    }
+  ],
+  "plan_sha256": "65d9c69ed8c33cf63c231bf82ba72174389a0fd4bc17628403fa54013f27a816",
+  "runner_sha256": "c72016e78503e5e4a21a8e750166cee2ee3c50d82cdfd3f9fcc6050e90677401",
+  "schema": "a10_ocr_to_compiled_gate_composition_v1",
+  "scope": "A09 archived OCR strings composed with A07 v2 and compiled core using test-double actions/effects only; no GUI/input/provider/formal allocation",
+  "source_sha256": {
+    "adapter_v2": "f1f3f6b2a1f0487a9c6f65b51936fafc8b6101390b1e4070f8e31f741a28b6ef",
+    "compiled_core": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
+  }
+}
