@@ -14,13 +14,16 @@ class Executor(Previous):
         self._external_emit = emit
         self.emit = self._emit_with_release_barrier
         self.release_watchers = []
+        self.release_publication_attempted_ids = set()
         self.published_release_ids = set()
         self.release_publication_errors = {}
 
     def _emit_with_release_barrier(self, event):
-        if type(event) is dict and event.get("event") == "terminal":
+        terminal_id = (event.get("id") if type(event) is dict and
+                       event.get("event") == "terminal" else None)
+        if terminal_id is not None:
             active = self.active
-            if active is not None and active[0] == event.get("id"):
+            if active is not None and active[0] == terminal_id:
                 cause = active[1].interruption_snapshot()
                 self._publish_release_cause(active[0], active[1], cause)
                 failure = self.release_publication_errors.get(active[0])
@@ -28,9 +31,16 @@ class Executor(Previous):
                     event["input_release_publication"] = {
                         "status": "delivery_unknown", "error": failure}
                 event["terminal_ns"] = time.perf_counter_ns()
-        self._external_emit(event)
-        if type(event) is dict and event.get("event") == "terminal":
-            self.release_publication_errors.pop(event.get("id"), None)
+        try:
+            self._external_emit(event)
+        finally:
+            # A failed terminal sink must not retain a completed worker as active.
+            if terminal_id is not None:
+                active = self.active
+                if active is not None and active[0] == terminal_id:
+                    self.active = None
+        if terminal_id is not None:
+            self.release_publication_errors.pop(terminal_id, None)
 
     def submit(self, identifier, steps, expected_sequence, valid_until_ns):
         with self.lock:
@@ -72,8 +82,12 @@ class Executor(Previous):
         with self.lock:
             if self.active is None or self.active[0] != identifier:
                 return
-            if identifier in self.published_release_ids:
+            if identifier in self.release_publication_attempted_ids:
                 return
+            # The sink may accept the event and then lose its acknowledgement.
+            # Treat attempts as at-most-once and report uncertainty rather than
+            # risking a duplicate early-release event the client rejects.
+            self.release_publication_attempted_ids.add(identifier)
             event = {"event": "input_released", "id": identifier,
                    "intent_token": cause["intent_token"],
                    "owner_release": record,
