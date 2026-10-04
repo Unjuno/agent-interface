@@ -39,8 +39,10 @@ container first; retain full Engine inspect while it is still in `created`
 state. Its entry shell then prints and verifies `/input.tar` SHA-256, prints
 all eight frozen input SHA-256 values, observes UID/GID and actual cgroup
 `cpu.max`, `memory.max`, `memory.swap.max`, and `pids.max`, and checks each
-against PRELAUNCH_FREEZE.md. Only after all checks pass may it `exec` the
-producer exactly once:
+against fixed expected-value literals supplied from PRELAUNCH_FREEZE.md in the
+recorded create command. PRELAUNCH_FREEZE.md stays an external custody record,
+not an unpinned member of the producer's eight-file input archive. Only after
+all checks pass may the entry shell `exec` the producer exactly once:
 
 ```
 python3 -B /input/research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py /output/data
