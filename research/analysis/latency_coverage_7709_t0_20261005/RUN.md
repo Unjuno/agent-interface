@@ -2,6 +2,8 @@
 
 - Date: 2026-10-05 (Asia/Tokyo environment date).
 - Frozen main: `c837ad535eed085d95744ad0a9680535a5bb7143`.
+- Freeze-time branch: `research/7709-t0-segment-coverage-20261005`, observed identical to frozen main before execution. During publication its ref became unavailable to the GitHub ref API; it was not force-updated or deleted by this task.
+- Delivery branch: `research/7709-t0-coverage-delivery-20261005`, created additively from the package commit so publication did not overwrite an uncertain ref.
 - Runtime: Ubuntu on WSL2, CPython 3.12.3, host CPU; not a WSLc/Docker/container run, as Issue #7709 T0 explicitly does not require one.
 - Formal invocation order/counts: generator 1, candidate 1, independent auditor 1; retries 0.
 - Generator exited 0 and reported 1,152,000 paired windows.
