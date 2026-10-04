@@ -31,11 +31,25 @@ image/Engine inspect config, actual cgroup cpu.max/memory.max/memory.swap.max/
 pids.max observations and in-container frozen input SHA checks. Engine config
 is not empirical enforcement; host contention/global bounds remain unqualified.
 
-Unpack archive into fresh guest input; compare host/guest archive SHA and
-all input manifests before launch. Mount unpacked input read-only at /input
-and native output parent at /output. Producer invocation once:
+Unpack archive into fresh guest input; compare host/guest archive SHA and all
+input manifests before launch. The native container must mount both the exact
+archive read-only at `/input.tar` and the unpacked tree read-only at `/input`,
+plus the native output parent at `/output`. Create (do not start) the named
+container first; retain full Engine inspect while it is still in `created`
+state. Its entry shell then prints and verifies `/input.tar` SHA-256, prints
+all eight frozen input SHA-256 values, observes UID/GID and actual cgroup
+`cpu.max`, `memory.max`, `memory.swap.max`, and `pids.max`, and checks each
+against PRELAUNCH_FREEZE.md. Only after all checks pass may it `exec` the
+producer exactly once:
+
+```
 python3 -B /input/research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py /output/data
-Retain stdout/stderr and Docker full inspect including id/state timestamps,
+```
+
+The container stdout is the pre-run hash/resource receipt followed by the
+producer journal. A failed pre-run check exits before Python producer code;
+that one-use container is retained and never restarted. After `docker start -a`,
+retain stdout/stderr and Docker full inspect including id/state timestamps,
 exit code/OOM/image/mounts. External observer owns receipts even if producer
 exits before files or is uncatchably killed. Never restart or retry container.
 
