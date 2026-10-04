@@ -83,7 +83,10 @@ class Executor(Previous):
         with self.lock:
             if self.active is None or self.active[0] != identifier:
                 return
-            if identifier in self.release_publication_attempted_ids:
+            # ExecutorV13 can publish the same interruption through its own
+            # watcher before this inherited terminal barrier runs.
+            if (identifier in self.release_publication_attempted_ids or
+                    identifier in self.published_release_ids):
                 return
             # A sink can accept the event and still lose its acknowledgement.
             # Keep the boundary at-most-once and report delivery uncertainty.
