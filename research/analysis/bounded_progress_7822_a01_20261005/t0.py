@@ -122,6 +122,19 @@ def graph_metrics(case, policy):
             "unsafe_enabled": any(not e[4] for e in active),
             "marker_evidence_edges": sum(int(e[5]) for e in active)}
 
+def replay_trace(case, events):
+    graph = ORACLE[case]
+    state = graph["start"]
+    seen_evidence = []
+    for event in events:
+        matches = [e for e in graph["edges"] if e[0] == state and e[1] == event and e[4]]
+        if len(matches) != 1:
+            return state, seen_evidence, False
+        edge = matches[0]
+        state = edge[2]
+        seen_evidence.append(bool(edge[5]))
+    return state, seen_evidence, True
+
 def audit(raw):
     errors = []
     expected = {
@@ -152,18 +165,40 @@ def audit(raw):
         errors.append("unknown_claim")
     if raw.get("controller_observed_markers"):
         errors.append("oracle_leak")
+    progress_events = set()
+    for graph in ORACLE.values():
+        progress_events.update(e[1] for e in graph["edges"] if e[5])
+    if any(e not in progress_events for e in raw.get("self_reported_progress_events", [])):
+        errors.append("activity_not_progress")
+    if raw.get("omitted_uncontrollable_cycle") is True:
+        errors.append("uncontrollable_edge_omitted")
+    if raw.get("fairness_assumed") is True:
+        errors.append("unfrozen_fairness")
+    if raw.get("unsafe_enabled") is True:
+        errors.append("unsafe_enable")
+    traces = [
+        ("wait_cycle", raw.get("wait_cycle", {}).get("ordinary", {}).get("decisions", []), "w", False),
+        ("wait_cycle", [raw.get("wait_cycle", {}).get("ordinary", {}).get("alternate_marker_action")], "g", True),
+        ("wait_cycle", raw.get("wait_cycle", {}).get("bounded", {}).get("decisions", []), "g", True),
+        ("bounded_async", raw.get("bounded_async", {}).get("bounded", {}).get("decisions", []), "g", True),
+    ]
+    for case, events, final_state, has_evidence in traces:
+        state, evidence, valid = replay_trace(case, events)
+        if not valid or state != final_state or any(evidence) != has_evidence:
+            errors.append(f"trace:{case}:{events}")
     return errors
 
 def main():
     raw = copy.deepcopy(CANDIDATE)
     raw["controller_observed_markers"] = []
+    raw["self_reported_progress_events"] = []
     baseline = audit(raw)
     mutations = {}
     tests = [
-        ("activity_as_progress", lambda x: x["wait_cycle"]["ordinary"].update(claim="BOUNDED_PROGRESS")),
-        ("omit_uncontrollable_cycle", lambda x: x["uncontrollable_cycle"]["bounded"].update(guaranteed=True)),
+        ("activity_as_progress", lambda x: x.update(self_reported_progress_events=["wait"])),
+        ("omit_uncontrollable_cycle", lambda x: x.update(omitted_uncontrollable_cycle=True)),
         ("oracle_leak", lambda x: x.update(controller_observed_markers=["g"])),
-        ("assume_fairness", lambda x: x["uncontrollable_cycle"]["bounded"].update(claim="BOUNDED_PROGRESS")),
+        ("assume_fairness", lambda x: x.update(fairness_assumed=True)),
         ("unsafe_enable", lambda x: x.update(unsafe_enabled=True)),
     ]
     for name, mutate in tests:
