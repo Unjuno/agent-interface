@@ -96,6 +96,31 @@ class Tests(unittest.TestCase):
   self.assertEqual(result['termination'],'deadline')
   self.assertEqual(calls,[])
 
+ def test_post_release_tail_returns_before_sampling_when_command_is_ready_at_entry(self):
+  class Clock:
+   ns=100
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   max_buffer_bytes=1024
+   def __init__(self,c):self.c=c;self.chunks=[b'{"op":"finish"}\n'];self.waits=0;self.reads=0
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,*_args):self.waits+=1;return bool(self.chunks)
+   def read_fn(self,_fd,_size):self.reads+=1;return self.chunks.pop(0)
+  clock=Clock();loop=Loop(clock);rows=[];samples=[]
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      lambda:samples.append(clock.ns) or 1,rows.append,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(100),
+      max_duration_ns=25,max_samples=5,stop_when=lambda _sample:False)
+  self.assertEqual(result['termination'],'command_ready')
+  self.assertEqual(result['disposition'],'CENSORED')
+  self.assertEqual(result['tail_samples'],0)
+  self.assertEqual(samples,[])
+  self.assertEqual(rows,[])
+  self.assertEqual(loop.reads,0)
+  self.assertEqual(next(adapter),'{"op":"finish"}')
+  self.assertEqual(adapter.commands,1)
+
  def test_post_release_tail_returns_when_command_is_ready_then_adapter_resumes(self):
   class Clock:
    ns=0
@@ -105,7 +130,8 @@ class Tests(unittest.TestCase):
    max_buffer_bytes=1024
    def __init__(self,c):self.c=c;self.chunks=[b'{"op":"finish"}\n']
    def clock_ns(self):return self.c.now()
-   def wait_readable(self,*_args):return bool(self.chunks)
+   def wait_readable(self,_fd,timeout):
+    return timeout>0 and bool(self.chunks)
    def read_fn(self,_fd,_size):return self.chunks.pop(0)
   clock=Clock();loop=Loop(clock);rows=[]
   adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),

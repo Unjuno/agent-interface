@@ -124,6 +124,21 @@ class MainThreadScorerStdin:
             now=self.loop.clock_ns()
             if now >= deadline_ns:
                 break
+            # A due scorer sample must not delay a command already waiting
+            # on stdin. Poll without consuming so the normal iterator owns it.
+            if self.loop.wait_readable(self.fd,0):
+                ended_ns=self.loop.clock_ns()
+                return {'schema':'map01-scorer-post-release-tail-v1',
+                        'release_returned_ns':release_returned_ns,
+                        'release_id':release_receipt.get('id'),
+                        'release_step':release_receipt.get('step'),
+                        'release_key':release_receipt.get('key'),
+                        'intent_token':release_receipt.get('intent_token'),
+                        'started_ns':started_ns,'ended_ns':ended_ns,
+                        'deadline_ns':deadline_ns,'tail_samples':tail_samples,
+                        'total_samples':self.samples,'stop_condition_met':False,
+                        'deadline_overrun':False,'disposition':'CENSORED',
+                        'termination':'command_ready'}
             if self.next_sample_ns is None:
                 self.next_sample_ns=now
             if now < self.next_sample_ns:
