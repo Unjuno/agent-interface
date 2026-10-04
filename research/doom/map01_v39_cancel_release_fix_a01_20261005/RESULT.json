@@ -3,6 +3,8 @@
     "aggregate_reconciliation_error_keeps_owner_release_unverified": true,
     "aggregate_reconciliation_error_preserves_per_key_release_measurement": true,
     "cancelled_key_release_receipt_matches_actuation_id_and_original_context": true,
+    "executor_v12_expiry_survives_aggregate_keymap_fault": true,
+    "executor_v12_expiry_survives_aggregate_pointer_fault": true,
     "executor_v12_expiry_terminal_contains_confirmed_contextual_up_receipt": true,
     "executor_v3_cancel_terminal_contains_one_verified_cleanup_receipt": true,
     "executor_v3_expiry_terminal_contains_confirmed_contextual_up_receipt": true,
@@ -24,7 +26,7 @@
       "exit": 0
     },
     "executor_v12_expiry_composition": {
-      "count": 1,
+      "count": 3,
       "exit": 0
     },
     "existing_v39_bridge": {

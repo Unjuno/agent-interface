@@ -49,3 +49,18 @@ The complete current-main replay, including the V12 expiry composition test, pas
 **U:** Fake display only; no real X11, application consumption, useful feedback, bounded recovery, gameplay, safety, latency, or live MAP01 allocation.
 
 Current main advanced to `bfd182727aebd9636c6a84fb437848c1dfe66be8` via the typed-observation epoch-alias repair. The frozen owner/bridge/Executor inputs are source-locked at that exact main. The refreshed overlay passes 11 focused candidate tests, 1 ExecutorV12 expiry-composition test, 10 owner compatibility tests, 2 bridge tests, and the source-locked 24-receipt audit. RED/GREEN logs and full replay are retained in `aggregate-query-red.log`, `aggregate-query-green.log`, and `current-main-post-r135-replay-a06.log`. PR #7805 remains a draft research candidate; no runtime code was promoted.
+
+
+## A07 — preserve owner-query-fault receipts through ExecutorV12 expiry
+
+**H:** When V13's expiry cleanup confirms F8 up but an aggregate pointer or keymap query fails, the V2 bridge must still publish the `expired` contextual per-key up. ExecutorV12 may emit its `expired` terminal only after its later release barrier verifies empty owner state.
+
+**T:** On exact main `bfd182727aebd9636c6a84fb437848c1dfe66be8`, run two fake-display V12 compositions. Let the owner deadline loop release F8, inject one failure into either aggregate `query_pointer()` or aggregate `query_keymap()`, and let ExecutorV12 perform its final release barrier. Require one context-bound `CONFIRMED_PHYSICAL_UP` with reason `expired`, an explicitly unverified partial owner record for the failed query, one expired terminal with verified release, and empty fake/backend-held state.
+
+**D:** Both integrations failed against pre-fix candidate commit `32686927ce6b07a035beb4c0297171a1f951c6c6` because the `expired` receipt count was zero. Both pass with the record-before-query repair.
+
+**C:** The V12 final barrier can perform a later successful aggregate check; that recovery does not replace the missing causal key-up receipt. This is a deterministic fault path, not an estimate of live X11 query failure frequency.
+
+**U:** Fake display only; no real X11, application effect, useful feedback, bounded recovery efficacy, gameplay, safety, latency, or live allocation.
+
+The current-main suite now includes 11 focused candidate tests, 3 ExecutorV12 composition tests (2 query-fault cases), 10 owner compatibility tests and 2 bridge tests. The source-locked auditor validates 26 receipts. RED/GREEN output is retained in `executor-v12-query-fault-red.log` and `executor-v12-query-fault-green.log`; exact-main replay is `current-main-post-r135-replay-a07.log`.

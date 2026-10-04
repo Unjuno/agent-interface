@@ -17,7 +17,7 @@ for path,expected in lock['base_sha256'].items():
     assert hashlib.sha256(blob).hexdigest() == expected, path
 for path,expected in lock['candidate_sha256'].items():
     assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest() == expected, path
-suites=[('candidate-suite',11),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',1)]
+suites=[('candidate-suite',11),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
 for name,count in suites:
     log=(HERE/f'{name}.log').read_text()
     code=int((HERE/f'{name}.exit').read_text())
@@ -36,10 +36,23 @@ for name in ('test_pointer_reconciliation_error_preserves_confirmed_release_rece
     assert name in red and name in green
 assert result['behavior']['aggregate_reconciliation_error_preserves_per_key_release_measurement'] is True
 assert result['behavior']['aggregate_reconciliation_error_keeps_owner_release_unverified'] is True
+integration_red=(HERE/'executor-v12-query-fault-red.log').read_text()
+integration_red_code=int((HERE/'executor-v12-query-fault-red.exit').read_text())
+integration_green=(HERE/'executor-v12-query-fault-green.log').read_text()
+integration_green_code=int((HERE/'executor-v12-query-fault-green.exit').read_text())
+assert integration_red_code != 0 and 'FAILED (failures=2)' in integration_red
+assert integration_green_code == 0 and 'Ran 2 tests' in integration_green and '\nOK\n' in integration_green
+for name in ('test_v12_expiry_retains_keyup_when_owner_pointer_query_fails',
+             'test_v12_expiry_retains_keyup_when_owner_keymap_query_fails'):
+    assert name in integration_red and name in integration_green
+assert result['behavior']['executor_v12_expiry_survives_aggregate_pointer_fault'] is True
+assert result['behavior']['executor_v12_expiry_survives_aggregate_keymap_fault'] is True
 assert result['disposition']=='PASS_CANDIDATE_MECHANICS'
 assert 'test_executor_cancel_terminal_contains_one_verified_cleanup_receipt' in (HERE/'candidate-suite.log').read_text()
 assert 'test_executor_expiry_terminal_contains_one_verified_cleanup_receipt' in (HERE/'candidate-suite.log').read_text()
 assert 'test_expiry_publishes_contextual_up_before_verified_terminal' in (HERE/'executor-v12-expiry-suite.log').read_text()
+assert 'test_v12_expiry_retains_keyup_when_owner_pointer_query_fails' in (HERE/'executor-v12-expiry-suite.log').read_text()
+assert 'test_v12_expiry_retains_keyup_when_owner_keymap_query_fails' in (HERE/'executor-v12-expiry-suite.log').read_text()
 assert 'test_expired_program_exit_drains_owner_cleanup_without_cancel_event' in (HERE/'candidate-suite.log').read_text()
 assert result['scope'].startswith('Local fake-display')
-print('AUDIT_PASS_SOURCE_LOCK_AND_24_TEST_RECEIPTS')
+print('AUDIT_PASS_SOURCE_LOCK_AND_26_TEST_RECEIPTS')
