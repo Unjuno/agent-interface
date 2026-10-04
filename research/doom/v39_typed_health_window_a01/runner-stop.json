@@ -1,0 +1,14 @@
+{
+  "schema": "saved-analysis-runner-stop-v1",
+  "experiment": "v39 typed-health short-window coalescing A01",
+  "frozen_source_commit": "2fbfc00f8e38f33d7d74fb7cc734fbf5b0a11ab0",
+  "status": "STOP_PRE_CANDIDATE_RUNNER_PARSE",
+  "candidate_evaluations": 0,
+  "exit_code": 1,
+  "failure_point": "The Node command fetched the report and JSONL, then passed the events text to JSON.parse without correctly splitting physical lines. The exception occurred before wait grouping or horizon evaluation.",
+  "retained_error_excerpt": "SyntaxError: Unexpected non-whitespace character after JSON at position 196 (line 2 column 1), at JSON.parse while mapping the events stream. Node.js v24.6.0 then emitted an assertion in src/win/async.c during shutdown.",
+  "command_shape": "node --input-type=module -e ... tx[1].trim().split(/\\\\r?\\\\n/).map(JSON.parse) ...",
+  "candidate_inputs_touched": false,
+  "rerun_of_A01": false,
+  "interpretation": "Harness/serialization STOP only. No H/T result was produced. This is preserved separately from any successor run; do not relabel as PASS/FAIL of the scientific hypothesis."
+}

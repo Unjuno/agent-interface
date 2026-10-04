@@ -1,0 +1,11 @@
+{
+  "format": "issue59-v39-paired-ammo-controller-a04-freeze-v1",
+  "base_commit": "e561b25b700680df4e6ffd2b92faf1dde1682ef7",
+  "observed_main_after_base": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+  "runtime": "CPython 3.14.5, macOS arm64; Pillow, NumPy, python-xlib from ephemeral uv environment",
+  "formal_live_allocation_invocations": 0,
+  "game_or_gui_invocations": 0,
+  "controller_source_sha256": "6dc7bf9b06932a6168b81f77fc7a07374bc6944c8f89dfbea9bceb6be65c3212",
+  "regression_source_sha256": "deb7513781aeea4ff9b14f704cc654efce55c30fbb751ec26143970b18e19028",
+  "decision_gate": "PASS only if the focused controller, v39, source-refresh, and action-validity regression suite passes; both changed Python files compile; git diff --check passes"
+}

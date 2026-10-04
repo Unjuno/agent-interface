@@ -106,6 +106,64 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertTrue(all(not row["physical_verification_authoritative"]
                             for row in receipts))
 
+    def test_input_edge_receipt_joins_repeated_same_key_by_admission_position(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        pairs = []
+        for source_step in (0, 2):
+            admission = next(row for row in source
+                             if row.get("event") == "input_admission" and
+                             row.get("step") == source_step)
+            release = next(row for row in source
+                           if row.get("event") == "input_release_transition" and
+                           row.get("step") == source_step)
+            pair = [json.loads(json.dumps(row)) for row in (admission, release)]
+            for row in pair:
+                row.update(id="repeat-key-program", step=7, key="d",
+                           admission_position=len(pairs))
+            pairs.append(pair)
+
+        receipts = controller.input_edge_receipts(
+            [row for pair in pairs for row in pair])
+
+        self.assertEqual([row["status"] for row in receipts], ["paired", "paired"])
+        self.assertEqual([row["admission_position"] for row in receipts], [0, 1])
+
+        pairs[1][1].pop("admission_position")
+        incomplete = controller.input_edge_receipts(
+            [row for pair in pairs for row in pair])
+        self.assertCountEqual([row["status"] for row in incomplete],
+                              ["paired", "admission_without_release",
+                               "release_without_admission"])
+
+        pairs[1][1]["admission_position"] = None
+        invalid = controller.input_edge_receipts(
+            [row for pair in pairs for row in pair])
+        self.assertEqual(sum(row["status"] == "paired" for row in invalid), 1)
+        self.assertEqual(invalid[0]["status"], "identity_unavailable")
+        self.assertEqual(invalid[0]["event"], "input_release_transition")
+
+    def test_adapter_edge_receipt_joins_repeated_cycles_by_actuation_id(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        pairs = []
+        for cycle in range(2):
+            pair = [json.loads(json.dumps(row)) for row in source]
+            actuation_id = f"test-owner:g{cycle + 1}:F8"
+            for row in pair:
+                data = row["physical_key_measurement"]
+                data["actuation_id"] = actuation_id
+                data["adapter_edge"]["actuation_id"] = actuation_id
+            pairs.extend(pair)
+
+        receipts = controller.input_edge_receipts(pairs)
+
+        self.assertEqual([row["status"] for row in receipts],
+                         ["adapter_edge_brackets_paired"] * 2)
+        self.assertEqual(len({row["actuation_id_sha256"] for row in receipts}), 2)
+
     def test_retained_v39_trace_with_unscoped_admissions_stays_unpaired(self):
         retained = (HERE / "results" / "map01-v39-coast-liveness-live-01" /
                     "runtime" / "events.jsonl")
@@ -158,6 +216,23 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             events[row_index]["physical_key_measurement"]["bracket"][field] = value
 
             with self.subTest(row_index=row_index, field=field):
+                receipt = controller.input_edge_receipts(events)[0]
+
+                self.assertEqual(receipt["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
+        for row_index, field in ((0, "physical_down_interval"),
+                                 (1, "physical_up_interval")):
+            events = json.loads(json.dumps(template))
+            interval = events[row_index]["physical_key_measurement"]["bracket"][field]
+            self.assertEqual(float(interval[0]), interval[0])
+            events[row_index]["physical_key_measurement"]["bracket"][field] = [
+                float(interval[0]), interval[1]]
+
+            with self.subTest(row_index=row_index, field=field,
+                              alias_type="float_for_int"):
                 receipt = controller.input_edge_receipts(events)[0]
 
                 self.assertEqual(receipt["status"],
@@ -625,6 +700,19 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(result["status"], "unavailable")
         self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
 
+    def test_feedback_refuses_boolean_or_float_step_identity_aliases(self):
+        before, after = observation(83, 100), observation(89, 200)
+        before["step"], after["step"] = 0, 1
+        for aliased_step in (True, 1.0):
+            bad = typed_observation(89, 200, 91, 44)
+            bad["step"] = aliased_step
+            with self.subTest(step=aliased_step):
+                result = controller.action_state_feedback(
+                    before, after,
+                    [{**typed_observation(83, 100, 91, 45), "step": 0}, bad])
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
+
     def test_feedback_refuses_typed_event_schema_and_top_level_binding_mismatch(self):
         before, after = observation(83, 100), observation(89, 200)
         wrong_schema = typed_observation(89, 200, 91, 44)
@@ -1023,6 +1111,215 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                                 "status": "unavailable",
                                 "reason": "typed_signal_unavailable"})
 
+
+
+
+
+    def test_feedback_refuses_non_string_program_identity_aliases(self):
+        cases = ((1, True), (True, 1), (1, 1.0))
+
+        for observation_id, typed_id in cases:
+            with self.subTest(observation_id=observation_id, typed_id=typed_id):
+                before = observation(0, 100)
+                before_row = typed_observation(0, 100, 91, 45)
+                after = observation(1, 200)
+                after["id"] = observation_id
+                after_row = typed_observation(1, 200, 91, 44)
+                after_row["id"] = typed_id
+
+                result = controller.action_state_feedback(
+                    before, after, [before_row, after_row])
+
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
+
+    def test_feedback_refuses_boolean_integer_alias_across_capture_bindings(self):
+        def fresh_binding():
+            return {"focus": 1, "surface": 1,
+                    "geometry": [0, 0, 640, 480]}
+
+        before = observation(0, 100)
+        after = observation(1, 200)
+        before["pointer_binding"] = fresh_binding()
+        after_binding = fresh_binding()
+        after_binding["focus"] = True
+        after["pointer_binding"] = after_binding
+        before_row = typed_observation(0, 100, 91, 45, binding=fresh_binding())
+        after_row = typed_observation(1, 200, 91, 44, binding=after_binding)
+
+        result = controller.action_state_feedback(
+            before, after, [before_row, after_row])
+
+        self.assertEqual(result["status"], "unavailable")
+        self.assertEqual(result["reason"], "typed_signal_binding_mismatch")
+
+    def test_feedback_refuses_boolean_integer_aliases_in_nested_bindings(self):
+        cases = (
+            ("typed_top_level_focus", "typed_top", ("focus",), True,
+             "typed_frame_identity_mismatch"),
+            ("observation_top_level_focus", "observation", ("focus",), True,
+             "typed_frame_identity_mismatch"),
+            ("typed_signal_focus", "typed_signal", ("focus",), True,
+             "typed_signal_unavailable"),
+            ("typed_top_level_focus_float", "typed_top", ("focus",), 1.0,
+             "typed_frame_identity_mismatch"),
+            ("observation_nested_geometry", "observation", ("geometry", 0), False,
+             "typed_frame_identity_mismatch"),
+        )
+
+        for name, target, path, alias, reason in cases:
+            with self.subTest(name=name):
+                before = observation(0, 100)
+                after = observation(1, 200)
+                def fresh_binding():
+                    return {"focus": 1, "surface": 1,
+                            "geometry": [0, 0, 640, 480]}
+                before["pointer_binding"] = fresh_binding()
+                after["pointer_binding"] = fresh_binding()
+                before_row = typed_observation(
+                    0, 100, 91, 45, binding=fresh_binding())
+                after_row = typed_observation(
+                    1, 200, 91, 44, binding=fresh_binding())
+                after_row["pointer_binding"] = fresh_binding()
+                for signal in after_row["signals"].values():
+                    signal["binding"] = fresh_binding()
+                binding = (after_row["pointer_binding"] if target.startswith("typed")
+                           else after["pointer_binding"])
+                if target == "typed_signal":
+                    binding = after_row["signals"]["health"]["binding"]
+                node = binding
+                for component in path[:-1]:
+                    node = node[component]
+                node[path[-1]] = alias
+
+                result = controller.action_state_feedback(
+                    before, after, [before_row, after_row])
+
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"], reason)
+
+    def test_feedback_refuses_boolean_or_float_observation_step_aliases(self):
+        before, after = observation(83, 100), observation(89, 200)
+        before["step"], after["step"] = 0, 1
+        typed = [typed_observation(83, 100, 91, 45),
+                 typed_observation(89, 200, 91, 44)]
+        typed[0]["step"], typed[1]["step"] = 0, 1
+        self.assertEqual(controller.action_state_feedback(
+            before, after, typed)["status"], "observed")
+
+        for side, aliases in (("before", (False, 0.0)),
+                              ("after", (True, 1.0))):
+            for aliased_step in aliases:
+                frames = deepcopy([before, after])
+                frames[0 if side == "before" else 1]["step"] = aliased_step
+                with self.subTest(side=side, step=aliased_step):
+                    self.assertEqual(controller.action_state_feedback(
+                        frames[0], frames[1], typed), {
+                            "status": "unavailable",
+                            "reason": "typed_frame_identity_mismatch"})
+
+
+    def test_adapter_unhashable_actuation_ids_fail_closed(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        original = [json.loads(line) for line in retained.read_text().splitlines()]
+        self.assertEqual(controller.input_edge_receipts(original)[0]["status"],
+                         "adapter_edge_brackets_paired")
+        for event_name in ("input_admission", "input_release_measurement"):
+            for invalid_id in ([], {}):
+                rows = deepcopy(original)
+                target = next(row for row in rows if row["event"] == event_name)
+                target["physical_key_measurement"]["actuation_id"] = invalid_id
+                target["physical_key_measurement"]["adapter_edge"]["actuation_id"] = invalid_id
+                with self.subTest(event=event_name, id_type=type(invalid_id).__name__):
+                    receipts = controller.input_edge_receipts(rows)
+                    self.assertTrue(receipts)
+                    for receipt in receipts:
+                        self.assertEqual(receipt["status"],
+                                         "adapter_edge_receipt_incomplete")
+                        self.assertIsNone(receipt["down_edge_interval_ns"])
+                        self.assertIsNone(receipt["up_edge_interval_ns"])
+
+    def test_unknown_claimed_measurement_without_actuation_id_invalidates_context(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        original = [json.loads(line) for line in retained.read_text().splitlines()]
+        for measurement in ({}, {"adapter_edge": {"edge": "down"}}):
+            rows = deepcopy(original)
+            unknown = deepcopy(rows[0])
+            unknown["event"] = "future_input_edge_event"
+            unknown["physical_key_measurement"] = measurement
+            with self.subTest(measurement=measurement):
+                receipts = controller.input_edge_receipts(rows + [unknown])
+                self.assertTrue(receipts)
+                for receipt in receipts:
+                    self.assertEqual(receipt["status"],
+                                     "adapter_edge_receipt_incomplete")
+                    self.assertIsNone(receipt["down_edge_interval_ns"])
+                    self.assertIsNone(receipt["up_edge_interval_ns"])
+
+
+    def test_input_edge_receipt_accepts_v11_owner_keyup_context_contract(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        events = []
+        for position, source_step in enumerate((0, 2)):
+            admission = next(row for row in source
+                             if row.get("event") == "input_admission" and
+                             row.get("step") == source_step)
+            release = next(row for row in source
+                           if row.get("event") == "input_release_transition" and
+                           row.get("step") == source_step)
+            admission, release = [json.loads(json.dumps(row))
+                                  for row in (admission, release)]
+            admission.update(id="v11-repeat-program", step=11,
+                             admission_position=position)
+            owner = release.pop("owner_thread_keyup_receipt")
+            for name in ("owner_thread_keyup_verified",
+                         "owner_thread_keyup_history_complete"):
+                release.pop(name, None)
+            release.update(
+                id="v11-repeat-program", step=11,
+                admission_position=position,
+                admission_identity_status="matched",
+                owner_keyup_join="MATCHED_EXPLICIT_KEYUP",
+                owner_release_history_complete=True,
+                owner_cleanup_intervened=False,
+                ordinary_release_candidate=True,
+                owner_keyup_receipt={
+                    "event": "owner_keyup", "schema": "owner-keyup-v11",
+                    "owner_id": owner["owner_id"],
+                    "intent_token": owner["intent_token"],
+                    "key": owner["key"], "reason": "explicit_up",
+                    "owner_keyup_started_ns": owner["owner_keyrelease_started_ns"],
+                    "owner_sync_returned_ns": owner["owner_sync_returned_ns"],
+                    "xsync_completed": True, "sync_error": None,
+                    "physical_verification_authoritative": False,
+                    "grants_input_authority": False,
+                })
+            events.extend((admission, release))
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual([row["status"] for row in receipts], ["paired", "paired"])
+        self.assertEqual([row["admission_position"] for row in receipts], [0, 1])
+        mutations = (
+            lambda row: row.update(owner_keyup_join="MISSING_OR_AMBIGUOUS_OWNER_RECEIPT"),
+            lambda row: row["owner_keyup_receipt"].update(xsync_completed=False),
+            lambda row: row.update(owner_release_history_complete=False),
+            lambda row: row["owner_keyup_receipt"].update(owner_id="other-owner"),
+            lambda row: row.update(admission_identity_status="ambiguous_multiple_admissions"),
+            lambda row: row.pop("owner_keyup_receipt"),
+        )
+        for mutate in mutations:
+            changed = json.loads(json.dumps(events))
+            mutate(changed[1])
+            with self.subTest(mutation=repr(mutate)):
+                projected = controller.input_edge_receipts(changed)
+                by_position = {row.get("admission_position"): row
+                               for row in projected if "admission_position" in row}
+                self.assertNotEqual(by_position[0]["status"], "paired")
 
 
 if __name__ == "__main__":

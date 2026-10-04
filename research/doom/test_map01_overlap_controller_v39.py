@@ -44,6 +44,50 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(receipt["monitor_mode"], "authored_policy_guard")
         self.assertEqual(receipt["authored"], authored)
 
+    def test_running_invalidation_interrupts_planner_and_requires_verified_empty_release(self):
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+        process, planner, handle = Process(), Planner(), object()
+
+        interruption, result = controller.cancel_invalidated_cover(
+            planner, handle, process, lambda predicate: terminal, "cover-0")
+
+        self.assertIs(result, terminal)
+        self.assertEqual(planner.interrupted, [handle])
+        self.assertEqual(interruption, {"status": "interrupted"})
+        self.assertIn('"op": "cancel"', process.stdin.writes[0])
+
+    def test_running_invalidation_rejects_nonempty_or_unverified_release(self):
+        class Stdin:
+            def write(self, value): pass
+            def flush(self): pass
+        class Process:
+            stdin = Stdin()
+        class Planner:
+            def interrupt(self, handle): return {"status": "interrupted"}
+        for release in (
+            {"verified": False, "keys_down": [], "buttons_down": []},
+            {"verified": True, "keys_down": ["W"], "buttons_down": []},
+            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+        ):
+            terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                        "release": release}
+            with self.subTest(release=release):
+                with self.assertRaisesRegex(RuntimeError, "verify empty release"):
+                    controller.cancel_invalidated_cover(
+                        Planner(), object(), Process(), lambda predicate: terminal, "cover-0")
+
 
 if __name__ == "__main__":
     unittest.main()
