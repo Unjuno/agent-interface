@@ -1,0 +1,27 @@
+{
+  "pr_number": 7449,
+  "pr_head": "915c46d7f448003d82dd002d6e9fb34141e2712a",
+  "main_checked": "d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6",
+  "suite": {
+    "upstream_tests": 5,
+    "derived_fault_injection_tests": 6,
+    "total_passed": 11,
+    "failed": 0
+  },
+  "fail_before_accept": {
+    "sink_failed_position": 0,
+    "row_0_emitted": false,
+    "emitted_positions": [1],
+    "emitted_batch_size": 2,
+    "emitted_batch_complete": false,
+    "emitted_disposition": "publication_exception",
+    "explicit_delivery_unknown_for_row_0": false,
+    "retry": false
+  },
+  "accept_then_raise": {
+    "emitted_positions": [0, 1],
+    "complete_flags": [true, false],
+    "retry": false
+  },
+  "scope": "Fake owner and sink construction only; no real input, game, model, GUI, external sink persistence, or executor-terminal integration claim."
+}
