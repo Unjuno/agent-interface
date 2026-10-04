@@ -1,0 +1,26 @@
+{
+  "schema": "issue59-v16-visual03-adapter-replay-source-pins-v1",
+  "source_commit": "52677e35431de60daacd0180792c686a1754dae1",
+  "source_package": "research/doom/v16_visual_recovery_window_59_4d74_20261004/",
+  "source_package_manifest_sha256": "271271a7c8955cf4631acdb9d33cb70b36fce52b1ba382322d641f3a68d2eb4c",
+  "source_files": {
+    "run/episode/runtime/events.jsonl": {
+      "bytes": 312118,
+      "sha256": "5407eaab7cc9f9d549c93a6407fc57f8d6252b52e9f2fb6e079eb27bb5004332"
+    },
+    "run/episode/runtime/scorer-events.jsonl": {
+      "bytes": 262,
+      "sha256": "1974b6e9e2c60740c51d627ca8c0b0f91d270cbaff0aff319c3a501f15a68228"
+    },
+    "run/episode/runtime/scorer-samples.jsonl": {
+      "bytes": 481699,
+      "sha256": "e113cca3c3f9635f76cb765e3d01f3c239110616c630db332b28058007476599"
+    }
+  },
+  "baseline_adapter": {
+    "head": "67d0e19800b8c2d2d8ccb27dcf37547130271de2",
+    "sha256": "03b49b2547950b4d07ede4f926902b6b57dde989ce93f4198e90d8e35530a038"
+  },
+  "candidate_adapter_sha256": "892e6d2572c77084aa5976e5e30dd10017839cc3db1549e9dd77497e9ad129f9",
+  "transformation": "Validate each release batch separately by (owner, intent, program id, release-batch id, step). The baseline keyed batch completeness by program id and batch id but omitted step, combining distinct size-1 batches across sequential steps."
+}
