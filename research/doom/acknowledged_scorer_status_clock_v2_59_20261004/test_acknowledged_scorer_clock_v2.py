@@ -1,3 +1,4 @@
+import importlib
 import unittest
 from unittest.mock import patch
 
@@ -91,6 +92,29 @@ class ClockFailureTests(unittest.TestCase):
         self.assertEqual(clock_calls, [True])
         self.assertEqual(result.producer["update_returned_ns"], 20)
         self.assertEqual(rows[0]["update_status"], "UPDATE_RETURNED")
+
+    def test_v16_proxy_clock_failure_preserves_inner_api_return(self):
+        v17 = importlib.import_module("session_map01_v17")
+        game = Game()
+        calls = []
+        rows = []
+        def clock():
+            calls.append(True)
+            if len(calls) == 3:
+                raise OSError("proxy return clock unavailable")
+            return 10
+        sampler = AcknowledgedSamplerClockV2(sample, "clock-run", rows.append,
+                                              clock_ns=clock)
+        proxy = v17.ObservedGameProxyClockV2(game, lambda: None, sampler)
+        with self.assertRaisesRegex(OSError, "proxy return clock unavailable"):
+            sampler(proxy, None, 10)
+        self.assertEqual(game.calls, 1)
+        self.assertEqual(rows[0]["update_status"], "UPDATE_RETURNED")
+        self.assertEqual(rows[0]["sample_status"], "NOT_ATTEMPTED")
+        self.assertEqual(rows[0]["producer"]["observation_status"],
+                         "UPDATE_RETURNED_UNTIMED")
+        self.assertNotIn("update_returned_ns", rows[0]["producer"])
+        self.assertNotIn("tic_after", rows[0]["producer"])
 
     def test_noop_reports_return_without_tic_qualification(self):
         class NoAdvanceGame(Game):

@@ -12,6 +12,22 @@ class AcknowledgedSamplerClockV2(AcknowledgedSampler):
     returned, not an episode-tic advance or a usable observation interval.
     """
 
+    def record_external_return_unqualified(self, game, before, started,
+                                           returned=None, after=None):
+        """Retain inner-call return when proxy clock/tic qualification fails."""
+        self.before_external_update(game)
+        self.update_sequence += 1
+        producer = {"run_id": self.run_id,
+                    "update_sequence": self.update_sequence,
+                    "observation_status": ("UPDATE_RETURNED_UNTIMED" if returned is None
+                                           else "UPDATE_RETURNED_UNBRACKETED"),
+                    "tic_before": before, "update_started_ns": started}
+        if returned is not None:
+            producer["update_returned_ns"] = returned
+        if after is not None:
+            producer["tic_after"] = after
+        self.external_ack = producer
+
     def __call__(self, game, variables, timeout_seconds, **kwargs):
         if self._failure is not None:
             raise RuntimeError("scorer failed; update retry refused") from self._failure
@@ -27,6 +43,7 @@ class AcknowledgedSamplerClockV2(AcknowledgedSampler):
                "status": "UPDATE_UNAVAILABLE", "update_status": "NOT_ATTEMPTED",
                "sample_status": "NOT_ATTEMPTED"}
         producer = None
+        external_before = self.external_ack
         try:
             if game.is_episode_finished():
                 if self.last is not None and self.last.episode_finished:
@@ -44,7 +61,6 @@ class AcknowledgedSamplerClockV2(AcknowledgedSampler):
                 before = int(game.get_episode_time())
                 started = self.clock_ns()
                 row.update(tic_before=before, update_started_ns=started)
-                external_before = self.external_ack
                 game.advance_action(1, True)
                 if self.external_ack is not external_before:
                     # The V16 observed proxy already captured this update's
@@ -104,7 +120,15 @@ class AcknowledgedSamplerClockV2(AcknowledgedSampler):
                        sample_status="AVAILABLE", sample=result.as_dict())
         except BaseException as error:
             self._failure = error
-            if row["update_status"] == "NOT_ATTEMPTED":
+            if (producer is None and self.external_ack is not external_before and
+                    self.external_ack.get("observation_status") in
+                    ("UPDATE_RETURNED_UNTIMED", "UPDATE_RETURNED_UNBRACKETED")):
+                producer = {**self.external_ack, "sample_sequence": self.sequence}
+                row.update(status="UPDATE_METADATA_UNAVAILABLE",
+                           update_status="UPDATE_RETURNED",
+                           sample_status="NOT_ATTEMPTED",
+                           producer=copy.deepcopy(producer))
+            elif row["update_status"] == "NOT_ATTEMPTED":
                 row.update(status="UPDATE_UNAVAILABLE",
                            update_status="UPDATE_UNAVAILABLE")
             elif row["sample_status"] == "PENDING":
