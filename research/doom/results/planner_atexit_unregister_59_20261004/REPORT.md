@@ -17,3 +17,7 @@ This fixes the interpreter-exit re-entry path. A non-cooperative planner close w
 
 ## Artifacts
 `FREEZE.json`, `RUN.json`, `STATIC_CHECKS.json`, baseline/candidate test output and exit files, `baseline/` exact source fixture, and `SHA256SUMS` preserve the source and execution record.
+
+## Current-main integration
+
+After PR base `af6d0f9` advanced to `d6a3fe6`, I merged current main into the candidate tree. The only overlapping path was `research/doom/README.md`; the helper and test source hashes in `FREEZE.json` stayed identical. On the combined tree (`bedcf34d3c0f8ce80d4212fd24e4d12e2922d2d4` before adding this integration receipt), all six suites passed again: Windows 33 tests with two POSIX-only skips; WSLc 33/33 with no skips. The cleanup modules compile and the staged current-main diff check passes. WSLc's cgroup warning remains; limits are requested, not proven enforced. Container inventory is empty after `--rm`.
