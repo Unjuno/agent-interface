@@ -1,0 +1,24 @@
+{
+  "schema": "unjuno.issue7167.t0.run.v1",
+  "issue": 7167,
+  "freeze_commit": "898c718f424ed16eb61137f816cff2ea74772d14",
+  "base_commit": "2fbfc00f8e38f33d7d74fb7cc734fbf5b0a11ab0",
+  "preregistration_comment_id": 5977567345,
+  "candidate_command": "python3 candidate.py --out formal_01/raw.json",
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "auditor_command": "python3 auditor.py --raw formal_01/raw.json --out formal_01/audit.json",
+  "auditor_exit_code": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "runtime": "host-only Python standard library; no network, model, GUI, container, or external data",
+  "result": {
+    "status": "PASS_METHOD_SCOPED",
+    "stored_records": 10,
+    "summaries": 3,
+    "retrieved_rows": 13,
+    "active_user_intents": 2,
+    "mutations_rejected": ["promote_application_text", "drop_summary_sources", "resurrect_superseded_revision", "trust_missing_source"],
+    "audit_errors": []
+  }
+}
