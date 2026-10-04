@@ -1,0 +1,23 @@
+{
+  "schema": "v39-session-child-pipe-audit-freeze-v3",
+  "audit_of": "v39-session-child-pipe-a02-20261005",
+  "frozen_at": "2026-10-05T05:44:08.2475471+09:00",
+  "candidate_was_rerun": false,
+  "candidate_result_sha256": "4f779aeea55cf05dfdf211fe6428987f6304aa6e6e8e156dc918dfbba98dd578",
+  "prior_audit_v2_sha256": "59a8186a3516033995e274ce26a311d2baa03cbcc52bea5040042728417cf671",
+  "auditor": {
+    "file": "audit_pipe_a02_v3.py",
+    "sha256": "ee6a576ed0c6ec00382a998359fa00e7c299b1da6455ad6fca95021480fe1ec4"
+  },
+  "raw_output_sha256": {
+    "CHILD_STDOUT.jsonl": "76060873ba7ec2de9e0061b5a3da47ce226bcc3eb7add81ccb93af511783614e",
+    "CHILD_STDERR.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "events.jsonl": "f389b288ac78e1137142a3df1c18e244115855ceee8f00bd171ffc6a11bbb08f",
+    "delivered.jsonl": "f389b288ac78e1137142a3df1c18e244115855ceee8f00bd171ffc6a11bbb08f",
+    "CONTROLLER_RECEIVED.json": "6b87043f2d026521c887e1c6ca9668079083803f713d3597528d84a49354fc61",
+    "RESULT.json": "4f779aeea55cf05dfdf211fe6428987f6304aa6e6e8e156dc918dfbba98dd578",
+    "RUN_RECEIPT.json": "0413456c6f232687b6c1662cc7c3b19e914811260c45673ec594b4c42bf98b5a"
+  },
+  "command": "py -3.11 audit_pipe_a02_v3.py",
+  "decision": "PASS_AUDIT only if all identities, hashes, round-trip, authority, writer and process-closure checks pass. This is a read-only audit; no candidate rerun."
+}

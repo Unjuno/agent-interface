@@ -1,0 +1,94 @@
+{
+  "checks": [
+    {
+      "actual": "f52a89f1893ad643649140eecafd8de8ba34fd88090aeee63780297bc1957f04",
+      "check": "candidate_sha256",
+      "pass": true
+    },
+    {
+      "actual": "27e0196c3c7862ba3a307ed764de5b6061e1f9294bbebf85f7f5fea7fc5bcc27",
+      "check": "auditor_sha256",
+      "pass": true
+    },
+    {
+      "actual": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+      "check": "main_ref",
+      "pass": true
+    },
+    {
+      "actual": "4c0123339e43bd80333118a32bc1ce625b79ff3f",
+      "check": "pr_7602_ref",
+      "pass": true
+    },
+    {
+      "actual": "4c7ab51a4512015a70e0e9ab90510b256b8b9cfd",
+      "check": "pr_7750_ref",
+      "pass": true
+    },
+    {
+      "actual": "905816607eef1552b5e8073d95db1975de00776d",
+      "check": "pr_7769_ref",
+      "pass": true
+    },
+    {
+      "actual": "e2d596984ce5403f37634ced4c9a3e2537e5f1a7",
+      "check": "source_blob:research/doom/session_map01_v12.py",
+      "pass": true,
+      "sha256": "ef89fa60d5ae71b6d5b4633d0d92820f8ce2f032cd59f142542ec00d4fd1db0d"
+    },
+    {
+      "actual": "5aa386667c447d84a04c280ea9e4a7f0f306ae92",
+      "check": "source_blob:research/doom/map01_overlap_controller_v39.py",
+      "pass": true,
+      "sha256": "c1cf7f17ac4cbbeb47222243d5baeeb419fd2d6db7a26cf0db295b01a3a03621"
+    },
+    {
+      "actual": "0a17bfa98f4ffbb63fd2d08995a5eb290a462918",
+      "check": "source_blob:research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/results/a08/published-events.jsonl",
+      "pass": true,
+      "sha256": "4028ca3a1dc908dc6375f840e2acd6d05f294ca67b1dc7696b4359fd085f59d7"
+    },
+    {
+      "actual": "f79e8737d0f5eac85d8c2f89c84316a6743eef88686a100513d510edf984864c",
+      "check": "emitter_ast_hash",
+      "pass": true
+    },
+    {
+      "actual": "4028ca3a1dc908dc6375f840e2acd6d05f294ca67b1dc7696b4359fd085f59d7",
+      "check": "input_hash_and_size",
+      "pass": true
+    },
+    {
+      "check": "one_pipe_row_and_roundtrip",
+      "pass": true
+    },
+    {
+      "check": "writer_logs_match_pipe",
+      "pass": true
+    },
+    {
+      "check": "authority_and_nested_release",
+      "pass": true
+    },
+    {
+      "check": "process_closure",
+      "pass": false
+    },
+    {
+      "check": "result_disposition",
+      "pass": true
+    }
+  ],
+  "disposition": "FAIL_AUDIT",
+  "raw_sha256": {
+    "CHILD_STDERR.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CHILD_STDOUT.jsonl": "76060873ba7ec2de9e0061b5a3da47ce226bcc3eb7add81ccb93af511783614e",
+    "CONTROLLER_RECEIVED.json": "6b87043f2d026521c887e1c6ca9668079083803f713d3597528d84a49354fc61",
+    "INPUT_EVENT.json": "4028ca3a1dc908dc6375f840e2acd6d05f294ca67b1dc7696b4359fd085f59d7",
+    "RESULT.json": "4f779aeea55cf05dfdf211fe6428987f6304aa6e6e8e156dc918dfbba98dd578",
+    "RUN_RECEIPT.json": "0413456c6f232687b6c1662cc7c3b19e914811260c45673ec594b4c42bf98b5a",
+    "delivered.jsonl": "f389b288ac78e1137142a3df1c18e244115855ceee8f00bd171ffc6a11bbb08f",
+    "events.jsonl": "f389b288ac78e1137142a3df1c18e244115855ceee8f00bd171ffc6a11bbb08f"
+  },
+  "schema": "v39-session-child-pipe-audit-a02-v2"
+}
