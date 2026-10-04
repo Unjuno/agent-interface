@@ -516,6 +516,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`human_return_to_own_work_6492_t0_20261002_v1/`](human_return_to_own_work_6492_t0_20261002_v1/)
 - [`iconfluence_5547_t0_v1/`](iconfluence_5547_t0_v1/)
 - [`image_jacobian_adaptation_7765_t0_20261005/`](image_jacobian_adaptation_7765_t0_20261005/)
+- [`image_jacobian_adaptation_7765_t0b_20261005/`](image_jacobian_adaptation_7765_t0b_20261005/)
+- [`image_jacobian_adaptation_7765_t0b_cal_a02_20261005/`](image_jacobian_adaptation_7765_t0b_cal_a02_20261005/)
 - [`ime_commit_effect_6523_t0_v1/`](ime_commit_effect_6523_t0_v1/)
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
