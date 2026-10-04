@@ -40,6 +40,7 @@ from running_action_guard_v1 import (
 from running_action_guard_v2 import RunningActionGuardV2
 from running_action_guard_v3 import RunningActionGuardV3
 from doom_action_snapshot_v1 import build_action_snapshot
+from doom_signal_value_domain_v1 import signal_value_in_domain
 NODE = "/mnt/c/Program Files/nodejs/node.exe"
 CLI = r"C:\Users\junny\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
 DISABLED_FEATURES = [
@@ -238,7 +239,13 @@ def prepare_action_admission(receipt, action, authored, source_health,
     required = contract["source"]["signals"]
     current = {"health": {"status": current_health["status"],
                           "value": current_health["value"]}}
+    if (current_health["status"] == "observed" and
+            not signal_value_in_domain("health", current_health.get("value"))):
+        raise ValueError("current health value is outside its declared domain")
     if "ammo" in required:
+        if (current_ammo["status"] == "observed" and
+                not signal_value_in_domain("ammo", current_ammo.get("value"))):
+            raise ValueError("current ammo value is outside its declared domain")
         if (current_ammo["sequence"] != current_health["sequence"] or
                 current_ammo["capture_ns"] != current_health["capture_ns"] or
                 current_ammo["binding"] != current_health["binding"]):
