@@ -1,0 +1,33 @@
+{
+  "C": "Audit-only successor; preserves all A04 bytes and does not rerun its candidate.",
+  "D": "PASS only if exact integer 1 passes, bool true is shown to pass A04 but fail A05, and false, zero, two, float, string, and null fail A05.",
+  "H": "A04 accepts JSON true as candidate invocation count 1; exact integer typing should reject the alias.",
+  "T": "Offline mutation audit of the exact retained A04 result; compare legacy and A05 behavior on JSON-compatible count values.",
+  "U": "One audit metadata field only; no live input, GUI/game, application effect, feedback, recovery, threat response, or MAP01 result.",
+  "run_id": "MAP01-V39-PERKEY-MEASUREMENT-CONSUMER-A05-20261005",
+  "schema": "map01_v39_perkey_measurement_consumer_a05_freeze_v1",
+  "scope": "exact-type guard for retained A04 invocation-count metadata",
+  "source_sha256": {
+    ".gitattributes": "19d32b34702c808b53cdfb4b0154c92a2c607bca1af384eaae4ae1750abcb63b",
+    "README.md": "42e3a49b5ef34f9de6918cf0f5e48de9645632bca25f92fa34c4b3ead1f43641",
+    "SOURCE/A04/.gitattributes": "b02f1cbf640db866f20557da8c7e1ea621e823fe6f69d65792148c18a7f97c30",
+    "SOURCE/A04/AUDIT.json": "43bbe49c698845bc2a9432ddf0c96e7418c752c48e2804ce6c597dd3efb34486",
+    "SOURCE/A04/FREEZE.json": "e9eb6c8f4b59423b3b031a408ce7f774baa45571bdc40f3e5a846cfcf5f4e6ee",
+    "SOURCE/A04/README.md": "7734866fbcd736d58bf056c6f1f8d4626c56aa4e9111a0d1e830d4d58b5077ac",
+    "SOURCE/A04/RESULT.json": "a22b549c7e9e9e300380409b029b68210ead50f734dcd67cb8c6d88177d14a90",
+    "SOURCE/A04/SHA256SUMS": "c028428e65b16b35544c1420c0b57fa6fdea8f3b34173622c71355cba98d3646",
+    "SOURCE/A04/SOURCE/BRIDGE_FREEZE_A01.json": "bfff8fba8f9656c8186f090be3ca542decd347fefc475e2502453e268330f020",
+    "SOURCE/A04/SOURCE/BRIDGE_RAW_A01.json": "94efe76f23a3136d14c2df5242290a939e1f8c5adc59cf7d1da06aaf16c64392",
+    "SOURCE/A04/SOURCE/FREEZE_A03.json": "a49cff90c5c31a42172acfac79f585357f8cf350e0ebffdefd5a7926c7ec7eea",
+    "SOURCE/A04/SOURCE/audit_a03.py": "3be9080c94c63c6a296a271815678da8f095beed25bbcb8e8e5d999996a86526",
+    "SOURCE/A04/SOURCE/consumer_a03.py": "1f6b8f0f886c234253c667b562b635677edbfca9cc6e6ae714260f6b36dc69d6",
+    "SOURCE/A04/audit.py": "258e069dda7f891b64bec72b8964f3f008443865c096854ec426831e6740d785",
+    "SOURCE/A04/build_freeze.py": "56f6b01ba99e3b62e8247737028535b776ddd42d69801c32212244f2c1889c6a",
+    "SOURCE/A04/candidate.py": "2f07412765da60a3da04f3c975e26fe6f82f1c41cdb94ccae7c20b50696f6936",
+    "SOURCE/A04/run_candidate.py": "114761405f9fc493cff129aafb7dc0703c77822ac092950c49f007275dee9a9e",
+    "SOURCE/A04/test_a04.py": "0a73cedd9e953533472d6a8ce946b2411584051debf8ca604466234d1e5cfe72",
+    "audit_a05.py": "e3fbc67e2289ea5c660f9e8a6a2bd9fe42028028272af9e76858cf8f95188f02",
+    "build_freeze.py": "d600ab467b06e412a5723ea76f6a1c75b22890ff9c8f5cbffc9c94ca9781594b",
+    "test_a05.py": "5978385e3a726db34aea65e212b6c424feda5eb4b6f26f3b50e6bed9c750110c"
+  }
+}
