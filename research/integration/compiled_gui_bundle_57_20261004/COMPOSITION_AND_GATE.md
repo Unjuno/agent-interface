@@ -4,7 +4,7 @@ Status: composition decision and requirement map; no new allocation or efficienc
 
 ## Pinned candidate
 
-Base: `8d9940c4e0afe7895715bce77fa9f7e455e06cad` (latest main checked 2026-10-04). The compiled and caller source blobs below match the exact tested `bfaa12181f81cac133747ca8a1b7eb277aa64424` base and remained byte-identical at this latest base.
+Integration branch base: `96f7041fe6b3eb71127ac4eca0ed31d313c29ad2` (main, checked 2026-10-04). Raw caller-composition runs are pinned to `bfaa12181f81cac133747ca8a1b7eb277aa64424`; the caller and compiled-runtime blobs were rechecked and remain byte-identical at this integration base.
 
 | Layer | Candidate | Owns | Boundary |
 |---|---|---|---|
