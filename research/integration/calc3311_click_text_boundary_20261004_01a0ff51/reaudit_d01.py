@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import subprocess
 import xml.etree.ElementTree as ET
 
@@ -24,6 +25,12 @@ def git_blob(path: str) -> bytes:
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     ).stdout
+
+
+def require_receipt_hash(data: bytes, expected: str, label: str) -> str:
+    actual = hashlib.sha256(data).hexdigest()
+    assert actual == expected, f"{label} does not match its execution receipt"
+    return actual
 
 
 def read_sheet(data: bytes) -> tuple[list[str], str | None, int]:
@@ -62,12 +69,18 @@ def main() -> None:
         prefix = f"{D01_ROOT}/row{row_number}/"
         raw = json.loads(git_blob(prefix + "raw.json"))
         host = json.loads(git_blob(prefix + "HOST_RECEIPT.json"))
-        prime_values, prime_formula, prime_populated = read_sheet(
-            git_blob(prefix + "prime.fods")
+        prime_fods = git_blob(prefix + "prime.fods")
+        trial_fods = git_blob(prefix + "trial.fods")
+        require_receipt_hash(
+            prime_fods, raw["tasks"][0]["saved_sha256"],
+            f"row {row_number} prime FODS",
         )
-        trial_values, trial_formula, trial_populated = read_sheet(
-            git_blob(prefix + "trial.fods")
+        require_receipt_hash(
+            trial_fods, raw["tasks"][1]["saved_sha256"],
+            f"row {row_number} trial FODS",
         )
+        prime_values, prime_formula, prime_populated = read_sheet(prime_fods)
+        trial_values, trial_formula, trial_populated = read_sheet(trial_fods)
         trial_program = raw["tasks"][1]["program"]
         operations = trial_program["ops"]
         release_index = max(

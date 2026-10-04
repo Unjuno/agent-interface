@@ -25,7 +25,7 @@ This establishes a missing pre-input selection acknowledgement in the captured p
 
 ## Independent check of the later D01 diagnostic
 
-`reaudit_d01.py` reads only the D01 Git objects pinned at commit `f89e59c33a5ca18e9b0a917a596a55b9a99467a6`. Its separate XML reader re-scores all eight prime/trial FODS pairs, checks the frozen 0/50 ms row schedule against the saved operations, and verifies the recorded no-model and neutral-cleanup receipts. Run it with:
+`reaudit_d01.py` reads only the D01 Git objects pinned at commit `f89e59c33a5ca18e9b0a917a596a55b9a99467a6`. Its separate XML reader re-scores all eight prime/trial FODS pairs, verifies each file's SHA-256 against that task's `saved_sha256` in `raw.json`, checks the frozen 0/50 ms row schedule against the saved operations, and verifies the recorded no-model and neutral-cleanup receipts. A replacement FODS with plausible cells but a different digest is rejected before scoring. Run it with:
 
 ```sh
 python3 research/integration/calc3311_click_text_boundary_20261004_01a0ff51/reaudit_d01.py
