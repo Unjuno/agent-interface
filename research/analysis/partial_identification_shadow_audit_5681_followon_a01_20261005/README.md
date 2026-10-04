@@ -32,4 +32,4 @@ For a frozen decision threshold `τ`: classify `ROBUST_ABOVE_THRESHOLD` only if 
 
 ## Reproduction
 
-The frozen candidate command is `python -B /src/candidate.py /src/cases.json /out/candidate.json`; the frozen auditor command is `python -B /src/audit.py /src/cases.json /out/candidate.json`. They run in separate WSLc containers with the pinned local image, no network, a read-only source mount and a distinct writable output mount. Exact commands, outputs, exit codes, platform and hashes are in `results/SELECTION-AWARE-PARTIAL-IDENTIFICATION-5681-T0-20261005-01/`.
+The candidate entrypoint is `python -B /src/candidate.py /src/cases.json /out/candidate.json`; the independent auditor entrypoint is `python -B /src/audit.py /src/cases.json /raw/candidate.json`. They run in separate WSLc containers with the pinned local image, no network, a read-only source mount and a distinct writable output mount. The observed argument vectors and the WSLc-specific omission of unsupported `--cidfile` are recorded in the allocation `RUN.json`; raw output, exit codes, platform and hashes are stored alongside it.
