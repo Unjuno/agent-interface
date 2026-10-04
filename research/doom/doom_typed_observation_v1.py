@@ -12,6 +12,15 @@ SCHEMA = "doom-typed-observation-v1"
 SUPPORTED = {"health", "ammo"}
 
 
+def _valid_pointer_binding(value):
+    return (
+        type(value) is dict and set(value) == {"focus", "surface", "geometry"} and
+        type(value["focus"]) is int and type(value["surface"]) is int and
+        type(value["geometry"]) is list and len(value["geometry"]) == 4 and
+        all(type(item) is int for item in value["geometry"])
+    )
+
+
 def frame_rgb_sha256(frame):
     if not isinstance(frame, Image.Image):
         raise ValueError("PIL frame required")
@@ -24,7 +33,10 @@ def _compact(result):
                 "capture_ns", "binding", "wad_sha256"}
     if (type(result) is not dict or not required <= set(result) or
             result["status"] not in ("observed", "unknown") or
-            (result["status"] == "unknown" and result["value"] is not None)):
+            (result["status"] == "unknown" and result["value"] is not None) or
+            type(result["sequence"]) is not int or
+            type(result["capture_ns"]) is not int or
+            not _valid_pointer_binding(result["binding"])):
         raise ValueError("exact typed signal result required")
     compact = {key: result[key] for key in required}
     if result["status"] == "unknown":
@@ -37,6 +49,7 @@ def extract_typed_observation(frame, metadata, readers, clock=time.perf_counter_
     if (type(metadata) is not dict or set(metadata) != expected or
             type(metadata["sequence"]) is not int or metadata["sequence"] < 1 or
             type(metadata["capture_ns"]) is not int or metadata["capture_ns"] <= 0 or
+            not _valid_pointer_binding(metadata["pointer_binding"]) or
             set(readers) != SUPPORTED):
         raise ValueError("exact capture metadata and health/ammo readers required")
     started_ns = clock()
@@ -44,6 +57,11 @@ def extract_typed_observation(frame, metadata, readers, clock=time.perf_counter_
     details = {name: readers[name].read_frame(observation, frame)
                for name in sorted(readers)}
     signals = {name: _compact(details[name]) for name in sorted(details)}
+    if any(signal["sequence"] != metadata["sequence"] or
+           signal["capture_ns"] != metadata["capture_ns"] or
+           signal["binding"] != metadata["pointer_binding"]
+           for signal in signals.values()):
+        raise ValueError("typed signals must bind the exact capture epoch")
     ready_ns = clock()
     if not metadata["capture_ns"] <= started_ns <= ready_ns:
         raise ValueError("typed extraction clock must follow capture")
@@ -64,6 +82,8 @@ def extract_typed_observation(frame, metadata, readers, clock=time.perf_counter_
 def build_action_snapshot(event, contract):
     digest = event.get("frame_rgb_sha256") if type(event) is dict else None
     frame_size = event.get("frame_size") if type(event) is dict else None
+    sequence = event.get("sequence") if type(event) is dict else None
+    binding = event.get("pointer_binding") if type(event) is dict else None
     capture_ns = event.get("capture_ns") if type(event) is dict else None
     started_ns = event.get("typed_extraction_started_ns") if type(event) is dict else None
     ready_ns = event.get("typed_ready_ns") if type(event) is dict else None
@@ -79,6 +99,8 @@ def build_action_snapshot(event, contract):
             any(character not in "0123456789abcdef" for character in digest) or
             type(frame_size) is not list or len(frame_size) != 2 or
             any(type(value) is not int or value <= 0 for value in frame_size) or
+            type(sequence) is not int or sequence < 1 or
+            not _valid_pointer_binding(binding) or
             type(capture_ns) is not int or type(started_ns) is not int or
             type(ready_ns) is not int or not capture_ns <= started_ns <= ready_ns or
             type(elapsed_ms) not in (int, float) or
@@ -88,19 +110,23 @@ def build_action_snapshot(event, contract):
     if not required or not required <= SUPPORTED or set(event.get("signals", {})) != SUPPORTED:
         raise ValueError("complete typed health/ammo event required")
     signals = {}
-    for name in sorted(required):
+    for name in sorted(SUPPORTED):
         row = event["signals"][name]
         if (type(row) is not dict or row.get("signal_id") != name or
+                type(row.get("sequence")) is not int or
+                type(row.get("capture_ns")) is not int or
+                not _valid_pointer_binding(row.get("binding")) or
                 row.get("sequence") != event.get("sequence") or
                 row.get("capture_ns") != event.get("capture_ns") or
-                row.get("binding") != event.get("pointer_binding") or
+                row.get("binding") != binding or
                 row.get("status") not in ("observed", "unknown") or
                 (row.get("status") == "unknown" and row.get("value") is not None)):
             raise ValueError("typed signal must bind the exact early epoch")
-        signals[name] = {"status": row["status"], "value": row["value"]}
-    return {"format": SNAPSHOT_FORMAT, "sequence": event["sequence"],
+        if name in required:
+            signals[name] = {"status": row["status"], "value": row["value"]}
+    return {"format": SNAPSHOT_FORMAT, "sequence": sequence,
             "capture_ns": event["capture_ns"],
-            "binding": event["pointer_binding"], "signals": signals}
+            "binding": binding, "signals": signals}
 
 
 def reconcile_artifact(typed, observation, readers):
