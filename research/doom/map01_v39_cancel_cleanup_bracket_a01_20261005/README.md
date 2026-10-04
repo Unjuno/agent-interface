@@ -84,15 +84,28 @@ each line with `json.loads`. This is a direct JSON round-trip transport, but
 A08 does not execute that writer/reader boundary. No live session or game was
 started for this check.
 
+- **A09:** Source-extracted the exact V12 `emit` method and V39 controller
+  `reader` and `wait` functions, then passed the retained A08 release event
+  through their in-memory file/stdout/queue path. The controller wait received
+  `input_released`; independent audit confirmed the decoded event and nested
+  owner cleanup (including two per-key brackets) were unchanged, and authority
+  remained false. Result: `PASS_RECONSTRUCTED_SCOPED`. The Windows text-mode
+  log files contain CRLF while captured stdout contains LF; parsed JSON objects
+  are equal. This exercises the source-extracted transport functions, not
+  `session_map01_v12.main()`, a real subprocess, OS input, or the game.
+
 The A03 source freeze includes hashes for its full imported fake-display/control
 dependency closure. The A04 freeze includes the exact guard method source and
 A03 raw input. The A08 freeze includes the current producer/consumer source
-methods and retained A03 input. Reproduce only the read-only audits with:
+methods and retained A03 input. The A09 freeze includes the current session
+writer, controller reader/wait, and A08 event. Reproduce only the read-only
+audits with:
 
 ```powershell
 python research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a03.py
 python research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a04.py
 python research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a08.py
+python research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a09.py
 ```
 
 All candidate outputs are consumed. Do not rerun them or overwrite any retained
