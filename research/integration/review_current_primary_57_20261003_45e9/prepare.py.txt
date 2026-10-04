@@ -1,0 +1,34 @@
+"""Freeze exact peer and explicitly isolated strictUTF8 composition before any runtime check."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,shutil,subprocess
+r=Path(__file__).resolve().parent;ws=r.parent.parent;e=json.loads((r/'EXPORT.json').read_bytes())
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+assert e['current_used_changed_paths']==[]
+names=['primary_stdio.mjs','primary_caller.mjs','primary_exchange.mjs','relay_host.mjs','relay_client.mjs','test_primary_stdio.mjs','test_primary_stdio_backpressure.mjs','test_relay_client.mjs']
+for variant in ['peer','combined']:
+ p=r/variant/'runtime/host_v1';p.mkdir(parents=True,exist_ok=False)
+ for n in names:shutil.copyfile(r/'head/runtime/host_v1'/n,p/n)
+own=r.parent/'stdio-utf8-repair-45e9/source/runtime/host_v1';pub=json.loads((ws/'outputs/primary-utf8-publication.json').read_bytes())
+for n in ['primary_stdio.mjs','test_primary_stdio_utf8.mjs']:
+ expected=next(x for x in pub['files'] if x['path']=='runtime/host_v1/'+n);assert sha((own/n).read_bytes())==expected['sha256']
+peer=(r/'peer/runtime/host_v1/primary_stdio.mjs').read_text(encoding='utf-8');utf8=(own/'primary_stdio.mjs').read_text(encoding='utf-8')
+start='export async function servePrimaryLines({exchange,input,output}) {';end="  output.on('error',failed);"
+a=peer.index(start);b=peer.index(end,a);u=utf8[utf8.index(start):utf8.index(end,utf8.index(start))]
+assert "lines.on('error',failed);" in peer[a:b] and "lines.on('error'" not in u
+combined=peer[:a]+u+"  lines.on('error',failed);\n"+peer[b:]
+needle="import {pathToFileURL} from 'node:url';\n";assert combined.count(needle)==1
+combined=combined.replace(needle,needle+"import {TextDecoder} from 'node:util';\n",1)
+needle="        output.removeListener('error',failed);input.removeListener('error',failed);";assert combined.count(needle)==1
+combined=combined.replace(needle,"        input.removeListener('data',validateBytes);input.removeListener('end',finishBytes);\n"+needle,1)
+assert "if(rejectedWrites.size){failed(Error('primary busy response backlog'));return;}" in combined
+(r/'combined/runtime/host_v1/primary_stdio.mjs').write_text(combined,encoding='utf-8',newline='\n')
+shutil.copyfile(own/'test_primary_stdio_utf8.mjs',r/'combined/runtime/host_v1/test_primary_stdio_utf8.mjs')
+node=Path(shutil.which('node'));source=[]
+for variant in ['peer','combined']:
+ for p in sorted((x for x in (r/variant).rglob('*') if x.is_file()),key=lambda x:x.relative_to(r/variant).as_posix()):
+  source.append({'variant':variant,'path':p.relative_to(r/variant).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())})
+put(r/'COMPOSITION_SOURCE.json',{'peer_head':e['head'],'current_main':e['current_main'],'owned_utf8_head':pub['head'],'recipe':'Retain complete exact6979 busy/runPrimaryStdio/Readline-error binding/tests and actual adopted6935relay; transplant exact ownedUTF8 serve prefix/byte validation, import and cleanup only. No live joint source/head installation.','combined_stdio_sha256':sha(combined.encode()),'current_relay_blob':'0db78713fac3b5498e95264400986d1288858ebb'})
+put(r/'FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'source':source,'helpers':[{'path':n,'sha256':sha((r/n).read_bytes())} for n in ['probes.mjs','prepare.py','capture.py']], 'intent_sha256':sha((r/'INTENT.json').read_bytes()),'environment_delta':{'TMP':str(r/'tmp'),'TEMP':str(r/'tmp'),'PRIMARY_STDIO_STARTUP_EVIDENCE_for_maintained':str(r/'maintained-startup-cases')},'job_timeout_seconds':25,'node_binary':str(node),'node_version':subprocess.check_output([str(node),'--version']).decode().strip(),'node_binary_sha256':sha(node.read_bytes()),'jobs':[{'name':'new-busy-fault','argv':[str(node),str(r/'probes.mjs')],'cwd':str(r)},{'name':'combined-maintained54','argv':[str(node),'--test','--test-concurrency=1','--test-reporter=tap','runtime/host_v1/test_primary_stdio.mjs','runtime/host_v1/test_primary_stdio_backpressure.mjs','runtime/host_v1/test_primary_stdio_utf8.mjs','runtime/host_v1/test_relay_client.mjs'],'cwd':str(r/'combined')}]})
+print(json.dumps({'prepared':True,'new_probe_rows':6,'composed_maintained_expected':54,'peer_source_unchanged':True}))

@@ -1,0 +1,4601 @@
+{
+  "base": "1089e144bcde387036c613972ff3f2f0c384dae4",
+  "branch": "research/5442-jupyterlab-01a0ff58-20261003",
+  "prefix": "research/integration/jupyterlab_endpoint_5442_01a0ff58",
+  "workflow_tree": "cc42f0dba9794dc79a2d1543b56eefb14ae9bf68",
+  "definitions": [
+    {
+      "path": ".github/workflows/57-paired-route-ledger-t0.yml",
+      "bytes": 8100,
+      "sha256": "b8b0c6c30925973a51d39932e15bee44b5d4cb030379db72c8799f60017cebe6",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation identifier; exact match required.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "paired-ledger-t0": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/paired-route-analysis-57-t0-20261001'"
+      }
+    },
+    {
+      "path": ".github/workflows/5716-identifiability-docker-construction-a01.yml",
+      "bytes": 9337,
+      "sha256": "882542753c0da02189271c4a8e719f10679a5a0d25ef269683a8b97805b7f2f9",
+      "events": {
+        "create": ""
+      },
+      "jobs_if": {
+        "construction": "github.event.ref_type == 'branch' && github.event.ref == 'research/5716-identifiability-docker-construction-20261001-01'"
+      }
+    },
+    {
+      "path": ".github/workflows/5771-disturbance-response-t1-v2.yml",
+      "bytes": 8307,
+      "sha256": "177ba0388cc6f720998b34376cc8edd3810b0f249db96ececbf4b93c45e63730",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation ID, exact match required.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "finite-t1": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/disturbance-response-feasibility-5771-t1-v2-20261001'"
+      }
+    },
+    {
+      "path": ".github/workflows/5771-disturbance-response-t1-v3.yml",
+      "bytes": 8279,
+      "sha256": "78ef73050b0692944fbb1da839dbcdd0b30338cd56efad0b2b40d1e5bc8a2c7a",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation ID, exact match required.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "finite-t1": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/disturbance-response-feasibility-5771-t1-v3-20261001'"
+      }
+    },
+    {
+      "path": ".github/workflows/5771-disturbance-response-t1.yml",
+      "bytes": 8324,
+      "sha256": "80ec8dc6684343f91964f030ebcad6a1d4d4f5095eebf9e56f638c8dfddf7ab3",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation identifier; must match FREEZE.json exactly.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "finite-t1": "github.event.ref_type == 'branch' && github.event.ref == 'research/disturbance-response-feasibility-5771-t0-20261001'"
+      }
+    },
+    {
+      "path": ".github/workflows/5811-relational-noninterference-t0.yml",
+      "bytes": 8031,
+      "sha256": "37f56a46f4d4d9893f575c0f29aaf8d71ededa8fa1310da2a357c6211801610f",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation identifier; exact match required.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "finite-t0": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/relational-noninterference-5811-t0-20261001'"
+      }
+    },
+    {
+      "path": ".github/workflows/5817-obligation-conservation-t0.yml",
+      "bytes": 8647,
+      "sha256": "3ac2a7dbfa4f17ffb91aa901736099fd82ba21055e7b3ba0eee5282b3bf79fbb",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation ID; exact match required.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "finite-t0": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/obligation-conservation-5817-t0-20261001-a2'"
+      }
+    },
+    {
+      "path": ".github/workflows/5850-assay-sensitivity-t0.yml",
+      "bytes": 5975,
+      "sha256": "16f62b5ce95a14fa1fb3b76ea10f27a2fbb413c261a12145dce1b38cb4de27e4",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation identifier; exact match required.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "assay-sensitivity-t0": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/assay-sensitivity-5850-t0-20261001'"
+      }
+    },
+    {
+      "path": ".github/workflows/5862-robust-recourse-t0.yml",
+      "bytes": 8021,
+      "sha256": "53be1ff9885b2aa7e1e4cbc28dfe0bd3e4a086cc2a285adeb32bd9a2d6579460",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation": {
+              "description": "Frozen allocation identifier; exact match required.",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "finite-t0": "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/robust-recourse-5862-t0-20261001'"
+      }
+    },
+    {
+      "path": ".github/workflows/adapter-trace-successor-2309.yml",
+      "bytes": 1240,
+      "sha256": "406d769717535b26e8920441259ffa3fc0097b59472607a332c51bb45e019492",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/adapter_trace_successor_2309_v1/**",
+            ".github/workflows/adapter-trace-successor-2309.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/integration/adapter_trace_successor_2309_v1/**",
+            ".github/workflows/adapter-trace-successor-2309.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/analysis-index.yml",
+      "bytes": 7198,
+      "sha256": "a85d59b60a25f64854b1d7ff795ad1f26fcc5d05157bb8fbfbdfc9bc269cba4b",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/**",
+            ".github/workflows/analysis-index.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/analysis/**",
+            ".github/workflows/analysis-index.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "analysis-index": null
+      }
+    },
+    {
+      "path": ".github/workflows/capture-artifact-boundary-v1.yml",
+      "bytes": 609,
+      "sha256": "7fb67a48f6da9a80114518990b9642d69784e6bb556612afee8016500d4e4de6",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "research/capture-artifact-boundary-v1"
+          ]
+        }
+      },
+      "jobs_if": {
+        "benchmark": null
+      }
+    },
+    {
+      "path": ".github/workflows/cli-golden-v3-adapter-2292.yml",
+      "bytes": 1322,
+      "sha256": "ced9e798d06c938241412774071fca8bd405eefa8908284d9f2e1b625432cd27",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/golden_v3.py",
+            "runtime/cli_v1/test_golden_v3.py",
+            "runtime/cli_v1/README.md",
+            ".github/workflows/cli-golden-v3-adapter-2292.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/cli-v1-lineage-dispatch-2397.yml",
+      "bytes": 677,
+      "sha256": "2a35339908dab030605abdb6a53bca62b7e5ab4c1ffb5e1c1d95c5e3b738a623",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/lineage.py",
+            "research/integration/cli_v1_lineage_dispatch_2397_v1/**",
+            ".github/workflows/cli-v1-lineage-dispatch-2397.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/cli-v1-lineage-freshness-2428.yml",
+      "bytes": 682,
+      "sha256": "7b1c8dced8f84ede15b30f67f6b6ee9ebbb1f7087d2fef34576fd4fdfc0d91fa",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/lineage.py",
+            "research/integration/cli_v1_lineage_freshness_2428_v1/**",
+            ".github/workflows/cli-v1-lineage-freshness-2428.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/cli-v1-lineage-sidecar-audit-2397.yml",
+      "bytes": 768,
+      "sha256": "7ede784d21cd6ad822ff6f92cdb20bfcaddc8e84f0c50b029bc8521e819d6813",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/cli_v1_lineage_sidecar_gate_v1/**",
+            "research/integration/cli_v1_lineage_sidecar_audit_2397_v1/**",
+            ".github/workflows/cli-v1-lineage-sidecar-audit-2397.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/composition-heldout-fixture-2068.yml",
+      "bytes": 966,
+      "sha256": "029b56c2d5db492187e69d6aa66b17db4a913579ff9955483492dbdb9aa51033",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/composition_heldout_fixture_2068_v1/**"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/composition-heldout-fixture-2068-v1"
+          ],
+          "paths": [
+            "research/analysis/composition_heldout_fixture_2068_v1/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "run": null
+      }
+    },
+    {
+      "path": ".github/workflows/container-lab-bundle-01.yml",
+      "bytes": 2841,
+      "sha256": "9462d1e974cd9ad6b9a1f8c2bad1c7efbba7b0f0888f0542d0e67cad66021f78",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/container-lab-bundle-01.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "package-only": null
+      }
+    },
+    {
+      "path": ".github/workflows/docker-ipc-bridge-contract-2818.yml",
+      "bytes": 374,
+      "sha256": "bca1729b3a30302d3283c35dfd1913de9eb67831ca6db78c8d572b464b77b0b5",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/docker-ipc-bridge-contract-ci-2818.yml",
+      "bytes": 3634,
+      "sha256": "6664ef7efae9546b92d715d12de8e54badeb569c7db7c428e2a590adae0d2d5e",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/docker-ipc-bridge-contract-ci-2818.yml",
+            "runtime/host_model_ipc_broker_v1.py",
+            "runtime/test_host_model_ipc_broker_v1.py",
+            "runtime/test_docker_host_model_bridge_v1.py",
+            "research/integration/docker_schema_preflight_bridge_2818_v1/**",
+            "research/live_control/issue_3311_host_ipc_v1/audit_orbstack_v1_transport.py",
+            "research/live_control/issue_3311_host_ipc_v1/test_audit_orbstack_v1_transport.py",
+            "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py",
+            "research/live_control/issue_3311_host_ipc_v1/source-revisions.json",
+            "research/live_control/issue_3311_host_ipc_v1/evidence/**",
+            "research/live_control/issue_3311_host_ipc_v1/audit-reports/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract": null,
+        "evidence-audit-windows": null
+      }
+    },
+    {
+      "path": ".github/workflows/docker-schema-preflight-output-validation-2849.yml",
+      "bytes": 3670,
+      "sha256": "48dc9de7d2370f2d2aaf79d437cca4240ac2db8d43449d27f40ca866ba43bc6f",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/docker-schema-preflight-output-validation-2849.yml",
+            "runtime/docker_schema_preflight_v1.py",
+            "runtime/test_docker_schema_preflight_v1.py",
+            "runtime/requirements-docker-schema-preflight.txt",
+            "research/live_control/docker_model_call_backend_v1.py",
+            "research/live_control/test_docker_model_call_backend_v1.py",
+            "research/live_control/model_call_backend_v1.py",
+            "research/live_control/test_model_call_backend_v1.py",
+            "research/live_control/integrated_efficiency_model_v1.py",
+            "research/live_control/probe_integrated_efficiency_live_orchestration_v1.py",
+            "research/live_control/test_integrated_efficiency_probe_injection_v1.py"
+          ]
+        }
+      },
+      "jobs_if": {
+        "windows-inputs": null,
+        "output-contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/dwell-bound-provenance-2279.yml",
+      "bytes": 900,
+      "sha256": "8d9e9d746e3b5a42aa03df1da9b728a73c4df74bf501f7fd4132db5a9bf2840f",
+      "events": {
+        "push": {
+          "branches": [
+            "research/dwell-bound-provenance-2279"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/live_control/dwell_bound_provenance_2279_v1/**",
+            ".github/workflows/dwell-bound-provenance-2279.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/dwell-timeout-oracle-2279.yml",
+      "bytes": 1237,
+      "sha256": "bdcd78615410f3ac1dffd96b4a1d4c4f0173aae0a908bcdecf1c761d5b5a69ba",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/live_control/dwell_timeout_oracle_2279_v1/**",
+            ".github/workflows/dwell-timeout-oracle-2279.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/live_control/dwell_timeout_oracle_2279_v1/**",
+            ".github/workflows/dwell-timeout-oracle-2279.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/exact-lp-evidence-order-2576-v2.yml",
+      "bytes": 1472,
+      "sha256": "ba33ce3e3c69d6847ea088a94f104fff3a2bf27f7b6b0f7444921338a394261a",
+      "events": {
+        "push": {
+          "branches": [
+            "research/lp-exact-evidence-order-2576-fix-v2"
+          ],
+          "paths": [
+            "research/launch/lp_exact_evidence_order_2576_v2/**",
+            "site/index.html",
+            "site/media/**",
+            ".github/workflows/exact-lp-evidence-order-2576-v2.yml"
+          ]
+        },
+        "pull_request": {
+          "types": [
+            "opened",
+            "synchronize",
+            "ready_for_review"
+          ],
+          "paths": [
+            "research/launch/lp_exact_evidence_order_2576_v2/**",
+            "site/index.html",
+            "site/media/**",
+            ".github/workflows/exact-lp-evidence-order-2576-v2.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "exact-browser": null
+      }
+    },
+    {
+      "path": ".github/workflows/explicit-context-dispatch-2530.yml",
+      "bytes": 842,
+      "sha256": "f05db43806d6ea7e284d4b94b9ecd5e56b35666444a8d581234885c1a83df32a",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "runtime/motor_state_v1/dispatch_bridge.py",
+            "runtime/motor_state_v1/test_dispatch_bridge.py",
+            "runtime/motor_state_v1/adapter.py",
+            ".github/workflows/explicit-context-dispatch-2530.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "runtime/motor_state_v1/dispatch_bridge.py",
+            "runtime/motor_state_v1/test_dispatch_bridge.py",
+            "runtime/motor_state_v1/adapter.py",
+            ".github/workflows/explicit-context-dispatch-2530.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "test": null
+      }
+    },
+    {
+      "path": ".github/workflows/explicit-context-dispatch-bridge-2530.yml",
+      "bytes": 614,
+      "sha256": "7e1690d75303e55cadb315ceecb41deb01ead90e53d89f9052b4031e0afc65c5",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "runtime/motor_state_v1/dispatch_bridge.py",
+            "runtime/motor_state_v1/test_dispatch_bridge.py",
+            "runtime/motor_state_v1/adapter.py",
+            ".github/workflows/explicit-context-dispatch-bridge-2530.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "test": null
+      }
+    },
+    {
+      "path": ".github/workflows/focused-observation-1998-current-main.yml",
+      "bytes": 1031,
+      "sha256": "c95e9b37f596f442cbcc96b23bfeafead36853517f5f3ab2dbadc90808beb1f5",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/focused_observation_request_successor_1935_v1/**",
+            ".github/workflows/focused-observation-1998-current-main.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "scoped-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/focused-observation-container-successor.yml",
+      "bytes": 922,
+      "sha256": "96ea3ff941e26c683a9c87cd8ef1c8c86b94105c075add098d04acfe9e107d6d",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/focused_observation_container_successor_2137_v1/**",
+            ".github/workflows/focused-observation-container-successor.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/full-golden-ipc-source-integrity-2737.yml",
+      "bytes": 1635,
+      "sha256": "fa1f6c2838e507a31ca6c9712b366c6d75faa5c50870dbb5a1b407efad7b06f1",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/analysis/full_golden_ipc_2737_v1/RESULT.json",
+            "research/live_control/**",
+            "runtime/host_model_ipc_broker_v1.py",
+            ".github/workflows/full-golden-ipc-source-integrity-2737.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/generation-bound-evidence-container-successor.yml",
+      "bytes": 1359,
+      "sha256": "fc6bf59ff9c0c16fb5637dec52345f158b8c00a7ce15cfedf3f7be51062e160b",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/generation_bound_evidence_container_successor_2166_v1/**",
+            ".github/workflows/generation-bound-evidence-container-successor.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/generation-bound-evidence-provenance-successor.yml",
+      "bytes": 3097,
+      "sha256": "95aa6fd8cc30a34a3e958075cb8375bea0ab897db24537dc158862532e3958ed",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/generation_bound_evidence_provenance_successor_2196_v1/**",
+            ".github/workflows/generation-bound-evidence-provenance-successor.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/generation-bound-provenance-canonical-digest.yml",
+      "bytes": 3164,
+      "sha256": "bbedbc2af54782af0e281594493f9b273c19098acb543d08841fae75a79b48ec",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/generation_bound_evidence_provenance_canonical_digest_2239_v1/**",
+            ".github/workflows/generation-bound-provenance-canonical-digest.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-cli-lifecycle-contract-successor-2259.yml",
+      "bytes": 2255,
+      "sha256": "6c38aa6d08b095e6528e66c2776286b509837014d30cec939e4a5c8f7e178486",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**",
+            ".github/workflows/golden-cli-lifecycle-contract-successor-2259.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**",
+            ".github/workflows/golden-cli-lifecycle-contract-successor-2259.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-cli-lifecycle-contract-successor.yml",
+      "bytes": 1246,
+      "sha256": "74aacc2c031ebfdbb03ed345d05784930bd8454b66fbc3f2b53083c4e2fd9648",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**",
+            ".github/workflows/golden-cli-lifecycle-contract-successor.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**",
+            ".github/workflows/golden-cli-lifecycle-contract-successor.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-cli-lifecycle-path-covered-2265.yml",
+      "bytes": 1390,
+      "sha256": "c0221beca6a86bbd190540f909af633f02d806a8329899532e7feaeb6fd719c9",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**",
+            ".github/workflows/golden-cli-lifecycle-path-covered-2265.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "formal": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/golden-delivery-join-v1.yml",
+      "bytes": 1360,
+      "sha256": "b47de61546283816f6cc97db37bd24b6b7902086904ef8b3da4c9430f0403d56",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/**",
+            "runtime/selector_v1/**",
+            "research/integration/golden_delivery_join_v1/**",
+            ".github/workflows/golden-delivery-join-v1.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "runtime/cli_v1/**",
+            "runtime/selector_v1/**",
+            "research/integration/golden_delivery_join_v1/**",
+            ".github/workflows/golden-delivery-join-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "offline-regression": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-ipc-accounting-3232.yml",
+      "bytes": 852,
+      "sha256": "6e21a23bb983d4286d84bdcb2f5bf32b900897f65bf674293b7d4ebbf4cfb93d",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/analysis/full_golden_ipc_2737_v1/RESULT.json",
+            "research/analysis/full_golden_ipc_3232_v1/audit_accounting.py",
+            ".github/workflows/golden-ipc-accounting-3232.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-ipc-live-receipt-composition-2996.yml",
+      "bytes": 5106,
+      "sha256": "6c1f62d2e5b45763c3182d7ef8e4151e9da4e7ea082ef1d1ab3f8e7483722b7c",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/golden-ipc-live-receipt-composition-2996.yml",
+            "research/live_control/session_v4.py",
+            "research/integration/golden_v3_receipt_composition_2916/**",
+            "research/observation_tiles/**",
+            "research/observation_gating/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "live-receipt-composition": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-ipc-observation-continuation-smoke-2979.yml",
+      "bytes": 4046,
+      "sha256": "63c25a0b1d4429df2e640719beb3f4e9c55b99a45e9b611eb5c354ca84d0c755",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/golden-ipc-observation-continuation-smoke-2979.yml",
+            "research/live_control/session_v4.py",
+            "research/observation_tiles/**",
+            "research/observation_gating/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "observation-continuation": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-ipc-runner-preflight-2705.yml",
+      "bytes": 515,
+      "sha256": "cd2dcc0dd5c1aae6514c2cf38eb6f461f8132aad1e1e42479ff66ea5c3110bed",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/golden_ipc_runner_preflight_2705/**",
+            "container_host_model_ipc_runner_v1.py",
+            "host_model_ipc_broker_v1.py"
+          ]
+        }
+      },
+      "jobs_if": {
+        "runner-preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-ipc-startup-ready-smoke-2922.yml",
+      "bytes": 2459,
+      "sha256": "2c2ae8166046d53dcaac13a2323e4991635a08f6f6d6131488b1bf3bc598a983",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/live_control/session_v4.py",
+            "research/live_control/gui_suite.py",
+            "research/live_control/tile_transport.py",
+            "research/observation_tiles/**",
+            "research/observation_gating/**",
+            ".github/workflows/golden-ipc-startup-ready-smoke-2922.yml",
+            "research/analysis/golden_ipc_transitive_closure_2922_v2/README.md"
+          ]
+        }
+      },
+      "jobs_if": {
+        "startup-ready": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-ipc-static-closure-2922.yml",
+      "bytes": 1192,
+      "sha256": "ff72558e10175d0679e80186cd06bcae373b3e76580bedce286310ab4adc93fd",
+      "events": {
+        "push": {
+          "paths": [
+            "research/analysis/golden_ipc_transitive_closure_2922_v2/**",
+            "research/live_control/tile_transport.py",
+            "research/live_control/gui_suite.py",
+            ".github/workflows/golden-ipc-static-closure-2922.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/analysis/golden_ipc_transitive_closure_2922_v2/**",
+            "research/live_control/tile_transport.py",
+            "research/live_control/gui_suite.py",
+            ".github/workflows/golden-ipc-static-closure-2922.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "static-closure": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-report-independent-scorer-2246.yml",
+      "bytes": 723,
+      "sha256": "6f82bd51e2130f275dfcdbe686f4836a201b3fcf687ccc0c72c5c378289ee4d2",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_report_independent_scorer_2246_v1/**",
+            "runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json",
+            ".github/workflows/golden-report-independent-scorer-2246.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-route-scope-preflight-2678.yml",
+      "bytes": 506,
+      "sha256": "1eb616eab66b59917f61ae5e613f6686e26aa8b47756ed97c9874445bfb71754",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/golden_route_scope_preflight_2678/**",
+            "research/integration/golden_v3_orbstack_2558_six_allocation_v1/RESULT.json"
+          ]
+        }
+      },
+      "jobs_if": {
+        "scope-preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-adapter-p2-rebase-2360.yml",
+      "bytes": 3854,
+      "sha256": "92f472b52131dbc6be2962d45f1722655ea0bd7ab0572c7a05882f2281e50a5a",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/__init__.py",
+            "research/integration/golden_v3_adapter_p2_rebase_2360_v1/**",
+            ".github/check_golden_adapter_history.py",
+            ".github/test_golden_adapter_history.py",
+            ".github/workflows/golden-v3-adapter-p2-rebase-2360.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "runtime/cli_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/__init__.py",
+            "research/integration/golden_v3_adapter_p2_rebase_2360_v1/**",
+            ".github/check_golden_adapter_history.py",
+            ".github/test_golden_adapter_history.py",
+            ".github/workflows/golden-v3-adapter-p2-rebase-2360.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-calc-construction-2492.yml",
+      "bytes": 775,
+      "sha256": "145bede15374938b422ee23e6dd2563a98bb56fb30fbe41a4347ce5e3f75c3f6",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/construction_calc.py",
+            ".github/workflows/golden-v3-calc-construction-2492.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-cli-adapter-2203.yml",
+      "bytes": 856,
+      "sha256": "6e708d66d26ab6e5d39f563fe5a7af308f8a3d3e17645734be5e091f11ba0979",
+      "events": {
+        "push": {
+          "paths": [
+            "research/integration/golden_v3_cli_adapter_2200_v1/**",
+            ".github/workflows/golden-v3-cli-adapter-2203.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_cli_adapter_2200_v1/**",
+            ".github/workflows/golden-v3-cli-adapter-2203.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-cli-adapter-2269.yml",
+      "bytes": 1293,
+      "sha256": "13e7eac08c216703127663a4cab5642d2b976bc579b349220ea139848203de00",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_cli_adapter_2203_v2/**",
+            ".github/workflows/golden-v3-cli-adapter-2269.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-cli-adapter-current-main-successor-2274.yml",
+      "bytes": 1248,
+      "sha256": "af01eb9496e1998108d9a9d1ebeb40646adfb88a8b2f9e738129462be393a990",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_cli_adapter_successor_2260_v1/**",
+            ".github/workflows/golden-v3-cli-adapter-current-main-successor-2274.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "audit": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-cli-contract-audit-2172.yml",
+      "bytes": 744,
+      "sha256": "0968f155c35984f96c8f028fa61cfac5cc202f4ec5f50dc81fd0b5d7561a3c56",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_cli_contract_audit_2172_v1/**",
+            ".github/workflows/golden-v3-cli-contract-audit-2172.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "audit": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-cli-lifecycle-contract-current-main-successor-2259.yml",
+      "bytes": 821,
+      "sha256": "791b71af0782998b04bae8d015f5645afc6ed63baae2ac7ff3753bbd1765399c",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**",
+            ".github/workflows/golden-v3-cli-lifecycle-contract-current-main-successor-2259.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "audit": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-cli-lifecycle-trace-2309.yml",
+      "bytes": 1600,
+      "sha256": "dc40e10fe619cb9b4f6f7ddcd09be7e444c318001fc94715c7ca2a86b5f9665f",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_cli_lifecycle_trace_2309_v1/**",
+            ".github/workflows/golden-v3-cli-lifecycle-trace-2309.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "audit": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-live-adapter-preflight-2246-v2.yml",
+      "bytes": 608,
+      "sha256": "fb19b71317dd27ffca42765ff991f1acca5592fb64e6ae5b5f94e8efdf10ce15",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_live_adapter_2246_v2/**",
+            ".github/workflows/golden-v3-live-adapter-preflight-2246-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-live-adapter-preflight-2246.yml",
+      "bytes": 602,
+      "sha256": "1d5b3c6051292a4951a924e0c2c436b1417820f2da42cc3c90446e979ccefc21",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_live_adapter_2246_v1/**",
+            ".github/workflows/golden-v3-live-adapter-preflight-2246.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-nested-failure-guard-2360.yml",
+      "bytes": 1447,
+      "sha256": "ba84af98ca994ebca284f8037226e989f7c69c14f67fc6274a50146717e3ceb5",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/golden_v3.py",
+            "research/integration/golden_v3_nested_failure_guard_2360_v1/**",
+            ".github/workflows/golden-v3-nested-failure-guard-2360.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-receipt-composition-2916.yml",
+      "bytes": 555,
+      "sha256": "1d3b115718a0b8146acb07f670ef7738e917c64af5ee5a431105f6ec830bbaa7",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_receipt_composition_2916/**",
+            ".github/workflows/golden-v3-receipt-composition-2916.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "decision-table": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-second-domain-2492.yml",
+      "bytes": 1837,
+      "sha256": "8aa1a9e5873996c3b95757b19de7ec880ae0c61fb0b493dafeedfa4c54d15ad4",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/**",
+            ".github/workflows/golden-v3-second-domain-2492.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "source-gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-second-domain-gtk-adapter-2557.yml",
+      "bytes": 592,
+      "sha256": "1e1d356bd931c2d52f76c9dd12df50a069888f0119c86b0fd500c0acde3536ea",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/gtk_adapter/**",
+            ".github/workflows/golden-v3-second-domain-gtk-adapter-2557.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/golden-v3-second-domain-gtk-scorer-2586.yml",
+      "bytes": 587,
+      "sha256": "0a2a45ae1fd994f246e43fec7f15c8ee81ae75122ba9f8574bc3c2dc0c4e6178",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/gtk_scorer/**",
+            ".github/workflows/golden-v3-second-domain-gtk-scorer-2586.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-bounded-allocation-2836.yml",
+      "bytes": 1984,
+      "sha256": "ca5bb3310a4242d5a37430eea687100c59480c38f669e69f1ae10e4e37dfcee6",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-fixture-startup-2805.yml",
+      "bytes": 1680,
+      "sha256": "404f96b5a3c6409e79386f81040c107c524b6e0df76b7700d584ae0ed78c81e3",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/gtk_fixture_startup_2805/**",
+            "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py",
+            "research/integration/gtk_fixture_dependency_2606_v2/**",
+            ".github/workflows/gtk-fixture-startup-2805.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/gtk-fixture-startup-diagnostic-2805"
+          ]
+        }
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-fixture-startup-2819.yml",
+      "bytes": 1605,
+      "sha256": "d354f0e57097c4b4d7d8477f008d54ac5142bcba704d184a24691d82f06502c1",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/gtk_fixture_startup_2819/**",
+            "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py",
+            "research/integration/gtk_fixture_dependency_2606_v2/**",
+            ".github/workflows/gtk-fixture-startup-2819.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/gtk-output-contract-2819"
+          ]
+        }
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-formal-allocation-2606-v1.yml",
+      "bytes": 1928,
+      "sha256": "efb935d21d182a68cc1efe1ac760622b4860dd4da4ab0f0488673986ade0287a",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-formal-matrix-gate-2606.yml",
+      "bytes": 474,
+      "sha256": "993f59edcb8835561b7d50176962ae92cdcf2614d686712bc59b7dd91e6cd7cb",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/formal_matrix_2606/**",
+            ".github/workflows/gtk-formal-matrix-gate-2606.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract-gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-golden-v3-runner-2492.yml",
+      "bytes": 978,
+      "sha256": "ae3c8589436282a5b95f83612319d22442457f22047e6117fee6b2b54e78c1a1",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/**",
+            ".github/workflows/gtk-golden-v3-runner-2492.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "bounded-preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-independent-gate-repair-2872.yml",
+      "bytes": 2412,
+      "sha256": "847961bca765ff8b6329de19a89c09b684bd57d32ccff13289edf4fd6fc1814f",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/gtk-independent-gate-repair-2872.yml",
+            "research/integration/golden_v3_second_domain_2246_v1/**"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/gtk-independent-gate-allocation-2884"
+          ]
+        }
+      },
+      "jobs_if": {
+        "gate-and-allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-missing-events-2909.yml",
+      "bytes": 1626,
+      "sha256": "477ed29c13d715e0ac9f64a6ce0b569dbee3daf55bd94c4a9354117add05ca18",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/gtk-missing-events-2909.yml",
+            "research/integration/golden_v3_second_domain_2246_v1/formal_matrix_runner.py"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/gtk-missing-events-2909"
+          ]
+        }
+      },
+      "jobs_if": {
+        "allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-receipt-audit-2862.yml",
+      "bytes": 2195,
+      "sha256": "18e851368f3aeea49f4fb74abaa4480de75c678b9d4f725e617bd447a04dbdb4",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "research/gtk-receipt-audit-2862"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/analysis/gtk_receipt_audit_2862/**",
+            ".github/workflows/gtk-receipt-audit-2862.yml",
+            "research/integration/golden_v3_second_domain_2246_v1/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-receipt-integrity-contract.yml",
+      "bytes": 846,
+      "sha256": "d21b6527a91f0595f3361aa03974e90d12f88d864fb4466f9d63312118bbeceb",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/formal_receipt_integrity_2740/**",
+            ".github/workflows/gtk-receipt-integrity-contract.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/gtk-formal-receipt-integrity-2740"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-scorer-successor-2577.yml",
+      "bytes": 546,
+      "sha256": "5b60e104d0a708d305cb2166e3eafd80a8ef3a46e875a18561ab5ee2e0a29c64",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/gtk_scorer_successor_2577/**",
+            ".github/workflows/gtk-scorer-successor-2577.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "tests": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-source-bundle-2780.yml",
+      "bytes": 956,
+      "sha256": "927c5abd4d1e316a6754fdce16ef440da75a48a384d576fd584e81859d3d6477",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/golden_v3_second_domain_2246_v1/source_bundle_2780/**",
+            ".github/workflows/gtk-source-bundle-2780.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/immutable-source-bundle-2780"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-xlib-allocation-2851.yml",
+      "bytes": 2053,
+      "sha256": "0333974f9a5305121307aacfeecc1de554509acdc310cab5cefa2cb6ed06890c",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/gtk-xlib-dependency-2844.yml",
+      "bytes": 1085,
+      "sha256": "5a3a618ce4f77c5ba7172fa1401206526f9e1cadc63141fbf7bf9b6a4aa7c410",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/gtk_fixture_dependency_2606_v3/**",
+            ".github/workflows/gtk-xlib-dependency-2844.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/gtk-xlib-dependency-2844"
+          ]
+        }
+      },
+      "jobs_if": {
+        "preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/guard-calibration-docker-result-2546.yml",
+      "bytes": 634,
+      "sha256": "337ef1a8313e97fe72ea858faede317414493f2fa1fad0a2eeffd24d4cb9b05f",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/measurement/guard_calibration_docker_result_2546_v1/**",
+            ".github/workflows/guard-calibration-docker-result-2546.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "result-ledger": null
+      }
+    },
+    {
+      "path": ".github/workflows/guard-calibration-support-2509.yml",
+      "bytes": 508,
+      "sha256": "23112a87b6808d93e68171de940cbefd6b5f608899c2c9767755ca1e35a27b60",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/guard_calibration_support_2509_v1/**",
+            ".github/workflows/guard-calibration-support-2509.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/history-conditioned-reliance-6616-a03.yml",
+      "bytes": 1194,
+      "sha256": "f02df7782cfb4b9dbcc233b0ff218dc50dc40701ba11859e31e7271075172445",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/history_conditioned_reliance_6616_t0_a03_orbstack_20261003/**",
+            ".github/workflows/history-conditioned-reliance-6616-a03.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/analysis/history_conditioned_reliance_6616_t0_a03_orbstack_20261003/**",
+            ".github/workflows/history-conditioned-reliance-6616-a03.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "a03-construction-contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/integrated-acceptance-boundary-2337.yml",
+      "bytes": 2029,
+      "sha256": "1d53e4f223c11929b2e8ebfc52083a06257868f6fd92d0867fae59d8a652d825",
+      "events": {
+        "push": {
+          "paths": [
+            "research/integration/live_adapter_effect_scorer_2246_v1/**",
+            "research/integration/integrated_acceptance_report_2337_v1/**",
+            "runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json",
+            ".github/workflows/integrated-acceptance-boundary-2337.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/integration/live_adapter_effect_scorer_2246_v1/**",
+            "research/integration/integrated_acceptance_report_2337_v1/**",
+            "runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json",
+            ".github/workflows/integrated-acceptance-boundary-2337.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "hold-boundary": null
+      }
+    },
+    {
+      "path": ".github/workflows/integrated-efficiency-repair-reacquisition-v2.yml",
+      "bytes": 469,
+      "sha256": "ffdb6cd3c72fa779584ef473c266a165a842fb12188c3e7267b869aa02ba6e07",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/integrated_efficiency_repair_reacquisition_v2/**",
+            ".github/workflows/integrated-efficiency-repair-reacquisition-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-3212-old-receipt-admission.yml",
+      "bytes": 645,
+      "sha256": "79d65e36b96debc4b67de47c5d64b74e2e12ee140dccecdf43bbf957bb3032ff",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/chromium/issue-3212-old-receipt-admission-v1/**",
+            ".github/workflows/issue-3212-old-receipt-admission.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-3300-live-vizdoom-coherence.yml",
+      "bytes": 839,
+      "sha256": "fccce3055eb458832e89898da4666584da1ed0861328472270f3af697dc169d7",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/doom/issue-3300-live-vizdoom-coherence-v1/**",
+            ".github/workflows/issue-3300-live-vizdoom-coherence.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-3602-publication-closure.yml",
+      "bytes": 4138,
+      "sha256": "5c9deed8761b9f3580ff204140e80002ca22034ed4f8d499b688e141b696365f",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/issue-3602-publication-closure.yml",
+            "research/integration/issue_3370_delivery_publication_closure_v1/**",
+            "research/integration/issue_3370_delivery_comparison_v1/evidence/**"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/issue-3602-publication-closure-v1"
+          ],
+          "paths": [
+            ".github/workflows/issue-3602-publication-closure.yml",
+            "research/integration/issue_3370_delivery_publication_closure_v1/**",
+            "research/integration/issue_3370_delivery_comparison_v1/evidence/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "publication-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-3628-tk-event-witness-construction.yml",
+      "bytes": 2354,
+      "sha256": "dfa689176f716d3977744e9f49c99232c90f245072a86a73ab6eb101ecb4ba1a",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "tk-construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-3676-audit-probe.yml",
+      "bytes": 1430,
+      "sha256": "4cd19276117eedaa7a0c023ca39ea28cee618247932f939843a92a433a2039af",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/issue-3676-audit-probe.yml",
+            "research/integration/issue_3676_docker_audit_probe_v1/**"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/issue-3676-docker-audit-probe-01"
+          ]
+        }
+      },
+      "jobs_if": {
+        "frozen-audit-probe": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-3676-hardened-audit.yml",
+      "bytes": 2262,
+      "sha256": "c85ebbf166edee532f29d9e50f7da404eec67f59ccc4dde9fe570e33cab033f5",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/issue-3676-hardened-audit.yml",
+            "research/issue_3676_audit_hardening_v1/**"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/issue-3676-audit-hardening-v1"
+          ]
+        }
+      },
+      "jobs_if": {
+        "hardened-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-3816-delivery-byte-binding.yml",
+      "bytes": 3716,
+      "sha256": "280fa0417e070359c4d42b51e2159107bccff833ad9749977918a2a92abc822f",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ],
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/audits/issue_3793_delivery_byte_binding_v3/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "retained-evidence-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5322-formal.yml",
+      "bytes": 2903,
+      "sha256": "60989f28cebe7ac4ef72ecf95c0b1fd1d68e34325b1dcc2a311b60a1b09eeb1f",
+      "events": {
+        "push": {
+          "branches": [
+            "research/issue5322-incentive-reporting-20260930-01"
+          ],
+          "paths": [
+            "research/experiments/strategic_reporting_5322_v1/START_FORMAL.txt"
+          ]
+        }
+      },
+      "jobs_if": {
+        "execute": null,
+        "publish": "always() && needs.execute.result == 'success'"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5372-backpressure-t1-successor.yml",
+      "bytes": 5959,
+      "sha256": "df5a74ca30bbed3744758a85131b84664114917da89040cd8e00064c225ba509",
+      "events": {
+        "push": {
+          "branches": [
+            "research/backpressure-endogenous-demand-5372-t1b-20261001"
+          ],
+          "paths": [
+            "research/analysis/safety_backpressure_5372_t1_successor_20261001/candidate.py",
+            "research/analysis/safety_backpressure_5372_t1_successor_20261001/audit_successor.py",
+            "research/analysis/safety_backpressure_5372_t1_successor_20261001/test_successor.py",
+            "research/analysis/safety_backpressure_5372_t1_successor_20261001/FREEZE.json",
+            "research/analysis/safety_backpressure_5372_t1_successor_20261001/SHA256SUMS",
+            ".github/workflows/issue-5372-backpressure-t1-successor.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "candidate": "github.event.head_commit.message == 'research(#5372): freeze successor allocation 02'",
+        "independent-audit": "needs.candidate.result == 'success'"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5372-backpressure-t1.yml",
+      "bytes": 5162,
+      "sha256": "4bd335d84a67bbf1e719666a150c1ac3057e92b69daca016903761776acb4011",
+      "events": {
+        "push": {
+          "branches": [
+            "research/backpressure-endogenous-demand-5372-t1-20261001"
+          ],
+          "paths": [
+            "research/analysis/safety_backpressure_5372_t1_v1/simulate.py",
+            "research/analysis/safety_backpressure_5372_t1_v1/audit.py",
+            "research/analysis/safety_backpressure_5372_t1_v1/test_experiment.py",
+            "research/analysis/safety_backpressure_5372_t1_v1/freeze.json",
+            "research/analysis/safety_backpressure_5372_t1_v1/SHA256SUMS",
+            ".github/workflows/issue-5372-backpressure-t1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "candidate": "github.event.head_commit.message == 'research(#5372): freeze T1 candidate and run isolated experiment'",
+        "independent-audit": "needs.candidate.result == 'success'"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5375-verifier-cascade-t0a2.yml",
+      "bytes": 1303,
+      "sha256": "89f95d56e4f3d424de04cdb39123ed75fc55266752e63fdd3adc4e1f4aa94ba0",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/verifier_cascade_capacity_5375_t0a2_20261002/**",
+            ".github/workflows/issue-5375-verifier-cascade-t0a2.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/analysis/verifier_cascade_capacity_5375_t0a2_20261002/**",
+            ".github/workflows/issue-5375-verifier-cascade-t0a2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "method-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5440-sensitivity-t1-audit.yml",
+      "bytes": 2539,
+      "sha256": "6df54515aa382c6f7c25cf18a8be3ffb8cc46e7426bd5d4113c162b8b00fafbd",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/hidden_cause_sensitivity_5440_t1/raw/formal.json",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/raw/audit.json",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/SHA256SUMS",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/execution-status.json",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/execution-status.sha256",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/supplemental.sha256",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/formal-result.json",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/formal-result.md",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/workflow-activation-stops.json",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/postrun-delivery-stop.json"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit-committed-raw": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5440-sensitivity-t1-run.yml",
+      "bytes": 3607,
+      "sha256": "80ad6f91bde556b154c70fed92e518e366c4277993249f9dd6670c36a2aa6d84",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/issue-5440-sensitivity-t1-run.yml",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/cases.json",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/candidate.py",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/audit.py",
+            "research/analysis/hidden_cause_sensitivity_5440_t1/preflight.py"
+          ]
+        }
+      },
+      "jobs_if": {
+        "container-experiment": "${{ github.sha == '32db1c3fdc6e50dd6d64c3d6886e503c94144fd6' }}"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5521-anergy-t3-container.yml",
+      "bytes": 7496,
+      "sha256": "c072afd506ab901728cc1887b3cff382107b349bdd0ab837f83ecc5c3d9bbc36",
+      "events": {
+        "push": {
+          "branches": [
+            "research/5521-anergy-t3-container-20261001-01"
+          ],
+          "paths": [
+            "research/experiments/issue_5521_anergy_t3/PLAN.md",
+            "research/experiments/issue_5521_anergy_t3/run.py",
+            "research/experiments/issue_5521_anergy_t3/audit.py",
+            "research/experiments/issue_5521_anergy_t3/test_t3.py",
+            "research/experiments/issue_5521_anergy_t3/container_arm.py",
+            "research/experiments/issue_5521_anergy_t3/assemble_container_raw.py",
+            "research/experiments/issue_5521_anergy_t3/audit_container.py",
+            "research/experiments/issue_5521_anergy_t3/test_container_arm.py",
+            ".github/workflows/issue-5521-anergy-t3-container.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "candidate": null,
+        "independent-audit": "${{ always() && needs.candidate.result == 'success' }}"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5557-temporal-t15-transport.yml",
+      "bytes": 5594,
+      "sha256": "264217ccfe01d9cd6aef56991c65693cdd9c803837e5294b0381bfcebf31548f",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ],
+          "paths": [
+            "research/analysis/mixed_criticality_temporal_feasibility_5557_t15_transport_v1/**",
+            ".github/workflows/issue-5557-temporal-t15-transport.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal-container-experiment": "github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5590-manski-docker-t1.yml",
+      "bytes": 8707,
+      "sha256": "6407a6ad3f3f80e8bcd62474335c436bd3bc6ce62f14257b6f842ec8fe2aed98",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ],
+          "paths": [
+            "research/analysis/missing_outcome_bounds_5590_docker_t1_20261001/**",
+            ".github/workflows/issue-5590-manski-docker-t1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "docker-t1": "github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5590-manski-docker-t2.yml",
+      "bytes": 9998,
+      "sha256": "486e420c6523d08321b0fcd911d49e8c92418fdb52b54b9cfc908cbf476751f7",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ],
+          "paths": [
+            "research/analysis/missing_outcome_bounds_5590_docker_t2_20261001/**",
+            ".github/workflows/issue-5590-manski-docker-t2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "docker-t2": "github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5686-surrogate-gate-t0.yml",
+      "bytes": 3637,
+      "sha256": "250c472a4b589711343f0a40ea31ea038a589f81bf983b4fa03f20f419e4b8e0",
+      "events": {
+        "push": {
+          "branches": [
+            "research/surrogate-endpoint-gate-5686-t0-a04-20261001"
+          ],
+          "paths": [
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/FREEZE.json",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/README.md",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/PREREGISTRATION.md",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/LOCAL_CI.md",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/candidate.py",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/audit.py",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/fixtures.json",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/test_gate.py",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_gate.py",
+            "research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_runner.py",
+            ".github/workflows/issue-5686-surrogate-gate-t0.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "candidate": null,
+        "independent-audit": "needs.candidate.result == 'success'"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5686-surrogate-selection-t2.yml",
+      "bytes": 3675,
+      "sha256": "816ce04acb4e285e0ce92e14b68531ee38bb83425090db5d7a1c76940d9bd0f7",
+      "events": {
+        "push": {
+          "branches": [
+            "research/surrogate-selection-feedback-5686-t2-a02-20261001"
+          ],
+          "paths": [
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/FREEZE.json",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/README.md",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/PREREGISTRATION.md",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/LOCAL_CI.md",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/fixtures.json",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/candidate.py",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/audit.py",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/test_gate.py",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/workflow_gate.py",
+            "research/analysis/surrogate_selection_feedback_5686_t2_20261001/workflow_runner.py",
+            ".github/workflows/issue-5686-surrogate-selection-t2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "candidate": null,
+        "independent-audit": "needs.candidate.result == 'success'"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-5707-typed-margin-t0.yml",
+      "bytes": 7034,
+      "sha256": "19444f307b9c53cb9b745ec1512aeefdbeaf50d14f0de2f355b775e5339fc8b0",
+      "events": {
+        "push": {
+          "branches": [
+            "research/5707-typed-boundary-margin-t0-20261001"
+          ],
+          "paths": [
+            "research/analysis/boundary_margin_5707_typed_v1/**",
+            ".github/workflows/issue-5707-typed-margin-t0.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "candidate": "github.event.before == '0000000000000000000000000000000000000000'",
+        "independent-audit": "needs.candidate.result == 'success'"
+      }
+    },
+    {
+      "path": ".github/workflows/issue-6026-nonrequester-ledger-t0.yml",
+      "bytes": 1459,
+      "sha256": "7a446be52d67229c7c85d6f381aa1eb61cf05742b7545e00af9a4fb12bb0522d",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/nonrequester_externalities_6026_t0_v1/**",
+            ".github/workflows/issue-6026-nonrequester-ledger-t0.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/analysis/nonrequester_externalities_6026_t0_v1/**",
+            ".github/workflows/issue-6026-nonrequester-ledger-t0.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "method-t0": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue-6138-sunk-cost-artifact-t0b.yml",
+      "bytes": 1288,
+      "sha256": "61e9ceeacf80fcd4ca065e9b9cb716999866abb5759d1d153133a75bec2bd55e",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/sunk_cost_artifact_value_6138_t0b_20261002/**",
+            ".github/workflows/issue-6138-sunk-cost-artifact-t0b.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/analysis/sunk_cost_artifact_value_6138_t0b_20261002/**",
+            ".github/workflows/issue-6138-sunk-cost-artifact-t0b.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "method-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue4197-readonly-qualification-s4a1.yml",
+      "bytes": 1290,
+      "sha256": "62b487ed203d2d21385b38e4135a0493c406e4393e55b01015129694766dd231",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/issue4197_readonly_qualification_s4a1/**",
+            "research/integration/native_handle_lifecycle_admission_v1/**",
+            ".github/workflows/issue4197-readonly-qualification-s4a1.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "retained-data": null
+      }
+    },
+    {
+      "path": ".github/workflows/issue4242-allocation02-formal.yml",
+      "bytes": 4753,
+      "sha256": "be0d9313b5371441fda4fe4c3c314d660b19d35b3e7b5588e2ff3fd0ad476595",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": "github.event.pull_request.head.ref == 'research/native-handle-destroy-generation-a2-20260923'"
+      }
+    },
+    {
+      "path": ".github/workflows/kernel-lifecycle-adapter-2333.yml",
+      "bytes": 1359,
+      "sha256": "b49b631f6694efd28af14f57ed04a9c73427a845e61714e1115a91389dd4fc1c",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/kernel_lifecycle_adapter_successor_2333_v1/**",
+            ".github/workflows/kernel-lifecycle-adapter-2333.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/integration/kernel_lifecycle_adapter_successor_2333_v1/**",
+            ".github/workflows/kernel-lifecycle-adapter-2333.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/kernel-lifecycle-adapter-3089.yml",
+      "bytes": 1359,
+      "sha256": "f4f4bd3c36f67bda1ea4d8e6c31fbbf6553230c6cc6c4a95280fa546ef2cfbf7",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/kernel_lifecycle_adapter_successor_2333_v2/**",
+            ".github/workflows/kernel-lifecycle-adapter-3089.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/integration/kernel_lifecycle_adapter_successor_2333_v2/**",
+            ".github/workflows/kernel-lifecycle-adapter-3089.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/known-postcondition-boundary-3048.yml",
+      "bytes": 697,
+      "sha256": "7cc06cd8f8ce23220a8c5eeb8791323712217fe7465a3d4fd906c4b31f0ce056",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/verification/known_postcondition_boundary_v1/**",
+            ".github/workflows/known-postcondition-boundary-3048.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/legacy-gtk-dispatch-contract.yml",
+      "bytes": 1010,
+      "sha256": "4238f33ddc29bedb0407ee1755bbd11a602c2d252816100a85b1e48a55613784",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/gtk-formal-allocation-2606-v1.yml",
+            ".github/workflows/gtk-bounded-allocation-2836.yml",
+            ".github/workflows/gtk-xlib-allocation-2851.yml",
+            ".github/workflows/legacy-gtk-dispatch-contract.yml",
+            ".github/scripts/test_legacy_gtk_manual_dispatch.py"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/gtk-formal-allocation-2606-v1.yml",
+            ".github/workflows/gtk-bounded-allocation-2836.yml",
+            ".github/workflows/gtk-xlib-allocation-2851.yml",
+            ".github/workflows/legacy-gtk-dispatch-contract.yml",
+            ".github/scripts/test_legacy_gtk_manual_dispatch.py"
+          ]
+        }
+      },
+      "jobs_if": {
+        "source-contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/live-adapter-authority-receipt-2382.yml",
+      "bytes": 624,
+      "sha256": "4bb888ae1c0f05f80d132b07ec340f69467c7639939f5e80768cca1cce35197d",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/live_adapter_authority_2382_v1/**",
+            ".github/workflows/live-adapter-authority-receipt-2382.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "validate": null
+      }
+    },
+    {
+      "path": ".github/workflows/live-adapter-effect-scorer-2246.yml",
+      "bytes": 2154,
+      "sha256": "4e876a2d18c264f0a0ba38af2c4686ac04b1fcfd50b910fa381a1ac9c6a4abb9",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/live_adapter_effect_scorer_2246_v1/**",
+            ".github/workflows/live-adapter-effect-scorer-2246.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "scorer": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-3270-replay-gate-repaired.yml",
+      "bytes": 832,
+      "sha256": "d5c4a8a5fe0c94dcef1b48b6df0ac3b510e785a1fd99fb7762f0784fe42c7a83",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened",
+            "synchronize",
+            "ready_for_review"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "replay-gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-attack-ammo-effect-2477.yml",
+      "bytes": 900,
+      "sha256": "a0c54cf7a5c6825cb4b9d07a1617e0b45eaccef56e863b9a99b2340b73573dfd",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/live_control/map01_attack_ammo_effect_2477_v1/**",
+            ".github/workflows/map01-attack-ammo-effect-2477.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "calibration": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-attack-onset-formal-stop-4223.yml",
+      "bytes": 1303,
+      "sha256": "7a691cfb8e537697be04e6016b8eb06291756269b0d66e99bd975e4852a0659e",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/doom/map01_attack_onset_phase_v1/**",
+            ".github/workflows/map01-attack-onset-formal-stop-4223.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/map01-attack-onset-phase-stop-4223-20260927"
+          ],
+          "paths": [
+            "research/doom/map01_attack_onset_phase_v1/**",
+            ".github/workflows/map01-attack-onset-formal-stop-4223.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "verify-stop-evidence": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-attack-start-gate-4223-t10.yml",
+      "bytes": 3578,
+      "sha256": "aaa1945ec9525799d8de8a4e2f1f69031b10d38f51537f43e12d50f23ea3631b",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ],
+          "paths": [
+            "research/doom/map01_attack_start_gate_4223_t10_20261001/**",
+            ".github/workflows/map01-attack-start-gate-4223-t10.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "startup-gate": "github.event.pull_request.head.repo.full_name == github.repository && github.run_attempt == 1"
+      }
+    },
+    {
+      "path": ".github/workflows/map01-attack-start-gate-4223-t6.yml",
+      "bytes": 3558,
+      "sha256": "87ba8613212f530f4e5d6aa85bd79944e90ab055088dfc56fa3ad6d104739531",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ],
+          "paths": [
+            "research/doom/map01_attack_start_gate_4223_t6_20261001/**",
+            ".github/workflows/map01-attack-start-gate-4223-t6.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "startup-gate": "github.event.pull_request.head.repo.full_name == github.repository && github.run_attempt == 1"
+      }
+    },
+    {
+      "path": ".github/workflows/map01-attack-start-gate-4223-t9.yml",
+      "bytes": 3558,
+      "sha256": "a7650a75dc9d4968a5ff1a12d78c233e2c1ee75b2c38a0fe05fdbe4e5d6e8079",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened"
+          ],
+          "paths": [
+            "research/doom/map01_attack_start_gate_4223_t9_20261001/**",
+            ".github/workflows/map01-attack-start-gate-4223-t9.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "startup-gate": "github.event.pull_request.head.repo.full_name == github.repository && github.run_attempt == 1"
+      }
+    },
+    {
+      "path": ".github/workflows/map01-boundary-pass-gate.yml",
+      "bytes": 1422,
+      "sha256": "58c063e5593106816faaa2223623aa7fb3e8c1732621347d5aab364c69029104",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/doom/map01_policy_invalidation_clock_4559_v1/adapter_v13.py",
+            "research/doom/map01_policy_invalidation_clock_4559_v1/replay_real_observation_boundary_v13.py",
+            "research/doom/map01_policy_invalidation_clock_4559_v1/test_diagnostic_capture.py",
+            ".github/workflows/map01-boundary-pass-gate.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "boundary-pass-gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-direct-action-effect-2458.yml",
+      "bytes": 1084,
+      "sha256": "9304a91b3ca747228808892f63684e3d661eec702f6e187c7a4c3c814ba8cfc8",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/live_control/map01_direct_action_effect_2458_v1/**",
+            ".github/workflows/map01-direct-action-effect-2458.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "calibration": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-finite-clear-artifact-successor-3156.yml",
+      "bytes": 8094,
+      "sha256": "b7f2ab8da6b3760ba982f0669d660b50a8a9277177ed73a77a2d56c698f455a7",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation_id": {
+              "description": "Fresh immutable finite-clear allocation identifier",
+              "required": "true",
+              "type": "string",
+              "default": "map01-finite-clear-artifact-successor-3156"
+            },
+            "formal_seed": {
+              "description": "Frozen formal seed for this allocation",
+              "required": "true",
+              "type": "string",
+              "default": "990615"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "measurement-gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-finite-clear-attempt-v1.yml",
+      "bytes": 8042,
+      "sha256": "414bbd1fc1bb78c1294a13162c3fc758cead4cc485d62ca6bfdb51cecdd5e637",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation_id": {
+              "description": "Fresh immutable finite-clear allocation identifier",
+              "required": "true",
+              "type": "string",
+              "default": "map01-finite-clear-attempt-v1"
+            },
+            "formal_seed": {
+              "description": "Frozen formal seed for this allocation",
+              "required": "true",
+              "type": "string",
+              "default": "990615"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "measurement-gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-gate-oracle-shape-fix-r1.yml",
+      "bytes": 1726,
+      "sha256": "914a9576869bd962714c6e6298de623b21ba2b351780281368aff6a0c65e8237",
+      "events": {
+        "push": {
+          "branches": [
+            "research/map01-gate-oracle-shape-fix-2346-r1"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/analysis/map01_matched_recovery_entry_gate_1866_r4/gate.py",
+            ".github/workflows/map01-gate-oracle-shape-fix-r1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "native": null,
+        "container": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-known-good-action-fixture-2472.yml",
+      "bytes": 928,
+      "sha256": "f41fd0d1cd0f93c9597a2ee0ee0ff50c907a960f73c2ac2483b1cf1c185dbde2",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/live_control/map01_known_good_action_fixture_2472_v1/**",
+            ".github/workflows/map01-known-good-action-fixture-2472.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "calibration": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-matched-recovery-entry-gate-1866-r4.yml",
+      "bytes": 1250,
+      "sha256": "7bf1e42825293a5271f7b2dea230e1cca60caabdcc2614b0a75d7a70716d420d",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "research/map01-matched-recovery-entry-gate-1866-r4"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/analysis/map01_matched_recovery_entry_gate_1866_r4/**",
+            ".github/workflows/map01-matched-recovery-entry-gate-1866-r4.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-matched-recovery-entry-gate-r5.yml",
+      "bytes": 1294,
+      "sha256": "e5396db505d4e2039c107361646dad8121c9f234e16750373c05a249f1f6efcd",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/map01-matched-recovery-entry-gate-r5.yml",
+            "research/analysis/map01_matched_recovery_entry_gate_1866_r5/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "execute-r5-classifier": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-measurement-integration-live-02.yml",
+      "bytes": 2768,
+      "sha256": "4d744f388731eb9153451d02628bf3dc2ece9f807b0dd0afb1b7266dbe023d93",
+      "events": {
+        "push": {
+          "branches": [
+            "**"
+          ],
+          "paths": [
+            ".github/workflows/map01-measurement-integration-live-02.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "measurement-gate": "github.event_name == 'push' && github.ref_type == 'branch'"
+      }
+    },
+    {
+      "path": ".github/workflows/map01-measurement-integration-live-03.yml",
+      "bytes": 6160,
+      "sha256": "4a00d7f9d1a6650234bb9bb6c0a3f87a9aa135ce0dd687abaad08332f7ad5fdf",
+      "events": {
+        "push": {
+          "branches": [
+            "**"
+          ],
+          "paths": [
+            ".github/workflows/map01-measurement-integration-live-03.yml",
+            "research/doom/map01_measurement_integration_live_03_prereg.json"
+          ]
+        }
+      },
+      "jobs_if": {
+        "measurement-gate": "github.event_name == 'push' && github.ref_type == 'branch'"
+      }
+    },
+    {
+      "path": ".github/workflows/map01-measurement-integration-live-04.yml",
+      "bytes": 7057,
+      "sha256": "2bd3735425378ab18a9b5e464fe38fe8ee9afc3d15ada45ce9bab1bc12970881",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/map01-measurement-integration-live-04.yml",
+            "research/doom/map01_measurement_integration_live_04_prereg.json"
+          ]
+        },
+        "workflow_dispatch": {
+          "inputs": {
+            "allocation_id": {
+              "description": "Fresh immutable allocation identifier",
+              "required": "true",
+              "type": "string",
+              "default": "map01-finite-clear-attempt-v1"
+            },
+            "formal_seed": {
+              "description": "Frozen formal seed for this allocation",
+              "required": "true",
+              "type": "string",
+              "default": "990615"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "measurement-gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-observation-preflight-2446.yml",
+      "bytes": 1052,
+      "sha256": "00c46d667645a75a21acd4d66604ec4eb5d033e841a51443ea3fb7a1c134e33b",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/live_control/map01_observation_preflight_2446_v1/**",
+            ".github/workflows/map01-observation-preflight-2446.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-occupancy-gate-frontier-1592-r1.yml",
+      "bytes": 1255,
+      "sha256": "1a060b92564f1f005f7bda96e590d06403ab7384c1d0cb1a59013e3d902ffff2",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/measurement/map01_occupancy_gate_frontier_1592_r1/**",
+            ".github/workflows/map01-occupancy-gate-frontier-1592-r1.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/map01-occupancy-gate-frontier-1592-r1"
+          ]
+        }
+      },
+      "jobs_if": {
+        "frontier": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-r4-sparse-checkout-2174.yml",
+      "bytes": 889,
+      "sha256": "c6244687d18cb1e3e5a5a6517864d3aed83a3b51bf9297f5b15f2a45c9f821b5",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "gate": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-cover-matched-live-v2-01.yml",
+      "bytes": 5060,
+      "sha256": "ef995f5630596086ffce3e740806be55bf0455465de0d043edcc56b7e5342f5e",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "formal-allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-cover-matched-live-v2-02.yml",
+      "bytes": 5077,
+      "sha256": "b4a31a31a92a730815cc8e3851c6c530b42c0c581dbec18cbfe82b9c96e3f6fd",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "formal-allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-cover-mechanism-live-v3-01.yml",
+      "bytes": 6249,
+      "sha256": "d15a2eaa01d6aa9ac92bc9d12d219c992e2bbf0a9c0f3d3eaec8c048426ade78",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/map01-recovery-cover-mechanism-live-v3-01.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "mechanism-block": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-cover-mechanism-live-v4-01.yml",
+      "bytes": 6660,
+      "sha256": "3b59ca10e863eacc10f5b29e5130b78279b92a3b5c37d93d7217be66022a429f",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/map01-recovery-cover-mechanism-live-v4-01.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "mechanism-block": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-cover-mechanism-live-v5-01.yml",
+      "bytes": 7051,
+      "sha256": "6e739bab66187868f6a56b839f8072f248a82b3aad2edc8282b10e55edd66897",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/map01-recovery-cover-mechanism-live-v5-01.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "mechanism-block": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-cover-mechanism-live-v6-01.yml",
+      "bytes": 7357,
+      "sha256": "37d36782a8e3fba312b45280769d8d9dd8a8a075ff9f6585e07352fd10587f46",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/map01-recovery-cover-mechanism-live-v6-01.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "mechanism-block": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-entry-gate-3008-v2.yml",
+      "bytes": 999,
+      "sha256": "44dd333a2a5da2f9cf67dc4e4bc80750af3bcab3d8e1e8e130ada71d07bc53d7",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/analysis/map01_matched_recovery_entry_gate_3008_v2/**",
+            ".github/workflows/map01-recovery-entry-gate-3008-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-mechanics-dev-01.yml",
+      "bytes": 5246,
+      "sha256": "77e81927555400d7ecf46a511fbd54ca6ca93ba9cb2740435de773f29874216f",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/map01-recovery-mechanics-dev-01.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "recovery-development": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-recovery-mechanics-dev-02.yml",
+      "bytes": 4355,
+      "sha256": "5a83bb18fefb86eab8ab8e0e026aee780f026657dab51d5d48ea3300ebcaeaf9",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/map01-recovery-mechanics-dev-02.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "recovery-development": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-task-effect-contract-1839-r1.yml",
+      "bytes": 1409,
+      "sha256": "2f8520c9741e1407dca4fdafd327e732dd4ef99a3723a4a709f7f8d4f59098a1",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/measurement/map01_task_effect_contract_1839_r1/**",
+            ".github/workflows/map01-task-effect-contract-1839-r1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-task-effect-contract-2241-r2.yml",
+      "bytes": 617,
+      "sha256": "2e58049cf8b980d2a806433feec1eb0859a81b663bd83df1c84168afae4b5b10",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/measurement/map01_task_effect_contract_2241_r2/**",
+            ".github/workflows/map01-task-effect-contract-2241-r2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "offline-contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-task-relative-deopt-2988.yml",
+      "bytes": 2252,
+      "sha256": "b26819a35067174138a9db4740cb64969a380c61150ff223f3d8c88f9f17b6e9",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/doom/map01_normal_no_progress_deopt_v1/**",
+            "research/doom/map01-deopt.Dockerfile",
+            ".github/workflows/map01-task-relative-deopt-2988.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-terminal-sync-diagnostic-3211-v2.yml",
+      "bytes": 3082,
+      "sha256": "1181f90101144b62b37f52189917f2a894a8bb25a25c4f4f7509e71634bae25a",
+      "events": {
+        "workflow_dispatch": {}
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-terminal-sync-diagnostic-3211-v3.yml",
+      "bytes": 3056,
+      "sha256": "7fcb1d17207e707ebcaae54f27cc6173db1a3cb9b6e5d68fa833f4b9d4be52a1",
+      "events": {
+        "workflow_dispatch": {}
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-terminal-sync-diagnostic-3211-v4.yml",
+      "bytes": 3132,
+      "sha256": "a100110afa1d1db77baa7278c9ad07ebe2ab3caa2408b00c0e496ac83cd004ca",
+      "events": {
+        "workflow_dispatch": {}
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-terminal-sync-diagnostic-3211-v5.yml",
+      "bytes": 3203,
+      "sha256": "d107d379cb5ef32ebfd5c4a22003653c168762daf1be53d1cc4e45b0199625dd",
+      "events": {
+        "workflow_dispatch": {}
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-terminal-sync-diagnostic-3211-v6.yml",
+      "bytes": 3195,
+      "sha256": "3eb7b77e5f2cc3bf66648aba758fa955db53babf1e2a303f73429196274d3d24",
+      "events": {
+        "workflow_dispatch": {}
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-terminal-sync-diagnostic-3211-v7.yml",
+      "bytes": 3195,
+      "sha256": "a9837b2d6ff61e9eba6c221b625895fe0db28f4ee2ce37a66208472b6e4ce5d7",
+      "events": {
+        "workflow_dispatch": {}
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-terminal-sync-diagnostic-3211.yml",
+      "bytes": 3634,
+      "sha256": "c9226fe9fae0a9882e6698ab0907c966041bd4cb357c08a88d1152dc2758e83f",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "diagnostic": "${{ false }}"
+      }
+    },
+    {
+      "path": ".github/workflows/map01-turn-action-effect-2468.yml",
+      "bytes": 900,
+      "sha256": "fc2d48dc4e8d1b1abd70611d120187063ec4e88c1d1b6aa0975ecc7805bfb4b9",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/live_control/map01_turn_action_effect_2468_v1/**",
+            ".github/workflows/map01-turn-action-effect-2468.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "calibration": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-v12-import-graph-repair-r1.yml",
+      "bytes": 1086,
+      "sha256": "c3a099ce3cae75d364b70f84e1dd113c779011e21c1ece22a9d8a8e0c79480a5",
+      "events": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/doom/map01_v12_import_graph_repair_r1_v1/**",
+            ".github/workflows/map01-v12-import-graph-repair-r1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "import-smoke": null
+      }
+    },
+    {
+      "path": ".github/workflows/map01-v12-physical-occupancy-r1-successor.yml",
+      "bytes": 5254,
+      "sha256": "132f4ea3b1070bbfa8b4eae6ba58a86679370f70f7990a59584fe09390fc69c8",
+      "events": {
+        "pull_request": {
+          "paths": [
+            ".github/workflows/map01-v12-physical-occupancy-r1-successor.yml",
+            "research/doom/map01_v12_physical_occupancy_live_r1_v1/**"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "map01-r1-successor": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/matched-recovery-readiness-gate-1866.yml",
+      "bytes": 1095,
+      "sha256": "8916e1148731ea81d26905ac981ed51f4bc5a63ecbb00e49203dabc68578b38c",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/matched_recovery_readiness_gate_1866_v1/**"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/matched-recovery-readiness-gate-1866-v1-r2"
+          ],
+          "paths": [
+            "research/analysis/matched_recovery_readiness_gate_1866_v1/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "run": null
+      }
+    },
+    {
+      "path": ".github/workflows/mindustry-v1602-asset-acquire-2624.yml",
+      "bytes": 3041,
+      "sha256": "a0a3adfdb0708deb72a5ba1a04db908ec45aaab063bb9f9e2de69d2515c8dd33",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "acquire": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-construction-2499.yml",
+      "bytes": 632,
+      "sha256": "1bcb65c4cac629742e2f4e6d4d622e407ec68173ff88721d0637b476e114ce67",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_long_session_2499/**",
+            ".github/workflows/mixed-app-construction-2499.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-formal-allocation-2821-v2.yml",
+      "bytes": 1746,
+      "sha256": "5500e5d7e3f7398886181f756345bf6a44ea5ae96787eaa9156311d48c6650a5",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_long_session_2499/formal_session.py",
+            "research/integration/mixed_app_long_session_2499/Dockerfile",
+            ".github/workflows/mixed-app-formal-allocation-2821-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-formal-allocation-2821-v3.yml",
+      "bytes": 2179,
+      "sha256": "6639f4c47572912cd04fe41f4aac89fee2712af400d2f8998ed49b6af0795806",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_long_session_2499/**",
+            ".github/workflows/mixed-app-formal-allocation-2821-v3.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-formal-allocation-2821.yml",
+      "bytes": 1659,
+      "sha256": "199a27090daba4d7129876dafaba57aef0f1488924bd9890c5efdaa10d8013e3",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_long_session_2499/formal_session.py",
+            ".github/workflows/mixed-app-formal-allocation-2821.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "allocation": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-identity-2666.yml",
+      "bytes": 370,
+      "sha256": "a59f540ee0a90777cdeb9e33e982a430185947d06ed09522cabc22ee68eaba99",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_identity_2666/**",
+            ".github/workflows/mixed-app-identity-2666.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-identity-repro-2782.yml",
+      "bytes": 1198,
+      "sha256": "be34277432e89484b8757c2fb3a49277f2a4859c1ec87c49baeb8e02cd27e449",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/integration/mixed_app_identity_2666_live_v3/**",
+            ".github/workflows/mixed-app-identity-repro-2782.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "reproduce": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-live-identity-2666.yml",
+      "bytes": 1120,
+      "sha256": "6c47f412738db4f28d4df9a624c568da5cc448ae1d92622f6fb47a90556927f9",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_identity_2666_live/**",
+            ".github/workflows/mixed-app-live-identity-2666.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/integration/mixed_app_identity_2666_live/**",
+            ".github/workflows/mixed-app-live-identity-2666.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "identity-preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-startup-diagnostic-2821-v2.yml",
+      "bytes": 1561,
+      "sha256": "20ca4e598ad18f14bffc0eb17c66a62889c92d1f7831dd90b15fb0bcb9e70137",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_long_session_2499/startup_diagnostic.py",
+            "research/integration/mixed_app_long_session_2499/Dockerfile.formal",
+            ".github/workflows/mixed-app-startup-diagnostic-2821-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-startup-diagnostic-2821-v5.yml",
+      "bytes": 2878,
+      "sha256": "f63148dd495fa13cd2c845805d7ef549d84b66f24e60acb558866e1fc2299aaa",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_long_session_2499/startup_diagnostic.py",
+            "research/integration/mixed_app_long_session_2499/Dockerfile.formal",
+            ".github/workflows/mixed-app-startup-diagnostic-2821-v5.yml",
+            "research/integration/mixed_app_long_session_2499/formal_session.py"
+          ]
+        }
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-startup-diagnostic-2821-v6.yml",
+      "bytes": 1677,
+      "sha256": "c72092dfb77285a5349a73ee8ebee4ee1f6ebb4fe0b593f18ed87310b5632de6",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "diagnostic": "${{ false }}"
+      }
+    },
+    {
+      "path": ".github/workflows/mixed-app-startup-diagnostic-2821.yml",
+      "bytes": 1498,
+      "sha256": "90825fef5096e1767712eb352ffbe276456ef01888cccffc5eb4d85870d1335b",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/mixed_app_long_session_2499/startup_diagnostic.py",
+            "research/integration/mixed_app_long_session_2499/Dockerfile.formal",
+            ".github/workflows/mixed-app-startup-diagnostic-2821.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "diagnostic": null
+      }
+    },
+    {
+      "path": ".github/workflows/motor-state-adapter-2508.yml",
+      "bytes": 429,
+      "sha256": "c4732bfb87554deccaa3c7fc1a777c25983901bd6763ae0e350e308f887f2b46",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/motor_state_v1/**",
+            ".github/workflows/motor-state-adapter-2508.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "test": null
+      }
+    },
+    {
+      "path": ".github/workflows/motor-state-contract-2481.yml",
+      "bytes": 700,
+      "sha256": "ddc59b29a587f990d3d575ff430d981837d209b8cc26f4c7303af32162eafdca",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/integration/motor_state_contract_2481_v1/**",
+            ".github/workflows/motor-state-contract-2481.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/motor-state-runtime-adapter-2502.yml",
+      "bytes": 787,
+      "sha256": "533018b290fbe009f66d4543e4e35d9b645c99f97dec2901c9f7d1b5823d8e93",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/integration/motor_state_runtime_adapter_2502_v1/**",
+            ".github/workflows/motor-state-runtime-adapter-2502.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "tests": null
+      }
+    },
+    {
+      "path": ".github/workflows/native-mcp-timing-audit.yml",
+      "bytes": 621,
+      "sha256": "bd04b5471356d14916b4b3fd06bef5907d0f39799626c955682f9f0fabd635ea",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/results/native-mcp-timed-01/**",
+            "runtime/results/native-mcp-managed-01/**",
+            ".github/workflows/native-mcp-timing-audit.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/native-mcp-v1.yml",
+      "bytes": 3170,
+      "sha256": "4045524671875777b9c3e100746951dab2ba7027dfe3a8c5ce405f27c6b6c2ce",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/live_control/**",
+            "runtime/cli_v1/**",
+            "runtime/host_v1/**",
+            "runtime/motor_state_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/core_v1/**",
+            "runtime/backends/**",
+            "runtime/integration_checks/**",
+            "runtime/distribution_v2/**",
+            "runtime/guarded_x11_v1/**",
+            ".github/workflows/native-mcp-v1.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/live_control/**",
+            "runtime/cli_v1/**",
+            "runtime/host_v1/**",
+            "runtime/motor_state_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/core_v1/**",
+            "runtime/backends/**",
+            "runtime/integration_checks/**",
+            "runtime/distribution_v2/**",
+            "runtime/guarded_x11_v1/**",
+            ".github/workflows/native-mcp-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "native-mcp": null
+      }
+    },
+    {
+      "path": ".github/workflows/native-motor-state-adapter-2490.yml",
+      "bytes": 724,
+      "sha256": "f8e0d0a058440e8984198c24853fe3182cd519940409908ae31dee794525d378",
+      "events": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            "research/integration/native_motor_state_adapter_2490_v1/**",
+            ".github/workflows/native-motor-state-adapter-2490.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/native-observe-construction-failure-2353-p2.yml",
+      "bytes": 632,
+      "sha256": "7cf4025923930a41cf601816fc1d407d489e959e7010735bfba3231cd9f61eb3",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/observe.py",
+            "research/integration/native_observe_construction_failure_2353_p2/**",
+            ".github/workflows/native-observe-construction-failure-2353-p2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/native-result-fail-closed-2530.yml",
+      "bytes": 599,
+      "sha256": "66b2eb0342e68820df30bbbf863b8958a7ba1002aca66700e9c9869dbd60d603",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/motor_state_v1/native_result.py",
+            "runtime/motor_state_v1/test_native_result.py",
+            "runtime/motor_state_v1/adapter.py",
+            ".github/workflows/native-result-fail-closed-2530.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "tests": null
+      }
+    },
+    {
+      "path": ".github/workflows/native-result-motor-state-2530.yml",
+      "bytes": 741,
+      "sha256": "a9fce5758e5fe03d7d1fc62cd071a65525151b7befc27a9f2c7185bbabf8a6e9",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/motor_state_v1/**",
+            ".github/workflows/native-result-motor-state-2530.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "research/native-result-motor-state-bridge-2530"
+          ],
+          "paths": [
+            "runtime/motor_state_v1/**",
+            ".github/workflows/native-result-motor-state-bridge-2530.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "pure-bridge": null
+      }
+    },
+    {
+      "path": ".github/workflows/negative-attention-successor-1943.yml",
+      "bytes": 762,
+      "sha256": "dac161b087e98773e62ce956bc64909ae2de8abda93ae18fa327437d16fe6a73",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "frozen-formal": "${{ false }}"
+      }
+    },
+    {
+      "path": ".github/workflows/o3-source-window-revalidation-3215.yml",
+      "bytes": 2158,
+      "sha256": "0a3e8fce1a507442e134165b60039cd393396751f71e6334ffe5987a7359b0f4",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/observation_gating/o3_source_window_revalidation_3215/**",
+            "research/observation_gating/o3_multi_app_negative_matrix_20260920/**",
+            "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py",
+            "research/observation_gating/o3_relevant_region_successor_v1/**",
+            ".github/workflows/o3-source-window-revalidation-3215.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "revalidate": null
+      }
+    },
+    {
+      "path": ".github/workflows/observation-o3-relevant-region-2612.yml",
+      "bytes": 446,
+      "sha256": "0fbc930c33872d267f082a23dcab34d935592eaed48b2e05958f055376318edb",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/observation_gating/o3_relevant_region_successor_v1/**",
+            ".github/workflows/observation-o3-relevant-region-2612.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/observation-o4-runtime-verify-2595.yml",
+      "bytes": 565,
+      "sha256": "25290fb6f3119d54f4cbefdd46c40a417c3e8751c6b91ec273bb0307e77460df",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/observation_gating/o4_runtime_verify_successor_v1/**",
+            ".github/workflows/observation-o4-runtime-verify-2595.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/observation-recovery-contract-2452.yml",
+      "bytes": 1041,
+      "sha256": "8f143f42de02e3f4254d866d89c19fa065317557255006261868c5922c2cd37a",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/observation_recovery_contract_2452_v1/**",
+            ".github/workflows/observation-recovery-contract-2452.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/origin-effect-binding-6500.yml",
+      "bytes": 708,
+      "sha256": "de0c4896ff02eb7f1da58f99b2c3fbbfef6994f19b4a97a8e5243470f6d100d4",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/origin_effect_binding_6500_t0_20261002/**",
+            ".github/workflows/origin-effect-binding-6500.yml",
+            "research/analysis/README.md",
+            "research/analysis/check_index.py"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "method-contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "bytes": 742,
+      "sha256": "4d50c201d5e7e020b506333a0de65f8bd98ae5de275eb49ed62275cb35b66575",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "site/**",
+            ".github/workflows/pages.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "deploy": null
+      }
+    },
+    {
+      "path": ".github/workflows/phase-derived-capture-6969.yml",
+      "bytes": 1227,
+      "sha256": "00326f7996d11483b5af7b692d0641c111f48983609297b146f4e55c6e26bd95",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/exogenous_phase_6803_derived_capture_a05_20261003_3cbf/**",
+            ".github/workflows/phase-derived-capture-6969.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/analysis/exogenous_phase_6803_derived_capture_a05_20261003_3cbf/**",
+            ".github/workflows/phase-derived-capture-6969.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "retained-evidence": null
+      }
+    },
+    {
+      "path": ".github/workflows/preview-constraint-parity-6565.yml",
+      "bytes": 724,
+      "sha256": "22033a7f088d5224770f8a432e9354e86afa2d5484735b92a7fe8fef0a1f5528",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/preview_constraint_parity_6565_t0_20261002/**",
+            ".github/workflows/preview-constraint-parity-6565.yml",
+            "research/analysis/README.md",
+            "research/analysis/check_index.py"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "method-contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/procedural-control-arena-v1.yml",
+      "bytes": 738,
+      "sha256": "7ad06557e72c8e2dd5fa25c66608d04cbb5f28a554260d31668fad8450efa634",
+      "events": {
+        "push": {
+          "paths": [
+            "research/procedural_control_arena_v1/**",
+            ".github/workflows/procedural-control-arena-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/procedural_control_arena_v1/**",
+            ".github/workflows/procedural-control-arena-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/procedural-operations-world-v0.yml",
+      "bytes": 1175,
+      "sha256": "026e642f60d6ec77f13b014e3ca7d0b6957e248a0221527d4d4a1984cb791c94",
+      "events": {
+        "push": {
+          "paths": [
+            "research/procedural_operations_world_v0/**",
+            ".github/workflows/procedural-operations-world-v0.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/procedural_operations_world_v0/**",
+            ".github/workflows/procedural-operations-world-v0.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/procedural-ops-facility-v0.yml",
+      "bytes": 1243,
+      "sha256": "eaccb128e3a66b2b80e663f6ca4e432b0173942e022da30150221e8903b73289",
+      "events": {
+        "push": {
+          "paths": [
+            "research/procedural_ops_facility_v0/**",
+            ".github/workflows/procedural-ops-facility-v0.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/procedural_ops_facility_v0/**",
+            ".github/workflows/procedural-ops-facility-v0.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "native-construction": null,
+        "container-construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/public-motor-state-package-2508-current-main.yml",
+      "bytes": 873,
+      "sha256": "9b3810d4f15ccc38dfa9f69a73ae728bb4e5442bea174300988fc74a95f192c4",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "runtime/motor_state_v1/native_result.py",
+            "runtime/motor_state_v1/test_native_result.py",
+            "runtime/motor_state_v1/adapter.py",
+            ".github/workflows/public-motor-state-package-2508-current-main.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "runtime/motor_state_v1/native_result.py",
+            "runtime/motor_state_v1/test_native_result.py",
+            "runtime/motor_state_v1/adapter.py",
+            ".github/workflows/public-motor-state-package-2508-current-main.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "tests": null
+      }
+    },
+    {
+      "path": ".github/workflows/public-motor-state-package-2508-failclosed-v2.yml",
+      "bytes": 573,
+      "sha256": "0ddca6909af31bf542b03ae61a10e9dbc258b59d72aefd3653bb19a68e91124b",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "runtime/motor_state_v1/native_result.py",
+            "runtime/motor_state_v1/test_native_result.py",
+            ".github/workflows/public-motor-state-package-2508-failclosed-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "tests": null
+      }
+    },
+    {
+      "path": ".github/workflows/public-navigation.yml",
+      "bytes": 2188,
+      "sha256": "a57cbeb56660bb04e5f2afa40808515ef0abd2120eb730f37543772898fb5011",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "*.md",
+            "docs/**",
+            "research/README.md",
+            "research/ROOT_NAMESPACE_MAP.md",
+            "research/analysis/README.md",
+            "research/concurrency/README.md",
+            "research/system1/README.md",
+            "research/local_system1/README.md",
+            "runtime/README.md",
+            "release/README.md",
+            "site/README.md",
+            ".github/README.md",
+            ".github/workflows/README.md",
+            ".github/check_public_navigation.py",
+            ".github/workflows/public-navigation.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "*.md",
+            "docs/**",
+            "research/README.md",
+            "research/ROOT_NAMESPACE_MAP.md",
+            "research/analysis/README.md",
+            "research/concurrency/README.md",
+            "research/system1/README.md",
+            "research/local_system1/README.md",
+            "runtime/README.md",
+            "release/README.md",
+            "site/README.md",
+            ".github/README.md",
+            ".github/workflows/README.md",
+            ".github/check_public_navigation.py",
+            ".github/workflows/public-navigation.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "public-navigation": null
+      }
+    },
+    {
+      "path": ".github/workflows/receipt-observation-r9k4-evidence.yml",
+      "bytes": 759,
+      "sha256": "2ff4d7f73f0357730de201570d835ef586f647b5fccd4e0ef6589a5656d32be3",
+      "events": {
+        "pull_request": {
+          "types": [
+            "opened",
+            "synchronize",
+            "ready_for_review"
+          ],
+          "paths": [
+            "research/system1/receipt_observation_delivery_c2a6_v1/**",
+            ".github/workflows/receipt-observation-r9k4-evidence.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "retained-evidence": null
+      }
+    },
+    {
+      "path": ".github/workflows/relational-coordinate-bounds-6684.yml",
+      "bytes": 657,
+      "sha256": "3e70353bca72628ce744d4efaef5ded4d2abb01c85264a60c0c69f08422672d9",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/relational_coordinate_bounds_6684_t0_20261002/**",
+            ".github/workflows/relational-coordinate-bounds-6684.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/release-telemetry-decision-successor-2107.yml",
+      "bytes": 1869,
+      "sha256": "608e25580bddc8e60c8b602fe01a7a3396c15b8c0137f0d690d4065c23abb915",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/release_telemetry_decision_successor_2107_v1/**",
+            ".github/workflows/release-telemetry-decision-successor-2107.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "decision-value": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/research-archive.yml",
+      "bytes": 1691,
+      "sha256": "16316c9afb68282e26d6be426413bb83a1514ea11595b32bc54d1f13543a2019",
+      "events": {
+        "workflow_dispatch": {
+          "inputs": {
+            "version": {
+              "description": "Archival research version without leading v",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "archive-research": null
+      }
+    },
+    {
+      "path": ".github/workflows/research-preview-rc1.yml",
+      "bytes": 2953,
+      "sha256": "e2d05aad5224dc8b7179a7e806802546def00c15ded50301d4fce6f089bfbf5f",
+      "events": {
+        "push": {
+          "branches": [
+            "release/research-preview-20260917-rc1"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "package-and-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/research-preview-readiness.yml",
+      "bytes": 1325,
+      "sha256": "8dea2a6bbed1abe2c81693b415f89c0ca0b0e1a5530ae8ab3bf440f713c51439",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "release/RESEARCH_PREVIEW_READINESS_20260919.md",
+            "release/RESEARCH_PREVIEW_READINESS_20260919.json",
+            ".github/workflows/research-preview-readiness.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "validate": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/research-workspace-index.yml",
+      "bytes": 1632,
+      "sha256": "4f2c91d604a6d6828230461f37461b0dc45622b6467c5d3678dd862ea10d29f3",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/README.md",
+            "research/ROOT_NAMESPACE_MAP.md",
+            "research/check_workspace_index.py",
+            "research/test_check_workspace_index.py",
+            "research/test_workspace_git_tree.py",
+            "research/*/*",
+            ".github/workflows/research-workspace-index.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/README.md",
+            "research/ROOT_NAMESPACE_MAP.md",
+            "research/check_workspace_index.py",
+            "research/test_check_workspace_index.py",
+            "research/test_workspace_git_tree.py",
+            "research/*/*",
+            ".github/workflows/research-workspace-index.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "research-workspace-index": null
+      }
+    },
+    {
+      "path": ".github/workflows/resident-gtk-incremental-3518-formal-03.yml",
+      "bytes": 1467,
+      "sha256": "1b71f41170c51b52f955b204761e82461b164264cc48314afc6acbe035a73edf",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/resident_gtk_incremental_3518_v2/**",
+            ".github/workflows/resident-gtk-incremental-3518-formal-03.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/analysis/resident_gtk_incremental_3518_v2/**",
+            ".github/workflows/resident-gtk-incremental-3518-formal-03.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "reproducible-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/resident-gtk-incremental-3518-formal.yml",
+      "bytes": 945,
+      "sha256": "923986ad2be9c3e502fb1cb97d86e1e41320a0f91925eb0f62fa83e8b8f74f69",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/resident_gtk_incremental_3518_v1/**",
+            ".github/workflows/resident-gtk-incremental-3518-formal.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/analysis/resident_gtk_incremental_3518_v1/**",
+            ".github/workflows/resident-gtk-incremental-3518-formal.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/resident-gtk-incremental-3518.yml",
+      "bytes": 751,
+      "sha256": "94eaaa9812921d5a59d3d98edfa5421488190e2f0e0a46057124648f48583eac",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/resident_gtk_incremental_3518_v1/**",
+            ".github/workflows/resident-gtk-incremental-3518.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-cli-v1.yml",
+      "bytes": 2298,
+      "sha256": "9cf96553545e9c0642950188e92bcdd2c3342fcfe3de881d00ffc541aba47319",
+      "events": {
+        "push": {
+          "branches": [
+            "main",
+            "integration/runtime-cli-v1-20260917"
+          ],
+          "paths": [
+            "research/analysis/gpu_grounding_template_diversity_2912_v2/**",
+            "runtime/cli_v1/**",
+            "runtime/host_v1/*.py",
+            "runtime/motor_state_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/core_v1/**",
+            "runtime/guarded_x11_v1/**",
+            "runtime/backends/**",
+            "runtime/distribution_v2/**",
+            ".github/workflows/runtime-cli-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/analysis/gpu_grounding_template_diversity_2912_v2/**",
+            "runtime/cli_v1/**",
+            "runtime/host_v1/*.py",
+            "runtime/motor_state_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/core_v1/**",
+            "runtime/guarded_x11_v1/**",
+            "runtime/backends/**",
+            "runtime/distribution_v2/**",
+            ".github/workflows/runtime-cli-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "cli": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-core-portability.yml",
+      "bytes": 1019,
+      "sha256": "c834a1f773628a932dc26ca144e1b7521c1d88cd36495e0f5e5834386c895196",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-core-v1-20260917"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/core_v1/**",
+            ".github/workflows/runtime-core-portability.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "core-contract": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-kernel-v1.yml",
+      "bytes": 957,
+      "sha256": "8b9c20bba712cd8854cb38db238b916101fe7d3c46f69a94e018c4a913de2571",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-kernel-v1-20260916"
+          ],
+          "paths": [
+            "runtime/kernel/**",
+            ".github/workflows/runtime-kernel-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/kernel/**",
+            ".github/workflows/runtime-kernel-v1.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "kernel-contracts": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-native-probe.yml",
+      "bytes": 1674,
+      "sha256": "c7a224aad758eac0857688bfdde56da7e63a08ee92d5facebabf21806c7afdbe",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-interface-v1-20260917"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/interface_v1/**",
+            ".github/workflows/runtime-native-probe.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "native-probe": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-portable-zipapp-v1.yml",
+      "bytes": 2819,
+      "sha256": "8abc90eb786986915080cc2eab84d9f0bc02b1faeb620f9d98cd5f043480c434",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/analysis/gpu_grounding_template_diversity_2912_v2/**",
+            "runtime/distribution_v2/**",
+            "runtime/host_v1/**",
+            "runtime/guarded_x11_v1/**",
+            "runtime/core_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/cli_v1/**",
+            "runtime/motor_state_v1/**",
+            "runtime/backends/x11_v1/**",
+            "runtime/backends/win32_v1/**",
+            "runtime/backends/quartz_v1/**",
+            ".github/workflows/runtime-portable-zipapp-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/analysis/gpu_grounding_template_diversity_2912_v2/**",
+            "runtime/distribution_v2/**",
+            "runtime/host_v1/**",
+            "runtime/guarded_x11_v1/**",
+            "runtime/core_v1/**",
+            "runtime/selector_v1/**",
+            "runtime/cli_v1/**",
+            "runtime/motor_state_v1/**",
+            "runtime/backends/x11_v1/**",
+            "runtime/backends/win32_v1/**",
+            "runtime/backends/quartz_v1/**",
+            ".github/workflows/runtime-portable-zipapp-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "build": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-preview-artifact-v1.yml",
+      "bytes": 4161,
+      "sha256": "6a7089c217fb7a6a3ea0fa1ce40678c7464acd8afc405a2aa3e547295ce46229",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/runtime-preview-artifact-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "package-and-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-preview-artifact-v2.yml",
+      "bytes": 7352,
+      "sha256": "abd6f6250d6d296f8ea2502aacae98bf033b600f4131115ff20f30df0c4bfe4a",
+      "events": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/runtime-preview-artifact-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "package-and-audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-quartz-v1.yml",
+      "bytes": 1268,
+      "sha256": "515fe8adbd7e1dde21a26db8734e17c85e7491f7a3e529f34c7194f629b70786",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-quartz-v1-20260917"
+          ],
+          "paths": [
+            "runtime/core_v1/**",
+            "runtime/backends/quartz_v1/**",
+            ".github/workflows/runtime-quartz-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/core_v1/**",
+            "runtime/backends/quartz_v1/**",
+            ".github/workflows/runtime-quartz-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "native-quartz": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-review-compilation-evidence-v1.yml",
+      "bytes": 739,
+      "sha256": "a93dec466fe46b9cc760832a399c9bdf5a5556cff23e7919fbc3db9ba0501641",
+      "events": {
+        "push": {
+          "paths": [
+            "research/integration/review_compilation_r4k6_v1/**",
+            ".github/workflows/runtime-review-compilation-evidence-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/integration/review_compilation_r4k6_v1/**",
+            ".github/workflows/runtime-review-compilation-evidence-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "evidence": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-review-compilation-v1.yml",
+      "bytes": 1552,
+      "sha256": "b7522d9344bd928654bc06fd04635047b1da9c59e0af6c1156a34a9bb8ee2b55",
+      "events": {
+        "push": {
+          "paths": [
+            "runtime/cli_v1/**",
+            "runtime/core_v1/**",
+            "runtime/motor_state_v1/**",
+            "research/integration/review_compilation_r4k6_v1/**",
+            ".github/workflows/runtime-review-compilation-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/**",
+            "runtime/core_v1/**",
+            "runtime/motor_state_v1/**",
+            "research/integration/review_compilation_r4k6_v1/**",
+            ".github/workflows/runtime-review-compilation-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "review": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-selector-v1.yml",
+      "bytes": 979,
+      "sha256": "055cb9b9c126633b4664c6262e8ac56ee55089d0fbb6b98b2b33a8fa7887d998",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-selector-v1-20260917"
+          ],
+          "paths": [
+            "runtime/selector_v1/**",
+            ".github/workflows/runtime-selector-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/selector_v1/**",
+            ".github/workflows/runtime-selector-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "selector": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-standalone-doctor.yml",
+      "bytes": 2479,
+      "sha256": "64380d2190d35989516956eccbd3ee2039c4939c8b977570e6ba87368b9bb563",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-standalone-doctor-v1-20260917"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/distribution_v1/**",
+            ".github/workflows/runtime-standalone-doctor.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "build-doctor": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-standalone-validator-v1.yml",
+      "bytes": 1169,
+      "sha256": "55ea34152872b096e040fb3310872a55106cef0ad05285bf27e9230a791f063f",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/distribution_v2/build_validator.py",
+            "runtime/distribution_v2/test_validator_zipapp.py",
+            "runtime/core_v1/**",
+            "runtime/cli_v1/validate_program.py",
+            "research/integration/standalone_validator_z5m8_v1/**",
+            ".github/workflows/runtime-standalone-validator-v1.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "runtime/distribution_v2/build_validator.py",
+            "runtime/distribution_v2/test_validator_zipapp.py",
+            "runtime/core_v1/**",
+            "runtime/cli_v1/validate_program.py",
+            "research/integration/standalone_validator_z5m8_v1/**",
+            ".github/workflows/runtime-standalone-validator-v1.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "static-artifact": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-static-validation-evidence-v1.yml",
+      "bytes": 1223,
+      "sha256": "7405b30b12c52603b77e6b4d07562c5bd37ecd955bfd5bfc33acf3e70236dcb3",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/**",
+            "runtime/core_v1/**",
+            "runtime/selector_v1/**",
+            "research/integration/display_free_validation_3850_v1/**",
+            ".github/workflows/runtime-static-validation*v1.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/integration/display_free_validation_3850_v1/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "evidence": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-static-validation-v1.yml",
+      "bytes": 1614,
+      "sha256": "ad114ad4cf24303202a0125b6285f8d0166a63313ae6b8c065ebcf62d3f2e3bb",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "runtime/cli_v1/validate_program.py",
+            "runtime/cli_v1/test_validate_program.py",
+            "research/integration/display_free_validation_3850_v1/**",
+            ".github/workflows/runtime-static-validation-v1.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "runtime/cli_v1/validate_program.py",
+            "runtime/cli_v1/test_validate_program.py",
+            "research/integration/display_free_validation_3850_v1/**",
+            ".github/workflows/runtime-static-validation-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "static-validation": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-win32-v1.yml",
+      "bytes": 1265,
+      "sha256": "8abe27d8c38f1baff3a6d70426e880d7c4ee68334277e189ae7a506d3b870db5",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-win32-v1-20260917"
+          ],
+          "paths": [
+            "runtime/core_v1/**",
+            "runtime/backends/win32_v1/**",
+            ".github/workflows/runtime-win32-v1.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/core_v1/**",
+            "runtime/backends/win32_v1/**",
+            ".github/workflows/runtime-win32-v1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "native-win32": null
+      }
+    },
+    {
+      "path": ".github/workflows/runtime-x11-v1.yml",
+      "bytes": 4753,
+      "sha256": "f9d111e63c884823f10bfa10b74813c7c9adc920fbc6eaa3efaf1b7c519bd03d",
+      "events": {
+        "push": {
+          "branches": [
+            "integration/runtime-x11-v1-20260917"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "runtime/core_v1/**",
+            "runtime/guarded_x11_v1/**",
+            "runtime/backends/x11_v1/**",
+            "runtime/cli_v1/**",
+            "research/live_control/native_handle_bridge_v1.py",
+            "research/live_control/test_native_handle_bridge_v1.py",
+            "research/live_control/agent_review.py",
+            "research/live_control/test_agent_review.py",
+            "research/live_control/receipt_image.py",
+            "research/live_control/receipt_references.py",
+            "research/live_control/test_receipt_references.py",
+            "research/live_control/native_review_recovery_v1.py",
+            "research/live_control/native_exchange_v1.py",
+            "research/live_control/test_native_exchange_v1.py",
+            "research/live_control/native_cleanup_v1.py",
+            "research/live_control/test_native_cleanup_v1.py",
+            "research/live_control/native_visual_watch_v1.py",
+            "research/live_control/test_native_visual_watch_v1.py",
+            "research/live_control/native_release_observation_v1.py",
+            "research/live_control/test_native_release_observation_v1.py",
+            "research/live_control/agent_exchange.py",
+            "research/live_control/run_native_calc_self_use_v1.py",
+            "research/live_control/test_native_finish_after_v1.py",
+            ".github/workflows/runtime-x11-v1.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "x11-integration": null
+      }
+    },
+    {
+      "path": ".github/workflows/scorer-coherence-audit-3300.yml",
+      "bytes": 522,
+      "sha256": "414ba4dc94f4bbd9e2336b3a8eb743eb5ad978a09e1745c587f5e125201cb693",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/doom/scorer_coherence_live_3300_v1/**",
+            ".github/workflows/scorer-coherence-audit-3300.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/semantic-difference-identity-successor.yml",
+      "bytes": 1192,
+      "sha256": "ade66f1b84b0fc79fb044be89f13e7ea8c171ff230497bbd3cbfe9bf512ffb37",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/semantic_difference_identity_successor_2004_v1/**",
+            ".github/workflows/semantic-difference-identity-successor.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "formal": null
+      }
+    },
+    {
+      "path": ".github/workflows/session-handoff-capsule-2630.yml",
+      "bytes": 427,
+      "sha256": "0b484679bf8c80d81694e4a1dbeb239d20dbb32e433540660584e018668de498",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/session_handoff/capsule_contract_successor_v1/**",
+            ".github/workflows/session-handoff-capsule-2630.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/shared-caller-accounting-successor-53.yml",
+      "bytes": 1843,
+      "sha256": "24e53ef2a31355cac29dbb6d84c77c49ee8facdf8e7b26955ae272594d3c6d70",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/shared_caller_accounting_successor_53_v1/**",
+            ".github/workflows/shared-caller-accounting-successor-53.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "accounting": "github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/spatial-block-6590-t1-v2.yml",
+      "bytes": 780,
+      "sha256": "9a2540431e9b8d609f53f21eb5093333b847c5d1aed38936df4188a0696c20d9",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/spatial_block_position_6590_t1_orbstack_v2/**",
+            ".github/workflows/spatial-block-6590-t1-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/spatial-block-6590-t1.yml",
+      "bytes": 939,
+      "sha256": "9359f17d7c6386b43c4d8c36a95fbca2b7cedcd62630202b2683ec8d80c4e826",
+      "events": {
+        "pull_request": {
+          "paths": [
+            "research/analysis/spatial_block_position_6590_t1_orbstack_v1/**",
+            ".github/workflows/spatial-block-6590-t1.yml"
+          ]
+        },
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "research/analysis/spatial_block_position_6590_t1_orbstack_v1/**",
+            ".github/workflows/spatial-block-6590-t1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "construction": null
+      }
+    },
+    {
+      "path": ".github/workflows/staggered-subagent-orchestration-3158.yml",
+      "bytes": 756,
+      "sha256": "e2376a316ffcb8d602f210eee840e78c532fb4fb8ce214cd8f6887c838ab96c4",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/coordination/staggered_subagent_orchestration_v1/**",
+            ".github/workflows/staggered-subagent-orchestration-3158.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/staggered-subagent-orchestration-v2-3199.yml",
+      "bytes": 1522,
+      "sha256": "f58ecc53a39c0652c3c1a1a04b09bd3cd4456f5ea2029e9e25c42dc5ca0bfc37",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/coordination/staggered_subagent_orchestration_v2/**",
+            ".github/workflows/staggered-subagent-orchestration-v2-3199.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/synthetic-model-facing-timing.yml",
+      "bytes": 693,
+      "sha256": "8c2d0d5eed3cc2b24e55aa325980ee09db2295f47ba2a51a59ff5d92cc4658ec",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            ".github/workflows/synthetic-model-facing-timing.yml",
+            "research/analysis/model_facing_timing_successor_2101/**"
+          ]
+        }
+      },
+      "jobs_if": {
+        "frozen-stub": null
+      }
+    },
+    {
+      "path": ".github/workflows/temporal-ambiguity-policy-2204.yml",
+      "bytes": 909,
+      "sha256": "aa97f3b0d55dab26898a9a1a3c2eabf0d095a8147d9d39f59b301e4f88fa23ac",
+      "events": {
+        "push": {
+          "branches": [
+            "research/temporal-ambiguity-policy-2204"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/causality/temporal_ambiguity_policy_2204_v1/**",
+            ".github/workflows/temporal-ambiguity-policy-2204.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "audit": null
+      }
+    },
+    {
+      "path": ".github/workflows/temporal-speculation-obstacle-preflight-2092.yml",
+      "bytes": 1013,
+      "sha256": "503afd8de2e89b50a7d76b7fcaa8046deb5791a2220e0d6bddc3c4cfb889d5e3",
+      "events": {
+        "push": {
+          "paths": [
+            "research/measurement/temporal_speculation_obstacle_preflight_2092_v1/**",
+            ".github/workflows/temporal-speculation-obstacle-preflight-2092.yml"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/measurement/temporal_speculation_obstacle_preflight_2092_v1/**",
+            ".github/workflows/temporal-speculation-obstacle-preflight-2092.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "preflight": null
+      }
+    },
+    {
+      "path": ".github/workflows/typed-deadband-successor.yml",
+      "bytes": 2772,
+      "sha256": "27ef302f9488a7b97860ad51edd5ee8742c7df3557d9d4fdf1b1cd009010dcda",
+      "events": {
+        "push": {
+          "branches": [
+            "research/typed-deadband-postcondition-successor-v1"
+          ],
+          "paths": [
+            "research/container_control/typed_deadband_postcondition_successor_v1/**",
+            ".github/workflows/typed-deadband-successor.yml"
+          ]
+        },
+        "pull_request": {
+          "types": [
+            "opened",
+            "synchronize",
+            "reopened"
+          ],
+          "paths": [
+            "research/container_control/typed_deadband_postcondition_successor_v1/**",
+            ".github/workflows/typed-deadband-successor.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "run-once": "github.event.pull_request.head.repo.full_name == github.repository"
+      }
+    },
+    {
+      "path": ".github/workflows/typed-negative-outcomes-39-r1.yml",
+      "bytes": 1746,
+      "sha256": "09f0837bfe4b15d9dd5c7885f1104761c5af8ce05d897c5d203851f0fa131884",
+      "events": {
+        "push": {
+          "branches": [
+            "research/typed-negative-outcomes-39-r1"
+          ]
+        },
+        "pull_request": {
+          "paths": [
+            "research/analysis/typed_negative_outcomes_successor_39_v1/**",
+            ".github/workflows/typed-negative-outcomes-39-r1.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "native": null,
+        "container": null
+      }
+    },
+    {
+      "path": ".github/workflows/workflow-dispatch-boundary-3222.yml",
+      "bytes": 638,
+      "sha256": "eeb1ce7c09e7e8f487e23b380e65d2094384cf59938c8c2833c0fc6ef53646ca",
+      "events": {
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "boundary": null
+      }
+    },
+    {
+      "path": ".github/workflows/x11-identity-readiness-2723.yml",
+      "bytes": 1046,
+      "sha256": "2e64974ba1bffbd8d3eeceead6aaefb7b41406cd0ee8fddaa8022a19a89730e3",
+      "events": {
+        "workflow_dispatch": "",
+        "pull_request": {
+          "paths": [
+            "research/integration/x11_identity_readiness_2723/**",
+            ".github/workflows/x11-identity-readiness-2723.yml"
+          ]
+        },
+        "push": {
+          "paths": [
+            "research/integration/x11_identity_readiness_2723/**",
+            ".github/workflows/x11-identity-readiness-2723.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "readiness": null
+      }
+    }
+  ],
+  "push_candidates": [],
+  "pull_request_candidates": [
+    ".github/workflows/issue4242-allocation02-formal.yml",
+    ".github/workflows/map01-3270-replay-gate-repaired.yml",
+    ".github/workflows/public-navigation.yml",
+    ".github/workflows/research-workspace-index.yml"
+  ],
+  "create_rows": [
+    {
+      "path": ".github/workflows/5716-identifiability-docker-construction-a01.yml",
+      "bytes": 9337,
+      "sha256": "882542753c0da02189271c4a8e719f10679a5a0d25ef269683a8b97805b7f2f9",
+      "events": {
+        "create": ""
+      },
+      "jobs_if": {
+        "construction": "github.event.ref_type == 'branch' && github.event.ref == 'research/5716-identifiability-docker-construction-20261001-01'"
+      }
+    }
+  ],
+  "pull_request_target_candidates": [],
+  "non_workflow_objects": [
+    {
+      "path": ".github/workflows/README.md",
+      "bytes": 3206,
+      "sha256": "d7e6dc0dcba8476cbe99668807d8e446bdee745d1916c08edcedc3327e1de80d"
+    }
+  ],
+  "disposition": "head commit [skip ci] for push/pull_request, required checks never called green or bypassed; one foreign exact create-job guard false",
+  "glob_scope": "conservative fnmatch event preflight, not full GitHub execution semantics"
+}

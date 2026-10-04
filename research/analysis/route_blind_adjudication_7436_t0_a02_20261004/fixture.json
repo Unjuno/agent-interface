@@ -1,0 +1,71 @@
+{
+  "schema": "route-blind-adjudication-7436-fixture-v1",
+  "rubric": {
+    "endpoint": "synthetic usefulness classification",
+    "allowed_scores": ["useful", "not_useful", "uncertain"],
+    "required_fields": ["score", "uncertainty", "evidence_pointer"],
+    "uncertainty_values": ["low", "medium", "high"]
+  },
+  "cases": [
+    {
+      "source_id": "case-01-alpha",
+      "stratum": "first-feedback",
+      "route": "ROUTE_ALPHA_EXPECTED_WINNER",
+      "artifact_path": "source/ROUTE_ALPHA_EXPECTED_WINNER/CANDIDATE_FAST_ROUTE_ALPHA_case01.json",
+      "filename": "CANDIDATE_FAST_ROUTE_ALPHA_case01.json",
+      "metadata": {"candidate": "CANDIDATE_FAST_ROUTE_ALPHA", "branch": "BRANCH_GUARDED_ALPHA", "predicted_winner": "PREDICTED_WINNER_ALPHA"},
+      "summary": "ROUTE_ALPHA_EXPECTED_WINNER produced a useful feedback cue.",
+      "evidence": {"event": "cue_visible", "elapsed_ms": 420, "task_state": "field-confirmed"}
+    },
+    {
+      "source_id": "case-01-beta",
+      "stratum": "first-feedback",
+      "route": "ROUTE_BETA_BASELINE",
+      "artifact_path": "source/ROUTE_BETA_BASELINE/CANDIDATE_BASELINE_ROUTE_BETA_case01.json",
+      "filename": "CANDIDATE_BASELINE_ROUTE_BETA_case01.json",
+      "metadata": {"candidate": "CANDIDATE_BASELINE_ROUTE_BETA", "branch": "BRANCH_BASELINE_BETA", "predicted_winner": "PREDICTED_WINNER_ALPHA"},
+      "summary": "ROUTE_BETA_BASELINE produced a useful feedback cue.",
+      "evidence": {"event": "cue_visible", "elapsed_ms": 420, "task_state": "field-confirmed"}
+    },
+    {
+      "source_id": "case-02-alpha",
+      "stratum": "collateral-review",
+      "route": "ROUTE_ALPHA_EXPECTED_WINNER",
+      "artifact_path": "source/ROUTE_ALPHA_EXPECTED_WINNER/CANDIDATE_FAST_ROUTE_ALPHA_case02.json",
+      "filename": "CANDIDATE_FAST_ROUTE_ALPHA_case02.json",
+      "metadata": {"candidate": "CANDIDATE_FAST_ROUTE_ALPHA", "branch": "BRANCH_GUARDED_ALPHA", "predicted_winner": "PREDICTED_WINNER_ALPHA"},
+      "summary": "ROUTE_ALPHA_EXPECTED_WINNER caused no material collateral change.",
+      "evidence": {"event": "collateral_delta", "changed_pixels": 0, "task_state": "saved"}
+    },
+    {
+      "source_id": "case-02-beta",
+      "stratum": "collateral-review",
+      "route": "ROUTE_BETA_BASELINE",
+      "artifact_path": "source/ROUTE_BETA_BASELINE/CANDIDATE_BASELINE_ROUTE_BETA_case02.json",
+      "filename": "CANDIDATE_BASELINE_ROUTE_BETA_case02.json",
+      "metadata": {"candidate": "CANDIDATE_BASELINE_ROUTE_BETA", "branch": "BRANCH_BASELINE_BETA", "predicted_winner": "PREDICTED_WINNER_ALPHA"},
+      "summary": "ROUTE_BETA_BASELINE caused no material collateral change.",
+      "evidence": {"event": "collateral_delta", "changed_pixels": 0, "task_state": "saved"}
+    },
+    {
+      "source_id": "case-03-alpha",
+      "stratum": "ambiguous-recovery",
+      "route": "ROUTE_ALPHA_EXPECTED_WINNER",
+      "artifact_path": "source/ROUTE_ALPHA_EXPECTED_WINNER/CANDIDATE_FAST_ROUTE_ALPHA_case03.json",
+      "filename": "CANDIDATE_FAST_ROUTE_ALPHA_case03.json",
+      "metadata": {"candidate": "CANDIDATE_FAST_ROUTE_ALPHA", "branch": "BRANCH_GUARDED_ALPHA", "predicted_winner": "PREDICTED_WINNER_ALPHA"},
+      "summary": "ROUTE_ALPHA_EXPECTED_WINNER left recovery ambiguous.",
+      "evidence": {"event": "recovery_state", "visible_state": "dialog-open", "task_state": "uncertain"}
+    },
+    {
+      "source_id": "case-03-beta",
+      "stratum": "ambiguous-recovery",
+      "route": "ROUTE_BETA_BASELINE",
+      "artifact_path": "source/ROUTE_BETA_BASELINE/CANDIDATE_BASELINE_ROUTE_BETA_case03.json",
+      "filename": "CANDIDATE_BASELINE_ROUTE_BETA_case03.json",
+      "metadata": {"candidate": "CANDIDATE_BASELINE_ROUTE_BETA", "branch": "BRANCH_BASELINE_BETA", "predicted_winner": "PREDICTED_WINNER_ALPHA"},
+      "summary": "ROUTE_BETA_BASELINE left recovery ambiguous.",
+      "evidence": {"event": "recovery_state", "visible_state": "dialog-open", "task_state": "uncertain"}
+    }
+  ]
+}

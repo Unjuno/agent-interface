@@ -1,0 +1,170 @@
+"""Saved-only literal semantics and rational paired reduction; imports no collector."""
+from fractions import Fraction
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+HERE=Path(__file__).resolve().parent
+MODE,OUT=sys.argv[1],Path(sys.argv[2])
+canon=lambda v:json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()+b'\n'
+sha=lambda raw:hashlib.sha256(raw).hexdigest()
+def require(value,message):
+    if not value:raise ValueError(message)
+def equal(actual,wanted,message):
+    require(canon(actual)==canon(wanted),message)
+
+def verify_method(method,spec):
+    equal(method['input'],spec,'full input bytes')
+    require(method['input_sha256']==sha(canon(spec)),'method input identity')
+    n=spec['method']['max_transitions'];names=spec['predicates']
+    predicates=lambda phase:{name:phase if name=='phase' else 0 for name in names}
+    observation=lambda phase:dict(sequence=phase+1,captured_ns=0,surface='form',predicates=predicates(phase),
+                                evidence_ref='frame-'+str(phase+1),evidence_digest='digest-'+str(phase+1))
+    phase=0;verified=0;seen={'observe':0,'admit':0,'execute':0,'verify_effect':0,'clock':0,'cancelled':0};journals=[]
+    last_observation=None;last_admission=None
+    for call in method['trace']:
+        kind=call['kind'];request=call['request'];returned=call['returned']
+        require(set(call)=={'kind','request','returned'},'complete callback envelope')
+        if kind=='journal':
+            require(returned is None,'journal return');journals.append(request);continue
+        require(kind in seen,'unknown callback');seen[kind]+=1
+        if kind=='clock':
+            require(request is None and type(returned)is int and returned==0,'static logical clock type/value')
+        elif kind=='cancelled':
+            require(request is None and returned is False,'healthy cancellation callback')
+        elif kind=='observe':
+            equal(request,dict(required_predicates=names,state='s'+str(phase)),'observer request')
+            equal(returned,observation(phase),'literal fresh phase observation')
+            require(seen['observe']==phase+1,'one observation per phase');last_observation=returned
+        elif kind=='admit':
+            require(phase<n and verified==phase and last_observation is not None,'verified prefix before next admission')
+            equal(request,dict(interface_id=spec['interface_id'],session_scope=spec['session_scope'],action='a'+str(phase),
+                               operation='step'+str(phase),symbol=spec['symbols']['field'],observation=observation(phase)),'literal admission request')
+            equal(returned,dict(eligible=True,status='revalidated',authorization='auth-'+str(phase+1),
+                                expected_sequence=phase+1,valid_until_ns=100_000_000),'literal admission return')
+            last_admission=returned
+        elif kind=='execute':
+            require(last_admission is not None and verified==phase and seen['admit']==phase+1,'own admission before execute')
+            equal(request,dict(action='a'+str(phase),operation='step'+str(phase),authorization='auth-'+str(phase+1),
+                               expected_sequence=phase+1,valid_until_ns=10_000_000),'literal dispatch fields')
+            equal(returned,dict(status='completed',action_id='action-'+str(phase+1),effect_ref='effect-'+str(phase+1),
+                                release=dict(verified=True,keys_down=[],buttons_down=[])),'literal execution terminal')
+            phase+=1;last_admission=None
+        elif kind=='verify_effect':
+            require(phase==verified+1 and seen['observe']==phase+1,'fresh effect observation before verifier')
+            equal(request,dict(action='a'+str(phase-1),effect_ref='effect-'+str(phase),expected_effect=predicates(phase),
+                               observation=observation(phase)),'literal verifier request')
+            equal(returned,dict(status='succeeded',evidence_ref='frame-'+str(phase+1)),'literal verifier evidence')
+            verified+=1
+    require(phase==verified==n and seen['observe']==n+1 and seen['admit']==seen['execute']==seen['verify_effect']==n,'complete healthy callback counts')
+    require(seen['clock']>0 and seen['cancelled']>0,'boundary callbacks retained')
+    wanted_journal=[]
+    for i in range(n+1):
+        wanted_journal.append(dict(event='observation_recorded',evidence_ref='frame-'+str(i+1),sequence=i+1,state='s'+str(i)))
+        if i>0:wanted_journal.append(dict(event='effect_checked',action='a'+str(i-1),status='succeeded',evidence_ref='frame-'+str(i+1)))
+        wanted_journal.append(dict(event='branch_selected',state='s'+str(i),outcome='action' if i<n else 'complete',
+                                   action='a'+str(i) if i<n else None,matched_conditions=predicates(i),evidence_ref='frame-'+str(i+1)))
+        if i<n:wanted_journal.append(dict(event='action_terminal',action='a'+str(i),status='completed',action_id='action-'+str(i+1),release_verified=True))
+    wanted_journal.append(dict(event='runtime_finished',outcome='TASK_SUCCEEDED',reason='method_complete',completed_transitions=n))
+    equal(journals,wanted_journal,'complete literal journal trace')
+    observations=[{k:v for k,v in observation(i).items() if k!='surface'} for i in range(n+1)]
+    transitions=[dict(from_state='s'+str(i),to_state='s'+str(i+1),action='a'+str(i),matched_conditions=predicates(i),
+                      observation_sequence=i+1,evidence_ref='frame-'+str(i+1),action_id='action-'+str(i+1),
+                      effect_ref='effect-'+str(i+1),release_verified=True) for i in range(n)]
+    critical=[r for r in wanted_journal if r['event']!='observation_recorded']
+    expected=dict(format='compiled-gui-runtime-receipt-v1',interface_id=spec['interface_id'],method=spec['method']['name'],
+                  method_version='1',session_scope=spec['session_scope'],outcome='TASK_SUCCEEDED',reason='method_complete',
+                  completed_transitions=n,frontier_model_resumptions=0,observations=observations,transitions=transitions,
+                  critical_events=critical,latest_evidence_ref='frame-'+str(n+1),pending_effect=None,started_ns=0,ended_ns=0,elapsed_ns=0,
+                  input_authority='admission_per_action_only',raw_evidence_retention='adapter_responsibility_unverified')
+    equal(method['receipt'],expected,'complete typed literal receipt')
+    return seen
+
+def interval(row):
+    for key in ('cycle_start','cycle_end','wall_start_ns','wall_end_ns'):
+        require(type(row[key])is int and row[key]>=0,'counter integer '+key)
+    require(row['cycle_end']>=row['cycle_start'] and row['wall_end_ns']>=row['wall_start_ns'],'counter ordered interval')
+    return row['wall_end_ns']-row['wall_start_ns'],row['cycle_end']-row['cycle_start']
+
+def controls(method,spec):
+    results=[]
+    for label in ('boolean-prefix','omitted-execute','borrowed-authority','borrowed-verifier-reference','unverified-release','omitted-journal','changed-input'):
+        m=json.loads(canon(method))
+        if label=='boolean-prefix':m['receipt']['completed_transitions']=True
+        elif label=='omitted-execute':m['trace']=[r for r in m['trace'] if r['kind']!='execute']
+        elif label=='borrowed-authority':next(r for r in m['trace'] if r['kind']=='execute')['request']['authorization']='other-authority'
+        elif label=='borrowed-verifier-reference':next(r for r in m['trace'] if r['kind']=='verify_effect')['returned']['evidence_ref']='other-frame'
+        elif label=='unverified-release':next(r for r in m['trace'] if r['kind']=='execute')['returned']['release']['verified']=False
+        elif label=='omitted-journal':m['trace']=[r for r in m['trace'] if r['kind']!='journal']
+        else:m['input']['method']['max_transitions']=True
+        try:verify_method(m,spec)
+        except ValueError as e:results.append(dict(label=label,rejected=True,reason=str(e)))
+        else:raise RuntimeError('ineffective copied control '+label)
+    try:interval(dict(cycle_start=10,cycle_end=9,wall_start_ns=1,wall_end_ns=2))
+    except ValueError as e:results.append(dict(label='backward-cycle-counter',rejected=True,reason=str(e)))
+    else:raise RuntimeError('ineffective counter control')
+    return results
+
+if MODE=='preflight':
+    p=json.loads((HERE/'preflight-01/preflight.json').read_bytes())
+    for row in p['rows']:verify_method(row['method'],p['inputs'][row['case']])
+    sample=p['rows'][0];challenge=controls(sample['method'],p['inputs'][sample['case']])
+    result=dict(preflight_methods=6,literal_semantics='all complete',controls=challenge,measurement_started=False)
+elif MODE=='audit':
+    freeze=json.loads((HERE/'FREEZE.json').read_bytes())
+    require(freeze['auditor_sha256']==sha(Path(__file__).read_bytes()),'frozen auditor')
+    pairs={case:{} for case in freeze['inputs']};zeros=0;endpoint_changes=0;records=0;methods=0;sample=None
+    raw_path=HERE/'measure-01/raw.jsonl'
+    with raw_path.open('rb') as stream:
+        header=json.loads(next(stream));records+=1
+        require(header['kind']=='header','raw header')
+        equal(header['freeze'],freeze,'complete frozen descriptor')
+        require(header['freeze_sha256']==sha((HERE/'FREEZE.json').read_bytes()),'freeze byte hash')
+        for i in range(64):
+            row=json.loads(next(stream));records+=1
+            require(row['kind']=='calibration' and type(row['index'])is int and row['index']==i,'64 calibration roster')
+            interval(row)
+        for case in freeze['inputs']:
+            for arm in ('baseline','candidate'):
+                row=json.loads(next(stream));records+=1
+                equal([row['kind'],row['case'],row['arm']],['warmup',case,arm],'six warmup batch roster')
+                require(len(row['methods'])==8,'warmup method count')
+                for m in row['methods']:verify_method(m,freeze['inputs'][case]);methods+=1
+        cases=list(freeze['inputs'])
+        for pair in range(31):
+            for case in cases[pair%3:]+cases[:pair%3]:
+                arms=('baseline','candidate') if pair%2==0 else ('candidate','baseline')
+                for arm in arms:
+                    row=json.loads(next(stream));records+=1
+                    equal([row['kind'],row['pair'],row['case'],row['arm']],['batch',pair,case,arm],'fixed paired complete batch roster')
+                    require(len(row['methods'])==8,'measured batch size')
+                    for m in row['methods']:verify_method(m,freeze['inputs'][case]);methods+=1
+                    wall,cycles=interval(row);zeros+=cycles==0
+                    require(type(row['processor_before'])is int and type(row['processor_after'])is int,'processor endpoint type')
+                    endpoint_changes+=row['processor_before']!=row['processor_after']
+                    pairs[case].setdefault(pair,{})[arm]=(Fraction(wall,8),Fraction(cycles,8))
+                    if sample is None:sample=(row['methods'][0],freeze['inputs'][case])
+        terminal=json.loads(next(stream));records+=1
+        equal(terminal,dict(kind='terminal',measured_methods=1488,warmup_methods=48,paired_case_rounds=93,status='collection_complete'),'actual complete terminal')
+        require(stream.read()==b'','no unaccounted raw rows')
+    require(records==258 and methods==1536,'complete raw/method denominator')
+    def rational(value):return dict(numerator=value.numerator,denominator=value.denominator)
+    summary={}
+    for case in pairs:
+        require(len(pairs[case])==31,'31 paired cases')
+        summary[case]={}
+        for i,metric in enumerate(('wall_ns_per_method','thread_cycle_counter_per_method')):
+            deltas=sorted(pairs[case][p]['candidate'][i]-pairs[case][p]['baseline'][i] for p in range(31))
+            summary[case][metric]=dict(paired_signed_median=rational(deltas[15]),minimum=rational(deltas[0]),maximum=rational(deltas[-1]),
+                all_signed_pairs=[rational(pairs[case][p]['candidate'][i]-pairs[case][p]['baseline'][i]) for p in range(31)])
+    challenge=controls(*sample)
+    result=dict(status='VALID_CHARACTERIZATION',raw_bytes=raw_path.stat().st_size,raw_sha256=sha(raw_path.read_bytes()),
+                source_pins=freeze['source_pins'],methods=1536,measured_methods=1488,warmup_methods=48,batches=186,pairs=93,
+                zero_cycle_batches=zeros,processor_endpoint_changes=endpoint_changes,summary=summary,controls=challenge,
+                thread_cycle_proxy='observed positive batch counter samples' if zeros==0 else 'zero batches retained; proxy unresolved',
+                cpu_seconds='UNRESOLVED_NO_CYCLE_TO_SECONDS_CONVERSION',limits=freeze['limits'],producer_formal_replays=0)
+else:raise RuntimeError('unsupported auditor mode')
+OUT.mkdir(exist_ok=False)
+with (OUT/'audit-result.json').open('xb') as f:f.write(canon(result))
+print(json.dumps({k:v for k,v in result.items() if k not in {'summary','source_pins','limits'}},sort_keys=True))

@@ -2,6 +2,7 @@
 import {createInterface} from 'node:readline';
 import {readFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
+import {TextDecoder} from 'node:util';
 import {createInstrumentedRelayClient} from './relay_host.mjs';
 import {createPrimaryExchange} from './primary_exchange.mjs';
 
@@ -30,10 +31,23 @@ function emit(output,value) {
 }
 
 export async function servePrimaryLines({exchange,input,output}) {
-  const lines=createInterface({input,terminal:false});
-  let pending=null,failure=null;
+  const decoder=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true});
+  let lines,pending=null,failure=null;
   const rejectedWrites=new Set();
-  function failed(error) {failure??=error;input.pause();lines.close();}
+  function failed(error) {failure??=error;input.pause();lines?.close();}
+  function validateBytes(chunk) {
+    if(failure)return;
+    try {
+      if(typeof chunk==='string')decoder.decode();
+      else decoder.decode(chunk,{stream:true});
+    } catch(error){failed(error);}
+  }
+  function finishBytes() {
+    if(failure)return;
+    try {decoder.decode();}catch(error){failed(error);}
+  }
+  input.on('data',validateBytes);input.on('end',finishBytes);
+  lines=createInterface({input,terminal:false});
   output.on('error',failed);
   input.on('error',failed);
   async function perform(line) {
@@ -59,6 +73,9 @@ export async function servePrimaryLines({exchange,input,output}) {
     lines.on('line',line=>{
       if(failure)return;
       if(pending){
+        // One unobserved busy write is enough. A synchronous line burst can
+        // continue even after input.pause(), so stop before retaining another.
+        if(rejectedWrites.size){failed(Error('primary busy response backlog'));return;}
         // Refuse this line now. It is never retained as a future action.
         const write=emit(output,{schema,status:'busy',operation_invoked:false,
           pending:true,next_id:exchange.state().next_id}).catch(failed);
@@ -72,6 +89,7 @@ export async function servePrimaryLines({exchange,input,output}) {
         // Finish observing that same promise before owner transport cleanup.
         await pending;await Promise.all(rejectedWrites);
         output.removeListener('error',failed);input.removeListener('error',failed);
+        input.removeListener('data',validateBytes);input.removeListener('end',finishBytes);
         if(failure)reject(failure);else resolve();
       })().catch(reject);
     });

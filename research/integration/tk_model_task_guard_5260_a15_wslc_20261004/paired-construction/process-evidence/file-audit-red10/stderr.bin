@@ -1,0 +1,120 @@
+test_exact_actual_file_scores_completed_without_producer_outcome (test_file_audit.FileAuditTests.test_exact_actual_file_scores_completed_without_producer_outcome) ... FAIL
+test_no_file_and_no_save_is_unfinished_not_completion (test_file_audit.FileAuditTests.test_no_file_and_no_save_is_unfinished_not_completion) ... FAIL
+test_tampered_file_is_custody_error_even_with_desired_text (test_file_audit.FileAuditTests.test_tampered_file_is_custody_error_even_with_desired_text) ... FAIL
+test_wrong_recipient_key_is_detected_even_if_decoy_text_unchanged (test_file_audit.FileAuditTests.test_wrong_recipient_key_is_detected_even_if_decoy_text_unchanged) ... FAIL
+test_wrong_saved_text_is_wrong_file_not_completion (test_file_audit.FileAuditTests.test_wrong_saved_text_is_wrong_file_not_completion) ... FAIL
+
+======================================================================
+FAIL: test_exact_actual_file_scores_completed_without_producer_outcome (test_file_audit.FileAuditTests.test_exact_actual_file_scores_completed_without_producer_outcome)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 13, in setUp
+    self.module = importlib.import_module('file_audit')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'file_audit'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 15, in setUp
+    self.fail('Independent saved-file scorer absent: '+str(error))
+AssertionError: Independent saved-file scorer absent: No module named 'file_audit'
+
+======================================================================
+FAIL: test_no_file_and_no_save_is_unfinished_not_completion (test_file_audit.FileAuditTests.test_no_file_and_no_save_is_unfinished_not_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 13, in setUp
+    self.module = importlib.import_module('file_audit')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'file_audit'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 15, in setUp
+    self.fail('Independent saved-file scorer absent: '+str(error))
+AssertionError: Independent saved-file scorer absent: No module named 'file_audit'
+
+======================================================================
+FAIL: test_tampered_file_is_custody_error_even_with_desired_text (test_file_audit.FileAuditTests.test_tampered_file_is_custody_error_even_with_desired_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 13, in setUp
+    self.module = importlib.import_module('file_audit')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'file_audit'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 15, in setUp
+    self.fail('Independent saved-file scorer absent: '+str(error))
+AssertionError: Independent saved-file scorer absent: No module named 'file_audit'
+
+======================================================================
+FAIL: test_wrong_recipient_key_is_detected_even_if_decoy_text_unchanged (test_file_audit.FileAuditTests.test_wrong_recipient_key_is_detected_even_if_decoy_text_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 13, in setUp
+    self.module = importlib.import_module('file_audit')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'file_audit'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 15, in setUp
+    self.fail('Independent saved-file scorer absent: '+str(error))
+AssertionError: Independent saved-file scorer absent: No module named 'file_audit'
+
+======================================================================
+FAIL: test_wrong_saved_text_is_wrong_file_not_completion (test_file_audit.FileAuditTests.test_wrong_saved_text_is_wrong_file_not_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 13, in setUp
+    self.module = importlib.import_module('file_audit')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'file_audit'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 15, in setUp
+    self.fail('Independent saved-file scorer absent: '+str(error))
+AssertionError: Independent saved-file scorer absent: No module named 'file_audit'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.007s
+
+FAILED (failures=5)

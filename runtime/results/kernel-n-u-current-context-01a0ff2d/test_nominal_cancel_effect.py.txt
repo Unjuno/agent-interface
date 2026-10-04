@@ -1,0 +1,27 @@
+from dataclasses import fields
+from types import SimpleNamespace
+import unittest
+from runtime.kernel import ContractError, RequestLifecycle
+from runtime.kernel.test_kernel import observation, binding, lease, request, execution, released
+
+def shaped(value):
+    return SimpleNamespace(**{field.name:getattr(value,field.name) for field in fields(value)})
+
+class JointRefusalRecoveryTests(unittest.TestCase):
+    def test_refused_nominal_receipt_and_cleanup_preserve_possible_effect(self):
+        flow=RequestLifecycle()
+        flow.record_observation(observation());flow.bind(binding())
+        flow.authorize(lease(),now_ns=200);flow.begin_execution(request(),now_ns=300)
+        before=vars(flow).copy()
+        with self.assertRaises(ContractError):flow.record_execution(shaped(execution()))
+        self.assertEqual(vars(flow),before)
+        with self.assertRaises(ContractError):flow.stop('shaped cleanup',release=shaped(released(800)))
+        self.assertEqual(vars(flow),before)
+        with self.assertRaises(ContractError):flow.stop('stale cleanup',release=released(299))
+        self.assertEqual(vars(flow),before)
+        flow.stop('verified cleanup',release=released(800))
+        result=flow.outcome()
+        self.assertEqual(result.command_id,'cmd-1')
+        self.assertTrue(result.effect_occurred)
+        self.assertFalse(result.effect_verified)
+        self.assertTrue(result.release_verified)

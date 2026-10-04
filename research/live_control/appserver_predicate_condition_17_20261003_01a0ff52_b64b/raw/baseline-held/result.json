@@ -1,0 +1,474 @@
+{
+  "arm": "baseline",
+  "case": "baseline-held",
+  "checkpoint": {
+    "journal_received": [
+      {
+        "direction": "received",
+        "message": {
+          "method": "fixture/notice",
+          "params": {
+            "token": "condition-C01"
+          }
+        },
+        "observed_ns": 31939502395503
+      },
+      {
+        "direction": "sent",
+        "message": {
+          "id": 1,
+          "method": "turn/interrupt",
+          "params": {
+            "threadId": "fixture-thread",
+            "turnId": "fixture-turn"
+          }
+        },
+        "observed_ns": 31939504557805
+      },
+      {
+        "direction": "received",
+        "message": {
+          "id": 1,
+          "result": {
+            "fixture": "interrupt-ack",
+            "token": "condition-C01"
+          }
+        },
+        "observed_ns": 31939508567949
+      }
+    ],
+    "notification_alive": true,
+    "notification_frames": [
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "wait",
+        "line": 359,
+        "self_is_client": false,
+        "self_is_shared_condition": false,
+        "timeout": 2
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "wait",
+        "line": 655,
+        "self_is_client": false,
+        "self_is_shared_condition": false,
+        "timeout": 2
+      },
+      {
+        "file": "/src/driver.py",
+        "function": "predicate",
+        "line": 50,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "deadline": 31939.556761149,
+        "file": "/src/baseline.py",
+        "function": "wait_notification",
+        "line": 93,
+        "self_is_client": true,
+        "self_is_shared_condition": false,
+        "timeout": 0.05
+      },
+      {
+        "file": "/src/driver.py",
+        "function": "<lambda>",
+        "line": 77,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/src/driver.py",
+        "function": "caller",
+        "line": 43,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "run",
+        "line": 1012,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap_inner",
+        "line": 1075,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap",
+        "line": 1032,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      }
+    ],
+    "ns": 31939757334726,
+    "outcomes_snapshot": {},
+    "peer_events": [
+      {
+        "event": "peer_start",
+        "ns": 31939502291044,
+        "pid": 18,
+        "seq": 1
+      },
+      {
+        "event": "wire_write_before",
+        "message": {
+          "method": "fixture/notice",
+          "params": {
+            "token": "condition-C01"
+          }
+        },
+        "ns": 31939502332253,
+        "seq": 2,
+        "wire": "{\"method\":\"fixture/notice\",\"params\":{\"token\":\"condition-C01\"}}\n"
+      },
+      {
+        "event": "wire_emitted",
+        "message": {
+          "method": "fixture/notice",
+          "params": {
+            "token": "condition-C01"
+          }
+        },
+        "ns": 31939502349461,
+        "seq": 3,
+        "wire": "{\"method\":\"fixture/notice\",\"params\":{\"token\":\"condition-C01\"}}\n"
+      },
+      {
+        "event": "request_received",
+        "message": {
+          "id": 1,
+          "method": "turn/interrupt",
+          "params": {
+            "threadId": "fixture-thread",
+            "turnId": "fixture-turn"
+          }
+        },
+        "ns": 31939504615556,
+        "seq": 4,
+        "wire": "{\"method\":\"turn/interrupt\",\"id\":1,\"params\":{\"threadId\":\"fixture-thread\",\"turnId\":\"fixture-turn\"}}\n"
+      },
+      {
+        "event": "wire_write_before",
+        "message": {
+          "id": 1,
+          "result": {
+            "fixture": "interrupt-ack",
+            "token": "condition-C01"
+          }
+        },
+        "ns": 31939508490907,
+        "seq": 5,
+        "wire": "{\"id\":1,\"result\":{\"fixture\":\"interrupt-ack\",\"token\":\"condition-C01\"}}\n"
+      },
+      {
+        "event": "wire_emitted",
+        "message": {
+          "id": 1,
+          "result": {
+            "fixture": "interrupt-ack",
+            "token": "condition-C01"
+          }
+        },
+        "ns": 31939508509699,
+        "seq": 6,
+        "wire": "{\"id\":1,\"result\":{\"fixture\":\"interrupt-ack\",\"token\":\"condition-C01\"}}\n"
+      }
+    ],
+    "reader_frames": [
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "__enter__",
+        "line": 300,
+        "self_is_client": false,
+        "self_is_shared_condition": true
+      },
+      {
+        "file": "/src/baseline.py",
+        "function": "_read",
+        "line": 34,
+        "self_is_client": true,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "run",
+        "line": 1012,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap_inner",
+        "line": 1075,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap",
+        "line": 1032,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      }
+    ],
+    "release_event_set": false,
+    "request_alive": true,
+    "request_frames": [
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "wait",
+        "line": 364,
+        "self_is_client": false,
+        "self_is_shared_condition": true,
+        "timeout": 0.049998582999251084
+      },
+      {
+        "deadline": 31939.554639138998,
+        "file": "/src/baseline.py",
+        "function": "request",
+        "identifier": 1,
+        "line": 76,
+        "method": "turn/interrupt",
+        "remaining": 0.049998582999251084,
+        "self_is_client": true,
+        "self_is_shared_condition": false,
+        "timeout": 0.05
+      },
+      {
+        "file": "/src/driver.py",
+        "function": "<lambda>",
+        "line": 66,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/src/driver.py",
+        "function": "caller",
+        "line": 43,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "run",
+        "line": 1012,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap_inner",
+        "line": 1075,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap",
+        "line": 1032,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      }
+    ],
+    "responses_snapshot": {}
+  },
+  "cleanup": {
+    "client_closed_flag": true,
+    "journal_closed": true,
+    "notification_alive": false,
+    "ns": 31939933370153,
+    "peer_returncode": 0,
+    "pipes": [
+      {
+        "closed_after_client_close": false,
+        "closed_after_driver_cleanup": true,
+        "fd": 6,
+        "fstat_errno": 9,
+        "name": "stdin"
+      },
+      {
+        "closed_after_client_close": false,
+        "closed_after_driver_cleanup": true,
+        "fd": 7,
+        "fstat_errno": 9,
+        "name": "stdout"
+      },
+      {
+        "closed_after_client_close": false,
+        "closed_after_driver_cleanup": true,
+        "fd": 9,
+        "fstat_errno": 9,
+        "name": "stderr"
+      }
+    ],
+    "reader_alive": false,
+    "request_alive": false
+  },
+  "clock": {
+    "monotonic": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    },
+    "perf_counter": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    }
+  },
+  "close_start_ns": 31939932500857,
+  "end_ns": 31939933374320,
+  "errors": [],
+  "mode": "held",
+  "outcomes": {
+    "notification": {
+      "end_ns": 31939908384075,
+      "kind": "return",
+      "start_ns": 31939506741982,
+      "value": {
+        "method": "fixture/notice",
+        "params": {
+          "token": "condition-C01"
+        }
+      }
+    },
+    "request": {
+      "end_ns": 31939908994828,
+      "kind": "return",
+      "start_ns": 31939504515847,
+      "value": {
+        "fixture": "interrupt-ack",
+        "token": "condition-C01"
+      }
+    }
+  },
+  "peer_pid": 18,
+  "peer_request_receipt_before_predicate": {
+    "event": "request_received",
+    "message": {
+      "id": 1,
+      "method": "turn/interrupt",
+      "params": {
+        "threadId": "fixture-thread",
+        "turnId": "fixture-turn"
+      }
+    },
+    "ns": 31939504615556,
+    "seq": 4,
+    "wire": "{\"method\":\"turn/interrupt\",\"id\":1,\"params\":{\"threadId\":\"fixture-thread\",\"turnId\":\"fixture-turn\"}}\n"
+  },
+  "peer_returncode": 0,
+  "peer_stderr": "",
+  "pid": 17,
+  "predicate_entry_ns": 31939506764107,
+  "request_before_predicate": {
+    "condition_waiters": 1,
+    "deadline_ns": 31939554639139,
+    "frames": [
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "wait",
+        "line": 359,
+        "self_is_client": false,
+        "self_is_shared_condition": true,
+        "timeout": 0.049998582999251084
+      },
+      {
+        "deadline": 31939.554639138998,
+        "file": "/src/baseline.py",
+        "function": "request",
+        "identifier": 1,
+        "line": 76,
+        "method": "turn/interrupt",
+        "remaining": 0.049998582999251084,
+        "self_is_client": true,
+        "self_is_shared_condition": false,
+        "timeout": 0.05
+      },
+      {
+        "file": "/src/driver.py",
+        "function": "<lambda>",
+        "line": 66,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/src/driver.py",
+        "function": "caller",
+        "line": 43,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "run",
+        "line": 1012,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap_inner",
+        "line": 1075,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      },
+      {
+        "file": "/usr/local/lib/python3.12/threading.py",
+        "function": "_bootstrap",
+        "line": 1032,
+        "self_is_client": false,
+        "self_is_shared_condition": false
+      }
+    ],
+    "ns": 31939506477856,
+    "request_frame": {
+      "deadline": 31939.554639138998,
+      "file": "/src/baseline.py",
+      "function": "request",
+      "identifier": 1,
+      "line": 76,
+      "method": "turn/interrupt",
+      "remaining": 0.049998582999251084,
+      "self_is_client": true,
+      "self_is_shared_condition": false,
+      "timeout": 0.05
+    }
+  },
+  "response_emitted": {
+    "event": "wire_emitted",
+    "message": {
+      "id": 1,
+      "result": {
+        "fixture": "interrupt-ack",
+        "token": "condition-C01"
+      }
+    },
+    "ns": 31939508509699,
+    "seq": 6,
+    "wire": "{\"id\":1,\"result\":{\"fixture\":\"interrupt-ack\",\"token\":\"condition-C01\"}}\n"
+  },
+  "response_received": {
+    "direction": "received",
+    "message": {
+      "id": 1,
+      "result": {
+        "fixture": "interrupt-ack",
+        "token": "condition-C01"
+      }
+    },
+    "observed_ns": 31939508567949
+  },
+  "schema": "predicate-condition-native-cell-v1",
+  "source_sha256": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+  "utc_start": "2026-10-03T10:02:08.308080+00:00"
+}

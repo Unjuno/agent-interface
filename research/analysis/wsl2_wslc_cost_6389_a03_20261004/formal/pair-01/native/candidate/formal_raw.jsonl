@@ -1,0 +1,9 @@
+{"decision":"ADMIT","id":"complete_no_disturbance","reachable":["A"],"reason":"all_reachable_states_safe"}
+{"decision":"YIELD_UNSAFE_OR_AMBIGUOUS","id":"hidden_redirect_without_observation","reachable":["A","B"],"reason":"unsafe_state_remains_possible"}
+{"decision":"ADMIT","id":"redirect_then_fresh_safe_observation","reachable":["A"],"reason":"all_reachable_states_safe"}
+{"decision":"YIELD_UNSAFE_OR_AMBIGUOUS","id":"redirect_then_fresh_unsafe_observation","reachable":["B"],"reason":"unsafe_state_remains_possible"}
+{"decision":"YIELD_UNSAFE_OR_AMBIGUOUS","id":"stale_generation_observation_ignored","reachable":["A","B"],"reason":"unsafe_state_remains_possible"}
+{"decision":"UNKNOWN_MODEL","id":"unknown_transition_alphabet","reachable":[],"reason":"transition_coverage_unverified"}
+{"decision":"UNKNOWN_MODEL","id":"out_of_support_state_possible","reachable":[],"reason":"transition_coverage_unverified"}
+{"decision":"UNKNOWN_MODEL","id":"fresh_observation_contradicts_complete_model","reachable":[],"reason":"fresh_observation_contradicts_model"}
+{"decision":"YIELD_UNSAFE_OR_AMBIGUOUS","id":"two_step_reachability","reachable":["A","B","C"],"reason":"unsafe_state_remains_possible"}

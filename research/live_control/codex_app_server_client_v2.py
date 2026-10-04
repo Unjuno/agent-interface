@@ -33,6 +33,8 @@ class CodexAppServerClient:
                 self._record("received", message)
                 with self._condition:
                     if "id" in message:
+                        if type(message["id"]) is bool:
+                            continue
                         self._responses[message["id"]] = message
                     else:
                         self._notifications.append(message)
