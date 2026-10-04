@@ -119,7 +119,10 @@ def main(*, run_id=None):
         if game is None or not game.initialized or game.closed:raise RuntimeError('scorer sampled outside initialized game lifetime')
         return _coherent_progress_sample(game,base.vd.GameVariable,timeout_seconds)
     def final_sample():sink.direct(sample_game(),time.perf_counter_ns)
-    original_ctor=base.vd.DoomGame;original_stdin=sys.stdin;polling=MainThreadScorerStdin(original_stdin,sample_game,sink,sample_hz=35.0)
+    original_ctor=base.vd.DoomGame;original_stdin=sys.stdin
+    original_backend=getattr(base,'Backend',None);had_backend=hasattr(base,'Backend')
+    original_executor=getattr(base,'Executor',None);had_executor=hasattr(base,'Executor')
+    polling=MainThreadScorerStdin(original_stdin,sample_game,sink,sample_hz=35.0)
     def ctor(*args,**kwargs):
         proxy=_GameProxy(original_ctor(*args,**kwargs),final_sample);holder['game']=proxy;return proxy
     if run_id is None:
@@ -132,5 +135,9 @@ def main(*, run_id=None):
     try:base.main()
     finally:
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
+        if had_backend:base.Backend=original_backend
+        else:del base.Backend
+        if had_executor:base.Executor=original_executor
+        else:del base.Executor
         sink.finalize(polling.stats());_merge_sources(out)
 if __name__=='__main__':main()

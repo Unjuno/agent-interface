@@ -60,11 +60,14 @@ class SessionSelectionTests(unittest.TestCase):
                         sys.argv = ["session", "--out", str(out)]
                         try:
                             candidate.main()
+                            self.assertFalse(hasattr(base, "Backend"))
+                            self.assertFalse(hasattr(base, "Executor"))
+                            candidate.main()
                         finally:
                             sys.argv, sys.stdin = oldargv, oldstdin
-                    self.assertIs(base.Backend, telemetry.Backend)
-                    self.assertIs(base.Executor, ReleaseOrderedExecutor)
-                    run_base.assert_called_once()
+                    self.assertFalse(hasattr(base, "Backend"))
+                    self.assertFalse(hasattr(base, "Executor"))
+                    self.assertEqual(run_base.call_count, 2)
                 manifest = json.loads((out / "sources.json").read_text(encoding="utf-8"))
                 manifest = {name.replace("\\", "/"): value
                             for name, value in manifest.items()}
