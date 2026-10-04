@@ -13,6 +13,12 @@
 | Shared-runtime transfer | [Shared runtime transfer](#shared-runtime-transfer) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
+## Recent source-boundary construction
+
+| Finding | Scope | Evidence |
+|---|---|---|
+| [V39 scorer-tail command readiness after the sample-boundary repair](v39_scorer_tail_command_priority_a03_20261005/REPORT.md) | Three Windows socketpair cases against the frozen PR #7692 source snapshot; no real stdin, game, GUI or live allocation | [Freeze](v39_scorer_tail_command_priority_a03_20261005/FREEZE.json), [candidate result](v39_scorer_tail_command_priority_a03_20261005/results/a03/RESULT.json), [corrected independent audit](v39_scorer_tail_command_priority_a03_20261005/results/a03/AUDIT_V2.json) |
+
 ## Track map
 
 ```mermaid

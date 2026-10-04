@@ -1,0 +1,9 @@
+commands (run from this directory):
+python candidate.py
+python audit.py  [A01 historical auditor; first run retained]
+python -m unittest -v test_audit.py  [A01 historical auditor tests; failure retained]
+python audit_v2.py
+python -m unittest -v test_audit_v2.py
+
+Candidate invocation: one only; result path results/a03/RESULT.json.
+Auditor A01 and A02 were run read-only over that unchanged candidate result.
