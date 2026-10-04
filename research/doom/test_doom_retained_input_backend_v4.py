@@ -176,6 +176,58 @@ class Tests(unittest.TestCase):
         self.assertEqual(releases[0]["admission_identity_status"],
                          "ambiguous_multiple_admissions")
 
+    def test_owner_admission_key_mismatch_is_not_joined_to_release(self):
+        owner = Owner([])
+        original_call = owner.call
+
+        def call(op, lease=None, key=None):
+            row = original_call(op, lease, key)
+            if op == "down":
+                row["key"] = "other"
+            return row
+
+        owner.call = call
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", False)]},
+                    None, "trial-12", 7)
+
+        release = next(row for row in rows
+                       if row.get("event") == "input_release_transition")
+        self.assertNotIn("admission_position", release)
+        self.assertEqual(release["admission_identity_status"],
+                         "unmatched_no_admission")
+        admission = next(row for row in rows if row.get("event") == "input_admission")
+        self.assertFalse(admission["admission_key_matches_request"])
+
+    def test_owner_release_key_mismatch_is_not_joined_to_admission(self):
+        owner = Owner([])
+        original_call = owner.call
+
+        def call(op, lease=None, key=None):
+            row = original_call(op, lease, key)
+            if op == "up":
+                row["key"] = "other"
+            return row
+
+        owner.call = call
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", False)]},
+                    None, "trial-13", 8)
+
+        release = next(row for row in rows
+                       if row.get("event") == "input_release_transition")
+        self.assertNotIn("admission_position", release)
+        self.assertEqual(release["admission_identity_status"],
+                         "release_key_mismatch")
+        self.assertFalse(release["release_key_matches_request"])
+        self.assertFalse(release["owner_transition_verified"])
+
     def test_repeated_same_key_cycles_emit_one_correlated_release_each(self):
         owner = Owner([])
         obj = make_backend(set(), owner)
