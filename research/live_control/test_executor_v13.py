@@ -167,7 +167,7 @@ class ExecutorV13Tests(unittest.TestCase):
 
         terminal = next(row for row in events if row.get("event") == "terminal")
         self.assertEqual(terminal["status"], "failed")
-        self.assertIsNotNone(terminal["error"])
+        self.assertIsNotNone(terminal["release"]["error"])
         self.assertFalse(terminal["release"]["verified"])
         self.assertEqual(terminal["release"]["release_batch_delivery"], custody)
 
