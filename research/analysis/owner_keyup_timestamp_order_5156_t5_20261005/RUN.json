@@ -15,7 +15,8 @@
     {"command": "git diff --check", "exit_code": 0},
     {"command": "PowerShell SHA256SUMS verification over all tracked package files except SHA256SUMS itself and ignored bytecode cache", "exit_code": 0, "verified_entries": 15},
     {"command": "post-rebase audit test replay using retained outputs", "exit_code": 1, "disposition": "STOP_AUDIT_INTEGRITY", "cause": "working-tree CRLF bytes differed from frozen LF source/case bytes; preserved at output/post_rebase_checkout_stop.json; no candidate invocation"},
-    {"command": "git cat-file exact-blob checkout repair followed by auditor test replay on retained outputs", "exit_code": 0, "result": "4/4 auditor tests passed; no candidate invocation"}
+    {"command": "git cat-file exact-blob checkout repair followed by auditor test replay on retained outputs", "exit_code": 0, "result": "4/4 auditor tests passed; no candidate invocation"},
+    {"command": "git rev-parse ec71c53411055b1d3960ca7c947b52a70c5dca2f:research/doom/analyze_map01_direct_retained_input_v1.py", "exit_code": 0, "result": "f3d5fe315df8f4296351f1a5fc666d50ecaa6745; baseline source blob unchanged on current main"}
   ],
   "scope": "construction evidence for offline timestamp-order classification only; no live X11 fixture allocation or MAP01 run"
 }

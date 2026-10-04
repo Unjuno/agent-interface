@@ -1,6 +1,6 @@
 # Issue #5156 T5 — timestamp-order readiness guard
 
-This additive construction package tests whether the offline retained-input analyzer refuses impossible ordering among its four timestamps. It follows #5156's T4 scoped finding and preserves T1–T4 artifacts unchanged. The baseline was frozen at `e561b25`; a later main advance to `b67fc4f` left the analyzer Git blob unchanged at `f3d5fe3`, so the T5 source change is on current main's descendant branch and does not alter allocation behavior.
+This additive construction package tests whether the offline retained-input analyzer refuses impossible ordering among its four timestamps. It follows #5156's T4 scoped finding and preserves T1–T4 artifacts unchanged. The baseline was frozen at `e561b25`; later main advances through `ec71c53` left the analyzer Git blob unchanged at `f3d5fe3`, so the T5 source change is on current main's descendant branch and does not alter allocation behavior.
 
 ## H/T/D/C/U
 

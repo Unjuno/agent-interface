@@ -1,6 +1,6 @@
 # T5 result — offline timestamp-order construction
 
-The analyzer at frozen main `e561b25b700680df4e6ffd2b92faf1dde1682ef7` accepted both invalid event sequences in the frozen corpus while accepting the two positive controls. Main later advanced to `b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3`; the analyzer blob remained `f3d5fe315df8f4296351f1a5fc666d50ecaa6745`. The independent audit reported `FAIL_TIMESTAMP_ORDER_NEGATIVE_ACCEPTED` for `ack_before_admission` and `release_return_before_start`, with zero raw-integrity errors.
+The analyzer at frozen main `e561b25b700680df4e6ffd2b92faf1dde1682ef7` accepted both invalid event sequences in the frozen corpus while accepting the two positive controls. Main later advanced through `ec71c53411055b1d3960ca7c947b52a70c5dca2f`; the analyzer blob remained `f3d5fe315df8f4296351f1a5fc666d50ecaa6745`. The independent audit reported `FAIL_TIMESTAMP_ORDER_NEGATIVE_ACCEPTED` for `ack_before_admission` and `release_return_before_start`, with zero raw-integrity errors.
 
 The source now checks that admission, input acknowledgement, release-call start, and release-call return timestamps are nondecreasing before it emits a retained interval. Equality remains accepted. On the same four cases, the repaired analyzer passed all four classifications and the independent audit reported `PASS_ORDER_GATE_CONSTRUCTION_SCOPED`, with no false accepts or integrity errors.
 
