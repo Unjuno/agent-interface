@@ -1,0 +1,99 @@
+{
+  "H_T_D_C_U": {
+    "C": "Producer-shaped construction only; does not validate VizDoom scorer correctness, real session publication completeness, application effect, safety, recovery, or task benefit.",
+    "D": "Scoped PASS only if six boundary cases match literal expectations and existing T0 unit tests remain green.",
+    "H": "Current-main V15 producer rows can feed the frozen scorer attribution gate through identity-bound normalization.",
+    "T": "Write tests first; run red, implement adapter, run green. Inputs use literal records matching current source field names; no external game/model/input.",
+    "U": "No live game, model, GUI or OS input; no #59 allocation used; causal attribution always remains NOT_ESTABLISHED."
+  },
+  "attribution_gate": {
+    "blob": "68d49857c49547585fdb313b00d08ae2969429be",
+    "commit": "b076890cbcd28f2889184055453f2868fd87c629",
+    "path": "research/doom/scorer_feedback_attribution_59_t0_a01_20261004/scorer_feedback_attribution_v1.py",
+    "pr_number": 7537
+  },
+  "attribution_gate_test": {
+    "blob": "c58cfebdc461de42245cb5973c20340979a7ccd2",
+    "bytes": 4555,
+    "commit": "b076890cbcd28f2889184055453f2868fd87c629",
+    "path": "research/doom/scorer_feedback_attribution_59_t0_a01_20261004/test_attribution.py",
+    "pr": 7537,
+    "sha256": "065f0ef3862952cb8f92f6cf5e9f5e8ea9fd56d78f074d421c03c255694e7dcd"
+  },
+  "base_commit": "27ba2445059e14589c69c36d09b675ac44fb7c6f",
+  "candidate_sources": {
+    "adapter.py": {
+      "bytes": 9291,
+      "sha256": "a6d6dcec7ba99a4d83ec38cd4f05cfec13b26eb8d8531066f2dd237ddf73a29e"
+    },
+    "audit_t2.py": {
+      "bytes": 2147,
+      "sha256": "572345866e02b8283ec5a3e0d71bf92fa9e0cb772d95539bc878f1dfb7a4aa15"
+    },
+    "run_t2.py": {
+      "bytes": 3981,
+      "sha256": "cdfb07f31f7142f5f61c36c024cf6bfaafda30fdb37af3b45bd2d297d6a4e996"
+    },
+    "test_adapter.py": {
+      "bytes": 5950,
+      "sha256": "b94f8f42875428b9b92be329951b133ed03ea45aff534a74e03a9d8a0e5e9f3d"
+    },
+    "test_t0.py": {
+      "bytes": 4555,
+      "sha256": "065f0ef3862952cb8f92f6cf5e9f5e8ea9fd56d78f074d421c03c255694e7dcd"
+    }
+  },
+  "decision_gate": {
+    "fail": "Any mismatched or unverified edge receives a unique token, a competing token is dropped, or controller-visible data is accepted as scorer input.",
+    "pass": "Exact producer-shaped rows map to one intent only for full verified interval coverage; competing intents return AMBIGUOUS; missing/mismatched/unverified identity returns UNRESOLVED/HOLD; causation stays NOT_ESTABLISHED."
+  },
+  "expected_tests": 18,
+  "frozen_at_utc": "2026-10-04T08:10:16Z",
+  "hypothesis": "Current V15 scorer and per-key release producers can be joined without timestamp-proximity inference: scorer events map to their exact sample timestamps; each input interval joins exact owner_id, intent_token, program id, step and key; verified XSync key-up rows complete only their matching admission.",
+  "producer_snapshots": {
+    "research/doom/independent_progress_clock_v2.py": {
+      "bytes": 8754,
+      "main_blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    },
+    "research/doom/main_thread_scorer_polling_v1.py": {
+      "bytes": 6011,
+      "main_blob": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+      "sha256": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84"
+    },
+    "research/doom/map01_scorer_stdio_adapter_v1.py": {
+      "bytes": 5200,
+      "main_blob": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+      "sha256": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab"
+    }
+  },
+  "producers": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": {
+      "blob": "93be5c2d05d946d43a7f063008e591dd66de2779"
+    },
+    "research/doom/independent_progress_clock_v2.py": {
+      "blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601"
+    },
+    "research/doom/map01_scorer_stdio_adapter_v1.py": {
+      "blob": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2"
+    },
+    "research/doom/session_map01_v15.py": {
+      "blob": "f71ca01426a703e4160c9403395fed03416c772e"
+    },
+    "research/live_control/input_owner_v12.py": {
+      "blob": "3addfe06a9d5116ec3b3d42b2ffe139885872adc"
+    },
+    "research/live_control/input_transition_owner_v4.py": {
+      "blob": "02c23c34e9382650a46e80d75fe49d5409153b75"
+    }
+  },
+  "runs": {
+    "green_test": 1,
+    "red_test": 1,
+    "unit_suite": 1
+  },
+  "schema": "map01-v15-attribution-adapter-t2-freeze-v1",
+  "test": "CPU-only construction using complete producer-shaped scorer envelopes and V15 backend admission/release rows. Exercise unique same-intent interval, concurrent token ambiguity, mismatched release, missing identity and controller-visible/mis-sampled scorer evidence. Invoke frozen PR #7537 attribution method.",
+  "test_source_bytes": 5950,
+  "test_source_sha256": "b94f8f42875428b9b92be329951b133ed03ea45aff534a74e03a9d8a0e5e9f3d"
+}
