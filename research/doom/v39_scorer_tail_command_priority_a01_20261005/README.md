@@ -19,4 +19,3 @@ This is a synthetic source-boundary construction, not an operating-system pipe t
 ## Reproduction
 
 From this directory, run `python candidate.py`, `python audit.py`, then `python -m unittest -v test_audit.py`. The candidate refuses to overwrite an existing `RESULT.json`; retain the first output as the raw result.
-

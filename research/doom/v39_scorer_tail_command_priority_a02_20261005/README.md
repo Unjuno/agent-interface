@@ -28,4 +28,3 @@ This is a source-boundary construction only. A socketpair provides actual OS des
 ## Reproduction
 
 Run `python audit.py` and `python -m unittest -v test_audit.py`. The original one-shot candidate raw is already retained; do not rerun `candidate.py` as part of auditing.
-

@@ -9,4 +9,3 @@ This finding applies only to the source-pinned adapter behavior and the determin
 ## Suggested repair
 
 Poll command readiness before every scorer callback, including iterations where sampling is already due after a callback overrun. Preserve the no-consumption behavior. Add deterministic tests for ready-at-entry and readiness becoming true during an overrun; ensure a ready command yields `command_ready` before the next scorer call.
-

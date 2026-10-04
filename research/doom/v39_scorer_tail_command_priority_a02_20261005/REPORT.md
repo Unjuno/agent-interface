@@ -11,4 +11,3 @@ Three earlier construction invocations stopped on Windows `MSG_DONTWAIT` portabi
 This construction does not test console stdin semantics, the DoomGame owner thread, actual command handling, keyboard release, model behavior, game effect, useful feedback, task recovery, safety, performance distribution, or MAP01 completion. No live allocation or shared runtime was used. PR #7692 head was read back from `refs/pull/7692/head` as `0c3627d63072b89d1c769fd0048e93baf157f5c7`; it matches the source revision tested.
 
 **Implementation implication:** check command readiness before every scorer callback, including when a previous callback overruns the next sample deadline, and preserve the current rule that the tail returns without consuming command bytes. Add ready-at-entry and during-overrun regressions. The adapter itself is not changed in this evidence package.
-
