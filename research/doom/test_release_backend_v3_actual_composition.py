@@ -15,10 +15,11 @@ class ActualReleaseCompositionTests(unittest.TestCase):
     def _run(self, *, wrong_key=False, step_exception=False, cleanup_exception=False,
              emit_accept_then_raise=False, cancel_after_sync=False,
              capture_publication_error=False, sink_accept_before_raise=True,
-             failure_position=0):
+             failure_position=0, incomplete_publication_failure=False,
+             capture_incomplete_error=False):
         emitted = []
         attempts = []
-        fail_emit = [emit_accept_then_raise]
+        fail_emit = [emit_accept_then_raise or incomplete_publication_failure]
 
         def emit(row):
             attempts.append(dict(row))
@@ -116,11 +117,18 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 self.raw("b", True)
                 if emit_accept_then_raise:
                     self.raw("c", True)
+                if incomplete_publication_failure:
+                    self.raw("c", True)
+                    self.raw("d", True)
                 self.raw("a", False)
                 if emit_accept_then_raise:
                     self.raw("b", False)
                     self.raw("c", False)
                     return
+                if incomplete_publication_failure:
+                    self.raw("b", False)
+                    self.raw("c", False)
+                    raise RuntimeError("later step failed")
                 raise RuntimeError("later step failed")
 
             def release_all(self):
@@ -153,8 +161,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             candidate._release_batch.context = {"rows": [], "identifier": "program-1",
                                                 "step": 0}
             if step_exception:
-                with self.assertRaisesRegex(RuntimeError, "later step failed"):
+                try:
                     candidate.execute({}, None, "program-1", 0)
+                except RuntimeError as exc:
+                    if capture_incomplete_error:
+                        return exc, attempts, emitted
+                    self.assertEqual(str(exc), "later step failed")
+                else:
+                    self.fail("step exception was not propagated")
             elif cleanup_exception:
                 for key in ("a", "b"):
                     candidate.raw(key, True)
@@ -268,10 +282,75 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     "error_type": "RuntimeError",
                 })
 
+    def test_incomplete_publish_sink_error_preserves_row_custody_without_retry(self):
+        for accepted in (False, True):
+            with self.subTest(sink_accept_before_raise=accepted):
+                error, attempts, emitted = self._run(
+                    step_exception=True, incomplete_publication_failure=True,
+                    capture_incomplete_error=True, sink_accept_before_raise=accepted,
+                    failure_position=1)
+                release_attempts = [row for row in attempts
+                                    if row.get("event") == "input_release_transition"]
+                self.assertEqual([row["release_batch_position"] for row in release_attempts],
+                                 [0, 1])
+                release_emitted = [row for row in emitted
+                                   if row.get("event") == "input_release_transition"]
+                self.assertEqual([row["release_batch_position"] for row in release_emitted],
+                                 [0] + ([1] if accepted else []))
+                self.assertEqual(str(error), "later step failed")
+                self.assertEqual(getattr(error, "release_batch_publication", None), {
+                    "status": "delivery_unknown", "identifier": "program-1", "step": 0,
+                    "size": 3, "position": 1, "confirmed_positions": [0],
+                    "not_attempted_positions": [2],
+                    "event": "input_release_transition", "key": "b",
+                    "error_type": "RuntimeError",
+                })
+
     def test_executor_terminal_retains_actual_backend_delivery_positions(self):
         error, _, _ = self._run(
             emit_accept_then_raise=True, capture_publication_error=True,
             sink_accept_before_raise=False, failure_position=1)
+        previous = sys.modules.get("executor_v13")
+        sys.path.insert(0, str(LIVE))
+        try:
+            executor_module = importlib.import_module("executor_v13")
+
+            class FailedPublicationBackend:
+                sequence = 1
+
+                def validate(self, steps):
+                    pass
+
+                def execute(self, step, cancel, identifier, index):
+                    raise error
+
+                def release_all(self):
+                    return {"verified": True}
+
+            events = []
+            executor = executor_module.Executor(FailedPublicationBackend(), events.append)
+            executor.submit("program-1", [{"op": "probe"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            executor.close()
+            terminal = next(row for row in events if row.get("event") == "terminal")
+            self.assertEqual(terminal["status"], "failed")
+            self.assertEqual(terminal["release_batch_publication"],
+                             error.release_batch_publication)
+        finally:
+            sys.path.remove(str(LIVE))
+            if previous is None:
+                sys.modules.pop("executor_v13", None)
+            else:
+                sys.modules["executor_v13"] = previous
+
+    def test_executor_terminal_retains_incomplete_publish_positions(self):
+        error, _, _ = self._run(
+            step_exception=True, incomplete_publication_failure=True,
+            capture_incomplete_error=True, sink_accept_before_raise=False,
+            failure_position=1)
         previous = sys.modules.get("executor_v13")
         sys.path.insert(0, str(LIVE))
         try:

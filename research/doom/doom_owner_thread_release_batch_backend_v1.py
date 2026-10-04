@@ -65,7 +65,26 @@ class Backend(Previous):
                     "release_batch_disposition identifies the exception boundary"
                 ),
             })
-            self.emit(row)
+            try:
+                self.emit(row)
+            except BaseException as exc:
+                context["publication_error_type"] = type(exc).__name__
+                context["publication_failure"] = {
+                    "status": "delivery_unknown",
+                    "identifier": context.get("identifier"),
+                    "step": context.get("step"),
+                    "size": size,
+                    "position": position,
+                    "confirmed_positions": list(
+                        context.get("publication_confirmed_positions", ())
+                    ),
+                    "not_attempted_positions": list(range(position + 1, size)),
+                    "event": row.get("event"),
+                    "key": row.get("key"),
+                    "error_type": type(exc).__name__,
+                }
+                raise
+            context.setdefault("publication_confirmed_positions", []).append(position)
 
     def _finish_incomplete_release_batch(self, context, error, disposition):
         if context.get("publication_error_type") is not None:
@@ -86,12 +105,19 @@ class Backend(Previous):
                 context, error, disposition=disposition
             )
         except BaseException as publish_exc:
-            add_note = getattr(error, "add_note", None)
-            if callable(add_note):
-                add_note(
-                    "incomplete release telemetry publication failed: "
-                    + type(publish_exc).__name__
-                )
+            publication = context.get("publication_failure")
+            if isinstance(publication, dict):
+                try:
+                    error.release_batch_publication = dict(publication)
+                except (AttributeError, TypeError):
+                    publication = None
+            if publication is None:
+                add_note = getattr(error, "add_note", None)
+                if callable(add_note):
+                    add_note(
+                        "incomplete release telemetry publication failed: "
+                        + type(publish_exc).__name__
+                    )
         finally:
             context["rows"].clear()
             try:
