@@ -1,7 +1,9 @@
 """Regression tests for the retained-failure evidence audit."""
 from pathlib import Path
+import hashlib
 import json
 import re
+import subprocess
 import unittest
 
 import audit_c12
@@ -104,6 +106,34 @@ class FrozenSourcePinTests(unittest.TestCase):
         self.assertTrue(audit_c12.has_pinned_owner_sources(pins, freeze))
         del pins["FROZEN/pr7440/research/live_control/input_owner_v12.py"]
         self.assertFalse(audit_c12.has_pinned_owner_sources(pins, freeze))
+
+    def test_rejects_changed_archive_even_if_its_manifest_hash_is_recomputed(self) -> None:
+        path = "FROZEN/pr7441/research/live_control/input_owner_v12.py"
+        freeze = json.loads((ROOT / "FREEZE.json").read_text())
+        expected_blob = freeze["candidate_derivation"]["base_git_blob_sha1"]
+        source_ref = freeze["pr7441_head"]
+        blob_id = subprocess.check_output(
+            ["git", "rev-parse", f"{source_ref}:research/live_control/input_owner_v12.py"],
+            cwd=ROOT,
+            text=True,
+        ).strip()
+        blob = subprocess.check_output(["git", "cat-file", "blob", blob_id], cwd=ROOT)
+        archived = (ROOT / path).read_bytes()
+        self.assertEqual(blob_id, expected_blob)
+        pins = json.loads((ROOT / "SOURCE_PINS.json").read_text())
+        pin_sha256 = pins[path]["sha256"]
+        self.assertTrue(
+            audit_c12.archive_pin_matches(archived, pin_sha256, blob, expected_blob)
+        )
+
+        changed = archived.replace(b"Research input owner", b"Altered input owner", 1)
+        self.assertNotEqual(changed, archived)
+        recomputed_manifest_hash = hashlib.sha256(changed).hexdigest()
+        self.assertFalse(
+            audit_c12.archive_pin_matches(
+                changed, recomputed_manifest_hash, blob, expected_blob
+            )
+        )
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -62,15 +63,65 @@ def has_exact_owner_derivation(base_source: str, patch_source: str, candidate: s
 def has_pinned_owner_sources(pins: dict, freeze: dict) -> bool:
     derivation = freeze["candidate_derivation"]
     expected = {
-        derivation["base_path"]: freeze["pr7441_head"],
-        derivation["patch_source"]: freeze["pr7440_head"],
+        derivation["base_path"]: (
+            freeze["pr7441_head"], derivation["base_git_blob_sha1"]
+        ),
+        derivation["patch_source"]: (
+            freeze["pr7440_head"], derivation["patch_git_blob_sha1"]
+        ),
     }
-    return all(
-        path in pins
-        and pins[path].get("source_ref") == source_ref
-        and re.fullmatch(r"[0-9a-f]{64}", pins[path].get("sha256", ""))
-        for path, source_ref in expected.items()
+    for path, (source_ref, expected_blob) in expected.items():
+        pin = pins.get(path, {})
+        if (pin.get("source_ref") != source_ref
+                or not re.fullmatch(r"[0-9a-f]{64}", pin.get("sha256", ""))
+                or not re.fullmatch(r"[0-9a-f]{40}", expected_blob)):
+            return False
+        prefix = (
+            "FROZEN/pr7441/"
+            if source_ref == freeze["pr7441_head"]
+            else "FROZEN/pr7440/"
+        )
+        if not path.startswith(prefix):
+            return False
+        upstream_path = path[len(prefix):]
+        try:
+            blob_id = subprocess.check_output(
+                ["git", "rev-parse", f"{source_ref}:{upstream_path}"],
+                cwd=ROOT,
+                stderr=subprocess.DEVNULL,
+                text=True,
+            ).strip()
+            blob = subprocess.check_output(
+                ["git", "cat-file", "blob", blob_id],
+                cwd=ROOT,
+                stderr=subprocess.DEVNULL,
+            )
+            archived = (ROOT / path).read_bytes()
+        except (OSError, subprocess.CalledProcessError):
+            return False
+        if blob_id != expected_blob or not archive_pin_matches(
+            archived, pin["sha256"], blob, expected_blob
+        ):
+            return False
+    return True
+
+
+def archive_pin_matches(
+    archived: bytes, expected_sha256: str, blob: bytes, expected_blob: str
+) -> bool:
+    return (
+        hashlib.sha256(archived).hexdigest() == expected_sha256
+        and archived_blob_matches(archived, blob, expected_blob)
     )
+
+
+def archived_blob_matches(archived: bytes, blob: bytes, expected_blob: str) -> bool:
+    """Tie a normalized archive copy to the immutable upstream Git blob ID."""
+    git_header = b"blob " + str(len(blob)).encode("ascii") + b"\0"
+    if hashlib.sha1(git_header + blob).hexdigest() != expected_blob:
+        return False
+    normalize = lambda data: data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return normalize(archived) == normalize(blob)
 
 
 def main() -> None:
