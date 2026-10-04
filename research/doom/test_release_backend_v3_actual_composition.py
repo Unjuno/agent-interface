@@ -11,7 +11,7 @@ LIVE = HERE.parent / "live_control"
 
 
 class ActualReleaseCompositionTests(unittest.TestCase):
-    def _run(self, *, wrong_key=False, step_exception=False):
+    def _run(self, *, wrong_key=False, step_exception=False, cleanup_exception=False):
         emitted = []
         low_level = types.ModuleType("input_owner_v12")
         transition = types.ModuleType("input_transition_owner_v3")
@@ -100,6 +100,11 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 self.raw("a", False)
                 raise RuntimeError("later step failed")
 
+            def release_all(self):
+                if cleanup_exception:
+                    raise RuntimeError("cleanup failed after partial release")
+                return {"verified": True}
+
         low_level.InputOwner = Owner
         transition.InputOwner = TransitionOwner
         backend_base.Backend = PreviousBackend
@@ -127,6 +132,12 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             if step_exception:
                 with self.assertRaisesRegex(RuntimeError, "later step failed"):
                     candidate.execute({}, None, "program-1", 0)
+            elif cleanup_exception:
+                for key in ("a", "b"):
+                    candidate.raw(key, True)
+                candidate.raw("a", False)
+                with self.assertRaisesRegex(RuntimeError, "cleanup failed after partial release"):
+                    candidate.release_all()
             else:
                 for key in ("a", "b"):
                     candidate.raw(key, True)
@@ -187,6 +198,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertFalse(releases[0]["owner_transition_verified"])
         self.assertFalse(releases[0]["release_batch_complete"])
         self.assertEqual(releases[0]["release_batch_disposition"], "step_exception")
+
+    def test_cleanup_exception_publishes_partial_receipt_before_propagating(self):
+        _, releases = self._run(cleanup_exception=True)
+        self.assertEqual([row["key"] for row in releases], ["a"])
+        self.assertTrue(releases[0]["owner_thread_keyup_verified"])
+        self.assertFalse(releases[0]["owner_transition_verified"])
+        self.assertFalse(releases[0]["release_batch_complete"])
+        self.assertEqual(releases[0]["release_batch_disposition"], "release_all_exception")
 
 
 if __name__ == "__main__":

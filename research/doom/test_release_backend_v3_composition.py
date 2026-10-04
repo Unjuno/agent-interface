@@ -46,9 +46,11 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                     count = len(self.records)
                     receipt = {
                         "event": "owner_explicit_keyup", "operation": "up", "key": key,
-                        "owner_id": self.owner_id, "intent_token": "lease-1",
-                        "valid_until_ns": 99, "owner_keyrelease_started_ns": 12,
-                        "owner_sync_returned_ns": 13, "server_sync_completed": True,
+                        "keycode": 25, "owner_id": self.owner_id,
+                        "intent_token": "lease-1", "valid_until_ns": None,
+                        "owner_keyrelease_started_ns": 12,
+                        "owner_sync_returned_ns": 13,
+                        "server_sync_completed": True,
                         "physical_verification_authoritative": False,
                     }
                     self.records.append(receipt)
