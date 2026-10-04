@@ -13,6 +13,7 @@ HERE = Path(__file__).resolve().parent
 class FakeDisplay:
     def __init__(self, _name):
         self.down = set()
+        self.events = []
         self.closed = False
         self._root = types.SimpleNamespace(query_pointer=lambda: types.SimpleNamespace(mask=0))
 
@@ -82,7 +83,14 @@ class RealOwnerQueueInterleavingTests(unittest.TestCase):
             xk = types.ModuleType("Xlib.XK")
             xk.string_to_keysym = lambda _key: 1
             display = types.ModuleType("Xlib.display")
-            display.Display = FakeDisplay
+            displays = []
+
+            def create_display(name):
+                instance = FakeDisplay(name)
+                displays.append(instance)
+                return instance
+
+            display.Display = create_display
             error = types.ModuleType("Xlib.error")
             error.BadWindow = type("BadWindow", (Exception,), {})
             error.BadDrawable = type("BadDrawable", (Exception,), {})
@@ -90,6 +98,7 @@ class RealOwnerQueueInterleavingTests(unittest.TestCase):
             xtest = types.ModuleType("Xlib.ext.xtest")
 
             def fake_input(connection, event, code):
+                connection.events.append((event, code))
                 if event == xconst.KeyPress:
                     connection.down.add(code)
                 elif event == xconst.KeyRelease:
@@ -148,6 +157,8 @@ class RealOwnerQueueInterleavingTests(unittest.TestCase):
                 self.assertTrue(row["owner_cleanup_intervened"])
                 self.assertFalse(row["ordinary_release_candidate"])
                 self.assertFalse(row["owner_transition_verified"])
+                self.assertEqual(displays[0].events,
+                                 [(xconst.KeyPress, 38), (xconst.KeyRelease, 38)])
             finally:
                 wrapper.close()
         finally:
