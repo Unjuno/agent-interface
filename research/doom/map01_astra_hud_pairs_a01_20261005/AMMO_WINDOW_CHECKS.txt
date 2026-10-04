@@ -4,6 +4,7 @@ Posthoc ammo/action reconstruction; no prospective/live allocation.
 - audit_ammo_window.py: PASS_AUDITED_POSTHOC_JOIN_HOLD_CAUSAL_ATTRIBUTION, 0 mismatches
 - Both plan terminal events include nested verified owner_release receipts with empty key/button sets; endpoint-to-receipt offsets: 97.359 ms and 91.157 ms.
 - test_ammo_window.py: 3 tests passed, including rejection of an unverified receipt
-- Existing pairwise, stream, and terminal-window audits/tests rerun in combined package suite.
+- Ammo video timeline addendum: 11 manually read one-round decrements; independent raw/video audit PASS, 0 mismatches; 3 focused tests pass.
+- Existing pairwise, stream, terminal-window, and both ammo audits/tests pass in combined package suite.
 - py_compile, package SHA256SUMS, and git diff --check pass.
 - No model, game, GUI, or input was run; physical/game key state and ammo-drop causality remain HOLD.

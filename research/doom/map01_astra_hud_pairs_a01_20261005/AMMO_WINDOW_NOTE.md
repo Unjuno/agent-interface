@@ -22,4 +22,4 @@ python research/doom/map01_astra_hud_pairs_a01_20261005/audit_ammo_window.py
 python -m unittest discover -s research/doom/map01_astra_hud_pairs_a01_20261005 -p test_ammo_window.py -v
 ```
 
-Input file hashes are pinned in `AMMO_WINDOW_INPUTS.json`. The independent audit re-joins raw report/event data and nested release receipts; manual HUD transcription and physical/game key state remain unaudited.
+Input file hashes are pinned in `AMMO_WINDOW_INPUTS.json`. The independent audit re-joins raw report/event data and nested release receipts; manual HUD transcription and physical/game key state remain unaudited. The later [video-derived ammo timeline](AMMO_VIDEO_NOTE.md) supplements this endpoint-only join with 0.2-second transition brackets aligned to retained local-cover steps; its separate audit still leaves causality HOLD.

@@ -1,0 +1,376 @@
+{
+  "schema": "map01-astra-ammo-video-timeline-v1",
+  "disposition": "PASS_POSTHOC_VIDEO_TEMPORAL_ASSOCIATION_HOLD_CAUSAL_ATTRIBUTION",
+  "source_sha256": {
+    "video.mp4": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+    "video.json": "adc28ec07940266a577ce4a1353dde7bee5810e3cb46e83afe006c3732f59779",
+    "events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "AMMO_VIDEO_ANNOTATIONS.json": "8bac4bed8b37a6c0f23cc730c852d5a11d42b10c1a3b6d0f07ec13e000e8066e"
+  },
+  "video_decode": {
+    "decoder": "PyAV",
+    "pyav_version": "18.1.0",
+    "width": 640,
+    "height": 560,
+    "fps": 10.0,
+    "frame_count": 780,
+    "source_playback_speed": 2.0,
+    "source_time_mapping": "monotonic source seconds = decoded video PTS seconds * source_playback_speed, relative to ready",
+    "ammo_roi_xyxy": [
+      0,
+      482,
+      100,
+      545
+    ]
+  },
+  "endpoint_alignment": [
+    {
+      "sequence": 117,
+      "capture_source_seconds": 35.180776337,
+      "video_frame": 176,
+      "video_pts_seconds": 17.6,
+      "mapped_source_seconds": 35.2,
+      "video_minus_capture_ms": 19.22366300000533,
+      "ammo_manual": 50,
+      "ammo_roi_sha256": "9e83d7c55e8fd7912e00a521c6b91ac53c1c6e4ba7a9813dd7d4c91f0459f5dd"
+    },
+    {
+      "sequence": 148,
+      "capture_source_seconds": 43.97575018,
+      "video_frame": 220,
+      "video_pts_seconds": 22.0,
+      "mapped_source_seconds": 44.0,
+      "video_minus_capture_ms": 24.24982000000142,
+      "ammo_manual": 48,
+      "ammo_roi_sha256": "78231c56620f75cb54248c84d7115a70dbadcd4ed6d938aa8fecf409fe29966b"
+    },
+    {
+      "sequence": 211,
+      "capture_source_seconds": 57.066683739,
+      "video_frame": 285,
+      "video_pts_seconds": 28.5,
+      "mapped_source_seconds": 57.0,
+      "video_minus_capture_ms": -66.68373899999835,
+      "ammo_manual": 37,
+      "ammo_roi_sha256": "bc3c5197fc04c1f5c5cdae2a23fa72520a4e4923ca5d7ac35556ec19f639677e"
+    }
+  ],
+  "plan4_model_window_source_seconds": [
+    44.476179731,
+    56.320774858
+  ],
+  "plan3_owner_release_verified_source_seconds": 44.073109489,
+  "ammo_decrement_count": 11,
+  "ammo_decrements_during_plan4_model_window": 9,
+  "ammo_decrements_straddling_plan4_model_start": 1,
+  "ammo_decrements_before_plan4_model_start": 1,
+  "firing_steps": [
+    {
+      "execution_id": "cover-4",
+      "step": 0,
+      "keys": [
+        "a",
+        "space"
+      ],
+      "ack_source_seconds": 44.200767468,
+      "complete_source_seconds": 44.824778982
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 2,
+      "keys": [
+        "d",
+        "space"
+      ],
+      "ack_source_seconds": 46.461358037,
+      "complete_source_seconds": 47.05353457
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 4,
+      "keys": [
+        "a",
+        "space"
+      ],
+      "ack_source_seconds": 48.701664327,
+      "complete_source_seconds": 49.286174496
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 6,
+      "keys": [
+        "d",
+        "space"
+      ],
+      "ack_source_seconds": 50.954232829,
+      "complete_source_seconds": 51.535803493
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 8,
+      "keys": [
+        "a",
+        "space"
+      ],
+      "ack_source_seconds": 53.188048036,
+      "complete_source_seconds": 53.84406872
+    }
+  ],
+  "transitions": [
+    {
+      "before_frame": 221,
+      "after_frame": 222,
+      "source_time_interval_seconds": [
+        44.2,
+        44.4
+      ],
+      "ammo_before_manual": 48,
+      "ammo_after_manual": 47,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "5555d7d2945d130733003c3394156e03ab636bb53f160e35aca4f46aa1944a6b",
+      "after_roi_sha256": "8d9e3c4ea086ff0373735286e4b3e64f332125bac4a78813f1673cfde3730ed6",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 0,
+          "overlap_ms": 199.23253199999635
+        }
+      ]
+    },
+    {
+      "before_frame": 222,
+      "after_frame": 223,
+      "source_time_interval_seconds": [
+        44.4,
+        44.6
+      ],
+      "ammo_before_manual": 47,
+      "ammo_after_manual": 46,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "8d9e3c4ea086ff0373735286e4b3e64f332125bac4a78813f1673cfde3730ed6",
+      "after_roi_sha256": "76cdc01264a85e2962d88e9d69a1cf52a29cb3a2ead463d3de78012e516672af",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 0,
+          "overlap_ms": 200.00000000000284
+        }
+      ]
+    },
+    {
+      "before_frame": 224,
+      "after_frame": 225,
+      "source_time_interval_seconds": [
+        44.8,
+        45.0
+      ],
+      "ammo_before_manual": 46,
+      "ammo_after_manual": 45,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "dfb3d4bed3f0a5729a21b8f4f158725b36f99d1a570a9436a46f58d4c4defeec",
+      "after_roi_sha256": "8813953299c0d9bf19eac7c02e96965d988946ed7bd0bede4ec3aa7a74a5916a",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 0,
+          "overlap_ms": 24.778982000000838
+        }
+      ]
+    },
+    {
+      "before_frame": 233,
+      "after_frame": 234,
+      "source_time_interval_seconds": [
+        46.6,
+        46.8
+      ],
+      "ammo_before_manual": 45,
+      "ammo_after_manual": 44,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "5c08bcf7d3b1442b8158d61a867f8881c63b696085a80b93c193c667e73830e0",
+      "after_roi_sha256": "15f8b5c05b496d82659addae9e601247b81e226032a644b7c028792f45eef5b5",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 2,
+          "overlap_ms": 199.99999999999574
+        }
+      ]
+    },
+    {
+      "before_frame": 235,
+      "after_frame": 236,
+      "source_time_interval_seconds": [
+        47.0,
+        47.2
+      ],
+      "ammo_before_manual": 44,
+      "ammo_after_manual": 43,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "6521bc59a3d73584e112687344495f828ee7d9d2c8079c486976341557ca294a",
+      "after_roi_sha256": "fc06c84924f254483204d1b156cef78044e2e3015ef15322bdfd04d069514612",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 2,
+          "overlap_ms": 53.534569999996506
+        }
+      ]
+    },
+    {
+      "before_frame": 244,
+      "after_frame": 245,
+      "source_time_interval_seconds": [
+        48.8,
+        49.0
+      ],
+      "ammo_before_manual": 43,
+      "ammo_after_manual": 42,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "3d5eb75f4c7460470e8b4e2227df20000037d1ea6fb44a9d8f1ef524c80f2946",
+      "after_roi_sha256": "bb338d25d0a6794a54d0b329987d2923d0877ca76f26b4dd2660a28c18ffba61",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 4,
+          "overlap_ms": 200.00000000000284
+        }
+      ]
+    },
+    {
+      "before_frame": 246,
+      "after_frame": 247,
+      "source_time_interval_seconds": [
+        49.2,
+        49.4
+      ],
+      "ammo_before_manual": 42,
+      "ammo_after_manual": 41,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "5fc17aa298f3412ee510b1408282647d967abe95e754c800df2521b7cd21d8d0",
+      "after_roi_sha256": "39a67f85d8b30e812e16f9a4c813ca21e57dfcdfff34875e4c8a7b8b90e576d8",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 4,
+          "overlap_ms": 86.17449599999816
+        }
+      ]
+    },
+    {
+      "before_frame": 255,
+      "after_frame": 256,
+      "source_time_interval_seconds": [
+        51.0,
+        51.2
+      ],
+      "ammo_before_manual": 41,
+      "ammo_after_manual": 40,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "c85d30c0cf5568a2a6844ac1cbf471fc6c5d2461242cd2436a0ec964f054cbd2",
+      "after_roi_sha256": "3952161d979e3a66aaa1efcec2b59bafee9daa1797febc228755d3a30dd67819",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 6,
+          "overlap_ms": 200.00000000000284
+        }
+      ]
+    },
+    {
+      "before_frame": 257,
+      "after_frame": 258,
+      "source_time_interval_seconds": [
+        51.4,
+        51.6
+      ],
+      "ammo_before_manual": 40,
+      "ammo_after_manual": 39,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "2c80f0291239230efdf9d16709e36f17c9ecb9845d101a40ab5fe1a6c74f47bb",
+      "after_roi_sha256": "87c442e19f930a8c637b7f0fd1bad8bbc95a2940db1fe33d5926d739a9926fc0",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 6,
+          "overlap_ms": 135.8034930000045
+        }
+      ]
+    },
+    {
+      "before_frame": 267,
+      "after_frame": 268,
+      "source_time_interval_seconds": [
+        53.4,
+        53.6
+      ],
+      "ammo_before_manual": 39,
+      "ammo_after_manual": 38,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "48240d70b1cde87bb85826bf88fcde93e026a35deeb472f4c393645893af324b",
+      "after_roi_sha256": "35f2d6553a92109ae8d5fa6e4017a16f65f2846a21af4c4c82082ef320221dbb",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 8,
+          "overlap_ms": 200.00000000000284
+        }
+      ]
+    },
+    {
+      "before_frame": 268,
+      "after_frame": 269,
+      "source_time_interval_seconds": [
+        53.6,
+        53.8
+      ],
+      "ammo_before_manual": 38,
+      "ammo_after_manual": 37,
+      "ammo_delta_manual": -1,
+      "before_roi_sha256": "35f2d6553a92109ae8d5fa6e4017a16f65f2846a21af4c4c82082ef320221dbb",
+      "after_roi_sha256": "9104efa3f648d751d11ea4710902bb4fef51871ff19b81ca9128f59dbb415da3",
+      "space_hold_lifecycle_overlaps": [
+        {
+          "execution_id": "cover-4",
+          "step": 8,
+          "overlap_ms": 199.99999999999574
+        }
+      ]
+    }
+  ],
+  "all_transition_intervals_overlap_cover4_space_hold_lifecycle": true,
+  "interpretation": "The video-bounded 48-to-37 HUD decrease appears as 11 one-round transitions between source times 44.2 and 53.8 seconds. All 11 transition brackets overlap a cover-4 keys_held-to-step_completed lifecycle whose key set includes space. One decrement precedes plan 4 model start, one bracket straddles its start, and nine brackets lie wholly inside its inference window. The first bracket begins after plan 3's nested owner-release receipt. This is temporal association, not proof of game consumption or physical key state.",
+  "limits": [
+    "ammo digits in the video are manual visual transcriptions; no runtime ammo telemetry is available",
+    "the encoded video is a 10 fps 2x export, so each transition is bounded to a 0.2-second source interval",
+    "keys_held-to-step_completed is an execution lifecycle envelope, not exact physical key occupancy or game consumption",
+    "the association does not establish causality, damage cause, successful targeting, or policy quality",
+    "single failed retained trajectory; no game, model, GUI, OS input, or live allocation was run"
+  ],
+  "crop_files": {
+    "frame-0176-ammo.png": "9e83d7c55e8fd7912e00a521c6b91ac53c1c6e4ba7a9813dd7d4c91f0459f5dd",
+    "frame-0220-ammo.png": "78231c56620f75cb54248c84d7115a70dbadcd4ed6d938aa8fecf409fe29966b",
+    "frame-0221-ammo.png": "5555d7d2945d130733003c3394156e03ab636bb53f160e35aca4f46aa1944a6b",
+    "frame-0222-ammo.png": "8d9e3c4ea086ff0373735286e4b3e64f332125bac4a78813f1673cfde3730ed6",
+    "frame-0223-ammo.png": "76cdc01264a85e2962d88e9d69a1cf52a29cb3a2ead463d3de78012e516672af",
+    "frame-0224-ammo.png": "dfb3d4bed3f0a5729a21b8f4f158725b36f99d1a570a9436a46f58d4c4defeec",
+    "frame-0225-ammo.png": "8813953299c0d9bf19eac7c02e96965d988946ed7bd0bede4ec3aa7a74a5916a",
+    "frame-0233-ammo.png": "5c08bcf7d3b1442b8158d61a867f8881c63b696085a80b93c193c667e73830e0",
+    "frame-0234-ammo.png": "15f8b5c05b496d82659addae9e601247b81e226032a644b7c028792f45eef5b5",
+    "frame-0235-ammo.png": "6521bc59a3d73584e112687344495f828ee7d9d2c8079c486976341557ca294a",
+    "frame-0236-ammo.png": "fc06c84924f254483204d1b156cef78044e2e3015ef15322bdfd04d069514612",
+    "frame-0244-ammo.png": "3d5eb75f4c7460470e8b4e2227df20000037d1ea6fb44a9d8f1ef524c80f2946",
+    "frame-0245-ammo.png": "bb338d25d0a6794a54d0b329987d2923d0877ca76f26b4dd2660a28c18ffba61",
+    "frame-0246-ammo.png": "5fc17aa298f3412ee510b1408282647d967abe95e754c800df2521b7cd21d8d0",
+    "frame-0247-ammo.png": "39a67f85d8b30e812e16f9a4c813ca21e57dfcdfff34875e4c8a7b8b90e576d8",
+    "frame-0255-ammo.png": "c85d30c0cf5568a2a6844ac1cbf471fc6c5d2461242cd2436a0ec964f054cbd2",
+    "frame-0256-ammo.png": "3952161d979e3a66aaa1efcec2b59bafee9daa1797febc228755d3a30dd67819",
+    "frame-0257-ammo.png": "2c80f0291239230efdf9d16709e36f17c9ecb9845d101a40ab5fe1a6c74f47bb",
+    "frame-0258-ammo.png": "87c442e19f930a8c637b7f0fd1bad8bbc95a2940db1fe33d5926d739a9926fc0",
+    "frame-0267-ammo.png": "48240d70b1cde87bb85826bf88fcde93e026a35deeb472f4c393645893af324b",
+    "frame-0268-ammo.png": "35f2d6553a92109ae8d5fa6e4017a16f65f2846a21af4c4c82082ef320221dbb",
+    "frame-0269-ammo.png": "9104efa3f648d751d11ea4710902bb4fef51871ff19b81ca9128f59dbb415da3",
+    "frame-0285-ammo.png": "bc3c5197fc04c1f5c5cdae2a23fa72520a4e4923ca5d7ac35556ec19f639677e"
+  }
+}
