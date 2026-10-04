@@ -31,6 +31,54 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_release_all_baseexception_preserves_custody_in_failed_terminal(self):
+        publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "cleanup-interrupt",
+            "step": 0, "size": 1,
+            "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
+        }
+        error = KeyboardInterrupt("release sink interrupted during cleanup")
+
+        class CleanupInterruptedBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+
+            def release_all(self):
+                error.release_batch_publication = publication
+                raise error
+
+        backend = CleanupInterruptedBackend()
+        events = []
+        terminal_received = threading.Event()
+        escaped = []
+        escaped_event = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        previous_hook = threading.excepthook
+        threading.excepthook = lambda args: (escaped.append(args.exc_value),
+                                             escaped_event.set())
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("cleanup-interrupt", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            self.assertTrue(escaped_event.wait(1), "worker interruption did not propagate")
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(error))
+        self.assertEqual(terminal["release"]["release_batch_delivery"], publication)
+        self.assertEqual(escaped, [error])
+        self.assertTrue(backend.started.is_set())
+        self.assertIsNone(executor.active)
+
     def test_base_exception_fails_terminal_before_propagating_publication_custody(self):
         publication = {
             "status": "delivery_unknown", "identifier": "interrupt-failure",

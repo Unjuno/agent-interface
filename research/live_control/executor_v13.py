@@ -145,6 +145,15 @@ class Executor(Previous):
                 publication = getattr(exc, "release_batch_publication", None)
                 if isinstance(publication, dict):
                     release["release_batch_delivery"] = dict(publication)
+            except BaseException as exc:
+                release = {"verified": False, "error": repr(exc)}
+                status = "failed"; error = repr(exc)
+                publication = getattr(exc, "release_batch_publication", None)
+                if isinstance(publication, dict):
+                    release["release_batch_delivery"] = dict(publication)
+                if process_exception is None:
+                    process_exception = exc
+                    process_traceback = exc.__traceback__
             if status == "completed":
                 try:
                     if lease.is_set(): raise Cancelled()
