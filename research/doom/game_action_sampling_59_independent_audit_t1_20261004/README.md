@@ -4,7 +4,7 @@
 
 **H:** The saved post-result summary for construction03 can be independently reconstructed from the immutable scorer last-action rows and associated runtime event receipts, while preserving its protocol STOP and not upgrading sampled evidence into useful gameplay.
 
-**T:** On current main `fe5a9dddf11f0351eb65001f1a1ddb867e8a5012`, verify all 89 manifested package members and 1,957 source-preparation Git blob pins against their exact source commit. Reconstruct the 717 action-sampler rows, the sole TURN_LEFT vector interval and neutral neighbors, cross-check the owner XTest/XSync release receipt ordering, and independently reconcile 715 separate progress samples with client updates. Add mutations for a wrong action channel and a reordered key-up receipt.
+**T:** From the audit checkout frozen at main `fe5a9dddf11f0351eb65001f1a1ddb867e8a5012` (the observed main tip at audit time), verify all 89 manifested package members and 1,957 source-preparation Git blob pins against their exact source commit. Reconstruct the 717 action-sampler rows, the sole TURN_LEFT vector interval and neutral neighbors, cross-check the owner XTest/XSync release receipt ordering, and independently reconcile 715 separate progress samples with client updates. Add mutations for a wrong action channel and a reordered key-up receipt.
 
 **D:** `PASS_SAMPLED_GAME_ACTION_STATE_SCOPED` only if raw rows reproduce the retained counts/ticks and ordered release receipt; retain `STOP_PROTOCOL_COMPLETION` if the post-action protocol lacks normal finish and requires external rescue. Useful task effect, exact engine transition onset, and recovery benefit remain unproven.
 
