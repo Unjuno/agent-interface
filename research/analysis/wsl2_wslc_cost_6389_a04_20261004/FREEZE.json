@@ -1,6 +1,7 @@
 {
   "allocation": "6389-wsl2-vs-wslc-native-suite-a04-20261004",
   "branch": "research/wsl2-wslc-migration-6389-a04-20261004",
+  "preregistration_commit": "44d6eff4e204ccc318f2dc4f5181964bdf2c94bb",
   "base_main_sha": "8094af4631fc7bc5d92990e5151d5e89477ee39f",
   "source_paths": [
     "runtime/integration_checks/native.py",
@@ -27,6 +28,11 @@
     "research/live_control/requirements-native-mcp.txt": {
       "windows_checkout_sha256": "4fe75062c5d424bbc86a8cd58c63ab19aeffe4f0a0e100022252c8032e12ee5b"
     }
+  },
+  "protocol_sha256": {
+    "measure.py": "7fdb7d61a47f8126d20cabea880094f4c9c541bfa95f2ee482ccde899cc44be8",
+    "audit.py": "a3ae6ace00834f5a82b6a493a2abc37fc87972a12013447073ac0e5dcc93cdac",
+    "test_audit.py": "98a40be9cdd4dd17281d26781f7dd7852a64a16df51de5f08166c280e2c72c72"
   },
   "native_runtime": {
     "distribution": "Ubuntu WSL2",
