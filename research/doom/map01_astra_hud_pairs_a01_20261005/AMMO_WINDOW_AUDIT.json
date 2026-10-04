@@ -1,0 +1,70 @@
+{
+  "schema": "map01-astra-ammo-window-audit-v1",
+  "disposition": "PASS_AUDITED_POSTHOC_JOIN_HOLD_CAUSAL_ATTRIBUTION",
+  "ammo_windows_recomputed": [
+    {
+      "from_decision": 3,
+      "to_decision": 4,
+      "sequences": [
+        117,
+        148
+      ],
+      "capture_delta_ns": 8794973843,
+      "ammo": [
+        50,
+        48
+      ],
+      "ammo_delta": -2,
+      "commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        },
+        {
+          "action": "fire",
+          "extent": "medium"
+        }
+      ],
+      "held_keys": [
+        "Shift_L",
+        "Up",
+        "space",
+        "space"
+      ],
+      "plan_id": "plan-3-primary-0-1"
+    },
+    {
+      "from_decision": 4,
+      "to_decision": 5,
+      "sequences": [
+        148,
+        211
+      ],
+      "capture_delta_ns": 13090933559,
+      "ammo": [
+        48,
+        37
+      ],
+      "ammo_delta": -11,
+      "commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "short"
+        }
+      ],
+      "held_keys": [
+        "Down",
+        "Right"
+      ],
+      "plan_id": "plan-4-primary-0-1"
+    }
+  ],
+  "explicit_release_event_types_recomputed": [],
+  "mismatch_count": 0,
+  "mismatches": [],
+  "scope": "independent report/event arithmetic and action-key joins only; HUD values and scene semantics remain manual"
+}

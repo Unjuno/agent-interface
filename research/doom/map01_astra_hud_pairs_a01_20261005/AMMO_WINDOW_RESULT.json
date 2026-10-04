@@ -1,0 +1,131 @@
+{
+  "schema": "map01-astra-ammo-window-v1",
+  "disposition": "PASS_POSTHOC_JOIN_HOLD_CAUSAL_ATTRIBUTION",
+  "windows": [
+    {
+      "from_decision": 3,
+      "to_decision": 4,
+      "source_sequences": [
+        117,
+        148
+      ],
+      "source_capture_ns": [
+        11849042916926,
+        11857837890769
+      ],
+      "source_capture_interval_ms": 8794.973843,
+      "ammo_manual": [
+        50,
+        48
+      ],
+      "ammo_delta": -2,
+      "planner_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        },
+        {
+          "action": "fire",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        },
+        {
+          "action": "fire",
+          "extent": "medium"
+        }
+      ],
+      "plan_id": "plan-3-primary-0-1",
+      "event_held_keys": [
+        "Shift_L",
+        "Up",
+        "space",
+        "space"
+      ],
+      "controller_model_interval_ms": 7304.472284,
+      "controller_model_start_ns": 11849529137725,
+      "controller_model_end_ns": 11856833610009,
+      "selected_frame_sha256": {
+        "3": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4",
+        "4": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965"
+      }
+    },
+    {
+      "from_decision": 4,
+      "to_decision": 5,
+      "source_sequences": [
+        148,
+        211
+      ],
+      "source_capture_ns": [
+        11857837890769,
+        11870928824328
+      ],
+      "source_capture_interval_ms": 13090.933559,
+      "ammo_manual": [
+        48,
+        37
+      ],
+      "ammo_delta": -11,
+      "planner_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "short"
+        }
+      ],
+      "plan_id": "plan-4-primary-0-1",
+      "event_held_keys": [
+        "Down",
+        "Right"
+      ],
+      "controller_model_interval_ms": 11844.595127,
+      "controller_model_start_ns": 11858338320320,
+      "controller_model_end_ns": 11870182915447,
+      "selected_frame_sha256": {
+        "4": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965",
+        "5": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300"
+      }
+    }
+  ],
+  "nonfire_window_ammo_drop": -11,
+  "nonfire_window_has_space_in_held_events": false,
+  "explicit_release_event_types_in_capture": [],
+  "exact_intermediate_pngs_present": false,
+  "interpretation": "The 11-count manual ammo decrease is bracketed by exact observation events whose corresponding model plan is non-firing and whose keys_held summaries contain only Down and Right. The raw event schema has no explicit key-release event type. This is an attribution gap, not proof of an input leak or stale fire.",
+  "limits": [
+    "ammo labels are manual reads of selected frames, not typed runtime telemetry",
+    "exact intermediate screenshot bytes are unavailable, so the count/time of individual shots is unknown",
+    "keys_held summaries and plan terminal events do not prove physical key-up",
+    "the interval spans planner latency and action execution; no causal attribution is possible",
+    "single retained trajectory; no live experiment, recovery, task success, or MAP01 claim"
+  ],
+  "local_manifest_frame_count": 419,
+  "input_sha256": {
+    "research/doom/results/map01-astra-attempt-v1/report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "research/doom/results/map01-astra-attempt-v1/frame-manifest.json": "e0cbb11901cedaae1283d228593307c0e771a51a31b21e7bb1de8db0650d2935",
+    "research/doom/results/map01-astra-attempt-v1/failure-analysis-v1.json": "b5383b9407198cd88e9aec712018965a27081701812619e9aeb84ba3e042e1ca",
+    "research/doom/results/map01-astra-attempt-v1/local-exact-frame-manifest.json": "fd508a715446358249933dd56098a480db1a2ff2f335b2e834059604f352df47",
+    "research/doom/results/map01-astra-attempt-v1/frames/03.png": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4",
+    "research/doom/results/map01-astra-attempt-v1/frames/04.png": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965",
+    "research/doom/results/map01-astra-attempt-v1/frames/05.png": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300"
+  }
+}

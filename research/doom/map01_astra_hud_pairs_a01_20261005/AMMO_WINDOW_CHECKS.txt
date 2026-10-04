@@ -1,0 +1,8 @@
+Posthoc ammo/action reconstruction; no prospective/live allocation.
+
+- ammo_window_reconstruction.py: PASS_POSTHOC_JOIN_HOLD_CAUSAL_ATTRIBUTION
+- audit_ammo_window.py: PASS_AUDITED_POSTHOC_JOIN_HOLD_CAUSAL_ATTRIBUTION, 0 mismatches
+- test_ammo_window.py: 2 tests passed
+- Existing pairwise, stream, and terminal-window audits/tests rerun in combined package suite.
+- py_compile, package SHA256SUMS, and git diff --check pass.
+- No model, game, GUI, or input was run; causality remains HOLD.
