@@ -270,6 +270,14 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipt["admitted_ns"], admission["admitted_ns"])
         self.assertIsNotNone(receipt["admitted_to_owner_keyup_start_ms"])
 
+        for aliased_position in (False, 0.0):
+            aliased = json.loads(json.dumps([admission, release]))
+            aliased[1]["admission_position"] = aliased_position
+            with self.subTest(release_admission_position=aliased_position):
+                projected = controller.input_edge_receipts(aliased)
+                self.assertEqual(projected[0]["status"], "identity_unavailable")
+                self.assertIsNone(projected[0].get("admitted_to_owner_keyup_start_ms"))
+
         for surface in ("admission", "release", "owner"):
             changed = json.loads(json.dumps([admission, release]))
             target = {"admission": changed[0], "release": changed[1],
