@@ -239,6 +239,40 @@ class Tests(unittest.TestCase):
         self.assertFalse(obj.emitted[0]['owner_cleanup_records_available'])
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
 
+    def test_malformed_owner_release_timestamp_fails_closed(self):
+        owner = Owner()
+        owner.records.append({
+            'event': 'owner_release', 'verified': True, 'verified_ns': None,
+        })
+        obj = make_backend({'a'}, owner)
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+
+    def test_malformed_owner_record_fails_closed(self):
+        owner = Owner()
+        owner.records.append(None)
+        obj = make_backend({'a'}, owner)
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+
+    def test_malformed_release_bracket_fails_closed(self):
+        owner = Owner()
+        original_call = owner.call
+
+        def malformed_bracket(*args, **kwargs):
+            row = original_call(*args, **kwargs)
+            if args[0] == 'up':
+                row['release_call_started_ns'] = None
+            return row
+
+        owner.call = malformed_bracket
+        obj = make_backend({'a'}, owner)
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+
     def test_intent_token_mismatch_fails_closed(self):
         obj = make_backend({'a'}, Owner(receipt_token='other'))
         obj.raw('a', False)

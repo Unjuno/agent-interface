@@ -1,0 +1,20 @@
+{
+  "schema": "map01-v39-cleanup-followup-v1",
+  "parent_commit": "2834209601483503a316863cf9964c9f966cede5",
+  "classification": "construction_only",
+  "parent_regressions": {"expected_failures": 3, "observed_failures": 3, "exit": 1},
+  "candidate": {
+    "backend_tests": {"passed": 24, "exit": 0},
+    "adjacent_owner_tests": {"passed": 8, "exit": 0},
+    "py_compile": "pass",
+    "diff_check": "pass",
+    "independent_audit_checks": 7
+  },
+  "scope": {
+    "physical_x11_release": "not_tested",
+    "application_feedback": "not_tested",
+    "bounded_recovery": "not_tested",
+    "live_allocation": "not_run"
+  },
+  "historical_parent_package_modified": false
+}
