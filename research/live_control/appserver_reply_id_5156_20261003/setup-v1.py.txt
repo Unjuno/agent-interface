@@ -1,0 +1,32 @@
+from datetime import datetime, timezone
+import hashlib, json, subprocess
+from pathlib import Path
+
+TASK=Path(__file__).resolve().parent.parent
+REPO=TASK/'work/appserver-reply-id'
+BASE='fb556b3d8bf5bae54a1f23b89fe2c2b5a2685df7'
+def git(*args):return subprocess.run(['git','-C',str(REPO),*args],capture_output=True,check=True,timeout=30).stdout
+if git('config','--get','extensions.worktreeConfig').decode().strip()!='true':raise ValueError('no private worktree config capability')
+if git('rev-parse','HEAD').decode().strip()!=BASE:raise ValueError('unexpected private source head')
+meta=Path(git('rev-parse','--git-dir').decode().strip()).resolve()
+expected=Path('OWNED_REPOSITORY/.git/worktrees/appserver-reply-id').resolve()
+if meta!=expected:raise ValueError('unexpected own metadata path')
+git('config','--worktree','core.sparseCheckout','true')
+git('config','--worktree','core.sparseCheckoutCone','false')
+patterns='/.gitattributes\n/.gitignore\n/research/live_control/codex_app_server_client_v2.py\n/research/live_control/appserver_reply_id_5156_20261003/\n/research/live_control/test_app_server_reply_id_5156.py\n'
+(meta/'info').mkdir(exist_ok=True)
+with (meta/'info/sparse-checkout').open('x',encoding='utf8',newline='\n') as f:f.write(patterns)
+git('read-tree','-mu','HEAD')
+path='research/live_control/codex_app_server_client_v2.py'
+original=git('show',BASE+':'+path)
+checked=(REPO/path).read_bytes()
+# Own checkout newline projection is retained before selecting exact Git bytes.
+out=TASK/'work/appserver-reply-id-setup';out.mkdir(exist_ok=True)
+with (out/'client.initial-working.py.txt').open('xb') as f:f.write(checked)
+(REPO/path).write_bytes(original)
+record=dict(observed_utc=datetime.now(timezone.utc).isoformat(),base=BASE,private_git_dir=str(meta),
+    sparse_patterns=patterns,original_bytes=len(original),original_sha256=hashlib.sha256(original).hexdigest(),
+    initial_working_sha256=hashlib.sha256(checked).hexdigest(),exact_git_source_selected_before_any_execution=True,
+    own_child_execution=False,main_send=False)
+with (out/'SETUP.json').open('x',encoding='utf8') as f:json.dump(record,f,indent=2);f.write('\n')
+print(json.dumps({k:v for k,v in record.items() if k not in ('sparse_patterns','private_git_dir')}))

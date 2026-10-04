@@ -1,0 +1,64 @@
+{
+  "classification": "ordinary native Node input-owner engineering; no formal/live allocation",
+  "result": "PASS_INPUT_ERROR_OWNER_SCOPED",
+  "source_commit": "8410d2b60877e5f50b7c0dea18ef0f72eb390eeb",
+  "source_base": "332da58a9b6b825c384a142dfb59d7ed2b8b774e",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "rows": 8,
+  "raw_bytes": 8310,
+  "raw_sha256": "362f60bda2c9fe7ac513302beb8c8f147267ea658509eefbac75fc4bafd970de",
+  "baseline_unhandled_input_failures": 3,
+  "candidate_unhandled_input_failures": 0,
+  "candidate_pending_outcomes_preserved": 2,
+  "eof_controls_preserved": 2,
+  "effective_raw_controls_rejected": 8,
+  "construction": {
+    "red": {
+      "methods": 14,
+      "pass": 12,
+      "fail": 2,
+      "exit": 1
+    },
+    "green": {
+      "methods": 14,
+      "pass": 14,
+      "exit": 0
+    }
+  },
+  "relevant_host_checks": {
+    "first": {
+      "methods": 42,
+      "pass": 41,
+      "missing_timing_dependency_failures": 1,
+      "exit": 1
+    },
+    "complete": {
+      "methods": 42,
+      "pass": 42,
+      "exit": 0
+    }
+  },
+  "neighbor_6902": {
+    "head": "f497a9fabcb1393d6858da057475a8e2c4abd2e3",
+    "tree": "d73a888e3af5e025bc18d56051a6f01de585e4a0",
+    "ordinary_combined_stdio_tests": 17,
+    "exit": 0,
+    "author_preparation_only": true
+  },
+  "temporal_correction": "Preexecution comment5965115525 inaccurately said main still332da; preceding ref already403a. Correction5965120153 preserves exact332da source freeze; relevant host/workflow difference is empty. No comparison was restarted.",
+  "triage_limit": "Initial tool-only #6902 read-error observation precedes dedicated construction/source/UTC receipts; it is motivation, not the decisive comparison.",
+  "publication_setup_failure": "Initial packaging helper tried a nonexistent integration_checks/__init__.py in a namespace package and exited1 before final manifest generation. Exact initial helper is retained; use the actual host_timing.py dependency. No source/comparison/audit changed or restarted.",
+  "publication_whitespace_failure": "Staged diff checks exit2 on original Node diagnostic-renderer spaces, including the copied diagnostic itself. Preserve those projected bytes; three artifact-only -whitespace entries allow retention. Runtime/test sources and original logs unchanged; no experiment/audit rerun.",
+  "scope_limits": [
+    "responsive output; actual Node streams and inert exchange only",
+    "no executed native backend/relay, input/release/task effect, GUI/model/GPU/container",
+    "no new byte framing, permanently stalled I/O deadline, memory/resource enforcement or performance claim",
+    "1MiB was a planned output budget; actual raw8310 bytes verified, not a general hostile-output collector cap",
+    "Node binary/source/arguments pinned; no full process-environment or OS isolation claim",
+    "Node22/24, Windows/device fault and actual CLI input-error cleanup not executed",
+    "no main application or counted nonauthor vote"
+  ],
+  "publication_projection": "Exact workspace/temp prefixes only; original private sources/logs preserved. Raw comparison and freeze sources unchanged."
+}

@@ -1,0 +1,103 @@
+"""One frozen owned-HWND capture allocation: no input or other-app access."""
+import base64
+import ctypes as c
+from ctypes import wintypes as w
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
+import time
+
+OUT=Path(sys.argv[1]).resolve()
+sys.path.insert(0,str(OUT/'source'))
+from runtime.backends.win32_v1.backend import Win32Backend,Win32BackendError
+
+u=c.WinDLL('user32',use_last_error=True);g=c.WinDLL('gdi32',use_last_error=True);k=c.WinDLL('kernel32',use_last_error=True)
+LRESULT=c.c_ssize_t;WPARAM=c.c_size_t;LPARAM=c.c_ssize_t
+PROC=c.WINFUNCTYPE(LRESULT,w.HWND,w.UINT,WPARAM,LPARAM)
+class RECT(c.Structure):
+    _fields_=[('left',w.LONG),('top',w.LONG),('right',w.LONG),('bottom',w.LONG)]
+class WNDCLASS(c.Structure):
+    _fields_=[('style',w.UINT),('lpfnWndProc',PROC),('cbClsExtra',c.c_int),('cbWndExtra',c.c_int),('hInstance',w.HINSTANCE),('hIcon',w.HICON),('hCursor',w.HANDLE),('hbrBackground',w.HBRUSH),('lpszMenuName',w.LPCWSTR),('lpszClassName',w.LPCWSTR)]
+u.DefWindowProcW.argtypes=[w.HWND,w.UINT,WPARAM,LPARAM];u.DefWindowProcW.restype=LRESULT
+u.RegisterClassW.argtypes=[c.POINTER(WNDCLASS)];u.RegisterClassW.restype=w.ATOM
+u.UnregisterClassW.argtypes=[w.LPCWSTR,w.HINSTANCE];u.UnregisterClassW.restype=w.BOOL
+u.CreateWindowExW.argtypes=[w.DWORD,w.LPCWSTR,w.LPCWSTR,w.DWORD,c.c_int,c.c_int,c.c_int,c.c_int,w.HWND,w.HMENU,w.HINSTANCE,w.LPVOID];u.CreateWindowExW.restype=w.HWND
+u.DestroyWindow.argtypes=[w.HWND];u.DestroyWindow.restype=w.BOOL
+u.IsWindowVisible.argtypes=[w.HWND];u.IsWindowVisible.restype=w.BOOL
+u.GetWindowThreadProcessId.argtypes=[w.HWND,c.POINTER(w.DWORD)];u.GetWindowThreadProcessId.restype=w.DWORD
+u.FillRect.argtypes=[w.HDC,c.POINTER(RECT),w.HBRUSH];u.FillRect.restype=c.c_int
+g.CreateSolidBrush.argtypes=[w.DWORD];g.CreateSolidBrush.restype=w.HBRUSH
+g.DeleteObject.argtypes=[w.HGDIOBJ];g.DeleteObject.restype=w.BOOL
+k.GetModuleHandleW.argtypes=[w.LPCWSTR];k.GetModuleHandleW.restype=w.HMODULE
+draws=[];callback_errors=[];brushes=[];hwnd=None;registered=False;rows=[]
+class_name='owned-capture-622-480b-A01-'+str(os.getpid())
+instance=k.GetModuleHandleW(None)
+
+@PROC
+def wndproc(window,msg,wp,lp):
+    if msg in (0x0317,0x0318):
+        try:
+            assert int(window)==int(hwnd), 'Only the owned target may print'
+            for rect,brush in zip((RECT(0,0,8,8),RECT(8,0,16,8),RECT(0,8,8,16),RECT(8,8,16,16)),brushes):
+                assert u.FillRect(wp,c.byref(rect),brush)
+            draws.append({'msg':msg,'owned_hwnd':int(window)})
+            return 0
+        except BaseException as error:
+            callback_errors.append(repr(error));return 0
+    return u.DefWindowProcW(window,msg,wp,lp)
+
+class Guard:
+    def __init__(self,dll,allowed,history):self.dll=dll;self.allowed=allowed;self.history=history
+    def __getattr__(self,name):
+        if name not in self.allowed:raise RuntimeError('Forbidden native call: '+name)
+        def call(*args):
+            if name in ('IsWindow','GetClientRect','ClientToScreen','GetDC','ReleaseDC','PrintWindow'):
+                assert int(args[0])==int(hwnd), 'No screen or other window capture'
+            result=getattr(self.dll,name)(*args)
+            row={'call':name,'result':int(result or 0)}
+            if name=='GetDIBits' and result:
+                row['raw_base64']=base64.b64encode(c.string_at(args[4],16*16*4)).decode()
+            self.history.append(row)
+            return result
+        return call
+
+result={'schema':'owned-native-capture-622-A01','pid':os.getpid(),'rows':rows,'draws':draws,'callback_errors':callback_errors,'native_task_input_calls':0,'model_calls':0,'scope':'Owned invisible fixture and window_client capture only; no task-effect, physical release, latency/population or mixed-DPI claim.'}
+def save():
+    (OUT/'RAW.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
+
+try:
+    u.SetProcessDPIAware()
+    for color in (0x0000ff,0x00ff00,0xff0000,0x00ffff):
+        brush=g.CreateSolidBrush(color);assert brush;brushes.append(brush)
+    wc=WNDCLASS(0,wndproc,0,0,instance,None,None,None,None,class_name)
+    assert u.RegisterClassW(c.byref(wc));registered=True
+    hwnd=u.CreateWindowExW(0,class_name,class_name,0x80000000,0,0,16,16,None,None,instance,None)
+    assert hwnd
+    owner=w.DWORD();u.GetWindowThreadProcessId(hwnd,c.byref(owner));assert owner.value==os.getpid()
+    assert not u.IsWindowVisible(hwnd)
+    result.update(hwnd=int(hwnd),owner_pid=owner.value,visible=False)
+    backend=Win32Backend({'owned':int(hwnd)})
+    dimensions=backend.geometry('owned');result['geometry']=dimensions
+    assert dimensions['width']==16 and dimensions['height']==16
+    native_u,native_g=backend.user32,backend.gdi32
+    for case,x,y,width,height,negative in (
+        ('full',0,0,16,16,False),('top_left',2,2,4,4,False),
+        ('bottom_right',12,12,4,4,False),('cross_quadrants',6,6,4,4,False),
+        ('outside_right',15,0,2,2,True),('zero_width',0,0,0,4,True)):
+        history=[]
+        backend.user32=Guard(native_u,{'IsWindow','GetClientRect','ClientToScreen','GetDC','ReleaseDC','PrintWindow'},history)
+        backend.gdi32=Guard(native_g,{'CreateCompatibleDC','CreateCompatibleBitmap','SelectObject','DeleteObject','DeleteDC','GetDIBits'},history)
+        row={'case':case,'region':[x,y,width,height],'negative':negative,'calls':history,'started_ns':time.monotonic_ns()};rows.append(row);save()
+        try:row['report']=backend.capture('owned','window_client',x,y,width,height)
+        except Win32BackendError as error:row['exception']={'type':type(error).__name__,'message':str(error)}
+        row['ended_ns']=time.monotonic_ns();row['backend_emissions']=backend.emissions;save()
+    result['terminal']='CAPTURE_ROWS_COMPLETE'
+finally:
+    cleanup={}
+    if hwnd:cleanup['destroy_window']=bool(u.DestroyWindow(hwnd))
+    cleanup['delete_brushes']=[bool(g.DeleteObject(brush)) for brush in brushes]
+    if registered:cleanup['unregister_class']=bool(u.UnregisterClassW(class_name,instance))
+    result['cleanup']=cleanup;save()
+print(json.dumps({'rows':len(rows),'callback_errors':callback_errors,'cleanup':result['cleanup']}))

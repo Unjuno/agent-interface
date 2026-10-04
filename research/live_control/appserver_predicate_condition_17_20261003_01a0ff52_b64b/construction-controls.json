@@ -1,0 +1,89 @@
+{
+  "client_constructors": 0,
+  "native_peers": 0,
+  "pass": true,
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "schema": "predicate-condition-memory-construction-v1",
+  "source_sha256": {
+    "baseline.py": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+    "candidate.py": "c05855b2c1129a67789f236d194fa5ae5e1929e72f7bd5a7acb936ffdd766569",
+    "construct_controls.py": "80ec6f8aef6e2f0d47d90258b39b7e08f330f6243e65d9ad8a6998dda594dc72"
+  },
+  "tests": [
+    {
+      "details": {
+        "closed_empty": "AppServerError",
+        "queued_true_after_EOF_and_deadline": "same identity returned"
+      },
+      "end_ns": 31656484034708,
+      "name": "baseline queued EOF/deadline",
+      "pass": true,
+      "start_ns": 31656479896750
+    },
+    {
+      "details": {
+        "condition": "released",
+        "exception": "LookupError",
+        "queue": "same identity retained"
+      },
+      "end_ns": 31656485222333,
+      "name": "baseline exception retention",
+      "pass": true,
+      "start_ns": 31656484035916
+    },
+    {
+      "details": {
+        "closed_empty": "AppServerError",
+        "queued_true_after_EOF_and_deadline": "same identity returned"
+      },
+      "end_ns": 31656486615833,
+      "name": "candidate queued EOF/deadline",
+      "pass": true,
+      "start_ns": 31656485224083
+    },
+    {
+      "details": {
+        "condition": "released",
+        "exception": "LookupError",
+        "queue": "same identity retained"
+      },
+      "end_ns": 31656487769541,
+      "name": "candidate exception retention",
+      "pass": true,
+      "start_ns": 31656486617125
+    },
+    {
+      "details": {
+        "callback_calls": 2,
+        "duplicate_return": false,
+        "equal_distinct_second": "A consumed after recheck",
+        "first": "B consumed"
+      },
+      "end_ns": 31656488992666,
+      "name": "candidate stale identity/equal value",
+      "pass": true,
+      "start_ns": 31656487770250
+    },
+    {
+      "details": {
+        "append_and_notify": "during false callback",
+        "old": "retained",
+        "result": "new matching identity returned"
+      },
+      "end_ns": 31656490474250,
+      "name": "candidate append before wait",
+      "pass": true,
+      "start_ns": 31656488993458
+    },
+    {
+      "details": {
+        "independent_acquisition": true,
+        "truth_conversion": "outside condition"
+      },
+      "end_ns": 31656491666791,
+      "name": "candidate truth conversion",
+      "pass": true,
+      "start_ns": 31656490474875
+    }
+  ]
+}

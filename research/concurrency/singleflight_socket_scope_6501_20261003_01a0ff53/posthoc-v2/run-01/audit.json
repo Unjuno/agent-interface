@@ -1,0 +1,356 @@
+{
+  "candidate_replay": false,
+  "controls": [
+    {
+      "additional": false,
+      "corrected_error": "missing trial",
+      "expected_original_acceptance": false,
+      "name": "missing_trial",
+      "original_disposition": {
+        "accepted": false,
+        "error": "missing trial",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "missing trial"
+    },
+    {
+      "additional": false,
+      "corrected_error": "trial coverage",
+      "expected_original_acceptance": false,
+      "name": "duplicate_trial",
+      "original_disposition": {
+        "accepted": false,
+        "error": "trial coverage",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "trial coverage"
+    },
+    {
+      "additional": false,
+      "corrected_error": "missing waiter",
+      "expected_original_acceptance": false,
+      "name": "missing_waiter",
+      "original_disposition": {
+        "accepted": false,
+        "error": "missing waiter",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "missing waiter"
+    },
+    {
+      "additional": false,
+      "corrected_error": "per-waiter descriptive gate",
+      "expected_original_acceptance": false,
+      "name": "wrong_scope_claim",
+      "original_disposition": {
+        "accepted": false,
+        "error": "per-waiter descriptive gate",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "per-waiter descriptive gate"
+    },
+    {
+      "additional": false,
+      "corrected_error": "wire hash/bound",
+      "expected_original_acceptance": false,
+      "name": "wire_hash",
+      "original_disposition": {
+        "accepted": false,
+        "error": "wire hash/bound",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "wire hash/bound"
+    },
+    {
+      "additional": false,
+      "corrected_error": "cleanup",
+      "expected_original_acceptance": false,
+      "name": "cleanup_bool_alias",
+      "original_disposition": {
+        "accepted": false,
+        "error": "cleanup",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "cleanup"
+    },
+    {
+      "additional": false,
+      "corrected_error": "caller schema",
+      "expected_original_acceptance": false,
+      "name": "unknown_authority",
+      "original_disposition": {
+        "accepted": false,
+        "error": "caller schema",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "caller schema"
+    },
+    {
+      "additional": false,
+      "corrected_error": "complete transport triples",
+      "expected_original_acceptance": false,
+      "name": "omitted_event",
+      "original_disposition": {
+        "accepted": false,
+        "error": "complete transport triples",
+        "status": null
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "complete transport triples"
+    },
+    {
+      "additional": true,
+      "corrected_error": "typed wire binding: server_sent rpc-0",
+      "expected_original_acceptance": true,
+      "name": "wire_answer_int_server_sent",
+      "original_disposition": {
+        "accepted": true,
+        "error": null,
+        "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED"
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "typed wire binding"
+    },
+    {
+      "additional": true,
+      "corrected_error": "typed wire binding: client_received rpc-0",
+      "expected_original_acceptance": true,
+      "name": "wire_answer_int_client_received",
+      "original_disposition": {
+        "accepted": true,
+        "error": null,
+        "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED"
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "typed wire binding"
+    },
+    {
+      "additional": true,
+      "corrected_error": "typed wire binding: server_sent rpc-0",
+      "expected_original_acceptance": true,
+      "name": "wire_answer_int_client_received_server_sent",
+      "original_disposition": {
+        "accepted": true,
+        "error": null,
+        "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED"
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "typed wire binding"
+    },
+    {
+      "additional": true,
+      "corrected_error": "typed wire binding: server_sent rpc-0",
+      "expected_original_acceptance": true,
+      "name": "wire_answer_float_server_sent",
+      "original_disposition": {
+        "accepted": true,
+        "error": null,
+        "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED"
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "typed wire binding"
+    },
+    {
+      "additional": true,
+      "corrected_error": "typed wire binding: client_received rpc-0",
+      "expected_original_acceptance": true,
+      "name": "wire_answer_float_client_received",
+      "original_disposition": {
+        "accepted": true,
+        "error": null,
+        "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED"
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "typed wire binding"
+    },
+    {
+      "additional": true,
+      "corrected_error": "typed wire binding: server_sent rpc-0",
+      "expected_original_acceptance": true,
+      "name": "wire_answer_float_client_received_server_sent",
+      "original_disposition": {
+        "accepted": true,
+        "error": null,
+        "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED"
+      },
+      "rejected_for_required_reason": true,
+      "required_reason": "typed wire binding"
+    }
+  ],
+  "corrected_retained_result": {
+    "actual_socket_invocations": {
+      "independent": 14,
+      "predicate_inflight": 7,
+      "scope_cache": 10,
+      "scope_inflight": 11
+    },
+    "callers": 56,
+    "details": [
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "after_completion_same_scope",
+        "mode": "independent"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "after_completion_same_scope",
+        "mode": "predicate_inflight"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 2,
+        "case_id": "after_completion_same_scope",
+        "mode": "scope_cache"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "after_completion_same_scope",
+        "mode": "scope_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_dependency",
+        "mode": "independent"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 2,
+        "case_id": "different_dependency",
+        "mode": "predicate_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_dependency",
+        "mode": "scope_cache"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_dependency",
+        "mode": "scope_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_target",
+        "mode": "independent"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 2,
+        "case_id": "different_target",
+        "mode": "predicate_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_target",
+        "mode": "scope_cache"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_target",
+        "mode": "scope_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_window",
+        "mode": "independent"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 2,
+        "case_id": "different_window",
+        "mode": "predicate_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_window",
+        "mode": "scope_cache"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "different_window",
+        "mode": "scope_inflight"
+      },
+      {
+        "actual_invocations": 4,
+        "callers": 4,
+        "case_id": "equivalent_four",
+        "mode": "independent"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 4,
+        "case_id": "equivalent_four",
+        "mode": "predicate_inflight"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 4,
+        "case_id": "equivalent_four",
+        "mode": "scope_cache"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 4,
+        "case_id": "equivalent_four",
+        "mode": "scope_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "source_restart_aba",
+        "mode": "independent"
+      },
+      {
+        "actual_invocations": 1,
+        "callers": 2,
+        "case_id": "source_restart_aba",
+        "mode": "predicate_inflight"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "source_restart_aba",
+        "mode": "scope_cache"
+      },
+      {
+        "actual_invocations": 2,
+        "callers": 2,
+        "case_id": "source_restart_aba",
+        "mode": "scope_inflight"
+      }
+    ],
+    "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED",
+    "trials": 24,
+    "wrong_scope_descriptive_refusals": {
+      "independent": 0,
+      "predicate_inflight": 4,
+      "scope_cache": 0,
+      "scope_inflight": 0
+    }
+  },
+  "errors": [],
+  "original_primary_outcome_preserved": true,
+  "raw_sha256": "d9a499468f00b381aed3b06dec160d9501b7f1de3540d3eed92bc8601e4ea15a",
+  "schema": "socket-scope-posthoc-wire-v2",
+  "status": "PASS_POSTHOC_WIRE_BINDING_SCOPED",
+  "wire_events": 126
+}

@@ -1,0 +1,35 @@
+name: Issue 5260 A03 no-input retained evidence
+
+on:
+  pull_request:
+    paths:
+      - '.gitattributes'
+      - 'research/integration/tk_firstchar_5260_a03_wslc_20261003/**'
+      - '.github/workflows/tk-firstchar-5260-a03-retained.yml'
+  push:
+    branches: [main]
+    paths:
+      - '.gitattributes'
+      - 'research/integration/tk_firstchar_5260_a03_wslc_20261003/**'
+      - '.github/workflows/tk-firstchar-5260-a03-retained.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retained-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/integration/tk_firstchar_5260_a03_wslc_20261003
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Component and custody tests
+        run: python -B -m unittest discover -s research/integration/tk_firstchar_5260_a03_wslc_20261003 -p 'test_*.py' -v
+      - name: Read-only retained validation (no GUI or input)
+        run: python -B research/integration/tk_firstchar_5260_a03_wslc_20261003/verify_packet.py

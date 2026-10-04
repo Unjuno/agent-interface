@@ -1,0 +1,64 @@
+{
+  "C": "Authored Python API schedule with only metadata probe allowed; missing method, duplicate command and release state varied. No natural scheduler or OS activity.",
+  "H": "The exact conjunction of PR6853 single-start, PR6859 factory completeness and PR6861 release lower-bound preserves all three boundaries in one sequential inert pipeline.",
+  "T": "One baseline and one combined 2916-row matrix: 81 factory states x 2 first-invalid states x 3 duplicate modes x 3 release ticks x 2 verified states; separate raw-only oracle. Normal and -O kernel tests.",
+  "U": "Sequential kernel API only. No thread safety, physical release, clock domain, OS effect, public MCP or performance claim. Planned tree is not main; approvals and actual rules remain unverified.",
+  "classification": "ordinary input-free engineering conjunction check, no formal allocation",
+  "common_deadline": "not available; does not extend any common deadline",
+  "composition": {
+    "base": "11f1bae6f8dbfd280b6ccbd0def0bc23fa5da68d",
+    "final_tree": "7013e1f769323d6fdc48db61c3ee4a3fc63fc33c",
+    "steps": [
+      {
+        "head": "f629d495502b0888c753e4bf731238cda6967846",
+        "pr": 6853,
+        "previous": "11f1bae6f8dbfd280b6ccbd0def0bc23fa5da68d",
+        "private_commit": "f12062f69ec2d10d1509c81445a6bf5950a9c43d",
+        "tree": "230ad2a01d69ea201af5ec075edd67c87aed45ec"
+      },
+      {
+        "head": "8641aa4dc5ba67d8282173ef16dc2e8630f43fc2",
+        "pr": 6859,
+        "previous": "f12062f69ec2d10d1509c81445a6bf5950a9c43d",
+        "private_commit": "97f02707ff81644c65eb805f8991a60825622878",
+        "tree": "90f494adc67d652d48b2755d2b645b64a1f81c52"
+      },
+      {
+        "head": "f3ecf397ae8618cf700e8f6b927bb688e32a42b4",
+        "pr": 6861,
+        "previous": "97f02707ff81644c65eb805f8991a60825622878",
+        "private_commit": "ccb07218c729643b38d54e317e0757282b05e96d",
+        "tree": "7013e1f769323d6fdc48db61c3ee4a3fc63fc33c"
+      }
+    ]
+  },
+  "decision": "Reject source mismatch. Combined requires all 2916 unique rows, zero contract mismatches, zero observe/execute/release_all calls, all directed oracle mutations rejected, and kernel regressions pass. Baseline mismatches are characterization only. Any failure retained; no thresholds changed.",
+  "frozen_utc": "2026-10-03T01:22:15.928894+00:00",
+  "host": "macOS arm64",
+  "model_gpu_gui_container": "none",
+  "output_limit_bytes": 5000000,
+  "parent_issue": 57,
+  "policy_version": "FINAL-v5",
+  "python": "3.14.5",
+  "run_id": "KERNEL-COMPOSITION-57-01a0ff53-20261003-A01",
+  "sha256": {
+    "baseline/runtime/kernel/__init__.py": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+    "baseline/runtime/kernel/backend.py": "b0991a015cd5e5cbba7a22963922310c99b9c793f56c6eaeb12eb5e384223668",
+    "baseline/runtime/kernel/contracts.py": "cd37284c15d01f2fde446d53ba161b4bc6224dfb0137324101f3d2eef8884ef8",
+    "baseline/runtime/kernel/lifecycle.py": "63789e8d76a5e312f3c283289ca84c2e8d250fe783a0a4711b3e7811935680ee",
+    "baseline/runtime/kernel/test_kernel.py": "cf36b501abff70d8696e2012af018e3ecd202ceb48dc39f1bf490cef032be49f",
+    "combined/runtime/kernel/__init__.py": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+    "combined/runtime/kernel/backend.py": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b",
+    "combined/runtime/kernel/contracts.py": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+    "combined/runtime/kernel/lifecycle.py": "5d3322096712f3a8af6350ec629f6e54079e2f8387e1d9d244703bfe3d011b25",
+    "combined/runtime/kernel/test_backend_contract.py": "9cad9eed0f698253484ba532ffe60754a41eb58ed687607b5fca80116e334fad",
+    "combined/runtime/kernel/test_kernel.py": "e49d3260e84edc9e95eb0690a92d6ca5ee87681e8dde854d5058ac75e37118e0",
+    "combined/runtime/kernel/test_release_epoch.py": "2fc5025733afbf030d388b8f271f3e3bfb5baa6725e0de2e7afa18c130906bf6",
+    "combined/runtime/results/kernel-release-epoch-01a0ff34/audit.py": "53deec9b30a2704f111290543127025bf96f94860b5e889d3e4d1149b9f8e2b7",
+    "combined/runtime/results/kernel-release-epoch-01a0ff34/probe.py": "83acbbaa6df215248890503a413ffc2ef43564bc8fed34519f3391471de50511",
+    "combined/runtime/results/kernel-release-epoch-01a0ff34/test_audit.py": "0e0958d9be114f70f8c9ef11c5f018a6434878864dcadb4e1da8582f52b3805d",
+    "oracle.py": "e8917dcc330ebb9e7ba50674bb2825083fed3998bf67dbe37a529a47879f785c",
+    "probe.py": "edd0e3c7030d6daf258d9b6fced5a3485de1cc1c9da25108b29db21c0f53e1fd"
+  },
+  "worker_id": "01a0ff53-0975-79e2-8d4e-d28683bc4f8e"
+}

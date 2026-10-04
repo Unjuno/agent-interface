@@ -1,0 +1,16 @@
+{
+  "allocation": "v39-native-fault-e05-3cbf-20261004",
+  "source_head": "96d39ca3855351b2501aab1da919941011190ac3",
+  "source_archive_sha256": "d1ad6dcb8720b27766702361b4898d13259d2efe0b173e7d0fbc970fe3d988db",
+  "image": "sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b",
+  "vm": "research-6183-t0-20261003",
+  "vm_id": "01M3ZD3J2GK283SQRFW9EW9DBZ",
+  "cases": ["original_fault", "candidate_fault", "candidate_healthy"],
+  "formal_native_runs": 1,
+  "saved_only_auditor_runs": 1,
+  "retries": 0,
+  "model_calls": 0,
+  "primary_gate": "three actual held-input cells with expected reader outcomes, matched cancel/same-lease early+terminal verified neutral release, independent full bitmap and natural childexit0, no cleanup faults and saved export equality",
+  "first_failure": "stop later cells and retain first STOP or partial failure without replay",
+  "scope": "controlled text-iterator fault with independent raw native drainer; no production adoption, model/task-effect/gameplay success or efficiency claim"
+}

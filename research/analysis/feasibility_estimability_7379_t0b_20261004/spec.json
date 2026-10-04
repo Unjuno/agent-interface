@@ -1,0 +1,24 @@
+{
+  "schema": "feasibility-estimability-spec-v1",
+  "factors": ["A", "B", "C"],
+  "configurations": [0, 1, 2, 3, 4, 5, 6, 7],
+  "coding": "bit j is factor j; 0 maps to -1 and 1 maps to +1",
+  "model_profiles": {
+    "main_plus_pair": ["1", "A", "B", "C", "AB", "AC", "BC"],
+    "saturated": ["1", "A", "B", "C", "AB", "AC", "BC", "ABC"]
+  },
+  "contrasts": {
+    "main_A": {"A": 1},
+    "main_B": {"B": 1},
+    "interaction_AB": {"AB": 1}
+  },
+  "feasibility_cases": {
+    "all_feasible": [0, 1, 2, 3, 4, 5, 6, 7],
+    "forbid_111": [0, 1, 2, 3, 4, 5, 6],
+    "factor_A_fixed_low": [0, 2, 4, 6],
+    "six_arm_restricted": [0, 1, 2, 4, 5, 6]
+  },
+  "enumerate_every_observed_support_subset": true,
+  "minimum_repair_tiebreak": "fewest added configurations, then lexicographic configuration tuple",
+  "decision_rule": "ESTIMABLE when all declared model profiles agree estimable; NOT_ESTIMABLE when all agree non-estimable; otherwise UNRESOLVED_MODEL. Repair suggestions are model-conditional and never authorize an experiment."
+}

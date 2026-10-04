@@ -1,0 +1,88 @@
+test_both_permutations_same_closed_map (test_mounts.Mounts.test_both_permutations_same_closed_map) ... FAIL
+test_duplicate_inspection_field_rejected (test_mounts.Mounts.test_duplicate_inspection_field_rejected) ... ok
+test_normalization_is_derived_and_input_immutable (test_mounts.Mounts.test_normalization_is_derived_and_input_immutable) ... ok
+test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) ... 
+  test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=0) ... FAIL
+  test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=1) ... FAIL
+  test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=2) ... FAIL
+  test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=3) ... FAIL
+  test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=4) ... FAIL
+  test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=5) ... FAIL
+  test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=6) ... FAIL
+
+======================================================================
+FAIL: test_both_permutations_same_closed_map (test_mounts.Mounts.test_both_permutations_same_closed_map)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 13, in test_both_permutations_same_closed_map
+    for mounts in (M,list(reversed(M))): self.assertEqual(mount_map(mounts,F),expected)
+                                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'/src': ('/inputs/source', False), '/out': ('/outputs/raw', True)}
+
+======================================================================
+FAIL: test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 21, in test_seven_adversarial_mount_cases
+    with self.subTest(index=index), self.assertRaises(ValueError): mount_map(mounts,F)
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 21, in test_seven_adversarial_mount_cases
+    with self.subTest(index=index), self.assertRaises(ValueError): mount_map(mounts,F)
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 21, in test_seven_adversarial_mount_cases
+    with self.subTest(index=index), self.assertRaises(ValueError): mount_map(mounts,F)
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 21, in test_seven_adversarial_mount_cases
+    with self.subTest(index=index), self.assertRaises(ValueError): mount_map(mounts,F)
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 21, in test_seven_adversarial_mount_cases
+    with self.subTest(index=index), self.assertRaises(ValueError): mount_map(mounts,F)
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 21, in test_seven_adversarial_mount_cases
+    with self.subTest(index=index), self.assertRaises(ValueError): mount_map(mounts,F)
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_seven_adversarial_mount_cases (test_mounts.Mounts.test_seven_adversarial_mount_cases) (index=6)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/mount_admission_6067_c01_20261003_3cbf/test_mounts.py", line 21, in test_seven_adversarial_mount_cases
+    with self.subTest(index=index), self.assertRaises(ValueError): mount_map(mounts,F)
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=8)

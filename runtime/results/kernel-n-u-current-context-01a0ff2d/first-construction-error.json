@@ -1,0 +1,14 @@
+{
+  "cause": "inverse guard template assumed different error-message text and omitted the actual conditional None release shape",
+  "command": "python.exe -B -X utf8 work/kernel-nominal-uncertainty-context-v3/build.py",
+  "error": "AssertionError: ('TargetBinding', 'guard identity')",
+  "exit_code": 1,
+  "first_partial_variants_preserved": [
+    "work/kernel-nominal-uncertainty-context-v3/nominal_only",
+    "work/kernel-nominal-uncertainty-context-v3/uncertainty_only"
+  ],
+  "first_script_preserved": "work/kernel-nominal-uncertainty-context-v3/build.first.py.txt",
+  "kind": "ordinary private source-projection construction failure before freeze or any test",
+  "original_source_or_formal_allocation_replayed": false,
+  "repair": "use exact six published guards, build separate02 source projections, mechanically bind their inverse to adopted temporal lifecycle Git blobb75daf118b786c637a1c3fab26bc8a20901a617d"
+}

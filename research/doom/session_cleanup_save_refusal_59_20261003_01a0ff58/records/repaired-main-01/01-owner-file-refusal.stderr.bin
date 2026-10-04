@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<LOCAL_HOME>\Documents\Codex\2026-10-03\new-chat-6\work\v12_cleanup_case.py", line 169, in <module>
+    module.main()
+  File "<LOCAL_HOME>\Documents\Codex\2026-10-03\new-chat-6\work\v12-cleanup-checkout\research\doom\session_map01_v12.py", line 358, in main
+    (args.out / "owner-events.json").write_text(
+  File "<LOCAL_HOME>\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_HOME>\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-owner-record-cleanup\\repaired-main-01\\01-owner-file-refusal\\session-out\\owner-events.json'

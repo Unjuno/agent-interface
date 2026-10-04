@@ -1,0 +1,294 @@
+{
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-FIXED-OVERHEAD-T4-20261004-01",
+  "rows": [
+    {
+      "scenario": "zero_startup_control",
+      "variants": {
+        "baseline": {
+          "parameters": {
+            "deadline": "3",
+            "horizon": "3",
+            "input_hold": "3",
+            "lease": "4",
+            "observation_period": "1",
+            "reference_period": "1",
+            "release_lag": "1/8",
+            "startup_delay": "0"
+          },
+          "trace": {
+            "first_unsafe_normalized": null,
+            "trace": [
+              {
+                "normalized": "0",
+                "state": "safe"
+              },
+              {
+                "normalized": "1",
+                "state": "safe"
+              },
+              {
+                "normalized": "2",
+                "state": "safe"
+              },
+              {
+                "normalized": "3",
+                "state": "safe"
+              }
+            ]
+          }
+        },
+        "fixed_startup": {
+          "parameters": {
+            "deadline": "6",
+            "horizon": "6",
+            "input_hold": "6",
+            "lease": "8",
+            "observation_period": "2",
+            "reference_period": "2",
+            "release_lag": "1/4",
+            "startup_delay": "0"
+          },
+          "trace": {
+            "first_unsafe_normalized": null,
+            "trace": [
+              {
+                "normalized": "0",
+                "state": "safe"
+              },
+              {
+                "normalized": "1",
+                "state": "safe"
+              },
+              {
+                "normalized": "2",
+                "state": "safe"
+              },
+              {
+                "normalized": "3",
+                "state": "safe"
+              }
+            ]
+          }
+        },
+        "homogeneous": {
+          "parameters": {
+            "deadline": "6",
+            "horizon": "6",
+            "input_hold": "6",
+            "lease": "8",
+            "observation_period": "2",
+            "reference_period": "2",
+            "release_lag": "1/4",
+            "startup_delay": "0"
+          },
+          "trace": {
+            "first_unsafe_normalized": null,
+            "trace": [
+              {
+                "normalized": "0",
+                "state": "safe"
+              },
+              {
+                "normalized": "1",
+                "state": "safe"
+              },
+              {
+                "normalized": "2",
+                "state": "safe"
+              },
+              {
+                "normalized": "3",
+                "state": "safe"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "scenario": "nonzero_startup_reachable_hazard",
+      "variants": {
+        "baseline": {
+          "parameters": {
+            "deadline": "3",
+            "horizon": "3",
+            "input_hold": "3",
+            "lease": "4",
+            "observation_period": "1",
+            "reference_period": "1",
+            "release_lag": "1/8",
+            "startup_delay": "1/4"
+          },
+          "trace": {
+            "first_unsafe_normalized": "1/4",
+            "trace": [
+              {
+                "normalized": "1/4",
+                "state": "hazard"
+              },
+              {
+                "normalized": "5/4",
+                "state": "hazard"
+              },
+              {
+                "normalized": "9/4",
+                "state": "hazard"
+              }
+            ]
+          }
+        },
+        "fixed_startup": {
+          "parameters": {
+            "deadline": "6",
+            "horizon": "6",
+            "input_hold": "6",
+            "lease": "8",
+            "observation_period": "2",
+            "reference_period": "2",
+            "release_lag": "1/4",
+            "startup_delay": "1/4"
+          },
+          "trace": {
+            "first_unsafe_normalized": "9/8",
+            "trace": [
+              {
+                "normalized": "1/8",
+                "state": "safe"
+              },
+              {
+                "normalized": "9/8",
+                "state": "hazard"
+              },
+              {
+                "normalized": "17/8",
+                "state": "hazard"
+              }
+            ]
+          }
+        },
+        "homogeneous": {
+          "parameters": {
+            "deadline": "6",
+            "horizon": "6",
+            "input_hold": "6",
+            "lease": "8",
+            "observation_period": "2",
+            "reference_period": "2",
+            "release_lag": "1/4",
+            "startup_delay": "1/2"
+          },
+          "trace": {
+            "first_unsafe_normalized": "1/4",
+            "trace": [
+              {
+                "normalized": "1/4",
+                "state": "hazard"
+              },
+              {
+                "normalized": "5/4",
+                "state": "hazard"
+              },
+              {
+                "normalized": "9/4",
+                "state": "hazard"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "scenario": "nonzero_startup_quiet",
+      "variants": {
+        "baseline": {
+          "parameters": {
+            "deadline": "3",
+            "horizon": "3",
+            "input_hold": "3",
+            "lease": "4",
+            "observation_period": "1",
+            "reference_period": "1",
+            "release_lag": "1/8",
+            "startup_delay": "1/4"
+          },
+          "trace": {
+            "first_unsafe_normalized": null,
+            "trace": [
+              {
+                "normalized": "1/4",
+                "state": "safe"
+              },
+              {
+                "normalized": "5/4",
+                "state": "safe"
+              },
+              {
+                "normalized": "9/4",
+                "state": "safe"
+              }
+            ]
+          }
+        },
+        "fixed_startup": {
+          "parameters": {
+            "deadline": "6",
+            "horizon": "6",
+            "input_hold": "6",
+            "lease": "8",
+            "observation_period": "2",
+            "reference_period": "2",
+            "release_lag": "1/4",
+            "startup_delay": "1/4"
+          },
+          "trace": {
+            "first_unsafe_normalized": null,
+            "trace": [
+              {
+                "normalized": "1/8",
+                "state": "safe"
+              },
+              {
+                "normalized": "9/8",
+                "state": "safe"
+              },
+              {
+                "normalized": "17/8",
+                "state": "safe"
+              }
+            ]
+          }
+        },
+        "homogeneous": {
+          "parameters": {
+            "deadline": "6",
+            "horizon": "6",
+            "input_hold": "6",
+            "lease": "8",
+            "observation_period": "2",
+            "reference_period": "2",
+            "release_lag": "1/4",
+            "startup_delay": "1/2"
+          },
+          "trace": {
+            "first_unsafe_normalized": null,
+            "trace": [
+              {
+                "normalized": "1/4",
+                "state": "safe"
+              },
+              {
+                "normalized": "5/4",
+                "state": "safe"
+              },
+              {
+                "normalized": "9/4",
+                "state": "safe"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "schema": "logical-time-fixed-overhead-raw-v1"
+}

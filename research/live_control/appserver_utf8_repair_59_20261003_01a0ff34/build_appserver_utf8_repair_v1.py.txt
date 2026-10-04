@@ -1,0 +1,125 @@
+"""Create a reviewed-source branch candidate with no working tree/main change."""
+import ast
+import datetime as dt
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+root=Path(__file__).resolve().parent
+out=root/"appserver-utf8-repair-59-01a0ff34"
+repo=root/"agent-interface"
+base="c79f1ef958f46ff6f146edf6f3065826463ade01"
+branch="fix/appserver-utf8-01a0ff34-20261003"
+leaf="research/live_control/appserver_utf8_repair_59_20261003_01a0ff34"
+stage=out/"publication"
+stage.mkdir(exist_ok=False)
+archive=stage/leaf
+archive.mkdir(parents=True)
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+def put_json(path,value):
+    path.write_bytes((json.dumps(value,ensure_ascii=True,indent=2)+"\n").encode("ascii"))
+env=dict(os.environ,GIT_NO_LAZY_FETCH="1",GIT_INDEX_FILE=str(out/"publication.index"))
+def git(*args,input=None):
+    result=subprocess.run(["git",*args],cwd=repo,env=env,input=input,capture_output=True)
+    if result.returncode:
+        raise RuntimeError(json.dumps({"command":list(args),"exit":result.returncode,"stderr":result.stderr.decode("utf-8",errors="replace")},ensure_ascii=True))
+    return result.stdout
+if subprocess.run(["git","show-ref","--verify","--quiet","refs/heads/"+branch],cwd=repo,env=env).returncode==0:
+    raise ValueError("own prospective branch already exists")
+plan=json.loads((out/"PLAN.json").read_bytes())
+result=json.loads((out/"REGRESSION_RESULT.json").read_bytes())
+if result["status"]!="PASS_EXPECTED_RED_AND_BOTH_GREEN":
+    raise ValueError("ordinary regression incomplete")
+for row in result["rows"]:
+    for stream in ("stdout","stderr"):
+        p=out/(row["phase"]+"."+stream+".bin")
+        if sha(p.read_bytes())!=row[stream]["sha256"]:
+            raise ValueError("first output changed")
+for rel in ["research/live_control/codex_app_server_client_v2.py","research/live_control/test_app_server_utf8.py","runtime/integration_checks/native.py"]:
+    target=stage/rel
+    target.parent.mkdir(parents=True,exist_ok=True)
+    target.write_bytes((out/"candidate"/rel).read_bytes())
+private_task=str(root.parent).encode()
+private_python=str(Path(sys.executable).parent).encode()
+def project(data):
+    for prefix,label in ((private_task,b"<OWNED_TASK>"),(private_python,b"<NATIVE_PYTHON>")):
+        data=data.replace(prefix,label).replace(prefix.replace(b"\\",b"\\\\"),label)
+    return data
+joins=[]
+capture_files=[out/"PLAN.json",out/"REGRESSION_RESULT.json"]+sorted(out.glob("*.receipt.json"))+sorted(out.glob("*.stdout.bin"))+sorted(out.glob("*.stderr.bin"))
+for p in capture_files:
+    original=p.read_bytes()
+    public=project(original)
+    (archive/p.name).write_bytes(public)
+    joins.append({"path":p.name,"original_bytes":len(original),"original_sha256":sha(original),"public_bytes":len(public),"public_sha256":sha(public),"exact":original==public})
+for name in ("prepare_appserver_utf8_repair.py","run_appserver_utf8_repair.py","appserver_utf8_regression.py"):
+    (archive/(name+".txt")).write_bytes((root/name).read_bytes())
+native=root/"appserver-native-utf8-59-01a0ff34"
+(archive/"REUSED_NATIVE_CAPSULE.json").write_bytes((native/"CAPSULE.json").read_bytes())
+(archive/"REUSED_NATIVE_READBACK.json").write_bytes((native/"REMOTE_READBACK.json").read_bytes())
+def methods(data):
+    c=next(n for n in ast.parse(data).body if isinstance(n,ast.ClassDef) and n.name=="CodexAppServerClient")
+    return {n.name:n for n in c.body if isinstance(n,ast.FunctionDef)}
+old=methods((native/"baseline.py.txt").read_bytes())
+current=methods((out/"base/research/live_control/codex_app_server_client_v2.py").read_bytes())
+candidate=methods((out/"candidate/research/live_control/codex_app_server_client_v2.py").read_bytes())
+native_candidate=methods((native/"comparison.py.txt").read_bytes())
+for name in ("__init__","_read"):
+    if ast.dump(old[name])!=ast.dump(current[name]) or ast.dump(candidate[name])!=ast.dump(native_candidate[name]):
+        raise ValueError("native codec evidence no longer applies")
+put_json(archive/"NATIVE_REUSE.json",{"source_scope":"constructor/_read codec only, not a whole-call native claim at new source", "original_native_baseline":"8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b","original_native_comparison":"adbaa3fefc1142921bcc687d48152b0e0d66ea5d77cb23e3f5ec2ba5f8272930","current_base":base,"current_EOF_source":"6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e","current_candidate":plan["candidate_client_sha256"],"constructor_and_read_AST_matches_native_pair":True,"other_changed_methods_from_native_reference":[n for n in old if ast.dump(old[n])!=ast.dump(current[n])],"native_replays":0,"original_result_comment":5967623673,"retained_capsule_sha256":sha((native/"CAPSULE.json").read_bytes()),"limits":"Original caller EOF diagnostic differs; no whole-client native execution at this new source. Two original peers were ordinary fixture samples, no actual provider/model wire or latency bound."})
+put_json(archive/"PROJECTIONS.json",{"recipe":"only owned task/interpreter path prefixes; raw bytes and prior first outcomes retained privately; no producer/native replay","joins":joins})
+(archive/".gitattributes").write_bytes(b"*.bin -diff\n*.json whitespace=cr-at-eol\n*.txt whitespace=cr-at-eol\n")
+report='''# Explicit UTF8 receive for the synchronous app-server client
+
+The existing text-mode Popen uses the host locale unless encoding is explicit. On native Windows CP932, our retained valid literal UTF8 fixture returns an accented result as mojibake and loses a Japanese response after a real reader UnicodeDecodeError. Explicit encoding="utf-8" is the single runtime change. All15 other client methods are AST-identical to current EOF-repaired basec79f1ef958f46ff6f146edf6f3065826463ade01. Native transport strict UTF8 decoding is chosen; there is no fallback to a wrong locale or replacement characters.
+
+Three portable decoding regressions use actual io.TextIOWrapper byte decoding with a deterministic CP932 fake-factory default: ASCII reply, accented reply, Japanese reply plus notification. RED on unmodified current source is3 tests/one failure/one error/exit1; new three plus existing four EOF regressions are7PASS normal and7PASS optimized. First three actual test process receipts and raw byte outputs are preserved. No full protocol/hosted suite PASS or real provider/model call is claimed. The new module is appended once to the existing protocol catalogue; old selections and ROOT/live_control PYTHONPATH, root cwd and runner behavior remain unchanged. Separate d447 EOF registration follow-up is not added or owned here.
+
+Previous native two-peer first outcomes are reused without replay, from advisory5967623673 https://github.com/Unjuno/agent-interface/pull/6965#issuecomment-5967623673. The26-member79758B capsuleSHA33fb5dd17c3111cf94ebeb910709ee3a299d9e0e87f7b4eef7f7806f872c495f is complete/inert and its actual remote reconstruction receipt is retained. The current base and proposed constructor/_read ASTs are exactly those of the prior native baseline/explicit-codec pair. Later EOF changes two caller methods; original native error wording/whole-client timing is not transferred. Three scoped ordinary new regression processes are not native peer or formal producer reruns.
+
+Default CPython Popen encoding parameter exists from Python3.6 onward (official https://docs.python.org/3.12/library/subprocess.html). Current tests use native CPython3.12.14. Existing fake factories with **kwargs remain covered by four EOF methods. Custom factories must accept the standard Popen encoding keyword and return streams consistent with it; arbitrary stricter factory signatures are not silently supported. Pre3.6 and other actual native runtimes are untested. Explicit Popen encoding also sets stdin/stderr wrappers; empty stderr and ASCII-only requests were the native conditions. Invalid UTF8/stdout or nonUTF8 stderr, decoder exception propagation, partial sends, Boolean-ID cache, journal locks, close/descendants and actual provider/server wire remain separate scopes.
+
+Official https://learn.chatgpt.com/docs/app-server specifies JSONL over stdio but does not itself specify UTF8. This repair chooses valid UTF8 bytes as the stated wire contract; actual provider/model/server binary qualification is not inferred from documentation. Source owners/reviewers must assess that contract and custom compatibility. Existing send/startup/cache/EOF/journal/close owners retain their changes, fresh current combination required before adoption.
+
+Reproduce only the affected ordinary regression: PYTHONPATH=<repository>;<repository>/research/live_control python -m unittest -v test_app_server_utf8 test_app_server_eof_stop (use platform path separator); optional -O. Retained native helpers are inert inside REUSED_NATIVE_CAPSULE.json, never invoke them as a reproduction step. Archive helper .py.txt images are inert. Projected path metadata/tracebacks have original/public hashes; private original output hashes are custody declarations, not authenticated originals. No useful task/control-feedback/input release/recovery/efficiency, real game/GUI/WSLc/VM/GPU, or full59/57/goal claim.
+
+This source proposal is independent of content votes/application records. No main send; source author0b3d is sole application owner. Fresh fixed existing nonauthor committee/two explicit votes, actual-current base/head/tree nonauthor combination check, live rights/rules/checks/cancellation and one expected-old forward update remain required.
+'''
+(archive/"REPORT.md").write_bytes(report.encode("utf-8"))
+manifest=[]
+for p in sorted(archive.rglob("*")):
+    if p.is_file():
+        data=p.read_bytes()
+        manifest.append({"path":p.relative_to(archive).as_posix(),"bytes":len(data),"sha256":sha(data)})
+put_json(archive/"MANIFEST.json",{"entries":manifest,"self_excluded":True})
+git("read-tree",base)
+staged=[]
+for p in sorted(stage.rglob("*")):
+    if p.is_file():
+        rel=p.relative_to(stage).as_posix()
+        data=p.read_bytes()
+        oid=git("hash-object","-w","--stdin",input=data).decode().strip()
+        git("update-index","--add","--cacheinfo","100644,"+oid+","+rel)
+        staged.append({"path":rel,"mode":"100644","blob":oid,"bytes":len(data),"sha256":sha(data)})
+tree=git("write-tree").decode().strip()
+changed=[line.split(b"\t")[-1].decode() for line in git("diff-tree","--no-commit-id","--name-status","-r",base,tree).splitlines()]
+if sorted(changed)!=sorted(p["path"] for p in staged):
+    raise ValueError("tree delta not exact")
+diff=git("-c","core.quotePath=true","-c","diff.mnemonicPrefix=false","diff","--no-ext-diff","--no-textconv","--no-renames","--no-color","--binary","--full-index","--text","--diff-algorithm=myers","--no-indent-heuristic","--unified=3","--inter-hunk-context=0","--src-prefix=a/","--dst-prefix=b/","--no-relative","--output-indicator-new=+","--output-indicator-old=-","--output-indicator-context= ",base,tree)
+(out/"FROZEN_DIFF.patch").write_bytes(diff)
+whitespace=subprocess.run(["git","-c","core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol","diff","--check",base,tree],cwd=repo,env=env,capture_output=True)
+(out/"WHITESPACE.stdout.bin").write_bytes(whitespace.stdout)
+(out/"WHITESPACE.stderr.bin").write_bytes(whitespace.stderr)
+if whitespace.returncode:
+    raise ValueError("first immutable diff whitespace gate failed; preserve candidate tree, do not commit")
+commit=git("commit-tree",tree,"-p",base,input=b"fix(research): decode app-server text pipes as UTF8 [skip ci]\n").decode().strip()
+git("update-ref","refs/heads/"+branch,commit,"0"*40)
+delivery={"status":"OWN_SOURCE_CANDIDATE_CREATED_NOT_PUSHED","utc":dt.datetime.now(dt.timezone.utc).isoformat(),"base":base,"branch":branch,"head":commit,"tree":tree,"changed_paths":staged,"manifest_entries":len(manifest),"manifest_sha256":sha((archive/"MANIFEST.json").read_bytes()),"diff_bytes":len(diff),"diff_sha256":sha(diff),"whitespace_exit":whitespace.returncode,"working_branch_unchanged":git("rev-parse","HEAD").decode().strip(),"main_transmissions":0}
+put_json(out/"DELIVERY.json",delivery)
+print(json.dumps({k:v for k,v in delivery.items() if k!="changed_paths"},ensure_ascii=True))

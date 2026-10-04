@@ -1,0 +1,19 @@
+{
+  "allocation": "SERIAL-CUE-7387-T0-WSLC-A01-20261004",
+  "disposition": "STOP_FORMAL_OUTPUT_DIRECTORY_PREEXISTED",
+  "candidate_invocations": 1,
+  "candidate_exit": 1,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "started_utc": "2026-10-04T03:09:55.4789957+00:00",
+  "error": "FileExistsError: /out exists while candidate calls mkdir(exist_ok=False)",
+  "cause": "runner created the bind-mount root; candidate contract expected the root to be absent",
+  "formal_rows": 0,
+  "auditor_verdict": null,
+  "captured_combined_output_sha256": "E0C25556A9EF5B48FCA8D48CB674E13AED1C1F42552E92D913D957C3E9FAA119",
+  "wslc": "3.0.1.0",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "container": "ai-7387-t0-a01-candidate; --rm; absent from active inventory after exit",
+  "resource_warning": "kernel does not support swap limit capabilities or cgroup is not mounted; no effective memory cap claimed",
+  "scope": "execution-contract STOP; no scientific or model result; A01 must not be retried"
+}

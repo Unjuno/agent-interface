@@ -1,0 +1,26 @@
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+root = Path(__file__).resolve().parent
+repo = root.parent / "agent-interface"
+base = "cb13a10dce358649458f5aea00947b8aa43fc5b8"
+current = "4bd391e6aa96fa20ebf8547a350a122f55d2e1ad"
+paths = ["runtime/cli_v1/" + name for name in ("__init__.py", "api.py", "receipt.py", "test_receipt_motor_state.py")]
+paths += ["runtime/selector_v1/" + name for name in ("__init__.py", "selector.py")]
+identities = {"base_sha": base, "current_main_checked": current, "files": {}}
+for path in paths:
+    data = subprocess.check_output(["git", "show", base + ":" + path], cwd=repo)
+    blob = subprocess.check_output(["git", "rev-parse", base + ":" + path], cwd=repo).decode().strip()
+    current_blob = subprocess.check_output(["git", "rev-parse", current + ":" + path], cwd=repo).decode().strip()
+    assert blob == current_blob
+    identities["files"][path] = {"blob_oid": blob, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
+    for directory in ("source", "before-source"):
+        target = root / directory / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open("xb") as stream:
+            stream.write(data)
+with (root / "receipt-source-identities.json").open("x", encoding="utf-8", newline="\n") as stream:
+    json.dump(identities, stream, indent=2); stream.write("\n")
+print(json.dumps({"materialized_dependency_files": len(paths), "source_byte_invariance": True, "current_main": current}))
