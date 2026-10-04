@@ -1,0 +1,68 @@
+{
+  "experiment": "CROSS-COMPONENT-POST-SAMPLE-CANCEL-7429-7440",
+  "classification": "CURRENT_HEAD_FIX_COMPOSES_WITH_EXECUTOR_PUBLICATION",
+  "trigger": "owner trace sets executor cancellation after initial cancel.is_set() sample and before release(reason); owner rechecks after release I/O",
+  "owner_release": {
+    "event": "owner_release",
+    "reason": "cancelled",
+    "verified": true,
+    "buttons_down": [],
+    "keys_down": [],
+    "verified_ns": 102732259682200,
+    "valid_until_ns": 102737245598000
+  },
+  "emitted_events": [
+    "accepted",
+    "step_started",
+    "step_completed",
+    "cancel_requested",
+    "input_released",
+    "terminal"
+  ],
+  "input_released_count": 1,
+  "terminal": {
+    "event": "terminal",
+    "id": "integration",
+    "status": "cancelled",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 102732259682200,
+      "valid_until_ns": 102737245598000,
+      "intent_token": "d8a95580d00c4de3880c44d8d8d4a4eb",
+      "release_call_started_ns": 102732254990600,
+      "release_call_returned_ns": 102732260784300
+    },
+    "interruption": {
+      "intent_token": "d8a95580d00c4de3880c44d8d8d4a4eb",
+      "record": {
+        "event": "owner_release",
+        "reason": "cancelled",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 102732259682200,
+        "valid_until_ns": 102737245598000
+      }
+    },
+    "decision_reason": null,
+    "terminal_ns": 102732260883900,
+    "semantic_completion": "program status only; task scoring is separate"
+  },
+  "fake_x_events": [
+    [
+      2,
+      38
+    ],
+    [
+      3,
+      38
+    ]
+  ]
+}
+
