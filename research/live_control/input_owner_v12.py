@@ -184,6 +184,10 @@ class InputOwner:
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
             bitmap = d.query_keymap()
             down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+            # Cancellation can arrive while release I/O and state verification
+            # are in progress. Recheck immediately before recording its cause.
+            if reason == 'release' and active is not None and active.cancel.is_set():
+                reason = 'cancelled'
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
                           keys_down=down, verified_ns=time.perf_counter_ns(),
                           valid_until_ns=active.deadline if active else None)

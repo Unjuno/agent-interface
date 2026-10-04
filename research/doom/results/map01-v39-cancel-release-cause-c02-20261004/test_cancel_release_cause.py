@@ -18,6 +18,7 @@ class FakeDisplay:
     def __init__(self, _name):
         self.down = set()
         self.events = []
+        self.on_sync = None
         self.root = types.SimpleNamespace(
             query_pointer=lambda: types.SimpleNamespace(mask=0, root_x=0, root_y=0))
 
@@ -37,6 +38,9 @@ class FakeDisplay:
         return bytes(bitmap)
 
     def sync(self):
+        if self.on_sync is not None:
+            callback, self.on_sync = self.on_sync, None
+            callback()
         return None
 
     def close(self):
@@ -59,7 +63,7 @@ class Lease:
         self.interruptions.append(receipt)
 
 
-def load_owner(dequeued):
+def load_owner(dequeued, cancel_after_dequeue=True):
     saved = {name: sys.modules.get(name) for name in (
         "Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
         "Xlib.ext", "Xlib.ext.xtest", "executor_v3")}
@@ -119,7 +123,8 @@ def load_owner(dequeued):
                 dequeued.set()
                 # This occurs after the owner-loop cancellation precheck and
                 # after the request is dequeued, but before release dispatch.
-                owner_lease[0].cancel.set()
+                if cancel_after_dequeue:
+                    owner_lease[0].cancel.set()
             return item
 
         result.get = get
@@ -144,9 +149,10 @@ def restore_modules(saved):
 
 
 class CancellationReleaseCauseTests(unittest.TestCase):
-    def _exercise(self, cancel_after_dequeue):
+    def _exercise(self, cancel_after_dequeue=False, cancel_during_sync=False):
         dequeued = threading.Event()
-        owner, displays, constants, lease_slot, saved = load_owner(dequeued)
+        owner, displays, constants, lease_slot, saved = load_owner(
+            dequeued, cancel_after_dequeue=cancel_after_dequeue)
         lease = Lease()
         lease_slot[0] = lease
         try:
@@ -154,6 +160,11 @@ class CancellationReleaseCauseTests(unittest.TestCase):
             if not cancel_after_dequeue:
                 # Keep the request queue hook from changing state on this path.
                 lease.cancel.set = lambda: None
+            if cancel_during_sync:
+                # The release handler sampled false before entering release();
+                # expose cancellation during key-up synchronization.
+                lease.cancel.set = threading.Event.set.__get__(lease.cancel)
+                displays[0].on_sync = lease.cancel.set
             receipt = owner.call("release", lease)
             self.assertTrue(dequeued.wait(1))
             self.assertTrue(receipt["verified"])
@@ -170,6 +181,9 @@ class CancellationReleaseCauseTests(unittest.TestCase):
 
     def test_ordinary_release_remains_ordinary(self):
         self.assertEqual(self._exercise(False), "release")
+
+    def test_cancel_arriving_during_release_io_is_preserved(self):
+        self.assertEqual(self._exercise(cancel_during_sync=True), "cancelled")
 
 
 if __name__ == "__main__":
