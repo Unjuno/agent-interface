@@ -31,3 +31,7 @@
 6. After the A02 outputs, the final mutation test was rerun without recording, package hashes and Python source compilation were checked, the workspace-index workflow's 22 tests passed, its index check found 159 directories, and git diff --cached --check passed.
 
 The exact outcomes and corrupted fields are retained in the A01 files and in MUTATION_TEST_A02.json, CANDIDATE_A02.json, and AUDIT_A02.json. The raw traces remain Git blobs at the commits recorded in FREEZE.json and FREEZE_A02.json.
+
+## Output line endings
+
+The A01/A02 JSON outputs were initially written with Windows CRLF endings and retained byte-for-byte in parent commit `a48281b9aaa433c6d0a93df9d35c9b2011994b9d`. This follow-up normalizes those text files to LF only; `LINE_ENDING_NORMALIZATION.json` records each prior Git blob and SHA-256 alongside the normalized SHA-256. The JSON payloads and Python sources are unchanged.
