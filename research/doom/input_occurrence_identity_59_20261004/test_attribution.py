@@ -80,6 +80,24 @@ class AttributionTests(unittest.TestCase):
             attribute_positive_events(samples, events, [admission],
                                      normalize_releases([release]), [binding])
 
+    def test_missing_or_empty_intent_identity_fails_closed(self):
+        for token in (None, "", "   "):
+            samples, events, admission, release, binding = fixture()
+            admission["intent_token"] = token
+            release["owner_thread_keyup_receipt"]["intent_token"] = token
+            with self.subTest(token=token), self.assertRaisesRegex(
+                    ValueError, "non-empty intent_token"):
+                attribute_positive_events(
+                    samples, events, [admission], normalize_releases([release]),
+                    [binding])
+
+        samples, events, admission, release, binding = fixture()
+        admission.pop("intent_token")
+        release["owner_thread_keyup_receipt"].pop("intent_token")
+        with self.assertRaisesRegex(ValueError, "non-empty intent_token"):
+            attribute_positive_events(samples, events, [admission],
+                                      normalize_releases([release]), [binding])
+
     def test_endpoint_tie_is_unresolved(self):
         samples, events, admission, release, binding = fixture()
         release["owner_thread_keyup_receipt"]["owner_keyrelease_started_ns"] = 190

@@ -1,0 +1,11 @@
+{
+  "baseline_commit": "5f1e8ca5ddfae92c68530fd86668b811e65d2a12",
+  "baseline_source_path": "research/doom/input_occurrence_identity_59_20261004/attribution.py",
+  "baseline_source_blob": "7ee3db4c299209239f0d1bb344a76dbf648d0b46",
+  "baseline_test_blob": "79d1a8c7c2bcbae8580552a92809ed20bf9a7a3e",
+  "wslc_image": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+  "wslc_flags": ["--rm", "--pull never", "--network none", "--user 65534:65534", "--cpus 1", "--memory 512m"],
+  "test_command": "python3 -B -m unittest test_attribution -v",
+  "oracle_command": "python -B research/doom/input_occurrence_identity_59_20261004/audit.py",
+  "limits": "Synthetic reducer only; no live session or causal attribution. WSLc memory and swap limit enforcement unverified."
+}
