@@ -12,3 +12,5 @@ Result: PASS_TEMPORAL_ORDERING_ONLY. Admission preceded cancel-command receipt b
 Frozen source commit c99d93a2c81945f0946173e48247bdd49e32a02a, SHA-256 2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381. Main at selection: 563f636203ffd4c71e6a81968f6ad950dc53eaff.
 
 Executed once with Windows CPython 3.11.9 because WSL returned Input/output error and C: had 0 free bytes. Host-only posthoc audit; no container claim. Reproduce with python temporal_orphan_audit.py.
+
+An independent backward-context audit is also retained in `audit_temporal_order.py`; it reconstructs each admission's context from preceding lifecycle records and independently confirms the orphan timestamps. Its result is `AUDIT.json`.

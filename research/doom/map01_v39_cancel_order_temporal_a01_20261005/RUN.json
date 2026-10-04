@@ -1,20 +1,31 @@
 {
   "schema": "map01-v39-cancel-order-temporal-a01-run-v1",
-  "command": "python temporal_orphan_audit.py",
+  "commands": [
+    "python temporal_orphan_audit.py",
+    "python audit_temporal_order.py",
+    "python -m py_compile temporal_orphan_audit.py audit_temporal_order.py"
+  ],
   "environment": {
     "os": "Windows",
     "python": "CPython 3.11.9",
     "container": "not run; WSL I/O error"
   },
-  "source_retrieval": "one HTTPS GET to pinned GitHub raw commit; SHA verified before parse",
+  "source_retrieval": "each script makes one HTTPS GET to pinned raw commit and verifies SHA before parsing",
   "rows": 634,
   "candidate_execution_count": 0,
   "formal_allocation_count": 0,
   "retries": 0,
-  "status": "PASS_TEMPORAL_ORDERING_ONLY",
+  "results": [
+    "PASS_TEMPORAL_ORDERING_ONLY",
+    "PASS_INDEPENDENT_TEMPORAL_AUDIT"
+  ],
   "construction": {
     "attempt1": "STOP_UNEXPECTED_UNMATCHED []: draft assumed input_admission rows contain id; schema omits id/step",
-    "attempt2": "PASS: reconstruct id/step from ordered step_started lifecycle event"
+    "attempt2": "PASS: reconstruct id/step from ordered step_started context"
   },
-  "storage": "C: 0 free bytes"
+  "storage": "C: 0 free bytes",
+  "limitations": [
+    "host-only posthoc saved-stream analysis",
+    "no container, candidate, game, model, GUI, X11, or OS-input execution"
+  ]
 }
