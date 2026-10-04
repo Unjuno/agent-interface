@@ -1,9 +1,10 @@
-"""Research InputOwner v13 candidate: add measured per-key cancellation cleanup edges.
+"""Research InputOwner v12: v10 control semantics with owner-thread physical-edge evidence.
 
-This successor retains v12 control semantics and ordinary key-edge measurements.
-Cancellation cleanup samples each owner-held key around its release, emits a
-context-bound receipt when the physical edge is confirmed, and never grants
-input authority.
+This research-only version adds best-effort pre/post keymap sampling and stable
+physical-hold identity to ordinary keyboard down/up. Measurement never grants
+authority and sampling failure never changes an otherwise-valid v10 action.
+Cleanup may terminate identity after v10 aggregate neutral verification, but does
+not fabricate a per-key cleanup edge interval.
 """
 import queue
 import threading
@@ -53,13 +54,13 @@ class _HoldIdentity:
     def __init__(self, owner_id):
         self.owner_id=owner_id
         self.counter=0
-        self.active={}  # keycode -> (intent_token, key_name, actuation_id, event_context)
+        self.active={}  # keycode -> (intent_token, key_name, actuation_id)
         self.retired=set()
 
-    def on_down(self, code, key, intent_token, owner_owned_before, confirmed_new_edge, event_context=None):
+    def on_down(self, code, key, intent_token, owner_owned_before, confirmed_new_edge):
         cur=self.active.get(code)
         if cur is not None:
-            cur_intent,cur_key,aid,_=cur
+            cur_intent,cur_key,aid=cur
             if not _valid_identity_text(intent_token) or (cur_intent,cur_key)!=(intent_token,key):
                 return 'LINEAGE_MISMATCH', None
             if owner_owned_before:
@@ -76,7 +77,7 @@ class _HoldIdentity:
         aid=f'{self.owner_id}:g{self.counter}:{key}'
         if aid in self.retired:
             raise RuntimeError('retired actuation identity reuse')
-        self.active[code]=(intent_token,key,aid,event_context)
+        self.active[code]=(intent_token,key,aid)
         return 'MINTED', aid
 
     def on_up(self, code, key, intent_token, confirmed_up_edge):
@@ -85,7 +86,7 @@ class _HoldIdentity:
         cur=self.active.get(code)
         if cur is None:
             return 'NO_ACTIVE_ID', None
-        cur_intent,cur_key,aid,_=cur
+        cur_intent,cur_key,aid=cur
         if not _valid_identity_text(intent_token) or (cur_intent,cur_key)!=(intent_token,key):
             return 'LINEAGE_MISMATCH', None
         del self.active[code]
@@ -94,7 +95,7 @@ class _HoldIdentity:
 
     def terminate_after_verified_neutral(self):
         # Aggregate cleanup may end a known hold lineage, but is not a per-key fresh-edge receipt.
-        for _,_,aid,_ in self.active.values():
+        for _,_,aid in self.active.values():
             self.retired.add(aid)
         self.active.clear()
 
@@ -139,13 +140,11 @@ class InputOwner:
             self.ready.set()
             self.stopped.set()
 
-    def call(self, operation, lease=None, key=None, event_context=None):
+    def call(self, operation, lease=None, key=None):
         if self.closed or self.stopped.is_set() or self.stop_requested.is_set():
             raise RuntimeError('input owner unavailable') from self.error
         done, reply = threading.Event(), []
-        if event_context is not None and (not isinstance(event_context, (tuple, list)) or len(event_context) != 2 or type(event_context[0]) is not str or not event_context[0] or type(event_context[1]) is not int or event_context[1] < 0):
-            raise ValueError('invalid program/step input context')
-        self.requests.put((operation, lease, key, event_context, done, reply))
+        self.requests.put((operation, lease, key, done, reply))
         deadline = time.monotonic() + 2
         while not done.wait(.01):
             if self.stopped.is_set():
@@ -287,67 +286,21 @@ class InputOwner:
         def release(reason):
             nonlocal active,revision
             revision += 1
-            per_key_release_measurements=[]
             for code in list(held):
-                key_lease=held[code]
-                identity=hold_identity.active.get(code)
-                pre=sample_key_state(code)
-                release_request_ns=time.perf_counter_ns()
                 xtest.fake_input(d, X.KeyRelease, code)
-                d.sync()
-                sync_return_ns=time.perf_counter_ns()
-                post=sample_key_state(code)
-                if identity is not None:
-                    intent_token,key_name,actuation_id,event_context=identity
-                else:
-                    intent_token=lease_intent_token(key_lease)
-                    key_name=None;actuation_id=None;event_context=None
-                classification='PHYSICAL_SAMPLE_UNAVAILABLE'
-                physical_interval=None
-                if pre['available'] and post['available']:
-                    classification,_=_classify_release(True,pre['down'],True,True,post['down'])
-                    if classification=='CONFIRMED_PHYSICAL_UP':
-                        physical_interval=[pre['finished_ns'],post['finished_ns']]
-                identity_status,retired_id=hold_identity.on_up(
-                    code,key_name,intent_token,classification=='CONFIRMED_PHYSICAL_UP') if key_name is not None else ('NO_ACTIVE_ID',None)
-                if retired_id is not None:
-                    actuation_id=retired_id
-                bracket=None
-                if physical_interval is not None and actuation_id is not None and event_context is not None:
-                    bracket=dict(status=classification,physical_up_interval=physical_interval,
-                                 release_id=f'{self.owner_id}:r{revision}:cleanup-up:{code}',
-                                 owner_id=self.owner_id,intent_token=intent_token,key=key_name,
-                                 grants_input_authority=False,application_consumption_observed=False)
-                measurement=dict(edge='up',classification=classification,bracket=bracket,
-                    actuation_id=actuation_id,identity_status=identity_status,
-                    pre_sample=pre,post_sample=post,release_attempted=True,
-                    release_request_ns=release_request_ns,sync_return_ns=sync_return_ns,
-                    adapter_edge=_edge_for_adapter('up',bracket,actuation_id),
-                    grants_input_authority=False,application_consumption_observed=False)
-                if actuation_id is not None and event_context is not None:
-                    per_key_release_measurements.append(dict(
-                        event='input_release_measurement',key=key_name,
-                        id=event_context[0],step=event_context[1],owner_id=self.owner_id,
-                        intent_token=intent_token,reason=reason,
-                        physical_key_measurement=measurement,grants_input_authority=False))
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
-            # Persist per-key release evidence before aggregate reconciliation. The
-            # physical key-up may be confirmed even if either global state query
-            # fails; retain that row without marking the whole input state verified.
-            record = dict(event='owner_release', reason=reason, verified=False,
-                          valid_until_ns=active.deadline if active else None,
-                          per_key_release_measurements=per_key_release_measurements)
-            self.records.append(record)
             mask = d.screen().root.query_pointer().mask
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
             bitmap = d.query_keymap()
             down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
-            record.update(verified=not down and not buttons_down, buttons_down=buttons_down,
-                          keys_down=down, verified_ns=time.perf_counter_ns())
+            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
+                          keys_down=down, verified_ns=time.perf_counter_ns(),
+                          valid_until_ns=active.deadline if active else None)
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
+            self.records.append(record)
             if down or buttons_down:
                 raise RuntimeError('owner release not verified: ' + repr(down))
             hold_identity.terminate_after_verified_neutral()
@@ -383,7 +336,7 @@ class InputOwner:
                 if active is not None:
                     timeout = min(timeout, max(0, (active.deadline-time.perf_counter_ns())/1e9))
                 try:
-                    op, lease, key, event_context, done, reply = self.requests.get(timeout=timeout)
+                    op, lease, key, done, reply = self.requests.get(timeout=timeout)
                 except queue.Empty:
                     continue
                 closing = op == 'close'
@@ -417,9 +370,7 @@ class InputOwner:
                     elif op in ('release', 'close'):
                         if op == 'release' and active is not None and active is not lease:
                             raise ValueError('release belongs to another intent')
-                        reason = ('expired' if op == 'release' and active is not None
-                                  and time.perf_counter_ns() >= active.deadline else op)
-                        result = release(reason)
+                        result = release(op)
                     elif op in ('move', 'button_down', 'button_up', 'wheel'):
                         root = d.screen().root
                         if op == 'button_up':
@@ -506,7 +457,7 @@ class InputOwner:
                                                  press_id=f'{self.owner_id}:r{revision}:down:{code}',owner_id=self.owner_id,
                                                  intent_token=intent_token,key=key,grants_input_authority=False,
                                                  application_consumption_observed=False)
-                            identity_status,actuation_id=hold_identity.on_down(code,key,intent_token,owner_owned_before,classified_status=='CONFIRMED_PHYSICAL_DOWN',event_context)
+                            identity_status,actuation_id=hold_identity.on_down(code,key,intent_token,owner_owned_before,classified_status=='CONFIRMED_PHYSICAL_DOWN')
                             measurement=dict(edge='down',classification=classified_status,bracket=bracket,actuation_id=actuation_id,
                                 identity_status=identity_status,pre_sample=pre,post_sample=post,
                                 press_request_ns=press_request_ns,sync_return_ns=sync_return_ns,

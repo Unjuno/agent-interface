@@ -26,3 +26,14 @@ python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test
 
 Current-main ExecutorV12 aggregate-query fault integrations (run in detached current-main overlay):
 python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_pointer_query_fails research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_keymap_query_fails -v
+
+Current A08 replay commands (bundled CPython 3.12.14, from repository root):
+
+- Focused candidate: `python -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release -v` (12 tests).
+- Optimized repeat: `python -O -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release -v` (12 tests).
+- ExecutorV12 exact-main composition: `python -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition -v` (3 tests; run in an overlay containing main sources pinned by SOURCE_LOCK.json).
+- Owner compatibility: `python research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py` (10 tests).
+- Existing V39 bridge: `PYTHONPATH=research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12:research/live_control:research/doom python -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v` (2 tests).
+- Read-only audit: `python research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py` (`AUDIT_PASS_SOURCE_LOCK_AND_27_PRIMARY_TESTS_PLUS_12_OPTIMIZED_REPEAT_AND_86_PACKAGE_FILES`).
+
+A08 regression pairs: `post-drain-red-current` / `post-drain-green-current` and `noop-row-red-current` / `noop-row-green-current`. All remain fake-display tests; no X server, game, GUI, or OS input was used.

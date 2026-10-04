@@ -8,15 +8,15 @@
 
 **D.** The control should produce zero bridge up receipts while reaching one verified `expired` terminal and empty state. The wrapper case passes only with exactly one context/actuation-matched `CONFIRMED_PHYSICAL_UP` before the same verified terminal, no second per-key edge from the final no-op release, and empty state. Any timeout, mismatch, duplicate, or non-neutral state fails the probe.
 
-**C.** The barrier forces a specific interleaving. Both arms use the repository's fake Xlib owner harness; only the wrapper arm drains after the inherited final release. The `execute()` body is an explicit test seam to control when expiry is raised. The current-main coast class and its session inheritance are loaded from the frozen source snapshot, and method resolution is checked at runtime.
+**C.** The barrier forces a specific interleaving. Both arms use the repository's fake Xlib owner harness; the A08 bridge arm runs its actual `release_all()` override, which delegates to the inherited current method and drains records in `finally`. The `execute()` body is an explicit test seam to control when expiry is raised. The current-main coast class and its session inheritance are loaded from the frozen source snapshot, and method resolution is checked at runtime.
 
 **U.** This is one synthetic schedule, not real X11/OS input, a game, application consumption, useful feedback, recovery efficacy, latency, safety, or live allocation. `session_v4` capture behavior and owner imports are inert/stubbed; the inherited `session_v5.Backend.release_all()` implementation and current coast/session class chain are the source under test. It establishes a scoped receipt-order result only.
 
 ## Result
 
-`PASS_SCOPED_FINAL_DRAIN`: inherited-only control emitted zero contextual up receipts; the final-drain wrapper emitted exactly one before terminal. Each arm produced two owner-release records (`expired`, then the inherited final `release`), one verified `expired` terminal, and empty fake physical and bridge-held sets. The no-op final release generated no duplicate per-key measurement.
+`PASS_SCOPED_FINAL_DRAIN`: inherited-only control emitted zero contextual up receipts; the frozen A08 candidate emitted exactly one before terminal. Each arm produced two owner-release records (`expired`, then the inherited final `release`), one verified `expired` terminal, and empty fake physical and bridge-held sets. The no-op final release generated no duplicate per-key measurement.
 
-Current main was `dccf55e264f434ca27f2948fe53be09919047819`. The nine frozen implementation files and their Git blob/SHA-256 identities are in `SOURCE_LOCK.json`. `audit.py` verifies retained raw output and source identity without executing the candidate. Reproduce with:
+Current main was `dccf55e264f434ca27f2948fe53be09919047819`. The current coast/session/executor chain and fake-display fixture are pinned to that main. The inherited-only baseline bridge/owner/helper are pinned to PR #7805 pre-A08 head `8ed40fcbc52a9ffd2da1fa14b9b9b2a22f4111a3`; the A08 candidate bridge/owner/helper are pinned to `adfa5c9ccbf2ca4f82b85b164f0439740f63cc80`. All 19 source blobs and their Git blob/SHA-256 identities are in `SOURCE_LOCK.json`. The runner rejects drift in its live fixture dependencies, and `audit.py` verifies retained raw output and source identity without executing the candidate. Reproduce with:
 
 ```sh
 python3 run_once.py

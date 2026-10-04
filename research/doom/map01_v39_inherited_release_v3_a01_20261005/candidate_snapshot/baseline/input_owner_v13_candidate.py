@@ -417,9 +417,7 @@ class InputOwner:
                     elif op in ('release', 'close'):
                         if op == 'release' and active is not None and active is not lease:
                             raise ValueError('release belongs to another intent')
-                        reason = ('expired' if op == 'release' and active is not None
-                                  and time.perf_counter_ns() >= active.deadline else op)
-                        result = release(reason)
+                        result = release(op)
                     elif op in ('move', 'button_down', 'button_up', 'wheel'):
                         root = d.screen().root
                         if op == 'button_up':

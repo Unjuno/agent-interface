@@ -56,26 +56,7 @@ class Backend(Previous):
         if record is None:
             return
         row = dict(record)
-        measurement = row.get("physical_key_measurement", {})
-        if not down and measurement.get("classification") == "NOOP_ALREADY_UP":
-            # Diagnostic evidence after owner cleanup is not a second edge.
-            row["event"] = "input_release_noop"
         row["id"], row["step"] = context
         row.setdefault("owner_id", self.owner.owner_id)
         row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
         self.emit(row)
-
-    def release_all(self):
-        try:
-            release = self.owner.call("release", self.lease)
-        finally:
-            # Executor calls this after execute() returns. Expiry cleanup may
-            # race its earlier exit drain, so drain again at the release barrier.
-            self._drain_owner_records()
-        state = self.owner.call("input_state", self.lease)
-        verified = (release.get("verified") is True
-                    and state.get("owned_keycodes") == []
-                    and state.get("owned_buttons") == [])
-        if verified:
-            self.held.clear()
-        return {"verified": verified, "owner_id": self.owner.owner_id}

@@ -1,5 +1,6 @@
 """One paired fake-display composition probe for the current V39 release chain."""
 import importlib.util
+import hashlib
 import json
 import sys
 import threading
@@ -10,8 +11,17 @@ from pathlib import Path
 PKG = Path(__file__).resolve().parent
 ROOT = PKG.parents[2]
 LIVE = PKG / "source_snapshot" / "live_control"
+CANDIDATE_BASELINE = PKG / "candidate_snapshot" / "baseline"
+CANDIDATE_A08 = PKG / "candidate_snapshot" / "a08"
 sys.path.insert(0, str(LIVE))
 sys.path.insert(0, str(ROOT))
+
+LOCK = json.loads((PKG / "SOURCE_LOCK.json").read_text())
+for locked in LOCK["files"]:
+    if not locked.get("runtime_dependency"):
+        continue
+    actual = hashlib.sha256((ROOT / locked["repo_path"]).read_bytes()).hexdigest()
+    assert actual == locked["sha256"], f"runtime dependency drift: {locked['repo_path']}"
 
 # Pin ExecutorV3 and Lease imports to the captured current-main source before
 # the legacy fake-display fixture adds its older dependency paths.
@@ -19,7 +29,20 @@ import executor_v3
 import lease
 
 sys.path.insert(0, str(ROOT / "research" / "live_control"))
-from research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release import load_candidate
+
+
+def load_frozen_candidate(candidate_dir):
+    helper_path = candidate_dir / "test_cancel_release.py"
+    spec = importlib.util.spec_from_file_location("frozen_cancel_release_helper", helper_path)
+    helper = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = helper
+    assert spec.loader is not None
+    spec.loader.exec_module(helper)
+    helper.FIX_PATH = candidate_dir
+    helper.BRIDGE_TEST_PATH = ROOT / "research" / "doom" / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
+    helper.OWNER_V13_PATH = candidate_dir / "input_owner_v13_candidate.py"
+    helper.BRIDGE_V2_PATH = candidate_dir / "bridge_v2_candidate.py"
+    return helper.load_candidate()
 
 
 def load_current_coast_backend():
@@ -46,31 +69,21 @@ def load_current_coast_backend():
     return module
 
 
-def run_case(final_drain):
-    bridge_test, _hm, harness, _lease, _bridge_module, backend = load_candidate()
+def run_case(candidate_fix):
+    candidate_dir = CANDIDATE_A08 if candidate_fix else CANDIDATE_BASELINE
+    bridge_test, _hm, harness, _lease, _bridge_module, backend = load_frozen_candidate(candidate_dir)
     coast = load_current_coast_backend()
     candidate_backend = type(backend)
-    if final_drain:
-        class ComposedBackend(candidate_backend, coast.Backend):
-            def release_all(self):
-                try:
-                    return super().release_all()
-                finally:
-                    self._drain_owner_records()
-    else:
-        class ComposedBackend(candidate_backend, coast.Backend):
-            pass
+    ComposedBackend = type("ComposedBackend", (candidate_backend, coast.Backend), {})
     backend.__class__ = ComposedBackend
     release_owner = next(cls for cls in ComposedBackend.__mro__
                          if "release_all" in cls.__dict__)
-    if final_drain:
-        assert release_owner is ComposedBackend
-        inherited_owner = next(cls for cls in ComposedBackend.__mro__[1:]
-                               if "release_all" in cls.__dict__)
-    else:
-        inherited_owner = release_owner
+    inherited_owner = (next(cls for cls in ComposedBackend.__mro__[ComposedBackend.__mro__.index(release_owner) + 1:]
+                            if "release_all" in cls.__dict__)
+                       if candidate_fix else release_owner)
     assert inherited_owner.__module__ == "session_v5"
     assert inherited_owner.__name__ == "Backend"
+    assert (release_owner.__module__ == "bridge_v2_candidate") == candidate_fix
 
     prior_lease = executor_v3.Lease
 
@@ -134,7 +147,7 @@ def run_case(final_drain):
     backend.validate = lambda _steps: None
     backend.emit = emit
     executor = executor_v3.Executor(backend, emit)
-    identity = "v13-v3-final-drain-a01" if final_drain else "v13-v3-inherited-only-a01"
+    identity = "v13-v3-a08-candidate-a01" if candidate_fix else "v13-v3-inherited-only-a01"
     try:
         deadline = time.perf_counter_ns() + 30_000_000
         executor.submit(identity, [{"op": "hold"}], 1, deadline)
@@ -151,8 +164,8 @@ def run_case(final_drain):
         owner_releases = [r for r in backend.owner.records if r.get("event") == "owner_release"]
         assert len(terms) == 1 and terms[0]["status"] == "expired", terms
         assert terms[0]["release"].get("verified") is True, terms
-        assert len(ups) == (1 if final_drain else 0), ups
-        if final_drain:
+        assert len(ups) == (1 if candidate_fix else 0), ups
+        if candidate_fix:
             assert ups[0]["physical_key_measurement"]["classification"] == "CONFIRMED_PHYSICAL_UP"
             assert (ups[0]["id"], ups[0]["step"]) == (identity, 0)
             assert ups[0]["intent_token"] == "intent-v13-v3-inherited-a01"
@@ -164,8 +177,9 @@ def run_case(final_drain):
         assert physical_empty and ledger_empty, (harness.d.physical, backend.held)
         return {
             "case": identity,
-            "final_drain_wrapper": final_drain,
-            "release_method_owner": inherited_owner.__module__ + "." + inherited_owner.__name__,
+            "candidate_final_drain_implementation": candidate_fix,
+            "release_method_owner": release_owner.__module__ + "." + release_owner.__name__,
+            "inherited_release_method_owner": inherited_owner.__module__ + "." + inherited_owner.__name__,
             "terminal_status": terms[0]["status"],
             "terminal_release_verified": terms[0]["release"]["verified"],
             "contextual_up_receipt_count": len(ups),
@@ -191,10 +205,11 @@ def main():
     candidate = run_case(True)
     result = {
         "result": "PASS_SCOPED_FINAL_DRAIN" if candidate["contextual_up_receipt_count"] == 1 else "FAIL",
-        "base_main_sha": json.loads((PKG / "SOURCE_LOCK.json").read_text())["base_main_sha"],
+        "base_main_sha": LOCK["base_main_sha"],
+        "candidate_commits": LOCK["candidate_commits"],
         "control": control,
         "candidate": candidate,
-        "scope": "paired fake-display forced schedule; current-main V39 coast Backend in MRO; release_all delegates to frozen session_v5.Backend; candidate wrapper drains pending owner records in finally; no real X11, OS input, game, application effect, or live allocation",
+        "scope": "paired fake-display forced schedule; current-main V39 coast Backend in MRO; baseline inherits frozen session_v5.release_all; A08 candidate bridge delegates to that method and drains pending owner records in finally; test execute seam; no real X11, OS input, game, application effect, or live allocation",
     }
     (PKG / "results" / "RESULT.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, sort_keys=True))
