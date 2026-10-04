@@ -42,15 +42,15 @@ class SessionSelectionTests(unittest.TestCase):
             base.sys = sys
             telemetry = types.ModuleType("doom_owner_thread_release_batch_backend_v1")
             telemetry.Backend = type("SelectedBackend", (), {})
-            conflicting = types.ModuleType("doom_owner_thread_release_batch_backend_v1")
+            conflicting = types.ModuleType("doom_typed_release_backend_v3")
             conflicting.Backend = type("ConflictingBackend", (), {})
             names = {
                 "session_map01_v12": sys.modules.get("session_map01_v12"),
-                "doom_owner_thread_release_batch_backend_v1": sys.modules.get("doom_owner_thread_release_batch_backend_v1"),
+                "doom_typed_release_backend_v3": sys.modules.get("doom_typed_release_backend_v3"),
                 "doom_owner_thread_release_batch_backend_v1": sys.modules.get("doom_owner_thread_release_batch_backend_v1"),
             }
             sys.modules.update({"session_map01_v12": base,
-                                "doom_owner_thread_release_batch_backend_v1": conflicting,
+                                "doom_typed_release_backend_v3": conflicting,
                                 "doom_owner_thread_release_batch_backend_v1": telemetry})
             try:
                 with patch.object(candidate, "MainThreadScorerStdin") as polling, \
