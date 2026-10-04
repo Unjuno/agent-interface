@@ -2,7 +2,10 @@
 
 Status: this document began as a pre-A05 composition plan. The current verified result and remaining gates are recorded below; historical planning detail is retained after that update.
 
-## Current evidence update (2026-10-04; checked main `2fbfc00`)
+## Current evidence update (2026-10-04; checked main `dae347c`)
+
+A14 extends A13 to the other five retained block-2/C screenshots with exactly one `gpt-5.6-luna` low-effort call per task. All five outputs pass the saved schema and A12 lifecycle compiler, with exact token/save gates and bounded coordinates/crops. Post-run visual inspection identifies an important boundary: task-3’s retained screenshot is blank (no visible field or Save button), yet its contract resembles the left-layout task-2 contract. The machine 5/5 is therefore only schema/lifecycle construction; visual review flags at least one grounding failure. No GUI action or effect was tested. Evidence is in `a14-lifecycle-cross-task-construction/`; it strengthens the requirement that compiler acceptance cannot stand in for fresh visual target admission. R02’s scored outcomes are unchanged.
+
 
 A12 adds a candidate schema wrapper that rejects observation-local `target_valid` from action postconditions while retaining it in pre-action branch guards. Its corrected construction and missing-save-effect negative case pass normal and optimized audits; this is not a live qualification. A13 then made exactly one model-only Codex call using the lifecycle clause, pinned screenshot, and schema. The returned contract passed the A12 wrapper and independent checks for exact entry/save effects, both guarded action branches, completion gate, and image bounds. The independent audit passes under normal Python and `-O` and rejects a forged `target_valid` postcondition in both modes. Evidence is under `a12-predicate-lifecycle-guard/` and `a13-predicate-lifecycle-prompt-check/`. A13 tests one sampled output only; it establishes neither grounding correctness nor effect, robustness, or efficiency. The formal R02 result remains unchanged, and the integrated efficiency gate remains unproven.
 
