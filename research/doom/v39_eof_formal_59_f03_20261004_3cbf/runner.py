@@ -49,11 +49,10 @@ def write(path, value):
 
 
 def sigint_blocked_reader(reader):
-    previous_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
-    try:
-        reader()
-    finally:
-        signal.pthread_sigmask(signal.SIG_SETMASK, previous_mask)
+    # This thread is dedicated to one reader invocation. Leave SIGINT blocked
+    # until the OS thread exits, avoiding an unmasked return/finalization window.
+    signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
+    reader()
 
 
 def expected(case, row):
@@ -166,8 +165,15 @@ def run(output, journal=None):
             script = ('import os,sys,time;print(\'{"event":"ready"}\',flush=True);sys.stdin.readline();'
                       'print(\'{"event":"terminal"}\',flush=True);os.close(1);time.sleep(3)') if case == 'candidate_events_eof' else (
                       'import os,sys,time;sys.stdout.write(sys.argv[1]);sys.stdout.flush();os.close(1);time.sleep(3)')
-            child = subprocess.Popen([sys.executable, '-u', '-c', script, wire], stdin=subprocess.PIPE,
-                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            # Keep a process-directed SIGINT pending until Popen returns and its
+            # live handle is owned by `child`; otherwise a tiny handoff window
+            # can orphan a process that the cleanup path cannot see.
+            previous_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
+            try:
+                child = subprocess.Popen([sys.executable, '-u', '-c', script, wire], stdin=subprocess.PIPE,
+                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            finally:
+                signal.pthread_sigmask(signal.SIG_SETMASK, previous_mask)
             row['child_pid'] = child.pid
             factory = baseline_factory if case == 'baseline_eof' else candidate_factory
             reader, wait, events = factory(code)(child, queue.Queue())

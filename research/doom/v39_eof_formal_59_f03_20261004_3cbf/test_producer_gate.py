@@ -20,6 +20,18 @@ class ProducerGateControls(unittest.TestCase):
         self.assertFalse(thread.is_alive())
         self.assertEqual(observed, [True])
 
+    def test_reader_thread_does_not_unblock_sigint_before_exit(self):
+        observed = []
+
+        def worker():
+            sigint_blocked_reader(lambda: None)
+            observed.append(signal.SIGINT in signal.pthread_sigmask(signal.SIG_BLOCK, set()))
+
+        thread = threading.Thread(target=worker)
+        thread.start(); thread.join(2)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(observed, [True])
+
     def row(self):
         lines = (Path(__file__).parent / 'methods/RUNNER-CONSTRUCTION.log').read_text().splitlines()
         row = next(json.loads(line) for line in lines if line.startswith('{')
