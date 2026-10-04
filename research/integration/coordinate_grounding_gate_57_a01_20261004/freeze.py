@@ -9,7 +9,7 @@ from pathlib import Path
 
 PACKAGE = Path(__file__).resolve().parent
 REPO = PACKAGE.parents[2]
-BASE_COMMIT = "99f77c47b91466d49c1e9438f9518d2edec6706a"
+BASE_COMMIT = "02953aa83d62e69a787de7732bf172f3f8ef8e1c"
 SOURCE_PATHS = [
     "runtime/guarded_x11_v1/frames.py",
     "runtime/guarded_x11_v1/handles_base.py",
