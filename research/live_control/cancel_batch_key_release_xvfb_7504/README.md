@@ -12,16 +12,14 @@ The observed client KeyRelease timestamp happened to fall inside the request-to-
 
 - Run 01 stopped before launching because display :96 had a lock file owned by another WSL user. The lock was left untouched.
 - Run 02 stopped before launching because the first runner version checked :96 while configured for :97.
-- Run 03 launched isolated Xvfb :98 and sent the key to its test window, then stopped on an incorrect assertion expecting a keycode field in the owner admission (that version reports the key name there). The harness closed the owner and Xvfb; the raw result records exit 0 and lock/socket cleanup.
+- Run 03 launched isolated Xvfb :98 and sent the key to its test window, then stopped on an incorrect assertion expecting a keycode field in the owner admission (that version reports the key name). The harness closed the owner and Xvfb; the raw result records exit 0 and lock/socket cleanup.
 - Run 04 used a corrected display readiness probe and key-name admission check. It is the sole `PASS_NONFORMAL_XVFB_SMOKE` result; earlier outcomes remain unchanged.
 
 ## Source identity
 
 Owner source: exact PR #7504 branch source blob `b590babae510c65fd3e00efaa5196f5ee7f2fd0c`, raw SHA-256 `ac354ffb2a4cfb11c739c8fc636ea63455d7b24bf4d1da8b6833256e63b9f64c`.
 
-Dependencies: #7429 current head at run `b30fd755e68d470799e6c26f12296a97cf027df8`; raw source hashes are recorded in the run JSON. The runner used for run 04 had SHA-256 `0991865fb0ac95b72fe312fb40d71ae7d74fcadcac1aacffd1bdbe87f8be982a`.
-
-Raw records and the runner are retained alongside this report. Do not rerun the consumed run ID. A new run requires a fresh scope/source/resource check.
+Dependencies: #7429 current head at run `b30fd755e68d470799e6c26f12296a97cf027df8`; raw source hashes are recorded in the run JSON. The exact local harness used for run 04 had SHA-256 `0991865fb0ac95b72fe312fb40d71ae7d74fcadcac1aacffd1bdbe87f8be982a`. Only the four raw run records and this report are archived here; the run harness is not, because it was specific to the local source layout and consumed display/run ID.
 
 ## Limits
 
