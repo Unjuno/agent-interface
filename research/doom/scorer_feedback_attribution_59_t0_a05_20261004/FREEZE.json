@@ -1,0 +1,60 @@
+{
+  "a04_pr_head": "8ddf0925539d03733d803b469586fb74a5b444e0",
+  "branch": "research/59-scorer-vocab-a05-20261004-main",
+  "cpus": "1",
+  "expected_negative_kinds": [
+    "DEATH_COUNT_INCREASE",
+    "PLAYER_DEAD",
+    "EPISODE_FINISHED_NO_EXIT"
+  ],
+  "expected_positive_useful_kinds": [
+    "KILL_COUNT_INCREASE",
+    "MAP_EXIT"
+  ],
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "issue": 7629,
+  "live_allocation": false,
+  "main_commit": "af6d0f9842a2377fba736d2d65643b02690f99d9",
+  "memory": "128m requested",
+  "memory_swap_limit": "not exposed by WSLc; record requested memory only",
+  "network": "none",
+  "no_external_install": true,
+  "parent_sources": {
+    "a03": {
+      "blob": "c42d10bbd5089ac64316a944c342b6d7fe80ebd8",
+      "commit": "8ddf0925539d03733d803b469586fb74a5b444e0",
+      "copy_path": "parents/scorer_feedback_attribution_59_t0_a03_20261004/scorer_feedback_attribution_v2.py",
+      "copy_sha256": "1717dcfb6752d1e1bea4ee4c6dd2f1a89109b4c0c010ad9db6c835348a12342c",
+      "path": "research/doom/scorer_feedback_attribution_59_t0_a03_20261004/scorer_feedback_attribution_v2.py"
+    },
+    "a04": {
+      "blob": "9e057fe4995db575aea2d82e5a13bf60f5048b69",
+      "commit": "8ddf0925539d03733d803b469586fb74a5b444e0",
+      "copy_path": "parents/scorer_feedback_attribution_59_t0_a04_20261004/scorer_feedback_attribution_v3.py",
+      "copy_sha256": "c96b4565452c6095c5f51410226e154ce91be42daa7f042052ff25d140b4a87f",
+      "path": "research/doom/scorer_feedback_attribution_59_t0_a04_20261004/scorer_feedback_attribution_v3.py"
+    },
+    "a04_tests": {
+      "blob": "eb4ad039c68ef1e38cfe01050ffe83c3271ac220",
+      "commit": "8ddf0925539d03733d803b469586fb74a5b444e0",
+      "copy_path": "parents/scorer_feedback_attribution_59_t0_a04_20261004/test_attribution.py",
+      "copy_sha256": "0ac463d1867b0a6a4f60b728a2e572a12e1601038e2ca8b3102f729cf6c6dbbb",
+      "path": "research/doom/scorer_feedback_attribution_59_t0_a04_20261004/test_attribution.py"
+    },
+    "main": {
+      "blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "commit": "af6d0f9842a2377fba736d2d65643b02690f99d9",
+      "copy_path": "parents/main/independent_progress_clock_v2.py",
+      "copy_sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+      "path": "research/doom/independent_progress_clock_v2.py"
+    }
+  },
+  "path": "research/doom/scorer_feedback_attribution_59_t0_a05_20261004",
+  "platform": "linux/amd64",
+  "python": "3.12.15",
+  "read_only_inputs": true,
+  "retries": 0,
+  "root_filesystem_readonly": false,
+  "schema": "scorer-feedback-attribution-a05-freeze-v1",
+  "uid": "65534"
+}

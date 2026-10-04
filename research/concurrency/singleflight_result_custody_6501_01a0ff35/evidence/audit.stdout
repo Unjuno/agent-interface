@@ -1,0 +1,85 @@
+{
+  "all_terminal_cleanup_verified": true,
+  "b_snapshot_failures_by_policy": {
+    "deep_completion": [],
+    "deep_delivery": [
+      "owner_nested"
+    ],
+    "independent": [],
+    "json_completion": [],
+    "shallow_delivery": [
+      "caller_nested",
+      "caller_list",
+      "owner_nested"
+    ],
+    "shared": [
+      "caller_top",
+      "caller_nested",
+      "caller_list",
+      "owner_nested"
+    ]
+  },
+  "corruption_controls": [
+    {
+      "modified_sha256": "e83ba690fc0b81f2beab0d38f2b876ffa5943a44062c72cd4ac733faebcd3b1e",
+      "name": "read_count_float",
+      "reason": "read_calls",
+      "rejected": true
+    },
+    {
+      "modified_sha256": "30a914fd78a15876f84d691d3fe1d240052d3b1cdce512b8a0e3e7170a631a9a",
+      "name": "changed_value_rehashed",
+      "reason": "b_value",
+      "rejected": true
+    },
+    {
+      "modified_sha256": "8debd200c88ec98397aa5f4521a2d755329b99bd63c03afd5df9b1261265ca2d",
+      "name": "missing_edit_event",
+      "reason": "event_coverage",
+      "rejected": true
+    },
+    {
+      "modified_sha256": "acaeac991e38adda6b7ecc0286604225f9b0b4c54d74bba2479dab8904ee153a",
+      "name": "false_freeze_pin",
+      "reason": "freeze_pin",
+      "rejected": true
+    },
+    {
+      "modified_sha256": "2c285f566c615d93a83bf00ffd958a5c6c7f7ea7796e183d8c6e1b00f0a195c9",
+      "name": "false_alias",
+      "reason": "identity",
+      "rejected": true
+    },
+    {
+      "modified_sha256": "05180035fe750b44d27c740bbfdebf3b63baf01ccf1f2bc08500087ed20d662e",
+      "name": "false_admission",
+      "reason": "naive_admission",
+      "rejected": true
+    },
+    {
+      "modified_sha256": "9b08dfb643f6171b6e930a213e85b7032cd23f5d887fff8febe077bfd4d89036",
+      "name": "nonterminal_waiter",
+      "reason": "cleanup",
+      "rejected": true
+    },
+    {
+      "modified_sha256": "2c566032143a26ffced73fa1aa946336b5f37ce49140c96e550dd59c0eeada3a",
+      "name": "missing_case",
+      "reason": "case_coverage",
+      "rejected": true
+    }
+  ],
+  "deliveries": 60,
+  "digest_false_admissions": 0,
+  "naive_scope_only_false_admissions": [
+    "shared.caller_nested",
+    "shared.owner_nested",
+    "shallow_delivery.caller_nested",
+    "shallow_delivery.owner_nested",
+    "deep_delivery.owner_nested"
+  ],
+  "producer_calls": 35,
+  "raw_sha256": "98e5e605e2a147c0f1a2d749202e978bdab7f6582656270327fb8af55a9d4970",
+  "rows": 30,
+  "verdict": "PASS_RESULT_CUSTODY_CHARACTERIZATION_SCOPED"
+}

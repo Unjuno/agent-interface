@@ -1,0 +1,684 @@
+{
+  "external_gui_input_provider_or_allocation": false,
+  "plan_sha256": "5f68fd6773913f7496bc5bb4886395aa1728bef142c208b8388a192adb6f8903",
+  "retained_final_predicates": {
+    "exact_saved_title": true,
+    "exact_token_visible": false,
+    "target_valid": false
+  },
+  "retained_sequences": [
+    13,
+    20,
+    25
+  ],
+  "retained_task": "R02 block-2/C/task-1",
+  "runner_sha256": "f11e7baf71034a05ccf181db737b7123918eb92716b80c6bac5f355941b30bf7",
+  "schema": "a11_postcondition_scope_counterfactual_raw_v1",
+  "source_commit": "88372bed99266ddfade7dedca9630555e18c8960",
+  "source_sha256": {
+    "compiler": "3cfce9fbb9d85a0f425b49efd2e284e14f3358c69ff8226e82c80db30e8cc13e",
+    "core": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014",
+    "schema": "c6b6ee14f9504c658e51128d35c150a830981c33773093ec01d4b83190271936",
+    "task": "80535efedb1af9bfa1b16346d66f27b10bf1119c21038629b08e3cb79356fc64"
+  },
+  "variants": [
+    {
+      "contract_expected_effects": {
+        "enter_authorized_token": {
+          "exact_token_visible": true,
+          "target_valid": true
+        },
+        "save_value": {
+          "exact_saved_title": true,
+          "target_valid": true
+        }
+      },
+      "mock_actions": [
+        "enter_authorized_token",
+        "save_value"
+      ],
+      "mock_verifications": [
+        "enter_authorized_token"
+      ],
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_authorized_token",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/009.png",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_authorized_token",
+            "event": "effect_checked",
+            "evidence_ref": "mock-verdict-1",
+            "status": "succeeded"
+          },
+          {
+            "action": "save_value",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/017.png",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "save_value",
+            "event": "effect_checked",
+            "evidence_ref": "runtime/025.png",
+            "status": "failed",
+            "verifier": "compiled_predicate_condition"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "effect_failed"
+          }
+        ],
+        "elapsed_ns": 26000000,
+        "ended_ns": 28000000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "observation_fixture_value_save",
+        "latest_evidence_ref": "runtime/025.png",
+        "method": "enter_then_save",
+        "method_version": "1.0",
+        "observations": [
+          {
+            "captured_ns": 3000000,
+            "evidence_digest": "d6718a4f555a9e41ea380fbd52079a0d737fff420bf5082f3b7673090b80c99c",
+            "evidence_ref": "runtime/009.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": false,
+              "target_valid": true
+            },
+            "sequence": 13
+          },
+          {
+            "captured_ns": 14000000,
+            "evidence_digest": "8477bda2ee0b7f69cc4de236d3dc3629f35ab7c06a439eee4fdd77f3b8a359b2",
+            "evidence_ref": "runtime/017.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "sequence": 20
+          },
+          {
+            "captured_ns": 25000000,
+            "evidence_digest": "4289f42d3b7e35f3469607fb3d4029641b2c82b7259e34ead549ad8344b215f0",
+            "evidence_ref": "runtime/025.png",
+            "predicates": {
+              "exact_saved_title": true,
+              "exact_token_visible": false,
+              "target_valid": false
+            },
+            "sequence": 25
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "save_value",
+          "effect_ref": "mock-effect-2",
+          "expected_effect": {
+            "exact_saved_title": true,
+            "target_valid": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "effect_failed",
+        "session_scope": "scope-a11-r02-task-1",
+        "started_ns": 2000000,
+        "transitions": [
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "runtime/009.png",
+            "from_state": "ready",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "observation_sequence": 13,
+            "release_verified": true,
+            "to_state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "effect_ref": "mock-effect-2",
+            "evidence_ref": "runtime/017.png",
+            "from_state": "token_entered",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "observation_sequence": 20,
+            "release_verified": true,
+            "to_state": "saved"
+          }
+        ]
+      },
+      "variant": "as_authored"
+    },
+    {
+      "contract_expected_effects": {
+        "enter_authorized_token": {
+          "exact_token_visible": true,
+          "target_valid": true
+        },
+        "save_value": {
+          "exact_saved_title": true
+        }
+      },
+      "mock_actions": [
+        "enter_authorized_token",
+        "save_value"
+      ],
+      "mock_verifications": [
+        "enter_authorized_token",
+        "save_value"
+      ],
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_authorized_token",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/009.png",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_authorized_token",
+            "event": "effect_checked",
+            "evidence_ref": "mock-verdict-1",
+            "status": "succeeded"
+          },
+          {
+            "action": "save_value",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/017.png",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "save_value",
+            "event": "effect_checked",
+            "evidence_ref": "mock-verdict-2",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "runtime/025.png",
+            "matched_conditions": {
+              "exact_saved_title": true
+            },
+            "outcome": "complete",
+            "state": "saved"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "elapsed_ns": 28000000,
+        "ended_ns": 30000000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "observation_fixture_value_save",
+        "latest_evidence_ref": "runtime/025.png",
+        "method": "enter_then_save",
+        "method_version": "1.0",
+        "observations": [
+          {
+            "captured_ns": 3000000,
+            "evidence_digest": "d6718a4f555a9e41ea380fbd52079a0d737fff420bf5082f3b7673090b80c99c",
+            "evidence_ref": "runtime/009.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": false,
+              "target_valid": true
+            },
+            "sequence": 13
+          },
+          {
+            "captured_ns": 14000000,
+            "evidence_digest": "8477bda2ee0b7f69cc4de236d3dc3629f35ab7c06a439eee4fdd77f3b8a359b2",
+            "evidence_ref": "runtime/017.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "sequence": 20
+          },
+          {
+            "captured_ns": 25000000,
+            "evidence_digest": "4289f42d3b7e35f3469607fb3d4029641b2c82b7259e34ead549ad8344b215f0",
+            "evidence_ref": "runtime/025.png",
+            "predicates": {
+              "exact_saved_title": true,
+              "exact_token_visible": false,
+              "target_valid": false
+            },
+            "sequence": 25
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "method_complete",
+        "session_scope": "scope-a11-r02-task-1",
+        "started_ns": 2000000,
+        "transitions": [
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "runtime/009.png",
+            "from_state": "ready",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "observation_sequence": 13,
+            "release_verified": true,
+            "to_state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "effect_ref": "mock-effect-2",
+            "evidence_ref": "runtime/017.png",
+            "from_state": "token_entered",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "observation_sequence": 20,
+            "release_verified": true,
+            "to_state": "saved"
+          }
+        ]
+      },
+      "variant": "transient_target_removed_saved_true"
+    },
+    {
+      "contract_expected_effects": {
+        "enter_authorized_token": {
+          "exact_token_visible": true,
+          "target_valid": true
+        },
+        "save_value": {
+          "exact_saved_title": true
+        }
+      },
+      "mock_actions": [
+        "enter_authorized_token",
+        "save_value"
+      ],
+      "mock_verifications": [
+        "enter_authorized_token"
+      ],
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_authorized_token",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/009.png",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_authorized_token",
+            "event": "effect_checked",
+            "evidence_ref": "mock-verdict-1",
+            "status": "succeeded"
+          },
+          {
+            "action": "save_value",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/017.png",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "save_value",
+            "event": "effect_checked",
+            "evidence_ref": "runtime/025.png",
+            "status": "failed",
+            "verifier": "compiled_predicate_condition"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "effect_failed"
+          }
+        ],
+        "elapsed_ns": 26000000,
+        "ended_ns": 28000000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "observation_fixture_value_save",
+        "latest_evidence_ref": "runtime/025.png",
+        "method": "enter_then_save",
+        "method_version": "1.0",
+        "observations": [
+          {
+            "captured_ns": 3000000,
+            "evidence_digest": "d6718a4f555a9e41ea380fbd52079a0d737fff420bf5082f3b7673090b80c99c",
+            "evidence_ref": "runtime/009.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": false,
+              "target_valid": true
+            },
+            "sequence": 13
+          },
+          {
+            "captured_ns": 14000000,
+            "evidence_digest": "8477bda2ee0b7f69cc4de236d3dc3629f35ab7c06a439eee4fdd77f3b8a359b2",
+            "evidence_ref": "runtime/017.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "sequence": 20
+          },
+          {
+            "captured_ns": 25000000,
+            "evidence_digest": "4289f42d3b7e35f3469607fb3d4029641b2c82b7259e34ead549ad8344b215f0",
+            "evidence_ref": "runtime/025.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": false,
+              "target_valid": false
+            },
+            "sequence": 25
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "save_value",
+          "effect_ref": "mock-effect-2",
+          "expected_effect": {
+            "exact_saved_title": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "effect_failed",
+        "session_scope": "scope-a11-r02-task-1",
+        "started_ns": 2000000,
+        "transitions": [
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "runtime/009.png",
+            "from_state": "ready",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "observation_sequence": 13,
+            "release_verified": true,
+            "to_state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "effect_ref": "mock-effect-2",
+            "evidence_ref": "runtime/017.png",
+            "from_state": "token_entered",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "observation_sequence": 20,
+            "release_verified": true,
+            "to_state": "saved"
+          }
+        ]
+      },
+      "variant": "transient_target_removed_saved_false"
+    },
+    {
+      "contract_expected_effects": {
+        "enter_authorized_token": {
+          "exact_token_visible": true,
+          "target_valid": true
+        },
+        "save_value": {
+          "exact_saved_title": true
+        }
+      },
+      "mock_actions": [
+        "enter_authorized_token",
+        "save_value"
+      ],
+      "mock_verifications": [
+        "enter_authorized_token"
+      ],
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_authorized_token",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/009.png",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_authorized_token",
+            "event": "effect_checked",
+            "evidence_ref": "mock-verdict-1",
+            "status": "succeeded"
+          },
+          {
+            "action": "save_value",
+            "event": "branch_selected",
+            "evidence_ref": "runtime/017.png",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "outcome": "action",
+            "state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "save_value",
+            "event": "effect_checked",
+            "evidence_ref": "runtime/025.png",
+            "status": "unavailable",
+            "verifier": "compiled_predicate_condition"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "effect_unavailable"
+          }
+        ],
+        "elapsed_ns": 26000000,
+        "ended_ns": 28000000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "observation_fixture_value_save",
+        "latest_evidence_ref": "runtime/025.png",
+        "method": "enter_then_save",
+        "method_version": "1.0",
+        "observations": [
+          {
+            "captured_ns": 3000000,
+            "evidence_digest": "d6718a4f555a9e41ea380fbd52079a0d737fff420bf5082f3b7673090b80c99c",
+            "evidence_ref": "runtime/009.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": false,
+              "target_valid": true
+            },
+            "sequence": 13
+          },
+          {
+            "captured_ns": 14000000,
+            "evidence_digest": "8477bda2ee0b7f69cc4de236d3dc3629f35ab7c06a439eee4fdd77f3b8a359b2",
+            "evidence_ref": "runtime/017.png",
+            "predicates": {
+              "exact_saved_title": false,
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "sequence": 20
+          },
+          {
+            "captured_ns": 25000000,
+            "evidence_digest": "4289f42d3b7e35f3469607fb3d4029641b2c82b7259e34ead549ad8344b215f0",
+            "evidence_ref": "runtime/025.png",
+            "predicates": {
+              "exact_saved_title": "unknown",
+              "exact_token_visible": false,
+              "target_valid": false
+            },
+            "sequence": 25
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "save_value",
+          "effect_ref": "mock-effect-2",
+          "expected_effect": {
+            "exact_saved_title": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "effect_unavailable",
+        "session_scope": "scope-a11-r02-task-1",
+        "started_ns": 2000000,
+        "transitions": [
+          {
+            "action": "enter_authorized_token",
+            "action_id": "mock-1",
+            "effect_ref": "mock-effect-1",
+            "evidence_ref": "runtime/009.png",
+            "from_state": "ready",
+            "matched_conditions": {
+              "target_valid": true
+            },
+            "observation_sequence": 13,
+            "release_verified": true,
+            "to_state": "token_entered"
+          },
+          {
+            "action": "save_value",
+            "action_id": "mock-2",
+            "effect_ref": "mock-effect-2",
+            "evidence_ref": "runtime/017.png",
+            "from_state": "token_entered",
+            "matched_conditions": {
+              "exact_token_visible": true,
+              "target_valid": true
+            },
+            "observation_sequence": 20,
+            "release_verified": true,
+            "to_state": "saved"
+          }
+        ]
+      },
+      "variant": "transient_target_removed_saved_unknown"
+    }
+  ]
+}

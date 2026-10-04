@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<STUDY_ROOT>\audit.py", line 177, in <module>
+    main()
+  File "<STUDY_ROOT>\audit.py", line 147, in main
+    result = check(records, out, freeze)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<STUDY_ROOT>\audit.py", line 115, in check
+    equal(row['sidecars_after_score'], [], 'closed witness needs no missing sidecar')
+  File "<STUDY_ROOT>\audit.py", line 24, in equal
+    require(json.dumps(left, sort_keys=True, allow_nan=False) ==
+  File "<STUDY_ROOT>\audit.py", line 19, in require
+    raise ValueError(reason)
+ValueError: closed witness needs no missing sidecar

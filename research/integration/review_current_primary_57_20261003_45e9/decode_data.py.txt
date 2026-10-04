@@ -1,0 +1,12 @@
+"""Decode a retained public comment as inert JSON data; execute nothing from it."""
+from pathlib import Path
+import base64,gzip,hashlib,json,re
+r=Path(__file__).resolve().parent
+c=json.loads((r/'CUSTODY_COMMENT.json').read_bytes())
+m=re.search(r'```base64\+gzip\s*([\s\S]*?)```',c['body']);assert m
+z=base64.b64decode(''.join(m[1].split()),validate=True)
+assert len(z)==13867 and hashlib.sha256(z).hexdigest()=='2bc7ae87164c62dcc2accba5b92b744b5b1a90019f01590f664f7e28c5ce3c6f'
+b=gzip.decompress(z)
+assert len(b)==42179 and hashlib.sha256(b).hexdigest()=='c95915d774569143f87eca3aba00f4a68b0511e07dd903ae6ee3b499126fc27b'
+d=json.loads(b);(r/'DECODED_CUSTODY.json').write_bytes(b)
+print(json.dumps({'decoded_hash_exact':True,'type':type(d).__name__,'keys':list(d) if isinstance(d,dict) else None,'sample_shapes':{k:{'type':type(v).__name__,'keys':list(v)[:10] if isinstance(v,dict) else None} for k,v in d.items()} if isinstance(d,dict) else None}))

@@ -1,0 +1,86 @@
+{
+  "actual_maintained_methods": 27,
+  "actual_public_cases": [
+    {
+      "case": "split-valid-japanese-emoji",
+      "cli_code": 0,
+      "fixture_requests": 1,
+      "owned_children_observed_absent": true,
+      "statuses": [
+        "ready",
+        "returned",
+        "terminal"
+      ]
+    },
+    {
+      "case": "malformed-before-admission",
+      "cli_code": 2,
+      "fixture_requests": 0,
+      "owned_children_observed_absent": true,
+      "statuses": [
+        "ready"
+      ]
+    },
+    {
+      "case": "accepted-before-byte-stop",
+      "cli_code": 2,
+      "fixture_requests": 1,
+      "owned_children_observed_absent": true,
+      "statuses": [
+        "ready",
+        "returned"
+      ]
+    }
+  ],
+  "copied_record_controls": [
+    {
+      "name": "bool-cli-code",
+      "rejected": true
+    },
+    {
+      "name": "bool-fixture-pid",
+      "rejected": true
+    },
+    {
+      "name": "nonce-mismatch",
+      "rejected": true
+    },
+    {
+      "name": "invented-second-command",
+      "rejected": true
+    },
+    {
+      "name": "normalized-count",
+      "rejected": true
+    },
+    {
+      "name": "changed-original-label",
+      "rejected": true
+    },
+    {
+      "name": "reversed-UTC",
+      "rejected": true
+    },
+    {
+      "name": "lost-returned-status",
+      "rejected": true
+    }
+  ],
+  "limits": "candidate public byte faults; no backend/input/task/release/performance/hard-I/O proof; file-read/fixture-release ordering is observed, internal validation time is not",
+  "original_assay_or_author_formal_replays": 0,
+  "phase_summaries": [
+    {
+      "fails": 8,
+      "label": "red-first",
+      "passes": 7,
+      "tests": 15
+    },
+    {
+      "fails": 0,
+      "label": "green-first",
+      "passes": 15,
+      "tests": 15
+    }
+  ],
+  "status": "PASS_REPAIR_SCOPE_RAW_JOINS"
+}

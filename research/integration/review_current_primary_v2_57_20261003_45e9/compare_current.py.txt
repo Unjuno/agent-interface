@@ -1,0 +1,35 @@
+"""Current immutable used-image comparison; no rerun of ordinary runtime tests."""
+from pathlib import Path
+from datetime import datetime,timezone
+import os,subprocess,json,hashlib,psutil
+r=Path(__file__).resolve().parent;repo=r.parent/'agent-interface';e=json.loads((r/'EXPORT.json').read_bytes());ref='89789e7592c4874c413943932926e9528750513a';base=e['review_base']
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1');prefix=['git','-c','maintenance.auto=false','-c','gc.auto=0']
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+def git(*a,**kw):return subprocess.check_output(prefix+list(a),cwd=repo,env=env,**kw)
+def fetch(label,oids,depth=None):
+ out=r/'command-first'/label;out.mkdir(parents=True,exist_ok=False);argv=prefix+['-c','fetch.negotiationAlgorithm=noop','fetch','origin','--no-auto-maintenance','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','--stdin']
+ if depth:argv.append('--depth='+str(depth))
+ started=datetime.now(timezone.utc).isoformat();code=None;live=False
+ with (out/'stdout.txt').open('wb') as stdout,(out/'stderr.txt').open('wb') as stderr:
+  p=subprocess.Popen(argv,cwd=repo,env=env,stdin=subprocess.PIPE,stdout=stdout,stderr=stderr);put(out/'START.json',{'pid':p.pid,'ppid':os.getpid(),'argv':argv,'oids':oids,'started_utc':started})
+  p.stdin.write(('\n'.join(oids)+'\n').encode());p.stdin.close()
+  try:code=p.wait(timeout=55)
+  except subprocess.TimeoutExpired:live=True
+ put(out/'RECEIPT.json',{'pid':p.pid,'exit_code':code,'confirmed_live':live,'original_pid_observed_absent':not psutil.pid_exists(p.pid),'started_utc':started,'ended_or_observed_utc':datetime.now(timezone.utc).isoformat(),'stdout_sha256':sha((out/'stdout.txt').read_bytes()),'stderr_sha256':sha((out/'stderr.txt').read_bytes()),'oids':oids})
+ assert code==0 and not live,('inspect original fetch PID, no restart',p.pid)
+index=sha((repo/'.git/index').read_bytes());head=git('rev-parse','HEAD').decode().strip()
+if git('cat-file','--batch-check',input=(ref+'\n').encode()).decode().endswith(' missing\n'):fetch('later-main-metadata',[ref],2)
+paths=sorted({x['path'] for x in e['extra_pins']})
+def images(oid):
+ rows={}
+ for line in git('ls-tree','-r',oid,'--',*paths).decode().splitlines():
+  metadata,path=line.split('\t');mode,kind,blob=metadata.split();rows[path]={'mode':mode,'kind':kind,'blob':blob}
+ return rows
+before=images(base);after=images(ref);changed=[p for p in paths if before.get(p)!=after.get(p)]
+agents=['AGENTS.md','.github/AGENTS.md','.github/workflows/AGENTS.md','runtime/AGENTS.md','runtime/host_v1/AGENTS.md','research/AGENTS.md','research/integration/AGENTS.md','research/live_control/AGENTS.md','runtime/integration_checks/AGENTS.md','runtime/distribution_v2/AGENTS.md','docs/AGENTS.md']
+ag=git('ls-tree','-r',ref,'--',*agents).decode().splitlines();assert not ag,('read instructions',ag)
+assert index==sha((repo/'.git/index').read_bytes()) and head==git('rev-parse','HEAD').decode().strip()
+result={'observed_utc':datetime.now(timezone.utc).isoformat(),'named_main':ref,'review_base':base,'previous_named_main':e['current_main'],'paths':paths,'used_images':after,'changed_used_paths':changed,'agents_ancestors':ag,'primary_head_index_unchanged':True,'runtime_replayed':False,'future_main_binding':False,'images_match_exactly':not changed}
+put(r/'CURRENT_COMPARISON.json',result);print(json.dumps({'named_main':ref,'used_image_count':len(paths),'changed_used_paths':changed,'exact':not changed}))
+

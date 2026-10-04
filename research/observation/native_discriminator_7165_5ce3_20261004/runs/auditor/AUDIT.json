@@ -1,0 +1,172 @@
+{
+  "raw_sha256": "25d9a8ff49ca13f7b8a2ea1b32557305df34966990ef75141aeffb18d1effd24",
+  "oracle_sha256": "e99ad66f37ec2a092dbe33900eb681839e1e079935c741c85ce2da91f4b32d0e",
+  "first_status": "FAIL_SINGLE_CUE_IDENTITY_SAFETY",
+  "metrics": {
+    "FULL_REACQUIRE": {
+      "correct": 12,
+      "wrong": 0,
+      "unknown": 9,
+      "unsafe_bind": 0,
+      "false_unknown": 0,
+      "canonical_observation_bytes": 15864,
+      "wrapped_native_calls": 294,
+      "measured_elapsed_ns": [
+        4519021,
+        512169,
+        480336,
+        501252,
+        497752,
+        468335,
+        506460,
+        446919,
+        465211,
+        451086,
+        483460,
+        434711,
+        475878,
+        416043,
+        428460,
+        516002,
+        411752,
+        421335,
+        462252,
+        421377,
+        485836
+      ]
+    },
+    "SIMILARITY_FIRST": {
+      "correct": 8,
+      "wrong": 13,
+      "unknown": 0,
+      "unsafe_bind": 17,
+      "false_unknown": 0,
+      "canonical_observation_bytes": 13818,
+      "wrapped_native_calls": 42,
+      "measured_elapsed_ns": [
+        193251,
+        164834,
+        174835,
+        155417,
+        168168,
+        148417,
+        171667,
+        151626,
+        177750,
+        157668,
+        169584,
+        155293,
+        159250,
+        162626,
+        157959,
+        175418,
+        147917,
+        149667,
+        160792,
+        151959,
+        182375
+      ]
+    },
+    "MEMORY_CUE": {
+      "correct": 9,
+      "wrong": 3,
+      "unknown": 9,
+      "unsafe_bind": 3,
+      "false_unknown": 3,
+      "canonical_observation_bytes": 2568,
+      "wrapped_native_calls": 60,
+      "measured_elapsed_ns": [
+        50876,
+        80792,
+        117084,
+        45709,
+        56209,
+        46084,
+        46917,
+        47084,
+        78625,
+        111751,
+        51334,
+        45500,
+        45209,
+        45625,
+        57709,
+        92167,
+        113459,
+        43792,
+        45417,
+        46334,
+        47667
+      ]
+    },
+    "FRESH_CUE": {
+      "correct": 9,
+      "wrong": 3,
+      "unknown": 9,
+      "unsafe_bind": 3,
+      "false_unknown": 3,
+      "canonical_observation_bytes": 2568,
+      "wrapped_native_calls": 60,
+      "measured_elapsed_ns": [
+        46167,
+        72959,
+        105792,
+        47084,
+        45792,
+        40916,
+        42292,
+        41959,
+        74500,
+        98583,
+        41833,
+        41000,
+        38125,
+        42376,
+        93042,
+        75251,
+        99375,
+        37583,
+        38208,
+        41167,
+        39626
+      ]
+    }
+  },
+  "same_memory_fresh_packets": 21,
+  "memory_specific_work_gain": false,
+  "controls": [
+    {
+      "control": 0,
+      "rejected": true
+    },
+    {
+      "control": 1,
+      "rejected": true
+    },
+    {
+      "control": 2,
+      "rejected": true
+    },
+    {
+      "control": 3,
+      "rejected": true
+    },
+    {
+      "control": 4,
+      "rejected": true
+    },
+    {
+      "control": 5,
+      "rejected": true
+    },
+    {
+      "control": 6,
+      "rejected": true
+    },
+    {
+      "control": 7,
+      "rejected": true
+    }
+  ],
+  "audit_status": "COMPLETE_SAVED_NATIVE_RECONSTRUCTION_SCOPED"
+}

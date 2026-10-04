@@ -1,0 +1,98 @@
+"""Finite study orchestration. UI actions occur only in CUA, outside this file."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import platform
+import sqlite3
+import subprocess
+import sys
+from urllib.request import Request, urlopen
+
+ROOT = Path(__file__).resolve().parent
+PRIMARY = ROOT / "primary"
+
+
+def jread(p):
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def validate_freeze():
+    frozen = jread(ROOT/"FREEZE.json")
+    for name, digest in frozen["source_sha256"].items():
+        if hashlib.sha256((ROOT/name).read_bytes()).hexdigest() != digest:
+            raise RuntimeError("frozen source changed: "+name)
+
+
+def child(label, source, *args):
+    cmd = [sys.executable, str(ROOT/"run_child.py"), str(PRIMARY/"receipts"), label,
+           "@python", str(ROOT/source), *map(str, args)]
+    subprocess.run(cmd, check=True)
+
+
+if __name__ == "__main__":
+    mode = sys.argv[1]
+    if mode == "freeze":
+        if (ROOT/"FREEZE.json").exists() or PRIMARY.exists():
+            raise RuntimeError("primary source freeze already consumed")
+        pre = jread(ROOT/"preflight-receipts"/"server.receipt.json")
+        if pre["exit_code"] != 0:
+            raise RuntimeError("preflight process incomplete")
+        with sqlite3.connect((ROOT/"preflight"/"app.sqlite").resolve().as_uri()+"?mode=ro", uri=True) as db:
+            assert db.execute("SELECT SUM(root_count),SUM(actor_count) FROM cases").fetchone() == (0, 0)
+            assert db.execute("SELECT COUNT(*) FROM effects").fetchone() == (0,)
+        ui = jread(ROOT/"preflight"/"UI_READONLY.json")
+        assert ui["labels"]["Study session"] == "preflight-only-6259-01a0ff58"
+        assert ui["labels"]["Namespace"] == "state-rebase-browser-6259-01a0ff58"
+        assert ui["dom_submits"] == 0
+        assert jread(ROOT/"construction"/"gate_v2.receipt.json")["exit_code"] == 0
+        files = [p for p in ROOT.iterdir() if p.suffix in (".py", ".md", ".json")]
+        data = dict(utc=datetime.now(timezone.utc).isoformat(), session="primary-6259-01a0ff58-v1",
+                    source_sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
+                    source_base="636986a804a6004cd047db7e8cc5e62c02d585d8",
+                    python=sys.version, os=platform.platform(), backend="stdlib HTTPServer + sqlite3",
+                    sqlite_version=sqlite3.sqlite_version, model_backend_calls=0,
+                    output_budget_bytes=16000000, controller_input="prospective contract + fresh public SQL projection only",
+                    primary_cases=8, dom_submits=8, serialized_actor_writes=2,
+                    no_primary_retry_reset_replacement=True, no_post_rebase_app_actions=True,
+                    preflight="closed/actual exit0/read-only UI and SQL prove zero effects",
+                    counts=[2,2,2,2], result_scope="purpose-built controlled app, not native input/model/performance")
+        (ROOT/"FREEZE.json").write_text(json.dumps(data, indent=2))
+        print(json.dumps(data, indent=2))
+    elif mode.startswith("stop-"):
+        out = ROOT/("preflight" if mode == "stop-preflight" else "primary")
+        start = jread(out/"SERVER_STARTED.json")
+        if not start["url"].startswith("http://127.0.0.1:"):
+            raise RuntimeError("unexpected server binding")
+        intent = out/"STOP_INTENT.json"
+        if intent.exists():
+            raise RuntimeError("stop request already sent; inspect process before repeating")
+        intent.write_text(json.dumps(dict(utc=datetime.now(timezone.utc).isoformat(), server=start), indent=2))
+        with urlopen(Request(start["url"]+"/stop", data=b"", method="POST"), timeout=5) as r:
+            result = dict(utc=datetime.now(timezone.utc).isoformat(), status=r.status, body=r.read().decode())
+        (out/"STOP_RESPONSE.json").write_text(json.dumps(result, indent=2))
+        print(json.dumps(result))
+    else:
+        validate_freeze()
+        if mode == "observe":
+            child(sys.argv[2], "observe.py", PRIMARY/"app.sqlite", sys.argv[2])
+        elif mode == "actor":
+            start = jread(PRIMARY/"SERVER_STARTED.json")
+            child("actor_"+sys.argv[2], "actor.py", start["url"], sys.argv[2])
+        elif mode == "prepare-input":
+            output = PRIMARY/"candidate_input.json"
+            if output.exists():
+                raise RuntimeError("candidate input already prepared")
+            rows = []
+            for goal in jread(ROOT/"GOALS.json"):
+                observed = jread(PRIMARY/"receipts"/(goal["case_id"]+".stdout.log"))
+                projection = next(p for p in observed["public_projection"] if p["case_id"] == goal["case_id"])
+                rows.append(dict(contract=goal, public=projection))
+            output.write_text(json.dumps(rows, indent=2))
+            print("Controller input frozen: eight contract/public-only records")
+        elif mode == "classify":
+            child("classifier", "gate.py", PRIMARY/"candidate_input.json")
+        elif mode == "audit":
+            child("audit_v1", "audit.py", PRIMARY)
+        else:
+            raise RuntimeError("unknown finite stage")

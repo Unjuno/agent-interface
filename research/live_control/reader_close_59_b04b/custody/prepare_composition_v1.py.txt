@@ -1,0 +1,62 @@
+"""Freeze two new helper/client composition cells; run no producer here."""
+import ast, datetime, hashlib, json, pathlib, platform, subprocess, sys, time
+
+R = pathlib.Path(__file__).resolve().parent
+SRC = R / 'src'
+OLD = R.parent / 'v39-startup-repair-01a0ff33' / 'source'
+E = R.parent / 'client-close-reader-59-20261003-01a0ff33'
+BASE = '1978f36e5d69c174c4a19ca0491664e856467407'
+HELPER_HEAD = 'aa0f889066834fe4c408838504b29a4cabb0fa39'
+CLIENT_PATH = 'research/live_control/codex_app_server_client_v2.py'
+CONTROLLER_PATH = 'research/doom/map01_overlap_controller_v39.py'
+
+def sha(b): return hashlib.sha256(b).hexdigest()
+def save(name, obj):
+    with (R / name).open('x', encoding='utf-8') as f:
+        json.dump(obj, f, indent=2); f.write('\n')
+def blob(ref, path):
+    return subprocess.check_output(['git', '-C', str(SRC), 'show', ref + ':' + path])
+def method(b, name):
+    cls = next(n for n in ast.parse(b).body if isinstance(n, ast.ClassDef) and n.name == 'CodexAppServerClient')
+    return ast.dump(next(n for n in cls.body if isinstance(n, ast.FunctionDef) and n.name == name), include_attributes=False)
+
+base = blob(BASE, CLIENT_PATH)
+fixed = (SRC / CLIENT_PATH).read_bytes()
+needle = b'        self._reader.join(timeout=timeout)\n'
+addition = b'        if self._reader.is_alive():\n            raise TimeoutError("app-server reader close timed out")\n'
+if base.count(needle) != 1 or fixed != base.replace(needle, needle + addition):
+    raise ValueError('candidate is not exact reader-only addition')
+controller = blob(HELPER_HEAD, CONTROLLER_PATH)
+tree = ast.parse(controller)
+helper = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == '_close_failed_startup')
+helper_module = ast.Module(body=[helper], type_ignores=[])
+compile(helper_module, 'exact-helper-only', 'exec')
+for name, data in [('base-client.py.txt', base), ('candidate-client.py.txt', fixed), ('startup-controller.py.txt', controller)]:
+    with (R / name).open('xb') as f: f.write(data)
+e_original = (E / 'original-client.py').read_bytes()
+e_fixed = (E / 'reader-refusal-client.py').read_bytes()
+names = ['__init__', '_read', '_record', 'close']
+save('APPLICABILITY.v1.json', {
+    'base_sha': BASE, 'helper_head': HELPER_HEAD,
+    'literal_reader_only_addition': True,
+    'previous_E_original_sha256': sha(e_original), 'previous_E_comparator_sha256': sha(e_fixed),
+    'previous_E_to_current_method_ast_equal': {n: method(e_original, n) == method(base, n) for n in names},
+    'previous_E_to_fixed_method_ast_equal': {n: method(e_fixed, n) == method(fixed, n) for n in names},
+    'helper_ast_sha256': sha(ast.dump(helper, include_attributes=False).encode()),
+    'helper_lines': [helper.lineno, helper.end_lineno],
+    'scope': 'New native current-client/helper 1-second close composition; session process and reader arguments are None. No game, provider, GUI or model imported. Old E is evidence reuse, never replayed.'})
+clock = time.get_clock_info('perf_counter')
+sources = {}
+for name in ['base-client.py.txt', 'candidate-client.py.txt', 'startup-controller.py.txt', 'collect_composition_v1.py', 'run_composition_v1.py']:
+    b = (R / name).read_bytes(); sources[name] = {'bytes': len(b), 'sha256': sha(b)}
+save('FREEZE.composition.v1.json', {
+    'allocation': 'READER-STARTUP-COMPOSITION-01a0ff33-20261003-v1',
+    'created_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'worker': '01a0ff33-b04b-7b51-8194-a60b82fed8a2', 'base_sha': BASE,
+    'claim_comment_id': 5967905599, 'sources': sources,
+    'cells': ['closed', 'held'], 'budget': {'max_cells': 2, 'max_owned_parents': 2, 'max_descendants': 1, 'max_simultaneous_transport_processes': 2, 'helper_close_timeout_seconds': 1, 'driver_guard_seconds': 30, 'writer_safety_seconds': 12, 'max_output_bytes': 1048576},
+    'oracle': {'closed': 'helper client_closed true; atexit callback removed; reader and journal retired', 'held': 'helper client_closed false and exact planner TimeoutError; journal stays open; callback actually invokes close after release; late frame retained; all owned handles/processes/threads/pipes retired'},
+    'first_error_rule': 'Keep actual first raw/error and STOP. No producer replay for review or unchanged failure.',
+    'environment': {'python': sys.version, 'executable': sys.executable, 'platform': platform.platform(), 'clock': {'implementation': clock.implementation, 'monotonic': clock.monotonic, 'adjustable': clock.adjustable, 'resolution': clock.resolution}},
+    'formal_experiment': False, 'previous_native_replay': False, 'deadline_anchor': 'unknown; not reset', 'new_workers': 0})
+print(json.dumps({'freeze': 'FREEZE.composition.v1.json', 'sources': sources, 'cells': ['closed', 'held']}, indent=2))

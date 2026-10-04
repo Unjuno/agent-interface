@@ -1,0 +1,12 @@
+{
+  "schema": "inference-disturbance-coupling-circular-phase-v1",
+  "issue": 7470,
+  "latency_period": [1, 2, 3, 4],
+  "disturbance_period": [0, 1, 2, 3],
+  "action_cap": 1,
+  "envelope_max": 6,
+  "null_gain": 0,
+  "interaction_gain": 0.25,
+  "periodic_boundary": "the last event transitions to the first event on the next period; this finite one-period audit retains every event including the wraparound edge",
+  "treatment": "all unique circular shifts of the intact latency period against the fixed intact disturbance period"
+}

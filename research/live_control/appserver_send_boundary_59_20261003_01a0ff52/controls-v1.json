@@ -1,0 +1,190 @@
+{
+  "reader": "audit_saved.py",
+  "reader_sha256": "3d0093e830d01b6160790eea358721dbf69142d4e461b38a91b3e0b07ebe5feb",
+  "created_utc": "2026-10-03T07:30:39.153539+00:00",
+  "original_errors": [],
+  "controls": [
+    {
+      "name": "deadline-present",
+      "cell": "full-short-current",
+      "changed_path": [
+        "checkpoint",
+        "frames",
+        "request",
+        "deadline_local_present"
+      ],
+      "old": false,
+      "new": true,
+      "rejected": true,
+      "errors": [
+        "full-short-current/before-deadline"
+      ],
+      "mutated_result_sha256": "c0040edf8db7d1ff08cdca11e5828f341979e6ea9cd067373b484ad461eb4445"
+    },
+    {
+      "name": "caller-not-blocked",
+      "cell": "full-short-current",
+      "changed_path": [
+        "checkpoint",
+        "caller_alive"
+      ],
+      "old": true,
+      "new": false,
+      "rejected": true,
+      "errors": [
+        "full-short-current/before-deadline"
+      ],
+      "mutated_result_sha256": "116aec9e8ddceda1cc69d0cd247ce92ce8f22cf069822e8831d92b64d1d84dbe"
+    },
+    {
+      "name": "wrong-source-line",
+      "cell": "full-short-current",
+      "changed_path": [
+        "checkpoint",
+        "frames",
+        "request",
+        "line"
+      ],
+      "old": 67,
+      "new": 999,
+      "rejected": true,
+      "errors": [
+        "full-short-current/before-deadline"
+      ],
+      "mutated_result_sha256": "3e1dc7cb898187e1b917532b6d00b1e534eb8b9c3fc61c63ed1ba4cab34157a5"
+    },
+    {
+      "name": "poison-cleared",
+      "cell": "full-short-existing_writer",
+      "changed_path": [
+        "writer_at_checkpoint",
+        "poisoned"
+      ],
+      "old": true,
+      "new": false,
+      "rejected": true,
+      "errors": [
+        "full-short-existing_writer/finite-poison"
+      ],
+      "mutated_result_sha256": "ffb81e0255b51fc6bb273e4bfccc62aee39adbe5dde05ac73f459b0d7a3dae6d"
+    },
+    {
+      "name": "followup-extra-write",
+      "cell": "full-short-existing_writer",
+      "changed_path": [
+        "followup",
+        "write_calls_after"
+      ],
+      "old": 1,
+      "new": 2,
+      "rejected": true,
+      "errors": [
+        "full-short-existing_writer/no-followup-write"
+      ],
+      "mutated_result_sha256": "b5da1badd6c153c8e556443861b521419ededb2b52c68e1b4ccc93264bc75c4a"
+    },
+    {
+      "name": "followup-write-count-bool",
+      "cell": "full-short-existing_writer",
+      "changed_path": [
+        "followup",
+        "write_calls_after"
+      ],
+      "old": 1,
+      "new": true,
+      "rejected": false,
+      "errors": [],
+      "mutated_result_sha256": "be3675a85ea69429e26fe9a1853033baee02b54ad6dcc0ea01779d7d3133cc74"
+    },
+    {
+      "name": "followup-record-count-bool",
+      "cell": "full-short-existing_writer",
+      "changed_path": [
+        "followup",
+        "records_after"
+      ],
+      "old": 1,
+      "new": true,
+      "rejected": false,
+      "errors": [],
+      "mutated_result_sha256": "955091f2f5369db25f5281470cc821559a0002e31417ec9c680641269b5ee3c9"
+    },
+    {
+      "name": "native-exit-bool",
+      "cell": "full-short-current",
+      "changed_path": [
+        "peer_exit"
+      ],
+      "old": -15,
+      "new": false,
+      "rejected": true,
+      "errors": [
+        "full-short-current/peer-exit-native-mac"
+      ],
+      "mutated_result_sha256": "ab7fc8e6ed36330043bb5d6160a5fe41488ff04c61c00e41021e43a0deb8b2b2"
+    },
+    {
+      "name": "healthy-wrong-result",
+      "cell": "healthy-current",
+      "changed_path": [
+        "caller_outcome",
+        "result",
+        "padding"
+      ],
+      "old": "short",
+      "new": "wrong",
+      "rejected": true,
+      "errors": [
+        "healthy-current/healthy"
+      ],
+      "mutated_result_sha256": "0bc7ee237d9d75828c76d5e520b302ce56ecdc47ee40b9bc7c51bf8541c84452"
+    },
+    {
+      "name": "ready-mode-wrong",
+      "cell": "full-short-current",
+      "changed_path": [
+        "ready",
+        "params",
+        "mode"
+      ],
+      "old": "pressure",
+      "new": "healthy",
+      "rejected": false,
+      "errors": [],
+      "mutated_result_sha256": "f3781096a80455ca52d4e8c73b0995f0fb3d19e228c07bad84ffebf6351cbaab"
+    },
+    {
+      "name": "wire-size-bool",
+      "cell": "full-short-current",
+      "changed_path": [
+        "wire",
+        "bytes"
+      ],
+      "old": 62,
+      "new": true,
+      "rejected": true,
+      "errors": [
+        "full-short-current/wire-join"
+      ],
+      "mutated_result_sha256": "de199ba26b28112ce22aee427808355d5aad9ac2b1ae7a7c577476c321e0abf2"
+    },
+    {
+      "name": "reap-unknown",
+      "cell": "full-short-current",
+      "changed_path": [
+        "owned_peer_reaped"
+      ],
+      "old": true,
+      "new": null,
+      "rejected": true,
+      "errors": [
+        "full-short-current/final-owned"
+      ],
+      "mutated_result_sha256": "cfcac98daa32db4bf733e1277fdfa9169fc8e246d3b5ee1473bd16f84d5cb2e8"
+    }
+  ],
+  "rejected": 9,
+  "accepted": 3,
+  "runtime_imports_or_native_children": 0,
+  "scope": "Copied saved-result sensitivity; original live source/data unchanged; no authenticity or exhaustive audit claim."
+}

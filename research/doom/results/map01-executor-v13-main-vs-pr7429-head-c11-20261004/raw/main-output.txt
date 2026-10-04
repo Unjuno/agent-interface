@@ -1,0 +1,92 @@
+test_cancelled_release_watcher_and_v12_terminal_barrier_share_deduplication (__main__.ExecutorV13Tests.test_cancelled_release_watcher_and_v12_terminal_barrier_share_deduplication) ... ok
+test_close_reentered_from_accepted_sink_prevents_worker_start (__main__.ExecutorV13Tests.test_close_reentered_from_accepted_sink_prevents_worker_start) ... ERROR
+test_focus_surface_and_expiry_publish_before_terminal (__main__.ExecutorV13Tests.test_focus_surface_and_expiry_publish_before_terminal) ... ok
+test_normal_completion_has_no_release_interruption_event (__main__.ExecutorV13Tests.test_normal_completion_has_no_release_interruption_event) ... ok
+test_reentrant_close_reports_unverified_release_without_starting_worker (__main__.ExecutorV13Tests.test_reentrant_close_reports_unverified_release_without_starting_worker) ... ERROR
+test_reentrant_close_terminal_delivery_unknown_stays_fail_closed (__main__.ExecutorV13Tests.test_reentrant_close_terminal_delivery_unknown_stays_fail_closed) ... FAIL
+test_release_sink_error_is_reported_by_terminal_without_retry (__main__.ExecutorV13Tests.test_release_sink_error_is_reported_by_terminal_without_retry) ... Exception in thread Thread-15 (_watch_release):
+Traceback (most recent call last):
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v13.py", line 69, in _watch_release
+    self._publish_cause_once(identifier, lease)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v13.py", line 63, in _publish_cause_once
+    self.emit(event)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\test_executor_v13_against_main.py", line 204, in emit
+    raise OSError("release acknowledgement lost")
+OSError: release acknowledgement lost
+ERROR
+
+======================================================================
+ERROR: test_close_reentered_from_accepted_sink_prevents_worker_start (__main__.ExecutorV13Tests.test_close_reentered_from_accepted_sink_prevents_worker_start)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\test_executor_v13_against_main.py", line 45, in test_close_reentered_from_accepted_sink_prevents_worker_start
+    executor.submit("reentrant-close", [{"op": "pointer_drag"}], 1,
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v13.py", line 24, in submit
+    super().submit(identifier, steps, expected_sequence, valid_until_ns)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v12.py", line 36, in submit
+    self.emit({"event": "accepted", "id": identifier,
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\test_executor_v13_against_main.py", line 42, in emit
+    executor.close()
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v13.py", line 147, in close
+    super().close()
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v12.py", line 86, in close
+    super().close()
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\common-support\executor_v5.py", line 100, in close
+    if job is not None: job[2].join()
+                        ^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1114, in join
+    raise RuntimeError("cannot join thread before it is started")
+RuntimeError: cannot join thread before it is started
+
+======================================================================
+ERROR: test_reentrant_close_reports_unverified_release_without_starting_worker (__main__.ExecutorV13Tests.test_reentrant_close_reports_unverified_release_without_starting_worker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\test_executor_v13_against_main.py", line 68, in test_reentrant_close_reports_unverified_release_without_starting_worker
+    executor.submit("reentrant-close-unverified", [{"op": "pointer_drag"}], 1,
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v13.py", line 24, in submit
+    super().submit(identifier, steps, expected_sequence, valid_until_ns)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v12.py", line 36, in submit
+    self.emit({"event": "accepted", "id": identifier,
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\test_executor_v13_against_main.py", line 65, in emit
+    executor.close()
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v13.py", line 147, in close
+    super().close()
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\main\executor_v12.py", line 86, in close
+    super().close()
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\FROZEN\common-support\executor_v5.py", line 100, in close
+    if job is not None: job[2].join()
+                        ^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1114, in join
+    raise RuntimeError("cannot join thread before it is started")
+RuntimeError: cannot join thread before it is started
+
+======================================================================
+ERROR: test_release_sink_error_is_reported_by_terminal_without_retry (__main__.ExecutorV13Tests.test_release_sink_error_is_reported_by_terminal_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\test_executor_v13_against_main.py", line 217, in test_release_sink_error_is_reported_by_terminal_without_retry
+    self.assertEqual(terminal["input_release_publication"],
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'input_release_publication'
+
+======================================================================
+FAIL: test_reentrant_close_terminal_delivery_unknown_stays_fail_closed (__main__.ExecutorV13Tests.test_reentrant_close_terminal_delivery_unknown_stays_fail_closed)
+----------------------------------------------------------------------
+RuntimeError: cannot join thread before it is started
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-head-c11-20261004\test_executor_v13_against_main.py", line 93, in test_reentrant_close_terminal_delivery_unknown_stays_fail_closed
+    with self.assertRaisesRegex(RuntimeError, "delivery is unknown"):
+AssertionError: "delivery is unknown" does not match "cannot join thread before it is started"
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.152s
+
+FAILED (failures=1, errors=3)

@@ -1,0 +1,269 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "display.geometry",
+    "event.feedback",
+    "input.keyboard",
+    "input.pointer",
+    "input.release_all",
+    "input.text",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 121165774334,
+    "ended_ns": 121736094335,
+    "emissions": 123,
+    "program_emissions": 41,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 121736091368
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 6,
+        "requested_ms": 20,
+        "started_ns": 121283186460,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121303278423
+      },
+      {
+        "operation_index": 10,
+        "requested_ms": 20,
+        "started_ns": 121304480150,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121324589778
+      },
+      {
+        "operation_index": 14,
+        "requested_ms": 20,
+        "started_ns": 121326339509,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121346435537
+      },
+      {
+        "operation_index": 16,
+        "requested_ms": 20,
+        "started_ns": 121347243709,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121367343395
+      },
+      {
+        "operation_index": 18,
+        "requested_ms": 20,
+        "started_ns": 121367940305,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121388041343
+      },
+      {
+        "operation_index": 20,
+        "requested_ms": 20,
+        "started_ns": 121388902942,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121409109601
+      },
+      {
+        "operation_index": 22,
+        "requested_ms": 20,
+        "started_ns": 121409979167,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121430720926
+      },
+      {
+        "operation_index": 26,
+        "requested_ms": 300,
+        "started_ns": 121435212231,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 121735356517
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 14,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_repaired",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_repaired",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 14,
+      "valid_until_ns": 122621702131,
+      "patch_sha256": "162ce097d3b71904b207bbb324e6cf78fd33545aef7973a9b48c464d9423d471",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 15,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_repaired",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_repaired",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 15,
+      "valid_until_ns": 122666064609,
+      "patch_sha256": "162ce097d3b71904b207bbb324e6cf78fd33545aef7973a9b48c464d9423d471",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_move",
+      "observation_sequence": 16,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_repaired",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_repaired",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 16,
+      "valid_until_ns": 122706537040,
+      "patch_sha256": "162ce097d3b71904b207bbb324e6cf78fd33545aef7973a9b48c464d9423d471",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_press",
+      "observation_sequence": 17,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_repaired",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_repaired",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 17,
+      "valid_until_ns": 122744982958,
+      "patch_sha256": "162ce097d3b71904b207bbb324e6cf78fd33545aef7973a9b48c464d9423d471",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

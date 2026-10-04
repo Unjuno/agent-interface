@@ -1,0 +1,112 @@
+"""Publish scoped reviewer evidence outside immutable V2 source; no primary checkout/index mutation."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+r=Path(__file__).resolve().parent;ws=r.parent.parent;repo=r.parent/'agent-interface';out=ws/'outputs/review6979-v2-45e9-complete';out.mkdir(exist_ok=False)
+d=json.loads((r/'PROPOSAL.canonical.json').read_bytes());head=d['head_sha'];prefix='research/integration/review_current_primary_v2_57_20261003_45e9';ref='refs/heads/review/current-primary-v2-45e9-20261003'
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_INDEX_FILE=str(r/'publication.index'))
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+def git(*a,**kw):return subprocess.check_output(['git','-c','maintenance.auto=false','-c','gc.auto=0',*a],cwd=repo,env=env,**kw)
+assert json.loads((r/'AUTHOR_AUDIT.json').read_bytes())['status']=='PASS_SAVED_V2_SOURCE_AND_CUSTODY'
+assert json.loads((r/'OWN_AUDIT.json').read_bytes())['status']=='PASS_SCOPED_V2_ISOLATED_UTF8_OWNER_COMPOSITION'
+assert json.loads((r/'CURRENT_COMPARISON.json').read_bytes())['images_match_exactly'] is True
+records=[];excluded=['PACKET_COMMENT.json','SUPPLEMENT_COMMENT.json','DECODED_PACKET.json','DECODED_SUPPLEMENT.json','REMOTE_MANIFEST.json','REMOTE_MANIFEST_CAPTURE.json','publication.index']
+private_values=sorted({str(ws),str(ws).replace('\\','/'),os.environ['USERPROFILE'],os.environ['USERPROFILE'].replace('\\','/')},key=len,reverse=True)
+def project(b):
+ for depth in reversed(range(7)):
+  for private in private_values:
+   value=private
+   for _ in range(depth):value=value.replace('\\','\\\\')
+   b=b.replace(value.encode(),b'<OWN_WORKSPACE>')
+ return b
+for p in sorted((x for x in r.rglob('*') if x.is_file()),key=lambda p:p.relative_to(r).as_posix()):
+ name=p.relative_to(r).as_posix()
+ if name.startswith(('source/','before/','head/','current/','tmp/')) or name in excluded:continue
+ b=p.read_bytes();public=project(b)
+ own_identifier=Path(os.environ['USERPROFILE']).name.encode()
+ if p.name=='publish-first.py.txt':public=public.replace(own_identifier,b'<OWN_USER>')
+ if p.suffix in ['.py','.mjs']:name+='.txt'
+ public.decode('utf-8',errors='strict');assert own_identifier.lower() not in public.lower(),('private path still present',name)
+ target=out/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(public)
+ records.append({'path':name,'original_bytes':len(b),'original_sha256':sha(b),'public_bytes':len(public),'public_sha256':sha(public),'own_prefix_projected':b!=public,'original_retained':p.read_bytes()==b})
+put(out/'PROVENANCE.json',{'created_utc':datetime.now(timezone.utc).isoformat(),'source_parent':head,'files':records,'projection':'Only own workspace/profile prefixes are replaced, including nested JSON escaping; own username literal in the retained first inert publication helper becomes OWN_USER. Original and public identities are separate; public original-hash joins require provenance-aware audit, no hash-only private recovery.','source_custody':'All179 Git images/28head pins/136manifest targets/134author public provenance rows were independently checked; exact source and author original archive remain in immutable2523 parent. Full author archive/current repository context are not duplicated here.','record_packets':'Original11-member5968011214 plus7-member5968073607 text custody packets decoded by owned data-only scripts, exact packet hashes/3478canonical/map verified. Received helper code stored only as inert snapshots; none executes.'})
+(out/'README.md').write_text('''# Independent V2 review and UTF8 first-diagnosis composition
+
+Existing nominated FINAL-v5 worker01a0ff2e-17a3-70a1-908e-0d6dd78c45e9; #6979/#57.
+Proposal5968011214/full display correction5968020614, epochcurrent-primary-v2-first-error-fixed-before-votes.
+Sourcehead2523fc996fa44d88d40aef79f1d757f569fca387/tree0324f43825f7c15e2d4ea748615b3e9712e35bfd;
+reviewbasebd1697d99d5db1d1b3040de2614992776b8f81a6, literalfirstparent67ccadd8a685f76e0e853ef772a2d5b509c2a65f.
+Complete3478 canonical bytes independently hash6630528f72c4d6fd668aa87a2525c227c4284fceab3bc332a5e18e3243ed4f9d.
+All179 complete before/after Git images reproduce ec3e1dae740e03d368ccb2af37dd6410d008e8eb2aa94cf475c9e158031e608b.
+All28 delivered source pins,136manifest targets and unchanged prior36-file leaf checked exactly.
+Used36 immutable source/context images in main89789e7592c4874c413943932926e9528750513a equal reviewbase.
+This named comparison is not a certificate for a future main/application tree.
+
+Independent saved-data oracle checks author's preserved red2/exit1 and green41/exit0,
+same new test definitions and28pins each, four original one-request/result/host/fixture histories,
+134public original/public joins including23own-prefix derivatives, first archive failure and known successful source-only push.
+It rejects10 effective copied semantic corruptions. Private projected originals remain separate custody claims;
+public hashes do not recover/authenticate their missing private bytes. No author41 or consumed formal/native producer replay.
+
+New prospectively frozen claim5968306544 concerns changed isolated exactV2 + separately owned strictUTF8.
+Exact private first-failure observer, public API, busy/startup/Readline behavior and adopted6935 relay remain.
+Own6961 decoder prefix is transplanted into the PRIVATE core and immediately calls observeFailure(failure).
+Combined stdio SHA15f302fe72c7de15bc678256525eba63a81189678f9bede89ee52e7fbbee9edd.
+The candidate is reviewer source, no installed joint source or accepted change to6961/6979 heads.
+
+Three NEW ordinary owner cases: malformed bytes first, then no further error / later input / later output.
+All preserve the SAME actual first ERR_ENCODING_INVALID_ENCODED_DATA TypeError identity,
+one original inert49B real-relay request/response/result, pending until release, original host/fixture0,
+six original worker/fixture PIDs observedabsent and foreign listeners retained.
+In these three cases only, a TextDecoder.decode wrapper observes and rethrows the same original Error;
+the original builtin is restored before completion. This is controlled mechanism evidence.
+Source/helper/argv/Node24.6.0/env delta/nonce/output and D frozen before first run; full raw streams/endpoints retained.
+Independent saved-data oracle rejects10 effective copied corruptions. These three first cases are never replayed.
+
+Composed56 ordinary methods include19stdio+3busy+2firsterror+15UTF8+17relay.
+First run exit1/54pass/2fail, zero skip/cancel; own missing startup parent directory causes child probe mkdir ENOENT/exit3 before product startup.
+FIRST_MAINTAINED_ENV_ERROR, first full stdout and actual receipt remain unchanged.
+One authorized ordinary environment repair creates fresh parent folders before the SAME affected56 argv;
+same product/test definitions/D, actual10:32:38.595689–10:32:41.194584UTC/exit0/56pass/0fail/skip/cancel/todo.
+No formal allocation or new three decoder cells are replayed. Both startup witnesses and four first/fixed busy fixtures retain owned cleanup/absence evidence.
+
+Own earlier received-manifest storage added one LF: export first AssertionError retained, exact24511MCP content captured and compared without canonical/byte-gate relaxation.
+Own first saved-data reader assumed an envelope around a direct host request: KeyError retained with original first reader snapshot,
+then actual request/direct response+typedattempt schema corrected, no raw/source or runtime replay.
+The first incomplete proposal display and author's first construction failure remain immutable history.
+
+V1 first-diagnosis diagnostic FAIL/HOLD and its output overlap correction remain historical.
+This V2 evidence directly supports the private immediate notification and resolves the saved failure in this isolated decoder composition.
+It does not turn old V1 votes or witnesses into new ones. Source6961 stays owned45e9/excluded from6979.
+No main request, application lock, shared resource allocation, extra worker or app-chat message.
+Actual current nonauthor base/head/plannedtree/raw/ordered-parent binding, fresh same-V2 quorum, live mandatory rules/checks/reviews/identity/ownership/cancellation,
+and one forward explicit-expected-old main-only route remain prerequisites to any actual application.
+Real backend/model/task effect, physical input release, generic recovery, deadline/byte bounds, atomic-ready/clock/efficiency/full goal remain unproved.
+
+All original executable snapshots are .py.txt/.mjs.txt. No new workflow/import/test discovery is added by this reviewer leaf.
+Own prefixes are projected with original/public provenance. Original private source/raw/helpers stay retained.
+''',encoding='utf-8',newline='\n')
+exceptions=[]
+for p in sorted((x for x in out.rglob('*') if x.is_file()),key=lambda p:p.relative_to(out).as_posix()):
+ b=p.read_bytes();name=p.relative_to(out).as_posix()
+ if b.endswith(b'\n\n') or b'\r\r\n' in b or any(line.rstrip(b'\r\n').endswith((b' ',b'\t')) for line in b.splitlines(keepends=True)):exceptions.append(name)
+(out/'.gitattributes').write_text('* -text whitespace=cr-at-eol\n'+''.join(name+' -whitespace\n' for name in exceptions),encoding='utf-8',newline='\n')
+files=sorted((p for p in out.rglob('*') if p.is_file()),key=lambda p:p.relative_to(out).as_posix())
+put(out/'MANIFEST.json',{'files':[{'path':p.relative_to(out).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in files],'exact_historical_whitespace_exceptions':exceptions})
+files=sorted((p for p in out.rglob('*') if p.is_file()),key=lambda p:p.relative_to(out).as_posix())
+index=sha((repo/'.git/index').read_bytes());primary=git('rev-parse','HEAD').decode().strip();git('read-tree',head);entries=[];images=[]
+for p in files:
+ b=p.read_bytes();oid=git('hash-object','-w','--stdin',input=b).decode().strip();path=prefix+'/'+p.relative_to(out).as_posix()
+ entries.append('100644 '+oid+'\t'+path+'\n');images.append({'path':path,'mode':'100644','blob_oid':oid,'bytes':len(b),'sha256':sha(b)})
+git('update-index','--index-info',input=''.join(entries).encode());tree=git('write-tree','--missing-ok').decode().strip()
+assert git('diff','--name-only','--no-renames',head,tree).decode().splitlines()==[x['path'] for x in images]
+argv=['git','-c','maintenance.auto=false','-c','gc.auto=0','diff','--check',head,tree];started=datetime.now(timezone.utc).isoformat()
+check=subprocess.run(argv,cwd=repo,env=dict(env,GIT_ATTR_SOURCE=tree),capture_output=True)
+for stream,b in [('stdout',check.stdout),('stderr',check.stderr)]:(ws/('outputs/review6979-v2-diffcheck.'+stream+'.txt')).write_bytes(b)
+put(ws/'outputs/review6979-v2-diffcheck.json',{'argv':argv,'started_utc':started,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':check.returncode,'GIT_ATTR_SOURCE':tree})
+assert check.returncode==0,(check.returncode,check.stdout[:1000])
+assert index==sha((repo/'.git/index').read_bytes()) and primary==git('rev-parse','HEAD').decode().strip()
+commit=git('commit-tree',tree,'-p',head,input=b'research(host): preserve V2 first-diagnosis and UTF8 composition review [skip ci]\n').decode().strip();git('update-ref',ref,commit,'0'*40)
+meta={'ref':ref,'head':commit,'tree':tree,'parent':head,'prefix':prefix,'archive_tree':git('rev-parse',commit+':'+prefix).decode().strip(),'files':len(files),'bytes':sum(p.stat().st_size for p in files),'images':images,'primary_head_unchanged':True,'primary_index_unchanged':True,'main_requests':0}
+put(ws/'outputs/review6979-v2-publication.json',meta);print(json.dumps({k:v for k,v in meta.items() if k!='images'}))

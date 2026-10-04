@@ -1,0 +1,14 @@
+import pathlib,json,hashlib,datetime,ast
+p=pathlib.Path(__file__).resolve().parent
+names=['baseline.py','candidate.py','driver.py','peer.py','collect.py','check_saved.py','PLAN.json','launch_once.py','construct_controls.py','construction-controls.json','check_parser_controls.py','parser-controls.json','selected-base.json','pre-freeze-current-applicability.json','resource-receipts.json','environment.stdout','environment.stderr','environment-inspect.json','implementation-audit.json','child-source-audit.json','claim-and-resource-intake.json','resource_check.py','own-engine.stdout','own-engine.stderr','own-containers.stdout','own-containers.stderr','own-image.stdout','own-image.stderr','guest-os.stdout','guest-os.stderr']
+inputs={}
+for name in names:
+ b=(p/name).read_bytes();inputs[name]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+ if name.endswith('.py'):ast.parse(b)
+a=json.loads((p/'implementation-audit.json').read_text())
+for name,h in a['reviewed_source_sha256'].items():assert inputs[name]['sha256']==h,name
+assert json.loads((p/'construction-controls.json').read_text())['pass']
+assert json.loads((p/'parser-controls.json').read_text())['pass']
+x={'schema':'predicate-condition-freeze-v1','allocation':'17-PREDICATE-CONDITION-C01-20261003-b64b','worker':'01a0ff52-b64b-71d2-b2d6-19a57b40283f','utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'image':'python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016','selected_source_base':'e54128b7ed4bfe1cd39177fa6c7d1a7c1c45d462','fresh_applicability_main':'e685a79baf9f52357f4e48c25ba3214a4a7d8ec9','frozen_inputs':inputs,'producer_budget':1,'native_first_cell_budget':4,'saved_data_auditor_budget':1,'retry_budget':0,'source_transfer_actual_byte_readback_required':True,'limits':'ordinary native construction; no previous formal replay/model/GUI/input/production adoption or whole-call guarantee'}
+with (p/'FREEZE.json').open('x') as f:f.write(json.dumps(x,sort_keys=True,indent=2)+'\n')
+print(json.dumps({'freeze_sha256':hashlib.sha256((p/'FREEZE.json').read_bytes()).hexdigest(),'inputs':len(inputs),'input_bytes':sum(v['bytes'] for v in inputs.values()),'frozen_core':{k:inputs[k]['sha256'] for k in ['baseline.py','candidate.py','driver.py','peer.py','collect.py','check_saved.py','PLAN.json','launch_once.py']},'utc':x['utc']},sort_keys=True))

@@ -1,0 +1,36 @@
+{
+  "status": "PASS_SAVED_ORDINARY_R02",
+  "cases": [
+    {
+      "n": 16,
+      "baseline_queue_visits": 16,
+      "R01_queue_visits": 152,
+      "R02_queue_visits": 16
+    },
+    {
+      "n": 64,
+      "baseline_queue_visits": 64,
+      "R01_queue_visits": 2144,
+      "R02_queue_visits": 64
+    },
+    {
+      "n": 256,
+      "baseline_queue_visits": 256,
+      "R01_queue_visits": 33152,
+      "R02_queue_visits": 256
+    },
+    {
+      "n": 1024,
+      "baseline_queue_visits": 1024,
+      "R01_queue_visits": 525824,
+      "R02_queue_visits": 1024
+    }
+  ],
+  "tests": 15,
+  "other14method_and_module_AST_unchanged": true,
+  "constructor_delta": "one initialized integer counter before reader start",
+  "generation_assumption": "queue removals occur only through wait_notification; no private mutation or object reinsertion",
+  "time_performance_claim": false,
+  "formal_native_replays": 0,
+  "main_sends": 0
+}
