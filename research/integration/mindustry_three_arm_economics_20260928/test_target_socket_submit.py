@@ -27,7 +27,8 @@ def success(action_id, *, cursor=7):
     return {
         "status": "boundary",
         "records": [{"event": "terminal", "id": action_id,
-                     "status": "completed", "release": {"verified": True}}],
+                     "status": "completed", "release": {
+                         "verified": True, "keys_down": [], "buttons_down": []}}],
         "cursor": cursor,
         "authority": "none",
         "acknowledgement": "not implied",
@@ -63,7 +64,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
                 "submit_prepared", "socket_response"])
             self.assertEqual(records[0]["request"]["command"], self.command())
             self.assertEqual(records[1]["response"]["records"][0]["release"],
-                             {"verified": True})
+                             {"verified": True, "keys_down": [],
+                              "buttons_down": []})
             before = path.read_bytes()
             with self.assertRaises(FileExistsError):
                 JsonlTraceSink(path)
@@ -250,6 +252,33 @@ class TargetSocketSubmitTests(unittest.TestCase):
                 submitter._exchange = lambda _request, value=response: value
                 with self.assertRaises(SocketSubmitStop):
                     submitter(self.command())
+
+    def test_release_receipt_requires_explicit_empty_key_and_button_sets(self):
+        release_cases = [
+            {"verified": True, "keys_down": ["LEFT"], "buttons_down": []},
+            {"verified": True, "keys_down": [], "buttons_down": ["left"]},
+            {"verified": True, "buttons_down": []},
+            {"verified": True, "keys_down": []},
+        ]
+        for release in release_cases:
+            with self.subTest(release=release):
+                response = success("A1-select-conveyor") | {"records": [{
+                    "event": "terminal", "id": "A1-select-conveyor",
+                    "status": "completed", "release": release}]}
+                submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                                  trace_sink=test_trace_sink)
+                submitter._exchange = lambda _request, value=response: value
+                with self.assertRaisesRegex(SocketSubmitStop, "empty held-input sets"):
+                    submitter(self.command())
+
+        empty_response = success("A1-select-conveyor") | {"records": [{
+            "event": "terminal", "id": "A1-select-conveyor",
+            "status": "completed", "release": {
+                "verified": True, "keys_down": [], "buttons_down": []}}]}
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: empty_response
+        self.assertIs(submitter(self.command())["released"], True)
 
     def test_authority_and_acknowledgement_metadata_must_remain_non_authorizing(self):
         for field, value in (("authority", "input_allowed"),

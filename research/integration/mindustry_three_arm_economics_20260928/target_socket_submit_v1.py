@@ -163,8 +163,15 @@ class TargetSocketSubmitter:
             raise SocketSubmitStop("matching terminal action boundary required")
         terminal = terminals[0]
         release = terminal.get("release")
-        if type(release) is not dict or release.get("verified") is not True:
-            raise SocketSubmitStop("matching terminal must verify input release")
+        if (type(release) is not dict
+                or set(release) != {"verified", "keys_down", "buttons_down"}
+                or release.get("verified") is not True
+                or type(release.get("keys_down")) is not list
+                or type(release.get("buttons_down")) is not list
+                or release["keys_down"] != []
+                or release["buttons_down"] != []):
+            raise SocketSubmitStop(
+                "matching terminal must verify empty held-input sets")
         cursor = response.get("cursor")
         if type(cursor) is not int or cursor <= self.cursor:
             raise SocketSubmitStop("advancing socket event cursor required")

@@ -471,3 +471,7 @@ buffer and refuses an oversized line even when its newline arrives in the same
 read. This closes a chunk-boundary gap where a single 65,536-byte receive
 could exceed the previous loop condition before parsing. A focused regression
 test exercises the oversized newline-terminated response.
+
+## Release-state gate construction (2026-10-05)
+
+A host-only H/T/D/C/U experiment reproduced a false-release acceptance in the pinned target socket adapter: held keys/buttons and omitted held-state arrays were accepted as `released: true`. The adapter now requires a verified receipt with explicit empty `keys_down` and `buttons_down`, and has regression coverage for both unsafe and missing fields. The seven-case probe found four false accepts in the frozen candidate; the package suite passes 122 tests in normal and optimized modes (two expected AF_UNIX skips each). Full freeze, raw observations, independent audit, repair logs, and limitations are recorded in [`construction/release_state_gate_a01_20261005/REPORT.md`](construction/release_state_gate_a01_20261005/REPORT.md). This is synthetic adapter evidence only; the upstream producer and #5130 formal allocation remain unverified.
