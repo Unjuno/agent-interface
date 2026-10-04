@@ -245,3 +245,19 @@ probe03 DID import this client: its46-module result does not qualify latest-main
 dependency bytes. Preserve the scoped historical PASS; next qualification must
 explicitly freeze/review the updated imported-client dependency. Do not silently
 overlay it onto probe03 or transfer the PASS to current main.
+
+
+## Current-main intent-token identity correction (2026-10-04)
+
+Independent review at main 4751c849f0408e3157d5d7a8974815d60c06d07a
+found both generated per-key measurement helpers reading `Lease.token`, while
+the production lease chain exposes `Lease.intent_token`. A01's synthetic
+`token` alias masked this mismatch. On current main a5f2bf291787000627abbc12c123af4bd2873d5c,
+branch `research/59-owner-intent-token-fix-a5f2-20261004` changes the
+research-only generated helpers to read `intent_token` and adds a regression
+that instantiates the repository's actual `lease.Lease` and
+`lease_cause_v1.Lease` class definitions without a `token` alias, then checks
+both per-key event and cleanup-bracket identity. A separate local construction
+reproduction passed against current-main source bytes. No A01 replay, X11, game,
+controller, or input was executed. This repairs measurement attribution only;
+it does not qualify the composed runtime, useful task effect, or formal cells.
