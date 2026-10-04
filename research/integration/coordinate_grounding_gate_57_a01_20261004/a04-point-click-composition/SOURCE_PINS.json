@@ -8,8 +8,8 @@
   "source_mint_route_reference": {
     "path": "research/live_control/session_v33.py",
     "git_blob": "34e738489619967a0be95d0b90de58d6490455a7",
-    "executed": false,
-    "note": "The pinned Backend route was inspected as the source of the source-sequence, exact-patch, focus/surface, and fresh-mint ordering. This construction invokes the pinned validator and actual runtime TargetHandleStore.mint/resolve_point; it does not instantiate the X11 session Backend."
+    "executed": true,
+    "note": "The pinned Backend validate/execute overrides run against an inert session IO base, pinned validator functions, the actual coordinate transform, and the actual runtime TargetHandleStore. The real session_v32/X11 transport and live display are not instantiated."
   },
   "legacy_adapter_reference": {
     "path": "research/integration/planner_contract_56_4d74_20261004/r02/planner_contract_adapter.py",

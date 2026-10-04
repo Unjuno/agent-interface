@@ -5,7 +5,7 @@ import json
 import subprocess
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image
 
 
 HERE = Path(__file__).resolve().parent
@@ -26,7 +26,7 @@ assert pins["schema"] == "a04-point-click-composition-source-pins-v1"
 assert blob_at(pins["source_commit"], pins["point_validator"]["path"]) == pins["point_validator"]["git_blob"]
 assert hashlib.sha1(b"blob " + str(len(blob(pins["point_validator"]["git_blob"]))).encode() + b"\0" + blob(pins["point_validator"]["git_blob"])).hexdigest() == pins["point_validator"]["git_blob"]
 assert blob_at(pins["source_commit"], pins["source_mint_route_reference"]["path"]) == pins["source_mint_route_reference"]["git_blob"]
-assert pins["source_mint_route_reference"]["executed"] is False
+assert pins["source_mint_route_reference"]["executed"] is True
 assert blob_at(pins["source_commit"], pins["legacy_adapter_reference"]["path"]) == pins["legacy_adapter_reference"]["git_blob"]
 for path, oid in pins["runtime_sources"].items():
     assert blob_at(pins["source_commit"], path) == oid
@@ -58,13 +58,22 @@ for source, row in zip(inputs["cases"], result["cases"], strict=True):
     patch_bytes = image.crop((box[0], box[1], box[0] + box[2], box[1] + box[3])).tobytes()
     digest = hashlib.sha256(patch_bytes).hexdigest()
     assert row["patch_sha256"] == row["mint"]["patch_sha256"] == row["resolution"]["patch_sha256"] == digest
+    route = row["mint_route"]
+    route_record = route["result"]
+    assert route["executed"] is True and route["accepted"] is True
+    assert route_record["source_sequence"] == 1 and route_record["fresh_sequence"] == 2
+    assert route_record["source_point"] == point and route_record["derived_box"] == box
+    assert route_record["derived_offset"] == expected_offset
+    assert route_record["fresh_patch_exact"] is True
+    assert route_record["source_patch_sha256"] == route_record["fresh_patch_sha256"] == digest
     assert row["accepted"] and row["status"] == row["mint"]["status"] == row["resolution"]["status"] == "VALID"
     assert row["resolution"]["eligible"] is True
     assert row["alias"] == row["command"]["name"] == row["action_spec"]["target_handle"] == row["resolution"]["handle"]
     assert row["proposal_point"] == point == row["command"]["point"] == row["resolution"]["point"] == row["action_spec"]["point"]
     assert row["action_spec"]["box"] == box and row["action_spec"]["offset"] == expected_offset
     assert row["action_specs"] == [row["action_spec"]]
-    assert row["command"]["source_sequence"] == row["mint"]["created_sequence"] == 1
+    assert row["command"]["source_sequence"] == route_record["source_sequence"] == 1
+    assert row["mint"]["created_sequence"] == route_record["fresh_sequence"] == 2
 
 negative = result["negative_cases"]
 fixed = negative["fixed_offset"]
@@ -74,15 +83,16 @@ assert fixed["resolution"]["point"] == [230, 409] and fixed["resolution"]["point
 wrong_alias = negative["wrong_alias"]
 assert not wrong_alias["accepted"] and wrong_alias["action_specs"] == []
 assert wrong_alias["status"] == "MISSING" and wrong_alias["stage"] == "fresh_resolution"
-expected = {"changed_patch": ("fresh_patch_check", "MISSING"),
-            "focus_changed": ("fresh_resolution", "SCOPE_MISMATCH"),
-            "surface_changed": ("fresh_resolution", "SCOPE_MISMATCH"),
+expected = {"changed_patch": ("source_mint_route", "MISSING"),
+            "focus_changed": ("source_mint_route", "SCOPE_MISMATCH"),
+            "surface_changed": ("source_mint_route", "SCOPE_MISMATCH"),
             "stale": ("fresh_resolution", "STALE")}
 assert set(result["ineligible_cases"]) == set(expected)
 for name, (stage, status) in expected.items():
     case = result["ineligible_cases"][name]
     assert not case["accepted"] and case["action_specs"] == []
     assert (case["stage"], case["status"]) == (stage, status)
+    assert case["mint_route"]["executed"] is True
 assert result["input_dispatch_count"] == result["gui_call_count"] == result["model_call_count"] == 0
 runs = json.loads((HERE / "RUNS.json").read_text(encoding="utf-8"))
 assert runs["tests"]["exit_code"] == runs["pycompile"]["exit_code"] == 0

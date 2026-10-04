@@ -21,6 +21,10 @@ class PointClickCompositionTests(unittest.TestCase):
         for case in cases:
             with self.subTest(task=case["task"]):
                 self.assertEqual(case["mint"]["status"], "VALID")
+                self.assertTrue(case["mint_route"]["executed"])
+                self.assertTrue(case["mint_route"]["result"]["fresh_patch_exact"])
+                self.assertEqual(case["mint_route"]["result"]["source_sequence"], 1)
+                self.assertEqual(case["mint_route"]["result"]["fresh_sequence"], 2)
                 self.assertTrue(case["resolution"]["eligible"])
                 self.assertEqual(case["resolution"]["status"], "VALID")
                 self.assertEqual(case["action_spec"]["target_handle"], case["alias"])
@@ -37,9 +41,9 @@ class PointClickCompositionTests(unittest.TestCase):
         self.assertEqual(negative["wrong_alias"]["action_specs"], [])
 
     def test_changed_patch_focus_surface_and_stale_observation_never_reach_sink(self):
-        expected = {"changed_patch": ("fresh_patch_check", "MISSING"),
-                    "focus_changed": ("fresh_resolution", "SCOPE_MISMATCH"),
-                    "surface_changed": ("fresh_resolution", "SCOPE_MISMATCH"),
+        expected = {"changed_patch": ("source_mint_route", "MISSING"),
+                    "focus_changed": ("source_mint_route", "SCOPE_MISMATCH"),
+                    "surface_changed": ("source_mint_route", "SCOPE_MISMATCH"),
                     "stale": ("fresh_resolution", "STALE")}
         for name, case in self.result["ineligible_cases"].items():
             with self.subTest(case=name):

@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import sys
 import subprocess
+import time
+import types
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -17,11 +18,12 @@ if str(REPO) not in sys.path:
 from runtime.guarded_x11_v1.handles import TargetHandleStore
 
 
-NOW_NS = 2_000_000
 SIZE_BY_TASK = {2: [64, 22], 3: [64, 22], 4: [64, 40], 5: [64, 36], 6: [64, 36]}
 ALIAS_BY_TASK = {task: f"field_task_{task}" for task in SIZE_BY_TASK}
 POINT_VALIDATOR_BLOB = "45b3d57e7ef873e92e88107e7019d64376061216"
 POINT_VALIDATOR_PATH = "research/live_control/model_point_target_v1.py"
+V33_BACKEND_BLOB = "34e738489619967a0be95d0b90de58d6490455a7"
+V33_BACKEND_PATH = "research/live_control/session_v33.py"
 
 
 def _load_pinned_validator():
@@ -36,6 +38,79 @@ def _load_pinned_validator():
 
 
 PINNED_VALIDATOR = _load_pinned_validator()
+
+
+class _InertDecisionRequired(Exception):
+    pass
+
+
+class _InertSessionBase:
+    """Small fake IO base for executing the pinned v33 route without X11."""
+    def __init__(self, session, out, emit):
+        self.session = session
+        self.out = out
+        self._emit = emit
+        self._cursor = -1
+        self.handles = session["handles"]
+
+    def validate(self, steps):
+        return None
+
+    def snapshot(self, identifier, index):
+        self._cursor = min(self._cursor + 1, len(self.session["observations"]) - 1)
+        return {"event": "inert_snapshot", "id": identifier, "step": index}
+
+    def observation(self):
+        return self.session["observations"][self._cursor]
+
+    def image(self):
+        return self.session["images"][self._cursor]
+
+    def emit(self, event):
+        self._emit(event)
+
+
+def _execute_pinned_v33_route(command: dict, source_image: Image.Image, fresh_image: Image.Image,
+                              source_obs: dict, fresh_obs: dict, store: TargetHandleStore) -> dict:
+    raw = subprocess.check_output(["git", "cat-file", "blob", V33_BACKEND_BLOB], cwd=REPO)
+    actual = subprocess.check_output(["git", "hash-object", "--stdin"], input=raw, cwd=REPO).decode().strip()
+    if actual != V33_BACKEND_BLOB:
+        raise RuntimeError("pinned v33 backend blob did not verify")
+    fake_frame = types.ModuleType("coordinate_frame_transform_v1")
+    from runtime.guarded_x11_v1.frames import translation
+    fake_frame.translation = translation
+    fake_executor = types.ModuleType("executor_v3")
+    fake_executor.DecisionRequired = _InertDecisionRequired
+    fake_model = types.ModuleType("model_point_target_v1")
+    fake_model.OPERATION = PINNED_VALIDATOR.OPERATION
+    fake_model.derive = PINNED_VALIDATOR.derive
+    fake_model.patch = PINNED_VALIDATOR.patch
+    fake_model.validate_step = PINNED_VALIDATOR.validate_step
+    fake_session = types.ModuleType("session_v32")
+    fake_session.Backend = _InertSessionBase
+    fake_session.suite = lambda: None
+    replacements = {"coordinate_frame_transform_v1": fake_frame, "executor_v3": fake_executor,
+                    "model_point_target_v1": fake_model, "session_v32": fake_session}
+    prior = {name: sys.modules.get(name) for name in replacements}
+    events: list[dict] = []
+    try:
+        sys.modules.update(replacements)
+        backend_module = types.ModuleType("a04_pinned_session_v33")
+        exec(compile(raw, f"git-blob:{V33_BACKEND_BLOB}:{V33_BACKEND_PATH}", "exec"), backend_module.__dict__)
+        session = {"observations": [source_obs, fresh_obs], "images": [source_image, fresh_image], "handles": store}
+        backend = backend_module.Backend(session, None, events.append)
+        backend.validate([command])
+        backend.snapshot("a04", 0)
+        result = backend.execute(command, lambda: False, "a04", 0)
+        return {"executed": True, "accepted": True, "result": result, "events": events}
+    except _InertDecisionRequired as exc:
+        return {"executed": True, "accepted": False, "reason": str(exc), "events": events}
+    finally:
+        for name, module in prior.items():
+            if module is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = module
 
 
 def observation(sequence: int, capture_ns: int, image_size: tuple[int, int], *,
@@ -81,51 +156,49 @@ def _proposal(case: dict, image: Image.Image) -> tuple[dict, dict, Image.Image]:
 def _compose(case: dict, *, mutation: str | None = None) -> dict:
     image = _image_for(case)
     command, derived, image = _proposal(case, image)
-    source_obs = observation(1, 1_000_000, image.size)
-    fresh_obs = observation(2, NOW_NS, image.size)
+    source_obs = observation(1, time.perf_counter_ns() - 2_000_000, image.size)
+    fresh_obs = observation(2, time.perf_counter_ns() - 100_000, image.size)
     fresh = image.copy()
     if mutation == "changed_patch":
         x, y, width, height = derived["box"]
         ImageDraw.Draw(fresh).rectangle((x, y, x + width - 1, y + height - 1), fill=(255, 255, 255))
     elif mutation == "focus_changed":
-        fresh_obs = observation(2, NOW_NS, image.size, focus=303)
+        fresh_obs = observation(2, time.perf_counter_ns() - 100_000, image.size, focus=303)
     elif mutation == "surface_changed":
-        fresh_obs = observation(2, NOW_NS, image.size, surface=404)
+        fresh_obs = observation(2, time.perf_counter_ns() - 100_000, image.size, surface=404)
     elif mutation == "stale":
-        fresh_obs = observation(2, NOW_NS, image.size)
+        fresh_obs = observation(2, time.perf_counter_ns() - 100_000, image.size)
     store = TargetHandleStore(f"a04-task-{case['task']}", id_factory=lambda: f"private-{case['task']}")
-    source_patch = image.crop((derived["box"][0], derived["box"][1], derived["box"][0] + derived["box"][2], derived["box"][1] + derived["box"][3])).tobytes()
-    current_patch = fresh.crop((derived["box"][0], derived["box"][1], derived["box"][0] + derived["box"][2], derived["box"][1] + derived["box"][3])).tobytes()
-    if source_patch != current_patch:
-        return {"accepted": False, "action_specs": [], "stage": "fresh_patch_check", "status": "MISSING",
-                "source_patch_sha256": hashlib.sha256(source_patch).hexdigest(),
-                "fresh_patch_sha256": hashlib.sha256(current_patch).hexdigest()}
-    minted = store.mint(command["name"], command["coordinate_frame"], derived["box"], source_obs, image, NOW_NS,
-                        ttl_ms=command["ttl_ms"], freshness_ms=command["freshness_ms"],
-                        search_radius=command["search_radius"],
-                        allowed_transformations=tuple(command["allowed_transformations"]))
+    route = _execute_pinned_v33_route(command, image, fresh, source_obs, fresh_obs, store)
+    if not route["accepted"]:
+        event = route["events"][-1]
+        reason = event.get("reason")
+        status = "MISSING" if reason == "source_patch_changed" else "SCOPE_MISMATCH"
+        return {"accepted": False, "action_specs": [], "stage": "source_mint_route",
+                "status": status, "reason": reason, "mint_route": route}
+    minted = route["result"]
     actual_alias = ALIAS_BY_TASK[case["task"]] if mutation != "wrong_alias" else "unrelated_alias"
     offset = derived["offset"]
     if mutation == "fixed_offset":
         offset = [12, 19]
-    resolve_now_ns = NOW_NS + 1_500_000_001 if mutation == "stale" else NOW_NS + 1_000_000
+    resolve_now_ns = fresh_obs["capture_ns"] + 1_500_000_001 if mutation == "stale" else time.perf_counter_ns()
     resolution = store.resolve_point(actual_alias, offset, fresh_obs, fresh, resolve_now_ns)
     sink: list[dict] = []
     if not resolution["eligible"]:
         return {"accepted": False, "action_specs": sink, "stage": "fresh_resolution", "status": resolution["status"],
-                "reason": resolution.get("reason"), "mint": minted, "resolution": resolution}
+                "reason": resolution.get("reason"), "mint": minted, "mint_route": route, "resolution": resolution}
     if (actual_alias != command["name"] or offset != derived["offset"] or
             resolution.get("point") != command["point"] or
             resolution.get("patch_sha256") != minted["patch_sha256"]):
         return {"accepted": False, "action_specs": sink, "stage": "identity_consistency", "status": "MISSING",
-                "mint": minted, "resolution": resolution}
+                "mint": minted, "mint_route": route, "resolution": resolution}
     action_spec = {"op": "pointer_click_target", "target_handle": actual_alias,
                    "offset": list(offset), "button": 1, "duration_ms": 80,
                    "point": list(resolution["point"]), "box": list(derived["box"]),
                    "patch_sha256": minted["patch_sha256"]}
     sink.append(action_spec)
     return {"accepted": True, "action_specs": sink, "stage": "action_specification_sink",
-            "status": resolution["status"], "mint": minted, "resolution": resolution,
+            "status": resolution["status"], "mint": minted, "mint_route": route, "resolution": resolution,
             "command": command, "alias": command["name"], "proposal_point": list(command["point"]),
             "box": list(derived["box"]), "offset": list(derived["offset"]),
             "patch_sha256": minted["patch_sha256"], "action_spec": action_spec}
