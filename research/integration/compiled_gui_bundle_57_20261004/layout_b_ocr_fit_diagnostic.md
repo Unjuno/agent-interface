@@ -15,17 +15,23 @@ SHA-256 pins:
 | `arms/ephemeral/runtime/068.png` (task-4 source image) | `e1416a9e8e5c084dbc888af20f7d43c2475163fe01879ebd748bb4c4ac71ad2f` |
 | `arms/ephemeral/runtime/077.png` (task-4 entered-value image) | `f07a6655e0f633db72a37450690282704cfa490aa2feb8f8e36c2524d4e8a185` |
 
-## Observation and OCR probe
+## Erratum and corrected observation
 
-Both PNGs are 1280×800. Inspection of the saved source frame and entered-value frame puts the layout-B input rectangle at approximately `(495, 541)–(803, 577)` in screenshot pixels, around the recorded point `(650, 558)`. The exact crop box was fed through local Tesseract after 4× resize and returned an empty string. Full-frame Tesseract `--psm 11` produced `1091028-4`, while the independent saved scorer has `t991028-4`; this is not an exact OCR match. The value is visibly present in the saved entered-value image and the exact independent POST record confirms the submission, but neither fact makes this OCR probe pass.
+An earlier attempt in this note incorrectly treated an empty Tesseract result on a crop written under `/tmp` as an OCR miss. Tesseract could not read those `/tmp` inputs, so that empty output was a path/tool-access failure and is invalid OCR evidence. The earlier claim that the layout-B crop returned empty has been withdrawn. The full-frame `--psm 11` result was produced from the retained repository screenshot and remains valid: it reads `1091028-4`, while the independent scorer records `t991028-4`.
 
-This exposes a concrete fit gap: a second fixed rectangle is insufficient as an exact-effect adapter. The current #7384 adapter rejects layout B; adding a guessed layout-B crop and marking `exact_token_visible=true` would be unsound. The next adapter should use the actual frozen layout-B observation path and demonstrate exact-token OCR on held raw frames (including a blank pre-entry frame), with the independent saved scorer still separate from its visual continuation predicate. Until then, layout B remains unqualified for C and task 4 must not be counted as compiled-arm evidence.
+The A01 construction probe applied crop `(499,546,280,26)`, 8× resize and Tesseract `--psm 7` to ephemeral-arm tasks 5 and 6. It produced no exact token match in either task window: task 5's best-looking outputs read `1991028-5` (missing `t`), and task 6's readout included a trailing caret mark or read `1991028-6`. Its task-4 blank-field negative returned empty text. However, the earlier dev-selection run that appeared to justify this geometry/scale/PSM also used grayscale conversion and a 32-pixel white border. A01 omitted both, so A01 is **HOLD for a development/execution recipe mismatch**, not a valid held-out evaluation of the method selected on task 4. See `layout_b_ocr_construction_a01_20261004/README.md`, `RAW.json`, and `AUDIT.json`; the audit reproduces the saved OCR stdout and source PNG hashes but records non-reproducible crop PNG byte hashes because the crop intermediates were not retained. A02 freezes the complete development recipe and uses untouched plain/persistent screenshots. Layout B remains unqualified for C, and the engineering probe's successful task-4 POST is not compiled-arm evidence.
 
-Reproduction on the retained raw inputs (diagnostic only):
+## A02 held-out construction result
+
+A02 first confirmed the development recipe on the ephemeral task-4 entered-value frame (`t991028-4`) and on its empty source frame (no text). It then froze that exact recipe and applied it to 56 screenshots across task-4/5/6 in the previously uninspected plain and persistent arms. Independent audit status is `PASS_SOURCE_CROP_PIXEL_AND_OCR_REPLAY`: zero source-image, regenerated crop-pixel, OCR-output, or scorer-oracle mismatches. All six task source frames produce no OCR output and no exact false positive. Exact positives appear only in task 4 (plain frame 065 and persistent frame 083); tasks 5 and 6 in both arms have zero exact-token frames. For task 5, OCR alternates between the correct initial `t` plus a trailing caret mark and a `1` in place of `t`; task 6 has the same initial-character ambiguity plus caret/parenthesis artifacts. Visual inspection of both positive frames confirms the exact token is visibly entered. The frozen decision is **FAIL_FROZEN_LAYOUT_B_OCR_EXACTNESS** because four of six held-out task-arm cases fail exact OCR.
+
+The A02 script ran natively on Darwin ARM64, Python 3.14.5, ImageMagick 7.1.2-23 and Tesseract 5.5.2 because the current OrbStack image inventory fails on a containerd content blob. It took 15.30 s for 56 saved frames; this is only OCR construction-workload timing and says nothing about live control or efficiency. The source run is explicitly synthetic-grounding engineering data and excluded from formal comparison. A02 script, raw per-frame outputs/pixel hashes, and independent replay audit are retained in `layout_b_ocr_construction_a02_20261004/`.
+
+Reproduction on the retained raw inputs from the repository root (diagnostic only):
 
 ```sh
-magick arms/ephemeral/runtime/077.png -crop 308x36+495+541 +repage -resize 1232x144 /tmp/layoutb-077-crop.png
-tesseract /tmp/layoutb-077-crop.png stdout --psm 7
-tesseract arms/ephemeral/runtime/077.png stdout --psm 11
+mkdir -p work/layoutb-ocr-diagnostic
+magick research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/ephemeral/runtime/077.png -crop 280x26+499+546 +repage -resize 800% work/layoutb-ocr-diagnostic/task4.png
+tesseract work/layoutb-ocr-diagnostic/task4.png stdout -l eng --psm 7
+tesseract research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/ephemeral/runtime/077.png stdout --psm 11
 ```
-
