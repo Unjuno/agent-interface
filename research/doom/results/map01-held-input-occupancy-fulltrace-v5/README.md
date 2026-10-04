@@ -20,4 +20,14 @@ This posthoc reconstruction fixes a completed-hold boundary defect: an earlier v
 | L | Confirmed occupancy lower bound, t_confirm - t_ack | ms | Nonnegative | Float |
 | U | Occupancy upper bound, t_release - t_admit | ms | Admission precedes release | Float |
 
+## Retained v38/v39 posthoc reanalysis
+
+Using the frozen raw traces from main commit `4ca1db66b6adcb4ea15fc3c744315ad39a87749e`, the v5 candidate was run once on each retained run and the independent v6 raw auditor was run once over both outputs. Raw inputs and original v4 candidate outputs were read-only.
+
+| Trace | Holds | Lower–upper total | Independent raw audit | v4 rows/intersections/totals |
+|---|---:|---:|---|---|
+| v38 | 11 | 3,048.890–4,039.878 ms | PASS, 0 errors | Exact match |
+| v39 | 29 | 6,301.200–8,452.733 ms | PASS, 0 errors | Exact match |
+
+The early verified empty-input cap does not change any retained hold row, decision intersection, or total. In v39, the existing single partial-admission/cancel-ack race remains one row with a zero positive lower bound. Full commands, frozen input hashes, and output hashes are in [POSTHOC_REANALYSIS.md](POSTHOC_REANALYSIS.md).
 
