@@ -3,6 +3,7 @@
 import argparse
 import contextlib
 import hashlib
+import importlib.util
 import json
 import os
 import shutil
@@ -25,6 +26,9 @@ from doom_hud_signal_v3 import DoomStatusNumberReader
 FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
 SETUP_INPUT_CONTRACT = ("fixture state reached through the same X11 Executor and "
                         "recorded OS-input/coast programs; save is setup-only")
+PERKEY_BRIDGE = HERE / "map01_v39_perkey_bridge_a01" / "bridge.py"
+PERKEY_OWNER = (HERE / "map01_attack_onset_phase_allocation_02_v1" /
+                "dependencies" / "v12" / "input_owner_v12.py")
 
 
 def file_sha256(path):
@@ -85,6 +89,8 @@ def main():
     parser.add_argument("--skill", type=int, choices=range(1,6), default=1)
     parser.add_argument("--fixture-out", type=Path)
     parser.add_argument("--load-fixture-manifest", type=Path)
+    parser.add_argument("--per-key-input-measurement", action="store_true",
+                        help="opt in to the A01 InputOwner v12 X-adapter edge telemetry")
     args = parser.parse_args()
     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
         parser.error("fixture-out must be a .png save container")
@@ -108,7 +114,7 @@ def main():
             print(encoded, flush=True)
 
     sources = {}
-    for path in (Path(__file__), HERE.parent / "live_control/session_v8.py",
+    source_paths = [Path(__file__), HERE.parent / "live_control/session_v8.py",
                  HERE.parent / "live_control/executor_v12.py",
                  HERE.parent / "live_control/executor_v11.py",
                  HERE.parent / "live_control/executor_v5.py",
@@ -126,7 +132,21 @@ def main():
                  HERE / "doom_typed_observation_v1.py",
                  HERE / "doom_hud_signal_v3.py",
                  HERE / "doom_hud_signal_v2.py",
-                 HERE / "doom_hud_signal_v1.py"):
+                 HERE / "doom_hud_signal_v1.py"]
+    selected_backend = Backend
+    if args.per_key_input_measurement:
+        if not PERKEY_BRIDGE.is_file() or not PERKEY_OWNER.is_file():
+            raise FileNotFoundError("per-key measurement source closure is incomplete")
+        sys.path.insert(0, str(PERKEY_OWNER.parent))
+        bridge_spec = importlib.util.spec_from_file_location(
+            "map01_v39_perkey_bridge_a01_backend", PERKEY_BRIDGE)
+        if bridge_spec is None or bridge_spec.loader is None:
+            raise ImportError("could not load per-key measurement bridge")
+        bridge_module = importlib.util.module_from_spec(bridge_spec)
+        bridge_spec.loader.exec_module(bridge_module)
+        selected_backend = bridge_module.Backend
+        source_paths.extend((PERKEY_BRIDGE, PERKEY_OWNER))
+    for path in source_paths:
         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
     try:
@@ -222,7 +242,7 @@ def main():
             signal_readers = {
                 name: DoomStatusNumberReader(iwad, signal_id=name)
                 for name in ("health", "ammo")}
-            backend = Backend(session, args.out, emit, signal_readers)
+            backend = selected_backend(session, args.out, emit, signal_readers)
         executor = Executor(backend, emit)
         operations = ["submit", "cancel", "clock", "finish"]
         if args.fixture_out is not None:

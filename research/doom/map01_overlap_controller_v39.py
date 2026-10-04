@@ -340,10 +340,13 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    return [sys.executable, str(HERE / "session_map01_v12.py"),
-            "--out", str(runtime), "--seed", str(args.seed),
-            "--timeout-seconds", "600", "--skill", "1",
-            "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+    command = [sys.executable, str(HERE / "session_map01_v12.py"),
+               "--out", str(runtime), "--seed", str(args.seed),
+               "--timeout-seconds", "600", "--skill", "1",
+               "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+    if getattr(args, "per_key_input_measurement", False):
+        command.append("--per-key-input-measurement")
+    return command
 
 
 def validate_action(action):
@@ -506,12 +509,45 @@ def action_state_feedback(before, after, typed_observations):
 
 
 def input_edge_receipts(events):
-    """Pair per-key owner admissions with key-up receipts without exposing tokens."""
+    """Project legacy owner receipts and measured X-adapter edge brackets separately."""
     grouped = {}
+    adapter_grouped = {}
     invalid = []
     for event in events:
-        if type(event) is not dict or event.get("event") not in (
-                "input_admission", "input_release_transition"):
+        if type(event) is not dict:
+            continue
+        event_name = event.get("event")
+        measurement = event.get("physical_key_measurement")
+        adapter_edge = (measurement.get("adapter_edge")
+                        if type(measurement) is dict else None)
+        adapter_candidate = (
+            event_name == "input_release_measurement" or
+            (event_name == "input_admission" and type(measurement) is dict))
+        if adapter_candidate:
+            edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
+            expected_edge = ("down" if event_name == "input_admission" else "up")
+            identifier, step, key, token = (event.get("id"), event.get("step"),
+                                            event.get("key"), event.get("intent_token"))
+            if (type(identifier) is not str or not identifier or
+                    type(step) is not int or step < 0 or
+                    type(key) is not str or not key or
+                    type(token) is not str or not token):
+                invalid.append({
+                    "status": "identity_unavailable",
+                    "event": event_name,
+                    "step": step if type(step) is int else None,
+                    "key": key if type(key) is str else None,
+                    "scope": "adapter edge bracket unpaired; source event identity incomplete",
+                })
+                continue
+            bucket = adapter_grouped.setdefault((identifier, step, key, token),
+                                                {"down": [], "up": []})
+            if edge_name in ("down", "up"):
+                bucket[edge_name].append(event)
+            else:
+                bucket[expected_edge].append(event)
+            continue
+        if event_name not in ("input_admission", "input_release_transition"):
             continue
         identifier = event.get("id")
         step = event.get("step")
@@ -534,6 +570,78 @@ def input_edge_receipts(events):
         bucket["admission" if event["event"] == "input_admission" else "release"].append(event)
 
     receipts = list(invalid)
+    for (identifier, step, key, token), bucket in adapter_grouped.items():
+        downs, ups = bucket["down"], bucket["up"]
+        down = downs[0] if len(downs) == 1 else None
+        up = ups[0] if len(ups) == 1 else None
+
+        def edge_of(row):
+            data = row.get("physical_key_measurement") if row else None
+            return data.get("adapter_edge") if type(data) is dict else None
+
+        def valid_interval(value):
+            return (type(value) is list and len(value) == 2 and
+                    all(type(item) is int for item in value) and value[0] <= value[1])
+
+        down_data = down.get("physical_key_measurement") if down else None
+        up_data = up.get("physical_key_measurement") if up else None
+        down_edge, up_edge = edge_of(down), edge_of(up)
+        down_interval = down_edge.get("interval") if type(down_edge) is dict else None
+        up_interval = up_edge.get("interval") if type(up_edge) is dict else None
+        down_actuation = down_edge.get("actuation_id") if type(down_edge) is dict else None
+        up_actuation = up_edge.get("actuation_id") if type(up_edge) is dict else None
+        down_owner = down_edge.get("owner_id") if type(down_edge) is dict else None
+        up_owner = up_edge.get("owner_id") if type(up_edge) is dict else None
+        complete = (
+            len(downs) == 1 and len(ups) == 1 and
+            type(down_data) is dict and type(up_data) is dict and
+            type(down_edge) is dict and type(up_edge) is dict and
+            down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
+            down_data.get("classification") == "CONFIRMED_PHYSICAL_DOWN" and
+            up_data.get("classification") == "CONFIRMED_PHYSICAL_UP" and
+            down_data.get("identity_status") == "MINTED" and
+            up_data.get("identity_status") == "RETIRED" and
+            down_data.get("actuation_id") == down_edge.get("actuation_id") and
+            up_data.get("actuation_id") == up_edge.get("actuation_id") and
+            down_data.get("grants_input_authority") is False and
+            up_data.get("grants_input_authority") is False and
+            down_edge.get("status") == "CONFIRMED_PHYSICAL_DOWN" and
+            up_edge.get("status") == "CONFIRMED_PHYSICAL_UP" and
+            valid_interval(down_interval) and valid_interval(up_interval) and
+            type(down_actuation) is str and bool(down_actuation) and
+            down_actuation == up_actuation and
+            type(down_owner) is str and bool(down_owner) and down_owner == up_owner and
+            all(row.get("id") == identifier and row.get("step") == step and
+                row.get("key") == key and row.get("intent_token") == token and
+                row.get("owner_id") == down_owner and
+                row.get("grants_input_authority",
+                        row["physical_key_measurement"].get("grants_input_authority")) is False
+                for row in (down, up)) and
+            all(edge.get("key") == key and edge.get("intent_token") == token and
+                edge.get("actuation_id") == down_actuation and
+                edge.get("owner_id") == down_owner and
+                edge.get("grants_input_authority") is False
+                for edge in (down_edge, up_edge)) and
+            down_data.get("application_consumption_observed") is False and
+            up_data.get("application_consumption_observed") is False)
+        receipts.append({
+            "status": "adapter_edge_brackets_paired" if complete else
+                      "adapter_edge_receipt_incomplete",
+            "program_id_sha256": hashlib.sha256(identifier.encode("utf-8")).hexdigest(),
+            "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
+            "owner_id_sha256": (hashlib.sha256(down_owner.encode("utf-8")).hexdigest()
+                                if type(down_owner) is str else None),
+            "actuation_id_sha256": (hashlib.sha256(down_actuation.encode("utf-8")).hexdigest()
+                                    if type(down_actuation) is str else None),
+            "step": step,
+            "key": key,
+            "down_edge_interval_ns": down_interval if complete else None,
+            "up_edge_interval_ns": up_interval if complete else None,
+            "grants_input_authority": False if complete else None,
+            "application_consumption_observed": False if complete else None,
+            "scope": ("InputOwner v12 X-server keymap sampling brackets; no application "
+                      "receipt, physical dwell claim, or task-benefit claim"),
+        })
     for (identifier, step, key, token), bucket in grouped.items():
         admissions = bucket["admission"]
         releases = bucket["release"]
@@ -663,6 +771,8 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
+    parser.add_argument("--per-key-input-measurement", action="store_true",
+                        help="load the source-hashed A01 per-key X-adapter measurement bridge")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
@@ -1200,7 +1310,11 @@ def main():
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
           "state_feedback_contract":"compare hash-bound typed public health/ammo values at exact before/after action observations and expose the observed transition in the next planner prompt as correlation only; never infer a hit or benefit",
-          "input_edge_receipt_contract":"pair per-key input admission with exact owner-thread key-up receipts by program, step, key and intent token; retain only token/ID digests and observed timestamps; server synchronization is not physical key-down duration or task benefit",
+          "input_edge_receipt_contract":("legacy input_release_transition rows pair per-key admissions "
+              "with exact owner-thread key-up receipts; optional A01 adapter rows pair X-server "
+              "down/up keymap sampling brackets by program, step, key, intent and actuation. "
+              "These are distinct evidence types; neither establishes application consumption or task benefit"),
+          "input_measurement_backend":"input-owner-v12-perkey-bridge" if args.per_key_input_measurement else "typed-release-v1-default",
           "input_edge_receipts":per_key_input_receipts,
           "input_edge_receipt_statuses":dict(Counter(
               row["status"] for row in per_key_input_receipts)),

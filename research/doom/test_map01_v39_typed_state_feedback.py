@@ -1,6 +1,8 @@
 """Regressions for source-bound HUD state feedback in V39 planner context."""
 import hashlib
 from itertools import product
+import json
+from types import SimpleNamespace
 import sys
 import tempfile
 import unittest
@@ -50,6 +52,50 @@ class FakePlanner:
 
 
 class V39TypedStateFeedbackTests(unittest.TestCase):
+    def test_session_command_forwards_per_key_measurement_only_when_opted_in(self):
+        args = SimpleNamespace(seed=7, load_fixture_manifest=HERE / "fixture.json",
+                               per_key_input_measurement=True)
+
+        command = controller.session_command(args, HERE / "runtime")
+
+        self.assertEqual(command[-1], "--per-key-input-measurement")
+        args.per_key_input_measurement = False
+        self.assertNotIn("--per-key-input-measurement",
+                         controller.session_command(args, HERE / "runtime"))
+
+    def test_input_edge_receipt_projects_retained_a01_adapter_edges_separately(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        events = [json.loads(line) for line in retained.read_text().splitlines()]
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual(len(receipts), 1)
+        receipt = receipts[0]
+        self.assertEqual(receipt["status"], "adapter_edge_brackets_paired")
+        self.assertEqual(receipt["step"], 2)
+        self.assertEqual(receipt["key"], "F8")
+        self.assertEqual(receipt["down_edge_interval_ns"],
+                         [87811364890958, 87811364895916])
+        self.assertEqual(receipt["up_edge_interval_ns"],
+                         [87811364946333, 87811364949416])
+        self.assertFalse(receipt["grants_input_authority"])
+        self.assertFalse(receipt["application_consumption_observed"])
+        self.assertIn("X-server", receipt["scope"])
+        self.assertNotIn("intent-v39-a01", repr(receipts))
+
+    def test_input_edge_receipt_rejects_adapter_actuation_identity_mismatch(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        events = [json.loads(line) for line in retained.read_text().splitlines()]
+        events[1]["physical_key_measurement"]["adapter_edge"]["actuation_id"] = "other"
+
+        receipt = controller.input_edge_receipts(events)[0]
+
+        self.assertEqual(receipt["status"], "adapter_edge_receipt_incomplete")
+        self.assertIsNone(receipt["down_edge_interval_ns"])
+        self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_input_edge_receipt_pairs_per_key_admission_and_server_keyup_without_secrets(self):
         token = "ephemeral-intent-token"
         events = [
