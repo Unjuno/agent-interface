@@ -1,0 +1,30 @@
+{
+  "fixture": "synthetic owner returns owner_id=null for release and state sample",
+  "record": {
+    "backend_owned_before_release": true,
+    "event": "input_release_transition",
+    "grants_input_authority": false,
+    "intent_token": "intent-1",
+    "intent_token_matches_after_batch": true,
+    "key": "a",
+    "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+    "operation": "up",
+    "ordinary_release_candidate": true,
+    "owned_keycodes_after_batch": [],
+    "owner_id": null,
+    "owner_identity_matches_after_batch": false,
+    "owner_sample_after_finished_ns": 110,
+    "owner_sample_after_started_ns": 100,
+    "owner_sample_ordered_after_batch": true,
+    "owner_transition_verified": false,
+    "physical_verification_authoritative": false,
+    "release_batch_identifier": "p",
+    "release_batch_position": 0,
+    "release_batch_schema": "input-release-batch-v3",
+    "release_batch_size": 1,
+    "release_batch_step": 0,
+    "release_call_returned_ns": 10,
+    "release_call_started_ns": 5
+  },
+  "schema": "input-release-owner-identity-candidate-v1"
+}

@@ -1,0 +1,18 @@
+Command:
+python -m unittest research.doom.test_doom_retained_input_backend_v3.Tests.test_missing_owner_identity_fails_closed -v
+
+Output:
+test_missing_owner_identity_fails_closed (research.doom.test_doom_retained_input_backend_v3.Tests.test_missing_owner_identity_fails_closed) ... FAIL
+
+======================================================================
+FAIL: test_missing_owner_identity_fails_closed (research.doom.test_doom_retained_input_backend_v3.Tests.test_missing_owner_identity_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-2\work\agent-interface\work\current-r134\research\doom\test_doom_retained_input_backend_v3.py", line 121, in test_missing_owner_identity_fails_closed
+    self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

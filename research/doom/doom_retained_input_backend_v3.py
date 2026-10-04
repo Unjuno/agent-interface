@@ -72,7 +72,11 @@ class Backend(Previous):
             and latest_return_ns <= sample_started_ns <= sample_finished_ns
         )
         owner_id = after.get("owner_id") if isinstance(after, dict) else None
-        owner_identity_matches = all(row.get("owner_id") == owner_id for row in rows)
+        owner_identity_matches = (
+            type(owner_id) is str and bool(owner_id)
+            and all(type(row.get("owner_id")) is str and bool(row.get("owner_id"))
+                    and row.get("owner_id") == owner_id for row in rows)
+        )
         # Missing identity on both sides is not a verified match.
         token_matches = (
             type(current_token) is str and bool(current_token)

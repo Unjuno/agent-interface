@@ -115,6 +115,12 @@ class Tests(unittest.TestCase):
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
         self.assertFalse(obj.emitted[0]['owner_identity_matches_after_batch'])
 
+    def test_missing_owner_identity_fails_closed(self):
+        obj = make_backend({'a'}, Owner(owner_id=None))
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+        self.assertFalse(obj.emitted[0]['owner_identity_matches_after_batch'])
+
     def test_nonempty_owner_state_fails_closed(self):
         obj = make_backend({'a'}, Owner(owned_after=[38]))
         obj.raw('a', False)
