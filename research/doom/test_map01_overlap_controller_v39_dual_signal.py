@@ -238,6 +238,83 @@ class PairedCoverGuardTests(unittest.TestCase):
         })
         self.assertEqual(event["reason"], "signal_pair_epoch_mismatch")
 
+    def test_full_observation_without_typed_companion_is_dispatched(self):
+        self.assertIn("observation", controller.DoomCoverSignalPairMonitor.event_types)
+        source = observation()
+        next_observation = observation(11, 1_100_000_000)
+        health_rows = {10: signal("health", 100),
+                       11: signal("health", 100, 11, 1_100_000_000)}
+        ammo_rows = {10: signal("ammo", 4),
+                     11: signal("ammo", 0, 11, 1_100_000_000)}
+        monitor, _ = self.make_monitor(health_rows, ammo_rows, source=source)
+
+        event = monitor.observe(next_observation)
+
+        self.assertEqual(event["event"], "paired_signal_invalidation")
+        self.assertEqual(event["outcomes"]["ammo"]["reason"], "below_hard_minimum")
+
+    def test_typed_then_full_duplicate_epoch_is_processed_once(self):
+        monitor, _ = self.make_monitor(
+            {10: signal("health", 100),
+             11: signal("health", 100, 11, 1_100_000_000)},
+            {10: signal("ammo", 4),
+             11: signal("ammo", 2, 11, 1_100_000_000)})
+        health = signal("health", 100, 11, 1_100_000_000)
+        ammo = signal("ammo", 2, 11, 1_100_000_000)
+        typed = {"event": "typed_observation", "sequence": 11,
+                 "capture_ns": 1_100_000_000,
+                 "pointer_binding": health["binding"],
+                 "frame_rgb_sha256": "a" * 64,
+                 "signals": {"health": health, "ammo": ammo}}
+        ordinary = {"event": "observation", "sequence": 11,
+                    "capture_ns": 1_100_000_000,
+                    "pointer_binding": health["binding"],
+                    "frame_rgb_sha256": "a" * 64}
+
+        self.assertIn("observation", controller.DoomCoverSignalPairMonitor.event_types)
+        self.assertIsNone(monitor.observe(typed))
+        self.assertIsNone(monitor.observe(ordinary))
+        self.assertEqual(monitor.soft_event_count, 1)
+
+    def test_full_then_typed_duplicate_epoch_is_processed_once(self):
+        monitor, _ = self.make_monitor(
+            {10: signal("health", 100),
+             11: signal("health", 100, 11, 1_100_000_000)},
+            {10: signal("ammo", 4),
+             11: signal("ammo", 2, 11, 1_100_000_000)})
+        health = signal("health", 100, 11, 1_100_000_000)
+        ammo = signal("ammo", 2, 11, 1_100_000_000)
+        ordinary = {"event": "observation", "sequence": 11,
+                    "capture_ns": 1_100_000_000,
+                    "pointer_binding": health["binding"],
+                    "frame_rgb_sha256": "a" * 64}
+        typed = {"event": "typed_observation", "sequence": 11,
+                 "capture_ns": 1_100_000_000,
+                 "pointer_binding": health["binding"],
+                 "frame_rgb_sha256": "a" * 64,
+                 "signals": {"health": health, "ammo": ammo}}
+
+        self.assertIsNone(monitor.observe(ordinary))
+        self.assertIsNone(monitor.observe(typed))
+        self.assertEqual(monitor.soft_event_count, 1)
+
+    def test_full_observation_reader_error_invalidates_instead_of_escaping(self):
+        class FailedReader:
+            def read(self, _observation):
+                raise OSError("fixture image unavailable")
+
+        monitor, _ = self.make_monitor(
+            {10: signal("health", 100),
+             11: signal("health", 100, 11, 1_100_000_000)},
+            {10: signal("ammo", 4),
+             11: signal("ammo", 4, 11, 1_100_000_000)})
+        monitor.readers["ammo"] = FailedReader()
+
+        event = monitor.observe(observation(11, 1_100_000_000))
+
+        self.assertEqual(event["reason"], "signal_pair_source_unavailable")
+        self.assertTrue(event["requires_new_decision"])
+
     def test_nonfire_cover_keeps_health_only_monitor(self):
         source = observation()
         health = signal("health", 100)
