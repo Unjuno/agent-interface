@@ -78,3 +78,10 @@ The current-main suite now includes 11 focused candidate tests, 3 ExecutorV12 co
 **U:** No real X11, application consumption, independently useful feedback, bounded recovery efficacy, gameplay, safety, latency, or live allocation. Issue #59 remains open.
 
 Bundled CPython 3.12.14 verification at exact main `bfd182727aebd9636c6a84fb437848c1dfe66be8`: candidate 12/12, optimized repeat 12/12, ExecutorV12 compositions 3/3, owner compatibility 10/10, and V39 bridge 2/2. The source audit checks 27 primary test receipts plus the optimized repeat. RED/GREEN pairs are retained in `post-drain-red-current.log` / `post-drain-green-current.log` and `noop-row-red-current.log` / `noop-row-green-current.log`.
+
+
+## A09 — retain focus-invalidation cleanup after execute drain
+
+A fake-display focus-change integration now blocks the owner at the physical key-release edge after focus invalidation is observed. ExecutorV3's program exits with the decision-required terminal while `cancel` remains clear; the terminal release barrier then drains one context-bound `focus_changed` up before a verified-empty terminal. The prior bridge fails with zero up receipts; the candidate passes. This directly covers the focus-invalidation branch requested in review.
+
+The expanded bundled CPython 3.12.14 verification has 13 focused candidate tests, an optimized 13-test repeat, 3 exact-main ExecutorV12 compositions, 10 InputOwner compatibility tests, 2 V39 bridge tests, and 28 primary receipts. The source audit verifies the 90-file package manifest. All evidence remains fake-display only.

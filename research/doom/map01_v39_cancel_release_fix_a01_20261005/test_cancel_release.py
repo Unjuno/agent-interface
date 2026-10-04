@@ -396,6 +396,115 @@ class CancellationReceiptTests(unittest.TestCase):
                 parent.execute = prior_execute
             executor_v3.Lease = prior_lease_type
 
+    def test_executor_focus_invalidation_after_execute_drain_publishes_receipt(self):
+        bridge_test, _hm, harness, _lease, _bm, backend = load_candidate()
+        import executor_v3
+        from executor_v3 import DecisionRequired
+        Executor = executor_v3.Executor
+        prior_lease_type = executor_v3.Lease
+
+        class ObservedLease(prior_lease_type):
+            def __init__(self, deadline):
+                super().__init__(deadline)
+                self.expected_focus = 42
+                self.intent_token = "intent-focus-executor-a01"
+
+        executor_v3.Lease = ObservedLease
+        parent = bridge_test.Backend.__bases__[0]
+        prior_execute = parent.__dict__.get("execute")
+        events = []
+        admission_seen = threading.Event()
+        terminal_seen = threading.Event()
+        drain_seen = threading.Event()
+        release_blocked = threading.Event()
+        allow_owner_cleanup = threading.Event()
+        real_fake_input = harness.mod.xtest.fake_input
+        real_focus = harness.d.get_input_focus
+        real_drain = backend._drain_owner_records
+
+        def emit(row):
+            events.append(row)
+            if row.get("event") == "input_admission":
+                admission_seen.set()
+            if row.get("event") == "terminal":
+                terminal_seen.set()
+
+        def block_key_release(display, event_type, code=None, **kwargs):
+            if event_type == harness.mod.X.KeyRelease and code == 74:
+                release_blocked.set()
+                if not allow_owner_cleanup.wait(2.0):
+                    raise RuntimeError("test focus-cleanup barrier timed out")
+            return real_fake_input(display, event_type, code, **kwargs)
+
+        def change_focus_after_admission():
+            result = real_focus()
+            if force_blur.is_set():
+                result.focus.id = 99
+            return result
+
+        def observe_drain():
+            result = real_drain()
+            drain_seen.set()
+            return result
+
+        def invalidate_focus_program(self, _step, _cancel, _identifier, _index):
+            self.raw("F8", True)
+            force_blur.set()
+            if not release_blocked.wait(1.0):
+                raise AssertionError("owner did not reach focus cleanup barrier")
+            raise DecisionRequired()
+
+        force_blur = threading.Event()
+        harness.d.get_input_focus = change_focus_after_admission
+        harness.mod.xtest.fake_input = block_key_release
+        backend._drain_owner_records = observe_drain
+        parent.execute = invalidate_focus_program
+        backend.sequence = 1
+        backend.validate = lambda _steps: None
+        backend.emit = emit
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("focus-executor-a01", [{"op": "hold"}], 1,
+                            time.perf_counter_ns() + 10_000_000_000)
+            self.assertTrue(admission_seen.wait(1.0), repr(events))
+            self.assertTrue(release_blocked.wait(1.0), repr(events))
+            self.assertTrue(drain_seen.wait(1.0), repr(events))
+            self.assertEqual(harness.owner.records, [])
+            self.assertFalse(any(row.get("event") == "input_release_measurement" for row in events))
+            self.assertEqual(backend.held, {"F8"})
+            self.assertFalse(backend.lease.cancel.is_set())
+            allow_owner_cleanup.set()
+            self.assertTrue(terminal_seen.wait(1.0), repr(events))
+            ups = [row for row in events if row.get("event") == "input_release_measurement"]
+            terminals = [row for row in events if row.get("event") == "terminal"]
+            admissions = [row for row in events if row.get("event") == "input_admission"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0]["reason"], "focus_changed")
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            self.assertEqual(ups[0]["physical_key_measurement"]["actuation_id"],
+                             admissions[0]["physical_key_measurement"]["actuation_id"])
+            self.assertEqual((ups[0]["id"], ups[0]["step"]),
+                             ("focus-executor-a01", 0))
+            self.assertEqual(len(terminals), 1)
+            self.assertEqual(terminals[0]["status"], "needs_decision")
+            self.assertTrue(terminals[0]["release"]["verified"])
+            self.assertFalse(backend.lease.cancel.is_set())
+            self.assertEqual(harness.d.physical, set())
+            self.assertEqual(backend.held, set())
+        finally:
+            allow_owner_cleanup.set()
+            executor.close()
+            harness.close()
+            harness.d.get_input_focus = real_focus
+            harness.mod.xtest.fake_input = real_fake_input
+            backend._drain_owner_records = real_drain
+            if prior_execute is None:
+                delattr(parent, "execute")
+            else:
+                parent.execute = prior_execute
+            executor_v3.Lease = prior_lease_type
+
     def test_executor_expiry_terminal_contains_one_verified_cleanup_receipt(self):
         bridge_test, _hm, harness, _lease, _bm, backend = load_candidate()
         import executor_v3

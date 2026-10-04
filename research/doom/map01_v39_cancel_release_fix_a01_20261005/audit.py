@@ -17,7 +17,7 @@ for path,expected in lock['base_sha256'].items():
     assert hashlib.sha256(blob).hexdigest() == expected, path
 for path,expected in lock['candidate_sha256'].items():
     assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest() == expected, path
-suites=[('candidate-suite',12),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
+suites=[('candidate-suite',13),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
 for name,count in suites:
     log=(HERE/f'{name}.log').read_text()
     code=int((HERE/f'{name}.exit').read_text())
@@ -58,14 +58,16 @@ assert 'test_v12_expiry_retains_keyup_when_owner_pointer_query_fails' in (HERE/'
 assert 'test_v12_expiry_retains_keyup_when_owner_keymap_query_fails' in (HERE/'executor-v12-expiry-suite.log').read_text()
 assert 'test_expired_program_exit_drains_owner_cleanup_without_cancel_event' in (HERE/'candidate-suite.log').read_text()
 assert 'test_async_cleanup_noop_up_is_not_a_second_release_measurement' in (HERE/'candidate-suite.log').read_text()
+assert 'test_executor_focus_invalidation_after_execute_drain_publishes_receipt' in (HERE/'candidate-suite.log').read_text()
 optimized=(HERE/'candidate-suite-opt.log').read_text()
 assert int((HERE/'candidate-suite-opt.exit').read_text()) == 0
-assert re.search(r'Ran 12 tests?', optimized) and '\nOK\n' in optimized
-assert result['tests']['candidate_cancel_release_optimized']['count'] == 12
+assert re.search(r'Ran 13 tests?', optimized) and '\nOK\n' in optimized
+assert result['tests']['candidate_cancel_release_optimized']['count'] == 13
 assert result['tests']['candidate_cancel_release_optimized']['exit'] == 0
 for red_name,green_name,red_message in (
     ('post-drain-red-current','post-drain-green-current','AssertionError: 0 != 1'),
     ('noop-row-red-current','noop-row-green-current','Lists differ'),
+    ('focus-drain-red-current','focus-drain-green-current','AssertionError: 0 != 1'),
 ):
     red=(HERE/(red_name+'.log')).read_text()
     green=(HERE/(green_name+'.log')).read_text()
@@ -79,8 +81,9 @@ for line in (HERE/'SHA256SUMS').read_text().splitlines():
     assert name not in manifest_names, name
     manifest_names.add(name)
     assert hashlib.sha256((HERE/name).read_bytes()).hexdigest() == expected, name
-assert {'candidate-suite-opt.log','post-drain-red-current.log',
+assert {'candidate-suite-opt.log','focus-drain-red-current.log',
+        'focus-drain-green-current.log','post-drain-red-current.log',
         'post-drain-green-current.log','noop-row-red-current.log',
         'noop-row-green-current.log'} <= manifest_names
 assert result['scope'].startswith('Local fake-display')
-print(f'AUDIT_PASS_SOURCE_LOCK_AND_27_PRIMARY_TESTS_PLUS_12_OPTIMIZED_REPEAT_AND_{len(manifest_names)}_PACKAGE_FILES')
+print(f'AUDIT_PASS_SOURCE_LOCK_AND_28_PRIMARY_TESTS_PLUS_13_OPTIMIZED_REPEAT_AND_{len(manifest_names)}_PACKAGE_FILES')

@@ -37,3 +37,6 @@ Current A08 replay commands (bundled CPython 3.12.14, from repository root):
 - Read-only audit: `python research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py` (`AUDIT_PASS_SOURCE_LOCK_AND_27_PRIMARY_TESTS_PLUS_12_OPTIMIZED_REPEAT_AND_86_PACKAGE_FILES`).
 
 A08 regression pairs: `post-drain-red-current` / `post-drain-green-current` and `noop-row-red-current` / `noop-row-green-current`. All remain fake-display tests; no X server, game, GUI, or OS input was used.
+
+
+Focus-invalidation post-drain pair: `focus-drain-red-current.log` / `focus-drain-green-current.log`. Current suite totals: 13 focused, 13 optimized repeat, 3 ExecutorV12 composition, 10 owner compatibility, and 2 existing bridge tests. The audit result suffix records the 90-file manifest.
