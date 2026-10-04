@@ -1,0 +1,4 @@
+T1 focused test result before assertion repair
+Command: py -3 -m unittest -v research.doom.producer_scorer_session_envelope_join_59_t1_20261004.test_session_envelope_join
+Exit: 1
+Result: 10 passed, 1 failed. The candidate correctly rejected duplicate producer sequence with `producer sample sequence must increase by one`; the test incorrectly expected the text `strictly increasing`. Candidate source unchanged; test assertion corrected to the actual contract diagnostic.

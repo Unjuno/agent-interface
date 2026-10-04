@@ -1,0 +1,6 @@
+AUDIT V1 FAILURE RETAINED
+
+Command: py -3 research\doom\producer_scorer_occurrence_join_59_t0_20261004\audit.py
+Exit: 1
+Raw candidate output remains unchanged at results/t0-01/raw.json.
+Failure: the boundary control changed event.observed_ns to the XSync interval start but did not move the corresponding acknowledged sample clock. The join correctly rejected the unlinked event before the intended release-boundary control ran. This is an auditor fixture-construction failure; no candidate rerun occurred.

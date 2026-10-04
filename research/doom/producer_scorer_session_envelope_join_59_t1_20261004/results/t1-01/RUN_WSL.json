@@ -1,0 +1,22 @@
+{
+  "schema": "producer-scorer-session-envelope-run-v1",
+  "host": "Ubuntu WSL",
+  "python": "3.12.3",
+  "command_argv": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--",
+    "bash",
+    "-lc",
+    "cd '/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-7/work/agent-interface-producer-scorer-join' && python3 -m unittest -v research.doom.producer_scorer_session_envelope_join_59_t1_20261004.test_session_envelope_join && python3 research/doom/producer_scorer_session_envelope_join_59_t1_20261004/run_t1.py && python3 research/doom/producer_scorer_session_envelope_join_59_t1_20261004/audit_t1.py && python3 -m py_compile research/doom/producer_scorer_session_envelope_join_59_t1_20261004/*.py"
+  ],
+  "started_utc": "2026-10-04T08:46:40.1808458Z",
+  "ended_utc": "2026-10-04T08:46:45.0176943Z",
+  "exit_code": 0,
+  "tests": 11,
+  "candidate_and_audit": "PASS",
+  "py_compile_exit": 0,
+  "raw_sha256": "131dde5670be4c6235272a20d1603bf474f9ea56b21e5c48768f00af4db37767",
+  "raw_canonical_sha256": "1f68042baa52b42260b841f6df20ef9da59a3b9f0a4b563f3783e389d9c64b7d"
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "producer-scorer-occurrence-join-freeze-v1",
+  "base_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "hypothesis": "An acknowledged scorer sample can be joined to a positive scorer event and then to one admitted owner key occurrence only when sample/update identity, run identity, action binding, and release bounds are all present and consistent.",
+  "test": "Generate two deterministic samples through the frozen AcknowledgedSampler with a fake game, feed them to the frozen ProgressClock, and compose one positive event through the frozen occurrence reducer. Exercise cross-run, missing producer, misclocked event, repeated sequence, terminal mutation, and release-sync-boundary controls.",
+  "decision": {
+    "pass": "The exact event maps to its unique acknowledged sample and the one matching occurrence is returned as unique_temporal_occurrence; all mismatched or incomplete identity controls fail closed, and release-bracket events remain unresolved.",
+    "fail": "Any mismatched producer/action run is joined, any event without an exact acknowledged sample is attributed, or a release-boundary event becomes active.",
+    "scope": "Deterministic synthetic source-composition construction only. No actual engine, V16 session, X11 server, controller, model, game allocation, task effect, or physical input."
+  },
+  "competing_explanation": "Numeric clock overlap alone may appear sufficient; cross-run controls test whether that would create a false join.",
+  "uncertainty": "The owner occurrence candidate does not yet emit the scorer run_id in its admission/release records, so the same-run binding tested here is a required source contract, not demonstrated live telemetry. Producer freshness and clocks are also not qualified against an actual engine session.",
+  "sources": {
+    "origin/main": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+    "PR_7545_acknowledged_scorer": "d2660e2405d8f869963001dd8474def61f2647d0",
+    "PR_7546_occurrence_attribution": "2072491261c09de035d1baae944bb9acb86f29ec",
+    "PR_7546_stacked_owner_source": "2072491261c09de035d1baae944bb9acb86f29ec"
+  },
+  "host": "Windows host / Python 3.13 and Ubuntu WSL / Python 3.12; WSLc executable unavailable"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "producer-scorer-session-envelope-run-v1",
+  "host": "Windows 11 Pro build 26300",
+  "python": "3.13.14",
+  "commands": [
+    "py -3 -m unittest -v research.doom.producer_scorer_session_envelope_join_59_t1_20261004.test_session_envelope_join",
+    "py -3 research/doom/producer_scorer_session_envelope_join_59_t1_20261004/run_t1.py",
+    "py -3 research/doom/producer_scorer_session_envelope_join_59_t1_20261004/audit_t1.py",
+    "py -3 -m py_compile [all package *.py]"
+  ],
+  "started_utc": "2026-10-04T08:46:21.7270808Z",
+  "ended_utc": "2026-10-04T08:46:22.5367864Z",
+  "test_exit": 0,
+  "candidate_exit": 0,
+  "audit_exit": 0,
+  "py_compile_exit": 0,
+  "tests": 11,
+  "raw_sha256": "5f480cdfff7b4b7d786ddd9d20cc22a1dbd0b2e538bb4bcd984c2d9078f35a24",
+  "raw_canonical_sha256": "1f68042baa52b42260b841f6df20ef9da59a3b9f0a4b563f3783e389d9c64b7d",
+  "raw_file": "raw-windows.json (CRLF reconstruction; raw SHA matches recorded Windows output)"
+}
