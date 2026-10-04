@@ -10,7 +10,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from audit_positions import audit_rows
+from audit_positions import audit_presentation_schema, audit_rows
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -20,6 +20,11 @@ DESIGN = json.loads((SOURCE / "design.json").read_text(encoding="utf-8"))
 ROWS = [
     json.loads(line)
     for line in (RAW / "isolated.jsonl").read_text(encoding="utf-8").splitlines()
+    if line.strip()
+]
+PRESENTATION_ROWS = [
+    json.loads(line)
+    for line in (RAW / "presentations.jsonl").read_text(encoding="utf-8").splitlines()
     if line.strip()
 ]
 FROZEN_AUDITOR_SPEC = importlib.util.spec_from_file_location(
@@ -36,6 +41,17 @@ class PositionAuditTests(unittest.TestCase):
             "position_rows": 16,
             "expected_rows": 16,
         })
+
+    def test_retained_presentation_rows_have_exact_allowed_fields(self):
+        result = audit_presentation_schema(PRESENTATION_ROWS)
+        self.assertEqual(result, {"ok": True, "errors": [], "presentation_rows": 288})
+
+    def test_answer_bearing_presentation_field_is_rejected(self):
+        mutated = copy.deepcopy(PRESENTATION_ROWS)
+        mutated[0]["answer"] = "red_square"
+        result = audit_presentation_schema(mutated)
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["errors"], ["presentation-schema-mismatch"])
 
     def test_effective_wrong_position_mutation_is_rejected(self):
         mutated = copy.deepcopy(ROWS)
@@ -83,19 +99,49 @@ class PositionAuditTests(unittest.TestCase):
                 "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
                 encoding="utf-8",
             )
-            files = sorted(
-                path for path in mutated_output.rglob("*")
-                if path.is_file() and path.name not in {"SHA256SUMS", "audit.json"}
-            )
-            checksum_text = "".join(
-                f"{hashlib.sha256(path.read_bytes()).hexdigest()}  "
-                f"{path.relative_to(mutated_output).as_posix()}\n"
-                for path in files
-            )
-            (mutated_output / "SHA256SUMS").write_text(checksum_text, encoding="ascii")
+            refresh_checksums(mutated_output)
             original_result = FROZEN_AUDITOR.audit_package(mutated_output)
             self.assertTrue(original_result["ok"], original_result["errors"])
             self.assertFalse(audit_rows(rows, DESIGN)["ok"])
+
+    def test_original_frozen_auditor_accepts_answer_field_in_presentation(self):
+        with tempfile.TemporaryDirectory(prefix="7387-schema-audit-") as temp:
+            generated_output = Path(temp) / "generated-output"
+            subprocess.run(
+                ["python", "-B", str(SOURCE / "candidate.py"), "--out", str(generated_output)],
+                cwd=REPO_ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            generated_rows = [
+                json.loads(line)
+                for line in (generated_output / "presentations.jsonl").read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual(generated_rows, PRESENTATION_ROWS)
+            mutated = copy.deepcopy(generated_rows)
+            mutated[0]["answer"] = "red_square"
+            (generated_output / "presentations.jsonl").write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in mutated),
+                encoding="utf-8",
+            )
+            refresh_checksums(generated_output)
+            original_result = FROZEN_AUDITOR.audit_package(generated_output)
+            self.assertTrue(original_result["ok"], original_result["errors"])
+            self.assertFalse(audit_presentation_schema(mutated)["ok"])
+
+
+def refresh_checksums(output: Path) -> None:
+    files = sorted(
+        path for path in output.rglob("*")
+        if path.is_file() and path.name not in {"SHA256SUMS", "audit.json"}
+    )
+    checksum_text = "".join(
+        f"{hashlib.sha256(path.read_bytes()).hexdigest()}  "
+        f"{path.relative_to(output).as_posix()}\n"
+        for path in files
+    )
+    (output / "SHA256SUMS").write_text(checksum_text, encoding="ascii")
 
 
 if __name__ == "__main__":
