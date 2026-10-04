@@ -1,113 +1,126 @@
 import unittest
 
-from attribution import attribute_progress_events, normalize_releases
+from attribution import attribute_positive_events, normalize_releases
 
 
 def fixture():
+    samples = [
+        {"schema": "independent-progress-sample-v2", "session_id": "session-a",
+         "sample_ns": 100, "kill_count": 0, "death_count": 0},
+        {"schema": "independent-progress-sample-v2", "session_id": "session-a",
+         "sample_ns": 200, "kill_count": 1, "death_count": 0},
+    ]
+    events = [{"schema": "independent-progress-event-v2", "session_id": "session-a",
+               "event_sequence": 1, "observed_ns": 200,
+               "kind": "KILL_COUNT_INCREASE", "polarity": "positive",
+               "useful": True, "controller_visible": False}]
     admission = {
-        "event": "input_admission", "id": "program-1", "step": 2,
-        "key": "W", "keycode": 38, "input_occurrence_id": "owner-a:9",
-        "owner_id": "owner-a", "intent_token": "intent-a",
-        "admitted_ns": 100, "input_ack_ns": 110,
+        "event": "input_admission", "session_id": "session-a",
+        "id": "program-1", "step": 2, "key": "W", "keycode": 38,
+        "input_occurrence_id": "owner-a:9", "owner_id": "owner-a",
+        "intent_token": "intent-a", "admitted_ns": 80, "input_ack_ns": 90,
     }
     release = {
-        "event": "input_release_transition", "id": "program-1", "step": 2,
+        "event": "input_release_transition", "session_id": "session-a",
+        "id": "program-1", "step": 2,
         "owner_thread_keyup_receipt": {
-            "event": "owner_explicit_keyup", "keycode": 38,
+            "event": "owner_explicit_keyup", "key": "W", "keycode": 38,
             "input_occurrence_id": "owner-a:9", "owner_id": "owner-a",
-            "intent_token": "intent-a", "owner_keyrelease_started_ns": 200,
-            "owner_sync_returned_ns": 210, "server_sync_completed": True,
+            "intent_token": "intent-a", "owner_keyrelease_started_ns": 210,
+            "owner_sync_returned_ns": 220, "server_sync_completed": True,
             "cancel_requested_after_sync": False,
         },
     }
-    event = {"schema": "independent-progress-event-v2", "event_sequence": 1,
-             "observed_ns": 150, "kind": "KILL_COUNT_INCREASE",
-             "controller_visible": False}
-    binding = {"program_id": "program-1", "step": 2,
+    binding = {"session_id": "session-a", "program_id": "program-1", "step": 2,
                "semantic_action_sha256": "a" * 64}
-    return admission, release, event, binding
+    return samples, events, admission, release, binding
 
 
 class AttributionTests(unittest.TestCase):
-    def test_unique_event_to_action_and_owner_release(self):
-        admission, raw_release, event, binding = fixture()
-        releases = normalize_releases([raw_release])
-        result = attribute_progress_events([event], [admission], releases,
-                                           [binding])[0]
-        self.assertEqual(result["status"], "unique_temporal_occurrence")
-        self.assertEqual(result["input_occurrence_id"], "owner-a:9")
-        self.assertFalse(result["causation_claimed"])
-
-    def test_release_sync_window_is_not_claimed_as_active(self):
-        admission, raw_release, event, binding = fixture()
-        event["observed_ns"] = 205
-        result = attribute_progress_events([event], [admission],
-                                           normalize_releases([raw_release]),
-                                           [binding])[0]
-        self.assertEqual(result["status"], "unresolved_release_boundary")
-
-    def test_cancellation_batch_interval_keeps_occurrence_identity(self):
-        admission, _raw_release, event, binding = fixture()
-        cancellation = {
-            "event": "input_released", "id": "program-1",
-            "owner_release": {
-                "event": "owner_release", "verified": True,
-                "key_release_intervals_ns": [{
-                    "keycode": 38, "input_occurrence_id": "owner-a:9",
-                    "owner_id": "owner-a", "intent_token": "intent-a",
-                    "interval_ns": [200, 210],
-                }],
-            },
-        }
-        result = attribute_progress_events(
-            [event], [admission], normalize_releases([cancellation]),
+    def test_strict_full_detection_bracket_is_only_a_possible_envelope(self):
+        samples, events, admission, release, binding = fixture()
+        result = attribute_positive_events(
+            samples, events, [admission], normalize_releases([release]),
             [binding])[0]
-        self.assertEqual(result["status"], "unique_temporal_occurrence")
+        self.assertEqual(result["detection_interval_ns"], [100, 200])
+        self.assertEqual(result["status"], "SINGLE_POSSIBLE_INTENT_ENVELOPE")
+        self.assertIsNone(result["intent_token"])
+        self.assertEqual(result["possible_occurrence_ids"], ["owner-a:9"])
+        self.assertEqual(result["causal_attribution"], "NOT_ESTABLISHED")
 
-    def test_two_active_key_occurrences_are_ambiguous(self):
-        admission, raw_release, event, binding = fixture()
-        second = dict(admission, key="A", keycode=39,
-                      input_occurrence_id="owner-a:10")
-        second_release = dict(raw_release,
-                              owner_thread_keyup_receipt=dict(
-                                  raw_release["owner_thread_keyup_receipt"],
-                                  keycode=39, input_occurrence_id="owner-a:10"))
-        result = attribute_progress_events(
-            [event], [admission, second],
-            normalize_releases([raw_release, second_release]),
+    def test_instantaneous_timestamp_inside_interval_does_not_cover_detection_bracket(self):
+        samples, events, admission, release, binding = fixture()
+        release["owner_thread_keyup_receipt"]["owner_keyrelease_started_ns"] = 150
+        release["owner_thread_keyup_receipt"]["owner_sync_returned_ns"] = 160
+        result = attribute_positive_events(
+            samples, events, [admission], normalize_releases([release]),
             [binding])[0]
-        self.assertEqual(result["status"], "ambiguous_multiple_active_occurrences")
+        self.assertEqual(result["status"], "UNRESOLVED")
+        self.assertEqual(result["reason"], "no_complete_verified_intent_coverage")
 
-    def test_missing_or_duplicate_release_fails_closed(self):
-        admission, raw_release, event, binding = fixture()
-        release = normalize_releases([raw_release])[0]
-        for releases in ([], [release, release]):
-            result = attribute_progress_events([event], [admission], releases,
-                                               [binding])[0]
-            self.assertEqual(result["status"],
-                             "unresolved_invalid_or_nonunique_lifecycle")
+    def test_cross_session_rows_are_rejected(self):
+        samples, events, admission, release, binding = fixture()
+        events[0]["session_id"] = "session-b"
+        with self.assertRaisesRegex(ValueError, "session_id mismatch"):
+            attribute_positive_events(samples, events, [admission],
+                                     normalize_releases([release]), [binding])
 
-    def test_missing_or_ambiguous_action_binding_fails_closed(self):
-        admission, raw_release, event, binding = fixture()
-        releases = normalize_releases([raw_release])
-        invalid_hash = dict(binding, semantic_action_sha256="not-a-sha256")
-        for bindings in ([], [binding, binding], [invalid_hash]):
-            result = attribute_progress_events([event], [admission], releases,
-                                               bindings)[0]
-            self.assertEqual(result["status"],
-                             "unresolved_invalid_or_nonunique_lifecycle")
+    def test_endpoint_tie_is_unresolved(self):
+        samples, events, admission, release, binding = fixture()
+        release["owner_thread_keyup_receipt"]["owner_keyrelease_started_ns"] = 190
+        release["owner_thread_keyup_receipt"]["owner_sync_returned_ns"] = 200
+        result = attribute_positive_events(
+            samples, events, [admission], normalize_releases([release]),
+            [binding])[0]
+        self.assertEqual(result["status"], "UNRESOLVED")
+        self.assertEqual(result["reason"], "endpoint_tie_without_authenticated_order")
 
-    def test_identity_mismatch_and_controller_visible_event_fail_closed(self):
-        admission, raw_release, event, binding = fixture()
-        raw_release["owner_thread_keyup_receipt"]["input_occurrence_id"] = "owner-a:10"
-        result = attribute_progress_events([event], [admission],
-                                           normalize_releases([raw_release]),
-                                           [binding])[0]
-        self.assertEqual(result["status"],
-                         "unresolved_invalid_or_nonunique_lifecycle")
-        event["controller_visible"] = True
-        result = attribute_progress_events([event], [admission], [], [binding])[0]
-        self.assertEqual(result["status"], "unresolved_invalid_progress_event")
+    def test_multiple_intents_are_ambiguous(self):
+        samples, events, admission, release, binding = fixture()
+        second = dict(admission, id="program-2", input_occurrence_id="owner-a:10",
+                      intent_token="intent-b", key="A", keycode=39)
+        second_release = dict(release, id="program-2", owner_thread_keyup_receipt=dict(
+            release["owner_thread_keyup_receipt"], input_occurrence_id="owner-a:10",
+            intent_token="intent-b", key="A", keycode=39))
+        second_binding = dict(binding, program_id="program-2",
+                              semantic_action_sha256="b" * 64)
+        result = attribute_positive_events(
+            samples, events, [admission, second],
+            normalize_releases([release, second_release]),
+            [binding, second_binding])[0]
+        self.assertEqual(result["status"], "AMBIGUOUS")
+        self.assertEqual(result["possible_intent_tokens"], ["intent-a", "intent-b"])
+
+    def test_unverified_cancel_release_stays_unresolved(self):
+        samples, events, admission, _release, binding = fixture()
+        cancel = {"event": "input_released", "session_id": "session-a",
+                  "id": "program-1", "owner_release": {
+                      "event": "owner_release", "verified": False,
+                      "key_release_intervals_ns": [{
+                          "keycode": 38, "input_occurrence_id": "owner-a:9",
+                          "owner_id": "owner-a", "intent_token": "intent-a",
+                          "interval_ns": [150, 220],
+                      }],
+                  }}
+        result = attribute_positive_events(
+            samples, events, [admission], normalize_releases([cancel]),
+            [binding])[0]
+        self.assertEqual(result["status"], "UNRESOLVED")
+        self.assertEqual(result["reason"], "unverified_release_boundary")
+
+    def test_missing_duplicate_or_mismatched_occurrence_fails_closed(self):
+        samples, events, admission, release, binding = fixture()
+        normalized = normalize_releases([release])
+        for admissions, releases in (([admission], []),
+                                     ([admission, admission], normalized),
+                                     ([admission], normalized + normalized)):
+            with self.assertRaises(ValueError):
+                attribute_positive_events(samples, events, admissions, releases,
+                                          [binding])
+        release["owner_thread_keyup_receipt"]["input_occurrence_id"] = "other"
+        with self.assertRaisesRegex(ValueError, "requires exactly one release"):
+            attribute_positive_events(samples, events, [admission],
+                                      normalize_releases([release]), [binding])
 
 
 if __name__ == "__main__":
