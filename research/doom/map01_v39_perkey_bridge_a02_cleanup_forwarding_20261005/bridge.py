@@ -72,7 +72,10 @@ class Backend(Previous):
         self.drain_owner_records()
         operation = "down" if down else "up"
         record = self.owner.call(operation, self.lease, key)
-        self.drain_owner_records()
+        # A concurrent cancellation can publish the matching cleanup row before
+        # call("down") returns. Register and emit the admission before draining it.
+        if not (down and record is not None):
+            self.drain_owner_records()
         if down:
             self.held.add(key)
         else:
@@ -94,6 +97,8 @@ class Backend(Previous):
             if (row.get("owner_id"), row.get("intent_token"), key) not in self._active_actuations:
                 return
         self.emit(row)
+        if down:
+            self.drain_owner_records()
 
     def close(self):
         self.drain_owner_records()

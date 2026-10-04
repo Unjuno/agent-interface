@@ -95,6 +95,58 @@ class CleanupForwardingTests(unittest.TestCase):
         finally:
             h.close()
 
+    def test_cleanup_published_during_down_call_keeps_admission_context(self):
+        aid = "owner:g1:F8"
+        cleanup = {"event": "owner_release", "verified": True,
+                   "per_key_release_measurements": [{
+                       "key": "F8", "actuation_id": aid,
+                       "classification": "CONFIRMED_PHYSICAL_UP",
+                       "bracket": {"key": "F8", "owner_id": "owner",
+                                   "intent_token": "tok",
+                                   "physical_up_interval": [10, 11]}}]}
+
+        class RacingOwner:
+            owner_id = "owner"
+
+            def __init__(self):
+                self.records = []
+
+            def call(self, operation, lease, key):
+                if operation == "down":
+                    # Deterministically model cancellation publication in the
+                    # return-to-caller window of the down operation.
+                    self.records.append(cleanup)
+                    return {"event": "input_admission", "owner_id": "owner",
+                            "intent_token": "tok", "key": key,
+                            "physical_key_measurement": {
+                                "actuation_id": aid, "classification": "ADMITTED"}}
+                return {"event": "input_release_measurement", "owner_id": "owner",
+                        "intent_token": "tok", "key": key,
+                        "physical_key_measurement": {
+                            "actuation_id": None, "classification": "NOOP_ALREADY_UP"}}
+
+        b = object.__new__(Backend)
+        b.owner, b.lease, b.held = RacingOwner(), types.SimpleNamespace(intent_token="tok"), set()
+        b._input_event_context = ("run-race", 2)
+        b._owner_records_cursor = 0
+        b._active_actuations, b._actuation_context = {}, {}
+        b.events, b.emit = [], None
+        b.emit = b.events.append
+
+        b.raw("F8", True)
+        b.raw("F8", False)
+
+        self.assertEqual([row["event"] for row in b.events],
+                         ["input_admission", "input_release_measurement"])
+        release = b.events[1]
+        self.assertEqual((release["id"], release["step"], release["intent_token"]),
+                         ("run-race", 2, "tok"))
+        self.assertEqual(release["physical_key_measurement"]["actuation_id"], aid)
+        self.assertEqual(release["physical_key_measurement"]["classification"],
+                         "CONFIRMED_PHYSICAL_UP")
+        self.assertEqual(release["owner_cleanup_record"], cleanup)
+        self.assertFalse(release["grants_input_authority"])
+
     def test_unmapped_cleanup_is_retained_without_projected_authority(self):
         b = object.__new__(Backend)
         b._actuation_context, b._active_actuations = {}, {}
