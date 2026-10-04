@@ -6,8 +6,10 @@
   "hypothesis": "An additive owner derivation can compose PR 7441's single key-up receipt with PR 7440's post-I/O cancellation-cause recheck.",
   "candidate_derivation": {
     "base_path": "FROZEN/pr7441/research/live_control/input_owner_v12.py",
-    "patch_source": "PR 7440 research/live_control/input_owner_v12.py",
-    "patch": "After X query_keymap and key-state verification, before constructing/recording owner_release: if reason is release and active.cancel is set, change reason to cancelled."
+    "patch_source": "FROZEN/pr7440/research/live_control/input_owner_v12.py",
+    "patch": "After X query_keymap and key-state verification, before constructing/recording owner_release: if reason is release and active.cancel is set, change reason to cancelled.",
+    "patch_git_blob_sha1": "4623b7858f639c6a70531651b0c39a67701d5223",
+    "base_git_blob_sha1": "49e77ac4c63b2c7f0f69af7ce68506ca717bec00"
   },
   "tests": [
     "candidate.live_control.test_composed_cancel_keyup_boundary",

@@ -36,13 +36,71 @@ def has_expected_initial_failure(output: str) -> bool:
     )
 
 
+def has_exact_owner_derivation(base_source: str, patch_source: str, candidate: str) -> bool:
+    """Require the candidate owner to be PR #7441 plus PR #7440's cause recheck."""
+    anchor = (
+        "            down = [code for code in touched "
+        "if bitmap[code // 8] & (1 << (code % 8))]\n"
+    )
+    addition = (
+        "            # Compose PR #7440's final post-I/O cause recheck with PR #7441's key-up receipt.\n"
+        "            if reason == 'release' and active is not None and active.cancel.is_set():\n"
+        "                reason = 'cancelled'\n"
+    )
+    patch_logic = (
+        "            if reason == 'release' and active is not None and active.cancel.is_set():\n"
+        "                reason = 'cancelled'\n"
+    )
+    return (
+        base_source.count(anchor) == 1
+        and patch_logic in patch_source
+        and candidate == base_source.replace(anchor, anchor + addition, 1)
+    )
+
+
+def has_pinned_owner_sources(pins: dict, freeze: dict) -> bool:
+    derivation = freeze["candidate_derivation"]
+    expected = {
+        derivation["base_path"]: freeze["pr7441_head"],
+        derivation["patch_source"]: freeze["pr7440_head"],
+    }
+    return all(
+        path in pins
+        and pins[path].get("source_ref") == source_ref
+        and re.fullmatch(r"[0-9a-f]{64}", pins[path].get("sha256", ""))
+        for path, source_ref in expected.items()
+    )
+
+
 def main() -> None:
     pins = json.loads((ROOT / "SOURCE_PINS.json").read_text(encoding="utf-8"))
+    freeze = json.loads((ROOT / "FREEZE.json").read_text(encoding="utf-8"))
     errors = []
     for rel, expected in pins.items():
         path = ROOT / rel
         if not path.is_file() or sha(path) != expected["sha256"]:
             errors.append(f"source_hash:{rel}")
+
+    derivation = freeze["candidate_derivation"]
+    base_path = derivation["base_path"]
+    patch_path = derivation["patch_source"]
+    owner_sources_pinned = has_pinned_owner_sources(pins, freeze)
+    if not owner_sources_pinned:
+        errors.append("owner_derivation_inputs_not_pinned")
+    owner_derivation_passed = False
+    try:
+        base_source = (ROOT / base_path).read_text(encoding="utf-8")
+        patch_source = (ROOT / patch_path).read_text(encoding="utf-8")
+        candidate_owner = (ROOT / "candidate/live_control/input_owner_v12.py").read_text(
+            encoding="utf-8"
+        )
+        owner_derivation_passed = has_exact_owner_derivation(
+            base_source, patch_source, candidate_owner
+        )
+        if not owner_derivation_passed:
+            errors.append("candidate_owner_not_exact_frozen_derivation")
+    except OSError:
+        errors.append("owner_derivation_source_missing")
 
     composition = (ROOT / "raw/composition-output.txt").read_text(encoding="utf-8")
     composition_exit = (ROOT / "raw/composition-exit.txt").read_text(encoding="utf-8").strip()
@@ -83,6 +141,8 @@ def main() -> None:
         "decision": "PASS_COMPOSITION_SCOPED" if not errors else "FAIL_AUDIT",
         "test_count": 7,
         "composition_tests_passed": 6 if " ... ok" in composition else 0,
+        "owner_sources_pinned": owner_sources_pinned,
+        "owner_derivation_passed": owner_derivation_passed,
         "publication_control_passed": control_exit == "0",
         "composition_exit": composition_exit,
         "publication_control_exit": control_exit,

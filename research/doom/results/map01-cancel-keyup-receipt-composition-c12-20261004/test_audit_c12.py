@@ -1,5 +1,6 @@
 """Regression tests for the retained-failure evidence audit."""
 from pathlib import Path
+import json
 import unittest
 
 import audit_c12
@@ -46,6 +47,43 @@ Ran 7 tests in 0.022s
 FAILED (errors=1)
 """
         self.assertFalse(audit_c12.has_expected_initial_failure(wrong_context))
+
+
+class OwnerDerivationTests(unittest.TestCase):
+    def test_accepts_the_pinned_pr7441_owner_with_pr7440_recheck(self) -> None:
+        base = (ROOT / "FROZEN/pr7441/research/live_control/input_owner_v12.py").read_text(
+            encoding="utf-8"
+        )
+        patch = (ROOT / "FROZEN/pr7440/research/live_control/input_owner_v12.py").read_text(
+            encoding="utf-8"
+        )
+        candidate = (ROOT / "candidate/live_control/input_owner_v12.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertTrue(audit_c12.has_exact_owner_derivation(base, patch, candidate))
+
+    def test_rejects_candidate_with_an_unreviewed_owner_change(self) -> None:
+        base = (ROOT / "FROZEN/pr7441/research/live_control/input_owner_v12.py").read_text(
+            encoding="utf-8"
+        )
+        patch = (ROOT / "FROZEN/pr7440/research/live_control/input_owner_v12.py").read_text(
+            encoding="utf-8"
+        )
+        candidate = (ROOT / "candidate/live_control/input_owner_v12.py").read_text(
+            encoding="utf-8"
+        )
+        changed = candidate.replace("reason = 'cancelled'", "reason = 'release'", 1)
+        self.assertNotEqual(changed, candidate)
+        self.assertFalse(audit_c12.has_exact_owner_derivation(base, patch, changed))
+
+
+class FrozenSourcePinTests(unittest.TestCase):
+    def test_requires_both_inputs_to_be_pinned_to_the_declared_pr_heads(self) -> None:
+        pins = json.loads((ROOT / "SOURCE_PINS.json").read_text())
+        freeze = json.loads((ROOT / "FREEZE.json").read_text())
+        self.assertTrue(audit_c12.has_pinned_owner_sources(pins, freeze))
+        del pins["FROZEN/pr7440/research/live_control/input_owner_v12.py"]
+        self.assertFalse(audit_c12.has_pinned_owner_sources(pins, freeze))
 
 
 if __name__ == "__main__":
