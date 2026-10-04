@@ -1,0 +1,82 @@
+{
+  "clock_domain": "synthetic_runtime_perf_counter_ns",
+  "live_game_model_or_input_launched": false,
+  "max_gap_ns": 100,
+  "rows": [
+    {
+      "expected": "ADMISSION_BRACKETED_PROGRESS",
+      "id": "valid_file_join",
+      "observed": {
+        "accepted_ns": 100,
+        "baseline_ns": 110,
+        "causal_attribution": false,
+        "decision": "ADMISSION_BRACKETED_PROGRESS",
+        "first_input_ns": 120,
+        "gap_ns": 20,
+        "intent_id": "recover-1",
+        "positive_sample_ns": 130,
+        "progress": {
+          "death_count": 0,
+          "kill_count": 1,
+          "map_exit": false
+        },
+        "reason": "bounded_independent_progress_observed_after_first_input"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "progress_only_before_first_input",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "no_bounded_post_input_progress"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "freshest_pre_input_baseline",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "no_bounded_post_input_progress"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "missing_pre_input_baseline",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "no_post_acceptance_pre_input_baseline"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "missed_period_in_attribution_window",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "missed_scorer_period"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "malformed_sample_bracket",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_scorer_clock_bracket"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "ambiguous_intent_identity",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "missing_or_ambiguous_acceptance"
+      }
+    }
+  ],
+  "schema": "scorer-eventlog-join-t0-raw-v1"
+}
