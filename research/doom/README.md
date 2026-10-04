@@ -379,3 +379,7 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 # Issue #59 retained v39 ammo-timeline posthoc package
 
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
+
+# Issue #59 retained V39 ammo-timeline audit follow-up
+
+[v39_fire_cover_ammo_timeline_audit_a01_20261005/REPORT.md](v39_fire_cover_ammo_timeline_audit_a01_20261005/REPORT.md) — v1 passed six saved-result corruptions, and A01 exposed an additional missing-null-key false pass. A02 matches 40 fields and rejects all six with independent reconstruction. Audit-integrity evidence only; original result unchanged, no new live allocation or task-effect claim.
