@@ -1,4 +1,5 @@
 """Regressions for source-bound HUD state feedback in V39 planner context."""
+from copy import deepcopy
 import hashlib
 from itertools import product
 import json
@@ -7,7 +8,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 
 HERE = Path(__file__).resolve().parent
@@ -500,7 +501,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipt["state_feedback"]["to_sequence"], 89)
         self.assertEqual(receipt["state_feedback"]["signals"]["ammo"]["delta"], -1)
 
-    def test_missing_prior_final_typed_frame_does_not_fall_back_to_earlier_sample(self):
+    def test_two_step_unavailable_endpoints_do_not_fall_back(self):
         before = observation(80, 100)
         before.update({"image": "before.png", "step": 0})
         step0_first = observation(81, 200)
@@ -518,26 +519,52 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         typed = [
             typed_observation(80, 100, 100, 50),
             typed_observation(81, 200, 90, 49),
-            # The final sample of step 0 has no typed counterpart.
+            typed_observation(82, 300, 80, 48),
             typed_observation(83, 400, 79, 47),
             typed_observation(84, 500, 78, 46),
         ]
         for row in typed:
-            row["step"] = 0 if row["sequence"] <= 81 else 1
+            row["step"] = 0 if row["sequence"] <= 82 else 1
 
-        with patch.object(controller, "descriptor",
-                          side_effect=["before", "step0-last", "step1-last"]), \
-             patch.object(controller, "normalized_mae", return_value=0.1):
-            receipts = controller.effect_receipts(
-                [{"action": "fire", "extent": "pulse"},
-                 {"action": "advance", "extent": "pulse"}],
-                before, [step0_first, step0_last, step1_first, step1_last],
-                150, typed_observations=typed)
+        cases = (
+            ("prior_final_missing", 82, "missing", "typed_frame_missing_or_ambiguous"),
+            ("prior_final_duplicate", 82, "duplicate", "typed_frame_missing_or_ambiguous"),
+            ("prior_final_unknown", 82, "unknown", "typed_signal_unavailable"),
+            ("current_first_missing", 83, "missing", "typed_frame_missing_or_ambiguous"),
+            ("prior_first_unknown", 81, "unknown", None),
+        )
+        for name, sequence, mutation, reason in cases:
+            with self.subTest(case=name):
+                rows = deepcopy(typed)
+                target = next(row for row in rows if row["sequence"] == sequence)
+                if mutation == "missing":
+                    rows.remove(target)
+                elif mutation == "duplicate":
+                    rows.append(deepcopy(target))
+                else:
+                    target["signals"]["health"].update(status="unknown", value=None)
+                with patch.object(controller, "descriptor",
+                                  side_effect=["before", "step0-last", "step1-last"]), \
+                     patch.object(controller, "normalized_mae", return_value=0.1):
+                    receipts = controller.effect_receipts(
+                        [{"action": "fire", "extent": "pulse"},
+                         {"action": "advance", "extent": "pulse"}],
+                        before, [step0_first, step0_last, step1_first, step1_last],
+                        150, typed_observations=rows)
 
-        self.assertEqual(receipts[1]["state_feedback"]["status"], "unavailable")
-        self.assertEqual(receipts[1]["state_feedback"]["reason"],
-                         "typed_frame_missing_or_ambiguous")
-        self.assertNotIn("signals", receipts[1]["state_feedback"])
+                if reason is not None:
+                    self.assertEqual(receipts[1]["state_feedback"], {
+                        "status": "unavailable", "reason": reason})
+                else:
+                    self.assertEqual(receipts[0]["state_feedback"], {
+                        "status": "unavailable", "reason": "typed_signal_unavailable"})
+                    feedback = receipts[1]["state_feedback"]
+                    self.assertEqual(feedback["status"], "observed")
+                    self.assertEqual((feedback["from_sequence"], feedback["to_sequence"]),
+                                     (82, 83))
+                    self.assertEqual(feedback["signals"], {
+                        "health": {"before": 80, "after": 79, "delta": -1},
+                        "ammo": {"before": 48, "after": 47, "delta": -1}})
 
     def test_next_action_state_feedback_uses_previous_step_final_observation(self):
         before = observation(80, 100)
@@ -565,8 +592,8 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             row["step"] = 0 if row["sequence"] <= 82 else 1
 
         with patch.object(controller, "descriptor",
-                          side_effect=["before", "step0-last", "step1-last"]), \
-             patch.object(controller, "normalized_mae", return_value=0.1):
+                          side_effect=["before", "step0-last", "step1-last"]) as describe, \
+             patch.object(controller, "normalized_mae", return_value=0.1) as mae:
             receipts = controller.effect_receipts(
                 [{"action": "fire", "extent": "pulse"},
                  {"action": "advance", "extent": "pulse"}],
@@ -579,6 +606,17 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipts[1]["state_feedback"]["from_sequence"], 82)
         self.assertEqual(receipts[1]["state_feedback"]["to_sequence"], 83)
         self.assertEqual(receipts[1]["state_feedback"]["signals"]["health"]["delta"], -1)
+        self.assertEqual(receipts[1]["state_feedback"]["signals"]["ammo"],
+                         {"before": 48, "after": 47, "delta": -1})
+        self.assertEqual([
+            (row["feedback_sequence"], row["feedback_capture_ns"],
+             row["after_sequence"], row["effect_observed_ns"])
+            for row in receipts], [(81, 200, 82, 300), (83, 400, 84, 500)])
+        self.assertEqual(describe.call_args_list, [
+            call(Path("before.png")), call(Path("step0-last.png")),
+            call(Path("step1-last.png"))])
+        self.assertEqual(mae.call_args_list, [
+            call("before", "step0-last"), call("step0-last", "step1-last")])
 
 
 if __name__ == "__main__":
