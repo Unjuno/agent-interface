@@ -50,7 +50,7 @@ def main():
     previous._GameProxy = lambda inner, final_sample: ObservedGameProxy(inner, final_sample, sampler)
     session_error = None
     try:
-        return previous.main()
+        return previous.main(run_id=run_id)
     except BaseException as error:
         session_error = error
         raise
