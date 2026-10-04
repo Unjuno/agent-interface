@@ -9,6 +9,8 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #17: [notification identity R03 arrival-before-wait evidence](concurrency/notification_identity_r03_17_20261004_b64b/RESCUE_20261004.md) — preserves R01/R02/R03 evidence and failures as inert archive; active client patch is excluded, and all FINAL-v5 vote/applicability/application gates remain open.
 - Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
 
+- Issue #7709 T1: [retained-trace feasibility audit](analysis/latency_regime_coverage_7709_t1_feasibility_20261005/REPORT.md) — one fixed-order model-visible pair only; 1,051 archived files independently hash-checked; HOLD for insufficient independent runs.
+
 - Issue #57: [incomplete-frame byte-frontier A01](integration/frame_byte_frontier_57_20261003_45e9/REPORT.md) — eight-cell construction PASS preserved; production cap and typed-stop integration remain HOLD, with current-main custody checks in [`RESCUE_20261004.md`](integration/frame_byte_frontier_57_20261003_45e9/RESCUE_20261004.md).
 - Issue #6526 C03: [WAL snapshot/write recovery boundary](integration/wal_snapshot_recovery_6526_01a0ff58_c03/REPORT.md) — six native compatibility cells preserved; original audit PASS and its SQL-copy gap remain alongside the separately versioned V2 audit that rejects all eight effective controls. No runtime recovery policy or task authority follows.
 
