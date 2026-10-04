@@ -82,6 +82,24 @@ def classify_intervals(heartbeats, host_rows):
     return summary
 
 
+def authenticate_post_manifest(worktree_manifest: bytes, index_manifest: bytes,
+                               head_manifest: bytes, worktree_sidecar: bytes,
+                               index_sidecar: bytes, head_sidecar: bytes) -> tuple[bool, list[str]]:
+    """Authenticate the post-audit manifest before trusting its path list."""
+    errors = []
+    if not (worktree_manifest == index_manifest == head_manifest):
+        errors.append("post-audit manifest differs across worktree, index, and HEAD")
+    if not (worktree_sidecar == index_sidecar == head_sidecar):
+        errors.append("post-audit manifest sidecar differs across worktree, index, and HEAD")
+    try:
+        expected = worktree_sidecar.decode("ascii").split()[0]
+    except (UnicodeDecodeError, IndexError):
+        expected = ""
+    if not expected or hashlib.sha256(worktree_manifest).hexdigest() != expected:
+        errors.append("post-audit manifest does not match its sidecar")
+    return not errors, errors
+
+
 def main() -> int:
     run = read_json(OUT / "RUN.json")
     original_audit = read_json(OUT / "AUDIT.json")
@@ -97,25 +115,45 @@ def main() -> int:
     )
     errors.extend(compare_streams(raw_rows, observed_rows, heartbeats, progress))
 
-    post_rows = [line.split("  ", 1) for line in
-                 (OUT / "POST_AUDIT_SHA256SUMS.txt").read_text(encoding="utf-8").splitlines()]
+    repo = ROOT.parents[2]
+    prefix = ROOT.relative_to(repo).as_posix() + "/"
+    manifest_rel = f"{prefix}results/a01/POST_AUDIT_SHA256SUMS.txt"
+    sidecar_rel = f"{prefix}results/a01/POST_AUDIT_SHA256SUMS.sha256"
+    manifest_path = OUT / "POST_AUDIT_SHA256SUMS.txt"
+    sidecar_path = OUT / "POST_AUDIT_SHA256SUMS.sha256"
+    work_manifest = manifest_path.read_bytes()
+    work_sidecar = sidecar_path.read_bytes()
+    index_manifest = subprocess.run(["git", "show", f":{manifest_rel}"], cwd=repo,
+                                    capture_output=True)
+    head_manifest = subprocess.run(["git", "show", f"HEAD:{manifest_rel}"], cwd=repo,
+                                   capture_output=True)
+    index_sidecar = subprocess.run(["git", "show", f":{sidecar_rel}"], cwd=repo,
+                                   capture_output=True)
+    head_sidecar = subprocess.run(["git", "show", f"HEAD:{sidecar_rel}"], cwd=repo,
+                                  capture_output=True)
+    post_manifest_authenticated = all(result.returncode == 0 for result in
+                                      (index_manifest, head_manifest, index_sidecar, head_sidecar))
+    post_manifest_errors = []
+    if post_manifest_authenticated:
+        post_manifest_authenticated, post_manifest_errors = authenticate_post_manifest(
+            work_manifest, index_manifest.stdout, head_manifest.stdout,
+            work_sidecar, index_sidecar.stdout, head_sidecar.stdout,
+        )
+    else:
+        post_manifest_errors = ["post-audit manifest or sidecar Git blob unavailable"]
+    errors.extend(post_manifest_errors)
+    post_rows = ([line.split("  ", 1) for line in work_manifest.decode("utf-8").splitlines()]
+                 if post_manifest_authenticated else [])
     worktree_mismatches = [name for digest, name in post_rows
                            if not (OUT / name).is_file()
                            or hashlib.sha256((OUT / name).read_bytes()).hexdigest() != digest]
-    repo = ROOT.parents[2]
-    prefix = ROOT.relative_to(repo).as_posix() + "/"
     committed_mismatches = []
     for digest, name in post_rows:
         blob = subprocess.run(["git", "show", f"HEAD:{prefix}results/a01/{name}"],
                               cwd=repo, capture_output=True)
         if blob.returncode != 0 or hashlib.sha256(blob.stdout).hexdigest() != digest:
             committed_mismatches.append(name)
-    sidecar_digest = (OUT / "POST_AUDIT_SHA256SUMS.sha256").read_text(encoding="utf-8").split()[0]
-    committed_manifest = subprocess.run(
-        ["git", "show", f"HEAD:{prefix}results/a01/POST_AUDIT_SHA256SUMS.txt"],
-        cwd=repo, capture_output=True, check=True,
-    ).stdout
-    sidecar_mismatch = hashlib.sha256(committed_manifest).hexdigest() != sidecar_digest
+    sidecar_mismatch = not post_manifest_authenticated
     if worktree_mismatches:
         errors.append("post-audit worktree seal mismatch")
     if committed_mismatches:
@@ -174,6 +212,7 @@ def main() -> int:
         "post_audit_manifest_worktree_mismatches": worktree_mismatches,
         "post_audit_manifest_committed_blob_mismatches": committed_mismatches,
         "post_audit_manifest_committed_sidecar_mismatch": sidecar_mismatch,
+        "post_audit_manifest_authenticated_before_path_use": post_manifest_authenticated,
     }
     REVIEW_OUT.parent.mkdir(parents=True, exist_ok=True)
     with REVIEW_OUT.open("w", encoding="utf-8", newline="\n") as stream:

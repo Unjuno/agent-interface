@@ -40,3 +40,18 @@ class ReconstructedBusyFormulaTests(unittest.TestCase):
         self.assertEqual(reconstructed_regime(66.666667), "threshold_ambiguous")
         self.assertEqual(reconstructed_regime(66.666668), "elevated")
         self.assertEqual(reconstructed_regime(66.666665), "ordinary")
+
+    def test_post_manifest_path_list_is_not_used_if_worktree_is_mutated(self):
+        import hashlib
+        from recheck_regimes import authenticate_post_manifest
+        sealed = b"sha256  retained.json\n"
+        sidecar = (hashlib.sha256(sealed).hexdigest() + "  POST_AUDIT_SHA256SUMS.txt\n").encode()
+        ok, errors = authenticate_post_manifest(sealed, sealed, sealed, sidecar, sidecar, sidecar)
+        self.assertTrue(ok)
+        self.assertEqual(errors, [])
+
+        altered = b"sha256  omitted-critical-file.json\n"
+        ok, errors = authenticate_post_manifest(altered, sealed, sealed, sidecar, sidecar, sidecar)
+        self.assertFalse(ok)
+        self.assertIn("post-audit manifest differs across worktree, index, and HEAD", errors)
+        self.assertIn("post-audit manifest does not match its sidecar", errors)
