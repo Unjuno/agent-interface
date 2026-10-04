@@ -65,7 +65,27 @@ def release_order_ok(last_active: dict, release: dict, first_neutral: dict) -> b
     ))
 
 
-def source_tree_pins_ok(preparation: dict) -> tuple[int, list[str]]:
+def validate_source_records(members: dict, tree: dict, blobs: dict[bytes, bytes]) -> dict:
+    git_blob_failures = []
+    sha256_failures = []
+    byte_count_failures = []
+    for path, row in members.items():
+        object_id = tree.get(path)
+        if object_id != row["git_blob"]:
+            git_blob_failures.append(path)
+        data = blobs.get(object_id.encode("ascii")) if object_id else None
+        if data is None or hashlib.sha256(data).hexdigest() != row["sha256"]:
+            sha256_failures.append(path)
+        if data is None or len(data) != row["bytes"]:
+            byte_count_failures.append(path)
+    return {
+        "git_blob_failures": git_blob_failures,
+        "sha256_failures": sha256_failures,
+        "byte_count_failures": byte_count_failures,
+    }
+
+
+def source_tree_pins_ok(preparation: dict) -> tuple[int, dict]:
     output = subprocess.run(
         ["git", "ls-tree", "-r", "-z", preparation["source_commit"]],
         cwd=REPO, check=True, capture_output=True,
@@ -78,11 +98,24 @@ def source_tree_pins_ok(preparation: dict) -> tuple[int, list[str]]:
         _mode, kind, object_id = metadata.split()
         if kind == b"blob":
             tree[path.decode("utf-8")] = object_id.decode("ascii")
-    failures = [
-        path for path, row in preparation["members"].items()
-        if tree.get(path) != row["git_blob"]
-    ]
-    return len(tree), failures
+    object_ids = sorted({tree[path] for path in preparation["members"] if path in tree})
+    batch = subprocess.run(
+        ["git", "cat-file", "--batch"], cwd=REPO, check=True,
+        input=("\n".join(object_ids) + "\n").encode("ascii"), capture_output=True,
+    ).stdout
+    blobs = {}
+    offset = 0
+    while offset < len(batch):
+        header_end = batch.index(b"\n", offset)
+        object_id, kind, size_text = batch[offset:header_end].split()
+        size = int(size_text)
+        data_start = header_end + 1
+        data_end = data_start + size
+        if kind != b"blob" or batch[data_end:data_end + 1] != b"\n":
+            raise ValueError("unexpected git cat-file --batch record")
+        blobs[object_id] = batch[data_start:data_end]
+        offset = data_end + 1
+    return len(tree), validate_source_records(preparation["members"], tree, blobs)
 
 
 def run_audit() -> dict:
@@ -100,7 +133,7 @@ def run_audit() -> dict:
             manifest_failures.append(rel)
 
     preparation = read_json(PACKAGE / "SOURCE_PREPARATION.json")
-    tree_blob_count, source_pin_failures = source_tree_pins_ok(preparation)
+    tree_blob_count, source_pin_checks = source_tree_pins_ok(preparation)
     declared_copies = read_json(PACKAGE / "DECLARED_COPIES.json")
     copy_failures = []
     for rel in declared_copies:
@@ -180,7 +213,11 @@ def run_audit() -> dict:
     action_ticks = [rows[i]["tic_before"] for i in active]
     all_checks = {
         "package_manifest_89_members": not manifest_failures and len(manifest) == 89,
-        "source_preparation_git_pins": not source_pin_failures and len(preparation["members"]) == 1957,
+        "source_preparation_git_pins": not source_pin_checks["git_blob_failures"] and len(preparation["members"]) == 1957,
+        "source_preparation_sha256_and_byte_counts": (
+            not source_pin_checks["sha256_failures"] and
+            not source_pin_checks["byte_count_failures"] and len(preparation["members"]) == 1957
+        ),
         "declared_source_copies": not copy_failures and len(declared_copies) == 20,
         "sample_rows_authority_free_and_tic_coherent": row_shape_ok and len(rows) == 717 and coherent_count == 717,
         "left_action_only_with_neutral_neighbors": all(action["checks"].values()) and len(active) == 8,
@@ -197,6 +234,8 @@ def run_audit() -> dict:
         "source_commit": preparation["source_commit"],
         "manifest_member_count": len(manifest),
         "source_pin_count": len(preparation["members"]),
+        "source_sha256_pin_count": len(preparation["members"]) - len(source_pin_checks["sha256_failures"]),
+        "source_byte_count_pin_count": len(preparation["members"]) - len(source_pin_checks["byte_count_failures"]),
         "source_tree_blob_count": tree_blob_count,
         "declared_copy_count": len(declared_copies),
         "action_sample_count": len(rows),

@@ -1,5 +1,6 @@
 """Mutation controls for the independent raw-stream audit of PR #7599."""
 import copy
+import hashlib
 from pathlib import Path
 import unittest
 
@@ -10,6 +11,7 @@ from .audit_raw_samples import (
     read_jsonl,
     release_order_ok,
     run_audit,
+    validate_source_records,
 )
 
 
@@ -31,7 +33,29 @@ class RawSamplingAuditTests(unittest.TestCase):
     def test_manifest_and_source_provenance_are_recomputed(self):
         self.assertTrue(self.result["checks"]["package_manifest_89_members"])
         self.assertTrue(self.result["checks"]["source_preparation_git_pins"])
+        self.assertTrue(self.result["checks"]["source_preparation_sha256_and_byte_counts"])
         self.assertTrue(self.result["checks"]["declared_source_copies"])
+
+    def test_wrong_source_sha256_claim_is_rejected(self):
+        data = b"pinned source bytes"
+        members = {"research/example.py": {
+            "git_blob": "abc123", "sha256": "0" * 64, "bytes": len(data)
+        }}
+        checks = validate_source_records(members, {"research/example.py": "abc123"}, {b"abc123": data})
+        self.assertEqual(checks["git_blob_failures"], [])
+        self.assertEqual(checks["byte_count_failures"], [])
+        self.assertEqual(checks["sha256_failures"], ["research/example.py"])
+
+    def test_wrong_source_byte_count_claim_is_rejected(self):
+        data = b"pinned source bytes"
+        members = {"research/example.py": {
+            "git_blob": "abc123", "sha256": hashlib.sha256(data).hexdigest(),
+            "bytes": len(data) + 1,
+        }}
+        checks = validate_source_records(members, {"research/example.py": "abc123"}, {b"abc123": data})
+        self.assertEqual(checks["git_blob_failures"], [])
+        self.assertEqual(checks["sha256_failures"], [])
+        self.assertEqual(checks["byte_count_failures"], ["research/example.py"])
 
     def test_static_result_is_exact_auditor_output(self):
         saved = read_json(Path(__file__).with_name("RESULT.json"))
