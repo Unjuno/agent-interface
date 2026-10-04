@@ -45,11 +45,19 @@ aliased key-up, repeated key-up, and unheld button-up. Each added zero release
 requests and zero sync calls. The candidate preserved injective and first
 aliased release identity and reported each applied request/sync. Checked-out
 V10 ordinary key-up and button-up return values remained `None`; admission
-receipts gained the resolved keycode. Six V11 owner tests and six typed backend contract tests pass against the checked-out sources. An integrated V10/V11/typed-backend run joins admissions at steps 0/1 to applied/no-op release calls at steps 2/3 and reconciles one keycode-77 physical interval. For the
+receipts gained the resolved keycode. Six V11 owner tests and six typed backend contract tests pass against the checked-out sources. An integrated V10/V11/typed-backend run joins admissions at steps 0/1 to applied/no-op release calls at steps 2/3 and groups them into one keycode-77 interval in this failure-free fixture. For the
 second aliased key-up, repeated key-up, and unheld button-up, it reported
 `release_applied=false`, both operation flags false, and
 `release_transition_interval_ns=null`, while retaining `call_interval_ns`.
 Saved counts match those claims. See `RESULT.json` and `audit.py`.
+
+Follow-up failure-boundary construction A02 found an important interpretation
+limit: when XSync raises after the server has applied KeyRelease, a later retry
+can return `release_applied=true` although fake key state was already up before
+that retry. Thus this receipt proves request and XSync completion inside the
+call bracket; it does not independently prove that a key-state edge occurred
+inside that bracket. See
+`../map01_release_receipt_failure_boundary_59_t1_a02_20261004/`.
 
 ## Reproduction
 

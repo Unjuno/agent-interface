@@ -120,7 +120,7 @@ def audit():
             "baseline false-success key/button no-op receipts",
             "candidate applied key releases match request and sync counts",
             "candidate no-op receipts have no release interval or false success",
-            "saved candidate receipts reconcile to one aliased physical interval",
+            "failure-free candidate receipts reconcile into one aliased keycode interval",
             "actual V11-to-typed-backend-to-oracle path joins across release-step provenance",
             "synthetic scope only",
         ],

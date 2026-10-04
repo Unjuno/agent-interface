@@ -1,0 +1,127 @@
+{
+  "cases": [
+    {
+      "admission": {
+        "admitted_ns": 119352011275600,
+        "event": "input_admission",
+        "input_ack_ns": 119352011279700,
+        "key": "W",
+        "keycode": 77,
+        "valid_until_ns": 119357011241400
+      },
+      "after_failure": {
+        "fake_server_key_down": true,
+        "trace": {
+          "injected": true,
+          "release_attempts": 1,
+          "sync_attempts": 0
+        }
+      },
+      "after_retry": {
+        "fake_server_key_down": false,
+        "trace": {
+          "injected": true,
+          "release_attempts": 2,
+          "sync_attempts": 1
+        }
+      },
+      "failed_call": {
+        "message": "injected XTest failure before fixture apply",
+        "type": "OSError"
+      },
+      "failure_point": "xtest_before_apply",
+      "retry_receipt": {
+        "application_consumption_observed": false,
+        "button": null,
+        "call_interval_ns": [
+          119352011346800,
+          119352011382300
+        ],
+        "call_interval_width_ns": 35500,
+        "call_returned_ns": 119352011382300,
+        "call_started_ns": 119352011346800,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": 35500,
+        "keycode": 77,
+        "operation": "up",
+        "owner_id": "3c2a8f0d59e5458a96430ccc6a734c03",
+        "payload": "W",
+        "release_applied": true,
+        "release_transition_interval_ns": [
+          119352011346800,
+          119352011382300
+        ],
+        "valid_until_ns": 119357011241400,
+        "x11_release_and_sync_completed_before_return": true,
+        "x11_release_request_issued": true,
+        "x11_sync_completed_before_return": true
+      }
+    },
+    {
+      "admission": {
+        "admitted_ns": 119353502671100,
+        "event": "input_admission",
+        "input_ack_ns": 119353502675300,
+        "key": "W",
+        "keycode": 77,
+        "valid_until_ns": 119358502640400
+      },
+      "after_failure": {
+        "fake_server_key_down": false,
+        "trace": {
+          "injected": true,
+          "release_attempts": 1,
+          "sync_attempts": 1
+        }
+      },
+      "after_retry": {
+        "fake_server_key_down": false,
+        "trace": {
+          "injected": true,
+          "release_attempts": 2,
+          "sync_attempts": 2
+        }
+      },
+      "failed_call": {
+        "message": "injected XSync exception after fixture apply",
+        "type": "OSError"
+      },
+      "failure_point": "xsync_after_apply",
+      "retry_receipt": {
+        "application_consumption_observed": false,
+        "button": null,
+        "call_interval_ns": [
+          119353502735300,
+          119353502767600
+        ],
+        "call_interval_width_ns": 32300,
+        "call_returned_ns": 119353502767600,
+        "call_started_ns": 119353502735300,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": 32300,
+        "keycode": 77,
+        "operation": "up",
+        "owner_id": "0d4ddfdaa4424f2080efaa757679bf37",
+        "payload": "W",
+        "release_applied": true,
+        "release_transition_interval_ns": [
+          119353502735300,
+          119353502767600
+        ],
+        "valid_until_ns": 119358502640400,
+        "x11_release_and_sync_completed_before_return": true,
+        "x11_release_request_issued": true,
+        "x11_sync_completed_before_return": true
+      }
+    }
+  ],
+  "schema": "map01-release-receipt-failure-boundary-result-v1",
+  "scope": "Synthetic FakeDisplay construction only; no live X server, OS input, game, model, or allocation. The post-XSync-failure injection models a server-processed release with an exception at the client synchronization boundary.",
+  "status": "PASS_SCOPED"
+}
