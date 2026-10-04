@@ -1,7 +1,0 @@
-# V16 provenance finalization errors
-
-H: session failure remains explicit when source-provenance finalization also fails, and temporary bindings restore. Controlled WSLc CPU/network-none/nonroot construction only; no game/controller/model/GPU/input or original formal replay.
-
-01 exact main540093 source: malformed sources.json plus session RuntimeError yields primary JSONDecodeError. FAIL_PRIMARY_SESSION_ERROR_PRESERVATION. Both bindings restored. Original implicit Python context was not captured; do not claim total exception loss. 02 minimal repair explicitly groups RuntimeError and JSONDecodeError, both bindings restored, PASS scoped. 03 five regressions PASS/exit0: ordinary return/source metadata, session-only same exception, provenance-only error, dual ordinary failure, dual KeyboardInterrupt/provenance failure. All three original source/freeze/stdout/stderr/exit and captured results remain immutable.
-
-Repair records an active session exception and groups a subsequent provenance error after restoring bindings. Single errors still propagate; successful return and metadata remain. This does not qualify full V16 main/controller/gameplay or timing/useful-feedback/release/recovery. Memory enforcement unproven; kernel warning retained. Initial baseline probe preceded repair, regression suite authored after repair. Freeze marks candidate source uncommitted at execution, byte hashes bind exact implementation. No failure regraded or consumed allocation retried.

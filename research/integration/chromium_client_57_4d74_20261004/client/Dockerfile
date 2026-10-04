@@ -1,3 +1,0 @@
-FROM chromium-integrated-57-4d74:20261004
-USER root
-RUN /usr/local/bin/python3 -m pip install --no-cache-dir numpy==2.3.3

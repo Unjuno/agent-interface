@@ -1,1 +1,0 @@
-Authored caller noncompleted projection contract: three first offline decisions, typed prefix/authority/delivery retained, verifier0. Read caller-native-state-mapping-57-4d74/REPORT.md and saved audit. No automatic native converter or real failure qualification, no native/model actor replay or runtime edits. HOLD_NATIVE_CONVERTER. Literal manifests/no redactions.

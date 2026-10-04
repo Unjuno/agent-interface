@@ -1,6 +1,0 @@
-# Frozen files, receipts and output hashes refer to exact bytes, not EOL conversions.
-* -text
-# Preserve Windows raw streams/receipt CRLF and intentional terminal blank lines.
-* whitespace=cr-at-eol,-blank-at-eof
-# Raw construction diagnostics can contain deliberate progress-line spaces.
-construction/** whitespace=-trailing-space,cr-at-eol

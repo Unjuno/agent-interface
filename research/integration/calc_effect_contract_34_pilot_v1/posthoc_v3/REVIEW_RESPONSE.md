@@ -1,7 +1,0 @@
-# PR #4633 review follow-up — second hardening pass
-
-Review found three gaps in the earlier classifier/auditor delivery: missing or malformed `raw_classifications` could still permit an audit PASS; the published baseline was only present as `.b64`; and the documented `run_classification.py` CLI was absent. The additive strict auditor now validates the exact expected shortcut/saved-effect mapping, requires the pinned image and completed harness, requires non-empty hex XIDs, makes any validation error STOP, and reads the published base64 workbook in memory. A runnable CLI plus its adjacent `classify.py` are published under `posthoc_v3/`; the documentation addendum points to that command and writes output to a fresh temporary directory.
-
-Twelve host-side standard-library tests pass for the decision/error rules and base64 decode path; `py_compile` passes. Running the CLI against the retained raw/v1 audit emitted `COMPLETED`, live `MATCH`, saved-effect `CONTRADICTED`, with frozen gate `STOP_CONSTRUCTION`. Output SHA-256: `d8b30d2ad3e2e1e342251a7ffa0934b87024d98779fb270463ab80d9e70e1881`.
-
-The full strict auditor has not yet been executed against the real retained workbook because the shared OrbStack Docker API is unresponsive; see Issue #4667. The latest source has no executed audit JSON and must not be presented as container-verified. Original raw, v1 audit and earlier posthoc output remain unchanged.

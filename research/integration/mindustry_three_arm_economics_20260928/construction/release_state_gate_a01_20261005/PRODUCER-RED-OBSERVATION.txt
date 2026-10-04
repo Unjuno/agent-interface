@@ -1,7 +1,0 @@
-Producer-envelope regression before compatibility fix:
-
-- Input mirrored `input_owner_v10`'s owner_release record: required verified-empty fields plus event/reason/timestamps.
-- Expected: adapter returns `released: true` for the matching terminal.
-- Observed: `SocketSubmitStop("matching terminal must verify empty held-input sets")` because the initial adapter rejected any additional producer metadata.
-- Classification: failed contract regression found during source-path review; not a physical or formal run.
-- After restricting accepted optional metadata to the source-defined four fields and validating them, the test passes. Unknown fields and malformed metadata remain rejected.

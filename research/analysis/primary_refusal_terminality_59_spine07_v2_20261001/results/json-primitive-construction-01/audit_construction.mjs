@@ -1,5 +1,0 @@
-import fs from 'node:fs';
-const raw=process.argv[2]?Buffer.from(process.argv[2],'base64').toString():fs.readFileSync(0,'utf8');const x=JSON.parse(raw),names=['null','string','number','boolean','array'];
-if(x.schema!=='primary-refusal-terminality-5693-json-primitive-construction-v1'||x.allocation!=='PRIMARY-REFUSAL-TERMINALITY-5693-JSON-PRIMITIVE-CONSTRUCTION-20261001-01'||x.sourceSha256!=='f8ddede770165eb66d988c8830e661fa5ce98c6dadd8ee4f7be68a92bea9c250'||x.host.platform!=='win32'||x.rows?.length!==5||x.rows.some((r,i)=>r.name!==names[i]))process.exit(2);
-for(const r of x.rows)if(!(r.firstError==='TypeError'&&r.stoppedBeforePrimaryContinues&&r.secondRejected&&r.effectfulHostCalls===1&&r.callsAfterRetry===1&&r.closeAllowed&&r.finalStop))process.exit(3);
-process.stdout.write(JSON.stringify({audit:'PASS_JSON_PRIMITIVE_TERMINALITY_CONSTRUCTION',rows:5})+'\n');

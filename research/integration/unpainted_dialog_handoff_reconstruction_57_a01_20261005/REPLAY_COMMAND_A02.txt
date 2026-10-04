@@ -1,6 +1,0 @@
-$ErrorActionPreference = 'Stop'
-$p = 'research/integration/unpainted_dialog_handoff_reconstruction_57_a01_20261005'
-$env:HANDOFF_REPLAY_CAPTURE = "$p/replay_raw/a02_20261005"
-node --test "$p/test_replay.mjs"
-Node runtime: v24.13.0
-Recorded replay test output: REPLAY_TEST_OUTPUT_A02.txt

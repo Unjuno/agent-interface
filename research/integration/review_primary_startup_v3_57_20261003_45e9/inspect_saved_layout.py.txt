@@ -1,9 +1,0 @@
-from pathlib import Path
-import json
-r=Path(__file__).resolve().parent/'source/research/integration/primary_startup_ready_57_20261003_01a0ff53'
-print(json.dumps({'receipts':[p.relative_to(r).as_posix() for p in r.rglob('*') if p.is_file() and ('receipt' in p.name.lower() or p.name in ['RAW.json','SOURCE_FREEZE.json','RESULT.json'])]}))
-d=json.loads((r/'PUBLIC_DERIVATIVES.json').read_bytes());print(json.dumps({'derivatives_type':type(d).__name__,'keys':list(d) if isinstance(d,dict) else None,'first':d[0] if isinstance(d,list) else {k:v[:1] if isinstance(v,list) else v for k,v in d.items()}}))
-for p in sorted(r.rglob('*')):
- if p.is_file() and p.name.lower().endswith('.json') and ('raw' in p.name.lower() or ('receipt' in p.name.lower() and ('checks' not in p.parts))):
-  data=json.loads(p.read_bytes());print(json.dumps({'path':p.relative_to(r).as_posix(),'type':type(data).__name__,'keys':list(data) if isinstance(data,dict) else None,'sample':str(data)[:700]}))
-

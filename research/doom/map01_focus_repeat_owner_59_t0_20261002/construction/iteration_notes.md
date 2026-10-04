@@ -1,1 +1,0 @@
-Construction iteration note (2026-10-02): a prior 69ed refreeze run was repeated after the fixture SHA was updated; that intermediate run exposed a test-class placement error (new pump tests accidentally nested the remaining auditor contract tests under the wrong class). No candidate process was run. The final suite below is the authoritative post-correction result.

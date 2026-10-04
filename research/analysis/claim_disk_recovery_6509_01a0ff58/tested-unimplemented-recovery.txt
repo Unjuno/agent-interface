@@ -1,6 +1,0 @@
-"""Research-only prefix reconstruction; never grants input authority."""
-MANDATORY = ("identity", "freshness", "effect")
-
-def recover(path, *, generation=1, scope="synthetic-claim"):
-    return {"disposition": "PARTIAL_UNKNOWN", "reason": "UNIMPLEMENTED",
-            "completed": [], "missing": list(MANDATORY)}

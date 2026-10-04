@@ -1,9 +1,0 @@
-def decode(value,variant):
- keys=('action','x','y') if variant=='A' else ('operation','horizontal','vertical')
- if type(value) is not dict or set(value)!=set(keys):raise ValueError('exact keys required')
- if value[keys[0]]!=('click' if variant=='A' else 'pointer_select'):raise ValueError('action required')
- x,y=value[keys[1]],value[keys[2]]
- if type(x) is not int or type(y) is not int or not 0<=x<640 or not 0<=y<360:raise ValueError('screen coordinates required')
- return x,y
-def program(x,y,expiry):
- return dict(schema='agent-interface/program-v1',program_id='schema-native-click',source=dict(observation_seq=1,binding_revision=1),authority=dict(lease_id='owned-fixture',expires_at_ns=expiry),terminal=dict(release_all_required=True),ops=[dict(op='focus',target='owned'),dict(op='pointer_move',frame='screen_physical_px',x=x,y=y),dict(op='pointer_button',button='left',down=True),dict(op='pointer_button',button='left',down=False),dict(op='release_all'),dict(op='wait_update',timeout_ms=50)])

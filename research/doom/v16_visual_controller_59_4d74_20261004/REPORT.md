@@ -1,9 +1,0 @@
-# Actual visual controller composition
-
-Visual01 stopped before ready. Its session stderr was not persisted by the current controller exception path; source remains unchanged. Diagnostic01 captured cwd permission error and exit139; diagnostic02 changes workdir to /out and exits0. Both are no-model/no-input startup diagnostics with stdin EOF, distinct seeds.
-
-Visual02 uses the same source f2aa59c8 and fixture/image, repaired additive launcher workdir, fresh seed40118, requested gpt-5.6-luna/low, two turns and120s outer bound. Container/host exit0, reader retired. First visual decision was eligible, accepted and completed two input steps. Second turn was interrupted after typed health became UNKNOWN (invalid_right_aligned_number), not proven physical health threshold crossing; answer discarded and cover cancelled with verified-empty release. No third post-invalidation decision: HOLD_POST_INVALIDATION_USEFUL_RECOVERY. 284 scorer samples/zero events, alive unfinished, zero kills/deaths/no exit.
-
-First turn10237input/296output (146reasoning subset); interrupted turn usage absent, all-attempt total UNKNOWN. 21.422s host elapsed and6.4786s model wall are descriptive, no matched comparison. One bounded file-sharing error recovered by frozen driver, not experiment retry. Source-member pins, copied declared sources/controller/assets, actual transport/model/image/input/release/score/cleanup records retained. External cached image and WADa8772e08 required; requested resource limits not demonstrated effective caps. No natural-threat recovery, useful feedback, causal benefit, exact physical per-key timing, model advantage or roadmap completion. Local prelaunch freezes have no independent custody witness. Historical mount paths require reconstruction.
-
-Prospective/first-result Issue59 comments5978464333/5978470114; diagnosis5978480690; visual02 protocol/result5978483810/5978491390. Old outcomes unchanged; no formal replay.

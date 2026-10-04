@@ -1,3 +1,0 @@
-# Controller preparation — NOT LIVE RECOVERY
-
-Eight setup/construction outcomes, including two original import STOPs. Zero new game/provider/input/GPU runs. Driver03/source08 are unlaunched derivatives. Current release-source composition, allocation, scorer freshness, physical release and independently useful recovery remain unresolved. Earlier formal transport/image PR7451/7455 remain unchanged. Historical absolute paths and external fixture/WAD/image/CLI prerequisites prevent a portability claim. WAD is not included. Inherited source closure manifests are historical checkpoints; source08 CURRENT_FILES is its inventory. The six-cell AST wait experiment uses authored events, not full controller or physical execution. Saved audits are not independent reviewer approval.

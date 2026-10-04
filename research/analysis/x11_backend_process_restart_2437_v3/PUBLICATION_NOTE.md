@@ -1,6 +1,0 @@
-# Post-audit publication protocol STOP
-
-- Allocation 03's local raw-only auditor completed once and returned `FAIL_BACKEND_RESTART_STALE_REQUEST_ADMITTED`, errors 0, 2,144 bytes, SHA-256 `375a41d1d7489dbbc9305d4d8fe58a36212fa066928b509d3af8e47dc0a7e4ef`.
-- During opaque-byte GitHub publication, `github_create_blob` returned raw blob SHA `28ce138abf8f3207428378fb705f6c7987b0d52b`. A subsequent `github_fetch` of that blob was expected to return a base64 Git blob envelope, but the connector instead exposed the UTF-8 JSON as decoded content. The response was parsed while trying to compare the transfer.
-- This is a post-audit read/parse protocol deviation. It did not invoke the scientific candidate or auditor and it did not change the original audit receipt, but the freeze prohibited any post-audit raw parse. Keep scientific result and publication state separate: the local one-shot audit remains a scoped FAIL; publication is **`STOP_POST_AUDIT_RAW_READBACK`** and independent GitHub byte-identity is unverified.
-- Do not read the local or remote raw again, rerun candidate/auditor, overwrite the raw, or assert repository-only reproducibility. Preserve the GitHub blob SHA and this deviation verbatim for review.

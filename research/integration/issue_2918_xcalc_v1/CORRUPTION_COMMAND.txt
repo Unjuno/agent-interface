@@ -1,5 +1,0 @@
-One frozen auditor corruption-control harness invocation after the normal independent audit. `/out` must be a dedicated writable directory distinct from `/in`; it creates three isolated input copies and never edits `/in`:
-
-docker --context orbstack run --rm --network none --cpus=2 --memory=1g --pids-limit=128 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m -e PYTHONDONTWRITEBYTECODE=1 -v /private/tmp/issue2918-xcalc-v1:/repo:ro -v /private/tmp/issue2918-xcalc-v1/research/integration/issue_2918_xcalc_v1/formal_01_raw:/in:ro -v /private/tmp/issue2918-xcalc-v1/research/integration/issue_2918_xcalc_v1/formal_01_corruption_controls:/out:rw -w /repo issue-3548-route-unit@sha256:0e35cdb51a82e59d359ec09b85ce835d9217a1eab65b68ce1871c9b0a85014c9 python3 -B research/integration/issue_2918_xcalc_v1/audit_corruption_controls.py /in /out
-
-Expected: wrong disposition, missing row, and altered PNG are each rejected by an auditor assertion; output records `PASS_AUDIT_CORRUPTION_CONTROLS` and `source_raw_unchanged=true`. A harness/setup failure is a HOLD and must not trigger a formal-runner retry.

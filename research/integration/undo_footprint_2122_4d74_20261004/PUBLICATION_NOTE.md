@@ -1,1 +1,0 @@
-Staging first whitespace check identified six literal apt progress log trailing spaces. Original logs remain byte-identical; whitespace attribute disabled for log artifacts only. This is publication formatting, not an experimental failure or data rewrite.

@@ -1,1 +1,0 @@
-G20 rejected full-cell binary OCR candidate. Read calc-full-binary-ocr-4d74/REPORT.md and independent audit. Numeric1/5 exact, blank6/6; original failures and all crops retained. Known-image diagnostic only, no native/model/replay/default changes. ROADMAP incomplete.

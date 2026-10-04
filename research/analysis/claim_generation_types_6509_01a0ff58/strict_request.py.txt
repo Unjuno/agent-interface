@@ -1,5 +1,0 @@
-MANDATORY = ("identity", "freshness", "effect")
-def recover(path, *, generation=1, scope="synthetic-claim", legacy):
-    if type(generation) is not int or generation <= 0:
-        return {"disposition": "PARTIAL_UNKNOWN", "reason": "REQUEST_GENERATION_TYPE", "completed": [], "missing": list(MANDATORY)}
-    return legacy(path, generation=generation, scope=scope)

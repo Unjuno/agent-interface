@@ -1,1 +1,0 @@
-The first supplementary boundary checker used the window end output record as if it were a call input, causing KeyError: input. Actual token-source replay had already passed (39 lines, 13 responses). The corrected checker uses first/last call source lines. Original token projection is unchanged. No live case or action was repeated.

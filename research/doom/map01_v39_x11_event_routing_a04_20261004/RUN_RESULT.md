@@ -1,9 +1,0 @@
-# A04 result: X11 event-routing control versus InputOwner v10
-
-The frozen candidate completed once and exercised both direct XTEST and current-main InputOwner v10 against the same focused Xlib client. Both routes produced 32-byte keymap samples `false → true → false`; v10 reported keycode 25 held after down, empty after up, and a verified empty explicit release. The client connection received one KeyPress and one KeyRelease packet for keycode 25 on each route.
-
-The independent auditor returned `FAIL_AUDIT` with seven errors. The candidate looked for the X event target as `event.event`; Python-Xlib 0.33 names this field `window`, so raw receipts contain `window_id: null`, the counter did not increment, and the auditor correctly refused the client-window identity and counter claims. The raw key events were received on the client connection, but this run does not retain a passing target-window receipt. A posthoc source inspection identified the field mismatch without rerunning input; see `results/A04/python-xlib-event-schema.txt`.
-
-A04 is retained as a failed measurement with its raw record, frozen sources, environment, setup check, candidate output, auditor output, and mutation tests. No candidate or auditor retry was performed. The candidate's own exit receipt/stdout say 0; the OrbStack command wrapper reported exit 1, retained as an execution-status discrepancy in `results/A04/EXECUTION_STATUS.json`. The audit's JSON and captured stdout both report audit exit 1.
-
-The Ubuntu 24.04 arm64 OrbStack guest used Python 3.12.3, Python-Xlib 0.33, and Xvfb 21.1.12. Candidate code made no network calls; Xvfb TCP listening was disabled. This is only a virtual focused-client event-routing control. It does not test a game, production GUI, useful feedback, recovery, latency benefit, task success, physical input, safety, or live threat exposure.

@@ -1,7 +1,0 @@
-{
-  "scope": "Verifier construction after completed functional pair; no GUI rerun or source/runtime change.",
-  "initial_verifier_sha256": "45eaf350b4fa0ad0b1f395bb9349d9a6d5dc88bfcab8ee2fb5699a739d0884ca",
-  "initial_failure": "ValueError: tool failure at unconditional not result.isError check",
-  "diagnosis": "Public MCP intentionally sets isError=true for needs_review status (runtime/cli_v1/mcp_server.py). Successful inspect_target returns needs_review, image and explicit candidate; this does not mean a failed input program.",
-  "repair": "Accept isError only for inspect_target + needs_review + no error + input_dispatched false + image capture returned + explicit review request. Preserve flag and all raw files."
-}

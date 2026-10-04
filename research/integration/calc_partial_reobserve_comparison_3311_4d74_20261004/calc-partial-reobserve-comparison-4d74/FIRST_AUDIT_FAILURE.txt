@@ -1,5 +1,0 @@
-First WSLc saved-transcript audit exited1: FileNotFoundError.
-audit.py used pathlib.Path(local[0]['path']).name on a Windows absolute path
-while running in Linux, yielding the whole C:\Users\... path as a filename.
-Original audit.py unchanged. Distinct audit_v2.py uses PureWindowsPath.
-No original model/native allocation rerun; only saved-data reader repaired.

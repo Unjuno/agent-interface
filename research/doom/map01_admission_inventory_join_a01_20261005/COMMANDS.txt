@@ -1,6 +1,0 @@
-# Executed once after FREEZE.json was written
-python analyze_inventory.py
-python audit_inventory.py
-python -m py_compile analyze_inventory.py audit_inventory.py
-# Repository whitespace check
-git diff --check

@@ -1,3 +1,0 @@
-STOP_CALIBRATION_AUDIT_FAILED
-
-Calibration source ran once and emitted 240 rows, selecting gain 0.9 by its internal table. The independent auditor ran once and exited 1 with 605 event/terminal reconstruction mismatches, concentrated in cross_coupling. Inspection identified an auditor implementation error: it did not consume the two provisional small-coupling RNG draws that the frozen plant generator consumes before overwriting them with the cross-coupling draws. The calibration result is therefore unaudited and the selected gain is not accepted. Do not run held-out T0b. Preserve these bytes unchanged; any corrected calibration must use a new allocation and new seed range.

@@ -1,9 +1,0 @@
-{
-  "attempt": "A02",
-  "disposition": "FAIL_METHOD_EXPECTED_REASON_LABELS_NOT_ENFORCED",
-  "candidate_output": "candidate-output-a02.json",
-  "independent_audit_output": "audit-output-a02.json",
-  "observed": "The independent oracle agrees with all seven actual candidate statuses and semantic rejection reasons, but the candidate's frozen expected_reason fields use mutation names for four cases. candidate.py returns nonzero when any actual reason differs from its expected_reason. The combined shell command did not retain the individual candidate process exit code, so the exit code is UNKNOWN; the retained output and code establish four declared reason mismatches.",
-  "meaning": "The independent semantic decisions look correct, but the frozen D gate requiring expected-class agreement is not met. Preserve as FAIL_METHOD; do not promote audit PASS to a candidate PASS.",
-  "rerun_policy": "Construction-only repair is permitted as a separately frozen A03 attempt; A02 raw outputs remain unchanged."
-}

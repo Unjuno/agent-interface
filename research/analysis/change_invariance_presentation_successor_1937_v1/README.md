@@ -1,1 +1,0 @@
-# Change and invariance presentation successor (#1977)\n\nFinite, network-free semantic check for typed CHANGED and IMPORTANT_UNCHANGED facts. Every fact carries source frame, epoch, and identity bindings; stale epochs and identity replacement become non-authoritative. Synthetic evidence only.\n

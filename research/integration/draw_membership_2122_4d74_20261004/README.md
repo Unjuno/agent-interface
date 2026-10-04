@@ -1,1 +1,0 @@
-Read REPORT.md. Live-page equality rejected both actual replacements and admitted both ordinary controls. Scoped result only; no atomicity, universal identity or model-value claim. B02 first failure remains unchanged.

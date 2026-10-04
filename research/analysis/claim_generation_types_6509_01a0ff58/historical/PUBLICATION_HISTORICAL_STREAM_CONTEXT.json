@@ -1,6 +1,0 @@
-{
-  "cause": "The newly preserved original v2 diff-check stdout also retained CRLF, under historical/ rather than results/. Candidate attr-source correctly exposed that this new history stream needed its own narrow whitespace rule.",
-  "exit": 2,
-  "first_v3_commands_and_stdout_preserved": true,
-  "repair": "Add historical/.gitattributes *.stdout whitespace=cr-at-eol; unchanged raw/freeze/input/code/first boundary/audit. No stream rewrite, global config change, reader/auditor replay or remote send."
-}

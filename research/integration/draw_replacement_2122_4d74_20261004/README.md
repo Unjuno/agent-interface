@@ -1,1 +1,0 @@
-Read REPORT.md. Actual independent replacement passed the old-reference guard in both cases: first auditor FAIL_OR_HOLD retained. Ordinary controls passed. Do not adopt for live membership or generation safety.

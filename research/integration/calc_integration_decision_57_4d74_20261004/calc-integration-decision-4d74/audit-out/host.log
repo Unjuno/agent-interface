@@ -1,9 +1,0 @@
-wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
-Traceback (most recent call last):
-  File "/data/reduce.py", line 16, in <module>
-    a=dict(model_contexts=len(models),registered_calls=sum(len(j['dynamic_calls']) for j in models),attempted_tasks=2,correct_tasks=sum(x['pass_effect'] for x in a_effects),wrong_tasks=1,censored_tasks=22,usage={k:sum(u[k] for u in us) for k in us[0]},full_session_wall_ns=e['sessions'][0]['ended_wall_ns']-e['sessions'][0]['started_wall_ns'],model_wall_ns=sum(s['wall_ns'] for s in stages),effects=a_effects,cleanup='UNKNOWN after external stop',disposition='FAIL_EFFECT_STOP; HOLD_COMPARISON')
-                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/data/reduce.py", line 16, in <genexpr>
-    a=dict(model_contexts=len(models),registered_calls=sum(len(j['dynamic_calls']) for j in models),attempted_tasks=2,correct_tasks=sum(x['pass_effect'] for x in a_effects),wrong_tasks=1,censored_tasks=22,usage={k:sum(u[k] for u in us) for k in us[0]},full_session_wall_ns=e['sessions'][0]['ended_wall_ns']-e['sessions'][0]['started_wall_ns'],model_wall_ns=sum(s['wall_ns'] for s in stages),effects=a_effects,cleanup='UNKNOWN after external stop',disposition='FAIL_EFFECT_STOP; HOLD_COMPARISON')
-                                                           ^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: object of type 'int' has no len()

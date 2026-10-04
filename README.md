@@ -1,116 +1,29 @@
-# Agent Interface
+# V39 post-execute owner-cleanup drain race A01
 
-**A faster interface between AI agents and computers.**
+## H/T/D/C/U
 
-> **Research thesis:** AI agents are becoming highly capable, but the computer-control tools they use are still primitive. If the model is held fixed, a better interface should let the same agent use computers with less waiting, fewer redundant observations, fewer model boundaries, and less recovery work at the same correctness.
+**H.** When `Backend.execute()` returns and its final drain observes no owner release record, InputOwner can subsequently complete expiry cleanup before ExecutorV3's terminal state query. The aggregate owner state can then be empty while the per-key release receipt was never emitted and the bridge's held ledger remains stale.
 
-> **Status: Research Preview.** This repository is the public research record. User-facing GitHub Releases are reserved for runnable distributions people can actually download and try.
+**T.** Frozen PR #7805 head `15d56feea35bc6d7c4b499bbaa63e3bb0762ae6c`; candidate owner blob `82d3881dd4064f58e847420bb336a70cd84ee307`, candidate bridge blob `ee1220cdc3d93d96aa1051c072ca7dceeb59c35d`. Current-main dependencies are pinned in `SOURCE_LOCK.json` at `aa2e4b623b2f4ccdcbc8e294535bab09c0092f30`. Container `python:3.12.11-slim`, image ID `sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f`; `--network none --read-only`.
 
-[Landing page](https://unjuno.github.io/agent-interface/) · [Docs](docs/README.md) · [Research](RESEARCH.md) · [Architecture](docs/architecture.md) · [Roadmap](ROADMAP.md) · [Runtime](runtime/README.md) · [Contribute](CONTRIBUTING.md)
+**D.** `RESULT.json` records the raw deterministic barrier run: at bridge drain there were zero owner records/release rows and bridge held `F8`; after the barrier opened, owner appended one `reason=expired` per-key receipt and physically released the fake key. ExecutorV3 terminal was `expired` and aggregate `release.verified=true`, while published per-key receipts stayed zero, bridge held `F8`, and its record cursor stayed zero. Exit 0.
 
-## What this project is
+**C.** Repository fake display and real ExecutorV3/candidate bridge/owner code. The test deterministically controls the owner's focus-check scheduling boundary. No real X server or OS input.
 
-Agent Interface holds the model fixed and asks whether a better computer interface can reduce avoidable waiting and repeated work without weakening correctness.
+**U.** No claim about race frequency on X11, application/game effect, useful feedback, recovery, latency, live MAP01, or Issue #59 completion. This is a telemetry/bridge-ledger lifecycle counterexample only.
 
-- The rich model keeps semantic intent and strategy.
-- Bounded local mechanisms handle high-frequency refinement, verification, and invalidation when they can do so safely.
-- Fresh evidence governs authority; stale, ambiguous, or novel state must yield back to stronger reasoning.
-- Universal computer control remains the fallback floor when optimized routes are unavailable.
-- The project optimizes for solving computer control, not mechanism novelty: existing or standard techniques are preferred when they are the smallest sufficient solution; new mechanisms need a measured residual.
+## Reproduction
 
-## System shape
+From this directory:
 
-```mermaid
-flowchart LR
-    A["Rich model / planner<br/>intent · semantics · strategy"]
-    B{"Agent Interface"}
-    C["Bounded local refinement<br/>macro · servo · watcher"]
-    D{"Fresh evidence<br/>still valid?"}
-    E["Deterministic authority<br/>admission · lease · release"]
-    F["OS / GUI"]
-    G["Incremental feedback"]
-
-    A --> B
-    B -->|"direct operation"| E
-    B -->|"bounded delegation"| C
-    C --> D
-    D -->|"yes"| E
-    D -->|"stale / ambiguous / novel → YIELD"| A
-    E --> F
-    F --> G
-    G --> C
-    G --> A
+```sh
+docker run --rm --network none --read-only \
+  --mount type=bind,src="$PWD",dst=/work,readonly -w /work \
+  python:3.12.11-slim python probe.py
 ```
 
-## Start here
+`RESULT.json` is the saved stdout from the successful run. `SOURCE_LOCK.json` identifies every vendored input by upstream Git blob SHA and SHA-256. `audit.py` is intentionally raw-only: it reads the saved JSON and locks, but imports no tested module.
 
-Read the current direction first; check ownership before starting work. Read the relevant sections and linked evidence rather than loading every historical record.
+## Disposition
 
-For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md). It covers intake, parallel ownership checks, evidence handling, publication, and safe branch disposition.
-
-| Need | Start with |
-|---|---|
-| Current goal | [Current direction](docs/CURRENT_GOAL.md) and [remaining roadmap gates](ROADMAP.md) |
-| Evidence and remaining gaps | [Progress](docs/PROGRESS_FROM_BASELINE.md) → [evidence map](docs/EVIDENCE_MAP.md) → the selected [ledger entry](RESEARCH.md), report, raw evidence and audit |
-| Ideas and outcomes | [Issue-centered index](docs/IDEAS_AND_OUTCOMES.md) for concise idea/disposition history; [Issues](https://github.com/Unjuno/agent-interface/issues) remain the intake and discussion source |
-| Ownership and overlap | The selected Issue’s latest explicit owner/allocation, related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls), and the [resource ownership log #5085](https://github.com/Unjuno/agent-interface/issues/5085); use the [retained research handoff](docs/LOCAL_RESEARCH_HANDOFF.md) for context and follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |
-| Branch cleanup | Start with [maintenance/custody history #672](https://github.com/Unjuno/agent-interface/issues/672) and the selected Issue’s latest correction; the [branch inventory](docs/BRANCH_INVENTORY_20261001.md) is a dated snapshot. Refresh PR/Issue links and commit ancestry before any deletion |
-| Archives and provenance | [Retained research namespaces](research/README.md#historical-archival-namespaces) and [document roles](docs/README.md#document-authority-map) |
-
-An open Issue, PR or branch does not mean work is unclaimed. An archival merge does not change a result’s scope or authorize a new allocation.
-
-For architecture, methods and releases, use the [documentation map](docs/README.md). For the current action/image interface, use the [interface guide](runtime/USING_CURRENT_INTERFACE.md).
-
-## Research method
-
-Questions that are exactly determined by contracts, invariants, finite state spaces, or reference oracles are reduced analytically first. Experiments are reserved for the residual that depends on real operating systems, applications, models, timing distributions, workloads, or other environment-dependent behavior.
-
-The clean comparison keeps model, task, environment, and correctness requirement fixed while changing only the interface. See [Research method](docs/RESEARCH_METHOD.md).
-
-Before opening a follow-up Issue, apply [failure classification and Issue routing](docs/ISSUE_FAILURE_CLASSIFICATION.md). A local tool/setup/upload failure is an execution record, not automatically a new research question or a fleet-wide blocker. Preserve its evidence without multiplying wrapper-only successor tasks.
-
-## Evidence and scope
-
-This repository contains analytical results, controlled experiments, live GUI studies, retained failures, audits, and integration work. A component PASS is not automatically an integrated PASS or product claim.
-
-- Evidence ledger: [RESEARCH.md](RESEARCH.md)
-- Research workspace: [research/README.md](research/README.md)
-- Analytical research: [research/analysis/README.md](research/analysis/README.md)
-- Latest detailed handoff: [docs/LOCAL_RESEARCH_HANDOFF.md](docs/LOCAL_RESEARCH_HANDOFF.md)
-- Terminology and status words: [docs/TERMINOLOGY.md](docs/TERMINOLOGY.md)
-
-Current evidence remains scoped. Broad human-tempo computer use, stable cross-platform runtime semantics, and a finished user-facing distribution are not established by this repository.
-
-## Repository layout
-
-```text
-.
-├── README.md              # public entry point
-├── RESEARCH.md            # detailed evidence ledger
-├── ROADMAP.md             # research and release sequence
-├── docs/                  # current goal, architecture, method, evidence map
-├── research/              # analysis, experiments, raw evidence, retained failures
-├── runtime/               # promoted executable semantics and runnable preview
-├── release/               # packaging and release-readiness evidence
-└── site/                  # public presentation layer
-```
-
-Completed evidence paths are generally kept stable for provenance; navigation is added around them instead of cosmetically moving historical artifacts.
-
-## Reproduce and contribute
-
-Research harnesses can inject real input. Use an isolated session or disposable environment and follow the specific experiment's instructions.
-
-```bash
-python -m pip install -r research/requirements.txt
-```
-
-Design ideas and analytical or empirical research proposals are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Idea issue form](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml).
-
-## More detail
-
-The previous extended root README material is retained in [docs/PUBLIC_README_DETAILS.md](docs/PUBLIC_README_DETAILS.md). It is kept for continuity and provenance, not as the recommended starting point.
-
-## License
-
-Apache License 2.0. See [LICENSE](LICENSE).
+`REPRODUCED_SCOPED_GAP`. This does not prove the latest PR #7805 head has the same behavior; it tests the exact frozen head above. The independent review comment on #7805 records that newer head `32686927ce6b07a035beb4c0297171a1f951c6c6` independently fails its expiry-terminal receipt regression on Windows/CPython 3.11.9. That is corroborating but distinct evidence, not substituted for this run.

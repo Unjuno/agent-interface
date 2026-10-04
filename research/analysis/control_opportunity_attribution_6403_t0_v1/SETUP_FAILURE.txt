@@ -1,9 +1,0 @@
-Construction-stage container setup failure (not part of formal run)
-
-Command attempted package execution without a bind mount for /package:
-  docker run ... python:3.12-slim python /package/build_check.py
-
-Observed stderr:
-  python: can't open file '/package/build_check.py': [Errno 2] No such file or directory
-
-Disposition: package code did not execute. The corrected read-only package bind mount was used for the construction check, which passed. This failure was not silently retried as a formal candidate run.

@@ -1,3 +1,0 @@
-# Issue #5970 T4 — X RECORD diagnostic
-
-This rung adds an independent X server delivery boundary to distinguish the T3 app/observer gap. Exact-source-derived fixture files are reused from merged T3 and hash-pinned; they are not regenerated or hand-edited here. See `PLAN.md` for H/T/D/C/U, `FREEZE.json` for one-shot constraints, `REPORT.md` and `RUN.md` for the outcome, and `SHA256SUMS.txt` for raw artifact integrity. Candidate and independent raw auditor ran once each. The auditor passed the narrow observer-gap discrimination; a Python-Xlib RECORD teardown diagnostic is retained. The full result is private-Xvfb synthetic evidence only.

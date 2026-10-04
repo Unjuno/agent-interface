@@ -1,7 +1,0 @@
-# Ordinary retained-audit repair
-
-- H: the frozen v1 audit has six demonstrated scalar-type/schema detection gaps on retained copied JSON; a type-exact closed-schema event-prefix oracle can reject them while reproducing the original bounded counts.
-- T: retain original raw/source/results and six first corruptions; compare the independent v2 oracle against original raw and fourteen effective controls; run seven portable unit methods and the byte-pinned retained-data CLI. No candidate/helper/formal allocation is replayed. Verification is ordinary repair and can be corrected when setup defects are found.
-- D: publication requires original20 files unchanged, exact saved copy names/count/hashes, original192 assignments/384 decisions and48/48/0 counts, zero original errors, all14 controls refused, and actual test/audit exits0. Any mismatch blocks publication and retains first evidence; no thresholds or failing rows are removed.
-- C: Python bool/int and int/float equality can conceal type aliases; unexpected keys can be ignored by permissive reducers. JSON serialization proves each mutation changes the input. A separate frozen-auditor comparison preserves the six initial false accepts. Empty file loops are a setup confound and now require exactly six files.
-- U: deterministic finite JSON reconstruction, no statistical uncertainty estimate. Real scheduler/backend/GUI effects, whole-repository integration, log authenticity under coordinated fabrication and duplicate JSON members are outside this check. Content approval and main application remain separate.

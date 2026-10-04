@@ -1,3 +1,0 @@
-First independent replay audit failed: ValueError: original reply bytes changed.
-Cause: the fixture parses the frozen reply and serializes it as one JSON line; the historical host retained pretty JSON. No original file or PNG was changed. Cross-run equality is parsed reply-object equality, while reference identities must match each replay's own retained reply/review bytes. Audit corrected; no GUI/task retry occurred.
-The replay's original base-reply assertion was self-equality and insufficient; verify_reuse.py independently checks exact current/base/review/image identities.

@@ -1,5 +1,0 @@
-Attempt 02 — retained construction FAIL before candidate invocation.
-Command: python -B -m unittest -v research/analysis/selection_variable_transport_5663_t1_20261002/test_method.py
-Exit: 1.
-Five tests passed. test_auditor_accepts_unmutated_result failed because audit.py read candidate_sha256 and input_sha256 at the top level of FREEZE.json, while the frozen hashes are nested under sha256. Error list: frozen_candidate_sha256, frozen_input_sha256. Candidate and formal auditor were not run in this attempt.
-Repair before attempt 03: corrected the two freeze lookups and added auditor self-hash verification; recomputed the freeze's source/input/test hashes. No formal allocation was consumed.

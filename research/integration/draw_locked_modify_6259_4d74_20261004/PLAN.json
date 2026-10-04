@@ -1,7 +1,0 @@
-{
-  "H": "controller notification suspension may hide mutation callbacks from F02 count guard while independent UNO writer still executes, allowing fractured satisfaction",
-  "T": "two fresh F02 stable/mutated docs with controller lock held across listener registration/readA/writer/readB; record counts at read and after unlock; unchanged F02 auditor tests original detection requirement",
-  "D": "first FAIL/HOLD if externalwrites not observed at read; keep separate effectaudit and lock/read records; no retry",
-  "C": "CPU1 memory512MiB networknone user65534 pinnedbab4dc0d no model",
-  "U": "composition boundary only; F02 remains scoped unlocked; no general lock notification claim outside actual measured operation"
-}

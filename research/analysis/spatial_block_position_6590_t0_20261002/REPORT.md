@@ -1,9 +1,0 @@
-# Issue #6590 T0 result — finite spatial-block method experiment
-
-**Decision: `METHOD_PASS` (scoped to the synthetic no-model method control).** The frozen candidate generated 12,800 rows once; the independent auditor ran once, exited 0, reconstructed all rows, reported zero errors, and passed all nine gates. Retries: 0.
-
-The uniform positive control scored 640/800 ACCEPT in every 4×4 block (rate range 0). In the planted local-failure control, block `b11` was worst at 160/800 (0.20), versus 640/800 (0.80) in each other block. The random-split diagnostic scored 412/640 (0.64375), giving a random-minus-worst-block gap of 0.44375, above the frozen 0.20 gate. Each block had 16 centers and 800 positive rows; all block folds had zero row/source/noise/position overlap. The random split shared all 64 positions and is explicitly diagnostic-only. Empty support returned `INSUFFICIENT`; injected position overlap was `REJECTED`.
-
-This is method validation on authored synthetic outcomes, not a fitted-model result and does not confirm the issue-level T1 hypothesis about visual target-position gains, real GUI performance, calibration, safety, or authority. Execution followed the public freeze's host-only protocol on CPython 3.14.5/macOS arm64. OrbStack was not used because the exact freeze marked the shared active container as another task's allocation without release. Candidate, audit, run record and raw hashes are in [`results/`](results/); historical #4752/#4814 evidence is unchanged in [`PRIOR_EVIDENCE_RECONSTRUCTION.json`](PRIOR_EVIDENCE_RECONSTRUCTION.json).
-
-The per-run record is [`results/RUN_RECORD.json`](results/RUN_RECORD.json). Frozen source lives at the original preregistration branch/commit; this additive result branch contains only the immutable copied freeze/protocol inputs and execution artifacts. A fresh Docker/OrbStack replication must use a separate successor allocation and must not replace this host result.

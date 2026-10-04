@@ -1,7 +1,0 @@
-# Neutral scorer runtime — original STOP and FAIL retained
-
-Two distinct setup conditions, one invocation each, no retries. Cached ViZDoom1.3.0/image94014 and existing Freedoom WAD are used without model, positive input or X server. Engine mode ASYNC_PLAYER, window hidden, available buttons empty. First allocation01 exits139 after cwd permission errors creating _vizdoom/config, no RESULT; no successful init or close is established. Separate02 changes only to explicit writable/out cwd and preserves01 unchanged.
-
-02 exits1/FAIL_QUALIFICATION under the original gate: after fixed150ms passive wait, gettertic remains1→1, while advance_action(1,True) returns after18020742ns and gettertic becomes8. Kills/deaths stayzero; game.close returns. Do not regrade toPASS. This qualifies neither underlying continuous game advancement nor cached-getter cause, score producer epoch/freshness, kill onset/useful effect, full session/recovery, physical input release, comparison or live allocation. The observed update return is not an exactly-one-tic advancement or a latency distribution.
-
-All raw/config artifacts, source/freeze/argv/host/RESULT bytes retained. WAD and cached image are pinned historical external dependencies, not bundled here; no portable setup claim. CPU/memory flags are requests; swap/cgroup warning preserved, enforcement unproven. First runtime qualification failed and next step is producer/update interpretation, not a new live controller run.

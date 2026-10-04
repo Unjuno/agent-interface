@@ -1,1 +1,0 @@
-import {writeFileSync} from 'node:fs';let bytes=0;writeFileSync(process.argv[2],JSON.stringify({pid:process.pid,ppid:process.ppid})+'\n',{flag:'wx'});process.stdin.on('data',x=>{bytes+=x.length;});process.on('exit',code=>writeFileSync(process.argv[3],JSON.stringify({pid:process.pid,code,bytes})+'\n',{flag:'wx'}));process.stdin.resume();

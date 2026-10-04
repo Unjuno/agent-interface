@@ -1,7 +1,0 @@
-# Inkscape conditional continuation preflight
-
-This candidate reads a synchronous, caller-selected original 1000x700 RGB capture. It has no sensor, model, input, source renewal or replay. The two fixed layouts come from primary-grounded coordinates in the existing four live cases. Dark rectangle interiors and light alternate-placement interiors must match jointly; blank frames are false and ambiguous/missing/changed-layout cases are unknown. Only exact True can be considered by a future caller, after completed dispatch and verified release.
-
-Eight original retained captures are checked against their recorded PNG hashes before decoding. Derived image mutations exist only in memory and are controls, never primary grounding. This is retrospective feasibility on existing images, not held-out success, a fresh GUI run, a general rectangle detector or independent saved-effect scoring. Original inline captures precede release; they are not post-release captures. The predicate does not certify text, whole-image absence of collateral changes, saved geometry or redraw.
-
-Next integration gate: freeze a finite fresh Inkscape ordinary callback/compiled comparison with the same predicates, baseline batching, guards, input expiry, raw receipt retention and independent SVG scoring. Wrong-layout/unknown must stop before Save in both routes. Do not promote a default or claim token/latency benefit from this preflight. Historical frozen files remain untouched.

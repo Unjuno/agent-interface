@@ -1,5 +1,0 @@
-# Ordinary fixture construction
-
-First `construction-smoke/smoke-candidate-eof` completed with primary/peer exits0/0, one real accepted request, saved original reply/image/presentation and owner transport closure. It revealed a synthetic response fixture error: releases were under `meta.execution`, but actual primary_caller reads `meta.result.execution`. Therefore it returned the original evidence while latching caller STOP. This is a fixture defect, not a production defect or a valid completed-input control. The first peer.py, executed collector copy collect_v1.py and untouched first outputs remain retained.
-
-Repair peer_v2.py changes only that nesting, with collector's peer filename updated. No production source changes and no original frozen producer/auditor invocation. Separately named construction-smoke-v2 is an ordinary fixture regression before the new formal eight-row freeze. The formal deck requires success caller_state.stopped null; it cannot convert the first fixture outcome into success.

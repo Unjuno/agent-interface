@@ -1,5 +1,0 @@
-One independent audit invocation after a successful formal runner (source and raw input read-only; report output is separate):
-
-docker --context orbstack run --rm --network none --cpus=2 --memory=1g --pids-limit=128 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -e PYTHONDONTWRITEBYTECODE=1 -v /private/tmp/issue2918-xcalc-v1:/repo:ro -v /private/tmp/issue2918-xcalc-v1/research/integration/issue_2918_xcalc_v1/formal_01_raw:/in:ro -v /private/tmp/issue2918-xcalc-v1/research/integration/issue_2918_xcalc_v1/formal_01_audit:/report:rw -w /repo issue-3548-route-unit@sha256:0e35cdb51a82e59d359ec09b85ce835d9217a1eab65b68ce1871c9b0a85014c9 python3 -B research/integration/issue_2918_xcalc_v1/audit_allocation.py /in /report
-
-Only after the primary independent audit, run the separately preregistered three-mutant auditor corruption-control harness. Its input mount is read-only; its scratch copies/output must be on a separate host directory, never nested under the raw input.

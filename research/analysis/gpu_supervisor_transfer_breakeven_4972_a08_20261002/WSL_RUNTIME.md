@@ -1,5 +1,0 @@
-# WSL runtime provenance (pre-candidate)
-
-Observed 2026-10-01 23:24 UTC / 2026-10-02 08:24 JST. Registered distro is Arch Linux on Microsoft WSL 2 (kernel 6.18.40.1-microsoft-standard-WSL2); it is not WSL 3. Podman 6.1.3, rootful storage at /var/lib/containers/storage, crun, NVIDIA Container Toolkit 1.20.0. CDI spec is /etc/cdi/nvidia.yaml, SHA-256 724b8c7d0e582ac5c51e45a61e3ed3fd98c859f287315d3fd62da38cca482398; nvidia-ctk cdi list reports nvidia.com/gpu=all. Host nvidia-smi reports RTX 3080 Laptop GPU. This is setup evidence only, not a formal candidate or proof that a container can compute on the GPU.
-
-The exact pinned PyTorch image has not yet been pulled into Podman. Do so before the formal window, verify the linux/amd64 RepoDigest, then run construction tests CPU-only inside that image with network disabled. Do not pull, build, or use a GPU during the formal candidate/auditor containers except the single preregistered candidate call. No Docker Desktop/CLI is available in this session.
