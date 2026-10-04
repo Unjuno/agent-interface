@@ -1,0 +1,169 @@
+{
+  "candidate_sha256": "4681bad81fbab0291418b014b1ab0f17668bd89f45fcb04ffca0b84720ad731e",
+  "fixture_sha256": "5dfcbe9d4866973d68719988bd41a3b04ff43ac3555b88b0d59463211a2afa6f",
+  "rows": [
+    {
+      "capsule_id": "capsule-17",
+      "case": "same_object_appearance_change",
+      "input_authorized": false,
+      "policy": "SIMILARITY_ONLY",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance"
+      ]
+    },
+    {
+      "capsule_id": "capsule-17",
+      "case": "same_object_appearance_change",
+      "input_authorized": false,
+      "policy": "IDENTITY_BOUND",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance"
+      ]
+    },
+    {
+      "capsule_id": null,
+      "case": "same_object_appearance_change",
+      "input_authorized": false,
+      "policy": "NO_MEMORY",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": "capsule-17",
+      "case": "lookalike_different_object",
+      "input_authorized": false,
+      "policy": "SIMILARITY_ONLY",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance"
+      ]
+    },
+    {
+      "capsule_id": null,
+      "case": "lookalike_different_object",
+      "input_authorized": false,
+      "policy": "IDENTITY_BOUND",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": null,
+      "case": "lookalike_different_object",
+      "input_authorized": false,
+      "policy": "NO_MEMORY",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": "capsule-17",
+      "case": "same_object_moved",
+      "input_authorized": false,
+      "policy": "SIMILARITY_ONLY",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance",
+        "location"
+      ]
+    },
+    {
+      "capsule_id": "capsule-17",
+      "case": "same_object_moved",
+      "input_authorized": false,
+      "policy": "IDENTITY_BOUND",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance",
+        "location"
+      ]
+    },
+    {
+      "capsule_id": null,
+      "case": "same_object_moved",
+      "input_authorized": false,
+      "policy": "NO_MEMORY",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": "capsule-17",
+      "case": "duplicate_label",
+      "input_authorized": false,
+      "policy": "SIMILARITY_ONLY",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance"
+      ]
+    },
+    {
+      "capsule_id": null,
+      "case": "duplicate_label",
+      "input_authorized": false,
+      "policy": "IDENTITY_BOUND",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": null,
+      "case": "duplicate_label",
+      "input_authorized": false,
+      "policy": "NO_MEMORY",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": "capsule-17",
+      "case": "recycled_id_new_generation",
+      "input_authorized": false,
+      "policy": "SIMILARITY_ONLY",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance"
+      ]
+    },
+    {
+      "capsule_id": null,
+      "case": "recycled_id_new_generation",
+      "input_authorized": false,
+      "policy": "IDENTITY_BOUND",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": null,
+      "case": "recycled_id_new_generation",
+      "input_authorized": false,
+      "policy": "NO_MEMORY",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": "capsule-17",
+      "case": "identity_unavailable",
+      "input_authorized": false,
+      "policy": "SIMILARITY_ONLY",
+      "retrieved": true,
+      "stale_fields": [
+        "appearance"
+      ]
+    },
+    {
+      "capsule_id": null,
+      "case": "identity_unavailable",
+      "input_authorized": false,
+      "policy": "IDENTITY_BOUND",
+      "retrieved": false,
+      "stale_fields": []
+    },
+    {
+      "capsule_id": null,
+      "case": "identity_unavailable",
+      "input_authorized": false,
+      "policy": "NO_MEMORY",
+      "retrieved": false,
+      "stale_fields": []
+    }
+  ],
+  "schema": "unjuno.issue7160.t0.candidate.v1"
+}
