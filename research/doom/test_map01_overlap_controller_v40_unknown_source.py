@@ -1,5 +1,6 @@
 import ast
 import importlib
+import io
 import json
 import queue
 import subprocess
@@ -112,6 +113,88 @@ class Map01V40UnknownSourceTests(unittest.TestCase):
         self.assertLess(first_gate, positions["submit_cover"][0])
         self.assertLess(positions["submit_cover"][0], second_gate)
         self.assertLess(second_gate, positions["begin_model_turn"][0])
+
+    def test_queued_invalidation_preempts_initial_cover_acceptance(self):
+        self.require_candidate()
+        source = (HERE / "map01_overlap_controller_v40.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        loop = next(node for node in ast.walk(main)
+                    if isinstance(node, ast.For) and isinstance(node.target, ast.Name)
+                    and node.target.id == "index")
+        planner_start = min(node.lineno for node in ast.walk(loop)
+                            if isinstance(node, ast.Call) and
+                            isinstance(node.func, ast.Name) and
+                            node.func.id == "begin_model_turn")
+        invalidation_branch = next(node for node in ast.walk(loop)
+            if isinstance(node, ast.If) and any(
+                isinstance(part, ast.Subscript) and
+                isinstance(part.value, ast.Name) and
+                part.value.id == "cover_acceptance" and
+                isinstance(part.slice, ast.Constant) and part.slice.value == "event"
+                for part in ast.walk(node.test)) and
+            any(isinstance(part, ast.Constant) and
+                part.value == "policy_invalidation" for part in ast.walk(node.test)))
+        branch_calls = [node for node in ast.walk(invalidation_branch)
+                        if isinstance(node, ast.Call) and
+                        isinstance(node.func, ast.Name)]
+        self.assertTrue(any(node.func.id == "cancel_unplanned_invalidated_cover"
+                            for node in branch_calls))
+        self.assertTrue(any(isinstance(node, ast.Continue)
+                            for node in ast.walk(invalidation_branch)))
+        self.assertLess(invalidation_branch.lineno, planner_start)
+
+        class Process:
+            def __init__(self):
+                self.stdin = io.StringIO()
+
+            @staticmethod
+            def poll():
+                return None
+
+        class Monitor:
+            event_types = {"observation"}
+
+            def __init__(self):
+                self.seen = []
+
+            def observe(self, row):
+                self.seen.append(row)
+                return {"status": "hard_change", "sequence": row["sequence"]}
+
+        incoming = queue.Queue()
+        observation = {"event": "observation", "sequence": 99}
+        accepted = {"event": "accepted", "id": "cover-0"}
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+        incoming.put(observation)
+        incoming.put(accepted)
+        incoming.put(terminal)
+        monitor = Monitor()
+        latest = []
+        process = Process()
+
+        def wait(predicate, timeout=40, observation_monitor=None):
+            return controller.wait_for_event(
+                incoming, process, predicate, timeout,
+                observation_monitor=observation_monitor,
+                on_observation=latest.append,
+            )
+
+        result = controller.wait_for_cover_acceptance(
+            wait, "cover-0", monitor)
+        self.assertEqual(result["event"], "policy_invalidation")
+        self.assertEqual(result["invalidation"]["sequence"], 99)
+        self.assertEqual(monitor.seen, [observation])
+        self.assertEqual(latest, [observation])
+        released = controller.cancel_unplanned_invalidated_cover(
+            process, wait, "cover-0")
+        self.assertEqual(released, terminal)
+        self.assertEqual(json.loads(process.stdin.getvalue()),
+                         {"op": "cancel", "id": "cover-0"})
+        self.assertTrue(controller.terminal_release_verified(released))
+        self.assertTrue(incoming.empty())
 
     def test_unknown_source_after_finish_eof_still_collects_score(self):
         self.require_candidate()

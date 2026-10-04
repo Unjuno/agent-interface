@@ -98,6 +98,18 @@ def cancel_cover_before_model(process, wait, cover_id):
     return terminal
 
 
+def cancel_unplanned_invalidated_cover(process, wait, cover_id):
+    """Cancel an admission-raced cover and require verified empty release."""
+    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+    process.stdin.flush()
+    terminal = wait(lambda row: row.get("event") == "terminal" and
+                    row.get("id") == cover_id)
+    if (terminal.get("status") != "cancelled" or
+            not terminal_release_verified(terminal)):
+        raise RuntimeError("invalidated cover before planning did not verify empty release")
+    return terminal
+
+
 class ControllerSessionCustody:
     """Finish or retire the owned session and preserve the events observed so far."""
 
@@ -602,6 +614,43 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
+def wait_for_event(incoming, process, predicate, timeout=40,
+                   observation_monitor=None, on_observation=None):
+    """Wait for one child event while honoring any supplied observation guard."""
+    end = time.monotonic() + timeout
+    while time.monotonic() < end:
+        try:
+            row = incoming.get(timeout=min(.25, max(.1, end - time.monotonic())))
+        except queue.Empty:
+            if process.poll() is not None:
+                detail = "stderr not synchronously drained"
+                raise RuntimeError(f"session exited before expected event: {detail}")
+            continue
+        if row["event"] == "observation" and on_observation is not None:
+            on_observation(row)
+        event_types = (getattr(observation_monitor, "event_types", {"observation"})
+                       if observation_monitor is not None else set())
+        if row["event"] in event_types:
+            invalidation = observation_monitor.observe(row)
+            if invalidation is not None:
+                if invalidation.get("event") == "running_action_invalidation":
+                    return invalidation
+                return {"event": "policy_invalidation",
+                        "invalidation": invalidation}
+        if predicate(row):
+            return row
+    raise TimeoutError()
+
+
+def wait_for_cover_acceptance(wait, identifier, observation_monitor):
+    """Do not admit a cover if a queued observation invalidates its source."""
+    return wait(
+        lambda row: row["event"] in ("accepted", "rejected") and
+        (row.get("id") == identifier or row["event"] == "rejected"),
+        observation_monitor=observation_monitor,
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -644,28 +693,14 @@ def main():
     latest = None
     def wait(predicate, timeout=40, observation_monitor=None):
         nonlocal latest
-        end = time.monotonic() + timeout
-        while time.monotonic() < end:
-            try:
-                row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
-            except queue.Empty:
-                if process.poll() is not None:
-                    detail="stderr not synchronously drained"
-                    raise RuntimeError(f"session exited before expected event: {detail}")
-                continue
-            if row["event"] == "observation":
-                latest = row
-            event_types = (getattr(observation_monitor, "event_types", {"observation"})
-                           if observation_monitor is not None else set())
-            if row["event"] in event_types:
-                invalidation = observation_monitor.observe(row)
-                if invalidation is not None:
-                    if invalidation.get("event") == "running_action_invalidation":
-                        return invalidation
-                    return {"event":"policy_invalidation",
-                            "invalidation":invalidation}
-            if predicate(row): return row
-        raise TimeoutError()
+        def update_latest(row):
+            nonlocal latest
+            latest = row
+        return wait_for_event(
+            incoming, process, predicate, timeout,
+            observation_monitor=observation_monitor,
+            on_observation=update_latest,
+        )
     custody = ControllerSessionCustody(
         process=process, wait_for_event=wait, events=all_events,
         reader_thread=reader_thread, output_dir=args.out,
@@ -741,11 +776,34 @@ def main():
             command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
               "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
             process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
-            accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                          (r.get("id")==identifier or r["event"]=="rejected"))
+            accepted=wait_for_cover_acceptance(
+                wait, identifier, validity_monitor)
+            if accepted["event"] == "policy_invalidation":
+                return accepted
             if accepted["event"]!="accepted":raise RuntimeError(accepted)
             cover_ids.append(identifier);return accepted
-        submit_cover(cover)
+        cover_acceptance = submit_cover(cover)
+        if cover_acceptance["event"] == "policy_invalidation":
+            terminal = cancel_unplanned_invalidated_cover(process, wait, cover)
+            cover_terminals.append(terminal)
+            decisions.append({
+                "iteration": index,
+                "source_sequence": latest.get("sequence"),
+                "cover_submit_attempts": [cover],
+                "cover_program_ids": [],
+                "cover_terminals": list(cover_terminals),
+                "cover_terminal_releases_verified": terminal_release_verified(terminal),
+                "cover_validity_admission": validity_admission,
+                "cover_validity_soft_events": validity_monitor.soft_event_count,
+                "cover_validity_latest_soft_event": validity_monitor.latest_soft_event,
+                "policy_invalidation": cover_acceptance["invalidation"],
+                "cover_terminal_before_plan": True,
+                "plan_terminal": "not_started",
+                "final_action_admission": None,
+                "model_action_discarded": True,
+                "discard_reason": "cover_invalidated_during_admission",
+            })
+            continue
         model_root=args.out/f"decision-{index}"
         model_root.mkdir()
         action_source_observation=dict(latest)
@@ -817,6 +875,13 @@ def main():
                 if future.done():break
                 next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                 next_accepted=submit_cover(next_cover)
+                if next_accepted["event"] == "policy_invalidation":
+                    invalidation=next_accepted["invalidation"]
+                    current_cover=next_cover
+                    planner_interrupt,current_terminal=cancel_invalidated_cover(
+                        planner,planner_handle,process,current_cover)
+                    cover_terminals.append(current_terminal)
+                    break
                 cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                     current_terminal["terminal_ns"])/1e6)
                 current_cover=next_cover;current_terminal=None
@@ -1265,7 +1330,8 @@ def main():
           x.get("cover_validity_admission",{}).get("status") != "admitted" for x in decisions),
       "model_actions_discarded":sum(x.get("model_action_discarded",False) for x in decisions),
       "historical_final_action_admission_statuses":dict(Counter(
-          x["final_action_admission"]["status"] for x in decisions)),
+          ((x.get("final_action_admission") or {}).get("status", "not_started")
+           for x in decisions))),
       "cover_programs":sum(len(x.get("cover_program_ids",[])) for x in decisions),
       "cover_renewals":sum(x.get("cover_renewals",0) for x in decisions),
       "cover_renewal_gaps_ms":[gap for x in decisions for gap in x.get("cover_renewal_gaps_ms",[])],
