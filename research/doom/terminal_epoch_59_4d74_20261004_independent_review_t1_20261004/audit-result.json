@@ -1,0 +1,48 @@
+{
+  "schema": "terminal-epoch-saved-data-review-v1",
+  "disposition": "PASS_TRACE_AND_SOURCE_BINDING_WITH_SCOPE_LIMITATIONS",
+  "review_head": "af6d0f9842a2377fba736d2d65643b02690f99d9",
+  "source_commit": "c09842a0ef49827bca07fb08461afd83ab37b885",
+  "source_commit_ancestor_of_review_head": true,
+  "manifest_files_verified": 11,
+  "source_files_bound_to_frozen_commit": [
+    "independent_progress_clock_v2.py",
+    "session_map01_v15.py"
+  ],
+  "probe_source_sha256": "e5f5c9de796697af9290a82bd2d3148355da3319de3b396233e678adebbf883b",
+  "probe_source_contract": {
+    "empty_available_button_set": true,
+    "only_advance_action_one_tic_update_true": true,
+    "episode_timeout_tics": 70,
+    "repeat_terminal_uses_later_monotonic_timestamp": true,
+    "game_action_emission_calls": 0
+  },
+  "trace": {
+    "rows": 57,
+    "producer_tic_start_end": [
+      5,
+      71
+    ],
+    "strictly_advancing_producer_tics": true,
+    "per_ack_tics_equal": true,
+    "frame_tic_matches": 56,
+    "events": 1,
+    "terminal_event": "EPISODE_FINISHED_NO_EXIT",
+    "terminal_event_negative_unuseful_invisible": true,
+    "duplicate_terminal_events": 0,
+    "positive_input_calls": 0,
+    "close_returned": true,
+    "running_after_close": false,
+    "ack_duration_ms_min_max": [
+      0.435599,
+      28.743768
+    ]
+  },
+  "limitations": [
+    "The WAD bytes are absent; only their declared SHA-256 is retained.",
+    "The host cgroup/swap warning means the requested memory cap is not independently established.",
+    "The retained repeated-terminal receipt stores no repeated sample timestamp; the probe source shows that it reuses the exact state with a later perf_counter_ns value, while the result stores only the empty event list.",
+    "The trace does not independently establish engine timeout onset, neutral cadence, positive task effect, physical input release, or gameplay efficacy.",
+    "This is a saved-data audit; no runtime, container, game, model, GUI, or input was started."
+  ]
+}
