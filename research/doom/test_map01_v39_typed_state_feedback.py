@@ -302,6 +302,56 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertTrue(all(row.get("input_ack_to_owner_keyup_start_ms") is None
                             for row in receipts))
 
+    def test_v11_duplicate_owner_admission_id_cannot_pair_two_edges(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        source_admission = next(row for row in source
+                                if row.get("event") == "input_admission" and
+                                row.get("step") == 0)
+        source_release = next(row for row in source
+                              if row.get("event") == "input_release_transition" and
+                              row.get("step") == 0)
+        duplicate_id = "owner-7:admission:4"
+
+        def pair(position):
+            admission, release = [json.loads(json.dumps(row)) for row in
+                                  (source_admission, source_release)]
+            admission.update(id="duplicate-id-program", step=4,
+                             admission_position=position,
+                             admission_id=duplicate_id, admission_sequence=4)
+            owner = release.pop("owner_thread_keyup_receipt")
+            for name in ("owner_thread_keyup_verified",
+                         "owner_thread_keyup_history_complete"):
+                release.pop(name, None)
+            release.update(
+                id="duplicate-id-program", step=4,
+                admission_position=position, admission_id=duplicate_id,
+                admission_identity_status="matched_explicit_id",
+                owner_keyup_join="MATCHED_EXPLICIT_KEYUP",
+                owner_release_history_complete=True, owner_cleanup_intervened=False,
+                ordinary_release_candidate=True,
+                owner_keyup_receipt={
+                    "event": "owner_keyup", "schema": "owner-keyup-v11",
+                    "owner_id": owner["owner_id"],
+                    "intent_token": owner["intent_token"], "key": owner["key"],
+                    "reason": "explicit_up", "admission_id": duplicate_id,
+                    "owner_keyup_started_ns": owner["owner_keyrelease_started_ns"],
+                    "owner_sync_returned_ns": owner["owner_sync_returned_ns"],
+                    "xsync_completed": True, "sync_error": None,
+                    "physical_verification_authoritative": False,
+                    "grants_input_authority": False,
+                })
+            return admission, release
+
+        events = [row for position in (0, 1) for row in pair(position)]
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual([row["status"] for row in receipts],
+                         ["release_receipt_incomplete"] * 2)
+        self.assertTrue(all(row["admitted_to_owner_keyup_start_ms"] is None
+                            for row in receipts))
+
     def test_input_edge_receipt_rejects_adapter_actuation_identity_mismatch(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")

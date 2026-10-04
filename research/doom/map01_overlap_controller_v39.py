@@ -755,6 +755,14 @@ def action_state_feedback(before, after, typed_observations):
 
 def input_edge_receipts(events):
     """Project legacy owner receipts and measured X-adapter edge brackets separately."""
+    events = list(events)
+    explicit_admission_id_counts = Counter(
+        (event.get("owner_id"), event.get("admission_id"))
+        for event in events
+        if type(event) is dict and event.get("event") == "input_admission"
+        and type(event.get("owner_id")) is str and bool(event.get("owner_id"))
+        and type(event.get("admission_id")) is str
+        and bool(event.get("admission_id")))
     grouped = {}
     adapter_grouped = {}
     invalid = []
@@ -1011,7 +1019,10 @@ def input_edge_receipts(events):
             type(admission_id_value) is str
             and bool(admission_id_value)
             and release_admission_id == admission_id_value
-            and owner_keyup_admission_id == admission_id_value)
+            and owner_keyup_admission_id == admission_id_value
+            and type(admission_owner_id) is str and bool(admission_owner_id)
+            and explicit_admission_id_counts.get(
+                (admission_owner_id, admission_id_value)) == 1)
         admission_identity_matches = (
             type(release) is dict and (
                 (release.get("admission_identity_status") == "matched_explicit_id"
