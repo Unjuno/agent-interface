@@ -71,8 +71,8 @@
               "reason": "method_complete"
             }
           ],
-          "elapsed_ns": 103100,
-          "ended_ns": 95821820269,
+          "elapsed_ns": 148000,
+          "ended_ns": 89057723091600,
           "format": "compiled-gui-runtime-receipt-v1",
           "frontier_model_resumptions": 0,
           "input_authority": "admission_per_action_only",
@@ -82,7 +82,7 @@
           "method_version": "1",
           "observations": [
             {
-              "captured_ns": 95821719719,
+              "captured_ns": 89057722946500,
               "evidence_digest": "d1",
               "evidence_ref": "frame-1",
               "predicates": {
@@ -93,7 +93,7 @@
               "sequence": 1
             },
             {
-              "captured_ns": 95821756472,
+              "captured_ns": 89057722997300,
               "evidence_digest": "d2",
               "evidence_ref": "frame-2",
               "predicates": {
@@ -104,7 +104,7 @@
               "sequence": 2
             },
             {
-              "captured_ns": 95821797677,
+              "captured_ns": 89057723058700,
               "evidence_digest": "d3",
               "evidence_ref": "frame-3",
               "predicates": {
@@ -120,7 +120,7 @@
           "raw_evidence_retention": "adapter_responsibility_unverified",
           "reason": "method_complete",
           "session_scope": "private-test-double",
-          "started_ns": 95821717169,
+          "started_ns": 89057722943600,
           "transitions": [
             {
               "action": "enter",
@@ -158,40 +158,40 @@
         {
           "event": "stage_started",
           "stage": "reuse_revalidate",
-          "started_ns": 95821585509
+          "started_ns": 89057722756600
         },
         {
-          "ended_ns": 95821614484,
+          "ended_ns": 89057722795300,
           "event": "stage_completed",
           "stage": "reuse_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "final_revalidate",
-          "started_ns": 95821621003
+          "started_ns": 89057722802400
         },
         {
-          "ended_ns": 95821645314,
+          "ended_ns": 89057722839200,
           "event": "stage_completed",
           "stage": "final_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "execute",
-          "started_ns": 95821649722
+          "started_ns": 89057722844800
         },
         {
-          "ended_ns": 95821858368,
+          "ended_ns": 89057723158400,
           "event": "stage_completed",
           "stage": "execute"
         },
         {
           "event": "stage_started",
           "stage": "verify_effect",
-          "started_ns": 95821863039
+          "started_ns": 89057723163900
         },
         {
-          "ended_ns": 95821865899,
+          "ended_ns": 89057723168000,
           "event": "stage_completed",
           "stage": "verify_effect"
         },
@@ -334,6 +334,9 @@
           ]
         },
         "delivery": "confirmed",
+        "effect_receipt": {
+          "status": "unavailable"
+        },
         "execution_progress": {
           "status": "completed"
         },
@@ -342,28 +345,28 @@
         "outcome": "TASK_NOT_VERIFIED",
         "phase_timings": [
           {
-            "elapsed_ns": 28975,
-            "ended_ns": 95821614484,
+            "elapsed_ns": 38700,
+            "ended_ns": 89057722795300,
             "stage": "reuse_revalidate",
-            "started_ns": 95821585509
+            "started_ns": 89057722756600
           },
           {
-            "elapsed_ns": 24311,
-            "ended_ns": 95821645314,
+            "elapsed_ns": 36800,
+            "ended_ns": 89057722839200,
             "stage": "final_revalidate",
-            "started_ns": 95821621003
+            "started_ns": 89057722802400
           },
           {
-            "elapsed_ns": 208646,
-            "ended_ns": 95821858368,
+            "elapsed_ns": 313600,
+            "ended_ns": 89057723158400,
             "stage": "execute",
-            "started_ns": 95821649722
+            "started_ns": 89057722844800
           },
           {
-            "elapsed_ns": 2860,
-            "ended_ns": 95821865899,
+            "elapsed_ns": 4100,
+            "ended_ns": 89057723168000,
             "stage": "verify_effect",
-            "started_ns": 95821863039
+            "started_ns": 89057723163900
           }
         ],
         "reason": "unavailable",
@@ -560,8 +563,8 @@
               "reason": "unknown_state"
             }
           ],
-          "elapsed_ns": 89001,
-          "ended_ns": 95821408926,
+          "elapsed_ns": 99600,
+          "ended_ns": 89057722549400,
           "format": "compiled-gui-runtime-receipt-v1",
           "frontier_model_resumptions": 0,
           "input_authority": "admission_per_action_only",
@@ -571,7 +574,7 @@
           "method_version": "1",
           "observations": [
             {
-              "captured_ns": 95821322701,
+              "captured_ns": 89057722452500,
               "evidence_digest": "d1",
               "evidence_ref": "frame-1",
               "predicates": {
@@ -582,7 +585,7 @@
               "sequence": 1
             },
             {
-              "captured_ns": 95821373809,
+              "captured_ns": 89057722516400,
               "evidence_digest": "d2",
               "evidence_ref": "frame-2",
               "predicates": {
@@ -598,7 +601,7 @@
           "raw_evidence_retention": "adapter_responsibility_unverified",
           "reason": "unknown_state",
           "session_scope": "private-test-double",
-          "started_ns": 95821319925,
+          "started_ns": 89057722449800,
           "transitions": [
             {
               "action": "enter",
@@ -621,30 +624,30 @@
         {
           "event": "stage_started",
           "stage": "reuse_revalidate",
-          "started_ns": 95821184454
+          "started_ns": 89057722164400
         },
         {
-          "ended_ns": 95821207317,
+          "ended_ns": 89057722241700,
           "event": "stage_completed",
           "stage": "reuse_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "final_revalidate",
-          "started_ns": 95821213167
+          "started_ns": 89057722248400
         },
         {
-          "ended_ns": 95821234433,
+          "ended_ns": 89057722283800,
           "event": "stage_completed",
           "stage": "final_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "execute",
-          "started_ns": 95821238671
+          "started_ns": 89057722289400
         },
         {
-          "ended_ns": 95821456293,
+          "ended_ns": 89057722598700,
           "event": "stage_completed",
           "stage": "execute"
         },
@@ -787,6 +790,7 @@
           ]
         },
         "delivery": "confirmed_partial",
+        "effect_receipt": null,
         "execution_progress": {
           "completed_actions": 1,
           "reason": "unknown_state",
@@ -797,22 +801,22 @@
         "outcome": "EXECUTION_INCOMPLETE",
         "phase_timings": [
           {
-            "elapsed_ns": 22863,
-            "ended_ns": 95821207317,
+            "elapsed_ns": 77300,
+            "ended_ns": 89057722241700,
             "stage": "reuse_revalidate",
-            "started_ns": 95821184454
+            "started_ns": 89057722164400
           },
           {
-            "elapsed_ns": 21266,
-            "ended_ns": 95821234433,
+            "elapsed_ns": 35400,
+            "ended_ns": 89057722283800,
             "stage": "final_revalidate",
-            "started_ns": 95821213167
+            "started_ns": 89057722248400
           },
           {
-            "elapsed_ns": 217622,
-            "ended_ns": 95821456293,
+            "elapsed_ns": 309300,
+            "ended_ns": 89057722598700,
             "stage": "execute",
-            "started_ns": 95821238671
+            "started_ns": 89057722289400
           }
         ],
         "reason": "unknown_state",
@@ -1044,8 +1048,8 @@
               "reason": "method_complete"
             }
           ],
-          "elapsed_ns": 190605,
-          "ended_ns": 95821016854,
+          "elapsed_ns": 168900,
+          "ended_ns": 89057721933200,
           "format": "compiled-gui-runtime-receipt-v1",
           "frontier_model_resumptions": 0,
           "input_authority": "admission_per_action_only",
@@ -1055,7 +1059,7 @@
           "method_version": "1",
           "observations": [
             {
-              "captured_ns": 95820833450,
+              "captured_ns": 89057721769300,
               "evidence_digest": "d1",
               "evidence_ref": "frame-1",
               "predicates": {
@@ -1066,7 +1070,7 @@
               "sequence": 1
             },
             {
-              "captured_ns": 95820896994,
+              "captured_ns": 89057721830800,
               "evidence_digest": "d2",
               "evidence_ref": "frame-2",
               "predicates": {
@@ -1077,7 +1081,7 @@
               "sequence": 2
             },
             {
-              "captured_ns": 95820979059,
+              "captured_ns": 89057721896900,
               "evidence_digest": "d3",
               "evidence_ref": "frame-3",
               "predicates": {
@@ -1093,7 +1097,7 @@
           "raw_evidence_retention": "adapter_responsibility_unverified",
           "reason": "method_complete",
           "session_scope": "private-test-double",
-          "started_ns": 95820826249,
+          "started_ns": 89057721764300,
           "transitions": [
             {
               "action": "enter",
@@ -1131,40 +1135,40 @@
         {
           "event": "stage_started",
           "stage": "reuse_revalidate",
-          "started_ns": 95820649923
+          "started_ns": 89057721518700
         },
         {
-          "ended_ns": 95820678666,
+          "ended_ns": 89057721585200,
           "event": "stage_completed",
           "stage": "reuse_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "final_revalidate",
-          "started_ns": 95820690425
+          "started_ns": 89057721594300
         },
         {
-          "ended_ns": 95820724174,
+          "ended_ns": 89057721639900,
           "event": "stage_completed",
           "stage": "final_revalidate"
         },
         {
           "event": "stage_started",
           "stage": "execute",
-          "started_ns": 95820735376
+          "started_ns": 89057721646300
         },
         {
-          "ended_ns": 95821065417,
+          "ended_ns": 89057722001600,
           "event": "stage_completed",
           "stage": "execute"
         },
         {
           "event": "stage_started",
           "stage": "verify_effect",
-          "started_ns": 95821071973
+          "started_ns": 89057722007400
         },
         {
-          "ended_ns": 95821074929,
+          "ended_ns": 89057722011600,
           "event": "stage_completed",
           "stage": "verify_effect"
         },
@@ -1307,6 +1311,9 @@
           ]
         },
         "delivery": "confirmed",
+        "effect_receipt": {
+          "status": "succeeded"
+        },
         "execution_progress": {
           "status": "completed"
         },
@@ -1315,28 +1322,28 @@
         "outcome": "TASK_SUCCEEDED",
         "phase_timings": [
           {
-            "elapsed_ns": 28743,
-            "ended_ns": 95820678666,
+            "elapsed_ns": 66500,
+            "ended_ns": 89057721585200,
             "stage": "reuse_revalidate",
-            "started_ns": 95820649923
+            "started_ns": 89057721518700
           },
           {
-            "elapsed_ns": 33749,
-            "ended_ns": 95820724174,
+            "elapsed_ns": 45600,
+            "ended_ns": 89057721639900,
             "stage": "final_revalidate",
-            "started_ns": 95820690425
+            "started_ns": 89057721594300
           },
           {
-            "elapsed_ns": 330041,
-            "ended_ns": 95821065417,
+            "elapsed_ns": 355300,
+            "ended_ns": 89057722001600,
             "stage": "execute",
-            "started_ns": 95820735376
+            "started_ns": 89057721646300
           },
           {
-            "elapsed_ns": 2956,
-            "ended_ns": 95821074929,
+            "elapsed_ns": 4200,
+            "ended_ns": 89057722011600,
             "stage": "verify_effect",
-            "started_ns": 95821071973
+            "started_ns": 89057722007400
           }
         ],
         "reason": "verified_effect",
@@ -1500,7 +1507,7 @@
   },
   "schema": "compiled-caller-composition-a01-v1",
   "source_sha256": {
-    "caller": "7a891f4737d37984c7af5a41e65b6ef863a4d81e336d742f75d930e8e75cd462",
+    "caller": "e9be73955d849a8d627450752a4b6b97a410cdd08e9424746d954e23015a654d",
     "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
   }
 }
