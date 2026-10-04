@@ -76,7 +76,7 @@ def main():
         "runtime_sources_sha256": runtime_hashes,
         "source_support_sha256": manifest["archive_sha256"],
         "source_support_manifest_sha256": sha256(package / "SOURCE_MANIFEST.json"),
-        "source_support_path": f"{PACKAGE_REL}/source-support.tar.gz",
+        "support_archive_path": f"{PACKAGE_REL}/source-support.tar.gz",
         "runtime_environment_path": f"{PACKAGE_REL}/ENVIRONMENT.json",
         "runtime_environment_sha256": environment_sha,
         "output_root": f"{PACKAGE_REL}/results/{args.allocation_id}",
