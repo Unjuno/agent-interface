@@ -1,0 +1,38 @@
+{
+  "source_commit": "76886c5cc41ef801bf1d0cb153b1dabf444d9127",
+  "source_blob": "776b3f32ada0b24d171908e595227e00e2ad9508",
+  "source_sha256": "48aa1c791ddaa7965a6c1374fc95a7a695d192b62e5fb3b859c0a56e11b7293a",
+  "function": "input_edge_receipts",
+  "fixture_sha256": "aa90e0ffeb18b2e3d5b28c159ceb4d6924c6b22da549b0014a184d28a1ec5519",
+  "actual_classification": "adapter_edge_brackets_paired",
+  "down_interval_ns": [
+    200,
+    210
+  ],
+  "up_interval_ns": [
+    100,
+    110
+  ],
+  "reversed_interval_pair_reproduced": true,
+  "scope": "Synthetic static counterexample only; does not establish any retained run was mismeasured.",
+  "receipt": {
+    "status": "adapter_edge_brackets_paired",
+    "program_id_sha256": "f93a49a28e386d77945c0ce150dd8e2be0099a65edd5e5114eeaa05a78ba58f9",
+    "intent_token_sha256": "f06e194de9d2ad49576b401e6890ab835f65e522c25aaabb8a48e95a0186cfea",
+    "owner_id_sha256": "90f9d7c2dc3a74b071652feddec532207e1aad02a37030875aa70b9266e8a4e8",
+    "actuation_id_sha256": "ce1a933577fb5b520b90e2ffa5dd61f10349ad488738baf85a34d9fde910fe40",
+    "step": 0,
+    "key": "F8",
+    "down_edge_interval_ns": [
+      200,
+      210
+    ],
+    "up_edge_interval_ns": [
+      100,
+      110
+    ],
+    "grants_input_authority": false,
+    "application_consumption_observed": false,
+    "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim"
+  }
+}
