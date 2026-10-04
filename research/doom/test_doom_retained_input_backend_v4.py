@@ -7,8 +7,15 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 
+class Parent:
+    def execute(self, step, cancel, identifier, index):
+        for key in step.get("keys", []):
+            self.raw(key, True)
+        return "ok"
+
+
 parent = types.ModuleType("doom_typed_coast_backend_v1")
-parent.Backend = object
+parent.Backend = Parent
 parent.suite = object()
 sys.modules["doom_typed_coast_backend_v1"] = parent
 wrapper = types.ModuleType("input_transition_owner_v3")
@@ -114,6 +121,22 @@ def make_backend(held, owner, lease=None):
 
 
 class Tests(unittest.TestCase):
+    def test_down_emits_executor_admission_identity_and_ordinal(self):
+        log = []
+        owner = Owner(log)
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        result = obj.execute({"keys": ["a", "a"]}, None, "trial-7", 12)
+
+        self.assertEqual(result, "ok")
+        self.assertEqual([(row["id"], row["step"], row["admission_position"])
+                          for row in rows],
+                         [("trial-7", 12, 0), ("trial-7", 12, 1)])
+        self.assertEqual([row["key"] for row in rows], ["a", "a"])
+        self.assertEqual(log, [("down", "a"), ("down", "a")])
+
     def run_release(self, owner, lease=None, held=("a",)):
         obj = make_backend(set(held), owner, lease)
         rows = []

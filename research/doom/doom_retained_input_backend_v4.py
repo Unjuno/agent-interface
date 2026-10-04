@@ -20,7 +20,8 @@ class Backend(Previous):
     def execute(self, step, cancel, identifier, index):
         previous = getattr(self._release_batch, "context", None)
         self._release_batch.context = {
-            "rows": [], "identifier": identifier, "step": index
+            "rows": [], "identifier": identifier, "step": index,
+            "next_admission_position": 0,
         }
         try:
             return super().execute(step, cancel, identifier, index)
@@ -82,6 +83,19 @@ class Backend(Previous):
             record = self.owner.call("down", self.lease, key)
             self.held.add(key)
             if record is not None:
+                context = getattr(self._release_batch, "context", None)
+                if (isinstance(record, dict)
+                        and record.get("event") == "input_admission"
+                        and context is not None):
+                    record = dict(record)
+                    record.update({
+                        "id": context["identifier"],
+                        "step": context["step"],
+                        "admission_position": context.setdefault(
+                            "next_admission_position", 0
+                        ),
+                    })
+                    context["next_admission_position"] += 1
                 self.emit(record)
             return None
 
