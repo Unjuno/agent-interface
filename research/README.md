@@ -124,6 +124,7 @@ Use analytical work to eliminate questions that are already decidable from expli
 - [`analysis/active_automata_learning_5385_t0_v1/REPORT.md`](analysis/active_automata_learning_5385_t0_v1/REPORT.md) — Issue #5385 OrbStack T0: four-state bounded active learner PASS against 2,801 finite words; no live-interface or unbounded-equivalence claim.
 - [`analysis/action_class_error_budget_5424_t2_v1/REPORT.md`](analysis/action_class_error_budget_5424_t2_v1/REPORT.md) — Issue #5424 OrbStack T2: fixed-corpus typed burn-rate budget reduced post-signal primary severe exposures, with correlated-fallback completion tradeoff and preserved audit-v1 FAIL.
 - [`analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md`](analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md) — Issue #5420 OrbStack T1: adaptive ε filter enforces the declared bound for two synthetic randomized-response channels; no GUI privacy or DP claim.
+- [`analysis/privacy_conditional_kernel_5420_t0_20261004/REPORT.md`](analysis/privacy_conditional_kernel_5420_t0_20261004/REPORT.md) — Issue #5420 successor T0: exact conditional-kernel gate rejects the shared-pad pair and accepts fresh-pad/constant controls; method-scoped only, not a product or general DP claim.
 
 ## Workspace map
 
