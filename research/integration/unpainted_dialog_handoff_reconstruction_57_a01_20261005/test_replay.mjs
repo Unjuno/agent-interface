@@ -46,7 +46,8 @@ test('retained unpainted/stale Calc frames traverse the current primary host as 
     args:[script,JSON.stringify(sequence),frames],evidenceDirectory:evidence});
   const seenImages=[];
   const caller=createPrimaryCaller(host,'guarded-local',{
-    text:()=>{},image:value=>seenImages.push(Buffer.from(value.bytes))});
+    text:()=>{},image:value=>seenImages.push(Buffer.from(value.bytes))},[],
+    {maxExplicitObservations:2});
   try {
     const first=await caller.input('save',[0,0],'click',[]);
     assert.deepEqual(seenImages[0],await readFile(join(frames,'006.png')));
@@ -76,6 +77,14 @@ test('retained unpainted/stale Calc frames traverse the current primary host as 
     assert.deepEqual(requests.map(row=>row.tool),tools);
     assert.equal(requests.filter(row=>row.tool==='interface_guarded_input').length,2,
       'each input occurs once; neither the stale observation nor recovery view replays it');
+    await assert.rejects(caller.observe(),/explicit observation budget exhausted/);
+    assert.equal(caller.state().stopped,'explicit observation budget exhausted');
+    assert.equal(host.state().attempts,4,'budget exhaustion refuses locally before a fifth host request');
+    await writeFile(join(evidence,'caller-policy.json'),JSON.stringify({
+      max_explicit_observations:2,explicit_observe_calls:3,
+      accepted_explicit_observations:2,refused_locally:1,
+      host_attempts_after_refusal:host.state().attempts,stopped:caller.state().stopped
+    },null,2)+'\n',{flag:'wx'});
     for(let attempt=1;attempt<=4;attempt++){
       const reply=JSON.parse(await readFile(join(evidence,`reply-${attempt}.json`),'utf8'));
       const meta=JSON.parse(reply.result.content.find(row=>row.type==='text').text);
