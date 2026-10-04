@@ -1,5 +1,7 @@
 # Result
 
-Disposition: **PASS_CANDIDATE_MECHANICS**. The candidate emits one up receipt for each canceled held key, binds it to the original actuation ID and program/step context, and reconciles bridge `held` state after verified owner cleanup. It preserves ordinary up behavior and leaves release unconfirmed when per-key samples are unavailable.
+Disposition: **PASS_CANDIDATE_MECHANICS**. The candidate emits a per-key release measurement for confirmed owner cleanup, joins it to the original actuation ID and program/step context, and drains owner records on every execute exit. Cancellation still performs ordered input-state reconciliation; query failures propagate while already-recorded measurements are preserved. Expiry cleanup already recorded before the program exit is now forwarded even when the cancellation event remains clear.
 
-The 5 focused tests, 10 existing owner integration tests run against v13, and 2 existing v39 bridge tests pass on the bundled CPython 3.12.14 runtime. The candidate has not been installed into a live MAP01 session or tested against X11, a game, application effects, useful feedback, or recovery efficacy. It is not an integrated runtime PASS.
+The current scoped suites pass 8 focused candidate tests, 10 InputOwner compatibility tests, and 2 existing v39 bridge tests on bundled CPython 3.12.14. The source-locked auditor validates all 20 receipts. The candidate delta was replayed against r135 main `16c74566b64f32d7fe035c7724bcfe3865863a91`; output is retained in `current-main-r135-replay-a02.log`.
+
+This remains fake-display candidate evidence. It does not characterize an owner cleanup still pending after execute exits, install the candidate into live MAP01, or establish real X11/application behavior, independently useful feedback, bounded recovery efficacy, gameplay, safety, latency, or a live allocation. It is not an integrated runtime PASS.
