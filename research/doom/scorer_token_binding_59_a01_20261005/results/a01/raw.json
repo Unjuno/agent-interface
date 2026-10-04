@@ -1,0 +1,81 @@
+{
+  "allocation_id": "SCORER-INTENT-TOKEN-BINDING-59-A01-20261005-01",
+  "baseline_evaluations": 1,
+  "cases": {
+    "baseline_mismatched_token": {
+      "accepted_ns": 100,
+      "baseline_ns": 110,
+      "causal_attribution": false,
+      "decision": "ADMISSION_BRACKETED_PROGRESS",
+      "first_input_ns": 120,
+      "gap_ns": 20,
+      "intent_id": "recover-1",
+      "positive_sample_ns": 130,
+      "progress": {
+        "death_count": 0,
+        "kill_count": 1,
+        "map_exit": false
+      },
+      "reason": "bounded_independent_progress_observed_after_first_input"
+    },
+    "candidate_matched_token": {
+      "accepted_ns": 100,
+      "baseline_ns": 110,
+      "causal_attribution": false,
+      "decision": "ADMISSION_BRACKETED_PROGRESS",
+      "first_input_ns": 120,
+      "gap_ns": 20,
+      "intent_id": "recover-1",
+      "positive_sample_ns": 130,
+      "progress": {
+        "death_count": 0,
+        "kill_count": 1,
+        "map_exit": false
+      },
+      "reason": "bounded_independent_progress_observed_after_first_input"
+    },
+    "candidate_mismatched_token": {
+      "causal_attribution": false,
+      "decision": "POST_CANCELLATION_COOCCURRENCE",
+      "reason": "intent_token_mismatch"
+    },
+    "candidate_missing_admission_token": {
+      "causal_attribution": false,
+      "decision": "POST_CANCELLATION_COOCCURRENCE",
+      "reason": "missing_input_intent_token"
+    }
+  },
+  "disposition": "PASS_TOKEN_BINDING_SCOPED",
+  "execution_environment": {
+    "container_stop": "Docker image inspection failed on missing containerd content blob; no container was started.",
+    "containerized": false,
+    "platform": "darwin",
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "runtime": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "finished_monotonic_ns": 142817225815833,
+  "frozen_runner_invocations": 1,
+  "gate_checks": {
+    "baseline_false_accept_reproduced": true,
+    "matched_token_positive_preserved": true,
+    "mismatched_token_rejected": true,
+    "missing_token_rejected": true
+  },
+  "input_sha256": "a691c648436fb97b82adbd5d49ff85aca59033d33a1ad969df0d14a8f96de9b0",
+  "retries": 0,
+  "schema": "scorer-intent-token-binding-a01-v1",
+  "source_head": "a2f85482c6968f9caa9dcbca017bd452b8a2c3b3",
+  "source_sha256": {
+    "COMMANDS.txt": "81ebce5bae448a8a409535119b460a2c18214029203ca52e0bcb742f0e8a39ae",
+    "ENVIRONMENT_STOP.txt": "91be88bdee8fa02ca93914cb061a3ea5372b58fc1709bd8ef53b2476e65e620f",
+    "README.md": "729f8a4acc14075d9549b3ac0a90f913bcfaa9d0e08ecd9e509511c0aa7bbd9f",
+    "audit_a01.py": "c8ef32eeaae4eb323c6c5ef461493b832c3c1d818138acc9d65256f8ae55fac0",
+    "candidate_v2.py": "cbee527b35d8e03c1579cc2cbd2ae2ccd84894f1c82319d83ac82c5d076a6327",
+    "cases.json": "bb972d29427c75dcd188b9fecbb7cc233026efc4260a2b4eb3677ebf891bbbdb",
+    "parent_candidate.py": "23727e925c3e27a171592b0a831ab29572647bc0309cb6f10b8d81c8104aa049",
+    "parent_file_join.py": "6e9b5fcfbe72d466c5f519b923fef01642fe0cf85bb78fa119fd9a1fed707d5f",
+    "run_a01.py": "f40196061001bd769c5e42178d1f934aebbce497c4d572cfe2858fbbcfadd1c0"
+  },
+  "started_monotonic_ns": 142817225754541,
+  "successor_evaluations": 3
+}
