@@ -1,0 +1,11 @@
+{
+  "schema": "map01-v39-perkey-bridge-a05-execution-v1",
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005",
+  "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "container_engine": "OrbStack Docker",
+  "engine_info_observed": "linux/aarch64 Docker 29.4.0",
+  "container_command": "docker run --rm --network none --read-only --cpus 1 --memory 256m --pids-limit 64 -e A05_IMAGE_ID=sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f -v /Users/taka/Documents/Codex/2026-10-03/new-chat-3/work/59-cleanup-telemetry-bridge-a01-20261005/research/doom/map01_v39_perkey_bridge_a05_out_of_order_context_20261005:/src:ro -v /Users/taka/Documents/Codex/2026-10-03/new-chat-3/work/59-cleanup-telemetry-bridge-a01-20261005/research/doom/map01_v39_perkey_bridge_a05_out_of_order_context_20261005/results:/results:rw -w /src -e PYTHONDONTWRITEBYTECODE=1 python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python3 run_candidate.py --out /results/a05",
+  "exit_code": 0,
+  "candidate_invocations": 1,
+  "candidate_stdout": "{\"a04_bindings\":[[\"cover-22\",4,\"F9\"],[\"cover-21\",2,\"F8\"]],\"raw_sha256\":\"26ab7024cffae727e6959073b7b9d90adf2c3f57524a19086a352cbb9db69d67\",\"run_id\":\"MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005\",\"status\":\"PENDING_INDEPENDENT_AUDIT\"}"
+}

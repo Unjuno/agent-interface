@@ -1969,6 +1969,10 @@ Candidate v4 and independent raw JSONL auditor v5 pass against retained v38/v39 
 
 This is a conservative extension to the already-published full-trace reconstruction and receipt replay (#6175/#6198), not a second claim for their 27 completed + 1 interrupted v39 rows. V4 explicitly adds the raw-trace `cover-4` step-10 partial/in-flight admission omitted from that 28-row account; its `[0,13.209ms]` bound and the 29-row audit are separately retained. The historical reports and dispositions are unchanged.
 
+## Issue #59 — V39 per-key cleanup context under reversed completion (2026-10-05)
+
+One pinned OrbStack Python-container construction sent two distinct admitted key actuations through the frozen A04 cleanup bridge, then delivered cleanup in reverse admission order. An intentionally weaker last-context comparator misbound one release; A04 retained both program/step identities, emitted both confirmed release measurements in observed order, and retired held/active/context state. The independent audit returned `PASS_OUT_OF_ORDER_CONTEXT_SCOPED`; the earlier mount-path STOP is preserved separately and executed zero candidate cases. This is two-key in-memory composition only—not an owner-thread schedule, production deployment, X11/input, application effect, threat response, recovery benefit, or latency result. See the [frozen package, STOP, raw candidate, and audit](research/doom/map01_v39_perkey_bridge_a05_out_of_order_context_20261005/README.md). Production wiring and an authorized end-to-end allocation remain open.
+
 ## Previous follow-up — v39 coast liveness and active revocation exposed (2026-09-15)
 
 V38's interrupted-tail loop came from an unauthored, empty-coast fallback
