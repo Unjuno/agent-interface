@@ -11,6 +11,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 - Issue #5156: [owner-thread per-key KeyRelease instrumentation A02](live_control/owner_keyup_instrumentation_5156_a02_20261005/evidence/OUTCOME.md) - five fake-Xlib cases passed independent audit and all eight corruption controls were rejected; A01 auditor failure remains retained, and no live X11 or game authority follows.
 - Issue #59/#5156: [per-admission to owner-key-up context join A02](live_control/owner_keyup_context_join_5156_a02_20261005/evidence/OUTCOME.md) - current-main V39 backend v4 preserved three identity-bound owner receipts; 8/8 corruption controls rejected, with A01 audit failure retained.
+- Issue #59/#5156: [owner-issued per-admission identity A03](live_control/owner_keyup_admission_id_5156_a03_20261005/evidence/FORMAL_01/OUTCOME.md) - three fake-Xlib cases passed the independent audit; 12/12 corrupted identity/context records were rejected. No live X11 or game authority follows.
 
 - Issue #7709 T1: [retained-trace feasibility audit](analysis/latency_regime_coverage_7709_t1_feasibility_20261005/REPORT.md) — one fixed-order model-visible pair only; 1,051 archived files independently hash-checked; HOLD for insufficient independent runs.
 
