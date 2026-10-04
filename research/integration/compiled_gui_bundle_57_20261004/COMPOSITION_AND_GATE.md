@@ -4,7 +4,7 @@ Status: composition decision and requirement map; no new allocation or efficienc
 
 ## Pinned candidate
 
-Integration branch base: `2f72c6474167f93a2e1a6e2b8a497a1a8a6d266a` (main, checked 2026-10-04). Raw caller-composition runs are pinned to `bfaa12181f81cac133747ca8a1b7eb277aa64424`; the caller and compiled-runtime blobs were rechecked and remain byte-identical at this integration base.
+Integration branch base: `0f71ca2ff9d4098c275d95f574addc5ced6b2661` (main, checked 2026-10-04). Raw caller-composition runs are pinned to `bfaa12181f81cac133747ca8a1b7eb277aa64424`. Main advanced by the independent #7327 evidence-preservation commit; current-main SHA-256 checks confirm the compiled-interface, compiled-runtime, and caller-v3 blobs remain `3cfce9fbb9d85a0f425b49efd2e284e14f3358c69ff8226e82c80db30e8cc13e`, `d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014`, and `8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca` respectively. None of the three paths changed between main `2f72c647` and `0f71ca2`.
 
 | Layer | Candidate | Owns | Boundary |
 |---|---|---|---|
