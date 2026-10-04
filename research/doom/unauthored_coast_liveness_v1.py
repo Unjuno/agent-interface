@@ -1,14 +1,18 @@
 """Candidate typed-health interrupt for unauthored, input-free MAP01 coast.
 
 This is a construction candidate, not an accepted operating threshold. The
-six-point drop is replay-derived from one retained v39 trace and needs a
-prospective live evaluation before adoption.
+five-point, two-of-three rule is replay-derived from retained v38/v39 traces
+and needs prospective evaluation before adoption.
 """
+
+from collections import deque
 
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
 
 
-CANDIDATE_MAX_HEALTH_LOSS = 6
+CANDIDATE_MIN_HEALTH_DROP = 5
+CANDIDATE_LOW_SAMPLES = 2
+CANDIDATE_WINDOW_SAMPLES = 3
 
 
 class _TypedHealthExtractor:
@@ -30,7 +34,7 @@ class _TypedHealthExtractor:
 
 
 class UnauthoredCoastMonitor(ObservableSignalPolicyMonitor):
-    """Invalidate a no-authority coast after candidate health loss or unknown."""
+    """Apply a bounded 2-of-3 drop rule; unknown/expired evidence fails closed."""
 
     event_types = frozenset({"typed_observation"})
 
@@ -45,14 +49,17 @@ class UnauthoredCoastMonitor(ObservableSignalPolicyMonitor):
         source_value = source_signal["value"]
         if not 1 <= source_value <= 1_000_000:
             raise ValueError("bounded positive source health required")
+        self.candidate_baseline = source_value
+        self.candidate_low_samples = deque(maxlen=CANDIDATE_WINDOW_SAMPLES)
         spec = {
             "op": "observable_signal_guard",
             "guard_id": f"map01-coast-candidate-{index}",
             "source_sequence": source_signal["sequence"],
             "signal_id": "health",
             "source_value": source_value,
-            # Guard invalidates below hard_minimum, so loss >= 6 trips it.
-            "hard_minimum": max(0, source_value - CANDIDATE_MAX_HEALTH_LOSS + 1),
+            # Death/unavailable/expired signals still invalidate immediately;
+            # the exploratory damage trigger is handled by the 2-of-3 window.
+            "hard_minimum": 1,
             "max_source_age_ms": 30000,
             "on_soft_change": "preserve_existing_policy",
             "on_hard_change": "needs_decision",
@@ -60,6 +67,41 @@ class UnauthoredCoastMonitor(ObservableSignalPolicyMonitor):
         }
         guard = ObservableSignalGuard(spec, source_signal, source_signal["binding"])
         super().__init__(guard, _TypedHealthExtractor())
+
+    def observe(self, observation):
+        event = super().observe(observation)
+        if event is not None:
+            return event
+        # `super` already validated monotonic sequence, signal binding, age and
+        # extraction. Re-read only the compact health record for the bounded
+        # rolling candidate rule.
+        signal = self.extractor.read(observation)
+        value = signal.get("value")
+        low = (signal.get("status") == "observed" and type(value) is int and
+               value <= self.candidate_baseline - CANDIDATE_MIN_HEALTH_DROP)
+        self.candidate_low_samples.append({
+            "sequence": observation["sequence"], "value": value, "low": low})
+        low_rows = [row for row in self.candidate_low_samples if row["low"]]
+        if len(low_rows) < CANDIDATE_LOW_SAMPLES:
+            return None
+        return {
+            "sequence": observation["sequence"],
+            "signal": signal,
+            "outcome": {
+                "status": "HARD_INVALIDATED",
+                "reason": "two_of_three_below_candidate_baseline",
+                "source_value": self.candidate_baseline,
+                "current_value": value,
+                "candidate_threshold": self.candidate_baseline - CANDIDATE_MIN_HEALTH_DROP,
+                "window_sequences": [row["sequence"] for row in self.candidate_low_samples],
+                "low_samples_in_window": len(low_rows),
+                "requires_new_decision": True,
+                "grants_input_authority": False,
+                "may_only_preserve_or_reduce_existing_authority": True,
+                "semantic_change_identified": True,
+                "task_success_verified": False,
+            },
+        }
 
 
 def invalidation_handoff_sequence(invalidation_sequence, latest_observation):
