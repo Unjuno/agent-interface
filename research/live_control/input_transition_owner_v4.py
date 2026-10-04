@@ -38,6 +38,7 @@ class InputOwner(Previous):
         caller_returned = transition.get("release_call_returned_ns") if isinstance(transition, dict) else None
         owner_started = receipt.get("owner_keyrelease_started_ns") if receipt else None
         owner_returned = receipt.get("owner_sync_returned_ns") if receipt else None
+        cancel_after_sync = receipt.get("cancel_requested_after_sync") if receipt else None
         token = self._intent_token(lease)
         receipt_valid = bool(
             history_complete
@@ -50,6 +51,7 @@ class InputOwner(Previous):
             and receipt.get("valid_until_ns") == transition.get("valid_until_ns")
             and receipt.get("server_sync_completed") is True
             and receipt.get("physical_verification_authoritative") is False
+            and type(cancel_after_sync) is bool
             and type(caller_started) is int
             and type(owner_started) is int
             and type(owner_returned) is int
@@ -65,8 +67,10 @@ class InputOwner(Previous):
             "owner_thread_keyup_receipt_count": len(owner_rows) if history_complete else 0,
             "owner_thread_keyup_history_complete": history_complete,
             "owner_thread_keyup_verified": receipt_valid,
+            "cancel_requested_after_sync": cancel_after_sync,
             "ordinary_release_candidate": (
-                transition.get("ordinary_release_candidate") is True and receipt_valid
+                transition.get("ordinary_release_candidate") is True
+                and receipt_valid and cancel_after_sync is False
             ),
             "release_measurement_contract_v4": (
                 "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested "

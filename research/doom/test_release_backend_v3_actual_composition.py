@@ -12,7 +12,7 @@ LIVE = HERE.parent / "live_control"
 
 class ActualReleaseCompositionTests(unittest.TestCase):
     def _run(self, *, wrong_key=False, step_exception=False, cleanup_exception=False,
-             emit_accept_then_raise=False):
+             emit_accept_then_raise=False, cancel_after_sync=False):
         emitted = []
         fail_emit = [emit_accept_then_raise]
 
@@ -52,6 +52,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                         "valid_until_ns": lease.deadline,
                         "owner_keyrelease_started_ns": 20,
                         "owner_sync_returned_ns": 21,
+                        "cancel_requested_after_sync": cancel_after_sync,
                         "server_sync_completed": True,
                         "physical_verification_authoritative": False,
                     })
@@ -203,6 +204,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual([row["key"] for row in releases], ["a", "b"])
         self.assertFalse(any(row["owner_transition_verified"] for row in releases))
         self.assertFalse(any(row["owner_thread_keyup_verified_after_batch"] for row in releases))
+
+    def test_cancel_during_keyup_sync_fails_closed_through_batch_composition(self):
+        _, releases = self._run(cancel_after_sync=True)
+        self.assertEqual([row["key"] for row in releases], ["a", "b"])
+        self.assertTrue(all(row["cancel_requested_after_sync"] for row in releases))
+        self.assertTrue(all(row["owner_thread_keyup_verified"] for row in releases))
+        self.assertFalse(any(row["ordinary_release_candidate"] for row in releases))
+        self.assertFalse(any(row["owner_transition_verified"] for row in releases))
 
     def test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception(self):
         _, releases = self._run(step_exception=True)
