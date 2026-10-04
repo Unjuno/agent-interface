@@ -1,0 +1,15 @@
+{
+  "schema": "pr7356-intent-token-identity-boundary-patched-audit-v1",
+  "raw_sha256": "12e32457a08f6dbba0044ef9fd511a6ce88401a437619880eeeb151a7e140836",
+  "baseline_results_sha256": "97d4bc244650df398bbaac5f60eae880b56c3e2444393ef74198fcbbf4e49ce7",
+  "patched_results_sha256": "191adaea91584c758305628368ce5a0ecf9200b4fab678d17302c01a89231995",
+  "patched_source_sha256": "1e989803aacb6186036b7cba0fe33523b7ad6ad81c01bc5346b4e7710df6727a",
+  "cases": 8,
+  "identity_false_accepts_repaired": [
+    "field_absent_both",
+    "explicit_null_both"
+  ],
+  "other_case_readiness_preserved": 6,
+  "errors": [],
+  "decision": "PASS_NARROW_IDENTITY_GUARD"
+}

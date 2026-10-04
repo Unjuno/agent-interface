@@ -1,0 +1,67 @@
+{
+  "schema": "pr7356-intent-token-identity-boundary-audit-v1",
+  "raw_sha256": "12e32457a08f6dbba0044ef9fd511a6ce88401a437619880eeeb151a7e140836",
+  "candidate_sha256": "97d4bc244650df398bbaac5f60eae880b56c3e2444393ef74198fcbbf4e49ce7",
+  "source_sha256": "c0187d5a95751e340f66fbbb03fe9066899bdb9c795a3dcaf1fd3be291d13496",
+  "case_count": 8,
+  "contract_scoped_checks": 5,
+  "contract_scoped_passes": 3,
+  "violations": [
+    {
+      "case": "field_absent_both",
+      "expected_ready": false,
+      "actual": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": null,
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "explicit_null_both",
+      "expected_ready": false,
+      "actual": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": null,
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    }
+  ],
+  "exploratory_untyped_cases": [
+    "boolean_both",
+    "empty_string_both",
+    "integer_both"
+  ],
+  "decision": "FAIL_IDENTITY_ABSENCE_ACCEPTED"
+}

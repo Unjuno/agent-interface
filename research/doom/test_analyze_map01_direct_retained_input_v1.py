@@ -113,6 +113,36 @@ class Tests(unittest.TestCase):
         self.assertFalse(result["measurement_ready"], result)
         self.assertEqual(result["invalid_release_count"], 1)
 
+    def test_absent_and_null_intent_tokens_fail_closed(self):
+        for token_state in ("absent", "null"):
+            with self.subTest(token_state=token_state):
+                admission = {"event": "input_admission", "key": "Up",
+                             "admitted_ns": 100, "input_ack_ns": 110}
+                release = {"event": "input_release_transition", "operation": "up",
+                           "key": "Up", "release_call_started_ns": 130,
+                           "release_call_returned_ns": 140, "owner_transition_verified": True}
+                if token_state == "null":
+                    admission["intent_token"] = None
+                    release["intent_token"] = None
+                result = candidate.analyze([admission, release])
+                self.assertFalse(result["measurement_ready"], result)
+                self.assertEqual(result["hold_count"], 0)
+                self.assertEqual(result["invalid_admission_count"], 1)
+
+    def test_absent_release_intent_token_fails_closed(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "Up",
+             "admitted_ns": 100, "input_ack_ns": 110},
+            {"event": "input_release_transition", "operation": "up", "key": "Up",
+             "release_call_started_ns": 130, "release_call_returned_ns": 140,
+             "owner_transition_verified": True},
+        ]
+        result = candidate.analyze(events)
+        self.assertFalse(result["measurement_ready"], result)
+        self.assertEqual(result["hold_count"], 0)
+        self.assertEqual(result["invalid_release_count"], 1)
+        self.assertEqual(result["unmatched_admission_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

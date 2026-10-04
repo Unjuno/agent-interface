@@ -13,14 +13,22 @@ def analyze(events):
     pending = defaultdict(deque)
     holds = []
     invalid_releases = []
+    invalid_admissions = []
     for row in events:
         event = row.get("event")
         if event == "input_admission" and row.get("key") is not None:
             token = row.get("intent_token")
+            if token is None:
+                invalid_admissions.append(row)
+                pending[(None, row["key"])].append(row)
+                continue
             pending[(token, row["key"])].append(row)
         elif event == "input_release_transition" and row.get("operation") == "up":
             token = row.get("intent_token")
             key = row.get("key")
+            if token is None:
+                invalid_releases.append(row)
+                continue
             queue = pending[(token, key)]
             if not queue or row.get("owner_transition_verified") is not True:
                 invalid_releases.append(row)
@@ -45,11 +53,12 @@ def analyze(events):
                           "censor_width_ms": (upper_ns - lower_ns) / 1e6,
                           "source_events": ["input_admission", "input_release_transition"]})
     unmatched = [dict(row) for queue in pending.values() for row in queue]
-    measurement_ready = bool(holds) and not unmatched and not invalid_releases
+    measurement_ready = bool(holds) and not unmatched and not invalid_releases and not invalid_admissions
     return {"schema": "map01-direct-retained-input-v1",
             "measurement_ready": measurement_ready,
             "hold_count": len(holds), "unmatched_admission_count": len(unmatched),
-            "invalid_release_count": len(invalid_releases), "holds": holds,
+            "invalid_release_count": len(invalid_releases),
+            "invalid_admission_count": len(invalid_admissions), "holds": holds,
             "decision": ("PASS: direct bounded release evidence available" if measurement_ready else
                          "FAIL: retained-input duration is not identifiable from this trace")}
 
