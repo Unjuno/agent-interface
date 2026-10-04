@@ -20,6 +20,8 @@ A subsequent local integration regression joins the actual `ExecutorV12` impleme
 
 This closes the specific construction gap between the owner cause and executor publication and includes the v4 owner wrapper. Evidence is in [`results/map01-v39-cancel-release-cause-integration-v1/`](results/map01-v39-cancel-release-cause-integration-v1/), with source/output SHA-256 manifest. This is a local non-formal regression using fake Xlib and a minimal backend. It still does not run the complete v14 session/backend in a live MAP01 allocation or establish application effects, useful feedback, bounded recovery, or comparative benefit; Issue #59 remains unresolved.
 
+The same regression then passed once under WSLc 3.0.1.0 with the pinned image `sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378`, network disabled, read-only source, and requested 1 CPU / 512 MiB. The independent C04 audit verifies all frozen source hashes, raw/exit receipt, image/mode, and no running container after the run. WSLc emitted its known swap/cgroup warning; no memory-isolation claim is made. This is cross-OS construction portability only. See [`results/map01-v39-cancel-release-cause-wslc-c04-20261004/`](results/map01-v39-cancel-release-cause-wslc-c04-20261004/).
+
 ## Reproduction and evidence
 
 Run `python -B test_cancel_release_cause.py` from either C01 or C02's result directory. C01 uses `input_owner_v10.py`; C02 sets `OWNER_UNDER_TEST` to `research/live_control/input_owner_v12.py`. C01 and C02 retain their own FREEZE, raw output, exit receipt, and audit. No retries were made.
