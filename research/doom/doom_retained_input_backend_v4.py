@@ -21,7 +21,7 @@ class Backend(Previous):
         previous = getattr(self._release_batch, "context", None)
         self._release_batch.context = {
             "rows": [], "identifier": identifier, "step": index,
-            "next_admission_position": 0,
+            "next_admission_position": 0, "admissions_by_key": {},
         }
         try:
             return super().execute(step, cancel, identifier, index)
@@ -96,6 +96,13 @@ class Backend(Previous):
                         ),
                     })
                     context["next_admission_position"] += 1
+                    context.setdefault("admissions_by_key", {}).setdefault(
+                        key, []
+                    ).append({
+                        "id": record["id"],
+                        "step": record["step"],
+                        "admission_position": record["admission_position"],
+                    })
                 self.emit(record)
             return None
 
@@ -112,6 +119,14 @@ class Backend(Previous):
             raise AssertionError("v4 requires input-release-transition receipt")
         row = dict(row)
         row["backend_owned_before_release"] = was_backend_owned
+        admissions = context.setdefault("admissions_by_key", {}).pop(key, [])
+        if len(admissions) == 1:
+            row.update(admissions[0])
+            row["admission_identity_status"] = "matched"
+        elif admissions:
+            row["admission_identity_status"] = "ambiguous_multiple_admissions"
+        else:
+            row["admission_identity_status"] = "unmatched_no_admission"
         context["rows"].append(row)
 
         # Preserve v3's proven non-staggering invariant.

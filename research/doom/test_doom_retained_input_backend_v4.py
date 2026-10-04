@@ -9,8 +9,11 @@ HERE = Path(__file__).resolve().parent
 
 class Parent:
     def execute(self, step, cancel, identifier, index):
-        for key in step.get("keys", []):
-            self.raw(key, True)
+        actions = step.get("actions")
+        if actions is None:
+            actions = [(key, True) for key in step.get("keys", [])]
+        for key, down in actions:
+            self.raw(key, down)
         return "ok"
 
 
@@ -136,6 +139,76 @@ class Tests(unittest.TestCase):
                          [("trial-7", 12, 0), ("trial-7", 12, 1)])
         self.assertEqual([row["key"] for row in rows], ["a", "a"])
         self.assertEqual(log, [("down", "a"), ("down", "a")])
+
+    def test_release_receipt_carries_matching_admission_identity(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        result = obj.execute({"actions": [("a", True), ("a", False)]},
+                             None, "trial-8", 3)
+
+        self.assertEqual(result, "ok")
+        admissions = [row for row in rows if row.get("event") == "input_admission"]
+        releases = [row for row in rows if row.get("event") == "input_release_transition"]
+        self.assertEqual(len(admissions), 1)
+        self.assertEqual(len(releases), 1)
+        self.assertEqual(
+            (releases[0]["id"], releases[0]["step"], releases[0]["admission_position"]),
+            (admissions[0]["id"], admissions[0]["step"],
+             admissions[0]["admission_position"]),
+        )
+        self.assertEqual(releases[0]["key"], admissions[0]["key"])
+
+    def test_duplicate_same_key_admissions_leave_release_unmatched(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", True), ("a", False)]},
+                    None, "trial-9", 4)
+
+        releases = [row for row in rows if row.get("event") == "input_release_transition"]
+        self.assertEqual(len(releases), 1)
+        self.assertNotIn("admission_position", releases[0])
+        self.assertEqual(releases[0]["admission_identity_status"],
+                         "ambiguous_multiple_admissions")
+
+    def test_repeated_same_key_cycles_emit_one_correlated_release_each(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", False),
+                                  ("a", True), ("a", False)]},
+                    None, "trial-10", 5)
+
+        admissions = [row for row in rows if row.get("event") == "input_admission"]
+        releases = [row for row in rows if row.get("event") == "input_release_transition"]
+        self.assertEqual([row["admission_position"] for row in admissions], [0, 1])
+        self.assertEqual([row["admission_position"] for row in releases], [0, 1])
+        self.assertEqual([row["admission_identity_status"] for row in releases],
+                         ["matched", "matched"])
+
+    def test_multi_key_releases_keep_identity_when_release_order_differs(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("space", True),
+                                  ("space", False), ("a", False)]},
+                    None, "trial-11", 6)
+
+        admissions = {row["key"]: row["admission_position"] for row in rows
+                      if row.get("event") == "input_admission"}
+        releases = {row["key"]: row["admission_position"] for row in rows
+                    if row.get("event") == "input_release_transition"}
+        self.assertEqual(admissions, {"a": 0, "space": 1})
+        self.assertEqual(releases, {"a": 0, "space": 1})
 
     def run_release(self, owner, lease=None, held=("a",)):
         obj = make_backend(set(held), owner, lease)
