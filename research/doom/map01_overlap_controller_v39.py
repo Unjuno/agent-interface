@@ -588,6 +588,7 @@ def input_edge_receipts(events):
                              else "physical_up_interval")
             return (
                 type(bracket) is dict and type(edge) is dict and
+                valid_interval(bracket.get(interval_name)) and
                 bracket.get("key") == edge.get("key") and
                 bracket.get("owner_id") == edge.get("owner_id") and
                 bracket.get("intent_token") == edge.get("intent_token") and
