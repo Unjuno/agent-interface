@@ -2,9 +2,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PassThrough,Writable} from 'node:stream';
+import {syncBuiltinESMExports} from 'node:module';
+import {createRequire} from 'node:module';
 import {mkdir,writeFile,readFile,access} from 'node:fs/promises';
 import {join} from 'node:path';
 import {runPrimaryStdio} from './primary_stdio.mjs';
+const require=createRequire(import.meta.url);
+const fsPromises=require('node:fs/promises');
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
 const fixture=`import {createInterface} from 'node:readline';
 import {writeFileSync,existsSync} from 'node:fs';
@@ -82,4 +86,49 @@ test('preclosed stdout refuses before launching host or creating its directories
   let received;try{await runPrimaryStdio(config,{input,output});}catch(error){received=error;}
   assert.equal(received?.code,'PRIMARY_OUTPUT_CLOSED');assert.equal(await exists(marker),false);
   assert.equal(await exists(join(dir,'host')),false);assert.equal(await exists(join(dir,'exchange')),false);
+});
+
+test('close during host startup blocks exchange creation and ready publication',{timeout:7000},async()=>{
+  assert.ok(process.env.PRIMARY_FAILURE_EVIDENCE);
+  const dir=join(process.env.PRIMARY_FAILURE_EVIDENCE,'startup-close');await mkdir(dir,{recursive:true});
+  const fixturePath=join(dir,'fixture.mjs');
+  const startPath=join(dir,'fixture-start.json');const exitPath=join(dir,'fixture-exit.json');
+  const fixture=`import {writeFileSync} from 'node:fs';
+import {join} from 'node:path';
+const dir=process.argv[2];
+writeFileSync(join(dir,'fixture-start.json'),JSON.stringify({pid:process.pid})+'\\n',{flag:'wx'});
+process.stdin.resume();
+process.on('exit',code=>writeFileSync(join(dir,'fixture-exit.json'),JSON.stringify({pid:process.pid,code})+'\\n',{flag:'wx'}));
+`;
+  await writeFile(fixturePath,fixture,{flag:'wx'});
+  const originalStatfs=fsPromises.statfs;let held=false,releaseGate,enteredGate;
+  const gate=new Promise(resolve=>releaseGate=resolve);const entered=new Promise(resolve=>enteredGate=resolve);
+  fsPromises.statfs=async(...args)=>{if(!held){held=true;enteredGate();await gate;}return originalStatfs(...args);};
+  syncBuiltinESMExports();
+  assert.equal((await import('node:fs/promises')).statfs,fsPromises.statfs);
+  const input=new PassThrough(),rows=[];
+  const output=new Writable({write(chunk,_encoding,done){rows.push(JSON.parse(String(chunk)));done();}});
+  const config={host:{command:process.execPath,args:[fixturePath,dir],evidenceDirectory:join(dir,'host')},route:'guarded-local',exchangeDirectory:join(dir,'exchange')};
+  let owner,received;
+  try {
+    owner=runPrimaryStdio(config,{input,output}).then(()=>({status:'resolved'}),error=>{received=error;return {status:'rejected'};});
+    await entered;
+    const closed=new Promise(resolve=>output.once('close',resolve));output.destroy();await closed;
+    releaseGate();
+    const settled=await owner;
+    assert.deepEqual(settled,{status:'rejected'});
+  } finally {
+    releaseGate();fsPromises.statfs=originalStatfs;syncBuiltinESMExports();input.destroy();
+    if(owner)await owner;
+  }
+  const start=JSON.parse(await readFile(startPath,'utf8'));const end=JSON.parse(await readFile(exitPath,'utf8'));
+  const witness={status:'rejected',error:{code:received?.code??null,message:received?.message},rows,
+    fixture_start:start,fixture_exit:end,host_exit:JSON.parse(await readFile(join(dir,'host/exit.json'),'utf8')),
+    exchange_directory_created:await exists(join(dir,'exchange')),input_error_listeners:input.listenerCount('error'),
+    output_error_listeners:output.listenerCount('error'),output_close_listeners:output.listenerCount('close')};
+  await writeFile(join(dir,'WITNESS.json'),JSON.stringify(witness,null,2)+'\n',{flag:'wx'});
+  assert.equal(received?.code,'PRIMARY_OUTPUT_CLOSED');assert.equal(rows.some(row=>row.status==='ready'),false);
+  assert.deepEqual(witness.host_exit,{code:0,signal:null});assert.equal(end.pid,start.pid);assert.equal(end.code,0);
+  assert.equal(witness.exchange_directory_created,false);assert.equal(witness.input_error_listeners,0);
+  assert.equal(witness.output_error_listeners,0);assert.equal(witness.output_close_listeners,0);
 });

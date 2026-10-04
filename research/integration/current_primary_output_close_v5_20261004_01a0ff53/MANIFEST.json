@@ -5,16 +5,18 @@
   "workflow_sha256": "6234226e80e553ec5733c9ffb11996c9fee8b28f608fd36c64cf74fb6a52040d",
   "changed_source_images": {
     "runtime/host_v1/primary_stdio.mjs": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+    "runtime/host_v1/test_primary_output_close_owner.mjs": "cf7c74378436664cc408349005d39afa1fc8d322895847a7fda424866779954c",
     "runtime/host_v1/test_primary_output_close.mjs": "024d17eadbcb5fe95f3c158a7ed18a55f5bd00e7ad9eae50518c7164ccca0738",
-    "runtime/host_v1/test_primary_output_close_owner.mjs": "40dde7b93f680942eaadec711ef3c166f2f4b8173e9d6515f137426b3e5494d6",
     ".github/workflows/native-mcp-v1.yml": "6234226e80e553ec5733c9ffb11996c9fee8b28f608fd36c64cf74fb6a52040d"
   },
   "workflow_node_run": {
-    "pid": 53876,
-    "start_utc": "2026-10-04T00:06:49.422153+00:00",
-    "end_utc": "2026-10-04T00:06:52.223793+00:00",
+    "pid": 85791,
+    "start_utc": "2026-10-04T00:27:47.403977+00:00",
+    "end_utc": "2026-10-04T00:27:50.192262+00:00",
     "source_base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
-    "candidate_product_sha256": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+    "latest_main_observed": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+    "product_sha256": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+    "startup_close_test_sha256": "cf7c74378436664cc408349005d39afa1fc8d322895847a7fda424866779954c",
     "argv": [
       "/opt/homebrew/Cellar/node/26.7.0/bin/node",
       "--test",
@@ -38,25 +40,20 @@
     ],
     "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-main9c3a-proposal",
     "exit_code": 0,
-    "stdout_bytes": 18559,
-    "stdout_sha256": "49667916cd5319c1d5bae54a3239fad786a271e06bc27c67d0e9bfbb5df21123",
+    "stdout_bytes": 18638,
+    "stdout_sha256": "6fbf86f74c02c33effd622ce85207de7d23e9071307f85b0f20ae753e6e934df",
     "stderr_bytes": 0,
     "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "bash_syntax_exit": 0,
     "execution_environment": "macOS, local Node 26.7.0, private inert fixtures; not hosted Ubuntu Node 22",
-    "dependency_checkout_hashes": {
-      "research/live_control/test_native_relay_client_v1.mjs": "878f1a6092741f88ac6169482c1173befb4e2249ac6fc29ff673dcb06c21f4b3",
-      "research/live_control/test_relay_host_timeline_v1.mjs": "82d34bfcade5e09186bdfde38e0b92e2b340a3ef9384818bba9de3d66306a763",
-      "research/live_control/native_relay_client_v1.mjs": "5de65441284d1c30364bf7ec57643a7d2d925d5cc8a2c16c42224be13bef6918",
-      "research/live_control/relay_host_timeline_v1.mjs": "1194a02ff4fc5eed6d34c85ea212f46db6782c7d7e3028235e04428f4666753b",
-      "runtime/integration_checks/host_timing.py": "9e7d207de0de4a0f35b15137afad5eea89381763633e7711e696bd07c2bdfee6"
-    }
+    "latest_main_relevant_paths_changed_since_base": []
   },
   "workflow_utf8_run": {
-    "pid": 54265,
-    "start_utc": "2026-10-04T00:07:07.917369+00:00",
-    "end_utc": "2026-10-04T00:07:08.045637+00:00",
+    "pid": 86274,
+    "start_utc": "2026-10-04T00:28:02.245942+00:00",
+    "end_utc": "2026-10-04T00:28:02.376136+00:00",
     "source_base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+    "latest_main_observed": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
     "argv": [
       "/opt/homebrew/Cellar/node/26.7.0/bin/node",
       "--test",
@@ -65,12 +62,32 @@
     "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-main9c3a-proposal",
     "exit_code": 0,
     "stdout_bytes": 897,
-    "stdout_sha256": "f03d6abd060045253bf89713292aee79cf645ca620e7ca46e8b99436964d9684",
+    "stdout_sha256": "74c96af9dd31f1b4dd59aded1aa91ddbfac3df0374a67742c0ae1ff663ada86f",
     "stderr_bytes": 0,
     "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "execution_environment": "macOS, local Node 26.7.0"
   },
   "scope": "Local inert fixture tests only; no hosted Ubuntu Node 22 or Python/native integration run. No task-effect, physical input release, GUI, model/provider, formal allocation, finite recovery, latency, or total-resource result claimed.",
   "main_sends": 0,
-  "unknown_sends": 0
+  "unknown_sends": 0,
+  "startup_close_run": {
+    "pid": 84302,
+    "start_utc": "2026-10-04T00:26:52.153977+00:00",
+    "end_utc": "2026-10-04T00:26:52.451176+00:00",
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+      "--test",
+      "runtime/host_v1/test_primary_output_close_owner.mjs"
+    ],
+    "exit_code": 0,
+    "stdout_bytes": 458,
+    "stdout_sha256": "109112c8cb9e48d9ae8082936a81828f4b10a1b40f896cfb3b8e982bc70e9b17",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence_directory": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-current-main-01/startup-close-targeted2/evidence",
+    "candidate_source_tree": "working-tree-with-startup-close-regression"
+  },
+  "startup_close_witness_sha256": "356428be1ffcb664f8380a6613e714460c532f02944505c1d462dac385c633b9",
+  "latest_main_observed": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+  "latest_main_selected_dependencies_unchanged_since_base": true
 }
