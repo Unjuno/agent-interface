@@ -1,0 +1,5 @@
+# Current release composition — one scoped software connection
+
+Exact executor609dfb2 from PR7429 composes with opt-in owner12/transition4 and unchanged owner-cause fixture from PR7440 head99b7d130, plus frozen earlier support. One private WSLc invocation exits0; 1/1 actual-thread fixture passes. A passive emitter recorder retains accepted, step-start, cancellation, verified empty cancelled owner release, input_released and cancelled terminal with matching intent/receipt. Publication precedes terminal. No source takeover or public V11 replacement; old V11 compatibility FAIL stays unchanged.
+
+This is supplied schedule/fake Xlib/minimal backend construction only. Zero X server, physical input, game, model or GPU. It does not qualify full session, per-key release batch, sink failure/V13 routes, application effect, useful recovery, or live allocation. Historical support and original staging dependencies are explicit; no portable setup claim. Requested CPU/memory caps do not prove enforcement; swap warning retained. Candidate ran once, retries0; no public source adoption. Existing owners retain their integration paths.
