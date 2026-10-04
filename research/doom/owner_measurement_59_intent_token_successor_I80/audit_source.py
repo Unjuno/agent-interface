@@ -32,6 +32,8 @@ accessor = ast.unparse(helpers['_measurement_intent'])
 check("getattr(lease, 'intent_token', None)" in accessor, 'accessor does not use current lease field')
 for name in ('_measurement_emit', '_measurement_mark'):
     check('_measurement_intent(lease)' in ast.unparse(helpers[name]), name + ' does not bind lease identity')
+for name in ('lease.py', 'lease_cause_v1.py'):
+    check((HERE / name).read_bytes() == (ROOT / 'research/live_control' / name).read_bytes(), 'copied lease source differs from current main: ' + name)
 lease_cause = (HERE / 'lease_cause_v1.py').read_text(encoding='utf-8-sig')
 check('self.intent_token = uuid.uuid4().hex' in lease_cause, 'actual Lease implementation changed')
 check('self.token =' not in lease_cause and 'def token(' not in lease_cause, 'fixture unexpectedly adds legacy alias')
