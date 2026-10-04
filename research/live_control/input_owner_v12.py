@@ -81,6 +81,7 @@ class InputOwner:
             self.ready.set()
             return
         held = {}
+        held_keys = {}
         touched = set()
         buttons = {}
         touched_buttons = set()
@@ -227,6 +228,7 @@ class InputOwner:
             buttons.clear()
             touched_buttons.clear()
             held.clear()
+            held_keys.clear()
             touched.clear()
             active = None
             return record
@@ -362,9 +364,13 @@ class InputOwner:
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
-                            result = dict(event='input_admission', key=key, admitted_ns=admitted,
+                            held_keys[(id(lease), key)] = code
+                            result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
                         else:
+                            # A keymap change must not redirect an up to a
+                            # different physical key than the one admitted.
+                            code = held_keys.get((id(lease), key), code)
                             # Cleanup from an old intent must never release a newer hold.
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
@@ -379,6 +385,7 @@ class InputOwner:
                                     else None
                                 )
                                 del held[code]
+                                held_keys.pop((id(lease), key), None)
                                 self.records.append(dict(
                                     event='owner_explicit_keyup', operation='up',
                                     owner_id=self.owner_id, key=key, keycode=code,

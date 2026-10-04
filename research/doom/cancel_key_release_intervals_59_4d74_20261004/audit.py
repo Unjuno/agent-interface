@@ -81,7 +81,7 @@ partial_freeze = json.loads((partial_root / "FREEZE.json").read_text())
 partial_result_path = partial_root / "audit.json"
 partial_result = json.loads(partial_result_path.read_text())
 checks["partial_failure_candidate_source_sha256"] = (
-    sha(candidate_root / "research/live_control/input_owner_v12.py")
+    sha(partial_root / "candidate" / "input_owner_v12.py")
     == partial_freeze["candidate_source_sha256"]
 )
 checks["partial_failure_candidate_test_sha256"] = (
@@ -114,6 +114,14 @@ checks["keymap_epoch_probe_sha256"] = (
 checks["keymap_epoch_audit_result"] = (
     keymap_audit.get("pass") is True
     and sha(keymap_audit_path) == keymap_freeze["audit_result_sha256"]
+)
+explicit_root = ROOT / "explicit_keyup_remap"
+explicit_freeze = json.loads((explicit_root / "FREEZE.json").read_text())
+explicit_audit_path = explicit_root / "AUDIT.json"
+explicit_audit = json.loads(explicit_audit_path.read_text())
+checks["explicit_keyup_remap_audit_result"] = (
+    explicit_audit.get("pass") is True
+    and sha(explicit_audit_path) == explicit_freeze["audit_result_sha256"]
 )
 manifest = (ROOT / "FILES.sha256").read_text().splitlines()
 manifest_results = []
