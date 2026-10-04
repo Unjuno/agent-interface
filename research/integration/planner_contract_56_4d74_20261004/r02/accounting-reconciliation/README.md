@@ -1,6 +1,6 @@
 # Planner-contract r02 per-arm cost reconciliation
 
-This read-only reconciliation joins the merged #7438/r02 retained task audit with its six separately retained A/B/C schema-preflight calls at source revision `510c98fe46889461dce2a4c0e14e261eaa47e8ed`. The formal experiment itself used frozen source snapshot `13bab54ea6d91978247ecc1b70e5060db752367a`; this accounting reads its immutable post-run evidence from the later archive commit.
+This read-only reconciliation joins the merged #7438/r02 retained task audit aggregates with its six separately retained A/B/C schema-preflight calls at source revision `510c98fe46889461dce2a4c0e14e261eaa47e8ed`. The formal experiment itself used frozen source snapshot `13bab54ea6d91978247ecc1b70e5060db752367a`; this accounting reads its immutable post-run evidence from the later archive commit. The script uses the retained arm audit aggregates and the six preflight records; it does not directly read all 48 individual task JSON records.
 
 Run from a repository checkout containing the pinned archive revision:
 

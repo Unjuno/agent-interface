@@ -1,6 +1,8 @@
 # A05 per-arm cost reconciliation
 
-This is a read-only reconciliation of merged #7413/A05 JSON at source revision `58bcbb4c45501880db8782158ddd3add3b765984`. It joins each arm's six retained task rows (two blocks) with its two schema-preflight records (A/B/C only), then checks that the reconstructed 26 provider attempts equal the published all-attempt usage totals.
+This is a read-only reconciliation of merged #7413/A05 retained JSON at source revision `58bcbb4c45501880db8782158ddd3add3b765984`. The script reads the pinned `RETAINED_EVIDENCE_AUDIT.json` arm aggregates (including saved-task counts, task usage, task elapsed time, model labels, and scorer counts) plus the six separate schema-preflight JSONs (A/B/C only). It checks that the reconstructed 26 provider attempts equal the published all-attempt usage totals; it does not directly read the 48 individual task JSON records.
+
+An independent direct-raw-row audit separately read the 48 task JSONs, eight independent-evaluation JSONs, six preflight JSONs, 26 raw model-call results, and `HOST.json`; it reconstructed the same per-arm attempts/totals and matched the joined task-plus-preflight usage exactly. That is a separate audit, not an input to this script.
 
 Run from a full repository checkout with the pinned revision present:
 
