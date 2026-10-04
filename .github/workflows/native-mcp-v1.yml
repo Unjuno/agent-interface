@@ -38,7 +38,7 @@ jobs:
         with:
           fetch-depth: 1
           # Contract tests use top-level research sources and fresh test fixtures.
-          # Exclude nested historical result bundles from this test checkout.
+          # Exclude nested historical bundles except the two inert receipt fixtures.
           sparse-checkout: |
             /runtime/__init__.py
             /runtime/backends/__init__.py
@@ -53,6 +53,10 @@ jobs:
             /runtime/guarded_x11_v1/
             /research/live_control/*
             !/research/live_control/*/
+            /research/live_control/caller_uncertain_tail_I13/
+            !/research/live_control/caller_uncertain_tail_I13/*
+            /research/live_control/caller_uncertain_tail_I13/LIVE_CALLER.json
+            /research/live_control/caller_uncertain_tail_I13/RESPONSE3.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
