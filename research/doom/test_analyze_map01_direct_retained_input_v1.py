@@ -91,6 +91,29 @@ class Tests(unittest.TestCase):
         self.assertFalse(result["measurement_ready"])
         self.assertEqual(result["invalid_release_count"], 1)
 
+    def test_release_before_input_ack_is_rejected(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "Up",
+             "admitted_ns": 1, "input_ack_ns": 4},
+            {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+             "key": "Up", "owner_id": "owner", "valid_until_ns": 100,
+             "release_call_started_ns": 3, "release_call_returned_ns": 10,
+             "owner_transition_verified": True,
+             "owner_thread_keyup_verified": True,
+             "owner_thread_keyup_verified_after_batch": True,
+             "owner_thread_keyup_history_complete": True,
+             "owner_thread_keyup_receipt_count": 1,
+             "owner_thread_keyup_receipt": {
+                 "event": "owner_explicit_keyup", "operation": "up", "key": "Up",
+                 "keycode": 111, "owner_id": "owner", "intent_token": "t",
+                 "valid_until_ns": 100, "owner_keyrelease_started_ns": 5,
+                 "owner_sync_returned_ns": 6, "server_sync_completed": True,
+                 "physical_verification_authoritative": False}},
+        ]
+        result = candidate.analyze(events)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["invalid_release_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -62,6 +62,12 @@ def analyze(events):
             if any(type(start.get(k)) is not int for k in required) or any(type(row.get(k)) is not int for k in release_required):
                 invalid_releases.append(row)
                 continue
+            if not (
+                start["admitted_ns"] <= start["input_ack_ns"]
+                <= row["release_call_started_ns"] <= row["release_call_returned_ns"]
+            ):
+                invalid_releases.append(row)
+                continue
             lower_ns = row["release_call_started_ns"] - start["input_ack_ns"]
             upper_ns = row["release_call_returned_ns"] - start["admitted_ns"]
             holds.append({"intent_token": token, "key": key,
