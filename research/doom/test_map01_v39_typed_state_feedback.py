@@ -556,7 +556,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 "signal_id": name, "sequence": 89, "capture_ns": 200,
                 "binding": BINDING, "status": "observed", "value": value}
 
-        for invalid_step in (True, 1.0):
+        for invalid_step in (True, 1.0, -1):
             with self.subTest(invalid_step=invalid_step):
                 malformed = dict(event, step=invalid_step)
 
@@ -591,6 +591,22 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(result["status"], "observed")
         self.assertEqual(result["signals"]["ammo"],
                          {"before": 45, "after": 45, "delta": 0})
+
+    def test_feedback_rejects_negative_step_identity_pair(self):
+        before = observation(83, 100)
+        after = observation(89, 200)
+        before["step"] = 0
+        after["step"] = -1
+        before_typed = typed_observation(83, 100, 91, 45)
+        after_typed = typed_observation(89, 200, 90, 44)
+        before_typed["step"] = 0
+        after_typed["step"] = -1
+
+        result = controller.action_state_feedback(
+            before, after, [before_typed, after_typed])
+
+        self.assertEqual(result["status"], "unavailable")
+        self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
 
     def test_feedback_refuses_typed_frame_with_mismatched_capture_time(self):
         before = observation(83, 100)
