@@ -1,0 +1,22 @@
+{
+  "schema": "map01-v39-perkey-bridge-a04-identity-validation-v2",
+  "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "platform": "linux/arm64",
+  "python": "3.12.11",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "limits": {"cpus": 1, "memory": "512MiB", "pids": 64, "tmpfs": "/tmp 64MiB"},
+  "candidate_probe": {"process_invocations": 1, "baseline_method_cases": 5, "successor_method_cases": 5, "exit_code": 0},
+  "audit_v1": {"disposition": "STOP_AUDIT_INVOCATION_RECEIPT_MISMATCH", "candidate_rerun": false},
+  "audit_v2": "PASS_EXACT_CLEANUP_IDENTITY_GUARD_SCOPED",
+  "tests": [
+    {"command": "python -m unittest -v test_a04.py", "exit_code": 0, "tests": 3},
+    {"command": "python -O -m unittest -v test_a04.py", "exit_code": 0, "tests": 3},
+    {"command": "python -m unittest -v test_a04_v2.py", "exit_code": 0, "tests": 3},
+    {"command": "python -O -m unittest -v test_a04_v2.py", "exit_code": 0, "tests": 3}
+  ],
+  "candidate_raw_sha256": "1506aa0dfe151282584b1fba9e60d54ecd817ae31e1ab7ec95185c73b78e564c",
+  "candidate_result_sha256": "53a561908e5dcc49cd13e83ec9314443a6b6c53ac7a47730634401f37893e8fe",
+  "authority_granted": false,
+  "application_effect_observed": false
+}
