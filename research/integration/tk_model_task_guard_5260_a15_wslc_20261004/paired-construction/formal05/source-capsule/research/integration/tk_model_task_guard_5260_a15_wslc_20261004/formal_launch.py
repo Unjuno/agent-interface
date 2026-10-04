@@ -27,20 +27,6 @@ def write_json_new(path, value):
     write_new(path, (json.dumps(value, sort_keys=True) + '\n').encode('utf-8'))
 
 
-def host_plan_ready(root, expected_blob):
-    """Accept readiness only after the host's sealed plan matches exact bytes."""
-    directory = Path(root) / 'host' / 'host-plan'
-    try:
-        marker_blob = (directory / 'ready.json').read_bytes()
-        marker = json.loads(marker_blob)
-        payload = (directory / 'payload.bin').read_bytes()
-    except (OSError, ValueError, TypeError):
-        return False
-    return (type(marker) is dict and set(marker) == {'bytes', 'sha256'}
-        and type(marker.get('bytes')) is int and marker['bytes'] == len(payload)
-        and marker.get('sha256') == digest(payload) and payload == expected_blob)
-
-
 def start_capture(argv, cwd, directory):
     """Publish an immutable argv/time receipt before starting exactly once."""
     directory, cwd = Path(directory), Path(cwd)
@@ -218,14 +204,13 @@ def launch(path):
     config = validate_outer_plan(path)
     root = Path(config['root'])
     host = start_capture(config['host_argv'], config['source_root'], root / 'host-launch')
-    expected_host_plan = (root / 'host-plan.json').read_bytes()
+    ready = root / 'host' / 'host-plan'
     deadline = time.monotonic() + config['host_ready_timeout_seconds']
-    while not host_plan_ready(root, expected_host_plan) \
-            and host['process'] is not None and host['process'].poll() is None:
+    while not ready.is_file() and host['process'] is not None and host['process'].poll() is None:
         if time.monotonic() >= deadline:
             break
         time.sleep(0.02)
-    if not host_plan_ready(root, expected_host_plan):
+    if not ready.is_file():
         receipt = finish_capture(host, timeout_seconds=2)
         return dict(status='STOP_HOST_NOT_READY', host_exit_code=receipt['exit_code'])
 

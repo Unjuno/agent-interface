@@ -247,6 +247,16 @@ initialized its host, then the candidate runner safely refused an already
 existing output directory before opening a GUI or exchange request. These are
 three distinct setup/review stops, not WSLc restrictions; none is reused.
 
+formal05 was separately source-frozen around the retained A14 visual
+counterexample (`TARGET=dv`, requested `hdv`) but stopped before candidate
+dispatch. The host had correctly published `host/host-plan/` as a sealed
+directory; the first outer-launch helper mistakenly waited for that path to be
+a regular file and terminated the host at its readiness deadline. No WSLc
+candidate, GUI, exchange request or model call began. The exact formal05 plan,
+source capsule, sealed host plan and outer host-launch attempt/receipt are
+retained at `paired-construction/formal05/`; no part of that allocation is
+reused.
+
 formal04 made four first-slot provider calls in WSLc with a frozen source and
 plan; all four recovery slots were explicitly skipped, with no retry. The
 separate saved-file auditor passed descriptively: both arms had 3 EXACT_FILE
@@ -275,3 +285,13 @@ duplicate network override denial and a fake end-to-end two-process run. The
 complete scoped WSLc suite on this exact source passed 93 tests with one
 explicit owned-host-exchange skip. It is ready for a fresh prospective
 allocation; it does not repair or upgrade formal04's disposition.
+
+The formal05 readiness mistake exposed that the host plan is itself a sealed
+directory (`payload.bin` plus `ready.json`), not a regular file. The launcher
+now validates that marker's exact byte count/hash and byte-compares the sealed
+payload with the frozen host-plan before it can start WSLc. Seven focused
+launcher tests pass, including missing/changed seal refusal. The preceding
+93-test WSLc package run passed after the latest-main merge; this small
+readiness-only fix also passed all seven focused tests. formal06 will be the
+first allocation using sealed-directory readiness; none of the saved stops is
+upgraded by that code change.

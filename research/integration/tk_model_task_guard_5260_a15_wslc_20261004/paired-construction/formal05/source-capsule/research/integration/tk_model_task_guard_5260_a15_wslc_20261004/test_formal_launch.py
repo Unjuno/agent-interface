@@ -5,26 +5,10 @@ import sys
 import tempfile
 import unittest
 
-from formal_launch import (digest, finish_capture, host_plan_ready, launch,
-                           start_capture, validate_outer_plan)
+from formal_launch import digest, finish_capture, launch, start_capture, validate_outer_plan
 
 
 class FormalLaunchCaptureTests(unittest.TestCase):
-    def test_host_readiness_requires_exact_valid_sealed_host_plan(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            expected = b'{"allocation":"frozen"}\n'
-            directory = root / 'host' / 'host-plan'
-            directory.mkdir(parents=True)
-            self.assertFalse(host_plan_ready(root, expected))
-            (directory / 'payload.bin').write_bytes(expected)
-            marker = {'bytes': len(expected), 'sha256': digest(expected)}
-            (directory / 'ready.json').write_text(json.dumps(marker) + '\n', encoding='utf-8')
-            self.assertTrue(host_plan_ready(root, expected))
-            self.assertFalse(host_plan_ready(root, expected + b'changed'))
-            (directory / 'payload.bin').write_bytes(expected + b'tampered')
-            self.assertFalse(host_plan_ready(root, expected))
-
     def test_frozen_formal_plan_checks_source_model_schema_slots_and_container(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / 'formal'
@@ -163,11 +147,9 @@ class FormalLaunchCaptureTests(unittest.TestCase):
                 'freeze_sha256': freeze}).encode() + b'\n'
             (root / 'host-plan.json').write_bytes(host_plan_blob)
             (source / 'host_stub.py').write_text('# frozen fixture\n', encoding='utf-8')
-            host_directory = root / 'host' / 'host-plan'
-            host_code = ("from pathlib import Path;import hashlib,json;p=Path(r'"
-                + str(host_directory) + "');p.mkdir(parents=True);b="
-                + repr(host_plan_blob)
-                + ";(p/'payload.bin').write_bytes(b);(p/'ready.json').write_text(json.dumps({'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})+'\\n')")
+            host_code = ("from pathlib import Path;Path(r'" + str(root / 'host' / 'host-plan')
+                + "').parent.mkdir(parents=True);Path(r'" + str(root / 'host' / 'host-plan')
+                + "').write_bytes(b'host-ready')")
             candidate_code = ("from pathlib import Path;Path(r'" + str(root / 'candidate')
                 + "').mkdir()")
             config = {'schema': 'a15-formal-outer-launch-v1', 'root': str(root),
