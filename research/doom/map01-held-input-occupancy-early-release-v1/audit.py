@@ -217,6 +217,11 @@ def audit(run_root: Path, output_path: Path) -> dict:
     assert totals["no_input_before_admission_steps"] == sum(flag(r, "no_input_before_admission") for r in output_rows.values())
     assert totals["partial_admission_before_keys_held_steps"] == sum(flag(r, "partial_admission_before_keys_held") for r in output_rows.values())
     assert totals["cancel_raced_input_ack_steps"] == sum(flag(r, "cancel_raced_input_ack") for r in output_rows.values())
+    for field in ("physical_any_key_occupancy_lower_ms",
+                  "physical_any_key_occupancy_upper_ms",
+                  "occupancy_interval_width_ms"):
+        expected = round(sum(decision[field] for decision in out["decisions"]), 3)
+        assert totals.get(field) == expected, f"aggregate total mismatch for {field}"
     return {"run": run_root.name, "hold_steps": len(output_rows),
             "no_input_steps": totals["no_input_before_admission_steps"],
             "partial_admission_steps": totals["partial_admission_before_keys_held_steps"],

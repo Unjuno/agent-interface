@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import ast
+import pytest
 
 ROOT = Path(__file__).resolve().parent
 ANALYZER_PATH = ROOT / "analyze.py"
@@ -73,24 +74,24 @@ def test_completed_hold_uses_first_verified_early_release_as_bound(tmp_path):
     corrupted = json.loads(candidate_path.read_text(encoding="utf-8"))
     corrupted["holds"][0]["released_by_ns"] = 90_000_000
     candidate_path.write_text(json.dumps(corrupted), encoding="utf-8")
-    try:
+    with pytest.raises(AssertionError):
         auditor.audit(run_root, candidate_path)
-    except AssertionError:
-        pass
-    else:
-        raise AssertionError("independent raw auditor accepted the stale post-release bound")
+
+    candidate_path.write_text(json.dumps(output), encoding="utf-8")
+    corrupted_totals = json.loads(candidate_path.read_text(encoding="utf-8"))
+    corrupted_totals["totals"]["physical_any_key_occupancy_lower_ms"] = 999_999.0
+    corrupted_totals["totals"]["physical_any_key_occupancy_upper_ms"] = -10.0
+    candidate_path.write_text(json.dumps(corrupted_totals), encoding="utf-8")
+    with pytest.raises(AssertionError):
+        auditor.audit(run_root, candidate_path)
 
 
 def test_fails_closed_when_acknowledgement_crosses_verified_release():
     analyzer = load("early_release_candidate_late_ack", ANALYZER_PATH)
     events = early_release_trace()
     next(row for row in events if row["event"] == "input_admission")["input_ack_ns"] = 50_000_000
-    try:
+    with pytest.raises(AssertionError, match="bounds|later admission/ack"):
         analyzer.reconstruct_holds(events)
-    except AssertionError as exc:
-        assert "bounds" in str(exc) or "later admission/ack" in str(exc)
-    else:
-        raise AssertionError("candidate accepted an acknowledgement after verified empty release")
 
 
 def test_completed_hold_is_corrected_even_when_a_later_step_is_cancelled(tmp_path):
@@ -124,12 +125,8 @@ def test_completed_hold_is_corrected_even_when_a_later_step_is_cancelled(tmp_pat
     published_path = tmp_path / "published-v7.json"
     published_path.write_text(json.dumps(published), encoding="utf-8")
     assert published["holds"][0]["released_by_ns"] == 90_000_000
-    try:
+    with pytest.raises(AssertionError):
         v7_auditor.audit(run_root, published_path)
-    except AssertionError:
-        pass
-    else:
-        raise AssertionError("V7 raw auditor accepted a missed completed hold")
     output = analyzer.analyze(run_root)
     hold = output["holds"][0]
     assert hold["terminal_status"] == "cancelled"
@@ -152,6 +149,13 @@ def test_current_owner_records_verified_timestamp_after_release_sync():
     verified_timestamp = next(node for node in ast.walk(release)
                               if isinstance(node, ast.keyword) and node.arg == "verified_ns")
     assert release_sync.lineno < verified_timestamp.value.lineno
+
+
+def test_posthoc_audit_payload_uses_v2_schema():
+    generator = load("posthoc_generator", ROOT / "run_posthoc.py")
+    payload = generator.audit_payload([])
+    assert payload["schema"] == "map01-held-input-occupancy-early-release-v2-audit"
+    assert payload["candidate_schema"] == "early-release-v2"
 
 
 def test_v7_candidate_and_auditor_accept_a_later_key_admission_after_early_release(tmp_path):
@@ -185,9 +189,5 @@ def test_v7_candidate_and_auditor_accept_a_later_key_admission_after_early_relea
     assert stale["holds"][0]["physical_any_key_occupancy_upper_ms"] == 29.0
     assert audit_v7.audit(run_root, stale_path)["raw_reconstruction"] == "PASS"
     candidate = load("early_release_candidate_late_key", ANALYZER_PATH)
-    try:
+    with pytest.raises(AssertionError, match="later admission/ack"):
         candidate.reconstruct_holds(events)
-    except AssertionError as exc:
-        assert "later admission/ack" in str(exc)
-    else:
-        raise AssertionError("candidate accepted a second key admitted after the release cap")

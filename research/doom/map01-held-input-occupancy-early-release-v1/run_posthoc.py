@@ -23,6 +23,10 @@ def load(name: str, path: Path):
     spec.loader.exec_module(module)
     return module
 
+def audit_payload(results: list[dict]) -> dict:
+    return {"schema": "map01-held-input-occupancy-early-release-v2-audit",
+            "candidate_schema": "early-release-v2", "results": results, "errors": []}
+
 def main() -> None:
     RESULTS.mkdir(exist_ok=True)
     candidate, auditor = load("candidate", PACKAGE / "analyze.py"), load("auditor", PACKAGE / "audit.py")
@@ -53,8 +57,7 @@ def main() -> None:
         invariance[label] = {"hold_bounds_unchanged": rows_equal, "decision_bounds_unchanged": decisions_equal,
                              "totals_unchanged": totals_equal, "totals": value["totals"]}
         input_hashes[label] = {"report.json": sha(report), "runtime/events.jsonl": sha(events)}
-    (RESULTS / "audit.json").write_text(json.dumps({"schema": "map01-held-input-occupancy-early-release-v1-audit",
-        "candidate_schema": "early-release-v1", "results": audits, "errors": []}, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (RESULTS / "audit.json").write_text(json.dumps(audit_payload(audits), indent=2) + "\n", encoding="utf-8", newline="\n")
     (RESULTS / "invariance.json").write_text(json.dumps(invariance, indent=2) + "\n", encoding="utf-8", newline="\n")
     manifest = {"schema": "map01-held-input-occupancy-early-release-v2-manifest",
         "source_sha256": {str(p.relative_to(PACKAGE)).replace("\\", "/"): sha(p) for p in SOURCES},
