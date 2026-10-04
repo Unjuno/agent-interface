@@ -1,0 +1,47 @@
+{
+  "schema": "v39-unknown-outer-adapter-independent-audit-freeze-v1",
+  "auditor_sha256": "c8010d52d6e3d4ebcb53192d8b57a433b974a29e42505b25fb7ac03a2857bff5",
+  "runtime": {
+    "os": "linux/amd64 via WSLc",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512M",
+    "swap_limit_claim": false
+  },
+  "invocation": {
+    "name": "v39-unknown-outer-auditor-a01-20261005",
+    "command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<src>,target=/src,readonly --mount type=bind,source=<raw>,target=/evidence,readonly --mount type=bind,source=<audit>,target=/audit --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/audit_raw.py"
+  },
+  "sha256": {
+    "audit_raw.py": "c8010d52d6e3d4ebcb53192d8b57a433b974a29e42505b25fb7ac03a2857bff5",
+    "candidate_controller.py": "b72168462a835f1f5df3febbb3e41c741cd57f33630834ca78998767f24eb0ea",
+    "controller.py": "41329ce5735aa80b0cb6710c10f2c2bf9627f3b22e57faf197cf37eef335129a",
+    "green_freeze.json": "d7dc90060ab8f772c12c0d30fde14822a7ae9b0abe6de4f4e1d74aee0b7106e7",
+    "green_freeze_a02.json": "ec72132a2d0ef0d9990ac2c4510b8f1a3f64fd2dbf206893f71486c0ecf6bd7d",
+    "map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+    "red_freeze.json": "58e5954e4724985220568c832afe64e572bbc56eda7ce6d9b3dd15ab19c5c496",
+    "run_unknown_outer.py": "057d88d8e0367eff963b6a100a310812068681e99d95b3e58675e47de05e3819",
+    "test_map01_v39_typed_state_feedback.py": "fdddd0206c5f0ef92cd81530db909dbde65d0da6464c5729fe1dd18381da8801",
+    "raw/green-a02-command.txt": "401a5c874cf1b4e59d9a4c61454964b4d8a682717eee2049491c2988c047e1c0",
+    "raw/green-a02-container.log": "ea4961ec48c882eea3991563a35bc5a27906d485afec0bd95e7b3989355800a9",
+    "raw/green-a02-exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "raw/green-a02-result.json": "e17d9b3909026956f2323e68866f219a2b5d33065b8631f03f16b9791d033ff5",
+    "raw/green-command.txt": "6570bffbb17127ab3315792ca25b43681c7b30d10c57112d4107a34c022a24f2",
+    "raw/green-container.log": "ac2179d37beb5b90521a1baeb64031b6a4e40b3888fcac912163213023d6cd46",
+    "raw/green-exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "raw/postflight/preflight-list.capture.json": "9f0c45699c2d8e1fddcfd4c95e79e028cfabceac14c90949e95227956921ac54",
+    "raw/postflight/preflight-list.exit-code.txt": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "raw/postflight/preflight-list.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw/postflight/preflight-list.stdout.bin": "c9ec6861b592bdffc9d0d614990be0930786c1690240acf8e79ef7b89d36ca40",
+    "raw/preflight-list.capture.json": "5414b0806a92c4beddf4a609db978dc774a9dd25af1fc13fab3a6a9b08fe58c2",
+    "raw/preflight-list.exit-code.txt": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "raw/preflight-list.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw/preflight-list.stdout.bin": "f38c7921294fbff269e9bb50d6052c957af2c7439ebb8318da5546475395176f",
+    "raw/red-command.txt": "c6d99740e178945354508e34ad374601e7842a39491b4812284c47de17b4734b",
+    "raw/red-container.log": "ab27947a667d2bdf4cb60efbfafa6c877139c51d45e2fa2ed4eac7b36bf1ebd8",
+    "raw/red-exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "raw/red-result.json": "d6c3a7973981e52a314c71e5633f6922cbb199aed0138ecf9cb71115fca8f71b"
+  }
+}
