@@ -1,0 +1,51 @@
+{
+  "a03": {
+    "files": {
+      "FREEZE.json": {
+        "git_blob": "7efa4064dddc75ef07bc3558cd5792dad7a5955e",
+        "sha256": "a49cff90c5c31a42172acfac79f585357f8cf350e0ebffdefd5a7926c7ec7eea"
+      },
+      "INPUT_EVENTS.jsonl": {
+        "git_blob": "eacb735634d6c6761ba7fa39448e6d7d43e342d5",
+        "sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+      },
+      "audit.py": {
+        "git_blob": "276265673b05b2dbc3402bb554d8aa7630ab197b",
+        "sha256": "3be9080c94c63c6a296a271815678da8f095beed25bbcb8e8e5d999996a86526"
+      },
+      "candidate.py": {
+        "git_blob": "8c2c8a4fe7c9cdfc27c9d6bbccc9a99cf71c5990",
+        "sha256": "1f6b8f0f886c234253c667b562b635677edbfca9cc6e6ae714260f6b36dc69d6"
+      }
+    },
+    "path": "../map01_v39_perkey_measurement_consumer_a03_20261005"
+  },
+  "commands": [
+    "py -3 generate_freeze.py",
+    "py -3 reproduce_a03.py",
+    "py -3 -m unittest -v test_consumer.py",
+    "py -3 -O -m unittest -v test_consumer.py",
+    "py -3 audit_report.py",
+    "py -3 -m py_compile candidate.py audit.py test_consumer.py reproduce_a03.py generate_freeze.py audit_report.py"
+  ],
+  "formal_allocation": false,
+  "input": {
+    "git_blob": "eacb735634d6c6761ba7fa39448e6d7d43e342d5",
+    "path": "../map01_v39_perkey_measurement_consumer_a03_20261005/INPUT_EVENTS.jsonl",
+    "sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+  },
+  "kind": "offline_identity_boundary_regression",
+  "run_id": "MAP01-V39-PERKEY-MEASUREMENT-CONSUMER-A05-20261005",
+  "schema": "map01_v39_perkey_measurement_consumer_a05_freeze_v1",
+  "scope": "exact typing of down/up identity fields in one retained fake-display pair; no live input or task-effect claim",
+  "source_sha256": {
+    "PLAN.md": "5899288c106154790f2dca6867cc2e7b5a3a3b2ce4f12c3f1f1292a26db49c72",
+    "README.md": "f9562a5f48039f0dd76ec7508e5e89f484e9d57c90d863c6072d8eb182236d02",
+    "audit.py": "fc1e4de2132c53f62eab496989d7409dfaec60c9957214a195c8c57e3c6258c6",
+    "audit_report.py": "cddea2cd73ff0fad8409644955d783d4aa1f58780bc6323c9232f0a58b6c5c12",
+    "candidate.py": "610d2d48641709b3d7a362b9656fdae2952e5f2d0ca8db2e16960312daa94855",
+    "generate_freeze.py": "5817839041c499a3c4685ef7f227ff677a55719a43ce7b245d821961d692f884",
+    "reproduce_a03.py": "399e82a43a852e5f39dcf66f17732d18b0fe913999e3378cd61391d51592b1f0",
+    "test_consumer.py": "f723f0726a333b874861145a0d9bab453e562f4dd5534fd00cdafa1357af7e04"
+  }
+}
