@@ -520,12 +520,22 @@ def input_edge_receipts(events):
         measurement = event.get("physical_key_measurement")
         adapter_edge = (measurement.get("adapter_edge")
                         if type(measurement) is dict else None)
+        unknown_adapter_event = (
+            event_name not in ("input_admission", "input_release_measurement",
+                               "input_release_transition") and
+            type(measurement) is dict)
         adapter_candidate = (
             event_name == "input_release_measurement" or
-            (event_name == "input_admission" and type(measurement) is dict))
+            (event_name == "input_admission" and type(measurement) is dict) or
+            unknown_adapter_event or
+            (event_name == "input_release_transition" and
+             type(adapter_edge) is dict))
         if adapter_candidate:
             edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
-            expected_edge = ("down" if event_name == "input_admission" else "up")
+            expected_edge = (
+                "down" if event_name == "input_admission" else
+                "up" if event_name == "input_release_measurement" else
+                edge_name if edge_name in ("down", "up") else None)
             identifier, step, key, token = (event.get("id"), event.get("step"),
                                             event.get("key"), event.get("intent_token"))
             if (type(identifier) is not str or not identifier or
@@ -541,10 +551,13 @@ def input_edge_receipts(events):
                 })
                 continue
             bucket = adapter_grouped.setdefault((identifier, step, key, token),
-                                                {"down": [], "up": []})
+                                                {"down": [], "up": [], "invalid": False})
             # Outer event type and nested edge label are both part of the
             # receipt identity. Do not let one release event supply a press.
-            bucket[expected_edge].append(event)
+            if expected_edge is None:
+                bucket["invalid"] = True
+            else:
+                bucket[expected_edge].append(event)
             continue
         if event_name not in ("input_admission", "input_release_transition"):
             continue
@@ -655,9 +668,12 @@ def input_edge_receipts(events):
                 up_data.get("pre_sample") if type(up_data) is dict else None,
                 up_data.get("post_sample") if type(up_data) is dict else None))
         complete = (
+            not bucket.get("invalid", False) and
             len(downs) == 1 and len(ups) == 1 and
             type(down_data) is dict and type(up_data) is dict and
             type(down_edge) is dict and type(up_edge) is dict and
+            down.get("event") == "input_admission" and
+            up.get("event") == "input_release_measurement" and
             down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
             down_data.get("edge") == "down" and up_data.get("edge") == "up" and
             down_data.get("classification") == "CONFIRMED_PHYSICAL_DOWN" and
