@@ -55,3 +55,19 @@ This closes one logical ownership edge in fake-Xlib construction only. It does
 not establish real X11 behavior, per-key physical transition times, useful
 feedback, game effect, bounded recovery, or live threat response. The matched
 Issue #59 live allocation gate remains open.
+
+## Additive keymap-eviction follow-up
+
+Review of the pushed alias fix found that explicit key-up still resolved the
+current keysym before reading its stored admission. A frozen regression admits
+W as code 87, changes the current mapping to unavailable, then requests
+`up(W)`. The exact pushed source fails with `ValueError` and leaves code 87
+down; the candidate reads the admitted code directly, releases it, and emits a
+matching receipt. The ordered adjacent owner/release/V13 suite passes 24 tests.
+Evidence and independent audit are under `keymap_eviction/`.
+
+The two key-up repairs establish a narrower fake-Xlib invariant: explicit up
+uses only a same-lease, same-logical-key admission record and does not depend on
+the current symbol map. They do not establish real X11 remap delivery,
+per-key physical transition time, useful task effect, recovery, or live threat
+control. Issue #59's matched live allocation remains unassigned.

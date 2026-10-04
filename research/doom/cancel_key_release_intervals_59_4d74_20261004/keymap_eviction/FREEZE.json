@@ -1,0 +1,30 @@
+{
+  "schema": "keyup-after-keysym-removal-freeze-v1",
+  "issue": 59,
+  "H": "An explicit up for an admitted logical key must release its admission-time physical keycode even if the current keysym map now returns no code.",
+  "T": "Under fake Xlib, admit W as code 87, change W's mapping to code 0, request up(W), and record call error, remaining physical key state, and owner_explicit_keyup receipt; repeat in an ordered adjacent suite.",
+  "D": {
+    "baseline": "FAIL if up raises, code 87 remains down, or the exact key-up receipt is absent.",
+    "candidate": "PASS only if up returns without error, fake state is empty, and one receipt identifies W/code 87."
+  },
+  "C": "The keycode used for an admitted hold is already authoritative for its paired release; current symbol lookup can become unavailable after keymap changes.",
+  "U": "Fake Xlib/source-composition only. No real X server, physical key timing, GUI/game effect, useful feedback, recovery, or live threat response is established.",
+  "baseline_commit": "8a3b21ac209543881afc0fd746ab1e29ca7af1f1",
+  "source_path": "research/live_control/input_owner_v12.py",
+  "baseline_source_sha256": "5910b22cda46fe22418dcfe10234b99f99e23c236e323d8ee51020544be4a7d5",
+  "candidate_source_sha256": "12b84ac259322560e4be0a425b1ffb9d30efb2a13300291d56dfead0bb564880",
+  "test_path": "research/live_control/test_input_owner_v12_keyup_after_keysym_removal.py",
+  "test_sha256": "5e9e3ac17950f8854dba96556379f2b06a82e18f4073bb859d67cff429fb7ad8",
+  "test_copy_sha256": "5e9e3ac17950f8854dba96556379f2b06a82e18f4073bb859d67cff429fb7ad8",
+  "runner_sha256": "1d8198760c45b052c634fa642603e9a36cfcd40da4637028f33e03f55a67672b",
+  "ordered_runner_sha256": "d21698480ec589dbe894a32f63c4c52407ec23e3b68a15e40d56d82d308d25cd",
+  "baseline_output_sha256": "8199f5d0473650663e5eded2a2e912486e921f217e9fb297aaea5e84ca81afc7",
+  "candidate_output_sha256": "3c85e5be1f419f9df2d3aa7b270241f3f8893e6fc27a96e6ade9bfb736a7631a",
+  "ordered_output_sha256": "dd10482c4cbd9efdfa6edf47bfb4802f310f8e2d3d32a711d9243004d9719f7a",
+  "audit_script_sha256": "3c31acc0b0dc65cc0e0b0ef834c9b7e84e3de4a9783f0e8ae0ecd26bde02cb17",
+  "audit_result_sha256": "9caf0475c555872c4ad6b6e31b0131c1ccd313d2b8f957b331da303e15eb8f7f",
+  "result_sha256": "d4195385cb45a2a6b671d0ddf501fbea4a3159898e78c59a105a79604f1ad3a7",
+  "runtime": "CPython 3.14.5 on macOS arm64, in-process fake Xlib",
+  "command": "python3 -B -m research.doom.cancel_key_release_intervals_59_4d74_20261004.keymap_eviction.run_ordered_suite",
+  "scope": "one deterministic construction regression; not a formal/live allocation"
+}

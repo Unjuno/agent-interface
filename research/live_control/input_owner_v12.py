@@ -343,10 +343,10 @@ class InputOwner:
                                           admitted_ns=admitted,input_ack_ns=time.perf_counter_ns(),
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
                     elif op in ('down', 'up'):
-                        code = d.keysym_to_keycode(XK.string_to_keysym(key))
-                        if not code:
-                            raise ValueError('key unavailable on input owner')
                         if op == 'down':
+                            code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                            if not code:
+                                raise ValueError('key unavailable on input owner')
                             if fault is not None:
                                 raise RuntimeError('input owner failed closed') from fault
                             if active is not None and active is not lease:

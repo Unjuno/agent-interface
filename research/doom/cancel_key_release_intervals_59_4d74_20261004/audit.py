@@ -135,12 +135,28 @@ alias_freeze = json.loads((alias_root / "FREEZE.json").read_text())
 alias_audit_path = alias_root / "AUDIT.json"
 alias_audit = json.loads(alias_audit_path.read_text())
 checks["unmatched_keyup_alias_candidate_source_sha256"] = (
-    sha(candidate_root / alias_freeze["source_path"])
+    sha(alias_root / "candidate" / "input_owner_v12.py")
     == alias_freeze["candidate_source_sha256"]
 )
 checks["unmatched_keyup_alias_audit_result"] = (
     alias_audit.get("pass") is True
     and sha(alias_audit_path) == alias_freeze["audit_result_sha256"]
+)
+alias_audit_v2 = json.loads((alias_root / "AUDIT_v2.json").read_text())
+checks["unmatched_keyup_alias_archived_source_reaudit"] = (
+    alias_audit_v2.get("pass") is True
+)
+eviction_root = ROOT / "keymap_eviction"
+eviction_freeze = json.loads((eviction_root / "FREEZE.json").read_text())
+eviction_audit_path = eviction_root / "AUDIT.json"
+eviction_audit = json.loads(eviction_audit_path.read_text())
+checks["keyup_after_keysym_removal_candidate_source_sha256"] = (
+    sha(candidate_root / eviction_freeze["source_path"])
+    == eviction_freeze["candidate_source_sha256"]
+)
+checks["keyup_after_keysym_removal_audit_result"] = (
+    eviction_audit.get("pass") is True
+    and sha(eviction_audit_path) == eviction_freeze["audit_result_sha256"]
 )
 manifest = (ROOT / "FILES.sha256").read_text().splitlines()
 manifest_results = []

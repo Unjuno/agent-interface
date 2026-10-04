@@ -1,0 +1,32 @@
+{
+  "schema": "keyup-after-keysym-removal-result-v1",
+  "issue": 59,
+  "disposition": "PASS_FAKE_XLIB_KEY_IDENTITY_CONSTRUCTION_SCOPED",
+  "baseline": {
+    "exit_code": 1,
+    "error": "ValueError('key unavailable on input owner')",
+    "keys_down_after_up": [87],
+    "explicit_keyup_receipts": 0
+  },
+  "candidate": {
+    "exit_code": 0,
+    "keys_down_after_up": [],
+    "explicit_keyup_receipts": 1,
+    "receipt_key": "W",
+    "receipt_keycode": 87
+  },
+  "ordered_adjacent_suite": {
+    "exit_code": 0,
+    "tests": 24,
+    "includes": [
+      "removed-keysym mapping regression before and after adjacent suites",
+      "unmatched key alias protection",
+      "admission-time remap release",
+      "cancellation/release intervals and V13 publication"
+    ]
+  },
+  "baseline_source_sha256": "5910b22cda46fe22418dcfe10234b99f99e23c236e323d8ee51020544be4a7d5",
+  "candidate_source_sha256": "12b84ac259322560e4be0a425b1ffb9d30efb2a13300291d56dfead0bb564880",
+  "test_sha256": "5e9e3ac17950f8854dba96556379f2b06a82e18f4073bb859d67cff429fb7ad8",
+  "limitations": "Fake Xlib only; no live X server, physical key transition timing, semantic interpretation, useful task effect, recovery, or live threat response."
+}

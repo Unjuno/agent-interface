@@ -1,0 +1,15 @@
+test_up_uses_admitted_code_when_current_keysym_has_no_code (research.live_control.test_input_owner_v12_keyup_after_keysym_removal.KeyUpAfterKeysymRemovalTests.test_up_uses_admitted_code_when_current_keysym_has_no_code) ... FAIL
+
+======================================================================
+FAIL: test_up_uses_admitted_code_when_current_keysym_has_no_code (research.live_control.test_input_owner_v12_keyup_after_keysym_removal.KeyUpAfterKeysymRemovalTests.test_up_uses_admitted_code_when_current_keysym_has_no_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-3/work/keyup-cancel-fix/research/live_control/test_input_owner_v12_keyup_after_keysym_removal.py", line 120, in test_up_uses_admitted_code_when_current_keysym_has_no_code
+    self.assertIsNone(error_after_up, observation)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "ValueError('key unavailable on input owner')" is not None : {'error_after_up': "ValueError('key unavailable on input owner')", 'keys_down': [87], 'keyups': []}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)
