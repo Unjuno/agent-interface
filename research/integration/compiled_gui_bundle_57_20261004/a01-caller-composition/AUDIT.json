@@ -1,10 +1,10 @@
 {
   "assertions": {
     "PR7330_candidate_preserves_completed_execution_progress": true,
+    "all_three_warm_routes_have_zero_attempts_and_empty_ledgers": true,
     "changed_unknown_stops_after_one_transition_with_typed_progress": true,
     "outer_unavailable_keeps_confirmed_delivery_but_main_drops_execution_progress": true,
-    "warm_positive_two_transitions_and_outer_effect_success": true,
-    "warm_routes_make_zero_model_attempts": true
+    "warm_positive_two_transitions_and_outer_effect_success": true
   },
   "observed": {
     "candidate_effect_unavailable_execution_progress": {

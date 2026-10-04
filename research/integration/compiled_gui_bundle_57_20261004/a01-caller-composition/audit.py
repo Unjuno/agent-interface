@@ -11,10 +11,15 @@ expected = {
 assert main['source_sha256']=={'caller':expected['main_caller'],'compiled':expected['compiled']}
 assert candidate['source_sha256']=={'caller':expected['candidate_caller'],'compiled':expected['compiled']}
 for label, data in [('main',main),('candidate',candidate)]:
+    # Every warm route must carry complete zero-attempt accounting. Checking
+    # only the positive route would let corrupted changed/effect records pass.
+    for case_name in ('warm_positive','warm_changed','outer_effect_unavailable'):
+        result = data['cases'][case_name]['result']
+        assert result['accounting']['attempted_calls']==0, (label,case_name,'attempted_calls')
+        assert result['attempt_ledger']==[], (label,case_name,'attempt_ledger')
     p=data['cases']['warm_positive']['result']; pc=data['cases']['warm_positive']['compiled'][0]
     assert (p['outcome'],p['task_effect'],p['delivery']) == ('TASK_SUCCEEDED','succeeded','confirmed')
     assert pc['outcome']=='TASK_SUCCEEDED' and pc['completed_transitions']==2
-    assert p['accounting']['attempted_calls']==0 and p['attempt_ledger']==[]
     c=data['cases']['warm_changed']['result']; cc=data['cases']['warm_changed']['compiled'][0]
     assert (c['outcome'],c['reason'],c['delivery']) == ('EXECUTION_INCOMPLETE','unknown_state','confirmed_partial')
     assert c['execution_progress']=={'status':'safe_yield','reason':'unknown_state','completed_actions':1}
@@ -37,7 +42,7 @@ report={
   'changed_unknown_stops_after_one_transition_with_typed_progress':True,
   'outer_unavailable_keeps_confirmed_delivery_but_main_drops_execution_progress':True,
   'PR7330_candidate_preserves_completed_execution_progress':True,
-  'warm_routes_make_zero_model_attempts':True},
+  'all_three_warm_routes_have_zero_attempts_and_empty_ledgers':True},
  'observed':{'main_effect_unavailable_execution_progress':main_progress,
              'candidate_effect_unavailable_execution_progress':candidate_progress,
              'main_source_sha256':main['source_sha256'],

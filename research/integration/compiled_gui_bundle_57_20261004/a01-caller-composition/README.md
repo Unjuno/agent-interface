@@ -15,7 +15,7 @@ PYTHONPATH=research/live_control:. python3 -B research/integration/compiled_gui_
 python3 -B research/integration/compiled_gui_bundle_57_20261004/a01-caller-composition/audit.py
 ```
 
-For the audit command, place `RUN-MAIN.json` and `RUN-PR7330.json` beside the auditor under the expected names. The committed audit binds both raw JSON files and runner source hashes, then checks the three expected state transitions/outcomes.
+For the audit command, place `RUN-MAIN.json` and `RUN-PR7330.json` beside the auditor under the expected names. The committed audit binds both raw JSON files and runner source hashes, then checks the three expected state transitions/outcomes. It independently checks both zero attempted calls and an empty attempt ledger for all three warm routes. `audit-coverage-test.py` corrupts the `warm_changed` and `outer_effect_unavailable` accounting rows and confirms the saved auditor rejects them.
 
 Observed: the positive arm completes two compiled transitions on both sources. The changed arm stops after one transition with `unknown_state`, preserving one completed action on both sources. When the outer effect verifier returns unavailable, both sources report `TASK_NOT_VERIFIED` and confirmed delivery; main drops `execution_progress`, while the PR #7330 candidate preserves `{"status":"completed"}`. All three warm routes make zero model attempts by design.
 

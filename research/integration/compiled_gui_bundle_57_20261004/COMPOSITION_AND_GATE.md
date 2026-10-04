@@ -43,7 +43,7 @@ After the caller composition gap is resolved, use the existing #56 comparison ha
 
 ## Immediate gates
 
-1. Obtain independent review of PR #7330's current-main caller composition; the local checks above are author-side evidence and cannot substitute for that review. Preserve source PRs #7289/#7310 and their historical results.
+1. Obtain independent review of PR #7330's current-main caller composition; the local checks above are author-side evidence and cannot substitute for that review. The #7330 head also lacks #7289's exact-boolean cost guard: its `isinstance(cost, (int, float))` accepts `True`/`False` as 1/0. I40 verified a scratch-only overlay with the #7289 guard and both boolean regression cases (72 selected tests, normal and `-O`); the PR branch remains untouched and this boundary must be resolved before adoption. Preserve source PRs #7289/#7310 and their historical results.
 2. Independently review the A01–A03 composed test boundary, then test schema-preflight handoff and evidence custody through the outer caller. A01–A03 cover warm execution, cold accounting, no-target abstention, failed model usage missingness, local/model repair, post-model changed-state stop and effect receipt custody.
 3. Proceed to the frozen live three-arm comparison only after those tests pass and the #57 live/resource gate is current and available. A component pass or saved live-05 result is not a substitute.
 
