@@ -297,6 +297,13 @@ class Tests(unittest.TestCase):
         self.assertNotEqual(admissions, releases)
 
     def test_v12_physical_measurements_survive_v4_context_and_consumer_replay(self):
+        missing = object()
+        xlib_module_names = (
+            "Xlib", "Xlib.display", "Xlib.ext", "Xlib.ext.xtest", "PIL"
+        )
+        original_xlib_modules = {
+            name: sys.modules.get(name, missing) for name in xlib_module_names
+        }
         bridge_test_path = HERE / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
         bridge_spec = importlib.util.spec_from_file_location(
             "perkey_bridge_test_for_v4", bridge_test_path
@@ -305,8 +312,17 @@ class Tests(unittest.TestCase):
         bridge_spec.loader.exec_module(bridge_test)
         harness_module = bridge_test.load_v12_test_harness()
         harness = harness_module.Harness(harness_module.owner_module)
+        original_keysym_mapper = harness_module.owner_module.XK.string_to_keysym
+        original_input_owner_module = sys.modules.get("input_owner_v12")
 
         try:
+            # The shared fake X display normally aliases every keysym to one code.
+            harness_module.owner_module.XK.string_to_keysym = (
+                lambda key: {"F8": 1, "F9": 2}.get(key, 0)
+            )
+            harness.d.keysym_to_keycode = lambda keysym: {
+                1: 74, 2: 75
+            }.get(keysym, 0)
             sys.modules["input_owner_v12"] = harness_module.owner_module
             transition_path = (
                 HERE / "map01_attack_onset_phase_allocation_02_v1" / "source"
@@ -325,25 +341,24 @@ class Tests(unittest.TestCase):
             obj = make_backend(set(), owner, lease)
             rows = []
             obj.emit = rows.append
-            obj.execute({"actions": [("F8", True), ("F8", False)]},
+            obj.execute({"actions": [
+                ("F8", True), ("F9", True),
+                ("F9", False), ("F8", False),
+            ]},
                         None, "cover-7", 2)
 
-            down = next(row for row in rows if row.get("event") == "input_admission")
-            up = next(row for row in rows
-                      if row.get("event") == "input_release_transition")
-            self.assertEqual((down.get("owner_id"), down["id"], down["step"]),
-                             (owner.owner_id, "cover-7", 2))
-            self.assertEqual((up["owner_id"], up["id"], up["step"]),
-                             (owner.owner_id, "cover-7", 2))
-            self.assertEqual(down["physical_key_measurement"]["classification"],
-                             "CONFIRMED_PHYSICAL_DOWN")
-            self.assertEqual(up["physical_key_measurement"]["classification"],
-                             "CONFIRMED_PHYSICAL_UP")
-            self.assertEqual(down["physical_key_measurement"]["actuation_id"],
-                             up["physical_key_measurement"]["actuation_id"])
-            self.assertEqual(up["admission_position"], down["admission_position"])
-            self.assertTrue(up["owner_transition_verified"])
-            self.assertFalse(up["grants_input_authority"])
+            downs = {row["key"]: row for row in rows
+                     if row.get("event") == "input_admission"}
+            ups = {row["key"]: row for row in rows
+                   if row.get("event") == "input_release_transition"}
+            self.assertEqual(set(downs), {"F8", "F9"})
+            self.assertEqual(set(ups), {"F8", "F9"})
+            self.assertEqual(
+                {row["admission_position"] for row in downs.values()}, {0, 1}
+            )
+            self.assertEqual([row["key"] for row in rows
+                              if row.get("event") == "input_release_transition"],
+                             ["F9", "F8"])
             self.assertEqual(harness.d.physical, set())
             self.assertEqual(obj.held, set())
 
@@ -356,13 +371,55 @@ class Tests(unittest.TestCase):
             )
             consumer = importlib.util.module_from_spec(consumer_spec)
             consumer_spec.loader.exec_module(consumer)
-            consumer_up = dict(up, event="input_release_measurement")
-            measured = consumer.reconstruct([down, consumer_up])
-            self.assertGreater(measured["hold_duration_lower_bound_ns"], 0)
-            self.assertFalse(measured["authority_granted"])
-            self.assertFalse(measured["application_effect_observed"])
+            for key in ("F8", "F9"):
+                down, up = downs[key], ups[key]
+                self.assertEqual(
+                    (down.get("owner_id"), down["id"], down["step"]),
+                    (owner.owner_id, "cover-7", 2),
+                )
+                self.assertEqual(
+                    (up["owner_id"], up["id"], up["step"]),
+                    (owner.owner_id, "cover-7", 2),
+                )
+                self.assertEqual(
+                    down["physical_key_measurement"]["classification"],
+                    "CONFIRMED_PHYSICAL_DOWN",
+                )
+                self.assertEqual(
+                    up["physical_key_measurement"]["classification"],
+                    "CONFIRMED_PHYSICAL_UP",
+                )
+                self.assertEqual(
+                    down["physical_key_measurement"]["actuation_id"],
+                    up["physical_key_measurement"]["actuation_id"],
+                )
+                self.assertEqual(
+                    up["admission_position"], down["admission_position"]
+                )
+                self.assertTrue(up["owner_transition_verified"])
+                self.assertFalse(up["grants_input_authority"])
+
+                consumer_up = dict(up, event="input_release_measurement")
+                measured = consumer.reconstruct([down, consumer_up])
+                self.assertGreater(measured["hold_duration_lower_bound_ns"], 0)
+                self.assertFalse(measured["authority_granted"])
+                self.assertFalse(measured["application_effect_observed"])
+            self.assertNotEqual(
+                downs["F8"]["physical_key_measurement"]["actuation_id"],
+                downs["F9"]["physical_key_measurement"]["actuation_id"],
+            )
         finally:
             harness.close()
+            harness_module.owner_module.XK.string_to_keysym = original_keysym_mapper
+            if original_input_owner_module is None:
+                sys.modules.pop("input_owner_v12", None)
+            else:
+                sys.modules["input_owner_v12"] = original_input_owner_module
+            for name, module in original_xlib_modules.items():
+                if module is missing:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
 
     def run_release(self, owner, lease=None, held=("a",)):
         obj = make_backend(set(held), owner, lease)
