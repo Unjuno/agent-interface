@@ -1,5 +1,11 @@
 # Analytical research
 
+- [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
+- [Issue #7387 A02 method result](serial_cue_interference_7387_t0_20261004_a02/REPORT.md) — WSLc candidate and raw-only auditor each ran once; 144 trials, 288 presentations, 16 isolated controls and 1,280 image files (five distinct pixel payloads) independently reconstructed; `PASS_METHOD_SCOPED`; model hypothesis remains untested.
+- [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
+- [Issue #7383 freshness-gated observation hedging T0](observation_hedging_7383_t0_20261004/REPORT.md) — synthetic independent-heavy-tail p95 improved 86.52% under the frozen threshold/work/deadline gates; correlated and shared-queue controls showed no gain. Independent audit passed 1,000 rows and rejected four mutations. Host CPU only; real capture critical-path evidence remains absent.
+- [`circuit_rejection_cost_5375_a02_20261004/REPORT.md`](circuit_rejection_cost_5375_a02_20261004/REPORT.md) — #5375 A02 WSLc one-tick finite result; 10 raw rows independently reconstructed, 4/4 mutation controls rejected, PASS_METHOD_SCOPED; A01 construction failure and auditor STOP preserved separately. No empirical production-cost, live-resilience, GUI/model, or product claim.
+
 - [Retained analytical source rescue — #6857/#6862/#6884](../recovery/analytical_source_rescue_20261004/README.md) — Exact original packets/history preserved; cancellation auditor v1 six false accepts and separately versioned v2 correction, LF/CRLF serialization-only evidence, and all historical temporal-contract HOLDs remain distinct. Archival integration is not original content-quorum/application approval, scientific/runtime adoption or a replay.
 
 - [Archived S05-WSLC image-gate preparation](looming_visual_assumption_gate_5905_s05_wslc_20261003/ARCHIVAL_QUALIFICATION.md) — #6808/#5905 frozen source and 24 images preserved; no published formal result. Distinct from the cancelled native S05 and executed S06; archival checks do not authorize a run.
@@ -344,6 +350,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
 - [`claim_generation_types_6509_01a0ff58/`](claim_generation_types_6509_01a0ff58/)
 - [`claim_ladder_6113_t0_20261002/`](claim_ladder_6113_t0_20261002/)
@@ -445,6 +452,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`faded_demonstration_6600_t0_orbstack_20261002/`](faded_demonstration_6600_t0_orbstack_20261002/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
+- [`feasibility_estimability_7379_t0b_20261004/`](feasibility_estimability_7379_t0b_20261004/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
 - [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
@@ -478,6 +486,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_proposal_risk_6143_t0_20261002/`](guard_proposal_risk_6143_t0_20261002/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
+- [`hazard_checkpoint_7466_t0_20261004/`](hazard_checkpoint_7466_t0_20261004/)
 - [`hazard_discretionary_capture_6086_t0_20261002/`](hazard_discretionary_capture_6086_t0_20261002/)
 - [`hazard_discretionary_capture_6086_t0_v1/`](hazard_discretionary_capture_6086_t0_v1/)
 - [`hedged_evidence_start_4277_v1/`](hedged_evidence_start_4277_v1/)
@@ -598,6 +607,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observable_predictive_tests_6258_t0_host_20261002/`](observable_predictive_tests_6258_t0_host_20261002/)
 - [`observable_quiescence_6664_t0_v1/`](observable_quiescence_6664_t0_v1/)
 - [`observation_bisimulation_branch_readiness_5516_t12/`](observation_bisimulation_branch_readiness_5516_t12/)
+- [`observation_hedging_7383_t0_20261004/`](observation_hedging_7383_t0_20261004/)
 - [`observation_intervention_6526_a01_orbstack_20261003/`](observation_intervention_6526_a01_orbstack_20261003/)
 - [`observation_intervention_6526_a02_orbstack_20261003/`](observation_intervention_6526_a02_orbstack_20261003/)
 - [`observation_intervention_6526_a03_deadline_audit_only_20261003/`](observation_intervention_6526_a03_deadline_audit_only_20261003/)
@@ -616,8 +626,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`oracle_boundary_swaps_6230_t0_20261002/`](oracle_boundary_swaps_6230_t0_20261002/)
 - [`oracle_boundary_swaps_6230_t0s2_20261002/`](oracle_boundary_swaps_6230_t0s2_20261002/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
+- [`ordered_context_history_7452_t0_20261004/`](ordered_context_history_7452_t0_20261004/)
 - [`origin_effect_binding_6500_t0_20261002/`](origin_effect_binding_6500_t0_20261002/)
 - [`owner_keyup_a18_boundary_audit_5156_20261003/`](owner_keyup_a18_boundary_audit_5156_20261003/)
+- [`owner_keyup_completion_sentinel_terminality_5156_20261003/`](owner_keyup_completion_sentinel_terminality_5156_20261003/)
 - [`owner_keyup_invocation_race_5156_t1_20261001/`](owner_keyup_invocation_race_5156_t1_20261001/)
 - [`owner_keyup_invocation_race_5156_t2_20261001/`](owner_keyup_invocation_race_5156_t2_20261001/)
 - [`owner_keyup_serializer_5156_t0_20261001_v1/`](owner_keyup_serializer_5156_t0_20261001_v1/)
@@ -723,6 +735,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/)
+- [`route_blind_adjudication_7436_t0_a01/`](route_blind_adjudication_7436_t0_a01/)
+- [`route_blind_adjudication_7436_t0_a02_20261004/`](route_blind_adjudication_7436_t0_a02_20261004/)
 - [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
 - [`route_selector_label_consistency_5911_t0/`](route_selector_label_consistency_5911_t0/)
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
@@ -766,6 +780,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_serializability_5318_audit_t3_20261002/`](semantic_serializability_5318_audit_t3_20261002/)
 - [`semantic_truth_cycle_4259_v1/`](semantic_truth_cycle_4259_v1/)
 - [`semantic_truth_maintenance_4259_v1/`](semantic_truth_maintenance_4259_v1/)
+- [`serial_cue_interference_7387_t0_20261004_a02/`](serial_cue_interference_7387_t0_20261004_a02/)
+- [`serial_cue_interference_7387_t0_a02_position_audit_20261004/`](serial_cue_interference_7387_t0_a02_position_audit_20261004/)
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 - [`serialized_attention_successor_1968_v1/`](serialized_attention_successor_1968_v1/)
 - [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/)
@@ -803,6 +819,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
+- [`task_memory_retrieval_7166_t0_host_a03_20261004/`](task_memory_retrieval_7166_t0_host_a03_20261004/)
+- [`task_memory_retrieval_7166_t0_host_a04_20261004/`](task_memory_retrieval_7166_t0_host_a04_20261004/)
+- [`task_memory_retrieval_7166_t0_host_a05_20261004/`](task_memory_retrieval_7166_t0_host_a05_20261004/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
 - [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
 - [`temporal_coalescing_6315_t0_v1/`](temporal_coalescing_6315_t0_v1/)
@@ -895,6 +914,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
+
+- [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
 
 - [`map01_owner_cross_head_59_t0_20261001/`](map01_owner_cross_head_59_t0_20261001/PRESERVATION_QUALIFICATION.md) — Preserved historical cross-head selector FAIL; synthetic rank placeholders, unchanged live-03 invalidation, no new runtime or allocation claim.
 
