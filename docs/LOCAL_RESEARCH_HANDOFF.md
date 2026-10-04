@@ -3956,3 +3956,11 @@ same-stream and2-vs-1 exchange rules. All32 hashes and output absence verify.
 Run once/no retry; v1's missing-evidence failure stays unchanged.
 
 </details>
+
+
+## 2026-10-05 thread handoff — Issue #7678
+
+- Current T0 outcome: **HOLD**. The candidate exited 0, but the first auditor exited 1 because freeze metadata was missing. Audit code and freeze metadata were changed after formal execution, then a manual auditor rerun printed PASS. That diagnostic recovery is not confirmatory. See `research/analysis/preference_manipulation_7678_t0_20261005/results/formal-01/AMENDMENT.md`; preserve `INITIAL_RUN_FAILURE.json`, raw candidate output, and both audit-stage records. No candidate rerun occurred.
+- Do not treat this allocation as PASS or issue a formal result report. The diagnostic counts are for future preregistration only. The GitHub issue was not updated.
+- Branch base: main `3dbbda05eb8d5067ee2c2969615e472a0f20f562`. Before PR integration, fetch current main and check Issue #7678, related branches, PRs, and reviewer/merge requirements. Do not rerun the consumed allocation.
+- No shared game/model lane was used. Do not call `wslc.exe` while the #6693 unknown-client hold remains.
