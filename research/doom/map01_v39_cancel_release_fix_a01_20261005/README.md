@@ -64,3 +64,16 @@ Current main advanced to `bfd182727aebd9636c6a84fb437848c1dfe66be8` via the type
 **U:** Fake display only; no real X11, application effect, useful feedback, bounded recovery efficacy, gameplay, safety, latency, or live allocation.
 
 The current-main suite now includes 11 focused candidate tests, 3 ExecutorV12 composition tests (2 query-fault cases), 10 owner compatibility tests and 2 bridge tests. The source-locked auditor validates 26 receipts. RED/GREEN output is retained in `executor-v12-query-fault-red.log` and `executor-v12-query-fault-green.log`; exact-main replay is `current-main-post-r135-replay-a07.log`.
+
+
+## A08 — wait for pending owner expiry cleanup after execute drain
+
+**H:** Owner expiry can race between the bridge's execute-exit record drain and ExecutorV3's post-execute release barrier. A stale empty `input_state` response can let the terminal fail without the contextual per-key up receipt.
+
+**T:** A deterministic fake-owner test holds the owner at its pre-deadline queue poll until the Executor post-execute state query is queued, forcing the stale query to be processed before the next expiry check. The baseline bridge at `32686927ce` fails with zero up receipts and an unverified terminal; the repaired bridge requests owner-thread release, waits for verified neutral state, drains the matching receipt, and passes. RED/GREEN logs are `expiry-drain-barrier-red.log` and `expiry-drain-barrier-green.log`.
+
+**D:** PASS requires one confirmed contextual F8 up receipt and verified-empty expiry terminal after the owner cleanup that follows execute drain. The 12 focused candidate tests, 3 ExecutorV12 composition tests, 10 owner compatibility tests, and 2 existing bridge tests pass; the source auditor checks all 27 receipts.
+
+**C:** This closes the tested scheduling interleave in a fake display and single process. It does not estimate real X11 timing or demonstrate application consumption.
+
+**U:** Fake display only; no real X11, useful feedback, bounded recovery, gameplay, safety, latency, or live MAP01 allocation. The OrbStack image inspection stopped with `operation not supported` on a containerd content blob; no image was pulled and no container run is claimed.

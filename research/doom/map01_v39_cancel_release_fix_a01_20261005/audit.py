@@ -17,7 +17,7 @@ for path,expected in lock['base_sha256'].items():
     assert hashlib.sha256(blob).hexdigest() == expected, path
 for path,expected in lock['candidate_sha256'].items():
     assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest() == expected, path
-suites=[('candidate-suite',11),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
+suites=[('candidate-suite',12),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
 for name,count in suites:
     log=(HERE/f'{name}.log').read_text()
     code=int((HERE/f'{name}.exit').read_text())
@@ -47,6 +47,7 @@ for name in ('test_v12_expiry_retains_keyup_when_owner_pointer_query_fails',
     assert name in integration_red and name in integration_green
 assert result['behavior']['executor_v12_expiry_survives_aggregate_pointer_fault'] is True
 assert result['behavior']['executor_v12_expiry_survives_aggregate_keymap_fault'] is True
+assert result['behavior']['executor_expiry_waits_for_owner_cleanup_after_execute_drain'] is True
 assert result['disposition']=='PASS_CANDIDATE_MECHANICS'
 assert 'test_executor_cancel_terminal_contains_one_verified_cleanup_receipt' in (HERE/'candidate-suite.log').read_text()
 assert 'test_executor_expiry_terminal_contains_one_verified_cleanup_receipt' in (HERE/'candidate-suite.log').read_text()
@@ -54,5 +55,13 @@ assert 'test_expiry_publishes_contextual_up_before_verified_terminal' in (HERE/'
 assert 'test_v12_expiry_retains_keyup_when_owner_pointer_query_fails' in (HERE/'executor-v12-expiry-suite.log').read_text()
 assert 'test_v12_expiry_retains_keyup_when_owner_keymap_query_fails' in (HERE/'executor-v12-expiry-suite.log').read_text()
 assert 'test_expired_program_exit_drains_owner_cleanup_without_cancel_event' in (HERE/'candidate-suite.log').read_text()
+expiry_red=(HERE/'expiry-drain-barrier-red.log').read_text()
+expiry_red_code=int((HERE/'expiry-drain-barrier-red.exit').read_text())
+expiry_green=(HERE/'expiry-drain-barrier-green.log').read_text()
+expiry_green_code=int((HERE/'expiry-drain-barrier-green.exit').read_text())
+expiry_test='test_executor_expiry_waits_for_owner_cleanup_that_follows_execute_drain'
+assert expiry_red_code != 0 and expiry_test in expiry_red and 'AssertionError: 0 != 1' in expiry_red
+assert expiry_green_code == 0 and expiry_test in expiry_green and '\nOK\n' in expiry_green
+assert expiry_test in (HERE/'candidate-suite.log').read_text()
 assert result['scope'].startswith('Local fake-display')
-print('AUDIT_PASS_SOURCE_LOCK_AND_26_TEST_RECEIPTS')
+print('AUDIT_PASS_SOURCE_LOCK_AND_27_TEST_RECEIPTS')
