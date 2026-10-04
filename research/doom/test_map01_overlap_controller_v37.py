@@ -92,6 +92,19 @@ class Map01OverlapControllerV36Tests(unittest.TestCase):
             ready, {"id": "primary", "accepted_ns": 202})
         self.assertEqual(admitted["status"], "INPUT_ADMITTED")
 
+    def test_out_of_domain_current_values_fail_before_executor(self):
+        candidate = action()
+        for current_health, current_ammo in ((201, 46), (79, 1000)):
+            with self.subTest(health=current_health, ammo=current_ammo):
+                with self.assertRaisesRegex(ValueError, "outside its declared domain"):
+                    controller.prepare_action_admission(
+                        initial_receipt(), candidate,
+                        candidate["action_validity"][0],
+                        signal("health", 85, 1, 100),
+                        signal("ammo", 47, 1, 100),
+                        signal("health", current_health, 2, 200),
+                        signal("ammo", current_ammo, 2, 200), 201)
+
     def test_zero_or_unknown_ammo_rejects_before_executor(self):
         candidate = action()
         for current in (signal("ammo", 0, 2, 200),
