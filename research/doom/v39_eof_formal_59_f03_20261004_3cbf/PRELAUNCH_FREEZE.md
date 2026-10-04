@@ -14,7 +14,11 @@ Expected cells and exact first-unexpected-cell STOP rule are in `PROTOCOL.md`. F
 
 ## Immutable eight-file input
 
-Frozen source commit `0f8700502ef5778fb2b3f5a37123d5b983422c5a`, tree `eeba8542507ba9406a869f6ba93c532f4c6f86ae`. Reproduce the exact archive from that public commit with `git archive --format=tar 0f8700502ef5778fb2b3f5a37123d5b983422c5a -- <the eight paths listed below>`; two independent invocations on this host were byte-identical. Exact archive SHA-256 `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5`. Host and guest copies match. Eight member hashes:
+Frozen source commit `0f8700502ef5778fb2b3f5a37123d5b983422c5a`, tree `eeba8542507ba9406a869f6ba93c532f4c6f86ae`. Reproduce the exact archive from that public commit with the following command; two independent invocations on this host were byte-identical. Exact archive SHA-256 `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5`. Host and guest copies match. Eight member hashes:
+
+```
+git archive --format=tar 0f8700502ef5778fb2b3f5a37123d5b983422c5a -- research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit_saved.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/PROTOCOL.md research/doom/v39_eof_formal_59_f03_20261004_3cbf/CUSTODY_PROTOCOL.md research/doom/v39_eof_59_f02_20261004_3cbf/candidate.py research/doom/v39_os_pipe_59_f01_20261004_3cbf/probe.py research/doom/v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz > input.tar
+```
 
 ```
 623fc63fb7d7f0ea87bd39109eb0a1bdcb5da7d5615cca2f85fcf2921821d386  research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py
@@ -27,13 +31,13 @@ ebfcef6197e7f121c9eb7d1c6822ac5d6fc3c1c9c3a4b2530517ad8a6de6d1d6  research/doom/
 d1ad6dcb8720b27766702361b4898d13259d2efe0b173e7d0fbc970fe3d988db  research/doom/v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz
 ```
 
-The separately retained manifest is `methods/input.SHA256` (SHA-256 `86882b20a319bfacb788fddbd81630dd6f4b1da93e4062eb0bf455d016f60c3d`). The archive is transferred unchanged; no working-tree archive, mutable tag, peer checkout, or module-preloaded process is used. The native and auditor entry scripts are exact host-side custody artifacts mounted read-only, not members of the eight-file research input: native SHA-256 `34ac52410e5acd341da0aeb3fd13e912f244226e66bce9d5a3c5cbd0872528be`, auditor SHA-256 `e5118f32454adaf9d812f7f33738c81bdf7550d2033c5d8a2d89b87a7fc0027f`.
+The separately retained manifest is `methods/input.SHA256` (SHA-256 `86882b20a319bfacb788fddbd81630dd6f4b1da93e4062eb0bf455d016f60c3d`). The archive is transferred unchanged; no working-tree archive, mutable tag, peer checkout, or module-preloaded process is used. The native and auditor entry scripts are exact host-side custody artifacts mounted read-only, not members of the eight-file research input: native SHA-256 `c6d401e77c72dc5c2d636ecb6ca5b5252045dbd406eaf1fa2418790b7c092882`, auditor SHA-256 `357ad84d5298f9399307c1a854efad4a1ccb37b189d4c217f291def40f52a002`.
 
 ## Setup-only container evidence
 
 The exact v6 input is copied to `/home/taka/f03-custody-bundle-v6/input.tar`, unpacked to `/home/taka/f03-formal-input-v6`, and independently matched against the manifest. Host and guest archive SHA-256 both equal `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5`; all eight extracted input files verify. Re-running the exact `git archive` command from the public frozen commit produced byte-identical output.
 
-Setup-only container `f03-final-preflight-v6-0f8700502e`, pinned image above, was created then inspected while `created` before its only start. It mounted the exact archive, unpacked tree, manifest and both entry scripts read-only; network none, CPU 1, memory and memory-swap 1 GiB, read-only root, all capabilities dropped, no-new-privileges, UID/GID 501 and private tmpfs. Its stdout checked archive digest, all eight input hashes, UID/GID, actual cgroup `cpu.max=100000 100000`, `memory.max=1073741824`, `memory.swap.max=0`, `pids.max=128`, and printed `PREFLIGHT_V6_PASS`. Exit 0, OOM false, started `2026-10-04T01:20:44.472126935Z`, finished `2026-10-04T01:20:44.565693509Z`. Full stdout and Engine inspect are retained in `methods/FINAL-PREFLIGHT-v6.log` and `methods/FINAL-PREFLIGHT-v6-inspect.json`; transfer receipt is `methods/FINAL-ARCHIVE-HASH-v6.log`. This is setup-only evidence; it does not establish host contention or global resource bounds.
+Setup-only container `f03-final-preflight-v6-0f8700502e`, pinned image above, was created then inspected while `created` before its only start. It mounted the exact archive, unpacked tree, manifest and both entry scripts read-only; network none, CPU 1, memory and memory-swap 1 GiB, read-only root, all capabilities dropped, no-new-privileges, UID/GID 501 and private tmpfs. Its stdout checked archive digest, all eight input hashes, UID/GID, actual cgroup `cpu.max=100000 100000`, `memory.max=1073741824`, `memory.swap.max=0`, `pids.max=128`, and printed `PREFLIGHT_V6_PASS`. Exit 0, OOM false, started `2026-10-04T01:20:44.472126935Z`, finished `2026-10-04T01:20:44.565693509Z`. Full stdout and Engine inspect are retained in `methods/FINAL-PREFLIGHT-v6.log` and `methods/FINAL-PREFLIGHT-v6-inspect.json`; archive receipt is `methods/FINAL-ARCHIVE-HASH-v6.log`. After final entry-script update, the guest copies of both scripts, manifest and archive were rehashed against the exact constants in this freeze; receipt is `methods/FINAL-ENTRY-HASH-v6.log`. This is setup-only evidence; it does not establish host contention or global resource bounds.
 
 Predecessor container `f03-final-preflight-v4b-796e5440be` validated the prior digest and is superseded. Its predecessor `f03-final-preflight-v4-796e5440be` had a missing manifest mount, remains `created`, and was never started. No candidate code ran in either predecessor.
 
@@ -56,8 +60,8 @@ AUDITOR: f03-pipe-auditor-formal-3cbf-20261004
 Exact guest custody bundle file SHA-256 values (verify these at the immediate gate):
 
 ```
-native-entry.sh: 34ac52410e5acd341da0aeb3fd13e912f244226e66bce9d5a3c5cbd0872528be
-auditor-entry.sh: e5118f32454adaf9d812f7f33738c81bdf7550d2033c5d8a2d89b87a7fc0027f
+native-entry.sh: c6d401e77c72dc5c2d636ecb6ca5b5252045dbd406eaf1fa2418790b7c092882
+auditor-entry.sh: 357ad84d5298f9399307c1a854efad4a1ccb37b189d4c217f291def40f52a002
 input.SHA256: 86882b20a319bfacb788fddbd81630dd6f4b1da93e4062eb0bf455d016f60c3d
 input.tar: 8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5
 ```

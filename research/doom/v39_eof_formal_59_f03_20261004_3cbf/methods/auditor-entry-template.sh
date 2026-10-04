@@ -12,7 +12,14 @@ expected_pids='128'
 actual_archive=$(sha256sum /input.tar | cut -d ' ' -f1)
 echo "archive_sha256=$actual_archive"
 [ "$actual_archive" = "$expected_archive" ] || fail archive_sha256
-(cd /input && sha256sum -c /custody/input.SHA256) || fail input_hashes
+count=0
+while read -r expected path; do
+  actual=$(sha256sum "/input/$path" | cut -d ' ' -f1)
+  echo "input_sha256=$actual  $path"
+  [ "$actual" = "$expected" ] || fail "input_hash:$path"
+  count=$((count + 1))
+done < /custody/input.SHA256
+[ "$count" = 8 ] || fail input_manifest_count
 actual_uid=$(id -u); actual_gid=$(id -g)
 echo "uid=$actual_uid gid=$actual_gid"
 [ "$actual_uid" = "$expected_uid" ] || fail uid
