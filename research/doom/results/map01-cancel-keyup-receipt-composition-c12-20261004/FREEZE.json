@@ -1,0 +1,25 @@
+{
+  "schema": "map01-cancel-keyup-receipt-composition-c12-freeze-v1",
+  "base_main": "75c6d18888da68033ef4b07cffefb3622568ed19",
+  "pr7440_head": "99b7d130742b4e884709a862bc074d15e6b42ac9",
+  "pr7441_head": "a5fec2be836afd21134db31d2dbf8be651e52c68",
+  "hypothesis": "An additive owner derivation can compose PR 7441's single key-up receipt with PR 7440's post-I/O cancellation-cause recheck.",
+  "candidate_derivation": {
+    "base_path": "FROZEN/pr7441/research/live_control/input_owner_v12.py",
+    "patch_source": "FROZEN/pr7440/research/live_control/input_owner_v12.py",
+    "patch": "After X query_keymap and key-state verification, before constructing/recording owner_release: if reason is release and active.cancel is set, change reason to cancelled.",
+    "patch_git_blob_sha1": "4623b7858f639c6a70531651b0c39a67701d5223",
+    "base_git_blob_sha1": "49e77ac4c63b2c7f0f69af7ce68506ca717bec00"
+  },
+  "tests": [
+    "candidate.live_control.test_composed_cancel_keyup_boundary",
+    "candidate.doom.test_release_backend_v3_composition",
+    "candidate.doom.test_multikey_release_batch_v3",
+    "candidate.live_control.test_executor_owner_cancel_cause_v1 (isolated process)"
+  ],
+  "composition_suite_test_count": 6,
+  "isolated_control_test_count": 1,
+  "processes": 2,
+  "scope": "host synthetic software construction",
+  "formal_or_live_allocation": false
+}
