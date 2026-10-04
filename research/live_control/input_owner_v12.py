@@ -343,6 +343,11 @@ class InputOwner:
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
                                 owner_sync_returned_ns = time.perf_counter_ns()
+                                cancel = getattr(lease, 'cancel', None)
+                                cancel_requested_after_sync = (
+                                    cancel.is_set() if callable(getattr(cancel, 'is_set', None))
+                                    else None
+                                )
                                 del held[code]
                                 self.records.append(dict(
                                     event='owner_explicit_keyup', operation='up',
@@ -351,6 +356,7 @@ class InputOwner:
                                     valid_until_ns=getattr(lease, 'deadline', None),
                                     owner_keyrelease_started_ns=owner_keyrelease_started_ns,
                                     owner_sync_returned_ns=owner_sync_returned_ns,
+                                    cancel_requested_after_sync=cancel_requested_after_sync,
                                     server_sync_completed=True,
                                     physical_verification_authoritative=False))
                             result = None

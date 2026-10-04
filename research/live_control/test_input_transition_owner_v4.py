@@ -27,6 +27,7 @@ class OwnerReceiptJoinTests(unittest.TestCase):
                         "owner_id": self.owner_id, "intent_token": lease.intent_token,
                         "valid_until_ns": lease.deadline,
                         "owner_keyrelease_started_ns": 12, "owner_sync_returned_ns": 13,
+                        "cancel_requested_after_sync": False,
                         "server_sync_completed": True,
                         "physical_verification_authoritative": False,
                     })
