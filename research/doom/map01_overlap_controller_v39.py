@@ -154,10 +154,23 @@ def _signal_pair_matches(observation, signals):
     return True
 
 
+def _signal_pair_content_matches(left, right):
+    for signal_id in ("health", "ammo"):
+        first = left.get(signal_id)
+        second = right.get(signal_id)
+        if type(first) is not dict or type(second) is not dict:
+            return False
+        for field in ("status", "signal_id", "value", "sequence",
+                      "capture_ns", "binding"):
+            if not _typed_json_equal(first.get(field), second.get(field)):
+                return False
+    return True
+
+
 class DoomCoverSignalPairMonitor:
     """Invalidate fire cover on incoherent or invalid paired health/ammo evidence."""
 
-    event_types = {"typed_observation"}
+    event_types = {"typed_observation", "observation"}
 
     def __init__(self, guards, health_reader, ammo_reader):
         self.guards = guards
@@ -166,6 +179,10 @@ class DoomCoverSignalPairMonitor:
                             for name, guard in guards.items()}
         self.last_sequence = guards["health"].spec["source_sequence"]
         self.last_capture_ns = guards["health"].source_capture_ns
+        self.last_event_kind = None
+        self.last_binding = None
+        self.last_frame_rgb_sha256 = None
+        self.last_signals = None
         self.soft_event_count = 0
         self.latest_soft_event = None
 
@@ -194,15 +211,58 @@ class DoomCoverSignalPairMonitor:
 
     def observe(self, observation):
         received_ns = time.perf_counter_ns()
-        if observation.get("event") == "typed_observation":
+        event_kind = observation.get("event")
+        sequence = observation.get("sequence")
+        capture_ns = observation.get("capture_ns")
+        binding = observation.get("pointer_binding")
+
+        # The producer normally emits the typed row immediately before the
+        # transport row for the same frame. Do not re-read or double-advance it.
+        if (event_kind == "observation" and
+                self.last_event_kind == "typed_observation" and
+                type(sequence) is int and sequence == self.last_sequence and
+                type(capture_ns) is int and capture_ns == self.last_capture_ns and
+                _typed_json_equal(binding, self.last_binding)):
+            frame_hash = observation.get("frame_rgb_sha256")
+            if (self.last_frame_rgb_sha256 is not None and frame_hash is not None and
+                    frame_hash != self.last_frame_rgb_sha256):
+                return self._invalidation(
+                    observation, "signal_pair_duplicate_frame_mismatch")
+            return None
+
+        if event_kind == "typed_observation":
             signals = observation.get("signals")
             if type(signals) is not dict:
                 return self._invalidation(observation, "signal_pair_missing")
+        elif event_kind == "observation":
+            try:
+                signals = {name: reader.read(observation)
+                           for name, reader in self.readers.items()}
+            except (OSError, ValueError, TypeError, KeyError):
+                return self._invalidation(
+                    observation, "signal_pair_source_unavailable")
         else:
-            signals = {name: reader.read(observation)
-                       for name, reader in self.readers.items()}
+            return self._invalidation(observation, "signal_pair_event_type_invalid")
         if not _signal_pair_matches(observation, signals):
             return self._invalidation(observation, "signal_pair_epoch_mismatch", signals)
+
+        # Support either transport order once, but invalidate a same-epoch
+        # disagreement between the typed signal and image-reader projections.
+        if (event_kind == "typed_observation" and
+                self.last_event_kind == "observation" and
+                type(sequence) is int and sequence == self.last_sequence and
+                type(capture_ns) is int and capture_ns == self.last_capture_ns):
+            frame_hash = observation.get("frame_rgb_sha256")
+            if (not _typed_json_equal(binding, self.last_binding) or
+                    not _signal_pair_content_matches(signals, self.last_signals) or
+                    (self.last_frame_rgb_sha256 is not None and frame_hash is not None and
+                     frame_hash != self.last_frame_rgb_sha256)):
+                return self._invalidation(
+                    observation, "signal_pair_duplicate_epoch_mismatch", signals)
+            self.last_event_kind = "typed_observation"
+            self.last_frame_rgb_sha256 = frame_hash
+            return None
+
         if observation["sequence"] <= self.last_sequence:
             return self._invalidation(
                 observation, "signal_pair_nonadvancing_sequence", signals)
@@ -237,6 +297,10 @@ class DoomCoverSignalPairMonitor:
                     "outcome_evaluated_ns": evaluated_ns,
                 }
             self.last_values[name] = value
+        self.last_event_kind = event_kind
+        self.last_binding = binding
+        self.last_frame_rgb_sha256 = observation.get("frame_rgb_sha256")
+        self.last_signals = signals
         return None
 
 
