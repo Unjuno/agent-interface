@@ -249,6 +249,32 @@ def expected_task_prompt(plan,row):
     return prompt.encode('utf-8')
 
 
+def expected_recovery_prompt(task_prompt,discrepancy):
+    fixed=(b'\nChanged-evidence recovery, not a retry: the first answer '
+        b'was inconsistent with the later cooperative app snapshot. Preserve the requested '
+        b'task and base a NEW decision on the attached later original image and literal '
+        b'current state below; never assume a repair already happened.\n')
+    return task_prompt+fixed+canonical(discrepancy)
+
+
+def expected_recovery_discrepancy(answer,current,source):
+    return dict(first_answer=answer,current_app_snapshot=current,capture_source=source,
+                recovery_nonce=current['nonce'])
+
+
+def validate_recovery_prompt(task_prompt,prompt,expected_discrepancy):
+    try:
+        actual=json.loads(prompt.splitlines()[-1])
+    except (AttributeError,IndexError,json.JSONDecodeError):
+        raise ValueError('PROCESS_RECOVERY_PROMPT_SCHEMA') from None
+    check(type(actual) is dict and set(actual)==
+          {'first_answer','current_app_snapshot','capture_source','recovery_nonce'}
+          and actual==expected_discrepancy,'PROCESS_RECOVERY_DISCREPANCY_JOIN')
+    check(prompt==expected_recovery_prompt(task_prompt,expected_discrepancy),
+          'PROCESS_RECOVERY_PROMPT_JOIN')
+    return actual
+
+
 def native_report(report, raw_results):
     result = report['result']
     check(report['task_success'] is None and report['replay_allowed'] is False,'NATIVE_REPORT_AUTHORITY')
@@ -477,13 +503,13 @@ def audit(root):
             check(paired['recovery']==recovery['client']==read(pair/'recovery-model.json'),'GUARD_RECOVERY_RESPONSE_JOIN')
             source,blob = capture(root,pair/'guard','recovery',app_data['guard'][0])
             check(blob==recovery['image'] and source['capture_ns']>receipt_clock,'IMAGE_RECOVERY_CHANGED_EVIDENCE')
-            check(recovery['prompt'].startswith(expected_task_prompt(plan,schedule)+b'\nChanged-evidence recovery, not a retry:'),
-                  'PROCESS_RECOVERY_PROMPT_JOIN')
-            discrepancy = json.loads(recovery['prompt'].splitlines()[-1])
-            check(discrepancy['first_answer']==answer and discrepancy['capture_source']==source
-                  and discrepancy['current_app_snapshot']==app_data['guard'][3].get(discrepancy['recovery_nonce'])
-                  and discrepancy['current_app_snapshot']['started_ns']>source['capture_ns'],
-                  'PROCESS_RECOVERY_DISCREPANCY_JOIN')
+            prompt_snapshots=[value for value in app_data['guard'][3].values()
+                if source['capture_ns']<value['started_ns']<=value['completed_ns']
+                <recovery['client']['response_seen_ns']]
+            check(len(prompt_snapshots)==1,'PROCESS_RECOVERY_SNAPSHOT_CARDINALITY')
+            expected_discrepancy=expected_recovery_discrepancy(answer,prompt_snapshots[0],source)
+            discrepancy=validate_recovery_prompt(expected_task_prompt(plan,schedule),recovery['prompt'],
+                                                 expected_discrepancy)
             check(len(guard_records)==2 and guard_records[1]['review']==recovery['parsed']['answer']
                   and guard_records[1]['response_seen_ns']==recovery['client']['response_seen_ns'],
                   'GUARD_RECOVERY_ADMISSION_JOIN')

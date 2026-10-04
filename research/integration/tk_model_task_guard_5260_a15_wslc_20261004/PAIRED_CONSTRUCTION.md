@@ -216,3 +216,23 @@ reconstructs it from the frozen plan. A producer/auditor byte-equality test and
 the historical c02 audit passed. The complete scoped WSLc suite after this
 change passed86 tests with one explicit owned-host-exchange skip. This qualifies
 the experiment harness, not the model hypothesis.
+
+### Recovery-prompt byte-integrity closure (2026-10-04)
+
+Review caught that validating only the final JSON parsed from a recovery prompt
+could miss injected instructions earlier in the prompt or extra discrepancy
+fields. Before any formal process was started, the formal01 allocation was
+immutably stopped at preallocation: zero host/GUI/container/provider starts and
+zero model calls. Its source capsule and plan remain preserved as evidence;
+they are not edited or reused.
+
+The successor auditor independently selects exactly one app snapshot acquired
+after recovery capture and completed before the client-local recovery receipt,
+then derives the exact four-field discrepancy from that snapshot, the joined
+first answer, and the independently joined capture source. It requires the
+exact field set/object and whole UTF-8 prompt bytes to match the producer's
+canonical serialization. Added fields and inserted instructions fail closed.
+The independent reviewer found no actionable issue in this precise change.
+The full scoped WSLc run passed 87 tests with one explicit owned-host-exchange
+skip (2026-10-04); no formal provider call has yet been made. This closes a
+harness review gap only and does not validate the research hypothesis.

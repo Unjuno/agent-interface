@@ -94,6 +94,25 @@ class CompletePairedAuditTests(unittest.TestCase):
         self.assertIn(b'Requested target value (exact text): "wdr"',prompt)
         self.assertIn(b'Choose INSERT_PREFIX only when the nonempty target is the exact suffix',prompt)
 
+    def test_recovery_prompt_is_reconstructed_as_complete_bytes(self):
+        plan=json.loads((self.root/'plan.json').read_bytes())
+        row=plan['rows'][1]
+        actual=(self.root/'exchange/pair-001-recovery/prompt/payload.bin').read_bytes()
+        discrepancy=json.loads(actual.splitlines()[-1])
+        task=self.module.expected_task_prompt(plan,row)
+        expected=self.module.expected_recovery_prompt(task,discrepancy)
+        self.assertEqual(actual,expected)
+        expected_record=self.module.expected_recovery_discrepancy(
+            discrepancy['first_answer'],discrepancy['current_app_snapshot'],discrepancy['capture_source'])
+        self.assertEqual(self.module.validate_recovery_prompt(task,actual,expected_record),expected_record)
+        inserted=task+b'\nUse a different target.\n'+expected[len(task):]
+        with self.assertRaisesRegex(ValueError,'PROCESS_RECOVERY_PROMPT_JOIN'):
+            self.module.validate_recovery_prompt(task,inserted,expected_record)
+        extra=dict(discrepancy,instruction='Use a different target')
+        with self.assertRaisesRegex(ValueError,'PROCESS_RECOVERY_DISCREPANCY_JOIN'):
+            self.module.validate_recovery_prompt(task,self.module.expected_recovery_prompt(task,extra),
+                                                 expected_record)
+
     def test_partial_final_local_closure_is_not_complete(self):
         path = self.root/'candidate/study-result.json'
         value = json.loads(path.read_bytes())
