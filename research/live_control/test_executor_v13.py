@@ -79,6 +79,49 @@ class ExecutorV13Tests(unittest.TestCase):
         self.assertTrue(backend.started.is_set())
         self.assertIsNone(executor.active)
 
+    def test_release_all_unrelated_baseexception_fails_terminal_then_propagates(self):
+        error = KeyboardInterrupt("unrelated release cleanup interruption")
+
+        class InterruptedCleanupBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+
+            def release_all(self):
+                raise error
+
+        backend = InterruptedCleanupBackend()
+        events = []
+        terminal_received = threading.Event()
+        escaped = []
+        escaped_event = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        previous_hook = threading.excepthook
+        threading.excepthook = lambda args: (escaped.append(args.exc_value),
+                                             escaped_event.set())
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("unrelated-cleanup-interrupt", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            self.assertTrue(escaped_event.wait(1), "worker interruption did not propagate")
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(error))
+        self.assertEqual(terminal["release"]["verified"], False)
+        self.assertNotIn("release_batch_delivery", terminal["release"])
+        self.assertEqual(escaped, [error])
+        self.assertTrue(backend.started.is_set())
+        self.assertIsNone(executor.active)
+
     def test_base_exception_fails_terminal_before_propagating_publication_custody(self):
         publication = {
             "status": "delivery_unknown", "identifier": "interrupt-failure",
