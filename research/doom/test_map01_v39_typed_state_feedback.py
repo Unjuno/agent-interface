@@ -613,6 +613,37 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(result["signals"]["ammo"],
                          {"before": 45, "after": 45, "delta": 0})
 
+    def test_feedback_rejects_boolean_aliases_in_before_identity_fields(self):
+        before = observation(83, 100)
+        after = observation(89, 200)
+        before["step"] = 0
+        after["step"] = 1
+        before_typed = typed_observation(83, 100, 91, 45)
+        after_typed = typed_observation(89, 200, 85, 44)
+        before_typed["step"] = 0
+        after_typed["step"] = 1
+
+        self.assertEqual(
+            controller.action_state_feedback(
+                before, after, [before_typed, after_typed])["status"],
+            "observed")
+
+        bad_before = dict(before, step=False)
+        bad_before_typed = dict(before_typed, step=False)
+        cases = (
+            ("before observation", bad_before, after,
+             [before_typed, after_typed]),
+            ("before typed row", before, after,
+             [bad_before_typed, after_typed]),
+        )
+        for field, before_row, after_row, typed_rows in cases:
+            with self.subTest(field=field):
+                result = controller.action_state_feedback(
+                    before_row, after_row, typed_rows)
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"],
+                                 "typed_frame_identity_mismatch")
+
     def test_feedback_rejects_noninteger_step_aliases_on_observation_and_typed_row(self):
         for mutation in ("observation", "typed_row", "both"):
             for invalid_step in (True, 1.0, -1):
