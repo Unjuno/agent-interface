@@ -28,6 +28,7 @@ paths = [
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/ADJACENT_EXIT.txt",
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_AUDIT_WSLC_INITIAL.txt",
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_AUDIT.txt",
+    "research/doom/map01-v39-release-cleanup-overlap-v1/results/AUDIT_EXIT.txt",
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_AUDITOR_TESTS.txt",
 ]
 lines = []

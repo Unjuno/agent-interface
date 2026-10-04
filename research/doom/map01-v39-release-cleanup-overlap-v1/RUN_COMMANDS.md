@@ -37,5 +37,5 @@ python -B research/doom/map01-v39-release-cleanup-overlap-v1/audit.py
 ```
 
 The current host-side auditor passed 9/9 checks and the mutation suite passed
-5/5. This follow-up reread retained logs only; it did not rerun the backend
-candidate or WSLc container.
+5/5; its raw output and `AUDIT_EXIT.txt` retain exit 0. This follow-up reread
+retained logs only; it did not rerun the backend candidate or WSLc container.

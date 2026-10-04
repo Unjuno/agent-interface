@@ -2,7 +2,7 @@
   "schema": "map01-v39-release-cleanup-overlap-result-v1",
   "baseline": {"sha": "fbed929f629dabaa9ae752019d0ee7151d4d2298", "regression": "failed as expected: cleanup overlap was left ordinary"},
   "candidate": {"backend_tests": "21/21 pass", "adjacent_wrapper_and_backend_tests": "29/29 pass"},
-  "audit": "corrected host-side retained-log audit 9/9; auditor mutation tests 5/5; initial WSLc string-check audit preserved as superseded",
+  "audit": "corrected host-side retained-log audit 9/9 exit 0; auditor mutation tests 5/5; initial WSLc string-check audit preserved as superseded",
   "environment_warning": "swap limit unsupported; accepted memory cap does not prove swap isolation",
   "decision": "adopt cleanup-overlap demotion in current-v39 typed release telemetry; remain synthetic construction evidence",
   "not_claimed": ["owner-thread scheduling", "X11 or live MAP01", "physical release timing", "task effect", "model or GPU performance", "safety or product reliability"],
