@@ -298,16 +298,55 @@ class Tests(unittest.TestCase):
         self.assertNotEqual(admissions, releases)
 
     def test_v12_physical_measurements_survive_v4_context_and_consumer_replay(self):
-        original_sys_modules = sys.modules.copy()
+        package_name = "map01_v39_perkey_bridge_a01"
+        package = types.ModuleType(package_name)
+        package.__path__ = [str(HERE / package_name)]
+        original_package_attrs = vars(package).copy()
+
+        # Keep a pre-existing package object with no child attribute. Importing
+        # ``package.bridge`` mutates this object even when sys.modules is restored.
+        with patch.dict(sys.modules, {package_name: package}):
+            original_sys_modules = sys.modules.copy()
+            original_sys_path = sys.path[:]
+            self._run_with_import_isolation(self._exercise_v12_physical_measurements)
+            self.assertEqual(sys.modules, original_sys_modules)
+            self.assertEqual(sys.path, original_sys_path)
+            self.assertEqual(vars(package), original_package_attrs)
+
+            def import_bridge_then_fail():
+                bridge_test_path = HERE / package_name / "test_bridge.py"
+                bridge_spec = importlib.util.spec_from_file_location(
+                    "perkey_bridge_test_failure_probe", bridge_test_path
+                )
+                bridge_test = importlib.util.module_from_spec(bridge_spec)
+                bridge_spec.loader.exec_module(bridge_test)
+                raise RuntimeError("injected failure after bridge import")
+
+            with self.assertRaisesRegex(RuntimeError, "injected failure"):
+                self._run_with_import_isolation(import_bridge_then_fail)
+            self.assertEqual(sys.modules, original_sys_modules)
+            self.assertEqual(sys.path, original_sys_path)
+            self.assertEqual(vars(package), original_package_attrs)
+
+    def _run_with_import_isolation(self, exercise):
         original_sys_path = sys.path[:]
+        bridge_package = sys.modules.get("map01_v39_perkey_bridge_a01")
+        missing = object()
+        original_bridge_attr = (
+            vars(bridge_package).get("bridge", missing)
+            if bridge_package is not None else missing
+        )
         try:
             # Include helper setup in the isolation boundary, not just assertions.
             with patch.dict(sys.modules):
-                self._exercise_v12_physical_measurements()
+                exercise()
         finally:
             sys.path[:] = original_sys_path
-        self.assertEqual(sys.modules, original_sys_modules)
-        self.assertEqual(sys.path, original_sys_path)
+            if bridge_package is not None:
+                if original_bridge_attr is missing:
+                    vars(bridge_package).pop("bridge", None)
+                else:
+                    bridge_package.bridge = original_bridge_attr
 
     def _exercise_v12_physical_measurements(self):
         bridge_test_path = (
