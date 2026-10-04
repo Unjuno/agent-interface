@@ -17,6 +17,7 @@ from raw_allocation_audit_v2 import audit as audit_raw
 from test_private_benchmark_channel import assemble_raw_from_private_channels
 from target_socket_submit_v1 import (JsonlTraceSink, SocketSubmitStop,
                                      TargetSocketSubmitter)
+from run_raw_socket_submit_construction import synthetic_bridge_exchange
 
 
 def test_trace_sink(_record):
@@ -253,6 +254,17 @@ class TargetSocketSubmitTests(unittest.TestCase):
                 with self.assertRaises(SocketSubmitStop):
                     submitter(self.command())
 
+    def test_synthetic_capture_runner_emits_accepted_empty_release_schema(self):
+        request = {"action_id": "A1-select-conveyor", "after": 7}
+        response = synthetic_bridge_exchange(request)
+        release = response["records"][0]["release"]
+        self.assertEqual(release, {
+            "verified": True, "keys_down": [], "buttons_down": []})
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: response
+        self.assertIs(submitter({"op": "submit", "id": request["action_id"]})[
+            "released"], True)
     def test_release_receipt_requires_explicit_empty_key_and_button_sets(self):
         release_cases = [
             {"verified": True, "keys_down": ["LEFT"], "buttons_down": []},
