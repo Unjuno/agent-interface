@@ -46,30 +46,44 @@ class AcknowledgedSamplerClockV2(AcknowledgedSampler):
                 row.update(tic_before=before, update_started_ns=started)
                 external_before = self.external_ack
                 game.advance_action(1, True)
-                # Set the API-return fact and identity before any fallible
-                # clock/tic qualification. Do not invent those measurements.
-                if self.external_ack is external_before:
+                if self.external_ack is not external_before:
+                    # The V16 observed proxy already captured this update's
+                    # timing and tic bracket. Reuse it; don't take a second,
+                    # potentially conflicting clock measurement.
+                    producer = {**self.external_ack,
+                                "sample_sequence": self.sequence,
+                                "observation_status": "UPDATE_RETURNED"}
+                    row.update(status="UPDATE_RETURNED",
+                               update_status="UPDATE_RETURNED",
+                               tic_before=producer["tic_before"],
+                               tic_after=producer["tic_after"],
+                               update_started_ns=producer["update_started_ns"],
+                               update_returned_ns=producer["update_returned_ns"])
+                else:
+                    # Set the API-return fact and identity before any fallible
+                    # clock/tic qualification. Do not invent those measurements.
                     self.update_sequence += 1
-                row.update(status="UPDATE_METADATA_PENDING",
-                           update_status="UPDATE_RETURNED")
-                producer = {"run_id": self.run_id,
-                            "sample_sequence": self.sequence,
-                            "update_sequence": self.update_sequence,
-                            "observation_status": "UPDATE_RETURNED_UNTIMED",
-                            "tic_before": before, "update_started_ns": started}
+                    row.update(status="UPDATE_METADATA_PENDING",
+                               update_status="UPDATE_RETURNED")
+                    producer = {"run_id": self.run_id,
+                                "sample_sequence": self.sequence,
+                                "update_sequence": self.update_sequence,
+                                "observation_status": "UPDATE_RETURNED_UNTIMED",
+                                "tic_before": before,
+                                "update_started_ns": started}
+                    row["producer"] = copy.deepcopy(producer)
+                    returned = self.clock_ns()
+                    after = int(game.get_episode_time())
+                    row.update(update_returned_ns=returned, tic_after=after)
+                    producer = {"run_id": self.run_id,
+                                "sample_sequence": self.sequence,
+                                "update_sequence": self.update_sequence,
+                                "observation_status": "UPDATE_RETURNED",
+                                "tic_before": before, "tic_after": after,
+                                "update_started_ns": started,
+                                "update_returned_ns": returned}
                 row["producer"] = copy.deepcopy(producer)
-                returned = self.clock_ns()
-                after = int(game.get_episode_time())
-                row.update(update_returned_ns=returned, tic_after=after)
-                producer = {"run_id": self.run_id,
-                            "sample_sequence": self.sequence,
-                            "update_sequence": self.update_sequence,
-                            "observation_status": "UPDATE_RETURNED",
-                            "tic_before": before, "tic_after": after,
-                            "update_started_ns": started,
-                            "update_returned_ns": returned}
-                row["producer"] = copy.deepcopy(producer)
-                if after <= before:
+                if producer["tic_after"] <= producer["tic_before"]:
                     raise RuntimeError("acknowledged update did not advance episode tic")
 
             row["producer"] = copy.deepcopy(producer)

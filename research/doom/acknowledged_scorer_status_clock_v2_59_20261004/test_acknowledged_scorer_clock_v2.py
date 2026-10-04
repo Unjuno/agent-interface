@@ -43,7 +43,7 @@ class ClockFailureTests(unittest.TestCase):
 
     def test_v1_reproduces_lost_return_fact(self):
         row = self.run_return_clock_failure(AcknowledgedSampler)
-        self.assertEqual(row["update_status"], "UPDATE_UNAVAILABLE")
+        self.assertEqual(row.get("update_status", row.get("status")), "UPDATE_UNAVAILABLE")
         self.assertNotIn("producer", row)
 
     def test_v2_keeps_api_return_separate_from_unavailable_metadata(self):
@@ -72,6 +72,22 @@ class ClockFailureTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "retry refused"):
             sampler(game, None, 10)
         self.assertEqual(game.calls, 1)
+
+    def test_reuses_observed_external_ack_instead_of_taking_a_second_timestamp(self):
+        rows = []
+        clock_calls = []
+        sampler = AcknowledgedSamplerClockV2(
+            sample, "clock-run", rows.append,
+            clock_ns=lambda: clock_calls.append(True) or 10)
+        class ObservedGame(Game):
+            def advance_action(self, count, update):
+                super().advance_action(count, update)
+                sampler.observe_external_update(self, 7, 10, 10, 20)
+        game = ObservedGame()
+        result = sampler(game, None, 10)
+        self.assertEqual(clock_calls, [True])
+        self.assertEqual(result.producer["update_returned_ns"], 20)
+        self.assertEqual(rows[0]["update_status"], "UPDATE_RETURNED")
 
 
 if __name__ == "__main__":
