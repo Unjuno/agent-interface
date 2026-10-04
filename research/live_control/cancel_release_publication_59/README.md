@@ -18,6 +18,8 @@ This is a focused event-handoff repair. The fake server does not prove physical 
 
 ## Delivery ambiguity and terminal-sink follow-up
 
+The cancellation-aware owner release reason is implemented by the additive `input_owner_v11.py` successor. Frozen `input_owner_v10.py` remains byte-identical to its retained source hash (`ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b`); the regression imports v11. This preserves the existing C01/C02 and other v10 source pins.
+
 On PR head `7c702769c7b8db36290391d115cae63f3f9a1770`, two additional test-first controls failed: an accept-then-raise release sink was invoked twice (the current client guard rejects a repeated early release for the same intent), and a throwing terminal sink left `executor.active` pointing to a stopped worker. The candidate marks each eligible release-event attempt before calling the sink. A sink exception is retained as `delivery_unknown` and is not retried because the event may already have been accepted. Terminal cleanup now clears the matching completed worker in `finally`, including when forwarding terminal raises. The terminal timestamp remains refreshed after the release barrier.
 
 The focused regression command is:
@@ -51,3 +53,5 @@ The discovered executor regression suite also passes 16/16. Final SHA-256: `exec
 ExecutorV13 publishes owner-release receipts from its own watcher and marks the ID deduplicated before calling the shared event sink. If that sink raises, the V12 wrapper previously let the exception escape without recording it; V13 then skipped the duplicate at its terminal barrier, so terminal omitted the uncertain release-delivery status. A synchronized test first reproduced the uncaught watcher exception and missing terminal field. The shared wrapper now captures failures only for `input_released` and `input_release_unverified`, retains `delivery_unknown` for the terminal, and preserves the one-attempt boundary. Other event sink exceptions still propagate.
 
 The focused V13 regression passes and asserts one sink attempt plus terminal `delivery_unknown` with the `OSError` type and message. Combined V12 cancellation-publication, V13/V12/V11/V10/base executor, and running-action guard suites pass 25/25. `py_compile` and `git diff --check` pass. Source SHA-256: `executor_v12.py` `11ed8e63fffa45bba52d8be2a926a1b5a09b20cfcbb0be0b02defc4b8a1e038b`; `test_executor_v13.py` `08c7385f3ead2cf670287c682a4d5b4037955f42121fe13203d09a7d0a12f739`. This remains deterministic executor/event-sink construction; it does not establish production transport delivery or live GUI behavior.
+
+The additive cancellation owner successor `input_owner_v11.py` has SHA-256 `270a0bd074c2ef88f9768d98e19f30b7c33ba21dd2d32511c95f823a208af46b`; v10 remains unchanged at the hash above. The fake-Xlib integration suite passes with the v11 import.
