@@ -1,0 +1,22 @@
+{
+  "allocation": "MAP01-ADMISSION-INVENTORY-JOIN-A01-20261005",
+  "current_main_at_selection": "109cedcf1fafc150e235c91141eb47bbc7396b43",
+  "source_commit": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "source_path": "research/doom/results/v39-control-telemetry-gap-audit-20261004/events.jsonl",
+  "source_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "expected_raw_rows": 634,
+  "expected_admissions": 39,
+  "expected_aggregate_receipts": 28,
+  "hypothesis": "per-key admissions scoped to a hold step enumerate the complete keys_held receipt set; canceled unmatched admission remains explicit",
+  "prereg_and_scripts_sha256": {
+    "analyze_inventory.py": "5EF5849C546DDB4A6877D27D2CBF18275657E9B77D6319E4133237AB2B203264",
+    "audit_inventory.py": "F8F0C9A9264E9E3693B45BBABE93BFD3BA564B277ED2EBD4E1C0192A1D56DE96",
+    "PREREGISTRATION.md": "56B8C7A9FC4BA763AC8CE973D36ADD745E9E81D18CD1804B4AD4BF0C6E6E5DD2"
+  },
+  "planned_commands": [
+    "python analyze_inventory.py",
+    "python audit_inventory.py",
+    "python -m py_compile analyze_inventory.py audit_inventory.py",
+    "git diff --check"
+  ]
+}

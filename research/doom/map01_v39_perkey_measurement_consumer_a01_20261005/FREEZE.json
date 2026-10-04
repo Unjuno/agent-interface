@@ -1,0 +1,40 @@
+{
+  "audit_argv": [
+    "python3",
+    "audit.py"
+  ],
+  "base_commit": "109cedcf1fafc150e235c91141eb47bbc7396b43",
+  "candidate_argv": [
+    "python3",
+    "run.py"
+  ],
+  "candidate_invocations_allowed": 1,
+  "decision": "PASS only if one exact down/up pair is joined by owner, intent, key, actuation, program and step; nested brackets agree; all authority/effect flags remain false; the release is confirmed; output interval is ordered and exactly reproducible by a separate raw-only audit. Otherwise FAIL or STOP.",
+  "hypothesis": "The retained V12 down/up measurement rows from the V39 bridge can be consumed as a fail-closed per-key interval without relabeling them as an authority-bearing release transition.",
+  "mutation_test_argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_consumer.py"
+  ],
+  "output_path": "research/doom/map01_v39_perkey_measurement_consumer_a01_20261005/results/a01",
+  "run_id": "MAP01-V39-PERKEY-MEASUREMENT-CONSUMER-A01-20261005",
+  "schema": "map01_v39_perkey_measurement_consumer_freeze_v1",
+  "scope": "Offline consumer integration over a retained fake-display construction pair. No new OS input, X server, game, model, GUI, live allocation, or recovery outcome. The interval is not physical game occupancy or task effect.",
+  "source_bridge_sha256": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+  "source_input": {
+    "git_blob": "eacb735634d6c6761ba7fa39448e6d7d43e342d5",
+    "path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl",
+    "sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4dba4bd2f7a9f84e4e"
+  },
+  "source_input_owner_v12_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+  "source_sha256": {
+    "audit.py": "131f405ee6f8030516db3a31f8f73c181052dec2fd59cee6cdb1ff0bbefe31c2",
+    "candidate.py": "8ea9c5ad5369645e4c2b46f2591647d5ad1de299c2df055e2f5f3ee65ecf1ee6",
+    "run.py": "7170323270f36e0425f6e0da1200a355a8bb32b6c209c5e95ae2f072b0508094",
+    "test_consumer.py": "868ee710ea82033b02a9f964f63d4f07a00123a30d58d7285fd376ff64c4e7aa"
+  },
+  "test": "Copy the exact two-row retained bridge stream; validate the nested V12 adapter-edge and source-bracket identities; derive a conservative down-to-up duration interval; independently reconstruct from input bytes; apply in-memory malformed-evidence mutations."
+}
