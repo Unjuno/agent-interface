@@ -8,14 +8,14 @@ A caller-side bracket around `InputOwner.call("up")` is insufficient to distingu
 
 ## T — Test
 
-Added fake-Xlib owner controls for explicit up and cleanup-before-queued-up, a transition wrapper join control, a backend batch-gate negative control with the owner receipt disabled, and an analyzer negative control with the batch owner receipt absent. Combined these with #7395 malformed-history and caller-bracket checks and #7405 terminal-cleanup receipt handling.
+Added fake-Xlib owner controls for explicit up and cleanup-before-queued-up, a transition wrapper join control, a backend batch-gate negative control with the owner receipt disabled, and analyzer controls for absent nested receipts and forged summary Booleans. The analyzer independently checks nested owner/key/token/deadline identity and owner-thread timestamps inside the caller bracket. Combined these with #7395 malformed-history and caller-bracket checks and #7405 terminal-cleanup receipt handling.
 
 ## D — Data and execution
 
 - Base: #7405 refreshed head `50c5d5ffe69f67c6ad56811496cec93694929cfe`, stacked on #7395.
-- Candidate code and tests: `91782ce69572173d1d068d34c9fccff967d81a27`.
+- Candidate code and tests: `562c10d2a0635a7a8f1b83acffbeb28519e062ff`.
 - `python -m unittest discover -s research/doom -p "test_doom_typed_release_backend_v3.py" -v`: **28/28 PASS**.
-- `python -m unittest discover -s research/doom -p "test_analyze_map01_direct_retained_input_v1.py" -v`: **4/4 PASS**.
+- `python -m unittest discover -s research/doom -p "test_analyze_map01_direct_retained_input_v1.py" -v`: **5/5 PASS**.
 - `python -m unittest discover -s research/live_control -p "test_input_transition_owner_v4_receipt.py" -v`: **4/4 PASS**, including two inherited owner tests.
 - Python compilation of changed owner, transition, backend, analyzer, session, and test modules: PASS.
 - `git diff --check`: PASS.
@@ -28,9 +28,9 @@ SHA-256 of candidate implementation and regression files:
 | `research/live_control/input_owner_v11.py` | `a73c63d32a9f55574f3e5b32e67021844c923b3d133699ffd5c9bf971bd12330` |
 | `research/live_control/input_transition_owner_v4.py` | `dd020956187d7be893a093b054f220603183e32560979639a281ce63daab7df9` |
 | `research/doom/doom_typed_release_backend_v3.py` | `6d8b655164361851ea3e8f829c2ecc1232a4c7278a768231d7e4461d6e4c46dc` |
-| `research/doom/analyze_map01_direct_retained_input_v1.py` | `3c5277244f7cf8b173f351744454d74fdae20a0b321ec581f2d512dfed0e0c74` |
+| `research/doom/analyze_map01_direct_retained_input_v1.py` | `005d9186e08e65fa548d8e459a42fd1fb4e46c320e6b9a17d10932732cb18ac9` |
 | `research/doom/test_doom_typed_release_backend_v3.py` | `2b7ecabf433bfbc3d9549e5410122dcfa0b57c1cb67e91019891f570960a5fb5` |
-| `research/doom/test_analyze_map01_direct_retained_input_v1.py` | `0ff26f9235a90c4d69e659606a362df65dc76e3d300748ec7753ba158e8d4460` |
+| `research/doom/test_analyze_map01_direct_retained_input_v1.py` | `72574732cdd60e892bf272ed461c4d78f44dbeb4cc500021ec85f4bf20e06274` |
 
 ## C — Conclusion
 
