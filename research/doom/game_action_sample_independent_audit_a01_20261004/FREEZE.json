@@ -1,0 +1,30 @@
+{
+  "record": "A01 independent raw-only audit",
+  "repository": "Unjuno/agent-interface",
+  "source_commit": "fe5a9dddf11f0351eb65001f1a1ddb867e8a5012",
+  "issue": 59,
+  "source_package": "research/doom/game_action_sampling_59_4d74_20261004/construction03/",
+  "question": "Do the raw scorer-only action samples independently support the bounded sampled-state claim, and do the surrounding raw protocol records support normal completion or useful recovery?",
+  "method": "Offline parsing of committed raw JSON/JSONL only; no original runner import, no game/model/input/GUI/container, and no allocation.",
+  "inputs": {
+    "scorer_last_action": "scorer-last-action.jsonl",
+    "runtime_events": "runtime/events.jsonl",
+    "runtime_scorer_samples": "runtime/scorer-samples.jsonl",
+    "runtime_environment": "runtime/environment.json",
+    "outer_probe_final": "PROBE_FINAL.json"
+  },
+  "decision_rule": "Require exact source hashes, coherent tic brackets and fixed button layout; identify only-left active samples; bind their bracketing states to one admitted Left input and its identity-matched explicit-up/XSync receipt; require the post-release neutral sample; separately classify game progress and outer protocol cleanup.",
+  "source_sha256": {
+    "scorer_last_action": "7270cb19ff9f29533331b5cac05b3ffb29a5e069cb1c9cb5a00ea31f6b663f85",
+    "runtime_events": "d0c81931ea5674a7c815fa3fbd423ecf0c4283464c50817355e8abb33e44dec5",
+    "runtime_scorer_samples": "22df0c14478a17f4007cded43e44b47e3094ae2ff782159a02f5e5e92998b2c7",
+    "runtime_environment": "625d324a359c53b86eeffff6927398c47318d2fa2b821b7b9ea2396243b451ac",
+    "outer_probe_final": "4d00d8f6c964a47727645cd1c3f9bb416fca81c062650a355f5bee59ab6d0da3"
+  },
+  "limits": [
+    "sampled game-side state is not exact transition onset or continuous per-tic occupancy",
+    "physical release verification is false",
+    "damage and ammo were not exposed in the scorer channel",
+    "the protocol ended by external child kill and does not demonstrate recovery efficacy"
+  ]
+}

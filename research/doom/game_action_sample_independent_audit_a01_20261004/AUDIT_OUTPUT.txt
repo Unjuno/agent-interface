@@ -1,0 +1,76 @@
+{
+  "disposition": "PASS_SAMPLED_GAME_ACTION_STATE_SCOPED_AND_STOP_PROTOCOL_COMPLETION",
+  "source_commit": "fe5a9dddf11f0351eb65001f1a1ddb867e8a5012",
+  "source_sha256": {
+    "scorer_last_action": "7270cb19ff9f29533331b5cac05b3ffb29a5e069cb1c9cb5a00ea31f6b663f85",
+    "runtime_events": "d0c81931ea5674a7c815fa3fbd423ecf0c4283464c50817355e8abb33e44dec5",
+    "runtime_scorer_samples": "22df0c14478a17f4007cded43e44b47e3094ae2ff782159a02f5e5e92998b2c7",
+    "runtime_environment": "625d324a359c53b86eeffff6927398c47318d2fa2b821b7b9ea2396243b451ac",
+    "outer_probe_final": "4d00d8f6c964a47727645cd1c3f9bb416fca81c062650a355f5bee59ab6d0da3"
+  },
+  "action_sample_count": 717,
+  "coherent_action_sample_count": 717,
+  "active_turn_left_sample_count": 8,
+  "active_sample_indexes_zero_based": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "active_sample_tics": [
+    1375,
+    1376,
+    1377,
+    1379,
+    1380,
+    1381,
+    1382,
+    1383
+  ],
+  "unobserved_tic_inside_active_span": 1378,
+  "input_admission_ns": 9991200273,
+  "input_ack_ns": 9991397856,
+  "keys_held_ack_ns": 9993756302,
+  "pre_active_neutral_sample": {
+    "index": 2,
+    "tic": 1374,
+    "returned_ns": 9972257362
+  },
+  "first_active_sample": {
+    "index": 3,
+    "tic": 1375,
+    "started_ns": 10001550736,
+    "returned_ns": 10001560224
+  },
+  "last_active_sample": {
+    "index": 10,
+    "tic": 1383,
+    "started_ns": 10228995584,
+    "returned_ns": 10229003207
+  },
+  "owner_keyup_bracket_ns": [
+    10246112869,
+    10246240188
+  ],
+  "input_release_event_emit_ns": 10246716556,
+  "first_post_release_neutral_sample": {
+    "index": 11,
+    "tic": 1384,
+    "started_ns": 10257661919,
+    "returned_ns": 10257669570
+  },
+  "scorer_sample_count": 715,
+  "max_kills": 0,
+  "max_deaths": 0,
+  "map_exit_observed": false,
+  "damage_or_ammo_measured": false,
+  "inner_program_terminal": "completed",
+  "outer_child_exit": -9,
+  "external_rescue_used": true,
+  "outer_reader_alive": true,
+  "interpretation": "eight sampled active values and a later neutral value are joined to the same Left intent and XSync up bracket; tic 1378 was not sampled; no useful recovery or normal protocol finish is shown"
+}
