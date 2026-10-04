@@ -1,0 +1,22 @@
+{
+  "experiment": "map01-v39-cancel-release-publication-barrier-r01-20261004",
+  "checked_at_utc": "2026-10-04T05:33:14Z",
+  "repository": "Unjuno/agent-interface",
+  "issue": 59,
+  "main_sha": "48405df03913bbe94f29b2e576f7fe5532972095",
+  "parent_pr_7440_sha": "99b7d130742b4e884709a862bc074d15e6b42ac9",
+  "test_pr_7468_sha": "06df46e496b31a15694d5f5ca5532405af358d8f",
+  "current_main_child_tree": "135c161c842880f4fcba9ba890d06f4ff84f5b44",
+  "barrier_pr_7429_sha": "6ebf04bc00a88c5707814dce26b7d9022a921311",
+  "barrier_candidate_tree": "3c429aa6b05844089d6532056a8a46b4f64e994c",
+  "test_path": "research/live_control/test_executor_owner_cancel_cause_postsample_v1.py",
+  "test_sha256": "6195b0469dccbf48fa3ab204e54b401dacd27ffd9dcf7f1657d45e64ff641f3d",
+  "owner_v12_sha256_both_trees": "7cc6b3bcac201624992657203cbb9459120956ad65c1fb6e56e4ac85aafad8f2",
+  "executor_v12_sha256_without_barrier": "b81ad839318e3a53edfde4425f61947fbbc6e142a85348e0a1fe730b754fc74d",
+  "executor_v12_sha256_with_barrier": "11ed8e63fffa45bba52d8be2a926a1b5a09b20cfcbb0be0b02defc4b8a1e038b",
+  "without_barrier": {"passes": 18, "failures": 2, "total": 20, "failed_trials": [15, 16]},
+  "with_barrier": {"passes": 20, "failures": 0, "total": 20},
+  "environment": "macOS arm64, Python 3.14.5, fake Xlib/XTest",
+  "container_status": "STOP; no image available and Docker image listing failed on content-store blob",
+  "scope_exclusions": ["natural race frequency", "physical input", "real X server", "application/game", "model", "useful task effect", "bounded recovery", "live MAP01", "matched performance"]
+}
