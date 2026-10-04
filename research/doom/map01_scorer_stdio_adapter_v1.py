@@ -35,7 +35,7 @@ class MainThreadScorerStdin:
     def __init__(self,stream,sample_fn,sink,sample_hz=35.0,loop=None):
         self.stream=stream;self.fd=stream.fileno();self.sample_fn=sample_fn;self.sink=sink
         self.loop=loop or MainThreadScorerPolling(sample_hz=sample_hz)
-        self.owner_thread=threading.get_ident();self.next_sample_ns=None;self.buffer=bytearray();self.samples=0;self.commands=0;self.missed=0;self.eof=False
+        self.owner_thread=threading.get_ident();self.next_sample_ns=None;self.buffer=bytearray();self.samples=0;self.commands=0;self.missed=0;self.eof=False;self._command_ready_pending=False
     def __iter__(self):return self
     def _sample_due(self):
         now=self.loop.clock_ns()
@@ -54,7 +54,10 @@ class MainThreadScorerStdin:
                 raw=bytes(self.buffer[:newline]);del self.buffer[:newline+1]
                 if not raw:continue
                 self.commands+=1;return raw.decode('utf-8',errors='strict')
-            self._sample_due()
+            command_ready_pending=self._command_ready_pending
+            self._command_ready_pending=False
+            if not command_ready_pending:
+                self._sample_due()
             now=self.loop.clock_ns();timeout=max(0,(self.next_sample_ns-now)/1e9)
             if not self.loop.wait_readable(self.fd,timeout):continue
             chunk=self.loop.read_fn(self.fd,65536)
@@ -144,6 +147,15 @@ class MainThreadScorerStdin:
         tail_samples=0
         matched=False
         deadline_overrun=False
+        def command_ready_result():
+            ended_ns=self.loop.clock_ns()
+            self._command_ready_pending=True
+            return {'schema':schema, **boundary_fields,
+                    'started_ns':started_ns,'ended_ns':ended_ns,
+                    'deadline_ns':deadline_ns,'tail_samples':tail_samples,
+                    'total_samples':self.samples,'stop_condition_met':False,
+                    'deadline_overrun':ended_ns>deadline_ns,
+                    'disposition':'CENSORED','termination':'command_ready'}
         while tail_samples < max_samples:
             now=self.loop.clock_ns()
             if now >= deadline_ns:
@@ -156,13 +168,7 @@ class MainThreadScorerStdin:
                 remaining=min((self.next_sample_ns-now)/1e9,
                               (deadline_ns-now)/1e9)
                 if self.loop.wait_readable(self.fd,remaining):
-                    ended_ns=self.loop.clock_ns()
-                    return {'schema':schema, **boundary_fields,
-                            'started_ns':started_ns,'ended_ns':ended_ns,
-                            'deadline_ns':deadline_ns,'tail_samples':tail_samples,
-                            'total_samples':self.samples,'stop_condition_met':False,
-                            'deadline_overrun':False,'disposition':'CENSORED',
-                            'termination':'command_ready'}
+                    return command_ready_result()
                 now=self.loop.clock_ns()
                 if now >= deadline_ns:
                     break
@@ -171,13 +177,7 @@ class MainThreadScorerStdin:
             # Recheck after any periodic wait and before scheduling a scorer
             # sample. Poll without consuming so the normal iterator owns input.
             if self.loop.wait_readable(self.fd,0):
-                ended_ns=self.loop.clock_ns()
-                return {'schema':schema, **boundary_fields,
-                        'started_ns':started_ns,'ended_ns':ended_ns,
-                        'deadline_ns':deadline_ns,'tail_samples':tail_samples,
-                        'total_samples':self.samples,'stop_condition_met':False,
-                        'deadline_overrun':False,'disposition':'CENSORED',
-                        'termination':'command_ready'}
+                return command_ready_result()
             elapsed=((now-self.next_sample_ns)//self.loop.period_ns)+1
             skipped=max(0,elapsed-1)
             scheduled=self.next_sample_ns
@@ -197,6 +197,11 @@ class MainThreadScorerStdin:
             self.samples+=1
             self.missed+=skipped
             tail_samples+=1
+            # The callback can run past the deadline while a command becomes
+            # readable. Observe readiness before classifying the stop reason,
+            # then let the ordinary iterator read without another scorer sample.
+            if self.loop.wait_readable(self.fd,0):
+                return command_ready_result()
             if self.loop.clock_ns() > deadline_ns:
                 deadline_overrun=True
                 break

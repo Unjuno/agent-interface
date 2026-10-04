@@ -180,6 +180,39 @@ class Tests(unittest.TestCase):
   self.assertEqual(next(adapter),'{"op":"finish"}')
   self.assertEqual(adapter.commands,1)
 
+ def test_command_ready_during_callback_deadline_overrun_preempts_next_scorer_sample(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   max_buffer_bytes=1024
+   def __init__(self,c):self.c=c;self.ready=False;self.reads=0
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,_fd,_timeout):return self.ready
+   def read_fn(self,_fd,_size):
+    self.reads+=1
+    return b'{"op":"finish"}\n'
+  clock=Clock();loop=Loop(clock);samples=[];rows=[]
+  def slow_sample():
+   samples.append(clock.ns)
+   if len(samples)==1:
+    clock.ns=125
+    loop.ready=True
+   return {'right':1}
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      slow_sample,rows.append,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(0),
+      max_duration_ns=100,max_samples=5,stop_when=lambda _sample:False)
+  self.assertEqual(result['termination'],'command_ready')
+  self.assertTrue(result['deadline_overrun'])
+  self.assertEqual(result['tail_samples'],1)
+  self.assertEqual(samples,[0])
+  self.assertEqual(next(adapter),'{"op":"finish"}')
+  self.assertEqual(samples,[0])
+  self.assertEqual(adapter.commands,1)
+  self.assertEqual(loop.reads,1)
+
  def test_post_release_tail_wait_overshoot_is_censored_without_sample(self):
   class Clock:
    ns=0

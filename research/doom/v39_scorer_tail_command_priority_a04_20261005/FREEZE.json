@@ -1,0 +1,42 @@
+{
+  "allocation_kind": "offline deterministic construction; no formal/live allocation",
+  "auditor_invocations_allowed_after_raw": 1,
+  "base_commit": "d59ce74c675294f2a4ba3ac7772442600deafecf",
+  "branch": "research/59-tail-command-priority-a04-20261005",
+  "candidate_invocations_allowed": 1,
+  "decision_gate": "PASS_CONSTRUCTION iff CENSORED/command_ready, deadline_overrun=true, one tail sample, zero reads inside tail, exact command returned on resume, one callback, one read, one command, and all frozen hashes match; otherwise FAIL.",
+  "environment": "research/doom/v39_scorer_tail_command_priority_a04_20261005/ENVIRONMENT.json",
+  "environment_sha256": "f95f06e9f8bf6aff89deda2a0a6605e626b190ce770d8c768c7e0fa41761c7e3",
+  "identity": "v39-scorer-tail-command-priority-a04-20261005",
+  "parent_head": "d59ce74c675294f2a4ba3ac7772442600deafecf",
+  "parent_pr": 7692,
+  "retry_policy": "no candidate rerun; preserve first outcome",
+  "scenario": {
+    "callback_finish_ns": 125,
+    "callback_start_ns": 0,
+    "command_json": "{\"op\":\"finish\"}",
+    "command_terminator": "LF",
+    "release_returned_ns": 0,
+    "tail_duration_ns": 100
+  },
+  "schema": "v39-scorer-tail-command-priority-freeze-a04-v1",
+  "scope": "Deterministic V1 adapter boundary on PR #7692 current head; no real stdin, Doom, model, game effect, recovery, or MAP01 outcome.",
+  "sha256": {
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "research/doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "f8de125b903a9a00c817c6cf1d895a22f56a059108e56b5682b2b17bc281d1cc",
+    "research/doom/map01_scorer_stdio_adapter_v2.py": "d2ce2d01d8bed7d69736940f9092e05ef3f87389a1b9b34414168847ff605e2c",
+    "research/doom/test_map01_scorer_stdio_adapter_v1.py": "30011bbe4de46d32acf150f39e1b65bb61d0939348bdf4a7f3a19c9bd95cce71",
+    "research/doom/test_map01_scorer_stdio_adapter_v2.py": "3fb3a70b49e6d90102b4d0b4dcad5c079950c7026c0acfeafea41d450ff40e36",
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/FREEZE.json": "73a4d7b7cea03c93f58d222d7d9719a880aa00d6cc095fc662673e027337d574",
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/README.md": "b77e3f56f09b7aa66ab160e5926c85f2ca7b3e4aa56488c8c618509801e654cd",
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/REPORT.md": "1232f6e4a9e33e4aaeb2f820beda252ea46f0b74a4cf74d9fa05fe1244705c5f",
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/audit_v2.py": "df12fa1cff10b0696c29dc8c650bec8dc99096471dee8037dbc9a35e9566a075",
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/results/a03/RESULT.json": "e97896aecfe7479c0b4dd4349d35758099364e6c4b7c2a5e072ba0345eaeae40",
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/COMMANDS.txt": "666847b94f9f8ee836a25590fc9455cc74fa246f696d12161cfedc5ba0254079",
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/DEVELOPMENT_RED.md": "52330620dec4821516d50180531a4daa4c0edd8f973b28fab04e6fb542fdaa01",
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/README.md": "27c6cebc5c8b51187beefa0b0ab6dfa6036de6d9101f41f737454612a3c3faee",
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/audit.py": "4e6341e8cc4f08f1aa4e244529d7a9ef3d85c14096a28da33f38cf9fe6f94ed6",
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/run.py": "265b842bb900331cc0149943077a39e44fa32321e3c1292ba5e666adf29a5d01"
+  }
+}
