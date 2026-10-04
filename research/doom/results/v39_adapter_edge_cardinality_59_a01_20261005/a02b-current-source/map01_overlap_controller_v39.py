@@ -512,8 +512,6 @@ def input_edge_receipts(events):
     """Project legacy owner receipts and measured X-adapter edge brackets separately."""
     grouped = {}
     adapter_grouped = {}
-    adapter_actuation_groups = {}
-    adapter_actuation_conflicts = set()
     invalid = []
     for event in events:
         if type(event) is not dict:
@@ -522,42 +520,18 @@ def input_edge_receipts(events):
         measurement = event.get("physical_key_measurement")
         adapter_edge = (measurement.get("adapter_edge")
                         if type(measurement) is dict else None)
-        unknown_adapter_event = (
-            event_name not in ("input_admission", "input_release_measurement",
-                               "input_release_transition") and
-            type(measurement) is dict)
         adapter_candidate = (
             event_name == "input_release_measurement" or
-            (event_name == "input_admission" and type(measurement) is dict) or
-            unknown_adapter_event or
-            (event_name == "input_release_transition" and
-             type(adapter_edge) is dict))
+            (event_name == "input_admission" and type(measurement) is dict))
         if adapter_candidate:
             edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
-            expected_edge = (
-                "down" if event_name == "input_admission" else
-                "up" if event_name == "input_release_measurement" else
-                edge_name if edge_name in ("down", "up") else None)
+            expected_edge = ("down" if event_name == "input_admission" else "up")
             identifier, step, key, token = (event.get("id"), event.get("step"),
                                             event.get("key"), event.get("intent_token"))
             if (type(identifier) is not str or not identifier or
                     type(step) is not int or step < 0 or
                     type(key) is not str or not key or
                     type(token) is not str or not token):
-                nested_key = (adapter_edge.get("key")
-                              if type(adapter_edge) is dict else None)
-                nested_token = (adapter_edge.get("intent_token")
-                                if type(adapter_edge) is dict else None)
-                nested_owner = (adapter_edge.get("owner_id")
-                                if type(adapter_edge) is dict else None)
-                nested_actuation = (adapter_edge.get("actuation_id")
-                                    if type(adapter_edge) is dict else None)
-                if (type(nested_owner) is str and nested_owner and
-                        type(nested_actuation) is str and nested_actuation and
-                        type(nested_key) is str and nested_key and
-                        type(nested_token) is str and nested_token):
-                    adapter_actuation_conflicts.add(
-                        (nested_owner, nested_actuation, nested_key, nested_token))
                 invalid.append({
                     "status": "identity_unavailable",
                     "event": event_name,
@@ -567,37 +541,10 @@ def input_edge_receipts(events):
                 })
                 continue
             bucket = adapter_grouped.setdefault((identifier, step, key, token),
-                                                {"down": [], "up": [], "invalid": False})
-            group_key = (identifier, step, key, token)
-            nested_key = (adapter_edge.get("key")
-                          if type(adapter_edge) is dict else None)
-            nested_token = (adapter_edge.get("intent_token")
-                            if type(adapter_edge) is dict else None)
-            nested_owner = (adapter_edge.get("owner_id")
-                            if type(adapter_edge) is dict else None)
-            nested_actuation = (adapter_edge.get("actuation_id")
-                                if type(adapter_edge) is dict else None)
-            if (type(nested_owner) is str and nested_owner and
-                    type(nested_actuation) is str and nested_actuation and
-                    type(nested_key) is str and nested_key and
-                    type(nested_token) is str and nested_token):
-                fingerprint = (nested_owner, nested_actuation,
-                               nested_key, nested_token)
-                adapter_actuation_groups.setdefault(fingerprint, set()).add(group_key)
-            if nested_key != key or nested_token != token:
-                bucket["invalid"] = True
-                if (type(nested_key) is str and nested_key and
-                        type(nested_token) is str and nested_token):
-                    nested_bucket = adapter_grouped.setdefault(
-                        (identifier, step, nested_key, nested_token),
-                        {"down": [], "up": [], "invalid": False})
-                    nested_bucket["invalid"] = True
+                                                {"down": [], "up": []})
             # Outer event type and nested edge label are both part of the
             # receipt identity. Do not let one release event supply a press.
-            if expected_edge is None:
-                bucket["invalid"] = True
-            else:
-                bucket[expected_edge].append(event)
+            bucket[expected_edge].append(event)
             continue
         if event_name not in ("input_admission", "input_release_transition"):
             continue
@@ -620,14 +567,6 @@ def input_edge_receipts(events):
         group_key = (identifier, step, key, token)
         bucket = grouped.setdefault(group_key, {"admission": [], "release": []})
         bucket["admission" if event["event"] == "input_admission" else "release"].append(event)
-
-    # A copied nested actuation under different outer identifiers is an
-    # identity conflict. Invalidate every implicated group so the unmodified
-    # original DOWN/UP pair cannot remain paired after a split replay.
-    for fingerprint, groups in adapter_actuation_groups.items():
-        if len(groups) > 1 or fingerprint in adapter_actuation_conflicts:
-            for group_key in groups:
-                adapter_grouped[group_key]["invalid"] = True
 
     receipts = list(invalid)
     for (identifier, step, key, token), bucket in adapter_grouped.items():
@@ -716,12 +655,9 @@ def input_edge_receipts(events):
                 up_data.get("pre_sample") if type(up_data) is dict else None,
                 up_data.get("post_sample") if type(up_data) is dict else None))
         complete = (
-            not bucket.get("invalid", False) and
             len(downs) == 1 and len(ups) == 1 and
             type(down_data) is dict and type(up_data) is dict and
             type(down_edge) is dict and type(up_edge) is dict and
-            down.get("event") == "input_admission" and
-            up.get("event") == "input_release_measurement" and
             down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
             down_data.get("edge") == "down" and up_data.get("edge") == "up" and
             down_data.get("classification") == "CONFIRMED_PHYSICAL_DOWN" and

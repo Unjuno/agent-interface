@@ -1,0 +1,247 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "candidate": {
+    "baseline_unique_pair": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 1
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_brackets_paired"
+      ],
+      "intervals": [
+        [
+          [
+            87811364890958,
+            87811364895916
+          ],
+          [
+            87811364946333,
+            87811364949416
+          ]
+        ]
+      ]
+    },
+    "duplicate_down_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_receipt_incomplete"
+      ],
+      "intervals": [
+        [
+          null,
+          null
+        ]
+      ]
+    },
+    "duplicate_up_identical": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_receipt_incomplete"
+      ],
+      "intervals": [
+        [
+          null,
+          null
+        ]
+      ]
+    },
+    "duplicate_both_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 2
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_receipt_incomplete"
+      ],
+      "intervals": [
+        [
+          null,
+          null
+        ]
+      ]
+    },
+    "duplicate_down_conflicting": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_receipt_incomplete"
+      ],
+      "intervals": [
+        [
+          null,
+          null
+        ]
+      ]
+    },
+    "duplicate_up_conflicting": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_receipt_incomplete"
+      ],
+      "intervals": [
+        [
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "weakened_mutation": {
+    "baseline_unique_pair": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 1
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_brackets_paired"
+      ],
+      "intervals": [
+        [
+          [
+            87811364890958,
+            87811364895916
+          ],
+          [
+            87811364946333,
+            87811364949416
+          ]
+        ]
+      ]
+    },
+    "duplicate_down_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_brackets_paired"
+      ],
+      "intervals": [
+        [
+          [
+            87811364890958,
+            87811364895916
+          ],
+          [
+            87811364946333,
+            87811364949416
+          ]
+        ]
+      ]
+    },
+    "duplicate_up_identical": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_brackets_paired"
+      ],
+      "intervals": [
+        [
+          [
+            87811364890958,
+            87811364895916
+          ],
+          [
+            87811364946333,
+            87811364949416
+          ]
+        ]
+      ]
+    },
+    "duplicate_both_identical": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 2
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_brackets_paired"
+      ],
+      "intervals": [
+        [
+          [
+            87811364890958,
+            87811364895916
+          ],
+          [
+            87811364946333,
+            87811364949416
+          ]
+        ]
+      ]
+    },
+    "duplicate_down_conflicting": {
+      "event_counts": {
+        "input_admission": 2,
+        "input_release_measurement": 1
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_brackets_paired"
+      ],
+      "intervals": [
+        [
+          [
+            87811364890958,
+            87811364895916
+          ],
+          [
+            87811364946333,
+            87811364949416
+          ]
+        ]
+      ]
+    },
+    "duplicate_up_conflicting": {
+      "event_counts": {
+        "input_admission": 1,
+        "input_release_measurement": 2
+      },
+      "receipt_count": 1,
+      "statuses": [
+        "adapter_edge_brackets_paired"
+      ],
+      "intervals": [
+        [
+          [
+            87811364890958,
+            87811364895916
+          ],
+          [
+            87811364946333,
+            87811364949416
+          ]
+        ]
+      ]
+    }
+  },
+  "resource_snapshot": {
+    "cpu_max": "100000 100000",
+    "memory_max": "536870912",
+    "memory_swap_max": "max",
+    "proc_swaps": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/dev/sdd                                partition\t16644092\t0\t\t-2"
+  }
+}

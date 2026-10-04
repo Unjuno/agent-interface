@@ -1,0 +1,13 @@
+{
+  "experiment": "V39_ADAPTER_NESTED_IDENTITY_MALFORMED_OUTER_TAINT_A08",
+  "baseline_head": "aa88a9d95e208d413e64a23fe30754ec52c9ad55",
+  "question": "When a duplicate adapter row has a malformed outer key or intent_token but an intact nested adapter identity, can it be rejected as identity_unavailable while the original receipt still exposes paired timing?",
+  "hypothesis": "An unusable outer key/token must not prevent the intact nested owner/actuation/key/token fingerprint from tainting the valid receipt group.",
+  "treatment": "Replay the retained A01 pair with duplicate DOWN rows whose outer intent_token or key is null or a list. Compare exact frozen baseline and candidate projector and rerun duplicate, unknown-event, legacy-transition, A06 token-conflict, and A07 split-group regressions.",
+  "decision_rule": "Baseline must retain a falsely paired original receipt in all four malformed cases. Candidate must return identity_unavailable plus one incomplete receipt with both intervals null for each, and pass all six targeted methods.",
+  "baseline_source_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "uncertainty": "Deterministic projector tests against one retained synthetic adapter trace only; no live-control or task-effect conclusion.",
+  "candidate_source_sha256": "782e63dd801a715acfdef25df656824fa8c7a115d2a43c80fdfe74c7aaa7335c",
+  "test_sha256": "3eedc5482066e42950bdbdee66bced3f0057ded859658c63f0408b98001cd0f5",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+}

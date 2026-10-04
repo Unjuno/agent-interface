@@ -1,0 +1,44 @@
+{
+  "experiment": "V39_ADAPTER_CROSS_GROUP_ACTUATION_TAINT_A07",
+  "baseline_head": "de6e56a7bf31792418475e13f1052a6da2974b1e",
+  "baseline_source_sha256": "8953c6a3fa1e37cf924ce5342fbc2fa77c698efb332f12fda1c0699264047e8d",
+  "candidate_source_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "test_sha256": "5786774754433b71ba38beae989adef32ebffec504ef555feb4db89c273ef4ce",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "baseline": {
+    "passed": false,
+    "tests": 5,
+    "failed_tests": 4,
+    "output": "test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A07Regressions.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok\ntest_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A07Regressions.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ... ok\ntest_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) ... \n  test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_down_outer_id_changed') ... FAIL\n  test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_up_outer_id_changed') ... FAIL\n  test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_down_outer_step_changed') ... FAIL\n  test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_up_outer_step_changed') ... FAIL\ntest_input_edge_receipt_rejects_outer_nested_token_conflict (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_nested_token_conflict) ... ok\ntest_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A07Regressions.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) ... ok\n\n======================================================================\nFAIL: test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_down_outer_id_changed')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 876, in test_input_edge_receipt_rejects_outer_group_split_for_same_actuation\n    self.assertTrue(all(row[\"status\"] ==\nAssertionError: False is not true\n\n======================================================================\nFAIL: test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_up_outer_id_changed')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 876, in test_input_edge_receipt_rejects_outer_group_split_for_same_actuation\n    self.assertTrue(all(row[\"status\"] ==\nAssertionError: False is not true\n\n======================================================================\nFAIL: test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_down_outer_step_changed')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 876, in test_input_edge_receipt_rejects_outer_group_split_for_same_actuation\n    self.assertTrue(all(row[\"status\"] ==\nAssertionError: False is not true\n\n======================================================================\nFAIL: test_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) (case='duplicate_up_outer_step_changed')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 876, in test_input_edge_receipt_rejects_outer_group_split_for_same_actuation\n    self.assertTrue(all(row[\"status\"] ==\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 5 tests in 0.030s\n\nFAILED (failures=4)\n"
+  },
+  "candidate": {
+    "passed": true,
+    "tests": 5,
+    "failed_tests": 0,
+    "output": "test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A07Regressions.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok\ntest_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A07Regressions.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ... ok\ntest_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) ... ok\ntest_input_edge_receipt_rejects_outer_nested_token_conflict (builtins.A07Regressions.test_input_edge_receipt_rejects_outer_nested_token_conflict) ... ok\ntest_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A07Regressions.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.021s\n\nOK\n"
+  },
+  "baseline_mutation_cases": [
+    {
+      "case": "duplicate_down_id_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    },
+    {
+      "case": "duplicate_down_step_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    },
+    {
+      "case": "duplicate_up_id_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    },
+    {
+      "case": "duplicate_up_step_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    }
+  ],
+  "all_four_baseline_false_pairs": true,
+  "syntax_compile": "PASS"
+}

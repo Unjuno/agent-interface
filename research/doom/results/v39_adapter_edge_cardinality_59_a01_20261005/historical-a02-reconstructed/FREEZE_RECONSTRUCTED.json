@@ -1,0 +1,39 @@
+{
+  "parent_commit": "ecb671747d63db26d90aea29a98311073e9f1da1",
+  "parent_branch": "fix/59-v39-typed-state-feedback-20261004",
+  "test_path": "research/doom/test_map01_v39_typed_state_feedback.py",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "hashes": {
+    "test": "bdd7092901ab6faad926a86333848b4a5c51d23b0a43aa51537f6974f66b571d",
+    "controller": "888c3a8f5ea682e0e63d4f63c71a737877829c5a893b427de118d1be958fba8a",
+    "fixture": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+    "runner": "7b8357034cb3c5aa80e39720478238b3c142b55c56eb2df51924bd423c9f7f9c"
+  },
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "command": "python /runner/candidate/run_regression.py",
+  "limits": {
+    "rm": true,
+    "cpus": 1,
+    "memory": "512M",
+    "pull": "never",
+    "network": "none",
+    "mounts": [
+      "research/doom:/src:ro",
+      "package:/runner:ro",
+      "a02-output:/out:rw"
+    ]
+  },
+  "execution": "Pass reconstructed from captured tool output. Initial harness binding error failed; corrected accepted execution ran one container and exited 0.",
+  "runner_sha256": "be8af1f14680d97df8555baa4bfb94ae8a855604211ed765132be70ea6320a27",
+  "result_path": "raw/a02-regression-result.json",
+  "result_sha256": "00f524a2ab2718ffd673d2753ba3891be492e34ca883befbcd47ba2e0c2d6fad",
+  "preflight_inventory": "raw/a02-preflight-running-containers.json",
+  "postflight_inventory": "raw/a02-postflight-running-containers.json",
+  "provenance_status": "RECONSTRUCTED_NOT_ACCEPTED_AS_RAW_AUDIT_EVIDENCE",
+  "limitations": [
+    "The raw accepted-run output directory was removed before package preservation.",
+    "The exact corrected runner named by the prior record (sha256 7b8357034cb3c5aa80e39720478238b3c142b55c56eb2df51924bd423c9f7f9c) was not recovered; the preserved runner-first-failed-binding.py is a different byte sequence and is only the failed initial harness.",
+    "The prior record named a test SHA that is not this current base/source version. This reconstructed result does not establish execution of the committed current regression.",
+    "a02-regression-result.json and transcript files were reconstructed from captured tool output after the temporary writable output directory disappeared; they are not raw container output."
+  ]
+}

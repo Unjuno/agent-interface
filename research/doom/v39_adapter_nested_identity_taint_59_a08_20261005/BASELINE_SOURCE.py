@@ -513,7 +513,6 @@ def input_edge_receipts(events):
     grouped = {}
     adapter_grouped = {}
     adapter_actuation_groups = {}
-    adapter_actuation_conflicts = set()
     invalid = []
     for event in events:
         if type(event) is not dict:
@@ -544,20 +543,6 @@ def input_edge_receipts(events):
                     type(step) is not int or step < 0 or
                     type(key) is not str or not key or
                     type(token) is not str or not token):
-                nested_key = (adapter_edge.get("key")
-                              if type(adapter_edge) is dict else None)
-                nested_token = (adapter_edge.get("intent_token")
-                                if type(adapter_edge) is dict else None)
-                nested_owner = (adapter_edge.get("owner_id")
-                                if type(adapter_edge) is dict else None)
-                nested_actuation = (adapter_edge.get("actuation_id")
-                                    if type(adapter_edge) is dict else None)
-                if (type(nested_owner) is str and nested_owner and
-                        type(nested_actuation) is str and nested_actuation and
-                        type(nested_key) is str and nested_key and
-                        type(nested_token) is str and nested_token):
-                    adapter_actuation_conflicts.add(
-                        (nested_owner, nested_actuation, nested_key, nested_token))
                 invalid.append({
                     "status": "identity_unavailable",
                     "event": event_name,
@@ -624,8 +609,8 @@ def input_edge_receipts(events):
     # A copied nested actuation under different outer identifiers is an
     # identity conflict. Invalidate every implicated group so the unmodified
     # original DOWN/UP pair cannot remain paired after a split replay.
-    for fingerprint, groups in adapter_actuation_groups.items():
-        if len(groups) > 1 or fingerprint in adapter_actuation_conflicts:
+    for groups in adapter_actuation_groups.values():
+        if len(groups) > 1:
             for group_key in groups:
                 adapter_grouped[group_key]["invalid"] = True
 

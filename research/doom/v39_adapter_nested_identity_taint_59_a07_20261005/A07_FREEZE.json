@@ -1,0 +1,14 @@
+{
+  "experiment": "V39_ADAPTER_CROSS_GROUP_ACTUATION_TAINT_A07",
+  "preregistered_at_utc": "2026-10-04T17:20:00Z",
+  "baseline_head": "de6e56a7bf31792418475e13f1052a6da2974b1e",
+  "question": "Can a copied DOWN or UP row preserve its nested adapter owner/actuation/key/token but change only the outer id or step, leaving the original adapter pair complete?",
+  "hypothesis": "A reused nested actuation fingerprint under multiple outer (id, step, key, intent_token) groups must invalidate all implicated groups.",
+  "treatment": "Replay the frozen A01 unique pair and four mutations: duplicate DOWN id changed; duplicate UP id changed; duplicate DOWN step changed; duplicate UP step changed. Compare the frozen current-head baseline projector to the candidate projector. Also run the prior A06 and cardinality/unknown/legacy targeted regressions.",
+  "decision_rule": "Baseline must return a falsely paired original group for each of four mutations. Candidate must return only incomplete adapter receipts with both timing intervals null for all four mutations and pass all five targeted test methods.",
+  "baseline_source_sha256": "8953c6a3fa1e37cf924ce5342fbc2fa77c698efb332f12fda1c0699264047e8d",
+  "candidate_source_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "test_sha256": "5786774754433b71ba38beae989adef32ebffec504ef555feb4db89c273ef4ce",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "uncertainty": "Deterministic source-projector tests over one retained synthetic X-adapter trace; no live control or task-effect claim."
+}

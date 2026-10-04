@@ -1,0 +1,70 @@
+{
+  "record_type": "execution_capture",
+  "experiment": "V39_ADAPTER_NESTED_IDENTITY_TAINT_A06",
+  "baseline_commit": "a3155bec0b21d29557dbd4bd3d7218eb039cb135",
+  "baseline_source_sha256": "620dca3822ab372db0f0b2dda23e196053647b5c5470de08dc85982ae0ed8c96",
+  "candidate_source_sha256": "788274d88616159127992835f229969a73ba6d4e1d3d5d54cbe7d9ada9ad6b59",
+  "test_sha256": "5ffc730e5fff609a4452003c746560dfea023eaaa56a45a7a8e6d42b700b9144",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "methods": [
+    "test_input_edge_receipt_rejects_duplicate_adapter_rows",
+    "test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge",
+    "test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge",
+    "test_input_edge_receipt_rejects_outer_nested_token_conflict"
+  ],
+  "subcases": [
+    "duplicate_down_identical",
+    "duplicate_up_identical",
+    "duplicate_both_identical",
+    "duplicate_down_conflicting",
+    "duplicate_up_conflicting",
+    "duplicate_down_unknown_kind",
+    "duplicate_up_unknown_kind",
+    "down_unknown_kind",
+    "up_unknown_kind",
+    "duplicate_up_as_legacy_transition",
+    "only_legacy_transition_up",
+    "duplicate_down_outer_token_changed",
+    "duplicate_up_outer_token_changed"
+  ],
+  "baseline_tests": 4,
+  "baseline_failed_subcases": 2,
+  "candidate_tests": 4,
+  "candidate_failed_tests": 0,
+  "syntax_compile": "PASS",
+  "audit_v1": {
+    "status": "FAIL",
+    "reason": "expectations incorrectly included earlier A05 baseline failures"
+  },
+  "audit_v2": {
+    "status": "FAIL",
+    "reason": "asserted failure text should contain serialized receipt details"
+  },
+  "audit_v3": {
+    "status": "PASS",
+    "checks": 19
+  },
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "candidate_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --name v39-adapter-identity-a06-candidate-20261005 --volume <worktree>:/src:ro --volume <candidate-output>:/out:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/v39_adapter_nested_identity_taint_59_a06_20261005/run_a06.py",
+  "audit_v3_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --name v39-adapter-identity-a06-audit-v3-20261005 --volume <worktree>:/src:ro --volume <a06-evidence>:/evidence:ro --volume <audit-output>:/audit:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/v39_adapter_nested_identity_taint_59_a06_20261005/audit_a06_v3.py",
+  "limits": {
+    "pull": "never",
+    "network": "none",
+    "cpus_requested": "1",
+    "memory_requested": "512M",
+    "user": "1000:1000",
+    "source": "read-only",
+    "distinct_output": "writable",
+    "auto_remove": true
+  },
+  "inventory": "candidate pre/post lists empty; audit-v3 pre/post lists empty; failed audit attempts used --rm but no immediate postflight list retained; WSLc inventory was empty at audit-v3 preflight.",
+  "timestamp_precision": "run order retained; exact start/end timestamps not captured",
+  "resource_warning": "WSLc warned swap-limit capabilities/cgroup unavailable; memory limited without swap. No swap-cap or full memory-enforcement claim.",
+  "successor_package_verifier": {
+    "path": "research/doom/results/v39_adapter_edge_cardinality_59_a01_20261005/verify_package.py",
+    "result": "PASS",
+    "checks": 81,
+    "manifest_entries": 42,
+    "note": "Live source/test hashes now bind to A06; frozen A02B and A05 evidence remain retained."
+  }
+}

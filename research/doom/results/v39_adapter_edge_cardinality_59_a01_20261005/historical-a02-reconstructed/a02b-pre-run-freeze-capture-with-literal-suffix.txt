@@ -1,0 +1,44 @@
+{
+  "experiment_id": "V39_ADAPTER_EDGE_CARDINALITY_A02B_CURRENT_HEAD",
+  "status": "FROZEN_BEFORE_RUN",
+  "base_pr_head": "a7f9e9e3c4bd31199bde3a14761783ead619ad08",
+  "base_branch": "fix/59-v39-typed-state-feedback-20261004",
+  "test_branch_commit_before_evidence": "worktree-at-a7f9e9e3c4bd31199bde3a14761783ead619ad08-plus-one-uncommitted-test-method",
+  "source": {
+    "path": "research/doom/map01_overlap_controller_v39.py",
+    "git_blob": "7494e8f217dc86e94cb1bca2fd37475cd53b7e9c",
+    "sha256": "41329ce5735aa80b0cb6710c10f2c2bf9627f3b22e57faf197cf37eef335129a"
+  },
+  "test": {
+    "path": "research/doom/test_map01_v39_typed_state_feedback.py",
+    "git_blob": "0d90a558b96f0734f5ddc4ca3e91703642646f37",
+    "sha256": "b82a97f32d51749988df059c963ccc163dfbfe5f294ff33aebcc39854173fb5b",
+    "method": "test_input_edge_receipt_rejects_duplicate_adapter_rows"
+  },
+  "input": {
+    "path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl",
+    "sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+  },
+  "source_snapshots": {
+    "controller": "a02b-current-source/map01_overlap_controller_v39.py",
+    "test": "a02b-current-source/test_map01_v39_typed_state_feedback.py"
+  },
+  "runner": {
+    "path": "candidate/run_a02b_current.py",
+    "sha256": "d5aad891aba7f76504cd64fcc2d01069939b9387b61cb40f32de2201b617265c"
+  },
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "command": "python /runner/candidate/run_a02b_current.py",
+  "limits": {
+    "network": "none",
+    "cpus": 1,
+    "memory": "512M",
+    "pull": "never",
+    "rm": true,
+    "source_mount": "research/doom:/src:ro",
+    "package_mount": "cardinality-package:/runner:ro",
+    "output_mount": "a02b-output:/out:rw"
+  },
+  "expected": "Exactly one retained-baseline test method with five duplicate subcases passes against the exact current #7602 controller and test source; both byte-compile; result exits 0.",
+  "accepted_run": "not yet run"
+}\n

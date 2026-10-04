@@ -1,0 +1,11 @@
+import ast, copy, hashlib, json
+from pathlib import Path
+R=Path("/src"); D=R/"research/doom"; P=D/"v39_adapter_nested_identity_taint_59_a07_20261005"; result=json.loads((P/"A07_RESULT.json").read_text(encoding="utf-8")); fixture=D/"map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl"; tests=D/"test_map01_v39_typed_state_feedback.py"; source=D/"map01_overlap_controller_v39.py"
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def fn(p):
+ t=ast.parse(p.read_text(encoding="utf-8")); n=next(x for x in t.body if isinstance(x,ast.FunctionDef) and x.name=="input_edge_receipts"); e={"hashlib":hashlib}; exec(compile(ast.fix_missing_locations(ast.Module(body=[n],type_ignores=[])),str(p),"exec"),e); return e["input_edge_receipts"]
+events=[json.loads(x) for x in fixture.read_text(encoding="utf-8").splitlines()]; down=next(x for x in events if x.get("event")=="input_admission"); up=next(x for x in events if x.get("event")=="input_release_measurement"); projector=fn(source); checks=[]
+for edge,row in (("down",down),("up",up)):
+ for field,value in (("id","copied-program"),("step",99)):
+  duplicate=copy.deepcopy(row); duplicate[field]=value; receipts=[x for x in projector(events+[duplicate]) if x.get("status","").startswith("adapter_edge_")]; checks.append({"case":f"duplicate_{edge}_{field}_changed","receipts":len(receipts),"all_incomplete":bool(receipts) and all(x["status"]=="adapter_edge_receipt_incomplete" for x in receipts),"all_intervals_null":bool(receipts) and all(x["down_edge_interval_ns"] is None and x["up_edge_interval_ns"] is None for x in receipts)})
+assert result["all_four_baseline_false_pairs"] and result["candidate"]["passed"] and not result["baseline"]["passed"]; assert sha(source)==result["candidate_source_sha256"] and sha(tests)==result["test_sha256"] and sha(fixture)==result["fixture_sha256"]; assert all(x["all_incomplete"] and x["all_intervals_null"] for x in checks); out={"audit":"PASS","source_sha256":sha(source),"test_sha256":sha(tests),"fixture_sha256":sha(fixture),"baseline_false_pairs":result["baseline_mutation_cases"],"candidate_mutations":checks,"checks":3+len(result["baseline_mutation_cases"])+2*len(checks)}; (Path("/out")/"A07_AUDIT.json").write_text(json.dumps(out,indent=2)+"\n",encoding="utf-8"); print(json.dumps(out,indent=2))
