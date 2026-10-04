@@ -13,6 +13,12 @@
 | Shared-runtime transfer | [Shared runtime transfer](#shared-runtime-transfer) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
+## Recent source-boundary construction
+
+| Finding | Scope | Evidence |
+|---|---|---|
+| [Scorer-tail command readiness under callback overrun](v39_scorer_tail_command_priority_a01_20261005/REPORT.md) | Synthetic fake-loop reproduction against the source-pinned PR #7692 adapter; no real stdin, controller, game, or live allocation | [Freeze](v39_scorer_tail_command_priority_a01_20261005/FREEZE.json), [result](v39_scorer_tail_command_priority_a01_20261005/RESULT.json), [audit](v39_scorer_tail_command_priority_a01_20261005/AUDIT.json) |
+
 ## Track map
 
 ```mermaid

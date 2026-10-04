@@ -1,0 +1,6 @@
+python candidate.py — PASS process; expected scientific disposition FAIL_READY_COMMAND_STARVATION_ON_SAMPLE_OVERRUN
+python audit.py — PASS_AUDIT_FAIL_REPRODUCED (7/7)
+python -m unittest -v test_audit.py — PASS (4 tests)
+Mutation controls: scorer_rows, readiness_checks, and disposition — all rejected by exact result reconstruction
+No real stdin, OS scheduler, controller, game, keyboard, model, or safety behavior tested.
+
