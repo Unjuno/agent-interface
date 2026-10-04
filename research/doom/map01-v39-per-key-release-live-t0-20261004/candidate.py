@@ -86,6 +86,17 @@ def initial_candidate_record(freeze, network_receipt):
     }
 
 
+def candidate_started_record(freeze, support):
+    return {
+        "allocation_id": freeze["allocation_id"],
+        "started_ns": time.perf_counter_ns(),
+        "platform": platform.platform(), "python": sys.version,
+        "support_root": str(support), "model_calls": 0,
+        "network": freeze["network_isolation"],
+        "scope": "current-v39 backend and executor on private Xvfb; no game/task",
+    }
+
+
 def install_support(path, expected_sha):
     if sha256(path) != expected_sha:
         raise RuntimeError("STOP_SUPPORT_ARCHIVE_HASH")
@@ -134,14 +145,9 @@ def main():
     network_receipt = verify_frozen(freeze)
     support = install_support(PACKAGE / "source-support.tar.gz",
                               freeze["source_support_sha256"])
-    (out / "candidate_started.json").write_text(json.dumps({
-        "allocation_id": freeze["allocation_id"],
-        "started_ns": time.perf_counter_ns(),
-        "platform": platform.platform(), "python": sys.version,
-        "support_root": str(support), "model_calls": 0,
-        "network": "container --network none",
-        "scope": "current-v39 backend and executor on private Xvfb; no game/task",
-    }, indent=2) + "\n", encoding="utf-8")
+    (out / "candidate_started.json").write_text(
+        json.dumps(candidate_started_record(freeze, support), indent=2) + "\n",
+        encoding="utf-8")
 
     import Xlib.display as xdisplay
     from Xlib import XK

@@ -18,6 +18,17 @@ spec.loader.exec_module(candidate)
 
 
 class CandidateNetworkReceiptTests(unittest.TestCase):
+    def test_candidate_started_records_frozen_network_isolation_route(self):
+        freeze = {
+            "allocation_id": "test-allocation",
+            "network_isolation": "unshare -n",
+        }
+        with mock.patch.object(candidate.time, "perf_counter_ns", return_value=123):
+            row = candidate.candidate_started_record(freeze, Path("/tmp/support"))
+        self.assertEqual(row["network"], "unshare -n")
+        self.assertEqual(row["allocation_id"], "test-allocation")
+        self.assertEqual(row["started_ns"], 123)
+
     def test_main_has_no_unbound_global_references(self):
         source = (HERE / "candidate.py").read_text(encoding="utf-8")
         module = symtable.symtable(source, str(HERE / "candidate.py"), "exec")
