@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
+
 - Issue #7383: [freshness-gated observation hedging T0](analysis/observation_hedging_7383_t0_20261004/REPORT.md) — the frozen synthetic independent-heavy-tail case passed its method gate, but correlated/shared-queue controls erase the latency gain; no real capture or critical-path benefit is established.
 
 - Issue #5424 T4: [severity-ranking inversion with hard-catastrophe control](analysis/action_class_error_budget_5424_t4_v1/REPORT.md) — 128 synthetic continuation rows independently reconstructed; hard gate prevented the two scripted catastrophic primary effects while correlated fallback risk remained. Method-scoped only.
