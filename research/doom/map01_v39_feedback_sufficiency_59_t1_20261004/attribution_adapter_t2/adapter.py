@@ -1,5 +1,6 @@
 """Fail-closed adapter from current V15 producer rows to attribution T0."""
 from __future__ import annotations
+import hashlib
 from collections import Counter, defaultdict
 from pathlib import Path
 import sys
@@ -14,6 +15,11 @@ from scorer_feedback_attribution_v1 import (  # noqa: E402
 
 def _integer(value):
     return type(value) is int and value >= 0
+
+
+def _sha256_hex(value):
+    return (isinstance(value, str) and len(value) == 64
+            and all(char in "0123456789abcdef" for char in value))
 
 
 def _identity(row):
@@ -97,7 +103,7 @@ def _unresolved(rows, reason):
     return output
 
 
-def _measured_interval_outcomes(samples, events, input_rows):
+def _measured_interval_outcomes(samples, events, input_rows, exact_intervals):
     """Use paired X-server sample brackets for conservative overlap checks.
 
     Edge intervals bound when a transition may have happened; they do not
@@ -122,10 +128,9 @@ def _measured_interval_outcomes(samples, events, input_rows):
             and down[0] <= down[1] < up[0] <= up[1]
             and row.get("grants_input_authority") is False
             and row.get("application_consumption_observed") is False
-            and isinstance(row.get("program_id_sha256"), str)
-            and bool(row["program_id_sha256"])
-            and isinstance(row.get("intent_token_sha256"), str)
-            and bool(row["intent_token_sha256"])
+            and _sha256_hex(row.get("program_id_sha256"))
+            and _sha256_hex(row.get("intent_token_sha256"))
+            and _sha256_hex(row.get("owner_id_sha256"))
             and isinstance(row.get("key"), str) and bool(row["key"])
         )
         if not valid:
@@ -135,6 +140,8 @@ def _measured_interval_outcomes(samples, events, input_rows):
                          "up": up, "key": row["key"]})
 
     sample_times = [row["sample_ns"] for row in samples]
+    exact_outcomes = attribute_positive_events(samples, events, exact_intervals)
+    exact_by_sequence = {row["event_sequence"]: row for row in exact_outcomes}
     outputs = []
     for event in events:
         if event.get("polarity") != "positive" or event.get("useful") is not True:
@@ -158,6 +165,12 @@ def _measured_interval_outcomes(samples, events, input_rows):
                 # and until the UP transition is certainly complete.
                 if row["down"][0] <= upper and row["up"][1] > lower:
                     possible.add(row["token"])
+            exact = exact_by_sequence.get(event.get("event_sequence"), {})
+            exact_tokens = exact.get("possible_intent_tokens", [])
+            if exact.get("status") == "TEMPORALLY_UNIQUE" and exact.get("intent_token"):
+                exact_tokens = [exact["intent_token"]]
+            possible.update(hashlib.sha256(token.encode("utf-8")).hexdigest()
+                            for token in exact_tokens)
         if len(possible) > 1:
             status, reason = "AMBIGUOUS", "multiple_measured_intent_envelopes_intersect"
         else:
@@ -289,7 +302,8 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
         attributions=_unresolved(event_rows,"input_trace_identity_or_completeness_hold")
     elif measured_rows:
         trace_integrity = "MEASURED_INTERVALS_ONLY"
-        attributions = _measured_interval_outcomes(samples, event_rows, measured_rows)
+        attributions = _measured_interval_outcomes(
+            samples, event_rows, measured_rows, intervals)
     else:
         trace_integrity="SOURCE_ROWS_JOINED"
         attributions=attribute_positive_events(samples,event_rows,intervals)

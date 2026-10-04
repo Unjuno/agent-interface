@@ -95,9 +95,9 @@ class V15AttributionAdapterTests(unittest.TestCase):
     def test_measured_down_up_envelope_is_not_promoted_to_exact_unique_coverage(self):
         """Adapter brackets bound possible occupancy; they do not prove it."""
         self.input=[{
-            'program_id_sha256':'program-hash', 'step':0,
-            'key':'space', 'owner_id_sha256':'owner-hash',
-            'intent_token_sha256':'intent-hash',
+            'program_id_sha256':'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'step':0,
+            'key':'space', 'owner_id_sha256':'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+            'intent_token_sha256':'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',
             'status':'adapter_edge_brackets_paired',
             'down_edge_interval_ns':[90,110],
             'up_edge_interval_ns':[290,310], 'grants_input_authority':False,
@@ -110,17 +110,17 @@ class V15AttributionAdapterTests(unittest.TestCase):
 
     def test_measured_interval_overlap_keeps_competing_intents_ambiguous(self):
         self.input=[{
-            'program_id_sha256':'program-hash-a', 'step':0,
-            'key':'space', 'owner_id_sha256':'owner-hash-1',
-            'intent_token_sha256':'intent-hash-a',
+            'program_id_sha256':'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'step':0,
+            'key':'space', 'owner_id_sha256':'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+            'intent_token_sha256':'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',
             'status':'adapter_edge_brackets_paired',
             'down_edge_interval_ns':[90,110],
             'up_edge_interval_ns':[150,190],
             'grants_input_authority':False, 'application_consumption_observed':False,
         },{
-            'program_id_sha256':'program-hash-b', 'step':1,
-            'key':'a', 'owner_id_sha256':'owner-hash-2',
-            'intent_token_sha256':'intent-hash-b',
+            'program_id_sha256':'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', 'step':1,
+            'key':'a', 'owner_id_sha256':'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+            'intent_token_sha256':'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
             'status':'adapter_edge_brackets_paired',
             'down_edge_interval_ns':[200,210],
             'up_edge_interval_ns':[290,310],
@@ -133,9 +133,9 @@ class V15AttributionAdapterTests(unittest.TestCase):
 
     def test_retained_a01_xserver_envelope_does_not_claim_application_effect(self):
         row={
-            'program_id_sha256':'program-hash', 'step':2, 'key':'F8',
-            'owner_id_sha256':'owner-hash',
-            'intent_token_sha256':'token-hash',
+            'program_id_sha256':'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'step':2, 'key':'F8',
+            'owner_id_sha256':'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+            'intent_token_sha256':'c'*64,
             'status':'adapter_edge_brackets_paired',
             'down_edge_interval_ns':[90,110],
             'up_edge_interval_ns':[290,310],
@@ -148,6 +148,20 @@ class V15AttributionAdapterTests(unittest.TestCase):
         self.assertEqual(result['attributions'][0]['reason'],
                          'measured_edge_envelope_not_exact_occupancy')
         self.assertEqual(result['trace_integrity'],'MEASURED_INTERVALS_ONLY')
+
+    def test_measured_envelope_does_not_hide_competing_exact_intent(self):
+        measured=dict(
+            program_id_sha256='b'*64, step=0, key='a',
+            owner_id_sha256='c'*64, intent_token_sha256='d'*64,
+            status='adapter_edge_brackets_paired',
+            down_edge_interval_ns=[90,110], up_edge_interval_ns=[290,310],
+            grants_input_authority=False, application_consumption_observed=False,
+        )
+        self.input=[down('exact-other','plan-exact',key='d'),
+                    up('exact-other','plan-exact',key='d'), measured]
+        result=adapt_session_records(self.samples,self.events,self.input)
+        self.assertEqual(result['attributions'][0]['status'],'AMBIGUOUS')
+        self.assertIsNone(result['attributions'][0]['intent_token'])
 
     def test_event_outside_sample_stream_fails_closed(self):
         self.events=[event(301)]

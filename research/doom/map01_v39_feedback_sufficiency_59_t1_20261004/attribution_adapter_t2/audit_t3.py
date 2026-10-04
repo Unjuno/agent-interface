@@ -53,9 +53,9 @@ event = {"schema": "independent-progress-event-v2", "event_sequence": 1,
 cases = {
     "single_retained_envelope": [receipt],
     "two_possible_intents": [
-        dict(receipt, intent_token_sha256="token-a"),
-        dict(receipt, program_id_sha256="program-b", key="a",
-             intent_token_sha256="token-b", owner_id_sha256="owner-2"),
+        dict(receipt, intent_token_sha256="a" * 64),
+        dict(receipt, program_id_sha256="b" * 64, key="a",
+             intent_token_sha256="c" * 64, owner_id_sha256="d" * 64),
     ],
 }
 expected = {"single_retained_envelope": "UNRESOLVED",
