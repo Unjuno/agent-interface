@@ -57,10 +57,13 @@ class Executor(Previous):
         with self.lock:
             if require_active and (self.active is None or self.active[0] != identifier):
                 return None
-            if identifier in self.published_release_ids:
+            if (identifier in self.release_publication_attempted_ids or
+                    identifier in self.published_release_ids):
                 return None
-            self.published_release_ids.add(identifier)
+            self.release_publication_attempted_ids.add(identifier)
             self.emit(event)
+            if identifier not in self.release_publication_errors:
+                self.published_release_ids.add(identifier)
         return event
 
     def _watch_release(self, identifier, lease, stop):

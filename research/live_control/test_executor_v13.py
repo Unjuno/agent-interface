@@ -144,6 +144,8 @@ class ExecutorV13Tests(unittest.TestCase):
             self.assertEqual(terminal["input_release_publication"],
                              {"status": "delivery_unknown", "error": {
                                  "type": "OSError", "message": "release acknowledgement lost"}})
+            self.assertIn("sink-error", executor.release_publication_attempted_ids)
+            self.assertNotIn("sink-error", executor.published_release_ids)
         finally:
             executor.close()
 
