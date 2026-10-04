@@ -1,0 +1,25 @@
+test_bridge (unittest.loader._FailedTest.test_bridge) ... ERROR
+
+======================================================================
+ERROR: test_bridge (unittest.loader._FailedTest.test_bridge)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_bridge
+Traceback (most recent call last):
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/private/tmp/v39-a02-export/research/doom/map01_v39_perkey_bridge_a01/test_bridge.py", line 59, in <module>
+    from map01_v39_perkey_bridge_a01.bridge import Backend
+  File "/private/tmp/v39-a02-export/research/doom/map01_v39_perkey_bridge_a01/bridge.py", line 5, in <module>
+    from input_owner_v12 import InputOwner
+  File "/private/tmp/v39-a02-export/research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py", line 15, in <module>
+    from executor_v3 import Cancelled, DecisionRequired
+ModuleNotFoundError: No module named 'executor_v3'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
