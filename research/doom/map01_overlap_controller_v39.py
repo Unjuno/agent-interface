@@ -432,7 +432,8 @@ def action_state_feedback(before, after, typed_observations):
     def read(observation):
         if (type(observation.get("sequence")) is not int or
                 type(observation.get("capture_ns")) is not int or
-                type(observation.get("step")) is not int):
+                type(observation.get("step")) is not int or
+                type(observation.get("id")) is not str or not observation.get("id")):
             return None, "typed_frame_identity_mismatch"
         matches = [row for row in typed_observations
                    if type(row) is dict and row.get("event") == "typed_observation" and
@@ -446,6 +447,7 @@ def action_state_feedback(before, after, typed_observations):
                 type(row.get("sequence")) is not int or
                 type(row.get("capture_ns")) is not int or
                 row.get("capture_ns") != observation.get("capture_ns") or
+                type(row.get("id")) is not str or not row.get("id") or
                 row.get("id") != observation.get("id") or
                 type(row.get("step")) is not int or
                 row.get("step") != observation.get("step") or
@@ -462,7 +464,9 @@ def action_state_feedback(before, after, typed_observations):
         wad_sha256 = None
         for name in ("health", "ammo"):
             signal = signals.get(name)
-            if (type(signal) is not dict or signal.get("status") != "observed" or
+            if (type(signal) is not dict or
+                    signal.get("format") != "observable-signal-v1" or
+                    signal.get("status") != "observed" or
                     signal.get("signal_id") != name or
                     type(signal.get("value")) is not int or
                     type(signal.get("sequence")) is not int or

@@ -964,6 +964,66 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(adapter_receipts[0]["down_edge_interval_ns"])
                 self.assertIsNone(adapter_receipts[0]["up_edge_interval_ns"])
 
+    def test_feedback_accepts_retained_producer_identity_and_signal_schema(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        events = [json.loads(line) for line in retained.read_text().splitlines()]
+        frames = [row for row in events if row.get("event") == "observation"]
+        typed = [row for row in events if row.get("event") == "typed_observation"]
+
+        feedback = controller.action_state_feedback(frames[0], frames[1], typed)
+
+        self.assertEqual(feedback["status"], "observed")
+        self.assertEqual((feedback["from_sequence"], feedback["to_sequence"]), (1, 2))
+        self.assertEqual(feedback["signals"], {
+            "health": {"before": 97, "after": 97, "delta": 0},
+            "ammo": {"before": 48, "after": 48, "delta": 0}})
+
+    def test_feedback_requires_nonempty_string_program_ids(self):
+        frames = [observation(83, 100), observation(89, 200)]
+        typed = [typed_observation(83, 100, 97, 48),
+                 typed_observation(89, 200, 91, 45)]
+        for endpoint in (0, 1):
+            for target in ("observation", "typed", "both"):
+                for mutation, value in (("missing", None), ("empty", ""),
+                                        ("nonstring", 17)):
+                    changed_frames, changed_typed = deepcopy((frames, typed))
+                    targets = []
+                    if target in ("observation", "both"):
+                        targets.append(changed_frames[endpoint])
+                    if target in ("typed", "both"):
+                        targets.append(changed_typed[endpoint])
+                    for row in targets:
+                        if mutation == "missing":
+                            row.pop("id")
+                        else:
+                            row["id"] = value
+                    with self.subTest(endpoint=endpoint, target=target, mutation=mutation):
+                        self.assertEqual(controller.action_state_feedback(
+                            changed_frames[0], changed_frames[1], changed_typed), {
+                                "status": "unavailable",
+                                "reason": "typed_frame_identity_mismatch"})
+
+    def test_feedback_requires_observable_signal_v1_format(self):
+        frames = [observation(83, 100), observation(89, 200)]
+        typed = [typed_observation(83, 100, 97, 48),
+                 typed_observation(89, 200, 91, 45)]
+        for endpoint in (0, 1):
+            for signal_name in ("health", "ammo"):
+                for mutation in ("missing", "future"):
+                    changed = deepcopy(typed)
+                    signal = changed[endpoint]["signals"][signal_name]
+                    if mutation == "missing":
+                        signal.pop("format")
+                    else:
+                        signal["format"] = "observable-signal-v2"
+                    with self.subTest(endpoint=endpoint, signal=signal_name, mutation=mutation):
+                        self.assertEqual(controller.action_state_feedback(
+                            frames[0], frames[1], changed), {
+                                "status": "unavailable",
+                                "reason": "typed_signal_unavailable"})
+
+
 
 if __name__ == "__main__":
     unittest.main()
