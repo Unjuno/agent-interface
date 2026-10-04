@@ -4,6 +4,11 @@ This deterministic construction tests the composition seam that remained after
 the acknowledged scorer candidate (#7545), temporal attribution (#7537/#7544),
 and owner-scoped occurrence reducer (#7546) were built separately.
 
+This frozen T0 API result remains intact. Its strict temporal-unique label was
+superseded by the updated session-bound envelope reducer; current interpretation
+and successor evidence are in
+[`producer_scorer_session_envelope_join_59_t1_20261004/README.md`](../producer_scorer_session_envelope_join_59_t1_20261004/README.md).
+
 The candidate drives the frozen `AcknowledgedSampler` with a fake game, sends
 the resulting samples through the current-main `ProgressClock`, links a
 positive progress event to its exact acknowledged sample, and then passes that

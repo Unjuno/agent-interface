@@ -1,0 +1,194 @@
+{
+  "admissions": [
+    {
+      "admitted_ns": 90,
+      "event": "input_admission",
+      "id": "program-1",
+      "input_ack_ns": 95,
+      "input_occurrence_id": "owner-a:1",
+      "intent_token": "intent-a",
+      "key": "W",
+      "keycode": 38,
+      "owner_id": "owner-a",
+      "session_id": "session-A",
+      "step": 0
+    }
+  ],
+  "attribution": [
+    {
+      "causal_attribution": "NOT_ESTABLISHED",
+      "causation_claimed": false,
+      "detection_interval_ns": [
+        120,
+        220
+      ],
+      "event_sequence": 1,
+      "intent_token": null,
+      "kind": "KILL_COUNT_INCREASE",
+      "possible_intent_tokens": [
+        "intent-a"
+      ],
+      "possible_occurrence_ids": [
+        "owner-a:1"
+      ],
+      "producer_run_id": "session-A",
+      "producer_sample_sequence": 2,
+      "producer_update_sequence": 2,
+      "reason": "one_verified_envelope_strictly_spans_detection_interval",
+      "semantic_action_sha256s": [
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "session_id": "session-A",
+      "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+    }
+  ],
+  "producer_samples": [
+    {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false,
+      "producer": {
+        "observation_status": "UPDATE_RETURNED",
+        "run_id": "session-A",
+        "sample_sequence": 1,
+        "tic_after": 11,
+        "tic_before": 10,
+        "update_returned_ns": 110,
+        "update_sequence": 1,
+        "update_started_ns": 90
+      },
+      "sample_ns": 120,
+      "schema": "independent-progress-sample-v2"
+    },
+    {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 1,
+      "map_exit": false,
+      "player_dead": false,
+      "producer": {
+        "observation_status": "UPDATE_RETURNED",
+        "run_id": "session-A",
+        "sample_sequence": 2,
+        "tic_after": 12,
+        "tic_before": 11,
+        "update_returned_ns": 210,
+        "update_sequence": 2,
+        "update_started_ns": 190
+      },
+      "sample_ns": 220,
+      "schema": "independent-progress-sample-v2"
+    }
+  ],
+  "producer_updates": [
+    {
+      "controller_visible": false,
+      "run_id": "session-A",
+      "sample": {
+        "death_count": 0,
+        "episode_finished": false,
+        "kill_count": 0,
+        "map_exit": false,
+        "player_dead": false,
+        "producer": {
+          "observation_status": "UPDATE_RETURNED",
+          "run_id": "session-A",
+          "sample_sequence": 1,
+          "tic_after": 11,
+          "tic_before": 10,
+          "update_returned_ns": 110,
+          "update_sequence": 1,
+          "update_started_ns": 90
+        },
+        "sample_ns": 120,
+        "schema": "independent-progress-sample-v2"
+      },
+      "sample_sequence": 1,
+      "schema": "scorer-client-update-v1",
+      "status": "UPDATE_RETURNED",
+      "tic_after": 11,
+      "tic_before": 10,
+      "update_returned_ns": 110,
+      "update_started_ns": 90
+    },
+    {
+      "controller_visible": false,
+      "run_id": "session-A",
+      "sample": {
+        "death_count": 0,
+        "episode_finished": false,
+        "kill_count": 1,
+        "map_exit": false,
+        "player_dead": false,
+        "producer": {
+          "observation_status": "UPDATE_RETURNED",
+          "run_id": "session-A",
+          "sample_sequence": 2,
+          "tic_after": 12,
+          "tic_before": 11,
+          "update_returned_ns": 210,
+          "update_sequence": 2,
+          "update_started_ns": 190
+        },
+        "sample_ns": 220,
+        "schema": "independent-progress-sample-v2"
+      },
+      "sample_sequence": 2,
+      "schema": "scorer-client-update-v1",
+      "status": "UPDATE_RETURNED",
+      "tic_after": 12,
+      "tic_before": 11,
+      "update_returned_ns": 210,
+      "update_started_ns": 190
+    }
+  ],
+  "raw_releases": [
+    {
+      "event": "input_release_transition",
+      "id": "program-1",
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "input_occurrence_id": "owner-a:1",
+        "intent_token": "intent-a",
+        "keycode": 38,
+        "owner_id": "owner-a",
+        "owner_keyrelease_started_ns": 250,
+        "owner_sync_returned_ns": 260,
+        "server_sync_completed": true
+      },
+      "session_id": "session-A",
+      "step": 0
+    }
+  ],
+  "run_id": "session-A",
+  "schema": "producer-scorer-session-envelope-raw-v1",
+  "scorer_events": [
+    {
+      "after": {
+        "delta": 1,
+        "kill_count": 1
+      },
+      "before": {
+        "kill_count": 0
+      },
+      "controller_visible": false,
+      "event_sequence": 1,
+      "kind": "KILL_COUNT_INCREASE",
+      "observed_ns": 220,
+      "polarity": "positive",
+      "schema": "independent-progress-event-v2",
+      "useful": true
+    }
+  ],
+  "semantic_bindings": [
+    {
+      "program_id": "program-1",
+      "semantic_action_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "session_id": "session-A",
+      "step": 0
+    }
+  ]
+}
