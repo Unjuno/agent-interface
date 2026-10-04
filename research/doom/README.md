@@ -376,3 +376,6 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [Native pipe/scorer known terminal and causal-audit limits](scorer_native_input_effect_59_20261003_b64b/CAUSAL_AUDIT_LIMIT_NOTE.md) — original 16-row result preserved with seven known V2 causal-order omissions; no runtime adoption or complete-audit claim.
 - [v39 v10 fake-Xlib keymap-witness source-compatibility probe](map01-v39-keymap-witness-fake-xlib-v1/README.md) — two repeated W occurrences pass through the exact v39 owner/wrapper call path with synthetic 32-byte keymap witnesses; 12 saved-result checks pass. Fake server only; no Xvfb, physical key, application, or task-effect evidence.
 - [Historical v13 release-telemetry composition STOP](results/map01-v13-release-telemetry-composition-t0-20261004-01/RUN_RESULT.md) — the frozen WSLc run retained the Pillow import failure; component tests passed but the typed backend composition remained unverified. No retry or dependency install; not live-input or gameplay evidence.
+# Issue #59 retained v39 ammo-timeline posthoc package
+
+[`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
