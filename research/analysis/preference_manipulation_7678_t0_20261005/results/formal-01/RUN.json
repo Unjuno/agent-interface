@@ -6,8 +6,10 @@
   "host": "Microsoft Windows NT 10.0.26300.0",
   "python": "Python 3.11.9",
   "candidate_exit_code": 0,
-  "auditor_exit_code": 0,
+  "initial_auditor_exit_code": 1,
+  "diagnostic_auditor_exit_code": 0,
   "retry_count": 0,
-  "status": "PASS_METHOD_SCOPED",
-  "note": "Initial one-shot runner recorded FAIL_AUDIT because PowerShell native-stderr handling left the exit code null; the immutable candidate output was retained and the frozen auditor was executed once manually after auditor-only fixes. No candidate or allocation rerun occurred."
+  "status": "HOLD",
+  "diagnostic_status": "PASS_METHOD_SCOPED",
+  "note": "Authoritative allocation disposition is HOLD: the first formal auditor exited 1, and audit code plus freeze metadata were changed after execution before the later diagnostic audit exited 0. The diagnostic PASS is not confirmatory. The initial failed auditor stdout/stderr were not retained; see INITIAL_RUN_FAILURE.json and AMENDMENT.md. No candidate or allocation rerun occurred."
 }

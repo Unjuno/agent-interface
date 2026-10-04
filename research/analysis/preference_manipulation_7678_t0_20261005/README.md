@@ -4,7 +4,7 @@ This package tests Issue #7678's finite, non-authoritative hypothesis against th
 
 ## Result
 
-See [`results/formal-01/REPORT.md`](results/formal-01/REPORT.md) for the candidate outcome, independent rank-vector audit, raw JSON, run record, and hashes. The unit of inference is the frozen synthetic fixture and the explicitly declared `possible_frontier` opportunity-set utility. It says nothing about actual human behavior or whether information should be withheld.
+The allocation disposition is **HOLD**; see [`results/formal-01/AMENDMENT.md`](results/formal-01/AMENDMENT.md) and the machine-readable [`results/formal-01/RUN.json`](results/formal-01/RUN.json). The later auditor PASS is diagnostic only. The unit of any diagnostic inference is the synthetic fixture and declared `possible_frontier` opportunity-set utility; it says nothing about actual human behavior or whether information should be withheld.
 
 ## Reproduce
 
