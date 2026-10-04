@@ -49,13 +49,15 @@ and unverified release stop without retry. The action ID also serves as the
 session-local transport request ID; the frozen six-task route has unique IDs
 for all twelve target submissions.
 
-Seven focused host tests pass, including wrapper binding and dispatch/compiler
-composition, lost-response/no-retry, unattributed rejection, wrong action/request identity,
+Nine focused host tests pass, including wrapper binding and dispatch/compiler
+composition, JSON-line wire serialization, non-authorizing response metadata,
+lost-response/no-retry, unattributed rejection, wrong action/request identity,
 unverified release, replayed or unflushed command receipt, and nonadvancing
-cursor controls. The full package passes 110/110. These tests inject the
-exchange response and do not open an AF_UNIX socket on this Windows host; they
-verify adapter semantics, not the actual bridge process, live images,
-Mindustry input, or task effects. A read-only re-audit of the retained capture
+cursor controls. The full package passes 112/112. These tests inject the
+exchange response or a fake socket and do not open an AF_UNIX socket on this
+Windows host; they verify adapter semantics and wire framing, not the actual
+bridge process, live images, Mindustry input, or task effects. A read-only
+re-audit of the retained capture
 still returns `PASS_CONSTRUCTION_ONLY` plus `PASS_SYNTHETIC_DISPATCH_JOIN`
 (18 tasks/36 dispatches), with `source_identity_verified=false`; all four
 manifest hashes match their current bytes. The wrapper targets the v2 bridge,

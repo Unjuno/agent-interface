@@ -1,7 +1,9 @@
 """Contract tests for the single-attempt Mindustry socket submit adapter."""
 
 import unittest
+import json
 from pathlib import Path
+from unittest.mock import patch
 
 from arm_coordinator import ArmCoordinator
 from target_execution_v1 import dispatch_task_targets
@@ -16,6 +18,8 @@ def success(action_id, *, cursor=7):
         "records": [{"event": "terminal", "id": action_id,
                      "status": "completed", "release": {"verified": True}}],
         "cursor": cursor,
+        "authority": "none",
+        "acknowledgement": "not implied",
         "command_receipt": {"request_id": action_id, "replayed": False,
                             "state": "stdin_flushed"},
     }
@@ -51,7 +55,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
         submitter._exchange = lambda request: calls.append(request) or {
             "status": "unattributed_rejection", "records": [
                 {"event": "rejected", "reason": "bad command"}], "cursor": 1,
-                "command_receipt": {"request_id": request["request_id"],
+            "authority": "none", "acknowledgement": "not implied",
+            "command_receipt": {"request_id": request["request_id"],
                                     "replayed": False,
                                     "state": "stdin_flushed"}}
 
@@ -80,6 +85,50 @@ class TargetSocketSubmitTests(unittest.TestCase):
                 submitter._exchange = lambda _request, value=response: value
                 with self.assertRaises(SocketSubmitStop):
                     submitter(self.command())
+
+    def test_authority_and_acknowledgement_metadata_must_remain_non_authorizing(self):
+        for field, value in (("authority", "input_allowed"),
+                             ("acknowledgement", "accepted")):
+            with self.subTest(field=field):
+                response = success("A1-select-conveyor") | {field: value}
+                submitter = TargetSocketSubmitter("/tmp/unused.sock")
+                submitter._exchange = lambda _request: response
+                with self.assertRaisesRegex(SocketSubmitStop, "non-authorizing"):
+                    submitter(self.command())
+
+    def test_unix_wire_exchange_serializes_one_json_line_and_parses_response(self):
+        wire_response = json.dumps(success("A1-select-conveyor")).encode() + b"\n"
+
+        class FakeSocket:
+            def __init__(self):
+                self.sent = bytearray()
+                self.chunks = [wire_response]
+                self.connected = None
+                self.timeout = None
+                self.closed = False
+
+            def __enter__(self): return self
+            def __exit__(self, *_args): self.closed = True
+            def settimeout(self, value): self.timeout = value
+            def connect(self, path): self.connected = path
+            def sendall(self, payload): self.sent.extend(payload)
+            def recv(self, _size): return self.chunks.pop(0) if self.chunks else b""
+
+        fake = FakeSocket()
+        submitter = TargetSocketSubmitter("/tmp/test.sock", timeout_s=2)
+        with patch("target_socket_submit_v1.socket.AF_UNIX", 1, create=True), \
+                patch("target_socket_submit_v1.socket.socket",
+                      return_value=fake) as factory:
+            response = submitter._exchange({"after": 3, "command": self.command()})
+
+        factory.assert_called_once()
+        request = json.loads(fake.sent.decode("utf-8"))
+        self.assertTrue(fake.sent.endswith(b"\n"))
+        self.assertEqual(fake.connected, "/tmp/test.sock")
+        self.assertEqual(fake.timeout, 3.0)
+        self.assertTrue(fake.closed)
+        self.assertEqual(request, {"after": 3, "command": self.command()})
+        self.assertEqual(response, success("A1-select-conveyor"))
 
     def test_transport_exception_consumes_action_without_retry(self):
         calls = []

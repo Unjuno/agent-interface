@@ -57,6 +57,9 @@ class TargetSocketSubmitter:
 
         if type(response) is not dict:
             raise SocketSubmitStop("socket response object required")
+        if (response.get("authority") != "none"
+                or response.get("acknowledgement") != "not implied"):
+            raise SocketSubmitStop("socket event response must remain non-authorizing")
         receipt = response.get("command_receipt")
         if (type(receipt) is not dict
                 or receipt.get("request_id") != action_id
