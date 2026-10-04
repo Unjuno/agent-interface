@@ -39,6 +39,17 @@ class FeedbackAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "no in-hold engine"):
             audit.audit_result(mutated, self.result)
 
+    def test_non_neutral_state_immediately_before_admission_is_rejected(self):
+        mutated = dict(self.inputs)
+        path = "research/doom/absolute_pair_59_4d74_20261004/05-pulse/scorer-last-action.jsonl"
+        rows = [json.loads(line) for line in mutated[path].splitlines()]
+        first_admission = 68857000143
+        prior = [row for row in rows if row["sample_returned_ns"] < first_admission]
+        prior[-1]["action"][5] = 1.0
+        mutated[path] = ("\n".join(json.dumps(row) for row in rows) + "\n").encode()
+        with self.assertRaisesRegex(ValueError, "latest pre-admission action sample is not neutral"):
+            audit.audit_result(mutated, self.result)
+
     def test_fabricated_neutral_after_censored_window_is_rejected(self):
         result = copy.deepcopy(self.result)
         pair = next(p for c in result["cells"] for p in c["pairs"]

@@ -121,6 +121,11 @@ def audit_result(inputs: dict[str, bytes], result: dict) -> dict:
                 raise ValueError(f"result pair lacks source identity: {cell}")
             if pair.get("admitted_ns") != times[0] or pair.get("input_ack_ns") != times[1]:
                 raise ValueError(f"result admission times do not match: {cell}")
+            before_press = [s for s in samples if s["sample_returned_ns"] < times[0]]
+            if not before_press or before_press[-1]["action"][move_index] != 0.0:
+                raise ValueError(f"latest pre-admission action sample is not neutral: {cell}")
+            if pair.get("pre_admission_neutral_sample_returned_ns") != before_press[-1]["sample_returned_ns"]:
+                raise ValueError(f"pre-admission neutral sample time mismatch: {cell}")
             if pair.get("owner_keyup_started_ns") != times[4] or pair.get("owner_sync_returned_ns") != times[5]:
                 raise ValueError(f"result owner key-up times do not match: {cell}")
             if pair.get("release_call_started_ns") != times[2] or pair.get("release_call_returned_ns") != times[3]:

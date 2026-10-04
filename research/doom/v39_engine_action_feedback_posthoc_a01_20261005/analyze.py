@@ -91,6 +91,8 @@ def derive_cell(cell: str, events: list[dict], samples: list[dict], result: dict
             raise ValueError(f"nonmonotonic key lifetime: {cell}")
 
         prior = [s for s in selected if s["sample_returned_ns"] < press_start]
+        if not prior or prior[-1]["action"][index] != 0.0:
+            raise ValueError(f"latest pre-admission scorer sample is not neutral: {cell}")
         during = [s for s in selected if s["sample_started_ns"] >= press_start and s["sample_returned_ns"] <= up_start]
         after = [s for s in selected if s["sample_started_ns"] >= up_return]
         first_positive = next((s for s in during if s["action"][index] == 1.0), None)
@@ -110,6 +112,7 @@ def derive_cell(cell: str, events: list[dict], samples: list[dict], result: dict
             "key": down["key"], "program_id": down.get("id"), "step": down.get("step"),
             "intent_token": down.get("intent_token"),
             "admitted_ns": press_start, "input_ack_ns": press_ack,
+            "pre_admission_neutral_sample_returned_ns": prior[-1]["sample_returned_ns"],
             "owner_keyup_started_ns": owner_up_start, "owner_sync_returned_ns": owner_up_return,
             "release_call_started_ns": up_start, "release_call_returned_ns": up_return,
             "pre_onset_false_sample_returned_ns": before_positive[-1]["sample_returned_ns"],
