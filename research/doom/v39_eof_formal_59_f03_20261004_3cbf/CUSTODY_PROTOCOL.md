@@ -1,8 +1,12 @@
 # Prospective F03 custody and allocation gates — no run yet
 
 H/T/D/C/U and four scientific cell gates remain PROTOCOL.md. This document
-specifies delivery, not an expanded empirical claim. Independent code review
-Socrates is pending at ab22b60a6. No launch while Important findings remain.
+specifies delivery, not an expanded empirical claim. Pasteur's read-only
+successor review of code commit 89b491adbed3df5fb5994d40e11bde7234ce61c2
+found 0 Critical / 0 Important and judged code ready subject to separate live
+allocation, frozen-input and custody gates. Exact-tree 22-control construction
+retest is recorded in READER_HANDOFF_RESULT.md. This clears code review only;
+do not launch until a final exact-frozen-input/custody review clears below.
 
 ## Frozen inputs and execution
 
