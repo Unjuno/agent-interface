@@ -524,6 +524,45 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                     self.assertIsNone(receipt["admitted_to_owner_keyup_start_ms"])
                     self.assertIsNone(receipt["input_ack_to_owner_keyup_start_ms"])
 
+    def test_running_action_snapshot_rejects_noninteger_step_aliases(self):
+        source_health = {"format": "observable-signal-v1",
+                         "status": "observed", "signal_id": "health",
+                         "value": 91, "sequence": 88, "capture_ns": 100,
+                         "binding": BINDING}
+        contract = controller.build_action_contract(
+            [{"action": "move", "extent": "pulse"}],
+            {"critical_health_minimum": 1, "maximum_health_loss": 5,
+             "minimum_ammo": 0, "max_current_age_ms": 1000},
+            source_health)
+        event = {
+            "event": "typed_observation",
+            "schema": "doom-typed-observation-v1",
+            "id": "cover-1",
+            "step": 1,
+            "sequence": 89,
+            "capture_ns": 200,
+            "pointer_binding": BINDING,
+            "signals": {},
+            "frame_rgb_sha256": "a" * 64,
+            "frame_size": [640, 480],
+            "typed_extraction_started_ns": 200,
+            "typed_ready_ns": 200,
+            "capture_to_typed_ready_ms": 0,
+            "artifact_published": False,
+            "grants_input_authority": False,
+        }
+        for name, value in (("health", 91), ("ammo", 45)):
+            event["signals"][name] = {
+                "signal_id": name, "sequence": 89, "capture_ns": 200,
+                "binding": BINDING, "status": "observed", "value": value}
+
+        for invalid_step in (True, 1.0):
+            with self.subTest(invalid_step=invalid_step):
+                malformed = dict(event, step=invalid_step)
+
+                with self.assertRaisesRegex(ValueError, "exact early typed"):
+                    controller.build_typed_action_snapshot(malformed, contract)
+
     def test_feedback_reports_exact_health_and_ammo_deltas_for_matching_frames(self):
         before = observation(83, 100)
         after = observation(89, 200)
