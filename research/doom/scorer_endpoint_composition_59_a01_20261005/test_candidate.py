@@ -124,6 +124,18 @@ class CandidateTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "UNKNOWN")
         self.assertNotIn("values", row)
 
+    def test_float_tic_readback_fails_closed(self):
+        receipt, row = self.run_checkpoint(
+            Game(10, 11, 11, [0, 1], read_tic=11.0))
+        self.assertEqual(receipt["status"], "UNKNOWN")
+        self.assertNotIn("values", row)
+
+    def test_boolean_tic_readback_fails_closed(self):
+        receipt, row = self.run_checkpoint(
+            Game(0, 1, 1, [0, 1], read_tic=True))
+        self.assertEqual(receipt["status"], "UNKNOWN")
+        self.assertNotIn("values", row)
+
 
 if __name__ == "__main__":
     unittest.main()

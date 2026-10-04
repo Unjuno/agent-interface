@@ -76,3 +76,22 @@ invalidation recovery, physical input release, planner resumption, bounded
 recovery, and a live MAP01 outcome remain unproven. This candidate grants no
 input authority and must be integrated and tested in the actual controller
 before runtime qualification.
+
+## Endpoint readback type follow-up
+
+The exact endpoint comparison also requires `tic_after_read` to be an exact
+integer. Python equality alone accepts `11.0 == 11` and `True == 1`; either
+could otherwise leave malformed scorer values in the private log with
+`REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING`. The additive regression
+preserves the valid integer path and requires float and boolean readbacks to
+return `UNKNOWN` without score values.
+
+The two new regressions failed against the previous source and pass after the
+type guard. The full package construction suite passes 17 tests, the retained
+V16 acknowledged-sampler suite passes 7 tests, and the package compiles. The
+original `test-output.txt`, source pins, and audit remain unchanged; follow-up
+outputs and their source hashes are stored separately in
+`followup-test-output.txt`, `followup-v16-test-output.txt`, and
+`FOLLOWUP_PINS.json`. `audit_followup.py` independently checks those retained
+logs and hashes. This repairs a candidate data-integrity check only; it is not
+an engine or live-session result.
