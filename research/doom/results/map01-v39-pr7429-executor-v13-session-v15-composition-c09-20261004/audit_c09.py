@@ -37,6 +37,7 @@ if (root / "overall.exit.txt").read_text(encoding="utf-8-sig").strip() != "0":
 refs = (root / "SOURCE_REFS.txt").read_text(encoding="utf-8-sig")
 for value in ("0f50064a7ea7a69c51cb6751ac313b0c8b5ec9e2",
               "915c46d7f448003d82dd002d6e9fb34141e2712a",
+              "5bd1cf7e38e1716e92ab76253d50b48a2385b7f4",
               "3e498aebd77e500d5a7b1ac9d434d37350a9f597"):
     if value not in refs:
         errors.append(f"source-ref:{value}")

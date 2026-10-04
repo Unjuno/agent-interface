@@ -4,7 +4,7 @@
 
 **Hypothesis.** The #7429 ExecutorV12/V13 publication barrier and error handling can replace the older executor modules in the #7449 candidate overlay; the cancellation-order integration, executor regressions, client guard, and session-selection checks will all pass.
 
-**Test.** Pin PR #7429 head `0f50064a7ea7a69c51cb6751ac313b0c8b5ec9e2`, PR #7449 base `915c46d7f448003d82dd002d6e9fb34141e2712a`, and candidate commit `3e498aebd77e500d5a7b1ac9d434d37350a9f597`. Copy #7449's top-level `research/live_control/*.py` and `research/doom/*.py` modules into a disposable overlay, replace the executor and publication-test files with exact files archived from #7429, then run the five recorded Python tests from that overlay.
+**Test.** Pin PR #7429 head `0f50064a7ea7a69c51cb6751ac313b0c8b5ec9e2`, PR #7449 head `915c46d7f448003d82dd002d6e9fb34141e2712a` (base `5bd1cf7e38e1716e92ab76253d50b48a2385b7f4`), and candidate commit `3e498aebd77e500d5a7b1ac9d434d37350a9f597`. Copy #7449's top-level `research/live_control/*.py` and `research/doom/*.py` modules into a disposable overlay, replace the executor and publication-test files with exact files archived from #7429, then run the five recorded Python tests from that overlay.
 
 **Decision.** PASS for this source-level composition check if all 16 tests pass (1 order barrier, 4 ExecutorV13, 6 cancellation/publication, 4 running-action guard, 1 session-v15 selector). The recorded run passes 16/16. If any test fails, treat composition as unresolved.
 
