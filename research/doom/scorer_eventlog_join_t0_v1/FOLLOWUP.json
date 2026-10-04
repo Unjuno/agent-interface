@@ -1,0 +1,12 @@
+{
+  "schema": "scorer-eventlog-prior-policy-regression-v1",
+  "base_main": "b47d4d0b053f6e7d88c37e24be81777aa28feb6a",
+  "prior_candidate_path": "research/doom/scorer_admission_attribution_t0_v1/candidate.py",
+  "prior_candidate_git_blob": "3a097172115b6d8c2cd482c37c80388b86404b25",
+  "prior_candidate_sha256": "fecf7be7abe7a36111ec2df171461eb225d5c951b37c8d979d0a2ce2d0e7f4b9",
+  "successor_candidate_sha256": "23727e925c3e27a171592b0a831ab29572647bc0309cb6f10b8d81c8104aa049",
+  "test": "One deterministic fixture is run against the exact merged #7471 classifier and the successor candidate in the current PR.",
+  "decision_gate": "Confirm the prior classifier reports ADMISSION_BRACKETED_PROGRESS with baseline 105 even though the kill is already observed at 115 before first input at 120; confirm the successor uses the freshest pre-input state and rejects the unchanged post-input count at 130.",
+  "resources": "Local Python 3.12.13 CPU-only deterministic check. No container retry was made after the recorded OrbStack content-store STOP.",
+  "claim_limit": "This is an offline policy regression only, not actual scorer-file parsing, live gameplay, or causal recovery evidence."
+}
