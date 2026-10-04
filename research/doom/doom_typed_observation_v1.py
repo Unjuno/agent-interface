@@ -6,6 +6,7 @@ import time
 from PIL import Image
 
 from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+from doom_signal_value_domain_v1 import signal_value_in_domain
 
 
 SCHEMA = "doom-typed-observation-v1"
@@ -97,6 +98,9 @@ def build_action_snapshot(event, contract):
                 row.get("status") not in ("observed", "unknown") or
                 (row.get("status") == "unknown" and row.get("value") is not None)):
             raise ValueError("typed signal must bind the exact early epoch")
+        if (row["status"] == "observed" and
+                not signal_value_in_domain(name, row.get("value"))):
+            raise ValueError("typed signal value is outside its declared domain")
         signals[name] = {"status": row["status"], "value": row["value"]}
     return {"format": SNAPSHOT_FORMAT, "sequence": event["sequence"],
             "capture_ns": event["capture_ns"],
