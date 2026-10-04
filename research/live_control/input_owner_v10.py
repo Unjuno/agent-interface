@@ -12,6 +12,15 @@ from Xlib.ext import xtest
 from executor_v3 import Cancelled, DecisionRequired
 
 
+class _OwnerReleaseTimingKey(str):
+    """Opt-in V11 key payload that carries owner-thread up timestamps."""
+
+    def __new__(cls, value):
+        instance = super().__new__(cls, value)
+        instance.owner_release_interval_ns = None
+        return instance
+
+
 class InputOwner:
     def __init__(self, display_name):
         self.requests = queue.Queue()
@@ -336,8 +345,18 @@ class InputOwner:
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
+                                # The opt-in string payload is a V11 telemetry carrier.
+                                # Record request-to-sync bounds on the sole owner thread;
+                                # ordinary V10 callers still receive None and pay no extra sync.
+                                owner_release_requested_ns = time.perf_counter_ns()
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
+                                owner_release_synced_ns = time.perf_counter_ns()
+                                if type(key) is _OwnerReleaseTimingKey:
+                                    key.owner_release_interval_ns = [
+                                        owner_release_requested_ns,
+                                        owner_release_synced_ns,
+                                    ]
                                 del held[code]
                             result = None
                     else:
@@ -358,3 +377,4 @@ class InputOwner:
                 self.records.append(dict(event='cleanup_failed', error=repr(exc), verified=False))
             finally:
                 d.close()
+
