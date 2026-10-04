@@ -9,7 +9,7 @@ import statistics
 from pathlib import PurePosixPath
 from pathlib import Path
 
-from candidate import classify_intent
+from missed_admission_guard_v1.candidate_v2 import classify_intent
 
 
 REQUIRED_SOURCES = {
