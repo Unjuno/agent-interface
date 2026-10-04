@@ -86,6 +86,21 @@ class AcknowledgedStatusV2Tests(unittest.TestCase):
         self.assertEqual(events[-1]["update_status"], "UPDATE_RETURNED")
         self.assertEqual(events[-1]["sample_status"], "UNAVAILABLE")
 
+    def test_ack_sink_exception_is_not_retried_or_followed_by_sampling(self):
+        attempts = []
+        sample_calls = []
+        def fail_after_accept(event):
+            attempts.append(event)
+            raise OSError("ack sink accepted then raised")
+        sampler = AcknowledgedSamplerV2(
+            lambda *a, **k: sample_calls.append(True), "run-v2",
+            fail_after_accept, clock_ns=lambda: 10)
+        with self.assertRaisesRegex(OSError, "accepted then raised"):
+            sampler(Game(), None, 5)
+        self.assertEqual(len(attempts), 1)
+        self.assertEqual(attempts[0]["event"], "update_acknowledged")
+        self.assertEqual(sample_calls, [])
+
 
 if __name__ == "__main__":
     unittest.main()

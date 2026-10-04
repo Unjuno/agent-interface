@@ -97,6 +97,10 @@ class AcknowledgedSamplerV2:
                 sample.episode_finished, sample.player_dead, sample.map_exit,
                 producer=producer)
         except BaseException as error:
+            # A sink failure has an ambiguous commit outcome. _emit latched
+            # this exact exception; do not publish a second status row.
+            if self._failure is error:
+                raise
             self._failure = error
             event = {**base, "event": "sample_result",
                      "update_status": "UPDATE_RETURNED" if producer else "UPDATE_UNAVAILABLE",
