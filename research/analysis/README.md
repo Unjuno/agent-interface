@@ -1,5 +1,6 @@
 # Analytical research
 
+- [Issue #7411 user-anchored minimum worthwhile benefit T0](benefit_threshold_7411_t0_20261005/REPORT.md) — synthetic method PASS only; lower-50th-percentile crossing brackets contain both planted strata, while correctness regression is ineligible and sparse support remains UNKNOWN. No human preference or route-benefit claim.
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
 - [Issue #7387 A02 method result](serial_cue_interference_7387_t0_20261004_a02/REPORT.md) — WSLc candidate and raw-only auditor each ran once; 144 trials, 288 presentations, 16 isolated controls and 1,280 image files (five distinct pixel payloads) independently reconstructed; `PASS_METHOD_SCOPED`; model hypothesis remains untested.
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
@@ -307,6 +308,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
+- [`benefit_threshold_7411_t0_20261005/`](benefit_threshold_7411_t0_20261005/)
 - [`benign_error_recovery_scope_6469_t0_20261002_v1/`](benign_error_recovery_scope_6469_t0_20261002_v1/)
 - [`blackstart_allwindow_trace_5970_t6_20261002/`](blackstart_allwindow_trace_5970_t6_20261002/)
 - [`blackstart_causal_cut_5970_t0_20261001/`](blackstart_causal_cut_5970_t0_20261001/)
