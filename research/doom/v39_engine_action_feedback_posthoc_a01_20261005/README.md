@@ -20,6 +20,8 @@ python research/doom/v39_engine_action_feedback_posthoc_a01_20261005/audit.py
 python -m unittest discover -s research/doom/v39_engine_action_feedback_posthoc_a01_20261005 -v
 ```
 
+The original A01 auditor and its saved output are retained unchanged. `audit_v2.py` is a versioned stricter read-only audit that independently rederives eight previously unchecked result fields: pair key, scorer sample counts, pre-onset sample timestamp, onset/neutral latency brackets, and the two reported summary booleans. Run it with `python research/doom/v39_engine_action_feedback_posthoc_a01_20261005/audit_v2.py`; its mutation controls are in `test_audit_v2.py`. This improves result-field integrity without modifying or repeating the source allocation.
+
 `FREEZE.json` pins every raw input and game-key configuration to source commit `c99d93a2c81945f0946173e48247bdd49e32a02a` by Git blob and SHA-256. The report uses scorer-call brackets as observation intervals; it does not claim the exact simulation tick at which the action changed.
 
 ## Current result
