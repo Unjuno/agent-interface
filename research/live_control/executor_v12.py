@@ -42,7 +42,19 @@ class Executor(Previous):
             self.terminal_publication_errors.pop(event.get("id"), None)
             self.release_publication_errors.pop(event.get("id"), None)
         else:
-            self._external_emit(event)
+            try:
+                self._external_emit(event)
+            except Exception as exc:
+                if (type(event) is dict and
+                        event.get("event") in ("input_released", "input_release_unverified")):
+                    identifier = event.get("id")
+                    self.release_publication_errors[identifier] = {
+                        "type": type(exc).__name__, "message": str(exc)}
+                    return
+                raise
+            if (type(event) is dict and
+                    event.get("event") in ("input_released", "input_release_unverified")):
+                self.release_publication_errors.pop(event.get("id"), None)
 
     def submit(self, identifier, steps, expected_sequence, valid_until_ns):
         with self.lock:

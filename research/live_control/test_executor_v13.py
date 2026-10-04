@@ -108,5 +108,40 @@ class ExecutorV13Tests(unittest.TestCase):
         finally:
             executor.close()
 
+    def test_release_sink_error_is_reported_by_terminal_without_retry(self):
+        events = []; attempted = threading.Event(); attempts = []
+
+        class SinkErrorBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+                lease.record_interruption({"event": "owner_release", "reason": "focus_changed",
+                    "verified": True, "keys_down": [], "buttons_down": [],
+                    "verified_ns": time.perf_counter_ns(), "valid_until_ns": lease.deadline})
+                if not attempted.wait(1):
+                    raise AssertionError("release sink was not attempted")
+                raise DecisionRequired("focus_changed")
+
+        def emit(event):
+            if event.get("event") == "input_released":
+                attempts.append(event)
+                attempted.set()
+                raise OSError("release acknowledgement lost")
+            events.append(event)
+
+        executor = Executor(SinkErrorBackend(), emit)
+        try:
+            executor.submit("sink-error", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row["event"] == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            terminal = next(row for row in events if row["event"] == "terminal")
+            self.assertEqual(len(attempts), 1)
+            self.assertEqual(terminal["input_release_publication"],
+                             {"status": "delivery_unknown", "error": {
+                                 "type": "OSError", "message": "release acknowledgement lost"}})
+        finally:
+            executor.close()
+
 
 if __name__ == "__main__": unittest.main()
