@@ -1,6 +1,6 @@
 # TDD RED receipt
 
-The first semantically valid regression run used the unmodified PR #7805 candidate bridge at commit `311f834bf63111b344297f947f8546128c7a1844`. At the aggregate-query barrier, the owner had appended one record with `verified=false` and no aggregate `keys_down`; the bridge drain advanced `_owner_record_cursor` to 1 and retained `{'F8'}`. After unblocking reconciliation, that same record became `verified=true` and `keys_down=[]`; the next drain still retained `{'F8'}`.
+Merged PR #7832 already preserves the container baseline RED and diagnostic neutral-state revisit; this packet does not claim first discovery. The first local semantically valid regression run used the unmodified PR #7805 candidate bridge at commit `311f834bf63111b344297f947f8546128c7a1844`. At the aggregate-query barrier, the owner had appended one record with `verified=false` and no aggregate `keys_down`; the bridge drain advanced `_owner_record_cursor` to 1 and retained `{'F8'}`. After unblocking reconciliation, that same record became `verified=true` and `keys_down=[]`; the next drain still retained `{'F8'}`.
 
 The intended RED assertion failed exactly:
 
