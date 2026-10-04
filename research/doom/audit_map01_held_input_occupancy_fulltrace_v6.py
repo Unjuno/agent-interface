@@ -227,8 +227,8 @@ def main() -> None:
     files = ("v38.json", "v39.json")
     result = [audit(args.repo / "research/doom/results" / name,
                     args.candidate_dir / file) for name, file in zip(names, files, strict=True)]
-    payload = {"schema": "map01-held-input-occupancy-fulltrace-v5-audit",
-               "candidate_schema": "fulltrace-v4", "results": result, "errors": []}
+    payload = {"schema": "map01-held-input-occupancy-fulltrace-v6-audit",
+               "candidate_schema": "fulltrace-v5", "results": result, "errors": []}
     encoded = json.dumps(payload, indent=2) + "\n"
     if args.out.exists():
         raise FileExistsError(args.out)
@@ -239,5 +239,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
 
