@@ -35,3 +35,8 @@ From the repository root, run python3 research/doom/feedback_onset_audit_v1/audi
 ## Consequence
 
 Keep the open opt-in per-key instrumentation path separate from task-effect claims. A future matched live run needs per-key admission/up/release records and a scorer-only, independently timestamped task-effect stream correlated to them. Scorer state must remain unavailable to the controller. A viewport delta or end-of-run score cannot recover first useful-feedback latency after the fact.
+
+
+## Preserved verifier construction stop
+
+The first execution of the saved PowerShell verifier stopped with STOP_EVENT_SHAPE_CHANGED because missing event categories evaluate to null in a PowerShell hashtable. The raw trace was unchanged. The corrected verifier fills absent categories with zero before the frozen gates. The failed verifier execution is retained in CONSTRUCTION_STOP_V1.txt; this was a verifier-construction error, not a change to the audit classification. Both saved runners were then replayed against the exact retained trace.
