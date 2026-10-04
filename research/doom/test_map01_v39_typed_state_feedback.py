@@ -591,11 +591,11 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             "observed")
 
         bad_before = json.loads(json.dumps(before))
-        bad_before["step"] = True
+        bad_before["step"] = False
         bad_after = json.loads(json.dumps(after))
         bad_after["step"] = True
         bad_typed_before = json.loads(json.dumps(typed))
-        bad_typed_before[0]["step"] = True
+        bad_typed_before[0]["step"] = False
         bad_typed_after = json.loads(json.dumps(typed))
         bad_typed_after[1]["step"] = True
         cases = (
