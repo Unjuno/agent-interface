@@ -1,21 +1,17 @@
-# Astra HUD threshold debounce A02
-
-## H/T/D/C/U
-
-- **H:** Requiring two adjacent frames above the retained A01 threshold (>60 red-mask XOR pixels) can reject single-frame flicker while retaining the frame-311 intermediate observation.
-- **T:** Recompute adjacent-frame persistence on the immutable A01 `samples.csv`, split at source-control time 31 s, without launching a game, model, GUI, or input.
-- **D:** One frozen full-series pass, 780 contiguous rows. Raw source commit `5e5fa2e697109dc68a605bbfcb04e523e3103698`; CSV SHA-256 `3fd8de61d8cde9ce3ab3a35d74841cecbef8dd426d12fbff9bb93889db92bdaa`.
-- **C:** Prefix `source_control_elapsed_s <= 31`; remainder `>31`; threshold strictly greater than 60 XOR pixels; persistence means an exceedance in the immediately next frame.
-- **U:** Retrospective visual-signal method analysis only. No semantic labels, controller intervention, task effect, or allocation.
-
-## Result
-
-The prefix contained 156 frames, max XOR 29, and zero threshold exceedances. The remainder contained 30 isolated exceedances and zero adjacent pairs. Frame 311 (62.2 s) had XOR 471 with no neighboring >60 event. The hypothesis is **falsified** for this trace: a two-frame debounce suppresses all measured threshold events, including the specific intermediate state retained by A01.
-
-The result does not mean these events are damage or useful feedback. A01 explicitly says the red-mask metric performs no OCR and cannot identify cause, safe response, or effect. This analysis only shows that a two-frame persistence gate would erase all single-frame high-change signals at the recorded 10-frame/s sampling cadence. It suggests testing semantic/time-aligned observations under a separately authorized live threat exposure, not lowering safety gates based on pixel change.
-
-## Reproduction and verification
-
-From this directory run `node analyze.mjs` with Node.js 18+ and network access. It fetches the CSV by immutable commit SHA, checks 780 contiguous frames, computes the frozen summary, and prints JSON. The independently executed local Node.js 24.6.0 command over the same pinned raw CSV returned the values above. The raw CSV SHA-256 is embedded in the output and result.
-
-No candidate run was repeated; no retained A01 file or prior result was altered.
+{
+  "protocol": "A02: one-frame threshold recurrence / two-frame debounce check",
+  "source_commit": "5e5fa2e697109dc68a605bbfcb04e523e3103698",
+  "source_csv_sha256": "0b585a3671a10ba2a3e4f634b32cddc7f3fb83aa85013eb75faff8a128cd7e97",
+  "rows": 780,
+  "threshold_changed_pixels_strictly_greater_than": 60,
+  "stable_prefix_source_seconds_lte": 31,
+  "stable_prefix_frames": 156,
+  "stable_prefix_max_xor": 29,
+  "stable_prefix_exceedances": 0,
+  "remainder_exceedances": 30,
+  "remainder_two_adjacent_exceedances": 0,
+  "frame_311_xor": 471,
+  "frame_311_has_adjacent_threshold_exceedance": false,
+  "remainder_exceedance_frames": [235,274,282,285,302,311,318,326,337,357,360,370,385,402,408,413,426,437,495,506,519,532,535,547,557,571,581,606,618,703],
+  "interpretation": "Two-consecutive-frame debounce suppresses every >60-pixel event in this retained trace, including frame 311. Visual-mask temporal resolution only; no event is labeled damage, threat, useful feedback, or safe action trigger."
+}
