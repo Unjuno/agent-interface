@@ -38,6 +38,7 @@ def _merge_sources(out: Path) -> None:
     sources = json.loads(path.read_text(encoding="utf-8"))
     additions = (
         HERE / "session_map01_v14.py",
+        HERE / "map01_overlap_controller_v39.py",
         HERE / "map01_overlap_controller_v40.py",
     )
     for source in additions:

@@ -1,4 +1,5 @@
 import sys
+import hashlib
 import json
 import tempfile
 import unittest
@@ -43,7 +44,12 @@ class V40CompositionTests(unittest.TestCase):
                              "release-v3")
             self.assertEqual(sources["live_control/input_transition_owner_v3.py"],
                              "owner-v3")
-            self.assertIn("doom/map01_overlap_controller_v40.py", sources)
+            for source in ("session_map01_v14.py",
+                           "map01_overlap_controller_v39.py",
+                           "map01_overlap_controller_v40.py"):
+                key = f"doom/{source}"
+                digest = hashlib.sha256((HERE / source).read_bytes()).hexdigest()
+                self.assertEqual(sources[key], digest)
 
 
 if __name__ == "__main__":
