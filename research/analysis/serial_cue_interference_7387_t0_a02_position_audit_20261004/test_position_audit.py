@@ -44,15 +44,29 @@ class PositionAuditTests(unittest.TestCase):
         })
 
     def test_retained_presentation_rows_have_exact_allowed_fields(self):
-        result = audit_presentation_schema(PRESENTATION_ROWS)
-        self.assertEqual(result, {"ok": True, "errors": [], "presentation_rows": 288})
+        result = audit_presentation_schema(PRESENTATION_ROWS, DESIGN)
+        self.assertEqual(result, {
+            "ok": True, "errors": [], "presentation_rows": 288, "expected_rows": 288,
+        })
 
     def test_answer_bearing_presentation_field_is_rejected(self):
         mutated = copy.deepcopy(PRESENTATION_ROWS)
         mutated[0]["answer"] = "red_square"
-        result = audit_presentation_schema(mutated)
+        result = audit_presentation_schema(mutated, DESIGN)
         self.assertFalse(result["ok"])
         self.assertEqual(result["errors"], ["presentation-schema-mismatch"])
+
+    def test_truncated_presentation_rows_are_rejected(self):
+        result = audit_presentation_schema(PRESENTATION_ROWS[:-1], DESIGN)
+        self.assertFalse(result["ok"])
+        self.assertIn("presentation-denominator", result["errors"])
+
+    def test_non_object_presentation_row_is_rejected(self):
+        mutated = copy.deepcopy(PRESENTATION_ROWS)
+        mutated[0] = ["token", "arm", "prompt", "source_indices", "frames"]
+        result = audit_presentation_schema(mutated, DESIGN)
+        self.assertFalse(result["ok"])
+        self.assertIn("presentation-schema-mismatch", result["errors"])
 
     def test_cli_returns_nonzero_and_false_json_for_corrupted_position(self):
         with tempfile.TemporaryDirectory(prefix="7387-cli-audit-") as temp:
@@ -84,6 +98,32 @@ class PositionAuditTests(unittest.TestCase):
             self.assertEqual(completed.returncode, 1)
             self.assertFalse(result["ok"])
             self.assertIn("isolated-position-mismatch", result["position_audit"]["errors"])
+
+    def test_cli_returns_nonzero_and_denominator_error_for_truncated_manifest(self):
+        with tempfile.TemporaryDirectory(prefix="7387-cli-denominator-") as temp:
+            isolated_path = Path(temp) / "isolated.jsonl"
+            presentations_path = Path(temp) / "presentations.jsonl"
+            isolated_path.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in ROWS),
+                encoding="utf-8",
+            )
+            presentations_path.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in PRESENTATION_ROWS[:-1]),
+                encoding="utf-8",
+            )
+            completed = subprocess.run(
+                [sys.executable, str(Path(__file__).with_name("audit_positions.py")),
+                 "--design", str(SOURCE / "design.json"),
+                 "--isolated", str(isolated_path),
+                 "--presentations", str(presentations_path)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            result = json.loads(completed.stdout)
+            self.assertEqual(completed.returncode, 1)
+            self.assertFalse(result["ok"])
+            self.assertIn("presentation-denominator", result["presentation_schema_audit"]["errors"])
 
     def test_effective_wrong_position_mutation_is_rejected(self):
         mutated = copy.deepcopy(ROWS)
@@ -160,7 +200,7 @@ class PositionAuditTests(unittest.TestCase):
             refresh_checksums(generated_output)
             original_result = FROZEN_AUDITOR.audit_package(generated_output)
             self.assertTrue(original_result["ok"], original_result["errors"])
-            self.assertFalse(audit_presentation_schema(mutated)["ok"])
+            self.assertFalse(audit_presentation_schema(mutated, DESIGN)["ok"])
 
 
 def refresh_checksums(output: Path) -> None:

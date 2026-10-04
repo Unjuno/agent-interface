@@ -45,10 +45,17 @@ def audit_rows(rows: list[dict], design: dict) -> dict:
     }
 
 
-def audit_presentation_schema(rows: list[dict]) -> dict:
+def audit_presentation_schema(rows: list[object], design: dict) -> dict:
     allowed_keys = {"token", "arm", "prompt", "source_indices", "frames"}
-    errors = ["presentation-schema-mismatch"] if any(set(row) != allowed_keys for row in rows) else []
-    return {"ok": not errors, "errors": errors, "presentation_rows": len(rows)}
+    expected_rows = (len(design["lags"]) * len(design["t2_positions"])
+                     * len(design["ordered_pairs"]) * len(design["arms"]))
+    errors = []
+    if len(rows) != expected_rows:
+        errors.append("presentation-denominator")
+    if any(not isinstance(row, dict) or set(row) != allowed_keys for row in rows):
+        errors.append("presentation-schema-mismatch")
+    return {"ok": not errors, "errors": sorted(set(errors)),
+            "presentation_rows": len(rows), "expected_rows": expected_rows}
 
 
 def main() -> None:
@@ -69,7 +76,7 @@ def main() -> None:
         if line.strip()
     ]
     positions = audit_rows(isolated_rows, design)
-    schema = audit_presentation_schema(presentation_rows)
+    schema = audit_presentation_schema(presentation_rows, design)
     result = {"ok": positions["ok"] and schema["ok"],
               "position_audit": positions, "presentation_schema_audit": schema}
     print(json.dumps(result, sort_keys=True))

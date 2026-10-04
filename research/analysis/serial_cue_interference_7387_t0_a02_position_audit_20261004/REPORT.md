@@ -2,15 +2,15 @@
 
 ## H / T / D / C / U
 
-- **H:** The retained A02 isolated-control `position` fields match the position encoded by each opaque token and frozen design, and model-facing presentation rows contain only the documented fields. Changed/missing positions and answer-bearing extra fields must be rejected.
-- **T:** Read committed A02 `isolated.jsonl`, `presentations.jsonl`, and A01 `design.json` without modifying them. Reconstruct all 16 token-bound expected positions; enforce exact row-key sets; test wrong/missing positions and an injected `answer` field. Separately reproduce each omission against a disposable candidate package with a refreshed checksum manifest.
-- **D:** Scoped PASS requires all 16 retained positions and all 288 presentation schemas to match, with the effective negative controls rejected by the supplemental audit. The frozen auditor's false accepts are recorded as coverage defects, not rewritten historical outcomes.
-- **C:** This supplement checks isolated positions and exact row-key sets only. It does not replace the original full auditor or independently re-audit every pixel, provenance claim, or other semantic property.
+- **H:** The retained A02 isolated-control `position` fields match the position encoded by each opaque token and frozen design, and the model-facing presentation manifest contains exactly 288 object rows with the documented fields. Changed/missing positions, answer-bearing extra fields, truncated manifests, and non-object entries must be rejected.
+- **T:** Read committed A02 `isolated.jsonl`, `presentations.jsonl`, and A01 `design.json` without modifying them. Reconstruct all 16 token-bound expected positions; derive the expected presentation denominator from the frozen design; enforce object types and exact row-key sets; test wrong/missing positions, injected `answer`, truncated rows, and array entries. Separately reproduce each omission against a disposable candidate package with a refreshed checksum manifest.
+- **D:** Scoped PASS requires all 16 retained positions and exactly 288 presentation object rows with expected keys, plus rejection of each effective negative control and nonzero CLI exit on rejected inputs. The frozen auditor's false accepts are recorded as coverage defects, not rewritten historical outcomes.
+- **C:** This supplement checks isolated positions and presentation denominator/object/key schema only. It does not independently validate every presentation token, arm, source index, frame value, pixel, provenance claim, or other semantic property.
 - **U:** No serial-interference model hypothesis, GUI effect, task outcome, runtime performance, or product claim is tested.
 
 ## Result
 
-`PASS_MANIFEST_INTEGRITY_SUPPLEMENT`: all 16 retained A02 positions matched their token-derived expectations; all 288 presentation rows and 16 isolated rows matched the expected exact key sets; wrong-valid-position, missing-position, and injected-answer-field controls were rejected. The original A01 auditor, A02 freeze, formal output, invocation counts, and historical PASS label were not edited or rerun. This supplement does not turn fields omitted by the original auditor into evidence that its original implementation checked them.
+`PASS_MANIFEST_INTEGRITY_SUPPLEMENT`: all 16 retained A02 positions matched their token-derived expectations; all 288 presentation rows and 16 isolated rows matched the expected exact key sets. Wrong-valid-position, missing-position, injected-answer-field, truncated-row, and non-object controls were rejected, and rejected CLI inputs exited nonzero. The original A01 auditor, A02 freeze, formal output, invocation counts, and historical PASS label were not edited or rerun. This supplement does not turn fields omitted by the original auditor into evidence that its original implementation checked them.
 
 The independent PR review identified two omissions in the original frozen auditor: the isolated loop checked frames and source indices but omitted `row["position"]`, and presentation rows were not restricted to an exact key set. This additive checker independently audits those two retained-raw coverage gaps. It reads the A02 output in place and does not rewrite it.
 
@@ -29,6 +29,6 @@ python research/analysis/serial_cue_interference_7387_t0_a02_position_audit_2026
 
 The regression tests regenerate disposable candidate packages under the system temporary directory, check isolated and presentation rows against the retained A02 rows, and run the original auditor on baseline and mutated disposable packages. Mutations change only the target row field(s) and refresh the disposable checksum manifest.
 
-The command-line contract is also tested in a child process: a corrupted position must produce JSON `ok: false` and exit status 1, so scripts cannot mistake an audit rejection for success.
+The command-line contract is also tested in child processes: a corrupted position and a truncated presentation manifest must each produce JSON `ok: false` and exit status 1, so scripts cannot mistake an audit rejection for success.
 
 No container, GUI, model, GPU, or OS-input invocation was made for this deterministic raw-field audit. The frozen A01 candidate was invoked locally only to generate disposable synthetic test data; no formal candidate result or retained output was regenerated.
