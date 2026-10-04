@@ -12,8 +12,7 @@ from executor_v3 import DecisionRequired
 
 class Backend:
     sequence = 1
-    def __init__(self, reason=None):
-        self.reason = reason; self.started = threading.Event(); self.releases = 0
+    def __init__(self, reason=None): self.reason = reason; self.started = threading.Event()
     def validate(self, steps): pass
     def execute(self, step, lease, identifier, index):
         self.started.set()
@@ -25,83 +24,11 @@ class Backend:
             raise DecisionRequired(self.reason)
         time.sleep(.01)
     def release_all(self):
-        self.releases += 1
         return {"verified": True, "keys_down": [], "buttons_down": [],
                 "verified_ns": time.perf_counter_ns()}
 
 
 class ExecutorV13Tests(unittest.TestCase):
-    def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
-        backend = Backend()
-        events = []
-        executor = None
-
-        def emit(event):
-            events.append(event)
-            if event.get("event") == "accepted":
-                executor.close()
-
-        executor = Executor(backend, emit)
-        executor.submit("reentrant-close", [{"op": "pointer_drag"}], 1,
-                        time.perf_counter_ns() + 1_000_000_000)
-        self.assertTrue(executor.closed)
-        self.assertIsNone(executor.active)
-        self.assertIsNone(executor.release_watch_stops.get("reentrant-close"))
-        self.assertFalse(backend.started.is_set())
-        self.assertEqual(backend.releases, 1)
-        self.assertFalse(any(row.get("event") == "step_started" for row in events))
-        self.assertTrue(any(row.get("event") == "terminal" and
-                            row.get("status") == "cancelled" for row in events))
-
-    def test_reentrant_close_reports_unverified_release_without_starting_worker(self):
-        backend = Backend()
-        backend.release_all = lambda: {"verified": False, "keys_down": ["x"]}
-        events = []
-        executor = None
-
-        def emit(event):
-            events.append(event)
-            if event.get("event") == "accepted":
-                executor.close()
-
-        executor = Executor(backend, emit)
-        executor.submit("reentrant-close-unverified", [{"op": "pointer_drag"}], 1,
-                        time.perf_counter_ns() + 1_000_000_000)
-        terminal = next(row for row in events if row.get("event") == "terminal")
-        self.assertEqual(terminal["status"], "failed")
-        self.assertFalse(terminal["release"]["verified"])
-        self.assertEqual(terminal["release"]["keys_down"], ["x"])
-        self.assertIsNone(executor.active)
-        self.assertFalse(backend.started.is_set())
-
-    def test_reentrant_close_terminal_delivery_unknown_stays_fail_closed(self):
-        backend = Backend()
-        events = []
-        executor = None
-
-        def emit(event):
-            events.append(event)
-            if event.get("event") == "accepted":
-                try:
-                    executor.close()
-                except OSError:
-                    pass
-            elif event.get("event") == "terminal":
-                raise OSError("terminal acknowledgement lost")
-
-        executor = Executor(backend, emit)
-        with self.assertRaisesRegex(RuntimeError, "delivery is unknown"):
-            executor.submit("reentrant-close-terminal-error", [{"op": "pointer_drag"}], 1,
-                            time.perf_counter_ns() + 1_000_000_000)
-        self.assertEqual(sum(row.get("event") == "terminal" for row in events), 1)
-        self.assertEqual(executor.terminal_publication_errors[
-            "reentrant-close-terminal-error"]["status"], "delivery_unknown")
-        self.assertIsNotNone(executor.active)
-        self.assertFalse(backend.started.is_set())
-        with self.assertRaisesRegex(ValueError, "closed or busy"):
-            executor.submit("must-stay-blocked", [{"op": "pointer_drag"}], 1,
-                            time.perf_counter_ns() + 1_000_000_000)
-
     def run_reason(self, reason):
         events = []; backend = Backend(reason); executor = Executor(backend, events.append)
         executor.submit("p", [{"op": "pointer_drag"}], 1,

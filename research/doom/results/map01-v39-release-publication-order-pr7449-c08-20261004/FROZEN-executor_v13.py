@@ -26,12 +26,6 @@ class Executor(Previous):
             self.release_watch_stops.pop(identifier, None)
             raise
         with self.lock:
-            if self.active is None or self.active[0] != identifier:
-                # V12 may have completed this accepted intent synchronously
-                # when its admission callback reentered close().
-                stop.set()
-                self.release_watch_stops.pop(identifier, None)
-                return
             lease = self.active[1]
         watcher = threading.Thread(
             target=self._watch_release,
@@ -63,13 +57,10 @@ class Executor(Previous):
         with self.lock:
             if require_active and (self.active is None or self.active[0] != identifier):
                 return None
-            if (identifier in self.release_publication_attempted_ids or
-                    identifier in self.published_release_ids):
+            if identifier in self.published_release_ids:
                 return None
-            self.release_publication_attempted_ids.add(identifier)
+            self.published_release_ids.add(identifier)
             self.emit(event)
-            if identifier not in self.release_publication_errors:
-                self.published_release_ids.add(identifier)
         return event
 
     def _watch_release(self, identifier, lease, stop):
@@ -90,14 +81,6 @@ class Executor(Previous):
             return matched
 
     def _run(self, identifier, steps, lease):
-        try:
-            self._run_with_watcher_cleanup(identifier, steps, lease)
-        finally:
-            stop = self.release_watch_stops.get(identifier)
-            if stop is not None:
-                stop.set()
-
-    def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
         try:
             for index, step in enumerate(steps):
