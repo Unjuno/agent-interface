@@ -54,6 +54,8 @@ class FeedbackReleaseContractTests(unittest.TestCase):
                     "release_transition_interval_ns": [start, end],
                     "interval_width_ns": end-start,
                     "x11_release_and_sync_completed_before_return": True,
+                    "x11_release_request_issued": True,
+                    "x11_sync_completed_before_return": True,
                     "continuous_physical_state_sampled": False,
                     "application_consumption_observed": False,
                     "grants_input_authority": False}
@@ -110,6 +112,77 @@ class FeedbackReleaseContractTests(unittest.TestCase):
                                  "release_transition_interval_ns": [350, 360],
                                  "occupancy_lower_ns": 40, "occupancy_upper_ns": 50,
                                  "exact_key_up_time": None, "censored": False}])
+
+    def test_applied_ordinary_alias_release_groups_admissions_and_accepts_noop(self):
+        def admission(key, step, ack):
+            return {"event": "input_admission", "id": "plan", "step": step,
+                    "key": key, "keycode": 77, "owner_id": "owner",
+                    "intent_token": "alias-ordinary", "admitted_ns": ack-5,
+                    "input_ack_ns": ack}
+
+        common = {"event": "input_release_rpc", "id": "plan",
+                  "owner_id": "owner", "intent_token": "alias-ordinary",
+                  "operation": "up", "grants_input_authority": False,
+                  "continuous_physical_state_sampled": False,
+                  "application_consumption_observed": False}
+        applied = dict(common, step=0, payload="W", keycode=77,
+                       call_started_ns=350, call_returned_ns=360,
+                       call_interval_ns=[350, 360], call_interval_width_ns=10,
+                       release_transition_interval_ns=[350, 360], interval_width_ns=10,
+                       release_applied=True, x11_release_request_issued=True,
+                       x11_sync_completed_before_return=True,
+                       x11_release_and_sync_completed_before_return=True)
+        noop = dict(common, step=1, payload="A", keycode=77,
+                    call_started_ns=370, call_returned_ns=380,
+                    call_interval_ns=[370, 380], call_interval_width_ns=10,
+                    release_transition_interval_ns=None, interval_width_ns=None,
+                    release_applied=False, x11_release_request_issued=False,
+                    x11_sync_completed_before_return=False,
+                    x11_release_and_sync_completed_before_return=False)
+        rows = reconcile_key_intervals([
+            admission("W", 0, 310), admission("A", 1, 320), applied, noop])
+        self.assertEqual(rows, [{"intent_token": "alias-ordinary", "owner_id": "owner",
+                                 "id": "plan", "step": None, "key": None,
+                                 "keys": ["A", "W"], "keycode": 77,
+                                 "admission_count": 2, "ack_ns": 310,
+                                 "release_transition_interval_ns": [350, 360],
+                                 "occupancy_lower_ns": 40, "occupancy_upper_ns": 50,
+                                 "exact_key_up_time": None, "censored": False}])
+
+    def test_noop_keyup_without_admission_is_metadata_not_interval(self):
+        noop = {"event": "input_release_rpc", "id": "plan", "step": 0,
+                "payload": "A", "owner_id": "owner", "intent_token": "empty",
+                "operation": "up", "keycode": 77, "release_applied": False,
+                "call_started_ns": 10, "call_returned_ns": 15,
+                "call_interval_ns": [10, 15], "call_interval_width_ns": 5,
+                "release_transition_interval_ns": None, "interval_width_ns": None,
+                "x11_release_request_issued": False,
+                "x11_sync_completed_before_return": False,
+                "x11_release_and_sync_completed_before_return": False,
+                "continuous_physical_state_sampled": False,
+                "application_consumption_observed": False,
+                "grants_input_authority": False}
+        self.assertEqual(reconcile_key_intervals([noop]), [])
+
+    def test_noop_receipt_does_not_close_an_open_admission(self):
+        admission = {"event": "input_admission", "id": "plan", "step": 0,
+                     "key": "A", "keycode": 77, "owner_id": "owner",
+                     "intent_token": "open-noop", "admitted_ns": 5,
+                     "input_ack_ns": 10}
+        noop = {"event": "input_release_rpc", "id": "plan", "step": 0,
+                "payload": "A", "owner_id": "owner", "intent_token": "open-noop",
+                "operation": "up", "keycode": 77, "release_applied": False,
+                "call_started_ns": 15, "call_returned_ns": 20,
+                "call_interval_ns": [15, 20], "call_interval_width_ns": 5,
+                "release_transition_interval_ns": None, "interval_width_ns": None,
+                "x11_release_request_issued": False,
+                "x11_sync_completed_before_return": False,
+                "x11_release_and_sync_completed_before_return": False,
+                "continuous_physical_state_sampled": False,
+                "application_consumption_observed": False,
+                "grants_input_authority": False}
+        with self.assertRaisesRegex(ValueError, "open_key_interval"):
+            reconcile_key_intervals([admission, noop])
 
     def test_malformed_keycode_release_interval_fails_closed(self):
         admission = {"event": "input_admission", "id": "plan", "step": 0,
@@ -187,6 +260,8 @@ class FeedbackReleaseContractTests(unittest.TestCase):
                          "release_transition_interval_ns": [520, 521],
                          "interval_width_ns": 1,
                          "x11_release_and_sync_completed_before_return": True,
+                         "x11_release_request_issued": True,
+                         "x11_sync_completed_before_return": True,
                          "continuous_physical_state_sampled": False,
                          "application_consumption_observed": False,
                          "grants_input_authority": False}
@@ -207,6 +282,10 @@ class FeedbackReleaseContractTests(unittest.TestCase):
         unproven_release.pop("release_applied")
         with self.assertRaisesRegex(ValueError, "invalid_or_unmatched_release_rpc"):
             reconcile_key_intervals([admitted, unproven_release])
+        unproven_io = dict(wrong_step_release, id="L3", step=0)
+        unproven_io.pop("x11_sync_completed_before_return")
+        with self.assertRaisesRegex(ValueError, "invalid_or_unmatched_release_rpc"):
+            reconcile_key_intervals([admitted, unproven_io])
         with self.assertRaisesRegex(ValueError, "open_key_interval"):
             reconcile_key_intervals([admitted])
         with self.assertRaisesRegex(ValueError, "unverified_owner_release"):

@@ -1,0 +1,460 @@
+{
+  "baseline_aliased": {
+    "admissions": [
+      {
+        "admitted_ns": 118164334780100,
+        "event": "input_admission",
+        "input_ack_ns": 118164334784400,
+        "key": "W",
+        "valid_until_ns": 118169334745300
+      },
+      {
+        "admitted_ns": 118164334828500,
+        "event": "input_admission",
+        "input_ack_ns": 118164334832000,
+        "key": "A",
+        "valid_until_ns": 118169334745300
+      }
+    ],
+    "button_noop_receipt": {
+      "application_consumption_observed": false,
+      "call_returned_ns": 118164334976900,
+      "call_started_ns": 118164334947500,
+      "continuous_physical_state_sampled": false,
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "intent_token": "probe-intent",
+      "interval_width_ns": 29400,
+      "operation": "button_up",
+      "owner_id": "40914cccb98d46ebbc7165936f4bb78b",
+      "payload": 1,
+      "release_transition_interval_ns": [
+        118164334947500,
+        118164334976900
+      ],
+      "valid_until_ns": 118169334745300,
+      "x11_release_and_sync_completed_before_return": true
+    },
+    "counts_after_button_noop": {
+      "button_release_requests": 0,
+      "key_release_requests": 1,
+      "sync_calls": 3
+    },
+    "counts_after_down": {
+      "button_release_requests": 0,
+      "key_release_requests": 0,
+      "sync_calls": 2
+    },
+    "counts_after_releases": {
+      "button_release_requests": 0,
+      "key_release_requests": 1,
+      "sync_calls": 3
+    },
+    "counts_after_repeated_up": {
+      "button_release_requests": 0,
+      "key_release_requests": 1,
+      "sync_calls": 3
+    },
+    "mapping": {
+      "A": 77,
+      "W": 77
+    },
+    "release_receipts": [
+      {
+        "application_consumption_observed": false,
+        "call_returned_ns": 118164334886100,
+        "call_started_ns": 118164334851600,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": 34500,
+        "operation": "up",
+        "owner_id": "40914cccb98d46ebbc7165936f4bb78b",
+        "payload": "W",
+        "release_transition_interval_ns": [
+          118164334851600,
+          118164334886100
+        ],
+        "valid_until_ns": 118169334745300,
+        "x11_release_and_sync_completed_before_return": true
+      },
+      {
+        "application_consumption_observed": false,
+        "call_returned_ns": 118164334916900,
+        "call_started_ns": 118164334887900,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": 29000,
+        "operation": "up",
+        "owner_id": "40914cccb98d46ebbc7165936f4bb78b",
+        "payload": "A",
+        "release_transition_interval_ns": [
+          118164334887900,
+          118164334916900
+        ],
+        "valid_until_ns": 118169334745300,
+        "x11_release_and_sync_completed_before_return": true
+      }
+    ],
+    "repeated_up_receipt": {
+      "application_consumption_observed": false,
+      "call_returned_ns": 118164334946300,
+      "call_started_ns": 118164334918600,
+      "continuous_physical_state_sampled": false,
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "intent_token": "probe-intent",
+      "interval_width_ns": 27700,
+      "operation": "up",
+      "owner_id": "40914cccb98d46ebbc7165936f4bb78b",
+      "payload": "A",
+      "release_transition_interval_ns": [
+        118164334918600,
+        118164334946300
+      ],
+      "valid_until_ns": 118169334745300,
+      "x11_release_and_sync_completed_before_return": true
+    }
+  },
+  "candidate_aliased": {
+    "admissions": [
+      {
+        "admitted_ns": 118164339350100,
+        "event": "input_admission",
+        "input_ack_ns": 118164339353200,
+        "key": "W",
+        "keycode": 77,
+        "valid_until_ns": 118169339329700
+      },
+      {
+        "admitted_ns": 118164339381400,
+        "event": "input_admission",
+        "input_ack_ns": 118164339383100,
+        "key": "A",
+        "keycode": 77,
+        "valid_until_ns": 118169339329700
+      }
+    ],
+    "button_noop_receipt": {
+      "application_consumption_observed": false,
+      "button": 1,
+      "call_interval_ns": [
+        118164339480700,
+        118164339506200
+      ],
+      "call_interval_width_ns": 25500,
+      "call_returned_ns": 118164339506200,
+      "call_started_ns": 118164339480700,
+      "continuous_physical_state_sampled": false,
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "intent_token": "probe-intent",
+      "interval_width_ns": null,
+      "keycode": null,
+      "operation": "button_up",
+      "owner_id": "27b51f5499334cc7b755e838594badf7",
+      "payload": 1,
+      "release_applied": false,
+      "release_transition_interval_ns": null,
+      "valid_until_ns": 118169339329700,
+      "x11_release_and_sync_completed_before_return": false,
+      "x11_release_request_issued": false,
+      "x11_sync_completed_before_return": false
+    },
+    "counts_after_button_noop": {
+      "button_release_requests": 0,
+      "key_release_requests": 1,
+      "sync_calls": 3
+    },
+    "counts_after_down": {
+      "button_release_requests": 0,
+      "key_release_requests": 0,
+      "sync_calls": 2
+    },
+    "counts_after_releases": {
+      "button_release_requests": 0,
+      "key_release_requests": 1,
+      "sync_calls": 3
+    },
+    "counts_after_repeated_up": {
+      "button_release_requests": 0,
+      "key_release_requests": 1,
+      "sync_calls": 3
+    },
+    "mapping": {
+      "A": 77,
+      "W": 77
+    },
+    "release_receipts": [
+      {
+        "application_consumption_observed": false,
+        "button": null,
+        "call_interval_ns": [
+          118164339395800,
+          118164339423300
+        ],
+        "call_interval_width_ns": 27500,
+        "call_returned_ns": 118164339423300,
+        "call_started_ns": 118164339395800,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": 27500,
+        "keycode": 77,
+        "operation": "up",
+        "owner_id": "27b51f5499334cc7b755e838594badf7",
+        "payload": "W",
+        "release_applied": true,
+        "release_transition_interval_ns": [
+          118164339395800,
+          118164339423300
+        ],
+        "valid_until_ns": 118169339329700,
+        "x11_release_and_sync_completed_before_return": true,
+        "x11_release_request_issued": true,
+        "x11_sync_completed_before_return": true
+      },
+      {
+        "application_consumption_observed": false,
+        "button": null,
+        "call_interval_ns": [
+          118164339426500,
+          118164339451600
+        ],
+        "call_interval_width_ns": 25100,
+        "call_returned_ns": 118164339451600,
+        "call_started_ns": 118164339426500,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": null,
+        "keycode": 77,
+        "operation": "up",
+        "owner_id": "27b51f5499334cc7b755e838594badf7",
+        "payload": "A",
+        "release_applied": false,
+        "release_transition_interval_ns": null,
+        "valid_until_ns": 118169339329700,
+        "x11_release_and_sync_completed_before_return": false,
+        "x11_release_request_issued": false,
+        "x11_sync_completed_before_return": false
+      }
+    ],
+    "repeated_up_receipt": {
+      "application_consumption_observed": false,
+      "button": null,
+      "call_interval_ns": [
+        118164339454000,
+        118164339478600
+      ],
+      "call_interval_width_ns": 24600,
+      "call_returned_ns": 118164339478600,
+      "call_started_ns": 118164339454000,
+      "continuous_physical_state_sampled": false,
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "intent_token": "probe-intent",
+      "interval_width_ns": null,
+      "keycode": 77,
+      "operation": "up",
+      "owner_id": "27b51f5499334cc7b755e838594badf7",
+      "payload": "A",
+      "release_applied": false,
+      "release_transition_interval_ns": null,
+      "valid_until_ns": 118169339329700,
+      "x11_release_and_sync_completed_before_return": false,
+      "x11_release_request_issued": false,
+      "x11_sync_completed_before_return": false
+    }
+  },
+  "candidate_injective": {
+    "admissions": [
+      {
+        "admitted_ns": 118164338975300,
+        "event": "input_admission",
+        "input_ack_ns": 118164338978500,
+        "key": "W",
+        "keycode": 87,
+        "valid_until_ns": 118169338947900
+      },
+      {
+        "admitted_ns": 118164339010000,
+        "event": "input_admission",
+        "input_ack_ns": 118164339011800,
+        "key": "A",
+        "keycode": 65,
+        "valid_until_ns": 118169338947900
+      }
+    ],
+    "button_noop_receipt": {
+      "application_consumption_observed": false,
+      "button": 1,
+      "call_interval_ns": [
+        118164339138700,
+        118164339165300
+      ],
+      "call_interval_width_ns": 26600,
+      "call_returned_ns": 118164339165300,
+      "call_started_ns": 118164339138700,
+      "continuous_physical_state_sampled": false,
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "intent_token": "probe-intent",
+      "interval_width_ns": null,
+      "keycode": null,
+      "operation": "button_up",
+      "owner_id": "f09d0abd2a744400972fd71733391ce0",
+      "payload": 1,
+      "release_applied": false,
+      "release_transition_interval_ns": null,
+      "valid_until_ns": 118169338947900,
+      "x11_release_and_sync_completed_before_return": false,
+      "x11_release_request_issued": false,
+      "x11_sync_completed_before_return": false
+    },
+    "counts_after_button_noop": {
+      "button_release_requests": 0,
+      "key_release_requests": 2,
+      "sync_calls": 4
+    },
+    "counts_after_down": {
+      "button_release_requests": 0,
+      "key_release_requests": 0,
+      "sync_calls": 2
+    },
+    "counts_after_releases": {
+      "button_release_requests": 0,
+      "key_release_requests": 2,
+      "sync_calls": 4
+    },
+    "counts_after_repeated_up": {
+      "button_release_requests": 0,
+      "key_release_requests": 2,
+      "sync_calls": 4
+    },
+    "mapping": {
+      "A": 65,
+      "W": 87
+    },
+    "release_receipts": [
+      {
+        "application_consumption_observed": false,
+        "button": null,
+        "call_interval_ns": [
+          118164339027600,
+          118164339066500
+        ],
+        "call_interval_width_ns": 38900,
+        "call_returned_ns": 118164339066500,
+        "call_started_ns": 118164339027600,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": 38900,
+        "keycode": 87,
+        "operation": "up",
+        "owner_id": "f09d0abd2a744400972fd71733391ce0",
+        "payload": "W",
+        "release_applied": true,
+        "release_transition_interval_ns": [
+          118164339027600,
+          118164339066500
+        ],
+        "valid_until_ns": 118169338947900,
+        "x11_release_and_sync_completed_before_return": true,
+        "x11_release_request_issued": true,
+        "x11_sync_completed_before_return": true
+      },
+      {
+        "application_consumption_observed": false,
+        "button": null,
+        "call_interval_ns": [
+          118164339070800,
+          118164339102900
+        ],
+        "call_interval_width_ns": 32100,
+        "call_returned_ns": 118164339102900,
+        "call_started_ns": 118164339070800,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "probe-intent",
+        "interval_width_ns": 32100,
+        "keycode": 65,
+        "operation": "up",
+        "owner_id": "f09d0abd2a744400972fd71733391ce0",
+        "payload": "A",
+        "release_applied": true,
+        "release_transition_interval_ns": [
+          118164339070800,
+          118164339102900
+        ],
+        "valid_until_ns": 118169338947900,
+        "x11_release_and_sync_completed_before_return": true,
+        "x11_release_request_issued": true,
+        "x11_sync_completed_before_return": true
+      }
+    ],
+    "repeated_up_receipt": {
+      "application_consumption_observed": false,
+      "button": null,
+      "call_interval_ns": [
+        118164339106100,
+        118164339134700
+      ],
+      "call_interval_width_ns": 28600,
+      "call_returned_ns": 118164339134700,
+      "call_started_ns": 118164339106100,
+      "continuous_physical_state_sampled": false,
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "intent_token": "probe-intent",
+      "interval_width_ns": null,
+      "keycode": 65,
+      "operation": "up",
+      "owner_id": "f09d0abd2a744400972fd71733391ce0",
+      "payload": "A",
+      "release_applied": false,
+      "release_transition_interval_ns": null,
+      "valid_until_ns": 118169338947900,
+      "x11_release_and_sync_completed_before_return": false,
+      "x11_release_request_issued": false,
+      "x11_sync_completed_before_return": false
+    }
+  },
+  "candidate_patch_sha256": "d3a106b952dd861c7091ea2498c2ba2fb55c8998e26708cc87d5bf9c7bc6e920",
+  "candidate_worktree_sha256": {
+    "research/live_control/input_owner_v10.py": "349af74264f6ee49173f51e7da1a3ffff6ac48ff0dede4cf8efd5621d90a98dc",
+    "research/live_control/input_owner_v11.py": "1a55a51b30b2bbc8a5828d072d093c691b3220ad993dca55200de5939b0888ef"
+  },
+  "fixture": {
+    "blob": "3b917891c88096b79a46ebcffeb581fa1e174186",
+    "commit": "69b2a53a251f91c4b76955d26bcb7888083cfd08",
+    "path": "research/doom/map01_cancel_keycode_identity_59_t0_a01_20261004/probe.py"
+  },
+  "legacy_v10_compatibility": {
+    "admission": {
+      "admitted_ns": 118164338617000,
+      "event": "input_admission",
+      "input_ack_ns": 118164338619000,
+      "key": "W",
+      "keycode": 87,
+      "valid_until_ns": 118169338587300
+    },
+    "button_up_return": null,
+    "key_up_return": null
+  },
+  "schema": "map01-v11-release-receipt-repair-probe-v1",
+  "scope": "frozen V10/V11 source plus in-memory candidate edits under FakeDisplay; no real X server, OS input, game, model, or live allocation",
+  "source_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "sources": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56"
+  }
+}

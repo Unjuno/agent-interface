@@ -17,6 +17,7 @@ class FakeOwner:
     def __init__(self):
         self.calls = []
         self.fail_on = None
+        self.release_applied = True
 
     def call(self, operation, lease=None, key=None):
         self.calls.append((operation, lease, key))
@@ -26,23 +27,31 @@ class FakeOwner:
             return {
                 "event": "input_admission",
                 "key": key,
+                "keycode": 65,
                 "admitted_ns": 10,
                 "input_ack_ns": 11,
                 "valid_until_ns": lease.deadline,
             }
         if operation == "up":
+            applied = self.release_applied
             return {
                 "event": "input_release_rpc",
                 "operation": "up",
                 "payload": key,
+                "keycode": 65,
+                "release_applied": applied,
                 "owner_id": self.owner_id,
                 "intent_token": lease.intent_token,
                 "call_started_ns": 20,
                 "call_returned_ns": 21,
-                "release_transition_interval_ns": [20, 21],
-                "interval_width_ns": 1,
+                "call_interval_ns": [20, 21],
+                "call_interval_width_ns": 1,
+                "release_transition_interval_ns": [20, 21] if applied else None,
+                "interval_width_ns": 1 if applied else None,
                 "valid_until_ns": lease.deadline,
-                "x11_release_and_sync_completed_before_return": True,
+                "x11_release_request_issued": applied,
+                "x11_sync_completed_before_return": applied,
+                "x11_release_and_sync_completed_before_return": applied,
                 "continuous_physical_state_sampled": False,
                 "application_consumption_observed": False,
                 "grants_input_authority": False,
@@ -76,6 +85,21 @@ class BackendV2Tests(unittest.TestCase):
         release = backend.events[-1]
         self.assertEqual(release["release_transition_interval_ns"], [20, 21])
         self.assertFalse(release["grants_input_authority"])
+
+    def test_noop_release_receipt_is_propagated_without_transition_interval(self):
+        backend = self.backend()
+        backend.raw("space", True)
+        backend.owner.release_applied = False
+        backend.raw("space", False)
+        release = backend.events[-1]
+        self.assertEqual(release["event"], "input_release_rpc")
+        self.assertEqual(release["keycode"], 65)
+        self.assertFalse(release["release_applied"])
+        self.assertFalse(release["x11_release_request_issued"])
+        self.assertFalse(release["x11_sync_completed_before_return"])
+        self.assertFalse(release["x11_release_and_sync_completed_before_return"])
+        self.assertEqual(release["call_interval_ns"], [20, 21])
+        self.assertIsNone(release["release_transition_interval_ns"])
 
     def test_missing_context_rejects_before_owner_call(self):
         backend = self.backend()

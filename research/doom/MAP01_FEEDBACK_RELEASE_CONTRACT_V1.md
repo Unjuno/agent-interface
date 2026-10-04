@@ -20,16 +20,14 @@ efficacy remain untested.**
   their admissions by identity and order, cancellation intervals remain explicitly
   censored at the verified nested empty-owner release, mismatched/controller-visible scorer
   evidence stays unknown, and a score outside the declared recovery window does
-  not pass. The retained synthetic suite passes 11/11 cases, including cross-program receipt rejection, keycode alias grouping, malformed keycode intervals, and fail-closed no-op or unproven ordinary release receipts.
+  not pass. The retained synthetic suite passes 14/14 cases, including cross-program receipt rejection, cancellation and ordinary-release alias grouping, malformed keycode intervals, fail-closed unproven applied receipts, and valid no-op receipts that contribute no transition interval.
 - **C:** Release may occur asynchronously between the last observation and
   terminal; its nested owner receipt is a valid censoring bound, not an exact normal
   key-up time. A standalone `owner_release` row is not the executor wire format
   and fails closed. A scorer sample may be exact yet show no task progress. A
   kill-count increment is a progress signal, not equivalent to map completion.
 - **U:** The oracle has synthetic receipt coverage plus retained-run negative
-  conformance checks below. No current runtime source was changed; no
-  live game, GUI, model, physical input, matched condition, recovery result,
-  performance effect, or #59 exit criterion is established.
+  conformance checks below. Main remains unchanged; this draft branch changes V10/V11 and typed-backend test sources, but no live game, GUI, model, physical input, matched condition, recovery result, performance effect, or #59 exit criterion is established.
 
 ## Existing integration boundary and remaining gap
 
@@ -84,14 +82,15 @@ kill or other useful effect. The repository's
 `independent_progress_clock_v1.py` already defines scorer-only positive and
 negative events but documents integration as deferred. Joining that stream to
 exact observations while keeping privileged scorer state out of the controller
-channel remains open. The V11 no-op receipt probe also shows that the existing ordinary release producer does not yet satisfy the strengthened contract: it can assert the XSync-shaped flag for a no-op. Receipts without explicit `release_applied=true` and a matching resolved keycode are therefore rejected by the oracle. The adjacent v13/backend-v2 suite could not be executed
-on this Windows host because its import closure requires PyXlib, which is not
-installed; no dependency was added. No live game or model run was started.
+channel remains open. The source-pinned V10/V11 baseline at `6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b` shows that the base ordinary release producer can assert the XSync-shaped flag for a no-op. This branch now contains a draft additive producer repair and typed-backend passthrough, verified offline; main is unchanged pending independent review. Applied receipts without explicit `release_applied=true` and a matching resolved keycode are rejected. A well-formed `release_applied=false` no-op receipt is accepted as call metadata only and contributes no transition interval; an applied alias-keycode release closes the physical interval for all currently open admissions sharing that code. The checked-out draft repair and source-pinned comparison in `map01_release_receipt_repair_59_t1_a01_20261004/` demonstrated this distinction against frozen V10/V11 sources. The candidate uses an additive V10 receipt call path that preserves legacy `call("up")` and `call("button_up")` return values in the comparison. Production integration still requires compatibility review before use. The adjacent V13 live-backend suite could not be executed on this Windows host because its import closure requires PyXlib, which is not installed; no dependency was added. The V11 owner and V2 typed-backend contract tests did run against the checked-out sources using the retained fake-Xlib fixture; the inherited session superclass was stubbed because it requires VizDoom. No live game or model run was started.
 
 ## Reproduction
 
 ```sh
 python research/doom/test_map01_feedback_release_contract_v1.py -v
+python research/doom/map01_release_receipt_repair_59_t1_a01_20261004/probe.py
+python research/doom/map01_release_receipt_repair_59_t1_a01_20261004/audit.py
+python research/doom/map01_release_receipt_repair_59_t1_a01_20261004/run_v11_unit_fake_xlib.py
 python -m py_compile research/doom/map01_feedback_release_contract_v1.py research/doom/test_map01_feedback_release_contract_v1.py
 git diff --check
 ```

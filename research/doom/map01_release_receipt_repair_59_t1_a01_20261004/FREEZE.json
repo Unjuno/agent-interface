@@ -1,0 +1,31 @@
+{
+  "schema": "map01-v11-release-receipt-repair-freeze-v1",
+  "issue": 59,
+  "allocation": "map01-release-receipt-repair-t1-a01-20261004",
+  "source_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "sources": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56"
+  },
+  "fixture": {
+    "commit": "69b2a53a251f91c4b76955d26bcb7888083cfd08",
+    "path": "research/doom/map01_cancel_keycode_identity_59_t0_a01_20261004/probe.py",
+    "blob": "3b917891c88096b79a46ebcffeb581fa1e174186"
+  },
+  "tested_sources": {
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/doom/test_doom_typed_release_backend_v2.py": "1d39655e558abb1d3f7d458a2176393f11074021b74d929590f77ed33b64253e",
+    "research/live_control/input_owner_v10.py": "349af74264f6ee49173f51e7da1a3ffff6ac48ff0dede4cf8efd5621d90a98dc",
+    "research/live_control/input_owner_v11.py": "1a55a51b30b2bbc8a5828d072d093c691b3220ad993dca55200de5939b0888ef",
+    "research/live_control/test_input_owner_v11.py": "3a73a0ba2cc257cfe3e9fd8a87fe9265dd30b8e72e6ae74296cc1aed37358dde"
+  },
+  "method": "execute frozen V10/V11 sources and the exact generated candidate patch applied to checked-out files under controlled FakeDisplay; run V11 unit contracts under the same fake-Xlib setup",
+  "factors": [
+    "injective mapping W=87,A=65",
+    "aliased mapping W=77,A=77",
+    "repeated key-up after release",
+    "button-up when no button is held"
+  ],
+  "decision": "candidate applied-release receipts must match actual fake KeyRelease/ButtonRelease and sync deltas; no-op receipts must expose identity but claim no applied transition and provide no release-transition interval",
+  "scope": "synthetic source construction only; no live X server or input"
+}

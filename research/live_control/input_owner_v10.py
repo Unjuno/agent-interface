@@ -61,6 +61,12 @@ class InputOwner:
         if not ok: raise result
         return result
 
+    def call_release_with_receipt(self, operation, lease=None, key=None):
+        variants = {"up": "up_with_receipt", "button_up": "button_up_with_receipt"}
+        if operation not in variants:
+            raise ValueError("release receipt is available only for up operations")
+        return self.call(variants[operation], lease, key)
+
     def close(self):
         if not self.closed:
             try:
@@ -244,7 +250,7 @@ class InputOwner:
                         if not all(point.mask & (X.Button1Mask << (b-1)) for b in buttons):
                             raise DecisionRequired('held button no longer physically down')
                         op='move';key={'x':key['x'],'y':key['y']}
-                    if op in ('move','button_down','button_up','wheel','down','up'):revision += 1
+                    if op in ('move','button_down','button_up','button_up_with_receipt','wheel','down','up','up_with_receipt'):revision += 1
                     if op == 'input_state':
                         started=time.perf_counter_ns();point=d.screen().root.query_pointer();focus=focus_id();finished=time.perf_counter_ns()
                         result=dict(owner_id=self.owner_id,revision=revision,sample_started_ns=started,sample_finished_ns=finished,
@@ -259,18 +265,25 @@ class InputOwner:
                         if op == 'release' and active is not None and active is not lease:
                             raise ValueError('release belongs to another intent')
                         result = release(op)
-                    elif op in ('move', 'button_down', 'button_up', 'wheel'):
+                    elif op in ('move', 'button_down', 'button_up', 'button_up_with_receipt', 'wheel'):
                         root = d.screen().root
-                        if op == 'button_up':
+                        if op in ('button_up', 'button_up_with_receipt'):
                             if type(key) is not int or key not in (1,2,3):
                                 raise ValueError('button must be 1..3')
                             if key in buttons and buttons[key] is not lease:
                                 raise ValueError('button belongs to another intent')
-                            if key in buttons:
+                            release_applied = key in buttons
+                            if release_applied:
                                 xtest.fake_input(d, X.ButtonRelease, key)
                                 d.sync()
                                 del buttons[key]
-                            result = None
+                            if op == 'button_up_with_receipt':
+                                result = dict(event='input_release_result', operation='button_up',
+                                              button=key, release_applied=release_applied,
+                                              x11_release_request_issued=release_applied,
+                                              x11_sync_completed=release_applied)
+                            else:
+                                result = None
                         else:
                             if op == 'move':
                                 if not isinstance(key, dict) or set(key) != {'x','y'} or any(type(key[k]) is not int for k in ('x','y')):
@@ -307,7 +320,7 @@ class InputOwner:
                             result = dict(event='pointer_admission', operation=op, payload=key,
                                           admitted_ns=admitted,input_ack_ns=time.perf_counter_ns(),
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
-                    elif op in ('down', 'up'):
+                    elif op in ('down', 'up', 'up_with_receipt'):
                         code = d.keysym_to_keycode(XK.string_to_keysym(key))
                         if not code:
                             raise ValueError('key unavailable on input owner')
@@ -329,17 +342,24 @@ class InputOwner:
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
-                            result = dict(event='input_admission', key=key, admitted_ns=admitted,
+                            result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
                         else:
                             # Cleanup from an old intent must never release a newer hold.
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
-                            if code in held:
+                            release_applied = code in held
+                            if release_applied:
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
                                 del held[code]
-                            result = None
+                            if op == 'up_with_receipt':
+                                result = dict(event='input_release_result', operation='up',
+                                              keycode=code, release_applied=release_applied,
+                                              x11_release_request_issued=release_applied,
+                                              x11_sync_completed=release_applied)
+                            else:
+                                result = None
                     else:
                         raise ValueError('unknown input operation')
                     if continuation and isinstance(result,dict):
