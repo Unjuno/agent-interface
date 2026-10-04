@@ -100,6 +100,7 @@ class Executor(Previous):
     def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
         release_batch_publication = None
+        pending_base_exception = None
         try:
             for index, step in enumerate(steps):
                 if lease.is_set(): raise Cancelled()
@@ -121,8 +122,7 @@ class Executor(Previous):
             publication = getattr(exc, "release_batch_publication", None)
             if isinstance(publication, dict):
                 release_batch_publication = dict(publication)
-            elif not isinstance(exc, Exception):
-                raise
+            pending_base_exception = exc
         finally:
             # An owner-originated focus/surface event is already available here.
             # For explicit cancellation, allow one owner polling interval before
@@ -137,12 +137,14 @@ class Executor(Previous):
                     release.setdefault("release_batch_delivery", release_batch_publication)
                 if release.get("verified") is not True:
                     status = "failed"; error = "input release not verified"
-            except Exception as exc:
+            except BaseException as exc:
                 release = {"verified": False, "error": repr(exc)}
                 status = "failed"
                 publication = getattr(exc, "release_batch_publication", None)
                 if isinstance(publication, dict):
                     release["release_batch_delivery"] = dict(publication)
+                if not isinstance(exc, Exception) and pending_base_exception is None:
+                    pending_base_exception = exc
             if status == "completed":
                 try:
                     if lease.is_set(): raise Cancelled()
@@ -172,6 +174,8 @@ class Executor(Previous):
             stop = self.release_watch_stops.get(identifier)
             if stop is not None:
                 stop.set()
+        if pending_base_exception is not None:
+            raise pending_base_exception
 
     def close(self):
         super().close()
