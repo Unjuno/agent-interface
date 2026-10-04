@@ -85,4 +85,3 @@ def main():
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
         sink.finalize(polling.stats());_merge_sources(out)
 if __name__=='__main__':main()
-
