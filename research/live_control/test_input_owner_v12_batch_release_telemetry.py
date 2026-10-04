@@ -29,17 +29,36 @@ def fake_input(d, event, code, **_kwargs):
         elif event == 3: SERVER["down"].discard(code)
         else: raise AssertionError(event)
 
-xlib=types.ModuleType("Xlib"); xlib.__path__=[]
-xlib.X=types.SimpleNamespace(KeyPress=2,KeyRelease=3,ButtonRelease=5,ButtonPress=4,
-                              Button1Mask=1,AnyPropertyType=0,IsViewable=2,MotionNotify=6)
-xlib.XK=types.SimpleNamespace(string_to_keysym=lambda value: ord(value[0]))
-xlib.display=types.SimpleNamespace(Display=FakeDisplay)
-xlib.error=types.SimpleNamespace(BadWindow=type("BadWindow",(Exception,),{}),BadDrawable=type("BadDrawable",(Exception,),{}))
-ext=types.ModuleType("Xlib.ext"); ext.__path__=[]
-xtest=types.ModuleType("Xlib.ext.xtest"); xtest.fake_input=fake_input; ext.xtest=xtest; xlib.ext=ext
-sys.modules.update({"Xlib":xlib,"Xlib.ext":ext,"Xlib.ext.xtest":xtest})
-from input_owner_v12 import InputOwner
-from executor_v13 import Executor
+_ABSENT=object()
+_MODULE_NAMES=("Xlib","Xlib.X","Xlib.XK","Xlib.display","Xlib.error",
+               "Xlib.ext","Xlib.ext.xtest","input_owner_v12","executor_v13")
+_SAVED_MODULES={}
+
+def setUpModule():
+    global InputOwner, Executor
+    _SAVED_MODULES.update({name:sys.modules.get(name,_ABSENT) for name in _MODULE_NAMES})
+    xlib=types.ModuleType("Xlib"); xlib.__path__=[]
+    xlib.X=types.SimpleNamespace(KeyPress=2,KeyRelease=3,ButtonRelease=5,ButtonPress=4,
+                                 Button1Mask=1,AnyPropertyType=0,IsViewable=2,MotionNotify=6)
+    xlib.XK=types.SimpleNamespace(string_to_keysym=lambda value: ord(value[0]))
+    xlib.display=types.SimpleNamespace(Display=FakeDisplay)
+    xlib.error=types.SimpleNamespace(BadWindow=type("BadWindow",(Exception,),{}),BadDrawable=type("BadDrawable",(Exception,),{}))
+    ext=types.ModuleType("Xlib.ext"); ext.__path__=[]
+    xtest=types.ModuleType("Xlib.ext.xtest"); xtest.fake_input=fake_input; ext.xtest=xtest; xlib.ext=ext
+    sys.modules.update({"Xlib":xlib,"Xlib.ext":ext,"Xlib.ext.xtest":xtest})
+    sys.modules.pop("input_owner_v12",None)
+    sys.modules.pop("executor_v13",None)
+    from input_owner_v12 import InputOwner
+    from executor_v13 import Executor
+    globals()["InputOwner"]=InputOwner
+    globals()["Executor"]=Executor
+
+def tearDownModule():
+    for name, module in _SAVED_MODULES.items():
+        if module is _ABSENT:
+            sys.modules.pop(name,None)
+        else:
+            sys.modules[name]=module
 
 class Lease:
     def __init__(self):
