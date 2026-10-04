@@ -1,0 +1,96 @@
+[
+  {
+    "case_id": "zero_support_spans",
+    "capture_frame_complete": true,
+    "out_of_frame_transition_known": false,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "zero_support_spans-0", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "zero_support_spans-1", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "zero_support_spans-2", "label": "unknown", "audit_inclusion_probability": "0/1"},
+      {"capture_id": "zero_support_spans-3", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  },
+  {
+    "case_id": "all_unknown",
+    "capture_frame_complete": true,
+    "out_of_frame_transition_known": false,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "all_unknown-0", "label": "unknown", "audit_inclusion_probability": "0/1"},
+      {"capture_id": "all_unknown-1", "label": "unknown", "audit_inclusion_probability": "0/1"},
+      {"capture_id": "all_unknown-2", "label": "unknown", "audit_inclusion_probability": "0/1"},
+      {"capture_id": "all_unknown-3", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  },
+  {
+    "case_id": "lower_bound_reject",
+    "capture_frame_complete": true,
+    "out_of_frame_transition_known": false,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "lower_bound_reject-0", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "lower_bound_reject-1", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "lower_bound_reject-2", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "lower_bound_reject-3", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  },
+  {
+    "case_id": "upper_bound_only",
+    "capture_frame_complete": true,
+    "out_of_frame_transition_known": false,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "upper_bound_only-0", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "upper_bound_only-1", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "upper_bound_only-2", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "upper_bound_only-3", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "upper_bound_only-4", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  },
+  {
+    "case_id": "upper_touches_threshold",
+    "capture_frame_complete": true,
+    "out_of_frame_transition_known": false,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "upper_touches_threshold-0", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "upper_touches_threshold-1", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "upper_touches_threshold-2", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "upper_touches_threshold-3", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  },
+  {
+    "case_id": "lower_touches_threshold",
+    "capture_frame_complete": true,
+    "out_of_frame_transition_known": false,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "lower_touches_threshold-0", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "lower_touches_threshold-1", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "lower_touches_threshold-2", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "lower_touches_threshold-3", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  },
+  {
+    "case_id": "incomplete_denominator",
+    "capture_frame_complete": false,
+    "out_of_frame_transition_known": false,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "incomplete_denominator-0", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "incomplete_denominator-1", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  },
+  {
+    "case_id": "out_of_frame",
+    "capture_frame_complete": true,
+    "out_of_frame_transition_known": true,
+    "threshold": "1/2",
+    "rows": [
+      {"capture_id": "out_of_frame-0", "label": "positive", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "out_of_frame-1", "label": "negative", "audit_inclusion_probability": "1/1"},
+      {"capture_id": "out_of_frame-2", "label": "unknown", "audit_inclusion_probability": "0/1"}
+    ]
+  }
+]
