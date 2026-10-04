@@ -19,4 +19,16 @@ python3 -B tests/test_audit_a01_v2_mutations.py
 python3 -B audit_a01_v2.py
 ```
 
+### Additive V3 trace-custody check
+
+The V2 audit above is retained unchanged. Its review found that semantically unscored fields in `raw/trace.json` could be edited without affecting V2's PASS. V3 therefore verifies the raw file's exact bytes against the pinned `raw_trace_sha256` before parsing it, then delegates the unchanged semantic checks to V2. `tests/test_audit_a01_v3_trace_hash.py` demonstrates the gap (V2 accepts edits to `started_at` and the batch `owner_id`) and confirms V3 rejects the altered bytes before parsing. Run:
+
+```sh
+python3 -B tests/test_audit_a01_v2_mutations.py
+python3 -B tests/test_audit_a01_v3_trace_hash.py
+python3 -B audit_a01_v3.py
+```
+
+This is a read-only audit successor; the candidate, original raw trace, first failed audit, and V2 freeze remain unchanged. No candidate or native/X11 experiment was rerun.
+
 The candidate allocation is consumed and must not be run again under A01. A future candidate execution requires a new allocation ID and an explicit delta. The first auditor is intentionally retained as the original failed version; the final command uses the versioned read-only repair and does not rerun the candidate.
