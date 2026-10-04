@@ -15,6 +15,8 @@ Result: `PASS_CONSTRUCTION` for the tested release-batch behavior; `HOLD_NATIVE_
 
 The original candidate suite was 18/18 green but its test parent implemented `release_all()` by looping through `raw()`, unlike the inherited production method. Applying the exact inherited method to the case produced a counterexample: owner calls `[('up', 'a'), ('release', None)]`, emitted receipts `[]`, pending receipt `['a']`, held set empty, and no post-cleanup `input_state` sample.
 
+An initial independent test invocation used the PR's base branch (`a35406ff`) instead of PR #7378's head (`fbed929f`) and an incomplete sparse checkout; it produced import/file-not-found errors and is not treated as a candidate result. After switching to the exact PR head and materializing the test's declared source dependencies, the parent suite passed 18/18 and the counterexample above reproduced.
+
 The new regression first failed as intended: expected `['a']`, got `[]`. After the fix:
 
 - `python3 -B -m unittest -v test_doom_typed_release_backend_v3` — **19/19 PASS**.
