@@ -1,0 +1,205 @@
+{
+  "experiment": "CROSS-COMPONENT-POST-SAMPLE-CANCEL-7429-7440",
+  "purpose": "Supplemental exact-current-#7429-head replay of the existing post-I/O composition schedule; original e22 evidence remains unchanged.",
+  "current_main": "0178fd24e9c317fff40e0fa1952fbe7e8ae01078",
+  "pr7429_head": "d35572515f828f458f7bc7406334f74707164199",
+  "pr7429_executor_blob": "cfd7a3f5979e2067b797ddb3dc7a48fcfc25de7d",
+  "pr7429_executor_raw_sha256": "11ed8e63fffa45bba52d8be2a926a1b5a09b20cfcbb0be0b02defc4b8a1e038b",
+  "pr7440_head": "99b7d130742b4e884709a862bc074d15e6b42ac9",
+  "sources": [
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/pr7429/executor_v12.py",
+      "git_blob": "cfd7a3f5979e2067b797ddb3dc7a48fcfc25de7d"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/pr7440/input_owner_v12.py",
+      "git_blob": "4623b7858f639c6a70531651b0c39a67701d5223"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/pr7440/input_transition_owner_v4.py",
+      "git_blob": "bd27bbddf277cfc0b26cffbfcd77af49954c21e3"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/main/executor_v3.py",
+      "git_blob": "2b072454fd81c41bf9e025217afc78020c7059de"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/main/executor_v5.py",
+      "git_blob": "742f7a5368b0bf6c202fdbe0856494abb5795dce"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/main/executor_v11.py",
+      "git_blob": "8dc84dc83bd3bb17ec5354d768383738e683d9d4"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/main/lease.py",
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/main/lease_cause_v1.py",
+      "git_blob": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/main/lease_cause_v2.py",
+      "git_blob": "7428e22919b019a62fa80f2162ce5c0bc1d9231b"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/dependencies/main/lease_release_v1.py",
+      "git_blob": "e325bd358874ae003e066f5d592c045b0ebef56e"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/test_postsample_composition.py",
+      "git_blob": "f170e72afde1530f08f7e61ae5582508acd8cc2a"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/test_ordinary_release_control.py",
+      "git_blob": "7061fa80ea7606ff80ecc5c7b83dda4b9aabc659"
+    },
+    {
+      "path": "research/live_control/cancel_release_publication_59/late_cancel_composition_v1/current_head_replay_7429_d355/audit_pair.py",
+      "git_blob": "1a76675fff5cd60b15f33a7e788f54860cf16020"
+    }
+  ],
+  "outputs": {
+    "RUN-01.json": {
+      "experiment": "CROSS-COMPONENT-POST-SAMPLE-CANCEL-7429-7440",
+      "classification": "CURRENT_HEAD_FIX_COMPOSES_WITH_EXECUTOR_PUBLICATION",
+      "trigger": "owner trace sets executor cancellation after initial cancel.is_set() sample and before release(reason); owner rechecks after release I/O",
+      "owner_release": {
+        "event": "owner_release",
+        "reason": "cancelled",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 102732259682200,
+        "valid_until_ns": 102737245598000
+      },
+      "emitted_events": [
+        "accepted",
+        "step_started",
+        "step_completed",
+        "cancel_requested",
+        "input_released",
+        "terminal"
+      ],
+      "input_released_count": 1,
+      "terminal": {
+        "event": "terminal",
+        "id": "integration",
+        "status": "cancelled",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "cancelled",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 102732259682200,
+          "valid_until_ns": 102737245598000,
+          "intent_token": "d8a95580d00c4de3880c44d8d8d4a4eb",
+          "release_call_started_ns": 102732254990600,
+          "release_call_returned_ns": 102732260784300
+        },
+        "interruption": {
+          "intent_token": "d8a95580d00c4de3880c44d8d8d4a4eb",
+          "record": {
+            "event": "owner_release",
+            "reason": "cancelled",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 102732259682200,
+            "valid_until_ns": 102737245598000
+          }
+        },
+        "decision_reason": null,
+        "terminal_ns": 102732260883900,
+        "semantic_completion": "program status only; task scoring is separate"
+      },
+      "fake_x_events": [
+        [
+          2,
+          38
+        ],
+        [
+          3,
+          38
+        ]
+      ]
+    },
+    "RUN-02.json": {
+      "experiment": "CROSS-COMPONENT-POST-SAMPLE-CANCEL-7429-7440",
+      "classification": "ORDINARY_RELEASE_CONTROL",
+      "trigger": "No cancellation; same owner release reason-sample source line and key-up operation",
+      "owner_release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 102732508338600,
+        "valid_until_ns": 102737494290200
+      },
+      "emitted_events": [
+        "accepted",
+        "step_started",
+        "step_completed",
+        "terminal"
+      ],
+      "input_released_count": 0,
+      "terminal": {
+        "event": "terminal",
+        "id": "integration",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 102732508338600,
+          "valid_until_ns": 102737494290200,
+          "intent_token": "fc6ff8119e274085b47859d1679785b6",
+          "release_call_started_ns": 102732503935100,
+          "release_call_returned_ns": 102732509075100
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 102732509104800,
+        "semantic_completion": "program status only; task scoring is separate"
+      },
+      "fake_x_events": [
+        [
+          2,
+          38
+        ],
+        [
+          3,
+          38
+        ]
+      ]
+    },
+    "AUDIT-01.json": {
+      "audit": "CROSS_COMPONENT_POST_SAMPLE_CANCEL_AUDIT_V1",
+      "result": "PASS_SCOPED_REPRODUCTION",
+      "errors": [],
+      "negative_controls_rejected": true,
+      "negative_control_error_counts": [
+        2,
+        1,
+        2
+      ],
+      "interpretation": "The current owner recheck preserves cancellation cause across the forced post-sample boundary; the executor publishes the verified-empty release before terminal. Ordinary release remains an un-interrupted completion. Fake-Xlib composition only; no physical input or task effect."
+    }
+  },
+  "local_validation": "Windows CPython: cancellation arm 1/1, ordinary-release control 1/1; raw-only audit PASS_SCOPED_REPRODUCTION, three negative controls rejected.",
+  "scope": "Forced fake-Xlib software schedule only; no physical release, application/game effect, useful feedback, bounded recovery, or live allocation.",
+  "commands": [
+    "test_postsample_composition.py",
+    "test_ordinary_release_control.py",
+    "audit_pair.py"
+  ]
+}
