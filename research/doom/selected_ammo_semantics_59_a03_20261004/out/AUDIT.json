@@ -1,0 +1,26 @@
+{
+  "schema": "selected-ammo-hud-reader-audit-v1",
+  "run_id": "59-selected-ammo-semantics-a03-20261004",
+  "disposition": "PASS_HASHED_WAD_GLYPH_READER_AND_SAME_TIC_API_SCOPED",
+  "checks": {
+    "fresh_wad_hash_matches_reader": true,
+    "no_inputs_submitted": true,
+    "two_same_tic_samples": true,
+    "api_values_equal_game_state_vector": true,
+    "health_reader_matches_api_and_hud": true,
+    "ammo_reader_matches_selected_weapon_ammo_and_hud": true,
+    "AMMO1_retained_separately_as_zero": true,
+    "all_frames_640x480_and_hash_bound": true,
+    "same_frame_capture_metadata_for_both_signals": true
+  },
+  "interpretation": "At both retained tics, current-main v3 WAD-glyph HUD reader returns health=100 and ammo=50 from the exact in-memory 640x480 frame. Same-tic direct API and GameState values match; SELECTED_WEAPON_AMMO=50 while AMMO1=0. The coast frame visibly has a close enemy and health remains 100. The result disambiguates the selected-ammo signal but does not identify unique AMMO slot mapping.",
+  "scope_limits": [
+    "two observations in one fresh episode",
+    "input-free 35-tic coast only",
+    "synthetic in-memory focus/surface binding metadata",
+    "no actual X11 window identity or focus check",
+    "no model/controller delivery",
+    "no damage or useful task progress",
+    "no per-key timing, threat reaction, or bounded recovery"
+  ]
+}
