@@ -71,6 +71,21 @@ visual_review = [
     }
     for item in failures
 ]
+crop_boundary_probe = {
+    "frozen_layout_b_box_xyxy": [499, 544, 799, 573],
+    "candidate_padded_box_xyxy": [493, 542, 805, 579],
+    "candidate_box_status": "visual crop preview only; OCR was not rerun",
+    "previews": [
+        {
+            "block": item["block"],
+            "task": item["task"],
+            "image_sha256": item["image_sha256"],
+            "frozen_crop": "left edge visibly cuts the leading t glyph",
+            "candidate_crop": "contains the complete token within the field border",
+        }
+        for item in failures
+    ],
+}
 report = {
     "source_revision": REF,
     "adapter_source": adapter_path,
@@ -79,7 +94,8 @@ report = {
     "failures": failures,
     "finding": "All three recorded safe-yields follow a completed, verified-release enter action. Each filled-state OCR result omits exactly the leading 't' from the task token, so the exact-match predicate fails and no submit program runs.",
     "visual_review": visual_review,
-    "interpretation_limit": "Manual review confirms the full expected token is visible in each exact archived frame despite the OCR omission. The narrow layout-B OCR crop is a plausible contributor, but this audit does not prove causation or validate a crop-padding repair. Preserve the formal 9/12 C-arm outcome; any candidate repair requires separate construction and a prospectively frozen allocation.",
+    "crop_boundary_probe": crop_boundary_probe,
+    "interpretation_limit": "Manual review confirms the full expected token is visible in each exact archived frame, and shows the frozen layout-B crop cuts the leading t at its left edge. A locally padded crop preview contains the full token, but Tesseract was unavailable so OCR success on that candidate is unverified. Preserve the formal 9/12 C-arm outcome; validate a candidate repair in a separate construction run before any prospectively frozen allocation.",
 }
 out = Path(__file__).with_name("C_FAILURE_DIAGNOSTICS.json")
 out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
