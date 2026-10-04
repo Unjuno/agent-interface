@@ -155,6 +155,60 @@ class CandidateNetworkReceiptTests(unittest.TestCase):
             self.assertFalse((out / "x11-display.txt").exists())
             self.assertEqual(exit_code, 2)
 
+    def test_xlib_import_failure_is_retained_as_incomplete_candidate(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            package = root / "research/doom/map01-v39-per-key-release-live-t0-20261004"
+            package.mkdir(parents=True)
+            out = root / "out"
+            out.mkdir()
+            freeze = {
+                "allocation_id": "MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01",
+                "runtime_environment_sha256": "fixture-env-sha",
+                "source_support_sha256": "fixture-support-sha",
+                "output_root": "out",
+                "execution_route": "direct process in isolated OrbStack Ubuntu/arm64 guest",
+                "network_isolation": "unshare -n",
+            }
+            (package / "FREEZE.json").write_text(json.dumps(freeze), encoding="utf-8")
+            receipt = {
+                "network_interfaces": ["ip6tnl0", "lo", "sit0", "tunl0"],
+                "network_link_states": {
+                    "ip6tnl0": "DOWN", "lo": "DOWN", "sit0": "DOWN", "tunl0": "DOWN",
+                },
+                "network_ipv4_routes": "",
+                "network_ipv6_routes": "",
+            }
+            real_import = builtins.__import__
+
+            def fail_xlib_import(name, globals=None, locals=None, fromlist=(), level=0):
+                if name == "Xlib.display":
+                    raise ImportError("synthetic missing Xlib")
+                return real_import(name, globals, locals, fromlist, level)
+
+            with mock.patch.object(candidate, "ROOT", root), \
+                    mock.patch.object(candidate, "PACKAGE", package), \
+                    mock.patch.object(candidate, "verify_frozen", return_value=receipt), \
+                    mock.patch.object(candidate, "install_support", return_value=root / "support"), \
+                    mock.patch.object(sys, "argv", [str(HERE / "candidate.py"),
+                                                     "--out", str(out)]), \
+                    mock.patch.object(builtins, "__import__", side_effect=fail_xlib_import):
+                failure = None
+                try:
+                    exit_code = candidate.main()
+                except Exception as exc:
+                    exit_code = None
+                    failure = repr(exc)
+
+            record_path = out / "candidate.json"
+            self.assertTrue(record_path.is_file(),
+                "pre-X11 import failure was not retained; main failure=" + str(failure))
+            row = json.loads(record_path.read_text(encoding="utf-8"))
+            self.assertEqual(exit_code, 2)
+            self.assertFalse(row["candidate_completed"])
+            self.assertTrue(any("synthetic missing Xlib" in item for item in row["issues"]))
+            self.assertFalse((out / "x11-display.txt").exists())
+
     def test_nonempty_route_stops_before_returning_a_network_receipt(self):
         with self.assertRaisesRegex(RuntimeError, "STOP_NETWORK_NAMESPACE"):
             self._verify(ipv4_routes="default via 192.0.2.1 dev eth0\n")

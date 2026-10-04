@@ -144,17 +144,6 @@ def main():
         "scope": "current-v39 backend and executor on private Xvfb; no game/task",
     }, indent=2) + "\n", encoding="utf-8")
 
-    import Xlib.display as xdisplay
-    from Xlib import XK
-    sys.path[:0] = [str(ROOT / "research/doom"),
-                    str(ROOT / "research/live_control")]
-    import session_map01_v12 as runtime
-
-    if runtime.Backend.__module__ != "doom_typed_release_backend_v3":
-        raise RuntimeError("FAIL_V39_BACKEND_SELECTION")
-    if runtime.Executor.__module__ != "executor_v12":
-        raise RuntimeError("FAIL_V39_EXECUTOR_SELECTION")
-
     events = []
     observer_rows = []
     lock = threading.RLock()
@@ -202,6 +191,17 @@ def main():
     candidate = initial_candidate_record(freeze, network_receipt)
     exit_code = 2
     try:
+        import Xlib.display as xdisplay
+        from Xlib import XK
+        sys.path[:0] = [str(ROOT / "research/doom"),
+                        str(ROOT / "research/live_control")]
+        import session_map01_v12 as runtime
+
+        if runtime.Backend.__module__ != "doom_typed_release_backend_v3":
+            raise RuntimeError("FAIL_V39_BACKEND_SELECTION")
+        if runtime.Executor.__module__ != "executor_v12":
+            raise RuntimeError("FAIL_V39_EXECUTOR_SELECTION")
+
         session = runtime.suite.Session()
         for key in ("DISPLAY", "XAUTHORITY", "HOME", "XDG_CONFIG_HOME",
                     "XDG_CACHE_HOME", "XDG_RUNTIME_DIR"):
