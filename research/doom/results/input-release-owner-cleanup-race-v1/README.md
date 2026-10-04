@@ -53,11 +53,15 @@ python research/doom/results/input-release-owner-cleanup-race-v1/capture_candida
 python research/doom/results/input-release-owner-cleanup-race-v1/audit_candidate.py
 ```
 
-`candidate.json` and `audit.json` retain the raw receipt/owner record and
-independent audit. The auditor verifies that exactly one cleanup timestamp is
-inside the explicit-up bracket, the request snapshot was stale-ordinary, the
+`candidate.json` and `audit.json` retain the latest raw receipt/owner record
+and independent audit. The auditor verifies that exactly one cleanup timestamp
+is inside the explicit-up bracket, the request snapshot was stale-ordinary, the
 adapter reclassified it, no authority claim was made, and the source hashes
-match the candidate freeze.
+match the candidate freeze. A post-rebase package-integrity refresh generated a
+second deterministic fixture receipt with new monotonic timestamps; the prior
+receipt/audit/stdout are preserved as `*-initial.json`, and the refreshed ones
+are preserved in the primary files. This was construction harness verification,
+not another live allocation or physical-input run.
 
 Post-fix local verification:
 
