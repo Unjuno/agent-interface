@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`circuit_rejection_cost_5375_a02_20261004/REPORT.md`](circuit_rejection_cost_5375_a02_20261004/REPORT.md) — #5375 A02 WSLc one-tick finite result; 10 raw rows independently reconstructed, 4/4 mutation controls rejected, PASS_METHOD_SCOPED; A01 construction failure and auditor STOP preserved separately. No empirical production-cost, live-resilience, GUI/model, or product claim.
+
 - [Retained analytical source rescue — #6857/#6862/#6884](../recovery/analytical_source_rescue_20261004/README.md) — Exact original packets/history preserved; cancellation auditor v1 six false accepts and separately versioned v2 correction, LF/CRLF serialization-only evidence, and all historical temporal-contract HOLDs remain distinct. Archival integration is not original content-quorum/application approval, scientific/runtime adoption or a replay.
 
 - [Archived S05-WSLC image-gate preparation](looming_visual_assumption_gate_5905_s05_wslc_20261003/ARCHIVAL_QUALIFICATION.md) — #6808/#5905 frozen source and 24 images preserved; no published formal result. Distinct from the cancelled native S05 and executed S06; archival checks do not authorize a run.
@@ -344,6 +346,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
 - [`claim_generation_types_6509_01a0ff58/`](claim_generation_types_6509_01a0ff58/)
 - [`claim_ladder_6113_t0_20261002/`](claim_ladder_6113_t0_20261002/)
@@ -445,6 +448,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`faded_demonstration_6600_t0_orbstack_20261002/`](faded_demonstration_6600_t0_orbstack_20261002/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
+- [`feasibility_estimability_7379_t0b_20261004/`](feasibility_estimability_7379_t0b_20261004/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
 - [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
@@ -625,6 +629,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_timestamp_order_5156_t2_20261004/`](owner_keyup_timestamp_order_5156_t2_20261004/)
 - [`owner_keyup_timestamp_order_5156_t3_20261004/`](owner_keyup_timestamp_order_5156_t3_20261004/)
 - [`owner_keyup_timestamp_order_5156_t4_20261004/`](owner_keyup_timestamp_order_5156_t4_20261004/)
+- [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
 - [`partial_order_audit_6505_orbstack_a01_20261003/`](partial_order_audit_6505_orbstack_a01_20261003/)
 - [`partial_order_audit_6505_orbstack_a02_20261003/`](partial_order_audit_6505_orbstack_a02_20261003/)
