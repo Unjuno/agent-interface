@@ -3,6 +3,7 @@ import sys
 import threading
 import types
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -297,14 +298,21 @@ class Tests(unittest.TestCase):
         self.assertNotEqual(admissions, releases)
 
     def test_v12_physical_measurements_survive_v4_context_and_consumer_replay(self):
-        missing = object()
-        xlib_module_names = (
-            "Xlib", "Xlib.display", "Xlib.ext", "Xlib.ext.xtest", "PIL"
+        original_sys_modules = sys.modules.copy()
+        original_sys_path = sys.path[:]
+        try:
+            # Include helper setup in the isolation boundary, not just assertions.
+            with patch.dict(sys.modules):
+                self._exercise_v12_physical_measurements()
+        finally:
+            sys.path[:] = original_sys_path
+        self.assertEqual(sys.modules, original_sys_modules)
+        self.assertEqual(sys.path, original_sys_path)
+
+    def _exercise_v12_physical_measurements(self):
+        bridge_test_path = (
+            HERE / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
         )
-        original_xlib_modules = {
-            name: sys.modules.get(name, missing) for name in xlib_module_names
-        }
-        bridge_test_path = HERE / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
         bridge_spec = importlib.util.spec_from_file_location(
             "perkey_bridge_test_for_v4", bridge_test_path
         )
@@ -312,18 +320,18 @@ class Tests(unittest.TestCase):
         bridge_spec.loader.exec_module(bridge_test)
         harness_module = bridge_test.load_v12_test_harness()
         harness = harness_module.Harness(harness_module.owner_module)
-        original_keysym_mapper = harness_module.owner_module.XK.string_to_keysym
-        original_input_owner_module = sys.modules.get("input_owner_v12")
+        owner_module = harness_module.owner_module
+        original_keysym_mapper = owner_module.XK.string_to_keysym
 
         try:
             # The shared fake X display normally aliases every keysym to one code.
-            harness_module.owner_module.XK.string_to_keysym = (
+            owner_module.XK.string_to_keysym = (
                 lambda key: {"F8": 1, "F9": 2}.get(key, 0)
             )
             harness.d.keysym_to_keycode = lambda keysym: {
                 1: 74, 2: 75
             }.get(keysym, 0)
-            sys.modules["input_owner_v12"] = harness_module.owner_module
+            sys.modules["input_owner_v12"] = owner_module
             transition_path = (
                 HERE / "map01_attack_onset_phase_allocation_02_v1" / "source"
                 / "map01_v12_transition_owner.py"
@@ -409,17 +417,12 @@ class Tests(unittest.TestCase):
                 downs["F9"]["physical_key_measurement"]["actuation_id"],
             )
         finally:
-            harness.close()
-            harness_module.owner_module.XK.string_to_keysym = original_keysym_mapper
-            if original_input_owner_module is None:
-                sys.modules.pop("input_owner_v12", None)
-            else:
-                sys.modules["input_owner_v12"] = original_input_owner_module
-            for name, module in original_xlib_modules.items():
-                if module is missing:
-                    sys.modules.pop(name, None)
-                else:
-                    sys.modules[name] = module
+            try:
+                if harness is not None:
+                    harness.close()
+            finally:
+                if owner_module is not None and original_keysym_mapper is not None:
+                    owner_module.XK.string_to_keysym = original_keysym_mapper
 
     def run_release(self, owner, lease=None, held=("a",)):
         obj = make_backend(set(held), owner, lease)
