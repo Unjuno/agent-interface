@@ -64,9 +64,19 @@ def main():
     assert "Ran 11 tests" in post_merge_tests and "OK" in post_merge_tests
     for key in ("test_exit", "compile_exit", "diff_check_exit"):
         assert (PACKET / post_merge[key]).read_text(encoding="utf-8").strip() == "0"
+    current_main = freeze["followup_03"]
+    assert sha256_at_commit(current_main["main_commit"],
+                            current_main["controller_path"]) == current_main["main_controller_sha256"]
+    assert sha256(REPO / current_main["controller_path"]) == current_main["candidate_controller_sha256"]
+    assert sha256(REPO / current_main["test_source_path"]) == current_main["test_source_sha256"]
+    current_tests = (PACKET / current_main["test_output"]).read_text(encoding="utf-8")
+    assert "Ran 24 tests" in current_tests and "OK" in current_tests
+    for key in ("test_exit", "compile_exit", "diff_check_exit"):
+        assert (PACKET / current_main[key]).read_text(encoding="utf-8").strip() == "0"
     print(json.dumps({"status": "PASS", "baseline_red": 2,
                       "candidate_tests": "10_PASS",
                       "followup_tests": "11_PASS",
+                      "current_main_tests": "24_PASS",
                       "manifest_files": len((PACKET / "FILES.sha256").read_text().splitlines()),
                       "live_execution": False}, sort_keys=True))
 

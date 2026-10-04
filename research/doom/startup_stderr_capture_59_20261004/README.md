@@ -23,3 +23,7 @@ The new wiring regression fails on the exact baseline source (1 expected failure
 ## Follow-up 02 — current-main integration
 
 After main advanced through #7577, I merged current main commit `ab63eeb452f5f305f08e9d358efe2296f4c26211` into this PR branch. The stderr change remained isolated from the comparison archive and UNKNOWN recovery changes. The wait/controller suites still pass 11/11 after the merge; compilation, whitespace checks, and the artifact audit pass. The test, compile, and diff-check outputs are retained in `out/followup-02-post-merge-*`.
+
+## Follow-up 03 — bounded source-refresh integration
+
+Main then advanced through #7578, which adds bounded passive refresh for unavailable HUD sources in the V39 controller. I merged current main `9590ee9e0c74f7438306e8efb48b2af813f7a86b` and ran the V39 wait, V39 controller, and source-refresh test modules together: 24/24 pass. Python compilation, `git diff --check`, and the packet audit pass. Exact outputs are in `out/followup-03-current-main-*`; the freeze binds the controller source hash to that main commit.
