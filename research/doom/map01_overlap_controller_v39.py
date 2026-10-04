@@ -578,8 +578,12 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    session = ("session_map01_v18.py" if getattr(args, "post_release_scorer_tail", False)
-               else "session_map01_v12.py")
+    if getattr(args, "post_release_perkey_scorer_tail", False):
+        session = "session_map01_v19.py"
+    elif getattr(args, "post_release_scorer_tail", False):
+        session = "session_map01_v18.py"
+    else:
+        session = "session_map01_v12.py"
     return [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
@@ -707,6 +711,8 @@ def main():
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
     parser.add_argument("--post-release-scorer-tail", action="store_true",
                         help="opt into a bounded scorer-only tail after verified final key-up")
+    parser.add_argument("--post-release-perkey-scorer-tail", action="store_true",
+                        help="opt into a scorer-only tail after measured per-key admission and release")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(

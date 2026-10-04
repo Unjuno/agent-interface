@@ -392,3 +392,17 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 # Issue #59 retained v39 ammo-timeline posthoc package
 
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
+
+## Per-key measured-release scorer-tail composition
+
+`session_map01_v19.py` and `map01_scorer_stdio_adapter_v3.py` add a separately
+opt-in scorer-only tail after the V39 bridge's raw `input_admission` and
+`input_release_measurement` rows pass an identity, actuation, physical-up
+bracket, and empty-backend check. The boundary is the upper timestamp of the
+confirmed physical-up sample interval. `--post-release-perkey-scorer-tail`
+selects this composition; default V12 and the existing V18 flag remain
+unchanged. Focused frozen-record, fake-session, and socket tests pass. This is
+construction evidence only: the frozen row came from a fake display, and no
+live game, OS input, authority grant, application consumption, or task effect
+was tested. See `test_map01_scorer_stdio_adapter_v3.py` and
+`test_session_map01_v19.py`.

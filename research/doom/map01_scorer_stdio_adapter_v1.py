@@ -113,10 +113,34 @@ class MainThreadScorerStdin:
             raise ValueError('max_samples must be a positive integer')
         if stop_when is not None and not callable(stop_when):
             raise TypeError('stop_when must be callable')
+        return self._sample_tail_after_boundary(
+            release_after_ns=release_returned_ns,
+            boundary_fields={
+                'release_returned_ns': release_returned_ns,
+                'release_id': release_receipt.get('id'),
+                'release_step': release_receipt.get('step'),
+                'release_key': release_receipt.get('key'),
+                'intent_token': release_receipt.get('intent_token'),
+            },
+            schema='map01-scorer-post-release-tail-v1',
+            max_duration_ns=max_duration_ns, max_samples=max_samples,
+            stop_when=stop_when)
+
+    def _sample_tail_after_boundary(self, *, release_after_ns, boundary_fields,
+                                    schema, max_duration_ns, max_samples,
+                                    stop_when=None):
+        if type(release_after_ns) is not int or release_after_ns < 0:
+            raise ValueError('release boundary must be a non-negative integer')
+        if type(max_duration_ns) is not int or max_duration_ns < 0:
+            raise ValueError('max_duration_ns must be a non-negative integer')
+        if type(max_samples) is not int or max_samples < 1:
+            raise ValueError('max_samples must be a positive integer')
+        if stop_when is not None and not callable(stop_when):
+            raise TypeError('stop_when must be callable')
         started_ns=self.loop.clock_ns()
-        if started_ns < release_returned_ns:
+        if started_ns < release_after_ns:
             raise ValueError('scorer tail began before verified release returned')
-        deadline_ns=release_returned_ns+max_duration_ns
+        deadline_ns=release_after_ns+max_duration_ns
         tail_samples=0
         matched=False
         deadline_overrun=False
@@ -133,12 +157,7 @@ class MainThreadScorerStdin:
                               (deadline_ns-now)/1e9)
                 if self.loop.wait_readable(self.fd,remaining):
                     ended_ns=self.loop.clock_ns()
-                    return {'schema':'map01-scorer-post-release-tail-v1',
-                            'release_returned_ns':release_returned_ns,
-                            'release_id':release_receipt.get('id'),
-                            'release_step':release_receipt.get('step'),
-                            'release_key':release_receipt.get('key'),
-                            'intent_token':release_receipt.get('intent_token'),
+                    return {'schema':schema, **boundary_fields,
                             'started_ns':started_ns,'ended_ns':ended_ns,
                             'deadline_ns':deadline_ns,'tail_samples':tail_samples,
                             'total_samples':self.samples,'stop_condition_met':False,
@@ -153,12 +172,7 @@ class MainThreadScorerStdin:
             # sample. Poll without consuming so the normal iterator owns input.
             if self.loop.wait_readable(self.fd,0):
                 ended_ns=self.loop.clock_ns()
-                return {'schema':'map01-scorer-post-release-tail-v1',
-                        'release_returned_ns':release_returned_ns,
-                        'release_id':release_receipt.get('id'),
-                        'release_step':release_receipt.get('step'),
-                        'release_key':release_receipt.get('key'),
-                        'intent_token':release_receipt.get('intent_token'),
+                return {'schema':schema, **boundary_fields,
                         'started_ns':started_ns,'ended_ns':ended_ns,
                         'deadline_ns':deadline_ns,'tail_samples':tail_samples,
                         'total_samples':self.samples,'stop_condition_met':False,
@@ -179,11 +193,7 @@ class MainThreadScorerStdin:
                        'start_lateness_ns':max(0,sample_started-scheduled),
                        'missed_periods_before':skipped,'payload':payload,
                        'post_release_tail':True,
-                       'release_returned_ns':release_returned_ns,
-                       'release_id':release_receipt.get('id'),
-                       'release_step':release_receipt.get('step'),
-                       'release_key':release_receipt.get('key'),
-                       'intent_token':release_receipt.get('intent_token')})
+                       **boundary_fields})
             self.samples+=1
             self.missed+=skipped
             tail_samples+=1
@@ -206,12 +216,7 @@ class MainThreadScorerStdin:
             termination='deadline'
         else:
             termination='sample_cap'
-        return {'schema':'map01-scorer-post-release-tail-v1',
-                'release_returned_ns':release_returned_ns,
-                'release_id':release_receipt.get('id'),
-                'release_step':release_receipt.get('step'),
-                'release_key':release_receipt.get('key'),
-                'intent_token':release_receipt.get('intent_token'),
+        return {'schema':schema, **boundary_fields,
                 'started_ns':started_ns,'ended_ns':ended_ns,
                 'deadline_ns':deadline_ns,'tail_samples':tail_samples,
                 'total_samples':self.samples,'stop_condition_met':matched,
