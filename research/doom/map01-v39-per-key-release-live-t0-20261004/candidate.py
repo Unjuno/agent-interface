@@ -73,7 +73,8 @@ def initial_candidate_record(freeze, network_receipt):
         "network_interfaces", "network_link_states",
         "network_ipv4_routes", "network_ipv6_routes",
     }
-    if set(network_receipt) != expected_network_fields:
+    if (not isinstance(network_receipt, dict)
+            or set(network_receipt) != expected_network_fields):
         raise RuntimeError("STOP_NETWORK_RECEIPT_INCOMPLETE")
     return {
         "allocation_id": freeze["allocation_id"],

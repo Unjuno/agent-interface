@@ -84,8 +84,11 @@ class CandidateNetworkReceiptTests(unittest.TestCase):
             "allocation_id": "test",
             "runtime_environment_sha256": "environment",
         }
-        with self.assertRaisesRegex(RuntimeError, "STOP_NETWORK_RECEIPT_INCOMPLETE"):
-            candidate.initial_candidate_record(freeze, {"network_interfaces": ["lo"]})
+        for receipt in ({"network_interfaces": ["lo"]}, None):
+            with self.subTest(receipt=receipt):
+                with self.assertRaisesRegex(
+                        RuntimeError, "STOP_NETWORK_RECEIPT_INCOMPLETE"):
+                    candidate.initial_candidate_record(freeze, receipt)
 
 
 if __name__ == "__main__":
