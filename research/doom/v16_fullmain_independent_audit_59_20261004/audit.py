@@ -113,6 +113,7 @@ def audit(repo: Path) -> dict[str, Any]:
     admission_identity = one_hold_admissions[0] if len(one_hold_admissions) == 1 else {}
     transition_identity = one_hold_transitions[0] if len(one_hold_transitions) == 1 else {}
     keyup_receipt = transition_identity.get("owner_thread_keyup_receipt", {})
+    keyup_record = one_hold_keyups[0] if len(one_hold_keyups) == 1 else {}
     identity_fields = ("owner_id", "intent_token", "id", "step", "key")
     identity_join_verified = (
         bool(admission_identity)
@@ -121,6 +122,21 @@ def audit(repo: Path) -> dict[str, Any]:
         and all(admission_identity.get(key) == keyup_receipt.get(key) for key in ("owner_id", "intent_token", "key"))
         and transition_identity.get("release_batch_identifier") == admission_identity.get("id")
         and transition_identity.get("release_batch_step") == admission_identity.get("step")
+        and transition_identity.get("release_batch_complete") is True
+        and transition_identity.get("release_batch_size") == 1
+        and transition_identity.get("release_batch_position") == 0
+    )
+    owner_receipt_matches_record = (
+        bool(keyup_receipt)
+        and all(keyup_receipt.get(key) == keyup_record.get(key) for key in ("owner_id", "intent_token", "key", "operation", "event", "owner_keyrelease_started_ns", "owner_sync_returned_ns", "physical_verification_authoritative"))
+        and transition_identity.get("owner_thread_keyup_verified_after_batch") is True
+        and transition_identity.get("owned_keycodes_after_batch") == []
+    )
+    sync_bracket_ordered = (
+        len(one_hold_transitions) == 1 and len(one_hold_keyups) == 1
+        and transition_identity.get("release_call_started_ns", 0) <= keyup_receipt.get("owner_keyrelease_started_ns", -1)
+        <= keyup_receipt.get("owner_sync_returned_ns", -1) <= transition_identity.get("release_call_returned_ns", 0)
+        <= transition_identity.get("emit_ns", 0)
     )
     if one_hold_result.get("status") != "PASS_ONE_HOLD_COMPOSITION_SCOPED" or one_hold_result.get("accepted") != 1 or one_hold_result.get("completed") != 1:
         errors.append("one_hold_result_disposition_mismatch")
@@ -138,6 +154,10 @@ def audit(repo: Path) -> dict[str, Any]:
             errors.append("one_hold_unexpected_physical_edge_measurement")
     if not identity_join_verified:
         errors.append("one_hold_identity_join_mismatch")
+    if not owner_receipt_matches_record:
+        errors.append("one_hold_nested_owner_receipt_mismatch")
+    if not sync_bracket_ordered:
+        errors.append("one_hold_sync_bracket_order_mismatch")
     if len(one_hold_empty_releases) != 1 or one_hold_empty_releases[0].get("verified") is not True or one_hold_empty_releases[0].get("keys_down") or one_hold_empty_releases[0].get("buttons_down"):
         errors.append("one_hold_verified_empty_release_mismatch")
     if one_hold_summary.get("sample_count") != 17 or len(one_hold_samples) != 17 or one_hold_summary.get("event_count") != 0 or one_hold_summary.get("event_summary", {}).get("positive_useful_events") != 0:
@@ -175,6 +195,8 @@ def audit(repo: Path) -> dict[str, Any]:
             "physical_release_authoritative": one_hold_keyups[0].get("physical_verification_authoritative") if one_hold_keyups else None,
             "owner_sync_completed": one_hold_keyups[0].get("server_sync_completed") if one_hold_keyups else None,
             "identity_join_verified": identity_join_verified,
+            "nested_receipt_matches_owner_record": owner_receipt_matches_record,
+            "sync_bracket_ordered": sync_bracket_ordered,
             "physical_edge_measurement_present": bool(one_hold_transitions and one_hold_transitions[0].get("physical_key_measurement")),
             "release_transition_follows_owner_sync": bool(one_hold_transitions and one_hold_keyups) and one_hold_transitions[0].get("emit_ns", 0) >= one_hold_keyups[0].get("owner_sync_returned_ns", 0),
             "verified_empty_owner_release": bool(one_hold_empty_releases) and one_hold_empty_releases[0].get("verified") is True,

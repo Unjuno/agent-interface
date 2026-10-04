@@ -26,6 +26,8 @@ class V16FullmainAuditTests(unittest.TestCase):
         self.assertEqual(result["construction02"]["positive_useful_events"], 0)
         self.assertTrue(result["construction02"]["post_score_precedes_close_release"])
         self.assertTrue(result["one_hold"]["identity_join_verified"])
+        self.assertTrue(result["one_hold"]["nested_receipt_matches_owner_record"])
+        self.assertTrue(result["one_hold"]["sync_bracket_ordered"])
         self.assertFalse(result["one_hold"]["physical_release_authoritative"])
         self.assertFalse(result["one_hold"]["physical_edge_measurement_present"])
 
@@ -79,6 +81,16 @@ class V16FullmainAuditTests(unittest.TestCase):
             path.write_text("\n".join(json.dumps(item) for item in events) + "\n", encoding="utf-8")
             result = audit(copy)
         self.assertIn("one_hold_identity_join_mismatch", result["errors"])
+
+    def test_detached_owner_keyup_receipt_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            copy = copy_sources(Path(tmp))
+            path = copy / ONE_HOLD / "out/session/owner-events.json"
+            owner = json.loads(path.read_text(encoding="utf-8"))
+            next(row for row in owner if row.get("event") == "owner_explicit_keyup")["owner_sync_returned_ns"] += 1
+            path.write_text(json.dumps(owner), encoding="utf-8")
+            result = audit(copy)
+        self.assertIn("one_hold_nested_owner_receipt_mismatch", result["errors"])
 
 
 if __name__ == "__main__":
