@@ -1,19 +1,18 @@
 """Telemetry-only wrapper for InputOwner v10 ordinary release RPCs.
 
-The v10 owner performs X11 KeyRelease/ButtonRelease followed by ``d.sync()`` for
-ordinary ``up`` / ``button_up`` operations, but returns ``None``.  This version
-keeps v10's owner thread and authority semantics unchanged and brackets those
-existing calls on the caller's ``perf_counter_ns`` clock.
-
-The resulting receipt proves only that the v10 owner call containing X11 release
-and sync completed somewhere inside ``[call_started_ns, call_returned_ns]``.  It
-is not a hardware-state timestamp and does not prove application consumption.
+The V10 owner performs X11 KeyRelease followed by ``d.sync()`` for ordinary
+``up`` operations and returns ``None``. This opt-in wrapper carries the key as a
+``str`` subclass so the owner thread can record its own request-to-sync interval
+without changing V10's ordinary return contract or adding another sync. The
+existing caller-side RPC interval remains available to measure queue plus owner
+latency. Neither interval is a hardware-state timestamp or proves application
+consumption.
 """
 from __future__ import annotations
 
 import time
 
-from input_owner_v10 import InputOwner as Previous
+from input_owner_v10 import InputOwner as Previous, _OwnerReleaseTimingKey
 
 
 RELEASE_OPS = frozenset({"up", "button_up"})
@@ -26,9 +25,10 @@ class InputOwner(Previous):
         if operation not in RELEASE_OPS:
             return super().call(operation, lease, key)
 
+        measured_key = _OwnerReleaseTimingKey(key) if operation == "up" else key
         call_started_ns = time.perf_counter_ns()
         # Important: if the underlying owner raises, no receipt is fabricated.
-        result = super().call(operation, lease, key)
+        result = super().call(operation, lease, measured_key)
         call_returned_ns = time.perf_counter_ns()
         if result is not None:
             raise RuntimeError("v10 ordinary release unexpectedly returned a payload")
@@ -44,6 +44,9 @@ class InputOwner(Previous):
             "call_started_ns": call_started_ns,
             "call_returned_ns": call_returned_ns,
             "release_transition_interval_ns": [call_started_ns, call_returned_ns],
+            "owner_thread_release_interval_ns": (
+                measured_key.owner_release_interval_ns if operation == "up" else None
+            ),
             "interval_width_ns": call_returned_ns - call_started_ns,
             "valid_until_ns": getattr(lease, "deadline", None),
             "x11_release_and_sync_completed_before_return": True,
@@ -51,3 +54,4 @@ class InputOwner(Previous):
             "application_consumption_observed": False,
             "grants_input_authority": False,
         }
+
