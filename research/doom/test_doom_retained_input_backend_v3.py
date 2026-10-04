@@ -4,6 +4,8 @@ import sys
 import threading
 import types
 import unittest
+from unittest.mock import patch
+import time
 
 HERE = Path(__file__).resolve().parent
 
@@ -84,6 +86,42 @@ def make_backend(held, owner=None, token='intent-1', with_context=True):
     return obj
 
 
+def actual_wrapper_batch_receipt():
+    wrapper_path = HERE.parent / 'live_control' / 'input_transition_owner_v3.py'
+    underlying = types.ModuleType('input_owner_v10')
+    underlying.InputOwner = object
+    actual = importlib.util.spec_from_file_location(
+        'input_transition_owner_v3_composition_probe', wrapper_path)
+    wrapper = importlib.util.module_from_spec(actual)
+    with patch.dict(sys.modules, {'input_owner_v10': underlying}):
+        actual.loader.exec_module(wrapper)
+
+    class InnerOwner:
+        def __init__(self, display_name):
+            self.owner_id = 'composed-owner'
+            self.owned = {'a'}
+
+        def call(self, operation, lease=None, key=None):
+            if operation == 'up':
+                self.owned.remove(key)
+                return None
+            if operation == 'input_state':
+                started = time.perf_counter_ns()
+                return {'owner_id': self.owner_id,
+                        'owned_keycodes': sorted(self.owned),
+                        'sample_started_ns': started,
+                        'sample_finished_ns': started + 1}
+            raise AssertionError(operation)
+
+    owner = wrapper.InputOwner('fake-display', _owner_cls=InnerOwner)
+    obj = make_backend({'a'}, owner)
+    obj.lease.deadline = time.perf_counter_ns() + 1_000_000_000
+    obj.lease.cancel = threading.Event()
+    obj.lease.focus_invalid = False
+    obj.raw('a', False)
+    return obj.emitted[0]
+
+
 class Tests(unittest.TestCase):
     def test_two_key_order_has_one_sample_after_both_releases_then_emits(self):
         obj = make_backend({'a', 'space'})
@@ -120,6 +158,17 @@ class Tests(unittest.TestCase):
         obj.raw('a', False)
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
         self.assertFalse(obj.emitted[0]['owner_identity_matches_after_batch'])
+
+    def test_batch_adapter_accepts_actual_v3_wrapper_receipt(self):
+        receipt = actual_wrapper_batch_receipt()
+        self.assertEqual(receipt['event'], 'input_release_transition')
+        self.assertEqual(receipt['owner_id'], 'composed-owner')
+        self.assertEqual(receipt['intent_token'], 'intent-1')
+        self.assertTrue(receipt['owner_identity_matches_after_batch'])
+        self.assertTrue(receipt['intent_token_matches_after_batch'])
+        self.assertTrue(receipt['owner_sample_ordered_after_batch'])
+        self.assertTrue(receipt['owner_transition_verified'])
+        self.assertFalse(receipt['physical_verification_authoritative'])
 
     def test_nonempty_owner_state_fails_closed(self):
         obj = make_backend({'a'}, Owner(owned_after=[38]))
