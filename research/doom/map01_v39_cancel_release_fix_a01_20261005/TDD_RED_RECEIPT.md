@@ -9,3 +9,5 @@ These were the two direct failures recorded in the interactive test output befor
 
 
 The first ExecutorV3 integration fixture also stopped before input because it omitted caller-observed focus binding. The exact HOLD construction output is retained in `executor-integration-attempt01.log`; the completed fixture and passing real ExecutorV3 terminal run are in `executor-integration-attempt02.log`.
+
+A third regression reproduced the reviewer-reported reconciliation exception: after the owner recorded a verified cleanup release, the original bridge raised from `input_state` before draining its event log. The new test expected one already-recorded up receipt but observed zero; it passes after draining in `finally`. The pre-fix run was repeated against the original committed candidate bytes and failed with `AssertionError: 0 != 1`.

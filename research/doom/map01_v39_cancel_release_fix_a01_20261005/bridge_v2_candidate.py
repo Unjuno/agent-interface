@@ -17,8 +17,12 @@ class Backend(Previous):
         finally:
             if self.lease.cancel.is_set():
                 # This owner-thread request is ordered after cancellation cleanup.
-                state = self.owner.call("input_state", self.lease)
-                self._drain_owner_records()
+                try:
+                    state = self.owner.call("input_state", self.lease)
+                finally:
+                    # Preserve already-recorded per-key evidence even when
+                    # state reconciliation itself fails.
+                    self._drain_owner_records()
                 if state.get("owned_keycodes") == [] and state.get("owned_buttons") == []:
                     self.held.clear()
 

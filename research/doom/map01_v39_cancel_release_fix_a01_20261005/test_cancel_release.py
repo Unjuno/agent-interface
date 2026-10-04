@@ -170,6 +170,35 @@ class CancellationReceiptTests(unittest.TestCase):
         finally:
             harness.close()
 
+    def test_reconciliation_error_does_not_drop_recorded_release_receipt(self):
+        bridge_test, _hm, harness, lease, _bm, backend = load_candidate()
+        real_call = harness.owner.call
+
+        def fail_reconciliation(operation, *args, **kwargs):
+            if operation == "input_state":
+                deadline = time.monotonic() + 1.0
+                while not any(row.get("event") == "owner_release"
+                              for row in harness.owner.records):
+                    if time.monotonic() >= deadline:
+                        raise AssertionError("owner cleanup did not record before reconciliation")
+                    time.sleep(0.001)
+                raise RuntimeError("injected reconciliation failure")
+            return real_call(operation, *args, **kwargs)
+
+        harness.owner.call = fail_reconciliation
+        try:
+            with self.assertRaisesRegex(RuntimeError, "injected reconciliation failure"):
+                run_program(bridge_test, backend, lease, one_key_cancel)
+            ups = [row for row in backend.events
+                   if row.get("event") == "input_release_measurement"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            self.assertEqual(backend.held, set())
+            self.assertEqual(harness.d.physical, set())
+        finally:
+            harness.close()
+
 
     def test_executor_cancel_terminal_contains_one_verified_cleanup_receipt(self):
         bridge_test, _hm, harness, _lease, _bm, backend = load_candidate()
