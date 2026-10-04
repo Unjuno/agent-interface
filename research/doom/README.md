@@ -18,6 +18,7 @@
 | Finding | Scope | Evidence |
 |---|---|---|
 | [Scorer-tail command readiness under callback overrun](v39_scorer_tail_command_priority_a01_20261005/REPORT.md) | Synthetic fake-loop reproduction against the source-pinned PR #7692 adapter; no real stdin, controller, game, or live allocation | [Freeze](v39_scorer_tail_command_priority_a01_20261005/FREEZE.json), [result](v39_scorer_tail_command_priority_a01_20261005/RESULT.json), [audit](v39_scorer_tail_command_priority_a01_20261005/AUDIT.json) |
+| [OS-backed scorer-tail command readiness under callback overrun](v39_scorer_tail_command_priority_a02_20261005/REPORT.md) | Windows socketpair / real `select.select` construction against exact PR #7692 head; not DoomGame stdin or live control | [Freeze](v39_scorer_tail_command_priority_a02_20261005/FREEZE.json), [candidate result](v39_scorer_tail_command_priority_a02_20261005/RESULT_V3.json), [independent audit](v39_scorer_tail_command_priority_a02_20261005/AUDIT.json) |
 
 ## Track map
 
