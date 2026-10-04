@@ -68,5 +68,12 @@ class RunningActionGuardV3Tests(unittest.TestCase):
                 "release": {"verified": True, "keys_down": [],
                             "buttons_down": [], "verified_ns": 301}})
 
+    def test_duplicate_early_release_receipt_is_rejected(self):
+        guard = self.armed()
+        release = self.release()
+        guard.record_input_released(release)
+        with self.assertRaisesRegex(ValueError, "physical release already recorded"):
+            guard.record_input_released(release)
+
 
 if __name__ == "__main__": unittest.main()

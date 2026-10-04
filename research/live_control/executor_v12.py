@@ -11,8 +11,51 @@ from lease_release_v1 import Lease
 class Executor(Previous):
     def __init__(self, backend, emit):
         super().__init__(backend, emit)
+        self._external_emit = emit
+        self.emit = self._emit_with_release_barrier
         self.release_watchers = []
+        self.release_publication_attempted_ids = set()
         self.published_release_ids = set()
+        self.release_publication_errors = {}
+        self.terminal_publication_errors = {}
+        self.admission_publication_errors = {}
+        self.admission_callback_ids = set()
+
+    def _emit_with_release_barrier(self, event):
+        if type(event) is dict and event.get("event") == "terminal":
+            active = self.active
+            if active is not None and active[0] == event.get("id"):
+                cause = active[1].interruption_snapshot()
+                self._publish_release_cause(active[0], active[1], cause)
+                failure = self.release_publication_errors.get(active[0])
+                if failure is not None:
+                    event["input_release_publication"] = {
+                        "status": "delivery_unknown", "error": failure}
+                event["terminal_ns"] = time.perf_counter_ns()
+        if type(event) is dict and event.get("event") == "terminal":
+            try:
+                self._external_emit(event)
+            except Exception as exc:
+                self.terminal_publication_errors[event.get("id")] = {
+                    "status": "delivery_unknown",
+                    "error": {"type": type(exc).__name__}}
+                raise
+            self.terminal_publication_errors.pop(event.get("id"), None)
+            self.release_publication_errors.pop(event.get("id"), None)
+        else:
+            try:
+                self._external_emit(event)
+            except Exception as exc:
+                if (type(event) is dict and
+                        event.get("event") in ("input_released", "input_release_unverified")):
+                    identifier = event.get("id")
+                    self.release_publication_errors[identifier] = {
+                        "type": type(exc).__name__, "message": str(exc)}
+                    return
+                raise
+            if (type(event) is dict and
+                    event.get("event") in ("input_released", "input_release_unverified")):
+                self.release_publication_errors.pop(event.get("id"), None)
 
     def submit(self, identifier, steps, expected_sequence, valid_until_ns):
         with self.lock:
@@ -33,15 +76,63 @@ class Executor(Previous):
                 target=self._run, args=(identifier, copied, lease), daemon=False)
             self.active = (identifier, lease, worker)
             self.used_ids.add(identifier)
-            self.emit({"event": "accepted", "id": identifier,
-                       "steps": len(copied), "program_sha256": attestation,
-                       "intent_token": lease.intent_token,
-                       "valid_until_ns": valid_until_ns,
-                       "accepted_ns": time.perf_counter_ns()})
+            self.admission_callback_ids.add(identifier)
+            try:
+                self.emit({"event": "accepted", "id": identifier,
+                           "steps": len(copied), "program_sha256": attestation,
+                           "intent_token": lease.intent_token,
+                           "valid_until_ns": valid_until_ns,
+                           "accepted_ns": time.perf_counter_ns()})
+            except Exception as exc:
+                # The sink may have accepted the event before losing its ack.
+                # Keep the slot occupied, but do not start input without a
+                # confirmed admission publication.
+                self.admission_publication_errors[identifier] = {
+                    "status": "delivery_unknown",
+                    "error": {"type": type(exc).__name__}}
+                raise
+            finally:
+                self.admission_callback_ids.discard(identifier)
+            if identifier in self.terminal_publication_errors:
+                raise RuntimeError("terminal publication delivery is unknown")
+            # The accepted-event callback is external code and may reenter
+            # close() through this RLock. Do not start a worker after that
+            # close has already returned; finish the accepted intent without
+            # executing any input.
+            if self.active is None or self.active[0] != identifier:
+                return
+            if self.closed:
+                lease.set()
+                try:
+                    release = self.backend.release_all()
+                    if release.get("verified") is not True:
+                        release = dict(release, verified=False)
+                    status = "cancelled" if release.get("verified") is True else "failed"
+                    error = None if status == "cancelled" else "input release not verified"
+                except Exception as exc:
+                    release = {"verified": False, "error": repr(exc)}
+                    status = "failed"
+                    error = repr(exc)
+                with self.lock:
+                    if self.active is not None and self.active[0] == identifier:
+                        self.active = None
+                    self.emit({"event": "terminal", "id": identifier,
+                               "status": status, "error": error,
+                               "steps_completed": 0,
+                               "release": release,
+                               "interruption": lease.interruption_snapshot(),
+                               "decision_reason": None,
+                               "terminal_ns": time.perf_counter_ns(),
+                               "semantic_completion": "program status only; task scoring is separate"})
+                    self.active = None
+                return
             worker.start()
 
     def _publish_release(self, identifier, lease):
         cause = lease.wait_interruption(2.0)
+        self._publish_release_cause(identifier, lease, cause)
+
+    def _publish_release_cause(self, identifier, lease, cause):
         if cause is None:
             return
         record = cause.get("record")
@@ -51,9 +142,14 @@ class Executor(Previous):
         with self.lock:
             if self.active is None or self.active[0] != identifier:
                 return
-            if identifier in self.published_release_ids:
+            # ExecutorV13 can publish the same interruption through its own
+            # watcher before this inherited terminal barrier runs.
+            if (identifier in self.release_publication_attempted_ids or
+                    identifier in self.published_release_ids):
                 return
-            self.published_release_ids.add(identifier)
+            # A sink can accept the event and still lose its acknowledgement.
+            # Keep the boundary at-most-once and report delivery uncertainty.
+            self.release_publication_attempted_ids.add(identifier)
             event = {"event": "input_released", "id": identifier,
                    "intent_token": cause["intent_token"],
                    "owner_release": record,
@@ -64,7 +160,14 @@ class Executor(Previous):
                     record.get("keys_down") != [] or
                     record.get("buttons_down") != []):
                 event["event"] = "input_release_unverified"
-            self.emit(event)
+            try:
+                self._external_emit(event)
+            except Exception as exc:
+                self.release_publication_errors[identifier] = {
+                    "type": type(exc).__name__, "message": str(exc)}
+                return
+            self.published_release_ids.add(identifier)
+            self.release_publication_errors.pop(identifier, None)
 
     def cancel(self, identifier):
         with self.lock:
@@ -83,6 +186,50 @@ class Executor(Previous):
             return matched
 
     def close(self):
-        super().close()
+        # A failed accepted-event publication leaves the fail-closed active
+        # slot's worker unstarted. The base close path unconditionally joins
+        # it, which raises RuntimeError for that state.
+        with self.lock:
+            self.closed = True
+            job = self.active
+            if job is not None:
+                job[1].set()
+        if job is not None:
+            if (job[2].ident is None and
+                    job[0] in self.admission_callback_ids):
+                # close() can be called reentrantly by the accepted-event
+                # sink before submit() starts its worker. Resolve that intent
+                # synchronously so close cannot return before release and
+                # terminal publication are handled.
+                try:
+                    release = self.backend.release_all()
+                    if release.get("verified") is not True:
+                        release = dict(release, verified=False)
+                    status = "cancelled" if release.get("verified") is True else "failed"
+                    error = None if status == "cancelled" else "input release not verified"
+                except Exception as exc:
+                    release = {"verified": False, "error": repr(exc)}
+                    status = "failed"
+                    error = repr(exc)
+                with self.lock:
+                    if self.active is job:
+                        self.active = None
+                try:
+                    self.emit({"event": "terminal", "id": job[0],
+                               "status": status, "error": error,
+                               "steps_completed": 0, "release": release,
+                               "interruption": job[1].interruption_snapshot(),
+                               "decision_reason": None,
+                               "terminal_ns": time.perf_counter_ns(),
+                               "semantic_completion": "program status only; task scoring is separate"})
+                except Exception:
+                    # Terminal delivery is ambiguous; restore the occupied
+                    # intent so no new input is admitted on uncertain state.
+                    with self.lock:
+                        if self.active is None:
+                            self.active = job
+                    raise
+            elif job[2].ident is not None:
+                job[2].join()
         for watcher in self.release_watchers:
             watcher.join()

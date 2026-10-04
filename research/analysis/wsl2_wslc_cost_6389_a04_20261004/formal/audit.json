@@ -1,0 +1,107 @@
+{
+  "allocation": "6389-wsl2-vs-wslc-native-suite-a04-20261004",
+  "candidate_count_per_arm": 3,
+  "errors": [],
+  "native_median_seconds": 132.66893650000566,
+  "native_relative_reduction": -0.07317163533816927,
+  "native_seconds": [
+    125.07336270000087,
+    132.66893650000566,
+    190.52173049999692
+  ],
+  "retry_count": 0,
+  "runner_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d",
+  "runs": [
+    {
+      "arm": "native",
+      "harness_tests": 205,
+      "pair": 1,
+      "protocol_tests": 445,
+      "runner_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d",
+      "suite_seconds": {
+        "harness": 66.247687474,
+        "protocol": 58.539896502
+      },
+      "total_tests": 650
+    },
+    {
+      "arm": "wslc",
+      "harness_tests": 205,
+      "pair": 1,
+      "protocol_tests": 445,
+      "runner_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d",
+      "suite_seconds": {
+        "harness": 54.759731942,
+        "protocol": 67.967977027
+      },
+      "total_tests": 650
+    },
+    {
+      "arm": "wslc",
+      "harness_tests": 205,
+      "pair": 2,
+      "protocol_tests": 445,
+      "runner_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d",
+      "suite_seconds": {
+        "harness": 58.480385434,
+        "protocol": 63.962318243
+      },
+      "total_tests": 650
+    },
+    {
+      "arm": "native",
+      "harness_tests": 205,
+      "pair": 2,
+      "protocol_tests": 445,
+      "runner_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d",
+      "suite_seconds": {
+        "harness": 69.812102702,
+        "protocol": 62.284413672
+      },
+      "total_tests": 650
+    },
+    {
+      "arm": "native",
+      "harness_tests": 205,
+      "pair": 3,
+      "protocol_tests": 445,
+      "runner_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d",
+      "suite_seconds": {
+        "harness": 115.500206635,
+        "protocol": 74.63359667
+      },
+      "total_tests": 650
+    },
+    {
+      "arm": "wslc",
+      "harness_tests": 205,
+      "pair": 3,
+      "protocol_tests": 445,
+      "runner_sha256": "6ea771ce3802a1d23eb98369b1dac80e153639d0e5c9c007ccab2f24d816e27d",
+      "suite_seconds": {
+        "harness": 89.932000729,
+        "protocol": 107.855863071
+      },
+      "total_tests": 650
+    }
+  ],
+  "status": "PASS_PORTABILITY_ONLY",
+  "test_counts_by_arm": {
+    "native": [
+      650,
+      650,
+      650
+    ],
+    "wslc": [
+      650,
+      650,
+      650
+    ]
+  },
+  "wslc_median_seconds": 123.62322310000309,
+  "wslc_seconds": [
+    123.62322310000309,
+    123.30101870000362,
+    199.07333670000662
+  ]
+}
