@@ -102,6 +102,16 @@ class Backend(Previous):
 
     def _publish_release_batch(self, context, *, terminal_cleanup_verified=None):
         rows = context["rows"]
+        release_brackets_valid = [
+            type(row.get("release_call_started_ns")) is int
+            and type(row.get("release_call_returned_ns")) is int
+            and row["release_call_started_ns"] <= row["release_call_returned_ns"]
+            for row in rows
+        ]
+        latest_return_ns = (
+            max(row["release_call_returned_ns"] for row in rows)
+            if all(release_brackets_valid) else None
+        )
         records = getattr(self.owner, "records", None)
         release_record_counts = [
             row.get("owner_cleanup_record_count_before_release") for row in rows
@@ -115,12 +125,12 @@ class Backend(Previous):
         current_records = records[first_count:] if valid_counts else None
         after = self.owner.call("input_state")
         current_token = getattr(self.lease, "intent_token", None)
-        latest_return_ns = max(row["release_call_returned_ns"] for row in rows)
         sample_started_ns = after.get("sample_started_ns") if isinstance(after, dict) else None
         sample_finished_ns = after.get("sample_finished_ns") if isinstance(after, dict) else None
         sample_ordered = (
             type(sample_started_ns) is int
             and type(sample_finished_ns) is int
+            and latest_return_ns is not None
             and latest_return_ns <= sample_started_ns <= sample_finished_ns
         )
         owner_id = after.get("owner_id") if isinstance(after, dict) else None
@@ -163,14 +173,9 @@ class Backend(Previous):
                     cleanup_records_valid = False
                     break
         cleanup_overlaps = []
-        release_brackets_valid = []
-        for row in rows:
+        for row, bracket_valid in zip(rows, release_brackets_valid):
             started = row.get("release_call_started_ns")
             returned = row.get("release_call_returned_ns")
-            bracket_valid = (
-                type(started) is int and type(returned) is int and started <= returned
-            )
-            release_brackets_valid.append(bracket_valid)
             overlaps = False
             if cleanup_records_available and bracket_valid:
                 overlaps = any(
@@ -238,3 +243,4 @@ class Backend(Previous):
         for receipt in rows:
             self.emit(receipt)
         rows.clear()
+
