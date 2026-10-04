@@ -1,0 +1,62 @@
+{
+  "mutated": {
+    "chronology_mismatches": 4,
+    "counts": {
+      "baseline": {
+        "incomplete": 85,
+        "ordered": 15
+      },
+      "candidate": {
+        "incomplete": 85,
+        "ordered": 15
+      }
+    },
+    "errors": [
+      "baseline: case 0: recorded chronology disagrees with intervals",
+      "baseline: case 0: status disagrees with intervals",
+      "baseline: case 0: unordered interval was exposed",
+      "baseline: case 4: recorded chronology disagrees with intervals",
+      "baseline: case 4: status disagrees with intervals",
+      "baseline: case 4: paired outputs disagree with intervals",
+      "candidate: case 0: recorded chronology disagrees with intervals",
+      "candidate: case 0: status disagrees with intervals",
+      "candidate: case 0: unordered interval was exposed",
+      "candidate: case 4: recorded chronology disagrees with intervals",
+      "candidate: case 4: status disagrees with intervals",
+      "candidate: case 4: paired outputs disagree with intervals"
+    ],
+    "status": "REJECTED"
+  },
+  "original": {
+    "chronology_mismatches": 0,
+    "errors": [],
+    "implementations": {
+      "baseline": {
+        "chronology_mismatches": 0,
+        "counts": {
+          "incomplete": 85,
+          "ordered": 15
+        },
+        "errors": [],
+        "status": "PASS"
+      },
+      "candidate": {
+        "chronology_mismatches": 0,
+        "counts": {
+          "incomplete": 85,
+          "ordered": 15
+        },
+        "errors": [],
+        "status": "PASS"
+      }
+    },
+    "status": "PASS"
+  },
+  "schema": "v39-application-consumption-audit-a02-v1",
+  "scope": "Audit-only deterministic verification of retained A01 interval classifications; no projector, X server, GUI, input, game, model, or task effect was executed.",
+  "source": {
+    "expected_input_sha256": "3f664d52a492ad9d0cbbbdb70880ffe16a4909d4bf2c2880d51891d523652363",
+    "input_sha256": "3f664d52a492ad9d0cbbbdb70880ffe16a4909d4bf2c2880d51891d523652363"
+  },
+  "status": "PASS_RAW_CHRONOLOGY_MUTATION_REJECTED"
+}
