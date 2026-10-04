@@ -1,5 +1,6 @@
 """Build generic action-validity snapshots from one exact DOOM observation."""
 from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+from doom_signal_value_domain_v1 import signal_value_in_domain
 
 
 SUPPORTED = {"health", "ammo"}
@@ -27,6 +28,9 @@ def build_action_snapshot(observation, contract, readers):
                 result.get("status") not in ("observed", "unknown") or
                 (result.get("status") == "unknown" and result.get("value") is not None)):
             raise ValueError("signal reader must bind the exact observation epoch")
+        if (result["status"] == "observed" and
+                not signal_value_in_domain(signal_id, result.get("value"))):
+            raise ValueError("observed signal value is outside its declared domain")
         signals[signal_id] = {"status": result["status"], "value": result["value"]}
     return {"format": SNAPSHOT_FORMAT, "sequence": sequence,
             "capture_ns": capture_ns, "binding": binding, "signals": signals}
