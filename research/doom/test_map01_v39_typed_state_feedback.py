@@ -126,6 +126,20 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertIsNone(receipt["down_edge_interval_ns"])
         self.assertIsNone(receipt["up_edge_interval_ns"])
 
+    def test_release_measurement_cannot_supply_down_edge(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        events = [json.loads(line) for line in retained.read_text().splitlines()]
+        events[0]["event"] = "input_release_measurement"
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual(len(receipts), 1)
+        self.assertEqual(receipts[0]["status"],
+                         "adapter_edge_receipt_incomplete")
+        self.assertIsNone(receipts[0]["down_edge_interval_ns"])
+        self.assertIsNone(receipts[0]["up_edge_interval_ns"])
+
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
