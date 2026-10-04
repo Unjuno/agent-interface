@@ -284,6 +284,23 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipt["down_edge_interval_ns"])
                 self.assertIsNone(receipt["up_edge_interval_ns"])
 
+        for row_index, field in ((0, "physical_down_interval"),
+                                 (1, "physical_up_interval")):
+            events = json.loads(json.dumps(template))
+            interval = events[row_index]["physical_key_measurement"]["bracket"][field]
+            self.assertEqual(float(interval[0]), interval[0])
+            events[row_index]["physical_key_measurement"]["bracket"][field] = [
+                float(interval[0]), interval[1]]
+
+            with self.subTest(row_index=row_index, field=field,
+                              alias_type="float_for_int"):
+                receipt = controller.input_edge_receipts(events)[0]
+
+                self.assertEqual(receipt["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_event_kind_must_match_nested_edge(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")

@@ -868,6 +868,7 @@ def input_edge_receipts(events):
                 bracket.get("key") == edge.get("key") and
                 bracket.get("owner_id") == edge.get("owner_id") and
                 bracket.get("intent_token") == edge.get("intent_token") and
+                valid_interval(bracket.get(interval_name)) and
                 bracket.get(interval_name) == edge.get("interval") and
                 bracket.get("status") == status and
                 bracket.get("grants_input_authority") is False and
