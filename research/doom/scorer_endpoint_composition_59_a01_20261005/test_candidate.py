@@ -124,6 +124,16 @@ class CandidateTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "UNKNOWN")
         self.assertNotIn("values", row)
 
+    def test_tic_readback_requires_exact_integer_type(self):
+        for before, after, readback in ((10, 11, 11.0), (0, 1, True)):
+            with self.subTest(readback_type=type(readback).__name__):
+                receipt, row = self.run_checkpoint(
+                    Game(before, after, after, [0, 1], read_tic=readback))
+                self.assertEqual(receipt["status"], "UNKNOWN")
+                self.assertEqual(row["status"], "UNKNOWN")
+                self.assertEqual(type(row["tic_after_read"]), type(readback))
+                self.assertNotIn("values", row)
+
 
 if __name__ == "__main__":
     unittest.main()

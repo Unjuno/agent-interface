@@ -69,7 +69,8 @@ def checkpoint(game, executor, owner, variables, log_path, checkpoint_id):
             row["state_tic"] = state.tic
             row["read_finished_ns"] = time.perf_counter_ns()
             row["tic_after_read"] = game.get_episode_time()
-            if row["tic_after_read"] != after:
+            readback_tic = row["tic_after_read"]
+            if type(readback_tic) is not int or readback_tic != after:
                 raise ValueError("episode tic changed during snapshot read")
             row["status"] = PENDING
     except Exception as error:
