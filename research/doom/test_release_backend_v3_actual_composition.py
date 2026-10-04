@@ -12,13 +12,15 @@ LIVE = HERE.parent / "live_control"
 
 class ActualReleaseCompositionTests(unittest.TestCase):
     def _run(self, *, wrong_key=False, step_exception=False, cleanup_exception=False,
-             emit_accept_then_raise=False, cancel_after_sync=False):
+             emit_accept_then_raise=False, cancel_after_sync=False, three_keys=False):
         emitted = []
         fail_emit = [emit_accept_then_raise]
+        keys = ("a", "b", "c") if three_keys else ("a", "b")
 
         def emit(row):
             emitted.append(dict(row))
-            if fail_emit[0] and row.get("event") == "input_release_transition":
+            if (fail_emit[0] and row.get("event") == "input_release_transition"
+                    and row.get("key") == "b"):
                 fail_emit[0] = False
                 raise RuntimeError("sink failed after accepting release row")
         low_level = types.ModuleType("input_owner_v12")
@@ -104,11 +106,12 @@ class ActualReleaseCompositionTests(unittest.TestCase):
 
             def execute(self, step, cancel, identifier, index):
                 self._input_event_context = (identifier, index)
-                self.raw("a", True)
-                self.raw("b", True)
-                self.raw("a", False)
+                for key in keys:
+                    self.raw(key, True)
+                for key in keys[:-1]:
+                    self.raw(key, False)
                 if emit_accept_then_raise:
-                    self.raw("b", False)
+                    self.raw(keys[-1], False)
                     return
                 raise RuntimeError("later step failed")
 
@@ -141,11 +144,12 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             candidate._input_event_context = ("program-1", 0)
             candidate._release_batch.context = {"rows": [], "identifier": "program-1",
                                                 "step": 0}
+            release_result = {"verified": False}
             if step_exception:
                 with self.assertRaisesRegex(RuntimeError, "later step failed"):
                     candidate.execute({}, None, "program-1", 0)
             elif cleanup_exception:
-                for key in ("a", "b"):
+                for key in keys:
                     candidate.raw(key, True)
                 candidate.raw("a", False)
                 with self.assertRaisesRegex(RuntimeError, "cleanup failed after partial release"):
@@ -153,14 +157,15 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             elif emit_accept_then_raise:
                 with self.assertRaisesRegex(RuntimeError, "sink failed after accepting release row"):
                     candidate.execute({}, None, "program-1", 0)
+                release_result = candidate.release_all()
             else:
-                for key in ("a", "b"):
+                for key in keys:
                     candidate.raw(key, True)
-                for key in ("a", "b"):
+                for key in keys:
                     candidate.raw(key, False)
             releases = [row for row in emitted if row.get("event") == "input_release_transition"]
             admissions = [row for row in emitted if row.get("event") == "input_admission"]
-            return admissions, releases
+            return admissions, releases, release_result
         finally:
             for path in (str(LIVE), str(HERE)):
                 if path in sys.path:
@@ -172,7 +177,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     sys.modules[name] = value
 
     def test_current_v4_wrapper_joins_each_key_admission_to_its_release(self):
-        admissions, releases = self._run()
+        admissions, releases, _ = self._run()
         self.assertEqual([row["key"] for row in admissions], ["a", "b"])
         self.assertTrue(all(row["event"] == "input_admission"
                             and row["operation"] == "down"
@@ -200,13 +205,13 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual([row["release_batch_size"] for row in releases], [2, 2])
 
     def test_wrong_key_receipt_fails_closed_through_batch_composition(self):
-        _, releases = self._run(wrong_key=True)
+        _, releases, _ = self._run(wrong_key=True)
         self.assertEqual([row["key"] for row in releases], ["a", "b"])
         self.assertFalse(any(row["owner_transition_verified"] for row in releases))
         self.assertFalse(any(row["owner_thread_keyup_verified_after_batch"] for row in releases))
 
     def test_cancel_during_keyup_sync_fails_closed_through_batch_composition(self):
-        _, releases = self._run(cancel_after_sync=True)
+        _, releases, _ = self._run(cancel_after_sync=True)
         self.assertEqual([row["key"] for row in releases], ["a", "b"])
         self.assertTrue(all(row["cancel_requested_after_sync"] for row in releases))
         self.assertTrue(all(row["owner_thread_keyup_verified"] for row in releases))
@@ -214,7 +219,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertFalse(any(row["owner_transition_verified"] for row in releases))
 
     def test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception(self):
-        _, releases = self._run(step_exception=True)
+        _, releases, _ = self._run(step_exception=True)
         self.assertEqual([row["key"] for row in releases], ["a"])
         self.assertEqual(releases[0]["owner_thread_keyup_receipt"]["key"], "a")
         self.assertTrue(releases[0]["owner_thread_keyup_verified"])
@@ -223,7 +228,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual(releases[0]["release_batch_disposition"], "step_exception")
 
     def test_cleanup_exception_publishes_partial_receipt_before_propagating(self):
-        _, releases = self._run(cleanup_exception=True)
+        _, releases, _ = self._run(cleanup_exception=True)
         self.assertEqual([row["key"] for row in releases], ["a"])
         self.assertTrue(releases[0]["owner_thread_keyup_verified"])
         self.assertFalse(releases[0]["owner_transition_verified"])
@@ -231,14 +236,20 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual(releases[0]["release_batch_disposition"], "release_all_exception")
 
     def test_accept_then_raise_does_not_duplicate_release_batch_rows(self):
-        _, releases = self._run(emit_accept_then_raise=True)
-        self.assertEqual(len(releases), 2)
+        _, releases, terminal_release = self._run(
+            emit_accept_then_raise=True, three_keys=True)
+        self.assertEqual(len(releases), 3)
         self.assertEqual([row["owner_thread_keyup_receipt"]["key"] for row in releases],
-                         ["a", "b"])
-        self.assertEqual([row["release_batch_position"] for row in releases], [0, 1])
-        self.assertEqual([row["release_batch_size"] for row in releases], [2, 2])
-        self.assertEqual([row["release_batch_complete"] for row in releases], [True, False])
-        self.assertEqual(releases[1]["release_batch_disposition"], "publication_exception")
+                         ["a", "b", "c"])
+        self.assertEqual([row["release_batch_position"] for row in releases], [0, 1, 2])
+        self.assertEqual([row["release_batch_size"] for row in releases], [3, 3, 3])
+        self.assertEqual([row["release_batch_complete"] for row in releases], [True, True, False])
+        self.assertEqual(releases[2]["release_batch_disposition"], "publication_exception")
+        self.assertEqual(terminal_release["release_batch_delivery"]["positions"], [
+            {"position": 0, "key": "a", "state": "confirmed"},
+            {"position": 1, "key": "b", "state": "unknown"},
+            {"position": 2, "key": "c", "state": "confirmed_incomplete"},
+        ])
 
 
 if __name__ == "__main__":

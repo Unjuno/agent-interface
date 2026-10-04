@@ -15,6 +15,37 @@ class Backend(Previous):
         self.owner.close()
         self.owner = InputOwner(session.name)
         self._release_batch = threading.local()
+        self._last_release_batch_delivery = None
+
+    def _delivery_ledger(self, context):
+        ledger = context.get("delivery_ledger")
+        if ledger is None:
+            rows = context["rows"]
+            positions = []
+            for position, row in enumerate(rows):
+                positions.append({
+                    "position": row.get("release_batch_position", position),
+                    "key": row.get("key"),
+                    "state": "not_attempted",
+                })
+            ledger = {
+                "schema": "release-batch-delivery-v1",
+                "identifier": context["identifier"],
+                "step": context.get("step"),
+                "size": len(positions),
+                "positions": positions,
+            }
+            context["delivery_ledger"] = ledger
+            self._last_release_batch_delivery = ledger
+        return ledger
+
+    def _set_delivery_state(self, context, row, state):
+        ledger = self._delivery_ledger(context)
+        position = row.get("release_batch_position")
+        for entry in ledger["positions"]:
+            if entry["position"] == position:
+                entry["state"] = state
+                return
 
     def execute(self, step, cancel, identifier, index):
         previous = getattr(self._release_batch, "context", None)
@@ -22,6 +53,7 @@ class Backend(Previous):
             context = previous
         else:
             context = {"rows": [], "identifier": identifier}
+            self._last_release_batch_delivery = None
         context["step"] = index
         self._release_batch.context = context
         try:
@@ -47,6 +79,7 @@ class Backend(Previous):
     def _publish_incomplete_release_batch(self, context, error, *, disposition):
         """Keep observed per-key up receipts when later cleanup cannot finish."""
         rows = context["rows"]
+        self._delivery_ledger(context)
         size = len(rows)
         for position, row in enumerate(rows):
             row.setdefault("release_batch_size", size)
@@ -65,7 +98,12 @@ class Backend(Previous):
                     "release_batch_disposition identifies the exception boundary"
                 ),
             })
-            self.emit(row)
+            try:
+                self.emit(row)
+            except BaseException:
+                self._set_delivery_state(context, row, "unknown")
+                raise
+            self._set_delivery_state(context, row, "confirmed_incomplete")
 
     def _finish_incomplete_release_batch(self, context, error, disposition):
         try:
@@ -113,6 +151,9 @@ class Backend(Previous):
                 del self._release_batch.context
             except AttributeError:
                 pass
+        if self._last_release_batch_delivery is not None and isinstance(result, dict):
+            result = dict(result)
+            result["release_batch_delivery"] = self._last_release_batch_delivery
         return result
 
     def raw(self, key, down):
@@ -157,6 +198,7 @@ class Backend(Previous):
 
     def _publish_release_batch(self, context, *, terminal_cleanup_verified=None):
         rows = context["rows"]
+        self._delivery_ledger(context)
         records = getattr(self.owner, "records", None)
         counts = [row.get("owner_cleanup_record_count_before_release") for row in rows]
         counts_valid = (
@@ -267,5 +309,7 @@ class Backend(Previous):
             try:
                 self.emit(row)
             except BaseException as exc:
+                self._set_delivery_state(context, row, "unknown")
                 context["publication_error_type"] = type(exc).__name__
                 raise
+            self._set_delivery_state(context, row, "confirmed")
