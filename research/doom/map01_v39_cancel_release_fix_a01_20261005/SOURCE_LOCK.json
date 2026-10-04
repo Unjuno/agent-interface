@@ -1,5 +1,5 @@
 {
-  "base_main": "bfd182727aebd9636c6a84fb437848c1dfe66be8",
+  "base_main": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
   "base_sha256": {
     "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
     "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
@@ -16,14 +16,20 @@
     "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
   },
   "candidate_sha256": {
-    "research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py": "d310bd6821cf293e6787273e6b7c0f592bfd81004f5b56de747276c824c56d93",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py": "0adf5a4807be9623d10452f1024a1419f9ff638dca61843d4df25f4b36fa26bb",
     "research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py": "0fd353ed0b61037a97f965b334fe639f551afe5846a3beb6f5d7e31e86b40779",
-    "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py": "8468a63973ea46ca11267679fe15e077eff22750cd0d9536f5809b49ba8d758b",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py": "45dffa9f70d7099b4a6574b25befc4096085c8dbe6b265d6ae020a6805b9d1d2",
     "research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py": "ae2135ba852d96cd48ed329b82ad0cfa101b97bcc246fa899bec54351cfefd1e",
-    "research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py": "ca8618ad79c6e3a9f929acb6093e73ed9da9f81def638108ba89f50d39c4d4d2",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py": "d2098fc1ba32551fa7399a87fce8b3d72653f56b0cb5d3b779c34f91534ebf5b",
     "research/doom/map01_v39_cancel_release_fix_a01_20261005/test_executor_v12_expiry_composition.py": "13a40988fd3f30391794eef55f25afffb071470cc220902cafb5751d7878328d"
   },
-  "host": "Windows (Codex desktop; exact OS build not captured)",
+  "host": "macOS 27.0.1 arm64",
   "runtime": "CPython 3.12.14 bundled workspace runtime",
-  "schema": "v39-cancel-release-fix-source-lock-v2"
+  "schema": "v39-cancel-release-fix-source-lock-v2",
+  "candidate_baseline": {
+    "commit": "61502e45d40b67b6d588b4e8357e42fde05a9dbe",
+    "path": "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py",
+    "git_blob": "e7889a7a34fe76df5f230d4108a77055b105a680",
+    "sha256": "8468a63973ea46ca11267679fe15e077eff22750cd0d9536f5809b49ba8d758b"
+  }
 }

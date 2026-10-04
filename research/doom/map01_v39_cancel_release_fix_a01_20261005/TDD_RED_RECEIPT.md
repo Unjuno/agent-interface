@@ -24,3 +24,6 @@ A deterministic post-drain schedule and a duplicate-up classification regression
 
 
 The reviewer-requested focus-invalidation lifecycle case is retained in `focus-drain-red-current.log` and `focus-drain-green-current.log`. With a fake observed focus change, the old bridge reaches a needs-decision terminal without publishing the already-started owner key-up; the candidate's release barrier drains one contextual `focus_changed` receipt first.
+
+
+A10 RED/GREEN rebases the confirmed-owner-hold retirement repair from #7823 onto #7805 head `61502e45d40b67b6d588b4e8357e42fde05a9dbe`. The baseline confirms F8 up and retains the partial unverified owner-release record, but after the aggregate keymap fault it accepts/injects a second key request under the same lease. The repair removes the owner-held entry at the confirmed per-key up, stores the aggregate exception as an owner fault, clears the active lease, and rejects the second request before injection. Logs: `owner-ledger-retirement-red.log` and `owner-ledger-retirement-green.log`.

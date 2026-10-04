@@ -15,9 +15,13 @@ git('cat-file', '-e', f"{lock['base_main']}^{{commit}}")
 for path,expected in lock['base_sha256'].items():
     blob=subprocess.check_output(['git','show',f"{lock['base_main']}:{path}"],cwd=ROOT)
     assert hashlib.sha256(blob).hexdigest() == expected, path
+baseline=lock['candidate_baseline']
+baseline_blob=subprocess.check_output(['git','show',f"{baseline['commit']}:{baseline['path']}"],cwd=ROOT)
+assert subprocess.check_output(['git','rev-parse',f"{baseline['commit']}:{baseline['path']}"],cwd=ROOT,text=True).strip() == baseline['git_blob']
+assert hashlib.sha256(baseline_blob).hexdigest() == baseline['sha256']
 for path,expected in lock['candidate_sha256'].items():
     assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest() == expected, path
-suites=[('candidate-suite',13),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
+suites=[('candidate-suite',14),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
 for name,count in suites:
     log=(HERE/f'{name}.log').read_text()
     code=int((HERE/f'{name}.exit').read_text())
@@ -36,6 +40,14 @@ for name in ('test_pointer_reconciliation_error_preserves_confirmed_release_rece
     assert name in red and name in green
 assert result['behavior']['aggregate_reconciliation_error_preserves_per_key_release_measurement'] is True
 assert result['behavior']['aggregate_reconciliation_error_keeps_owner_release_unverified'] is True
+assert result['behavior']['confirmed_per_key_up_retires_owner_hold_before_aggregate_queries'] is True
+assert result['behavior']['aggregate_reconciliation_error_faults_owner_and_rejects_followup_down'] is True
+owner_red=(HERE/'owner-ledger-retirement-red.log').read_text()
+owner_green=(HERE/'owner-ledger-retirement-green.log').read_text()
+assert int((HERE/'owner-ledger-retirement-red.exit').read_text()) != 0 and 'AssertionError: RuntimeError not raised' in owner_red
+assert 'test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error' in owner_red
+assert int((HERE/'owner-ledger-retirement-green.exit').read_text()) == 0 and '\nOK\n' in owner_green
+assert 'test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error' in owner_green
 integration_red=(HERE/'executor-v12-query-fault-red.log').read_text()
 integration_red_code=int((HERE/'executor-v12-query-fault-red.exit').read_text())
 integration_green=(HERE/'executor-v12-query-fault-green.log').read_text()
@@ -61,8 +73,8 @@ assert 'test_async_cleanup_noop_up_is_not_a_second_release_measurement' in (HERE
 assert 'test_executor_focus_invalidation_after_execute_drain_publishes_receipt' in (HERE/'candidate-suite.log').read_text()
 optimized=(HERE/'candidate-suite-opt.log').read_text()
 assert int((HERE/'candidate-suite-opt.exit').read_text()) == 0
-assert re.search(r'Ran 13 tests?', optimized) and '\nOK\n' in optimized
-assert result['tests']['candidate_cancel_release_optimized']['count'] == 13
+assert re.search(r'Ran 14 tests?', optimized) and '\nOK\n' in optimized
+assert result['tests']['candidate_cancel_release_optimized']['count'] == 14
 assert result['tests']['candidate_cancel_release_optimized']['exit'] == 0
 for red_name,green_name,red_message in (
     ('post-drain-red-current','post-drain-green-current','AssertionError: 0 != 1'),
@@ -84,6 +96,7 @@ for line in (HERE/'SHA256SUMS').read_text().splitlines():
 assert {'candidate-suite-opt.log','focus-drain-red-current.log',
         'focus-drain-green-current.log','post-drain-red-current.log',
         'post-drain-green-current.log','noop-row-red-current.log',
-        'noop-row-green-current.log'} <= manifest_names
+        'noop-row-green-current.log','owner-ledger-retirement-red.log',
+        'owner-ledger-retirement-green.log'} <= manifest_names
 assert result['scope'].startswith('Local fake-display')
-print(f'AUDIT_PASS_SOURCE_LOCK_AND_28_PRIMARY_TESTS_PLUS_13_OPTIMIZED_REPEAT_AND_{len(manifest_names)}_PACKAGE_FILES')
+print(f'AUDIT_PASS_SOURCE_LOCK_AND_29_PRIMARY_TESTS_PLUS_14_OPTIMIZED_REPEAT_AND_{len(manifest_names)}_PACKAGE_FILES')

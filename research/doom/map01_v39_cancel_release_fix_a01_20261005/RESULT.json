@@ -18,19 +18,21 @@
     "ordinary_up_still_emits_one_matching_receipt": true,
     "reconciliation_failure_preserves_recorded_release_measurement": true,
     "unavailable_samples_emit_unconfirmed_row_without_adapter_edge": true,
-    "verified_owner_cleanup_reconciles_bridge_held_set": true
+    "verified_owner_cleanup_reconciles_bridge_held_set": true,
+    "confirmed_per_key_up_retires_owner_hold_before_aggregate_queries": true,
+    "aggregate_reconciliation_error_faults_owner_and_rejects_followup_down": true
   },
   "disposition": "PASS_CANDIDATE_MECHANICS",
   "schema": "map01-v39-cancel-release-fix-result-v2",
-  "scope": "Local fake-display owner/bridge and exact-main ExecutorV12 composition tests only. Candidate not wired into live MAP01 runtime.",
-  "source_commit": "bfd182727aebd9636c6a84fb437848c1dfe66be8",
+  "scope": "Local fake-display owner/bridge plus current PR #7805 candidate compatibility and ExecutorV12 composition tests. Candidate not wired into live MAP01 runtime.",
+  "source_commit": "892cc5bfa836af8b6512f17aaa427f84e14b55cc",
   "tests": {
     "candidate_cancel_release": {
-      "count": 13,
+      "count": 14,
       "exit": 0
     },
     "candidate_cancel_release_optimized": {
-      "count": 13,
+      "count": 14,
       "exit": 0
     },
     "executor_v12_expiry_composition": {
@@ -55,5 +57,6 @@
     "safety",
     "latency",
     "matched live comparison"
-  ]
+  ],
+  "candidate_source_commit": "61502e45d40b67b6d588b4e8357e42fde05a9dbe"
 }

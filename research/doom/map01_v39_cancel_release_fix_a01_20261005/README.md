@@ -84,4 +84,17 @@ Bundled CPython 3.12.14 verification at exact main `bfd182727aebd9636c6a84fb4378
 
 A fake-display focus-change integration now blocks the owner at the physical key-release edge after focus invalidation is observed. ExecutorV3's program exits with the decision-required terminal while `cancel` remains clear; the terminal release barrier then drains one context-bound `focus_changed` up before a verified-empty terminal. The prior bridge fails with zero up receipts; the candidate passes. This directly covers the focus-invalidation branch requested in review.
 
-The expanded bundled CPython 3.12.14 verification has 13 focused candidate tests, an optimized 13-test repeat, 3 exact-main ExecutorV12 compositions, 10 InputOwner compatibility tests, 2 V39 bridge tests, and 28 primary receipts. The source audit verifies the 90-file package manifest. All evidence remains fake-display only.
+The expanded bundled CPython 3.12.14 verification has 14 focused candidate tests, an optimized 14-test repeat, 3 exact-main ExecutorV12 compositions, 10 InputOwner compatibility tests, 2 V39 bridge tests, and 29 primary receipts. The source audit verifies the 95-file package manifest. All evidence remains fake-display only.
+
+
+## A10 — retire confirmed owner holds before aggregate verification
+
+**H:** The #7805 owner persists its per-key receipt before aggregate pointer/keymap queries, but it can retain the confirmed key in its internal `held` map and keep the active lease when a later aggregate query fails. A subsequent request under that lease may then be admitted after the prior key-up.
+
+**T:** On exact #7805 candidate head `61502e45d40b67b6d588b4e8357e42fde05a9dbe`, admit F8, inject a failure into the aggregate keymap query after the pre/post per-key samples, drain the partial owner record, then request key `b` under the same lease. RED uses the unmodified owner source blob at that head. The candidate retires owner-held state at `CONFIRMED_PHYSICAL_UP`, records the aggregate exception as an owner fault, clears the active lease, and rejects later key input before injection.
+
+**D:** PASS requires the partial `owner_release` to stay `verified=false` without aggregate `keys_down`, exactly one context-bound confirmed F8 up, empty owner-physical and bridge-held states, and a subsequent down rejected with `input owner failed closed` without a new fake input event. The baseline fails because that second down is accepted; candidate GREEN passes.
+
+**C:** This rebases the owner-ledger repair from draft PR #7823's A02 onto the later #7805 head, which includes the A08/A09 release barrier and V39/ExecutorV3 evidence. It preserves #7805's pre-query partial record and adds no duplicate owner-release record.
+
+**U:** Bundled CPython 3.12.14 on macOS 27.0.1 arm64; fake display only. No container run, real X11, OS input, application effect, useful feedback, recovery efficacy, threat control, gameplay, latency, or live MAP01 allocation is claimed.

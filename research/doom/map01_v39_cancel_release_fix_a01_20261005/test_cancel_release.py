@@ -1,4 +1,5 @@
 import importlib.util
+import os
 import sys
 import threading
 import time
@@ -9,7 +10,8 @@ ROOT = Path(__file__).resolve().parents[3]
 DOOM = ROOT / "research" / "doom"
 FIX_PATH = DOOM / "map01_v39_cancel_release_fix_a01_20261005"
 BRIDGE_TEST_PATH = DOOM / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
-OWNER_V13_PATH = FIX_PATH / "input_owner_v13_candidate.py"
+OWNER_V13_PATH = Path(os.environ.get(
+    "V13_OWNER_CANDIDATE_PATH", FIX_PATH / "input_owner_v13_candidate.py"))
 BRIDGE_V2_PATH = FIX_PATH / "bridge_v2_candidate.py"
 
 
@@ -285,6 +287,38 @@ class CancellationReceiptTests(unittest.TestCase):
             self.assertNotIn("keys_down", partial[0])
             self.assertEqual(backend.held, set())
             self.assertEqual(harness.d.physical, set())
+        finally:
+            harness.close()
+
+    def test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error(self):
+        bridge_test, hm, harness, lease, _bm, backend = load_candidate()
+        hm.owner_module.XK.string_to_keysym = lambda key: {"F8": 8, "b": 9}[key]
+        harness.d.keysym_to_keycode = lambda sym: {8: 74, 9: 98}[sym]
+        backend._input_event_context = ("owner-ledger-retirement-a01", 3)
+        try:
+            backend.raw("F8", True)
+            harness.d.query_fail_on.add(harness.d.query_i + 3)
+            with self.assertRaisesRegex(RuntimeError, "sample failure"):
+                harness.owner.call("release", lease)
+            backend._drain_owner_records()
+
+            partial = [row for row in harness.owner.records
+                       if row.get("event") == "owner_release"]
+            self.assertEqual(len(partial), 1)
+            self.assertFalse(partial[0]["verified"])
+            self.assertNotIn("keys_down", partial[0])
+            receipts = partial[0]["per_key_release_measurements"]
+            self.assertEqual(len(receipts), 1)
+            self.assertEqual(receipts[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            self.assertEqual(backend.held, set())
+            self.assertEqual(harness.d.physical, set())
+
+            injections_after_cleanup = len(harness.d.injections)
+            with self.assertRaisesRegex(RuntimeError, "input owner failed closed"):
+                harness.owner.call("down", lease, "b")
+            self.assertEqual(len(harness.d.injections), injections_after_cleanup)
+            self.assertNotIn(98, harness.d.physical)
         finally:
             harness.close()
 

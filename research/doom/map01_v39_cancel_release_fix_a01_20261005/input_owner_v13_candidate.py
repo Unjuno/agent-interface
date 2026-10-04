@@ -285,7 +285,7 @@ class InputOwner:
                 raise Cancelled()
 
         def release(reason):
-            nonlocal active,revision
+            nonlocal active,revision,fault
             revision += 1
             per_key_release_measurements=[]
             for code in list(held):
@@ -308,6 +308,11 @@ class InputOwner:
                     classification,_=_classify_release(True,pre['down'],True,True,post['down'])
                     if classification=='CONFIRMED_PHYSICAL_UP':
                         physical_interval=[pre['finished_ns'],post['finished_ns']]
+                if classification == 'CONFIRMED_PHYSICAL_UP':
+                    # The owner-held map tracks this owner's current physical
+                    # hold. Retire it at the confirmed per-key edge, even when
+                    # the later aggregate device queries fail.
+                    held.pop(code, None)
                 identity_status,retired_id=hold_identity.on_up(
                     code,key_name,intent_token,classification=='CONFIRMED_PHYSICAL_UP') if key_name is not None else ('NO_ACTIVE_ID',None)
                 if retired_id is not None:
@@ -340,10 +345,17 @@ class InputOwner:
                           valid_until_ns=active.deadline if active else None,
                           per_key_release_measurements=per_key_release_measurements)
             self.records.append(record)
-            mask = d.screen().root.query_pointer().mask
-            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-            bitmap = d.query_keymap()
-            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+            try:
+                mask = d.screen().root.query_pointer().mask
+                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+                bitmap = d.query_keymap()
+                down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+            except Exception as exc:
+                # Keep the partial receipt, preserve the aggregate error, and
+                # stop accepting work from this owner after verification fails.
+                fault = exc
+                active = None
+                raise
             record.update(verified=not down and not buttons_down, buttons_down=buttons_down,
                           keys_down=down, verified_ns=time.perf_counter_ns())
             if active is not None and hasattr(active, 'record_interruption'):
