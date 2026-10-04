@@ -20,7 +20,7 @@ The first composed implementation should keep the existing checked-target/revali
 
 The open #7353 branch's source-pinned A06 test-double counterexample held the field empty while reporting `field_pixels_changed=true`; its v1 adapter dispatched Submit and returned `TASK_SUCCEEDED`. The separately versioned A07 v2 contract stops after entry when `field_value_matches_task=false`, permits Submit only when that predicate and a revalidated Submit target are true, and completes only after a separate submission predicate. Its independent audit reports `PASS_EXACT_VALUE_GATE_CONSTRUCTION_SCOPED` (raw SHA-256 `e8199fbbe73c602bc85dd2417ae3211eec5cd3391a2948512b88e6ec8002b3dd`; PR #7353 head `e423448c135467335054030d6b6d76cb85c92b36`). The v2 method relies on its observer to supply trustworthy exact-value semantics; OCR, false acceptance, live GUI effect, and efficiency remain unqualified. It does not alter A05 or r02's first outcomes.
 
-The separate A05 geometry readback in draft PR #7454 pins all three failure frames and confirms that the frozen box `(499,544,799,573)` cuts the leading `t`; padded bounds `(493,542,805,579)` visually include the token and field border. This is crop geometry, not OCR recognition. Tesseract output with padded bounds, exact/near-miss controls, and any new formal candidate result remain outstanding.
+The separate A05 geometry readback in PR #7454 pins all three failure frames and confirms that the frozen box `(499,544,799,573)` cuts the leading `t`; padded bounds `(493,542,805,579)` visually include the token and field border. This is crop geometry, not OCR recognition. Tesseract output with padded bounds, exact/near-miss controls, and any new formal candidate result remain outstanding.
 
 ## Reconciled measurements
 
