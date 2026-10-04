@@ -843,6 +843,43 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                                     row["up_edge_interval_ns"] is None
                                     for row in adapter_receipts))
 
+    def test_input_edge_receipt_rejects_outer_group_split_for_same_actuation(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        down = next(row for row in template if row.get("event") == "input_admission")
+        up = next(row for row in template
+                  if row.get("event") == "input_release_measurement")
+
+        def move_outer_group(row, field, value):
+            duplicate = json.loads(json.dumps(row))
+            duplicate[field] = value
+            return duplicate
+
+        cases = (
+            ("duplicate_down_outer_id_changed",
+             [down, move_outer_group(down, "id", "copied-program"), up]),
+            ("duplicate_up_outer_id_changed",
+             [down, up, move_outer_group(up, "id", "copied-program")]),
+            ("duplicate_down_outer_step_changed",
+             [down, move_outer_group(down, "step", 99), up]),
+            ("duplicate_up_outer_step_changed",
+             [down, up, move_outer_group(up, "step", 99)]),
+        )
+        for name, rows in cases:
+            with self.subTest(case=name):
+                receipts = controller.input_edge_receipts(
+                    json.loads(json.dumps(rows)))
+                adapter_receipts = [row for row in receipts
+                                    if row.get("status", "").startswith("adapter_edge_")]
+                self.assertGreaterEqual(len(adapter_receipts), 2)
+                self.assertTrue(all(row["status"] ==
+                                    "adapter_edge_receipt_incomplete"
+                                    for row in adapter_receipts))
+                self.assertTrue(all(row["down_edge_interval_ns"] is None and
+                                    row["up_edge_interval_ns"] is None
+                                    for row in adapter_receipts))
+
 
 if __name__ == "__main__":
     unittest.main()

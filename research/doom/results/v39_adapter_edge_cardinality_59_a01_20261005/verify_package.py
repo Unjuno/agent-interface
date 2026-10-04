@@ -43,10 +43,17 @@ ck(b["status"]=="FROZEN_BEFORE_RUN","A02B preregistration status")
 ck(b["base_pr_head"]=="a7f9e9e3c4bd31199bde3a14761783ead619ad08","A02B current parent identity")
 ck(sha(source)==b["source"]["sha256"],"A02B controller snapshot SHA256")
 ck(sha(test)==b["test"]["sha256"],"A02B exact proposed test snapshot SHA256")
-a06_path=REPO/"research/doom/v39_adapter_nested_identity_taint_59_a06_20261005/A06_RESULT.json"
-a06=json.loads(a06_path.read_text(encoding="utf-8"))
-ck(sha(REPO/"research/doom/test_map01_v39_typed_state_feedback.py")==a06["test_sha256"],"A06 live branch test SHA256")
-ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==a06["candidate_source_sha256"],"A06 live branch controller SHA256")
+a07_path=REPO/"research/doom/v39_adapter_nested_identity_taint_59_a07_20261005/A07_RESULT.json"
+a07=json.loads(a07_path.read_text(encoding="utf-8"))
+ck(sha(REPO/"research/doom/test_map01_v39_typed_state_feedback.py")==a07["test_sha256"],"A07 live branch test SHA256")
+ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==a07["candidate_source_sha256"],"A07 live branch controller SHA256")
+ck(a07["all_four_baseline_false_pairs"] and a07["candidate"]["passed"] and not a07["baseline"]["passed"],"A07 baseline/candidate decision")
+a07_audit=json.loads((REPO/"research/doom/v39_adapter_nested_identity_taint_59_a07_20261005/A07_AUDIT.json").read_text(encoding="utf-8"))
+ck(a07_audit["audit"]=="PASS" and a07_audit["source_sha256"]==a07["candidate_source_sha256"] and a07_audit["test_sha256"]==a07["test_sha256"],"A07 raw-derived audit binds current source/test")
+a07_package=REPO/"research/doom/v39_adapter_nested_identity_taint_59_a07_20261005"
+a07_manifest={line.split("  ",1)[1]:line.split("  ",1)[0] for line in (a07_package/"SHA256SUMS_A07.txt").read_text(encoding="utf-8").splitlines()}
+ck(all(sha(a07_package/Path(*PurePosixPath(rel).parts))==digest for rel,digest in a07_manifest.items()),"A07 evidence manifest hashes")
+ck(set(a07_manifest)=={p.relative_to(a07_package).as_posix() for p in a07_package.rglob("*") if p.is_file() and p.name!="SHA256SUMS_A07.txt" and not excluded(p.relative_to(a07_package).as_posix())},"A07 evidence manifest complete index")
 ck(sha(runner)==b["runner"]["sha256"],"A02B runner SHA256")
 for snapshot,key in ((source,"source"),(test,"test")):
     blob=subprocess.check_output(["git","-C",str(REPO),"hash-object","--no-filters",str(snapshot)],text=True).strip()

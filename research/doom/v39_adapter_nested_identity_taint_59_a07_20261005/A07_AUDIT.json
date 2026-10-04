@@ -1,0 +1,55 @@
+{
+  "audit": "PASS",
+  "source_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "test_sha256": "5786774754433b71ba38beae989adef32ebffec504ef555feb4db89c273ef4ce",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "baseline_false_pairs": [
+    {
+      "case": "duplicate_down_id_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    },
+    {
+      "case": "duplicate_down_step_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    },
+    {
+      "case": "duplicate_up_id_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    },
+    {
+      "case": "duplicate_up_step_changed",
+      "baseline_paired_receipts": 1,
+      "baseline_false_pair": true
+    }
+  ],
+  "candidate_mutations": [
+    {
+      "case": "duplicate_down_id_changed",
+      "receipts": 2,
+      "all_incomplete": true,
+      "all_intervals_null": true
+    },
+    {
+      "case": "duplicate_down_step_changed",
+      "receipts": 2,
+      "all_incomplete": true,
+      "all_intervals_null": true
+    },
+    {
+      "case": "duplicate_up_id_changed",
+      "receipts": 2,
+      "all_incomplete": true,
+      "all_intervals_null": true
+    },
+    {
+      "case": "duplicate_up_step_changed",
+      "receipts": 2,
+      "all_incomplete": true,
+      "all_intervals_null": true
+    }
+  ],
+  "checks": 15
+}
