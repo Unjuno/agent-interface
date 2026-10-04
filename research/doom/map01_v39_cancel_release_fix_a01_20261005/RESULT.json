@@ -1,0 +1,19 @@
+{
+  "schema": "map01-v39-cancel-release-fix-result-v1",
+  "disposition": "PASS_CANDIDATE_MECHANICS",
+  "source_commit": "2e1df9a56a0b46c1733c731bde3409c68c8750c7",
+  "tests": {
+    "candidate_cancel_release": {"count": 5, "exit": 0},
+    "input_owner_v12_compatibility_on_v13": {"count": 10, "exit": 0},
+    "existing_v39_bridge": {"count": 2, "exit": 0}
+  },
+  "behavior": {
+    "cancelled_key_release_receipt_matches_actuation_id_and_original_context": true,
+    "multiple_keys_keep_distinct_step_context": true,
+    "verified_owner_cleanup_reconciles_bridge_held_set": true,
+    "ordinary_up_still_emits_one_matching_receipt": true,
+    "missing_per_key_sample_does_not_claim_confirmed_up": true
+  },
+  "scope": "Local fake-display owner and bridge candidate tests only. Candidate not wired into live MAP01 runtime.",
+  "unverified": ["real X11", "application consumption", "independently useful feedback", "bounded recovery efficacy", "gameplay/MAP01 outcome", "safety", "latency", "matched live comparison"]
+}

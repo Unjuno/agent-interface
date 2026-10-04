@@ -1,0 +1,16 @@
+Runtime: /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 (CPython 3.12.14)
+Working directory: repository root; host macOS 27.0 arm64.
+
+Focused candidate tests:
+python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release -v
+
+Retained owner compatibility suite redirected to candidate InputOwner v13:
+python3 research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py
+
+Existing bridge suite:
+PYTHONPATH=research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12:research/live_control:research/doom python3 -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v
+
+Read-only result audit:
+python3 research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py
+
+No X server, game, GUI, or OS input was used.
