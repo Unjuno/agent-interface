@@ -77,14 +77,16 @@ an execution-policy violation, not a formal result; it has been reported on
 #5130 and #5085. No further Docker calls will be made on this lane until an
 explicit slot assignment.
 
-Readiness gap: this additive path has host-side controller adapters, a private
-score/reset file channel, and an independent host reset witness. It still has
-no integrated live three-arm runner, live-game construction suite, or
-independent raw-output auditor. The existing single-task Mindustry runner and
-synthetic repeat-fixture protocol are references, not evidence that the
-six-task three-arm path is implemented. Those composed artifacts and their
-construction checks must be completed before freezing or launching a formal
-allocation.
+Readiness gap: this additive path now has host-side target/socket adapters, a
+private score/reset file channel, an 18-task synthetic three-arm composition,
+and independent raw-v2 plus dispatch-sidecar auditors. Those construction
+checks establish that the host components compose over synthetic inputs; they
+do not establish a live Mindustry runner. A live three-arm runner, real GUI and
+socket integration, source/artifact identity closure, and an independently
+audited live raw capture remain unverified. The existing single-task runner
+and synthetic repeat-fixture protocol remain references, not evidence of the
+six-task live result. The resource and source gates below still control any
+formal allocation.
 
 The decision-contract check is synthetic and non-scientific. It was run both
 on the host and in local, network-disabled Docker containers using the
@@ -414,10 +416,13 @@ resets, compiler and socket are simulated callbacks. A second control walks all
 three arms across all 18 tasks and 36 ordered point dispatches, checking the
 frozen cold/reuse/repair route and model-call schedules. These controls do not
 connect a live Mindustry socket, capture real images, dispatch input, call a
-model, score a game task, produce an independent raw audit, or demonstrate
-three-arm execution/economics. The actual live adapters, full runner, and
-allocation remain unimplemented. No game, model, Docker command, workflow, or
-formal allocation was invoked; the #5130 resource gate remains controlling.
+model, score a game task, or demonstrate live three-arm execution/economics.
+The synthetic raw-v2 and target-dispatch auditors are implemented, but there
+is no live raw capture or source-identity proof. The socket adapter has only
+fake-exchange and fake-socket coverage on this Windows host; the actual bridge
+process and full runner remain unverified. No game, model, Docker command,
+workflow, or formal allocation was invoked; the #5130 resource gate remains
+controlling.
 
 ## Three-arm dispatch + lifecycle raw reconstruction (host construction, 2026-10-04)
 
@@ -426,3 +431,23 @@ After refreshing the branch through current `origin/main` `d22c094a4a2e229233347
 A new immutable construction capture is in `construction/raw_target_dispatch_lifecycle_20261004_03/`. It retains `raw-events.json`, `target-dispatch-events.json`, raw-v2 `audit.json`, independent `dispatch-audit.json`, and `SHA256SUMS`. Raw SHA-256 is `814b5dd83cfe7d963914020db02588a8604548c6e82b4db66493cb88ae1ef8bf`; target-dispatch sidecar SHA-256 is `b3c1eaf0b5093374ee8463cade2217a3197aff938ea968a98e3df7554a48ca66`. The dispatch sidecar is checked by `audit_target_dispatch_capture.py`, which joins each compiled target/request/expected observation sequence with its raw admission, feedback, release, and B1 stale-refusal/repair record. It verifies all 18 tasks and 36 ordered dispatches. Its mutation suite rejects reversed target order, stale request sequence, missing release, an admitted old B1 reference, and malformed observation input. The raw-v2 auditor returns `PASS_CONSTRUCTION_ONLY`, no errors, `RETAIN` as the synthetic evaluator disposition, break-even task 2, 18 reset reconstructions, and 3 geometry transitions. The capture explicitly reports `source_identity_verified=false`: its artifact/model/container/game identity fields are synthetic sentinels, and the result is not live-source verification or an economics experiment. Callback effects remain simulated.
 
 On merge base `d22c094a4a2e2292333479573c2eb446c345e1b9`, the dedicated dispatch/raw mutation suite passes 6/6, the complete package passes 103/103, the inherited efficiency probe passes with 10 controls, and `git diff --check` passes. The exact six sparse-checkout support files were materialized from checked-out Git blobs only for these local checks. No Docker, Actions workflow, Mindustry process, socket, model call, task input, or formal allocation was used; the #5130 shared-resource gate remains in force. See `RAW_TARGET_DISPATCH_CONSTRUCTION.md` for the H/T/D/C/U and scope.
+
+## Durable socket submit trace (host construction, 2026-10-04)
+
+The v2 socket submit adapter now requires an explicit trace sink. Its
+`JsonlTraceSink` creates a new file exclusively and fsyncs every JSONL record.
+The adapter journals the full compiled request before transport, then journals
+the response before validation; a failure writing the pre-send record prevents
+the exchange, and ambiguous transport results remain one-shot with no retry.
+The focused socket-submit suite passes 13/13 after refreshing the branch
+through current `main` `510c98fe46889461dce2a4c0e14e261eaa47e8ed`; Python
+compilation and `git diff --check` also pass. The full package previously passed
+116/116 on the same implementation before that main merge, but a repeat was
+not completed in the sparse Windows checkout because required source/data
+blobs are absent. A fresh read-only recomputation of the retained raw-v2 and
+dispatch-sidecar audits on the refreshed branch exactly matches the committed
+audit JSON: `PASS_CONSTRUCTION_ONLY` with source identity false, and
+`PASS_SYNTHETIC_DISPATCH_JOIN` for 18 tasks/36 target dispatches. PR #7370 is
+open and Draft at head `af38f4637`. No live socket process, Mindustry input,
+model call, Docker operation, or formal allocation was used; the #5130 gate
+remains active.
