@@ -437,7 +437,9 @@ def action_state_feedback(before, after, typed_observations):
             return None, "typed_frame_missing_or_ambiguous"
         row = matches[0]
         frame_hash = observation.get("frame_rgb_sha256")
-        if (type(row.get("sequence")) is not int or
+        if (row.get("schema") != "doom-typed-observation-v1" or
+                row.get("pointer_binding") != observation.get("pointer_binding") or
+                type(row.get("sequence")) is not int or
                 type(row.get("capture_ns")) is not int or
                 row.get("capture_ns") != observation.get("capture_ns") or
                 row.get("id") != observation.get("id") or
@@ -554,6 +556,9 @@ def input_edge_receipts(events):
         elif (release.get("operation") != "up" or type(owner) is not dict or
               owner.get("event") != "owner_explicit_keyup" or
               owner.get("key") != key or owner.get("intent_token") != token or
+              owner.get("server_sync_completed") is not True or
+              release.get("owner_thread_keyup_verified") is not True or
+              release.get("owner_thread_keyup_history_complete") is not True or
               type(admitted_ns) is not int or type(input_ack_ns) is not int or
               input_ack_ns < admitted_ns or
               type(release_started_ns) is not int or type(release_returned_ns) is not int or
