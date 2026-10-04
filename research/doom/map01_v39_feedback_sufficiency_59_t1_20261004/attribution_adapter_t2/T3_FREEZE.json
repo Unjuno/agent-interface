@@ -1,0 +1,48 @@
+{
+  "schema": "map01-interval-censored-feedback-composition-t3-freeze-v1",
+  "base_source": "T2 adapter construction in this package",
+  "input_producer": {
+    "pr": 7602,
+    "head": "64c48e95425972bc04e61a41d219686c789cb6b6",
+    "source_path": "research/doom/map01_overlap_controller_v39.py",
+    "receipt": "input_edge_receipt",
+    "retained_fixture_path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl"
+  },
+  "hypothesis": "Per-key X-server DOWN/UP measurement envelopes can conservatively identify possible overlap with an independent scorer detection bracket, but cannot establish exact held-input coverage or unique temporal attribution.",
+  "test": "Join only complete paired edge receipts by their digested intent identity. A single envelope intersecting the scorer bracket remains unresolved; multiple distinct intersecting envelopes remain ambiguous; malformed or incomplete envelopes cannot yield unique attribution.",
+  "decision": {
+    "pass": "All paired-envelope controls avoid TEMPORALLY_UNIQUE; one possible envelope yields UNRESOLVED and two possible identities yield AMBIGUOUS.",
+    "fail": "Any measured envelope is promoted to unique attribution or a competing possible identity is dropped.",
+    "scope": "Offline adapter construction on retained A01 X-server keymap sample brackets and synthetic independent scorer rows only."
+  },
+  "limitations": [
+    "X-server keymap sample brackets do not establish continuous physical key occupancy.",
+    "No application consumption, task effect, causation, safety, recovery benefit, or live-game performance is established.",
+    "No game, model, GUI, X server, or OS-input allocation ran."
+  ],
+  "raw_fixture": {
+    "path": "run/a01-input-edge-receipt.jsonl",
+    "sha256": "a2a0fe0c5f2bdf5dc76f982e343ced8e273c5b21fff67132a8128b58e7a3b0b7",
+    "source_path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl",
+    "source_export_sha256": "30441d45a91405730d0fdf076cda8d4d0b990962be8e27f60f0b5d0bb4cccb7c",
+    "receipt_export_sha256": "a2a0fe0c5f2bdf5dc76f982e343ced8e273c5b21fff67132a8128b58e7a3b0b7",
+    "source_row_count": 2,
+    "adapter_receipt_count": 2
+  },
+  "identity_hashes": {
+    "schema": "sha256-hex",
+    "intent_token_sha256": "260da62b681cf61e44dabf9ab43ef5d1adcc571135bed836c5f98b5e2b7ea668",
+    "owner_id_sha256": "fd81cb832367b988c512e15ebb616b53bfb67ab6023e7f19fee8bc9a2a51ba2d"
+  },
+  "scorer_fixture": {
+    "sample_times_ns": [87811364892000, 87811364948000],
+    "positive_event_time_ns": 87811364948000,
+    "synthetic": true
+  },
+  "expected": {
+    "single_retained_envelope": "UNRESOLVED",
+    "two_possible_intents": "AMBIGUOUS",
+    "causal_attribution": "NOT_ESTABLISHED",
+    "tests": 21
+  }
+}

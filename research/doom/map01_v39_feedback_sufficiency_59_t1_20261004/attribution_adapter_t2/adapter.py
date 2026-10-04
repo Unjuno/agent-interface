@@ -97,6 +97,78 @@ def _unresolved(rows, reason):
     return output
 
 
+def _measured_interval_outcomes(samples, events, input_rows):
+    """Use paired X-server sample brackets for conservative overlap checks.
+
+    Edge intervals bound when a transition may have happened; they do not
+    prove continuous key occupancy. They can expose possible competing intent
+    overlap, but never establish full-span unique coverage.
+    """
+    rows = []
+    for row in input_rows:
+        if not isinstance(row, dict) or row.get("event") != "input_edge_receipt":
+            continue
+        down, up = row.get("down_edge_interval_ns"), row.get("up_edge_interval_ns")
+        valid = (
+            row.get("status") == "adapter_edge_brackets_paired"
+            and type(down) is list and len(down) == 2
+            and type(up) is list and len(up) == 2
+            and all(_integer(value) for value in down + up)
+            and down[0] <= down[1] < up[0] <= up[1]
+            and row.get("grants_input_authority") is False
+            and row.get("application_consumption_observed") is False
+            and isinstance(row.get("intent_token_sha256"), str)
+            and bool(row["intent_token_sha256"])
+            and isinstance(row.get("key"), str) and bool(row["key"])
+        )
+        if not valid:
+            rows.append(None)
+        else:
+            rows.append({"token": row["intent_token_sha256"], "down": down,
+                         "up": up, "key": row["key"]})
+
+    sample_times = [row["sample_ns"] for row in samples]
+    outputs = []
+    for event in events:
+        if event.get("polarity") != "positive" or event.get("useful") is not True:
+            continue
+        observed = event.get("observed_ns")
+        if observed not in sample_times or sample_times.index(observed) == 0:
+            lower = None
+        else:
+            lower = sample_times[sample_times.index(observed) - 1]
+        upper = observed
+        possible = set()
+        malformed = False
+        if lower is None:
+            malformed = True
+        else:
+            for row in rows:
+                if row is None:
+                    malformed = True
+                    continue
+                # A held key is possible any time after the DOWN interval starts
+                # and until the UP transition is certainly complete.
+                if row["down"][0] <= upper and row["up"][1] > lower:
+                    possible.add(row["token"])
+        if len(possible) > 1:
+            status, reason = "AMBIGUOUS", "multiple_measured_intent_envelopes_intersect"
+        else:
+            status = "UNRESOLVED"
+            reason = ("measured_edge_envelope_not_exact_occupancy" if possible
+                      else "no_measured_intent_envelope_intersects")
+            if malformed:
+                reason = "incomplete_measured_interval_evidence"
+        outputs.append({
+            "event_sequence": event.get("event_sequence"), "kind": event.get("kind"),
+            "detection_interval_ns": [lower, upper] if lower is not None else None,
+            "status": status, "reason": reason,
+            "possible_intent_token_sha256": sorted(possible), "intent_token": None,
+            "causal_attribution": "NOT_ESTABLISHED",
+        })
+    return outputs
+
+
 def adapt_session_records(sample_rows, event_rows, input_rows):
     """Normalize V15 sink/backend rows and apply the frozen temporal gate.
 
@@ -188,6 +260,11 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
             "release_verified":verified,
         })
 
+    measured_rows = []
+    for row in input_rows:
+        if isinstance(row, dict) and row.get("event") == "input_edge_receipt":
+            measured_rows.append(row)
+
     if integrity:
         if "unbound_input_admission" in integrity or "unbound_key_release" in integrity:
             trace_integrity="HOLD_UNBOUND_INPUT_IDENTITY"
@@ -198,6 +275,9 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
         else:
             trace_integrity="HOLD_DUPLICATE_OR_MALFORMED_INPUT_RECORD"
         attributions=_unresolved(event_rows,"input_trace_identity_or_completeness_hold")
+    elif measured_rows:
+        trace_integrity = "MEASURED_INTERVALS_ONLY"
+        attributions = _measured_interval_outcomes(samples, event_rows, measured_rows)
     else:
         trace_integrity="SOURCE_ROWS_JOINED"
         attributions=attribute_positive_events(samples,event_rows,intervals)

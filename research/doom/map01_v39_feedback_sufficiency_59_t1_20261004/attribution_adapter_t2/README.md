@@ -1,4 +1,4 @@
-# V15 scorer/input attribution adapter construction T2
+# V15 scorer/input attribution adapter construction T2 and interval-censored T3
 
 ## H / T / D / C / U
 
@@ -23,3 +23,9 @@ python -B audit_t2.py --run-dir run/replay
 ```
 
 The runner requires an output path that does not already exist and refuses to append to or overwrite an existing run. The commands above write a replay under `run/replay/`; choose a different fresh path for another run. The retained T2 evidence under [`run/`](run/) remains immutable. The T2 gate source and V15 scorer producer files are pinned in `FREEZE.json`. The real scorer writer emits two samples and one positive kill-count event per replay. The fixture timestamps 100 and 300 ns and its 35 Hz summary field are synthetic inputs, not an observed sampling interval or rate. The source-shaped actuator rows and six outcomes are saved in the selected run directory. The independent raw-only check for the retained original run is [`AUDIT.json`](AUDIT.json).
+
+## T3: compose X-server edge envelopes with the scorer bracket
+
+PR #7602 now emits `input_edge_receipt` rows with strictly separated DOWN and UP X-server keymap-sampling intervals. These are transition bounds, not exact key occupancy or application consumption. T3 adapts that row shape separately from the V15 explicit-keyup/XSync path. A single measured envelope intersecting a synthetic positive scorer bracket returns `UNRESOLVED`; two pseudonymously distinct possible envelopes return `AMBIGUOUS`; neither can yield a unique intent. This preserves uncertainty instead of coercing edge bounds into point timestamps.
+
+The retained A01 F8 pair is projected into two receipts in [`run/a01-input-edge-receipt.jsonl`](run/a01-input-edge-receipt.jsonl), with source export SHA-256 `30441d45a91405730d0fdf076cda8d4d0b990962be8e27f60f0b5d0bb4cccb7c` and projected receipt SHA-256 `a2a0fe0c5f2bdf5dc76f982e343ced8e273c5b21fff67132a8128b58e7a3b0b7`. The scorer bracket and two-intent mutation are synthetic construction cases in `test_adapter.py`; outputs are in `run/single_retained_envelope.json` and `run/two_possible_intents.json`. Reproduce CPU-only with `python -B -m unittest -v test_adapter.py test_t0.py` and `python -B audit_t3.py`. All 21 tests pass. No live scorer/game/model/GUI/OS input was run; T3 adds no causality or task-effect claim.

@@ -92,6 +92,63 @@ class V15AttributionAdapterTests(unittest.TestCase):
         result=adapt_session_records(self.samples,self.events,self.input)
         self.assertEqual(result['attributions'][0]['status'],'UNRESOLVED')
 
+    def test_measured_down_up_envelope_is_not_promoted_to_exact_unique_coverage(self):
+        """Adapter brackets bound possible occupancy; they do not prove it."""
+        self.input=[{
+            'event':'input_edge_receipt', 'id':'plan-a', 'step':0,
+            'key':'space', 'owner_id_sha256':'owner-hash',
+            'intent_token_sha256':'intent-hash',
+            'status':'adapter_edge_brackets_paired',
+            'down_edge_interval_ns':[90,110],
+            'up_edge_interval_ns':[290,310], 'grants_input_authority':False,
+            'application_consumption_observed':False,
+        }]
+        result=adapt_session_records(self.samples,self.events,self.input)
+        self.assertEqual(result['attributions'][0]['status'],'UNRESOLVED')
+        self.assertIsNone(result['attributions'][0]['intent_token'])
+        self.assertEqual(result['trace_integrity'],'MEASURED_INTERVALS_ONLY')
+
+    def test_measured_interval_overlap_keeps_competing_intents_ambiguous(self):
+        self.input=[{
+            'event':'input_edge_receipt', 'id':'plan-a', 'step':0,
+            'key':'space', 'owner_id_sha256':'owner-hash-1',
+            'intent_token_sha256':'intent-hash-a',
+            'status':'adapter_edge_brackets_paired',
+            'down_edge_interval_ns':[90,110],
+            'up_edge_interval_ns':[150,190],
+            'grants_input_authority':False, 'application_consumption_observed':False,
+        },{
+            'event':'input_edge_receipt', 'id':'plan-b', 'step':1,
+            'key':'a', 'owner_id_sha256':'owner-hash-2',
+            'intent_token_sha256':'intent-hash-b',
+            'status':'adapter_edge_brackets_paired',
+            'down_edge_interval_ns':[200,210],
+            'up_edge_interval_ns':[290,310],
+            'grants_input_authority':False, 'application_consumption_observed':False,
+        }]
+        result=adapt_session_records(self.samples,self.events,self.input)
+        self.assertEqual(result['attributions'][0]['status'],'AMBIGUOUS')
+        self.assertEqual(len(result['attributions'][0]['possible_intent_token_sha256']), 2)
+        self.assertEqual(result['trace_integrity'],'MEASURED_INTERVALS_ONLY')
+
+    def test_retained_a01_xserver_envelope_does_not_claim_application_effect(self):
+        row={
+            'event':'input_edge_receipt', 'id':'cover-7', 'step':2, 'key':'F8',
+            'owner_id_sha256':'owner-hash',
+            'intent_token_sha256':'token-hash',
+            'status':'adapter_edge_brackets_paired',
+            'down_edge_interval_ns':[90,110],
+            'up_edge_interval_ns':[290,310],
+            'grants_input_authority':False,
+            'application_consumption_observed':False,
+        }
+        self.input=[row]
+        result=adapt_session_records(self.samples,self.events,self.input)
+        self.assertEqual(result['attributions'][0]['status'],'UNRESOLVED')
+        self.assertEqual(result['attributions'][0]['reason'],
+                         'measured_edge_envelope_not_exact_occupancy')
+        self.assertEqual(result['trace_integrity'],'MEASURED_INTERVALS_ONLY')
+
     def test_event_outside_sample_stream_fails_closed(self):
         self.events=[event(301)]
         with self.assertRaises(ValueError):
