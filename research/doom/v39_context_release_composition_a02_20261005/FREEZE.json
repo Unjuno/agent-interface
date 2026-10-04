@@ -1,0 +1,26 @@
+{
+  "schema": "v39-context-release-composition-freeze-v1",
+  "attempt": "A02",
+  "frozen_at_local": "2026-10-05 Asia/Tokyo",
+  "hypothesis": "Current main composed with the explicit owner-admission-ID projector fix, owner-issued per-admission identity/release receipts, and per-key cancellation cleanup retains the three focused contracts without merge conflict or focused test regression.",
+  "base_main": "344abbd2c19e7678322a2d35988beaa585689b61",
+  "components": {
+    "pr_7783_projection_fix_based_on_7602": "43abc8408b50b71f980472d6a8ec265db2adc7d8",
+    "pr_7750_owner_admission_identity": "a422c3d49902a2bc424d80b4fd4c41ef45aa2996",
+    "pr_7769_per_key_cleanup": "7ff2923572adb7f9f462411936e67f65fa465799"
+  },
+  "composition_order": ["main", "pr_7783", "pr_7750", "pr_7769"],
+  "environment": {
+    "host": "macOS 27.0 arm64",
+    "python": "CPython 3.12.14 bundled workspace runtime",
+    "container": "none; synthetic source/fake-display tests only; OrbStack host has concurrent research VMs and is not allocated exclusively to this test",
+    "live_resources_used": false
+  },
+  "test_suites": [
+    {"command": "PYTHONPATH=research/doom:research/live_control python -m unittest research.doom.test_map01_v39_typed_state_feedback -v", "expected_tests": 37},
+    {"command": "PYTHONPATH=research/doom:research/live_control python -m unittest discover -s research/live_control/owner_keyup_admission_id_5156_a03_20261005 -p 'test_*.py' -v", "expected_tests": 3},
+    {"command": "PYTHONPATH=research/doom:research/live_control python -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v", "expected_tests": 3}
+  ],
+  "decision": "PASS_COMPOSITION_SCOPED only if all three sequential synthetic merges are conflict-free, the final composition tree is recorded and reproducible, and each suite passes at its frozen count. Preserve failures; no source/test repair or retry within A02.",
+  "scope": "Offline source composition and fake/source-level tests only; no X server, ViZDoom, model, planner, GUI, OS input, live allocation, useful-feedback latency, recovery efficacy, or MAP01 result."
+}
