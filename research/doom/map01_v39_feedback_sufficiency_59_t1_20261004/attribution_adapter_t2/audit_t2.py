@@ -1,7 +1,12 @@
 """Independent raw-result audit for producer-composition T2."""
 import json
+import argparse
 from pathlib import Path
-ROOT=Path(__file__).resolve().parent; RUN=ROOT/'run'
+ROOT=Path(__file__).resolve().parent
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--run-dir',type=Path,default=ROOT/'run/replay',
+                    help='run directory to audit (default: run/replay)')
+RUN=parser.parse_args().run_dir
 result=json.loads((RUN/'candidate.json').read_text(encoding='utf-8'))
 inputs=json.loads((RUN/'input-records.json').read_text(encoding='utf-8'))
 samples=[json.loads(x) for x in (RUN/'scorer/scorer-samples.jsonl').read_text(encoding='utf-8').splitlines() if x]

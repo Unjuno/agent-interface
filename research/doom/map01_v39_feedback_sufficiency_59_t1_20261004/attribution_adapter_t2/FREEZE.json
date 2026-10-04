@@ -27,12 +27,12 @@
       "sha256": "a6d6dcec7ba99a4d83ec38cd4f05cfec13b26eb8d8531066f2dd237ddf73a29e"
     },
     "audit_t2.py": {
-      "bytes": 2147,
-      "sha256": "572345866e02b8283ec5a3e0d71bf92fa9e0cb772d95539bc878f1dfb7a4aa15"
+      "bytes": 2378,
+      "sha256": "29535b5b1a2f541bd718fd487e59771f333e665a7134aba620aa7d0df6d36798"
     },
     "run_t2.py": {
-      "bytes": 3981,
-      "sha256": "cdfb07f31f7142f5f61c36c024cf6bfaafda30fdb37af3b45bd2d297d6a4e996"
+      "bytes": 4455,
+      "sha256": "5bcbc539be9a84f7d69b0f32209a840fb9c6f2f8496b2749f0873f09c4df08cd"
     },
     "test_adapter.py": {
       "bytes": 5950,
@@ -41,14 +41,18 @@
     "test_t0.py": {
       "bytes": 4555,
       "sha256": "065f0ef3862952cb8f92f6cf5e9f5e8ea9fd56d78f074d421c03c255694e7dcd"
+    },
+    "test_runner.py": {
+      "bytes": 2528,
+      "sha256": "a4623c3cd3f236ec88dd0c1fdf0c3e385301676f053c421b73262e3e04c922ba"
     }
   },
   "decision_gate": {
     "fail": "Any mismatched or unverified edge receives a unique token, a competing token is dropped, or controller-visible data is accepted as scorer input.",
     "pass": "Exact producer-shaped rows map to one intent only for full verified interval coverage; competing intents return AMBIGUOUS; missing/mismatched/unverified identity returns UNRESOLVED/HOLD; causation stays NOT_ESTABLISHED."
   },
-  "expected_tests": 18,
-  "frozen_at_utc": "2026-10-04T08:10:16Z",
+  "expected_tests": 19,
+  "frozen_at_utc": "2026-10-04T08:47:56Z",
   "hypothesis": "Current V15 scorer and per-key release producers can be joined without timestamp-proximity inference: scorer events map to their exact sample timestamps; each input interval joins exact owner_id, intent_token, program id, step and key; verified XSync key-up rows complete only their matching admission.",
   "producer_snapshots": {
     "research/doom/independent_progress_clock_v2.py": {

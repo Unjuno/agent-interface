@@ -33,9 +33,9 @@ python -B audit_t1.py
 Run T2 from `attribution_adapter_t2/`:
 
 ```powershell
-python -B -m unittest -v test_adapter.py test_t0.py
-python -B run_t2.py
-python -B audit_t2.py
+python -B -m unittest -v test_adapter.py test_t0.py test_runner.py
+python -B run_t2.py --run-dir run/replay
+python -B audit_t2.py --run-dir run/replay
 ```
 
 Both freezes pin the source commit and source files. Candidate, audit, test, and raw outputs are retained beside each freeze. The Issue #59 live threat-control and MAP01 gates remain open; T1/T2 do not consume or authorize the unassigned live lane. The concrete next evidence remains a fresh assigned current-V15 session retaining scorer samples/events and identity-bound per-key admission/key-up rows, followed by the separately labelled continuously advancing MAP01 attempt.
