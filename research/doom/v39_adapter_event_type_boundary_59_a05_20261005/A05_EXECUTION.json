@@ -1,0 +1,52 @@
+{
+  "record_type": "execution_capture",
+  "experiment": "V39_ADAPTER_EVENT_TYPE_BOUNDARY_A05",
+  "baseline_commit": "73ccfa7696c1b005be7c1c59e63d1c06dfe3674d",
+  "baseline_source_sha256": "41329ce5735aa80b0cb6710c10f2c2bf9627f3b22e57faf197cf37eef335129a",
+  "candidate_source_sha256": "620dca3822ab372db0f0b2dda23e196053647b5c5470de08dc85982ae0ed8c96",
+  "test_sha256": "a3e42bfe05b5e811254811e6e62f320574a40ce7aa426d0b4b92e34b3cb85a64",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "methods": [
+    "test_input_edge_receipt_rejects_duplicate_adapter_rows",
+    "test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge",
+    "test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge"
+  ],
+  "subcases": [
+    "duplicate_down_unknown_kind",
+    "duplicate_up_unknown_kind",
+    "down_unknown_kind",
+    "up_unknown_kind",
+    "duplicate_up_as_legacy_transition",
+    "only_legacy_transition_up"
+  ],
+  "baseline_tests": 3,
+  "baseline_failed_tests": 3,
+  "candidate_tests": 3,
+  "candidate_failed_tests": 0,
+  "syntax_compile": "PASS",
+  "independent_audit": "PASS",
+  "independent_audit_checks": 16,
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "candidate_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --name v39-adapter-event-a05-candidate-20261005 --volume <worktree>:/src:ro --volume <candidate-output>:/out:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/v39_adapter_event_type_boundary_59_a05_20261005/run_a05.py",
+  "auditor_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --name v39-adapter-event-a05-audit-20261005 --volume <worktree>:/src:ro --volume <a05-evidence>:/evidence:ro --volume <audit-output>:/audit:rw --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/v39_adapter_event_type_boundary_59_a05_20261005/audit_a05.py",
+  "limits": {
+    "network": "none",
+    "pull": "never",
+    "cpus_requested": "1",
+    "memory_requested": "512M",
+    "user": "1000:1000",
+    "source": "read-only",
+    "output": "separate writable mounts",
+    "auto_remove": true
+  },
+  "container_inventories": "preflight before candidate empty; post-candidate empty; post-auditor empty (captured text files)",
+  "timestamp_precision": "run order retained; exact execution start/end timestamps were not captured",
+  "resource_warning": "WSLc warned swap-limit capabilities or cgroup unavailable; memory limited without swap. No swap cap or full memory-enforcement claim.",
+  "successor_package_verifier": {
+    "path": "research/doom/results/v39_adapter_edge_cardinality_59_a01_20261005/verify_package.py",
+    "result": "PASS",
+    "checks": 81,
+    "manifest_entries": 42,
+    "note": "The live-branch checks were updated from frozen A02B bytes to the A05 candidate source/test hashes; the A02B retained source/test snapshots and outcome remain frozen."
+  }
+}

@@ -1,0 +1,78 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "experiment": "V39_ADAPTER_EVENT_TYPE_BOUNDARY_A05",
+  "baseline_commit": "73ccfa7696c1b005be7c1c59e63d1c06dfe3674d",
+  "baseline_source_sha256": "41329ce5735aa80b0cb6710c10f2c2bf9627f3b22e57faf197cf37eef335129a",
+  "candidate_source_sha256": "620dca3822ab372db0f0b2dda23e196053647b5c5470de08dc85982ae0ed8c96",
+  "test_sha256": "a3e42bfe05b5e811254811e6e62f320574a40ce7aa426d0b4b92e34b3cb85a64",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "methods": [
+    "test_input_edge_receipt_rejects_duplicate_adapter_rows",
+    "test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge",
+    "test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge"
+  ],
+  "syntax_compile": "PASS",
+  "subcases": [
+    "duplicate_down_unknown_kind",
+    "duplicate_up_unknown_kind",
+    "down_unknown_kind",
+    "up_unknown_kind",
+    "duplicate_up_as_legacy_transition",
+    "only_legacy_transition_up"
+  ]
+}
+BASELINE
+test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok
+test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ...
+  test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) (case='duplicate_up_as_legacy_transition') ... FAIL
+test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) ...
+  test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) (case='duplicate_down_unknown_kind') ... FAIL
+  test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) (case='duplicate_up_unknown_kind') ... FAIL
+
+======================================================================
+FAIL: test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) (case='duplicate_up_as_legacy_transition')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_map01_v39_typed_state_feedback.py", line 808, in test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge
+    self.assertEqual(adapter_receipts[0]["status"],
+AssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'
+- adapter_edge_brackets_paired
++ adapter_edge_receipt_incomplete
+
+
+======================================================================
+FAIL: test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) (case='duplicate_down_unknown_kind')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_map01_v39_typed_state_feedback.py", line 782, in test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge
+    self.assertEqual(receipts[0]["status"],
+AssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'
+- adapter_edge_brackets_paired
++ adapter_edge_receipt_incomplete
+
+
+======================================================================
+FAIL: test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) (case='duplicate_up_unknown_kind')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_map01_v39_typed_state_feedback.py", line 782, in test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge
+    self.assertEqual(receipts[0]["status"],
+AssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'
+- adapter_edge_brackets_paired
++ adapter_edge_receipt_incomplete
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.014s
+
+FAILED (failures=3)
+
+CANDIDATE
+test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok
+test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ... ok
+test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A05AdapterEventTypeTests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.010s
+
+OK
