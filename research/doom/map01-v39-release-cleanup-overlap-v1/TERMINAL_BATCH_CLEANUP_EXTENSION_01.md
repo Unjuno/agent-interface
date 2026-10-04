@@ -23,6 +23,14 @@ cleanup record predating the current batch.
 
 ## D — Data and execution
 
+- Baseline adapter at refreshed #7385 head: SHA-256
+  `df7ea1c1ec2f1ce05e380b35586e0601b06ad591cb52be0702e0f4278cb65a2a`.
+- Baseline test at refreshed #7385 head: SHA-256
+  `eb7c6db10369e843b82f76fb26e8ce266c3334994e2e58546513f8986fd69e65`.
+- Candidate adapter: SHA-256
+  `fa9c72beb838ceceff117408f6d88f2b02dc1d8d3102b3295428ad6e571b2731`.
+- Candidate test: SHA-256
+  `03189f87ea22a53a27c2f8d2a82d9fafbd74c2c17e0823256ad4d2612ec0b9bd`.
 - `python3 -B -m unittest -v test_doom_typed_release_backend_v3`: **24/24 PASS**.
 - `python3 -B -m unittest -v test_overlap_controller_v39_wait`: **7/7 PASS**.
 - `git diff --check`: PASS.
