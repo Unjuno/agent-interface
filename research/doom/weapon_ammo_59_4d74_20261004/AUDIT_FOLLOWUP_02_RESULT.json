@@ -4,6 +4,7 @@
     "checks": {
       "HUD_API_values_agree": true,
       "HUD_signals_validly_bound_to_initial_capture": true,
+      "api_timeline_brackets_hud_capture": true,
       "capture_binding_well_formed": true,
       "clean_child_and_reader_exit": true,
       "coherent_samples_finite_and_ordered": true,
@@ -36,15 +37,37 @@
   "audit_id": "weapon-ammo-audit-followup-02",
   "base_commit": "8532022e2828aaf06e847f2932d9205e42fa6361",
   "followup_files": {
-    "AUDIT_FOLLOWUP_02.md": "df4c20953367235f538129413a97b7e40967af8a9c0f51400b3986b87d4559d5",
-    "audit_weapon_ammo_followup_02.py": "1f31b682a46124934855e84ab3b93f1b63b176b9cd90b386e4e0d441ebe4fdf6",
-    "test_audit_weapon_ammo_followup_02.py": "5603d5e7ec3da8b8d2bc6863276290378da8d421c226d7f36632a2746de86e14"
+    "AUDIT_FOLLOWUP_02.md": "821a0e13bfdaf03647f4783745f88d30ba6acdf5b57951acfd44810ee72249ff",
+    "audit_weapon_ammo_followup_02.py": "07d4f45a5b848bd96946fbf0801546ec2582eb9b60585c13344567efc6d9f5d4",
+    "max_age_mutation_01/AUDIT.json": "cb54133fbc9f049a661ee78f8aac6921bee42c45a5a6507ce0baebc59a3ba593",
+    "max_age_mutation_01/FREEZE.json": "6928b0747a0ef065ac6092462c184dcfea5f4454d39af47a23a725f203e4fb9a",
+    "max_age_mutation_01/RUN.json": "5546e52ab3c9f0d9b5efa82b1d09756bfb521d9043bcb5ec12d6d87553316108",
+    "max_age_mutation_01/SHA256SUMS.txt": "a91575c7b14d313d03645c5be9ec2b88e285906db164538365548b823a6133e0",
+    "max_age_mutation_01/audit.py": "6e2fb9e0ce90593091d1e7717c97f21ce166c8acb3a09981bdaac7b5a747c54f",
+    "max_age_mutation_01/baseline_auditor.py": "1f31b682a46124934855e84ab3b93f1b63b176b9cd90b386e4e0d441ebe4fdf6",
+    "max_age_mutation_01/experiment.py": "46128c1b000b6b7570890e35166dfb7d0cfb9f815d036efd4f8f9fcb7a5c872d",
+    "max_age_mutation_01/mutated/sample-pair-04/00-coast/FINAL.json": "9041b7d59ab980a2e272a1098096312dd57f35218ead35766e9d1d14034ea449",
+    "max_age_mutation_01/mutated/sample-pair-04/00-coast/RESULT.json": "61fc4148221519e5a668f471ace042849e271b32d0f01d25939ce68ad5ba15a4",
+    "max_age_mutation_01/mutated/sample-pair-04/00-coast/events.jsonl": "6a48212dedb620eed58262bf3c9e1cc7a3f640edc3d481b3dbc8d6ed5e1cdcf7",
+    "max_age_mutation_01/mutated/sample-pair-04/00-coast/scorer-last-action.jsonl": "4685d6dd3952d31d4df405eaf1ec6bcc2b777bafcea722f762d3fc14eb78d3d0",
+    "test_audit_weapon_ammo_followup_02.py": "b01e30838b408d58b29e7232db8f9e2f7a7fce8ead6a17da6ad364f5b8d23005"
   },
-  "scope": "Post-result audit hardening; retained original evidence and manifest unchanged; no new game allocation.",
+  "max_age_mutation_experiment": {
+    "baseline_disposition": "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED",
+    "baseline_nearest_api_offset_ns": 997606517203,
+    "candidate_bracket_check": false,
+    "candidate_disposition": "HOLD_AUDIT_CHECK_FAILED",
+    "checksum_manifest_sha256": "a91575c7b14d313d03645c5be9ec2b88e285906db164538365548b823a6133e0",
+    "command": "python experiment.py; python audit.py",
+    "experiment_id": "weapon-ammo-api-timeline-bracket-01",
+    "independent_audit": "PASS_MUTATION_REJECTED"
+  },
+  "original_followup_01_unchanged": true,
+  "scope": "Post-result audit hardening; retained original evidence and manifest unchanged; no new game allocation. Timeline bracketing does not establish a maximum age within the bracket or simultaneous HUD/API truth.",
   "tests": {
     "command": "python -m unittest -v test_audit_weapon_ammo_followup_02.py",
-    "count": 7,
+    "count": 8,
     "failed": 0,
-    "passed": 7
+    "passed": 8
   }
 }

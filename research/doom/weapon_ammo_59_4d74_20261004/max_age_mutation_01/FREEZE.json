@@ -1,0 +1,18 @@
+{
+  "experiment_id": "weapon-ammo-api-timeline-bracket-01",
+  "issue": 59,
+  "H": "The follow-up 02 auditor can falsely pass if all coherent API sample timestamps and the selected scoring window are shifted far beyond the unchanged typed HUD capture while the nearest API values are edited to agree.",
+  "T": "On a disposable copy of the retained fixture, add 1,000,000,000,000 ns to each coherent scorer row's start/return times and both RESULT window bounds, then set the nearest coherent row's HEALTH, SELECTED_WEAPON, SELECTED_WEAPON_AMMO, and matching AMMO2 values to the retained HUD values.",
+  "D": "The frozen pre-bracket auditor returning PASS confirms the hypothesis; the revised auditor should HOLD because no coherent scorer sample timeline brackets the unchanged typed HUD capture.",
+  "C": "Unmodified retained fixture, audited with the revised auditor.",
+  "U": [
+    "This synthetic retained-fixture experiment does not measure live input, game effect, recovery, threat response, or usefulness to a controller.",
+    "The API timeline bracketing rule does not establish simultaneity or a bounded maximum age within the bracket."
+  ],
+  "baseline_commit": "bb87895fa6103575e929fcd8e3d61a62fa96740c",
+  "baseline_path": "research/doom/weapon_ammo_59_4d74_20261004/audit_weapon_ammo_followup_02.py",
+  "baseline_git_blob": "4a0707abecdf7323ed49692014c688b0f8a4cd4e",
+  "retained_fixture_base_commit": "8532022e2828aaf06e847f2932d9205e42fa6361",
+  "retained_fixture_path": "research/doom/weapon_ammo_59_4d74_20261004/00-coast",
+  "execution": "Local Windows CPU-only Python; no WSLc assignment, container, model, game, GUI, or input use."
+}

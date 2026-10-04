@@ -137,11 +137,6 @@ def audit(root: Path) -> dict[str, Any]:
     checks["HUD_signals_validly_bound_to_initial_capture"] = signal_meta_ok
 
     coherent_rows = [row for row in rows if row.get("coherent_tic")]
-    capture_ns = initial["capture_ns"]
-    checks["api_timeline_brackets_hud_capture"] = (
-        any(row["sample_returned_ns"] <= capture_ns for row in coherent_rows)
-        and any(row["sample_started_ns"] >= capture_ns for row in coherent_rows)
-    )
     near = min(coherent_rows, key=lambda row: abs(row["sample_returned_ns"] - initial["capture_ns"]))
     checks["nearest_api_sample_neutral"] = neutral_action(near)
     variables = near["variables"]
