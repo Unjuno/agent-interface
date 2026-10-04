@@ -418,9 +418,10 @@ frozen cold/reuse/repair route and model-call schedules. These controls do not
 connect a live Mindustry socket, capture real images, dispatch input, call a
 model, score a game task, or demonstrate live three-arm execution/economics.
 The synthetic raw-v2 and target-dispatch auditors are implemented, but there
-is no live raw capture or source-identity proof. The socket adapter has only
-fake-exchange and fake-socket coverage on this Windows host; the actual bridge
-process and full runner remain unverified. No game, model, Docker command,
+is no live raw capture or source-identity proof. The socket adapter also has a
+real AF_UNIX round-trip regression that passes under WSL's local fake bridge;
+the Windows Python runtime skips that test because it has no AF_UNIX. The
+actual bridge process and full runner remain unverified. No game, model, Docker command,
 workflow, or formal allocation was invoked; the #5130 resource gate remains
 controlling.
 
@@ -446,11 +447,14 @@ the frozen 18-task synthetic three-arm route using an injected fake bridge:
 each arm makes 12 sequential submissions, advances its cursor from 0 through
 12, and writes 24 ordered fsynced JSONL records. The dispatch join audits 18
 tasks/36 target dispatches and raw-v2 returns `PASS_CONSTRUCTION_ONLY`; source
-identity remains false. The focused socket-submit suite passes 15/15 and the
-full package passes 118/118 after refreshing through current `main`
-`0db425b379f9438bf6b13c95dce1b763750b06d5`. Ten sparse-checkout support blobs
-were materialized from that Git tree only for the full test run and removed
-afterward. Python compilation and `git diff --check` also pass. A fresh
+identity remains false. The 16-test socket-submit suite has 15 passing tests
+and the AF_UNIX case skipped on Windows; that skipped case passes under WSL.
+The full package passes 119 tests after refreshing through current `main`
+`0db425b379f9438bf6b13c95dce1b763750b06d5`: 118 pass and the AF_UNIX test
+skips on Windows. Six sparse-checkout support blobs were materialized from
+that Git tree only for the full test run and removed afterward; the AF_UNIX
+test separately passes against a real local socket under WSL. Python
+compilation and `git diff --check` also pass. A fresh
 read-only recomputation after this main refresh of
 the retained raw-v2 and dispatch-sidecar audits exactly matches the committed
 audit JSON: `PASS_CONSTRUCTION_ONLY` with source identity false, and

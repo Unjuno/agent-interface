@@ -2,6 +2,7 @@
 
 import unittest
 import json
+import socket
 from pathlib import Path
 import tempfile
 import threading
@@ -295,6 +296,64 @@ class TargetSocketSubmitTests(unittest.TestCase):
         self.assertTrue(fake.closed)
         self.assertEqual(request, {"after": 3, "command": self.command()})
         self.assertEqual(response, success("A1-select-conveyor"))
+
+    @unittest.skipUnless(hasattr(socket, "AF_UNIX"),
+                         "host Python does not provide AF_UNIX")
+    def test_submit_round_trip_over_real_local_unix_socket(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            socket_path = str(Path(temporary) / "bridge.sock")
+            server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            server.bind(socket_path)
+            server.listen(1)
+            server.settimeout(3)
+            server_errors = []
+            requests = []
+
+            def serve_one_request():
+                try:
+                    connection, _ = server.accept()
+                    with connection:
+                        connection.settimeout(3)
+                        payload = bytearray()
+                        while b"\n" not in payload:
+                            chunk = connection.recv(4096)
+                            if not chunk:
+                                raise AssertionError("client closed before newline")
+                            payload.extend(chunk)
+                        line, remainder = bytes(payload).split(b"\n", 1)
+                        if remainder:
+                            raise AssertionError("unexpected bytes after request line")
+                        request = json.loads(line.decode("utf-8"))
+                        requests.append(request)
+                        response = success(
+                            request["action_id"], cursor=request["after"] + 1)
+                        connection.sendall(
+                            json.dumps(response, separators=(",", ":"),
+                                       allow_nan=False).encode("utf-8") + b"\n")
+                except BaseException as error:
+                    server_errors.append(error)
+
+            thread = threading.Thread(target=serve_one_request, daemon=True)
+            thread.start()
+            journal = []
+            submitter = TargetSocketSubmitter(
+                socket_path, timeout_s=2, trace_sink=journal.append)
+            try:
+                result = submitter(self.command())
+            finally:
+                server.close()
+                thread.join(timeout=3)
+
+            self.assertFalse(thread.is_alive(), "local bridge thread did not finish")
+            self.assertEqual(server_errors, [])
+            self.assertEqual(len(requests), 1)
+            self.assertEqual(requests[0]["after"], 0)
+            self.assertEqual(requests[0]["action_id"], "A1-select-conveyor")
+            self.assertEqual(result, {"request_id": "A1-select-conveyor",
+                                      "terminal": True, "released": True})
+            self.assertEqual(submitter.cursor, 1)
+            self.assertEqual([row["event"] for row in journal],
+                             ["submit_prepared", "socket_response"])
 
     def test_transport_exception_consumes_action_without_retry(self):
         calls = []
