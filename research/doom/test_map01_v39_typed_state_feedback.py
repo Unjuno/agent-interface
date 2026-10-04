@@ -304,25 +304,20 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                      if start <= end]
         paired = incomplete = 0
 
-        def set_edge_interval(row, edge_name, start, end):
+        def set_interval(row, edge_name, start, finish):
             measurement = row["physical_key_measurement"]
-            measurement["adapter_edge"]["interval"] = [start, end]
-            measurement["bracket"][
-                "physical_down_interval" if edge_name == "down"
-                else "physical_up_interval"] = [start, end]
-            pre = measurement["pre_sample"]
-            post = measurement["post_sample"]
-            pre["started_ns"] = pre["finished_ns"] = start
-            post["started_ns"] = start if edge_name == "up" else end
-            post["finished_ns"] = end
+            measurement["adapter_edge"]["interval"] = [start, finish]
+            interval_name = ("physical_down_interval" if edge_name == "down"
+                             else "physical_up_interval")
+            measurement["bracket"][interval_name] = [start, finish]
+            measurement["pre_sample"].update(started_ns=start, finished_ns=start)
+            measurement["post_sample"].update(started_ns=start, finished_ns=finish)
+            request_name = "press_request_ns" if edge_name == "down" else "release_request_ns"
+            measurement[request_name] = start
+            measurement["sync_return_ns"] = start
             if edge_name == "down":
-                measurement["press_request_ns"] = start
-                measurement["sync_return_ns"] = start
-                row["admitted_ns"] = start - 1
+                row["admitted_ns"] = start
                 row["input_ack_ns"] = start
-            else:
-                measurement["release_request_ns"] = start
-                measurement["sync_return_ns"] = start
 
         for down_start, down_end in intervals:
             for up_start, up_end in intervals:
@@ -331,8 +326,8 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                             if row.get("event") == "input_admission")
                 up = next(row for row in events
                           if row.get("event") == "input_release_measurement")
-                set_edge_interval(down, "down", down_start, down_end)
-                set_edge_interval(up, "up", up_start, up_end)
+                set_interval(down, "down", down_start, down_end)
+                set_interval(up, "up", up_start, up_end)
 
                 receipt = controller.input_edge_receipts(events)[0]
                 strictly_ordered = down_end < up_start
