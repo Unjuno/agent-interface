@@ -4,7 +4,7 @@
 
 **T — Minimum discriminator:** Exercise the cleanup helper with inert process/planner boundaries, including a reader that supplies its terminal and scorer rows only as it drains, plus a reader that remains alive past the join timeout. PASS requires the original exception identity to survive, a `controller-failure.json` to name the failing stage, and cleanup evidence to distinguish fully closed from incomplete teardown.
 
-**D — Result:** PASS for seven cleanup-helper tests, seven wait-loop tests, fourteen source-refresh tests, and Python compilation plus `git diff --check`. The delayed-reader case proves terminal classification happens after reader join; the still-live-reader case fails closed. Existing v39 coast tests could not import because Pillow is unavailable in this host environment. This is construction evidence only; no VizDoom, app-server, model, GUI, or input operation ran.
+**D — Result:** PASS for seven cleanup-helper tests, seven wait-loop tests, thirteen source-refresh tests, and Python compilation plus `git diff --check`. The delayed-reader case proves terminal classification happens after reader join; the still-live-reader case fails closed. Existing v39 coast tests could not import because Pillow is unavailable in this host environment. This is construction evidence only; no VizDoom, app-server, model, GUI, or input operation ran.
 
 **C — Competing explanation:** The constructed process and owner records do not reproduce native child pipe pressure, a real scorer/backend failure, or a non-cooperative session. A finish request alone does not prove input termination; the report separately checks matching terminal and empty-release records.
 
