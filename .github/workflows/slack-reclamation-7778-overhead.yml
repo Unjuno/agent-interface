@@ -1,20 +1,20 @@
-name: Issue 7778 slack reclamation T0
+name: Issue 7778 slack reclamation overhead sensitivity
 
 on:
   pull_request:
     paths:
-      - 'research/analysis/slack_reclamation_7778_t0_20261005/**'
+      - 'research/analysis/slack_reclamation_7778_dispatch_sensitivity_t0_20261005/**'
       - 'research/analysis/README.md'
       - 'research/analysis/check_index.py'
-      - '.github/workflows/slack-reclamation-7778.yml'
+      - '.github/workflows/slack-reclamation-7778-overhead.yml'
   push:
     branches:
       - main
     paths:
-      - 'research/analysis/slack_reclamation_7778_t0_20261005/**'
+      - 'research/analysis/slack_reclamation_7778_dispatch_sensitivity_t0_20261005/**'
       - 'research/analysis/README.md'
       - 'research/analysis/check_index.py'
-      - '.github/workflows/slack-reclamation-7778.yml'
+      - '.github/workflows/slack-reclamation-7778-overhead.yml'
   workflow_dispatch:
 
 permissions:
@@ -30,6 +30,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Test frozen slack-reclamation method and mutation controls
-        run: python -B -m unittest discover -s research/analysis/slack_reclamation_7778_t0_20261005 -p 'test_*.py' -v
+        run: python -B -m unittest discover -s research/analysis/slack_reclamation_7778_dispatch_sensitivity_t0_20261005 -p 'test_*.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
