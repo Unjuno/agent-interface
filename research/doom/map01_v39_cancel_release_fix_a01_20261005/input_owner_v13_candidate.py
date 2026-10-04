@@ -333,17 +333,21 @@ class InputOwner:
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
+            # Persist per-key release evidence before aggregate reconciliation. The
+            # physical key-up may be confirmed even if either global state query
+            # fails; retain that row without marking the whole input state verified.
+            record = dict(event='owner_release', reason=reason, verified=False,
+                          valid_until_ns=active.deadline if active else None,
+                          per_key_release_measurements=per_key_release_measurements)
+            self.records.append(record)
             mask = d.screen().root.query_pointer().mask
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
             bitmap = d.query_keymap()
             down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
-            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
-                          keys_down=down, verified_ns=time.perf_counter_ns(),
-                          valid_until_ns=active.deadline if active else None,
-                          per_key_release_measurements=per_key_release_measurements)
+            record.update(verified=not down and not buttons_down, buttons_down=buttons_down,
+                          keys_down=down, verified_ns=time.perf_counter_ns())
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
-            self.records.append(record)
             if down or buttons_down:
                 raise RuntimeError('owner release not verified: ' + repr(down))
             hold_identity.terminate_after_verified_neutral()

@@ -199,6 +199,64 @@ class CancellationReceiptTests(unittest.TestCase):
         finally:
             harness.close()
 
+    def test_pointer_reconciliation_error_preserves_confirmed_release_receipt(self):
+        _bridge_test, hm, harness, lease, _bm, backend = load_candidate()
+        real_query_pointer = hm.Root.query_pointer
+        calls = []
+
+        def fail_first_query_pointer(root):
+            calls.append("query_pointer")
+            if len(calls) == 1:
+                raise RuntimeError("injected aggregate pointer query failure")
+            return real_query_pointer(root)
+
+        hm.Root.query_pointer = fail_first_query_pointer
+        backend._input_event_context = ("pointer-query-failure", 6)
+        try:
+            backend.raw("F8", True)
+            with self.assertRaisesRegex(RuntimeError, "injected aggregate pointer query failure"):
+                harness.owner.call("release", lease)
+            backend._drain_owner_records()
+            ups = [row for row in backend.events
+                   if row.get("event") == "input_release_measurement"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            partial = [row for row in harness.owner.records
+                       if row.get("event") == "owner_release"]
+            self.assertEqual(len(partial), 1)
+            self.assertFalse(partial[0]["verified"])
+            self.assertNotIn("keys_down", partial[0])
+            self.assertEqual(backend.held, set())
+            self.assertEqual(harness.d.physical, set())
+        finally:
+            hm.Root.query_pointer = real_query_pointer
+            harness.close()
+
+    def test_keymap_reconciliation_error_preserves_confirmed_release_receipt(self):
+        _bridge_test, _hm, harness, lease, _bm, backend = load_candidate()
+        backend._input_event_context = ("keymap-query-failure", 7)
+        try:
+            backend.raw("F8", True)
+            harness.d.query_fail_on.add(harness.d.query_i + 3)
+            with self.assertRaisesRegex(RuntimeError, "sample failure"):
+                harness.owner.call("release", lease)
+            backend._drain_owner_records()
+            ups = [row for row in backend.events
+                   if row.get("event") == "input_release_measurement"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            partial = [row for row in harness.owner.records
+                       if row.get("event") == "owner_release"]
+            self.assertEqual(len(partial), 1)
+            self.assertFalse(partial[0]["verified"])
+            self.assertNotIn("keys_down", partial[0])
+            self.assertEqual(backend.held, set())
+            self.assertEqual(harness.d.physical, set())
+        finally:
+            harness.close()
+
     def test_expired_program_exit_drains_owner_cleanup_without_cancel_event(self):
         bridge_test, _hm, harness, lease, _bm, backend = load_candidate()
         real_call = harness.owner.call

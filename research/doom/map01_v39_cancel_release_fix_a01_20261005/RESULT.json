@@ -1,24 +1,30 @@
 {
   "behavior": {
+    "aggregate_reconciliation_error_keeps_owner_release_unverified": true,
+    "aggregate_reconciliation_error_preserves_per_key_release_measurement": true,
     "cancelled_key_release_receipt_matches_actuation_id_and_original_context": true,
+    "executor_v12_expiry_terminal_contains_confirmed_contextual_up_receipt": true,
     "executor_v3_cancel_terminal_contains_one_verified_cleanup_receipt": true,
+    "executor_v3_expiry_terminal_contains_confirmed_contextual_up_receipt": true,
+    "expired_program_exit_drains_previously_recorded_owner_release": true,
     "missing_per_key_sample_does_not_claim_confirmed_up": true,
     "multiple_keys_keep_distinct_step_context": true,
     "ordinary_up_still_emits_one_matching_receipt": true,
-    "unavailable_samples_emit_unconfirmed_row_without_adapter_edge": true,
-    "verified_owner_cleanup_reconciles_bridge_held_set": true,
     "reconciliation_failure_preserves_recorded_release_measurement": true,
-    "expired_program_exit_drains_previously_recorded_owner_release": true,
-    "executor_v3_expiry_terminal_contains_confirmed_contextual_up_receipt": true,
-    "executor_v12_expiry_terminal_contains_confirmed_contextual_up_receipt": true
+    "unavailable_samples_emit_unconfirmed_row_without_adapter_edge": true,
+    "verified_owner_cleanup_reconciles_bridge_held_set": true
   },
   "disposition": "PASS_CANDIDATE_MECHANICS",
   "schema": "map01-v39-cancel-release-fix-result-v1",
   "scope": "Local fake-display owner/bridge and current-main ExecutorV12 composition tests only. Candidate not wired into live MAP01 runtime.",
-  "source_commit": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "source_commit": "bfd182727aebd9636c6a84fb437848c1dfe66be8",
   "tests": {
     "candidate_cancel_release": {
-      "count": 9,
+      "count": 11,
+      "exit": 0
+    },
+    "executor_v12_expiry_composition": {
+      "count": 1,
       "exit": 0
     },
     "existing_v39_bridge": {
@@ -27,10 +33,6 @@
     },
     "input_owner_v12_compatibility_on_v13": {
       "count": 10,
-      "exit": 0
-    },
-    "executor_v12_expiry_composition": {
-      "count": 1,
       "exit": 0
     }
   },

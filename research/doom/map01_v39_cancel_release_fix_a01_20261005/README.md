@@ -34,3 +34,18 @@ The candidate is also exercised through current-main ExecutorV12 (main `aa2e4b62
 
 
 The complete current-main replay, including the V12 expiry composition test, passed at `aa2e4b623b2f4ccdcbc8e294535bab09c0092f30`: 9 candidate tests, 1 V12 composition test, 10 owner compatibility tests, 2 bridge tests, and the 22-receipt source audit. The final replay record is `current-main-post-r135-replay-a05.log`; the package checksum manifest covers retained evidence and source files. This adds fake-display composition evidence only.
+
+
+## A06 — preserve release measurements across aggregate-query failures
+
+**H:** After a confirmed per-key up, an aggregate `query_pointer()` or `query_keymap()` failure can occur before the candidate owner stores the per-key measurement.
+
+**T:** Deterministic fake-display regressions admit F8 with a program/step identity, execute owner cleanup, and inject each aggregate-query fault after the per-key pre/post keymap samples. The unfixed candidate loses the bridge release row in both cases.
+
+**D:** PASS requires the confirmed context/actuation-bound up row to remain drainable, the owner-release record to remain explicitly `verified=false` without fabricated aggregate fields, and the original query error to propagate. The two tests failed against pre-fix PR #7805 candidate commit `32686927ce6b07a035beb4c0297171a1f951c6c6` and pass after the record is appended before aggregate queries.
+
+**C:** A transient one-shot query failure followed by a successful ordered `input_state` query can reconcile the bridge's aggregate held set; this does not establish what real X11 does or how often queries fail.
+
+**U:** Fake display only; no real X11, application consumption, useful feedback, bounded recovery, gameplay, safety, latency, or live MAP01 allocation.
+
+Current main advanced to `bfd182727aebd9636c6a84fb437848c1dfe66be8` via the typed-observation epoch-alias repair. The frozen owner/bridge/Executor inputs are source-locked at that exact main. The refreshed overlay passes 11 focused candidate tests, 1 ExecutorV12 expiry-composition test, 10 owner compatibility tests, 2 bridge tests, and the source-locked 24-receipt audit. RED/GREEN logs and full replay are retained in `aggregate-query-red.log`, `aggregate-query-green.log`, and `current-main-post-r135-replay-a06.log`. PR #7805 remains a draft research candidate; no runtime code was promoted.
