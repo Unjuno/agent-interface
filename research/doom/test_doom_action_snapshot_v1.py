@@ -8,6 +8,8 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from action_validity_admission_v1 import CONTRACT_FORMAT
 from doom_action_snapshot_v1 import build_action_snapshot
+from doom_typed_observation_v1 import (
+    SCHEMA as TYPED_SCHEMA, build_action_snapshot as build_typed_action_snapshot)
 
 
 BINDING = {"focus": 7, "surface": 8, "geometry": [0, 0, 640, 480]}
@@ -59,6 +61,35 @@ class DoomActionSnapshotTests(unittest.TestCase):
             build_action_snapshot(
                 OBSERVATION, contract({"enemy_visible": {}}),
                 {"enemy_visible": Reader("enemy_visible")})
+
+    def test_out_of_domain_current_values_fail_in_both_snapshot_builders(self):
+        spec = contract({"health": {}, "ammo": {}})
+        for health, ammo in ((201, 12), (90, 1000)):
+            with self.subTest(health=health, ammo=ammo):
+                with self.assertRaisesRegex(ValueError, "outside its declared domain"):
+                    build_action_snapshot(
+                        OBSERVATION, spec,
+                        {"health": Reader("health", value=health),
+                         "ammo": Reader("ammo", value=ammo)})
+
+        typed = {
+            "event": "typed_observation", "schema": TYPED_SCHEMA,
+            "sequence": 2, "capture_ns": 200, "pointer_binding": BINDING,
+            "frame_rgb_sha256": "a" * 64, "frame_size": [640, 480],
+            "typed_extraction_started_ns": 201, "typed_ready_ns": 202,
+            "capture_to_typed_ready_ms": 0.002,
+            "artifact_published": False, "grants_input_authority": False,
+            "signals": {
+                "health": {"signal_id": "health", "status": "observed",
+                           "value": 201, "sequence": 2, "capture_ns": 200,
+                           "binding": BINDING, "wad_sha256": "b" * 64},
+                "ammo": {"signal_id": "ammo", "status": "observed",
+                         "value": 12, "sequence": 2, "capture_ns": 200,
+                         "binding": BINDING, "wad_sha256": "b" * 64},
+            },
+        }
+        with self.assertRaisesRegex(ValueError, "outside its declared domain"):
+            build_typed_action_snapshot(typed, spec)
 
 
 if __name__ == "__main__":
