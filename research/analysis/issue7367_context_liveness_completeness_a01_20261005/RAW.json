@@ -1,0 +1,38 @@
+{
+  "a01_inputs": {
+    "PRE-RUN.json": "43cde96a305005f21e8a5ee8ec140c194d209c1444811301dfbf98a612fb128f",
+    "run_a01.py": "a622c7a4c89173430dadb48e967df5b2f645da8140555f129952f5d777a3998b",
+    "workload.json": "37263f1731de25e71285bf1fc3527935380ef1ea315949df4985da1eebd3cc09"
+  },
+  "base_main": "0c4be66bcaac697f1019916e3d8ada889abd5ced",
+  "classification": "COMPLETENESS_CONTRACT_GAP_DEMONSTRATED",
+  "counterfactual_actual_workflow": {
+    "missing_required_records": [
+      "completed-note"
+    ],
+    "omitted_consumer_node": "hidden_audit",
+    "required_uses": [
+      {
+        "field": "terminal_receipt",
+        "record_id": "completed-note"
+      }
+    ]
+  },
+  "declared_candidate": {
+    "disposition": "PROVEN_DEAD_EVICTION",
+    "dynamic_consumers_possible": false,
+    "evicted_ids": [
+      "completed-note",
+      "obsolete-observation",
+      "release-history",
+      "stale-summary"
+    ],
+    "graph_complete": true
+  },
+  "schema": "issue7367-completeness-boundary-a01-raw-v1",
+  "scope": "deterministic host-side contract probe; explicit counterfactual only",
+  "unknown_scope_control": {
+    "disposition": "UNKNOWN_KEEP",
+    "evicted_ids": []
+  }
+}

@@ -1,0 +1,5 @@
+Candidate boundary probe (Windows host, Python 3.11.9):
+python research/analysis/issue7367_context_liveness_completeness_a01_20261005/run_a01.py --out research/analysis/issue7367_context_liveness_completeness_a01_20261005/RAW.json
+
+Independent raw audit:
+python research/analysis/issue7367_context_liveness_completeness_a01_20261005/audit_a01.py research/analysis/issue7367_context_liveness_completeness_a01_20261005/RAW.json --out research/analysis/issue7367_context_liveness_completeness_a01_20261005/AUDIT.json
