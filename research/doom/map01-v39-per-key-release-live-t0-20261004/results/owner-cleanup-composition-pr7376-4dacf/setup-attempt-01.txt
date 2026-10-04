@@ -1,0 +1,5 @@
+Construction harness setup attempt 01 stopped before its report because the fake Xlib pointer omitted root_x/root_y. Exact exception:
+
+AttributeError: 'types.SimpleNamespace' object has no attribute 'root_x'
+
+The stack reached the backend's post-batch owner-state sample. This was a test-double setup error, not a runtime result. The fixture was corrected to provide root_x=0 and root_y=0 before the recorded run. No actual X11 server or input was used.
