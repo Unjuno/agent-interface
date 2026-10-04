@@ -6,7 +6,8 @@ import unittest
 from runtime.kernel import (
     Action, ActionKind, AuthorityLease, ContractError, EffectOccurrence,
     EffectReceipt, EffectStatus, ExecutionReceipt, ExecutionRequest,
-    Observation, ReleaseReceipt, RequestLifecycle, Stage, TargetBinding,
+    InputTransition, InputTransitionReceipt, Observation, ReleaseReceipt,
+    RequestLifecycle, Stage, TargetBinding,
 )
 
 H = "a" * 64
@@ -29,11 +30,32 @@ def executed_flow():
     flow.record_execution(ExecutionReceipt(
         "command", "backend", M, "lease", 7, "surface", 600, 800, 1,
         EffectOccurrence.OBSERVED, ReleaseReceipt(900, True),
+        (InputTransitionReceipt("action", "Return", InputTransition.DOWN, 610, 611),
+         InputTransitionReceipt("action", "Return", InputTransition.UP, 700, 701)),
     ))
     return flow
 
 
 class EffectStartEpochTests(unittest.TestCase):
+    def test_key_action_without_transition_timestamps_is_refused(self):
+        flow = RequestLifecycle()
+        observation = Observation(7, 100, "surface", H, 10, 10, "rgb24")
+        binding = TargetBinding("target", 7, "surface", B)
+        lease = AuthorityLease("lease", 7, "surface", 1000, frozenset({ActionKind.KEY}))
+        request = ExecutionRequest("command", M, binding, lease,
+                                   (Action("action", ActionKind.KEY, "press-release"),))
+        flow.record_observation(observation)
+        flow.bind(binding)
+        flow.authorize(lease, now_ns=200)
+        flow.begin_execution(request, now_ns=400)
+        receipt = ExecutionReceipt(
+            "command", "backend", M, "lease", 7, "surface", 600, 800, 1,
+            EffectOccurrence.NONE, ReleaseReceipt(900, True),
+        )
+        with self.assertRaisesRegex(ContractError, "requires per-control transition evidence"):
+            flow.record_execution(receipt)
+        self.assertIsNone(flow.execution)
+
     def test_pre_start_observation_refused_for_every_status(self):
         # Omitting the new guard must admit these typed stale receipts.
         for status in EffectStatus:

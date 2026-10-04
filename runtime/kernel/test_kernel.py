@@ -7,7 +7,8 @@ from dataclasses import replace
 from runtime.kernel import (
     Action, ActionKind, AuthorityLease, BackendInfo, BackendRegistry, Capability,
     ContractError, EffectOccurrence, EffectReceipt, EffectStatus, ExecutionReceipt,
-    ExecutionRequest, Observation, ReleaseReceipt, RequestLifecycle, Stage,
+    ExecutionRequest, InputTransition, InputTransitionReceipt, Observation,
+    ReleaseReceipt, RequestLifecycle, Stage,
     SupportLevel, TargetBinding,
 )
 
@@ -68,6 +69,39 @@ class ContractTests(unittest.TestCase):
     def test_verified_release_requires_empty_input(self):
         with self.assertRaises(ContractError):
             ReleaseReceipt(10, True, ("A",), ())
+
+    def test_per_control_transitions_retain_admission_and_release_timestamps(self):
+        receipt = ExecutionReceipt(
+            "cmd-1", "backend-1", M, "lease-1", 7, "surface-a",
+            500, 700, 1, EffectOccurrence.OBSERVED, released(),
+            (InputTransitionReceipt("a1", "space", InputTransition.DOWN, 510, 512),
+             InputTransitionReceipt("a1", "space", InputTransition.UP, 650, 653)),
+        )
+        self.assertEqual(
+            [(event.control, event.transition.value, event.acknowledged_ns)
+             for event in receipt.input_transitions],
+            [("space", "down", 512), ("space", "up", 653)],
+        )
+
+    def test_input_transition_rejects_ack_before_request(self):
+        with self.assertRaises(ContractError):
+            InputTransitionReceipt("a1", "space", InputTransition.UP, 20, 19)
+
+    def test_input_transition_stream_rejects_missing_up(self):
+        with self.assertRaisesRegex(ContractError, "end with held"):
+            ExecutionReceipt(
+                "cmd-1", "backend-1", M, "lease-1", 7, "surface-a",
+                500, 700, 1, EffectOccurrence.POSSIBLE, released(),
+                (InputTransitionReceipt("a1", "space", InputTransition.DOWN, 510, 512),),
+            )
+
+    def test_input_transition_stream_rejects_up_without_down(self):
+        with self.assertRaisesRegex(ContractError, "no preceding down"):
+            ExecutionReceipt(
+                "cmd-1", "backend-1", M, "lease-1", 7, "surface-a",
+                500, 700, 1, EffectOccurrence.POSSIBLE, released(),
+                (InputTransitionReceipt("a1", "space", InputTransition.UP, 510, 512),),
+            )
 
     def test_unavailable_backend_cannot_advertise_capability(self):
         with self.assertRaises(ContractError):
@@ -193,6 +227,18 @@ class LifecycleTests(unittest.TestCase):
             500, 700, 1, EffectOccurrence.POSSIBLE, bad_release,
         )
         with self.assertRaises(ContractError):
+            flow.record_execution(receipt)
+
+    def test_input_transition_must_reference_authorized_input_action(self):
+        flow = self.make_authorized()
+        flow.begin_execution(request(), now_ns=300)
+        receipt = ExecutionReceipt(
+            "cmd-1", "backend-1", M, "lease-1", 7, "surface-a",
+            500, 700, 1, EffectOccurrence.POSSIBLE, released(),
+            (InputTransitionReceipt("unrequested", "space", InputTransition.DOWN, 510, 512),
+             InputTransitionReceipt("unrequested", "space", InputTransition.UP, 650, 653)),
+        )
+        with self.assertRaisesRegex(ContractError, "without input authority"):
             flow.record_execution(receipt)
 
     def test_stop_with_active_authority_requires_release(self):
