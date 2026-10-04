@@ -10,7 +10,7 @@
 - Main immediately before execution remained `13bab54ea6d91978247ecc1b70e5060db752367a`; no intervening main change was observed from intake.
 - Candidate command: `wslc run --rm --name ai-7383-t0-a01-candidate --pull never --network none --cpus 1 --memory 512M --volume "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-github-mcp-main-2\work\7383-observation-hedge-t0-wslc-a01:/src:ro" --volume "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-github-mcp-main-2\work\7383-observation-hedge-t0-wslc-a01\out:/out:rw" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B candidate.py`.
 - Candidate stdout: `{"status": "CANDIDATE_COMPLETE", "threshold": 11, "cases": 200, "rows": 600}`. Exit 0.
-- Auditor command: same frozen WSLc flags/paths/image and owned name `ai-7383-t0-a01-auditor`, ending `python -B audit.py`.
+- Auditor command: `wslc run --rm --name ai-7383-t0-a01-auditor --pull never --network none --cpus 1 --memory 512M --volume "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-github-mcp-main-2\work\7383-observation-hedge-t0-wslc-a01:/src:ro" --volume "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-github-mcp-main-2\work\7383-observation-hedge-t0-wslc-a01\out:/out:rw" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B audit.py`.
 - Auditor stdout is summarized in `out/audit.json`: 600 rows, threshold 11 ms, no errors, four of four controls rejected, `PASS_METHOD_SCOPED`. Exit 0.
 - Both WSLc invocations emitted: `Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.` The requested 512 MiB limit was accepted, but effective memory/swap enforcement is unknown.
 - Immediate post-run `wslc container list` showed no running containers. No unrelated image/container was modified or deleted.
@@ -36,6 +36,7 @@ The immediate-duplication diagnostic p95/work by stratum is available in the raw
 - Freeze SHA-256: `6be5534b1c9576f454e1f30802ac059aeab96f1da3f34e98ffc8537ec3207642`.
 - Candidate raw SHA-256: `8b8479edb15f8b7183abdd46767ddf2ba1b9da8199f5308759b6edfeac7de9ab` (168,136 bytes).
 - Transport copy `candidate.json.gz` SHA-256: `2be623a95c52a2bd02f1f3fa39e643bfd13ebc2637cd6870cac30b439e356e8b` (5,050 bytes); decompression independently reproduced all 168,136 raw bytes and the raw SHA-256 above.
+- GitHub retains that transport copy as `formal_01/candidate.json.gz.b64`; base64-decode, then gzip-decompress to recover the byte-exact candidate JSON.
 - Auditor JSON SHA-256: `f5f23be7d4551ab30ee3357b61c3f249860af643b6b26212df19ae2bf4846382` (3,194 bytes).
 - The auditor is a separate implementation and does not import the candidate. It reconstructed all expected rows from its own enumeration, then rejected partial response, stale-generation-first, double-admission and omitted-loser-work mutations. These are finite checks of this fixture only.
 
