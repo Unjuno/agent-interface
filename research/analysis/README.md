@@ -501,7 +501,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
-- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/) — Issue #7470 A02: all 24 fixed-marginal latency/disturbance pairings audited across null and planted-interaction plants (48 trajectories); method-scoped only, with A01 prelaunch STOP preserved.
+- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/) — Issue #7470 A02 harness diagnostic: 24 arbitrary pairings audited across null/planted plants; does not meet the later circular-shift design clarification. A01 prelaunch STOP preserved.
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/)
 - [`integrated_decision_scope_57_t0_v1/`](integrated_decision_scope_57_t0_v1/)

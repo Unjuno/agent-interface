@@ -11,3 +11,4 @@
 - After adding the index rows, Python byte-compilation and `git diff --check`: PASS.
 - Host-only standard-library test; no container, model, GUI, network, GPU, or actuation.
 - Full repository CI and hosted Actions: not run; this finite stdlib experiment does not require the full product suite.
+- Design review after formal execution identified a conformance gap with the Issue's circular-shift clarification; A02 is not an Issue-level PASS. See REPORT.md; formal raw outputs and candidate source remain unchanged.

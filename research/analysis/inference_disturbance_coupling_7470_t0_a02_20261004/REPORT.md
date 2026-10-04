@@ -1,8 +1,8 @@
-# Issue #7470 T0 A02 — PASS_METHOD_SCOPED
+# Issue #7470 T0 A02 — PASS_METHOD_SCOPED (design-conformance gap)
 
 ## Decision
 
-The frozen finite method test passed. All 24 assignments of the exact latency multiset `{1,2,3,4}` to the exact disturbance sequence `{0,1,2,3}` were evaluated in both the null and planted-interaction plants (48 trajectories total). The independent auditor reconstructed every event/trajectory and rejected all three preregistered mutations.
+The frozen finite assignment-method test passed. All 24 assignments of the exact latency multiset `{1,2,3,4}` to the disturbance sequence `{0,1,2,3}` were evaluated in both the null and planted-interaction plants (48 trajectories total). The independent auditor reconstructed every event/trajectory and rejected all three preregistered mutations. However, this does **not** satisfy the Issue's later operational design clarification requiring intact periodic input sequences and circular shifts: arbitrary latency permutations alter within-stream serial structure. Treat A02 only as a harness diagnostic for an explicitly planted interaction, not as the Issue's qualifying coupling comparison.
 
 ## Observed finite result
 
@@ -22,6 +22,10 @@ The frozen finite method test passed. All 24 assignments of the exact latency mu
 ## Scope and limits
 
 This confirms only that the finite analysis harness detects its intentionally planted latency×severity interaction while preserving a no-interaction control. The interaction term was specified by construction, so this is not evidence that real inference latency and GUI/game disturbances are coupled, nor that this state, action, event-clock, or envelope represents a real system. No population probability, causal runtime effect, safety bound, model quality, GUI/game result, user benefit, or deployment threshold is established. T1 remains conditional on retained traces with source-bound latency, disturbance, cover, state, and outcome provenance; absent any of these, retain `HOLD_NO_ELIGIBLE_TRACE`.
+
+### Design-conformance gap
+
+The Issue's design clarification specifies two frozen periodic sequences and circular shifts to preserve each sequence's circular autocorrelation while varying relative phase. A02 permuted latency entries independently against a fixed disturbance sequence. This changes latency serial structure and therefore cannot answer the clarified phase/coupling estimand. The A02 formal execution is retained unchanged; a separate successor is required for the circular-shift experiment.
 
 ## Environment
 
