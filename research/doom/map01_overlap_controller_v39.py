@@ -102,7 +102,125 @@ def guard_spec(validity, source_signal, index):
     }
 
 
-def build_cover_monitor(reader, source_observation, authored_validity, index):
+def ammo_guard_spec(source_signal, index, max_source_age_ms):
+    return {
+        "op": "observable_signal_guard",
+        "guard_id": f"map01-{index}-ammo",
+        "source_sequence": source_signal["sequence"],
+        "signal_id": "ammo",
+        "source_value": source_signal["value"],
+        "hard_minimum": 1,
+        "max_source_age_ms": max_source_age_ms,
+        "on_soft_change": "preserve_existing_policy",
+        "on_hard_change": "needs_decision",
+        "on_unknown": "needs_decision",
+    }
+
+
+def _signal_pair_matches(observation, signals):
+    sequence = observation.get("sequence")
+    capture_ns = observation.get("capture_ns")
+    binding = observation.get("pointer_binding")
+    if (type(sequence) is not int or sequence < 1 or
+            type(capture_ns) is not int or capture_ns < 1 or
+            type(binding) is not dict):
+        return False
+    for signal_id in ("health", "ammo"):
+        signal = signals.get(signal_id)
+        if (type(signal) is not dict or signal.get("status") != "observed" or
+                signal.get("signal_id") != signal_id or
+                type(signal.get("sequence")) is not int or
+                type(signal.get("capture_ns")) is not int or
+                signal.get("sequence") != sequence or
+                signal.get("capture_ns") != capture_ns or
+                signal.get("binding") != binding):
+            return False
+    return True
+
+
+class DoomCoverSignalPairMonitor:
+    """Invalidate fire cover on incoherent or invalid paired health/ammo evidence."""
+
+    event_types = {"typed_observation"}
+
+    def __init__(self, guards, health_reader, ammo_reader):
+        self.guards = guards
+        self.readers = {"health": health_reader, "ammo": ammo_reader}
+        self.last_values = {name: guard.spec["source_value"]
+                            for name, guard in guards.items()}
+        self.last_sequence = guards["health"].spec["source_sequence"]
+        self.soft_event_count = 0
+        self.latest_soft_event = None
+
+    def _invalidation(self, observation, reason, signals=None, outcomes=None,
+                      outcome=None):
+        evaluated_ns = time.perf_counter_ns()
+        if outcome is None:
+            outcome = {
+                "status": "UNKNOWN", "reason": reason,
+                "requires_new_decision": True,
+                "grants_input_authority": False,
+                "may_only_preserve_or_reduce_existing_authority": True,
+                "task_success_verified": False,
+            }
+        return {
+            "event": "paired_signal_invalidation",
+            "reason": reason,
+            "sequence": observation.get("sequence"),
+            "signals": signals,
+            "outcomes": outcomes,
+            "outcome": outcome,
+            "outcome_evaluated_ns": evaluated_ns,
+            "requires_new_decision": True,
+            "grants_input_authority": False,
+        }
+
+    def observe(self, observation):
+        received_ns = time.perf_counter_ns()
+        if observation.get("event") == "typed_observation":
+            signals = observation.get("signals")
+            if type(signals) is not dict:
+                return self._invalidation(observation, "signal_pair_missing")
+        else:
+            signals = {name: reader.read(observation)
+                       for name, reader in self.readers.items()}
+        if not _signal_pair_matches(observation, signals):
+            return self._invalidation(observation, "signal_pair_epoch_mismatch", signals)
+        if observation["sequence"] <= self.last_sequence:
+            return self._invalidation(
+                observation, "signal_pair_nonadvancing_sequence", signals)
+        self.last_sequence = observation["sequence"]
+
+        outcomes = {name: guard.evaluate(signals[name])
+                    for name, guard in self.guards.items()}
+        evaluated_ns = time.perf_counter_ns()
+        invalid = [(name, outcome) for name, outcome in outcomes.items()
+                   if outcome["requires_new_decision"]]
+        if invalid:
+            name, outcome = invalid[0]
+            result = self._invalidation(
+                observation, f"{name}:{outcome['reason']}", signals, outcomes,
+                outcome)
+            result.update({"monitor_received_ns": received_ns,
+                           "outcome_evaluated_ns": evaluated_ns})
+            return result
+
+        for name, outcome in outcomes.items():
+            value = signals[name]["value"]
+            if outcome["status"] == "SOFT_CHANGED" and value != self.last_values[name]:
+                self.soft_event_count += 1
+                self.latest_soft_event = {
+                    "sequence": observation["sequence"],
+                    "signal": signals[name], "outcome": outcome,
+                    "monitor_received_ns": received_ns,
+                    "outcome_evaluated_ns": evaluated_ns,
+                }
+            self.last_values[name] = value
+        return None
+
+
+def build_cover_monitor(reader, source_observation, authored_validity, index,
+                        *, ammo_reader=None, requires_ammo=False):
     source_signal = reader.read(source_observation)
     if source_signal["status"] != "observed" or source_signal["value"] < 1:
         raise RuntimeError("cover validity source health unavailable")
@@ -128,6 +246,44 @@ def build_cover_monitor(reader, source_observation, authored_validity, index):
     effective = authored_validity if admitted else None
     spec = guard_spec(effective, source_signal, index)
     guard = ObservableSignalGuard(spec, source_signal, source_signal["binding"])
+    monitor = ObservableSignalPolicyMonitor(guard, reader)
+    ammo_source = None
+    if requires_ammo:
+        if ammo_reader is None:
+            raise ValueError("ammo reader required for fire cover")
+        ammo_source = ammo_reader.read(source_observation)
+        pair = {"health": source_signal, "ammo": ammo_source}
+        if not _signal_pair_matches(source_observation, pair):
+            return monitor, {
+                "status": "rejected_source_health_ammo_pair",
+                "authored": authored_validity,
+                "effective": {"signal_id": "health",
+                              "critical_health_minimum": spec["hard_minimum"],
+                              "maximum_health_loss": 0 if effective is None else
+                                  effective["maximum_health_loss"],
+                              "hard_minimum": spec["hard_minimum"],
+                              "max_source_age_ms": spec["max_source_age_ms"]},
+                "source_signal": source_signal, "source_ammo_signal": ammo_source,
+                "grants_input_authority": False,
+            }
+        if type(ammo_source.get("value")) is not int or ammo_source["value"] < 1:
+            return monitor, {
+                "status": "rejected_source_ammo_below_positive_floor",
+                "authored": authored_validity,
+                "effective": {"signal_id": "health",
+                              "critical_health_minimum": spec["hard_minimum"],
+                              "maximum_health_loss": 0 if effective is None else
+                                  effective["maximum_health_loss"],
+                              "hard_minimum": spec["hard_minimum"],
+                              "max_source_age_ms": spec["max_source_age_ms"]},
+                "source_signal": source_signal, "source_ammo_signal": ammo_source,
+                "grants_input_authority": False,
+            }
+        ammo_spec = ammo_guard_spec(ammo_source, index, spec["max_source_age_ms"])
+        ammo_guard = ObservableSignalGuard(
+            ammo_spec, ammo_source, ammo_source["binding"])
+        monitor = DoomCoverSignalPairMonitor(
+            {"health": guard, "ammo": ammo_guard}, reader, ammo_reader)
     receipt = {
         "status": admission_status,
         "authored": authored_validity,
@@ -139,9 +295,11 @@ def build_cover_monitor(reader, source_observation, authored_validity, index):
                       "hard_minimum": spec["hard_minimum"],
                       "max_source_age_ms": spec["max_source_age_ms"]},
         "source_signal": source_signal,
+        "source_ammo_signal": ammo_source,
+        "monitor_mode": "paired_health_ammo" if requires_ammo else "health_only",
         "grants_input_authority": False,
     }
-    return ObservableSignalPolicyMonitor(guard, reader), receipt
+    return monitor, receipt
 
 
 def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
@@ -162,6 +320,11 @@ def admitted_cover_commands(commands, validity_admission):
     return list(commands)
 
 
+def cover_requires_ammo(commands):
+    return any(command.get("action") in ("fire", "advance_fire", "retreat_fire")
+               for command in commands)
+
+
 def latest_soft_event_summary(decisions):
     """Return bounded semantic evidence from the immediately preceding interval."""
     if not decisions:
@@ -178,8 +341,8 @@ def latest_soft_event_summary(decisions):
     iteration = decision.get("iteration")
     source_iteration = decision.get("cover_policy_source_iteration")
     if (type(outcome) is not dict or type(signal) is not dict or
-            signal.get("signal_id") != "health" or
-            outcome.get("signal_id") != "health" or
+            signal.get("signal_id") not in ("health", "ammo") or
+            outcome.get("signal_id") != signal.get("signal_id") or
             outcome.get("status") != "SOFT_CHANGED" or
             outcome.get("reason") != "within_validity_envelope" or
             outcome.get("keep_existing_policy") is not True or
@@ -197,7 +360,7 @@ def latest_soft_event_summary(decisions):
             outcome.get("current_value") < outcome.get("hard_minimum")):
         raise RuntimeError("invalid prior soft-event evidence")
     return {
-        "signal_id": "health",
+        "signal_id": signal["signal_id"],
         "source_value": outcome["source_value"],
         "current_value": outcome["current_value"],
         "hard_minimum": outcome["hard_minimum"],
@@ -559,7 +722,9 @@ def main():
             failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
             validity_monitor, validity_admission = build_cover_monitor(
-                signal_reader, latest, cover_validity_semantic, index)
+                signal_reader, latest, cover_validity_semantic, index,
+                ammo_reader=ammo_reader,
+                requires_ammo=cover_requires_ammo(cover_semantic))
             cover_semantic = admitted_cover_commands(cover_semantic, validity_admission)
             validity_monitor, validity_admission = select_cover_monitor(
                 validity_monitor, validity_admission, cover_semantic,
