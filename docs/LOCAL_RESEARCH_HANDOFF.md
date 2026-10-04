@@ -3964,3 +3964,23 @@ Run once/no retry; v1's missing-evidence failure stays unchanged.
 - Do not treat this allocation as PASS or issue a formal result report. The diagnostic counts are for future preregistration only. The GitHub issue was not updated.
 - Branch base: main `3dbbda05eb8d5067ee2c2969615e472a0f20f562`. Before PR integration, fetch current main and check Issue #7678, related branches, PRs, and reviewer/merge requirements. Do not rerun the consumed allocation.
 - No shared game/model lane was used. Do not call `wslc.exe` while the #6693 unknown-client hold remains.
+
+### Integration and reviewer correction — 2026-10-05
+
+PR [#7733](https://github.com/Unjuno/agent-interface/pull/7733) preserves this
+T0 package for `main`; the live PR was open and mergeable at handoff. Its first
+independent automated review identified three evidence-delivery defects: the
+machine-readable `RUN.json` exposed the post-freeze diagnostic PASS as the
+result, the first auditor's stdout/stderr were not retained, and the package
+README linked to a nonexistent `REPORT.md`. Corrections must label the overall
+allocation `HOLD`, retain the diagnostic PASS only as diagnostic, explicitly
+disclose the lost first-audit streams (never recreate them), and link the
+authoritative `AMENDMENT.md`. No formal allocation is to be rerun.
+
+After corrections are pushed, obtain a fresh independent review and required
+non-author consent before any merge to `main`. Keep the scientific status HOLD
+after merge; merging only integrates evidence and does not rehabilitate the
+allocation. The live Issue #7678 is still open with no comments, so record this
+disposition and PR link there when updating the handoff. For the next owner,
+start with a genuinely new hypothesis or analysis lane; this consumed allocation
+cannot be reused. Respect the #6693 WSLc hold.
