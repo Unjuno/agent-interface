@@ -1,0 +1,45 @@
+{
+  "allocation": "map01-v39-coast-liveness-live-01",
+  "evidence_class": "posthoc retained single-allocation trace audit",
+  "interpretation_limits": [
+    "The measured signal is an adverse health change, not positive task-effect onset.",
+    "The verified empty owner release is a program-level release after later inputs; it is not a per-key up timestamp or key dwell measurement.",
+    "The subsequent model action was rejected because current health decreased beyond its authored predicate.",
+    "The post-control score records no MAP01 exit and an unfinished episode; this is not a task success or recovery-benefit result.",
+    "One retained run cannot establish matched-condition performance or a general timing distribution."
+  ],
+  "measurements": {
+    "feedback_to_hold_step_completion_ms": 96.311598,
+    "feedback_to_model_terminal_ms": 1925.503834,
+    "feedback_to_next_step_keys_ack_ms": 154.146074,
+    "feedback_to_outcome_ms": 116.350394,
+    "feedback_to_verified_empty_owner_release_ms": 1937.087025,
+    "health_capture_ns": 55515991409029,
+    "health_monitor_outcome_ns": 55516107759423,
+    "hold_key_ack_ns": 55515591044890,
+    "hold_step_completion_ns": 55516087720627,
+    "model_wait_end_ns": 55517916912863,
+    "model_wait_start_ns": 55512196452160,
+    "next_step_keys_ack_ns": 55516145555103,
+    "normal_per_key_up_receipt_present": false,
+    "verified_empty_owner_release_ns": 55517928496054
+  },
+  "schema": "v39-health-feedback-timing-result-v1",
+  "source_commit": "1a3d253d7ef5761aecbf28a6092eb5ab8a128df6",
+  "state": {
+    "cover_preserved": true,
+    "death_count": 0,
+    "episode_finished": false,
+    "feedback_granted_authority": false,
+    "first_pending_action_admission": "REJECTED_ACTION_NOT_CURRENT",
+    "guard_status": "SOFT_CHANGED",
+    "health_at_capture": 85,
+    "health_source": 97,
+    "kill_count": 1,
+    "map_exit": false,
+    "next_action_health_current": 73,
+    "next_action_health_source": 85,
+    "next_pending_action_admission": "REJECTED_ACTION_NOT_CURRENT",
+    "reward": 0.0
+  }
+}
