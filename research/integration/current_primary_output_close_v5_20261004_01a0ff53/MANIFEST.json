@@ -1,0 +1,477 @@
+{
+  "schema": "agent-interface/primary-stdio-output-close-v5-addendum-evidence-v1",
+  "base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+  "product_sha256": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+  "workflow_sha256": "6234226e80e553ec5733c9ffb11996c9fee8b28f608fd36c64cf74fb6a52040d",
+  "changed_source_images": {
+    "runtime/host_v1/primary_stdio.mjs": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+    "runtime/host_v1/test_primary_output_close_owner.mjs": "cf7c74378436664cc408349005d39afa1fc8d322895847a7fda424866779954c",
+    "runtime/host_v1/test_primary_output_close.mjs": "024d17eadbcb5fe95f3c158a7ed18a55f5bd00e7ad9eae50518c7164ccca0738",
+    ".github/workflows/native-mcp-v1.yml": "6234226e80e553ec5733c9ffb11996c9fee8b28f608fd36c64cf74fb6a52040d"
+  },
+  "workflow_node_run": {
+    "pid": 85791,
+    "start_utc": "2026-10-04T00:27:47.403977+00:00",
+    "end_utc": "2026-10-04T00:27:50.192262+00:00",
+    "source_base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+    "latest_main_observed": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+    "product_sha256": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+    "startup_close_test_sha256": "cf7c74378436664cc408349005d39afa1fc8d322895847a7fda424866779954c",
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+      "--test",
+      "research/live_control/test_native_relay_client_v1.mjs",
+      "research/live_control/test_relay_host_timeline_v1.mjs",
+      "runtime/host_v1/test_relay_client.mjs",
+      "runtime/host_v1/test_relay_host.mjs",
+      "runtime/host_v1/test_evidence_capacity.mjs",
+      "runtime/host_v1/test_text_acknowledgment.mjs",
+      "runtime/host_v1/test_primary_caller.mjs",
+      "runtime/host_v1/test_primary_mint.mjs",
+      "runtime/host_v1/test_primary_mint_many.mjs",
+      "runtime/host_v1/test_primary_input.mjs",
+      "runtime/host_v1/test_primary_window_review.mjs",
+      "runtime/host_v1/test_primary_exchange.mjs",
+      "runtime/host_v1/test_primary_stdio.mjs",
+      "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+      "runtime/host_v1/test_primary_stdio_failure_order.mjs",
+      "runtime/host_v1/test_primary_output_close.mjs",
+      "runtime/host_v1/test_primary_output_close_owner.mjs"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-main9c3a-proposal",
+    "exit_code": 0,
+    "stdout_bytes": 18638,
+    "stdout_sha256": "6fbf86f74c02c33effd622ce85207de7d23e9071307f85b0f20ae753e6e934df",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bash_syntax_exit": 0,
+    "execution_environment": "macOS, local Node 26.7.0, private inert fixtures; not hosted Ubuntu Node 22",
+    "latest_main_relevant_paths_changed_since_base": []
+  },
+  "workflow_utf8_run": {
+    "pid": 86274,
+    "start_utc": "2026-10-04T00:28:02.245942+00:00",
+    "end_utc": "2026-10-04T00:28:02.376136+00:00",
+    "source_base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+    "latest_main_observed": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+      "--test",
+      "runtime/host_v1/test_primary_stdio_utf8.mjs"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-main9c3a-proposal",
+    "exit_code": 0,
+    "stdout_bytes": 897,
+    "stdout_sha256": "74c96af9dd31f1b4dd59aded1aa91ddbfac3df0374a67742c0ae1ff663ada86f",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execution_environment": "macOS, local Node 26.7.0"
+  },
+  "scope": "Local and hosted inert contract tests only. Hosted Native MCP workflow passed on head 6faf147 (Node workflow steps and Python/native 445 protocol + 205 harness tests on Ubuntu/Python 3.12.14); local Node 22.23.3 and Node 26.7.0 each passed the exact 17-module Node suite; separate UTF-8 15/15 and focused owner 4/4 remain recorded. No live GUI, physical input, model/provider, formal allocation, task-effect/release proof, finite recovery, latency, or total-resource result is claimed.",
+  "main_sends": 0,
+  "unknown_sends": 0,
+  "startup_close_run": {
+    "pid": 84302,
+    "start_utc": "2026-10-04T00:26:52.153977+00:00",
+    "end_utc": "2026-10-04T00:26:52.451176+00:00",
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+      "--test",
+      "runtime/host_v1/test_primary_output_close_owner.mjs"
+    ],
+    "exit_code": 0,
+    "stdout_bytes": 458,
+    "stdout_sha256": "109112c8cb9e48d9ae8082936a81828f4b10a1b40f896cfb3b8e982bc70e9b17",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence_directory": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-current-main-01/startup-close-targeted2/evidence",
+    "candidate_source_tree": "working-tree-with-startup-close-regression"
+  },
+  "startup_close_witness_sha256": "356428be1ffcb664f8380a6613e714460c532f02944505c1d462dac385c633b9",
+  "latest_main_observed": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+  "latest_main_selected_dependencies_unchanged_since_base": true,
+  "current_main_revalidation": {
+    "observed_utc": "2026-10-04T01:00:27Z",
+    "main_sha": "4ca1db66b6adcb4ea15fc3c744315ad39a87749e",
+    "candidate_parent": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+    "unchanged_paths_since_candidate_parent": [
+      "runtime/host_v1/**",
+      "research/live_control/test_native_relay_client_v1.mjs",
+      "research/live_control/test_relay_host_timeline_v1.mjs",
+      ".github/workflows/native-mcp-v1.yml",
+      "runtime/integration_checks/native.py"
+    ],
+    "all_pr_paths_overlap_since_candidate_parent": []
+  },
+  "workflow_node22_local_run": {
+    "source_head": "6faf147afcc5a7f72f2d79c8c39de1465279b196",
+    "source_tree": "256de557e385b1d1e587dacacc0be1f00aa1fdac",
+    "runtime": "Node.js v22.23.3 provided by npm package node@22; macOS, local private fixtures",
+    "start_utc": "2026-10-04T00:47:09.711251000Z",
+    "end_utc": "2026-10-04T00:47:13.522670000Z",
+    "exit_code": 0,
+    "tests": {
+      "count": 211,
+      "pass": 211,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "stdout_bytes": 44866,
+    "stdout_sha256": "fc3823d7c7a757d3ee9d1faf4d23d18dda96a0f2c8ad9f2da2e868d3b8ce91b4",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "command_file": "workflow-native-linux/node22-local/command.txt",
+    "stdout_file": "workflow-native-linux/node22-local/stdout.log",
+    "stderr_file": "workflow-native-linux/node22-local/stderr.log",
+    "receipt_file": "workflow-native-linux/node22-local/receipt.json",
+    "scope": "Exact 17-module native-mcp-v1 Node workflow command on macOS with inert fixtures; hosted Ubuntu evidence is recorded below."
+  },
+  "hosted_native_mcp_run": {
+    "run_id": 37165227376,
+    "job_id": 111326650819,
+    "run_url": "https://github.com/Unjuno/agent-interface/actions/runs/37165227376",
+    "source_head": "6faf147afcc5a7f72f2d79c8c39de1465279b196",
+    "status": "success",
+    "started_utc": "2026-10-04T00:48:04Z",
+    "completed_utc": "2026-10-04T00:48:51Z",
+    "steps": {
+      "host_relay_and_primary_node_tests": "success",
+      "python_native_integration": "success",
+      "strict_primary_stdio_utf8": "success"
+    },
+    "python_runtime": "Python 3.12.14, ubuntu-latest",
+    "python_native_result": "PASS",
+    "python_suites": {
+      "protocol": {
+        "tests": 445,
+        "status": "PASS"
+      },
+      "harness": {
+        "tests": 205,
+        "status": "PASS"
+      }
+    },
+    "runner_sha256": "fa8916162c8a454cd7225fee14c56dfb6e0df078f0034f746325bd96f640e1a1",
+    "result_json_sha256": "40fe73aa8f9ca33302785f051a8e5365436fa47d157957d1a063bea9ae805479",
+    "artifact_id": 11288989350,
+    "artifact_name": "native-contract-checks",
+    "artifact_digest": "sha256:dcf01f47a162f60336e6c3f6ccabf64fc035efff1ff5b39e89250135de40f27c",
+    "startup_close_witness": "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/WITNESS.json",
+    "artifact_files": {
+      "workflow-native-linux/run-37165227376/native-ci/harness.stderr.log": {
+        "bytes": 35809,
+        "sha256": "c2e484fb2275171767d841c14124677cd188a862e2238a422527efb7ae8539de"
+      },
+      "workflow-native-linux/run-37165227376/native-ci/harness.stdout.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "workflow-native-linux/run-37165227376/native-ci/protocol.stderr.log": {
+        "bytes": 88329,
+        "sha256": "bbc3ed22d5559c0458cee43521547dd3ae3ff6cb07fe8421743cbb7625244ca4"
+      },
+      "workflow-native-linux/run-37165227376/native-ci/protocol.stdout.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "workflow-native-linux/run-37165227376/native-ci/result.json": {
+        "bytes": 3807,
+        "sha256": "40fe73aa8f9ca33302785f051a8e5365436fa47d157957d1a063bea9ae805479"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/WITNESS.json": {
+        "bytes": 1637,
+        "sha256": "892f4406a76b086d19a955d56a4d46d73dd86d60efbdc4cda908aeafe1ddd619"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/exchange/original-reply-1.json": {
+        "bytes": 189,
+        "sha256": "659d0858b26d78373c89c90dd945aedf9631fd1cefc5d5b26950ba6cbe1928b9"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/exchange/presentation-1.json": {
+        "bytes": 327,
+        "sha256": "7946cf7cd9d70e2b53fec9b83c07c343d0e37eb4b3424558409c2de597c466bb"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/exchange/request-1.json": {
+        "bytes": 78,
+        "sha256": "00a08ed3b2e30fd26c1eae7360863b88d7eb990e25d11a7bfce022335cfdfff8"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/fixture-exit.json": {
+        "bytes": 66,
+        "sha256": "6816dfbdeadd1682efcaf33567e3eb7fdb825711c3fa4d6282488d544c3db09b"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/fixture-request.json": {
+        "bytes": 72,
+        "sha256": "1764b9c4f61dac10f9f400ef99648a0a5f4f17404b28a4c02610d1bb33e070a3"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/fixture-start.json": {
+        "bytes": 25,
+        "sha256": "1be2e64817483fd1ad841ae8b47ea5cc73eb1658585e778b43acd77d21ec23bc"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/fixture.mjs": {
+        "bytes": 1082,
+        "sha256": "5b620b086c803fa254c3296430177416a5b412bbc2ff1856a40695bd764aeda1"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/host/exit.json": {
+        "bytes": 34,
+        "sha256": "6380f7ebf1263a94abaaef4f5a1323cf0f4fbc88e37d8f1792ae68f163e18807"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/host/host-events.jsonl": {
+        "bytes": 991,
+        "sha256": "202e8894eb8ed8884b3f66b1ef739a7a362042b20f3683ff119a16a9dc521636"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/host/reply-1.json": {
+        "bytes": 177,
+        "sha256": "101eaf352fa863f8047db5a30d7814f57e0a8ba92e918e7a35713b0b98723774"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/host/request-1.json": {
+        "bytes": 94,
+        "sha256": "f5fbe9148fab4bbd55617d0c376f10f3420225da552c75ce7a8b131dc39993d0"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/host/storage-preflight.json": {
+        "bytes": 553,
+        "sha256": "c3f588ab6f61d733ae5c063aef6e205b4c7c79e35f99bb2de0954f89b621614f"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/output.raw.txt": {
+        "bytes": 662,
+        "sha256": "e1216b2ec02244b4879a1561744b953c99e254bb03a8e31d9e5e795c6211cd2f"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/input/release.json": {
+        "bytes": 3,
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/WITNESS.json": {
+        "bytes": 1639,
+        "sha256": "67966179998299c02b6c17b555483ed384cc40930e3f8a473d6844de5451452f"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/exchange/original-reply-1.json": {
+        "bytes": 189,
+        "sha256": "659d0858b26d78373c89c90dd945aedf9631fd1cefc5d5b26950ba6cbe1928b9"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/exchange/presentation-1.json": {
+        "bytes": 328,
+        "sha256": "494e85a9607ac9e9758f7479dea7b05420b0b5217c874a542adcbb2d961a6fd0"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/exchange/request-1.json": {
+        "bytes": 78,
+        "sha256": "00a08ed3b2e30fd26c1eae7360863b88d7eb990e25d11a7bfce022335cfdfff8"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/fixture-exit.json": {
+        "bytes": 66,
+        "sha256": "b934d4cf8d55e9d3ce4774157a60f2819e7e3c2295c729bc3d8ceee6d7df9641"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/fixture-request.json": {
+        "bytes": 72,
+        "sha256": "1764b9c4f61dac10f9f400ef99648a0a5f4f17404b28a4c02610d1bb33e070a3"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/fixture-start.json": {
+        "bytes": 25,
+        "sha256": "d768079de054180ef0869af875d1e18283dd9fe15640a1df9ad7e333bb63c031"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/fixture.mjs": {
+        "bytes": 1082,
+        "sha256": "5b620b086c803fa254c3296430177416a5b412bbc2ff1856a40695bd764aeda1"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/host/exit.json": {
+        "bytes": 34,
+        "sha256": "6380f7ebf1263a94abaaef4f5a1323cf0f4fbc88e37d8f1792ae68f163e18807"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/host/host-events.jsonl": {
+        "bytes": 992,
+        "sha256": "7f3b780115400f7b9e62a10c907042d6bbf19929d2badc84dbcb1e76061063aa"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/host/reply-1.json": {
+        "bytes": 177,
+        "sha256": "101eaf352fa863f8047db5a30d7814f57e0a8ba92e918e7a35713b0b98723774"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/host/request-1.json": {
+        "bytes": 94,
+        "sha256": "f5fbe9148fab4bbd55617d0c376f10f3420225da552c75ce7a8b131dc39993d0"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/host/storage-preflight.json": {
+        "bytes": 554,
+        "sha256": "d8587b33997ed971021b4008b6cd0b92713674824084df7e8d510e4802cd68f2"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/output.raw.txt": {
+        "bytes": 663,
+        "sha256": "03666965eb4a6fcf7b7cb918593c79d32049eda1886bf26ddf7df40945630b52"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output/release.json": {
+        "bytes": 3,
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close/busy/WITNESS.json": {
+        "bytes": 718,
+        "sha256": "82d25acdd1d817f9e58803fb6f3b8bf58a9d1e03b80851c06d0122fb0a8b5a9d"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close/completed/WITNESS.json": {
+        "bytes": 102,
+        "sha256": "107f0f2f413e8772de688e5ac8bd8d648cba1cd5025802732c96ea1a6e06a36a"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close/first-error/WITNESS.json": {
+        "bytes": 85,
+        "sha256": "5f9302a1b9673df1fe65ddf94a21dae63bdb382523deb02146d44497a1f45719"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close/preclosed/WITNESS.json": {
+        "bytes": 77,
+        "sha256": "2c7b4f388601b45fe40eb76ac02095c132317d4013ea94d3ad7fe315fac81cfe"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close/returned/WITNESS.json": {
+        "bytes": 731,
+        "sha256": "0a0868330809a60a1108609c59b7928747f32ff985d4caf699d420b03d8e3307"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/WITNESS.json": {
+        "bytes": 1237,
+        "sha256": "50c972157ef0555fbb2532f821170a6537e1df232fac8f77ea522a2dbbad220f"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/exchange/original-reply-1.json": {
+        "bytes": 189,
+        "sha256": "659d0858b26d78373c89c90dd945aedf9631fd1cefc5d5b26950ba6cbe1928b9"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/exchange/presentation-1.json": {
+        "bytes": 345,
+        "sha256": "c91f1de70dd4a7fc0a536559f571391e720bd5891d87d1c804cef3d37ce8d6ae"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/exchange/request-1.json": {
+        "bytes": 78,
+        "sha256": "00a08ed3b2e30fd26c1eae7360863b88d7eb990e25d11a7bfce022335cfdfff8"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/fixture-exit.json": {
+        "bytes": 66,
+        "sha256": "959f9b6cd9c108a2d90348eb5f5f256a2124158857074efbc11621212a0b1bc9"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/fixture-request.json": {
+        "bytes": 72,
+        "sha256": "1764b9c4f61dac10f9f400ef99648a0a5f4f17404b28a4c02610d1bb33e070a3"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/fixture-start.json": {
+        "bytes": 25,
+        "sha256": "cd09f3925168276dc3855775a728330508eae7a8a7a2fd266a174099bea0e24f"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/fixture.mjs": {
+        "bytes": 1082,
+        "sha256": "5b620b086c803fa254c3296430177416a5b412bbc2ff1856a40695bd764aeda1"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/host/exit.json": {
+        "bytes": 34,
+        "sha256": "6380f7ebf1263a94abaaef4f5a1323cf0f4fbc88e37d8f1792ae68f163e18807"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/host/host-events.jsonl": {
+        "bytes": 992,
+        "sha256": "00e53d4a0f5905aab2e3c4156be70ef5c9ed69e6fc0bf6736a80c91d78ddb34e"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/host/reply-1.json": {
+        "bytes": 177,
+        "sha256": "101eaf352fa863f8047db5a30d7814f57e0a8ba92e918e7a35713b0b98723774"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/host/request-1.json": {
+        "bytes": 94,
+        "sha256": "f5fbe9148fab4bbd55617d0c376f10f3420225da552c75ce7a8b131dc39993d0"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/host/storage-preflight.json": {
+        "bytes": 571,
+        "sha256": "121828016c486cf9cb67f47850566ed38c527a801d631d1f3d3209b6000d3fb2"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/output.raw.txt": {
+        "bytes": 260,
+        "sha256": "3562ab5a5a182a7175f9834d05fa75fb0d3fa88579c7b9182d48790630f3ba55"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/busy/release.json": {
+        "bytes": 3,
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/WITNESS.json": {
+        "bytes": 1666,
+        "sha256": "17a7fc023e1259509876ffbb18a9f15b03820bfccb6280011157b9bc76ccc80a"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/exchange/original-reply-1.json": {
+        "bytes": 189,
+        "sha256": "659d0858b26d78373c89c90dd945aedf9631fd1cefc5d5b26950ba6cbe1928b9"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/exchange/presentation-1.json": {
+        "bytes": 349,
+        "sha256": "e7a7f7268a9ea807e02df425c3137bf00dc06e492d00468ba58ddddc2db0c7f4"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/exchange/request-1.json": {
+        "bytes": 78,
+        "sha256": "00a08ed3b2e30fd26c1eae7360863b88d7eb990e25d11a7bfce022335cfdfff8"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/fixture-exit.json": {
+        "bytes": 66,
+        "sha256": "2b459a1bd7d3a51dcb79f3f4aeb0c26e7b0079436bb372f1cb3c9395f87a882a"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/fixture-request.json": {
+        "bytes": 72,
+        "sha256": "1764b9c4f61dac10f9f400ef99648a0a5f4f17404b28a4c02610d1bb33e070a3"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/fixture-start.json": {
+        "bytes": 25,
+        "sha256": "9b1ca932f522d3392c7e9ee3f3ab602e2c3e6bf46807927c247533edeea04804"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/fixture.mjs": {
+        "bytes": 1082,
+        "sha256": "5b620b086c803fa254c3296430177416a5b412bbc2ff1856a40695bd764aeda1"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/host/exit.json": {
+        "bytes": 34,
+        "sha256": "6380f7ebf1263a94abaaef4f5a1323cf0f4fbc88e37d8f1792ae68f163e18807"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/host/host-events.jsonl": {
+        "bytes": 991,
+        "sha256": "8b1c515c90ebb54de3ff2b643cdfda405a6ff8d9455e3298f21df17262f524f0"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/host/reply-1.json": {
+        "bytes": 177,
+        "sha256": "101eaf352fa863f8047db5a30d7814f57e0a8ba92e918e7a35713b0b98723774"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/host/request-1.json": {
+        "bytes": 94,
+        "sha256": "f5fbe9148fab4bbd55617d0c376f10f3420225da552c75ce7a8b131dc39993d0"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/host/storage-preflight.json": {
+        "bytes": 575,
+        "sha256": "683b0bbfacc0726391ff4ffb88ec90ab7e29f77c4303489dbd9b097ad418f067"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/output.raw.txt": {
+        "bytes": 569,
+        "sha256": "105925578d9ec27231ae700be144d01dc5e1aaba1fa90011ed08e36c0e1ca209"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/output-close-owner/returned/release.json": {
+        "bytes": 3,
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/preclosed-owner/fixture.mjs": {
+        "bytes": 188,
+        "sha256": "d1c18938239e71aeb860e16233b1f59d8491852275a663752cb149e8f0fe917a"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/WITNESS.json": {
+        "bytes": 439,
+        "sha256": "fa3ffd5936d62eab9ff786bcfd65bc8d150a23683ea5873420a0b16e9b76502b"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/fixture-exit.json": {
+        "bytes": 22,
+        "sha256": "44ac1c3712b0ec2fa58b479711ac7c52e3428ccf9180ae2590663113d5028796"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/fixture-start.json": {
+        "bytes": 13,
+        "sha256": "0c0e7a309f0253400f7e09476c4189610691a5199dba3a73e1a2eb8f292aecb6"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/fixture.mjs": {
+        "bytes": 347,
+        "sha256": "17fe85bf82161bfd93f8e6a9f0ec2207b49a2d9824ebd41a298928fd91ff8674"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/host/exit.json": {
+        "bytes": 34,
+        "sha256": "6380f7ebf1263a94abaaef4f5a1323cf0f4fbc88e37d8f1792ae68f163e18807"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/host/host-events.jsonl": {
+        "bytes": 142,
+        "sha256": "133a73ba3206ef69af4697dedfc205ac29a38bc459cdf440bec4701d25e6cd0f"
+      },
+      "workflow-native-linux/run-37165227376/primary-owner/run.JFsabG/startup-close/host/storage-preflight.json": {
+        "bytes": 561,
+        "sha256": "79c04434f9217b92eb07d61572dfe57b3822cd41116bb40cc5d82d6d66a2d3c9"
+      }
+    },
+    "scope": "Workflow contract suites and inert startup-close witness; not live GUI, physical input, model, task-effect, formal allocation, latency or end-to-end product evidence."
+  }
+}
