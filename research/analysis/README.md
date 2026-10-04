@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #7778 demand-guarded slack reclamation T0](slack_reclamation_7778_t0_20261005/REPORT.md) — zero-overhead T0: 9 traces / 27 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED; separate [T0b dispatch sensitivity](slack_reclamation_7778_dispatch_sensitivity_t0_20261005/REPORT.md): 18 traces / 108 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED. Priority-only completed more optional work than guarded slack over the full overhead-0 matrix, so no scheduler promotion follows.
+
 - [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
 
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
@@ -835,6 +837,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`skill_applicability_6262_wslc_t0b_v1/`](skill_applicability_6262_wslc_t0b_v1/)
 - [`skill_registry_topk_starvation_751_t0_20261002/`](skill_registry_topk_starvation_751_t0_20261002/)
 - [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
+- [`slack_reclamation_7778_dispatch_sensitivity_t0_20261005/`](slack_reclamation_7778_dispatch_sensitivity_t0_20261005/)
+- [`slack_reclamation_7778_t0_20261005/`](slack_reclamation_7778_t0_20261005/)
 - [`soft_revisit_bias_5756_t0_orbstack_a03_20261003/`](soft_revisit_bias_5756_t0_orbstack_a03_20261003/)
 - [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`soft_revisit_bias_6442_supplemental_audit_v1/`](soft_revisit_bias_6442_supplemental_audit_v1/)
