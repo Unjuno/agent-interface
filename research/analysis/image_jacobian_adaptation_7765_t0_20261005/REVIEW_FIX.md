@@ -15,3 +15,6 @@ historical experiment remains byte-reproducible. `test_review_fixes.py` tests
 the new entry points; the original `test_method.py` continues to test the
 frozen implementation. No formal candidate or auditor was rerun, and no
 scientific disposition or raw result was changed.
+- `reviewed_auditor.audit_rows` now requires exact `int` seed identifiers before set comparison, excluding `bool` and `float` values that compare equal to integers. Full-grid `False` and `0.0` mutations both return `HOLD_AUDIT_OR_OUTCOME`.
+
+The complete WSLc package suite passes 11/11. The committed raw JSONL was restored byte-for-byte after the Windows checkout exposed CRLF translation; its frozen SHA-256 matches again. Formal candidates/auditors were not rerun.

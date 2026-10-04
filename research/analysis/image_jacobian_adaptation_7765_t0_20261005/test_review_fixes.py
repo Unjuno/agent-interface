@@ -42,6 +42,23 @@ class ReviewFixTests(unittest.TestCase):
         self.assertEqual(result["errors"], ["PAIR_GRID_INCOMPLETE_OR_DUPLICATE"])
         self.assertFalse(result["pair_grid_complete"])
 
+    def test_non_integer_seed_identifiers_return_hold(self):
+        for malformed_seed in (False, 0.0):
+            rows = [trial(seed, condition, arm)
+                    for condition in PROTOCOL["conditions"]
+                    for seed in range(30)
+                    for arm in PROTOCOL["arms"]]
+            row = next(row for row in rows
+                       if row["condition"] == PROTOCOL["conditions"][0]
+                       and row["seed"] == 0
+                       and row["arm"] == PROTOCOL["arms"][0])
+            row["seed"] = malformed_seed
+            with self.subTest(seed=repr(malformed_seed)):
+                result = audit_rows(rows)
+                self.assertEqual(result["status"], "HOLD_AUDIT_OR_OUTCOME")
+                self.assertEqual(result["errors"], ["PAIR_GRID_INCOMPLETE_OR_DUPLICATE"])
+                self.assertFalse(result["pair_grid_complete"])
+
 
 if __name__ == "__main__":
     unittest.main()

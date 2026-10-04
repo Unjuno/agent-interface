@@ -15,6 +15,10 @@ def audit_rows(rows):
     try:
         got = [(row.get("condition"), row.get("seed"), row.get("arm"))
                for row in rows]
+        if any(type(seed) is not int for _, seed, _ in got):
+            return {"status": "HOLD_AUDIT_OR_OUTCOME",
+                    "errors": ["PAIR_GRID_INCOMPLETE_OR_DUPLICATE"],
+                    "rows": len(got), "pair_grid_complete": False}
         got_set = set(got)
     except (AttributeError, TypeError):
         return {"status": "HOLD_AUDIT_OR_OUTCOME",
