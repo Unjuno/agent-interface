@@ -49,6 +49,29 @@ class ActionValidityAdmissionTests(unittest.TestCase):
         self.assertEqual(result["status"], "REJECTED_PREDICATE")
         self.assertTrue(result["requires_new_decision"])
 
+    def test_numeric_signal_type_change_rejects_boolean_and_float_aliases(self):
+        for value in (True, 79.0):
+            with self.subTest(value=value):
+                current = snapshot()
+                current["signals"]["health"]["value"] = value
+                authored = contract()
+                authored["predicates"][0]["value"] = 1
+                authored["predicates"][1]["value"] = 100
+                result = evaluate_action_validity(
+                    ACTION, authored, current, 1_101_000_000)
+                self.assertEqual(result["status"], "REJECTED_PREDICATE")
+                self.assertFalse(
+                    result["action_may_proceed_to_executor_admission"])
+
+    def test_float_signal_remains_valid_when_source_is_float(self):
+        authored = contract()
+        authored["source"]["signals"]["health"]["value"] = 85.0
+        current = snapshot()
+        current["signals"]["health"]["value"] = 79.0
+        result = evaluate_action_validity(
+            ACTION, authored, current, 1_101_000_000)
+        self.assertEqual(result["status"], "VALID_CURRENT")
+
     def test_unobservable_required_signal_fails_closed(self):
         current = snapshot()
         current["signals"]["enemy_visible"] = {"status": "unknown", "value": None}

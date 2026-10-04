@@ -159,17 +159,19 @@ def evaluate_action_validity(action, contract, snapshot, controller_decided_ns):
             return _result("REJECTED_SIGNAL_UNKNOWN", f"{signal_id}_unavailable",
                            contract, snapshot, controller_decided_ns, checks)
         observed = current["value"]
+        source_value = source["signals"][signal_id]["value"]
         operator = predicate["operator"]
         expected = predicate["value"]
         try:
-            if operator == "equals":
+            if type(observed) is not type(source_value):
+                passed = False
+            elif operator == "equals":
                 passed = type(observed) is type(expected) and observed == expected
             elif operator == "minimum":
                 passed = observed >= expected
             elif operator == "maximum":
                 passed = observed <= expected
             else:
-                source_value = source["signals"][signal_id]["value"]
                 passed = observed >= source_value - expected
         except TypeError:
             passed = False
