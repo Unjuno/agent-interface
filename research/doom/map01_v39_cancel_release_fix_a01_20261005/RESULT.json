@@ -3,6 +3,7 @@
     "aggregate_reconciliation_error_keeps_owner_release_unverified": true,
     "aggregate_reconciliation_error_preserves_per_key_release_measurement": true,
     "cancelled_key_release_receipt_matches_actuation_id_and_original_context": true,
+    "executor_focus_invalidation_after_execute_drain_is_closed_by_release_barrier": true,
     "executor_release_barrier_preserves_expired_reason_when_deadline_has_passed": true,
     "executor_v12_expiry_survives_aggregate_keymap_fault": true,
     "executor_v12_expiry_survives_aggregate_pointer_fault": true,
@@ -25,11 +26,11 @@
   "source_commit": "bfd182727aebd9636c6a84fb437848c1dfe66be8",
   "tests": {
     "candidate_cancel_release": {
-      "count": 12,
+      "count": 13,
       "exit": 0
     },
     "candidate_cancel_release_optimized": {
-      "count": 12,
+      "count": 13,
       "exit": 0
     },
     "executor_v12_expiry_composition": {
