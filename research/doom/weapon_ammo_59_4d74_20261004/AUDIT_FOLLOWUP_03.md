@@ -6,7 +6,7 @@
 
 **T.** On a temporary copy of the retained `00-coast` fixture, mutate the nearest row separately to (1) unequal tic endpoints, (2) reversed sample bounds, and (3) a non-finite diagnostic variable. Each must change the successor auditor from `PASS_HUD_WEAPON_AMMO_BINDING_SCOPED` to `HOLD_AUDIT_CHECK_FAILED`. The unmodified committed fixture remains the positive control.
 
-**D.** All three mutated cases hold; the retained fixture remains scoped PASS. The complete follow-up 01/02/03 focused suite passes 15/15. The first two new mutation tests were observed failing against the incomplete follow-up-03 wrapper before the coherence checks were added. `py_compile` and `git diff --check` pass.
+**D.** All three mutated cases hold; the retained fixture remains scoped PASS. After parent PR #7631 advanced, the combined follow-up 01/02/03 focused suite passes 16/16 on parent head `367df9288913ee142a216403c740e4072c13d7c3` plus this successor. The new mutation tests were observed failing against the incomplete follow-up-03 wrapper before their corresponding checks were added. `py_compile` and `git diff --check` pass.
 
 **C.** A trustworthy producer may guarantee that `coherent_tic=true` implies ordered sampling and equal tics. This auditor must not silently rely on that implication when the row is outside the scored-window validation; independently checking the values is cheap and makes the retained-data predicate explicit.
 
