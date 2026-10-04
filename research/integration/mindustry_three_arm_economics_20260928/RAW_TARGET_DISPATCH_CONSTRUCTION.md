@@ -69,10 +69,10 @@ regressions pass under WSL using real local AF_UNIX sockets: one targets a
 synthetic server, and one runs the actual `mindustry_three_arm_socket_v2`
 wrapper plus `stopped_socket_v2` server while replacing only the runtime child
 with a pipe-backed fake. The latter verifies the wrapper's child-entrypoint
-rewrite, bridge request admission/cursor, once-only pipe forwarding, and the
-terminal response/command receipt. Windows skips both tests because its
-Python runtime does not expose AF_UNIX. The interactive runtime child, live
-images, Mindustry input, and task effects remain unverified. A read-only
+rewrite, 12 sequential bridge admissions through one cursor (0→12), once-only
+pipe forwarding, and the terminal response/command receipt. Windows skips
+both tests because its Python runtime does not expose AF_UNIX. The interactive
+runtime child, live images, Mindustry input, and task effects remain unverified. A read-only
 re-audit of the retained capture
 still returns `PASS_CONSTRUCTION_ONLY` plus `PASS_SYNTHETIC_DISPATCH_JOIN`
 (18 tasks/36 dispatches), with `source_identity_verified=false`; all four

@@ -449,10 +449,13 @@ class TargetSocketSubmitTests(unittest.TestCase):
             journal = []
             submitter = TargetSocketSubmitter(
                 observation["socket"], timeout_s=2, trace_sink=journal.append)
-            result = submitter(self.command())
-            self.assertEqual(result, {"request_id": "A1-select-conveyor",
-                                      "terminal": True, "released": True})
-            self.assertEqual(submitter.cursor, 1)
+            for index in range(1, 13):
+                action_id = f"synthetic-action-{index}"
+                result = submitter(self.command(action_id))
+                self.assertEqual(result, {"request_id": action_id,
+                                          "terminal": True, "released": True})
+                self.assertEqual(submitter.cursor, index)
+            self.assertEqual(len(journal), 24)
 
             finish_id = "finish-local-bridge"
             finish = {"after": submitter.cursor, "events": ["terminal"],
