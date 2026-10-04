@@ -38,3 +38,12 @@ gate remains open.
 Commands, pre-run hashes, exact test outputs, audit attempts, and the final
 independent audit are retained in this directory. `SHA256SUMS.txt` covers the
 post-run result and audit artifacts.
+
+The PR workflow checks were also run locally against this checkout: the
+research workspace unit suite passed 22 tests on Windows CPython 3.11, the
+workspace index CLI indexed 159 top-level research directories, and the
+Ubuntu WSL replay-gate suite passed 2 tests. The workspace index CLI was run on
+Windows because WSL Git cannot resolve this Windows worktree's `.git` pointer;
+that WSL invocation failed with `GIT_COMMAND_FAILED` and is retained alongside
+the successful host run. These checks validate repository consistency and
+replay determinism, not live gameplay or the open #59 control gate.
