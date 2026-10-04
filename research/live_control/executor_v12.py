@@ -89,6 +89,24 @@ class Executor(Previous):
                     "status": "delivery_unknown",
                     "error": {"type": type(exc).__name__}}
                 raise
+            # The accepted-event callback is external code and may reenter
+            # close() through this RLock. Do not start a worker after that
+            # close has already returned; finish the accepted intent without
+            # executing any input.
+            if self.closed or self.active is None or self.active[0] != identifier:
+                lease.set()
+                with self.lock:
+                    self.emit({"event": "terminal", "id": identifier,
+                               "status": "cancelled", "error": None,
+                               "steps_completed": 0,
+                               "release": {"verified": True, "keys_down": [],
+                                           "buttons_down": []},
+                               "interruption": lease.interruption_snapshot(),
+                               "decision_reason": None,
+                               "terminal_ns": time.perf_counter_ns(),
+                               "semantic_completion": "program status only; task scoring is separate"})
+                    self.active = None
+                return
             worker.start()
 
     def _publish_release(self, identifier, lease):

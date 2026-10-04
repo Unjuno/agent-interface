@@ -29,6 +29,27 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
+        backend = Backend()
+        events = []
+        executor = None
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "accepted":
+                executor.close()
+
+        executor = Executor(backend, emit)
+        executor.submit("reentrant-close", [{"op": "pointer_drag"}], 1,
+                        time.perf_counter_ns() + 1_000_000_000)
+        self.assertTrue(executor.closed)
+        self.assertIsNone(executor.active)
+        self.assertIsNone(executor.release_watch_stops.get("reentrant-close"))
+        self.assertFalse(backend.started.is_set())
+        self.assertFalse(any(row.get("event") == "step_started" for row in events))
+        self.assertTrue(any(row.get("event") == "terminal" and
+                            row.get("status") == "cancelled" for row in events))
+
     def run_reason(self, reason):
         events = []; backend = Backend(reason); executor = Executor(backend, events.append)
         executor.submit("p", [{"op": "pointer_drag"}], 1,
