@@ -19,6 +19,7 @@ class Executor(Previous):
         self.release_publication_errors = {}
         self.terminal_publication_errors = {}
         self.admission_publication_errors = {}
+        self.admission_callback_ids = set()
 
     def _emit_with_release_barrier(self, event):
         if type(event) is dict and event.get("event") == "terminal":
@@ -75,6 +76,7 @@ class Executor(Previous):
                 target=self._run, args=(identifier, copied, lease), daemon=False)
             self.active = (identifier, lease, worker)
             self.used_ids.add(identifier)
+            self.admission_callback_ids.add(identifier)
             try:
                 self.emit({"event": "accepted", "id": identifier,
                            "steps": len(copied), "program_sha256": attestation,
@@ -89,18 +91,33 @@ class Executor(Previous):
                     "status": "delivery_unknown",
                     "error": {"type": type(exc).__name__}}
                 raise
+            finally:
+                self.admission_callback_ids.discard(identifier)
             # The accepted-event callback is external code and may reenter
             # close() through this RLock. Do not start a worker after that
             # close has already returned; finish the accepted intent without
             # executing any input.
-            if self.closed or self.active is None or self.active[0] != identifier:
+            if self.active is None or self.active[0] != identifier:
+                return
+            if self.closed:
                 lease.set()
+                try:
+                    release = self.backend.release_all()
+                    if release.get("verified") is not True:
+                        release = dict(release, verified=False)
+                    status = "cancelled" if release.get("verified") is True else "failed"
+                    error = None if status == "cancelled" else "input release not verified"
+                except Exception as exc:
+                    release = {"verified": False, "error": repr(exc)}
+                    status = "failed"
+                    error = repr(exc)
                 with self.lock:
+                    if self.active is not None and self.active[0] == identifier:
+                        self.active = None
                     self.emit({"event": "terminal", "id": identifier,
-                               "status": "cancelled", "error": None,
+                               "status": status, "error": error,
                                "steps_completed": 0,
-                               "release": {"verified": True, "keys_down": [],
-                                           "buttons_down": []},
+                               "release": release,
                                "interruption": lease.interruption_snapshot(),
                                "decision_reason": None,
                                "terminal_ns": time.perf_counter_ns(),
@@ -175,7 +192,34 @@ class Executor(Previous):
             job = self.active
             if job is not None:
                 job[1].set()
-        if job is not None and job[2].ident is not None:
-            job[2].join()
+        if job is not None:
+            if (job[2].ident is None and
+                    job[0] in self.admission_callback_ids):
+                # close() can be called reentrantly by the accepted-event
+                # sink before submit() starts its worker. Resolve that intent
+                # synchronously so close cannot return before release and
+                # terminal publication are handled.
+                try:
+                    release = self.backend.release_all()
+                    if release.get("verified") is not True:
+                        release = dict(release, verified=False)
+                    status = "cancelled" if release.get("verified") is True else "failed"
+                    error = None if status == "cancelled" else "input release not verified"
+                except Exception as exc:
+                    release = {"verified": False, "error": repr(exc)}
+                    status = "failed"
+                    error = repr(exc)
+                with self.lock:
+                    if self.active is job:
+                        self.active = None
+                self.emit({"event": "terminal", "id": job[0],
+                           "status": status, "error": error,
+                           "steps_completed": 0, "release": release,
+                           "interruption": job[1].interruption_snapshot(),
+                           "decision_reason": None,
+                           "terminal_ns": time.perf_counter_ns(),
+                           "semantic_completion": "program status only; task scoring is separate"})
+            elif job[2].ident is not None:
+                job[2].join()
         for watcher in self.release_watchers:
             watcher.join()
