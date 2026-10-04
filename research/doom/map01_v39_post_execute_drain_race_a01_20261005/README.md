@@ -22,7 +22,7 @@ docker run --rm --network none --read-only \
   python:3.12.11-slim python probe.py
 ```
 
-`RESULT.json` is the saved stdout from the successful run. `SOURCE_LOCK.json` identifies every vendored input by upstream Git blob SHA and SHA-256. `audit.py` is intentionally raw-only: it reads the saved JSON and locks, but imports no tested module.
+`RAW_RUN_R02.json` is the complete stdout from a second successful isolated run (exit 0); the first successful tool output was not saved byte-for-byte. `RESULT.json` is a normalized observation summary, not raw stdout. `SOURCE_LOCK.json` identifies every vendored input by upstream Git blob SHA and SHA-256 and locks R02. `audit.py` is intentionally raw-only: it reads saved JSON and locks, but imports no tested module.
 
 ## Disposition
 
