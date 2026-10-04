@@ -364,6 +364,7 @@ application-effect, or gameplay result. See [`owner occurrence-binding T0`](map0
 and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 
 - [v39 startup-fault ownership construction](v39_startup_cleanup_59_20261003_01a0ff52/README.md): exact caller retains a private session after missing-fixture rejection; ordinary fake-boundary evidence, no physical release/runtime repair claim.
+- [v39 release-cleanup branch rescue](v39_release_cleanup_rescue_20261004/REPORT.md): preserves #7378/#7385/#7399/#7395 historical experiment packages while keeping the evolved current-main backend authoritative; source-drift and pre-start STOP limits are explicit.
 - [Native Linux game construction: writable-CWD repair and getter-clock STOP](native_game_readiness_59_20261003_b64b/REPORT.md) — first exit139 preserved, repaired no-input STOP2; attack NOT_RUN, no useful-feedback/release/R134 claim.
 - [Native pipe/scorer known terminal and causal-audit limits](scorer_native_input_effect_59_20261003_b64b/CAUSAL_AUDIT_LIMIT_NOTE.md) — original 16-row result preserved with seven known V2 causal-order omissions; no runtime adoption or complete-audit claim.
 - [v39 v10 fake-Xlib keymap-witness source-compatibility probe](map01-v39-keymap-witness-fake-xlib-v1/README.md) — two repeated W occurrences pass through the exact v39 owner/wrapper call path with synthetic 32-byte keymap witnesses; 12 saved-result checks pass. Fake server only; no Xvfb, physical key, application, or task-effect evidence.
