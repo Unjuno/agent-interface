@@ -128,29 +128,107 @@ class ControllerSessionCustody:
         self._score = None
         self._finalized = False
         self._receipt = None
+        self._finish_writer = None
+        self._finish_writer_error = None
+        self.finish_send_timeout = False
+        self.child_termination_requested = False
+        self.child_kill_requested = False
+
+    def _send_finish_bounded(self, errors):
+        """Deliver finish without letting a full child pipe block the controller."""
+        if self.finish_sent:
+            return True
+        if self._finish_writer is None:
+            def send_finish():
+                try:
+                    if self.process.stdin is None or self.process.stdin.closed:
+                        raise BrokenPipeError("child stdin is unavailable")
+                    self.process.stdin.write('{"op":"finish"}\n')
+                    self.process.stdin.flush()
+                    self.finish_sent = True
+                except BaseException as error:
+                    self._finish_writer_error = error
+
+            self._finish_writer = threading.Thread(
+                target=send_finish, name="controller-finish-writer", daemon=True)
+            try:
+                self._finish_writer.start()
+            except BaseException as error:
+                self._finish_writer_error = error
+                errors.append({"step": "start_finish_writer", "error": repr(error)})
+                return False
+        self._finish_writer.join(timeout=max(0, self.finish_timeout))
+        if self.finish_sent:
+            return True
+        if self._finish_writer.is_alive():
+            self.finish_send_timeout = True
+            errors.append({"step": "finish_send_timeout",
+                           "error": f"writer exceeded {self.finish_timeout}s"})
+            return False
+        if self._finish_writer_error is not None:
+            errors.append({"step": "send_finish",
+                           "error": repr(self._finish_writer_error)})
+            return False
+        errors.append({"step": "send_finish",
+                       "error": "writer exited without confirming delivery"})
+        return False
+
+    def _retire_owned_child(self, errors):
+        """Stop only this owned child after finish could not be delivered."""
+        if self.process.poll() is None:
+            self.child_termination_requested = True
+            try:
+                self.process.terminate()
+            except BaseException as error:
+                errors.append({"step": "terminate_owned_child", "error": repr(error)})
+        try:
+            self.process.wait(timeout=max(0, self.process_timeout))
+        except subprocess.TimeoutExpired:
+            self.child_kill_requested = True
+            try:
+                self.process.kill()
+            except BaseException as error:
+                errors.append({"step": "kill_owned_child", "error": repr(error)})
+            try:
+                self.process.wait(timeout=max(0, self.process_timeout))
+            except BaseException as error:
+                errors.append({"step": "wait_after_kill", "error": repr(error)})
+        except BaseException as error:
+            errors.append({"step": "wait_after_terminate", "error": repr(error)})
+        if self._finish_writer is not None and self._finish_writer.is_alive():
+            self._finish_writer.join(timeout=min(1, max(0, self.process_timeout)))
+            if self._finish_writer.is_alive():
+                errors.append({"step": "finish_writer_join",
+                               "error": "writer remained blocked after child retirement"})
 
     def finish(self, reason="interpreter_exit"):
         if self._finalized:
             return self._score
         errors = []
+        finish_delivery_failed = False
         if self.process.poll() is None and not self.finish_sent:
-            try:
-                self.process.stdin.write('{"op":"finish"}\n')
-                self.process.stdin.flush()
-                self.finish_sent = True
-            except BaseException as error:
-                errors.append({"step": "send_finish", "error": repr(error)})
+            if not self._send_finish_bounded(errors):
+                finish_delivery_failed = True
+                self._retire_owned_child(errors)
+        score_timeout = (min(1, max(0, self.finish_timeout))
+                         if finish_delivery_failed else self.finish_timeout)
         try:
             self._score = self.wait_for_event(
                 lambda row: row.get("event") == "post_control_score",
-                timeout=self.finish_timeout)
+                timeout=score_timeout)
         except BaseException as error:
             errors.append({"step": "wait_post_control_score", "error": repr(error)})
-        if self.process.stdin is not None and not self.process.stdin.closed:
+        writer_alive = (self._finish_writer is not None and
+                        self._finish_writer.is_alive())
+        if (self.process.stdin is not None and not self.process.stdin.closed and
+                not writer_alive):
             try:
                 self.process.stdin.close()
             except BaseException as error:
                 errors.append({"step": "close_stdin", "error": repr(error)})
+        elif writer_alive:
+            errors.append({"step": "close_stdin",
+                           "error": "skipped while finish writer remained blocked"})
         try:
             self.process.wait(timeout=self.process_timeout)
         except subprocess.TimeoutExpired:
@@ -178,6 +256,9 @@ class ControllerSessionCustody:
             "schema": "map01-controller-session-cleanup-v1",
             "reason": reason,
             "finish_sent": self.finish_sent,
+            "finish_send_timeout": self.finish_send_timeout,
+            "child_termination_requested": self.child_termination_requested,
+            "child_kill_requested": self.child_kill_requested,
             "score_observed": self._score is not None,
             "process_exit": self.process.poll(),
             "reader_stopped": (self.reader_thread is None or
