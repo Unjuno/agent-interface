@@ -1,0 +1,246 @@
+{
+  "episodes": [
+    {
+      "case": "no-disturbance",
+      "input": {
+        "applied_u": 0.6,
+        "kp": 2.0,
+        "lease_valid": true,
+        "rate_limit_per_tick": 0.2,
+        "ref": 1.0,
+        "requested_u": 0.6,
+        "source_quiesced": true,
+        "state_fresh": true,
+        "y": 0.4
+      },
+      "routes": [
+        {
+          "discontinuity": 0.2,
+          "first_applied": 0.8,
+          "first_command": 1.0,
+          "first_raw": 1.2,
+          "peak_abs_tracking_error": 0.6,
+          "peak_state": 0.66875,
+          "route": "cold"
+        },
+        {
+          "discontinuity": 0.0,
+          "first_applied": 0.6,
+          "first_command": 0.6,
+          "first_raw": 0.6,
+          "peak_abs_tracking_error": 0.6,
+          "peak_state": 0.466666666667,
+          "route": "conditioned"
+        }
+      ]
+    },
+    {
+      "case": "step-disturbance-at-switch",
+      "input": {
+        "applied_u": 0.6,
+        "kp": 2.0,
+        "lease_valid": true,
+        "rate_limit_per_tick": 0.2,
+        "ref": 1.0,
+        "requested_u": 0.6,
+        "source_quiesced": true,
+        "state_fresh": true,
+        "y": 0.5
+      },
+      "routes": [
+        {
+          "discontinuity": 0.2,
+          "first_applied": 0.8,
+          "first_command": 1.0,
+          "first_raw": 1.0,
+          "peak_abs_tracking_error": 0.5,
+          "peak_state": 0.666666666666,
+          "route": "cold"
+        },
+        {
+          "discontinuity": 0.0,
+          "first_applied": 0.6,
+          "first_command": 0.6,
+          "first_raw": 0.6,
+          "peak_abs_tracking_error": 0.5,
+          "peak_state": 0.533333333333,
+          "route": "conditioned"
+        }
+      ]
+    },
+    {
+      "case": "saturation-at-switch",
+      "input": {
+        "applied_u": 1.0,
+        "kp": 2.0,
+        "lease_valid": true,
+        "rate_limit_per_tick": 0.2,
+        "ref": 1.0,
+        "requested_u": 1.0,
+        "source_quiesced": true,
+        "state_fresh": true,
+        "y": 0.5
+      },
+      "routes": [
+        {
+          "discontinuity": 0.0,
+          "first_applied": 1.0,
+          "first_command": 1.0,
+          "first_raw": 1.0,
+          "peak_abs_tracking_error": 0.5,
+          "peak_state": 0.66875,
+          "route": "cold"
+        },
+        {
+          "discontinuity": 0.0,
+          "first_applied": 1.0,
+          "first_command": 1.0,
+          "first_raw": 1.0,
+          "peak_abs_tracking_error": 0.5,
+          "peak_state": 0.66875,
+          "route": "conditioned"
+        }
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "case": "stale-state",
+      "events": [
+        "source_active",
+        "receiver_denied",
+        "source_released"
+      ],
+      "input": {
+        "delay_ticks": 0,
+        "lease_valid": true,
+        "source_quiesced": true,
+        "state_fresh": false,
+        "state_present": true
+      },
+      "owner_final": "none",
+      "receiver_actuations": [],
+      "release_not_delayed_by_conditioning": false
+    },
+    {
+      "case": "missing-state",
+      "events": [
+        "source_active",
+        "receiver_denied",
+        "source_released"
+      ],
+      "input": {
+        "delay_ticks": 0,
+        "lease_valid": true,
+        "source_quiesced": true,
+        "state_fresh": true,
+        "state_present": false
+      },
+      "owner_final": "none",
+      "receiver_actuations": [],
+      "release_not_delayed_by_conditioning": false
+    },
+    {
+      "case": "revoked-lease",
+      "events": [
+        "source_active",
+        "receiver_denied",
+        "source_released"
+      ],
+      "input": {
+        "delay_ticks": 0,
+        "lease_valid": false,
+        "source_quiesced": true,
+        "state_fresh": true,
+        "state_present": true
+      },
+      "owner_final": "none",
+      "receiver_actuations": [],
+      "release_not_delayed_by_conditioning": false
+    },
+    {
+      "case": "delayed-handoff",
+      "events": [
+        "source_active",
+        "handoff_delayed",
+        "source_quiesced_after_delay",
+        "transfer_accepted",
+        "receiver_actuation"
+      ],
+      "input": {
+        "delay_ticks": 2,
+        "lease_valid": true,
+        "source_quiesced": true,
+        "state_fresh": true,
+        "state_present": true
+      },
+      "owner_final": "receiver",
+      "receiver_actuations": [
+        0.6
+      ],
+      "release_not_delayed_by_conditioning": true
+    },
+    {
+      "case": "pre-quiescence",
+      "events": [
+        "source_active",
+        "receiver_denied_before_quiescence"
+      ],
+      "input": {
+        "delay_ticks": 0,
+        "lease_valid": true,
+        "source_quiesced": false,
+        "state_fresh": true,
+        "state_present": true
+      },
+      "owner_final": "source",
+      "receiver_actuations": [],
+      "release_not_delayed_by_conditioning": true
+    }
+  ],
+  "mutation_controls": [
+    {
+      "case": "mutant-stale-state-accepted",
+      "input": {
+        "lease_valid": true,
+        "source_quiesced": true,
+        "state_fresh": false,
+        "state_present": true
+      },
+      "receiver_actuations": [
+        0.6
+      ]
+    },
+    {
+      "case": "mutant-act-before-quiescence",
+      "input": {
+        "lease_valid": true,
+        "source_quiesced": false,
+        "state_fresh": true,
+        "state_present": true
+      },
+      "receiver_actuations": [
+        0.6
+      ]
+    },
+    {
+      "case": "mutant-condition-from-requested-input",
+      "discontinuity": 0.2,
+      "input": {
+        "applied_u": 0.6,
+        "lease_valid": true,
+        "requested_u": 0.95,
+        "source_quiesced": true,
+        "state_fresh": true
+      },
+      "receiver_actuations": [
+        0.8
+      ]
+    }
+  ],
+  "runtime": {
+    "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+    "python": "3.12.15 (main, Oct  1 2026, 21:47:32) [GCC 14.2.0]"
+  },
+  "schema": "issue7424-bumpless-t0-raw-v1"
+}
