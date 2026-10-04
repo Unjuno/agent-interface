@@ -779,6 +779,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_truth_cycle_4259_v1/`](semantic_truth_cycle_4259_v1/)
 - [`semantic_truth_maintenance_4259_v1/`](semantic_truth_maintenance_4259_v1/)
 - [`serial_cue_interference_7387_t0_20261004_a02/`](serial_cue_interference_7387_t0_20261004_a02/)
+- [`serial_cue_interference_7387_t0_a02_position_audit_20261004/`](serial_cue_interference_7387_t0_a02_position_audit_20261004/)
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 - [`serialized_attention_successor_1968_v1/`](serialized_attention_successor_1968_v1/)
 - [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/)
