@@ -622,6 +622,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_timestamp_order_5156_t2_20261004/`](owner_keyup_timestamp_order_5156_t2_20261004/)
 - [`owner_keyup_timestamp_order_5156_t3_20261004/`](owner_keyup_timestamp_order_5156_t3_20261004/)
 - [`owner_keyup_timestamp_order_5156_t4_20261004/`](owner_keyup_timestamp_order_5156_t4_20261004/)
+- [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
 - [`partial_order_audit_6505_orbstack_a01_20261003/`](partial_order_audit_6505_orbstack_a01_20261003/)
 - [`partial_order_audit_6505_orbstack_a02_20261003/`](partial_order_audit_6505_orbstack_a02_20261003/)

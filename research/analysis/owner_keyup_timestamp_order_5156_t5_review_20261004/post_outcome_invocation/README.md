@@ -19,6 +19,10 @@ this record.
 
 Reproduction command that was actually run:
 
+Working directory: `research/analysis/owner_keyup_timestamp_order_5156_t4_20261004/`
+(repository root is the parent checkout). The relative inputs below resolve from
+that T4 directory.
+
 ```sh
 python -B candidate.py cases.json source/analyze_map01_direct_retained_input_v1.py /tmp/pr7365-independent-replay.json
 ```
