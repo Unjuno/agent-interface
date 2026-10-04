@@ -15,3 +15,4 @@ WSLc warned that cgroup/swap limits are unsupported or unavailable. Requested `-
 - A workspace-index unittest invocation from the repository root failed because that module imports a sibling checker and expects `research/` as its working directory. The corrected `python -B -m unittest -v test_check_workspace_index` from `research/` passed 1/1.
 - `python -B check_workspace_index.py --git-tree` from `research/`: 159 top-level directories reachable.
 - `git diff --check`: PASS. These repository checks validate packaging/navigation, not model-facing hypothesis or live integration.
+- An initial analysis-index `--write` in this sparse checkout displaced one manually authored #7371 custody note that had been placed inside the generated block. The PR diff exposed it; the note was restored in the manual navigation section, the generated block now only carries retained directories, and the index check passes without other directory removals.
