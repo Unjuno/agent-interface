@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`circuit_rejection_cost_5375_a02_20261004/REPORT.md`](circuit_rejection_cost_5375_a02_20261004/REPORT.md) — #5375 A02 WSLc one-tick finite result; 10 raw rows independently reconstructed, 4/4 mutation controls rejected, PASS_METHOD_SCOPED; A01 construction failure and auditor STOP preserved separately. No empirical production-cost, live-resilience, GUI/model, or product claim.
+
 - [Retained analytical source rescue — #6857/#6862/#6884](../recovery/analytical_source_rescue_20261004/README.md) — Exact original packets/history preserved; cancellation auditor v1 six false accepts and separately versioned v2 correction, LF/CRLF serialization-only evidence, and all historical temporal-contract HOLDs remain distinct. Archival integration is not original content-quorum/application approval, scientific/runtime adoption or a replay.
 
 - [Archived S05-WSLC image-gate preparation](looming_visual_assumption_gate_5905_s05_wslc_20261003/ARCHIVAL_QUALIFICATION.md) — #6808/#5905 frozen source and 24 images preserved; no published formal result. Distinct from the cancelled native S05 and executed S06; archival checks do not authorize a run.
