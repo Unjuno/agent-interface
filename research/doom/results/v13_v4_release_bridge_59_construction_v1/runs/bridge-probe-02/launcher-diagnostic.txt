@@ -1,0 +1,5 @@
+RUN 02 LAUNCHER DIAGNOSTIC — preserve as a harness-path failure
+
+The frozen source precheck command was invoked with the working directory set to source/, so it looked for source/FREEZE.json instead of ../FREEZE.json and exited with FileNotFoundError. A subsequent Copy-Item used the same wrong relative location and failed. The PowerShell script did not stop on those errors, so the unittest and saved-row audit still ran and passed (see test.log and audit.log); trace.json was emitted.
+
+Disposition for the declared run gate: UNQUALIFIED because the requested pre-invocation hash-verification step did not complete. The package-root freeze itself existed before this invocation, source hashes were later verified, and all output is retained. Run 02 is not the accepted result; see separately frozen run 03.

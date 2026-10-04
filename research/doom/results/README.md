@@ -36,6 +36,8 @@ Never overwrite a committed retained allocation. Use a distinct allocation/resul
 
 ## Recent measurement evidence
 
+- [Issue #59 current-main V13-to-V4 bridge A01](v13_v4_release_bridge_59_current_main_a01_20261004/README.md) — ordinary-up direct composition failure reproduced; adapted synthetic bridge tests pass 5/5 and saved-row audit 18 checks. Complements #7542 V12 cancellation-interval/Executor V13 fixture evidence but does not join both into runtime; native Windows only and not WSLc-qualified Issue evidence.
+- [Pre-#7513 V13-to-V4 source snapshot](v13_v4_release_bridge_59_construction_v1/README.md) — preserved historical construction package; its run 02 source-preflight path error remains unqualified.
 - [MAP01 measurement-integration live-03](map01_measurement_integration_live_03/README.md) — one GitHub-hosted no-model telemetry allocation; measurement and terminal-score audits pass, but the episode did not finish or exit MAP01. Triggered by an archival-tag push; not recovery-vs-coast efficacy and not the WSLc allocation.
 
 ## Related navigation

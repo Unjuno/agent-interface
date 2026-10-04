@@ -1,0 +1,3 @@
+HOST QUALIFICATION LIMITATION
+
+The frozen construction test ran on native Windows because `C:\Program Files\WSL\wslc.exe` is absent. The repo governing invariant calls for WSLc on eligible local CPU construction. Docker was not substituted because this test did not require Engine API, Compose, unsupported isolation/resource controls, or GUI behavior. The test/audit result is preserved, but it is not accepted as WSLc-qualified Issue evidence. No retry or alternate-container run was made.

@@ -1,0 +1,27 @@
+{
+  "study": "Issue #59 V13-to-V4 release batch bridge construction",
+  "version": 1,
+  "created": "2026-10-04",
+  "H": "The exact PR #7429 V13/V11 owner returns an input_release_rpc payload that the exact V4 transition parent cannot directly accept. An adapter can consume and retain that receipt while allowing the V4 parent to join its owner-thread key-up receipt; bad/missing RPC evidence must fail closed through the release-batch consumer.",
+  "T": "Load exact blob-pinned PR #7429 V11/V13, retained V3/V4 transition owners, PR #7449 backend v3, and current PR #7488 backend v1. Replace only the V10 owner base call/state sample with deterministic test doubles. Exercise valid and wrong-token RPC receipt variants through both exact batch consumers and independently audit the saved valid emitted row.",
+  "D": "PASS only if all four bridge unit tests pass; the two exact backend consumers accept valid receipts with owner_transition_verified=true; both disqualify a wrong-token receipt with ordinary_release_candidate=false and owner_transition_verified=false; and the saved-row audit passes. Otherwise retain FAIL/STOP without regrading prior PR results.",
+  "C": "This may establish only Python wrapper composition. The test doubles do not reproduce owner-thread scheduling, actual XTest KeyRelease/XSync, the full session/backend import/package graph, or device/application behavior.",
+  "U": "One native-Windows test invocation; synthetic single-key receipts; no WSLc executable available at C:/Program Files/WSL/wslc.exe; no X server, physical input, game, model, scorer freshness, recovery, matched evaluation, or live allocation.",
+  "source_refs": {
+    "pr7429_head": "b30fd755e68d470799e6c26f12296a97cf027df8",
+    "pr7449_head": "915c46d7f448003d82dd002d6e9fb34141e2712a",
+    "pr7488_head": "3e8652bbd495703822873c9c94293e354201290c",
+    "pr7429_input_owner_v11_blob": "842071284156d3ccc647f47135ee62a9e512cb56",
+    "pr7429_input_owner_v13_blob": "f10f2d05dcaa63c35b51c8f38b737753574b8fa0",
+    "pr7449_batch_backend_v3_blob": "43f28640ada8d3efe1f7b59408184ffda39ba3a2",
+    "pr7488_batch_backend_v1_blob": "93be5c2d05d946d43a7f063008e591dd66de2779",
+    "pr7488_transition_owner_v4_blob": "a8458898f14a3d211d765a6684a85938fb38da52",
+    "pr7488_transition_owner_v3_blob": "0ea631abcf6272f0538a9ef9198ad8069b47b464"
+  },
+  "argv": [
+    "py -3.13 -m unittest -v test_transition_v4_rpc_bridge",
+    "py -3.13 audit_v13_v4_backend_bridge.py ../runs/bridge-probe-01/trace.json"
+  ],
+  "retries": 0,
+  "allocation": "construction-only; no formal/live allocation"
+}
