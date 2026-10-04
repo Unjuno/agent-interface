@@ -1,0 +1,18 @@
+{
+  "audit_tamper_control_rejected": true,
+  "disposition": "PASS_SOURCE_EPOCH_REQUIRED_UNDER_STALE_RETURN_MODEL",
+  "event_outcomes": {
+    "positive_kill": "KILL_COUNT_INCREASE",
+    "terminal_no_exit": "EPISODE_FINISHED_NO_EXIT"
+  },
+  "fresh_and_stale_event_outputs_identical": true,
+  "limitations": [
+    "upstream stale return is a counterfactual possibility, not observed ViZDoom behavior",
+    "no empirical terminal onset or engine freshness acknowledgment",
+    "no game, GUI, model, input, allocation, or controller effect tested"
+  ],
+  "pass": true,
+  "producer_epoch_or_update_epoch_in_sample_api": false,
+  "provenance_cases": 2,
+  "source_sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+}
