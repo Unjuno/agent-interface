@@ -27,7 +27,12 @@ class Backend(Previous):
         try:
             result = super().execute(step, cancel, identifier, index)
         except BaseException as exc:
-            self._finish_incomplete_release_batch(context, exc, "step_exception")
+            disposition = (
+                "publication_exception"
+                if context.get("publication_error_type") is not None
+                else "step_exception"
+            )
+            self._finish_incomplete_release_batch(context, exc, disposition)
             raise
 
         if context["rows"]:
@@ -44,10 +49,10 @@ class Backend(Previous):
         rows = context["rows"]
         size = len(rows)
         for position, row in enumerate(rows):
+            row.setdefault("release_batch_size", size)
+            row.setdefault("release_batch_position", position)
             row.update({
                 "release_batch_schema": "input-release-batch-v3",
-                "release_batch_size": size,
-                "release_batch_position": position,
                 "release_batch_complete": False,
                 "release_batch_disposition": disposition,
                 "release_batch_error_type": type(error).__name__,
@@ -56,8 +61,8 @@ class Backend(Previous):
                 "owner_thread_keyup_verified_after_batch": False,
                 "physical_verification_authoritative": False,
                 "measurement_contract_v3": (
-                    "explicit per-key up receipt retained before a later step exception; "
-                    "the release batch is incomplete and unverified"
+                    "release telemetry is incomplete or publication failed; "
+                    "release_batch_disposition identifies the exception boundary"
                 ),
             })
             self.emit(row)
@@ -255,6 +260,12 @@ class Backend(Previous):
             if terminal_cleanup_verified is not None:
                 row["release_batch_finalized_by_terminal_cleanup"] = True
                 row["terminal_cleanup_verified"] = terminal_cleanup_verified
-        for row in rows:
-            self.emit(row)
-        rows.clear()
+        while rows:
+            # Mark delivery attempt before crossing the sink boundary. If a
+            # sink accepts a row and then raises, execute() must not retry it.
+            row = rows.pop(0)
+            try:
+                self.emit(row)
+            except BaseException as exc:
+                context["publication_error_type"] = type(exc).__name__
+                raise

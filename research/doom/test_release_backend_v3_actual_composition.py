@@ -11,8 +11,16 @@ LIVE = HERE.parent / "live_control"
 
 
 class ActualReleaseCompositionTests(unittest.TestCase):
-    def _run(self, *, wrong_key=False, step_exception=False, cleanup_exception=False):
+    def _run(self, *, wrong_key=False, step_exception=False, cleanup_exception=False,
+             emit_accept_then_raise=False):
         emitted = []
+        fail_emit = [emit_accept_then_raise]
+
+        def emit(row):
+            emitted.append(dict(row))
+            if fail_emit[0] and row.get("event") == "input_release_transition":
+                fail_emit[0] = False
+                raise RuntimeError("sink failed after accepting release row")
         low_level = types.ModuleType("input_owner_v12")
         transition = types.ModuleType("input_transition_owner_v3")
         backend_base = types.ModuleType("doom_typed_release_backend_v2")
@@ -98,6 +106,9 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 self.raw("a", True)
                 self.raw("b", True)
                 self.raw("a", False)
+                if emit_accept_then_raise:
+                    self.raw("b", False)
+                    return
                 raise RuntimeError("later step failed")
 
             def release_all(self):
@@ -124,7 +135,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             # Ensure the backend imports the real wrapper implementation under test.
             self.assertIs(backend.InputOwner, owner_v4.InputOwner)
             candidate = backend.Backend(types.SimpleNamespace(name="display"), None,
-                                        emitted.append, {})
+                                        emit, {})
             candidate.lease = types.SimpleNamespace(intent_token="lease-1", deadline=99)
             candidate._input_event_context = ("program-1", 0)
             candidate._release_batch.context = {"rows": [], "identifier": "program-1",
@@ -138,6 +149,9 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 candidate.raw("a", False)
                 with self.assertRaisesRegex(RuntimeError, "cleanup failed after partial release"):
                     candidate.release_all()
+            elif emit_accept_then_raise:
+                with self.assertRaisesRegex(RuntimeError, "sink failed after accepting release row"):
+                    candidate.execute({}, None, "program-1", 0)
             else:
                 for key in ("a", "b"):
                     candidate.raw(key, True)
@@ -206,6 +220,16 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertFalse(releases[0]["owner_transition_verified"])
         self.assertFalse(releases[0]["release_batch_complete"])
         self.assertEqual(releases[0]["release_batch_disposition"], "release_all_exception")
+
+    def test_accept_then_raise_does_not_duplicate_release_batch_rows(self):
+        _, releases = self._run(emit_accept_then_raise=True)
+        self.assertEqual(len(releases), 2)
+        self.assertEqual([row["owner_thread_keyup_receipt"]["key"] for row in releases],
+                         ["a", "b"])
+        self.assertEqual([row["release_batch_position"] for row in releases], [0, 1])
+        self.assertEqual([row["release_batch_size"] for row in releases], [2, 2])
+        self.assertEqual([row["release_batch_complete"] for row in releases], [True, False])
+        self.assertEqual(releases[1]["release_batch_disposition"], "publication_exception")
 
 
 if __name__ == "__main__":
