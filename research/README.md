@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #7411 T0 A01: [user-worthwhile route-benefit estimator](analysis/user_worthwhile_benefit_7411_t0_a01_20261004/REPORT.md) — synthetic estimates recovered planted medians within 1 s, but the frozen auditor missed preregistered row/mutation validation; disposition HOLD, with first result preserved and no retry.
+
 - Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
 
 - Issue #7383: [freshness-gated observation hedging T0](analysis/observation_hedging_7383_t0_20261004/REPORT.md) — the frozen synthetic independent-heavy-tail case passed its method gate, but correlated/shared-queue controls erase the latency gain; no real capture or critical-path benefit is established.

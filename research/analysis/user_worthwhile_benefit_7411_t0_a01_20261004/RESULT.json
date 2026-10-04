@@ -1,0 +1,16 @@
+{
+  "allocation": "USER-WORTHWHILE-BENEFIT-7411-T0-A01-20261004",
+  "formal_candidate_exit": 0,
+  "formal_auditor_exit": 0,
+  "formal_auditor_reported": "PASS_METHOD_SCOPED",
+  "post_run_disposition": "HOLD_AUDIT_INCOMPLETE",
+  "post_run_reason": "Review found the frozen auditor only count-checked and analyzed raw rows; its four mutation checks only asserted that mutations changed the raw SHA-256. It did not validate the frozen raw record schema/generator row-for-row or execute the mutations against the audit validation path, as required by D.",
+  "raw_sha256": "b6245ff2f2afee4b97ad4f63ff69fa7af26aa8011ebc4256753775593741ea04",
+  "schema": "issue-7411-t0-a01-result-v1",
+  "synthetic_candidate_estimates": {
+    "PLANNER_BOUNDARY": {"threshold_seconds": 9.0, "truth_seconds": 10, "absolute_error_seconds": 1.0},
+    "LOCAL_PROCESSING": {"threshold_seconds": 13.0, "truth_seconds": 14, "absolute_error_seconds": 1.0},
+    "LOW_SUPPORT": {"status": "UNKNOWN"}
+  },
+  "scope_limit": "No human, route, application, GUI, model, task-effect, production, or product-value evidence. Host-only; container isolation unverified."
+}
