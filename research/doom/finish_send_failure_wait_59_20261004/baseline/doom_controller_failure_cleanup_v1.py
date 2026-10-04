@@ -53,22 +53,12 @@ class ControllerFailureCleanup:
         if child is not None:
             polled=attempt('child_poll_before',child.poll)
             if not polled or receipt['stages'][-1]['result'] is None:
-                finish_sent=attempt('finish_send',lambda:send_failure_finish(child.stdin))
-                if finish_sent:
-                    if not attempt('child_wait',lambda:child.wait(timeout=5)):
-                        attempt('child_terminate',child.terminate)
-                        if not attempt('terminated_wait',lambda:child.wait(timeout=1)):
-                            attempt('child_kill',child.kill)
-                            attempt('killed_wait',lambda:child.wait(timeout=1))
-                else:
-                    receipt['stages'].append({'stage':'child_wait','status':'skipped',
-                                              'reason':'finish_send_failed'})
-                    poll_ok=attempt('child_poll_after_finish_failure',child.poll)
-                    if not poll_ok or receipt['stages'][-1]['result'] is None:
-                        attempt('child_terminate',child.terminate)
-                        if not attempt('terminated_wait',lambda:child.wait(timeout=1)):
-                            attempt('child_kill',child.kill)
-                            attempt('killed_wait',lambda:child.wait(timeout=1))
+                attempt('finish_send',lambda:send_failure_finish(child.stdin))
+                if not attempt('child_wait',lambda:child.wait(timeout=5)):
+                    attempt('child_terminate',child.terminate)
+                    if not attempt('terminated_wait',lambda:child.wait(timeout=1)):
+                        attempt('child_kill',child.kill)
+                        attempt('killed_wait',lambda:child.wait(timeout=1))
             if attempt('child_poll_after',child.poll):
                 receipt['child_exit_code']=receipt['stages'][-1]['result']
         if attempt('planner_close',lambda:self.planner.close(timeout=1)):
