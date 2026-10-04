@@ -1,5 +1,6 @@
 """Regressions for source-bound HUD state feedback in V39 planner context."""
 import hashlib
+from itertools import product
 import sys
 import tempfile
 import unittest
@@ -32,8 +33,9 @@ def typed_observation(sequence, capture_ns, health, ammo, *, binding=BINDING):
             "capture_ns": capture_ns, "binding": binding,
             "wad_sha256": WAD_SHA256,
         }
-    return {"event": "typed_observation", "sequence": sequence,
-            "capture_ns": capture_ns,
+    return {"event": "typed_observation", "schema": "doom-typed-observation-v1",
+            "sequence": sequence, "capture_ns": capture_ns,
+            "pointer_binding": binding,
             "frame_rgb_sha256": f"{sequence:064x}", "signals": signals,
             "id": "program-1", "step": sequence}
 
@@ -140,6 +142,42 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "release_receipt_incomplete")
         self.assertIsNone(receipt["input_ack_to_owner_keyup_start_ms"])
 
+    def test_input_edge_receipt_requires_all_sync_and_owner_history_confirmations(self):
+        for server_sync, verified, history in product((None, False, True), repeat=3):
+            events = [
+                {"event": "input_admission", "id": "program-1", "step": 0,
+                 "key": "d", "intent_token": "token", "admitted_ns": 100,
+                 "input_ack_ns": 110},
+                {"event": "input_release_transition", "id": "program-1", "step": 0,
+                 "key": "d", "intent_token": "token", "operation": "up",
+                 "release_call_started_ns": 190, "release_call_returned_ns": 240,
+                 "owner_thread_keyup_receipt": {
+                     "event": "owner_explicit_keyup", "key": "d",
+                     "intent_token": "token", "owner_keyrelease_started_ns": 200,
+                     "owner_sync_returned_ns": 220,
+                     "server_sync_completed": server_sync},
+                 "owner_thread_keyup_verified": verified,
+                 "owner_thread_keyup_history_complete": history},
+            ]
+            row = events[1]
+            owner = row["owner_thread_keyup_receipt"]
+            if server_sync is None:
+                owner.pop("server_sync_completed")
+            if verified is None:
+                row.pop("owner_thread_keyup_verified")
+            if history is None:
+                row.pop("owner_thread_keyup_history_complete")
+
+            receipt = controller.input_edge_receipts(events)[0]
+            with self.subTest(server_sync=server_sync, verified=verified, history=history):
+                if (server_sync, verified, history) == (True, True, True):
+                    self.assertEqual(receipt["status"], "paired")
+                    self.assertEqual(receipt["input_ack_to_owner_keyup_start_ms"], 0.00009)
+                else:
+                    self.assertEqual(receipt["status"], "release_receipt_incomplete")
+                    self.assertIsNone(receipt["admitted_to_owner_keyup_start_ms"])
+                    self.assertIsNone(receipt["input_ack_to_owner_keyup_start_ms"])
+
     def test_feedback_reports_exact_health_and_ammo_deltas_for_matching_frames(self):
         before = observation(83, 100)
         after = observation(89, 200)
@@ -203,6 +241,20 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
 
         self.assertEqual(result["status"], "unavailable")
         self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
+
+    def test_feedback_refuses_typed_event_schema_and_top_level_binding_mismatch(self):
+        before, after = observation(83, 100), observation(89, 200)
+        wrong_schema = typed_observation(89, 200, 91, 44)
+        wrong_schema["schema"] = "unexpected-schema"
+        wrong_binding = typed_observation(89, 200, 91, 44)
+        wrong_binding["pointer_binding"] = {
+            "focus": 99, "surface": 99, "geometry": [0, 0, 640, 480]}
+        for bad in (wrong_schema, wrong_binding):
+            with self.subTest(schema=bad["schema"], binding=bad["pointer_binding"]):
+                result = controller.action_state_feedback(
+                    before, after, [typed_observation(83, 100, 91, 45), bad])
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
 
     def test_feedback_refuses_out_of_domain_typed_hud_values(self):
         before = observation(83, 100)
