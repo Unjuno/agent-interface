@@ -733,6 +733,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/)
+- [`route_blind_adjudication_7436_t0_a01/`](route_blind_adjudication_7436_t0_a01/)
+- [`route_blind_adjudication_7436_t0_a02_20261004/`](route_blind_adjudication_7436_t0_a02_20261004/)
 - [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
 - [`route_selector_label_consistency_5911_t0/`](route_selector_label_consistency_5911_t0/)
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
