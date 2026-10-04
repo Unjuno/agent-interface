@@ -1,0 +1,40 @@
+{
+  "status": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "rows": 240,
+  "paired_conditions": {
+    "constant": 30,
+    "gain_drift": 30,
+    "cross_coupling": 30,
+    "saturation": 30
+  },
+  "all_goals_reached": true,
+  "same_goal_outcomes": true,
+  "adaptation_subset": [
+    "gain_drift",
+    "cross_coupling"
+  ],
+  "fixed_corrections": 329,
+  "online_jacobian_corrections": 195,
+  "correction_reduction_fraction": 0.4072948328267477,
+  "per_condition_totals": {
+    "constant": {
+      "fixed": 162,
+      "online_jacobian": 96
+    },
+    "gain_drift": {
+      "fixed": 152,
+      "online_jacobian": 94
+    },
+    "cross_coupling": {
+      "fixed": 177,
+      "online_jacobian": 101
+    },
+    "saturation": {
+      "fixed": 187,
+      "online_jacobian": 138
+    }
+  },
+  "safety_violations": 0,
+  "raw_sha256": "45455c8bd338925c11231a81bd48801e5890ec1627f33b3bdff6550085665e43"
+}
