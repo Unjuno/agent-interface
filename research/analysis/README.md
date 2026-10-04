@@ -1,10 +1,17 @@
 # Analytical research
 
+- [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
+
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
 - [Issue #7387 A02 method result](serial_cue_interference_7387_t0_20261004_a02/REPORT.md) — WSLc candidate and raw-only auditor each ran once; 144 trials, 288 presentations, 16 isolated controls and 1,280 image files (five distinct pixel payloads) independently reconstructed; `PASS_METHOD_SCOPED`; model hypothesis remains untested.
+- [Issue #7470 A02](inference_disturbance_coupling_7470_t0_a02_20261004/README.md) — harness diagnostic over 24 arbitrary pairings; does not meet the later circular-shift design clarification. A01 prelaunch STOP preserved.
+- [Issue #7470 A03](inference_disturbance_coupling_7470_t0_a03_20261004/README.md) — four intact-sequence phase rotations detect planted sensitivity, but omit the explicit period-to-period seam transition required by the clarified design.
+- [Issue #7470 A04](inference_disturbance_coupling_7470_t0_a04_20261004/README.md) — eight trajectories include the seam, but the frozen centered-correlation formula has an extra 1/n normalization; not an Issue-level PASS.
+- [Issue #7470 A05](inference_disturbance_coupling_7470_t0_a05_20261004/README.md) — standard Pearson fixture, four intact circular shifts, and two periods with explicit seam; 8/8 reconstructed and 3/3 mutations rejected; finite method-scoped pass only.
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
 - [Issue #7383 freshness-gated observation hedging T0](observation_hedging_7383_t0_20261004/REPORT.md) — synthetic independent-heavy-tail p95 improved 86.52% under the frozen threshold/work/deadline gates; correlated and shared-queue controls showed no gain. Independent audit passed 1,000 rows and rejected four mutations. Host CPU only; real capture critical-path evidence remains absent.
 - [`circuit_rejection_cost_5375_a02_20261004/REPORT.md`](circuit_rejection_cost_5375_a02_20261004/REPORT.md) — #5375 A02 WSLc one-tick finite result; 10 raw rows independently reconstructed, 4/4 mutation controls rejected, PASS_METHOD_SCOPED; A01 construction failure and auditor STOP preserved separately. No empirical production-cost, live-resilience, GUI/model, or product claim.
+- [`circuit_rejection_cost_5375_a01_20261004/REPORT.md`](circuit_rejection_cost_5375_a01_20261004/REPORT.md) — #5375 A01 exact 480-row record rescued; candidate violates frozen capacity on row 1 and the one auditor invocation STOPped on a read-only output destination. No rerun or hypothesis result.
 
 - [Retained analytical source rescue — #6857/#6862/#6884](../recovery/analytical_source_rescue_20261004/README.md) — Exact original packets/history preserved; cancellation auditor v1 six false accepts and separately versioned v2 correction, LF/CRLF serialization-only evidence, and all historical temporal-contract HOLDs remain distinct. Archival integration is not original content-quorum/application approval, scientific/runtime adoption or a replay.
 
@@ -306,6 +313,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
+- [`benefit_threshold_7411_t0_20261005/`](benefit_threshold_7411_t0_20261005/)
 - [`benign_error_recovery_scope_6469_t0_20261002_v1/`](benign_error_recovery_scope_6469_t0_20261002_v1/)
 - [`blackstart_allwindow_trace_5970_t6_20261002/`](blackstart_allwindow_trace_5970_t6_20261002/)
 - [`blackstart_causal_cut_5970_t0_20261001/`](blackstart_causal_cut_5970_t0_20261001/)
@@ -351,6 +359,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`circuit_rejection_cost_5375_a01_20261004/`](circuit_rejection_cost_5375_a01_20261004/)
 - [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
 - [`claim_generation_types_6509_01a0ff58/`](claim_generation_types_6509_01a0ff58/)
@@ -359,6 +368,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`claim_scoped_clip_trace_6536_t0_20261002/`](claim_scoped_clip_trace_6536_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
+- [`client_energy_per_effect_7728_t0_20261005/`](client_energy_per_effect_7728_t0_20261005/)
 - [`clipboard_formats_36_t0_01a0ff51/`](clipboard_formats_36_t0_01a0ff51/)
 - [`clipboard_formats_36_x11_transfer_01a0ff51/`](clipboard_formats_36_x11_transfer_01a0ff51/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)
@@ -439,6 +449,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
 - [`escrow_optional_budget_6156_t0_20261002/`](escrow_optional_budget_6156_t0_20261002/)
 - [`evaluation_cue_reactivity_6413_t0_wslc_20261003/`](evaluation_cue_reactivity_6413_t0_wslc_20261003/)
+- [`event_memory_7161_t0_20261005/`](event_memory_7161_t0_20261005/)
 - [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
 - [`evidence_compute_calibration_identifiability_r3_v1/`](evidence_compute_calibration_identifiability_r3_v1/)
 - [`evidence_compute_decision_lattice_r2_v1/`](evidence_compute_decision_lattice_r2_v1/)
@@ -491,6 +502,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_proposal_risk_6143_t0_20261002/`](guard_proposal_risk_6143_t0_20261002/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
+- [`hazard_checkpoint_7466_adaptive_cost_a02_20261004/`](hazard_checkpoint_7466_adaptive_cost_a02_20261004/)
+- [`hazard_checkpoint_7466_feedback_gate_a03_20261004/`](hazard_checkpoint_7466_feedback_gate_a03_20261004/)
 - [`hazard_checkpoint_7466_t0_20261004/`](hazard_checkpoint_7466_t0_20261004/)
 - [`hazard_discretionary_capture_6086_t0_20261002/`](hazard_discretionary_capture_6086_t0_20261002/)
 - [`hazard_discretionary_capture_6086_t0_v1/`](hazard_discretionary_capture_6086_t0_v1/)
@@ -506,6 +519,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
+- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a03_20261004/`](inference_disturbance_coupling_7470_t0_a03_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a04_20261004/`](inference_disturbance_coupling_7470_t0_a04_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a05_20261004/`](inference_disturbance_coupling_7470_t0_a05_20261004/)
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/)
 - [`integrated_decision_scope_57_t0_v1/`](integrated_decision_scope_57_t0_v1/)
@@ -524,6 +541,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
+- [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
 - [`joint_authority_5805_t0_exploratory/`](joint_authority_5805_t0_exploratory/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
@@ -531,6 +549,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`kernel_receipt_capture_5225_integrity_v1/`](kernel_receipt_capture_5225_integrity_v1/)
 - [`kernel_receipt_time_5215_audit_successor_20260929/`](kernel_receipt_time_5215_audit_successor_20260929/)
 - [`label_control_ambiguity_6038_t0_v1/`](label_control_ambiguity_6038_t0_v1/)
+- [`latency_coverage_7709_t0_20261005/`](latency_coverage_7709_t0_20261005/)
+- [`latency_regime_coverage_7709_t0_20261005/`](latency_regime_coverage_7709_t0_20261005/)
+- [`latency_regime_coverage_7709_t1_feasibility_20261005/`](latency_regime_coverage_7709_t1_feasibility_20261005/)
+- [`latency_source_manifest_coverage_7707_a01_20261005/`](latency_source_manifest_coverage_7707_a01_20261005/)
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
@@ -605,6 +627,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
 - [`needle_role_skill_lifecycle_5133_v2/`](needle_role_skill_lifecycle_5133_v2/)
+- [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
+- [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`notification_sampling_reactivity_6657_t0_20261002/`](notification_sampling_reactivity_6657_t0_20261002/)
 - [`object_bound_context_capsules_7160_t0_20261004/`](object_bound_context_capsules_7160_t0_20261004/)
 - [`obligation_capacity_6121_t0_20261002/`](obligation_capacity_6121_t0_20261002/)
@@ -808,6 +832,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`soft_revisit_bias_5756_t0_orbstack_a03_20261003/`](soft_revisit_bias_5756_t0_orbstack_a03_20261003/)
 - [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`soft_revisit_bias_6442_supplemental_audit_v1/`](soft_revisit_bias_6442_supplemental_audit_v1/)
+- [`source_bound_conflict_cores_7501_provenance_a02_20261005/`](source_bound_conflict_cores_7501_provenance_a02_20261005/)
+- [`source_bound_conflict_cores_7501_scaling_a01_20261005/`](source_bound_conflict_cores_7501_scaling_a01_20261005/)
 - [`source_bound_conflict_cores_7501_t0_20261004/`](source_bound_conflict_cores_7501_t0_20261004/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
 - [`source_window_type_boundary_4782_v1/`](source_window_type_boundary_4782_v1/)

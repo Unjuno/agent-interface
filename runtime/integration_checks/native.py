@@ -26,6 +26,12 @@ SUITES['protocol'].append('test_appserver_process_tree_cleanup_20261004')
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
 
+SUITES['protocol'].extend([
+    'test_adaptive_acquisition_caller_refusal_v3',
+    'test_adaptive_acquisition_caller_dispatch_v3',
+    'test_adaptive_acquisition_caller_uncertain_tail_v3',
+])
+
 SUITES['protocol'].extend(['test_adaptive_acquisition_cost_coverage', 'test_adaptive_acquisition_aggregate_cost', 'runtime.integration_checks.test_native_catalogue', 'test_cost_invocation_composition_93c2'])
 
 SUITES['protocol'].append('test_adaptive_acquisition_diagnostics_93c2')

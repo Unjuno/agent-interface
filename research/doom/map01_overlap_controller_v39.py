@@ -24,7 +24,8 @@ from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
     reconcile_artifact)
-from doom_action_validity_contract_v1 import build_contract as build_action_contract
+from doom_action_validity_contract_v1 import (
+    bindings_equal_exact, build_contract as build_action_contract)
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
 from codex_app_server_client_v2 import CodexAppServerClient
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
@@ -102,7 +103,198 @@ def guard_spec(validity, source_signal, index):
     }
 
 
-def build_cover_monitor(reader, source_observation, authored_validity, index):
+def ammo_guard_spec(source_signal, index, max_source_age_ms):
+    return {
+        "op": "observable_signal_guard",
+        "guard_id": f"map01-{index}-ammo",
+        "source_sequence": source_signal["sequence"],
+        "signal_id": "ammo",
+        "source_value": source_signal["value"],
+        "hard_minimum": 1,
+        "max_source_age_ms": max_source_age_ms,
+        "on_soft_change": "preserve_existing_policy",
+        "on_hard_change": "needs_decision",
+        "on_unknown": "needs_decision",
+    }
+
+
+def _typed_json_equal(left, right):
+    """Compare JSON-shaped identity values without Python bool/int aliases."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        if (any(type(key) is not str for key in left) or
+                any(type(key) is not str for key in right) or
+                left.keys() != right.keys()):
+            return False
+        return all(_typed_json_equal(left[key], right[key]) for key in left)
+    if type(left) is list:
+        return (len(left) == len(right) and
+                all(_typed_json_equal(a, b) for a, b in zip(left, right)))
+    return left == right
+
+
+def _signal_pair_matches(observation, signals):
+    sequence = observation.get("sequence")
+    capture_ns = observation.get("capture_ns")
+    binding = observation.get("pointer_binding")
+    if (type(sequence) is not int or sequence < 1 or
+            type(capture_ns) is not int or capture_ns < 1 or
+            type(binding) is not dict):
+        return False
+    for signal_id in ("health", "ammo"):
+        signal = signals.get(signal_id)
+        if (type(signal) is not dict or signal.get("status") != "observed" or
+                signal.get("signal_id") != signal_id or
+                type(signal.get("sequence")) is not int or
+                type(signal.get("capture_ns")) is not int or
+                signal.get("sequence") != sequence or
+                signal.get("capture_ns") != capture_ns or
+                not _typed_json_equal(signal.get("binding"), binding)):
+            return False
+    return True
+
+
+def _signal_pair_content_matches(left, right):
+    for signal_id in ("health", "ammo"):
+        first = left.get(signal_id)
+        second = right.get(signal_id)
+        if type(first) is not dict or type(second) is not dict:
+            return False
+        for field in ("status", "signal_id", "value", "sequence",
+                      "capture_ns", "binding"):
+            if not _typed_json_equal(first.get(field), second.get(field)):
+                return False
+    return True
+
+
+class DoomCoverSignalPairMonitor:
+    """Invalidate fire cover on incoherent or invalid paired health/ammo evidence."""
+
+    event_types = {"typed_observation", "observation"}
+
+    def __init__(self, guards, health_reader, ammo_reader):
+        self.guards = guards
+        self.readers = {"health": health_reader, "ammo": ammo_reader}
+        self.last_values = {name: guard.spec["source_value"]
+                            for name, guard in guards.items()}
+        self.last_sequence = guards["health"].spec["source_sequence"]
+        self.last_capture_ns = guards["health"].source_capture_ns
+        self.last_event_kind = None
+        self.last_binding = None
+        self.last_frame_rgb_sha256 = None
+        self.last_signals = None
+        self.soft_event_count = 0
+        self.latest_soft_event = None
+
+    def _invalidation(self, observation, reason, signals=None, outcomes=None,
+                      outcome=None):
+        evaluated_ns = time.perf_counter_ns()
+        if outcome is None:
+            outcome = {
+                "status": "UNKNOWN", "reason": reason,
+                "requires_new_decision": True,
+                "grants_input_authority": False,
+                "may_only_preserve_or_reduce_existing_authority": True,
+                "task_success_verified": False,
+            }
+        return {
+            "event": "paired_signal_invalidation",
+            "reason": reason,
+            "sequence": observation.get("sequence"),
+            "signals": signals,
+            "outcomes": outcomes,
+            "outcome": outcome,
+            "outcome_evaluated_ns": evaluated_ns,
+            "requires_new_decision": True,
+            "grants_input_authority": False,
+        }
+
+    def observe(self, observation):
+        received_ns = time.perf_counter_ns()
+        event_kind = observation.get("event")
+        sequence = observation.get("sequence")
+        capture_ns = observation.get("capture_ns")
+        binding = observation.get("pointer_binding")
+
+        if event_kind == "typed_observation":
+            signals = observation.get("signals")
+            if type(signals) is not dict:
+                return self._invalidation(observation, "signal_pair_missing")
+        elif event_kind == "observation":
+            try:
+                signals = {name: reader.read(observation)
+                           for name, reader in self.readers.items()}
+            except (OSError, ValueError, TypeError, KeyError):
+                return self._invalidation(
+                    observation, "signal_pair_source_unavailable")
+        else:
+            return self._invalidation(observation, "signal_pair_event_type_invalid")
+        if not _signal_pair_matches(observation, signals):
+            return self._invalidation(observation, "signal_pair_epoch_mismatch", signals)
+
+        # Support either transport order once, but compare both paired signal
+        # projections even when typed evidence arrives first.
+        if (event_kind != self.last_event_kind and
+                self.last_event_kind in {"typed_observation", "observation"} and
+                type(sequence) is int and sequence == self.last_sequence and
+                type(capture_ns) is int and capture_ns == self.last_capture_ns):
+            frame_hash = observation.get("frame_rgb_sha256")
+            if (not _typed_json_equal(binding, self.last_binding) or
+                    not _signal_pair_content_matches(signals, self.last_signals) or
+                    (self.last_frame_rgb_sha256 is not None and frame_hash is not None and
+                     frame_hash != self.last_frame_rgb_sha256)):
+                return self._invalidation(
+                    observation, "signal_pair_duplicate_epoch_mismatch", signals)
+            self.last_signals = signals
+            self.last_binding = binding
+            self.last_frame_rgb_sha256 = frame_hash
+            self.last_event_kind = event_kind
+            return None
+
+        if observation["sequence"] <= self.last_sequence:
+            return self._invalidation(
+                observation, "signal_pair_nonadvancing_sequence", signals)
+        if observation["capture_ns"] <= self.last_capture_ns:
+            return self._invalidation(
+                observation, "signal_pair_nonadvancing_capture_time", signals)
+        self.last_sequence = observation["sequence"]
+        self.last_capture_ns = observation["capture_ns"]
+
+        outcomes = {name: guard.evaluate(signals[name])
+                    for name, guard in self.guards.items()}
+        evaluated_ns = time.perf_counter_ns()
+        invalid = [(name, outcome) for name, outcome in outcomes.items()
+                   if outcome["requires_new_decision"]]
+        if invalid:
+            name, outcome = invalid[0]
+            result = self._invalidation(
+                observation, f"{name}:{outcome['reason']}", signals, outcomes,
+                outcome)
+            result.update({"monitor_received_ns": received_ns,
+                           "outcome_evaluated_ns": evaluated_ns})
+            return result
+
+        for name, outcome in outcomes.items():
+            value = signals[name]["value"]
+            if outcome["status"] == "SOFT_CHANGED" and value != self.last_values[name]:
+                self.soft_event_count += 1
+                self.latest_soft_event = {
+                    "sequence": observation["sequence"],
+                    "signal": signals[name], "outcome": outcome,
+                    "monitor_received_ns": received_ns,
+                    "outcome_evaluated_ns": evaluated_ns,
+                }
+            self.last_values[name] = value
+        self.last_event_kind = event_kind
+        self.last_binding = binding
+        self.last_frame_rgb_sha256 = observation.get("frame_rgb_sha256")
+        self.last_signals = signals
+        return None
+
+
+def build_cover_monitor(reader, source_observation, authored_validity, index,
+                        *, ammo_reader=None, requires_ammo=False):
     source_signal = reader.read(source_observation)
     if source_signal["status"] != "observed" or source_signal["value"] < 1:
         raise RuntimeError("cover validity source health unavailable")
@@ -128,6 +320,44 @@ def build_cover_monitor(reader, source_observation, authored_validity, index):
     effective = authored_validity if admitted else None
     spec = guard_spec(effective, source_signal, index)
     guard = ObservableSignalGuard(spec, source_signal, source_signal["binding"])
+    monitor = ObservableSignalPolicyMonitor(guard, reader)
+    ammo_source = None
+    if requires_ammo:
+        if ammo_reader is None:
+            raise ValueError("ammo reader required for fire cover")
+        ammo_source = ammo_reader.read(source_observation)
+        pair = {"health": source_signal, "ammo": ammo_source}
+        if not _signal_pair_matches(source_observation, pair):
+            return monitor, {
+                "status": "rejected_source_health_ammo_pair",
+                "authored": authored_validity,
+                "effective": {"signal_id": "health",
+                              "critical_health_minimum": spec["hard_minimum"],
+                              "maximum_health_loss": 0 if effective is None else
+                                  effective["maximum_health_loss"],
+                              "hard_minimum": spec["hard_minimum"],
+                              "max_source_age_ms": spec["max_source_age_ms"]},
+                "source_signal": source_signal, "source_ammo_signal": ammo_source,
+                "grants_input_authority": False,
+            }
+        if type(ammo_source.get("value")) is not int or ammo_source["value"] < 1:
+            return monitor, {
+                "status": "rejected_source_ammo_below_positive_floor",
+                "authored": authored_validity,
+                "effective": {"signal_id": "health",
+                              "critical_health_minimum": spec["hard_minimum"],
+                              "maximum_health_loss": 0 if effective is None else
+                                  effective["maximum_health_loss"],
+                              "hard_minimum": spec["hard_minimum"],
+                              "max_source_age_ms": spec["max_source_age_ms"]},
+                "source_signal": source_signal, "source_ammo_signal": ammo_source,
+                "grants_input_authority": False,
+            }
+        ammo_spec = ammo_guard_spec(ammo_source, index, spec["max_source_age_ms"])
+        ammo_guard = ObservableSignalGuard(
+            ammo_spec, ammo_source, ammo_source["binding"])
+        monitor = DoomCoverSignalPairMonitor(
+            {"health": guard, "ammo": ammo_guard}, reader, ammo_reader)
     receipt = {
         "status": admission_status,
         "authored": authored_validity,
@@ -139,9 +369,11 @@ def build_cover_monitor(reader, source_observation, authored_validity, index):
                       "hard_minimum": spec["hard_minimum"],
                       "max_source_age_ms": spec["max_source_age_ms"]},
         "source_signal": source_signal,
+        "source_ammo_signal": ammo_source,
+        "monitor_mode": "paired_health_ammo" if requires_ammo else "health_only",
         "grants_input_authority": False,
     }
-    return ObservableSignalPolicyMonitor(guard, reader), receipt
+    return monitor, receipt
 
 
 def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
@@ -162,6 +394,11 @@ def admitted_cover_commands(commands, validity_admission):
     return list(commands)
 
 
+def cover_requires_ammo(commands):
+    return any(command.get("action") in ("fire", "advance_fire", "retreat_fire")
+               for command in commands)
+
+
 def latest_soft_event_summary(decisions):
     """Return bounded semantic evidence from the immediately preceding interval."""
     if not decisions:
@@ -178,8 +415,8 @@ def latest_soft_event_summary(decisions):
     iteration = decision.get("iteration")
     source_iteration = decision.get("cover_policy_source_iteration")
     if (type(outcome) is not dict or type(signal) is not dict or
-            signal.get("signal_id") != "health" or
-            outcome.get("signal_id") != "health" or
+            signal.get("signal_id") not in ("health", "ammo") or
+            outcome.get("signal_id") != signal.get("signal_id") or
             outcome.get("status") != "SOFT_CHANGED" or
             outcome.get("reason") != "within_validity_envelope" or
             outcome.get("keep_existing_policy") is not True or
@@ -197,7 +434,7 @@ def latest_soft_event_summary(decisions):
             outcome.get("current_value") < outcome.get("hard_minimum")):
         raise RuntimeError("invalid prior soft-event evidence")
     return {
-        "signal_id": "health",
+        "signal_id": signal["signal_id"],
         "source_value": outcome["source_value"],
         "current_value": outcome["current_value"],
         "hard_minimum": outcome["hard_minimum"],
@@ -241,7 +478,8 @@ def prepare_action_admission(receipt, action, authored, source_health,
     if "ammo" in required:
         if (current_ammo["sequence"] != current_health["sequence"] or
                 current_ammo["capture_ns"] != current_health["capture_ns"] or
-                current_ammo["binding"] != current_health["binding"]):
+                not bindings_equal_exact(current_ammo["binding"],
+                                         current_health["binding"])):
             raise ValueError("current health and ammo must share one observation epoch")
         current["ammo"] = {"status": current_ammo["status"],
                            "value": current_ammo["value"]}
@@ -864,6 +1102,7 @@ def main():
         journal_path=args.out / "planner-protocol.jsonl")
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
+        failure_cleanup.set_stage("planner_initialize")
         planner_client.initialize()
         planner = PersistentPlannerAdapter(
             planner_client, model=args.model, effort=args.effort, cwd=win(REPO),
@@ -879,11 +1118,16 @@ def main():
         failure_cleanup.track(process)
         incoming = queue.Queue()
         all_events = []
+        reader_errors = []
         def reader():
-            for line in process.stdout:
-                row = json.loads(line); all_events.append(row); incoming.put(row)
-        threading.Thread(target=reader, daemon=True).start()
+            try:
+                for line in process.stdout:
+                    row = json.loads(line); all_events.append(row); incoming.put(row)
+            except BaseException as error:
+                reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
+        reader_thread = threading.Thread(target=reader, daemon=True)
+        reader_thread.start()
         def wait(predicate, timeout=40, observation_monitor=None):
             nonlocal latest
             end = time.monotonic() + timeout
@@ -908,6 +1152,8 @@ def main():
                                 "invalidation":invalidation}
                 if predicate(row): return row
             raise TimeoutError()
+        failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
+        failure_cleanup.set_stage("session_startup")
         ready = wait(lambda r:r["event"] == "ready")
         runtime_fixture = ready.get("fixture")
         if runtime_fixture is None:
@@ -917,6 +1163,7 @@ def main():
         source_refreshes=[]
         program_admissions=0
         for index in range(args.iterations):
+            failure_cleanup.set_stage("source_refresh")
             if index and index % args.session_span == 0:
                 planner.start_session()
                 model_session_id=planner.thread_id
@@ -929,19 +1176,27 @@ def main():
                     f"source-refresh-{index}")
             except SourceRefreshRefused as error:
                 source_refreshes.append(dict(error.receipt, iteration=index))
-                (args.out/"source-refreshes.json").write_text(
-                    json.dumps(source_refreshes,indent=2)+"\n")
+                try:
+                    (args.out/"source-refreshes.json").write_text(
+                        json.dumps(source_refreshes,indent=2)+"\n")
+                except BaseException as save_error:
+                    error.add_note(
+                        f"source refresh receipt write failed: {type(save_error).__name__}: {save_error}")
                 raise
             source_refreshes.append(dict(source_refresh, iteration=index))
             (args.out/"source-refreshes.json").write_text(
                 json.dumps(source_refreshes,indent=2)+"\n")
+            failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
             validity_monitor, validity_admission = build_cover_monitor(
-                signal_reader, latest, cover_validity_semantic, index)
+                signal_reader, latest, cover_validity_semantic, index,
+                ammo_reader=ammo_reader,
+                requires_ammo=cover_requires_ammo(cover_semantic))
             cover_semantic = admitted_cover_commands(cover_semantic, validity_admission)
             validity_monitor, validity_admission = select_cover_monitor(
                 validity_monitor, validity_admission, cover_semantic,
                 cover_policy_source_iteration)
+            failure_cleanup.set_stage("cover_program_compile")
             cover_steps=compile_cover(cover_semantic)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             def submit_cover(identifier):
@@ -954,15 +1209,19 @@ def main():
                               (r.get("id")==identifier or r["event"]=="rejected"))
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 cover_ids.append(identifier);return accepted
+            failure_cleanup.set_stage("cover_program_admission")
             submit_cover(cover)
+            failure_cleanup.set_stage("decision_artifact_prepare")
             model_root=args.out/f"decision-{index}"
             model_root.mkdir()
             action_source_observation=dict(latest)
+            failure_cleanup.set_stage("action_source_health_ammo")
             source_health_signal=signal_reader.read(action_source_observation)
             source_ammo_signal=ammo_reader.read(action_source_observation)
             if (source_health_signal["status"] != "observed" or
                     source_ammo_signal["status"] != "observed"):
                 raise RuntimeError("action source health/ammo unavailable")
+            failure_cleanup.set_stage("planner_input_prepare")
             source_image=Path(action_source_observation["image"])
             invalidation_monitor=validity_monitor
             invalidation=None
@@ -980,6 +1239,7 @@ def main():
             prior=[Path(row["source_image"]) for row in decisions]
             temporal_sheet(prior+[source_image],image)
             model_started_ns=time.perf_counter_ns()
+            failure_cleanup.set_stage("planner_turn")
             planner_handle=begin_model_turn(
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
@@ -1011,6 +1271,7 @@ def main():
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
                 planner_result=future.result()
+                failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
             model_ended_ns=time.perf_counter_ns()
             model_ns=model_ended_ns-model_started_ns
@@ -1132,6 +1393,7 @@ def main():
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
                   "terminal_candidate":True,"model_action_discarded":False})
                 break
+            failure_cleanup.set_stage("action_admission")
             fresh_before_plan=dict(latest)
             current_health_signal=signal_reader.read(fresh_before_plan)
             current_ammo_signal=ammo_reader.read(fresh_before_plan)
@@ -1164,6 +1426,7 @@ def main():
                 continue
             grounded_capture_ns=source_health_signal["capture_ns"]
             trace=[]
+            failure_cleanup.set_stage("action_guard_setup")
             running_guard=RunningActionGuardV3(
                 action,final_action_admission,compile_commands,
                 "map01_overlap_controller_v38.compile_commands")
@@ -1279,6 +1542,7 @@ def main():
             if not boundaries or boundaries[-1] != len(action["commands"])-1:
                 boundaries.append(len(action["commands"])-1)
             segment_start=0
+            failure_cleanup.set_stage("active_action_execution")
             for segment_end in boundaries:
                 segment_commands=action["commands"][segment_start:segment_end+1]
                 result=execute_segment(f"plan-{index}-primary-{segment_start}-{segment_end}",
@@ -1362,12 +1626,18 @@ def main():
                                 else "stopped_action_not_current"),
                "model_action_discarded":False,
                "remaining_action_discarded":running_action_receipt["state"]!=RUNNING_COMPLETED})
+        failure_cleanup.set_stage("session_finish")
         process.stdin.write('{"op":"finish"}\n');process.stdin.flush()
+        failure_cleanup.set_stage("final_score_wait")
         score=wait(lambda r:r["event"]=="post_control_score")
+        failure_cleanup.set_stage("session_reap")
         process.wait(timeout=20)
+        failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
+        failure_cleanup.set_stage("stderr_capture")
         (args.out/"stderr.txt").write_text(process.stderr.read())
+        failure_cleanup.set_stage("final_report_prepare")
         typed_events = {row["sequence"]:row for row in all_events
                         if row.get("event")=="typed_observation"}
         full_events = {row["sequence"]:row for row in all_events
@@ -1472,6 +1742,7 @@ def main():
               x["action"]["state"]=="active" and len(x["action"].get("next_cover_validity",[]))==1 and
               not x.get("model_action_discarded",False) for x in decisions),
           "model_wall_seconds":sum(x["model_ns"] for x in decisions)/1e9}
+        failure_cleanup.set_stage("report_write")
         (args.out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
         print(json.dumps({"iterations":len(decisions),"score":score,
           "model_wall_seconds":report["model_wall_seconds"]},indent=2))
