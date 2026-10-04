@@ -1,6 +1,19 @@
-# F03 exact input archive readback
+# F03 exact input archive readbacks
 
-Date: 2026-10-04. This additive custody record preserves the exact source archive named by the F03 freeze. It does not change the freeze, the source tree, or any formal allocation input.
+Date: 2026-10-04. This additive custody record preserves two exact source archives named by successive F03 freezes. The first is a predecessor freeze; the second is the current final freeze. These records do not change either freeze, the source tree, or any formal allocation input.
+
+## Current final freeze
+
+- Archive: `f03-formal-freeze-6d8387caa8.tar`
+- Size: 1,720,320 bytes
+- SHA-256: `786dafda0057e809b5b5f32488899a544e07ad856323d0f635017681704b6344`
+- Frozen manifest source: final-freeze commit `43f9a0008bf75da19865cfdea2898d1b896fbbc3`; tree/source commit `6d8387caa8a004ebbdadc377e499b85b3b3a10db`
+- Member check: exactly eight regular files; every SHA-256 matches the current freeze manifest; no symlinks or other special entries
+- Verifier: `verify_final_archive.py`
+
+The bytes were copied unchanged from `/tmp/f03-formal-freeze-6d8387caa8.tar`; the verifier recomputes the outer digest and all frozen member hashes without extracting files. This current final archive supersedes the predecessor below for any future review, while neither archive by itself authorizes launch.
+
+## Predecessor freeze
 
 - Archive: `f03-final-freeze-40b57f74f4.tar`
 - Size: 1,720,320 bytes
