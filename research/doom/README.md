@@ -380,6 +380,7 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [A07 current-head paired-cover integration validation](v39_ammo_cover_current_head_validation_59_a07_20261005/README.md) — 46 tests pass after typed/full-observation dispatch and strict pair-order updates; this remains synthetic integration evidence with no live allocation.
 - [A08 post-rebase paired-cover validation](v39_ammo_cover_main_rebase_validation_59_a08_20261005/README.md) — 46 synthetic regression tests pass on PR head `acce7cb9` after rebasing onto `main` `3dbbda05`; no live allocation or task-effect result is claimed.
 - [A09 same-epoch paired-signal consistency regression](v39_ammo_duplicate_consistency_59_a09_20261005/README.md) — reproduced a typed/full duplicate mismatch accepted before the fix; the fix compares both signal projections and all 47 focused tests pass. Synthetic evidence only.
+- [A10 exact paired fire-binding regression](v39_ammo_exact_binding_contract_59_a10_20261005/README.md) — reproduced and rejected a nested `true`/`1` health/ammo binding alias; 48 focused synthetic tests pass. No live allocation.
 # Issue #59 retained v39 ammo-timeline posthoc package
 
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
