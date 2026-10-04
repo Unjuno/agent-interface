@@ -1,0 +1,27 @@
+{
+  "adjudication": "read-only container re-adjudication PASS_DOWN_CLEANUP_RACE_REPAIRED",
+  "audit_output_sha256": "e83401ca4659a6a2197a7d2d600f0da4ed8c6a3dda6c9ba1b6a53df261f46c44",
+  "candidate_probe_rerun": false,
+  "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "limits": {
+    "cpus": 1,
+    "memory": "512MiB",
+    "pids": 64,
+    "tmpfs": "/tmp 64MiB"
+  },
+  "network": "none",
+  "platform": "linux/arm64",
+  "python": "3.12.11",
+  "root_filesystem": "read-only",
+  "schema": "audit-v2-container-validation-v1",
+  "tests": [
+    {
+      "command": "python -m unittest -v test_a03_v2.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python -O -m unittest -v test_a03_v2.py",
+      "exit_code": 0
+    }
+  ]
+}

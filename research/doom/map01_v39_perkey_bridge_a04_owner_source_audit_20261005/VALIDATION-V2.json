@@ -1,0 +1,27 @@
+{
+  "adjudication": "read-only container re-adjudication PASS_OWNER_SOURCE_BOUND_EXACT_TYPE_AUDIT",
+  "audit_output_sha256": "c9789c730640fbb7b31eaa98e6c5177f38cfd5a88d71b4cc3f3fdeaee5ba008b",
+  "candidate_probe_rerun": false,
+  "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "limits": {
+    "cpus": 1,
+    "memory": "512MiB",
+    "pids": 64,
+    "tmpfs": "/tmp 64MiB"
+  },
+  "network": "none",
+  "platform": "linux/arm64",
+  "python": "3.12.11",
+  "root_filesystem": "read-only",
+  "schema": "audit-v2-container-validation-v1",
+  "tests": [
+    {
+      "command": "python -m unittest -v test_a04_v2.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python -O -m unittest -v test_a04_v2.py",
+      "exit_code": 0
+    }
+  ]
+}

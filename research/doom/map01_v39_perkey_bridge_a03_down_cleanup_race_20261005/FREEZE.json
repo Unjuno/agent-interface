@@ -1,0 +1,33 @@
+{
+  "C": "Finite stub-controlled ordering witness; does not measure live scheduler incidence.",
+  "D": "PASS only if A02 reproduces unscoped cleanup plus NOOP and A03 emits admission then one contextual confirmed release with neutral state.",
+  "H": "Cleanup created during the down owner call must resolve using the returned admission's context.",
+  "T": "One deterministic in-memory owner stub appends matching confirmed-up cleanup before returning down admission; compare frozen A02 and repaired successor.",
+  "U": "No real owner, OS input, GUI, game, model, application effect, recovery, threat response, or MAP01 progress.",
+  "baseline_and_successor_invocations": 1,
+  "container": {
+    "cpus": 1,
+    "memory_mib": 512,
+    "network": "none",
+    "root_read_only": true
+  },
+  "image": "python:3.12.11-slim",
+  "image_id": "sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "input_sha256": "8b861280cfb36ef6388664d62a3fd9e36bf7808504ecd8d762d1d290d5eca09b",
+  "platform": "linux/arm64",
+  "python_version": "3.12.11",
+  "run_id": "v39-perkey-bridge-a03-down-cleanup-race-20261005",
+  "schema": "map01_v39_perkey_bridge_a03_race_freeze_v1",
+  "scope": "in-memory owner-call ordering stub; no OS or GUI input",
+  "source_sha256": {
+    ".gitattributes": "5a01b12dc9a61cc9f8d5faa378ed7b93e3a5728f61dfff69e312748be08c99a4",
+    "README.md": "f3e0ce5d164390b22d7dd7f008049ab97b8aab40a5353aa2234b9d1e4fb4b9ac",
+    "SOURCE/A02/bridge.py": "b14ec37323ae3f2510538326011c63a5253745521724613b0b573e902aabe377",
+    "audit_a03.py": "8f12ef66ba67f376aa7c6a7518dd1cee7885f735442db7218560ab063898aa1a",
+    "bridge_a03.py": "a5395c000b7dcffb6379f738c78627fadbfd43eae4a8b45ade3ddc5be59488d3",
+    "build_freeze.py": "3fc4cee7c8638174c3a384daf43b0d62478d81b42697c761c609e689b108e5db",
+    "probe_a03.py": "26cbc228c9b0db5fc8b7793da1f7b4d8c3f471c1c1c7ec842313c7bf102b2e84",
+    "scenario.json": "8b861280cfb36ef6388664d62a3fd9e36bf7808504ecd8d762d1d290d5eca09b",
+    "test_a03.py": "5a751b29f99affb7aed15154b0f4f3462c00764a733f427403b536d6fe5c261d"
+  }
+}
