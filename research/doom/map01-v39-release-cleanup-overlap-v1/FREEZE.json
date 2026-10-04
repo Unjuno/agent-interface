@@ -1,0 +1,23 @@
+{
+  "schema": "map01-v39-release-cleanup-overlap-construction-v1",
+  "issue": 59,
+  "base_pr": 7378,
+  "base_sha": "fbed929f629dabaa9ae752019d0ee7151d4d2298",
+  "candidate_paths": [
+    "research/doom/doom_typed_release_backend_v3.py",
+    "research/doom/test_doom_typed_release_backend_v3.py"
+  ],
+  "claim": "timestamped verified owner cleanup inside an explicit key-up caller bracket must refuse ordinary per-key release verification",
+  "runtime": "WSLc",
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "image_repo_digest": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "limits": {"network": "none", "cpus": 1, "memory": "512M accepted", "swap": "unavailable per WSL warning"},
+  "formal_or_live_allocation": false,
+  "outcome": "baseline false-positive reproduced; candidate suite passed 21/21; adjacent wrapper/backend suites passed 29/29; independent raw-log audit passed 6/6",
+  "scope_limits": [
+    "synthetic deterministic owner and adapter test",
+    "no owner-thread queue scheduling reproduction",
+    "no X11, game, physical release timing, task-effect, model, or performance claim",
+    "no live allocation started or retried"
+  ]
+}

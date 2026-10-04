@@ -68,13 +68,15 @@ class Lease:
 
 class Owner:
     def __init__(self, *, owned_after=None, owner_id='owner-1', sample_started=100,
-                 ordinary=True, receipt_token='intent-1'):
+                 ordinary=True, receipt_token='intent-1', cleanup_ns=None):
         self.calls = []
         self.owned_after = [] if owned_after is None else list(owned_after)
         self.owner_id = owner_id
         self.sample_started = sample_started
         self.ordinary = ordinary
         self.receipt_token = receipt_token
+        self.records = []
+        self.cleanup_ns = cleanup_ns
         self.release_index = 0
         self.closed = False
 
@@ -88,6 +90,11 @@ class Owner:
         if op == 'up':
             self.release_index += 1
             returned = self.release_index * 10
+            if self.cleanup_ns is not None:
+                self.records.append({
+                    'event': 'owner_release', 'verified': True,
+                    'reason': 'cancelled', 'verified_ns': self.cleanup_ns,
+                })
             return {
                 'event': 'input_release_transition', 'operation': 'up', 'key': key,
                 'owner_id': self.owner_id, 'intent_token': self.receipt_token,
@@ -198,6 +205,32 @@ class Tests(unittest.TestCase):
     def test_stale_ordinary_candidate_fails_closed(self):
         obj = make_backend({'a'}, Owner(ordinary=False))
         obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+
+    def test_cleanup_inside_explicit_release_bracket_is_not_ordinary(self):
+        obj = make_backend({'a'}, Owner(cleanup_ns=7))
+        obj.raw('a', False)
+        row = obj.emitted[0]
+        self.assertTrue(row['ordinary_release_candidate'] is False)
+        self.assertTrue(row['owner_cleanup_records_available'])
+        self.assertTrue(row['owner_cleanup_overlapped_release_call'])
+        self.assertFalse(row['owner_transition_verified'])
+
+    def test_cleanup_outside_explicit_release_bracket_keeps_ordinary_release(self):
+        obj = make_backend({'a'}, Owner(cleanup_ns=4))
+        obj.raw('a', False)
+        row = obj.emitted[0]
+        self.assertTrue(row['ordinary_release_candidate'])
+        self.assertTrue(row['owner_cleanup_records_available'])
+        self.assertFalse(row['owner_cleanup_overlapped_release_call'])
+        self.assertTrue(row['owner_transition_verified'])
+
+    def test_missing_cleanup_log_fails_closed(self):
+        owner = Owner()
+        del owner.records
+        obj = make_backend({'a'}, owner)
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['owner_cleanup_records_available'])
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
 
     def test_intent_token_mismatch_fails_closed(self):
