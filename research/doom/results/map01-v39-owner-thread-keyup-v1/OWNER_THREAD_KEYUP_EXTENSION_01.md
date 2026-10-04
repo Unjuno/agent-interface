@@ -17,6 +17,7 @@ Added fake-Xlib owner controls for explicit up and cleanup-before-queued-up, a t
 - `python -m unittest discover -s research/doom -p "test_doom_typed_release_backend_v3.py" -v`: **28/28 PASS**.
 - `python -m unittest discover -s research/doom -p "test_analyze_map01_direct_retained_input_v1.py" -v`: **5/5 PASS**.
 - `python -m unittest discover -s research/live_control -p "test_input_transition_owner_v4_receipt.py" -v`: **4/4 PASS**, including two inherited owner tests.
+- Batch serialization source regression confirms the batch receipt field is emitted exactly once.
 - Python compilation of changed owner, transition, backend, analyzer, session, and test modules: PASS.
 - `git diff --check`: PASS.
 - Fake Xlib only; no X server, game, container, or live allocation was run.
@@ -27,9 +28,9 @@ SHA-256 of candidate implementation and regression files:
 |---|---|
 | `research/live_control/input_owner_v11.py` | `a73c63d32a9f55574f3e5b32e67021844c923b3d133699ffd5c9bf971bd12330` |
 | `research/live_control/input_transition_owner_v4.py` | `dd020956187d7be893a093b054f220603183e32560979639a281ce63daab7df9` |
-| `research/doom/doom_typed_release_backend_v3.py` | `6d8b655164361851ea3e8f829c2ecc1232a4c7278a768231d7e4461d6e4c46dc` |
+| `research/doom/doom_typed_release_backend_v3.py` | `ad82198625f5cd6690093bf258ea303d547b6bad279456bf95f3facfb8398282` |
 | `research/doom/analyze_map01_direct_retained_input_v1.py` | `005d9186e08e65fa548d8e459a42fd1fb4e46c320e6b9a17d10932732cb18ac9` |
-| `research/doom/test_doom_typed_release_backend_v3.py` | `2b7ecabf433bfbc3d9549e5410122dcfa0b57c1cb67e91019891f570960a5fb5` |
+| `research/doom/test_doom_typed_release_backend_v3.py` | `25ac719787751db6fd3174a714e6238cfdae12ba3b248bd4f4543519b7cffe74` |
 | `research/doom/test_analyze_map01_direct_retained_input_v1.py` | `72574732cdd60e892bf272ed461c4d78f44dbeb4cc500021ec85f4bf20e06274` |
 
 ## C — Conclusion
