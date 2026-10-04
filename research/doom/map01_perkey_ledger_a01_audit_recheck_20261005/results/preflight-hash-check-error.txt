@@ -1,3 +1,5 @@
 Two initial source-hash verification invocations referenced inputs/audit.py and then inputs/candidate.py, but the evidence package stores the audit as inputs/predecessor-audit.py and candidate/ledger copies had not yet been added. Both checks stopped before hash verification completed. No candidate or audit experiment was invoked by those checks. The missing byte-identical provenance copies were added; the corrected verification command checks the complete frozen input mapping.
 
 A later final manifest-validation invocation ran `shasum -c` from the repository root even though manifest paths are package-relative; every path was therefore unresolved and one unrelated root README was read. The source compilation had already passed before this path error. The manifest check is rerun from the package root, where the relative paths resolve.
+
+After merging the latest main into the follow-up branch, a test command was also invoked from the repository root instead of this package directory, so unittest could not import `test_audit_recheck`. No test ran in that invocation. The suite is rerun from the package root below.
