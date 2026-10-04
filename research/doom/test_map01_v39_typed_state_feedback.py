@@ -84,6 +84,22 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertIn("X-server", receipt["scope"])
         self.assertNotIn("intent-v39-a01", repr(receipts))
 
+    def test_input_edge_receipt_pairs_retained_absolute_pair_release_trace(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        events = [json.loads(line) for line in retained.read_text().splitlines()]
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual(len(receipts), 2)
+        self.assertTrue(all(row["status"] == "paired" for row in receipts))
+        self.assertTrue(all(
+            row["input_ack_ns"] <= row["release_call_started_ns"] <=
+            row["owner_keyrelease_started_ns"] <= row["owner_sync_returned_ns"] <=
+            row["release_call_returned_ns"] for row in receipts))
+        self.assertTrue(all(not row["physical_verification_authoritative"]
+                            for row in receipts))
+
     def test_retained_v39_trace_with_unscoped_admissions_stays_unpaired(self):
         retained = (HERE / "results" / "map01-v39-coast-liveness-live-01" /
                     "runtime" / "events.jsonl")
