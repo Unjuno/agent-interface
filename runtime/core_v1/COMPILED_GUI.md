@@ -57,8 +57,15 @@ provide live revocation, custom-object or concurrent-callback safety.
 Each observation request receives its own declared-predicate list. The journal
 receives a separate deep copy of each event, so callback-local formatting or
 later edits to retained payloads cannot change private declarations or returned
-critical evidence. Callbacks remain trusted synchronous code: their exceptions
-propagate and their I/O must obey the existing deadline contract.
+critical evidence. Callbacks remain trusted synchronous code and their I/O must
+obey the existing deadline contract. Ordinary observation-adapter exceptions
+return `RUNTIME_FAILED / observation_failed`; `ObservationAssociationChanged`
+retains its `SAFE_YIELD / association_changed` mapping. Cancellation-callback
+exceptions and non-Boolean returns produce `RUNTIME_FAILED / execution_failed`;
+an affirmative Boolean still yields `SAFE_YIELD / cancelled`. These paths retain
+the completed prefix and any pending effect without another dispatch or retry.
+Admission, execution, effect-verifier, journal and clock exceptions, along with
+observation-validation errors after a successful adapter return, still propagate.
 
 After observation, branch journaling, admission, effect verification and returned
 execution, the runtime rechecks its original method deadline. Reaching the exact
