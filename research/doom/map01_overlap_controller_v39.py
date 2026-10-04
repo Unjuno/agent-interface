@@ -472,6 +472,7 @@ def main():
         journal_path=args.out / "planner-protocol.jsonl")
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
+        failure_cleanup.set_stage("planner_initialize")
         planner_client.initialize()
         planner = PersistentPlannerAdapter(
             planner_client, model=args.model, effort=args.effort, cwd=win(REPO),
@@ -487,11 +488,16 @@ def main():
         failure_cleanup.track(process)
         incoming = queue.Queue()
         all_events = []
+        reader_errors = []
         def reader():
-            for line in process.stdout:
-                row = json.loads(line); all_events.append(row); incoming.put(row)
-        threading.Thread(target=reader, daemon=True).start()
+            try:
+                for line in process.stdout:
+                    row = json.loads(line); all_events.append(row); incoming.put(row)
+            except BaseException as error:
+                reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
+        reader_thread = threading.Thread(target=reader, daemon=True)
+        reader_thread.start()
         def wait(predicate, timeout=40, observation_monitor=None):
             nonlocal latest
             end = time.monotonic() + timeout
@@ -516,6 +522,8 @@ def main():
                                 "invalidation":invalidation}
                 if predicate(row): return row
             raise TimeoutError()
+        failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
+        failure_cleanup.set_stage("session_startup")
         ready = wait(lambda r:r["event"] == "ready")
         runtime_fixture = ready.get("fixture")
         if runtime_fixture is None:
@@ -525,6 +533,7 @@ def main():
         source_refreshes=[]
         program_admissions=0
         for index in range(args.iterations):
+            failure_cleanup.set_stage("source_refresh")
             if index and index % args.session_span == 0:
                 planner.start_session()
                 model_session_id=planner.thread_id
@@ -537,12 +546,17 @@ def main():
                     f"source-refresh-{index}")
             except SourceRefreshRefused as error:
                 source_refreshes.append(dict(error.receipt, iteration=index))
-                (args.out/"source-refreshes.json").write_text(
-                    json.dumps(source_refreshes,indent=2)+"\n")
+                try:
+                    (args.out/"source-refreshes.json").write_text(
+                        json.dumps(source_refreshes,indent=2)+"\n")
+                except BaseException as save_error:
+                    error.add_note(
+                        f"source refresh receipt write failed: {type(save_error).__name__}: {save_error}")
                 raise
             source_refreshes.append(dict(source_refresh, iteration=index))
             (args.out/"source-refreshes.json").write_text(
                 json.dumps(source_refreshes,indent=2)+"\n")
+            failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
             validity_monitor, validity_admission = build_cover_monitor(
                 signal_reader, latest, cover_validity_semantic, index)
@@ -550,6 +564,7 @@ def main():
             validity_monitor, validity_admission = select_cover_monitor(
                 validity_monitor, validity_admission, cover_semantic,
                 cover_policy_source_iteration)
+            failure_cleanup.set_stage("action_source_health_ammo")
             cover_steps=compile_cover(cover_semantic)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             def submit_cover(identifier):
@@ -1069,4 +1084,3 @@ def main():
           "model_wall_seconds":report["model_wall_seconds"]},indent=2))
 
 if __name__ == "__main__": main()
-

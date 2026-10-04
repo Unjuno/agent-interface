@@ -13,13 +13,75 @@ class Pipe:
         if self.fail: raise BrokenPipeError()
         self.data+=data
     def flush(self): pass
+    def close(self): pass
 class Child:
     def __init__(self, fail=False): self.stdin=Pipe(fail);self.exited=False
     def poll(self): return 0 if self.exited else None
     def wait(self,timeout): self.exited=True;return 0
     def terminate(self): self.exited=True
     def kill(self): self.exited=True
+
+class DelayedReader:
+    def __init__(self, events, late_rows, stop=True):
+        self.events=events;self.late_rows=late_rows;self.stop=stop;self.join_calls=[]
+        self.alive=True
+    def is_alive(self): return self.alive
+    def join(self,timeout):
+        self.join_calls.append(timeout);self.events.extend(self.late_rows)
+        if self.stop:self.alive=False
 class Tests(unittest.TestCase):
+    def test_reader_is_joined_before_terminal_evidence_is_classified(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);runtime=out/'runtime';runtime.mkdir()
+            (runtime/'score.json').write_text('{"event":"post_control_score"}\n')
+            (runtime/'owner-events.json').write_text('[{"reason":"close","verified":true}]\n')
+            events=[{'event':'accepted','id':'passive-1'}]
+            reader=DelayedReader(events,[
+                {'event':'terminal','id':'passive-1','status':'completed',
+                 'release':{'verified':True,'keys_down':[],'buttons_down':[]}},
+                {'event':'post_control_score'}])
+            planner=Planner();child=Child();error=ValueError('typed source unavailable')
+            wait_calls=[]
+            def event_wait(predicate,timeout):
+                wait_calls.append(timeout)
+                row={'event':'post_control_score'}
+                self.assertTrue(predicate(row));return row
+            with self.assertRaises(ValueError) as caught:
+                with ControllerFailureCleanup(planner,out) as scope:
+                    scope.track(child)
+                    scope.set_stage('source_refresh')
+                    scope.observe_output(events,reader,event_wait,runtime)
+                    raise error
+            self.assertIs(caught.exception,error)
+            self.assertEqual(reader.join_calls,[5])
+            self.assertTrue(planner.closed and child.exited)
+            self.assertEqual(wait_calls,[10])
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertEqual(receipt['failed_stage'],'source_refresh')
+            self.assertTrue(receipt['stdout_reader_retired'])
+            self.assertTrue(receipt['input_terminals_complete'])
+            self.assertTrue(receipt['input_releases_verified_empty'])
+            self.assertTrue(receipt['scorer_terminal_observed'])
+            self.assertTrue(receipt['owner_events_closed'])
+            self.assertTrue(receipt['cleanup_complete'])
+
+    def test_reader_timeout_fails_closed_on_event_set_completeness(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);runtime=out/'runtime';runtime.mkdir()
+            events=[{'event':'accepted','id':'passive-1'}]
+            reader=DelayedReader(events,[],stop=False)
+            planner=Planner();child=Child()
+            event_wait=lambda predicate,timeout:{'event':'post_control_score'}
+            with self.assertRaises(ValueError):
+                with ControllerFailureCleanup(planner,out) as scope:
+                    scope.track(child);scope.observe_output(events,reader,event_wait,runtime)
+                    raise ValueError('primary')
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertFalse(receipt['stdout_reader_retired'])
+            self.assertFalse(receipt['input_terminals_complete'])
+            self.assertFalse(receipt['input_releases_verified_empty'])
+            self.assertFalse(receipt['cleanup_complete'])
+
     def test_original_error_preserved_child_finished_planner_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             planner=Planner();child=Child();error=ValueError('original')
