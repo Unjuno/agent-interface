@@ -1,0 +1,28 @@
+{
+  "schema": "fake-xlib-module-cache-isolation-freeze-v1",
+  "reviewed_head": "ebe86025e7f122f0a93b841cf41211bc50b715fe",
+  "base_main": "dae347cb8333f4469c89b076b0b466cc8bf6b960",
+  "H": "The new fake-Xlib owner test and adjacent explicit-key-up cancellation test restore every pre-existing input_owner_v12 and transition-wrapper sys.modules entry after completion.",
+  "T": "Pre-fix sentinel probe against the archived reviewed test, then the 18-execution ordered single-process suite with the interval test before and after V4/cause/batch/V13 tests.",
+  "D": {
+    "FAIL": "the sentinel pre-fix probe exits 1 because the preloaded input_owner_v12 module is removed",
+    "PASS": "ordered post-fix runner exits 0 with 18 tests and unittest reports OK",
+    "HOLD": "test runner import or setup failure"
+  },
+  "C": "The fake Xlib objects and owner test do not exercise native X11; only Python module-cache preservation is measured.",
+  "U": "No X server, physical input, GUI/game/model, useful feedback, or live allocation. Mac-host Python bundle was used.",
+  "candidate_test_path": "research/live_control/test_input_owner_v12_batch_release_intervals.py",
+  "candidate_test_sha256": "6d9d95c7d44a96300cd969e61a1a6a60db5f1a9e840075219dd4c9830926c2bd",
+  "adjacent_test_path": "research/live_control/test_input_owner_v12_explicit_up_cancel.py",
+  "adjacent_test_sha256": "b2e85bc26b0292cda027c1100e2ccaa0102f9c6a95fdc3b7bb7bfa732eb2acee",
+  "runner_sha256": "c2954cb99a04c137356ccb775585ae252926087b89e60e7d37812043f999c2af",
+  "archived_pre_review_test_sha256": "c471de8219b62b91d50d58ae62191caf529821f5b0ce6d11654882ba2450887f",
+  "commands": [
+    "PYTHONPATH=research/live_control:research/doom python3 module_cache_isolation/pre_fix_probe.py",
+    "PYTHONPATH=.:research/live_control:research/doom python3 module_cache_isolation/run_test_order_followup.py"
+  ],
+  "host": {
+    "python": "3.12.14",
+    "runtime": "Codex bundled Python with Pillow 12.3.0"
+  }
+}

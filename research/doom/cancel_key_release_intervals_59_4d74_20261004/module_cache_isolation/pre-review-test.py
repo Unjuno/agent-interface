@@ -57,26 +57,10 @@ class Lease:
 
 
 class BatchReleaseIntervalTests(unittest.TestCase):
-    def test_restores_a_preloaded_owner_module_after_fake_xlib_run(self):
-        prior_owner = types.ModuleType("input_owner_v12")
-        previous = sys.modules.get("input_owner_v12")
-        sys.modules["input_owner_v12"] = prior_owner
-        try:
-            self.test_cancelled_release_records_each_key_to_shared_sync_bound()
-            self.assertIs(sys.modules.get("input_owner_v12"), prior_owner)
-        finally:
-            if previous is None:
-                sys.modules.pop("input_owner_v12", None)
-            else:
-                sys.modules["input_owner_v12"] = previous
-
     def test_cancelled_release_records_each_key_to_shared_sync_bound(self):
         names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
                  "Xlib.ext", "Xlib.ext.xtest")
-        owner_names = ("input_owner_v12", "input_transition_owner_v3",
-                       "input_transition_owner_v4")
         saved = {name: sys.modules.get(name) for name in names}
-        saved_owners = {name: sys.modules.get(name) for name in owner_names}
         display_instance = FakeDisplay()
         xlib = types.ModuleType("Xlib")
         xlib.X = types.SimpleNamespace(
@@ -108,8 +92,7 @@ class BatchReleaseIntervalTests(unittest.TestCase):
         })
         owner = None
         try:
-            for name in owner_names:
-                sys.modules.pop(name, None)
+            sys.modules.pop("input_owner_v12", None)
             from input_owner_v12 import InputOwner
 
             owner = InputOwner(":fake")
@@ -143,12 +126,8 @@ class BatchReleaseIntervalTests(unittest.TestCase):
         finally:
             if owner is not None:
                 owner.close()
+            sys.modules.pop("input_owner_v12", None)
             for name, module in saved.items():
-                if module is None:
-                    sys.modules.pop(name, None)
-                else:
-                    sys.modules[name] = module
-            for name, module in saved_owners.items():
                 if module is None:
                     sys.modules.pop(name, None)
                 else:

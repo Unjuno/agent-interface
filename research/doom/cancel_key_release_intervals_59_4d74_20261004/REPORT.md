@@ -13,3 +13,8 @@ This construction check closes a source/telemetry gap found during the current-m
 **U — Uncertainty and limits.** This is fake-Xlib/source-composition evidence only. It does not test a real X server, OS input, physical key transition, GUI/game effect, model, useful feedback, full session, or bounded recovery. The candidate suite ran on the macOS host because the configured OrbStack Docker daemon returned an unsupported content-store operation during image listing. No game/GPU allocation was used. The private #59 game lane remains unassigned.
 
 The exact freeze, commands, source hashes, raw output, and an audit script are in this directory. Historical STOP and FAIL outputs are preserved and not relabeled as candidate results.
+
+
+## Test-isolation follow-up
+
+An independent review found that the fake-Xlib tests evicted cached owner/transition modules without restoring earlier entries. A sentinel regression failed against the original test, then both owner fixtures were updated to restore saved module entries. The ordered 18-test single-process follow-up passes with the new interval test before and after the adjacent transition, cancellation, batch, and V13 suites. Raw outcomes and hashes are retained under `module_cache_isolation/`. This repairs test isolation only and does not change the production behavior or construction-only scope.

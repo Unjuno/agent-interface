@@ -64,7 +64,10 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
     def test_cancel_during_keyup_sync_is_not_marked_ordinary(self):
         names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
                  "Xlib.ext", "Xlib.ext.xtest")
+        owner_names = ("input_owner_v12", "input_transition_owner_v3",
+                       "input_transition_owner_v4")
         saved = {name: sys.modules.get(name) for name in names}
+        saved_owners = {name: sys.modules.get(name) for name in owner_names}
         display_instance = FakeDisplay()
         xlib = types.ModuleType("Xlib")
         xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
@@ -94,8 +97,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
                             "Xlib.ext.xtest": xtest})
         owner = None
         try:
-            for name in ("input_owner_v12", "input_transition_owner_v3",
-                         "input_transition_owner_v4"):
+            for name in owner_names:
                 sys.modules.pop(name, None)
             from input_transition_owner_v4 import InputOwner
 
@@ -113,10 +115,12 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
         finally:
             if owner is not None:
                 owner.close()
-            for name in ("input_transition_owner_v4", "input_transition_owner_v3",
-                         "input_owner_v12"):
-                sys.modules.pop(name, None)
             for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
+            for name, module in saved_owners.items():
                 if module is None:
                     sys.modules.pop(name, None)
                 else:
