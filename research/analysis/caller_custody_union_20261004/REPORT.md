@@ -6,8 +6,8 @@ task-effect qualification.
 
 ## Lineage and scope
 
-- Base: `origin/main` `99f77c47b91466d49c1e9438f9518d2edec6706a`.
-- Successor head at report creation: `903992f62f68b3a6e2b11db775b6053825c25e61`.
+- Base: `origin/main` `63980603e4bb6e4b128ed07af3bf7023bc2d4734` (refreshed 2026-10-04).
+- Refreshed successor head before this report correction: `f488c2fb49db741a176e0a1f719a793023b0e727`.
 - Source PR #7494 (`rescue/caller-composed-5156-20261004`) and source PR #7330
   (`fix/caller-current-main-composition-i76`) were merged locally as separate
   parents without textual conflicts. Both source PRs and their branches remain
@@ -40,8 +40,10 @@ review remain open gates.
 
 ## Validation
 
-- Focused caller union: 74 tests PASS under Python 3.12.13, both normal and
-  `-O` modes.
+- Focused caller union: 70 tests PASS under Python 3.12.13, both normal and
+  `-O` modes on the refreshed successor tree. Native catalogue tests: 4 PASS;
+  research workspace-index tests: 1 PASS; git-tree workspace index: PASS
+  (159 top-level directories); analysis index: PASS (671 retained directories).
 - Full native runner on the union: FAIL; protocol 526 tests (4 failures, 6
   errors, 5 skips), harness 205 tests (31 errors). A comparison baseline at
   `60997f0599392d1b06c638b7deb0f30c5855d152` (main's immediate integration
