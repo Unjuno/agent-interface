@@ -68,13 +68,19 @@ def fake_input(display, event, code, **_kwargs):
             raise AssertionError(event)
 
 
-def load_candidate():
-    source = subprocess.check_output(
-        ["git", "show", f"{SOURCE_COMMIT}:{SOURCE_PATH}"]
-    )
+def candidate_source():
+    source = subprocess.check_output([
+        "git", "show", f"{SOURCE_COMMIT}:{SOURCE_PATH}"
+    ])
     blob = hashlib.sha1(b"blob " + str(len(source)).encode() + b"\0" + source).hexdigest()
     if blob != EXPECTED_BLOB:
         raise RuntimeError(f"candidate blob mismatch: {blob}")
+    return source
+
+
+def load_candidate(source=None):
+    if source is None:
+        source = candidate_source()
 
     executor = types.ModuleType("executor_v3")
     executor.Cancelled = type("Cancelled", (Exception,), {})
