@@ -1,0 +1,278 @@
+{
+  "bridge_held_after_terminal": [],
+  "cursor_after_execute_drain": 0,
+  "events": [
+    {
+      "accepted_ns": 163864933249791,
+      "event": "accepted",
+      "id": "expiry-pending-a01",
+      "intent_token": "intent-expiry-pending-a01",
+      "program_sha256": "9b03876859bd7a373d90deec30ddabd709ae0785ab626fa170828f0ee0ee5af6",
+      "steps": 1,
+      "valid_until_ns": 163865183187250
+    },
+    {
+      "event": "step_started",
+      "id": "expiry-pending-a01",
+      "issued_ns": 163864933305250,
+      "operation": "hold",
+      "step": 0
+    },
+    {
+      "admitted_ns": 163864933331625,
+      "event": "input_admission",
+      "id": "expiry-pending-a01",
+      "input_ack_ns": 163864933338416,
+      "intent_token": "intent-expiry-pending-a01",
+      "key": "F8",
+      "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+      "physical_key_measurement": {
+        "actuation_id": "12b89706e4ed4e74a230679be0d4f62c:g1:F8",
+        "adapter_edge": {
+          "actuation_id": "12b89706e4ed4e74a230679be0d4f62c:g1:F8",
+          "edge": "down",
+          "grants_input_authority": false,
+          "intent_token": "intent-expiry-pending-a01",
+          "interval": [
+            163864933334791,
+            163864933340916
+          ],
+          "key": "F8",
+          "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "grants_input_authority": false,
+          "intent_token": "intent-expiry-pending-a01",
+          "key": "F8",
+          "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+          "physical_down_interval": [
+            163864933334791,
+            163864933340916
+          ],
+          "press_id": "12b89706e4ed4e74a230679be0d4f62c:r1:down:74",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "classification": "CONFIRMED_PHYSICAL_DOWN",
+        "edge": "down",
+        "grants_input_authority": false,
+        "identity_status": "MINTED",
+        "post_sample": {
+          "available": true,
+          "down": true,
+          "error": null,
+          "finished_ns": 163864933340916,
+          "started_ns": 163864933338708
+        },
+        "pre_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 163864933334791,
+          "started_ns": 163864933332041
+        },
+        "press_request_ns": 163864933335666,
+        "sync_return_ns": 163864933338416
+      },
+      "step": 0,
+      "valid_until_ns": 163865183187250
+    },
+    {
+      "decision_reason": null,
+      "error": null,
+      "event": "terminal",
+      "id": "expiry-pending-a01",
+      "interruption": {
+        "intent_token": "intent-expiry-pending-a01",
+        "record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "event": "input_release_measurement",
+              "grants_input_authority": false,
+              "id": "expiry-pending-a01",
+              "intent_token": "intent-expiry-pending-a01",
+              "key": "F8",
+              "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+              "physical_key_measurement": {
+                "actuation_id": "12b89706e4ed4e74a230679be0d4f62c:g1:F8",
+                "adapter_edge": {
+                  "actuation_id": "12b89706e4ed4e74a230679be0d4f62c:g1:F8",
+                  "edge": "up",
+                  "grants_input_authority": false,
+                  "intent_token": "intent-expiry-pending-a01",
+                  "interval": [
+                    163865183791583,
+                    163865184016250
+                  ],
+                  "key": "F8",
+                  "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+                  "status": "CONFIRMED_PHYSICAL_UP"
+                },
+                "application_consumption_observed": false,
+                "bracket": {
+                  "application_consumption_observed": false,
+                  "grants_input_authority": false,
+                  "intent_token": "intent-expiry-pending-a01",
+                  "key": "F8",
+                  "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+                  "physical_up_interval": [
+                    163865183791583,
+                    163865184016250
+                  ],
+                  "release_id": "12b89706e4ed4e74a230679be0d4f62c:r2:cleanup-up:74",
+                  "status": "CONFIRMED_PHYSICAL_UP"
+                },
+                "classification": "CONFIRMED_PHYSICAL_UP",
+                "edge": "up",
+                "grants_input_authority": false,
+                "identity_status": "RETIRED",
+                "post_sample": {
+                  "available": true,
+                  "down": false,
+                  "error": null,
+                  "finished_ns": 163865184016250,
+                  "started_ns": 163865184012250
+                },
+                "pre_sample": {
+                  "available": true,
+                  "down": true,
+                  "error": null,
+                  "finished_ns": 163865183791583,
+                  "started_ns": 163865183770125
+                },
+                "release_attempted": true,
+                "release_request_ns": 163865183796291,
+                "sync_return_ns": 163865184011625
+              },
+              "reason": "expired",
+              "step": 0
+            }
+          ],
+          "reason": "expired",
+          "valid_until_ns": 163865183187250,
+          "verified": true,
+          "verified_ns": 163865184084500
+        }
+      },
+      "release": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "per_key_release_measurements": [],
+        "reason": "release",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 163865184310875
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "expired",
+      "steps_completed": 0,
+      "terminal_ns": 163865184429708
+    }
+  ],
+  "executor_active_after_terminal": false,
+  "fake_physical_keys_after_terminal": [],
+  "owner_records_after_unblock": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "per_key_release_measurements": [
+        {
+          "event": "input_release_measurement",
+          "grants_input_authority": false,
+          "id": "expiry-pending-a01",
+          "intent_token": "intent-expiry-pending-a01",
+          "key": "F8",
+          "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+          "physical_key_measurement": {
+            "actuation_id": "12b89706e4ed4e74a230679be0d4f62c:g1:F8",
+            "adapter_edge": {
+              "actuation_id": "12b89706e4ed4e74a230679be0d4f62c:g1:F8",
+              "edge": "up",
+              "grants_input_authority": false,
+              "intent_token": "intent-expiry-pending-a01",
+              "interval": [
+                163865183791583,
+                163865184016250
+              ],
+              "key": "F8",
+              "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+              "status": "CONFIRMED_PHYSICAL_UP"
+            },
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-expiry-pending-a01",
+              "key": "F8",
+              "owner_id": "12b89706e4ed4e74a230679be0d4f62c",
+              "physical_up_interval": [
+                163865183791583,
+                163865184016250
+              ],
+              "release_id": "12b89706e4ed4e74a230679be0d4f62c:r2:cleanup-up:74",
+              "status": "CONFIRMED_PHYSICAL_UP"
+            },
+            "classification": "CONFIRMED_PHYSICAL_UP",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "RETIRED",
+            "post_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 163865184016250,
+              "started_ns": 163865184012250
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 163865183791583,
+              "started_ns": 163865183770125
+            },
+            "release_attempted": true,
+            "release_request_ns": 163865183796291,
+            "sync_return_ns": 163865184011625
+          },
+          "reason": "expired",
+          "step": 0
+        }
+      ],
+      "reason": "expired",
+      "valid_until_ns": 163865183187250,
+      "verified": true,
+      "verified_ns": 163865184084500
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "per_key_release_measurements": [],
+      "reason": "release",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 163865184310875
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "per_key_release_measurements": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 163865184558416
+    }
+  ],
+  "owner_records_before_unblock": [],
+  "physical_state_while_sync_blocked": [],
+  "schema": "map01-v39-expiry-pending-cleanup-candidate-v1",
+  "terminal_count": 1
+}
