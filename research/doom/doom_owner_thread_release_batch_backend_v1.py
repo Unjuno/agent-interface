@@ -49,9 +49,8 @@ class Backend(Previous):
         return {**ledger, "positions": [dict(position)
                                          for position in ledger.get("positions", [])]}
 
-    def _set_delivery_state(self, context, row, state):
+    def _set_delivery_state(self, context, position, state):
         ledger = self._delivery_ledger(context)
-        position = row.get("release_batch_position")
         for entry in ledger["positions"]:
             if entry["position"] == position:
                 entry["state"] = state
@@ -118,12 +117,13 @@ class Backend(Previous):
                     "release_batch_disposition identifies the exception boundary"
                 ),
             })
+            position = row.get("release_batch_position")
             try:
                 self.emit(row)
             except BaseException:
-                self._set_delivery_state(context, row, "unknown")
+                self._set_delivery_state(context, position, "unknown")
                 raise
-            self._set_delivery_state(context, row, "confirmed_incomplete")
+            self._set_delivery_state(context, position, "confirmed_incomplete")
 
     def _finish_incomplete_release_batch(self, context, error, disposition):
         try:
@@ -337,10 +337,11 @@ class Backend(Previous):
             # Mark delivery attempt before crossing the sink boundary. If a
             # sink accepts a row and then raises, execute() must not retry it.
             row = rows.pop(0)
+            position = row.get("release_batch_position")
             try:
                 self.emit(row)
             except BaseException as exc:
-                self._set_delivery_state(context, row, "unknown")
+                self._set_delivery_state(context, position, "unknown")
                 context["publication_error_type"] = type(exc).__name__
                 raise
-            self._set_delivery_state(context, row, "confirmed")
+            self._set_delivery_state(context, position, "confirmed")
