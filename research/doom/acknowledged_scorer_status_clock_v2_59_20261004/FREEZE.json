@@ -1,0 +1,19 @@
+{
+  "schema": "acknowledged-scorer-clock-v2-freeze-1",
+  "parent_pr_head": "9e33a99e495b148f9dbfa90fef16413859b271de",
+  "latest_main_head": "c7837e7aae09bf2f3d9b40a77b790d7d6777d799",
+  "latest_main_inputs": {
+    "research/doom/session_map01_v16.py": "526f6ef9f07953c053cc3eed136b1c1144e071dd35c0b9493b0c9820889ddefe",
+    "research/doom/acknowledged_scorer_v1.py": "edca36213884a2f21542a3b1339e8b2d3b68b79ebcadd3d0067bdc80d9bf42f0",
+    "research/doom/test_acknowledged_scorer_v1.py": "b440434de977026f9ee6bc0313fdf4ff951a5b7990ff1e65a42c6d55a2aa19b3",
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+  },
+  "runtime": "native macOS Python 3.14 for current candidate checks; cached WSLc image unavailable on the present Docker daemon",
+  "commands": [
+    "PYTHONPATH=research/doom:research/doom/acknowledged_scorer_status_clock_v2_59_20261004 python3 -m unittest -v test_session_map01_v17 test_acknowledged_scorer_clock_v2",
+    "PYTHONPATH=<current-main>/research/doom:<candidate-package> python3 -m unittest -v test_acknowledged_scorer_clock_v2",
+    "PYTHONPATH=<current-main>/research/doom python3 -m unittest -v test_acknowledged_scorer_v1"
+  ],
+  "container_image": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+  "container_execution": "STOP_BEFORE_EXECUTION: image absent; local image inventory reports containerd content-blob operation not supported; no pull/retry"
+}

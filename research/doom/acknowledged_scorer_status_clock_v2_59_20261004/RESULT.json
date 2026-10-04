@@ -1,0 +1,29 @@
+{
+  "schema": "acknowledged-scorer-clock-v2-construction-result-1",
+  "status": "PASS_CONSTRUCTION_ONLY",
+  "date": "2026-10-04",
+  "parent_pr_head": "9e33a99e495b148f9dbfa90fef16413859b271de",
+  "latest_main": "c7837e7aae09bf2f3d9b40a77b790d7d6777d799",
+  "baseline_tdd_red": {
+    "exit": 1,
+    "expected_failure": "UPDATE_UNAVAILABLE != UPDATE_RETURNED",
+    "advance_action_calls": 1,
+    "fake_tic": "7->10",
+    "return_clock_error": "OSError"
+  },
+  "candidate_and_v17_tests": {"parent_passed": 9, "main_passed": 9, "failed": 0},
+  "v2_injected_unaffected_contracts": {"parent_passed": 10, "main_passed": 9, "failed": 0},
+  "unmodified_v1_tests": {"parent_passed": 11, "main_passed": 10, "failed": 0},
+  "v2_noop_reclassification": "PASS; UPDATE_RETURNED + UPDATE_VALIDATION_FAILED, no sample",
+  "predecessor_packet_audit": {"status": "PASS", "manifest_files": 13},
+  "compile": "PASS",
+  "diff_check": "PASS",
+  "container": {
+    "status": "STOP_BEFORE_EXECUTION",
+    "reason": "frozen image absent; local image inventory fails with containerd content-blob operation not supported",
+    "pull_or_retry": false
+  },
+  "live_engine_or_input": false,
+  "runtime_integration": "V17 opt-in binding/proxy construction tested; full V16 main/session NOT_RUN",
+  "main_session_executed": false
+}
