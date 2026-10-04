@@ -817,6 +817,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`soft_revisit_bias_5756_t0_orbstack_a03_20261003/`](soft_revisit_bias_5756_t0_orbstack_a03_20261003/)
 - [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`soft_revisit_bias_6442_supplemental_audit_v1/`](soft_revisit_bias_6442_supplemental_audit_v1/)
+- [`source_bound_conflict_cores_7501_provenance_a02_20261005/`](source_bound_conflict_cores_7501_provenance_a02_20261005/)
 - [`source_bound_conflict_cores_7501_scaling_a01_20261005/`](source_bound_conflict_cores_7501_scaling_a01_20261005/)
 - [`source_bound_conflict_cores_7501_t0_20261004/`](source_bound_conflict_cores_7501_t0_20261004/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
