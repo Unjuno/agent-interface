@@ -1,0 +1,25 @@
+{
+  "schema": "unauthored-coast-typed-interrupt-construction-freeze-v1",
+  "main_commit": "dae347cb8333f4469c89b076b0b466cc8bf6b960",
+  "candidate_branch": "research/59-unauthored-coast-typed-interrupt-v1",
+  "candidate_commit": "89a13ffab5a25ecdcd858e03c9f21ba15ae94c69",
+  "current_v39_blob": "0f3dfcada36520acb24fceaf26a4124c96e050b3",
+  "candidate_v40_blob": "58ab94bc9824b0e88c37c3a18bb448ea8dce6b0e",
+  "monitor_blob": "2a1934c8724a141dd0d959a6fc45562c30a526c6",
+  "hypothesis": "During unauthored empty coast, interrupt after at least two of latest three typed health samples are <= model-start baseline minus five; never replan from screenshot older than invalidation sequence.",
+  "treatment": "Versioned v40 controller and v1 monitor; no game/model/input.",
+  "decision": "Construction only; 9 monitor/handoff tests and 3 integration tests pass; py_compile passes.",
+  "control": "Frozen current main v39 blob remains unchanged.",
+  "uncertainty": "Saved-only retrospective comparison is censored/nonmatched; no live lane assigned; no planner-cost, safety, recovery, or task success claim.",
+  "environment": {
+    "host": "Windows",
+    "python": "3.11.9",
+    "wslc_available": false,
+    "live_allocation": "not invoked"
+  },
+  "commands": [
+    "python -m py_compile outputs/coast-interrupt-handoff-prototype/map01_overlap_controller_v40.py outputs/coast-interrupt-handoff-prototype/unauthored_coast_liveness_v1.py",
+    "python -m unittest discover -s outputs/coast-interrupt-handoff-prototype -p test_unauthored_coast_liveness_v1.py -v",
+    "python -m unittest discover -s outputs/coast-interrupt-handoff-prototype -p test_map01_overlap_controller_v40.py -v"
+  ]
+}
