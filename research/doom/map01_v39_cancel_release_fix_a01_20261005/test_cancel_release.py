@@ -1,5 +1,6 @@
 import importlib.util
 import sys
+import threading
 import time
 import unittest
 from pathlib import Path
@@ -77,8 +78,20 @@ class CancellationReceiptTests(unittest.TestCase):
                              down["physical_key_measurement"]["actuation_id"])
             self.assertEqual(up["physical_key_measurement"]["classification"],
                              "CONFIRMED_PHYSICAL_UP")
-            self.assertEqual(up["physical_key_measurement"]["identity_status"], "RETIRED")
+            measurement = up["physical_key_measurement"]
+            self.assertEqual(measurement["identity_status"], "RETIRED")
             self.assertEqual(up["reason"], "cancelled")
+            self.assertEqual(measurement["adapter_edge"]["edge"], "up")
+            self.assertFalse(measurement["adapter_edge"]["grants_input_authority"])
+            interval = measurement["adapter_edge"]["interval"]
+            self.assertEqual(interval, [measurement["pre_sample"]["finished_ns"],
+                                        measurement["post_sample"]["finished_ns"]])
+            self.assertLessEqual(measurement["pre_sample"]["finished_ns"],
+                                 measurement["release_request_ns"])
+            self.assertLessEqual(measurement["release_request_ns"],
+                                 measurement["sync_return_ns"])
+            self.assertLessEqual(measurement["sync_return_ns"],
+                                 measurement["post_sample"]["started_ns"])
         finally:
             harness.close()
 
@@ -112,6 +125,8 @@ class CancellationReceiptTests(unittest.TestCase):
             self.assertEqual(set(ups), {"F8", "F9"})
             self.assertEqual(ups["F8"]["step"], 10)
             self.assertEqual(ups["F9"]["step"], 11)
+            self.assertNotEqual(ups["F8"]["physical_key_measurement"]["actuation_id"],
+                                ups["F9"]["physical_key_measurement"]["actuation_id"])
             for key in ("F8", "F9"):
                 self.assertEqual(ups[key]["id"], "cover-cancel-fix")
                 self.assertEqual(ups[key]["physical_key_measurement"]["actuation_id"],
@@ -154,6 +169,92 @@ class CancellationReceiptTests(unittest.TestCase):
             self.assertEqual(backend.held, set())
         finally:
             harness.close()
+
+
+    def test_executor_cancel_terminal_contains_one_verified_cleanup_receipt(self):
+        bridge_test, _hm, harness, _lease, _bm, backend = load_candidate()
+        import executor_v3
+        Cancelled, Executor = executor_v3.Cancelled, executor_v3.Executor
+        parent = bridge_test.Backend.__bases__[0]
+        prior_lease_type = executor_v3.Lease
+
+        class ObservedLease(prior_lease_type):
+            def __init__(self, deadline):
+                super().__init__(deadline)
+                self.expected_focus = 42
+                self.intent_token = "intent-cancel-executor-a01"
+
+        executor_v3.Lease = ObservedLease
+        missing = object()
+        prior_execute = parent.__dict__.get("execute", missing)
+        prior_release = parent.__dict__.get("release_all", missing)
+        events = []
+        admission_seen = threading.Event()
+        terminal_seen = threading.Event()
+
+        def emit(row):
+            events.append(row)
+            if row.get("event") == "input_admission":
+                admission_seen.set()
+            if row.get("event") == "terminal":
+                terminal_seen.set()
+
+        def blocking_program(self, _step, cancel, _identifier, _index):
+            self.raw("F8", True)
+            cancel.wait(2.0)
+            raise Cancelled()
+
+        def release_all(self):
+            for key in list(self.held):
+                self.raw(key, False)
+            state = self.owner.call("input_state", self.lease)
+            return {"verified": (self.held == set()
+                                 and state.get("owned_keycodes") == []
+                                 and state.get("owned_buttons") == [])}
+
+        parent.execute = blocking_program
+        parent.release_all = release_all
+        backend.sequence = 1
+        backend.validate = lambda _steps: None
+        backend.emit = emit
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("cancel-executor-a01", [{"op": "hold"}], 1,
+                            time.perf_counter_ns() + 10_000_000_000)
+            self.assertTrue(admission_seen.wait(1.0), repr(events))
+            self.assertTrue(executor.cancel("cancel-executor-a01"))
+            self.assertTrue(terminal_seen.wait(1.0))
+            ups = [row for row in events if row.get("event") == "input_release_measurement"]
+            terminals = [row for row in events if row.get("event") == "terminal"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            self.assertEqual((ups[0]["id"], ups[0]["step"]),
+                             ("cancel-executor-a01", 0))
+            self.assertEqual(len(terminals), 1)
+            self.assertEqual(terminals[0]["status"], "cancelled")
+            self.assertTrue(terminals[0]["release"]["verified"])
+            event_names = [row.get("event") for row in events]
+            self.assertLess(event_names.index("input_admission"),
+                            event_names.index("cancel_requested"))
+            self.assertLess(event_names.index("cancel_requested"),
+                            event_names.index("input_release_measurement"))
+            self.assertLess(event_names.index("input_release_measurement"),
+                            event_names.index("terminal"))
+            self.assertEqual(harness.d.physical, set())
+            self.assertEqual(backend.held, set())
+        finally:
+            executor.close()
+            harness.close()
+            if prior_execute is missing:
+                delattr(parent, "execute")
+            else:
+                parent.execute = prior_execute
+            if prior_release is missing:
+                delattr(parent, "release_all")
+            else:
+                parent.release_all = prior_release
+            executor_v3.Lease = prior_lease_type
 
 
 if __name__ == "__main__":

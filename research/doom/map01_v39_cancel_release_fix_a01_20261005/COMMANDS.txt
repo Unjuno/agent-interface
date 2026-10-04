@@ -14,3 +14,6 @@ Read-only result audit:
 python3 research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py
 
 No X server, game, GUI, or OS input was used.
+
+ExecutorV3 cancel-to-terminal integration (included in the 6-test focused suite):
+python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_cancel_terminal_contains_one_verified_cleanup_receipt -v
