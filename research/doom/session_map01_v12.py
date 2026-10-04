@@ -134,6 +134,7 @@ def main():
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
             session = suite.Session()
+            (args.out / "x11-display.txt").write_text(session.name, encoding="utf-8")
             atom = session.d.intern_atom("_NET_SUPPORTING_WM_CHECK")
             session._wait(lambda: session.d.screen().root.get_full_property(atom, 0) is not None,
                           4, "WM readiness")

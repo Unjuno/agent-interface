@@ -133,6 +133,7 @@ class Tests(unittest.TestCase):
         self.assertIn('HERE / "doom_typed_release_backend_v3.py"', session)
         self.assertIn('HERE.parent / "live_control/input_transition_owner_v3.py"', session)
         self.assertIn('from input_owner_v10 import InputOwner as Previous', owner)
+        self.assertIn('(args.out / "x11-display.txt").write_text(session.name', session)
 
     def test_constructor_replaces_the_current_release_backend_owner(self):
         Parent.created_owners.clear()
