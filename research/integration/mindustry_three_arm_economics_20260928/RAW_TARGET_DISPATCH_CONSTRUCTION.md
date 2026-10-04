@@ -49,14 +49,18 @@ and unverified release stop without retry. The action ID also serves as the
 session-local transport request ID; the frozen six-task route has unique IDs
 for all twelve target submissions.
 
-Nine focused host tests pass, including wrapper binding and dispatch/compiler
+Twelve focused host tests pass, including wrapper binding and dispatch/compiler
 composition, JSON-line wire serialization, non-authorizing response metadata,
 lost-response/no-retry, unattributed rejection, wrong action/request identity,
 unverified release, replayed or unflushed command receipt, and nonadvancing
-cursor controls. The full package passes 112/112. These tests inject the
-exchange response or a fake socket and do not open an AF_UNIX socket on this
-Windows host; they verify adapter semantics and wire framing, not the actual
-bridge process, live images, Mindustry input, or task effects. A read-only
+cursor controls. The full package passes 115/115. A required trace sink receives
+the compiled request before socket exchange, then the full response or an
+uncertain-transport event; sink failure before exchange prevents transmission.
+The adapter checks that a sink is supplied but cannot establish that an
+arbitrary caller's sink is durable. These tests inject the exchange response or
+a fake socket and do not open an AF_UNIX socket on this Windows host; they
+verify adapter semantics and wire framing, not the actual bridge process, live
+images, Mindustry input, or task effects. A read-only
 re-audit of the retained capture
 still returns `PASS_CONSTRUCTION_ONLY` plus `PASS_SYNTHETIC_DISPATCH_JOIN`
 (18 tasks/36 dispatches), with `source_identity_verified=false`; all four

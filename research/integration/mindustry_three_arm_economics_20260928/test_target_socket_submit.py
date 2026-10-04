@@ -12,6 +12,10 @@ from target_receipts_v1 import (build_palette_receipt,
 from target_socket_submit_v1 import SocketSubmitStop, TargetSocketSubmitter
 
 
+def test_trace_sink(_record):
+    pass
+
+
 def success(action_id, *, cursor=7):
     return {
         "status": "boundary",
@@ -30,9 +34,16 @@ class TargetSocketSubmitTests(unittest.TestCase):
         return {"op": "submit", "id": identifier,
                 "expected_sequence": 5, "steps": [{"op": "observe"}]}
 
+    def test_submitter_cannot_be_constructed_without_explicit_trace_sink(self):
+        with self.assertRaises(TypeError):
+            TargetSocketSubmitter("/tmp/unused.sock")
+        with self.assertRaisesRegex(ValueError, "pre-send trace sink"):
+            TargetSocketSubmitter("/tmp/unused.sock", trace_sink=None)
+
     def test_sends_v2_action_scope_and_returns_release_receipt(self):
         sent = []
-        submitter = TargetSocketSubmitter("/tmp/unused.sock", after=3)
+        submitter = TargetSocketSubmitter("/tmp/unused.sock", after=3,
+                                          trace_sink=test_trace_sink)
 
         def exchange(request):
             sent.append(request)
@@ -51,7 +62,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
 
     def test_unattributed_rejection_fails_closed_and_is_not_retried(self):
         calls = []
-        submitter = TargetSocketSubmitter("/tmp/unused.sock")
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
         submitter._exchange = lambda request: calls.append(request) or {
             "status": "unattributed_rejection", "records": [
                 {"event": "rejected", "reason": "bad command"}], "cursor": 1,
@@ -62,6 +74,9 @@ class TargetSocketSubmitTests(unittest.TestCase):
 
         with self.assertRaisesRegex(SocketSubmitStop, "terminal action boundary"):
             submitter(self.command())
+        self.assertEqual(submitter.trace_events[-1]["event"], "socket_response")
+        self.assertEqual(submitter.trace_events[-1]["response"]["records"][0]["event"],
+                         "rejected")
         with self.assertRaisesRegex(SocketSubmitStop, "already consumed"):
             submitter(self.command())
         self.assertEqual(len(calls), 1)
@@ -81,7 +96,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
         ]
         for response in cases:
             with self.subTest(response=response):
-                submitter = TargetSocketSubmitter("/tmp/unused.sock")
+                submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                                  trace_sink=test_trace_sink)
                 submitter._exchange = lambda _request, value=response: value
                 with self.assertRaises(SocketSubmitStop):
                     submitter(self.command())
@@ -91,7 +107,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
                              ("acknowledgement", "accepted")):
             with self.subTest(field=field):
                 response = success("A1-select-conveyor") | {field: value}
-                submitter = TargetSocketSubmitter("/tmp/unused.sock")
+                submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                                  trace_sink=test_trace_sink)
                 submitter._exchange = lambda _request: response
                 with self.assertRaisesRegex(SocketSubmitStop, "non-authorizing"):
                     submitter(self.command())
@@ -115,7 +132,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
             def recv(self, _size): return self.chunks.pop(0) if self.chunks else b""
 
         fake = FakeSocket()
-        submitter = TargetSocketSubmitter("/tmp/test.sock", timeout_s=2)
+        submitter = TargetSocketSubmitter("/tmp/test.sock", timeout_s=2,
+                                          trace_sink=test_trace_sink)
         with patch("target_socket_submit_v1.socket.AF_UNIX", 1, create=True), \
                 patch("target_socket_submit_v1.socket.socket",
                       return_value=fake) as factory:
@@ -132,7 +150,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
 
     def test_transport_exception_consumes_action_without_retry(self):
         calls = []
-        submitter = TargetSocketSubmitter("/tmp/unused.sock")
+        journal = []
+        submitter = TargetSocketSubmitter("/tmp/unused.sock", trace_sink=journal.append)
 
         def lost_response(_request):
             calls.append(1)
@@ -144,9 +163,49 @@ class TargetSocketSubmitTests(unittest.TestCase):
         with self.assertRaisesRegex(SocketSubmitStop, "already consumed"):
             submitter(self.command())
         self.assertEqual(calls, [1])
+        self.assertEqual([row["event"] for row in journal], [
+            "submit_prepared", "transport_outcome_unknown"])
+
+    def test_journal_precedes_exchange_and_preserves_response(self):
+        order = []
+        journal = []
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=lambda row: (
+                                              journal.append(row),
+                                              order.append("journal:" + row["event"])))
+
+        def exchange(request):
+            order.append("exchange")
+            self.assertEqual(journal[0]["event"], "submit_prepared")
+            self.assertEqual(journal[0]["request"], request)
+            return success(request["action_id"])
+
+        submitter._exchange = exchange
+        submitter(self.command())
+
+        self.assertEqual(order, ["journal:submit_prepared", "exchange",
+                                 "journal:socket_response"])
+        self.assertEqual(journal[1]["response"], success("A1-select-conveyor"))
+        self.assertEqual([row["event"] for row in submitter.trace_events], [
+            "submit_prepared", "socket_response"])
+
+    def test_pre_send_journal_failure_stops_before_exchange(self):
+        exchanges = []
+
+        def fail_sink(_record):
+            raise OSError("journal unavailable")
+
+        submitter = TargetSocketSubmitter("/tmp/unused.sock", trace_sink=fail_sink)
+        submitter._exchange = lambda request: exchanges.append(request)
+        with self.assertRaisesRegex(SocketSubmitStop, "trace sink failed"):
+            submitter(self.command())
+        with self.assertRaisesRegex(SocketSubmitStop, "already consumed"):
+            submitter(self.command())
+        self.assertEqual(exchanges, [])
 
     def test_nonadvancing_cursor_is_not_a_terminal_receipt(self):
-        submitter = TargetSocketSubmitter("/tmp/unused.sock", after=8)
+        submitter = TargetSocketSubmitter("/tmp/unused.sock", after=8,
+                                          trace_sink=test_trace_sink)
         submitter._exchange = lambda request: success(request["action_id"], cursor=8)
         with self.assertRaisesRegex(SocketSubmitStop, "advancing socket event cursor"):
             submitter(self.command())
@@ -173,7 +232,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
                             lambda _image: candidate)
         sequence = {"value": 1}
         fresh = iter((observation(2), observation(3)))
-        submitter = TargetSocketSubmitter("/tmp/unused.sock")
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
         wire_requests = []
 
         def exchange(request):
