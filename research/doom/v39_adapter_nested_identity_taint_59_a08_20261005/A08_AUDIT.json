@@ -1,0 +1,67 @@
+{
+  "audit": "PASS",
+  "checks": 15,
+  "source_sha256": "782e63dd801a715acfdef25df656824fa8c7a115d2a43c80fdfe74c7aaa7335c",
+  "test_sha256": "3eedc5482066e42950bdbdee66bced3f0057ded859658c63f0408b98001cd0f5",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "candidate_mutations": [
+    {
+      "field": "intent_token",
+      "value": null,
+      "identity_unavailable": true,
+      "one_incomplete": true,
+      "timing_null": true
+    },
+    {
+      "field": "intent_token",
+      "value": [
+        "bad"
+      ],
+      "identity_unavailable": true,
+      "one_incomplete": true,
+      "timing_null": true
+    },
+    {
+      "field": "key",
+      "value": null,
+      "identity_unavailable": true,
+      "one_incomplete": true,
+      "timing_null": true
+    },
+    {
+      "field": "key",
+      "value": [
+        "bad"
+      ],
+      "identity_unavailable": true,
+      "one_incomplete": true,
+      "timing_null": true
+    }
+  ],
+  "baseline_false_pairs": [
+    {
+      "field": "intent_token",
+      "value": null,
+      "baseline_false_pair": true
+    },
+    {
+      "field": "intent_token",
+      "value": [
+        "bad"
+      ],
+      "baseline_false_pair": true
+    },
+    {
+      "field": "key",
+      "value": null,
+      "baseline_false_pair": true
+    },
+    {
+      "field": "key",
+      "value": [
+        "bad"
+      ],
+      "baseline_false_pair": true
+    }
+  ]
+}

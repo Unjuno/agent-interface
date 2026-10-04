@@ -1,0 +1,48 @@
+{
+  "experiment": "V39_ADAPTER_NESTED_IDENTITY_MALFORMED_OUTER_TAINT_A08",
+  "baseline_head": "aa88a9d95e208d413e64a23fe30754ec52c9ad55",
+  "baseline_source_sha256": "3ee9dfaabcb33be8ee239051d85425d189abaae36063fda560bf0f0c344b175b",
+  "candidate_source_sha256": "782e63dd801a715acfdef25df656824fa8c7a115d2a43c80fdfe74c7aaa7335c",
+  "test_sha256": "3eedc5482066e42950bdbdee66bced3f0057ded859658c63f0408b98001cd0f5",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "baseline": {
+    "passed": false,
+    "tests": 6,
+    "failed_tests": 4,
+    "output": "test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A08Tests.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok\ntest_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A08Tests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ... ok\ntest_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A08Tests.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) ... ok\ntest_input_edge_receipt_rejects_outer_nested_token_conflict (builtins.A08Tests.test_input_edge_receipt_rejects_outer_nested_token_conflict) ... ok\ntest_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A08Tests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) ... ok\ntest_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) ... \n  test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_token_null') ... FAIL\n  test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_token_list') ... FAIL\n  test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_key_null') ... FAIL\n  test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_key_list') ... FAIL\n\n======================================================================\nFAIL: test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_token_null')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 908, in test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token\n    self.assertEqual(adapter_receipts[0][\"status\"],\nAssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'\n- adapter_edge_brackets_paired\n+ adapter_edge_receipt_incomplete\n\n\n======================================================================\nFAIL: test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_token_list')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 908, in test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token\n    self.assertEqual(adapter_receipts[0][\"status\"],\nAssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'\n- adapter_edge_brackets_paired\n+ adapter_edge_receipt_incomplete\n\n\n======================================================================\nFAIL: test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_key_null')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 908, in test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token\n    self.assertEqual(adapter_receipts[0][\"status\"],\nAssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'\n- adapter_edge_brackets_paired\n+ adapter_edge_receipt_incomplete\n\n\n======================================================================\nFAIL: test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) (case='outer_key_list')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/research/doom/test_map01_v39_typed_state_feedback.py\", line 908, in test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token\n    self.assertEqual(adapter_receipts[0][\"status\"],\nAssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'\n- adapter_edge_brackets_paired\n+ adapter_edge_receipt_incomplete\n\n\n----------------------------------------------------------------------\nRan 6 tests in 0.044s\n\nFAILED (failures=4)\n"
+  },
+  "candidate": {
+    "passed": true,
+    "tests": 6,
+    "failed_tests": 0,
+    "output": "test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A08Tests.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok\ntest_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A08Tests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ... ok\ntest_input_edge_receipt_rejects_outer_group_split_for_same_actuation (builtins.A08Tests.test_input_edge_receipt_rejects_outer_group_split_for_same_actuation) ... ok\ntest_input_edge_receipt_rejects_outer_nested_token_conflict (builtins.A08Tests.test_input_edge_receipt_rejects_outer_nested_token_conflict) ... ok\ntest_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge (builtins.A08Tests.test_input_edge_receipt_rejects_unknown_outer_event_with_adapter_edge) ... ok\ntest_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token (builtins.A08Tests.test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.028s\n\nOK\n"
+  },
+  "malformed_outer_cases": [
+    {
+      "field": "intent_token",
+      "value": null,
+      "baseline_false_pair": true
+    },
+    {
+      "field": "intent_token",
+      "value": [
+        "bad"
+      ],
+      "baseline_false_pair": true
+    },
+    {
+      "field": "key",
+      "value": null,
+      "baseline_false_pair": true
+    },
+    {
+      "field": "key",
+      "value": [
+        "bad"
+      ],
+      "baseline_false_pair": true
+    }
+  ],
+  "all_four_baseline_false_pairs": true,
+  "syntax_compile": "PASS"
+}

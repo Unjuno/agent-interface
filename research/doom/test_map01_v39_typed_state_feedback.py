@@ -880,6 +880,36 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                                     row["up_edge_interval_ns"] is None
                                     for row in adapter_receipts))
 
+    def test_input_edge_receipt_taints_nested_identity_for_unavailable_outer_key_token(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        down = next(row for row in template if row.get("event") == "input_admission")
+        up = next(row for row in template
+                  if row.get("event") == "input_release_measurement")
+
+        cases = (
+            ("outer_token_null", "intent_token", None),
+            ("outer_token_list", "intent_token", ["malformed"]),
+            ("outer_key_null", "key", None),
+            ("outer_key_list", "key", ["malformed"]),
+        )
+        for name, field, value in cases:
+            with self.subTest(case=name):
+                duplicate = json.loads(json.dumps(down))
+                duplicate[field] = value
+                receipts = controller.input_edge_receipts(
+                    json.loads(json.dumps([down, duplicate, up])))
+                adapter_receipts = [row for row in receipts
+                                    if row.get("status", "").startswith("adapter_edge_")]
+                self.assertTrue(any(row.get("status") == "identity_unavailable"
+                                    for row in receipts))
+                self.assertEqual(len(adapter_receipts), 1)
+                self.assertEqual(adapter_receipts[0]["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(adapter_receipts[0]["down_edge_interval_ns"])
+                self.assertIsNone(adapter_receipts[0]["up_edge_interval_ns"])
+
 
 if __name__ == "__main__":
     unittest.main()
