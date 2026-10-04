@@ -123,6 +123,25 @@ checks["explicit_keyup_remap_audit_result"] = (
     explicit_audit.get("pass") is True
     and sha(explicit_audit_path) == explicit_freeze["audit_result_sha256"]
 )
+explicit_audit_v2_path = explicit_root / "AUDIT_v2.json"
+explicit_audit_v2 = json.loads(explicit_audit_v2_path.read_text())
+checks["explicit_keyup_remap_archived_source_reaudit"] = (
+    explicit_audit_v2.get("pass") is True
+    and sha(explicit_root / "candidate" / "input_owner_v12.py")
+        == explicit_freeze["candidate_source_sha256"]
+)
+alias_root = ROOT / "unmatched_keyup_alias"
+alias_freeze = json.loads((alias_root / "FREEZE.json").read_text())
+alias_audit_path = alias_root / "AUDIT.json"
+alias_audit = json.loads(alias_audit_path.read_text())
+checks["unmatched_keyup_alias_candidate_source_sha256"] = (
+    sha(candidate_root / alias_freeze["source_path"])
+    == alias_freeze["candidate_source_sha256"]
+)
+checks["unmatched_keyup_alias_audit_result"] = (
+    alias_audit.get("pass") is True
+    and sha(alias_audit_path) == alias_freeze["audit_result_sha256"]
+)
 manifest = (ROOT / "FILES.sha256").read_text().splitlines()
 manifest_results = []
 for line in manifest:

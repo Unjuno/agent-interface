@@ -370,11 +370,14 @@ class InputOwner:
                         else:
                             # A keymap change must not redirect an up to a
                             # different physical key than the one admitted.
-                            code = held_keys.get((id(lease), key), code)
+                            # An up without a matching admission is not allowed
+                            # to release a different key that happens to map to
+                            # the same current keycode.
+                            code = held_keys.get((id(lease), key))
                             # Cleanup from an old intent must never release a newer hold.
-                            if code in held and held[code] is not lease:
+                            if code is not None and code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
-                            if code in held:
+                            if code is not None and code in held:
                                 owner_keyrelease_started_ns = time.perf_counter_ns()
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()

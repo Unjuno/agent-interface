@@ -35,3 +35,23 @@ The probe loads pinned source at `1721f7cb2a47f53641bc7c93effe2a2b817013cd` and 
 A separate fake-Xlib regression exposed a normal-release defect. The pinned source admitted W as keycode 87, then re-resolved W after the synthetic map changed it to 77. The explicit key-up therefore left physical code 87 down. The candidate now retains the resolved keycode per active lease and logical key, includes it in the admission receipt, and uses that same code for explicit key-up. The regression confirms the physical state empties and admission/key-up receipts both identify 87; the explicit-up request-start and XSync-return timestamps are ordered. The ordered owner/release/V13 suite passes 20 tests. See `explicit_keyup_remap/` for the pinned baseline failure, candidate result, STOP from an incorrect script invocation, and independent audit.
 
 This corrects key identity for paired key-down/key-up across a later mapping change. It does not prove real X11 mapping-change delivery, the semantic meaning of the remapped key, physical transition timing, application/game effect, model behavior, bounded recovery, or live threat response.
+## Additive unmatched-keyup alias follow-up
+
+At the explicit-keyup candidate from PR #7529, a new fake-Xlib case admitted
+`W` at code 87, remapped unadmitted `A` to code 87, and requested `up(A)`. The
+candidate released W despite there being no admission for A. The follow-up
+changes explicit key-up to use only the `(lease, logical key)` admission map;
+unmatched key-up is a no-op. The exact prior source fails the retained test and
+the candidate passes it. A 22-test ordered adjacent suite also passes with the
+new regression at both ends. See
+`unmatched_keyup_alias/README.md` and `unmatched_keyup_alias/RESULT.json`.
+
+The original explicit-remap evidence remains unchanged. Its archived source
+re-audit is `explicit_keyup_remap/AUDIT_v2.json`; it checks the retained result
+against the pinned pre-follow-up candidate instead of requiring that old source
+to remain the current runtime file.
+
+This closes one logical ownership edge in fake-Xlib construction only. It does
+not establish real X11 behavior, per-key physical transition times, useful
+feedback, game effect, bounded recovery, or live threat response. The matched
+Issue #59 live allocation gate remains open.

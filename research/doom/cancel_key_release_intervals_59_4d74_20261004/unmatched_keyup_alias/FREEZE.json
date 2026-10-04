@@ -1,0 +1,34 @@
+{
+  "schema": "unmatched-keyup-alias-freeze-v1",
+  "issue": 59,
+  "H": "An explicit key-up without a matching lease/logical-key admission must not release another held key merely because both logical keysyms resolve to the same current X keycode.",
+  "T": "Under fake Xlib, admit W as code 87, remap A to code 87 without admitting A, request up(A), then verify W remains physically down and has no owner key-up receipt; finally request up(W) and verify empty state.",
+  "D": {
+    "baseline": "FAIL if up(A) clears code 87 or emits a key-up receipt for A.",
+    "candidate": "PASS only if up(A) preserves code 87 with no key-up receipt, then up(W) clears code 87 with the receipt identifying W/code 87."
+  },
+  "C": "This is a malformed or stale logical up edge, but fail-closed ownership requires that an unadmitted symbol cannot release a different active key in the same lease.",
+  "U": "Fake Xlib/source-composition only. No real X server, semantic remap delivery, GUI/game effect, useful feedback, recovery, or live threat response is measured.",
+  "baseline_commit": "9edcc73e5ebcf026756807ff35185c3e0b16989e",
+  "source_path": "research/live_control/input_owner_v12.py",
+  "baseline_source_sha256": "82f5bb461b571df859bd1683058443b3106626079ade472ed8647e4eba5f3594",
+  "candidate_source_sha256": "5910b22cda46fe22418dcfe10234b99f99e23c236e323d8ee51020544be4a7d5",
+  "test_path": "research/live_control/test_input_owner_v12_unmatched_keyup_alias.py",
+  "test_sha256": "e5ca599bcd69ffbca9755463974d966c072f6756c4eb6df7e409ece39846f22d",
+  "test_copy_sha256": "e5ca599bcd69ffbca9755463974d966c072f6756c4eb6df7e409ece39846f22d",
+  "runner_sha256": "49b2e311151bbfac8e87a62861c427e8555d4782caa81f4efe36fcdca5126f54",
+  "ordered_runner_sha256": "1e95038ccca71e6cffcf554de1b869c83874cab7392e051ebe79333a16302b23",
+  "audit_script_sha256": "18333b7a76b8b234d884bb32bdc163eed1a603c6e3048e311c2c29688d692e2f",
+  "baseline_output_sha256": "d67dd1a4e09383f6c4b05dfeada109e2c657b23f8ce321110d5d59f589a8cae7",
+  "candidate_output_sha256": "57d3e00d84ffd58ab4c21a801ef0715c1f20595d4c4dea8496112ae907d1f44f",
+  "ordered_output_sha256": "022aa0bbb67b95df1d7751c04a269b5cd450d426a9a35d51391a7c8bb532727b",
+  "result_sha256": "bb316abacbf55cf6027e1db27cb722467b7de3c1ac5d27f5febd86d863900cf8",
+  "audit_result_sha256": "1b4be8d03c63890f5023f153bc0b61088ae5fedcc02346abd93428ff03a8ad81",
+  "runtime": "CPython 3.14.5 on macOS arm64, in-process fake Xlib",
+  "commands": [
+    "python3 -B research/doom/cancel_key_release_intervals_59_4d74_20261004/unmatched_keyup_alias/run_case.py baseline",
+    "python3 -B research/doom/cancel_key_release_intervals_59_4d74_20261004/unmatched_keyup_alias/run_case.py candidate",
+    "python3 -B -m research.doom.cancel_key_release_intervals_59_4d74_20261004.unmatched_keyup_alias.run_ordered_suite"
+  ],
+  "scope": "one-case deterministic construction regression; not a formal/live allocation"
+}
