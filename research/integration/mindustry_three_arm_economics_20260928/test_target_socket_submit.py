@@ -11,6 +11,9 @@ from arm_coordinator import ArmCoordinator
 from target_execution_v1 import dispatch_task_targets
 from target_receipts_v1 import (build_palette_receipt,
                                 build_world_receipt)
+from audit_target_dispatch_capture import audit as audit_dispatch
+from raw_allocation_audit_v2 import audit as audit_raw
+from test_private_benchmark_channel import assemble_raw_from_private_channels
 from target_socket_submit_v1 import (JsonlTraceSink, SocketSubmitStop,
                                      TargetSocketSubmitter)
 
@@ -64,6 +67,67 @@ class TargetSocketSubmitTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 JsonlTraceSink(path)
             self.assertEqual(path.read_bytes(), before)
+
+    def test_real_submit_adapter_composes_through_three_arm_synthetic_runner(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            trace_dir = root / "submit-traces"
+            trace_dir.mkdir()
+            dispatch_path = root / "target-dispatch-events.json"
+            channel_root = root / "channels"
+            channel_root.mkdir()
+            submitters = {}
+            sinks = []
+            requests = {arm: [] for arm in ("plain", "ephemeral", "persistent")}
+
+            def make_submitter(arm):
+                sink = JsonlTraceSink(trace_dir / f"{arm}.jsonl")
+                sinks.append(sink)
+                submitter = TargetSocketSubmitter(
+                    f"/tmp/{arm}.sock", trace_sink=sink)
+
+                def fake_bridge(request):
+                    requests[arm].append(request)
+                    return success(request["action_id"],
+                                   cursor=request["after"] + 1)
+
+                submitter._exchange = fake_bridge
+                submitters[arm] = submitter
+                return submitter
+
+            try:
+                raw = assemble_raw_from_private_channels(
+                    channel_root, dispatch_path,
+                    submitter_factory=make_submitter)
+            finally:
+                for sink in sinks:
+                    sink.close()
+
+            dispatch = json.loads(dispatch_path.read_text(encoding="utf-8"))
+            self.assertEqual(audit_dispatch(raw, dispatch), {
+                "audit": "PASS_SYNTHETIC_DISPATCH_JOIN",
+                "tasks_verified": 18,
+                "target_dispatches_verified": 36,
+            })
+            raw_result = audit_raw(json.dumps(raw, sort_keys=True).encode())
+            self.assertEqual(raw_result["audit"], "PASS_CONSTRUCTION_ONLY")
+            self.assertIs(raw_result["source_identity_verified"], False)
+
+            for arm in ("plain", "ephemeral", "persistent"):
+                self.assertEqual(len(requests[arm]), 12)
+                self.assertEqual([request["after"] for request in requests[arm]],
+                                 list(range(12)))
+                self.assertEqual(len({request["action_id"]
+                                      for request in requests[arm]}), 12)
+                self.assertEqual(submitters[arm].cursor, 12)
+                trace = [json.loads(line) for line in
+                         (trace_dir / f"{arm}.jsonl").read_text(
+                             encoding="utf-8").splitlines()]
+                self.assertEqual(len(trace), 24)
+                self.assertEqual([row["event"] for row in trace], [
+                    event for _ in range(12)
+                    for event in ("submit_prepared", "socket_response")
+                ])
 
     def test_sends_v2_action_scope_and_returns_release_receipt(self):
         sent = []

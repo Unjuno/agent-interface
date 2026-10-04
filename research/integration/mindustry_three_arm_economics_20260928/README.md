@@ -441,8 +441,13 @@ the response before validation; a failure writing the pre-send record prevents
 the exchange, and ambiguous transport results remain one-shot with no retry.
 Calls through one submitter instance are serialized across the complete socket
 exchange so concurrent actions cannot reuse an old event cursor or overlap
-input operations. The focused socket-submit suite passes 14/14 and the full
-package passes 117/117 after refreshing through current `main`
+input operations. An integration test runs the actual submit adapter through
+the frozen 18-task synthetic three-arm route using an injected fake bridge:
+each arm makes 12 sequential submissions, advances its cursor from 0 through
+12, and writes 24 ordered fsynced JSONL records. The dispatch join audits 18
+tasks/36 target dispatches and raw-v2 returns `PASS_CONSTRUCTION_ONLY`; source
+identity remains false. The focused socket-submit suite passes 15/15 and the
+full package passes 118/118 after refreshing through current `main`
 `0db425b379f9438bf6b13c95dce1b763750b06d5`. Ten sparse-checkout support blobs
 were materialized from that Git tree only for the full test run and removed
 afterward. Python compilation and `git diff --check` also pass. A fresh

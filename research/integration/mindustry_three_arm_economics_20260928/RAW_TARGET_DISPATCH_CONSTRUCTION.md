@@ -49,20 +49,26 @@ and unverified release stop without retry. The action ID also serves as the
 session-local transport request ID; the frozen six-task route has unique IDs
 for all twelve target submissions.
 
-Thirteen focused host tests pass, including wrapper binding and dispatch/compiler
+Fifteen focused host tests pass, including wrapper binding and dispatch/compiler
 composition, JSON-line wire serialization, non-authorizing response metadata,
 lost-response/no-retry, unattributed rejection, wrong action/request identity,
 unverified release, replayed or unflushed command receipt, and nonadvancing
-cursor controls. The full package passes 116/116. A required trace sink receives
-the compiled request before socket exchange, then the full response or an
+cursor controls. The full package passes 118/118 on current main
+`0db425b379f9438bf6b13c95dce1b763750b06d5`. A required trace sink receives the
+compiled request before socket exchange, then the full response or an
 uncertain-transport event; sink failure before exchange prevents transmission.
 The included `JsonlTraceSink` uses exclusive file creation and fsyncs each
 record, and its test verifies ordered readback and refusal to overwrite an
-existing output. Arbitrary caller-supplied sinks still carry a durability
-obligation. These tests inject the exchange response or a fake socket and do
-not open an AF_UNIX socket on this Windows host; they verify adapter semantics
-and trace persistence behavior, not the actual bridge process, live images,
-Mindustry input, or task effects. A read-only
+existing output. The integration control injects that adapter into the frozen
+18-task synthetic route using a fake v2 bridge: each arm sends 12 ordered
+actions through one persistent cursor, and its temporary JSONL trace contains
+24 alternating prepared-request/response records. The raw-v2 and independent
+dispatch audits accept all 18 tasks/36 dispatches as construction-only.
+Arbitrary caller-supplied sinks still carry a durability obligation. These
+tests inject the bridge exchange or a fake socket and do not open an AF_UNIX
+socket on this Windows host; they verify adapter composition and trace
+persistence behavior, not the actual bridge process, live images, Mindustry
+input, or task effects. A read-only
 re-audit of the retained capture
 still returns `PASS_CONSTRUCTION_ONLY` plus `PASS_SYNTHETIC_DISPATCH_JOIN`
 (18 tasks/36 dispatches), with `source_identity_verified=false`; all four

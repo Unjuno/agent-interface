@@ -45,7 +45,7 @@ def ns_values(value):
             yield from ns_values(item)
 
 
-def run_complete_fake_channel(root: Path, arm: str) -> dict:
+def run_complete_fake_channel(root: Path, arm: str, submitter=None) -> dict:
     root.mkdir()
     initial = snapshot()
     channel = PrivateBenchmarkChannel(root, timeout_s=2, poll_s=0.005)
@@ -108,7 +108,9 @@ def run_complete_fake_channel(root: Path, arm: str) -> dict:
             return row
 
         def compile_request(locator, _clock, current_task, target, _receipt):
-            return {"id": f"{current_task}-{target}", "target": target,
+            return {"op": "submit", "id": f"{current_task}-{target}",
+                    "target": target,
+                    "steps": [{"op": "observe"}],
                     "expected_sequence": locator["validated_sequence"]}
 
         with patch("target_execution_v1.compile_receipt_target_click",
@@ -119,8 +121,9 @@ def run_complete_fake_channel(root: Path, arm: str) -> dict:
                 read_clock=lambda: {"sequence": sequences["value"],
                                     "runtime_ns": 1_000_000 + sequences["value"]},
                 build_receipt=lambda _locator, target: {"target": target},
-                submit=lambda request: {"request_id": request["id"],
-                                        "terminal": True, "released": True})
+                submit=(submitter if submitter is not None else
+                        lambda request: {"request_id": request["id"],
+                                         "terminal": True, "released": True}))
         if ([row["target"] for row in target_results]
                 != ["palette_point", "target_point"]):
             raise AssertionError("two ordered target dispatches required per task")
@@ -163,10 +166,14 @@ def run_complete_fake_channel(root: Path, arm: str) -> dict:
             "dispatch_capture": dispatch_capture}
 
 
-def assemble_raw_from_private_channels(root: Path,
-                                       dispatch_output: Path | None = None) -> dict:
-    capture = {arm: run_complete_fake_channel(root / arm, arm)
-               for arm in ("plain", "ephemeral", "persistent")}
+def assemble_raw_from_private_channels(
+        root: Path, dispatch_output: Path | None = None, *,
+        submitter_factory=None) -> dict:
+    capture = {}
+    for arm in ("plain", "ephemeral", "persistent"):
+        submitter = (submitter_factory(arm)
+                     if submitter_factory is not None else None)
+        capture[arm] = run_complete_fake_channel(root / arm, arm, submitter)
     raw = raw_v2()
     for arm, captured in capture.items():
         rows = captured["lifecycle"]
