@@ -11,7 +11,7 @@ LIVE = HERE.parent / "live_control"
 
 
 class ActualReleaseCompositionTests(unittest.TestCase):
-    def _run(self, *, wrong_key=False):
+    def _run(self, *, wrong_key=False, step_exception=False):
         emitted = []
         low_level = types.ModuleType("input_owner_v12")
         transition = types.ModuleType("input_transition_owner_v3")
@@ -93,6 +93,13 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 self._input_event_context = None
                 self.emit = emit
 
+            def execute(self, step, cancel, identifier, index):
+                self._input_event_context = (identifier, index)
+                self.raw("a", True)
+                self.raw("b", True)
+                self.raw("a", False)
+                raise RuntimeError("later step failed")
+
         low_level.InputOwner = Owner
         transition.InputOwner = TransitionOwner
         backend_base.Backend = PreviousBackend
@@ -117,10 +124,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             candidate._input_event_context = ("program-1", 0)
             candidate._release_batch.context = {"rows": [], "identifier": "program-1",
                                                 "step": 0}
-            for key in ("a", "b"):
-                candidate.raw(key, True)
-            for key in ("a", "b"):
-                candidate.raw(key, False)
+            if step_exception:
+                with self.assertRaisesRegex(RuntimeError, "later step failed"):
+                    candidate.execute({}, None, "program-1", 0)
+            else:
+                for key in ("a", "b"):
+                    candidate.raw(key, True)
+                for key in ("a", "b"):
+                    candidate.raw(key, False)
             releases = [row for row in emitted if row.get("event") == "input_release_transition"]
             admissions = [row for row in emitted if row.get("event") == "input_admission"]
             return admissions, releases
@@ -167,6 +178,15 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual([row["key"] for row in releases], ["a", "b"])
         self.assertFalse(any(row["owner_transition_verified"] for row in releases))
         self.assertFalse(any(row["owner_thread_keyup_verified_after_batch"] for row in releases))
+
+    def test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception(self):
+        _, releases = self._run(step_exception=True)
+        self.assertEqual([row["key"] for row in releases], ["a"])
+        self.assertEqual(releases[0]["owner_thread_keyup_receipt"]["key"], "a")
+        self.assertTrue(releases[0]["owner_thread_keyup_verified"])
+        self.assertFalse(releases[0]["owner_transition_verified"])
+        self.assertFalse(releases[0]["release_batch_complete"])
+        self.assertEqual(releases[0]["release_batch_disposition"], "step_exception")
 
 
 if __name__ == "__main__":
