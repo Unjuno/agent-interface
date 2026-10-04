@@ -2,8 +2,8 @@
   "current_main": "3dbbda05eb8d5067ee2c2969615e472a0f20f562",
   "candidate_branch": "research/59-a09-partial-identity-taint-20261005",
   "candidate_head": "1d3a7ffbd2fc78da00836133a455adde9f7ac885",
-  "status": "HOLD_FOR_LATEST_MAIN; PR_BASE_INTEGRATION_PASS",
-  "reason": "The maintenance clone's shallow boundary prevents a trustworthy common-base merge. A merge trial against the merge-base it inferred 41df296 produced a tree that deleted the branch's unmerged test/package paths, so the tree was rejected. No current-main integration tests are claimed.",
+  "status": "superseded historical HOLD; latest-main validation is recorded in LATEST_MAIN_INTEGRATION.json",
+  "reason": "This earlier check correctly rejected its invalid shallow-boundary merge trial and claimed no validation. A subsequent correctly composed merge tree was independently validated; see LATEST_MAIN_INTEGRATION.json.",
   "branch_local_validation": {
     "full_suite_tests": 41,
     "full_suite": "PASS",
@@ -11,6 +11,7 @@
     "package_verifier": "PASS"
   },
   "historical_integration": "See CURRENT_MAIN_INTEGRATION.json; it records a pre-A11 composition against c837ad535eed085d95744ad0a9680535a5bb7143 and is superseded.",
+  "superseded_by": "LATEST_MAIN_INTEGRATION.json",
   "pr_base_integration": "PASS; see PR_BASE_INTEGRATION.json",
   "scope": "source-only local synthetic tests; no live allocation or GUI/game/input/model activity"
 }
