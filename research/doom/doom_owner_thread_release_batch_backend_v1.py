@@ -20,26 +20,38 @@ class Backend(Previous):
     def _delivery_ledger(self, context):
         ledger = context.get("delivery_ledger")
         if ledger is None:
-            rows = context["rows"]
-            positions = []
-            for position, row in enumerate(rows):
-                row.setdefault("release_batch_position", position)
-                row.setdefault("release_batch_size", len(rows))
-                positions.append({
-                    "position": row["release_batch_position"],
-                    "step": row.get("release_batch_step", context.get("step")),
-                    "key": row.get("key"),
-                    "state": "not_attempted",
-                })
             ledger = {
                 "schema": "release-batch-delivery-v1",
                 "identifier": context["identifier"],
                 "step": context.get("step"),
-                "size": len(positions),
-                "positions": positions,
+                "size": 0,
+                "positions": [],
             }
             context["delivery_ledger"] = ledger
             self._last_release_batch_delivery = ledger
+        # A text step can publish several held-key batches before execute()
+        # returns. Keep local receipt coordinates, but append custody positions
+        # for each new row rather than reusing position zero of the first batch.
+        # Retain each row alongside its index so Python cannot recycle its id.
+        bindings = context.setdefault("delivery_rows", {})
+        rows = context["rows"]
+        for position, row in enumerate(rows):
+            row.setdefault("release_batch_position", position)
+            row.setdefault("release_batch_size", len(rows))
+            binding = bindings.get(id(row))
+            if binding is None:
+                delivery_position = len(ledger["positions"])
+                bindings[id(row)] = (row, delivery_position)
+                ledger["positions"].append({
+                    "position": delivery_position,
+                    "step": row.get("release_batch_step", context.get("step")),
+                    "key": row.get("key"),
+                    "state": "not_attempted",
+                })
+            else:
+                delivery_position = binding[1]
+            row["release_batch_delivery_position"] = delivery_position
+        ledger["size"] = len(ledger["positions"])
         return ledger
 
     @staticmethod
@@ -51,11 +63,8 @@ class Backend(Previous):
 
     def _set_delivery_state(self, context, row, state):
         ledger = self._delivery_ledger(context)
-        position = row.get("release_batch_position")
-        for entry in ledger["positions"]:
-            if entry["position"] == position:
-                entry["state"] = state
-                return
+        position = context["delivery_rows"][id(row)][1]
+        ledger["positions"][position]["state"] = state
 
     def _attach_delivery_ledger(self, error, context=None):
         ledger = (context.get("delivery_ledger") if context is not None

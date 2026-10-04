@@ -18,7 +18,8 @@ class ActualReleaseCompositionTests(unittest.TestCase):
              failure_position=0, capture_step_exception=False,
              fail_incomplete_publication=False,
              incomplete_publication_rows=False,
-             release_all_publication_failure=False, return_backend=False):
+             release_all_publication_failure=False, return_backend=False,
+             text=None, failure_key=None):
         emitted = []
         attempts = []
         fail_emit = [emit_accept_then_raise or release_all_publication_failure]
@@ -28,13 +29,15 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             if (fail_incomplete_publication
                     and row.get("event") == "input_release_transition"
                     and row.get("release_batch_complete") is False
-                    and row.get("release_batch_position") == failure_position):
+                    and row.get("release_batch_position") == failure_position
+                    and (failure_key is None or row.get("key") == failure_key)):
                 fail_emit[0] = False
                 if sink_accept_before_raise:
                     emitted.append(dict(row))
                 raise OSError("incomplete receipt sink failed")
             if (fail_emit[0] and row.get("event") == "input_release_transition"
-                    and row.get("release_batch_position") == failure_position):
+                    and row.get("release_batch_position") == failure_position
+                    and (failure_key is None or row.get("key") == failure_key)):
                 fail_emit[0] = False
                 if sink_accept_before_raise:
                     emitted.append(dict(row))
@@ -123,6 +126,13 @@ class ActualReleaseCompositionTests(unittest.TestCase):
 
             def execute(self, step, cancel, identifier, index):
                 self._input_event_context = (identifier, index)
+                if text is not None:
+                    # The supported predecessor text operation calls down/up
+                    # for each character within this one execute() context.
+                    for key in text:
+                        self.raw(key, True)
+                        self.raw(key, False)
+                    return
                 self.raw("a", True)
                 self.raw("b", True)
                 if emit_accept_then_raise:
@@ -227,6 +237,36 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         release = backend.release_all()
         self.assertTrue(release["verified"])
         self.assertNotIn("release_batch_delivery", release)
+
+    def test_text_batches_preserve_confirmed_prefix_when_later_sink_fails(self):
+        for accepted in (False, True):
+            with self.subTest(sink_accept_before_raise=accepted):
+                error, attempts, emitted = self._run(
+                    emit_accept_then_raise=True, capture_publication_error=True,
+                    text="ab", failure_key="b", failure_position=0,
+                    sink_accept_before_raise=accepted)
+                release_attempts = [row for row in attempts
+                                    if row.get("event") == "input_release_transition"]
+                release_emitted = [row for row in emitted
+                                   if row.get("event") == "input_release_transition"]
+                self.assertEqual([row["key"] for row in release_attempts], ["a", "b"])
+                self.assertEqual([row["key"] for row in release_emitted],
+                                 ["a", "b"] if accepted else ["a"])
+                self.assertEqual(str(error), "sink failed after accepting release row")
+                self.assertEqual(error.release_batch_publication, {
+                    "schema": "release-batch-delivery-v1",
+                    "identifier": "program-1", "step": 0, "size": 2,
+                    "positions": [
+                        {"position": 0, "step": 0, "key": "a", "state": "confirmed"},
+                        {"position": 1, "step": 0, "key": "b", "state": "unknown"},
+                    ],
+                })
+                # Batch-local receipt coordinates remain valid and immutable;
+                # the additive delivery coordinate binds each cumulative row.
+                self.assertEqual([row["release_batch_position"] for row in release_attempts], [0, 0])
+                self.assertEqual([row["release_batch_size"] for row in release_attempts], [1, 1])
+                self.assertEqual([row["release_batch_delivery_position"]
+                                  for row in release_attempts], [0, 1])
 
     def test_current_v4_wrapper_joins_each_key_admission_to_its_release(self):
         admissions, releases = self._run()
