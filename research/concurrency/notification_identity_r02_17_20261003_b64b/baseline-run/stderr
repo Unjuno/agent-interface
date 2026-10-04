@@ -1,0 +1,67 @@
+test_closed_queue_match_precedes_eof (test_notification_identity.NotificationIdentityTests.test_closed_queue_match_precedes_eof) ... ok
+test_closed_queue_miss_retains_notification (test_notification_identity.NotificationIdentityTests.test_closed_queue_miss_retains_notification) ... ok
+test_distinct_equal_objects_are_consumed_by_identity (test_notification_identity.NotificationIdentityTests.test_distinct_equal_objects_are_consumed_by_identity) ... FAIL
+test_healthy_queued_match_has_priority_over_zero_timeout (test_notification_identity.NotificationIdentityTests.test_healthy_queued_match_has_priority_over_zero_timeout) ... ok
+test_nested_consumption_of_later_row_does_not_visit_stale_row (test_notification_identity.NotificationIdentityTests.test_nested_consumption_of_later_row_does_not_visit_stale_row) ... ERROR
+test_predicate_exception_propagates_without_consumption (test_notification_identity.NotificationIdentityTests.test_predicate_exception_propagates_without_consumption) ... ok
+test_reentrant_false_does_not_invalidate_iteration (test_notification_identity.NotificationIdentityTests.test_reentrant_false_does_not_invalidate_iteration) ... ERROR
+test_reentrant_true_cannot_return_already_consumed_object (test_notification_identity.NotificationIdentityTests.test_reentrant_true_cannot_return_already_consumed_object) ... FAIL
+test_truth_conversion_can_reenter (test_notification_identity.NotificationIdentityTests.test_truth_conversion_can_reenter) ... FAIL
+test_wait_turn_completed_retains_rich_params (test_notification_identity.NotificationIdentityTests.test_wait_turn_completed_retains_rich_params) ... ok
+test_unchanged_pure_false_scan_visits_linear_number_of_queue_rows (test_notification_identity.PureScanCostTests.test_unchanged_pure_false_scan_visits_linear_number_of_queue_rows) ... ok
+
+======================================================================
+ERROR: test_nested_consumption_of_later_row_does_not_visit_stale_row (test_notification_identity.NotificationIdentityTests.test_nested_consumption_of_later_row_does_not_visit_stale_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-identity-r02-b64b/baseline/test_notification_identity.py", line 73, in test_nested_consumption_of_later_row_does_not_visit_stale_row
+    c.wait_notification(predicate, timeout=0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-identity-r02-b64b/baseline/codex_app_server_client_v2.py", line 92, in wait_notification
+    for index, message in enumerate(self._notifications):
+                          ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: deque mutated during iteration
+
+======================================================================
+ERROR: test_reentrant_false_does_not_invalidate_iteration (test_notification_identity.NotificationIdentityTests.test_reentrant_false_does_not_invalidate_iteration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-identity-r02-b64b/baseline/test_notification_identity.py", line 51, in test_reentrant_false_does_not_invalidate_iteration
+    c.wait_notification(predicate, timeout=0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-identity-r02-b64b/baseline/codex_app_server_client_v2.py", line 92, in wait_notification
+    for index, message in enumerate(self._notifications):
+                          ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: deque mutated during iteration
+
+======================================================================
+FAIL: test_distinct_equal_objects_are_consumed_by_identity (test_notification_identity.NotificationIdentityTests.test_distinct_equal_objects_are_consumed_by_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-identity-r02-b64b/baseline/test_notification_identity.py", line 61, in test_distinct_equal_objects_are_consumed_by_identity
+    self.assertIs(c.wait_notification(predicate, timeout=0), equal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'method': 'turn/completed', 'params': {'threadId': '日本語-é', 'turn': {'id': 'A', 'intent': ['retain', {'target': '☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀'}]}}} is not {'method': 'turn/completed', 'params': {'threadId': '日本語-é', 'turn': {'id': 'A', 'intent': ['retain', {'target': '☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀☀'}]}}}
+
+======================================================================
+FAIL: test_reentrant_true_cannot_return_already_consumed_object (test_notification_identity.NotificationIdentityTests.test_reentrant_true_cannot_return_already_consumed_object)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-identity-r02-b64b/baseline/test_notification_identity.py", line 39, in test_reentrant_true_cannot_return_already_consumed_object
+    with self.assertRaises(TimeoutError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_truth_conversion_can_reenter (test_notification_identity.NotificationIdentityTests.test_truth_conversion_can_reenter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-identity-r02-b64b/baseline/test_notification_identity.py", line 85, in test_truth_conversion_can_reenter
+    with self.assertRaises(TimeoutError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.003s
+
+FAILED (failures=3, errors=2)
