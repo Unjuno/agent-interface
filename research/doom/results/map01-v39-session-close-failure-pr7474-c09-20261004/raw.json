@@ -1,0 +1,55 @@
+{
+  "artifact_id": "map01-v39-session-close-failure-pr7474-c09-20261004",
+  "base_commit": "3e498aebd77e500d5a7b1ac9d434d37350a9f597",
+  "baseline": {
+    "path": "BASELINE-session_map01_v15.py",
+    "git_blob": "5116b931dccafa6e83599df01bfd86ed662c7ee5",
+    "sha256": "875da0369e8e2c98b8ebf6ea1351cebb13fd8e748514d5d1e569ae56d40446bc"
+  },
+  "candidate": {
+    "path": "../../session_map01_v15.py",
+    "sha256": "90590ae95219ebcf7b64d7ddad08c5352f7b49bd0f625fc452140f9657269941"
+  },
+  "regression": {
+    "red_command": "SESSION_MAP01_V15_SOURCE=<artifact>/BASELINE-session_map01_v15.py python -B <artifact>/test_session_close_cleanup.py -v",
+    "red_exit": 1,
+    "red_failures": 2,
+    "green_command": "python -B <artifact>/test_session_close_cleanup.py -v",
+    "green_exit": 0,
+    "green_passes": 2
+  },
+  "related_tests": [
+    {
+      "command": "python -B research/doom/test_session_map01_v12_cleanup.py -v",
+      "passed": 9
+    },
+    {
+      "command": "python -B research/doom/test_session_map01_v14.py -v",
+      "passed": 1
+    },
+    {
+      "command": "python -B research/doom/test_session_map01_v15.py -v",
+      "passed": 1
+    },
+    {
+      "command": "python -B research/live_control/test_executor_v13.py -v",
+      "passed": 2
+    }
+  ],
+  "broad_suite": {
+    "command": "python -B -m unittest discover -s research/doom -p 'test_session_map01_v*.py' -v",
+    "outcome": "20 outcomes; 6 errors unrelated to this patch",
+    "errors": [
+      "older versions require missing vizdoom",
+      "v10/v11 Windows pipe/select WinError 10038",
+      "v13 composition/environment"
+    ]
+  },
+  "limits": [
+    "Fake game only",
+    "No ViZDoom launch",
+    "No X server",
+    "No model, physical input, or live lane use",
+    "No claim about score freshness"
+  ]
+}
