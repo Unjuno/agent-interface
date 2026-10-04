@@ -96,6 +96,33 @@ class Backend(Previous):
         owner_empty = owned_after == []
         backend_ownership = all(row.get("backend_owned_before_release") is True for row in rows)
         ordinary = all(row.get("ordinary_release_candidate") is True for row in rows)
+        owner_records = getattr(self.owner, "records", None)
+        cleanup_records_available = isinstance(owner_records, list)
+        cleanup_overlaps = []
+        for row in rows:
+            started = row.get("release_call_started_ns")
+            returned = row.get("release_call_returned_ns")
+            overlaps = False
+            if cleanup_records_available:
+                overlaps = any(
+                    isinstance(record, dict)
+                    and record.get("event") == "owner_release"
+                    and type(record.get("verified_ns")) is int
+                    and type(started) is int
+                    and type(returned) is int
+                    and started <= record["verified_ns"] <= returned
+                    for record in owner_records
+                )
+            cleanup_overlaps.append(overlaps)
+            row["owner_cleanup_records_available"] = cleanup_records_available
+            row["owner_cleanup_overlapped_release_call"] = overlaps
+            if overlaps or not cleanup_records_available:
+                # A queued explicit up can arrive after cancellation cleanup has
+                # already released the key. Do not classify that as an ordinary
+                # per-key release, even if the wrapper's pre-call lease snapshot
+                # was still ordinary.
+                row["ordinary_release_candidate"] = False
+        ordinary = ordinary and cleanup_records_available and not any(cleanup_overlaps)
         batch_verified = bool(
             rows and sample_ordered and owner_identity_matches and token_matches
             and owner_empty and backend_ownership and ordinary
