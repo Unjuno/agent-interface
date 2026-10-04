@@ -1,4 +1,4 @@
-import tempfile,unittest,json
+import fcntl,os,subprocess,sys,tempfile,time,unittest,json
 from pathlib import Path
 from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
 
@@ -30,6 +30,40 @@ class DelayedReader:
         self.join_calls.append(timeout);self.events.extend(self.late_rows)
         if self.stop:self.alive=False
 class Tests(unittest.TestCase):
+    @unittest.skipUnless(os.name=='posix','pipe filling uses POSIX nonblocking descriptor flags')
+    def test_full_child_stdin_pipe_does_not_block_cleanup_reachability(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);planner=Planner()
+            child=subprocess.Popen([sys.executable,'-c','import time; time.sleep(60)'],
+                stdin=subprocess.PIPE,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
+                text=True,bufsize=1)
+            fd=child.stdin.fileno();old_flags=fcntl.fcntl(fd,fcntl.F_GETFL)
+            fcntl.fcntl(fd,fcntl.F_SETFL,old_flags|os.O_NONBLOCK)
+            filled=0
+            while True:
+                try:filled+=os.write(fd,b'x'*4096)
+                except BlockingIOError:break
+            fcntl.fcntl(fd,fcntl.F_SETFL,old_flags)
+            self.assertGreater(filled,0)
+            error=ValueError('primary under pipe pressure')
+            started=time.monotonic()
+            with self.assertRaises(ValueError) as caught:
+                with ControllerFailureCleanup(planner,out,finish_timeout=.15,
+                        child_wait_timeout=.15,escalation_wait_timeout=.5) as scope:
+                    scope.track(child);scope.set_stage('source_refresh');raise error
+            elapsed=time.monotonic()-started
+            self.assertIs(caught.exception,error)
+            self.assertLess(elapsed,3.0)
+            self.assertIsNotNone(child.poll())
+            self.assertTrue(planner.closed)
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertEqual(receipt['failed_stage'],'source_refresh')
+            self.assertEqual(next(row for row in receipt['stages']
+                                  if row['stage']=='finish_send')['status'],'timed_out')
+            self.assertEqual(next(row for row in receipt['stages']
+                                  if row['stage']=='finish_sender_retired')['status'],'returned')
+            self.assertFalse(receipt['cleanup_complete'])
+
     def test_reader_is_joined_before_terminal_evidence_is_classified(self):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp);runtime=out/'runtime';runtime.mkdir()
