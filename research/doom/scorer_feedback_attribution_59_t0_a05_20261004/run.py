@@ -78,7 +78,7 @@ result = {
         else "FAIL_A05_CHECKS"
     ),
 }
-(ROOT / "A05_RESULT.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+(ROOT / "RESULT.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 print(json.dumps({
     "disposition": result["disposition"],
     "red_exit": red["exit_code"],

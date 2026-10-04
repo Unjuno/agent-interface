@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-result = json.loads((ROOT / "A05_RESULT.json").read_text(encoding="utf-8"))
+result = json.loads((ROOT / "RESULT.json").read_text(encoding="utf-8"))
 
 
 def digest(name):
