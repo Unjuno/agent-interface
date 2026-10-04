@@ -297,6 +297,28 @@ class TargetSocketSubmitTests(unittest.TestCase):
         self.assertEqual(request, {"after": 3, "command": self.command()})
         self.assertEqual(response, success("A1-select-conveyor"))
 
+    def test_unix_wire_exchange_rejects_line_over_response_limit(self):
+        oversized_line = (b'{"padding":"' + b"x" * 1_048_576 + b'"}\n')
+
+        class FakeSocket:
+            def __init__(self): self.remaining = oversized_line
+            def __enter__(self): return self
+            def __exit__(self, *_args): pass
+            def settimeout(self, _value): pass
+            def connect(self, _path): pass
+            def sendall(self, _payload): pass
+            def recv(self, size):
+                chunk, self.remaining = self.remaining[:size], self.remaining[size:]
+                return chunk
+
+        submitter = TargetSocketSubmitter("/tmp/test.sock", timeout_s=2,
+                                          trace_sink=test_trace_sink)
+        with patch("target_socket_submit_v1.socket.AF_UNIX", 1, create=True), \
+                patch("target_socket_submit_v1.socket.socket",
+                      return_value=FakeSocket()):
+            with self.assertRaisesRegex(SocketSubmitStop, "response size limit"):
+                submitter._exchange({"after": 0})
+
     @unittest.skipUnless(hasattr(socket, "AF_UNIX"),
                          "host Python does not provide AF_UNIX")
     def test_submit_round_trip_over_real_local_unix_socket(self):

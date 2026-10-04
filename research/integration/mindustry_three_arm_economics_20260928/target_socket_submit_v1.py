@@ -16,6 +16,9 @@ import threading
 from typing import Callable
 
 
+_MAX_SOCKET_RESPONSE_BYTES = 1_048_576
+
+
 class SocketSubmitStop(RuntimeError):
     """Fail-closed socket boundary; the request must not be resent."""
 
@@ -186,11 +189,14 @@ class TargetSocketSubmitter:
             connection.connect(self.socket_path)
             connection.sendall(payload)
             chunks = bytearray()
-            while len(chunks) <= 1_048_576:
-                chunk = connection.recv(65536)
+            while len(chunks) <= _MAX_SOCKET_RESPONSE_BYTES:
+                chunk = connection.recv(min(
+                    65536, _MAX_SOCKET_RESPONSE_BYTES + 1 - len(chunks)))
                 if not chunk:
                     break
                 chunks.extend(chunk)
+                if len(chunks) > _MAX_SOCKET_RESPONSE_BYTES:
+                    raise SocketSubmitStop("socket response size limit exceeded")
                 newline = chunks.find(b"\n")
                 if newline >= 0:
                     return json.loads(bytes(chunks[:newline]).decode("utf-8"))

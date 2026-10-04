@@ -465,3 +465,9 @@ audit JSON: `PASS_CONSTRUCTION_ONLY` with source identity false, and
 `PASS_SYNTHETIC_DISPATCH_JOIN` for 18 tasks/36 target dispatches. PR #7370 is
 open and Draft. No live socket process, Mindustry input, model call, Docker
 operation, or formal allocation was used; the #5130 gate remains active.
+
+The response reader enforces a 1,048,576-byte limit on the received socket
+buffer and refuses an oversized line even when its newline arrives in the same
+read. This closes a chunk-boundary gap where a single 65,536-byte receive
+could exceed the previous loop condition before parsing. A focused regression
+test exercises the oversized newline-terminated response.
