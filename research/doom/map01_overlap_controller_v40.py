@@ -608,6 +608,11 @@ def main():
                 else:
                     current_terminal=boundary
             cover_terminals.append(current_terminal)
+            if invalidation is not None:
+                wait_for_fresh_observation(
+                    wait,
+                    invalidation_handoff_sequence(invalidation.get("sequence"), latest),
+                    latest_observation=lambda: latest)
         final_action_admission=final_admission_from_planner_result(
             planner_result,planner_terminal_observed_ns,
             invalidation,time.perf_counter_ns())
