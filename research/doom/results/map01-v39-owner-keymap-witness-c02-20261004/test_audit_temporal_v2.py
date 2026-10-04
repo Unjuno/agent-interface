@@ -77,6 +77,12 @@ class TemporalBindingTests(unittest.TestCase):
         result = audit_v2.evaluate_temporal_binding(raw, cases)
         self.assertFalse(result["all_occurrences_temporally_bound"])
 
+    def test_down_sample_at_lease_deadline_fails(self):
+        _, raw, cases, _, _, _ = self._fixture()
+        raw["events"][0]["valid_until_ns"] = 21
+        result = audit_v2.evaluate_temporal_binding(raw, cases)
+        self.assertFalse(result["all_occurrences_temporally_bound"])
+
     def test_cross_occurrence_timestamps_fail(self):
         _, raw, cases, _, _, _ = self._fixture()
         raw["events"][0]["admitted_ns"] = 112
@@ -89,6 +95,11 @@ class TemporalBindingTests(unittest.TestCase):
         raw["events"].append(None)
         raw["occurrences"][0] = None
         result = audit_v2.evaluate_temporal_binding(raw, cases)
+        self.assertFalse(result["all_occurrences_temporally_bound"])
+
+    def test_empty_occurrence_set_fails(self):
+        result = audit_v2.evaluate_temporal_binding(
+            {"occurrences": [], "events": []}, {"occurrences": 2, "key": "w"})
         self.assertFalse(result["all_occurrences_temporally_bound"])
 
 

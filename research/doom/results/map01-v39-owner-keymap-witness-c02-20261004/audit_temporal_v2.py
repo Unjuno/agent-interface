@@ -43,7 +43,7 @@ def evaluate_temporal_binding(raw, cases):
             and type(admitted) is int and type(acknowledged) is int
             and type(valid_until) is int
             and times[0] <= admitted <= acknowledged <= times[1] <= times[2]
-            and acknowledged < valid_until
+            and times[2] < valid_until
         )
         rows.append({
             "intent_token": token,
