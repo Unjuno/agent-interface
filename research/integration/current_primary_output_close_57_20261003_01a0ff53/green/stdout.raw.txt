@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: silent close rejects returned write and retains accepted work
+ok 1 - silent close rejects returned write and retains accepted work
+  ---
+  duration_ms: 5.013667
+  type: 'test'
+  ...
+# Subtest: silent close rejects busy write and retains accepted work
+ok 2 - silent close rejects busy write and retains accepted work
+  ---
+  duration_ms: 1.902708
+  type: 'test'
+  ...
+# Subtest: completed write remains successful after later close
+ok 3 - completed write remains successful after later close
+  ---
+  duration_ms: 1.139834
+  type: 'test'
+  ...
+# Subtest: callback error remains the same first object after close
+ok 4 - callback error remains the same first object after close
+  ---
+  duration_ms: 1.295834
+  type: 'test'
+  ...
+# Subtest: already destroyed output rejects without another write call
+ok 5 - already destroyed output rejects without another write call
+  ---
+  duration_ms: 0.96175
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 76.236625

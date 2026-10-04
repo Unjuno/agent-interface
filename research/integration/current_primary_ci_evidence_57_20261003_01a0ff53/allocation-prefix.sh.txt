@@ -1,0 +1,5 @@
+set -euo pipefail
+: "${RUNNER_TEMP:?}" "${GITHUB_ENV:?}"
+PRIMARY_FAILURE_EVIDENCE="$(mktemp -d "$RUNNER_TEMP/primary-failure-order.XXXXXX")"
+export PRIMARY_FAILURE_EVIDENCE
+printf 'PRIMARY_FAILURE_EVIDENCE=%s\n' "$PRIMARY_FAILURE_EVIDENCE" >> "$GITHUB_ENV"

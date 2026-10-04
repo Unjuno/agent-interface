@@ -25,16 +25,32 @@ export function validatePrimaryConfig(config) {
 
 function emit(output,value) {
   return new Promise((resolve,reject)=>{
-    try {output.write(JSON.stringify(value)+'\n',error=>error?reject(error):resolve());}
-    catch(error){reject(error);}
+    let settled=false;
+    function finish(error) {
+      if(settled)return;
+      settled=true;output.removeListener('close',closed);
+      if(error)reject(error);else resolve();
+    }
+    function closed() {
+      const error=Error('primary output closed before write completion');
+      error.code='PRIMARY_OUTPUT_CLOSED';finish(error);
+    }
+    output.once('close',closed);
+    if(output.destroyed||output.closed||output.writableEnded){closed();return;}
+    try {output.write(JSON.stringify(value)+'\n',finish);}
+    catch(error){finish(error);}
   });
 }
 
 export async function servePrimaryLines({exchange,input,output}) {
+  return serveOwnedPrimaryLines({exchange,input,output});
+}
+
+async function serveOwnedPrimaryLines({exchange,input,output},observeFailure=()=>{}) {
   const decoder=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true});
   let lines,pending=null,failure=null;
   const rejectedWrites=new Set();
-  function failed(error) {failure??=error;input.pause();lines?.close();}
+  function failed(error) {failure??=error;observeFailure(failure);input.pause();lines?.close();}
   function validateBytes(chunk) {
     if(failure)return;
     try {
@@ -48,6 +64,7 @@ export async function servePrimaryLines({exchange,input,output}) {
   }
   input.on('data',validateBytes);input.on('end',finishBytes);
   lines=createInterface({input,terminal:false});
+  lines.on('error',failed);
   output.on('error',failed);
   input.on('error',failed);
   async function perform(line) {
@@ -99,24 +116,34 @@ export async function servePrimaryLines({exchange,input,output}) {
 export async function runPrimaryStdio(config,{input=process.stdin,output=process.stdout}={}) {
   validatePrimaryConfig(config);
   if(output.isTTY)throw TypeError('primary stdout must be a pipe or file; terminal rendering is not a JSON-lines transport');
-  const host=await createInstrumentedRelayClient(config.host);
-  let exchange,failure=null;
+  let host,exchange,failure=null;
+  function failed(error) {failure??=error;input.pause();}
+  input.on('error',failed);output.on('error',failed);
   try {
-    exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
-      expectations:config.expectations??[],options:config.primaryOptions??{}});
-    await emit(output,{schema,status:'ready',state:exchange.state()});
-    await servePrimaryLines({exchange,input,output});
-  } catch(error){failure=error;}
-  // Close only the original transport after EOF/failure. A failed output must
-  // not be written again in a finally block that hides its original exception.
-  let exit;
-  try {exit=await host.close();}
-  catch(error){
-    if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
-    throw error;
+    try {
+      host=await createInstrumentedRelayClient(config.host);
+      if(failure)throw failure;
+      exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
+        expectations:config.expectations??[],options:config.primaryOptions??{}});
+      if(failure)throw failure;
+      await emit(output,{schema,status:'ready',state:exchange.state()});
+      if(failure)throw failure;
+      await serveOwnedPrimaryLines({exchange,input,output},failed);
+    } catch(error){failure??=error;}
+    // Close only the original transport after EOF/failure. A failed output must
+    // not be written again in a finally block that hides its original exception.
+    let exit;
+    try {if(host)exit=await host.close();}
+    catch(error){
+      if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
+      throw error;
+    }
+    if(failure)throw failure;
+    await emit(output,{schema,status:'terminal',exit,state:exchange.state()});
+    if(failure)throw failure;
+  } finally {
+    output.removeListener('error',failed);input.removeListener('error',failed);
   }
-  if(failure)throw failure;
-  await emit(output,{schema,status:'terminal',exit,state:exchange.state()});
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
