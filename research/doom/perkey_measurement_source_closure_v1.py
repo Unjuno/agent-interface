@@ -13,6 +13,9 @@ def per_key_measurement_sources(doom_dir):
 
 def with_per_key_measurement_sources(base_paths, doom_dir, enabled):
     paths = list(base_paths)
+    helper_path = Path(__file__).resolve()
+    if helper_path not in paths:
+        paths.append(helper_path)
     if enabled:
         extra = per_key_measurement_sources(doom_dir)
         missing = [path for path in extra if not path.is_file()]

@@ -53,14 +53,16 @@ class FakePlanner:
 
 
 class V39TypedStateFeedbackTests(unittest.TestCase):
-    def test_per_key_manifest_pins_transitive_executor_dependency_only_when_opted_in(self):
+    def test_per_key_manifest_pins_source_closure_helper_and_executor(self):
         base = [HERE / "session_map01_v12.py"]
+        helper_path = HERE / "perkey_measurement_source_closure_v1.py"
         default_paths = with_per_key_measurement_sources(base, HERE, False)
         measured_paths = with_per_key_measurement_sources(base, HERE, True)
-        self.assertEqual(default_paths, base)
-        self.assertEqual(measured_paths[:1], base)
-        self.assertIn(HERE.parent / "live_control" / "executor_v3.py", measured_paths)
-        self.assertEqual(len(measured_paths), 4)
+        self.assertEqual(default_paths, base + [helper_path])
+        self.assertEqual(measured_paths[:len(default_paths)], default_paths)
+        self.assertIn(HERE.parent / "live_control" / "executor_v3.py",
+                      measured_paths)
+        self.assertEqual(len(measured_paths), 5)
     def test_session_command_forwards_per_key_measurement_only_when_opted_in(self):
         args = SimpleNamespace(seed=7, load_fixture_manifest=HERE / "fixture.json",
                                per_key_input_measurement=True)
