@@ -178,41 +178,22 @@ class InputOwner:
             # Bound every per-key release request by the completion of the
             # shared XSync; this is not a physical key-up timestamp.
             key_release_starts = []
-            xserver_sync_completed_ns = None
-            key_release_intervals_ns = []
-            try:
-                for code in list(held):
-                    request_started_ns = time.perf_counter_ns()
-                    xtest.fake_input(d, X.KeyRelease, code)
-                    key_release_starts.append((code, request_started_ns))
-                for button in list(buttons):
-                    xtest.fake_input(d, X.ButtonRelease, button)
-                d.sync()
-                xserver_sync_completed_ns = time.perf_counter_ns()
-                key_release_intervals_ns = [
-                    dict(keycode=code, interval_ns=[started, xserver_sync_completed_ns])
-                    for code, started in key_release_starts
-                ]
-                mask = d.screen().root.query_pointer().mask
-                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-                bitmap = d.query_keymap()
-                down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
-            except Exception as exc:
-                # XTest may have queued a release before the client reports an
-                # error. Without a completing XSync there is no conservative
-                # interval; a later state-query error can retain the intervals
-                # while still leaving physical verification unknown. Wake the
-                # lease watcher with an explicitly unverified receipt.
-                failed_record = dict(
-                    event='owner_release', reason=reason, verified=False,
-                    buttons_down=sorted(buttons), keys_down=sorted(held),
-                    key_release_intervals_ns=key_release_intervals_ns,
-                    release_error=repr(exc),
-                    valid_until_ns=active.deadline if active else None)
-                self.records.append(failed_record)
-                if active is not None and hasattr(active, 'record_interruption'):
-                    active.record_interruption(failed_record)
-                raise
+            for code in list(held):
+                request_started_ns = time.perf_counter_ns()
+                xtest.fake_input(d, X.KeyRelease, code)
+                key_release_starts.append((code, request_started_ns))
+            for button in list(buttons):
+                xtest.fake_input(d, X.ButtonRelease, button)
+            d.sync()
+            xserver_sync_completed_ns = time.perf_counter_ns()
+            key_release_intervals_ns = [
+                dict(keycode=code, interval_ns=[started, xserver_sync_completed_ns])
+                for code, started in key_release_starts
+            ]
+            mask = d.screen().root.query_pointer().mask
+            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+            bitmap = d.query_keymap()
+            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
             if reason == 'release' and active is not None and active.cancel.is_set():
                 reason = 'cancelled'
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,

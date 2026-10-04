@@ -14,6 +14,10 @@ This construction check closes a source/telemetry gap found during the current-m
 
 The exact freeze, commands, source hashes, raw output, and an audit script are in this directory. Historical STOP and FAIL outputs are preserved and not relabeled as candidate results.
 
+## Partial cancellation release failure follow-up
+
+A second fake-Xlib experiment injected an accepted-then-raised per-key release request before XSync. On the prior source, this produced no cancellation receipt or lease interruption until later cleanup; the raw failing assertion is retained. The repair now emits an explicitly unverified `owner_release` record with no release intervals, conservatively retains the held keycodes, and wakes the lease watcher. The V13 adapter maps that record to `input_release_unverified`; it grants no authority. A subsequent close attempt independently verifies that both keys are up. The ordered adjacent suite still passes all 18 tests. See `partial_release_failure/REPORT.md` and its frozen consistency audit. This remains fake-Xlib evidence, not real X11 or task-effect validation.
+
 
 ## Test-isolation follow-up
 

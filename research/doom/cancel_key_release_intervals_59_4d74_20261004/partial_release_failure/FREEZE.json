@@ -1,0 +1,33 @@
+{
+  "schema": "cancel-key-release-partial-failure-freeze-v1",
+  "question": "Do cancellation request and verification errors promptly publish conservative release receipts, retaining intervals only when shared XSync completed?",
+  "H": "Any exception during cancellation release must publish one owner_release interruption marked verified=false and wake release monitoring. If XSync did not complete, no per-key interval is valid; if only post-sync keymap verification fails, completed intervals remain valid. The V13 adapter classifies both as input_release_unverified without granting authority. A later cleanup retry may independently verify release.",
+  "T": "Fake-Xlib owner-thread fault injection in two phases: admit W and A, cancel, make the A KeyRelease clear fake state then raise before XSync, then separately complete XSync and make query_keymap raise. Queue an owner input_state read after cleanup, inspect receipts before close, and characterize later cleanup.",
+  "D": {
+    "FAIL": "Before repair, cancellation produces no owner_release receipt/interruption before close.",
+    "PASS": "After repair, both injected exception phases record and publish unverified cancellation receipts; no-XSync intervals are empty, post-XSync intervals remain bounded, V13 grants no authority, and close later records separate verified cleanup.",
+    "HOLD": "Fake owner cannot process the deterministic fault or the capture harness fails."
+  },
+  "C": "A reported client-side XTest error may follow server acceptance; immediate physical state in the fake backend is not authoritative. The owner must keep the failed state conservative and can still recover on a later cleanup call.",
+  "U": "Fake Xlib only. No real X server, operating-system input, GUI/game effect, model, live lane, or application recovery was exercised.",
+  "baseline_head": "f0c3fa6dc34d03ec8a0e57286acba469e958a304",
+  "baseline_source_sha256": "40c9d7520e1d94b020e140674458fa0419f8605368a07eb15c146b8a5fc8a912",
+  "candidate_source_sha256": "e48b12c22c23af3fb32465ef85aa71c3e69605a721f54cc127299ff1ec7366b0",
+  "candidate_test_path": "research/live_control/test_input_owner_v12_partial_release_failure.py",
+  "candidate_test_sha256": "fcbfbe4d7d081cbcd140b3c7805bb9b563db91c16f401039780b2d4296a4c10c",
+  "experiment_script_sha256": "00fcdddbea1f2e9feb83e7c3d974c0112971afb0cc684c45d6e3e07f67a73a90",
+  "red_stderr_sha256": "984ed50c9dc6f57b6b070ad8b07a6c72788d2357a8d2304584f5af5088594295",
+  "green_stdout_sha256": "2141605990dde9ee77e158114f45316203a86b7b57b7a336484e1c409d6810ea",
+  "verify_red_stderr_sha256": "984ed50c9dc6f57b6b070ad8b07a6c72788d2357a8d2304584f5af5088594295",
+  "verify_stdout_sha256": "9bed79305565e9df653b5ba4a35725b08b3cbeb8c1e56958503b6ae79adac448",
+  "audit_script_sha256": "e6c74a01a30c54933c1808cd9b9776687792d905a696d1cf52ee207760159dbd",
+  "audit_result_sha256": "9667bec4f688736b39428f58d0a71adffdb693882b6b7c10ca8103a764da5914",
+  "suite_stderr_sha256": "d36cc4f74dd3f2c2079edf01a87fff7236540c68c201c52f65d7c0d03e7fbadd",
+  "suite_runner_sha256": "49be669717516aa10b8e434f45e9364ca31ed69ac8df1bad0bbbc81c499288a6",
+  "runtime": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "red_command": "INPUT_OWNER_SOURCE_DIR=research/doom/cancel_key_release_intervals_59_4d74_20261004/partial_release_failure/baseline PYTHONPATH=research/live_control:research/doom python3 research/doom/cancel_key_release_intervals_59_4d74_20261004/partial_release_failure/characterize_sync_failure.py",
+  "green_command": "PYTHONPATH=research/live_control:research/doom python3 research/doom/cancel_key_release_intervals_59_4d74_20261004/partial_release_failure/characterize_sync_failure.py",
+  "suite_command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=. python3 research/doom/cancel_key_release_intervals_59_4d74_20261004/partial_release_failure/run_ordered_suite.py",
+  "red_outcome": "exit 1: failed cancellation must publish one unverified owner_release",
+  "green_outcome": "exit 0: unverified interruption precedes independently verified shutdown cleanup"
+}

@@ -11,8 +11,8 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 candidate_root = ROOT.parents[2]
-checks["candidate_source_sha256"] = (
-    sha(candidate_root / freeze["candidate_source_path"])
+checks["initial_candidate_source_sha256"] = (
+    sha(ROOT / "partial_release_failure" / "baseline" / "input_owner_v12.py")
     == freeze["candidate_source_sha256"]
 )
 checks["initial_candidate_test_sha256"] = (
@@ -75,6 +75,34 @@ checks["ordered_runner_matches_freeze"] = (
 checks["adjacent_test_matches_freeze"] = (
     sha(candidate_root / followup["adjacent_test_path"])
     == followup["adjacent_test_sha256"]
+)
+partial_root = ROOT / "partial_release_failure"
+partial_freeze = json.loads((partial_root / "FREEZE.json").read_text())
+partial_result_path = partial_root / "audit.json"
+partial_result = json.loads(partial_result_path.read_text())
+checks["partial_failure_candidate_source_sha256"] = (
+    sha(candidate_root / "research/live_control/input_owner_v12.py")
+    == partial_freeze["candidate_source_sha256"]
+)
+checks["partial_failure_candidate_test_sha256"] = (
+    sha(candidate_root / partial_freeze["candidate_test_path"])
+    == partial_freeze["candidate_test_sha256"]
+)
+checks["partial_failure_experiment_script_sha256"] = (
+    sha(partial_root / "characterize_sync_failure.py")
+    == partial_freeze["experiment_script_sha256"]
+)
+checks["partial_failure_audit_script_sha256"] = (
+    sha(partial_root / "audit_partial_failure.py")
+    == partial_freeze["audit_script_sha256"]
+)
+checks["partial_failure_suite_sha256"] = (
+    sha(partial_root / "suite.stderr.txt")
+    == partial_freeze["suite_stderr_sha256"]
+)
+checks["partial_failure_audit_result"] = (
+    partial_result.get("pass") is True
+    and sha(partial_result_path) == partial_freeze["audit_result_sha256"]
 )
 manifest = (ROOT / "FILES.sha256").read_text().splitlines()
 manifest_results = []
