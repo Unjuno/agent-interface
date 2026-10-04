@@ -1,0 +1,8 @@
+{
+  "baseline_head": "341c333f33908852d3ff377c79d5100bb0e1ee91",
+  "command": "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -B -m unittest test_candidate.CandidateNetworkReceiptTests.test_incomplete_network_receipt_is_retained_by_main -v",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "test_incomplete_network_receipt_is_retained_by_main (test_candidate.CandidateNetworkReceiptTests.test_incomplete_network_receipt_is_retained_by_main) ... ERROR\n\n======================================================================\nERROR: test_incomplete_network_receipt_is_retained_by_main (test_candidate.CandidateNetworkReceiptTests.test_incomplete_network_receipt_is_retained_by_main)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\junny\\AppData\\Local\\Temp\\pr7386-baseline-red-3y4m2r89\\test_candidate.py\", line 237, in test_incomplete_network_receipt_is_retained_by_main\n    exit_code = candidate.main()\n                ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\AppData\\Local\\Temp\\pr7386-baseline-red-3y4m2r89\\candidate.py\", line 191, in main\n    candidate = initial_candidate_record(freeze, network_receipt)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\AppData\\Local\\Temp\\pr7386-baseline-red-3y4m2r89\\candidate.py\", line 78, in initial_candidate_record\n    raise RuntimeError(\"STOP_NETWORK_RECEIPT_INCOMPLETE\")\nRuntimeError: STOP_NETWORK_RECEIPT_INCOMPLETE\n\n----------------------------------------------------------------------\nRan 1 test in 0.056s\n\nFAILED (errors=1)\n",
+  "expected_red": true
+}

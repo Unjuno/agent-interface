@@ -188,9 +188,17 @@ def main():
             condition.notify_all()
 
     session = backend = executor = None
-    candidate = initial_candidate_record(freeze, network_receipt)
+    candidate = {
+        "allocation_id": freeze.get("allocation_id"),
+        "candidate_completed": False,
+        "model_calls": 0,
+        "trials": [],
+        "cleanup": {},
+        "issues": [],
+    }
     exit_code = 2
     try:
+        candidate = initial_candidate_record(freeze, network_receipt)
         import Xlib.display as xdisplay
         from Xlib import XK
         sys.path[:0] = [str(ROOT / "research/doom"),

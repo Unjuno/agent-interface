@@ -209,6 +209,45 @@ class CandidateNetworkReceiptTests(unittest.TestCase):
             self.assertTrue(any("synthetic missing Xlib" in item for item in row["issues"]))
             self.assertFalse((out / "x11-display.txt").exists())
 
+    def test_incomplete_network_receipt_is_retained_by_main(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            package = root / "research/doom/map01-v39-per-key-release-live-t0-20261004"
+            package.mkdir(parents=True)
+            out = root / "out"
+            out.mkdir()
+            freeze = {
+                "allocation_id": "MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01",
+                "runtime_environment_sha256": "fixture-env-sha",
+                "source_support_sha256": "fixture-support-sha",
+                "output_root": "out",
+                "execution_route": "direct process in isolated OrbStack Ubuntu/arm64 guest",
+                "network_isolation": "unshare -n",
+            }
+            (package / "FREEZE.json").write_text(json.dumps(freeze), encoding="utf-8")
+
+            with mock.patch.object(candidate, "ROOT", root), \
+                    mock.patch.object(candidate, "PACKAGE", package), \
+                    mock.patch.object(candidate, "verify_frozen", return_value={
+                        "network_interfaces": ["lo"],
+                    }), \
+                    mock.patch.object(candidate, "install_support", return_value=root / "support"), \
+                    mock.patch.object(sys, "argv", [str(HERE / "candidate.py"),
+                                                     "--out", str(out)]):
+                exit_code = candidate.main()
+
+            started_path = out / "candidate_started.json"
+            record_path = out / "candidate.json"
+            self.assertTrue(started_path.is_file())
+            self.assertTrue(record_path.is_file(),
+                            "incomplete receipt escaped the candidate finalizer")
+            row = json.loads(record_path.read_text(encoding="utf-8"))
+            self.assertEqual(exit_code, 2)
+            self.assertFalse(row["candidate_completed"])
+            self.assertTrue(any("STOP_NETWORK_RECEIPT_INCOMPLETE" in issue
+                                for issue in row["issues"]))
+            self.assertFalse((out / "x11-display.txt").exists())
+
     def test_nonempty_route_stops_before_returning_a_network_receipt(self):
         with self.assertRaisesRegex(RuntimeError, "STOP_NETWORK_NAMESPACE"):
             self._verify(ipv4_routes="default via 192.0.2.1 dev eth0\n")
