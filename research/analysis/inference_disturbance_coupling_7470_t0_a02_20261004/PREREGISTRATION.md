@@ -1,4 +1,6 @@
-# Preregistration — Issue #7470 T0 — 2026-10-04
+# Preregistration — Issue #7470 T0 A02 — 2026-10-04
+
+A02 is a fresh successor after A01's `STOP_MAIN_ADVANCED_PRELAUNCH` (#5976972848). A01 candidate/auditor counts remain 0/0; A01 will not be rerun. A02 has the same prospective method gates but a current-main base, a fresh branch, freeze, and output path.
 
 ## H / T / D / C / U
 
@@ -10,7 +12,7 @@
 
 ## Freeze / launch gates
 
-Base main: `0178fd24e9c317fff40e0fa1952fbe7e8ae01078`. Branch: `research/inference-disturbance-coupling-7470-t0-20261004`. Additive path: `research/analysis/inference_disturbance_coupling_7470_t0_20261004/`; formal `results/` must be absent. Candidate/auditor/spec/test identities are pinned in `PRELAUNCH_FREEZE.json`. If main changes, the Issue gains a conflicting owner/allocation, output becomes occupied, or hashes differ before launch, STOP before candidate. Formal candidate and audit each run at most once.
+Base main: `b63b8ad7872f3d19407dce8ed0862ec0aa4a4925`. Branch: `research/inference-disturbance-coupling-7470-t0-a02-20261004`. Additive path: `research/analysis/inference_disturbance_coupling_7470_t0_a02_20261004/`; formal `results/` must be absent. Candidate/auditor/spec/test identities are pinned in `PRELAUNCH_FREEZE.json`. If main changes, the Issue gains a conflicting owner/allocation, output becomes occupied, or hashes differ before launch, STOP before candidate. Formal candidate and audit each run at most once.
 
 ## Environment
 
