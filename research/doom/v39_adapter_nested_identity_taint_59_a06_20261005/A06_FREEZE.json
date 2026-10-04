@@ -1,0 +1,32 @@
+{
+  "experiment": "V39_ADAPTER_NESTED_IDENTITY_TAINT_A06",
+  "preregistered_at_utc": "2026-10-04T16:53:48Z",
+  "question": "Can a duplicate adapter edge with a changed outer intent token and unchanged nested adapter token split into another identity group while the original pair remains complete?",
+  "hypothesis": "An adapter row whose outer identity disagrees with nested adapter-edge identity must invalidate both identity groups implicated by the contradiction, so the original receipt cannot retain exposed timing.",
+  "treatment": "Freeze #7690 head and retained A01 fixture. Mutate one duplicate DOWN and one duplicate UP by changing only the outer intent_token, leaving nested adapter_edge identity unchanged. Run existing exact/unknown/legacy regressions plus these two outer-vs-nested token mutations against the frozen baseline and candidate projector.",
+  "decision_rule": "Baseline expected to leave original pairs complete for both copied rows. Candidate must pass all four exact test methods; both conflict cases must return no paired adapter receipt and null intervals for every adapter receipt. Existing five duplicate, four unknown-event and two legacy-transition cases remain closed.",
+  "controls": "Exact unique retained DOWN/UP; five prior exact/conflicting duplicates; unknown event discriminator cases; supported legacy transition outer-name cases.",
+  "uncertainty": "One synthetic retained X-adapter fixture and deterministic projector only; no live X-server, physical dwell, application consumption, task effect, threat response, recovery or MAP01 result.",
+  "baseline": {
+    "commit": "a3155bec0b21d29557dbd4bd3d7218eb039cb135",
+    "source_path": "research/doom/map01_overlap_controller_v39.py",
+    "source_sha256": "620dca3822ab372db0f0b2dda23e196053647b5c5470de08dc85982ae0ed8c96",
+    "test_path": "research/doom/test_map01_v39_typed_state_feedback.py",
+    "test_sha256": "a3e42bfe05b5e811254811e6e62f320574a40ce7aa426d0b4b92e34b3cb85a64",
+    "fixture_path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl",
+    "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+  },
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "container_policy": {
+    "wslc": "wslc.exe",
+    "pull": "never",
+    "network": "none",
+    "cpus": "1 requested",
+    "memory": "512M requested; enforcement unassumed",
+    "uid_gid": "1000:1000",
+    "source": "read-only",
+    "output": "distinct writable mount",
+    "retries": 0,
+    "auto_remove": true
+  }
+}

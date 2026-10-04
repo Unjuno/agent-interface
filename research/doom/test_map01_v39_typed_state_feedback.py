@@ -810,6 +810,39 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(adapter_receipts[0]["down_edge_interval_ns"])
                 self.assertIsNone(adapter_receipts[0]["up_edge_interval_ns"])
 
+    def test_input_edge_receipt_rejects_outer_nested_token_conflict(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        down = next(row for row in template if row.get("event") == "input_admission")
+        up = next(row for row in template
+                  if row.get("event") == "input_release_measurement")
+
+        def change_outer_token(row):
+            duplicate = json.loads(json.dumps(row))
+            duplicate["intent_token"] = "contradictory-outer-token"
+            return duplicate
+
+        cases = (
+            ("duplicate_down_outer_token_changed",
+             [down, change_outer_token(down), up]),
+            ("duplicate_up_outer_token_changed",
+             [down, up, change_outer_token(up)]),
+        )
+        for name, rows in cases:
+            with self.subTest(case=name):
+                receipts = controller.input_edge_receipts(
+                    json.loads(json.dumps(rows)))
+                adapter_receipts = [row for row in receipts
+                                    if row.get("status", "").startswith("adapter_edge_")]
+                self.assertTrue(adapter_receipts)
+                self.assertTrue(all(row["status"] ==
+                                    "adapter_edge_receipt_incomplete"
+                                    for row in adapter_receipts))
+                self.assertTrue(all(row["down_edge_interval_ns"] is None and
+                                    row["up_edge_interval_ns"] is None
+                                    for row in adapter_receipts))
+
 
 if __name__ == "__main__":
     unittest.main()

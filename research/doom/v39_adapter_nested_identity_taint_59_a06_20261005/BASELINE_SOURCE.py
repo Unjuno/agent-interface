@@ -552,18 +552,6 @@ def input_edge_receipts(events):
                 continue
             bucket = adapter_grouped.setdefault((identifier, step, key, token),
                                                 {"down": [], "up": [], "invalid": False})
-            nested_key = (adapter_edge.get("key")
-                          if type(adapter_edge) is dict else None)
-            nested_token = (adapter_edge.get("intent_token")
-                            if type(adapter_edge) is dict else None)
-            if nested_key != key or nested_token != token:
-                bucket["invalid"] = True
-                if (type(nested_key) is str and nested_key and
-                        type(nested_token) is str and nested_token):
-                    nested_bucket = adapter_grouped.setdefault(
-                        (identifier, step, nested_key, nested_token),
-                        {"down": [], "up": [], "invalid": False})
-                    nested_bucket["invalid"] = True
             # Outer event type and nested edge label are both part of the
             # receipt identity. Do not let one release event supply a press.
             if expected_edge is None:
