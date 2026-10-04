@@ -400,6 +400,29 @@ class CancelReleasePublicationTest(unittest.TestCase):
             SERVER["on_sync"] = None
             owner.close()
 
+    def test_cancelled_lease_without_active_ownership_is_not_cancel_cause(self):
+        SERVER["down"].clear()
+        SERVER["on_sync"] = None
+        owner = self.InputOwner(None)
+
+        class Lease:
+            def __init__(self):
+                self.cancel = threading.Event()
+                self.cancel.set()
+                self.deadline = time.perf_counter_ns() + 10_000_000_000
+                self.interruptions = []
+
+            def record_interruption(self, record):
+                self.interruptions.append(record)
+
+        lease = Lease()
+        try:
+            result = owner.call("release", lease)
+            self.assertEqual(result["reason"], "release")
+            self.assertEqual(lease.interruptions, [])
+        finally:
+            owner.close()
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

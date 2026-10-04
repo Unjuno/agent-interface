@@ -201,7 +201,9 @@ class InputOwner(Previous):
                     elif op in ('release', 'close'):
                         if op == 'release' and active is not None and active is not lease:
                             raise ValueError('release belongs to another intent')
-                        result = release('cancelled' if lease is not None and lease.cancel.is_set() else op)
+                        reason = ('cancelled' if op == 'release' and active is lease and
+                                  lease is not None and lease.cancel.is_set() else op)
+                        result = release(reason)
                     elif op in ('move', 'button_down', 'button_up', 'wheel'):
                         root = d.screen().root
                         if op == 'button_up':
