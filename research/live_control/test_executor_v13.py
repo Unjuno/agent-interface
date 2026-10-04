@@ -57,5 +57,34 @@ class ExecutorV13Tests(unittest.TestCase):
         self.assertEqual(next(row for row in events if row["event"] == "terminal")["status"],
                          "completed")
 
+    def test_terminal_preserves_per_row_release_publication_uncertainty(self):
+        report = {"id": "p", "step": 0, "release_batch_size": 2,
+                  "rows": [
+                      {"position": 0, "key": "a", "status": "delivery_unknown"},
+                      {"position": 1, "key": "b", "status": "not_attempted"},
+                  ]}
+
+        class BatchFailureBackend(Backend):
+            def __init__(self):
+                super().__init__()
+                self.release_batch_publication_reports = [report]
+
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+                raise RuntimeError("release row sink failed")
+
+        events = []
+        executor = Executor(BatchFailureBackend(), events.append)
+        try:
+            executor.submit("p", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row["event"] == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            terminal = next(row for row in events if row["event"] == "terminal")
+            self.assertEqual(terminal["release_batch_publication_reports"], [report])
+        finally:
+            executor.close()
+
 
 if __name__ == "__main__": unittest.main()

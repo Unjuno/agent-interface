@@ -15,6 +15,7 @@ class Backend(Previous):
         self.owner.close()
         self.owner = InputOwner(session.name)
         self._release_batch = threading.local()
+        self.release_batch_publication_reports = []
 
     def execute(self, step, cancel, identifier, index):
         previous = getattr(self._release_batch, "context", None)
@@ -68,6 +69,11 @@ class Backend(Previous):
             self.emit(row)
 
     def _finish_incomplete_release_batch(self, context, error, disposition):
+        report = context.get("release_batch_publication_report")
+        if isinstance(report, dict):
+            for item in report["rows"]:
+                if item["status"] == "pending":
+                    item["status"] = "not_attempted"
         try:
             self._publish_incomplete_release_batch(
                 context, error, disposition=disposition
@@ -237,6 +243,17 @@ class Backend(Previous):
             and brackets_valid and no_cleanup_overlap and owner_keyup
         )
         size = len(rows)
+        report = {
+            "id": context["identifier"],
+            "step": context["step"],
+            "release_batch_size": size,
+            "rows": [
+                {"position": position, "key": row.get("key"), "status": "pending"}
+                for position, row in enumerate(rows)
+            ],
+        }
+        context["release_batch_publication_report"] = report
+        self.release_batch_publication_reports.append(report)
         for position, row in enumerate(rows):
             row.update({
                 "release_batch_schema": "input-release-batch-v3",
@@ -264,8 +281,13 @@ class Backend(Previous):
             # Mark delivery attempt before crossing the sink boundary. If a
             # sink accepts a row and then raises, execute() must not retry it.
             row = rows.pop(0)
+            status = report["rows"][row["release_batch_position"]]
+            status["status"] = "delivery_unknown"
             try:
                 self.emit(row)
             except BaseException as exc:
                 context["publication_error_type"] = type(exc).__name__
+                report["publication_error_type"] = type(exc).__name__
                 raise
+            else:
+                status["status"] = "confirmed"

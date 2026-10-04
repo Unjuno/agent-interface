@@ -132,12 +132,21 @@ class Executor(Previous):
             # terminal makes program_terminal_pending false.
             self._publish_cause_once(identifier, lease)
             with self.lock:
-                self.emit({"event": "terminal", "id": identifier, "status": status,
-                           "error": error, "steps_completed": completed,
-                           "release": release, "interruption": interruption,
-                           "decision_reason": decision_reason,
-                           "terminal_ns": time.perf_counter_ns(),
-                           "semantic_completion": "program status only; task scoring is separate"})
+                terminal = {"event": "terminal", "id": identifier, "status": status,
+                            "error": error, "steps_completed": completed,
+                            "release": release, "interruption": interruption,
+                            "decision_reason": decision_reason,
+                            "terminal_ns": time.perf_counter_ns(),
+                            "semantic_completion": "program status only; task scoring is separate"}
+                reports = getattr(self.backend, "release_batch_publication_reports", None)
+                if isinstance(reports, list):
+                    matching = [copy.deepcopy(report) for report in reports
+                                if isinstance(report, dict) and report.get("id") == identifier]
+                    if any(any(row.get("status") != "confirmed"
+                               for row in report.get("rows", [])
+                               if isinstance(row, dict)) for report in matching):
+                        terminal["release_batch_publication_reports"] = matching
+                self.emit(terminal)
                 self.active = None
             stop = self.release_watch_stops.get(identifier)
             if stop is not None:
