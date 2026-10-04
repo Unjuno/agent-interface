@@ -110,3 +110,27 @@ python research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a09.py
 
 All candidate outputs are consumed. Do not rerun them or overwrite any retained
 result directory.
+
+## A10 independent bracket audit correction
+
+Review found that the original A03 auditor checked that each reported interval
+matched the two sample finish timestamps, but did not verify sample
+availability/state, each sample's own start/finish order, or that the owner
+release request and XSync return fell within the sample bracket. A10 leaves all
+A03 files unchanged and adds an independently frozen raw-only audit over the
+same two-key fake-display cancellation trace.
+
+The A10 auditor verifies down samples observe false→true and release samples
+true→false, all samples are available and error-free, every sample interval is
+ordered, and each press/release request plus XSync return is ordered inside its
+pre/post sample interval. Four tests mutate sampled state, availability, sample
+ordering, release bracket timing, and down request timing; all are rejected.
+The audit returns `PASS_AUDITED_BRACKET_EVIDENCE`. This confirms internal
+consistency of the retained fake-display measurements only; it does not prove
+an exact physical edge, OS-level release, application consumption, or game
+effect.
+
+Reproduce the audit and mutation controls from this directory with
+`python audit_a10.py`, `python -m unittest -v test_a10.py`, and
+`python -O -m unittest -v test_a10.py`. The A03 fake-display candidate was not
+rerun.
