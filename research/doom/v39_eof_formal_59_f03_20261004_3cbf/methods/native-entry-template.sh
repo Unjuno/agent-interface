@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 fail() { echo "PREFLIGHT_STOP:$1" >&2; exit 90; }
-expected_archive='00492207c2dba6daa11c4d3581fdb05fbb15ac2c9d6244342b721f2afb5b23ad'
+expected_archive='8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5'
 expected_uid='501'
 expected_gid='501'
 expected_cpu='100000 100000'

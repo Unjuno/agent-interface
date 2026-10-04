@@ -14,7 +14,7 @@ Expected cells and exact first-unexpected-cell STOP rule are in `PROTOCOL.md`. F
 
 ## Immutable eight-file input
 
-Frozen source commit `4639fdd963aba0cc1268889f22b3783c6b429a3d`, tree `15cd556d218540d4a6a9004d961b7fb0186a8838`. The exact archive was generated with `git archive --format=tar HEAD -- <the eight paths listed below>` at that commit; exact retained bytes SHA-256 `00492207c2dba6daa11c4d3581fdb05fbb15ac2c9d6244342b721f2afb5b23ad`. Host and guest copies match. Eight member hashes:
+Frozen source commit `0f8700502ef5778fb2b3f5a37123d5b983422c5a`, tree `eeba8542507ba9406a869f6ba93c532f4c6f86ae`. Reproduce the exact archive from that public commit with `git archive --format=tar 0f8700502ef5778fb2b3f5a37123d5b983422c5a -- <the eight paths listed below>`; two independent invocations on this host were byte-identical. Exact archive SHA-256 `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5`. Host and guest copies match. Eight member hashes:
 
 ```
 623fc63fb7d7f0ea87bd39109eb0a1bdcb5da7d5615cca2f85fcf2921821d386  research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py
@@ -27,15 +27,17 @@ ebfcef6197e7f121c9eb7d1c6822ac5d6fc3c1c9c3a4b2530517ad8a6de6d1d6  research/doom/
 d1ad6dcb8720b27766702361b4898d13259d2efe0b173e7d0fbc970fe3d988db  research/doom/v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz
 ```
 
-The separately retained manifest is `methods/input.SHA256` (SHA-256 `86882b20a319bfacb788fddbd81630dd6f4b1da93e4062eb0bf455d016f60c3d`). The archive is transferred unchanged; no working-tree archive, mutable tag, peer checkout, or module-preloaded process is used. The native and auditor entry scripts are exact host-side custody artifacts mounted read-only, not members of the eight-file research input: `methods/native-entry-template.sh` SHA-256 `31fb86bd8f0412a54719af8922e75f22a2efa6cb848724f24bf54da928b8915f`; `methods/auditor-entry-template.sh` SHA-256 `a679e4126978cf5efb39889557133066d86b6049be1189551e318d94794ab9cb`.
+The separately retained manifest is `methods/input.SHA256` (SHA-256 `86882b20a319bfacb788fddbd81630dd6f4b1da93e4062eb0bf455d016f60c3d`). The archive is transferred unchanged; no working-tree archive, mutable tag, peer checkout, or module-preloaded process is used. The native and auditor entry scripts are exact host-side custody artifacts mounted read-only, not members of the eight-file research input: native SHA-256 `34ac52410e5acd341da0aeb3fd13e912f244226e66bce9d5a3c5cbd0872528be`, auditor SHA-256 `e5118f32454adaf9d812f7f33738c81bdf7550d2033c5d8a2d89b87a7fc0027f`.
 
 ## Setup-only container evidence
 
-The exact v4 input was copied to `/home/taka/f03-custody-bundle-v4/input.tar`, unpacked to `/home/taka/f03-formal-input-v4`, and independently matched against the manifest. Host and guest archive SHA-256 both equal `00492207c2dba6daa11c4d3581fdb05fbb15ac2c9d6244342b721f2afb5b23ad`; all eight extracted input files verify.
+The exact v6 input is copied to `/home/taka/f03-custody-bundle-v6/input.tar`, unpacked to `/home/taka/f03-formal-input-v6`, and independently matched against the manifest. Host and guest archive SHA-256 both equal `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5`; all eight extracted input files verify. Re-running the exact `git archive` command from the public frozen commit produced byte-identical output.
 
-Setup-only container `f03-final-preflight-v4b-796e5440be`, image pinned above, was created then inspected while `created` before its one start. It mounted the archive and unpacked inputs read-only plus the manifest read-only; network none, CPU 1, memory and memory-swap 1 GiB, read-only root, all capabilities dropped, no-new-privileges, UID/GID 501, private tmpfs. Its stdout verified archive hash, all eight file hashes, `uid=501 gid=501 groups=501`, `cpu.max=100000 100000`, `memory.max=1073741824`, `memory.swap.max=0`, `pids.max=128`, then `PREFLIGHT_V4_PASS`. Exit 0, OOM false, start `2026-10-04T01:12:50.330974927Z`, finish `2026-10-04T01:12:50.419928058Z`. This is setup-only evidence; it does not establish host contention or global resource bounds.
+Setup-only container `f03-final-preflight-v6-0f8700502e`, pinned image above, was created then inspected while `created` before its only start. It mounted the exact archive, unpacked tree, manifest and both entry scripts read-only; network none, CPU 1, memory and memory-swap 1 GiB, read-only root, all capabilities dropped, no-new-privileges, UID/GID 501 and private tmpfs. Its stdout checked archive digest, all eight input hashes, UID/GID, actual cgroup `cpu.max=100000 100000`, `memory.max=1073741824`, `memory.swap.max=0`, `pids.max=128`, and printed `PREFLIGHT_V6_PASS`. Exit 0, OOM false, started `2026-10-04T01:20:44.472126935Z`, finished `2026-10-04T01:20:44.565693509Z`. Full stdout and Engine inspect are retained in `methods/FINAL-PREFLIGHT-v6.log` and `methods/FINAL-PREFLIGHT-v6-inspect.json`; transfer receipt is `methods/FINAL-ARCHIVE-HASH-v6.log`. This is setup-only evidence; it does not establish host contention or global resource bounds.
 
-An earlier create-only setup container `f03-final-preflight-v4-796e5440be` had a malformed preflight command (manifest path was not mounted). It remains `created`, was never started, and is superseded; no candidate code ran. The corrected, distinct v4b setup-only container is the only PASS above. No formal container has been created.
+Predecessor container `f03-final-preflight-v4b-796e5440be` validated the prior digest and is superseded. Its predecessor `f03-final-preflight-v4-796e5440be` had a missing manifest mount, remains `created`, and was never started. No candidate code ran in either predecessor.
+
+Earlier setup-only records for v1–v4 are superseded. The v4 create-only container with a missing manifest mount remains unstarted and retained; no candidate code ran. Only the exact v6 preflight above applies to this freeze. No formal container has been created.
 
 ## Executable launch bundle — exact commands
 
@@ -44,14 +46,23 @@ Fixed guest paths:
 ```
 VM: research-6183-t0-20261003 (UUID 01M3ZD3J2GK283SQRFW9EW9DBZ)
 IMAGE: sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b
-INPUT: /home/taka/f03-formal-input-v4
-BUNDLE: /home/taka/f03-custody-bundle-v4
+INPUT: /home/taka/f03-formal-input-v6
+BUNDLE: /home/taka/f03-custody-bundle-v6
 ROOT: /home/taka/f03-pipe-formal-3cbf-20261004
 NATIVE: f03-pipe-native-formal-3cbf-20261004
 AUDITOR: f03-pipe-auditor-formal-3cbf-20261004
 ```
 
-Before launch, recheck the VM UUID/state with `orbctl info research-6183-t0-20261003`. On that VM as `taka`, run `sudo -n docker ps --no-trunc`; it must show no unrelated running container. Check both formal names absent with `sudo -n docker inspect NAME` (a present name is STOP; do not remove it), and require `test ! -e /home/taka/f03-pipe-formal-3cbf-20261004`. Recompute `shasum -a 256 /tmp/f03-final-freeze-v4.tar` on host and `sha256sum /home/taka/f03-custody-bundle-v4/input.tar` on guest; both must equal the archive digest above. Recompute and compare the guest `native-entry.sh`, `auditor-entry.sh`, and `input.SHA256` hashes to the values above. Record all output immediately before creating a formal container. Any mismatch or unrelated running Docker container is STOP; do not launch.
+Exact guest custody bundle file SHA-256 values (verify these at the immediate gate):
+
+```
+native-entry.sh: 34ac52410e5acd341da0aeb3fd13e912f244226e66bce9d5a3c5cbd0872528be
+auditor-entry.sh: e5118f32454adaf9d812f7f33738c81bdf7550d2033c5d8a2d89b87a7fc0027f
+input.SHA256: 86882b20a319bfacb788fddbd81630dd6f4b1da93e4062eb0bf455d016f60c3d
+input.tar: 8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5
+```
+
+Before launch, recheck the VM UUID/state with `orbctl info research-6183-t0-20261003`. On that VM as `taka`, run `sudo -n docker ps --no-trunc`; it must show no unrelated running container. Check both formal names absent with `sudo -n docker inspect NAME` (a present name is STOP; do not remove it), and require `test ! -e /home/taka/f03-pipe-formal-3cbf-20261004`. Recompute `shasum -a 256 /tmp/f03-formal-frozen-v6.tar` on host and `sha256sum /home/taka/f03-custody-bundle-v6/input.tar` on guest; both must equal the archive digest above. Recompute and compare the guest `native-entry.sh`, `auditor-entry.sh`, and `input.SHA256` hashes to the values above. Record all output immediately before creating a formal container. Any mismatch or unrelated running Docker container is STOP; do not launch.
 
 After those checks pass, create the four empty output subdirectories once:
 
@@ -62,7 +73,7 @@ mkdir -p /home/taka/f03-pipe-formal-3cbf-20261004/native /home/taka/f03-pipe-for
 Exact native create command (run on the owned VM as `taka`; this does not start it):
 
 ```
-sudo -n docker create --name f03-pipe-native-formal-3cbf-20261004 --platform linux/arm64 --network none --cpus 1 --memory 1g --memory-swap 1g --pids-limit 128 --read-only --cap-drop ALL --security-opt no-new-privileges --user 501:501 --tmpfs /tmp:rw,nosuid,size=256m --workdir /input --mount type=bind,src=/home/taka/f03-formal-input-v4,dst=/input,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v4/input.tar,dst=/input.tar,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v4/input.SHA256,dst=/custody/input.SHA256,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v4/native-entry.sh,dst=/entry.sh,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/native,dst=/output sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b /bin/sh /entry.sh
+sudo -n docker create --name f03-pipe-native-formal-3cbf-20261004 --platform linux/arm64 --network none --cpus 1 --memory 1g --memory-swap 1g --pids-limit 128 --read-only --cap-drop ALL --security-opt no-new-privileges --user 501:501 --tmpfs /tmp:rw,nosuid,size=256m --workdir /input --mount type=bind,src=/home/taka/f03-formal-input-v6,dst=/input,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/input.tar,dst=/input.tar,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/input.SHA256,dst=/custody/input.SHA256,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/native-entry.sh,dst=/entry.sh,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/native,dst=/output sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b /bin/sh /entry.sh
 ```
 
 Before any start, save full `sudo -n docker inspect f03-pipe-native-formal-3cbf-20261004` to `ROOT/receipts/native-created-inspect.json`; independently verify state `created`, pinned image, exact mounts, read-only input/archive/script, writable native output only, network none, and all resource/security fields match this freeze. If not exact, STOP and do not start. Exact one-use start and external exit receipt:
@@ -81,7 +92,7 @@ Never restart or retry. Retain even a pre-exec failure. Only if native external 
 Only after the above success gate, require the retained external `ROOT/receipts/native_exit.txt` to contain exactly `0\n`. Create the auditor container once with the exact settings/mounts below (it is not created before candidate success):
 
 ```
-sudo -n docker create --name f03-pipe-auditor-formal-3cbf-20261004 --platform linux/arm64 --network none --cpus 1 --memory 1g --memory-swap 1g --pids-limit 128 --read-only --cap-drop ALL --security-opt no-new-privileges --user 501:501 --tmpfs /tmp:rw,nosuid,size=256m --workdir /input --mount type=bind,src=/home/taka/f03-formal-input-v4,dst=/input,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v4/input.tar,dst=/input.tar,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v4/input.SHA256,dst=/custody/input.SHA256,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v4/auditor-entry.sh,dst=/entry.sh,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/export,dst=/saved,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/audit,dst=/audit --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/receipts/native_exit.txt,dst=/receipt/native_exit.txt,readonly sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b /bin/sh /entry.sh
+sudo -n docker create --name f03-pipe-auditor-formal-3cbf-20261004 --platform linux/arm64 --network none --cpus 1 --memory 1g --memory-swap 1g --pids-limit 128 --read-only --cap-drop ALL --security-opt no-new-privileges --user 501:501 --tmpfs /tmp:rw,nosuid,size=256m --workdir /input --mount type=bind,src=/home/taka/f03-formal-input-v6,dst=/input,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/input.tar,dst=/input.tar,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/input.SHA256,dst=/custody/input.SHA256,readonly --mount type=bind,src=/home/taka/f03-custody-bundle-v6/auditor-entry.sh,dst=/entry.sh,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/export,dst=/saved,readonly --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/audit,dst=/audit --mount type=bind,src=/home/taka/f03-pipe-formal-3cbf-20261004/receipts/native_exit.txt,dst=/receipt/native_exit.txt,readonly sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b /bin/sh /entry.sh
 ```
 
 Save/inspect the auditor in `created` state with the same exact checks before its sole start:
@@ -98,6 +109,6 @@ The auditor entry script checks archive/member hashes, UID/GID, actual cgroups a
 
 ## Remaining limits
 
-Independent review must inspect this exact launch bundle and confirm the final Issue #59 notice for archive digest `00492207c2dba6daa11c4d3581fdb05fbb15ac2c9d6244342b721f2afb5b23ad`. Immediately before formal container creation repeat all VM, running-container, container-name, output-root, host/guest archive and script/manifest hash checks above and preserve the output. Until review, notice and immediate checks pass, do not create or start either formal container.
+Independent review must inspect this exact launch bundle and confirm the final Issue #59 notice for archive digest `8c04363ba608fd97b79f6a206ab0b7be51ad8098a92e130b53b7ece5f4c961c5`. Immediately before formal container creation repeat all VM, running-container, container-name, output-root, host/guest archive and script/manifest hash checks above and preserve the output. Until the v6 setup preflight, final review, notice and immediate checks pass, do not create or start either formal container.
 
 SIGINT construction proves first-child interruption retention, not interruption while reader active, repeated signals during cleanup, SIGKILL retention inside producer, corrupt module loading branches, restart/concurrentconsumer/shape, live GUI/input/game/model/integration/causal timing/physical safety/fullroadmap. Host contention and global resource bounds are unqualified. This bounded pipe experiment does not close Issue #59 or the full roadmap.
