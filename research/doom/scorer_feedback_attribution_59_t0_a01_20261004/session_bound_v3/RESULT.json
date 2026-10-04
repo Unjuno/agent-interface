@@ -1,0 +1,34 @@
+{
+  "a03_unguarded_cross_session": {
+    "causal_attribution": "NOT_ESTABLISHED",
+    "intent_token": null,
+    "possible_intent_tokens": [
+      "intent-a"
+    ],
+    "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+  },
+  "parent_head": "58102e6c12719ed5f4c4bb9616331d86b39ffa90",
+  "schema": "scorer-feedback-session-bound-a03-v1",
+  "scope": "fixed synthetic API-boundary construction only",
+  "status": "PASS_SESSION_BOUND_A03",
+  "v3_cross_session": {
+    "disposition": "REJECTED",
+    "reason": "session_id mismatch across scorer and actuation records"
+  },
+  "v3_endpoint_tie": {
+    "intent_token": null,
+    "status": "UNRESOLVED"
+  },
+  "v3_missing_identity": {
+    "disposition": "REJECTED",
+    "reason": "interval row requires a non-empty session_id"
+  },
+  "v3_same_session": {
+    "causal_attribution": "NOT_ESTABLISHED",
+    "intent_token": null,
+    "possible_intent_tokens": [
+      "intent-a"
+    ],
+    "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+  }
+}

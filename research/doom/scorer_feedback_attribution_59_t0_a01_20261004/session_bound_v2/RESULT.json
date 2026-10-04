@@ -1,0 +1,24 @@
+{
+  "parent_head": "b076890cbcd28f2889184055453f2868fd87c629",
+  "schema": "scorer-feedback-session-bound-t0-v2",
+  "scope": "fixed synthetic API-boundary construction only",
+  "status": "PASS_SESSION_BOUND",
+  "v1_cross_session_control": {
+    "causal_attribution": "NOT_ESTABLISHED",
+    "intent_token": "intent-a",
+    "status": "TEMPORALLY_UNIQUE"
+  },
+  "v2_cross_session": {
+    "disposition": "REJECTED",
+    "reason": "session_id mismatch across scorer and actuation records"
+  },
+  "v2_missing_session": {
+    "disposition": "REJECTED",
+    "reason": "sample row requires a non-empty session_id"
+  },
+  "v2_same_session": {
+    "causal_attribution": "NOT_ESTABLISHED",
+    "intent_token": "intent-a",
+    "status": "TEMPORALLY_UNIQUE"
+  }
+}
