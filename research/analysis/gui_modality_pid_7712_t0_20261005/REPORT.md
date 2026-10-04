@@ -2,7 +2,7 @@
 
 ## Observed result
 
-The one frozen candidate invocation completed on CPython 3.12.10 and returned all six declared cases. The independent auditor returned `PASS_METHOD_SCOPED` (six scoped checks). Four auditor tests passed, including three frozen mutation controls. The commands and exit codes are in `RUN.txt`; the exact outputs are `raw.json` and `audit.json`.
+The one frozen candidate invocation completed on CPython 3.12.10 and returned all six declared cases. The independent auditor returned `PASS_METHOD_SCOPED` (six scoped checks). The original auditor tests passed 4/4, including three frozen mutation controls. A separately frozen posthoc extension then passed 5/5; it directly tests target-name relabeling, while retaining the original run and adding no candidate invocation. Details and hashes are in `T0_CORRECTION.md`, `test_audit_v2.py`, `T0_SHA256SUMS_V2.txt`, and `T0_AUDIT_V2.txt`.
 
 The result matches the declared `I_min` atoms: duplicate-source redundancy is 1 bit; X1-only and X2-only fixtures each have 1 bit unique information; XOR has 1 bit synergy; the independent null has zero information; and the imbalanced X1-only fixture has `H(Y)=0.8112781244591328` bits of X1-unique information. All atoms are nonnegative within the frozen tolerance.
 

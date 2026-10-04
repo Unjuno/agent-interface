@@ -1,6 +1,6 @@
 # Issue #7712 T0: exact discrete PID qualification
 
-**Disposition: `PASS_METHOD_SCOPED`.** The frozen bivariate Williams–Beer `I_min` implementation recovered the expected redundancy, unique-information, and synergy atoms on six exact integer-count distributions. The separately written raw-data auditor independently reconstructed all rows; three frozen mutation controls rejected source relabeling, deleted probability mass, and a changed joint distribution.
+**Disposition: `PASS_METHOD_SCOPED`.** The frozen bivariate Williams–Beer `I_min` implementation recovered the expected redundancy, unique-information, and synergy atoms on six exact integer-count distributions. The separately written raw-data auditor independently reconstructed all rows. The original frozen test suite passed 4/4; a later separately frozen negative-control extension passed 5/5 and explicitly tests target-name relabeling, which the original controls did not. The first result remains unchanged; see `T0_CORRECTION.md` and `T0_AUDIT_V2.txt`.
 
 | Fixture | Redundancy (bits) | Unique X1 (bits) | Unique X2 (bits) | Synergy (bits) | Joint MI (bits) |
 |---|---:|---:|---:|---:|---:|
