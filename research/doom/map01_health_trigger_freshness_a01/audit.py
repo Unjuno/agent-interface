@@ -27,6 +27,32 @@ def summarize(event):
     }
 
 
+def ms(delta_ns):
+    return round(delta_ns / 1_000_000, 3)
+
+
+def validate_v39_pair(pair, expected_name, expected_sequences, indexed):
+    assert pair["decision"] == expected_name
+    rows = pair["rows"]
+    assert tuple(row["sequence"] for row in rows) == expected_sequences
+    for row in rows:
+        typed = indexed[("typed_observation", row["sequence"])]
+        observed = indexed[("observation", row["sequence"])]
+        assert typed["id"] == observed["id"] == row["id"]
+        assert typed["capture_ns"] == observed["capture_ns"] == row["capture_ns"]
+        assert typed["frame_rgb_sha256"] == observed["frame_rgb_sha256"] == row["frame_rgb_sha256"]
+        assert typed["signals"]["health"]["value"] == row["health"]
+        assert typed["signals"]["health"]["sequence"] == row["sequence"]
+    assert rows[0]["id"] == rows[1]["id"] == f"cover-{expected_name[-1]}"
+    capture_spacing = ms(rows[1]["capture_ns"] - rows[0]["capture_ns"])
+    emit_spacing = ms(rows[1]["emit_ns"] - rows[0]["emit_ns"])
+    capture_to_emit = [ms(row["emit_ns"] - row["capture_ns"]) for row in rows]
+    assert pair["capture_spacing_ms"] == capture_spacing
+    assert pair["emit_spacing_ms"] == emit_spacing
+    assert pair["capture_to_emit_ms"] == capture_to_emit
+    assert pair["distinct_frame_hashes"] is True
+
+
 def reconstruct_v38_context(report, events):
     decision = next(row for row in report["decisions"] if row["iteration"] == 2)
     terminal = decision["final_action_admission"]["planner_terminal"]["terminal_observed_ns"]
@@ -84,14 +110,11 @@ def main():
         assert hashlib.sha256(source.read_bytes()).hexdigest() == item["sha256"], name
     events = read_jsonl(ROOT / result["inputs"]["v39_events"]["path"])
     indexed = {(e.get("event"), e.get("sequence")): e for e in events if e.get("event") in ("typed_observation", "observation")}
-    for pair in result["v39_candidate_pairs"]:
-        for row in pair["rows"]:
-            typed = indexed[("typed_observation", row["sequence"])]
-            observed = indexed[("observation", row["sequence"])]
-            assert typed["id"] == observed["id"] == row["id"]
-            assert typed["capture_ns"] == observed["capture_ns"] == row["capture_ns"]
-            assert typed["frame_rgb_sha256"] == observed["frame_rgb_sha256"] == row["frame_rgb_sha256"]
-            assert typed["signals"]["health"]["value"] == row["health"]
+    expected_pairs = (("d2", (81, 82)), ("d3", (103, 104)))
+    pairs = result["v39_candidate_pairs"]
+    assert len(pairs) == len(expected_pairs)
+    for pair, (expected_name, expected_sequences) in zip(pairs, expected_pairs):
+        validate_v39_pair(pair, expected_name, expected_sequences, indexed)
     v38report = json.loads((ROOT / result["inputs"]["v38_report"]["path"]).read_text(encoding="utf-8"))
     v38events = read_jsonl(ROOT / result["inputs"]["v38_events"]["path"])
     reconstructed = reconstruct_v38_context(v38report, v38events)
