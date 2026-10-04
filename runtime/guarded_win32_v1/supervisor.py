@@ -1,12 +1,12 @@
 """Bound waiting on a caller-owned ordinary verifier child; no input replay."""
 import subprocess, time
 
-def run(argv, payload, deadline_ns):
+def run(argv, payload, deadline_ns, env=None):
     if type(deadline_ns) is not int or type(payload) is not bytes or len(payload) > 1048576:
         raise ValueError('bounded bytes payload and integer deadline required')
     if time.monotonic_ns() >= deadline_ns:
         return {'status': 'unknown', 'reason': 'deadline_before_start', 'started': False}
-    p = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
     try:
         remaining = (deadline_ns - time.monotonic_ns()) / 1000000000.0
         if remaining <= 0:
