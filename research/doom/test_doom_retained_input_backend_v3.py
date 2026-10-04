@@ -138,6 +138,18 @@ class Tests(unittest.TestCase):
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
         self.assertFalse(obj.emitted[0]['intent_token_matches_after_batch'])
 
+    def test_missing_intent_token_fails_closed(self):
+        obj = make_backend({'a'}, Owner(receipt_token=None), token=None)
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+        self.assertFalse(obj.emitted[0]['intent_token_matches_after_batch'])
+
+    def test_empty_intent_token_fails_closed(self):
+        obj = make_backend({'a'}, Owner(receipt_token=''), token='')
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+        self.assertFalse(obj.emitted[0]['intent_token_matches_after_batch'])
+
     def test_non_step_cleanup_releases_without_telemetry(self):
         obj = make_backend({'a'}, with_context=False)
         obj.raw('a', False)

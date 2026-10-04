@@ -73,7 +73,11 @@ class Backend(Previous):
         )
         owner_id = after.get("owner_id") if isinstance(after, dict) else None
         owner_identity_matches = all(row.get("owner_id") == owner_id for row in rows)
-        token_matches = all(row.get("intent_token") == current_token for row in rows)
+        # Missing identity on both sides is not a verified match.
+        token_matches = (
+            type(current_token) is str and bool(current_token)
+            and all(row.get("intent_token") == current_token for row in rows)
+        )
         owned_after = after.get("owned_keycodes") if isinstance(after, dict) else None
         owner_empty = owned_after == []
         backend_ownership = all(row.get("backend_owned_before_release") is True for row in rows)
