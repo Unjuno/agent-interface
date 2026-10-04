@@ -16,3 +16,9 @@ test_temporal_audit_rejects_missing_times_accepted_by_parent_audit (test_audit_t
 Ran 13 tests in 0.010s
 
 OK
+
+Fail-closed entrypoint regression run after hardening main():
+`python3 -m pytest -q test_audit_temporal_v2.py test_audit.py`
+19 passed, 5 subtests passed. This includes stale-PASS replacement for each of
+the five non-object JSON roots, invalid JSON, and valid input, plus all prior
+temporal and parent-auditor mutation cases.

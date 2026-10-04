@@ -1,6 +1,8 @@
 """Supplement the frozen C02 audit with admission-to-keymap time binding."""
 import hashlib
 import json
+import os
+import tempfile
 from pathlib import Path
 
 import audit as parent_audit
@@ -8,6 +10,25 @@ import audit as parent_audit
 
 ROOT = Path(__file__).resolve().parent
 PASS = "PASS_V39_XVFB_KEYMAP_TEMPORAL_BINDING_SCOPED"
+FAIL = "FAIL_OR_HOLD_V39_KEYMAP_TEMPORAL_BINDING"
+
+
+def _write_report(path, report):
+    """Replace the report atomically so readers never see a partial JSON file."""
+    path = Path(path)
+    fd, temporary = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            json.dump(report, stream, sort_keys=True, indent=2)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
 
 
 def evaluate_temporal_binding(raw, cases):
@@ -96,16 +117,44 @@ def build_report(raw, cases, freeze, started, environment):
 
 
 def main():
-    raw = json.loads((ROOT / "candidate.raw.json").read_text(encoding="utf-8"))
-    cases = json.loads((ROOT / "cases.json").read_text(encoding="utf-8"))
-    freeze = json.loads((ROOT / "FREEZE.json").read_text(encoding="utf-8"))
-    started = json.loads((ROOT / "candidate.started.json").read_text(encoding="utf-8"))
-    environment = json.loads((ROOT / "ENVIRONMENT.json").read_text(encoding="utf-8"))
-    report = build_report(raw, cases, freeze, started, environment)
-    (ROOT / "AUDIT_V2.json").write_text(json.dumps(report, sort_keys=True, indent=2) + "\n",
-                                        encoding="utf-8")
+    report_path = ROOT / "AUDIT_V2.json"
+    report = {
+        "schema": "map01-v39-owner-keymap-witness-audit-v2",
+        "gate": FAIL,
+        "checks": {"audit_completed": False, "input_documents_are_objects": False},
+        "failed_checks": ["audit_completed", "input_documents_are_objects"],
+        "scope": "virtual X11 server state and admission interval ordering only",
+        "error": "audit did not complete",
+    }
+    # Remove any prior PASS before reading inputs. If loading, validation, or
+    # evaluation fails, the final structured report below replaces this HOLD.
+    _write_report(report_path, report)
+    try:
+        names = ("candidate.raw.json", "cases.json", "FREEZE.json",
+                 "candidate.started.json", "ENVIRONMENT.json")
+        documents = {
+            name: json.loads((ROOT / name).read_text(encoding="utf-8"))
+            for name in names
+        }
+        malformed = [name for name, value in documents.items()
+                     if not isinstance(value, dict)]
+        if malformed:
+            raise ValueError("JSON roots must be objects: " + ", ".join(malformed))
+        report = build_report(
+            documents["candidate.raw.json"], documents["cases.json"],
+            documents["FREEZE.json"], documents["candidate.started.json"],
+            documents["ENVIRONMENT.json"],
+        )
+    except Exception as exc:
+        report["error"] = f"{type(exc).__name__}: {exc}"
+    report["checks"]["audit_completed"] = "error" not in report
+    report["checks"]["input_documents_are_objects"] = "error" not in report
+    report["failed_checks"] = sorted(
+        name for name, passed in report["checks"].items() if not passed
+    )
+    _write_report(report_path, report)
     print(json.dumps(report, sort_keys=True))
-    raise SystemExit(0 if report["gate"] == PASS else 1)
+    raise SystemExit(0 if report["gate"] == PASS and not report["failed_checks"] else 1)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,11 @@ from test_audit import make_fixture
 
 
 class TemporalBindingTests(unittest.TestCase):
+    def setUp(self):
+        roots = (audit_v2.ROOT, audit_v2.parent_audit.ROOT)
+        self.addCleanup(setattr, audit_v2, "ROOT", roots[0])
+        self.addCleanup(setattr, audit_v2.parent_audit, "ROOT", roots[1])
+
     def _fixture(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
@@ -124,6 +129,63 @@ class TemporalBindingTests(unittest.TestCase):
         self.assertFalse(report["checks"]["admission_timestamps_within_key_down_witness"])
         self.assertEqual(report["gate"], "FAIL_OR_HOLD_V39_KEYMAP_TEMPORAL_BINDING")
         self.assertIn("AttributeError", report["parent_evaluator_error"])
+
+    def _install_main_inputs(self, root, raw, cases, freeze, started, environment):
+        for name, value in (("FREEZE.json", freeze), ("ENVIRONMENT.json", environment),
+                            ("candidate.raw.json", raw), ("cases.json", cases),
+                            ("candidate.started.json", started)):
+            (root / name).write_text(json.dumps(value), encoding="utf-8")
+        audit_v2.ROOT = root
+        audit_v2.parent_audit.ROOT = root
+
+    def test_main_replaces_stale_pass_when_any_json_root_is_not_an_object(self):
+        names = ("candidate.raw.json", "cases.json", "FREEZE.json",
+                 "candidate.started.json", "ENVIRONMENT.json")
+        for malformed_name in names:
+            with self.subTest(document=malformed_name), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                _, raw, cases, freeze, started, environment = self._fixture()
+                self._install_main_inputs(root, raw, cases, freeze, started, environment)
+                (root / malformed_name).write_text("null", encoding="utf-8")
+                output = root / "AUDIT_V2.json"
+                output.write_text('{"gate":"PASS_V39_XVFB_KEYMAP_TEMPORAL_BINDING_SCOPED"}\n',
+                                  encoding="utf-8")
+                with self.assertRaises(SystemExit) as raised:
+                    audit_v2.main()
+                report = json.loads(output.read_text(encoding="utf-8"))
+                self.assertEqual(raised.exception.code, 1)
+                self.assertEqual(report["gate"], "FAIL_OR_HOLD_V39_KEYMAP_TEMPORAL_BINDING")
+                self.assertIn("ValueError", report["error"])
+
+    def test_main_replaces_stale_pass_when_input_json_is_invalid(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            _, raw, cases, freeze, started, environment = self._fixture()
+            self._install_main_inputs(root, raw, cases, freeze, started, environment)
+            (root / "candidate.raw.json").write_text("{", encoding="utf-8")
+            output = root / "AUDIT_V2.json"
+            output.write_text('{"gate":"PASS_V39_XVFB_KEYMAP_TEMPORAL_BINDING_SCOPED"}\n',
+                              encoding="utf-8")
+            with self.assertRaises(SystemExit) as raised:
+                audit_v2.main()
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(raised.exception.code, 1)
+            self.assertEqual(report["gate"], "FAIL_OR_HOLD_V39_KEYMAP_TEMPORAL_BINDING")
+            self.assertIn("JSONDecodeError", report["error"])
+
+    def test_main_passes_valid_fixture_and_replaces_stale_report(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            _, raw, cases, freeze, started, environment = self._fixture()
+            self._install_main_inputs(root, raw, cases, freeze, started, environment)
+            output = root / "AUDIT_V2.json"
+            output.write_text('{"gate":"stale"}\n', encoding="utf-8")
+            with self.assertRaises(SystemExit) as raised:
+                audit_v2.main()
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(raised.exception.code, 0)
+            self.assertEqual(report["gate"], audit_v2.PASS)
+            self.assertEqual(report["failed_checks"], [])
 
 
 if __name__ == "__main__":
