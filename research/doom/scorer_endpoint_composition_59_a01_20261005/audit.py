@@ -15,6 +15,7 @@ EXPECTED_TESTS = (
     "test_multi_tic_ack_matches_snapshot_and_is_accepted",
     "test_no_op_update_fails_closed",
     "test_one_tic_ack_with_coherent_snapshot",
+    "test_post_read_tic_requires_exact_integer_type",
     "test_retained_async_spectator_counterexample_composes",
     "test_retained_runtime_endpoint_composes_with_actual_v16_sampler_and_sink",
     "test_installs_snapshot_sampler_restores_and_binds_source_hashes",

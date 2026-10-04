@@ -2,6 +2,7 @@ test_configured_variable_order_mismatch_fails_closed (test_candidate.CandidateTe
 test_multi_tic_ack_matches_snapshot_and_is_accepted (test_candidate.CandidateTests.test_multi_tic_ack_matches_snapshot_and_is_accepted) ... ok
 test_no_op_update_fails_closed (test_candidate.CandidateTests.test_no_op_update_fails_closed) ... ok
 test_one_tic_ack_with_coherent_snapshot (test_candidate.CandidateTests.test_one_tic_ack_with_coherent_snapshot) ... ok
+test_post_read_tic_requires_exact_integer_type (test_candidate.CandidateTests.test_post_read_tic_requires_exact_integer_type) ... ok
 test_retained_async_spectator_counterexample_composes (test_candidate.CandidateTests.test_retained_async_spectator_counterexample_composes) ... ok
 test_snapshot_mismatch_fails_closed (test_candidate.CandidateTests.test_snapshot_mismatch_fails_closed) ... ok
 test_tic_drift_during_read_fails_closed (test_candidate.CandidateTests.test_tic_drift_during_read_fails_closed) ... ok
@@ -15,6 +16,6 @@ test_fractional_counter_fails_closed (test_state_snapshot_sampler.StateSnapshotC
 test_retained_runtime_endpoint_composes_with_actual_v16_sampler_and_sink (test_state_snapshot_sampler.StateSnapshotCompositionTests.test_retained_runtime_endpoint_composes_with_actual_v16_sampler_and_sink) ... ok
 
 ----------------------------------------------------------------------
-Ran 15 tests in 0.038s
+Ran 16 tests in 0.204s
 
 OK

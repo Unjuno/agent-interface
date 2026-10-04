@@ -119,6 +119,14 @@ class CandidateTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "UNKNOWN")
         self.assertNotIn("values", row)
 
+    def test_post_read_tic_requires_exact_integer_type(self):
+        for before, after, read_tic in ((10, 11, 11.0), (0, 1, True)):
+            with self.subTest(before=before, after=after, read_tic=read_tic):
+                receipt, row = self.run_checkpoint(
+                    Game(before, after, after, [0, 1], read_tic=read_tic))
+                self.assertEqual(receipt["status"], "UNKNOWN")
+                self.assertNotIn("values", row)
+                self.assertNotIn("values", receipt)
     def test_tic_drift_during_read_fails_closed(self):
         receipt, row = self.run_checkpoint(Game(1, 11, 11, [0, 0], read_tic=12))
         self.assertEqual(receipt["status"], "UNKNOWN")
