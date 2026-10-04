@@ -1,0 +1,17 @@
+{
+  "allocation_id": "MAP01-FEEDBACK-OCCUPANCY-JOIN-A03-20261005",
+  "base_commit": "8ff7afed76c1d81eabac9d0c37d4191b352045a4",
+  "run_type": "deterministic_local_cpu_posthoc",
+  "hypothesis": "Removing missing intent/program-step identity from per-key admission events by temporal association to later aggregate keys_held rows is not reliably possible in the retained v39 trace; the minimum evidence is raw-event ambiguity and adversarial counterexamples.",
+  "test": "For each per-key admission, enumerate all later aggregate hold receipts containing that key and report zero/one/multiple candidates. Separately validate the stable-key-set aggregate relationship per id/step. Independently test a greedy-next-hold rule on a small event sequence where overlapping holds make it misattribute an admission.",
+  "decision": "PASS_AMBIGUITY_FALSIFIED_RECONSTRUCTION_SCOPED if the pinned source hashes match, all 39 admissions and 28 holds are accounted for, at least one admission has multiple candidate holds, per-id/step key sets agree, and independent audit confirms a greedy counterexample; otherwise FAIL or HOLD on provenance mismatch.",
+  "competing_explanation": "The trace is sequential enough that a stronger hidden ordering/runtime invariant could permit reconstruction, even though that invariant is absent from raw records. This test deliberately uses no such undocumented assumption.",
+  "uncertainty": "Offline schema analysis of one retained trajectory; establishes insufficiency of recorded identity for the tested reconstruction rule, not impossibility of recovery given external runtime source or undocumented ordering invariants. No physical key occupancy, semantic usefulness, live behavior, or causal effect is measured.",
+  "source_manifest": "SOURCE_SHA256SUMS.txt",
+  "candidate_command": "python research/doom/map01_feedback_occupancy_join_a03_20261005/analyze.py",
+  "independent_audit_command": "python research/doom/map01_feedback_occupancy_join_a03_20261005/audit.py",
+  "candidate_runs": 1,
+  "retry": false,
+  "live_game_model_gui_input_calls": 0,
+  "docker_wslc_calls": 0
+}
