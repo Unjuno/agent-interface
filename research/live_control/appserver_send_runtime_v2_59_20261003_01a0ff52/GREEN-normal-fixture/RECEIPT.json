@@ -1,0 +1,29 @@
+{
+  "phase": "GREEN-normal-fixture",
+  "argv": [
+    "/run/current-system/sw/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_app_server_runtime_eligibility",
+    "research.live_control.test_codex_app_server_send_deadline_v1",
+    "test_app_server_eof_stop"
+  ],
+  "cwd": "<OWNED_TASK>",
+  "PYTHONPATH": "<OWNED_TASK>/source:<OWNED_TASK>/source/research/live_control:<OWNED_TASK>",
+  "source_sha256": "bfbecdb4aff202dde9a993ea42fcd772d9ef28ac1a8ecb9422cd45fec09b0548",
+  "test_sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11",
+  "scope": "ordinary affected regression; no native peer/formal replay",
+  "started_utc": "2026-10-03T10:27:40.790333+00:00",
+  "pid": 93760,
+  "ended_utc": "2026-10-03T10:27:40.907928+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 4370,
+    "sha256": "4f5bb11e85f561c328335efeb879ed1e18e29c7c5c6499b8644c7f6824199347"
+  }
+}

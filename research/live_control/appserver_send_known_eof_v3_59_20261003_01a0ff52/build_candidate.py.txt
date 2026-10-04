@@ -1,0 +1,107 @@
+"""Owned private-index source candidate; no main update or helper replay."""
+from pathlib import Path
+import hashlib
+import json
+import os
+import subprocess
+
+P = Path(__file__).resolve().parent
+R = P.parent/'agent-interface'
+BASE = 'a06d7f77367190b90350c34624647e8bc0d4b0fd'
+OLD = '0c8e6c25d46b67a89f83d16f6b683866a6f55a23'
+LEAF = 'research/live_control/appserver_send_known_eof_v3_59_20261003_01a0ff52/'
+INDEX = P/'candidate.index'
+ENV = dict(os.environ, GIT_INDEX_FILE=str(INDEX))
+
+def git(*args, data=None, private=True):
+    return subprocess.run(['/run/current-system/sw/bin/git','--no-lazy-fetch','-C',str(R),*args],
+                          input=data,env=ENV if private else None,capture_output=True,check=True).stdout
+
+def digest(b):
+    return hashlib.sha256(b).hexdigest()
+
+def dump(x):
+    return (json.dumps(x,indent=2)+'\n').encode()
+
+def tree(ref):
+    result={}
+    for row in git('ls-tree','-r','-z',ref).split(b'\0'):
+        if row:
+            meta,path=row.split(b'\t',1); result[path.decode()]=tuple(meta.decode().split())
+    return result
+
+if INDEX.exists() or git('status','--porcelain=v1',private=False):
+    raise RuntimeError('existing index or changed owned checkout')
+if git('rev-parse','HEAD').strip().decode()!='fbd804e549b589e7e7e692ab4f89183d21451ca7':
+    raise RuntimeError('owned checkout head changed')
+base,old=tree(BASE),tree(OLD)
+v2=json.loads((P.parent/'send-runtime-eligibility-v2-01a0ff52/content-proposal-v2.json').read_text())['proposal']
+archive=[r for r in json.loads((P.parent/'send-runtime-eligibility-v2-01a0ff52/candidate-images.json').read_text()) if r['path'].startswith((v2['preserved_v1_package'],v2['package']))]
+if len(archive)!=196:
+    raise ValueError('archive image count changed')
+files={}
+for name in ['codex_app_server_client_v2.py','test_codex_app_server_send_deadline_v1.py','test_app_server_eof_stop.py','test_app_server_runtime_eligibility.py','test_app_server_known_eof.py']:
+    files['research/live_control/'+name]=(P/'source/research/live_control'/name).read_bytes()
+files['runtime/integration_checks/native.py']=(P/'candidate-native.py').read_bytes()
+files['research/live_control/README.md']=(P/'base-README.md').read_bytes()+b'\n- [#6965 V3 known-EOF admission](appserver_send_known_eof_v3_59_20261003_01a0ff52/REPORT.md): new calls refuse before send once reader EOF is known; solicited reply remains usable. Three-line guard with29 ordinary tests; original V1/V2 evidence retained. Runtime eligibility/uncertain-send limits remain. No concurrent EOF atomicity, whole-call bound or provider/GUI/task qualification.\n'
+items=['REPORT.md','PLAN.json','independent-saved-reduction.json','fixture-change-check.json','base-copy-check.json','base-native.py.first-copy','base-README.md.first-copy','first-current-ref-404.json','peer-packet.json','run_ordinary.py','build_candidate.py']
+for phase in ['RED-terminal','GREEN-normal','GREEN-optimized']:
+    receipt=json.loads((P/phase/'RECEIPT.json').read_text())
+    if receipt['exit_code']!=(1 if phase=='RED-terminal' else 0):
+        raise ValueError('first regression outcome changed')
+    for stream in ['stdout','stderr']:
+        b=(P/phase/(stream+'.bin')).read_bytes()
+        if receipt[stream]!={'bytes':len(b),'sha256':digest(b)}:
+            raise ValueError('regression stream custody mismatch')
+    items += [phase+'/'+name for name in ['PLAN.json','RECEIPT.json','stdout.bin','stderr.bin']]
+for name in ['codex_app_server_client_v2.py','test_codex_app_server_send_deadline_v1.py','test_app_server_eof_stop.py']:
+    items.append(name+'.patch')
+joins=[]
+for item in items:
+    original=(P/item).read_bytes(); public=original.replace(str(P).encode(),b'<OWNED_V3_TASK>')
+    inert=item+'.txt' if item.endswith('.py') else item
+    files[LEAF+inert]=public
+    joins.append({'path':inert,'original_bytes':len(original),'original_sha256':digest(original),'public_bytes':len(public),'public_sha256':digest(public)})
+for name in ['codex_app_server_client_v2.py','test_app_server_known_eof.py','test_app_server_eof_stop.py','test_codex_app_server_send_deadline_v1.py']:
+    files[LEAF+'candidate/'+name+'.txt']=(P/'source/research/live_control'/name).read_bytes()
+files[LEAF+'RED-source-client.py.txt']=(P/'RED-source/codex_app_server_client_v2.py').read_bytes()
+files[LEAF+'PROJECTIONS.json']=dump({'recipe':'owned V3 absolute prefix only; public peer packet already projected upstream','joins':joins})
+files[LEAF+'.gitattributes']=b'*.bin whitespace=-blank-at-eol\n'
+manifest={'self_excluded':True,'entries':[{'path':path.removeprefix(LEAF),'bytes':len(b),'sha256':digest(b)} for path,b in sorted(files.items()) if path.startswith(LEAF)]}
+files[LEAF+'MANIFEST.json']=dump(manifest)
+git('read-tree',BASE)
+records=[]
+for row in archive:
+    path=row['path']; mode,kind,oid=old[path]
+    if path in base or kind!='blob' or oid!=row['blob']:
+        raise ValueError('archive collision or custody changed')
+    b=git('cat-file','blob',oid)
+    if len(b)!=row['bytes'] or digest(b)!=row['sha256']:
+        raise ValueError('archive member mismatch')
+    records.append((mode+' '+oid+'\t'+path+'\0').encode())
+for path,b in files.items():
+    if path.startswith(LEAF) and path in base:
+        raise ValueError('new leaf collision')
+    oid=git('hash-object','-w','--stdin',data=b).strip().decode()
+    records.append(('100644 '+oid+'\t'+path+'\0').encode())
+git('update-index','-z','--index-info',data=b''.join(records))
+for r in records:
+    git('cat-file','-e',r.split(b' ',1)[1].split(b'\t',1)[0].decode()+'^{blob}')
+t=git('write-tree','--missing-ok').strip().decode()
+h=git('commit-tree',t,'-p',BASE,'-p',OLD,data=b'fix(research): refuse known-EOF app-server sends before effects [skip ci]\n').strip().decode()
+new=tree(h); changed={p for p in base.keys()|new.keys() if base.get(p)!=new.get(p)}
+expected={r['path'] for r in archive}|set(files)
+if changed!=expected:
+    raise ValueError('unexpected base delta')
+rows=[]
+for path in sorted(changed):
+    mode,kind,oid=new[path]; b=git('cat-file','blob',oid)
+    rows.append({'path':path,'mode':mode,'blob':oid,'bytes':len(b),'sha256':digest(b)})
+recipe=v2['diff_recipe'][:-2]+[BASE,h]
+diff=git(*recipe)
+(P/'candidate-exact.diff').write_bytes(diff)
+(P/'candidate-images.json').write_bytes(dump(rows))
+m={'head':h,'tree':t,'review_base':BASE,'parents':[BASE,OLD],'changed_images':len(rows),'changed_image_bytes':sum(r['bytes'] for r in rows),'untouched_base_entries':sum(p not in changed for p in base),'preserved_archives':196,'package':LEAF,'manifest_entries':len(manifest['entries']),'manifest_sha256':digest(files[LEAF+'MANIFEST.json']),'diff_recipe':recipe,'diff_bytes':len(diff),'diff_sha256':digest(diff),'source_pins':[r for r in rows if r['path'] in files and not r['path'].startswith(LEAF)],'main_sends':0}
+(P/'candidate-metadata.json').write_bytes(dump(m))
+git('update-ref','refs/heads/review/appserver-send-known-eof-v3-01a0ff52-20261003',h,'0'*40)
+print(json.dumps(m))

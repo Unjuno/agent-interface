@@ -1,0 +1,37 @@
+{
+  "input_pins": {
+    "source/research/live_control/test_app_server_runtime_eligibility.py": {
+      "bytes": 3438,
+      "sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11"
+    },
+    "source/research/live_control/codex_app_server_client_v2.py": {
+      "bytes": 10073,
+      "sha256": "bfbecdb4aff202dde9a993ea42fcd772d9ef28ac1a8ecb9422cd45fec09b0548"
+    },
+    "source/research/live_control/test_codex_app_server_send_deadline_v1.py": {
+      "bytes": 12237,
+      "sha256": "0304faa4dce3f26741ec9c5cf5192a3145b1313845b58803c4fd90ff6466d61c"
+    },
+    "source/research/live_control/test_app_server_eof_stop.py": {
+      "bytes": 2296,
+      "sha256": "603d4b0cc56ca66aa87e9d3034a087d6a08c0b50310b188e48207275f7698bb9"
+    },
+    "source/research/live_control/test_app_server_known_eof.py": {
+      "bytes": 4317,
+      "sha256": "ae65c23420aefe86fe4431a69b29b38dcc64c5701efeb3d0d1ad8db59f8d00d9"
+    }
+  },
+  "phase": "RED-terminal",
+  "argv": [
+    "/run/current-system/sw/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "research.live_control.test_app_server_known_eof"
+  ],
+  "cwd": "<OWNED_V3_TASK>",
+  "PYTHONPATH": "<OWNED_V3_TASK>/source:<OWNED_V3_TASK>/source/research/live_control:<OWNED_V3_TASK>",
+  "source_sha256": "bfbecdb4aff202dde9a993ea42fcd772d9ef28ac1a8ecb9422cd45fec09b0548",
+  "test_sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11",
+  "scope": "ordinary affected regression; no native peer/formal replay"
+}

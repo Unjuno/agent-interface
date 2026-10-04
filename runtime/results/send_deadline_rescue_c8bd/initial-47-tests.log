@@ -1,0 +1,50 @@
+.........................FFF.....................
+======================================================================
+FAIL: test_eligible_environments_reach_factory_and_preserve_call (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_eligible_environments_reach_factory_and_preserve_call) (platform='nt', version=(3, 12))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_app_server_runtime_eligibility.py", line 51, in test_eligible_environments_reach_factory_and_preserve_call
+    factory.assert_called_once_with(['inert'], cwd=None, stdin=module.subprocess.PIPE,
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 961, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 949, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: expected call not found.
+Expected: mock(['inert'], cwd=None, stdin=-1, stdout=-1, stderr=-1, text=True, bufsize=1)
+  Actual: mock(['inert'], cwd=None, stdin=-1, stdout=-1, stderr=-1, text=True, encoding='utf-8', bufsize=1)
+
+======================================================================
+FAIL: test_eligible_environments_reach_factory_and_preserve_call (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_eligible_environments_reach_factory_and_preserve_call) (platform='nt', version=(3, 13))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_app_server_runtime_eligibility.py", line 51, in test_eligible_environments_reach_factory_and_preserve_call
+    factory.assert_called_once_with(['inert'], cwd=None, stdin=module.subprocess.PIPE,
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 961, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 949, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: expected call not found.
+Expected: mock(['inert'], cwd=None, stdin=-1, stdout=-1, stderr=-1, text=True, bufsize=1)
+  Actual: mock(['inert'], cwd=None, stdin=-1, stdout=-1, stderr=-1, text=True, encoding='utf-8', bufsize=1)
+
+======================================================================
+FAIL: test_eligible_environments_reach_factory_and_preserve_call (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_eligible_environments_reach_factory_and_preserve_call) (platform='posix', version=(3, 11))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_app_server_runtime_eligibility.py", line 51, in test_eligible_environments_reach_factory_and_preserve_call
+    factory.assert_called_once_with(['inert'], cwd=None, stdin=module.subprocess.PIPE,
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 961, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 949, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: expected call not found.
+Expected: mock(['inert'], cwd=None, stdin=-1, stdout=-1, stderr=-1, text=True, bufsize=1)
+  Actual: mock(['inert'], cwd=None, stdin=-1, stdout=-1, stderr=-1, text=True, encoding='utf-8', bufsize=1)
+
+----------------------------------------------------------------------
+Ran 47 tests in 0.436s
+
+FAILED (failures=3)

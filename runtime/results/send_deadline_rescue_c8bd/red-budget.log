@@ -1,0 +1,20 @@
+F
+======================================================================
+FAIL: test_request_spends_one_budget_on_send_and_response_wait (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_request_spends_one_budget_on_send_and_response_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_codex_app_server_send_deadline_v1.py", line 196, in test_request_spends_one_budget_on_send_and_response_wait
+    self.assertEqual(captured, [.05])
+AssertionError: Lists differ: [None] != [0.05]
+
+First differing element 0:
+None
+0.05
+
+- [None]
++ [0.05]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

@@ -1,0 +1,27 @@
+{
+  "phase": "RED-eligibility",
+  "argv": [
+    "/run/current-system/sw/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_app_server_runtime_eligibility"
+  ],
+  "cwd": "<OWNED_TASK>",
+  "PYTHONPATH": "<OWNED_TASK>/source:<OWNED_TASK>/source/research/live_control:<OWNED_TASK>",
+  "source_sha256": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d",
+  "test_sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11",
+  "scope": "ordinary affected regression; no native peer/formal replay",
+  "started_utc": "2026-10-03T10:25:26.248105+00:00",
+  "pid": 93178,
+  "ended_utc": "2026-10-03T10:25:26.351090+00:00",
+  "exit_code": 1,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 8890,
+    "sha256": "f1990008d98bbc0731dbae91c58cbf6074933e37b7a7b5b8f021b000713d71e6"
+  }
+}

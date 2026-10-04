@@ -1,0 +1,29 @@
+from pathlib import Path
+import json
+import subprocess
+import hashlib
+
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+GIT = '/run/current-system/sw/bin/git'
+BASE = 'e5270c7bfe50911225afc6c3b5273021331b2bb1'
+paths = ['research/live_control/codex_app_server_client_v2.py',
+         'research/live_control/README.md']
+pins = []
+for relative in paths:
+    data = subprocess.check_output([GIT, 'show', BASE + ':' + relative], cwd=ROOT)
+    snapshot = WORK / (Path(relative).name + '.original')
+    with snapshot.open('xb') as output:
+        output.write(data)
+    path = ROOT / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        assert path.read_bytes() == data
+    else:
+        with path.open('xb') as output:
+            output.write(data)
+    pins.append({'path': relative, 'bytes': len(data),
+                 'sha256': hashlib.sha256(data).hexdigest(),
+                 'blob': subprocess.check_output([GIT, 'rev-parse', BASE + ':' + relative], cwd=ROOT, text=True).strip()})
+(WORK / 'source-pins.json').write_text(json.dumps({'base': BASE, 'sources': pins}, indent=2) + '\n')
+print(json.dumps(pins))
