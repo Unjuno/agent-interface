@@ -96,10 +96,15 @@ class ExplicitUpLedgerTests(unittest.TestCase):
                 obj = self.backend(stubborn=stubborn)
                 reply = self.record(obj, name + ('_stubborn' if stubborn else '_healthy'),
                                     lambda: self.dispatch(obj, name, ops))
-                self.assertEqual(reply['admission'], 'accepted')
-                release = reply['execution']['releases'][-1]
+                if stubborn:
+                    self.assertEqual(reply['status'], 'execution_failed')
+                    self.assertEqual(reply['error'], 'BACKEND_EXECUTION')
+                    release = reply['release']
+                else:
+                    self.assertEqual(reply['admission'], 'accepted')
+                    release = reply['execution']['releases'][-1]
                 self.assertIs(release['verified'], not stubborn)
-                self.assertEqual(reply['status'], 'release_unverified' if stubborn else 'completed')
+                self.assertEqual(reply['status'], 'execution_failed' if stubborn else 'completed')
                 self.assertEqual(obj.user32.down, {vk} if stubborn else set())
                 self.assertEqual(obj.held_keys, {key: vk} if stubborn and key else {})
                 self.assertEqual(obj.held_buttons, {button} if stubborn and button else set())
@@ -121,14 +126,16 @@ class ExplicitUpLedgerTests(unittest.TestCase):
     def test_untracked_up_does_not_claim_unowned_inputs(self):
         obj = self.backend(stubborn=True)
         obj.user32.down = {81, 1}
-        obj.key_state('Q', False)
-        obj.pointer_button('left', False)
+        with self.assertRaisesRegex(native.Win32BackendError, 'key UP unverified'):
+            obj.key_state('Q', False)
+        with self.assertRaisesRegex(native.Win32BackendError, 'button UP unverified'):
+            obj.pointer_button('left', False)
         release = self.record(obj, 'untracked_control', obj.release_all)
         self.assertIs(release['verified'], True)
         self.assertEqual(obj.held_keys, {})
         self.assertEqual(obj.held_buttons, set())
         self.assertEqual(obj.user32.down, {81, 1})
-        self.assertFalse(any('query' in event for event in obj.user32.events))
+        self.assertTrue(any('query' in event for event in obj.user32.events))
 
     def test_explicit_up_send_failure_preserves_existing_obligation(self):
         for name in ('key', 'button'):
@@ -146,10 +153,47 @@ class ExplicitUpLedgerTests(unittest.TestCase):
     def test_state_read_failure_after_explicit_up_preserves_obligation(self):
         obj = self.backend(stubborn=True, query_error=True)
         obj.key_state('Q', True)
-        obj.key_state('Q', False)
         with self.assertRaisesRegex(RuntimeError, 'read unavailable'):
-            self.record(obj, 'explicit_up_query_exception', obj.release_all)
+            self.record(obj, 'explicit_up_query_exception', lambda: obj.key_state('Q', False))
         self.assertEqual(obj.held_keys, {'Q': 81})
+
+    def test_explicit_up_failure_quarantines_until_recovery(self):
+        obj = self.backend(stubborn=True)
+        obj.pending_unicode_ups = set()
+        session = Win32RuntimeSession(obj)
+
+        def dispatch(pid, ops):
+            program = {'schema': SCHEMA_PROGRAM, 'program_id': pid,
+                       'source': {'observation_seq': 7, 'binding_revision': 3},
+                       'authority': {'lease_id': 'ordinary-explicit-up', 'expires_at_ns': 100},
+                       'terminal': {'release_all_required': True},
+                       'ops': ops + [{'op': 'release_all'}]}
+            return session.dispatch(program, current_observation_seq=7,
+                                    current_binding_revision=3, now_ns=1)
+
+        failed = dispatch('explicit_up_failed', [
+            {'op': 'key_state', 'key': 'Q', 'down': True},
+            {'op': 'key_state', 'key': 'Q', 'down': False},
+            {'op': 'text', 'text': 'x'},
+        ])
+        self.assertEqual(failed['status'], 'execution_failed')
+        self.assertTrue(failed['recovery_required'])
+        self.assertFalse(any(event.get('send') == 0 for event in obj.user32.events))
+        emissions = obj.emissions
+        events = list(obj.user32.events)
+
+        refused = dispatch('quarantined', [])
+        self.assertEqual(refused['status'], 'refused')
+        self.assertEqual(refused['error'], 'INPUT_RECOVERY_REQUIRED')
+        self.assertEqual(obj.emissions, emissions)
+        self.assertEqual(obj.user32.events, events)
+
+        obj.user32.stubborn = False
+        recovered = session.recover_input()
+        self.assertEqual(recovered['status'], 'input_recovered')
+        self.assertFalse(session.recovery_required)
+        self.assertEqual(obj.held_keys, {})
+        self.assertEqual(obj.user32.down, set())
 
     def test_caller_later_neutral_read_retires_explicit_up_obligation(self):
         obj = self.backend(stubborn=True)
@@ -159,7 +203,8 @@ class ExplicitUpLedgerTests(unittest.TestCase):
         first_ledger = dict(obj.held_keys)
         obj.user32.stubborn = False
         second = self.record(obj, 'later_second', lambda: self.dispatch(obj, 'later_second', []))
-        self.assertEqual(first['status'], 'release_unverified')
+        self.assertEqual(first['status'], 'execution_failed')
+        self.assertEqual(first['error'], 'BACKEND_EXECUTION')
         self.assertEqual(first_ledger, {'Q': 81})
         self.assertEqual(second['status'], 'completed')
         self.assertEqual(obj.held_keys, {})
