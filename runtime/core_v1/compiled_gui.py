@@ -246,6 +246,10 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.
             return finish("SAFE_YIELD", "association_changed")
+        except Exception:
+            # Adapter failures (for example an OCR timeout) invalidate this
+            # observation. Return the verified prefix and never infer a branch.
+            return finish("RUNTIME_FAILED", "observation_failed")
         observed_ns = clock()
         observation, refusal = _observation(raw, interface, previous_sequence)
         if refusal:
