@@ -23,6 +23,9 @@ def audit_rows(rows: list[dict], design: dict) -> dict:
     errors: list[str] = []
     seen: set[str] = set()
     for row in rows:
+        if not isinstance(row, dict):
+            errors.append("isolated-schema-mismatch")
+            continue
         if set(row) != allowed_keys:
             errors.append("isolated-schema-mismatch")
         token = row.get("token")

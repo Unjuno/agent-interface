@@ -68,6 +68,13 @@ class PositionAuditTests(unittest.TestCase):
         self.assertFalse(result["ok"])
         self.assertIn("presentation-schema-mismatch", result["errors"])
 
+    def test_non_object_isolated_row_is_rejected(self):
+        mutated = copy.deepcopy(ROWS)
+        mutated[0] = ["token", "position", "prompt", "source_indices", "frames"]
+        result = audit_rows(mutated, DESIGN)
+        self.assertFalse(result["ok"])
+        self.assertIn("isolated-schema-mismatch", result["errors"])
+
     def test_cli_returns_nonzero_and_false_json_for_corrupted_position(self):
         with tempfile.TemporaryDirectory(prefix="7387-cli-audit-") as temp:
             isolated_path = Path(temp) / "isolated.jsonl"
