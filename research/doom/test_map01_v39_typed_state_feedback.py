@@ -126,6 +126,39 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertIsNone(receipt["down_edge_interval_ns"])
         self.assertIsNone(receipt["up_edge_interval_ns"])
 
+    def test_adapter_edges_must_match_owner_generated_brackets(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        mutations = (
+            (0, "physical_down_interval", [1, 2]),
+            (0, "key", "other-key"),
+            (0, "owner_id", "other-owner"),
+            (0, "intent_token", "other-token"),
+            (0, "status", "CONTRADICTORY"),
+            (0, "grants_input_authority", True),
+            (0, "application_consumption_observed", True),
+            (1, "physical_up_interval", [1, 2]),
+            (1, "key", "other-key"),
+            (1, "owner_id", "other-owner"),
+            (1, "intent_token", "other-token"),
+            (1, "status", "CONTRADICTORY"),
+            (1, "grants_input_authority", True),
+            (1, "application_consumption_observed", True),
+        )
+
+        for row_index, field, value in mutations:
+            events = json.loads(json.dumps(template))
+            events[row_index]["physical_key_measurement"]["bracket"][field] = value
+
+            with self.subTest(row_index=row_index, field=field):
+                receipt = controller.input_edge_receipts(events)[0]
+
+                self.assertEqual(receipt["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_event_kind_must_match_nested_edge(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
