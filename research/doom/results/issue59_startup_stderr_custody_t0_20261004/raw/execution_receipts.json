@@ -1,0 +1,41 @@
+{
+  "allocation_id": "ISSUE59-STARTUP-STDERR-T0-20261004-01",
+  "container_image": "node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+  "platform": "OrbStack Docker linux/arm64; --network=none; read-only root and source; requested 1 CPU/256 MiB/16 pids",
+  "source_freeze_sha256": "8cb8db1fa7f7c8c7b50e85d3d4c78a5c319959313f733063bb28306a22e76004",
+  "preflight": {
+    "running_containers": 0,
+    "all_image_catalog": {
+      "command": "docker images --digests --format '{{.Repository}}:{{.Tag}} {{.Digest}} {{.ID}} {{.Size}}'",
+      "exit_code": 1,
+      "stderr": "Error response from daemon: rpc error: code = Unknown desc = blob sha256:cf02676f620c6679614a311c4baee4deceb135a37cae9d6e14c39a5e8e49001e expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/cf02676f620c6679614a311c4baee4deceb135a37cae9d6e14c39a5e8e49001e: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/cf02676f620c6679614a311c4baee4deceb135a37cae9d6e14c39a5e8e49001e: operation not supported",
+      "response": "Did not repeat catalog enumeration or restart daemon; inspected and ran only the already-pinned digest below."
+    },
+    "pinned_image_inspect": {"exit_code":0,"stdout":"sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 linux/arm64"}
+  },
+  "construction": {
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "construction_test=PASS fixture_rows=4 audit_errors=0 mutations=4/4 formal_subprocesses=0",
+    "formal_output_written": false
+  },
+  "candidate": {
+    "invocations": 1,
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --memory=256m --cpus=1 --pids-limit 16 --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-04/agent-interface-59-startup-stderr-t0/research/doom/results/issue59_startup_stderr_custody_t0_20261004/src,dst=/src,readonly --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-04/agent-interface-59-startup-stderr-t0/research/doom/results/issue59_startup_stderr_custody_t0_20261004/raw,dst=/out --entrypoint node node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 /src/candidate.mjs /out/candidate.json",
+    "exit_code": 0,
+    "stdout": "{\"status\":\"CANDIDATE_EXIT_0\",\"rows\":4}",
+    "raw_file": "candidate.json",
+    "raw_sha256": "8be2929ed4752b2b98aaae2ccb0cdde94e11c4653c464041fcff5d230c3dbe6b",
+    "candidate_retry": false
+  },
+  "independent_auditor": {
+    "invocations": 1,
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --memory=256m --cpus=1 --pids-limit 16 --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-04/agent-interface-59-startup-stderr-t0/research/doom/results/issue59_startup_stderr_custody_t0_20261004/src,dst=/src,readonly --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-04/agent-interface-59-startup-stderr-t0/research/doom/results/issue59_startup_stderr_custody_t0_20261004/raw,dst=/out --entrypoint node node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 /src/audit.mjs /out/candidate.json /out/audit.json",
+    "exit_code": 0,
+    "stdout": "PASS_METHOD_SCOPED rows=4 scenarios=4 errors=0 mutations=4/4",
+    "audit_file": "audit.json",
+    "audit_sha256": "343612b8d514edd68c3956f551cf3a2a4b1d9311e19b8fcecb9b2d5105525812",
+    "auditor_imports_candidate": false
+  },
+  "formal_retry": false
+}
