@@ -1,0 +1,35 @@
+{
+  "case_count": 7,
+  "corruption_controls": [
+    {
+      "id": "drop_delta_entry",
+      "rejected": true
+    },
+    {
+      "id": "alter_export_hash",
+      "rejected": true
+    },
+    {
+      "id": "false_accept_refusal",
+      "rejected": true
+    },
+    {
+      "id": "remove_network_denial",
+      "rejected": true
+    }
+  ],
+  "errors": [
+    "diff:clean_single",
+    "bytes:clean_single",
+    "diff:clean_multi_rename",
+    "bytes:clean_multi_rename",
+    "diff:clean_metadata_change",
+    "bytes:clean_metadata_change",
+    "diff:partial_multifile_save",
+    "bytes:partial_multifile_save",
+    "diff:network_effect_attempt",
+    "bytes:network_effect_attempt"
+  ],
+  "scope": "synthetic Docker-managed container overlay only; not macOS host APFS COW, GUI application consistency, or general process sandboxing",
+  "status": "FAIL_AUDIT"
+}

@@ -6,6 +6,10 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
+
+- Issue #7383: [freshness-gated observation hedging T0](analysis/observation_hedging_7383_t0_20261004/REPORT.md) — the frozen synthetic independent-heavy-tail case passed its method gate, but correlated/shared-queue controls erase the latency gain; no real capture or critical-path benefit is established.
+
 - Issue #5424 T4: [severity-ranking inversion with hard-catastrophe control](analysis/action_class_error_budget_5424_t4_v1/REPORT.md) — 128 synthetic continuation rows independently reconstructed; hard gate prevented the two scripted catastrophic primary effects while correlated fallback risk remained. Method-scoped only.
 
 - Issue #6723 successor to #5370 T7: [composed bounded priority-inheritance experiment](analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) — 36 rows independently audited; synthetic method-scoped result only, with historical T6 STOP preserved.
@@ -120,6 +124,7 @@ Use analytical work to eliminate questions that are already decidable from expli
 - [`analysis/active_automata_learning_5385_t0_v1/REPORT.md`](analysis/active_automata_learning_5385_t0_v1/REPORT.md) — Issue #5385 OrbStack T0: four-state bounded active learner PASS against 2,801 finite words; no live-interface or unbounded-equivalence claim.
 - [`analysis/action_class_error_budget_5424_t2_v1/REPORT.md`](analysis/action_class_error_budget_5424_t2_v1/REPORT.md) — Issue #5424 OrbStack T2: fixed-corpus typed burn-rate budget reduced post-signal primary severe exposures, with correlated-fallback completion tradeoff and preserved audit-v1 FAIL.
 - [`analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md`](analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md) — Issue #5420 OrbStack T1: adaptive ε filter enforces the declared bound for two synthetic randomized-response channels; no GUI privacy or DP claim.
+- [`analysis/privacy_conditional_kernel_5420_t0_20261004/REPORT.md`](analysis/privacy_conditional_kernel_5420_t0_20261004/REPORT.md) — Issue #5420 successor T0: exact conditional-kernel gate rejects the shared-pad pair and accepts fresh-pad/constant controls; method-scoped only, not a product or general DP claim.
 
 ## Workspace map
 

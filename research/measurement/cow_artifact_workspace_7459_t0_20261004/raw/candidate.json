@@ -1,0 +1,549 @@
+{
+  "cases": [
+    {
+      "accept_expected": true,
+      "base_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "container_id": "fcd7cb92530b0637c68c2927f5beba0de7974525a37bb42c73ea411027cbfc57",
+      "decision": "ACCEPT_DELTA",
+      "diff": {
+        "argv": [
+          "docker",
+          "diff",
+          "cow7459t0-clean_single"
+        ],
+        "exit": 0,
+        "output": "C /workspace\nC /workspace/single.txt\nC /etc\nC /etc/ssl\nC /etc/ssl/certs\nA /etc/ssl/certs/orbstack-root.crt\nC /etc/ssl/certs/ca-certificates.crt\nC /usr\nC /usr/local\nC /usr/local/share\nA /usr/local/share/ca-certificates\nA /usr/local/share/ca-certificates/orbstack-root.crt\n"
+      },
+      "diff_entries": [
+        "A /etc/ssl/certs/orbstack-root.crt",
+        "A /usr/local/share/ca-certificates",
+        "A /usr/local/share/ca-certificates/orbstack-root.crt",
+        "C /etc",
+        "C /etc/ssl",
+        "C /etc/ssl/certs",
+        "C /etc/ssl/certs/ca-certificates.crt",
+        "C /usr",
+        "C /usr/local",
+        "C /usr/local/share",
+        "C /workspace",
+        "C /workspace/single.txt"
+      ],
+      "expected_inventory": {
+        "single.txt": "db9c521aa8e4db6929ef2ace6f0ebc956b5f9911e7debb88bb6b1c031c1fd3a2"
+      },
+      "export_cp": {
+        "argv": [
+          "docker",
+          "cp",
+          "cow7459t0-clean_single:/workspace/.",
+          "/Users/taka/Documents/Codex/2026-10-04/agent-interface-7459-cow-t0/research/measurement/cow_artifact_workspace_7459_t0_20261004/raw/clean_single"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      "export_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "db9c521aa8e4db6929ef2ace6f0ebc956b5f9911e7debb88bb6b1c031c1fd3a2"
+      },
+      "export_modes": {
+        "alpha.txt": "644",
+        "beta.txt": "644",
+        "single.txt": "644"
+      },
+      "id": "clean_single",
+      "inspect": {
+        "argv": [
+          "docker",
+          "inspect",
+          "cow7459t0-clean_single",
+          "--format",
+          "{{json .HostConfig}} {{json .State}}"
+        ],
+        "exit": 0,
+        "output": "{\"Binds\":null,\"ContainerIDFile\":\"\",\"LogConfig\":{\"Type\":\"json-file\",\"Config\":{\"max-file\":\"5\",\"max-size\":\"20m\"}},\"NetworkMode\":\"none\",\"PortBindings\":{},\"RestartPolicy\":{\"Name\":\"no\",\"MaximumRetryCount\":0},\"AutoRemove\":false,\"VolumeDriver\":\"\",\"VolumesFrom\":null,\"ConsoleSize\":[0,0],\"CapAdd\":null,\"CapDrop\":null,\"CgroupnsMode\":\"private\",\"Dns\":null,\"DnsOptions\":[],\"DnsSearch\":[],\"ExtraHosts\":null,\"GroupAdd\":null,\"IpcMode\":\"private\",\"Cgroup\":\"\",\"Links\":null,\"OomScoreAdj\":0,\"PidMode\":\"\",\"Privileged\":false,\"PublishAllPorts\":false,\"ReadonlyRootfs\":false,\"SecurityOpt\":null,\"UTSMode\":\"\",\"UsernsMode\":\"\",\"ShmSize\":8403288064,\"Runtime\":\"runc\",\"Isolation\":\"\",\"CpuShares\":0,\"Memory\":0,\"NanoCpus\":0,\"CgroupParent\":\"\",\"BlkioWeight\":0,\"BlkioWeightDevice\":[],\"BlkioDeviceReadBps\":[],\"BlkioDeviceWriteBps\":[],\"BlkioDeviceReadIOps\":[],\"BlkioDeviceWriteIOps\":[],\"CpuPeriod\":0,\"CpuQuota\":0,\"CpuRealtimePeriod\":0,\"CpuRealtimeRuntime\":0,\"CpusetCpus\":\"\",\"CpusetMems\":\"\",\"Devices\":[],\"DeviceCgroupRules\":null,\"DeviceRequests\":null,\"MemoryReservation\":0,\"MemorySwap\":0,\"MemorySwappiness\":null,\"OomKillDisable\":null,\"PidsLimit\":32,\"Ulimits\":[],\"CpuCount\":0,\"CpuPercent\":0,\"IOMaximumIOps\":0,\"IOMaximumBandwidth\":0,\"MaskedPaths\":[\"/proc/acpi\",\"/proc/asound\",\"/proc/interrupts\",\"/proc/kcore\",\"/proc/keys\",\"/proc/latency_stats\",\"/proc/sched_debug\",\"/proc/scsi\",\"/proc/timer_list\",\"/proc/timer_stats\",\"/sys/devices/virtual/powercap\",\"/sys/firmware\"],\"ReadonlyPaths\":[\"/proc/bus\",\"/proc/fs\",\"/proc/irq\",\"/proc/sys\",\"/proc/sysrq-trigger\"]} {\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-10-04T08:50:15.992697725Z\",\"FinishedAt\":\"2026-10-04T08:50:26.171120425Z\"}\n"
+      },
+      "mode_expected": null,
+      "network_denied_expected": false,
+      "ops": [
+        {
+          "argv": [
+            "docker",
+            "exec",
+            "cow7459t0-clean_single",
+            "sh",
+            "-c",
+            "printf 'single-v2\\n' > /workspace/single.txt"
+          ],
+          "exit": 0,
+          "output": ""
+        }
+      ]
+    },
+    {
+      "accept_expected": true,
+      "base_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "container_id": "2ff7e69d7420167edac4bb678eb1af796790112c7d85d304157e072226ac23c1",
+      "decision": "ACCEPT_DELTA",
+      "diff": {
+        "argv": [
+          "docker",
+          "diff",
+          "cow7459t0-clean_multi_rename"
+        ],
+        "exit": 0,
+        "output": "C /usr\nC /usr/local\nC /usr/local/share\nA /usr/local/share/ca-certificates\nA /usr/local/share/ca-certificates/orbstack-root.crt\nC /workspace\nC /workspace/alpha.txt\nA /workspace/gamma.txt\nA /workspace/new.txt\nD /workspace/beta.txt\nC /etc\nC /etc/ssl\nC /etc/ssl/certs\nA /etc/ssl/certs/orbstack-root.crt\nC /etc/ssl/certs/ca-certificates.crt\n"
+      },
+      "diff_entries": [
+        "A /etc/ssl/certs/orbstack-root.crt",
+        "A /usr/local/share/ca-certificates",
+        "A /usr/local/share/ca-certificates/orbstack-root.crt",
+        "A /workspace/gamma.txt",
+        "A /workspace/new.txt",
+        "C /etc",
+        "C /etc/ssl",
+        "C /etc/ssl/certs",
+        "C /etc/ssl/certs/ca-certificates.crt",
+        "C /usr",
+        "C /usr/local",
+        "C /usr/local/share",
+        "C /workspace",
+        "C /workspace/alpha.txt",
+        "D /workspace/beta.txt"
+      ],
+      "expected_inventory": {
+        "alpha.txt": "44843c4a8568dcef53d45d8817fa192943c06fb52d3bea43626798c6a74c4edd",
+        "gamma.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "new.txt": "52eee8c23b84611035a78f5c41a44cc7da1018a8d30f35b1bb306fa798ac6dd8"
+      },
+      "export_cp": {
+        "argv": [
+          "docker",
+          "cp",
+          "cow7459t0-clean_multi_rename:/workspace/.",
+          "/Users/taka/Documents/Codex/2026-10-04/agent-interface-7459-cow-t0/research/measurement/cow_artifact_workspace_7459_t0_20261004/raw/clean_multi_rename"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      "export_inventory": {
+        "alpha.txt": "44843c4a8568dcef53d45d8817fa192943c06fb52d3bea43626798c6a74c4edd",
+        "gamma.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "new.txt": "52eee8c23b84611035a78f5c41a44cc7da1018a8d30f35b1bb306fa798ac6dd8",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "export_modes": {
+        "alpha.txt": "644",
+        "gamma.txt": "644",
+        "new.txt": "644",
+        "single.txt": "644"
+      },
+      "id": "clean_multi_rename",
+      "inspect": {
+        "argv": [
+          "docker",
+          "inspect",
+          "cow7459t0-clean_multi_rename",
+          "--format",
+          "{{json .HostConfig}} {{json .State}}"
+        ],
+        "exit": 0,
+        "output": "{\"Binds\":null,\"ContainerIDFile\":\"\",\"LogConfig\":{\"Type\":\"json-file\",\"Config\":{\"max-file\":\"5\",\"max-size\":\"20m\"}},\"NetworkMode\":\"none\",\"PortBindings\":{},\"RestartPolicy\":{\"Name\":\"no\",\"MaximumRetryCount\":0},\"AutoRemove\":false,\"VolumeDriver\":\"\",\"VolumesFrom\":null,\"ConsoleSize\":[0,0],\"CapAdd\":null,\"CapDrop\":null,\"CgroupnsMode\":\"private\",\"Dns\":null,\"DnsOptions\":[],\"DnsSearch\":[],\"ExtraHosts\":null,\"GroupAdd\":null,\"IpcMode\":\"private\",\"Cgroup\":\"\",\"Links\":null,\"OomScoreAdj\":0,\"PidMode\":\"\",\"Privileged\":false,\"PublishAllPorts\":false,\"ReadonlyRootfs\":false,\"SecurityOpt\":null,\"UTSMode\":\"\",\"UsernsMode\":\"\",\"ShmSize\":8403288064,\"Runtime\":\"runc\",\"Isolation\":\"\",\"CpuShares\":0,\"Memory\":0,\"NanoCpus\":0,\"CgroupParent\":\"\",\"BlkioWeight\":0,\"BlkioWeightDevice\":[],\"BlkioDeviceReadBps\":[],\"BlkioDeviceWriteBps\":[],\"BlkioDeviceReadIOps\":[],\"BlkioDeviceWriteIOps\":[],\"CpuPeriod\":0,\"CpuQuota\":0,\"CpuRealtimePeriod\":0,\"CpuRealtimeRuntime\":0,\"CpusetCpus\":\"\",\"CpusetMems\":\"\",\"Devices\":[],\"DeviceCgroupRules\":null,\"DeviceRequests\":null,\"MemoryReservation\":0,\"MemorySwap\":0,\"MemorySwappiness\":null,\"OomKillDisable\":null,\"PidsLimit\":32,\"Ulimits\":[],\"CpuCount\":0,\"CpuPercent\":0,\"IOMaximumIOps\":0,\"IOMaximumBandwidth\":0,\"MaskedPaths\":[\"/proc/acpi\",\"/proc/asound\",\"/proc/interrupts\",\"/proc/kcore\",\"/proc/keys\",\"/proc/latency_stats\",\"/proc/sched_debug\",\"/proc/scsi\",\"/proc/timer_list\",\"/proc/timer_stats\",\"/sys/devices/virtual/powercap\",\"/sys/firmware\"],\"ReadonlyPaths\":[\"/proc/bus\",\"/proc/fs\",\"/proc/irq\",\"/proc/sys\",\"/proc/sysrq-trigger\"]} {\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-10-04T08:50:26.541522305Z\",\"FinishedAt\":\"2026-10-04T08:50:36.806674289Z\"}\n"
+      },
+      "mode_expected": null,
+      "network_denied_expected": false,
+      "ops": [
+        {
+          "argv": [
+            "docker",
+            "exec",
+            "cow7459t0-clean_multi_rename",
+            "sh",
+            "-c",
+            "printf 'alpha-v2\\n' > /workspace/alpha.txt"
+          ],
+          "exit": 0,
+          "output": ""
+        },
+        {
+          "argv": [
+            "docker",
+            "exec",
+            "cow7459t0-clean_multi_rename",
+            "sh",
+            "-c",
+            "mv /workspace/beta.txt /workspace/gamma.txt"
+          ],
+          "exit": 0,
+          "output": ""
+        },
+        {
+          "argv": [
+            "docker",
+            "exec",
+            "cow7459t0-clean_multi_rename",
+            "sh",
+            "-c",
+            "printf 'new-v1\\n' > /workspace/new.txt"
+          ],
+          "exit": 0,
+          "output": ""
+        }
+      ]
+    },
+    {
+      "accept_expected": true,
+      "base_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "container_id": "fc7fa53b33b1102b5d464a9e6beea825c95e5ceb8668d04b47a99a10085dcc81",
+      "decision": "ACCEPT_DELTA",
+      "diff": {
+        "argv": [
+          "docker",
+          "diff",
+          "cow7459t0-clean_metadata_change"
+        ],
+        "exit": 0,
+        "output": "C /usr\nC /usr/local\nC /usr/local/share\nA /usr/local/share/ca-certificates\nA /usr/local/share/ca-certificates/orbstack-root.crt\nC /workspace\nC /workspace/single.txt\nC /etc\nC /etc/ssl\nC /etc/ssl/certs\nC /etc/ssl/certs/ca-certificates.crt\nA /etc/ssl/certs/orbstack-root.crt\n"
+      },
+      "diff_entries": [
+        "A /etc/ssl/certs/orbstack-root.crt",
+        "A /usr/local/share/ca-certificates",
+        "A /usr/local/share/ca-certificates/orbstack-root.crt",
+        "C /etc",
+        "C /etc/ssl",
+        "C /etc/ssl/certs",
+        "C /etc/ssl/certs/ca-certificates.crt",
+        "C /usr",
+        "C /usr/local",
+        "C /usr/local/share",
+        "C /workspace",
+        "C /workspace/single.txt"
+      ],
+      "expected_inventory": {
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "export_cp": {
+        "argv": [
+          "docker",
+          "cp",
+          "cow7459t0-clean_metadata_change:/workspace/.",
+          "/Users/taka/Documents/Codex/2026-10-04/agent-interface-7459-cow-t0/research/measurement/cow_artifact_workspace_7459_t0_20261004/raw/clean_metadata_change"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      "export_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "export_modes": {
+        "alpha.txt": "644",
+        "beta.txt": "644",
+        "single.txt": "600"
+      },
+      "id": "clean_metadata_change",
+      "inspect": {
+        "argv": [
+          "docker",
+          "inspect",
+          "cow7459t0-clean_metadata_change",
+          "--format",
+          "{{json .HostConfig}} {{json .State}}"
+        ],
+        "exit": 0,
+        "output": "{\"Binds\":null,\"ContainerIDFile\":\"\",\"LogConfig\":{\"Type\":\"json-file\",\"Config\":{\"max-file\":\"5\",\"max-size\":\"20m\"}},\"NetworkMode\":\"none\",\"PortBindings\":{},\"RestartPolicy\":{\"Name\":\"no\",\"MaximumRetryCount\":0},\"AutoRemove\":false,\"VolumeDriver\":\"\",\"VolumesFrom\":null,\"ConsoleSize\":[0,0],\"CapAdd\":null,\"CapDrop\":null,\"CgroupnsMode\":\"private\",\"Dns\":null,\"DnsOptions\":[],\"DnsSearch\":[],\"ExtraHosts\":null,\"GroupAdd\":null,\"IpcMode\":\"private\",\"Cgroup\":\"\",\"Links\":null,\"OomScoreAdj\":0,\"PidMode\":\"\",\"Privileged\":false,\"PublishAllPorts\":false,\"ReadonlyRootfs\":false,\"SecurityOpt\":null,\"UTSMode\":\"\",\"UsernsMode\":\"\",\"ShmSize\":8403288064,\"Runtime\":\"runc\",\"Isolation\":\"\",\"CpuShares\":0,\"Memory\":0,\"NanoCpus\":0,\"CgroupParent\":\"\",\"BlkioWeight\":0,\"BlkioWeightDevice\":[],\"BlkioDeviceReadBps\":[],\"BlkioDeviceWriteBps\":[],\"BlkioDeviceReadIOps\":[],\"BlkioDeviceWriteIOps\":[],\"CpuPeriod\":0,\"CpuQuota\":0,\"CpuRealtimePeriod\":0,\"CpuRealtimeRuntime\":0,\"CpusetCpus\":\"\",\"CpusetMems\":\"\",\"Devices\":[],\"DeviceCgroupRules\":null,\"DeviceRequests\":null,\"MemoryReservation\":0,\"MemorySwap\":0,\"MemorySwappiness\":null,\"OomKillDisable\":null,\"PidsLimit\":32,\"Ulimits\":[],\"CpuCount\":0,\"CpuPercent\":0,\"IOMaximumIOps\":0,\"IOMaximumBandwidth\":0,\"MaskedPaths\":[\"/proc/acpi\",\"/proc/asound\",\"/proc/interrupts\",\"/proc/kcore\",\"/proc/keys\",\"/proc/latency_stats\",\"/proc/sched_debug\",\"/proc/scsi\",\"/proc/timer_list\",\"/proc/timer_stats\",\"/sys/devices/virtual/powercap\",\"/sys/firmware\"],\"ReadonlyPaths\":[\"/proc/bus\",\"/proc/fs\",\"/proc/irq\",\"/proc/sys\",\"/proc/sysrq-trigger\"]} {\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-10-04T08:50:37.181535526Z\",\"FinishedAt\":\"2026-10-04T08:50:47.337129233Z\"}\n"
+      },
+      "mode_expected": "600",
+      "network_denied_expected": false,
+      "ops": [
+        {
+          "argv": [
+            "docker",
+            "exec",
+            "cow7459t0-clean_metadata_change",
+            "sh",
+            "-c",
+            "chmod 600 /workspace/single.txt"
+          ],
+          "exit": 0,
+          "output": ""
+        }
+      ]
+    },
+    {
+      "accept_expected": false,
+      "base_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "container_id": "d32a39cd2a645227ef430925684ddc2556ffeb6f565243a2d9c60aa7552cd261",
+      "decision": "REFUSE_INCOMPLETE_OR_EFFECT",
+      "diff": {
+        "argv": [
+          "docker",
+          "diff",
+          "cow7459t0-partial_multifile_save"
+        ],
+        "exit": 0,
+        "output": "C /workspace\nC /workspace/alpha.txt\nC /etc\nC /etc/ssl\nC /etc/ssl/certs\nC /etc/ssl/certs/ca-certificates.crt\nA /etc/ssl/certs/orbstack-root.crt\nC /usr\nC /usr/local\nC /usr/local/share\nA /usr/local/share/ca-certificates\nA /usr/local/share/ca-certificates/orbstack-root.crt\n"
+      },
+      "diff_entries": [
+        "A /etc/ssl/certs/orbstack-root.crt",
+        "A /usr/local/share/ca-certificates",
+        "A /usr/local/share/ca-certificates/orbstack-root.crt",
+        "C /etc",
+        "C /etc/ssl",
+        "C /etc/ssl/certs",
+        "C /etc/ssl/certs/ca-certificates.crt",
+        "C /usr",
+        "C /usr/local",
+        "C /usr/local/share",
+        "C /workspace",
+        "C /workspace/alpha.txt"
+      ],
+      "expected_inventory": {
+        "alpha.txt": "f6fc4a361e1584426325d27c61711a70faa739b4301ac927a3f64ac74f2ad12c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876"
+      },
+      "export_cp": {
+        "argv": [
+          "docker",
+          "cp",
+          "cow7459t0-partial_multifile_save:/workspace/.",
+          "/Users/taka/Documents/Codex/2026-10-04/agent-interface-7459-cow-t0/research/measurement/cow_artifact_workspace_7459_t0_20261004/raw/partial_multifile_save"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      "export_inventory": {
+        "alpha.txt": "f6fc4a361e1584426325d27c61711a70faa739b4301ac927a3f64ac74f2ad12c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "export_modes": {
+        "alpha.txt": "644",
+        "beta.txt": "644",
+        "single.txt": "644"
+      },
+      "id": "partial_multifile_save",
+      "inspect": {
+        "argv": [
+          "docker",
+          "inspect",
+          "cow7459t0-partial_multifile_save",
+          "--format",
+          "{{json .HostConfig}} {{json .State}}"
+        ],
+        "exit": 0,
+        "output": "{\"Binds\":null,\"ContainerIDFile\":\"\",\"LogConfig\":{\"Type\":\"json-file\",\"Config\":{\"max-file\":\"5\",\"max-size\":\"20m\"}},\"NetworkMode\":\"none\",\"PortBindings\":{},\"RestartPolicy\":{\"Name\":\"no\",\"MaximumRetryCount\":0},\"AutoRemove\":false,\"VolumeDriver\":\"\",\"VolumesFrom\":null,\"ConsoleSize\":[0,0],\"CapAdd\":null,\"CapDrop\":null,\"CgroupnsMode\":\"private\",\"Dns\":null,\"DnsOptions\":[],\"DnsSearch\":[],\"ExtraHosts\":null,\"GroupAdd\":null,\"IpcMode\":\"private\",\"Cgroup\":\"\",\"Links\":null,\"OomScoreAdj\":0,\"PidMode\":\"\",\"Privileged\":false,\"PublishAllPorts\":false,\"ReadonlyRootfs\":false,\"SecurityOpt\":null,\"UTSMode\":\"\",\"UsernsMode\":\"\",\"ShmSize\":8403288064,\"Runtime\":\"runc\",\"Isolation\":\"\",\"CpuShares\":0,\"Memory\":0,\"NanoCpus\":0,\"CgroupParent\":\"\",\"BlkioWeight\":0,\"BlkioWeightDevice\":[],\"BlkioDeviceReadBps\":[],\"BlkioDeviceWriteBps\":[],\"BlkioDeviceReadIOps\":[],\"BlkioDeviceWriteIOps\":[],\"CpuPeriod\":0,\"CpuQuota\":0,\"CpuRealtimePeriod\":0,\"CpuRealtimeRuntime\":0,\"CpusetCpus\":\"\",\"CpusetMems\":\"\",\"Devices\":[],\"DeviceCgroupRules\":null,\"DeviceRequests\":null,\"MemoryReservation\":0,\"MemorySwap\":0,\"MemorySwappiness\":null,\"OomKillDisable\":null,\"PidsLimit\":32,\"Ulimits\":[],\"CpuCount\":0,\"CpuPercent\":0,\"IOMaximumIOps\":0,\"IOMaximumBandwidth\":0,\"MaskedPaths\":[\"/proc/acpi\",\"/proc/asound\",\"/proc/interrupts\",\"/proc/kcore\",\"/proc/keys\",\"/proc/latency_stats\",\"/proc/sched_debug\",\"/proc/scsi\",\"/proc/timer_list\",\"/proc/timer_stats\",\"/sys/devices/virtual/powercap\",\"/sys/firmware\"],\"ReadonlyPaths\":[\"/proc/bus\",\"/proc/fs\",\"/proc/irq\",\"/proc/sys\",\"/proc/sysrq-trigger\"]} {\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-10-04T08:50:47.694774089Z\",\"FinishedAt\":\"2026-10-04T08:50:57.86601746Z\"}\n"
+      },
+      "mode_expected": null,
+      "network_denied_expected": false,
+      "ops": [
+        {
+          "argv": [
+            "docker",
+            "exec",
+            "cow7459t0-partial_multifile_save",
+            "sh",
+            "-c",
+            "printf 'alpha-partial\\n' > /workspace/alpha.txt; exit 23"
+          ],
+          "exit": 23,
+          "output": ""
+        }
+      ]
+    },
+    {
+      "accept_expected": false,
+      "base_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "container_id": "bf6a4dcbd60d27f5d2fcc5449ac3178e62fa53fa394bb321bf66de956351e470",
+      "decision": "REFUSE_INCOMPLETE_OR_EFFECT",
+      "diff": {
+        "argv": [
+          "docker",
+          "diff",
+          "cow7459t0-network_effect_attempt"
+        ],
+        "exit": 0,
+        "output": "C /etc\nC /etc/ssl\nC /etc/ssl/certs\nC /etc/ssl/certs/ca-certificates.crt\nA /etc/ssl/certs/orbstack-root.crt\nC /usr\nC /usr/local\nC /usr/local/share\nA /usr/local/share/ca-certificates\nA /usr/local/share/ca-certificates/orbstack-root.crt\n"
+      },
+      "diff_entries": [
+        "A /etc/ssl/certs/orbstack-root.crt",
+        "A /usr/local/share/ca-certificates",
+        "A /usr/local/share/ca-certificates/orbstack-root.crt",
+        "C /etc",
+        "C /etc/ssl",
+        "C /etc/ssl/certs",
+        "C /etc/ssl/certs/ca-certificates.crt",
+        "C /usr",
+        "C /usr/local",
+        "C /usr/local/share"
+      ],
+      "expected_inventory": {
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "export_cp": {
+        "argv": [
+          "docker",
+          "cp",
+          "cow7459t0-network_effect_attempt:/workspace/.",
+          "/Users/taka/Documents/Codex/2026-10-04/agent-interface-7459-cow-t0/research/measurement/cow_artifact_workspace_7459_t0_20261004/raw/network_effect_attempt"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      "export_inventory": {
+        "alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+        "beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "export_modes": {
+        "alpha.txt": "644",
+        "beta.txt": "644",
+        "single.txt": "644"
+      },
+      "id": "network_effect_attempt",
+      "inspect": {
+        "argv": [
+          "docker",
+          "inspect",
+          "cow7459t0-network_effect_attempt",
+          "--format",
+          "{{json .HostConfig}} {{json .State}}"
+        ],
+        "exit": 0,
+        "output": "{\"Binds\":null,\"ContainerIDFile\":\"\",\"LogConfig\":{\"Type\":\"json-file\",\"Config\":{\"max-file\":\"5\",\"max-size\":\"20m\"}},\"NetworkMode\":\"none\",\"PortBindings\":{},\"RestartPolicy\":{\"Name\":\"no\",\"MaximumRetryCount\":0},\"AutoRemove\":false,\"VolumeDriver\":\"\",\"VolumesFrom\":null,\"ConsoleSize\":[0,0],\"CapAdd\":null,\"CapDrop\":null,\"CgroupnsMode\":\"private\",\"Dns\":null,\"DnsOptions\":[],\"DnsSearch\":[],\"ExtraHosts\":null,\"GroupAdd\":null,\"IpcMode\":\"private\",\"Cgroup\":\"\",\"Links\":null,\"OomScoreAdj\":0,\"PidMode\":\"\",\"Privileged\":false,\"PublishAllPorts\":false,\"ReadonlyRootfs\":false,\"SecurityOpt\":null,\"UTSMode\":\"\",\"UsernsMode\":\"\",\"ShmSize\":8403288064,\"Runtime\":\"runc\",\"Isolation\":\"\",\"CpuShares\":0,\"Memory\":0,\"NanoCpus\":0,\"CgroupParent\":\"\",\"BlkioWeight\":0,\"BlkioWeightDevice\":[],\"BlkioDeviceReadBps\":[],\"BlkioDeviceWriteBps\":[],\"BlkioDeviceReadIOps\":[],\"BlkioDeviceWriteIOps\":[],\"CpuPeriod\":0,\"CpuQuota\":0,\"CpuRealtimePeriod\":0,\"CpuRealtimeRuntime\":0,\"CpusetCpus\":\"\",\"CpusetMems\":\"\",\"Devices\":[],\"DeviceCgroupRules\":null,\"DeviceRequests\":null,\"MemoryReservation\":0,\"MemorySwap\":0,\"MemorySwappiness\":null,\"OomKillDisable\":null,\"PidsLimit\":32,\"Ulimits\":[],\"CpuCount\":0,\"CpuPercent\":0,\"IOMaximumIOps\":0,\"IOMaximumBandwidth\":0,\"MaskedPaths\":[\"/proc/acpi\",\"/proc/asound\",\"/proc/interrupts\",\"/proc/kcore\",\"/proc/keys\",\"/proc/latency_stats\",\"/proc/sched_debug\",\"/proc/scsi\",\"/proc/timer_list\",\"/proc/timer_stats\",\"/sys/devices/virtual/powercap\",\"/sys/firmware\"],\"ReadonlyPaths\":[\"/proc/bus\",\"/proc/fs\",\"/proc/irq\",\"/proc/sys\",\"/proc/sysrq-trigger\"]} {\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-10-04T08:50:58.233796202Z\",\"FinishedAt\":\"2026-10-04T08:51:08.40571066Z\"}\n"
+      },
+      "mode_expected": null,
+      "network_denied_expected": true,
+      "ops": [
+        {
+          "argv": [
+            "docker",
+            "exec",
+            "cow7459t0-network_effect_attempt",
+            "sh",
+            "-c",
+            "wget -T 1 -O /tmp/cow-out https://198.51.100.1/"
+          ],
+          "exit": 1,
+          "output": "Connecting to 198.51.100.1 (198.51.100.1:443)\nwget: can't connect to remote host (198.51.100.1): Network unreachable\n"
+        }
+      ]
+    },
+    {
+      "container_created": false,
+      "decision": "REFUSE_UNPROVABLE_STATE",
+      "id": "dirty_open_buffer"
+    },
+    {
+      "container_created": false,
+      "decision": "REFUSE_UNPROVABLE_STATE",
+      "id": "concurrent_base_revision_changed"
+    }
+  ],
+  "controls": {
+    "direct_live": {
+      "base_inventory": {
+        "single.txt": "db9c521aa8e4db6929ef2ace6f0ebc956b5f9911e7debb88bb6b1c031c1fd3a2"
+      },
+      "draft_inventory": null
+    },
+    "native_draft": {
+      "base_inventory": {
+        "single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0"
+      },
+      "draft_inventory": {
+        "single.txt": "db9c521aa8e4db6929ef2ace6f0ebc956b5f9911e7debb88bb6b1c031c1fd3a2"
+      }
+    }
+  },
+  "docker_version": {
+    "argv": [
+      "docker",
+      "version",
+      "--format",
+      "{{.Client.Version}}/{{.Server.Version}}"
+    ],
+    "exit": 0,
+    "output": "29.5.2/29.4.0\n"
+  },
+  "freeze": {
+    "audit_command": "python3 audit.py",
+    "candidate_command": "python3 candidate.py",
+    "decision_gate": "METHOD_PASS_SCOPED only for exact clean deltas, unchanged base, and all planted uncertainty/effect cases refused; otherwise FAIL/HOLD/STOP per README.",
+    "docker": "29.5.2/29.4.0 linux/arm64",
+    "driver": "linux/aarch64 overlayfs",
+    "files_sha256": {
+      ".dockerignore": "4685e82b589d00677fc964118caae06d331ac687ca1660ea8aa880feab521803",
+      "Dockerfile": "76a835220228d2da3537b26561428747b7727276c90778231b79a28d9169a32f",
+      "README.md": "44f093f835c8e25fe1e40547b2b8ab9c1d29022cbc4b4596aa3e9b6cf84fad86",
+      "audit.py": "b1d0f29ec3d7be2483a5b726ab7ac31830602c0f4393dd469e818ad1b5e6cfc7",
+      "base/alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+      "base/beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+      "base/single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0",
+      "candidate.py": "b8b2a260698eb19883f5df501f416e039ccb362214a2d750f364f94d324288e5",
+      "freeze.py": "6f5243fd3eead33e2799cda58eddf2f182aabd71a0f66309793b7568b49b2c91"
+    },
+    "pinned_image": "sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8 [\"alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8\"]",
+    "repository_head": "93090bcbf0c9eb0cd5f6feeb4abd2477e8453202",
+    "schema": "cow-7459-t0-freeze-v1"
+  },
+  "freeze_sha256": "9d6b391997d41fa3745ea5a85b5435b7f87de86a628053de185d5e0e1f6cdd84",
+  "image_build": {
+    "argv": [
+      "docker",
+      "build",
+      "--pull=false",
+      "--network=none",
+      "-t",
+      "local/cow-7459-t0:20261004",
+      "/Users/taka/Documents/Codex/2026-10-04/agent-interface-7459-cow-t0/research/measurement/cow_artifact_workspace_7459_t0_20261004"
+    ],
+    "exit": 0,
+    "output": "#0 building with \"orbstack\" instance using docker driver\n\n#1 [internal] load build definition from Dockerfile\n#1 transferring dockerfile: 144B done\n#1 DONE 0.1s\n\n#2 [internal] load metadata for docker.io/library/alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8\n#2 DONE 1.4s\n\n#3 [internal] load .dockerignore\n#3 transferring context: 56B done\n#3 DONE 0.1s\n\n#4 [1/2] FROM docker.io/library/alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8\n#4 resolve docker.io/library/alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8\n#4 resolve docker.io/library/alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8 0.1s done\n#4 DONE 0.1s\n\n#5 [internal] load build context\n#5 transferring context: 187B done\n#5 DONE 0.1s\n\n#6 [2/2] COPY base/ /workspace/\n#6 DONE 0.1s\n\n#7 exporting to image\n#7 exporting layers\n#7 exporting layers 0.2s done\n#7 exporting manifest sha256:5f8a613b32209fbd7874e70b7ee8c74a6a5f49debb14634e5435a56800172092\n#7 exporting manifest sha256:5f8a613b32209fbd7874e70b7ee8c74a6a5f49debb14634e5435a56800172092 0.0s done\n#7 exporting config sha256:f7ec83629235d2f1b0f15bf79f38b89875b688421b218e6baccde4100de6e90b 0.0s done\n#7 exporting attestation manifest sha256:96bee0d9fdb9dea6044b769c8345ceba7d33e3ee34deeabd02f5e14f9722c304 0.0s done\n#7 exporting manifest list sha256:af9d25c54d1de15a07a285222db9c0fb1062c5a20853bc535dbdcbae0e6a6d6e\n#7 exporting manifest list sha256:af9d25c54d1de15a07a285222db9c0fb1062c5a20853bc535dbdcbae0e6a6d6e 0.0s done\n#7 naming to docker.io/local/cow-7459-t0:20261004 done\n#7 unpacking to docker.io/local/cow-7459-t0:20261004 0.0s done\n#7 DONE 0.4s\n"
+  },
+  "image_inspect": {
+    "argv": [
+      "docker",
+      "image",
+      "inspect",
+      "alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8",
+      "--format",
+      "{{.Id}} {{json .RepoDigests}}"
+    ],
+    "exit": 0,
+    "output": "sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8 [\"alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8\"]\n"
+  },
+  "schema": "cow-7459-t0-candidate-v1",
+  "source_sha256": {
+    ".dockerignore": "4685e82b589d00677fc964118caae06d331ac687ca1660ea8aa880feab521803",
+    "Dockerfile": "76a835220228d2da3537b26561428747b7727276c90778231b79a28d9169a32f",
+    "README.md": "44f093f835c8e25fe1e40547b2b8ab9c1d29022cbc4b4596aa3e9b6cf84fad86",
+    "audit.py": "b1d0f29ec3d7be2483a5b726ab7ac31830602c0f4393dd469e818ad1b5e6cfc7",
+    "base/alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+    "base/beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+    "base/single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0",
+    "candidate.py": "b8b2a260698eb19883f5df501f416e039ccb362214a2d750f364f94d324288e5",
+    "freeze.py": "6f5243fd3eead33e2799cda58eddf2f182aabd71a0f66309793b7568b49b2c91"
+  }
+}

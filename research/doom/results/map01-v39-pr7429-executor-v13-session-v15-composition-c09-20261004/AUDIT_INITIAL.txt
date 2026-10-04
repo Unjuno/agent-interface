@@ -1,0 +1,7 @@
+Initial audit output (retained):
+{
+  "checks": 13,
+  "errors": ["raw-content:raw/05-session-selection.txt"],
+  "status": "FAIL"
+}
+Disposition: the regression test is invoked with unittest verbosity 1 and correctly emits `.` followed by `Ran 1 test` and `OK`; the auditor's initial assertion incorrectly expected the test method name. The frozen test/raw/source are unchanged. Audit v2 checks the actual count line instead.

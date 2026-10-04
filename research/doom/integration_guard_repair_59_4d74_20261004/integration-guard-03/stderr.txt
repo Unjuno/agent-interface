@@ -1,0 +1,16 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_inner_game_is_closed_when_final_sample_raises (builtins.GameProxyLifecycleTests.test_inner_game_is_closed_when_final_sample_raises) ... ok
+test_reentrant_close_during_final_sample_does_not_repeat_cleanup (builtins.GameProxyLifecycleTests.test_reentrant_close_during_final_sample_does_not_repeat_cleanup) ... ok
+test_repeated_close_reports_the_original_cleanup_failure (builtins.GameProxyLifecycleTests.test_repeated_close_reports_the_original_cleanup_failure) ... ok
+test_sample_and_cleanup_errors_are_both_grouped (builtins.GameProxyLifecycleTests.test_sample_and_cleanup_errors_are_both_grouped) ... ok
+test_session_unwind_preserves_controller_sample_and_close_errors (builtins.GameProxyLifecycleTests.test_session_unwind_preserves_controller_sample_and_close_errors) ... ok
+test_successful_sample_preserves_inner_close_result_and_is_idempotent (builtins.GameProxyLifecycleTests.test_successful_sample_preserves_inner_close_result_and_is_idempotent) ... ok
+test_wrapped_close_failure_is_replayed_without_a_false_success (builtins.GameProxyLifecycleTests.test_wrapped_close_failure_is_replayed_without_a_false_success) ... ok
+test_cancel_arriving_after_dequeue_is_preserved_as_release_cause (cause_fixture.CancellationReleaseCauseTests.test_cancel_arriving_after_dequeue_is_preserved_as_release_cause) ... ok
+test_cancel_arriving_during_release_io_is_preserved (cause_fixture.CancellationReleaseCauseTests.test_cancel_arriving_during_release_io_is_preserved) ... ok
+test_ordinary_release_remains_ordinary (cause_fixture.CancellationReleaseCauseTests.test_ordinary_release_remains_ordinary) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.031s
+
+OK
