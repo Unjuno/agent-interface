@@ -4,7 +4,7 @@
 
 The pinned `target_socket_submit_v1.py` candidate marked an action `released: true` when its terminal receipt omitted `keys_down` or `buttons_down`, and when either set reported held input. The frozen seven-case in-memory probe accepted the empty verified control and also falsely accepted four unsafe/malformed receipts. The independent auditor classified this as `PASS_GAP_REPRODUCED`.
 
-The additive adapter fix now requires the exact release schema `{verified, keys_down, buttons_down}`, `verified is True`, and both held-input arrays present and empty before it can return `released: true`. The regression test covers a valid control, held key, held button, missing keys field, and missing buttons field.
+The additive adapter fix now requires `verified is True` and explicitly present empty `keys_down` and `buttons_down`. It accepts the producer metadata envelope (`event`, `reason`, `verified_ns`, and `valid_until_ns`) with type/value checks, and rejects unknown fields. The regression test covers a valid control, held key, held button, missing keys field, and missing buttons field.
 
 ## H/T/D/C/U
 
@@ -16,11 +16,11 @@ The additive adapter fix now requires the exact release schema `{verified, keys_
 
 ## Repair validation
 
-After the regression was observed failing against the frozen candidate, the adapter was changed to fail closed on any missing, extra, wrongly typed, unverified, or nonempty release state. The Mindustry integration package has 122 tests passing in normal mode and 122 passing under `-O`; each mode reports two expected AF_UNIX skips on this Windows host. `py_compile` and `git diff --check` both exit 0. Logs and receipts are preserved in this directory. `REPAIR-RESULT-v1.json` and `full-discover-no-tests.log` preserve earlier command/setup errors rather than concealing them.
+After the regression was observed failing against the frozen candidate, the adapter was changed to fail closed on missing, unknown, wrongly typed, unverified, or nonempty held-input state. The Mindustry integration package has 122 tests passing in normal mode and 122 passing under `-O`; each mode reports two expected AF_UNIX skips on this Windows host. `py_compile` and `git diff --check` both exit 0. Logs and receipts are preserved in this directory. `REPAIR-RESULT-v1.json` and `full-discover-no-tests.log` preserve earlier command/setup errors rather than concealing them.
 
 ## Limits and next step
 
-This is an adapter contract repair based on a synthetic terminal payload. It assumes the upstream producer emits the exact verified-empty schema; the producer itself has not been tested. The #5130 formal Docker/game allocation remains a separate authorization gate. This result is not live, formal, economics, or product-readiness evidence. Before that run, integrate and verify the producer contract under the exact assigned slot, then execute the preregistered protocol and independent raw audit.
+This is an adapter contract repair based on a synthetic terminal payload. The upstream producer source path is statically inspected and its owner_release envelope is exercised synthetically. Runtime execution, X11 state, and physical release remain untested. The #5130 formal Docker/game allocation remains a separate authorization gate. This result is not live, formal, economics, or product-readiness evidence. Before that run, integrate and verify the producer contract under the exact assigned slot, then execute the preregistered protocol and independent raw audit.
 
 ## Replay
 

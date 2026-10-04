@@ -163,13 +163,30 @@ class TargetSocketSubmitter:
             raise SocketSubmitStop("matching terminal action boundary required")
         terminal = terminals[0]
         release = terminal.get("release")
+        required_release_fields = {"verified", "keys_down", "buttons_down"}
+        producer_metadata_fields = {
+            "event", "reason", "verified_ns", "valid_until_ns"}
         if (type(release) is not dict
-                or set(release) != {"verified", "keys_down", "buttons_down"}
+                or not required_release_fields.issubset(release)
+                or not set(release).issubset(
+                    required_release_fields | producer_metadata_fields)
                 or release.get("verified") is not True
                 or type(release.get("keys_down")) is not list
                 or type(release.get("buttons_down")) is not list
                 or release["keys_down"] != []
-                or release["buttons_down"] != []):
+                or release["buttons_down"] != []
+                or ("event" in release
+                    and release["event"] != "owner_release")
+                or ("reason" in release
+                    and (type(release["reason"]) is not str
+                         or not release["reason"]))
+                or ("verified_ns" in release
+                    and (type(release["verified_ns"]) is not int
+                         or release["verified_ns"] < 1))
+                or ("valid_until_ns" in release
+                    and release["valid_until_ns"] is not None
+                    and (type(release["valid_until_ns"]) is not int
+                         or release["valid_until_ns"] < 1))):
             raise SocketSubmitStop(
                 "matching terminal must verify empty held-input sets")
         cursor = response.get("cursor")

@@ -259,16 +259,40 @@ class TargetSocketSubmitTests(unittest.TestCase):
         response = synthetic_bridge_exchange(request)
         release = response["records"][0]["release"]
         self.assertEqual(release, {
-            "verified": True, "keys_down": [], "buttons_down": []})
+            "event": "owner_release", "reason": "release",
+            "verified": True, "buttons_down": [], "keys_down": [],
+            "verified_ns": 1, "valid_until_ns": 2})
         submitter = TargetSocketSubmitter("/tmp/unused.sock",
                                           trace_sink=test_trace_sink)
         submitter._exchange = lambda _request: response
         self.assertIs(submitter({"op": "submit", "id": request["action_id"]})[
             "released"], True)
+
+    def test_accepts_input_owner_release_record_with_verified_empty_state(self):
+        producer_release = {
+            "event": "owner_release", "reason": "release",
+            "verified": True, "buttons_down": [], "keys_down": [],
+            "verified_ns": 123456789, "valid_until_ns": 123456999,
+        }
+        response = success("A1-select-conveyor") | {"records": [{
+            "event": "terminal", "id": "A1-select-conveyor",
+            "status": "completed", "release": producer_release}]}
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: response
+        self.assertIs(submitter(self.command())["released"], True)
+
     def test_release_receipt_requires_explicit_empty_key_and_button_sets(self):
         release_cases = [
             {"verified": True, "keys_down": ["LEFT"], "buttons_down": []},
             {"verified": True, "keys_down": [], "buttons_down": ["left"]},
+            {"verified": True, "keys_down": [], "buttons_down": [], "future": "unreviewed"},
+            {"verified": True, "keys_down": [], "buttons_down": [],
+             "event": "terminal"},
+            {"verified": True, "keys_down": [], "buttons_down": [],
+             "verified_ns": True},
+            {"verified": True, "keys_down": [], "buttons_down": [],
+             "valid_until_ns": "later"},
             {"verified": True, "buttons_down": []},
             {"verified": True, "keys_down": []},
         ]
