@@ -1,0 +1,76 @@
+{
+  "schema": "agent-interface/primary-stdio-output-close-v5-addendum-evidence-v1",
+  "base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+  "product_sha256": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+  "workflow_sha256": "6234226e80e553ec5733c9ffb11996c9fee8b28f608fd36c64cf74fb6a52040d",
+  "changed_source_images": {
+    "runtime/host_v1/primary_stdio.mjs": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+    "runtime/host_v1/test_primary_output_close.mjs": "024d17eadbcb5fe95f3c158a7ed18a55f5bd00e7ad9eae50518c7164ccca0738",
+    "runtime/host_v1/test_primary_output_close_owner.mjs": "40dde7b93f680942eaadec711ef3c166f2f4b8173e9d6515f137426b3e5494d6",
+    ".github/workflows/native-mcp-v1.yml": "6234226e80e553ec5733c9ffb11996c9fee8b28f608fd36c64cf74fb6a52040d"
+  },
+  "workflow_node_run": {
+    "pid": 53876,
+    "start_utc": "2026-10-04T00:06:49.422153+00:00",
+    "end_utc": "2026-10-04T00:06:52.223793+00:00",
+    "source_base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+    "candidate_product_sha256": "96dbb1cca146210c51b1c7a24c23666ba7d37634fc4b549085b6c4fcb57dca21",
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+      "--test",
+      "research/live_control/test_native_relay_client_v1.mjs",
+      "research/live_control/test_relay_host_timeline_v1.mjs",
+      "runtime/host_v1/test_relay_client.mjs",
+      "runtime/host_v1/test_relay_host.mjs",
+      "runtime/host_v1/test_evidence_capacity.mjs",
+      "runtime/host_v1/test_text_acknowledgment.mjs",
+      "runtime/host_v1/test_primary_caller.mjs",
+      "runtime/host_v1/test_primary_mint.mjs",
+      "runtime/host_v1/test_primary_mint_many.mjs",
+      "runtime/host_v1/test_primary_input.mjs",
+      "runtime/host_v1/test_primary_window_review.mjs",
+      "runtime/host_v1/test_primary_exchange.mjs",
+      "runtime/host_v1/test_primary_stdio.mjs",
+      "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+      "runtime/host_v1/test_primary_stdio_failure_order.mjs",
+      "runtime/host_v1/test_primary_output_close.mjs",
+      "runtime/host_v1/test_primary_output_close_owner.mjs"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-main9c3a-proposal",
+    "exit_code": 0,
+    "stdout_bytes": 18559,
+    "stdout_sha256": "49667916cd5319c1d5bae54a3239fad786a271e06bc27c67d0e9bfbb5df21123",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bash_syntax_exit": 0,
+    "execution_environment": "macOS, local Node 26.7.0, private inert fixtures; not hosted Ubuntu Node 22",
+    "dependency_checkout_hashes": {
+      "research/live_control/test_native_relay_client_v1.mjs": "878f1a6092741f88ac6169482c1173befb4e2249ac6fc29ff673dcb06c21f4b3",
+      "research/live_control/test_relay_host_timeline_v1.mjs": "82d34bfcade5e09186bdfde38e0b92e2b340a3ef9384818bba9de3d66306a763",
+      "research/live_control/native_relay_client_v1.mjs": "5de65441284d1c30364bf7ec57643a7d2d925d5cc8a2c16c42224be13bef6918",
+      "research/live_control/relay_host_timeline_v1.mjs": "1194a02ff4fc5eed6d34c85ea212f46db6782c7d7e3028235e04428f4666753b",
+      "runtime/integration_checks/host_timing.py": "9e7d207de0de4a0f35b15137afad5eea89381763633e7711e696bd07c2bdfee6"
+    }
+  },
+  "workflow_utf8_run": {
+    "pid": 54265,
+    "start_utc": "2026-10-04T00:07:07.917369+00:00",
+    "end_utc": "2026-10-04T00:07:08.045637+00:00",
+    "source_base": "9c3a6b8a761e460baa6a3c8c801c93a34f3b7252",
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+      "--test",
+      "runtime/host_v1/test_primary_stdio_utf8.mjs"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/current-primary-v5-main9c3a-proposal",
+    "exit_code": 0,
+    "stdout_bytes": 897,
+    "stdout_sha256": "f03d6abd060045253bf89713292aee79cf645ca620e7ca46e8b99436964d9684",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execution_environment": "macOS, local Node 26.7.0"
+  },
+  "scope": "Local inert fixture tests only; no hosted Ubuntu Node 22 or Python/native integration run. No task-effect, physical input release, GUI, model/provider, formal allocation, finite recovery, latency, or total-resource result claimed.",
+  "main_sends": 0,
+  "unknown_sends": 0
+}
