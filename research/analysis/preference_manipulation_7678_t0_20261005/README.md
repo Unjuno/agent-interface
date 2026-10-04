@@ -6,6 +6,14 @@ This package tests Issue #7678's finite, non-authoritative hypothesis against th
 
 The allocation disposition is **HOLD**; see [`results/formal-01/AMENDMENT.md`](results/formal-01/AMENDMENT.md) and the machine-readable [`results/formal-01/RUN.json`](results/formal-01/RUN.json). The later auditor PASS is diagnostic only. The unit of any diagnostic inference is the synthetic fixture and declared `possible_frontier` opportunity-set utility; it says nothing about actual human behavior or whether information should be withheld.
 
+An additive reviewer-correction diagnostic is retained under
+[`results/review-correction-01/`](results/review-correction-01/). It independently
+reconstructs order tiers and partial-information signals from rank vectors and
+the fixture, then checks the candidate-authored mappings before using them.
+Its output remains diagnostic and does not change the authoritative HOLD or
+repair the missing first-auditor streams. The earlier `formal-01/audit-output.json`
+and candidate output are preserved unchanged.
+
 ## Reproduce
 
 Run `python -B -m unittest discover -s . -p test_construction.py -v` for construction checks. The formal candidate and auditor were each run exactly once in sequence by `run_formal.ps1`; the exact source revision and procedure are in `FREEZE.json`, `COMMANDS.txt`, and `results/formal-01/RUN.json`. Do not rerun allocation `PREFERENCE-MANIPULATION-7678-T0-20261005-01`; preserve its raw outputs.

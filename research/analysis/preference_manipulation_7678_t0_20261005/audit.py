@@ -5,6 +5,7 @@ import hashlib
 import itertools
 import json
 import subprocess
+import argparse
 from pathlib import Path
 
 
@@ -199,10 +200,63 @@ def best_rank(signature, true_order):
     return min((rank[route] for route in front), default=len(true_order) + 1)
 
 
-def summarize_manipulation(document):
-    report_by_id = {r["report_id"]: r for r in document["reports"]}
-    order_by_id = {r["order_id"]: r["tiers"] for r in document["orders"]}
-    world_by_id = {w["world_id"]: w for w in document["worlds"]}
+def encode_preference(tiers):
+    ranks = {route: tier for tier, group in enumerate(tiers) for route in group}
+    routes = sorted(ranks)
+    strict, ties = [], []
+    for index, left in enumerate(routes):
+        for right in routes[index + 1:]:
+            if ranks[left] < ranks[right]:
+                strict.append([left, right])
+            elif ranks[right] < ranks[left]:
+                strict.append([right, left])
+            else:
+                ties.append([left, right])
+    return {"strict": sorted(strict), "ties": sorted(ties)}
+
+
+def project_preference(tiers, mask):
+    full = encode_preference(tiers)
+    allowed = {tuple(sorted(pair)) for pair in itertools.combinations(sorted(mask), 2)}
+    return {
+        "strict": [pair for pair in full["strict"] if tuple(sorted(pair)) in allowed],
+        "ties": [pair for pair in full["ties"] if tuple(sorted(pair)) in allowed],
+    }
+
+
+def expected_world_rows(fixture, orders):
+    rows = []
+    for indices in itertools.product(range(len(orders)), repeat=len(fixture["principals"])):
+        signals = {}
+        for reporter in range(len(fixture["principals"])):
+            peer_order = orders[indices[1 - reporter]][0]
+            signals[str(reporter)] = project_preference(peer_order, fixture["partial_information_mask"])
+        rows.append({
+            "world_id": "-".join(f"O{index:02d}" for index in indices),
+            "order_indices": list(indices),
+            "partial_signals": signals,
+        })
+    return rows
+
+
+def candidate_domain_matches(document, fixture, orders, reports):
+    expected_orders = [
+        {"order_id": f"O{index:02d}", "tiers": [list(tier) for tier in tiers],
+         "preference": encode_preference(tiers)}
+        for index, (tiers, _) in enumerate(orders)
+    ]
+    return (
+        document.get("orders") == expected_orders
+        and document.get("reports") == reports
+        and document.get("worlds") == expected_world_rows(fixture, orders)
+    )
+
+
+def summarize_manipulation(document, fixture, orders, reports):
+    report_by_id = {r["report_id"]: r for r in reports}
+    order_by_id = {f"O{index:02d}": [list(tier) for tier in tiers]
+                   for index, (tiers, _) in enumerate(orders)}
+    world_by_id = {w["world_id"]: w for w in expected_world_rows(fixture, orders)}
     row_lookup = {(tuple(row["order_indices"]), row["reporter"], row["report_id"]): row
                   for row in document["deviations"]}
     safe_full, safe_partial = [], []
@@ -261,7 +315,7 @@ def summarize_manipulation(document):
             "safe_beneficial_partial_information": safe_partial}
 
 
-def audit():
+def audit(output_path=None):
     freeze = json.loads((HERE / "FREEZE.json").read_text(encoding="utf-8"))
     fixture = json.loads((HERE / "fixture.json").read_text(encoding="utf-8"))
     for relative, expected in freeze["sha256"].items():
@@ -281,6 +335,8 @@ def audit():
     reports = report_domain(orders, fixture["report_masks"])
     if len(orders) != 13 or len(reports) != 23:
         raise SystemExit("HOLD_DOMAIN_CARDINALITY_MISMATCH")
+    if not candidate_domain_matches(document, fixture, orders, reports):
+        raise SystemExit("FAIL_CANDIDATE_ORDER_REPORT_OR_WORLD_MAPPING_MISMATCH")
     expected_keys = set()
     expected_by_key = {}
     for indices in itertools.product(range(len(orders)), repeat=2):
@@ -341,7 +397,7 @@ def audit():
             or controls["no_decision_right"]["decision_status"] != "NO_AUTO_CHOICE_WITHOUT_DECISION_RIGHT":
         raise SystemExit("FAIL_DECISION_RIGHT_CONTROL")
 
-    manipulation = summarize_manipulation(document)
+    manipulation = summarize_manipulation(document, fixture, orders, reports)
     if manipulation["frontier_changed_deviations"] == 0:
         raise SystemExit("FAIL_NO_REPORT_SENSITIVITY_DETECTED")
     if manipulation["safe_beneficial_full_information"] or manipulation["safe_beneficial_partial_information"]:
@@ -379,7 +435,9 @@ def audit():
         "manipulation": manipulation,
         "scope": "finite synthetic certificate sensitivity; possible-frontier opportunity-set utility only",
     }
-    (OUT / "audit-output.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    target = Path(output_path) if output_path else OUT / "audit-output.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"status": result["status"], "counts": result["counts"],
                       "manipulation_counts": {k: len(v) for k, v in manipulation.items()
                                               if isinstance(v, list)}}, sort_keys=True))
@@ -387,4 +445,7 @@ def audit():
 
 
 if __name__ == "__main__":
-    raise SystemExit(audit())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", type=Path, default=OUT / "audit-output.json")
+    args = parser.parse_args()
+    raise SystemExit(audit(args.output))
