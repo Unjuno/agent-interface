@@ -11,7 +11,7 @@ CANDIDATE = HERE / "session_map01_v13_release_telemetry.py"
 
 class SessionReleaseTelemetryCompositionTests(unittest.TestCase):
     def test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes(self):
-        base = BASE.read_text(encoding="utf-8")
+        base = BASE.read_text(encoding="utf-8").rstrip("\n") + "\n"
         candidate = CANDIDATE.read_text(encoding="utf-8")
         expected = base.replace(
             '"""MAP01 v12 publishes lease-bound physical release before terminal closure."""',

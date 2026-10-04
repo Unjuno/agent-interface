@@ -8,7 +8,7 @@ Base: current `main` at `2ed11c5552956499454e8a99acf5a2f374106d34`.
 
 **H:** Selecting the already-tested v2 typed release backend in an opt-in copy of the current v12 MAP01 session runner is sufficient to emit the v11 per-key ordinary-release RPC receipt, while leaving the v12 session body and default backend unchanged.
 
-**T:** Copy current-main `session_map01_v12.py` to `session_map01_v13_release_telemetry.py`; change only its module description, backend import, and source-hash list (replace the v1 backend hash with v2 and add the v11 owner hash). Compare the entire candidate file byte-for-byte against that expected transformation. Run the focused composition test and compile both session modules.
+**T:** Copy current-main `session_map01_v12.py` to `session_map01_v13_release_telemetry.py`; change only its module description, backend import, and source-hash list (replace the v1 backend hash with v2 and add the v11 owner hash), and normalize its extra blank line at EOF. Compare the entire candidate file against that exact transformation. Run the focused composition test and compile both session modules.
 
 **D:** Pass composition only if the whole-file comparison is exact, the import resolves to `doom_typed_release_backend_v2.Backend`, source hashes cover both `doom_typed_release_backend_v2.py` and `input_owner_v11.py`, the candidate compiles, and its module-specific tests pass. Any other session-body change is a failure pending separate justification.
 
