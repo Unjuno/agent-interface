@@ -8,12 +8,14 @@ on:
       - 'runtime/core_v1/**'
       - 'runtime/backends/win32_v1/**'
       - 'runtime/guarded_win32_v1/**'
+      - 'runtime/guarded_x11_v1/**'
       - '.github/workflows/runtime-win32-v1.yml'
   pull_request:
     paths:
       - 'runtime/core_v1/**'
       - 'runtime/backends/win32_v1/**'
       - 'runtime/guarded_win32_v1/**'
+      - 'runtime/guarded_x11_v1/**'
       - '.github/workflows/runtime-win32-v1.yml'
 
 permissions:
@@ -32,13 +34,14 @@ jobs:
             runtime/core_v1
             runtime/backends/win32_v1
             runtime/guarded_win32_v1
+            runtime/guarded_x11_v1
           sparse-checkout-cone-mode: false
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Compile exact source
-        run: python -m compileall -q runtime/core_v1 runtime/backends/win32_v1 runtime/guarded_win32_v1
+        run: python -m compileall -q runtime/core_v1 runtime/backends/win32_v1 runtime/guarded_win32_v1 runtime/guarded_x11_v1
       - name: Install guarded API test dependency
         run: python -m pip install Pillow==10.2.0
       - name: Run guarded Win32 unit and recovery tests
