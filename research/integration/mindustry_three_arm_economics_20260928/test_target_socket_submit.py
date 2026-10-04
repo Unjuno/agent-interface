@@ -17,6 +17,7 @@ from raw_allocation_audit_v2 import audit as audit_raw
 from test_private_benchmark_channel import assemble_raw_from_private_channels
 from target_socket_submit_v1 import (JsonlTraceSink, SocketSubmitStop,
                                      TargetSocketSubmitter)
+from run_raw_socket_submit_construction import synthetic_bridge_exchange
 
 
 def test_trace_sink(_record):
@@ -27,7 +28,8 @@ def success(action_id, *, cursor=7):
     return {
         "status": "boundary",
         "records": [{"event": "terminal", "id": action_id,
-                     "status": "completed", "release": {"verified": True}}],
+                     "status": "completed", "release": {
+                         "verified": True, "keys_down": [], "buttons_down": []}}],
         "cursor": cursor,
         "authority": "none",
         "acknowledgement": "not implied",
@@ -63,7 +65,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
                 "submit_prepared", "socket_response"])
             self.assertEqual(records[0]["request"]["command"], self.command())
             self.assertEqual(records[1]["response"]["records"][0]["release"],
-                             {"verified": True})
+                             {"verified": True, "keys_down": [],
+                              "buttons_down": []})
             before = path.read_bytes()
             with self.assertRaises(FileExistsError):
                 JsonlTraceSink(path)
@@ -251,6 +254,68 @@ class TargetSocketSubmitTests(unittest.TestCase):
                 with self.assertRaises(SocketSubmitStop):
                     submitter(self.command())
 
+    def test_synthetic_capture_runner_emits_accepted_empty_release_schema(self):
+        request = {"action_id": "A1-select-conveyor", "after": 7}
+        response = synthetic_bridge_exchange(request)
+        release = response["records"][0]["release"]
+        self.assertEqual(release, {
+            "event": "owner_release", "reason": "release",
+            "verified": True, "buttons_down": [], "keys_down": [],
+            "verified_ns": 1, "valid_until_ns": 2})
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: response
+        self.assertIs(submitter({"op": "submit", "id": request["action_id"]})[
+            "released"], True)
+
+    def test_accepts_input_owner_release_record_with_verified_empty_state(self):
+        producer_release = {
+            "event": "owner_release", "reason": "release",
+            "verified": True, "buttons_down": [], "keys_down": [],
+            "verified_ns": 123456789, "valid_until_ns": 123456999,
+        }
+        response = success("A1-select-conveyor") | {"records": [{
+            "event": "terminal", "id": "A1-select-conveyor",
+            "status": "completed", "release": producer_release}]}
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: response
+        self.assertIs(submitter(self.command())["released"], True)
+
+    def test_release_receipt_requires_explicit_empty_key_and_button_sets(self):
+        release_cases = [
+            {"verified": True, "keys_down": ["LEFT"], "buttons_down": []},
+            {"verified": True, "keys_down": [], "buttons_down": ["left"]},
+            {"verified": True, "keys_down": [], "buttons_down": [], "future": "unreviewed"},
+            {"verified": True, "keys_down": [], "buttons_down": [],
+             "event": "terminal"},
+            {"verified": True, "keys_down": [], "buttons_down": [],
+             "verified_ns": True},
+            {"verified": True, "keys_down": [], "buttons_down": [],
+             "valid_until_ns": "later"},
+            {"verified": True, "buttons_down": []},
+            {"verified": True, "keys_down": []},
+        ]
+        for release in release_cases:
+            with self.subTest(release=release):
+                response = success("A1-select-conveyor") | {"records": [{
+                    "event": "terminal", "id": "A1-select-conveyor",
+                    "status": "completed", "release": release}]}
+                submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                                  trace_sink=test_trace_sink)
+                submitter._exchange = lambda _request, value=response: value
+                with self.assertRaisesRegex(SocketSubmitStop, "empty held-input sets"):
+                    submitter(self.command())
+
+        empty_response = success("A1-select-conveyor") | {"records": [{
+            "event": "terminal", "id": "A1-select-conveyor",
+            "status": "completed", "release": {
+                "verified": True, "keys_down": [], "buttons_down": []}}]}
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: empty_response
+        self.assertIs(submitter(self.command())["released"], True)
+
     def test_authority_and_acknowledgement_metadata_must_remain_non_authorizing(self):
         for field, value in (("authority", "input_allowed"),
                              ("acknowledgement", "accepted")):
@@ -424,7 +489,9 @@ class TargetSocketSubmitTests(unittest.TestCase):
                         command = json.loads(line.decode("utf-8"))
                         record = {"event": "terminal", "id": command["id"],
                                   "status": "completed",
-                                  "release": {"verified": True}}
+                                  "release": {"verified": True,
+                                              "keys_down": [],
+                                              "buttons_down": []}}
                         events.write((json.dumps(record) + "\n").encode("utf-8"))
                         if command["op"] == "finish":
                             break
@@ -634,6 +701,30 @@ class TargetSocketSubmitTests(unittest.TestCase):
         ])
         self.assertEqual([row["action_id"] for row in wire_requests], [
             "A1-select-conveyor", "A1-place-conveyor"])
+
+    def test_terminal_status_gate_is_independent_of_verified_release(self):
+        for status in ("failed", "cancelled", "expired", "needs_decision", None):
+            with self.subTest(status=status):
+                response = success("A1-select-conveyor")
+                terminal = response["records"][0]
+                if status is None:
+                    del terminal["status"]
+                else:
+                    terminal["status"] = status
+                submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                                  trace_sink=test_trace_sink)
+                submitter._exchange = lambda _request: response
+                with self.assertRaisesRegex(SocketSubmitStop,
+                                            "report completed action"):
+                    submitter(self.command())
+
+        response = success("A1-select-conveyor")
+        response["records"][0]["release"]["verified"] = False
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+        submitter._exchange = lambda _request: response
+        with self.assertRaises(SocketSubmitStop):
+            submitter(self.command())
 
 
 if __name__ == "__main__":
