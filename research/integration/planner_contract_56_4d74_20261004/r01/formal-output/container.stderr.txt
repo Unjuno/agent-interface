@@ -1,0 +1,39 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 38, in model_call
+    if not (0<=x0<x1<=1280 and 0<=y0<y1<=800):raise ValueError('invalid crop bounds')
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid crop bounds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 121, in <module>
+    try:main()
+        ^^^^^^
+  File "/study/comparison_runner.py", line 112, in main
+    if arm!='D':dump(root/'schema-preflight.json',model_call(arm,'Return valid field_point=[285,400], submit_point=[376,400], with a bounded valid contract and value_crop if required. For contract: symbols use both roles field/submit; enter_token targets field and expects exact_token_visible=true; submit_form targets submit and expects exact_saved_title=true; the submit branch requires exact_token_visible=true; completion requires exact_saved_title=true. Use one branch per state, null reason for action, null action/next_state/reason for complete. This is endpoint schema compatibility only; no GUI or task authorization.'))
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/comparison_runner.py", line 39, in model_call
+    except ValueError as e:raise ModelFailure('contract output invalid: '+str(e),call_id=result['thread_ids'][0],usage=result.get('usage'),visible_images_submitted=result['visible_images_submitted'],wait_ns=result['wait_ns'],typed_status='FAILED_OUTPUT')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+adaptive_acquisition_caller_v3.ModelFailure: contract output invalid: invalid crop bounds
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 38, in model_call
+    if not (0<=x0<x1<=1280 and 0<=y0<y1<=800):raise ValueError('invalid crop bounds')
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid crop bounds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 121, in <module>
+    try:main()
+        ^^^^^^
+  File "/study/comparison_runner.py", line 112, in main
+    if arm!='D':dump(root/'schema-preflight.json',model_call(arm,'Return valid field_point=[285,400], submit_point=[376,400], with a bounded valid contract and value_crop if required. For contract: symbols use both roles field/submit; enter_token targets field and expects exact_token_visible=true; submit_form targets submit and expects exact_saved_title=true; the submit branch requires exact_token_visible=true; completion requires exact_saved_title=true. Use one branch per state, null reason for action, null action/next_state/reason for complete. This is endpoint schema compatibility only; no GUI or task authorization.'))
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/comparison_runner.py", line 39, in model_call
+    except ValueError as e:raise ModelFailure('contract output invalid: '+str(e),call_id=result['thread_ids'][0],usage=result.get('usage'),visible_images_submitted=result['visible_images_submitted'],wait_ns=result['wait_ns'],typed_status='FAILED_OUTPUT')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+adaptive_acquisition_caller_v3.ModelFailure: contract output invalid: invalid crop bounds
