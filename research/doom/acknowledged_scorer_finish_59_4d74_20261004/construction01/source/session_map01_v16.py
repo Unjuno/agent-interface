@@ -12,33 +12,10 @@ from acknowledged_scorer_v1 import AcknowledgedSampler
 import session_map01_v15 as previous
 
 
-class ObservedGameProxy(previous._GameProxy):
-    def __init__(self, inner, final_sample, sampler):
-        super().__init__(inner, final_sample)
-        self._sampler = sampler
-
-    def advance_action(self, tics=1, update_state=True):
-        self._sampler.before_external_update(self)
-        if tics != 1 or update_state is not True:
-            raise ValueError('V16 requires one requested tic with state update')
-        before = int(self._inner.get_episode_time())
-        started = self._sampler.clock_ns()
-        try:
-            result = self._inner.advance_action(tics, update_state)
-            returned = self._sampler.clock_ns()
-            after = int(self._inner.get_episode_time())
-            self._sampler.observe_external_update(self, before, after, started, returned)
-            return result
-        except BaseException as error:
-            self._sampler._failure = error
-            raise
-
-
 def main():
     out = Path(previous._option('--out'))
     run_id = str(uuid.uuid4())
     original = previous._coherent_progress_sample
-    original_proxy = previous._GameProxy
 
     def emit(row):
         out.mkdir(parents=True, exist_ok=True)
@@ -47,12 +24,10 @@ def main():
 
     sampler = AcknowledgedSampler(original, run_id, emit)
     previous._coherent_progress_sample = sampler
-    previous._GameProxy = lambda inner, final_sample: ObservedGameProxy(inner, final_sample, sampler)
     try:
         return previous.main()
     finally:
         previous._coherent_progress_sample = original
-        previous._GameProxy = original_proxy
         sources = out / 'sources.json'
         if sources.exists():
             data = json.loads(sources.read_text(encoding='utf-8'))

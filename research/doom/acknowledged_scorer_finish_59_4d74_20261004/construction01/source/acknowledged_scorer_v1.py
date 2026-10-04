@@ -27,29 +27,6 @@ class AcknowledgedSampler:
         self.last = None
         self.game = None
         self._failure = None
-        self.external_ack = None
-        self.update_sequence = 0
-
-    def before_external_update(self, game):
-        if self._failure is not None:
-            raise RuntimeError("scorer failed; update retry refused") from self._failure
-        if threading.get_ident() != self.owner_thread:
-            raise RuntimeError("scorer update left session main thread")
-        if self.game is None:
-            self.game = game
-        elif self.game is not game:
-            raise RuntimeError("new game requires a new scorer run")
-
-    def observe_external_update(self, game, before, after, started, returned):
-        self.before_external_update(game)
-        if after <= before or returned < started:
-            raise RuntimeError("external update acknowledgment is unavailable")
-        self.update_sequence += 1
-        self.external_ack = {"run_id": self.run_id,
-                             "update_sequence": self.update_sequence,
-                             "tic_before": before, "tic_after": after,
-                             "update_started_ns": started,
-                             "update_returned_ns": returned}
 
     def __call__(self, game, variables, timeout_seconds, **kwargs):
         if self._failure is not None:
@@ -66,30 +43,23 @@ class AcknowledgedSampler:
                "status": "UPDATE_UNAVAILABLE"}
         try:
             if game.is_episode_finished():
-                if self.last is not None and self.last.episode_finished:
-                    # Terminal repeats carry the original acknowledgment explicitly.
-                    producer = copy.deepcopy(self.last.producer)
-                    producer.update(sample_sequence=self.sequence,
-                                    observation_status="TERMINAL_REPEAT_NO_UPDATE")
-                elif self.external_ack is not None and self.external_ack['tic_after'] == int(game.get_episode_time()):
-                    producer = {**self.external_ack, "sample_sequence": self.sequence,
-                                "observation_status": "EXTERNAL_UPDATE_RETURNED"}
-                else:
+                if self.last is None or not self.last.episode_finished:
                     raise RuntimeError("terminal state has no acknowledged sample")
+                # Terminal repeats carry the original acknowledgment explicitly.
+                producer = copy.deepcopy(self.last.producer)
+                producer.update(sample_sequence=self.sequence,
+                                observation_status="TERMINAL_REPEAT_NO_UPDATE")
             else:
                 before = int(game.get_episode_time())
                 row.update(tic_before=before, update_started_ns=self.clock_ns())
-                external_before = self.external_ack
                 game.advance_action(1, True)
                 row["update_returned_ns"] = self.clock_ns()
                 after = int(game.get_episode_time())
                 row["tic_after"] = after
                 if after <= before:
                     raise RuntimeError("acknowledged update did not advance episode tic")
-                if self.external_ack is external_before:
-                    self.update_sequence += 1
                 producer = {"run_id": self.run_id, "sample_sequence": self.sequence,
-                            "update_sequence": self.update_sequence,
+                            "update_sequence": self.sequence,
                             "observation_status": "UPDATE_RETURNED",
                             "tic_before": before, "tic_after": after,
                             "update_started_ns": row["update_started_ns"],
