@@ -6,7 +6,7 @@
 
 This was the prospective experiment registered in #5085 comment 5974859562 for the execution gate in #3352. The source was frozen at commit `25700c9f68e9937fc1057a5da91d14c3971bb2b6`. The Dockerfile blob was `f1464e51c2cc4e493c439f93fc049ccfe6221590`; the native runner blob was `d70fa82b1b29c4a384a95348697431ec3d28d2a0`; and the required `requirements-native-mcp.txt` blob was `c2bd62fb8e00ef32764d35e46276536648b8aea5` (12 bytes).
 
-The materialized source manifest contains 1,087 files / 5,474,485 bytes. Its entries were checked against their Git blob SHA-1s. However, the materialized build context **omitted** `research/live_control/requirements-native-mcp.txt`, which the frozen Dockerfile copies. The file exists at the frozen GitHub commit with the blob identity above. The exact first build log reports that the file was not found while calculating the `COPY` cache key. The context therefore failed provenance/completeness before dependency installation; the specific omission in the source-selection/materialization path is not further localized here.
+The materialized source manifest contains 1,087 files / 5,474,485 bytes. Its entries were checked against their Git blob SHA-1s. A subsequent frozen-tree completeness audit localized the source-acquisition defect: the GitHub Contents listing used for `research/live_control` returned 900 file entries, while the non-truncated direct Git tree at the same frozen commit contains 1,957 files. The CI non-cone workflow selects files directly under that directory, so 1,057 selected files were absent from the materialized context; the required requirements file is one of them. Across all selected roots, the exact expected inventory is 2,144 files versus 1,087 materialized (all 1,087 matched their Git blob IDs, with zero mismatches or extras). The first build log reports the missing requirements path at Dockerfile `COPY`, before dependency installation.
 
 ## H / T / D / C / U
 
@@ -18,7 +18,9 @@ The materialized source manifest contains 1,087 files / 5,474,485 bytes. Its ent
 
 ## Retained evidence
 
-- `source-files.json.gz` — compressed JSON manifest of the expected path, Git blob, and byte size for every materialized source file. Decompress to recover the original `source-files.json`.
+- `source-files.json.gz` — compressed JSON manifest of the path, Git blob, and byte size for every materialized source file. Decompress to recover `source-files.json`.
+- `source-tree-audit.ps1` — rerunnable comparison of the frozen CI source selection against Git tree objects.
+- `output/source-tree-audit.json` and `output/source-tree-missing.json.gz` — supplemental, non-retry audit from the frozen Git tree, including the 1,057 omitted selected paths and blob identities.
 - `remote-requirement.json` — independent GitHub Contents API identity for the required file at the frozen commit.
 - `audit.ps1` and `output/audit.json` — independent audit implementation and saved audit result.
 - `output/build-command.json`, `output/build.log`, and `output/build-exit.json` — first build command, complete output, and terminal exit receipt.
