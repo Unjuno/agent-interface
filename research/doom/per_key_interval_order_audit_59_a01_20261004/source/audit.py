@@ -2,6 +2,7 @@
 """Reproduce the PR #7602 reversed edge-bracket classification."""
 
 import ast
+import copy
 import hashlib
 import json
 from pathlib import Path
@@ -31,13 +32,22 @@ def main():
     exec(compile(isolated, str(SOURCE), "exec"), namespace)
 
     fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
-    receipt = namespace["input_edge_receipts"](fixture["events"])[0]
-    down = receipt.get("down_edge_interval_ns")
-    up = receipt.get("up_edge_interval_ns")
-    reversed_intervals = (
-        type(down) is list and type(up) is list and up[1] < down[0]
-    )
-    reproduced = reversed_intervals and receipt.get("status") == "adapter_edge_brackets_paired"
+    cases = {}
+    for name, down_interval, up_interval in (
+        ("ordered", [100, 110], [200, 210]),
+        ("overlapping", [100, 200], [150, 250]),
+        ("reversed", [200, 210], [100, 110]),
+    ):
+        events = copy.deepcopy(fixture["events"])
+        events[0]["physical_key_measurement"]["adapter_edge"]["interval"] = down_interval
+        events[1]["physical_key_measurement"]["adapter_edge"]["interval"] = up_interval
+        cases[name] = namespace["input_edge_receipts"](events)[0]
+
+    reversed_receipt = cases["reversed"]
+    reversed_intervals = reversed_receipt.get("up_edge_interval_ns", [0, 0])[1] < \
+        reversed_receipt.get("down_edge_interval_ns", [0, 0])[0]
+    reproduced = (reversed_intervals and
+                  reversed_receipt.get("status") == "adapter_edge_brackets_paired")
 
     result = {
         "source_commit": "76886c5cc41ef801bf1d0cb153b1dabf444d9127",
@@ -45,17 +55,24 @@ def main():
         "source_sha256": source_sha256,
         "function": "input_edge_receipts",
         "fixture_sha256": hashlib.sha256(FIXTURE.read_bytes()).hexdigest(),
-        "actual_classification": receipt.get("status"),
-        "down_interval_ns": down,
-        "up_interval_ns": up,
+        "classifications": {
+            name: {
+                "status": receipt.get("status"),
+                "down_interval_ns": receipt.get("down_edge_interval_ns"),
+                "up_interval_ns": receipt.get("up_edge_interval_ns"),
+            }
+            for name, receipt in cases.items()
+        },
         "reversed_interval_pair_reproduced": reproduced,
+        "overlapping_interval_pair_classified_complete": (
+            cases["overlapping"].get("status") == "adapter_edge_brackets_paired"),
         "scope": "Synthetic static counterexample only; does not establish any retained run was mismeasured.",
-        "receipt": receipt,
+        "reversed_receipt": reversed_receipt,
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in (
-        "actual_classification", "down_interval_ns", "up_interval_ns",
-        "reversed_interval_pair_reproduced")}, indent=2))
+        "classifications", "reversed_interval_pair_reproduced",
+        "overlapping_interval_pair_classified_complete")}, indent=2))
     if not reproduced:
         raise SystemExit("expected reversed-interval misclassification was not reproduced")
 

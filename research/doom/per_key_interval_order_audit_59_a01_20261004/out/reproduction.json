@@ -4,18 +4,45 @@
   "source_sha256": "48aa1c791ddaa7965a6c1374fc95a7a695d192b62e5fb3b859c0a56e11b7293a",
   "function": "input_edge_receipts",
   "fixture_sha256": "aa90e0ffeb18b2e3d5b28c159ceb4d6924c6b22da549b0014a184d28a1ec5519",
-  "actual_classification": "adapter_edge_brackets_paired",
-  "down_interval_ns": [
-    200,
-    210
-  ],
-  "up_interval_ns": [
-    100,
-    110
-  ],
+  "classifications": {
+    "ordered": {
+      "status": "adapter_edge_brackets_paired",
+      "down_interval_ns": [
+        100,
+        110
+      ],
+      "up_interval_ns": [
+        200,
+        210
+      ]
+    },
+    "overlapping": {
+      "status": "adapter_edge_brackets_paired",
+      "down_interval_ns": [
+        100,
+        200
+      ],
+      "up_interval_ns": [
+        150,
+        250
+      ]
+    },
+    "reversed": {
+      "status": "adapter_edge_brackets_paired",
+      "down_interval_ns": [
+        200,
+        210
+      ],
+      "up_interval_ns": [
+        100,
+        110
+      ]
+    }
+  },
   "reversed_interval_pair_reproduced": true,
+  "overlapping_interval_pair_classified_complete": true,
   "scope": "Synthetic static counterexample only; does not establish any retained run was mismeasured.",
-  "receipt": {
+  "reversed_receipt": {
     "status": "adapter_edge_brackets_paired",
     "program_id_sha256": "f93a49a28e386d77945c0ce150dd8e2be0099a65edd5e5114eeaa05a78ba58f9",
     "intent_token_sha256": "f06e194de9d2ad49576b401e6890ab835f65e522c25aaabb8a48e95a0186cfea",
