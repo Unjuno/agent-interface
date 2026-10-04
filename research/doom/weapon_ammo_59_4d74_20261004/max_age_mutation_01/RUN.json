@@ -1,0 +1,109 @@
+{
+  "baseline_commit": "bb87895fa6103575e929fcd8e3d61a62fa96740c",
+  "baseline_git_blob": "4a0707abecdf7323ed49692014c688b0f8a4cd4e",
+  "baseline_report": {
+    "all_neutral": true,
+    "checks": {
+      "HUD_API_values_agree": true,
+      "HUD_signals_validly_bound_to_initial_capture": true,
+      "capture_binding_well_formed": true,
+      "clean_child_and_reader_exit": true,
+      "coherent_samples_finite_and_ordered": true,
+      "initial_frame_digest_well_formed": true,
+      "nearest_api_sample_neutral": true,
+      "no_external_rescue": true,
+      "one_initial_observation": true,
+      "sample_window_nonempty": true,
+      "selected_ammo_matches_selected_slot": true,
+      "selected_weapon_and_ammo_well_formed": true,
+      "typed_capture_matches_observation_event": true,
+      "window_samples_neutral": true
+    },
+    "disposition": "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED",
+    "hud_api_differences": {
+      "ammo": 0.0,
+      "health": 0.0
+    },
+    "initial_hud_values": {
+      "ammo": 48.0,
+      "health": 97.0
+    },
+    "limits": "Near-time selected-fixture binding only; not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
+    "matching_slot_ammo": 48.0,
+    "nearest_api_offset_ns": 997606517203,
+    "sample_count": 90,
+    "selected_weapon": 2.0,
+    "selected_weapon_ammo": 48.0
+  },
+  "baseline_source_sha256": "1f31b682a46124934855e84ab3b93f1b63b176b9cd90b386e4e0d441ebe4fdf6",
+  "candidate_report": {
+    "all_neutral": true,
+    "checks": {
+      "HUD_API_values_agree": true,
+      "HUD_signals_validly_bound_to_initial_capture": true,
+      "api_timeline_brackets_hud_capture": false,
+      "capture_binding_well_formed": true,
+      "clean_child_and_reader_exit": true,
+      "coherent_samples_finite_and_ordered": true,
+      "initial_frame_digest_well_formed": true,
+      "nearest_api_sample_neutral": true,
+      "no_external_rescue": true,
+      "one_initial_observation": true,
+      "sample_window_nonempty": true,
+      "selected_ammo_matches_selected_slot": true,
+      "selected_weapon_and_ammo_well_formed": true,
+      "typed_capture_matches_observation_event": true,
+      "window_samples_neutral": true
+    },
+    "disposition": "HOLD_AUDIT_CHECK_FAILED",
+    "hud_api_differences": {
+      "ammo": 0.0,
+      "health": 0.0
+    },
+    "initial_hud_values": {
+      "ammo": 48.0,
+      "health": 97.0
+    },
+    "limits": "Near-time selected-fixture binding only; not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
+    "matching_slot_ammo": 48.0,
+    "nearest_api_offset_ns": 997606517203,
+    "sample_count": 90,
+    "selected_weapon": 2.0,
+    "selected_weapon_ammo": 48.0
+  },
+  "candidate_source_sha256": "07d4f45a5b848bd96946fbf0801546ec2582eb9b60585c13344567efc6d9f5d4",
+  "candidate_worktree_base": "bb87895fa6103575e929fcd8e3d61a62fa96740c",
+  "command": "python experiment.py; python audit.py",
+  "execution": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "worktree_head_before_change": "bb87895fa6103575e929fcd8e3d61a62fa96740c"
+  },
+  "experiment_id": "weapon-ammo-api-timeline-bracket-01",
+  "experiment_source_sha256": "46128c1b000b6b7570890e35166dfb7d0cfb9f815d036efd4f8f9fcb7a5c872d",
+  "freeze_sha256": "6928b0747a0ef065ac6092462c184dcfea5f4454d39af47a23a725f203e4fb9a",
+  "independent_auditor_source_sha256": "6e2fb9e0ce90593091d1e7717c97f21ce166c8acb3a09981bdaac7b5a747c54f",
+  "input_sha256": {
+    "FINAL.json": "9041b7d59ab980a2e272a1098096312dd57f35218ead35766e9d1d14034ea449",
+    "RESULT.json": "67c0fc65ff9cb314202bb720b08b9c043988f9da38197c052c7e1efbdc3be100",
+    "events.jsonl": "6a48212dedb620eed58262bf3c9e1cc7a3f640edc3d481b3dbc8d6ed5e1cdcf7",
+    "scorer-last-action.jsonl": "f725a92e6a4618f9b6495ac186fd56679f53a70076e265eeaf51bc0fb85c6220"
+  },
+  "mutated_input_sha256": {
+    "FINAL.json": "9041b7d59ab980a2e272a1098096312dd57f35218ead35766e9d1d14034ea449",
+    "RESULT.json": "61fc4148221519e5a668f471ace042849e271b32d0f01d25939ce68ad5ba15a4",
+    "events.jsonl": "6a48212dedb620eed58262bf3c9e1cc7a3f640edc3d481b3dbc8d6ed5e1cdcf7",
+    "scorer-last-action.jsonl": "4685d6dd3952d31d4df405eaf1ec6bcc2b777bafcea722f762d3fc14eb78d3d0"
+  },
+  "mutation": {
+    "coherent_rows_shifted": 98,
+    "nearest_sample_fields_aligned_to_hud": [
+      "HEALTH",
+      "SELECTED_WEAPON",
+      "SELECTED_WEAPON_AMMO",
+      "AMMO2"
+    ],
+    "nearest_sample_offset_from_hud_ns": 997606517203,
+    "timestamp_offset_ns": 1000000000000
+  }
+}

@@ -97,6 +97,45 @@ class WeaponAmmoAuditFollowupTests(unittest.TestCase):
             self.assertEqual(report["disposition"], "HOLD_AUDIT_CHECK_FAILED")
             self.assertFalse(report["checks"]["nearest_api_sample_neutral"])
 
+    def test_api_timeline_detached_from_hud_capture_cannot_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = compact_fixture(Path(temporary))
+            cell = root / "00-coast"
+            result_path = cell / "RESULT.json"
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+            rows_path = cell / "scorer-last-action.jsonl"
+            rows = [json.loads(line) for line in rows_path.read_text(encoding="utf-8").splitlines()]
+            offset = 1_000_000_000_000
+            result["window_start_ns"] += offset
+            result["window_end_ns"] += offset
+            for row in rows:
+                if row["coherent_tic"]:
+                    row["sample_started_ns"] += offset
+                    row["sample_returned_ns"] += offset
+            initial = next(
+                event
+                for event in (
+                    json.loads(line)
+                    for line in (cell / "events.jsonl").read_text(encoding="utf-8").splitlines()
+                )
+                if event.get("event") == "typed_observation"
+            )
+            nearest = min(
+                (row for row in rows if row["coherent_tic"]),
+                key=lambda row: abs(row["sample_returned_ns"] - initial["capture_ns"]),
+            )
+            nearest["variables"].update(
+                HEALTH=97.0,
+                SELECTED_WEAPON=2.0,
+                SELECTED_WEAPON_AMMO=48.0,
+                AMMO2=48.0,
+            )
+            write_json(result_path, result)
+            write_jsonl(rows_path, rows)
+            report = audit(root)
+            self.assertEqual(report["disposition"], "HOLD_AUDIT_CHECK_FAILED")
+            self.assertFalse(report["checks"]["api_timeline_brackets_hud_capture"])
+
     def test_malformed_action_vector_cannot_be_treated_as_neutral(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = compact_fixture(Path(temporary))
