@@ -1,5 +1,8 @@
 import unittest
+from unittest.mock import patch
 
+import acknowledged_scorer_v1 as scorer_v1_module
+import test_acknowledged_scorer_v1 as existing_contract_tests
 from acknowledged_scorer_v1 import AcknowledgedSampler
 from acknowledged_scorer_clock_v2 import AcknowledgedSamplerClockV2
 from independent_progress_clock_v2 import ProgressSample
@@ -88,6 +91,43 @@ class ClockFailureTests(unittest.TestCase):
         self.assertEqual(clock_calls, [True])
         self.assertEqual(result.producer["update_returned_ns"], 20)
         self.assertEqual(rows[0]["update_status"], "UPDATE_RETURNED")
+
+    def test_noop_reports_return_without_tic_qualification(self):
+        class NoAdvanceGame(Game):
+            def advance_action(self, count, update):
+                self.calls += 1
+        game = NoAdvanceGame()
+        rows = []
+        sampled = []
+        sampler = AcknowledgedSamplerClockV2(
+            lambda *args: sampled.append(True), "clock-run", rows.append,
+            clock_ns=lambda: 10)
+        with self.assertRaisesRegex(RuntimeError, "did not advance"):
+            sampler(game, None, 10)
+        self.assertEqual(game.calls, 1)
+        self.assertEqual(sampled, [])
+        self.assertEqual(rows[0]["status"], "UPDATE_VALIDATION_FAILED")
+        self.assertEqual(rows[0]["update_status"], "UPDATE_RETURNED")
+        self.assertEqual(rows[0]["sample_status"], "NOT_ATTEMPTED")
+        self.assertEqual(rows[0]["producer"]["tic_before"], 7)
+        self.assertEqual(rows[0]["producer"]["tic_after"], 7)
+
+    def test_v2_passes_existing_contracts_except_reclassified_noop_case(self):
+        result = unittest.TestResult()
+        all_tests = unittest.defaultTestLoader.loadTestsFromTestCase(
+            existing_contract_tests.AcknowledgedScorerTests)
+        suite = unittest.TestSuite(
+            test for test in all_tests
+            if not test.id().endswith("test_noop_never_returns_a_sample"))
+        with patch.object(scorer_v1_module, "AcknowledgedSampler",
+                          AcknowledgedSamplerClockV2), \
+             patch.object(existing_contract_tests, "AcknowledgedSampler",
+                          AcknowledgedSamplerClockV2), \
+             patch.object(existing_contract_tests.session, "AcknowledgedSampler",
+                          AcknowledgedSamplerClockV2):
+            suite.run(result)
+        self.assertTrue(result.wasSuccessful(), result.errors + result.failures)
+        self.assertIn(result.testsRun, (9, 10))
 
 
 if __name__ == "__main__":
