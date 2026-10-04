@@ -111,6 +111,7 @@ def make_owner():
     module = importlib.util.module_from_spec(spec)
     sys.modules["owner_under_test"] = module
     spec.loader.exec_module(module)
+    import input_transition_owner_v4
 
     release_dequeued = threading.Event()
     lease_slot = [None]
@@ -132,10 +133,10 @@ def make_owner():
 
     queue.Queue = controlled_queue
     try:
-        owner = module.InputOwner(":fake")
+        owner = input_transition_owner_v4.InputOwner(":fake")
     finally:
         queue.Queue = factory
-    owner_thread = owner.thread.ident
+    owner_thread = owner._inner.thread.ident
     return owner, displays, constants, release_dequeued, lease_slot, owner_thread, saved
 
 

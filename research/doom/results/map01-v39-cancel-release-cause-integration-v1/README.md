@@ -1,6 +1,6 @@
 # Owner-to-ExecutorV12 cancellation publication integration check
 
-This local construction regression joins the actual `ExecutorV12` implementation to the actual `input_owner_v12` request thread. A minimal backend exercises `release_all` by calling that owner; fake Xlib tracks a held key and confirms its release. The test forces cancellation to become owner-visible only after the explicit release request is dequeued, so the owner must classify the cleanup as `cancelled` while the executor's cancellation check already sees it.
+This local construction regression joins the actual `ExecutorV12` implementation to the actual `input_owner_v12` request thread through `input_transition_owner_v4`. A minimal backend exercises `release_all` by calling the versioned wrapper; fake Xlib tracks a held key and confirms its release. The test forces cancellation to become owner-visible only after the explicit release request is dequeued, so the owner must classify the cleanup as `cancelled` while the executor's cancellation check already sees it.
 
 ## H / T / D / C / U
 

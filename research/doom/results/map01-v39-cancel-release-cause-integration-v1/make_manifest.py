@@ -14,6 +14,7 @@ paths = [
     "research/live_control/lease_cause_v1.py",
     "research/live_control/lease.py",
     "research/live_control/input_owner_v12.py",
+    "research/live_control/input_transition_owner_v4.py",
     "research/live_control/test_executor_owner_cancel_cause_v1.py",
     "research/live_control/test_executor_v12.py",
 ]
