@@ -89,3 +89,50 @@ git diff --check
 
 The experiment informs the #59 telemetry prerequisite only. It does not supply
 the separately unassigned live threat-exposure allocation or satisfy Issue #59.
+
+## A02 read-only audit successor
+
+Review of A01 found that its original auditor checked the cleanup interval
+against sample finish timestamps but did not verify sample availability, sample
+errors, the observed down-to-up state transition, sample start/finish order, or
+the release-request/XSync timing inside the sample bracket. A raw mutation
+setting both samples unavailable and reversing their states still passed A01's
+`audit_raw` as `PASS_GAP_REPRODUCED`. This is an audit weakness; the original
+A01 raw and result are unchanged.
+
+A02 adds a separate raw-only audit over the exact retained A01 bytes. It passes
+`PASS_AUDITED_GAP_REPRODUCED` after verifying both admitted-down and cancellation-up
+sample state transitions, successful samples, ordered sample intervals, and
+press/release request plus sync returns inside their brackets. Fourteen mutation
+controls reject unavailable/error samples, state reversals, sample/timing
+corruption, actuation mismatch, authority, and application-effect claims.
+Candidate invocations remain zero; no fake-display run, GUI, OS input, game, or
+model was repeated.
+
+- **H:** An independent raw-only audit can confirm A01's cancellation bracket
+  while rejecting malformed sample, state, identity, authority, effect, and
+  timing evidence.
+- **T:** Replay the exact retained A01 raw through A02 once, then run fourteen
+  in-memory corruption controls. Do not invoke the candidate.
+- **D:** PASS only if both retained brackets reconstruct and every corruption
+  control is rejected.
+- **C:** A01's candidate raw may be valid despite the weaker original audit;
+  A02 strengthens audit coverage without changing A01's result.
+- **U:** One key and one fake-display cancellation trace. No live OS input,
+  useful feedback, recovery, application effect, or MAP01 progress.
+
+Reproduce from this directory with:
+
+```powershell
+python build_freeze_a02.py
+python -m py_compile audit_a02.py test_a02.py build_freeze_a02.py
+python -m unittest -v test_a02.py
+python -O -m unittest -v test_a02.py
+python audit_a02.py
+```
+
+The A02 freeze binds the A01 raw, A01 freeze, A01 audit source, A02 auditor,
+tests, and freeze builder. The local `.gitattributes` keeps A02 code/results in
+LF and preserves the frozen A01 source bytes exactly across checkouts. A02's
+result is a stronger audit of the same single-key fake-display trace, not new
+runtime or scientific evidence.
