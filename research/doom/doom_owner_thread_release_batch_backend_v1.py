@@ -27,6 +27,7 @@ class Backend(Previous):
                 row.setdefault("release_batch_size", len(rows))
                 positions.append({
                     "position": row["release_batch_position"],
+                    "step": row.get("release_batch_step", context.get("step")),
                     "key": row.get("key"),
                     "state": "not_attempted",
                 })

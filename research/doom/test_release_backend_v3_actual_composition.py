@@ -285,9 +285,9 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     "schema": "release-batch-delivery-v1",
                     "identifier": "program-1", "step": 0, "size": 3,
                     "positions": [
-                        {"position": 0, "key": "a", "state": "confirmed"},
-                        {"position": 1, "key": "b", "state": "unknown"},
-                        {"position": 2, "key": "c", "state": "confirmed_incomplete"},
+                        {"position": 0, "step": 0, "key": "a", "state": "confirmed"},
+                        {"position": 1, "step": 0, "key": "b", "state": "unknown"},
+                        {"position": 2, "step": 0, "key": "c", "state": "confirmed_incomplete"},
                     ],
                 })
 
@@ -343,7 +343,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual(release.get("release_batch_delivery"), {
             "schema": "release-batch-delivery-v1", "identifier": "program-1",
             "step": 0, "size": 1,
-            "positions": [{"position": 0, "key": "a", "state": "unknown"}],
+            "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
         })
 
     def test_release_all_publication_failure_retains_delivery_ledger(self):
@@ -358,7 +358,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual(error.release_batch_publication, {
             "schema": "release-batch-delivery-v1", "identifier": "program-1",
             "step": 0, "size": 1,
-            "positions": [{"position": 0, "key": "a", "state": "unknown"}],
+            "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
         })
 
 
