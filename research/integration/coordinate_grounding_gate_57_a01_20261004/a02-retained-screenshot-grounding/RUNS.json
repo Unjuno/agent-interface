@@ -1,0 +1,58 @@
+{
+  "schema": "a02-run-record-v1",
+  "observed_at_utc": "2026-10-04 11:10:29 UTC",
+  "repository_commit_before_a02": "bac9b066480abbe76d850559323206eac73ce38c",
+  "checked_main_tip": "63980603e4bb6e4b128ed07af3bf7023bc2d4734",
+  "host": "Windows 10; Python 3.11.9; CPU-only local offline replay",
+  "source_runtime_snapshot": "02953aa83d62e69a787de7732bf172f3f8ef8e1c",
+  "input_source_pr_head": "e8f7c02cb98d849312a4889fa4d52ec424088732",
+  "commands": [
+    {
+      "command": "python research/integration/coordinate_grounding_gate_57_a01_20261004/a02-retained-screenshot-grounding/extract_frozen_inputs.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python research/integration/coordinate_grounding_gate_57_a01_20261004/a02-retained-screenshot-grounding/run.py",
+      "exit_code": 0,
+      "output": "out/run.stdout.txt"
+    },
+    {
+      "command": "python -m unittest discover -s research/integration/coordinate_grounding_gate_57_a01_20261004/a02-retained-screenshot-grounding -p test_candidate.py -v",
+      "exit_code": 0,
+      "output": "out/tests.stdout.txt",
+      "summary": "Ran 2 tests; OK"
+    },
+    {
+      "command": "python -m py_compile candidate.py run.py audit.py test_candidate.py extract_frozen_inputs.py",
+      "exit_code": 0,
+      "output": "out/pycompile.stdout.txt"
+    },
+    {
+      "command": "python research/integration/coordinate_grounding_gate_57_a01_20261004/a02-retained-screenshot-grounding/audit.py",
+      "exit_code": 0,
+      "output": "out/audit.stdout.txt",
+      "summary": "PASS_A02_SOURCE_AND_OUTCOME_AUDIT"
+    },
+    {
+      "command": "python out/preregistered_expectation_test.py",
+      "exit_code": 1,
+      "expected": true,
+      "output": "out/PREREGISTERED_EXPECTATION_FAILURE.txt",
+      "summary": "The initial task-3 absence and all-visible-admission expectations failed; the exact screenshot contradicts the task-3 absence premise and low-texture fields refuse."
+    }
+  ],
+  "retained_outcome": {
+    "coordinates": 10,
+    "valid": 7,
+    "flat_refused": 3,
+    "other_status": 0,
+    "input_dispatch_count": 0,
+    "model_call_count": 0,
+    "gui_call_count": 0
+  },
+  "adjacent_a01_verification": {
+    "command": "python -m research.integration.coordinate_grounding_gate_57_a01_20261004.run",
+    "exit_code": 0,
+    "expected_suite_exception": "The adjacent suite is recorded in the parent package as STOP_MISSING_PYTHON_XLIB if Python Xlib remains unavailable."
+  }
+}
