@@ -56,6 +56,18 @@ class WeightValidationFollowup(unittest.TestCase):
         )
         self.assertEqual(weight_input_errors(base, DATA["criteria"]), [])
 
+    def test_mixed_numeric_weight_total_overflow_fails_closed(self):
+        case = copy.deepcopy(next(c for c in DATA["cases"] if c["id"] == "weights-fast"))
+        criteria = tuple(DATA["criteria"])
+        case["input"]["weights"] = {
+            criteria[0]: 10**308,
+            criteria[1]: 10**308,
+            criteria[2]: 0.0,
+            criteria[3]: 0.0,
+        }
+        self.assertEqual(hardened_evaluate(case)["status"], "HOLD_INPUT_INVALID")
+        self.assertEqual(weight_input_errors(case, criteria), ["WEIGHT_TOTAL_OVERFLOW"])
+
     def test_oversized_integer_and_non_object_inputs_fail_closed(self):
         base = copy.deepcopy(next(c for c in DATA["cases"] if c["id"] == "weights-fast"))
         base["input"]["weights"]["wait_ms"] = 10**400

@@ -23,7 +23,10 @@ def weight_input_errors(case, criteria):
     values = list(weights.values())
     if any(not finite_number(value) or value < 0 for value in values):
         return ["WEIGHT_VALUE_NOT_FINITE_NONNEGATIVE"]
-    total = sum(values)
+    try:
+        total = sum(values)
+    except OverflowError:
+        return ["WEIGHT_TOTAL_OVERFLOW"]
     if not finite_number(total) or abs(total - 1.0) > 1e-9:
         return ["WEIGHT_VECTOR_NOT_NORMALIZED"]
     return []

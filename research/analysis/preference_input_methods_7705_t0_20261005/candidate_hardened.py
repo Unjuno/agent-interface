@@ -41,7 +41,10 @@ def evaluate(case,routes=None,criteria=None):
         if (not isinstance(w,dict) or set(w)!=set(criteria) or
                 any(not finite_number(x) or x<0 for x in w.values())):
             return {"status":"HOLD_INPUT_INVALID","selected":[],"pareto":front}
-        total=sum(w.values())
+        try:
+            total = sum(w.values())
+        except OverflowError:
+            return {"status":"HOLD_INPUT_INVALID","selected":[],"pareto":front}
         if not finite_number(total) or abs(total-1)>1e-9:
             return {"status":"HOLD_INPUT_INVALID","selected":[],"pareto":front}
         score=lambda r:sum(w[k]*r["outcomes"][k] for k in criteria)
