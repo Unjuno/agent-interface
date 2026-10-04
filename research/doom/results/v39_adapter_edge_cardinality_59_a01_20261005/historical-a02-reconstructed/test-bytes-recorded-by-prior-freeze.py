@@ -203,40 +203,6 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipt["down_edge_interval_ns"])
                 self.assertIsNone(receipt["up_edge_interval_ns"])
 
-    def test_application_consumption_claim_must_not_contradict_adapter_projection(self):
-        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
-                    "construction-a01" / "candidate-events.jsonl")
-        template = [json.loads(line) for line in retained.read_text().splitlines()]
-        baseline = controller.input_edge_receipts(template)[0]
-        self.assertEqual(baseline["status"], "adapter_edge_brackets_paired")
-
-        layers = ("event", "measurement", "adapter_edge", "bracket",
-                  "pre_sample", "post_sample")
-        conflicting_values = (True, 1, 0, None, "false")
-        for row_index in range(2):
-            for layer in layers:
-                for value in conflicting_values:
-                    events = json.loads(json.dumps(template))
-                    row = events[row_index]
-                    if layer == "event":
-                        row["application_consumption_observed"] = value
-                    elif layer == "measurement":
-                        row["physical_key_measurement"][
-                            "application_consumption_observed"] = value
-                    else:
-                        row["physical_key_measurement"][layer][
-                            "application_consumption_observed"] = value
-
-                    with self.subTest(row_index=row_index, layer=layer, value=value):
-                        receipt = controller.input_edge_receipts(events)[0]
-                        self.assertEqual(receipt["status"],
-                                         "adapter_edge_receipt_incomplete")
-                        for field in ("input_admitted_ns", "down_press_request_ns",
-                                      "down_sync_return_ns", "down_edge_interval_ns",
-                                      "up_release_request_ns", "up_sync_return_ns",
-                                      "up_edge_interval_ns"):
-                            self.assertIsNone(receipt[field])
-
     def test_adapter_pair_requires_consistent_samples_and_request_timing(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
@@ -284,20 +250,6 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                               "up_edge_interval_ns"):
                     self.assertIsNone(receipt[field])
 
-    def test_adapter_edge_pairs_reject_interval_conflicting_with_owner_bracket(self):
-        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
-                    "construction-a01" / "candidate-events.jsonl")
-        template = [json.loads(line) for line in retained.read_text().splitlines()]
-        for event_name in ("input_admission", "input_release_measurement"):
-            events = json.loads(json.dumps(template))
-            row = next(row for row in events if row.get("event") == event_name)
-            row["physical_key_measurement"]["adapter_edge"]["interval"] = [1, 2]
-            receipt = controller.input_edge_receipts(events)[0]
-            with self.subTest(event=event_name):
-                self.assertEqual(receipt["status"], "adapter_edge_receipt_incomplete")
-                self.assertIsNone(receipt["down_edge_interval_ns"])
-                self.assertIsNone(receipt["up_edge_interval_ns"])
-
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
@@ -319,7 +271,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             measurement[request_name] = start
             measurement["sync_return_ns"] = start
             if edge_name == "down":
-                row["admitted_ns"] = start
+                row["admitted_ns"] = start - 1
                 row["input_ack_ns"] = start
 
         for down_start, down_end in intervals:
@@ -684,37 +636,6 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipt["plan_accept_to_last_capture_ms"], 0.0002)
         self.assertEqual(receipt["state_feedback"]["to_sequence"], 89)
         self.assertEqual(receipt["state_feedback"]["signals"]["ammo"]["delta"], -1)
-
-    def test_feedback_baseline_advances_to_previous_action_last_sample(self):
-        before = observation(0, 100)
-        before.update({"image": "before.png", "step": -1})
-        samples = []
-        typed = [typed_observation(0, 100, 100, 50)]
-        for sequence, step, capture_ns, health, ammo in (
-                (1, 0, 200, 99, 49),
-                (2, 0, 300, 70, 30),
-                (3, 1, 400, 70, 30),
-                (4, 1, 500, 70, 30)):
-            row = observation(sequence, capture_ns)
-            row.update({"image": f"sample-{sequence}.png", "step": step,
-                        "capture_ms": 0.5})
-            samples.append(row)
-            typed.append(typed_observation(sequence, capture_ns, health, ammo))
-            typed[-1]["step"] = step
-
-        with patch.object(controller, "descriptor",
-                          side_effect=["before", "step-0-last", "step-1-last"]), \
-                patch.object(controller, "normalized_mae", return_value=0.1):
-            receipts = controller.effect_receipts(
-                [{"action": "move", "extent": "hold"},
-                 {"action": "turn", "extent": "hold"}],
-                before, samples, 100, typed_observations=typed)
-
-        feedback = receipts[1]["state_feedback"]
-        self.assertEqual(feedback["from_sequence"], 2)
-        self.assertEqual(feedback["to_sequence"], 3)
-        self.assertEqual(feedback["signals"]["health"]["delta"], 0)
-        self.assertEqual(feedback["signals"]["ammo"]["delta"], 0)
 
 
     def test_input_edge_receipt_rejects_duplicate_adapter_rows(self):

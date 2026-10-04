@@ -1,0 +1,39 @@
+{
+  "experiment_id": "V39_ADAPTER_EDGE_CARDINALITY_A02B_CURRENT_HEAD",
+  "status": "PASS_HASH_PINNED_SOURCE_EXTRACTED_TEST",
+  "source_commit": "a7f9e9e3c4bd31199bde3a14761783ead619ad08",
+  "runner_sha256": "d5aad891aba7f76504cd64fcc2d01069939b9387b61cb40f32de2201b617265c",
+  "result_path": "raw/a02b-current-regression-result.json",
+  "result_sha256": "ebd9c6c1f50306841b558199eac4b1e2eefe7bb290ae303b04622a81223e3526",
+  "container_log_path": "raw/a02b-container.log",
+  "container_log_sha256": "5e33dceaf7ca1644d476e209ac6ad6684e47b5bbd98362f1b02477626e79722c",
+  "container_exit_code": 0,
+  "container_count": 1,
+  "preflight_capture": "GAP: list command invoked before run but output file was not retained; no empty-inventory claim.",
+  "postflight_list_capture": {
+    "path": "raw/a02b-postflight-list-capture.json",
+    "sha256": "243fc8a5863adb647fe0ff21277112f0f95a39a7064568cdb1335a541cc5fec0",
+    "returncode": 0,
+    "stdout_exact": ""
+  },
+  "result": {
+    "result": "PASS",
+    "test": "test_input_edge_receipt_rejects_duplicate_adapter_rows",
+    "unittest_methods": 1,
+    "duplicate_subcases": 5,
+    "controller_sha256": "41329ce5735aa80b0cb6710c10f2c2bf9627f3b22e57faf197cf37eef335129a",
+    "test_sha256": "b82a97f32d51749988df059c963ccc163dfbfe5f294ff33aebcc39854173fb5b",
+    "py_compile": "PASS",
+    "resource_snapshot": {
+      "cpu_max": "100000 100000",
+      "memory_max": "536870912",
+      "memory_swap_max": "max"
+    }
+  },
+  "limitations": [
+    "No preflight inventory conclusion.",
+    "memory.swap.max was max; swap limit unavailable.",
+    "AST-isolated execution of exact method and projector; not full repository suite.",
+    "Synthetic retained fixture only; no physical release, application consumption, useful game effect, live threat response, or recovery."
+  ]
+}

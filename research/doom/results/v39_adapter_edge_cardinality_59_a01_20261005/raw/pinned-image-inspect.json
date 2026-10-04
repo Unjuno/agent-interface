@@ -1,0 +1,49 @@
+[
+  {
+    "Architecture": "amd64",
+    "Author": "",
+    "Comment": "buildkit.dockerfile.v0",
+    "Config": {
+      "Cmd": [
+        "python3"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.15",
+        "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a"
+      ],
+      "ExposedPorts": null,
+      "Labels": null,
+      "StopSignal": "",
+      "User": "",
+      "Volumes": null,
+      "WorkingDir": ""
+    },
+    "Created": "2026-10-01T21:49:55.902225648Z",
+    "Id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "Metadata": {
+      "LastTagTime": "0001-01-01T00:00:00Z"
+    },
+    "Os": "linux",
+    "Parent": "",
+    "RepoDigests": [
+      "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016"
+    ],
+    "RepoTags": [
+      "python:3.12-slim"
+    ],
+    "RootFS": {
+      "Layers": [
+        "sha256:a6dc765193a52cbaede3c93a9ff48b9540948dd0774bbe7031fcb5847606f9ac",
+        "sha256:ec5ef3f1cbefdce6c6ac6574e6609310d57e2baab89df410bf30228f5f567273",
+        "sha256:5b57eb74119f41ab33783352993c069e1f4ac4136e711d205e136808aad526b6",
+        "sha256:d88e62f9bbff6447c00667778988589b711cebf26b8046fdf54eebc0a543c204"
+      ],
+      "Type": "layers"
+    },
+    "Size": 127599824
+  }
+]
