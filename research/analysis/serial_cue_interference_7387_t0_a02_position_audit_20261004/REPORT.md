@@ -29,4 +29,6 @@ python research/analysis/serial_cue_interference_7387_t0_a02_position_audit_2026
 
 The regression tests regenerate disposable candidate packages under the system temporary directory, check isolated and presentation rows against the retained A02 rows, and run the original auditor on baseline and mutated disposable packages. Mutations change only the target row field(s) and refresh the disposable checksum manifest.
 
+The command-line contract is also tested in a child process: a corrupted position must produce JSON `ok: false` and exit status 1, so scripts cannot mistake an audit rejection for success.
+
 No container, GUI, model, GPU, or OS-input invocation was made for this deterministic raw-field audit. The frozen A01 candidate was invoked locally only to generate disposable synthetic test data; no formal candidate result or retained output was regenerated.

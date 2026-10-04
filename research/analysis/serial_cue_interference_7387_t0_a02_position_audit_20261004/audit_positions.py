@@ -70,8 +70,11 @@ def main() -> None:
     ]
     positions = audit_rows(isolated_rows, design)
     schema = audit_presentation_schema(presentation_rows)
-    print(json.dumps({"ok": positions["ok"] and schema["ok"],
-                      "position_audit": positions, "presentation_schema_audit": schema}, sort_keys=True))
+    result = {"ok": positions["ok"] and schema["ok"],
+              "position_audit": positions, "presentation_schema_audit": schema}
+    print(json.dumps(result, sort_keys=True))
+    if not result["ok"]:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

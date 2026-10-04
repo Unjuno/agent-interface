@@ -6,6 +6,7 @@ import importlib.util
 import json
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -52,6 +53,37 @@ class PositionAuditTests(unittest.TestCase):
         result = audit_presentation_schema(mutated)
         self.assertFalse(result["ok"])
         self.assertEqual(result["errors"], ["presentation-schema-mismatch"])
+
+    def test_cli_returns_nonzero_and_false_json_for_corrupted_position(self):
+        with tempfile.TemporaryDirectory(prefix="7387-cli-audit-") as temp:
+            isolated_path = Path(temp) / "isolated.jsonl"
+            presentations_path = Path(temp) / "presentations.jsonl"
+            mutated = copy.deepcopy(ROWS)
+            mutated[0]["position"] = next(
+                position for position in DESIGN["isolated_positions"]
+                if position != mutated[0]["position"]
+            )
+            isolated_path.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in mutated),
+                encoding="utf-8",
+            )
+            presentations_path.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in PRESENTATION_ROWS),
+                encoding="utf-8",
+            )
+            completed = subprocess.run(
+                [sys.executable, str(Path(__file__).with_name("audit_positions.py")),
+                 "--design", str(SOURCE / "design.json"),
+                 "--isolated", str(isolated_path),
+                 "--presentations", str(presentations_path)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            result = json.loads(completed.stdout)
+            self.assertEqual(completed.returncode, 1)
+            self.assertFalse(result["ok"])
+            self.assertIn("isolated-position-mismatch", result["position_audit"]["errors"])
 
     def test_effective_wrong_position_mutation_is_rejected(self):
         mutated = copy.deepcopy(ROWS)
