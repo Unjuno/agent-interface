@@ -1,0 +1,850 @@
+{
+  "allocation": "BRAESS-QUEUE-ACCOUNTING-5855-T0-20261004-A01",
+  "checks": {
+    "candidate_summary_not_trusted": true,
+    "complete_baseline_conserved": true,
+    "duplicate_receipt_rejected": true,
+    "every_accepted_snapshot_conserved": true,
+    "matched_ids_and_offers": true,
+    "route_censoring_preserved": true,
+    "stable_fixture_little_identity": true,
+    "transient_not_steady_state": true
+  },
+  "disposition": "PASS_ACCOUNTING_CONTROLS_SCOPED",
+  "schema": "braess-queue-conservation-audit-a01-v1",
+  "trace_audits": {
+    "duplicate-retry-receipt": {
+      "accepted": false,
+      "censored_ids": [],
+      "errors": [
+        "duplicate_or_unmatched_terminal",
+        "duplicate_receipt_id"
+      ],
+      "lambda_offered": 0.3333333333333333,
+      "lambda_offered_times_mean_verified_sojourn": 0.6666666666666666,
+      "lambda_verified": 0.3333333333333333,
+      "lambda_verified_times_mean_verified_sojourn": 0.6666666666666666,
+      "ledger_snapshots": [
+        {
+          "conserved": true,
+          "event_id": "retry-offer",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "retry-start-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "retry-failure-event",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "retry-start-2",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "retry-terminal-event-1",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "retry-terminal-event-duplicate",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "retry-horizon",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        }
+      ],
+      "mean_verified_sojourn": 2.0,
+      "occupancy_area": 2,
+      "offered_count": 1,
+      "offered_ids": [
+        "t0"
+      ],
+      "terminal_counts": {
+        "lost": 0,
+        "rejected": 0,
+        "skipped": 0,
+        "verified": 1
+      },
+      "time_average_occupancy": 0.6666666666666666,
+      "verified_count": 1,
+      "verified_ids": [
+        "t0"
+      ],
+      "verified_mean_sojourn": 2.0,
+      "window_ticks": 3
+    },
+    "matched-baseline": {
+      "accepted": true,
+      "censored_ids": [],
+      "errors": [],
+      "lambda_offered": 0.4,
+      "lambda_offered_times_mean_verified_sojourn": 1.4000000000000001,
+      "lambda_verified": 0.4,
+      "lambda_verified_times_mean_verified_sojourn": 1.4000000000000001,
+      "ledger_snapshots": [
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-offer-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-start-0-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-offer-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-verified-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-offer-2",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 2,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-start-1-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-offer-3",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 2,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-verified-1",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 2,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-start-2-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-verified-2",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 3
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-start-3-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 3
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-verified-3",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 4
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-baseline-horizon",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 4
+          }
+        }
+      ],
+      "mean_verified_sojourn": 3.5,
+      "occupancy_area": 14,
+      "offered_count": 4,
+      "offered_ids": [
+        "t0",
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "terminal_counts": {
+        "lost": 0,
+        "rejected": 0,
+        "skipped": 0,
+        "verified": 4
+      },
+      "time_average_occupancy": 1.4,
+      "verified_count": 4,
+      "verified_ids": [
+        "t0",
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "verified_mean_sojourn": 3.5,
+      "window_ticks": 10
+    },
+    "matched-route-added": {
+      "accepted": true,
+      "censored_ids": [
+        "t2",
+        "t3"
+      ],
+      "errors": [],
+      "lambda_offered": 0.4,
+      "lambda_offered_times_mean_verified_sojourn": 0.4,
+      "lambda_verified": 0.2,
+      "lambda_verified_times_mean_verified_sojourn": 0.2,
+      "ledger_snapshots": [
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-offer-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-start-0-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-verified-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-offer-1",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-start-1-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-verified-1",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-offer-2",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-start-2-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-offer-3",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "matched-route-added-horizon",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 4,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        }
+      ],
+      "mean_verified_sojourn": 1.0,
+      "occupancy_area": 17,
+      "offered_count": 4,
+      "offered_ids": [
+        "t0",
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "terminal_counts": {
+        "lost": 0,
+        "rejected": 0,
+        "skipped": 0,
+        "verified": 2
+      },
+      "time_average_occupancy": 1.7,
+      "verified_count": 2,
+      "verified_ids": [
+        "t0",
+        "t1"
+      ],
+      "verified_mean_sojourn": 1.0,
+      "window_ticks": 10
+    },
+    "stable-periodic-control": {
+      "accepted": true,
+      "censored_ids": [],
+      "errors": [],
+      "lambda_offered": 0.5,
+      "lambda_offered_times_mean_verified_sojourn": 0.5,
+      "lambda_verified": 0.5,
+      "lambda_verified_times_mean_verified_sojourn": 0.5,
+      "ledger_snapshots": [
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-offer-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-start-0-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-verified-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-offer-1",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-start-1-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-verified-1",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-offer-2",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-start-2-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 2
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-verified-2",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 3
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "stable-periodic-control-horizon",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 3
+          }
+        }
+      ],
+      "mean_verified_sojourn": 1.0,
+      "occupancy_area": 3,
+      "offered_count": 3,
+      "offered_ids": [
+        "t0",
+        "t1",
+        "t2"
+      ],
+      "terminal_counts": {
+        "lost": 0,
+        "rejected": 0,
+        "skipped": 0,
+        "verified": 3
+      },
+      "time_average_occupancy": 0.5,
+      "verified_count": 3,
+      "verified_ids": [
+        "t0",
+        "t1",
+        "t2"
+      ],
+      "verified_mean_sojourn": 1.0,
+      "window_ticks": 6
+    },
+    "transient-startup": {
+      "accepted": true,
+      "censored_ids": [
+        "t1",
+        "t2"
+      ],
+      "errors": [],
+      "lambda_offered": 1.0,
+      "lambda_offered_times_mean_verified_sojourn": 2.0,
+      "lambda_verified": 0.3333333333333333,
+      "lambda_verified_times_mean_verified_sojourn": 0.6666666666666666,
+      "ledger_snapshots": [
+        {
+          "conserved": true,
+          "event_id": "transient-startup-offer-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "transient-startup-start-0-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 1,
+            "queued": 0,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "transient-startup-offer-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 0
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "transient-startup-verified-0",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 2,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "transient-startup-offer-2",
+          "ledger": {
+            "in_service": 0,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 2,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "transient-startup-start-1-1",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        },
+        {
+          "conserved": true,
+          "event_id": "transient-startup-horizon",
+          "ledger": {
+            "in_service": 1,
+            "initial_pending": 0,
+            "lost": 0,
+            "offered": 3,
+            "queued": 1,
+            "rejected": 0,
+            "skipped": 0,
+            "verified": 1
+          }
+        }
+      ],
+      "mean_verified_sojourn": 2.0,
+      "occupancy_area": 5,
+      "offered_count": 3,
+      "offered_ids": [
+        "t0",
+        "t1",
+        "t2"
+      ],
+      "terminal_counts": {
+        "lost": 0,
+        "rejected": 0,
+        "skipped": 0,
+        "verified": 1
+      },
+      "time_average_occupancy": 1.6666666666666667,
+      "verified_count": 1,
+      "verified_ids": [
+        "t0"
+      ],
+      "verified_mean_sojourn": 2.0,
+      "window_ticks": 3
+    }
+  }
+}

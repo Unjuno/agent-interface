@@ -1,0 +1,34 @@
+{
+  "allocation": "BRAESS-QUEUE-ACCOUNTING-5855-T0-20261004-A01",
+  "branch": "research/5855-queue-conservation-a01-20261004",
+  "candidate_invocations_before_freeze": 0,
+  "auditor_invocations_before_freeze": 0,
+  "candidate_output_path_absent_before_freeze": true,
+  "auditor_output_path_absent_before_freeze": true,
+  "source_main": "9dc383a89043deb6199c847196498d867ba6bb75",
+  "runtime": {
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "python_executable_sha256": "2477b47fa3ae65b9574eb18a15edb364e96948eaa1875ad3f1c80d780efc9c12",
+    "execution_mode": "one local CPU process; no container, model, network, GPU, GUI, input, or live runtime"
+  },
+  "container_stop": {
+    "context": "orbstack",
+    "docker_info": "reachable; Linux guest reports 10 CPUs and 16808173568 bytes memory",
+    "docker_image_inspect": "STOP_CONTAINER_CONTENT_STORE: containerd reports a missing SHA-256 content blob and operation not supported",
+    "no_container_started": true
+  },
+  "source_sha256": {
+    "PREREGISTRATION.md": "51e03d398b5622d4440c8a1b99fb81d654ba22bfb30deb30eb0551cc0102248e",
+    "candidate.py": "dc3331fda42d38e8019898e27e3cab133594574ebba7e8aed15ef3a8148164e4",
+    "audit.py": "4c21f3ead93e9879dd7ca8e78ded49d1ae65e52068824f459718997c685f5cce",
+    "test_audit.py": "cd69fde612f7becc2da75ca8e37e5388fa39120bb2a9c68cda0c54375a05369a"
+  },
+  "pre_candidate_controls": {
+    "unit_tests": "4/4 pass",
+    "ast_syntax": "3/3 pass",
+    "git_diff_check": "pass"
+  },
+  "gate": "Run candidate exactly once. Run independent raw-only auditor exactly once only if candidate exits zero. Any nonzero result is retained; no retries."
+}
