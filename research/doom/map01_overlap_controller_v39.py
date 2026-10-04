@@ -564,7 +564,7 @@ def main():
             validity_monitor, validity_admission = select_cover_monitor(
                 validity_monitor, validity_admission, cover_semantic,
                 cover_policy_source_iteration)
-            failure_cleanup.set_stage("action_source_health_ammo")
+            failure_cleanup.set_stage("cover_program_compile")
             cover_steps=compile_cover(cover_semantic)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             def submit_cover(identifier):
@@ -577,15 +577,19 @@ def main():
                               (r.get("id")==identifier or r["event"]=="rejected"))
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 cover_ids.append(identifier);return accepted
+            failure_cleanup.set_stage("cover_program_admission")
             submit_cover(cover)
+            failure_cleanup.set_stage("decision_artifact_prepare")
             model_root=args.out/f"decision-{index}"
             model_root.mkdir()
             action_source_observation=dict(latest)
+            failure_cleanup.set_stage("action_source_health_ammo")
             source_health_signal=signal_reader.read(action_source_observation)
             source_ammo_signal=ammo_reader.read(action_source_observation)
             if (source_health_signal["status"] != "observed" or
                     source_ammo_signal["status"] != "observed"):
                 raise RuntimeError("action source health/ammo unavailable")
+            failure_cleanup.set_stage("planner_input_prepare")
             source_image=Path(action_source_observation["image"])
             invalidation_monitor=validity_monitor
             invalidation=None
@@ -597,6 +601,7 @@ def main():
             prior=[Path(row["source_image"]) for row in decisions]
             temporal_sheet(prior+[source_image],image)
             model_started_ns=time.perf_counter_ns()
+            failure_cleanup.set_stage("planner_turn")
             planner_handle=begin_model_turn(
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
@@ -628,6 +633,7 @@ def main():
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
                 planner_result=future.result()
+                failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
             model_ended_ns=time.perf_counter_ns()
             model_ns=model_ended_ns-model_started_ns
@@ -749,6 +755,7 @@ def main():
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
                   "terminal_candidate":True,"model_action_discarded":False})
                 break
+            failure_cleanup.set_stage("action_admission")
             fresh_before_plan=dict(latest)
             current_health_signal=signal_reader.read(fresh_before_plan)
             current_ammo_signal=ammo_reader.read(fresh_before_plan)
@@ -781,6 +788,7 @@ def main():
                 continue
             grounded_capture_ns=source_health_signal["capture_ns"]
             trace=[]
+            failure_cleanup.set_stage("action_guard_setup")
             running_guard=RunningActionGuardV3(
                 action,final_action_admission,compile_commands,
                 "map01_overlap_controller_v38.compile_commands")
@@ -896,6 +904,7 @@ def main():
             if not boundaries or boundaries[-1] != len(action["commands"])-1:
                 boundaries.append(len(action["commands"])-1)
             segment_start=0
+            failure_cleanup.set_stage("active_action_execution")
             for segment_end in boundaries:
                 segment_commands=action["commands"][segment_start:segment_end+1]
                 result=execute_segment(f"plan-{index}-primary-{segment_start}-{segment_end}",
@@ -979,12 +988,18 @@ def main():
                                 else "stopped_action_not_current"),
                "model_action_discarded":False,
                "remaining_action_discarded":running_action_receipt["state"]!=RUNNING_COMPLETED})
+        failure_cleanup.set_stage("session_finish")
         process.stdin.write('{"op":"finish"}\n');process.stdin.flush()
+        failure_cleanup.set_stage("final_score_wait")
         score=wait(lambda r:r["event"]=="post_control_score")
+        failure_cleanup.set_stage("session_reap")
         process.wait(timeout=20)
+        failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
+        failure_cleanup.set_stage("stderr_capture")
         (args.out/"stderr.txt").write_text(process.stderr.read())
+        failure_cleanup.set_stage("final_report_prepare")
         typed_events = {row["sequence"]:row for row in all_events
                         if row.get("event")=="typed_observation"}
         full_events = {row["sequence"]:row for row in all_events
@@ -1079,6 +1094,7 @@ def main():
               x["action"]["state"]=="active" and len(x["action"].get("next_cover_validity",[]))==1 and
               not x.get("model_action_discarded",False) for x in decisions),
           "model_wall_seconds":sum(x["model_ns"] for x in decisions)/1e9}
+        failure_cleanup.set_stage("report_write")
         (args.out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
         print(json.dumps({"iterations":len(decisions),"score":score,
           "model_wall_seconds":report["model_wall_seconds"]},indent=2))

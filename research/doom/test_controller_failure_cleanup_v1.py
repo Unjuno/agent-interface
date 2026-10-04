@@ -1,4 +1,4 @@
-import fcntl,os,subprocess,sys,tempfile,time,unittest,json
+import os,subprocess,sys,tempfile,time,unittest,json
 from unittest.mock import patch
 from doom_controller_failure_cleanup_v1 import send_failure_finish
 from pathlib import Path
@@ -41,6 +41,7 @@ class Tests(unittest.TestCase):
         self.addCleanup(self.finish_patch.stop)
     @unittest.skipUnless(os.name=='posix','pipe filling uses POSIX nonblocking descriptor flags')
     def test_full_child_stdin_pipe_does_not_block_cleanup_reachability(self):
+        import fcntl
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp);planner=Planner()
             child=subprocess.Popen([sys.executable,'-c','import time; time.sleep(60)'],
