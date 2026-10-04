@@ -1,0 +1,29 @@
+{
+  "status": "PASS_COUNTER_ORACLE_MATCH",
+  "issue": 7728,
+  "target_domain": "RAPL_Package0_PKG",
+  "unit": "picowatt-hours",
+  "emi_energy_before": "718676780634444",
+  "performance_counter_raw": "718691170585277",
+  "emi_energy_after": "718691313952222",
+  "emi_delta": "14533317778",
+  "emi_time_delta_100ns": "26912157",
+  "counter_bracketed": true,
+  "wrap_observed": false,
+  "route_or_effect_claim": false,
+  "negative_controls": [
+    {
+      "name": "unit-relabel",
+      "rejected": true
+    },
+    {
+      "name": "missing-domain-channel",
+      "rejected": true
+    },
+    {
+      "name": "counter-outside-bracket",
+      "rejected": true
+    }
+  ],
+  "negative_controls_passed": true
+}

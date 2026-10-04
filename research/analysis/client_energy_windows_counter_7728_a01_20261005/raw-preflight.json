@@ -1,0 +1,97 @@
+﻿{
+    "schema":  "issue7728-windows-energy-counter-a01-v1",
+    "start_utc":  "2026-10-04T19:04:24.9403928Z",
+    "end_utc":  "2026-10-04T19:04:27.6675583Z",
+    "host_os":  "10.0.26200.0",
+    "counter":  {
+                    "requested_path":  "\\Energy Meter(RAPL_Package0_PKG)\\Energy",
+                    "returned_path":  "\\\\\u003cLOCAL_HOST\u003e\\energy meter(rapl_package0_pkg)\\energy",
+                    "instance":  "rapl_package0_pkg",
+                    "status":  "0",
+                    "timestamp_utc":  "2026-10-04T19:04:27.6469003Z",
+                    "raw_value":  "718691170585277",
+                    "cooked_value":  "718691170585277",
+                    "counter_type":  "NumberOfItems64",
+                    "time_base":  "10000000"
+                },
+    "emi_before":  [
+                       {
+                           "device_index":  0,
+                           "version":  2,
+                           "hardware_oem":  "Microsoft",
+                           "hardware_model":  "PPM",
+                           "metered_hardware_name":  null,
+                           "error":  null,
+                           "channels":  [
+                                            {
+                                                "name":  "RAPL_Package0_PKG",
+                                                "unit_code":  0,
+                                                "unit":  "picowatt-hours",
+                                                "absolute_energy":  "718676780634444",
+                                                "absolute_time_100ns":  "1514147548710"
+                                            },
+                                            {
+                                                "name":  "RAPL_Package0_DRAM",
+                                                "unit_code":  0,
+                                                "unit":  "picowatt-hours",
+                                                "absolute_energy":  "0",
+                                                "absolute_time_100ns":  "1514147548717"
+                                            },
+                                            {
+                                                "name":  "RAPL_Package0_PP0",
+                                                "unit_code":  0,
+                                                "unit":  "picowatt-hours",
+                                                "absolute_energy":  "557955685465833",
+                                                "absolute_time_100ns":  "1514147548722"
+                                            },
+                                            {
+                                                "name":  "RAPL_Package0_PP1",
+                                                "unit_code":  0,
+                                                "unit":  "picowatt-hours",
+                                                "absolute_energy":  "1500988722500",
+                                                "absolute_time_100ns":  "1514147548726"
+                                            }
+                                        ]
+                       }
+                   ],
+    "emi_after":  [
+                      {
+                          "device_index":  0,
+                          "version":  2,
+                          "hardware_oem":  "Microsoft",
+                          "hardware_model":  "PPM",
+                          "metered_hardware_name":  null,
+                          "error":  null,
+                          "channels":  [
+                                           {
+                                               "name":  "RAPL_Package0_PKG",
+                                               "unit_code":  0,
+                                               "unit":  "picowatt-hours",
+                                               "absolute_energy":  "718691313952222",
+                                               "absolute_time_100ns":  "1514174460867"
+                                           },
+                                           {
+                                               "name":  "RAPL_Package0_DRAM",
+                                               "unit_code":  0,
+                                               "unit":  "picowatt-hours",
+                                               "absolute_energy":  "0",
+                                               "absolute_time_100ns":  "1514174460875"
+                                           },
+                                           {
+                                               "name":  "RAPL_Package0_PP0",
+                                               "unit_code":  0,
+                                               "unit":  "picowatt-hours",
+                                               "absolute_energy":  "557967173850000",
+                                               "absolute_time_100ns":  "1514174460880"
+                                           },
+                                           {
+                                               "name":  "RAPL_Package0_PP1",
+                                               "unit_code":  0,
+                                               "unit":  "picowatt-hours",
+                                               "absolute_energy":  "1501039149166",
+                                               "absolute_time_100ns":  "1514174460884"
+                                           }
+                                       ]
+                      }
+                  ]
+}
