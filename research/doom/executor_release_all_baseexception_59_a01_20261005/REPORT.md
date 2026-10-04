@@ -1,5 +1,7 @@
 # Exact-head cleanup BaseException audit — PR #7635
 
+> **Historical baseline:** this package freezes parent head `61e5e877101f3182f64986406a5552917d554446`. The cleanup path defect reproduced here was fixed on PR #7635 head `636f61941e3da887a1641e4399c2f0e3373a7974`; do not treat this report as a finding against the current head. A distinct current-head double-fault custody loss is documented in `research/doom/release_custody_double_baseexception_59_a01_20261005/`.
+
 ## H/T/D/C/U
 
 - **H:** At PR #7635 head `61e5e877101f3182f64986406a5552917d554446`, an exception carrying release-batch custody from `backend.release_all()` bypasses ExecutorV13 terminal publication because the cleanup handler catches `Exception`, not `BaseException`.
