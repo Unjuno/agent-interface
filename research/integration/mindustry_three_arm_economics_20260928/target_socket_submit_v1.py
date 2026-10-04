@@ -11,11 +11,59 @@ import json
 import socket
 import copy
 from pathlib import Path
+import os
+import threading
 from typing import Callable
 
 
 class SocketSubmitStop(RuntimeError):
     """Fail-closed socket boundary; the request must not be resent."""
+
+
+class JsonlTraceSink:
+    """Exclusive append-only trace file, fsynced after every JSONL record.
+
+    The parent directory must already exist. Existing files are never appended
+    to or replaced, so each benchmark invocation needs a fresh output path.
+    """
+
+    def __init__(self, path: str | Path):
+        self.path = Path(path)
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+        flags |= getattr(os, "O_NOFOLLOW", 0)
+        self.fd = os.open(self.path, flags, 0o600)
+        self.closed = False
+        self.lock = threading.Lock()
+
+    def __call__(self, record: dict) -> None:
+        payload = json.dumps(record, sort_keys=True, separators=(",", ":"),
+                             ensure_ascii=False, allow_nan=False).encode("utf-8") + b"\n"
+        with self.lock:
+            if self.closed:
+                raise ValueError("trace sink is closed")
+            remaining = memoryview(payload)
+            while remaining:
+                written = os.write(self.fd, remaining)
+                if written <= 0:
+                    raise OSError("trace write made no progress")
+                remaining = remaining[written:]
+            os.fsync(self.fd)
+
+    def close(self) -> None:
+        with self.lock:
+            if self.closed:
+                return
+            try:
+                os.fsync(self.fd)
+            finally:
+                os.close(self.fd)
+                self.closed = True
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_args):
+        self.close()
 
 
 class TargetSocketSubmitter:

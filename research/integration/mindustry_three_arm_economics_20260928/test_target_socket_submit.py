@@ -3,13 +3,15 @@
 import unittest
 import json
 from pathlib import Path
+import tempfile
 from unittest.mock import patch
 
 from arm_coordinator import ArmCoordinator
 from target_execution_v1 import dispatch_task_targets
 from target_receipts_v1 import (build_palette_receipt,
                                 build_world_receipt)
-from target_socket_submit_v1 import SocketSubmitStop, TargetSocketSubmitter
+from target_socket_submit_v1 import (JsonlTraceSink, SocketSubmitStop,
+                                     TargetSocketSubmitter)
 
 
 def test_trace_sink(_record):
@@ -39,6 +41,28 @@ class TargetSocketSubmitTests(unittest.TestCase):
             TargetSocketSubmitter("/tmp/unused.sock")
         with self.assertRaisesRegex(ValueError, "pre-send trace sink"):
             TargetSocketSubmitter("/tmp/unused.sock", trace_sink=None)
+
+    def test_jsonl_sink_fsyncs_trace_and_refuses_existing_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "socket-trace.jsonl"
+            with JsonlTraceSink(path) as sink:
+                submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                                  trace_sink=sink)
+                submitter._exchange = lambda request: success(
+                    request["action_id"])
+                submitter(self.command())
+
+            lines = path.read_text(encoding="utf-8").splitlines()
+            records = [json.loads(line) for line in lines]
+            self.assertEqual([record["event"] for record in records], [
+                "submit_prepared", "socket_response"])
+            self.assertEqual(records[0]["request"]["command"], self.command())
+            self.assertEqual(records[1]["response"]["records"][0]["release"],
+                             {"verified": True})
+            before = path.read_bytes()
+            with self.assertRaises(FileExistsError):
+                JsonlTraceSink(path)
+            self.assertEqual(path.read_bytes(), before)
 
     def test_sends_v2_action_scope_and_returns_release_receipt(self):
         sent = []
