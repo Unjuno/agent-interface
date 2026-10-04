@@ -8,7 +8,7 @@ The result matches the declared `I_min` atoms: duplicate-source redundancy is 1 
 
 ## Decision
 
-T0 passes for this exact discrete method and fixture set. It is now reasonable to proceed to the distinct, read-only T1 feasibility audit in Issue #7712. T0 does not support an H-pass about GUI modalities or predict held-out ablation effects.
+T0 passes for this exact discrete method and fixture set. A subsequent read-only T1 audit of retained #6678 browser-fixture data found all 72 same-capture modality bundles and an independently authored state oracle, but no independent safe-action/effect labels (`HOLD_NO_SAFE_ACTION_EFFECT_LABELS`). Thus those data can check channel pairing, but cannot supply the target required for #7712's proposed decision-conditioned PID/ablation claim. The exact inventory audit is in `t1_readonly_audit/`. T0 and T1 do not support an H-pass about natural GUI modalities or predict held-out ablation effects.
 
 ## Evidence and integrity
 
