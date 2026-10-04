@@ -1,4 +1,5 @@
 import os,subprocess,sys,tempfile,time,unittest,json
+import threading
 from unittest.mock import patch
 from doom_controller_failure_cleanup_v1 import send_failure_finish
 from pathlib import Path
@@ -142,6 +143,23 @@ class Tests(unittest.TestCase):
             with self.assertRaises(KeyboardInterrupt) as caught:
                 with ControllerFailureCleanup(planner,Path(tmp)): raise error
             self.assertIs(caught.exception,error);self.assertTrue(planner.closed)
+    def test_planner_close_that_ignores_timeout_cannot_block_failure_receipt(self):
+        class StuckPlanner:
+            def close(self, timeout=1):
+                threading.Event().wait()
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);error=ValueError('primary')
+            started=time.monotonic()
+            with self.assertRaises(ValueError) as caught:
+                with ControllerFailureCleanup(StuckPlanner(),out): raise error
+            elapsed=time.monotonic()-started
+            self.assertIs(caught.exception,error)
+            self.assertLess(elapsed,2.5)
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            planner_stage=next(row for row in receipt['stages']
+                               if row['stage']=='planner_close')
+            self.assertEqual(planner_stage['status'],'timed_out')
+            self.assertFalse(receipt['cleanup_complete'])
     def test_broken_finish_still_waits_and_closes_planner(self):
         with tempfile.TemporaryDirectory() as tmp:
             planner=Planner();child=Child(True)

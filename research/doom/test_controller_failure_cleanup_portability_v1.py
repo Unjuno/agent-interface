@@ -29,7 +29,7 @@ if failed_imports:
             capture_output=True, text=True, check=False)
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertEqual(
-            completed.stdout.strip(), "tests=8 import_errors=0",
+            completed.stdout.strip(), "tests=9 import_errors=0",
             completed.stderr)
 
 
