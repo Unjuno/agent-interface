@@ -79,7 +79,7 @@ class InterruptControl(unittest.TestCase):
                 ' original(path,value)\n'
                 ' if path.name=="baseline_eof.json": os.kill(os.getpid(),signal.SIGINT)\n'
                 'runner.write=write\n'
-                'runner.run(__import__("pathlib").Path(sys.argv[1]))\n')
+                'sys.exit(runner.run(__import__("pathlib").Path(sys.argv[1])))\n')
             process = subprocess.run([sys.executable, '-B', '-c', code, str(output)],
                                      capture_output=True, text=True)
             self.assertNotEqual(process.returncode, 0)
@@ -88,3 +88,24 @@ class InterruptControl(unittest.TestCase):
             summary = json.loads((output / 'SUMMARY.json').read_text())
             self.assertEqual(summary['cases'], ['baseline_eof'])
             self.assertIn('STOP', summary['verdict'])
+
+    def test_sigint_at_finalize_entry_retains_reaped_child_and_stop(self):
+        with tempfile.TemporaryDirectory() as name:
+            output = Path(name) / 'output'
+            code = (
+                'import os,signal,sys; import runner; original=runner.finalize_cell\n'
+                'def interrupt_before_finalize(*args):\n'
+                ' os.kill(os.getpid(),signal.SIGINT)\n'
+                ' original(*args)\n'
+                'runner.finalize_cell=interrupt_before_finalize\n'
+                'sys.exit(runner.run(__import__("pathlib").Path(sys.argv[1])))\n')
+            process = subprocess.run([sys.executable, '-B', '-c', code, str(output)],
+                                     capture_output=True, text=True)
+            self.assertEqual(process.returncode, 1, process.stderr)
+            row = json.loads((output / 'baseline_eof.json').read_text())
+            self.assertIs(row['cleanup_child_alive'], False)
+            self.assertFalse(row['cleanup_faults'])
+            summary = json.loads((output / 'SUMMARY.json').read_text())
+            self.assertEqual(summary['cases'], ['baseline_eof'])
+            self.assertEqual(summary['verdict'], 'STOP_FIRST_UNEXPECTED_CELL')
+            self.assertEqual(summary['stop_reason'], 'KeyboardInterrupt')

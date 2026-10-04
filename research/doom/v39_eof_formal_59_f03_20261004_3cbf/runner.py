@@ -156,55 +156,70 @@ def run(output, journal=None):
             'error': repr(error)})
         return 1
     rows = []
+    interrupted_after_cell = False
     for case in CASES:
         row = {'case': case, 'start_ns': time.perf_counter_ns(), 'pins': hashes,
                'waits': [], 'events': [], 'cleanup_faults': [], 'fatal': None}
         child = thread = None
         try:
-            wire = 'not-json\n' if case == 'candidate_json' else ''
-            script = ('import os,sys,time;print(\'{"event":"ready"}\',flush=True);sys.stdin.readline();'
-                      'print(\'{"event":"terminal"}\',flush=True);os.close(1);time.sleep(3)') if case == 'candidate_events_eof' else (
-                      'import os,sys,time;sys.stdout.write(sys.argv[1]);sys.stdout.flush();os.close(1);time.sleep(3)')
-            # Keep a process-directed SIGINT pending until Popen returns and its
-            # live handle is owned by `child`; otherwise a tiny handoff window
-            # can orphan a process that the cleanup path cannot see.
-            previous_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
-            try:
-                child = subprocess.Popen([sys.executable, '-u', '-c', script, wire], stdin=subprocess.PIPE,
-                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            finally:
-                signal.pthread_sigmask(signal.SIG_SETMASK, previous_mask)
-            row['child_pid'] = child.pid
-            factory = baseline_factory if case == 'baseline_eof' else candidate_factory
-            reader, wait, events = factory(code)(child, queue.Queue())
-            thread = threading.Thread(target=sigint_blocked_reader, args=(reader,), name='f03-reader'); thread.start()
-            if case == 'candidate_events_eof':
-                row['ready'] = wait(lambda event: event['event'] == 'ready', timeout=1)
-                row['reader_alive_after_ready'] = thread.is_alive()
-                child.stdin.write('continue\n'); child.stdin.flush()
-                row['terminal'] = wait(lambda event: event['event'] == 'terminal', timeout=1)
-            for attempt in range(2):
-                result = {'start_ns': time.perf_counter_ns()}
-                try:
-                    wait(lambda event: False, timeout=.35)
-                    result.update(outcome='unexpected_return', cause=None)
-                except Exception as error:
-                    result.update(outcome=type(error).__name__,
-                                  cause=type(error.__cause__).__name__ if error.__cause__ else None,
-                                  detail=repr(error))
-                result['end_ns'] = time.perf_counter_ns(); row['waits'].append(result)
-            thread.join(1)
-            row.update(reader_alive=thread.is_alive(), child_alive=child.poll() is None, events=events)
-        except (Exception, KeyboardInterrupt) as error:
+            # Cover the entire cell, including the bytecode gap between its
+            # exception handler and finalize_cell(). A pending SIGINT is
+            # delivered only after the row and incomplete-sequence checkpoint
+            # are durable.
+            old_cell_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
+        except KeyboardInterrupt as error:
             row['fatal'] = repr(error)
             row['fatal_type'] = type(error).__name__
-        finally:
             finalize_cell(output, rows, case, row, child, thread, journal)
+            break
+        try:
+            try:
+                wire = 'not-json\n' if case == 'candidate_json' else ''
+                script = ('import os,sys,time;print(\'{"event":"ready"}\',flush=True);sys.stdin.readline();'
+                          'print(\'{"event":"terminal"}\',flush=True);os.close(1);time.sleep(3)') if case == 'candidate_events_eof' else (
+                          'import os,sys,time;sys.stdout.write(sys.argv[1]);sys.stdout.flush();os.close(1);time.sleep(3)')
+                child = subprocess.Popen([sys.executable, '-u', '-c', script, wire], stdin=subprocess.PIPE,
+                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                row['child_pid'] = child.pid
+                factory = baseline_factory if case == 'baseline_eof' else candidate_factory
+                reader, wait, events = factory(code)(child, queue.Queue())
+                thread = threading.Thread(target=sigint_blocked_reader, args=(reader,), name='f03-reader'); thread.start()
+                if case == 'candidate_events_eof':
+                    row['ready'] = wait(lambda event: event['event'] == 'ready', timeout=1)
+                    row['reader_alive_after_ready'] = thread.is_alive()
+                    child.stdin.write('continue\n'); child.stdin.flush()
+                    row['terminal'] = wait(lambda event: event['event'] == 'terminal', timeout=1)
+                for attempt in range(2):
+                    result = {'start_ns': time.perf_counter_ns()}
+                    try:
+                        wait(lambda event: False, timeout=.35)
+                        result.update(outcome='unexpected_return', cause=None)
+                    except Exception as error:
+                        result.update(outcome=type(error).__name__,
+                                      cause=type(error.__cause__).__name__ if error.__cause__ else None,
+                                      detail=repr(error))
+                    result['end_ns'] = time.perf_counter_ns(); row['waits'].append(result)
+                thread.join(1)
+                row.update(reader_alive=thread.is_alive(), child_alive=child.poll() is None, events=events)
+            except (Exception, KeyboardInterrupt) as error:
+                row['fatal'] = repr(error)
+                row['fatal_type'] = type(error).__name__
+            finally:
+                finalize_cell(output, rows, case, row, child, thread, journal)
+        finally:
+            try:
+                signal.pthread_sigmask(signal.SIG_SETMASK, old_cell_mask)
+            except KeyboardInterrupt:
+                interrupted_after_cell = True
+        if interrupted_after_cell:
+            break
         if row['gate'] is not True:
             break
     summary = {'cases': [row['case'] for row in rows], 'retries': 0, 'model_calls': 0,
                'verdict': 'FOUR_CELL_GATES_TRUE_AWAITING_EXIT' if len(rows) == 4 and all(row['gate'] for row in rows) else 'STOP_FIRST_UNEXPECTED_CELL'}
-    if rows and rows[-1].get('fatal_type'):
+    if interrupted_after_cell:
+        summary['stop_reason'] = 'KeyboardInterrupt'
+    elif rows and rows[-1].get('fatal_type'):
         summary['stop_reason'] = rows[-1]['fatal_type']
     elif rows and rows[-1]['cleanup_faults']:
         summary['stop_reason'] = 'cleanup_fault'
