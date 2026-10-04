@@ -675,7 +675,8 @@ def action_state_feedback(before, after, typed_observations):
     def read(observation):
         if (type(observation.get("sequence")) is not int or
                 type(observation.get("capture_ns")) is not int or
-                type(observation.get("step")) is not int):
+                type(observation.get("step")) is not int or
+                type(observation.get("id")) is not str or not observation.get("id")):
             return None, "typed_frame_identity_mismatch"
         matches = [row for row in typed_observations
                    if type(row) is dict and row.get("event") == "typed_observation" and
@@ -685,11 +686,13 @@ def action_state_feedback(before, after, typed_observations):
         row = matches[0]
         frame_hash = observation.get("frame_rgb_sha256")
         if (row.get("schema") != "doom-typed-observation-v1" or
-                row.get("pointer_binding") != observation.get("pointer_binding") or
+                not _typed_json_equal(row.get("pointer_binding"),
+                                    observation.get("pointer_binding")) or
                 type(row.get("sequence")) is not int or
                 type(row.get("capture_ns")) is not int or
                 type(row.get("step")) is not int or
                 row.get("capture_ns") != observation.get("capture_ns") or
+                type(row.get("id")) is not str or not row.get("id") or
                 row.get("id") != observation.get("id") or
                 row.get("step") != observation.get("step") or
                 type(frame_hash) is not str or len(frame_hash) != 64 or
@@ -705,14 +708,16 @@ def action_state_feedback(before, after, typed_observations):
         wad_sha256 = None
         for name in ("health", "ammo"):
             signal = signals.get(name)
-            if (type(signal) is not dict or signal.get("status") != "observed" or
+            if (type(signal) is not dict or
+                    signal.get("format") != "observable-signal-v1" or
+                    signal.get("status") != "observed" or
                     signal.get("signal_id") != name or
                     type(signal.get("value")) is not int or
                     type(signal.get("sequence")) is not int or
                     signal.get("sequence") != observation.get("sequence") or
                     type(signal.get("capture_ns")) is not int or
                     signal.get("capture_ns") != observation.get("capture_ns") or
-                    signal.get("binding") != binding):
+                    not _typed_json_equal(signal.get("binding"), binding)):
                 return None, "typed_signal_unavailable"
             lower, upper = (1, 200) if name == "health" else (0, 999)
             if not lower <= signal["value"] <= upper:
@@ -737,7 +742,7 @@ def action_state_feedback(before, after, typed_observations):
     if (after["sequence"] <= before["sequence"] or
             after["capture_ns"] <= before["capture_ns"]):
         return {"status": "unavailable", "reason": "typed_frame_order_invalid"}
-    if (current["binding"] != previous["binding"] or
+    if (not _typed_json_equal(current["binding"], previous["binding"]) or
             current["wad_sha256"] != previous["wad_sha256"]):
         return {"status": "unavailable", "reason": "typed_signal_binding_mismatch"}
     return {
@@ -755,8 +760,17 @@ def action_state_feedback(before, after, typed_observations):
 
 def input_edge_receipts(events):
     """Project legacy owner receipts and measured X-adapter edge brackets separately."""
+    events = list(events)
+    explicit_admission_id_counts = Counter(
+        (event.get("owner_id"), event.get("admission_id"))
+        for event in events
+        if type(event) is dict and event.get("event") == "input_admission"
+        and type(event.get("owner_id")) is str and bool(event.get("owner_id"))
+        and type(event.get("admission_id")) is str
+        and bool(event.get("admission_id")))
     grouped = {}
     adapter_grouped = {}
+    invalid_adapter_contexts = set()
     invalid = []
     for event in events:
         if type(event) is not dict:
@@ -765,12 +779,22 @@ def input_edge_receipts(events):
         measurement = event.get("physical_key_measurement")
         adapter_edge = (measurement.get("adapter_edge")
                         if type(measurement) is dict else None)
+        unknown_adapter_event = (
+            event_name not in ("input_admission", "input_release_measurement",
+                               "input_release_transition") and
+            type(measurement) is dict)
         adapter_candidate = (
             event_name == "input_release_measurement" or
-            (event_name == "input_admission" and type(measurement) is dict))
+            (event_name == "input_admission" and type(measurement) is dict) or
+            unknown_adapter_event or
+            (event_name == "input_release_transition" and
+             type(adapter_edge) is dict))
         if adapter_candidate:
             edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
-            expected_edge = ("down" if event_name == "input_admission" else "up")
+            expected_edge = (
+                "down" if event_name == "input_admission" else
+                "up" if event_name == "input_release_measurement" else
+                edge_name if edge_name in ("down", "up") else None)
             identifier, step, key, token = (event.get("id"), event.get("step"),
                                             event.get("key"), event.get("intent_token"))
             if (type(identifier) is not str or not identifier or
@@ -787,12 +811,20 @@ def input_edge_receipts(events):
                 continue
             actuation_id = (adapter_edge.get("actuation_id")
                             if type(adapter_edge) is dict else None)
+            if type(actuation_id) is not str or not actuation_id:
+                # An unidentifiable claimed edge cannot be assigned to one
+                # repeated cycle, so it invalidates this coarse identity.
+                invalid_adapter_contexts.add((identifier, step, key, token))
+                actuation_id = None
             bucket = adapter_grouped.setdefault(
                 (identifier, step, key, token, actuation_id),
-                {"down": [], "up": []})
+                {"down": [], "up": [], "invalid": False})
             # Outer event type and nested edge label are both part of the
             # receipt identity. Do not let one release event supply a press.
-            bucket[expected_edge].append(event)
+            if expected_edge is None:
+                bucket["invalid"] = True
+            else:
+                bucket[expected_edge].append(event)
             continue
         if event_name not in ("input_admission", "input_release_transition"):
             continue
@@ -851,6 +883,7 @@ def input_edge_receipts(events):
                 bracket.get("key") == edge.get("key") and
                 bracket.get("owner_id") == edge.get("owner_id") and
                 bracket.get("intent_token") == edge.get("intent_token") and
+                valid_interval(bracket.get(interval_name)) and
                 bracket.get(interval_name) == edge.get("interval") and
                 bracket.get("status") == status and
                 bracket.get("grants_input_authority") is False and
@@ -915,9 +948,13 @@ def input_edge_receipts(events):
                 up_data.get("pre_sample") if type(up_data) is dict else None,
                 up_data.get("post_sample") if type(up_data) is dict else None))
         complete = (
+            (identifier, step, key, token) not in invalid_adapter_contexts and
+            not bucket.get("invalid", False) and
             len(downs) == 1 and len(ups) == 1 and
             type(down_data) is dict and type(up_data) is dict and
             type(down_edge) is dict and type(up_edge) is dict and
+            down.get("event") == "input_admission" and
+            up.get("event") == "input_release_measurement" and
             down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
             down_data.get("edge") == "down" and up_data.get("edge") == "up" and
             down_data.get("classification") == "CONFIRMED_PHYSICAL_DOWN" and
@@ -997,6 +1034,32 @@ def input_edge_receipts(events):
         release_returned_ns = release.get("release_call_returned_ns") if release else None
         admission_owner_id = (admission.get("owner_id")
                               if type(admission) is dict else None)
+        owner_keyup_admission_id = (
+            owner.get("admission_id") if type(owner) is dict else None)
+        admission_id_surfaces = (admission, release, owner)
+        explicit_admission_id_present = any(
+            type(row) is dict and "admission_id" in row
+            for row in admission_id_surfaces)
+        admission_id_value = (admission.get("admission_id")
+                              if type(admission) is dict else None)
+        release_admission_id = (release.get("admission_id")
+                                if type(release) is dict else None)
+        explicit_admission_id_matches = (
+            type(admission_id_value) is str
+            and bool(admission_id_value)
+            and release_admission_id == admission_id_value
+            and owner_keyup_admission_id == admission_id_value
+            and type(admission_owner_id) is str and bool(admission_owner_id)
+            and release.get("owner_id") == admission_owner_id
+            and owner.get("owner_id") == admission_owner_id
+            and explicit_admission_id_counts.get(
+                (admission_owner_id, admission_id_value)) == 1)
+        admission_identity_matches = (
+            type(release) is dict and (
+                (release.get("admission_identity_status") == "matched_explicit_id"
+                 and explicit_admission_id_matches)
+                if explicit_admission_id_present else
+                release.get("admission_identity_status") == "matched"))
         keyup_started_ns = (owner.get("owner_keyup_started_ns")
                             if v11_contract and type(owner) is dict else
                             (owner.get("owner_keyrelease_started_ns")
@@ -1012,7 +1075,7 @@ def input_edge_receipts(events):
             owner_verified = (
                 release.get("owner_keyup_join") == "MATCHED_EXPLICIT_KEYUP" and
                 release.get("owner_transition_verified") is True and
-                release.get("admission_identity_status") == "matched" and
+                admission_identity_matches and
                 release.get("admission_position") == admission_position and
                 release.get("ordinary_release_candidate") is True)
             owner_contract_valid = (
@@ -1049,6 +1112,7 @@ def input_edge_receipts(events):
             status = "admission_without_release"
         elif (release.get("operation") != "up" or type(owner) is not dict or
               not owner_contract_valid or
+              (explicit_admission_id_present and not explicit_admission_id_matches) or
               owner.get("key") != key or owner.get("intent_token") != token or
               not sync_completed or not owner_verified or
               not owner_history_complete or
@@ -1077,6 +1141,8 @@ def input_edge_receipts(events):
             "step": step,
             "key": key,
             "admission_position": admission_position,
+            "admission_id": (admission_id_value
+                             if explicit_admission_id_matches else None),
             "admitted_ns": admitted_ns if type(admitted_ns) is int else None,
             "input_ack_ns": input_ack_ns if type(input_ack_ns) is int else None,
             "release_call_started_ns": release_started_ns if type(release_started_ns) is int else None,
