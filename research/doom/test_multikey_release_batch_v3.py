@@ -3,13 +3,12 @@
 These tests use fake owner state and validate software receipt attribution only.
 They do not exercise X11, physical key release, or application effects.
 """
+import importlib.util
 import sys
 import threading
 import types
 import unittest
 from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 class FakeOwner:
     mode = "normal"
@@ -95,11 +94,29 @@ class FakePrevious:
 
 base_module.Backend = FakePrevious
 base_module.suite = object()
-sys.modules["doom_typed_release_backend_v2"] = base_module
 wrapper_module = types.ModuleType("input_transition_owner_v4")
 wrapper_module.InputOwner = FakeOwner
-sys.modules["input_transition_owner_v4"] = wrapper_module
-import doom_typed_release_backend_v3 as candidate
+
+def load_candidate_isolated():
+    names = ("doom_typed_release_backend_v2", "input_transition_owner_v4")
+    saved = {name: sys.modules.get(name) for name in names}
+    try:
+        sys.modules["doom_typed_release_backend_v2"] = base_module
+        sys.modules["input_transition_owner_v4"] = wrapper_module
+        path = Path(__file__).resolve().with_name("doom_typed_release_backend_v3.py")
+        spec = importlib.util.spec_from_file_location(
+            "doom_typed_release_backend_v3_multikey_test", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    finally:
+        for name, old in saved.items():
+            if old is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = old
+
+candidate = load_candidate_isolated()
 
 class MultiKeyReleaseBatchTests(unittest.TestCase):
     def run_batch(self, mode):
