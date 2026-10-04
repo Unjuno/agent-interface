@@ -1,0 +1,76 @@
+{
+  "schema": "map01-v3-backend-direct-analyzer-token-cross-layer-cases-I84-v1",
+  "cases": [
+    {
+      "case": "matching_nonempty_string",
+      "admission_token_present": true,
+      "admission_token": "intent-1",
+      "lease_token": "intent-1",
+      "receipt_token": "intent-1",
+      "expected_verified": true,
+      "expected_ready": true
+    },
+    {
+      "case": "matching_empty_string",
+      "admission_token_present": true,
+      "admission_token": "",
+      "lease_token": "",
+      "receipt_token": "",
+      "expected_verified": false,
+      "expected_ready": false
+    },
+    {
+      "case": "matching_integer",
+      "admission_token_present": true,
+      "admission_token": 17,
+      "lease_token": 17,
+      "receipt_token": 17,
+      "expected_verified": false,
+      "expected_ready": false
+    },
+    {
+      "case": "matching_boolean",
+      "admission_token_present": true,
+      "admission_token": true,
+      "lease_token": true,
+      "receipt_token": true,
+      "expected_verified": false,
+      "expected_ready": false
+    },
+    {
+      "case": "explicit_null_identity",
+      "admission_token_present": true,
+      "admission_token": null,
+      "lease_token": null,
+      "receipt_token": null,
+      "expected_verified": false,
+      "expected_ready": false
+    },
+    {
+      "case": "absent_identity",
+      "admission_token_present": false,
+      "lease_token": null,
+      "receipt_token": null,
+      "expected_verified": false,
+      "expected_ready": false
+    },
+    {
+      "case": "mismatched_nonempty_strings",
+      "admission_token_present": true,
+      "admission_token": "intent-1",
+      "lease_token": "intent-1",
+      "receipt_token": "other",
+      "expected_verified": false,
+      "expected_ready": false
+    },
+    {
+      "case": "missing_release_receipt_token",
+      "admission_token_present": true,
+      "admission_token": "intent-1",
+      "lease_token": "intent-1",
+      "receipt_token": null,
+      "expected_verified": false,
+      "expected_ready": false
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "map01-release-producer-analyzer-cross-layer-cases-I85-v1",
+  "cases": [
+    {"case":"normal_nonempty_identity","producer_verified":true,"measurement_ready":true,"hold_count":1},
+    {"case":"prior_cleanup_outside_bracket","producer_verified":true,"measurement_ready":true,"hold_count":1},
+    {"case":"cleanup_inside_release_bracket","producer_verified":false,"measurement_ready":false,"hold_count":0},
+    {"case":"empty_identity","producer_verified":false,"measurement_ready":false,"hold_count":0},
+    {"case":"integer_identity","producer_verified":false,"measurement_ready":false,"hold_count":0},
+    {"case":"mismatched_identity","producer_verified":false,"measurement_ready":false,"hold_count":0},
+    {"case":"missing_identity","producer_verified":false,"measurement_ready":false,"hold_count":0},
+    {"case":"consumer_timestamp_order_mutation","producer_verified":true,"measurement_ready":false,"hold_count":0,"invalid_release_count":1}
+  ]
+}

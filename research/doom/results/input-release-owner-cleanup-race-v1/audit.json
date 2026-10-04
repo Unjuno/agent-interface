@@ -1,0 +1,19 @@
+{
+  "candidate_sha256": "76addc9b7c3f22c694169c6688ec64cf6304fb3654322ae31e5348b3727f3268",
+  "checks": {
+    "adapter_reclassifies_overlapping_cleanup": true,
+    "candidate_implementation_source_hashes": true,
+    "cleanup_record_is_inside_explicit_up_bracket": true,
+    "no_authority_or_physical_claim": true,
+    "wrapper_snapshot_was_ordinary_at_request": true
+  },
+  "implementation_source_sha256": {
+    "research/doom/doom_retained_input_backend_v3.py": "6db0845c42f285b43c42639a390fb535a522bc913f417c1ccad9a1153d15484e",
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+  },
+  "outcome": "PASS",
+  "overlapping_cleanup_records": 1,
+  "schema": "input-release-owner-cleanup-race-audit-v1",
+  "scope": "synthetic in-bracket cleanup reclassification only"
+}

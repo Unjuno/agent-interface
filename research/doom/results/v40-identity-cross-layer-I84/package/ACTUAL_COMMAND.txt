@@ -1,0 +1,7 @@
+Executed from the local task workspace with a read-only bind and no network:
+
+$sourceDir = (Resolve-Path 'C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\outputs\pr7356-cross-layer-I84').Path
+$mount = "type=bind,source=$sourceDir,target=/src,readonly"
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --user 501:501 --mount $mount --workdir /src sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364 python3 -B /src/cross_layer_probe.py
+
+Exit status: 0. The stdout JSON was saved as candidate-results.json. WSLc emitted: "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."

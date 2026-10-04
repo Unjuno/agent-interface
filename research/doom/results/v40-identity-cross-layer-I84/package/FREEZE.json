@@ -1,0 +1,43 @@
+{
+  "schema": "map01-v3-backend-direct-analyzer-token-cross-layer-I84-v1",
+  "repository": "Unjuno/agent-interface",
+  "current_main": "184f71cff5ee1e10dfbb68d9ef532381fa513a14",
+  "backend_pr": {
+    "number": 7352,
+    "head": "b37a57eba77b120176e6f9c4f065da9aac353145",
+    "backend_git_blob": "ac7d1dc4da097a4298967981a00ca53c9f7a5b1d",
+    "backend_sha256": "2b02a5c5186fdfae448bb58ad07131e8b229c3131adcc91be98b34ebe10e9db3",
+    "test_git_blob": "be911f09700c077d7139cbb3d83b179f8227a80b",
+    "test_sha256": "1607f2532b96835e22b4add24c0712316c23642166bc4ba2d49573a98b4fb412"
+  },
+  "analyzer_pr": {
+    "number": 7356,
+    "head": "17fb65363d5dcd21f58ed71e6e48b640ead391d8",
+    "analyzer_git_blob": "1ab5c64c6d98d5ac0f9d199c76989ee66fe541c5",
+    "analyzer_sha256": "62bc822f2922f12a1a271407217107675a4df0d402bc6bbf261a3e33b05790d8"
+  },
+  "raw_cases_sha256": "009d3b5dd17dc145a8e8940f3a836c34444b3d295d574983febf792a4fd73401",
+  "candidate_results_sha256": "57866258d775bc847e50704911668b0077000b9c70dfdf656641f7adaaadac41",
+  "audit_sha256": "2c9a5470017f46a07f52cfc2fde40535738946317d284744805a826c704a722f",
+  "candidate_sha256": "22888e2e6cd004dde9333c8d7c0b22ba92087c0a35ee7843d0b1cffea1c91765",
+  "auditor_sha256": "61a1299ace1a432e63c4573efcfd6c4b925bd982847489b6b25efc5d4c118535",
+  "case_count": 8,
+  "decision": "PASS_PRODUCER_CONSUMER_IDENTITY_ALIGNMENT",
+  "container": {
+    "runtime": "Microsoft WSLc 3.0.1.0",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "network": "none",
+    "cpus": "1",
+    "memory_limit_bytes": 536870912,
+    "observed_cpu_max": "100000 100000",
+    "uid_gid": "501:501",
+    "observed_uid": 501,
+    "mount": "/src read-only",
+    "swap_limit": "unavailable (WSLc warning)"
+  },
+  "formal_allocation": false,
+  "live_resource_used": false,
+  "results_pending": false,
+  "pre_run_freeze_sha256": "5218dbd7b6c01a77383382256b89ecbdcab0c6093bb52477bd86077ebbfc0a54",
+  "pre_run_freeze_artifact": "PRE_RUN_FREEZE.json"
+}

@@ -1,0 +1,6 @@
+Run from repository root in PowerShell. Use a fresh copy of the evidence directory when reproducing so the frozen outputs are not overwritten.
+
+$evidenceDir = (Resolve-Path 'research/doom/results/v40-identity-cross-layer-I84').Path
+$mount = "type=bind,source=$evidenceDir,target=/src,readonly"
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --user 501:501 --mount $mount --workdir /src sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364 python3 -B /src/cross_layer_probe.py | Set-Content -Encoding utf8 "$evidenceDir/candidate-results.json"
+Get-Content -Raw "$evidenceDir/candidate-results.json" | python "$evidenceDir/audit_cross_layer.py" | Tee-Object -FilePath "$evidenceDir/audit-result.json"

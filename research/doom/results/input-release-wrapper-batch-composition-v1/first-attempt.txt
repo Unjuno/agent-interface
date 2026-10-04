@@ -1,0 +1,11 @@
+Command:
+python -m unittest research.doom.test_doom_retained_input_backend_v3.Tests.test_batch_adapter_accepts_actual_v3_wrapper_receipt -v
+
+First outcome: test harness setup error before the wrapper/backend receipt case executed. The implementation used `unittest.mock.patch` without importing `unittest.mock`.
+
+Traceback excerpt:
+  File "research/doom/test_doom_retained_input_backend_v3.py", line 131, in test_batch_adapter_accepts_actual_v3_wrapper_receipt
+    with unittest.mock.patch.dict(sys.modules, {'input_owner_v10': underlying}):
+AttributeError: module 'unittest' has no attribute 'mock'
+
+Disposition: retained as a harness setup error, not classified as candidate or product failure. The harness now imports `patch` explicitly; no implementation source changed between this setup error and the successful candidate execution.
