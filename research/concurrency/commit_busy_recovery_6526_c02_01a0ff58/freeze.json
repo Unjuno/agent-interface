@@ -1,0 +1,27 @@
+{
+  "C": "Known standard SQLite locking, deliberately weak duplicate UPDATE comparator; WAL success means no recovery branch is entered.",
+  "D": "Expected BUSY only DELETE COMMIT_ONLY/UPDATE_AGAIN; active transaction true only those rows; fresh endpoints 1 except DELETE UPDATE_AGAIN=2; all six integrity ok, endpoint changes0, exit0; raw trace counts and closed DB hashes reconcile; four effective copied-data corruptions refused. Any disagreement FAIL; incomplete source/process/evidence HOLD.",
+  "H": "After a known returned reader-caused DELETE COMMIT BUSY, retrying only COMMIT in the same active transaction saves exactly one revision; repeating UPDATE in that active transaction doubles it.",
+  "T": "DELETE/WAL x RELEASE_FIRST/COMMIT_ONLY/UPDATE_AGAIN; exactly six fresh DBs, one ordered deck, zero retry; separate fresh endpoint process after connection close.",
+  "U": "Single-thread multi-connection native Windows/Python, private integer fixture, no scheduler/timing/population/model/task/GUI/crash/lost-response or production guarantee. Ending a foreign observer or resuming after deadline/revocation is not authorized.",
+  "audit": "one raw/database reconstruction; any audit repair separate version preserving first failure",
+  "audit_sha256": "725d48d52dc3ec4e599fff4972965b9146b521a4489a04c200ea21f21d06b8b0",
+  "claim_comment": 5969017529,
+  "controls": [
+    "revision_bool",
+    "erase_busy",
+    "duplicate_missing",
+    "trace_missing"
+  ],
+  "created_utc": "2026-10-03T12:11:17.709152+00:00",
+  "executable_sha256": "5f7b89a612c9b8af1d6456cdfcd1dbe5ca630849e79aebced9bee9a6694952ec",
+  "id": "C02_COMMIT_BUSY_RECOVERY_20261003_01a0ff58",
+  "kind": "ordinary native compatibility construction, not formal",
+  "main_sha": "a06d7f77367190b90350c34624647e8bc0d4b0fd",
+  "outputs": "first/",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "scope": "new private first DBs only; original C01 producer/auditor/native bundles untouched",
+  "source_sha256": "9de69ff14352887ed039d7927566cb52dd42360a28c07499d43033274a053904",
+  "sqlite": "3.45.1",
+  "stop": "first unexpected exception retains partial receipt; no comparison rerun"
+}

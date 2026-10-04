@@ -1,0 +1,63 @@
+import datetime, hashlib, json, pathlib, sqlite3, subprocess, sys
+
+ROOT = pathlib.Path(__file__).resolve().parent
+POLICIES = ('RELEASE_FIRST', 'COMMIT_ONLY', 'UPDATE_AGAIN')
+def stamp(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def digest(data): return hashlib.sha256(data).hexdigest()
+def write(path, value): path.write_text(json.dumps(value, sort_keys=True, indent=2)+'\n', encoding='utf-8')
+
+if __name__ == '__main__':
+    out = ROOT / 'first'
+    out.mkdir(exist_ok=False)
+    source = pathlib.Path(__file__).read_bytes()
+    freeze = json.loads((ROOT/'freeze.json').read_text())
+    if freeze['source_sha256'] != digest(source): raise RuntimeError('source changed')
+    if freeze['python'] != sys.version or freeze['sqlite'] != sqlite3.sqlite_version: raise RuntimeError('environment changed')
+    started = stamp()
+    rows = []
+    try:
+        for mode in ('DELETE', 'WAL'):
+            for policy in POLICIES:
+                key = mode+'_'+policy
+                db = out/(key+'.db')
+                trace = []
+                w = sqlite3.connect(db, timeout=0, isolation_level=None)
+                w.set_trace_callback(lambda sql: trace.append(['writer',sql]))
+                effective = w.execute('PRAGMA journal_mode='+mode).fetchone()[0].upper()
+                w.execute('PRAGMA synchronous=FULL')
+                w.execute('CREATE TABLE task (id INTEGER PRIMARY KEY, revision INTEGER NOT NULL)')
+                w.execute('INSERT INTO task VALUES (1,0)')
+                r = sqlite3.connect(db.as_uri()+'?mode=ro', uri=True, timeout=0, isolation_level=None)
+                r.set_trace_callback(lambda sql: trace.append(['reader',sql]))
+                r.execute('PRAGMA query_only=ON')
+                r.execute('BEGIN')
+                initial = r.execute('SELECT revision FROM task WHERE id=1').fetchone()[0]
+                w.execute('BEGIN IMMEDIATE')
+                w.execute('UPDATE task SET revision=revision+1 WHERE id=1')
+                first_error = None
+                if policy == 'RELEASE_FIRST': r.execute('ROLLBACK')
+                try: w.execute('COMMIT')
+                except sqlite3.OperationalError as error:
+                    first_error = {'code':error.sqlite_errorcode,'name':error.sqlite_errorname,'message':str(error)}
+                active = w.in_transaction
+                second_commit = False
+                if first_error is not None:
+                    if first_error['code'] != sqlite3.SQLITE_BUSY or not active: raise RuntimeError('unexpected error or transaction end')
+                    r.execute('ROLLBACK')
+                    if policy == 'UPDATE_AGAIN': w.execute('UPDATE task SET revision=revision+1 WHERE id=1')
+                    w.execute('COMMIT')
+                    second_commit = True
+                if r.in_transaction: r.execute('ROLLBACK')
+                final_active = w.in_transaction
+                r.close(); w.close()
+                code = 'import sqlite3,sys,json; c=sqlite3.connect(sys.argv[1]+"?mode=ro",uri=True); print(json.dumps({"revision":c.execute("SELECT revision FROM task WHERE id=1").fetchone()[0],"integrity":c.execute("PRAGMA integrity_check").fetchone()[0],"changes":c.total_changes})); c.close()'
+                proc = subprocess.run([sys.executable,'-I','-c',code,db.as_uri()],capture_output=True,timeout=5)
+                if proc.returncode != 0: raise RuntimeError(proc.stderr.decode())
+                endpoint = json.loads(proc.stdout)
+                row = {'id':key,'mode':effective,'policy':policy,'initial':initial,'first_error':first_error,'active_after_first_commit':active,'second_commit':second_commit,'final_active':final_active,'trace':trace,'endpoint':endpoint,'endpoint_exit':proc.returncode,'endpoint_stdout_hex':proc.stdout.hex(),'endpoint_stderr_hex':proc.stderr.hex(),'db_sha256':digest(db.read_bytes())}
+                rows.append(row)
+                with (out/'rows.jsonl').open('a',encoding='utf-8',newline='\n') as f: f.write(json.dumps(row,sort_keys=True)+'\n')
+        write(out/'receipt.json',{'started_utc':started,'ended_utc':stamp(),'row_count':len(rows),'source_sha256':digest(source),'python':sys.version,'sqlite':sqlite3.sqlite_version,'status':'COMPLETE'})
+    except BaseException as error:
+        write(out/'receipt.json',{'started_utc':started,'ended_utc':stamp(),'row_count':len(rows),'status':'FIRST_FAILURE','error':repr(error)})
+        raise
