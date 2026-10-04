@@ -17,6 +17,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
              capture_publication_error=False, sink_accept_before_raise=True,
              failure_position=0, capture_step_exception=False,
              fail_incomplete_publication=False,
+             incomplete_publication_rows=False,
              release_all_publication_failure=False):
         emitted = []
         attempts = []
@@ -26,7 +27,9 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             attempts.append(dict(row))
             if (fail_incomplete_publication
                     and row.get("event") == "input_release_transition"
-                    and row.get("release_batch_complete") is False):
+                    and row.get("release_batch_complete") is False
+                    and row.get("release_batch_position") == failure_position):
+                fail_emit[0] = False
                 if sink_accept_before_raise:
                     emitted.append(dict(row))
                 raise OSError("incomplete receipt sink failed")
@@ -129,6 +132,12 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     self.raw("b", False)
                     self.raw("c", False)
                     return
+                if incomplete_publication_rows:
+                    self._release_batch.context["rows"] = [
+                        {"event": "input_release_transition", "key": key,
+                         "release_batch_step": 0}
+                        for key in ("a", "b", "c")
+                    ]
                 raise RuntimeError("later step failed")
 
             def release_all(self):
@@ -345,6 +354,35 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             "step": 0, "size": 1,
             "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
         })
+
+    def test_incomplete_publication_middle_failure_preserves_remaining_positions(self):
+        for accepted in (False, True):
+            with self.subTest(sink_accept_before_raise=accepted):
+                error, attempts, emitted, release = self._run(
+                    step_exception=True, capture_step_exception=True,
+                    fail_incomplete_publication=True,
+                    incomplete_publication_rows=True,
+                    sink_accept_before_raise=accepted, failure_position=1)
+                attempted = [row["release_batch_position"] for row in attempts
+                             if row.get("release_batch_complete") is False]
+                self.assertEqual(attempted, [0, 1])
+                self.assertEqual(
+                    [row["release_batch_position"] for row in emitted
+                     if row.get("release_batch_complete") is False],
+                    [0, 1] if accepted else [0],
+                )
+                self.assertEqual(str(error), "later step failed")
+                self.assertEqual(release.get("release_batch_delivery"), {
+                    "schema": "release-batch-delivery-v1",
+                    "identifier": "program-1", "step": 0, "size": 3,
+                    "positions": [
+                        {"position": 0, "step": 0, "key": "a",
+                         "state": "confirmed_incomplete"},
+                        {"position": 1, "step": 0, "key": "b", "state": "unknown"},
+                        {"position": 2, "step": 0, "key": "c",
+                         "state": "not_attempted"},
+                    ],
+                })
 
     def test_release_all_publication_failure_retains_delivery_ledger(self):
         error, attempts, emitted = self._run(
