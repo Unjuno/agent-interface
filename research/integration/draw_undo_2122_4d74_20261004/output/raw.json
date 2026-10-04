@@ -1,0 +1,118 @@
+{
+  "rows": [
+    {
+      "case": "insert_rectangle",
+      "events": [
+        {
+          "stage": "before_operation",
+          "objects": [],
+          "titles": [],
+          "undo_possible": false,
+          "locked": false
+        },
+        {
+          "stage": "after_operation",
+          "objects": [
+            {
+              "name": "owned_rectangle",
+              "type": "com.sun.star.drawing.RectangleShape",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                2000,
+                1500
+              ]
+            }
+          ],
+          "titles": [
+            "Change object name of Rectangle to 'owned_rectangle'"
+          ],
+          "undo_possible": true,
+          "locked": false
+        },
+        {
+          "stage": "after_undo",
+          "objects": [
+            {
+              "name": "",
+              "type": "com.sun.star.drawing.RectangleShape",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                2000,
+                1500
+              ]
+            }
+          ],
+          "titles": [],
+          "undo_possible": false,
+          "locked": false
+        }
+      ],
+      "mutation_observed": true,
+      "disposition": "FAIL_WRONG_RESTORATION",
+      "saved_sha256": "98019909b7687f1f03f235e67b3b2235e7fc06a947468bdce6e9713579c9f0f3"
+    },
+    {
+      "case": "move_rectangle",
+      "events": [
+        {
+          "stage": "before_operation",
+          "objects": [
+            {
+              "name": "owned_rectangle",
+              "type": "com.sun.star.drawing.RectangleShape",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                2000,
+                1500
+              ]
+            }
+          ],
+          "titles": [],
+          "undo_possible": false,
+          "locked": false
+        },
+        {
+          "stage": "after_operation",
+          "objects": [
+            {
+              "name": "owned_rectangle",
+              "type": "com.sun.star.drawing.RectangleShape",
+              "position": [
+                4000,
+                3000
+              ],
+              "size": [
+                2000,
+                1500
+              ]
+            }
+          ],
+          "titles": [],
+          "undo_possible": false,
+          "locked": false
+        }
+      ],
+      "mutation_observed": true,
+      "disposition": "HOLD_OPERATION_NOT_RECORDED",
+      "saved_sha256": "7615018df227081912eb285376500d202cc03fcd9f6edcddc4bd864a5cdd5715"
+    }
+  ],
+  "errors": [],
+  "parent_exit": 0,
+  "version": "LibreOffice 25.2.3.2 520(Build:2)",
+  "cgroup": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "scope": "actual headless Draw direct UNO recording eligibility only; no model/GUI/independent writer/task benefit"
+}

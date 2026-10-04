@@ -1,0 +1,54 @@
+[
+    {
+        "Architecture": "arm64",
+        "Config": {
+            "Cmd": [
+                "python",
+                "--version"
+            ],
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.15",
+                "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PIP_DISABLE_PIP_VERSION_CHECK=1",
+                "PYTHONDONTWRITEBYTECODE=1",
+                "OMP_NUM_THREADS=1",
+                "OPENBLAS_NUM_THREADS=1"
+            ]
+        },
+        "Created": "2026-10-03T14:44:33.512593977+09:00",
+        "Descriptor": {
+            "digest": "sha256:93ef9169b70d152291972b652bde109d15868d25f65e1110a817b1f63ead886f",
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "size": 1842
+        },
+        "Id": "sha256:93ef9169b70d152291972b652bde109d15868d25f65e1110a817b1f63ead886f",
+        "Metadata": {
+            "LastTagTime": "2026-10-03T05:44:33.582294861Z"
+        },
+        "Os": "linux",
+        "Parent": "sha256:66388947fe72fcd25e3e9ed3f0b85a7ea3c053838334a75c05ed620a4d7f069c",
+        "RepoDigests": [
+            "native-game-b64b@sha256:93ef9169b70d152291972b652bde109d15868d25f65e1110a817b1f63ead886f"
+        ],
+        "RepoTags": [
+            "native-game-b64b:construction01"
+        ],
+        "RootFS": {
+            "Layers": [
+                "sha256:8227a1264c7ff2f8bd125b585e62c1cec77dd2099c985c33e08d34292d06144f",
+                "sha256:8e2be503717272d4f4f0e02e726fa56ede53bceb1951faa0a968b4a7a64b56e3",
+                "sha256:fcda622f7893cdd820b98f1cc0bd608bf43a10bb9bfc9bc09a71033d64c68944",
+                "sha256:3171a6e7233900b64eba1aeb29207d880671af8cee44163aa9f97331b3821b61",
+                "sha256:6434829e842796ae957428a3c8fc3b1530c213fcc2d1536cacbdfd64bfb0d48a",
+                "sha256:07478bc06bdb9c8871b966fb6522fd4070f4b2404be01ec5bdda1c4be794b74f",
+                "sha256:81e17eb5791f53b5b65f7a174459bedef8a493081e998f5c3bc803e3ff535909"
+            ],
+            "Type": "layers"
+        },
+        "Size": 368109012
+    }
+]

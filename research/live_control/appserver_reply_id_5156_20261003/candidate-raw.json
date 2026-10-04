@@ -1,0 +1,684 @@
+{
+  "schema": "native-rpc-boolean-comparison-v1",
+  "id": "appserver-rpc-boolean-id-5156-native-A01-20261003",
+  "arm": "candidate",
+  "source_sha256": "4555b752be1d4810b038c2aa10957c5854d2a1b9f647df6d15998733243c1d44",
+  "freeze_sha256": "dbc6495bbddbb781a95b470a88f73cafcbf860a091ca4cbb3c94d8aae971b50f",
+  "decision": "PASS_BOOLEAN_ID_FILTER",
+  "rows": [
+    {
+      "index": 0,
+      "case": "integer_one",
+      "arm": "candidate",
+      "reply_id": 1,
+      "json_type": "number",
+      "start_utc": "2026-10-03T06:34:07.617180+00:00",
+      "end_utc": "2026-10-03T06:34:07.712053+00:00",
+      "elapsed_ns": 94290400,
+      "peer_pid": 19348,
+      "native_command": [
+        "NATIVE_PYTHON",
+        "-B",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/peer.py.txt",
+        "integer_one",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/runs/candidate/00-integer_one/peer.json"
+      ],
+      "natural_peer_exit0": true,
+      "caller": {
+        "kind": "returned",
+        "value": {
+          "kind": "fixture-payload",
+          "case": "integer_one"
+        }
+      },
+      "peer": {
+        "schema": "native-rpc-id-peer-v1",
+        "case": "integer_one",
+        "peer_pid": 19348,
+        "start_utc": "2026-10-03T06:34:07.705870+00:00",
+        "request_line_utf8": "{\"method\":\"fixture/probe\",\"id\":1,\"params\":{\"case\":\"integer_one\"}}\r\n",
+        "request": {
+          "method": "fixture/probe",
+          "id": 1,
+          "params": {
+            "case": "integer_one"
+          }
+        },
+        "reply_line_ascii": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"kind\":\"fixture-payload\",\"case\":\"integer_one\"}}\n",
+        "reply": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "kind": "fixture-payload",
+            "case": "integer_one"
+          }
+        },
+        "before_reply_ns": 19995995081200,
+        "receipt_written_utc": "2026-10-03T06:34:07.705870+00:00",
+        "planned_terminal": "natural process EOF after this single reply"
+      },
+      "journal": [
+        {
+          "direction": "sent",
+          "observed_ns": 19995915487800,
+          "message": {
+            "method": "fixture/probe",
+            "id": 1,
+            "params": {
+              "case": "integer_one"
+            }
+          }
+        },
+        {
+          "direction": "received",
+          "observed_ns": 19995995620900,
+          "message": {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "result": {
+              "kind": "fixture-payload",
+              "case": "integer_one"
+            }
+          }
+        }
+      ],
+      "files": {
+        "peer.json": {
+          "path": "runs/candidate/00-integer_one/peer.json",
+          "bytes": 787,
+          "sha256": "0d54a8ff0bb0d0174b9ccb8e880c2d3e2c0f61aa61fa18d50d3a66fb86f36b28"
+        },
+        "client.jsonl": {
+          "path": "runs/candidate/00-integer_one/client.jsonl",
+          "bytes": 274,
+          "sha256": "626131e8ffe3a40a81691aeb36457ccc29934d00a0faa074d11b76444350b270"
+        }
+      },
+      "final_state": {
+        "closed": true,
+        "next_id": 2,
+        "responses": [],
+        "notifications": [],
+        "reader_alive": false,
+        "process_returncode": 0,
+        "journal_closed": true,
+        "parent_handles_before_explicit_cleanup": {
+          "stdin": false,
+          "stdout": false,
+          "stderr": false
+        },
+        "parent_handles_after_cleanup": {
+          "stdin": true,
+          "stdout": true,
+          "stderr": true
+        }
+      },
+      "issues": []
+    },
+    {
+      "index": 1,
+      "case": "number_float",
+      "arm": "candidate",
+      "reply_id": 1.0,
+      "json_type": "number",
+      "start_utc": "2026-10-03T06:34:07.729152+00:00",
+      "end_utc": "2026-10-03T06:34:07.815480+00:00",
+      "elapsed_ns": 86540500,
+      "peer_pid": 5692,
+      "native_command": [
+        "NATIVE_PYTHON",
+        "-B",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/peer.py.txt",
+        "number_float",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/runs/candidate/01-number_float/peer.json"
+      ],
+      "natural_peer_exit0": true,
+      "caller": {
+        "kind": "returned",
+        "value": {
+          "kind": "fixture-payload",
+          "case": "number_float"
+        }
+      },
+      "peer": {
+        "schema": "native-rpc-id-peer-v1",
+        "case": "number_float",
+        "peer_pid": 5692,
+        "start_utc": "2026-10-03T06:34:07.808968+00:00",
+        "request_line_utf8": "{\"method\":\"fixture/probe\",\"id\":1,\"params\":{\"case\":\"number_float\"}}\r\n",
+        "request": {
+          "method": "fixture/probe",
+          "id": 1,
+          "params": {
+            "case": "number_float"
+          }
+        },
+        "reply_line_ascii": "{\"jsonrpc\":\"2.0\",\"id\":1.0,\"result\":{\"kind\":\"fixture-payload\",\"case\":\"number_float\"}}\n",
+        "reply": {
+          "jsonrpc": "2.0",
+          "id": 1.0,
+          "result": {
+            "kind": "fixture-payload",
+            "case": "number_float"
+          }
+        },
+        "before_reply_ns": 19996099262400,
+        "receipt_written_utc": "2026-10-03T06:34:07.808968+00:00",
+        "planned_terminal": "natural process EOF after this single reply"
+      },
+      "journal": [
+        {
+          "direction": "sent",
+          "observed_ns": 19996026412700,
+          "message": {
+            "method": "fixture/probe",
+            "id": 1,
+            "params": {
+              "case": "number_float"
+            }
+          }
+        },
+        {
+          "direction": "received",
+          "observed_ns": 19996099923000,
+          "message": {
+            "jsonrpc": "2.0",
+            "id": 1.0,
+            "result": {
+              "kind": "fixture-payload",
+              "case": "number_float"
+            }
+          }
+        }
+      ],
+      "files": {
+        "peer.json": {
+          "path": "runs/candidate/01-number_float/peer.json",
+          "bytes": 795,
+          "sha256": "82ece107331816360b7f9c8c6906141e8408f7bb9bf4b87b41af785b554ef215"
+        },
+        "client.jsonl": {
+          "path": "runs/candidate/01-number_float/client.jsonl",
+          "bytes": 278,
+          "sha256": "8f2888db78a02ccb0e7558a2f959ba92d918dadac434b357e09a33758689f5eb"
+        }
+      },
+      "final_state": {
+        "closed": true,
+        "next_id": 2,
+        "responses": [],
+        "notifications": [],
+        "reader_alive": false,
+        "process_returncode": 0,
+        "journal_closed": true,
+        "parent_handles_before_explicit_cleanup": {
+          "stdin": false,
+          "stdout": false,
+          "stderr": false
+        },
+        "parent_handles_after_cleanup": {
+          "stdin": true,
+          "stdout": true,
+          "stderr": true
+        }
+      },
+      "issues": []
+    },
+    {
+      "index": 2,
+      "case": "boolean_true",
+      "arm": "candidate",
+      "reply_id": true,
+      "json_type": "boolean",
+      "start_utc": "2026-10-03T06:34:07.829993+00:00",
+      "end_utc": "2026-10-03T06:34:07.913133+00:00",
+      "elapsed_ns": 81760700,
+      "peer_pid": 14972,
+      "native_command": [
+        "NATIVE_PYTHON",
+        "-B",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/peer.py.txt",
+        "boolean_true",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/runs/candidate/02-boolean_true/peer.json"
+      ],
+      "natural_peer_exit0": true,
+      "caller": {
+        "kind": "raised",
+        "exception_type": "AppServerError",
+        "message": "app-server closed during fixture/probe: fixture EOF"
+      },
+      "peer": {
+        "schema": "native-rpc-id-peer-v1",
+        "case": "boolean_true",
+        "peer_pid": 14972,
+        "start_utc": "2026-10-03T06:34:07.907134+00:00",
+        "request_line_utf8": "{\"method\":\"fixture/probe\",\"id\":1,\"params\":{\"case\":\"boolean_true\"}}\r\n",
+        "request": {
+          "method": "fixture/probe",
+          "id": 1,
+          "params": {
+            "case": "boolean_true"
+          }
+        },
+        "reply_line_ascii": "{\"jsonrpc\":\"2.0\",\"id\":true,\"result\":{\"kind\":\"fixture-payload\",\"case\":\"boolean_true\"}}\n",
+        "reply": {
+          "jsonrpc": "2.0",
+          "id": true,
+          "result": {
+            "kind": "fixture-payload",
+            "case": "boolean_true"
+          }
+        },
+        "before_reply_ns": 19996196408900,
+        "receipt_written_utc": "2026-10-03T06:34:07.907134+00:00",
+        "planned_terminal": "natural process EOF after this single reply"
+      },
+      "journal": [
+        {
+          "direction": "sent",
+          "observed_ns": 19996127585200,
+          "message": {
+            "method": "fixture/probe",
+            "id": 1,
+            "params": {
+              "case": "boolean_true"
+            }
+          }
+        },
+        {
+          "direction": "received",
+          "observed_ns": 19996196981200,
+          "message": {
+            "jsonrpc": "2.0",
+            "id": true,
+            "result": {
+              "kind": "fixture-payload",
+              "case": "boolean_true"
+            }
+          }
+        }
+      ],
+      "files": {
+        "peer.json": {
+          "path": "runs/candidate/02-boolean_true/peer.json",
+          "bytes": 798,
+          "sha256": "0fc432d484f4ca6a7511d62c000540935af4d3489a7d7b0ed6a22e970b83474a"
+        },
+        "client.jsonl": {
+          "path": "runs/candidate/02-boolean_true/client.jsonl",
+          "bytes": 279,
+          "sha256": "1f07823f05c9743f7ecac8de595887d7b18228025c4039982ba3fe13fd172445"
+        }
+      },
+      "final_state": {
+        "closed": true,
+        "next_id": 2,
+        "responses": [],
+        "notifications": [],
+        "reader_alive": false,
+        "process_returncode": 0,
+        "journal_closed": true,
+        "parent_handles_before_explicit_cleanup": {
+          "stdin": false,
+          "stdout": false,
+          "stderr": false
+        },
+        "parent_handles_after_cleanup": {
+          "stdin": true,
+          "stdout": true,
+          "stderr": true
+        }
+      },
+      "issues": []
+    },
+    {
+      "index": 3,
+      "case": "boolean_false",
+      "arm": "candidate",
+      "reply_id": false,
+      "json_type": "boolean",
+      "start_utc": "2026-10-03T06:34:07.926202+00:00",
+      "end_utc": "2026-10-03T06:34:08.015531+00:00",
+      "elapsed_ns": 88861700,
+      "peer_pid": 25096,
+      "native_command": [
+        "NATIVE_PYTHON",
+        "-B",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/peer.py.txt",
+        "boolean_false",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/runs/candidate/03-boolean_false/peer.json"
+      ],
+      "natural_peer_exit0": true,
+      "caller": {
+        "kind": "raised",
+        "exception_type": "AppServerError",
+        "message": "app-server closed during fixture/probe: fixture EOF"
+      },
+      "peer": {
+        "schema": "native-rpc-id-peer-v1",
+        "case": "boolean_false",
+        "peer_pid": 25096,
+        "start_utc": "2026-10-03T06:34:08.009020+00:00",
+        "request_line_utf8": "{\"method\":\"fixture/probe\",\"id\":1,\"params\":{\"case\":\"boolean_false\"}}\r\n",
+        "request": {
+          "method": "fixture/probe",
+          "id": 1,
+          "params": {
+            "case": "boolean_false"
+          }
+        },
+        "reply_line_ascii": "{\"jsonrpc\":\"2.0\",\"id\":false,\"result\":{\"kind\":\"fixture-payload\",\"case\":\"boolean_false\"}}\n",
+        "reply": {
+          "jsonrpc": "2.0",
+          "id": false,
+          "result": {
+            "kind": "fixture-payload",
+            "case": "boolean_false"
+          }
+        },
+        "before_reply_ns": 19996298468800,
+        "receipt_written_utc": "2026-10-03T06:34:08.009526+00:00",
+        "planned_terminal": "natural process EOF after this single reply"
+      },
+      "journal": [
+        {
+          "direction": "sent",
+          "observed_ns": 19996223411000,
+          "message": {
+            "method": "fixture/probe",
+            "id": 1,
+            "params": {
+              "case": "boolean_false"
+            }
+          }
+        },
+        {
+          "direction": "received",
+          "observed_ns": 19996299123300,
+          "message": {
+            "jsonrpc": "2.0",
+            "id": false,
+            "result": {
+              "kind": "fixture-payload",
+              "case": "boolean_false"
+            }
+          }
+        }
+      ],
+      "files": {
+        "peer.json": {
+          "path": "runs/candidate/03-boolean_false/peer.json",
+          "bytes": 805,
+          "sha256": "c878803433f42e10bf425929c0e54c1da4f37ac34a5bcfb94dae8db52f9591ca"
+        },
+        "client.jsonl": {
+          "path": "runs/candidate/03-boolean_false/client.jsonl",
+          "bytes": 282,
+          "sha256": "18df7f59705a6d3d6b6408ad5a3bda690a4145175009c9b159699f554928a737"
+        }
+      },
+      "final_state": {
+        "closed": true,
+        "next_id": 2,
+        "responses": [],
+        "notifications": [],
+        "reader_alive": false,
+        "process_returncode": 0,
+        "journal_closed": true,
+        "parent_handles_before_explicit_cleanup": {
+          "stdin": false,
+          "stdout": false,
+          "stderr": false
+        },
+        "parent_handles_after_cleanup": {
+          "stdin": true,
+          "stdout": true,
+          "stderr": true
+        }
+      },
+      "issues": []
+    },
+    {
+      "index": 4,
+      "case": "string_one",
+      "arm": "candidate",
+      "reply_id": "1",
+      "json_type": "string",
+      "start_utc": "2026-10-03T06:34:08.030567+00:00",
+      "end_utc": "2026-10-03T06:34:08.115975+00:00",
+      "elapsed_ns": 86180600,
+      "peer_pid": 25004,
+      "native_command": [
+        "NATIVE_PYTHON",
+        "-B",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/peer.py.txt",
+        "string_one",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/runs/candidate/04-string_one/peer.json"
+      ],
+      "natural_peer_exit0": true,
+      "caller": {
+        "kind": "raised",
+        "exception_type": "AppServerError",
+        "message": "app-server closed during fixture/probe: fixture EOF"
+      },
+      "peer": {
+        "schema": "native-rpc-id-peer-v1",
+        "case": "string_one",
+        "peer_pid": 25004,
+        "start_utc": "2026-10-03T06:34:08.109465+00:00",
+        "request_line_utf8": "{\"method\":\"fixture/probe\",\"id\":1,\"params\":{\"case\":\"string_one\"}}\r\n",
+        "request": {
+          "method": "fixture/probe",
+          "id": 1,
+          "params": {
+            "case": "string_one"
+          }
+        },
+        "reply_line_ascii": "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"result\":{\"kind\":\"fixture-payload\",\"case\":\"string_one\"}}\n",
+        "reply": {
+          "jsonrpc": "2.0",
+          "id": "1",
+          "result": {
+            "kind": "fixture-payload",
+            "case": "string_one"
+          }
+        },
+        "before_reply_ns": 19996399266000,
+        "receipt_written_utc": "2026-10-03T06:34:08.109465+00:00",
+        "planned_terminal": "natural process EOF after this single reply"
+      },
+      "journal": [
+        {
+          "direction": "sent",
+          "observed_ns": 19996326843200,
+          "message": {
+            "method": "fixture/probe",
+            "id": 1,
+            "params": {
+              "case": "string_one"
+            }
+          }
+        },
+        {
+          "direction": "received",
+          "observed_ns": 19996399831000,
+          "message": {
+            "jsonrpc": "2.0",
+            "id": "1",
+            "result": {
+              "kind": "fixture-payload",
+              "case": "string_one"
+            }
+          }
+        }
+      ],
+      "files": {
+        "peer.json": {
+          "path": "runs/candidate/04-string_one/peer.json",
+          "bytes": 788,
+          "sha256": "3a9687378064cd15ed3adb53ed01f487fa1caa06b45455a93004774dc0860098"
+        },
+        "client.jsonl": {
+          "path": "runs/candidate/04-string_one/client.jsonl",
+          "bytes": 274,
+          "sha256": "c56611a11e096f2baade7ab3a9eae10b7c7e2f50a311a8e588e6f749092bf4ed"
+        }
+      },
+      "final_state": {
+        "closed": true,
+        "next_id": 2,
+        "responses": [
+          {
+            "id": "1",
+            "message": {
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "kind": "fixture-payload",
+                "case": "string_one"
+              }
+            }
+          }
+        ],
+        "notifications": [],
+        "reader_alive": false,
+        "process_returncode": 0,
+        "journal_closed": true,
+        "parent_handles_before_explicit_cleanup": {
+          "stdin": false,
+          "stdout": false,
+          "stderr": false
+        },
+        "parent_handles_after_cleanup": {
+          "stdin": true,
+          "stdout": true,
+          "stderr": true
+        }
+      },
+      "issues": []
+    },
+    {
+      "index": 5,
+      "case": "null_id",
+      "arm": "candidate",
+      "reply_id": null,
+      "json_type": "null",
+      "start_utc": "2026-10-03T06:34:08.131543+00:00",
+      "end_utc": "2026-10-03T06:34:08.217953+00:00",
+      "elapsed_ns": 86960900,
+      "peer_pid": 4064,
+      "native_command": [
+        "NATIVE_PYTHON",
+        "-B",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/peer.py.txt",
+        "null_id",
+        "OWNED_ROOT/work/appserver-reply-id/research/live_control/appserver_reply_id_5156_20261003/runs/candidate/05-null_id/peer.json"
+      ],
+      "natural_peer_exit0": true,
+      "caller": {
+        "kind": "raised",
+        "exception_type": "AppServerError",
+        "message": "app-server closed during fixture/probe: fixture EOF"
+      },
+      "peer": {
+        "schema": "native-rpc-id-peer-v1",
+        "case": "null_id",
+        "peer_pid": 4064,
+        "start_utc": "2026-10-03T06:34:08.212954+00:00",
+        "request_line_utf8": "{\"method\":\"fixture/probe\",\"id\":1,\"params\":{\"case\":\"null_id\"}}\r\n",
+        "request": {
+          "method": "fixture/probe",
+          "id": 1,
+          "params": {
+            "case": "null_id"
+          }
+        },
+        "reply_line_ascii": "{\"jsonrpc\":\"2.0\",\"id\":null,\"result\":{\"kind\":\"fixture-payload\",\"case\":\"null_id\"}}\n",
+        "reply": {
+          "jsonrpc": "2.0",
+          "id": null,
+          "result": {
+            "kind": "fixture-payload",
+            "case": "null_id"
+          }
+        },
+        "before_reply_ns": 19996502168400,
+        "receipt_written_utc": "2026-10-03T06:34:08.212954+00:00",
+        "planned_terminal": "natural process EOF after this single reply"
+      },
+      "journal": [
+        {
+          "direction": "sent",
+          "observed_ns": 19996430021400,
+          "message": {
+            "method": "fixture/probe",
+            "id": 1,
+            "params": {
+              "case": "null_id"
+            }
+          }
+        },
+        {
+          "direction": "received",
+          "observed_ns": 19996502721600,
+          "message": {
+            "jsonrpc": "2.0",
+            "id": null,
+            "result": {
+              "kind": "fixture-payload",
+              "case": "null_id"
+            }
+          }
+        }
+      ],
+      "files": {
+        "peer.json": {
+          "path": "runs/candidate/05-null_id/peer.json",
+          "bytes": 772,
+          "sha256": "dc01ca9095df485c81f112445377e2f2682fc1d56b5f5df92f7d7e0cf451cfe2"
+        },
+        "client.jsonl": {
+          "path": "runs/candidate/05-null_id/client.jsonl",
+          "bytes": 269,
+          "sha256": "651c6bc3ef2a2661e5525d4e2f615ae3a07c1cfccbd9d46b5293709237a24db5"
+        }
+      },
+      "final_state": {
+        "closed": true,
+        "next_id": 2,
+        "responses": [
+          {
+            "id": null,
+            "message": {
+              "jsonrpc": "2.0",
+              "id": null,
+              "result": {
+                "kind": "fixture-payload",
+                "case": "null_id"
+              }
+            }
+          }
+        ],
+        "notifications": [],
+        "reader_alive": false,
+        "process_returncode": 0,
+        "journal_closed": true,
+        "parent_handles_before_explicit_cleanup": {
+          "stdin": false,
+          "stdout": false,
+          "stderr": false
+        },
+        "parent_handles_after_cleanup": {
+          "stdin": true,
+          "stdout": true,
+          "stderr": true
+        }
+      },
+      "issues": []
+    }
+  ],
+  "stop_error": null,
+  "returned": 2,
+  "boolean_returns": 0,
+  "scope": "native owned inert JSONL protocol; no genuine model/provider/backend/input/latency/task result"
+}

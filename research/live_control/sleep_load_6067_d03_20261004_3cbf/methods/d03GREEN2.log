@@ -1,0 +1,41 @@
+Warning: truncated output (original token count: 830)
+Total output lines: 45
+
+test_accept_complete (test_cell.CellTests.test_accept_complete) ... ok
+test_backwards_clock (test_cell.CellTests.test_backwards_clock) ... ok
+test_bool_timestamp (test_cell.CellTests.test_bool_timestamp) ... ok
+test_cpu_regression_between_rows (test_cell.CellTests.test_cpu_regression_between_rows) ... ok
+test_drop_row (test_cell.CellTests.test_drop_row) ... ok
+test_foreign_arm (test_cell.CellTests.test_foreign_arm) ... ok
+test_foreign_pid (test_cell.CellTests.test_foreign_pid) ... ok
+test_missing_optional_status (test_cell.CellTests.test_missing_optional_status) ... ERROR
+test_partial_status (test_cell.CellTests.test_partial_status) ... ok
+test_raw_counter_mismatch (test_cell.CellTests.test_raw_counter_mismatch) ... ok
+test_request_not_absolute (test_cell.CellTests.test_request_not_absolute) ... ok
+test_unexpected_child (test_cell.CellTests.test_unexpected_child) ... ok
+test_wrong_deadline (test_cell.CellTests.test_wrong_deadline) ... ok
+test_bool_clock_rejected (test_core.DecisionTests.test_bool_clock_rejected) ... ok
+test_counter_raw_negative_rejected (test_core.DecisionTests.test_counter_raw_negative_rejected) ... ok
+test_duplicate_counter_rejected (test_core.DecisionTests.test_duplicate_counter_rejected) ... ok
+test_duplicate_pair_arm_rejected (test_core.DecisionTests.test_duplicate_pair_arm_rejected) ... ok
+test_five_exact_boundary_support (test_core.DecisionTests.test_fiv…130 tokens truncated…_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_cell.py", line 35, in test_missing_optional_status
+    def test_missing_optional_status(self):self.reject(lambda c:c["rows"][0]["pre"].pop("schedstat"))
+                                           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_cell.py", line 24, in reject
+    with self.assertRaises(ValueError):self.check(c)
+                                       ~~~~~~~~~~^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_cell.py", line 20, in check
+    def check(self,c):return validate_cell(c,PLAN["cases"][0],PLAN)
+                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/core.py", line 76, in validate_cell
+    opt=snap[key]
+        ~~~~^^^^^
+KeyError: 'schedstat'
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.002s
+
+FAILED (errors=1)

@@ -1,0 +1,118 @@
+{
+  "disposition": "HOLD_FIRST_OCR_UNAVAILABLE_SECOND_STAGE_CENSORED",
+  "first_saved_effect": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "17",
+        "17",
+        null
+      ],
+      [
+        1,
+        1,
+        "23",
+        "23",
+        null
+      ],
+      [
+        1,
+        2,
+        "391",
+        "391",
+        "of:=[.A2]*[.B2]"
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "17",
+        "17",
+        null
+      ],
+      [
+        1,
+        1,
+        "23",
+        "23",
+        null
+      ],
+      [
+        1,
+        2,
+        "391",
+        "391",
+        "of:=[.A2]*[.B2]"
+      ]
+    ]
+  },
+  "graph_outcome": "SAFE_YIELD",
+  "graph_reason": "effect_unavailable",
+  "native_programs": 1,
+  "second_save_exists": false,
+  "ocr_stdout": [
+    "",
+    ""
+  ],
+  "model_summary": {
+    "label": "batch",
+    "usage": {
+      "totalTokens": 44372,
+      "inputTokens": 44132,
+      "cachedInputTokens": 7936,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 240,
+      "reasoningOutputTokens": 160
+    },
+    "thread_id": "01a1030d-5651-7041-bf3e-d7d418715492",
+    "dynamic_calls": 1,
+    "wall_ns": 8215370300
+  },
+  "first_auditor_failure": "FileNotFoundError second.fods; original audit source retained",
+  "correction": "Initial report draft wrongly asserted two saves before audit. Actual second stage censored, not completed. Draft retained separately."
+}

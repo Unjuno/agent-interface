@@ -1,0 +1,18 @@
+"""One prospective invocation; record actual collector PID/UTC/streams."""
+import datetime, hashlib, json, pathlib, subprocess, sys
+R = pathlib.Path(__file__).resolve().parent
+def utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def sha(b): return hashlib.sha256(b).hexdigest()
+argv = [sys.executable, '-B', str(R / 'collect_composition_v1.py')]
+intent = {'argv': argv, 'cwd': str(R), 'created_utc': utc(), 'freeze_sha256': sha((R / 'FREEZE.composition.v1.json').read_bytes()), 'runner_sha256': sha(pathlib.Path(__file__).read_bytes()), 'ordinary_construction': True, 'formal_or_original_replay': False}
+with (R / 'COMPOSITION_INTENT.v1.json').open('x', encoding='utf-8') as f: json.dump(intent, f, indent=2); f.write('\n')
+started = utc(); p = subprocess.Popen(argv, cwd=R, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+guard = False
+try: out, err = p.communicate(timeout=30)
+except subprocess.TimeoutExpired:
+    guard = True; p.kill(); out, err = p.communicate(timeout=5)
+(R / 'composition.stdout.v1.log').write_bytes(out); (R / 'composition.stderr.v1.log').write_bytes(err)
+receipt = {**intent, 'pid': p.pid, 'started_utc': started, 'ended_utc': utc(), 'exit_code': p.returncode, 'owned_driver_guard_kill': guard, 'stdout_bytes': len(out), 'stdout_sha256': sha(out), 'stderr_bytes': len(err), 'stderr_sha256': sha(err)}
+with (R / 'COMPOSITION_RECEIPT.v1.json').open('x', encoding='utf-8') as f: json.dump(receipt, f, indent=2); f.write('\n')
+print(json.dumps(receipt, indent=2)); print(out.decode('utf-8', errors='replace')); print(err.decode('utf-8', errors='replace'))
+raise SystemExit(p.returncode if p.returncode else int(guard))

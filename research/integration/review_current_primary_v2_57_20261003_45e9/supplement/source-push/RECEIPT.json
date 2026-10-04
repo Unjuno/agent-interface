@@ -1,0 +1,28 @@
+{
+  "started_utc": "2026-10-03T09:57:09.192501+00:00",
+  "ended_utc": "2026-10-03T09:57:11.162836+00:00",
+  "argv": [
+    "git",
+    "-C",
+    "<OWN_WORKSPACE>/work/agent-interface",
+    "-c",
+    "pack.window=0",
+    "-c",
+    "pack.depth=0",
+    "push",
+    "--no-thin",
+    "--force-with-lease=refs/heads/repair/primary-current-01a0ff53-20261003:67ccadd8a685f76e0e853ef772a2d5b509c2a65f",
+    "origin",
+    "2523fc996fa44d88d40aef79f1d757f569fca387:refs/heads/repair/primary-current-01a0ff53-20261003"
+  ],
+  "exit_code": 0,
+  "expected_old_source_ref": "67ccadd8a685f76e0e853ef772a2d5b509c2a65f",
+  "source_ref": "refs/heads/repair/primary-current-01a0ff53-20261003",
+  "new_head": "2523fc996fa44d88d40aef79f1d757f569fca387",
+  "only_source_ref_update": true,
+  "main_sends": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "1a3f7bfe1644e2df228f3597d1bde347126b807375e3af6e47a76d468d1fb579",
+  "stdout_bytes": 0,
+  "stderr_bytes": 159
+}

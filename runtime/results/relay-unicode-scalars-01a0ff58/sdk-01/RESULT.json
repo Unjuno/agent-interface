@@ -1,0 +1,104 @@
+{
+  "decision": "PASS_PRE_SDK_SCALAR_REFUSAL_AND_SAME_ID_CONTINUITY",
+  "responses": [
+    {
+      "id": 1,
+      "tool": "interface_validate",
+      "sdk_entry_ns": 45355515000000,
+      "status": "returned",
+      "sdk_return_ns": 45355531000000,
+      "result": {
+        "meta": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"received\": {\n    \"text\": \"\u8cc7\u6599\ud83d\ude00\",\n    \"nested\": {\n      \"\u00e9\": [\n        null,\n        true,\n        7\n      ]\n    }\n  }\n}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": false
+      },
+      "next_id": 2
+    },
+    {
+      "status": "refused",
+      "dispatched": false,
+      "next_id": 2,
+      "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+    },
+    {
+      "status": "refused",
+      "dispatched": false,
+      "next_id": 2,
+      "error": "'utf-8' codec can't encode character '\\udfff' in position 0: surrogates not allowed"
+    },
+    {
+      "status": "refused",
+      "dispatched": false,
+      "next_id": 2,
+      "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+    },
+    {
+      "id": 2,
+      "tool": "interface_validate",
+      "sdk_entry_ns": 45355531000000,
+      "status": "returned",
+      "sdk_return_ns": 45355531000000,
+      "result": {
+        "meta": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"received\": {\n    \"paired\": \"\ud83d\ude00\",\n    \"looks\": \"\\\\ud800\"\n  }\n}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": false
+      },
+      "next_id": 3
+    },
+    {
+      "status": "refused",
+      "dispatched": false,
+      "next_id": 3,
+      "error": "next id must be 3; never resend an accepted id"
+    },
+    {
+      "id": 3,
+      "tool": "interface_validate",
+      "sdk_entry_ns": 45355531000000,
+      "status": "returned",
+      "sdk_return_ns": 45355531000000,
+      "result": {
+        "meta": null,
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"received\": {\n    \"final\": \"\udbff\udfff\",\n    \"text\": \"\u65e5\u672c\u8a9e\"\n  }\n}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": false
+      },
+      "next_id": 4
+    }
+  ],
+  "actual_children": [
+    {
+      "pid": 8720,
+      "returncode": 0
+    }
+  ],
+  "synthetic_entries": 3,
+  "ended_utc": "2026-10-03T12:58:50.741823+00:00",
+  "driver_pid": 36312,
+  "peer_producer_replays": 0,
+  "native_backend_calls": 0,
+  "main_sends": 0
+}

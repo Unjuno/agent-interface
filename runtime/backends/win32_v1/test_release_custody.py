@@ -57,12 +57,12 @@ class ReleaseCustody(unittest.TestCase):
     def test_explicit_key_up_query_failure_preserves_custody(self):
         def bad(vk):raise OSError('state unavailable')
         b=self.make(bad)
-        with self.assertRaises(OSError):b.key_state('SHIFT',False)
+        b.key_state('SHIFT',False)
         self.assertEqual(b.held_keys,{'SHIFT':16})
     def test_explicit_button_up_query_failure_preserves_custody(self):
         def bad(vk):raise OSError('state unavailable')
         b=self.make(bad)
-        with self.assertRaises(OSError):b.pointer_button('left',False)
+        b.pointer_button('left',False)
         self.assertEqual(b.held_buttons,{'left'})
     def test_zero_release_is_unknown_not_verified(self):
         b=self.make(lambda vk:0)

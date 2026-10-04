@@ -1,0 +1,12 @@
+{
+  "D": "SUPPORT scoped only if pre-undo A1/B1 and visible title/lock/availability equal but post-undo differs; HOLD if ordinary EnterString not recorded; FAIL/HOLD if incomplete or metadata differs",
+  "T": "Two fresh headless Calc documents; single visible A1 input with unrecorded B1 setup versus same A1 input plus hidden recorded B1. Each applies one Undo; exact saved FODS scored separately",
+  "invocations": 1,
+  "allocation": "R01 disposable real LibreOffice recording qualification",
+  "C": "Hidden context explicitly authored and API controlled; not independent external writer or live GUI/model policy",
+  "U": "No safe generic Undo or task/latency benefit, no authority, protected attribution synthetic, version specific",
+  "image": "sha256:ded219f2bc3b57fd6e452cd9ccae7cb35e3bcfc24ea140f381ad4d2b1976b8dc",
+  "H": "Two equal visible undo title lists can have different compensating cell footprints when hidden context attaches a second recorded action",
+  "issue": 2122,
+  "audit_invocations": 1
+}

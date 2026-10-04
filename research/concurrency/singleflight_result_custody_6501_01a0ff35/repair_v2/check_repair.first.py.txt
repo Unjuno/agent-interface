@@ -1,0 +1,76 @@
+"""Directed copied-JSON causal controls; no producer or original audit main."""
+from pathlib import Path
+import hashlib, importlib.util, json, sys, unittest
+
+here=Path(__file__).resolve().parent
+package=here.parent/'agent-interface-6501-custody-v2/research/concurrency/singleflight_result_custody_6501_01a0ff35'
+raw_bytes=(package/'evidence/raw.json').read_bytes()
+assert hashlib.sha256(raw_bytes).hexdigest()=='98e5e605e2a147c0f1a2d749202e978bdab7f6582656270327fb8af55a9d4970'
+raw=json.loads(raw_bytes)
+freeze=(package/'FREEZE.json').read_bytes()
+fixture=(package/'fixtures.json').read_bytes()
+
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path)
+    result=importlib.util.module_from_spec(spec);spec.loader.exec_module(result);return result
+
+legacy=load('legacy_saved_custody',package/'audit.py')
+target=legacy if '--legacy' in sys.argv else load('repaired_saved_custody',here/'audit_v2.py')
+def clone():return json.loads(json.dumps(raw,sort_keys=True,separators=(',',':'),allow_nan=False))
+def serialized(value):return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()+b'\n'
+def reorder(value,index,waiter):
+    row=value['rows'][index];events=row['events']
+    event=events.pop(next(n for n,e in enumerate(events) if e['kind']=='delivery' and e['waiter']==waiter))
+    call=1 if waiter=='B' and row['policy']=='independent' else 0
+    if waiter=='A':
+        position=next(n for n,e in enumerate(events) if e['kind']=='producer_release')+1
+    else:
+        position=next(n for n,e in enumerate(events) if e['kind']=='read_return' and e['call']==call)
+    events.insert(position,event)
+    for n,e in enumerate(events):e['ordinal']=n
+
+witnesses=[]
+for n,row in enumerate(raw['rows']):
+    copied=clone();reorder(copied,n,'A');stream=serialized(copied)
+    witnesses.append(dict(row=row['id'],sha256=hashlib.sha256(stream).hexdigest(),bytes=len(stream)))
+assert witnesses[0]['sha256']=='0b0193d49dab3123778d3aeaae1c8916d11f7e74ba017064b2705c5ababd4445'
+with (here/'witnesses.json').open('w',encoding='utf-8') as f:json.dump(witnesses,f,sort_keys=True,indent=2);f.write('\n')
+
+class DeliveryReturnTests(unittest.TestCase):
+    def test_original_summary_is_preserved(self):
+        result=target.inspect(raw,freeze,fixture)
+        expected=legacy.inspect(raw,freeze,fixture)
+        self.assertEqual({k:result[k] for k in expected},expected)
+        self.assertEqual((result['rows'],result['deliveries'],result['producer_calls']),(30,60,35))
+
+    def test_each_A_delivery_must_follow_its_producer_return(self):
+        for n,row in enumerate(raw['rows']):
+            with self.subTest(row=row['id']):
+                copied=clone();reorder(copied,n,'A')
+                self.assertEqual(legacy.inspect(copied,freeze,fixture)['verdict'],
+                                 'PASS_RESULT_CUSTODY_CHARACTERIZATION_SCOPED')
+                with self.assertRaisesRegex(legacy.AuditError,'^return_before_delivery:A:call0$'):
+                    target.inspect(copied,freeze,fixture)
+
+    def test_B_before_its_mapped_return_remains_rejected(self):
+        for n,row in enumerate(raw['rows']):
+            with self.subTest(row=row['id']):
+                copied=clone();reorder(copied,n,'B')
+                with self.assertRaises(legacy.AuditError):target.inspect(copied,freeze,fixture)
+
+    def test_equal_numeric_return_call_aliases_remain_rejected(self):
+        for n,row in enumerate(raw['rows']):
+            for value in (0.0,False):
+                with self.subTest(row=row['id'],value=value):
+                    copied=clone()
+                    event=next(e for e in copied['rows'][n]['events'] if e['kind']=='read_return' and e['call']==0)
+                    event['call']=value
+                    with self.assertRaises(legacy.AuditError):target.inspect(copied,freeze,fixture)
+
+if __name__=='__main__':
+    suite=unittest.defaultTestLoader.loadTestsFromTestCase(DeliveryReturnTests)
+    result=unittest.TextTestRunner(verbosity=2).run(suite)
+    print(json.dumps(dict(original_raw_sha256=hashlib.sha256(raw_bytes).hexdigest(),
+        A_control_witnesses=witnesses,first_definition='legacy' if target is legacy else 'v2',
+        methods=result.testsRun,failures=len(result.failures),errors=len(result.errors))))
+    raise SystemExit(0 if result.wasSuccessful() else 1)

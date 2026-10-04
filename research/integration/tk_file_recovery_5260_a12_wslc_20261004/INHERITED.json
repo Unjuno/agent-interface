@@ -1,0 +1,32 @@
+{
+  "schema": "issue5260-a12-inherited-provenance-v1",
+  "source_package": "research/integration/tk_focus_drift_5260_a11_wslc_20261004",
+  "source_commit": "b9f8633f006b8c6b9e401e9f07b29cacec8dc2fd",
+  "original_run_freeze_sha256": "8b134d0a0cca8336c0c08e566291f83a7de9db41e0c805ba00b54771ff1b8a9e",
+  "sha256": {
+    ".gitattributes": "c1ff4fda811b8baba79c18ad1e31d1ba80c434f87cb9fb376d7878926cdd5baf",
+    "cache_audit.py": "674ffd2c69dd0ca41e54d52c68c729931298f0869b76b87739e70aefda29446f",
+    "common_a08_audit.py": "e1ff5736ffbf98fda0eacacf405a3cb50566d26e312f5cb72062428617f36f31",
+    "drift_audit.py": "7a65f444fb2e7ae51e05409868775474e05872d3e52d42c504e8ca77d3fff9d7",
+    "drift.py": "65044eb8f8575ce55a701039883b76563d573c32822327b2e733ea103df04531",
+    "effect_audit.py": "8c462ed279c48def596baf4605f9848e8e40972a84b64e469d23b69136e012a3",
+    "focus_pipe.py": "a8f61b603f3d535e7e1aa2f3fea6c31a613a6b3fff0079c5e30e8071546273f7",
+    "focus_trace.py": "54a2f7d8356ff2dadbd820df09455c593e8df82609f49db07216584d1272143e",
+    "gate_audit.py": "7f212d9eb54e86e722e93664a370cad30a23b6a04b7c2cfbf11438823c1fc1f6",
+    "host_capture.py": "5925ba89a92faaea6063a1a268bf344270d1f471f720f56bbe3a0f54d3ca967d",
+    "pipe_audit.py": "8a74d80052427fccb52d7aa32c7cc63909cb998b614df6a06ff897d05d570a74",
+    "pipe_gate.py": "19d7b103186e5c2b4d43b129662cb7808329c745efab62640eeb6c6a955c8520",
+    "pipe_receipt.py": "febb389831652fa7b4f3809535a65c43b84413b7edadb6b29b12ec58049fdcba",
+    "pipe_transport.py": "6d7957eb6870717f7304158114213a839e7ee211755c9e979eb91a0555e29d80",
+    "private_cache.py": "0be35323e2285659252cf39dd00c111cacbee5b2c0cb40da86813251c2f234fe",
+    "readiness_once.py": "714a2cff123a40430e3a4087d63b1cb018e19120d9b570d70fd261cb0481e183",
+    "ready_guard.py": "ea9cf5989cfdbb1dca32354af1f3d3a2733b21df004e56f3f525665de4453d29",
+    "sample_custody.py": "e2458eaab46b453607864311972bded0395cda62594cf45f1a4163fb8ce53fbb"
+  },
+  "renamed_test_fixture": {
+    "target": "phase_fixture.py",
+    "source": "test_drift_audit.py",
+    "purpose": "synthetic construction tests only; not formal scientific evidence"
+  },
+  "limits": "Byte equality proves provenance, not independent implementations or external authority. Existing A11/A09 outcomes are unchanged."
+}

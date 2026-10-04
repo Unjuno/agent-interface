@@ -1,0 +1,50 @@
+test_accepts_hand_checked_cancelled_empty_trace (test_audit.AuditControls.test_accepts_hand_checked_cancelled_empty_trace) ... ok
+test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) ... ok
+test_real_sibling_import_receipt_and_unchanged_main_arguments (test_entry.EntryBoundary.test_real_sibling_import_receipt_and_unchanged_main_arguments) ... ok
+test_real_semantic_fixture_accepts (test_gate.ReleaseGateTests.test_real_semantic_fixture_accepts) ... ok
+test_rejects_failed_or_unknown_cleanup (test_gate.ReleaseGateTests.test_rejects_failed_or_unknown_cleanup) ... ok
+test_rejects_missing_or_wrong_release_custody (test_gate.ReleaseGateTests.test_rejects_missing_or_wrong_release_custody) ... ok
+test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) ... ok
+test_rejects_truthy_verification_and_held_release (test_gate.ReleaseGateTests.test_rejects_truthy_verification_and_held_release) ... ok
+test_cli_emits_valid_json_stop_record (test_partial_audit.PartialAuditEntry.test_cli_emits_valid_json_stop_record) ... FAIL
+test_refuses_corrupt_partial_release_gate (test_partial_audit.PartialAuditEntry.test_refuses_corrupt_partial_release_gate) ... ok
+test_refuses_later_cells_after_partial_stop (test_partial_audit.PartialAuditEntry.test_refuses_later_cells_after_partial_stop) ... ok
+test_saved_partial_stop_returns_stop_not_scientific_pass (test_partial_audit.PartialAuditEntry.test_saved_partial_stop_returns_stop_not_scientific_pass) ... ok
+test_refuses_any_exposure_fields_even_null (test_partial_stop.PartialStopControls.test_refuses_any_exposure_fields_even_null) ... ok
+test_refuses_imported_or_nonempty_stdout (test_partial_stop.PartialStopControls.test_refuses_imported_or_nonempty_stdout) ... ok
+test_refuses_missing_failure_identity_and_chronology (test_partial_stop.PartialStopControls.test_refuses_missing_failure_identity_and_chronology) ... ok
+test_refuses_truthy_gate_aliases (test_partial_stop.PartialStopControls.test_refuses_truthy_gate_aliases) ... ok
+test_refuses_unknown_or_successful_terminal_and_cleanup (test_partial_stop.PartialStopControls.test_refuses_unknown_or_successful_terminal_and_cleanup) ... ok
+test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) ... ok
+test_valid_record_preserves_stop_not_science_pass (test_partial_stop.PartialStopControls.test_valid_record_preserves_stop_not_science_pass) ... ok
+test_both_exact_readers_deliver_real_ready_without_injection (test_receiver.ExactReceiverTests.test_both_exact_readers_deliver_real_ready_without_injection) ... ok
+test_exact_candidate_surfaces_parser_cause_from_injected_stream (test_receiver.ExactReceiverTests.test_exact_candidate_surfaces_parser_cause_from_injected_stream) ... ok
+test_healthy_requires_live_reader_and_no_injection (test_receiver.FaultGateTests.test_healthy_requires_live_reader_and_no_injection) ... ok
+test_original_requires_exact_unhandled_reader_error_only (test_receiver.FaultGateTests.test_original_requires_exact_unhandled_reader_error_only) ... ok
+test_rejects_not_held_notification_and_wrong_fault (test_receiver.FaultGateTests.test_rejects_not_held_notification_and_wrong_fault) ... ok
+
+======================================================================
+FAIL: test_cli_emits_valid_json_stop_record (test_partial_audit.PartialAuditEntry.test_cli_emits_valid_json_stop_record)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e04_20261004_3cbf/test_partial_audit.py", line 24, in test_cli_emits_valid_json_stop_record
+    decoded = json.loads(output.read_text())
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 348, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 802 (char 801)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e04_20261004_3cbf/test_partial_audit.py", line 26, in test_cli_emits_valid_json_stop_record
+    self.fail('CLI output is not parseable saved JSON: ' + repr(exc))
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CLI output is not parseable saved JSON: JSONDecodeError('Extra data: line 1 column 802 (char 801)')
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.485s
+
+FAILED (failures=1)

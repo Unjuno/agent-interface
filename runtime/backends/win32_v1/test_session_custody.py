@@ -5,7 +5,7 @@ from runtime.backends.win32_v1.backend import Win32Backend
 from runtime.core_v1.contract import SCHEMA_PROGRAM
 class SessionCustody(unittest.TestCase):
     def make(self):
-        b=object.__new__(Win32Backend);b.held_keys={'SHIFT':16};b.held_buttons=set();b.emissions=0;b.targets={};self.sends=[];self.state=0
+        b=object.__new__(Win32Backend);b.held_keys={'SHIFT':16};b.held_buttons=set();b.pending_unicode_ups=set();b.emissions=0;b.targets={};self.sends=[];self.state=0
         b.user32=types.SimpleNamespace(GetAsyncKeyState=lambda vk:self.state);b._send_key=lambda vk,down:self.sends.append((vk,down));b._send=lambda *a:None
         return b,m.Win32RuntimeSession(b)
     def dispatch(self,s,ops):
@@ -13,6 +13,11 @@ class SessionCustody(unittest.TestCase):
         return s.dispatch(p,current_observation_seq=1,current_binding_revision=1,now_ns=0)
     def test_pending_custody_refuses_new_input_without_sends(self):
         b,s=self.make();r=self.dispatch(s,[dict(op='key_state',key='S',down=True),dict(op='release_all')])
+        self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'RELEASE_UNVERIFIED');self.assertEqual(self.sends,[])
+
+    def test_pending_unicode_release_refuses_new_input(self):
+        b,s=self.make();b.held_keys={};b.pending_unicode_ups={65}
+        r=self.dispatch(s,[dict(op='key_state',key='S',down=True),dict(op='release_all')])
         self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'RELEASE_UNVERIFIED');self.assertEqual(self.sends,[])
     def test_unverified_cleanup_keeps_fence(self):
         b,s=self.make();self.assertEqual(self.dispatch(s,[dict(op='release_all')])['status'],'release_unverified');n=len(self.sends)

@@ -1,0 +1,899 @@
+[
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.046265+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.024515+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "6c427924a9158887dc7880721f10f8e9077ffc4c17b52131bb5bf44495940875"
+  },
+  {
+    "argv": [
+      "git",
+      "status",
+      "--porcelain",
+      "--untracked-files=no"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.144621+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.052265+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "refs/heads/research/claim-generation-types-6509-01a0ff58-20261003"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.166358+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.144621+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "4b7f913503b0ac76d558bbe5c9d017d535b94b3d040c88f99796551e86ded1ae"
+  },
+  {
+    "argv": [
+      "git",
+      "diff-tree",
+      "-r",
+      "--no-commit-id",
+      "--name-status",
+      "--no-renames",
+      "636986a804a6004cd047db7e8cc5e62c02d585d8",
+      "8539933f2405007cff83ef9ffdc3f0977e571710"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.299680+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.166358+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "5ccfebd12b5ec61b10a9e1bba3010cd729f3a001d3c8a69dbcb9b1af07b411d4"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "8539933f2405007cff83ef9ffdc3f0977e571710^{tree}"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.366833+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.301947+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "d126d7ff80445fd92c5e420e3f0b64857d7bcb562bd25180c7ac5a6c3cec85ad"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.443992+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.393332+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "4d864ca500e50916c59ed5eeab784fb01b829032ffc23e559f903084c32d52aa"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,fa1385d99a319b43c06f5309d1aae9fdd3adea46,research/analysis/claim_generation_types_6509_01a0ff58/.gitattributes"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.527311+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:00.443992+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.589035+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.528370+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "8b4747049691c97a4876504b9e04fbb49e45365b35621a2008de254ebfa77cd9"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,c8787aeca131c3ab7716226c3e752d9ce6b3beb3,research/analysis/claim_generation_types_6509_01a0ff58/audit.py.txt"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.665936+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:00.589035+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.729028+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.666979+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "4db76e1025d1572d16510199162767555e4d82b2dcb0a954984bff38b0b64e8a"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,7d5f91b29ecd8a0778c86580c929aff7e67f8fc5,research/analysis/claim_generation_types_6509_01a0ff58/FREEZE.json"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.806940+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:00.730033+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.869899+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.808091+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "2a58a9bef699005c6c082c2afd316c7619902fd889890e5a6c0fb868d891cf2a"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,7e8cccf53224a86c588e6446d083313d07cedd45,research/analysis/claim_generation_types_6509_01a0ff58/historical/publication-check-v1.py.txt"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:00.947877+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:00.870905+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.012916+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:00.948879+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "9bfc32666c591ff529316afc59ea88128a7022c6b3114a1cb0fbb29fae659865"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,708741442c82b37a190a643f01cdf7be6eb35477,research/analysis/claim_generation_types_6509_01a0ff58/historical/publication-commands-v1.json"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.090854+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.012916+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.152797+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:01.091854+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "bfd6b2527f0756e76bcd8be395aafd51b09a6c1e548800e8eea0db9d4acc39aa"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,9bd6f00d3ab00d48868ac9aead8a7793aca4e01a,research/analysis/claim_generation_types_6509_01a0ff58/historical/PUBLICATION_FIRST_FAILURE.json"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.230751+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.153798+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.292748+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:01.230751+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "811b18b918330d34d98f2f2a9d96352b5818ea678e9243ea8f319e718bc997a9"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,a4f2849c0b67c3d946a20fe215c0315e0e40a3db,research/analysis/claim_generation_types_6509_01a0ff58/historical/SHA256SUMS-before-publication-context.txt"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.369755+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.292748+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.421210+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:01.369755+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "703f8229d933d5c93ef3f996a91bdd1a6bf376252a85d8d9e6bb158bec73d2d0"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,7d8afe9078c8c1c604204d4c94fbe186b0231202,research/analysis/claim_generation_types_6509_01a0ff58/input/c03.receipts.jsonl"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.497706+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.421210+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.560318+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:01.498706+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "b26a6ddbbdcc02d90455bd1eb4747aba273d816d1ea62b64d067a5c8b7fc24d9"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,27bfea7b589c483f7744dd0c943f293ea94876df,research/analysis/claim_generation_types_6509_01a0ff58/PLAN.md"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.638419+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.561319+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.700185+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:01.638419+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "849368485b798a847d8e670973df1ae551bcdfc6667aebef7e0688925d4d177d"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,6291a556fee4f0f9f087ce69d6cf21d6b959dc4f,research/analysis/claim_generation_types_6509_01a0ff58/probe.py.txt"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.778046+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.700185+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.839793+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:01.779047+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "ddb34273c82b6e86b2c644d8d2b3110d9cf03301b443143fe17170fa6636fd29"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,58ae8181988e9263f425eb3a052120631513a849,research/analysis/claim_generation_types_6509_01a0ff58/README.md"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.916272+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.840794+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:01.980478+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:01.917271+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "fa6d8a9de5140777c301ce45a3a1fa8bbbd0b9182bee2701d1d1231cd8c3883a"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,c70352c7c879f731a50e17f5523b087857a3712f,research/analysis/claim_generation_types_6509_01a0ff58/REPORT.md"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.058453+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:01.981477+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.120941+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:02.059454+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "0555ab41014e156c26df394a28ca2171849608c6a9e4d056b1368cb92050ef5b"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,23ff310f08dbfc7dc873e15a4edff090982a68e9,research/analysis/claim_generation_types_6509_01a0ff58/results/.gitattributes"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.196274+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:02.120941+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.258344+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:02.197275+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "775cecfebadb082aa1f0f3490ee8a5a00cc2ffc80fc2dfa5304ca8d8a441fe5c"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,b2464e69f678dad5c4a939f971a56a561fa25bee,research/analysis/claim_generation_types_6509_01a0ff58/results/AUDIT.json"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.335023+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:02.259346+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.386211+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:02.336029+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "9ca990ad213db6735ea35d90b25433efd2e35300a1a42469eeed91c2d62ae235"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,e69de29bb2d1d6434b8b29ae775ad8c2e48c5391,research/analysis/claim_generation_types_6509_01a0ff58/results/audit.stderr"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.462829+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:02.387210+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.525703+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:02.463830+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "9b175b54a70bb32c6726a3b9ea1441cf60f0a663bfb2c8c276961436b3a5c546"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,2982b2fc6a3a2f753f461ced8ee27569606cf5ba,research/analysis/claim_generation_types_6509_01a0ff58/results/audit.stdout"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.604525+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:02.527204+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.665511+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:02.605525+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "1afd5f946391b1665b394d69737b7ef5893cee805b0a3ffafa8088f8a7d3652c"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,2970a1d0627dc483b0a01fc7d6b79f3c21221489,research/analysis/claim_generation_types_6509_01a0ff58/results/BOUNDARY.json"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.744103+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:02.666512+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.795386+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:02.745104+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "9ca990ad213db6735ea35d90b25433efd2e35300a1a42469eeed91c2d62ae235"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,e69de29bb2d1d6434b8b29ae775ad8c2e48c5391,research/analysis/claim_generation_types_6509_01a0ff58/results/boundary.stderr"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.873669+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:02.796669+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:02.936647+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:02.874669+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "474bca6e0e39a5ab10c030cc3bbd447d8a289e66125432f5f58b7e0cd48dc216"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,937c8679af93ba5b81de4470a09e29aceb40cfc0,research/analysis/claim_generation_types_6509_01a0ff58/results/boundary.stdout"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.014186+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:02.937647+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.076961+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:03.014186+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "a51a4c533b99931d8cc9cadefbbf229e1dd59dc8cf3cc43c431afb08c6ade99e"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,112bfcc85938717491de04ef3d67c67f30987f9e,research/analysis/claim_generation_types_6509_01a0ff58/results/raw.json"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.155829+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:03.077966+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.223124+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:03.161059+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "4acb60bfa9d5edeceb732dec527b7f6beab907e334d8a603bdc6856da4e9c87c"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,55bf8b7b367ceae6934d7f46cd06925163e2ab3e,research/analysis/claim_generation_types_6509_01a0ff58/SHA256SUMS"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.299768+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:03.224126+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.352419+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:03.301253+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "c2bc1ba3cf356827cf4cbd637cd43f6713a335249a626a9a1676d6c4677eb74b"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,08cf7870ef8cc3583008fc700a148e5778b1635e,research/analysis/claim_generation_types_6509_01a0ff58/source/legacy_PLAN.md"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.428828+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:03.353779+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.478679+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:03.428828+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "d4080fcf7a0fde4fe81e832bc6cd29c2a18b3dbeeaa8d0531c55dc8e88034c43"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,66d739093590873c6e6445a1f0928bf8989cd3c8,research/analysis/claim_generation_types_6509_01a0ff58/source/legacy_recovery.py.txt"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.563276+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:03.479684+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.671757+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:03.564276+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "387e633d002d950d5f04467bf83e89c5e4569e296d0599cc3a77cfb1b28c348f"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,b042e5abc1eaa3c2622860fd85c3fe52da59d17e,research/analysis/claim_generation_types_6509_01a0ff58/SOURCE_PINS.json"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.763626+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:03.672801+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "hash-object",
+      "-w",
+      "--stdin"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.824133+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:03.764627+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "f2ddfc14eab9406878e601d32c8318aa236d154dcc2150327ed308567985806a"
+  },
+  {
+    "argv": [
+      "git",
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      "100644,c30cccc55f6e8ea8bce8996b20c86da30510342b,research/analysis/claim_generation_types_6509_01a0ff58/strict_request.py.txt"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.903326+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:03.825134+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "show",
+      "636986a804a6004cd047db7e8cc5e62c02d585d8:research/analysis/README.md"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:03.969317+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:03.909601+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "c8d7ded940791fd90ba3ac9a30d901d8f94047f34accb5129f8d4ab186f4ce16"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      ":research/analysis/README.md"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:04.006830+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:03.970317+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "a9a4d1da69ac5be185e69ed60a9eead5f69d8dc6b83684359b276772e4a59766"
+  },
+  {
+    "argv": [
+      "git",
+      "cat-file",
+      "blob",
+      "c150433e60f54932c88ba91d7383048c6cf59c04"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:04.070344+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:04.006830+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "78fdf8b72265fdb7d4518ae85196f8281ff706e6177885bf900f905b0e5fffbe"
+  },
+  {
+    "argv": [
+      "git",
+      "write-tree",
+      "--missing-ok"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:04.201393+00:00",
+    "private_index": true,
+    "started_utc": "2026-10-03T06:29:04.071344+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "eb5ce3799dd941cd6fa10f3f8d5d1f7f197cf3c4dbcc35819ef41192dda63c13"
+  },
+  {
+    "argv": [
+      "git",
+      "commit-tree",
+      "232c3dd8f63731df9fb9d908ecc454bb7c6074e0",
+      "-p",
+      "636986a804a6004cd047db7e8cc5e62c02d585d8"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:04.272834+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:04.202394+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "b55ce4a6ebc3939e8d798a5d9bd2311e432348fc2238e3df29ef1a710ac3d560"
+  },
+  {
+    "argv": [
+      "git",
+      "diff-tree",
+      "-r",
+      "--no-commit-id",
+      "--name-status",
+      "--no-renames",
+      "636986a804a6004cd047db7e8cc5e62c02d585d8",
+      "67f1a967c7238c2f2d9b012dfea5f7a7884dbcaa"
+    ],
+    "exit": 0,
+    "finished_utc": "2026-10-03T06:29:04.412708+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:04.272834+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "f65e0d520d746aea52ff588c3ee91cfa494842c69182bee77ddae01cd8802ad0"
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "636986a804a6004cd047db7e8cc5e62c02d585d8",
+      "67f1a967c7238c2f2d9b012dfea5f7a7884dbcaa"
+    ],
+    "exit": 2,
+    "finished_utc": "2026-10-03T06:29:04.482009+00:00",
+    "private_index": false,
+    "started_utc": "2026-10-03T06:29:04.413223+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "c5f194120d7ffb1887ca268f3e119cbfe27f079a698038d43dcb033c17bf0617"
+  }
+]

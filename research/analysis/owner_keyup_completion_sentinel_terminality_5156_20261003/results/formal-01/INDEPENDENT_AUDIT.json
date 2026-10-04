@@ -1,0 +1,27 @@
+{
+  "control": {
+    "exit_code": 0,
+    "raw_sha256": "af6acf7d18603665899fa153ae7b54c27c74262a0bd8a331da03774cd1e03158",
+    "status": "PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY",
+    "target_result_sha256": "e053a67db5406eb0053c3d44716b2f77d9af71ccac9f59dbb68672cb568868d8"
+  },
+  "errors": [],
+  "independent_checks": [
+    "exact source commit, Git blobs, and SHA-256 values",
+    "control completion row is final",
+    "treatment completion row is first",
+    "same completion object in both cases",
+    "same non-completion records in the same relative order",
+    "identical serialized row multisets",
+    "target stdout, saved audit, raw hash, row count, and exit/status agreement"
+  ],
+  "nonterminal": {
+    "exit_code": 0,
+    "raw_sha256": "28d23cca05313a8e6ae434627c815ad53eca2fc219ccd35b964b2d07caa31bf7",
+    "status": "PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY",
+    "target_result_sha256": "45b5c5d547f26d42d721dd349ce671b94ee7d417b1b8ece99a3cfc1c1ff55059"
+  },
+  "scope": "synthetic JSONL auditor ordering only; no X11, physical input, application effect, or task result",
+  "source_commit": "f474970f82d68b6648aac64f99048ad0c2fd5732",
+  "status": "FINDING_NONTERMINAL_COMPLETION_ACCEPTED"
+}

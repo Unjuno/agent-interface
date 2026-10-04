@@ -1,0 +1,40 @@
+{
+  "argv": [
+    "C:/Program Files/WSL/wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--cpus",
+    "0.5",
+    "--memory",
+    "512M",
+    "--user",
+    "65534:65534",
+    "--name",
+    "ai-5260-a15-review-red07-20261004",
+    "--mount",
+    "type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-x20/_research_6003_a01_20261003,target=/src,readonly",
+    "--env",
+    "PYTHONPATH=/src:/src/research/integration/tk_model_task_guard_5260_a15_wslc_20261004",
+    "--workdir",
+    "/src",
+    "sha256:a67fdc7786a9245adf081382c35dfdee2d3e8506859d397972750428aede6461",
+    "research/integration/tk_model_task_guard_5260_a15_wslc_20261004/construction_x11.py",
+    "test_live_pair.LivePairTests.test_focus_click_publication_fault_is_terminal_before_any_new_input",
+    "test_study.StudyLifecycleTests.test_omitted_local_sources_stop_before_output_or_exchange_creation",
+    "-v"
+  ],
+  "exit_code": 1,
+  "finished_utc": "2026-10-03T23:07:37.133428+00:00",
+  "launch_error": null,
+  "output_sha256": {
+    "attempt.json": "b603962dfc85128483b490596b7bcdc5d57528a857db6f89bebe90e1919452bd",
+    "stderr.bin": "3e17826c8a09f07b259b070c9e1a51b259c3549757f233c51c6428e254280189",
+    "stdout.bin": "da154ebf79a56f239451fcf76e006dddb679e293d070ea956adec1e4b4fd335f"
+  },
+  "started_utc": "2026-10-03T23:07:26.525120+00:00",
+  "wall_seconds": 10.607107100004214
+}

@@ -160,6 +160,7 @@ class Win32Backend:
                 raise Win32BackendError(f"invalid HWND for target {name}")
         self.held_keys: dict[str, int] = {}
         self.held_buttons: set[str] = set()
+        self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
 
     def _configure_api(self) -> None:
@@ -281,9 +282,14 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
-        elif self._key_down_state(vk) is False:
-            # Send completion alone cannot retire an unresolved release.
-            self.held_keys.pop(key, None)
+        elif key in self.held_keys:
+            try:
+                state = self._key_down_state(vk)
+            except Exception:
+                state = None
+            if state is False:
+                # Send completion alone cannot retire an unresolved release.
+                self.held_keys.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:
@@ -292,9 +298,13 @@ class Win32Backend:
             self.key_state(key, False)
 
     def text(self, value: str) -> None:
+        if self.pending_unicode_ups:
+            raise Win32BackendError("unresolved Unicode UP delivery")
         for unit in utf16_units(value):
             self._send_unicode_unit(unit, True)
+            self.pending_unicode_ups.add(unit)
             self._send_unicode_unit(unit, False)
+            self.pending_unicode_ups.remove(unit)
 
     def pointer_move(self, target: str, frame: str, x: int, y: int) -> None:
         rx, ry = self._root_point(target, frame, x, y)
@@ -311,8 +321,13 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
-        elif self._key_down_state(BUTTON_FLAGS[button][2]) is False:
-            self.held_buttons.discard(button)
+        elif button in self.held_buttons:
+            try:
+                state = self._key_down_state(BUTTON_FLAGS[button][2])
+            except Exception:
+                state = None
+            if state is False:
+                self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
         for value, flag in ((dy, MOUSEEVENTF_WHEEL), (dx, MOUSEEVENTF_HWHEEL)):
@@ -335,12 +350,20 @@ class Win32Backend:
             if not mem_dc or not bitmap:
                 raise Win32BackendError("GDI allocation failed")
             old = self.gdi32.SelectObject(mem_dc, bitmap)
+            if not old or old == ctypes.c_void_p(-1).value:
+                old = None
+                raise Win32BackendError("GDI bitmap selection failed")
             if print_window:
                 if not self.user32.PrintWindow(source_hwnd, mem_dc, PW_CLIENTONLY):
                     raise Win32BackendError("PrintWindow failed")
             elif not self.gdi32.BitBlt(mem_dc, 0, 0, w, h,
                                        source_dc, sx, sy, SRCCOPY):
                 raise Win32BackendError("BitBlt failed")
+            # GetDIBits requires the bitmap to be deselected from every DC.
+            restored = self.gdi32.SelectObject(mem_dc, old)
+            if not restored or restored == ctypes.c_void_p(-1).value:
+                raise Win32BackendError("GDI bitmap deselection failed")
+            old = None
             info = BITMAPINFO()
             info.bmiHeader = BITMAPINFOHEADER(
                 ctypes.sizeof(BITMAPINFOHEADER), w, -h, 1, 32, BI_RGB,
@@ -360,6 +383,11 @@ class Win32Backend:
             if mem_dc:
                 self.gdi32.DeleteDC(mem_dc)
             self.user32.ReleaseDC(source_hwnd, source_dc)
+
+    def observe_read_only(self, target: str, frame: str, region) -> dict[str, Any]:
+        # Validate binding without changing caller-owned input or recovery state.
+        self._target(target)
+        return self.capture(target, frame, *region)
 
     def capture(self, target: str, frame: str, x: int, y: int,
                 w: int, h: int) -> dict[str, Any]:
@@ -420,6 +448,16 @@ class Win32Backend:
         return bool(state & 0x8000) if state else None
 
     def release_all(self) -> dict[str, Any]:
+        # Compensate unmatched Unicode delivery once; failure retains the unit.
+        # This acknowledges UP insertion, not physical or application state.
+        unicode_error = None
+        for unit in sorted(getattr(self, "pending_unicode_ups", ())):
+            try:
+                self._send_unicode_unit(unit, False)
+            except Exception as error:
+                unicode_error = unicode_error or error
+            else:
+                self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
         for vk in sorted(set(tracked_keys.values())):
@@ -447,6 +485,8 @@ class Win32Backend:
                           if key_states[name] is not False}
         self.held_buttons = {name for name in tracked_buttons
                              if button_states[name] is not False}
+        if unicode_error is not None:
+            raise unicode_error
         return {"keys_down": keys, "buttons_down": buttons,
                 "keys_unknown": unknown_keys, "buttons_unknown": unknown_buttons,
                 "verified": not keys and not buttons and not unknown_keys and not unknown_buttons,
@@ -499,7 +539,8 @@ class Win32Backend:
                     or (kind == "pointer_button" and not op["down"])
                     or kind == "release_all"
                 )
-                if release_attempt and (self.held_keys or self.held_buttons):
+                if release_attempt and (self.held_keys or self.held_buttons or
+                                        getattr(self, "pending_unicode_ups", ())):
                     # An unconfirmed UP ends this program's task effects. Try
                     # cleanup once more, retain custody, and let the session
                     # report release_unverified without sending later ops.

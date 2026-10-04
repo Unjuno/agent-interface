@@ -6,6 +6,16 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #17: [notification identity R03 arrival-before-wait evidence](concurrency/notification_identity_r03_17_20261004_b64b/RESCUE_20261004.md) — preserves R01/R02/R03 evidence and failures as inert archive; active client patch is excluded, and all FINAL-v5 vote/applicability/application gates remain open.
+- Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
+
+- Issue #57: [incomplete-frame byte-frontier A01](integration/frame_byte_frontier_57_20261003_45e9/REPORT.md) — eight-cell construction PASS preserved; production cap and typed-stop integration remain HOLD, with current-main custody checks in [`RESCUE_20261004.md`](integration/frame_byte_frontier_57_20261003_45e9/RESCUE_20261004.md).
+- Issue #6526 C03: [WAL snapshot/write recovery boundary](integration/wal_snapshot_recovery_6526_01a0ff58_c03/REPORT.md) — six native compatibility cells preserved; original audit PASS and its SQL-copy gap remain alongside the separately versioned V2 audit that rejects all eight effective controls. No runtime recovery policy or task authority follows.
+
+- Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
+
+- Issue #7383: [freshness-gated observation hedging T0](analysis/observation_hedging_7383_t0_20261004/REPORT.md) — the frozen synthetic independent-heavy-tail case passed its method gate, but correlated/shared-queue controls erase the latency gain; no real capture or critical-path benefit is established.
+
 - Issue #5424 T4: [severity-ranking inversion with hard-catastrophe control](analysis/action_class_error_budget_5424_t4_v1/REPORT.md) — 128 synthetic continuation rows independently reconstructed; hard gate prevented the two scripted catastrophic primary effects while correlated fallback risk remained. Method-scoped only.
 
 - Issue #6723 successor to #5370 T7: [composed bounded priority-inheritance experiment](analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) — 36 rows independently audited; synthetic method-scoped result only, with historical T6 STOP preserved.
@@ -120,6 +130,7 @@ Use analytical work to eliminate questions that are already decidable from expli
 - [`analysis/active_automata_learning_5385_t0_v1/REPORT.md`](analysis/active_automata_learning_5385_t0_v1/REPORT.md) — Issue #5385 OrbStack T0: four-state bounded active learner PASS against 2,801 finite words; no live-interface or unbounded-equivalence claim.
 - [`analysis/action_class_error_budget_5424_t2_v1/REPORT.md`](analysis/action_class_error_budget_5424_t2_v1/REPORT.md) — Issue #5424 OrbStack T2: fixed-corpus typed burn-rate budget reduced post-signal primary severe exposures, with correlated-fallback completion tradeoff and preserved audit-v1 FAIL.
 - [`analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md`](analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md) — Issue #5420 OrbStack T1: adaptive ε filter enforces the declared bound for two synthetic randomized-response channels; no GUI privacy or DP claim.
+- [`analysis/privacy_conditional_kernel_5420_t0_20261004/REPORT.md`](analysis/privacy_conditional_kernel_5420_t0_20261004/REPORT.md) — Issue #5420 successor T0: exact conditional-kernel gate rejects the shared-pad pair and accepts fresh-pad/constant controls; method-scoped only, not a product or general DP claim.
 
 ## Workspace map
 
@@ -166,6 +177,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 ### Runtime, input, and text delivery
 
 - `runtime_*` directories — backend/native/runtime experiments.
+- [`native-suite-wslc-a03/`](native-suite-wslc-a03/) — Issue #3352 WSLc A03 stopped after two harness errors because the test image lacks Git; retained setup-failure evidence, not a product failure.
 - [`container_control/`](container_control/) — containerized control work.
 - [`control_codec/`](control_codec/) — control-codec experiments.
 - [`x11_text_german_layout_3668_v2/`](x11_text_german_layout_3668_v2/) — Issue #3741 German XKB text-delivery evidence; retained audit FAIL and missing de-01 raw row are detailed in RECOVERY_REVIEW.md.

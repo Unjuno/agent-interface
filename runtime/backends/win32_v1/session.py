@@ -33,7 +33,8 @@ class Win32RuntimeSession:
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
             }
-        if (self.backend.held_keys or self.backend.held_buttons) and any(
+        if (self.backend.held_keys or self.backend.held_buttons or
+                getattr(self.backend, "pending_unicode_ups", ())) and any(
             op["op"] != "release_all" for op in program["ops"]
         ):
             # Pending release belongs to this backend, independent of caller

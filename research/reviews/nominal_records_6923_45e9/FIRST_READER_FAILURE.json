@@ -1,0 +1,15 @@
+{
+  "kind": "reviewer reader bug",
+  "command": [
+    "python",
+    "-B",
+    "work/review6923/audit_retained.py"
+  ],
+  "exit_code": 1,
+  "first_source": "audit_retained-first.py.txt",
+  "reason": "Counter(mapping) interpreted outcome strings as counts; expected method identities need Counter(list(mapping))",
+  "process_full_streams_separately_captured": false,
+  "exact_process_utc_not_captured": true,
+  "tool_output_retained_in_conversation": true,
+  "candidate_or_author_test_failure": false
+}

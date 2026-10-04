@@ -1,0 +1,30 @@
+{
+  "schema": "issue59-startup-stderr-freeze-v1",
+  "allocation_id": "ISSUE59-STARTUP-STDERR-T0-20261004-01",
+  "repository_head": "156312eb6b733edf0c6ac47903c52016efe9da31",
+  "container": {
+    "engine": "OrbStack Docker",
+    "client_server": "29.5.2/29.4.0",
+    "platform": "linux/arm64",
+    "os": "linux",
+    "architecture": "aarch64",
+    "storage_driver": "overlayfs",
+    "image": "node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+    "network": "none",
+    "source_mount": "read-only",
+    "resources": {"cpus": 1, "memory": "256m", "pids_limit": 16}
+  },
+  "source_sha256": {
+    "PLAN.md": "92cbf83ebab63e9ac163c9c54ff6f1bba7048e1e710a2878d015fcb51105f0c7",
+    "spec.json": "2d71d05c506cd6eb78c94bc2658ebce3e853f6624152163ffe767efc42ac5bb0",
+    "candidate.mjs": "cfa4f181074ce375622d57817a22c61afa08f331c1fa7ea913930d48369225be",
+    "audit.mjs": "fc6ff260b8b37e4bc62e78dc4439b08b5261a4bc5a985455ba68b1b32d88f70c",
+    "test.mjs": "0008154c6d596452450ff042820835f9ca4b7127cf6f555b5b3b65c3776d7525"
+  },
+  "commands": {
+    "construction": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --memory=256m --cpus=1 --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly --entrypoint node node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 /src/test.mjs",
+    "candidate": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --memory=256m --cpus=1 --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly --mount type=bind,src=<RAW>,dst=/out --entrypoint node node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 /src/candidate.mjs /out/candidate.json",
+    "auditor": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --memory=256m --cpus=1 --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly --mount type=bind,src=<RAW>,dst=/out --entrypoint node node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 /src/audit.mjs /out/candidate.json /out/audit.json"
+  },
+  "formal_sequence": "one candidate invocation followed by one independent raw-only auditor invocation; no candidate retry"
+}
