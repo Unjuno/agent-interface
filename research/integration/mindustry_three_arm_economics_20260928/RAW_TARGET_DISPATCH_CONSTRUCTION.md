@@ -34,3 +34,30 @@ The committed `SHA256SUMS` covers all four result files. Raw SHA-256 is `814b5dd
 On that source, the dedicated join mutation suite passes 6/6 and the full package suite passes 103/103; inherited decision probe passes with 10 controls. A fresh read-only sidecar audit exactly matches the retained `dispatch-audit.json`. This second audit is a host-side synthetic integrity check, not live evidence or source authentication. All model/game/socket/compiler/reset callbacks remain simulated.
 
 No Docker operation, Actions workflow, Mindustry process, socket, model call, task input, or formal allocation was performed. The #5130 named-slot and sibling-container gate remains active. Actual live adapters and formal results remain open.
+
+## One-attempt socket submit adapter (host construction, 2026-10-04)
+
+The target dispatch callback seam now has an additive implementation in
+`target_socket_submit_v1.py`, paired with
+`mindustry_three_arm_socket_v2.py`. The adapter sends one compiled request
+through the existing v2 Unix-socket protocol, scopes the response by the
+command's action ID, requires the bridge's fresh `stdin_flushed` receipt and
+exactly one same-ID terminal record, and returns the dispatch contract's
+receipt only when `release.verified` is true. It consumes the action before
+attempting transport; timeout, rejection, malformed identity, cursor failure,
+and unverified release stop without retry. The action ID also serves as the
+session-local transport request ID; the frozen six-task route has unique IDs
+for all twelve target submissions.
+
+Six focused host tests pass, including wrapper binding,
+lost-response/no-retry, unattributed rejection, wrong action/request identity,
+unverified release, replayed or unflushed command receipt, and nonadvancing
+cursor controls. The full package passes 109/109. These tests inject the
+exchange response and do not open an AF_UNIX socket on this Windows host; they
+verify adapter semantics, not the actual bridge process, live images,
+Mindustry input, or task effects. A read-only re-audit of the retained capture
+still returns `PASS_CONSTRUCTION_ONLY` plus `PASS_SYNTHETIC_DISPATCH_JOIN`
+(18 tasks/36 dispatches), with `source_identity_verified=false`; all four
+manifest hashes match their current bytes. The wrapper targets the v2 bridge,
+but no live socket process or formal allocation was run. The #5130 container
+lane remains unassigned, and no Docker command was issued.
