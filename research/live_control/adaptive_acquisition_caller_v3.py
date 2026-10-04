@@ -25,7 +25,7 @@ LOCAL_EXECUTION_YIELD_REASONS = {
     "unknown_state", "ambiguous_state", "stale_observation", "stale_symbol",
     "missing_symbol", "association_changed", "authority_unavailable",
     "effect_failed", "effect_unavailable", "no_progress", "cancelled",
-    "budget_exhausted", "delivery_uncertain", "execution_failed",
+    "budget_exhausted", "delivery_uncertain", "execution_failed", "execution_refused",
 }
 
 
@@ -162,12 +162,19 @@ def _execution_decision(value):
         if set(value) != {"status"}:
             raise ValueError("legacy execution decision accepts status only")
         return copy.deepcopy(value)
-    if status != "safe_yield" or set(value) != {"status", "reason", "completed_actions"}:
+    fields = {"status", "reason", "completed_actions"}
+    if "input_dispatched" in value:
+        fields.add("input_dispatched")
+        if type(value["input_dispatched"]) is not bool:
+            raise ValueError("strict Boolean input_dispatched required")
+    if status != "safe_yield" or set(value) != fields:
         raise ValueError("exact safe_yield execution decision required")
     if value["reason"] not in LOCAL_EXECUTION_YIELD_REASONS:
         raise ValueError("unsupported local execution yield reason " + str(value["reason"]))
     if type(value["completed_actions"]) is not int or value["completed_actions"] < 0:
         raise ValueError("nonnegative completed_actions required")
+    if value.get("input_dispatched") is False and value["completed_actions"]:
+        raise ValueError("completed actions require dispatched input")
     return copy.deepcopy(value)
 
 
@@ -316,7 +323,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                   "phase_timings": phases,
                   "input_authority": ("none" if execution_progress is not None and
                       execution_progress.get("status") == "safe_yield" and
-                      execution_progress.get("completed_actions") == 0 else
+                      delivery == "not_attempted" else
                       "consumed_by_recorded_execute_stage" if stages["execute"]["status"] == "completed"
                       else "none")}
         emit({"event": "adaptive_route_finished", "outcome": outcome,
@@ -399,7 +406,12 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         execution = _execution_decision(local("execute", {"target": selected, "check": revalidation}))
         if execution["status"] == "safe_yield":
             return finish("EXECUTION_INCOMPLETE", execution["reason"],
-                          delivery="confirmed_partial" if execution["completed_actions"] else "not_attempted",
+                          delivery=("delivery_uncertain" if
+                              execution["reason"] in {"delivery_uncertain", "execution_failed"} and
+                              execution.get("input_dispatched") is not False else
+                              "confirmed_partial" if execution["completed_actions"] else
+                                    "delivery_uncertain" if execution.get("input_dispatched") is True
+                                    else "not_attempted"),
                           execution_progress=execution)
         if execution["status"] != "completed":
             return finish("EXECUTION_INCOMPLETE", execution["status"],
