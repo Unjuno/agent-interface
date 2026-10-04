@@ -746,6 +746,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
 - [`relational_noninterference_5811_t0_v1/`](relational_noninterference_5811_t0_v1/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
+- [`replenishable_cpu_service_7722_t0_20261005/`](replenishable_cpu_service_7722_t0_20261005/)
 - [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)
 - [`research_failure_detector_5531_t5/`](research_failure_detector_5531_t5/)
