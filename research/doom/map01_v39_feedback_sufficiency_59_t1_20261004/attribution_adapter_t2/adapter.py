@@ -106,7 +106,12 @@ def _measured_interval_outcomes(samples, events, input_rows):
     """
     rows = []
     for row in input_rows:
-        if not isinstance(row, dict) or row.get("event") != "input_edge_receipt":
+        if (not isinstance(row, dict)
+            or row.get("status") not in {
+                "adapter_edge_brackets_paired", "adapter_edge_receipt_incomplete"
+            }
+            or "down_edge_interval_ns" not in row
+            or "up_edge_interval_ns" not in row):
             continue
         down, up = row.get("down_edge_interval_ns"), row.get("up_edge_interval_ns")
         valid = (
@@ -117,6 +122,8 @@ def _measured_interval_outcomes(samples, events, input_rows):
             and down[0] <= down[1] < up[0] <= up[1]
             and row.get("grants_input_authority") is False
             and row.get("application_consumption_observed") is False
+            and isinstance(row.get("program_id_sha256"), str)
+            and bool(row["program_id_sha256"])
             and isinstance(row.get("intent_token_sha256"), str)
             and bool(row["intent_token_sha256"])
             and isinstance(row.get("key"), str) and bool(row["key"])
@@ -262,7 +269,12 @@ def adapt_session_records(sample_rows, event_rows, input_rows):
 
     measured_rows = []
     for row in input_rows:
-        if isinstance(row, dict) and row.get("event") == "input_edge_receipt":
+        if (isinstance(row, dict)
+            and row.get("status") in {
+                "adapter_edge_brackets_paired", "adapter_edge_receipt_incomplete"
+            }
+            and "down_edge_interval_ns" in row
+            and "up_edge_interval_ns" in row):
             measured_rows.append(row)
 
     if integrity:

@@ -95,7 +95,7 @@ class V15AttributionAdapterTests(unittest.TestCase):
     def test_measured_down_up_envelope_is_not_promoted_to_exact_unique_coverage(self):
         """Adapter brackets bound possible occupancy; they do not prove it."""
         self.input=[{
-            'event':'input_edge_receipt', 'id':'plan-a', 'step':0,
+            'program_id_sha256':'program-hash', 'step':0,
             'key':'space', 'owner_id_sha256':'owner-hash',
             'intent_token_sha256':'intent-hash',
             'status':'adapter_edge_brackets_paired',
@@ -110,7 +110,7 @@ class V15AttributionAdapterTests(unittest.TestCase):
 
     def test_measured_interval_overlap_keeps_competing_intents_ambiguous(self):
         self.input=[{
-            'event':'input_edge_receipt', 'id':'plan-a', 'step':0,
+            'program_id_sha256':'program-hash-a', 'step':0,
             'key':'space', 'owner_id_sha256':'owner-hash-1',
             'intent_token_sha256':'intent-hash-a',
             'status':'adapter_edge_brackets_paired',
@@ -118,7 +118,7 @@ class V15AttributionAdapterTests(unittest.TestCase):
             'up_edge_interval_ns':[150,190],
             'grants_input_authority':False, 'application_consumption_observed':False,
         },{
-            'event':'input_edge_receipt', 'id':'plan-b', 'step':1,
+            'program_id_sha256':'program-hash-b', 'step':1,
             'key':'a', 'owner_id_sha256':'owner-hash-2',
             'intent_token_sha256':'intent-hash-b',
             'status':'adapter_edge_brackets_paired',
@@ -133,7 +133,7 @@ class V15AttributionAdapterTests(unittest.TestCase):
 
     def test_retained_a01_xserver_envelope_does_not_claim_application_effect(self):
         row={
-            'event':'input_edge_receipt', 'id':'cover-7', 'step':2, 'key':'F8',
+            'program_id_sha256':'program-hash', 'step':2, 'key':'F8',
             'owner_id_sha256':'owner-hash',
             'intent_token_sha256':'token-hash',
             'status':'adapter_edge_brackets_paired',
