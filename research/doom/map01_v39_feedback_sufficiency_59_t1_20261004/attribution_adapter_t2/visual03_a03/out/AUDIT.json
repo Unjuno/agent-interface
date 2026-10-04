@@ -1,0 +1,26 @@
+{
+  "audit": "PASS_SCOPED_VISUAL03_TEMPORAL_ASSOCIATION",
+  "baseline_false_incomplete_batch_groups": 4,
+  "candidate_status": "TEMPORALLY_UNIQUE",
+  "causal_attribution": "NOT_ESTABLISHED",
+  "counts": {
+    "admissions": 19,
+    "events": 1,
+    "release_transitions": 19,
+    "samples": 761,
+    "step_scoped_batches": 18
+  },
+  "detection_interval_ns": [
+    28348735736,
+    28398091723
+  ],
+  "errors": [],
+  "full_bracket_covering_tokens": [
+    "41a11010ac2d4543bfb8d4f2b4bb8f83"
+  ],
+  "possible_intent_tokens": [
+    "41a11010ac2d4543bfb8d4f2b4bb8f83"
+  ],
+  "release_basis": "Nested owner-thread XSync receipt only; physical_verification_authoritative=false.",
+  "scope": "Temporal association only. Event onset and causal input effect are not established; no physical key-up timing, threat recovery, or new live qualification."
+}

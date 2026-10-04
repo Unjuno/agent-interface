@@ -1,0 +1,72 @@
+{
+  "adapter_source_hashes": {
+    "baseline_adapter_sha256": "03b49b2547950b4d07ede4f926902b6b57dde989ce93f4198e90d8e35530a038",
+    "candidate_adapter_sha256": "892e6d2572c77084aa5976e5e30dd10017839cc3db1549e9dd77497e9ad129f9",
+    "scorer_feedback_attribution_v1_sha256": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b"
+  },
+  "baseline": {
+    "attributions": [
+      {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": null,
+        "event_sequence": 1,
+        "intent_token": null,
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [],
+        "reason": "input_trace_identity_or_completeness_hold",
+        "status": "UNRESOLVED"
+      }
+    ],
+    "counts": {
+      "candidate_key_intervals": 19,
+      "input_admissions": 19,
+      "integrity_flags": [
+        "incomplete_release_batch"
+      ],
+      "key_release_receipts": 19,
+      "scorer_events": 1,
+      "scorer_samples": 761,
+      "unverified_or_censored_key_intervals": 0
+    },
+    "schema": "v15-scorer-input-attribution-adapter-v1",
+    "trace_integrity": "HOLD_INCOMPLETE_RELEASE_BATCH"
+  },
+  "candidate": {
+    "attributions": [
+      {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": [
+          28348735736,
+          28398091723
+        ],
+        "event_sequence": 1,
+        "intent_token": "41a11010ac2d4543bfb8d4f2b4bb8f83",
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [
+          "41a11010ac2d4543bfb8d4f2b4bb8f83"
+        ],
+        "reason": "one_verified_intent_covers_full_detection_interval",
+        "status": "TEMPORALLY_UNIQUE"
+      }
+    ],
+    "counts": {
+      "candidate_key_intervals": 19,
+      "input_admissions": 19,
+      "integrity_flags": [],
+      "key_release_receipts": 19,
+      "scorer_events": 1,
+      "scorer_samples": 761,
+      "unverified_or_censored_key_intervals": 0
+    },
+    "schema": "v15-scorer-input-attribution-adapter-v1",
+    "trace_integrity": "SOURCE_ROWS_JOINED"
+  },
+  "disposition": "PASS_SCOPED_STEP_SCOPED_BATCH_REPLAY",
+  "raw_counts": {
+    "events": 1,
+    "input_rows": 38,
+    "samples": 761
+  },
+  "schema": "issue59-v16-visual03-adapter-replay-result-v1",
+  "scope": "One retained visual03 scorer event; owner XSync release boundary is not physical key-up timing. No causal, task-effect, recovery, or live-run qualification."
+}

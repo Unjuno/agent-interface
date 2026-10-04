@@ -1,0 +1,13 @@
+{
+  "schema": "issue59-v16-visual03-adapter-replay-freeze-v1",
+  "source_commit": "52677e35431de60daacd0180792c686a1754dae1",
+  "source_issue": "https://github.com/Unjuno/agent-interface/issues/59",
+  "source_pull_request": "https://github.com/Unjuno/agent-interface/pull/7571",
+  "baseline_adapter_commit": "67d0e19800b8c2d2d8ccb27dcf37547130271de2",
+  "hypothesis": "Release-batch completeness must be grouped per program step; a program-level id may be reused across sequential size-1 batches.",
+  "observed_before_repair": "The pinned baseline adapter returns HOLD_INCOMPLETE_RELEASE_BATCH on the retained visual03 producer rows and leaves its one positive KILL_COUNT_INCREASE unresolved.",
+  "procedure": "Replay all 761 scorer samples, the one retained positive scorer event, and all 19 input admissions plus 19 input_release_transition records from the exact visual03 run through the baseline and repaired V15/T0 adapter.",
+  "scope": "Retained-data offline integration replay only. No live allocation, GUI, model, game input, or source runtime replay was performed.",
+  "frozen_inputs": "SOURCE_PINS.json and the three byte-pinned raw input slices in this directory.",
+  "decision_gate": "Retain the one-line step-scoped grouping repair only if the baseline red result changes to complete source join and the temporal association is independently reproducible; causal attribution must remain NOT_ESTABLISHED."
+}

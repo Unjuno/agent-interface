@@ -39,3 +39,9 @@ python -B audit_t2.py --run-dir run/replay
 ```
 
 Both freezes pin the source commit and source files. Candidate, audit, test, and raw outputs are retained beside each freeze. The Issue #59 live threat-control and MAP01 gates remain open; T1/T2 do not consume or authorize the unassigned live lane. The concrete next evidence remains a fresh assigned current-V15 session retaining scorer samples/events and identity-bound per-key admission/key-up rows, followed by the separately labelled continuously advancing MAP01 attempt.
+
+## T3 — compose the merged v39 physical-key bridge with the V15 scorer gate
+
+The new `attribution_adapter_t2/bridge_composition_a01/` package adds an adapter path for the merged v39 bridge's nested confirmed physical down/up brackets. It uses the inner interval known to be held (latest possible down through earliest possible up), and requires shared actuation, owner, intent, program, step, and key identities. The exact retained fake-display bridge rows compose with deterministic scorer fixtures; mismatched identity, unconfirmed up, overlapping edge uncertainty, and missing up remain unresolved. The result is `TEMPORALLY_UNIQUE` only inside the fixture's guaranteed-held interval and always keeps `causal_attribution: NOT_ESTABLISHED`.
+
+A01 and A02 runner persistence failures are preserved as STOP files; A03 is the first fully retained result. This is still source composition only: synthetic scorer timestamps do not measure useful live feedback, and the bridge fixture does not establish current live keymap or application consumption. See the T3 freeze, raw stream, candidate output, and independent audit in that directory. No live allocation was used or authorized.
