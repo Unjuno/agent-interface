@@ -6,10 +6,13 @@
     "research/doom/v16_one_hold_59_4d74_20261004/"
   ],
   "audit": "audit.py",
+  "adapter_replay": "adapter_replay.py",
+  "adapter_dependency": "dependency/SOURCE_PINS.json",
   "tests": "test_audit.py",
   "commands": [
     "python -B research/doom/v16_fullmain_independent_audit_59_20261004/audit.py --repo .",
+    "python -B research/doom/v16_fullmain_independent_audit_59_20261004/adapter_replay.py --repo .",
     "python -B -m unittest discover -s research/doom/v16_fullmain_independent_audit_59_20261004 -p test_*.py -v"
   ],
-  "scope": "Read-only independent consistency audit of two already-retained no-action constructions; no experiment allocation, input, GUI launch, model call, or resource reservation."
+  "scope": "Read-only audit and adapter replay over retained no-action and one-hold outputs; no new experiment allocation, input, GUI launch, model call, or resource reservation. Adapter dependency source is pinned to draft PR #7561 and copied byte-for-byte."
 }

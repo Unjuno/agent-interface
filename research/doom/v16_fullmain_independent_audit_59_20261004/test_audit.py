@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from audit import ONE_HOLD, SOURCE, audit
+from adapter_replay import run as adapter_replay
 
 
 REPO = Path(__file__).resolve().parents[3]
@@ -27,6 +28,16 @@ class V16FullmainAuditTests(unittest.TestCase):
         self.assertTrue(result["one_hold"]["identity_join_verified"])
         self.assertFalse(result["one_hold"]["physical_release_authoritative"])
         self.assertFalse(result["one_hold"]["physical_edge_measurement_present"])
+
+    def test_actual_one_hold_rows_join_pinned_v15_adapter(self):
+        result = adapter_replay(REPO)
+        self.assertEqual(result["trace_integrity"], "SOURCE_ROWS_JOINED")
+        self.assertEqual(result["counts"]["input_admissions"], 1)
+        self.assertEqual(result["counts"]["key_release_receipts"], 1)
+        self.assertEqual(result["counts"]["scorer_samples"], 17)
+        self.assertEqual(result["counts"]["scorer_events"], 0)
+        self.assertEqual(result["attributions"], [])
+        self.assertFalse(result["release_identity"]["physical_verification_authoritative"])
 
     def test_nonempty_close_release_fails(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,16 +1,46 @@
 {
-  "schema": "issue59-v16-lifecycle-independent-audit-files-v1",
+  "schema": "issue59-v16-lifecycle-adapter-audit-files-v1",
   "base_commit": "2fde408576e02ae735fc80cc1f8f835961394e4c",
   "files": [
+    {
+      "path": "adapter_replay.py",
+      "bytes": 3002,
+      "sha256": "b63496a7c3c0e97fa47e6cf77c147d57efe1faaa40dcd9d6989795b7554baf2e"
+    },
     {
       "path": "audit.py",
       "bytes": 11927,
       "sha256": "bdee4d9c8de0525295bfe148b8894bf29a23ba5eec621863abeb19dcf41c289c"
     },
     {
+      "path": "dependency/attribution_adapter_t2/adapter.py",
+      "bytes": 11865,
+      "sha256": "03b49b2547950b4d07ede4f926902b6b57dde989ce93f4198e90d8e35530a038"
+    },
+    {
+      "path": "dependency/scorer_feedback_attribution_v1.py",
+      "bytes": 6930,
+      "sha256": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b"
+    },
+    {
+      "path": "dependency/SOURCE_PINS.json",
+      "bytes": 507,
+      "sha256": "1e0e0e71e133abc57da80dbc50175aadd6d9962024eb194c16d183f1178682f1"
+    },
+    {
       "path": "FREEZE.json",
-      "bytes": 720,
-      "sha256": "2eb869e4ad375ff49f3be43f0905785ecea47d147cffd427b0731c1a70b9aac0"
+      "bytes": 993,
+      "sha256": "774462fd07ac02825ada59786f310911f3eb71d6bb4ebc535376468ecd710be6"
+    },
+    {
+      "path": "out/adapter_replay.json",
+      "bytes": 1346,
+      "sha256": "5ba759c9c6b1a7f4ba25d4b8dc780eae912ab4dbdd276dc9ffe557bf7df8ea20"
+    },
+    {
+      "path": "out/adapter_replay.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "out/audit.stderr.txt",
@@ -24,8 +54,8 @@
     },
     {
       "path": "out/tests.stderr.txt",
-      "bytes": 728,
-      "sha256": "22b2c3a7c4a03d4255e41b39a6f2cb9176b98f7f336b89705bda64e710cfdcc3"
+      "bytes": 871,
+      "sha256": "06f323200cb90181de8d528543775e4de9485c622b70c412f699fe2eab0a8536"
     },
     {
       "path": "out/tests.stdout.txt",
@@ -34,15 +64,15 @@
     },
     {
       "path": "README.md",
-      "bytes": 1877,
-      "sha256": "040c3c5453f5fa2b415b89646207a5550f09e12aec94d2d4a63718ffa6ab0f53"
+      "bytes": 2397,
+      "sha256": "702ee6676b0569b2e085e45db04d5d19c1e3a9d471a12ce010592a79ba818f0a"
     },
     {
       "path": "test_audit.py",
-      "bytes": 3358,
-      "sha256": "e9be444c4a782e8172ab6bebde0779d7b2eb000a94c8ee3ec3eb86cb85e77601"
+      "bytes": 3994,
+      "sha256": "35919451387f4a4501f62c518be07d2ef84c5739940daeb15fc04ae2a59f3930"
     }
   ],
-  "total_files": 8,
-  "total_bytes": 19903
+  "total_files": 14,
+  "total_bytes": 45125
 }
