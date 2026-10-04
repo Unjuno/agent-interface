@@ -17,9 +17,9 @@ The partial-batch adversary exposed an actual defect during construction: with `
 ## Validation and evidence
 
 ```powershell
-python -B -m unittest -v test_adapter.py test_t0.py
-python -B run_t2.py
-python -B audit_t2.py
+python -B -m unittest -v test_adapter.py test_t0.py test_runner.py
+python -B run_t2.py --run-dir run/replay
+python -B audit_t2.py --run-dir run/replay
 ```
 
-The T2 gate source and V15 scorer producer files are pinned in `FREEZE.json`. The real scorer writer emitted two samples and one positive kill-count event into [`run/scorer`](run/scorer/). The fixture timestamps 100 and 300 ns and its 35 Hz summary field are synthetic inputs, not an observed sampling interval or rate. The source-shaped actuator rows and six outcomes are in [`run/input-records.json`](run/input-records.json) and [`run/candidate.json`](run/candidate.json). The independent raw-only check is [`AUDIT.json`](AUDIT.json).
+The runner requires an output path that does not already exist and refuses to append to or overwrite an existing run. The commands above write a replay under `run/replay/`; choose a different fresh path for another run. The retained T2 evidence under [`run/`](run/) remains immutable. The T2 gate source and V15 scorer producer files are pinned in `FREEZE.json`. The real scorer writer emits two samples and one positive kill-count event per replay. The fixture timestamps 100 and 300 ns and its 35 Hz summary field are synthetic inputs, not an observed sampling interval or rate. The source-shaped actuator rows and six outcomes are saved in the selected run directory. The independent raw-only check for the retained original run is [`AUDIT.json`](AUDIT.json).
