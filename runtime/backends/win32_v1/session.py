@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from runtime.core_v1.contract import admit_program
-from .backend import Win32Backend, Win32BackendError
+from .backend import Win32Backend, Win32BackendError, Win32ExecutionError
 
 
 class Win32RuntimeSession:
@@ -87,12 +87,20 @@ class Win32RuntimeSession:
         try:
             result = self.backend.execute(program)
         except Win32BackendError as error:
-            self.recovery_required = True
+            release = getattr(error, "release_receipt", None)
+            cleanup_error = getattr(error, "cleanup_error", None)
+            if isinstance(error, Win32ExecutionError):
+                if release is not None and cleanup_error is None:
+                    self._record_release([release])
+                else:
+                    self.recovery_required = True
+            # A plain Win32BackendError from execute is its repeated preflight
+            # refusal. The backend raises it before the operation loop emits input.
             return {
                 "status": "execution_failed",
                 "error": "BACKEND_EXECUTION",
-                "release": getattr(error, "release_receipt", None),
-                "cleanup_error": getattr(error, "cleanup_error", None),
+                "release": release,
+                "cleanup_error": cleanup_error,
                 "detail": str(error),
                 "backend_emissions": self.backend.emissions,
                 "recovery_required": self.recovery_required,
