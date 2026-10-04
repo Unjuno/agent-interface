@@ -2,8 +2,36 @@ import time,json,pathlib
 import runtime.guarded_win32_v1.test_late_state as fixtures
 from runtime.guarded_win32_v1.worker_effect import PixelEffect
 import unittest
+import os
+import subprocess
+import sys
+import tempfile
+import shutil
+from pathlib import Path
+from runtime.distribution_v2.build import build
 
 class WorkerEffectCases(unittest.TestCase):
+ def test_packaged_archive_worker_resolves_module_outside_source_checkout(self):
+  root=Path(__file__).resolve().parents[2]
+  with tempfile.TemporaryDirectory() as td:
+   temp=Path(td);archive=temp/'runtime.pyz'
+   source=temp/'source';source.mkdir();shutil.copytree(root/'runtime',source/'runtime')
+   build(source,archive,temp/'manifest.json',temp/'sha256')
+   code='''import json,sys,time
+sys.path.insert(0,sys.argv[1])
+from PIL import Image
+from runtime.guarded_win32_v1.worker_effect import PixelEffect
+row={"session_scope":"scope","sequence":1,"binding_revision":2,"native":{"artifact":{"sha256":"abc"}}}
+effect=PixelEffect([{"point":[0,0],"rgb":[1,2,3]}],time.monotonic_ns()+5000000000)
+result=effect({},None,row,Image.new("RGB",(1,1),(1,2,3)))
+print(json.dumps({"result":result,"receipt":effect.receipt},default=lambda value:value.decode(errors="replace") if isinstance(value,bytes) else str(value)))'''
+   env=os.environ.copy();env.pop('PYTHONPATH',None)
+   proc=subprocess.run([sys.executable,'-c',code,str(archive)],cwd=temp,capture_output=True,text=True,timeout=10,env=env)
+   self.assertEqual(proc.returncode,0,proc.stderr)
+   result=json.loads(proc.stdout)
+   self.assertIs(result['result'],True,result)
+   self.assertEqual(result['receipt']['status'],'returned',result)
+
  def test_integration_variants(self):
   rows=[]
   for mode in ['matches','differs','expired','invalid_condition']:
