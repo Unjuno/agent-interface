@@ -2,7 +2,10 @@
 
 Status: this document began as a pre-A05 composition plan. The current verified result and remaining gates are recorded below; historical planning detail is retained after that update.
 
-## Current evidence update (2026-10-04; checked main `75c6d18`)
+## Current evidence update (2026-10-04; checked main `2fbfc00`)
+
+A12 adds a candidate schema wrapper that rejects observation-local `target_valid` from action postconditions while retaining it in pre-action branch guards. Its corrected construction and missing-save-effect negative case pass normal and optimized audits; this is not a live qualification. A13 then made exactly one model-only Codex call using the lifecycle clause, pinned screenshot, and schema. The returned contract passed the A12 wrapper and independent checks for exact entry/save effects, both guarded action branches, completion gate, and image bounds. The independent audit passes under normal Python and `-O` and rejects a forged `target_valid` postcondition in both modes. Evidence is under `a12-predicate-lifecycle-guard/` and `a13-predicate-lifecycle-prompt-check/`. A13 tests one sampled output only; it establishes neither grounding correctness nor effect, robustness, or efficiency. The formal R02 result remains unchanged, and the integrated efficiency gate remains unproven.
+
 
 PR #7413 is merged to main with a complete two-block/four-arm 48-task WSLc comparison. A/B/D each score 12/12 exact submissions; fixed-template compiled C scores 9/12 and safely refuses three OCR/effect mismatches. Its C candidate is rejected for this fixture. The report finds B uses 66.66% less task input+output than fresh-grounding A and is 10.95% faster after preflight wait; C costs 0.39% more task input+output than B, is 27.04% slower, and misses three tasks. D is a known-form control with unavailable prior human setup cost. These results do not qualify a general efficiency or human-tempo claim.
 
