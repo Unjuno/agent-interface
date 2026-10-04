@@ -1,0 +1,49 @@
+{
+  "schema": "scorer-eventlog-run-bundle-freeze-v1",
+  "question": "Does the MAP01 JSONL consumer fail closed unless the event stream, scorer samples, scorer events, source hashes, and scorer summary reconcile from one run directory?",
+  "base_main": "8e807cd4c4ecd07f53c98f4d1629fbbe3528ac2b",
+  "stack_parent": "c0d7f484e2223e3e6bcae7963b21a682e6efbcc1",
+  "required_source_paths": [
+    "doom/session_map01_v12.py",
+    "doom/session_map01_v13.py",
+    "doom/map01_scorer_stdio_adapter_v1.py",
+    "doom/main_thread_scorer_polling_v1.py",
+    "doom/independent_progress_clock_v2.py",
+    "doom/doom_retained_input_backend_v3.py",
+    "live_control/input_transition_owner_v3.py"
+  ],
+  "required_source_sha256": {
+    "doom/session_map01_v12.py": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2",
+    "doom/session_map01_v13.py": "1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98",
+    "doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "doom/doom_retained_input_backend_v3.py": "cad7de4769e574f78663e8351a8c2f8c714d51dfa7f9c41bcfb9716f06bef309",
+    "live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+  },
+  "cases": {
+    "valid_bundle": "ADMISSION_BRACKETED_PROGRESS",
+    "missing_sources": "POST_CANCELLATION_COOCCURRENCE",
+    "missing_required_source": "POST_CANCELLATION_COOCCURRENCE",
+    "missing_summary": "POST_CANCELLATION_COOCCURRENCE",
+    "source_hash_mismatch": "POST_CANCELLATION_COOCCURRENCE",
+    "source_path_traversal": "POST_CANCELLATION_COOCCURRENCE",
+    "summary_sample_count_mismatch": "POST_CANCELLATION_COOCCURRENCE",
+    "summary_interval_mismatch": "POST_CANCELLATION_COOCCURRENCE",
+    "summary_event_mismatch": "POST_CANCELLATION_COOCCURRENCE",
+    "missing_scorer_events": "POST_CANCELLATION_COOCCURRENCE"
+  },
+  "decision_gates": {
+    "valid_bundle_reason": "bounded_independent_progress_observed_after_first_input",
+    "invalid_bundle_reason": "invalid_or_missing_run_bundle",
+    "causal_attribution": false
+  },
+  "launch_scope": {
+    "game": false,
+    "model": false,
+    "input": false,
+    "gpu": false,
+    "container": false,
+    "live_allocation": false
+  }
+}

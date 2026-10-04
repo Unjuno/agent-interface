@@ -1,0 +1,135 @@
+{
+  "base_main": "8e807cd4c4ecd07f53c98f4d1629fbbe3528ac2b",
+  "cases": [
+    {
+      "expected": "ADMISSION_BRACKETED_PROGRESS",
+      "id": "valid_bundle",
+      "observed": {
+        "accepted_ns": 100,
+        "baseline_ns": 110,
+        "causal_attribution": false,
+        "decision": "ADMISSION_BRACKETED_PROGRESS",
+        "first_input_ns": 120,
+        "gap_ns": 20,
+        "intent_id": "recover-1",
+        "positive_sample_ns": 130,
+        "progress": {
+          "death_count": 0,
+          "kill_count": 1,
+          "map_exit": false
+        },
+        "reason": "bounded_independent_progress_observed_after_first_input"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "missing_sources",
+      "observed": {
+        "bundle_error": "FileNotFoundError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "missing_required_source",
+      "observed": {
+        "bundle_error": "ValueError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "missing_summary",
+      "observed": {
+        "bundle_error": "FileNotFoundError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "source_hash_mismatch",
+      "observed": {
+        "bundle_error": "ValueError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "source_path_traversal",
+      "observed": {
+        "bundle_error": "ValueError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "summary_sample_count_mismatch",
+      "observed": {
+        "bundle_error": "ValueError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "summary_interval_mismatch",
+      "observed": {
+        "bundle_error": "ValueError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "summary_event_mismatch",
+      "observed": {
+        "bundle_error": "ValueError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "missing_scorer_events",
+      "observed": {
+        "bundle_error": "FileNotFoundError",
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_run_bundle"
+      }
+    }
+  ],
+  "freeze_sha256": "6d2a14edad9a3c9ec150ebe64df208456c6a5fd518fce73b67b2996d1c864817",
+  "launch_scope": {
+    "container": false,
+    "game": false,
+    "gpu": false,
+    "input": false,
+    "live_allocation": false,
+    "model": false
+  },
+  "schema": "scorer-eventlog-run-bundle-raw-v1",
+  "source_sha256": {
+    "doom/doom_retained_input_backend_v3.py": "cad7de4769e574f78663e8351a8c2f8c714d51dfa7f9c41bcfb9716f06bef309",
+    "doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "doom/session_map01_v12.py": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2",
+    "doom/session_map01_v13.py": "1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98",
+    "live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+  },
+  "stack_parent": "c0d7f484e2223e3e6bcae7963b21a682e6efbcc1"
+}
