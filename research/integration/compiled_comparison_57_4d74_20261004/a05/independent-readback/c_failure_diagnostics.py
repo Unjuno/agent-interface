@@ -86,6 +86,8 @@ crop_boundary_probe = {
         for item in failures
     ],
 }
+preview_manifest = Path(__file__).with_name("crop-previews") / "manifest.json"
+preview_manifest_sha = hashlib.sha256(preview_manifest.read_bytes()).hexdigest()
 report = {
     "source_revision": REF,
     "adapter_source": adapter_path,
@@ -95,6 +97,7 @@ report = {
     "finding": "All three recorded safe-yields follow a completed, verified-release enter action. Each filled-state OCR result omits exactly the leading 't' from the task token, so the exact-match predicate fails and no submit program runs.",
     "visual_review": visual_review,
     "crop_boundary_probe": crop_boundary_probe,
+    "crop_preview_manifest_sha256": preview_manifest_sha,
     "interpretation_limit": "Manual review confirms the full expected token is visible in each exact archived frame, and shows the frozen layout-B crop cuts the leading t at its left edge. A locally padded crop preview contains the full token, but Tesseract was unavailable so OCR success on that candidate is unverified. Preserve the formal 9/12 C-arm outcome; validate a candidate repair in a separate construction run before any prospectively frozen allocation.",
 }
 out = Path(__file__).with_name("C_FAILURE_DIAGNOSTICS.json")
