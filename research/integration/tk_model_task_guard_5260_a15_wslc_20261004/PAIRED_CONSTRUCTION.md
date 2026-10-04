@@ -236,3 +236,42 @@ The independent reviewer found no actionable issue in this precise change.
 The full scoped WSLc run passed 87 tests with one explicit owned-host-exchange
 skip (2026-10-04); no formal provider call has yet been made. This closes a
 harness review gap only and does not validate the research hypothesis.
+
+### Formal allocation outcomes (2026-10-04)
+
+The immutable allocation history is retained under `formal-preallocation-stops/`
+and `paired-construction/formal04/`. formal01 stopped before process dispatch
+after review found the prompt-parity gap. formal02 stopped before candidate
+dispatch because the host custody directory had been pre-created. formal03
+initialized its host, then the candidate runner safely refused an already
+existing output directory before opening a GUI or exchange request. These are
+three distinct setup/review stops, not WSLc restrictions; none is reused.
+
+formal04 made four first-slot provider calls in WSLc with a frozen source and
+plan; all four recovery slots were explicitly skipped, with no retry. The
+separate saved-file auditor passed descriptively: both arms had 3 EXACT_FILE
+and 1 UNFINISHED_NO_FILE outcomes, no wrong-recipient events and no decoy
+changes. The mismatch/recovery hypothesis was not exercised. The paired method
+auditor could not complete because the frozen packet lacks prospective,
+byte-sealed outer host and candidate launch attempt/receipt records; the
+separate file score explicitly makes no provider-performance claim. Therefore
+formal04 is METHOD_INCOMPLETE, not a formal pass. Requested model and effort
+were `gpt-5.6-luna` / `low`; identity is not independently attested. Full
+details, original custody, command output and audit failures are retained in
+`paired-construction/formal04/FORMAL_STATUS.md`.
+
+Next, make the outer host/container launcher capture those records before any
+future provider request can run; freeze that launcher, root schema and exact
+container command in a new allocation, exercise its receipt tests, then repeat
+the full saved paired audit before using any scientific outcome. Do not
+retrofit missing evidence into formal04.
+
+The successor host-side launcher is now implemented in `formal_launch.py`.
+It validates the frozen source/capsule, model/effort/schema, all first/recovery
+slots, pinned WSLc image, network-off/read-only source mount, absent custody and
+candidate-output paths, and captures both outer processes' original stdout,
+stderr, argv, exit code, timing and hashes. Its six focused tests pass, including
+duplicate network override denial and a fake end-to-end two-process run. The
+complete scoped WSLc suite on this exact source passed 93 tests with one
+explicit owned-host-exchange skip. It is ready for a fresh prospective
+allocation; it does not repair or upgrade formal04's disposition.
