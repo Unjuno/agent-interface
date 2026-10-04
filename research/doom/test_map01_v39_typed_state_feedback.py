@@ -147,6 +147,66 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipts[0]["down_edge_interval_ns"])
                 self.assertIsNone(receipts[0]["up_edge_interval_ns"])
 
+    def test_measurement_edge_must_match_outer_event_and_adapter_edge(self):
+        owner_id = "owner-1"
+        actuation_id = "actuation-1"
+        intent_token = "intent-1"
+
+        def event(event_name, edge, interval, identity_status):
+            status = (
+                "CONFIRMED_PHYSICAL_DOWN" if edge == "down"
+                else "CONFIRMED_PHYSICAL_UP"
+            )
+            measurement = {
+                "edge": edge,
+                "classification": status,
+                "identity_status": identity_status,
+                "actuation_id": actuation_id,
+                "grants_input_authority": False,
+                "application_consumption_observed": False,
+                "adapter_edge": {
+                    "edge": edge,
+                    "interval": interval,
+                    "actuation_id": actuation_id,
+                    "owner_id": owner_id,
+                    "intent_token": intent_token,
+                    "key": "F8",
+                    "status": status,
+                    "grants_input_authority": False,
+                },
+            }
+            return {
+                "event": event_name,
+                "id": "program-1",
+                "step": 0,
+                "key": "F8",
+                "intent_token": intent_token,
+                "owner_id": owner_id,
+                "grants_input_authority": False,
+                "physical_key_measurement": measurement,
+            }
+
+        template = [
+            event("input_admission", "down", [10, 11], "MINTED"),
+            event("input_release_measurement", "up", [20, 21], "RETIRED"),
+        ]
+        self.assertEqual(controller.input_edge_receipts(template)[0]["status"],
+                         "adapter_edge_brackets_paired")
+
+        for row_index, contradictory_edge in ((0, "up"), (1, "down")):
+            events = json.loads(json.dumps(template))
+            events[row_index]["physical_key_measurement"]["edge"] = contradictory_edge
+
+            with self.subTest(row_index=row_index,
+                              contradictory_edge=contradictory_edge):
+                receipts = controller.input_edge_receipts(events)
+
+                self.assertEqual(len(receipts), 1)
+                self.assertEqual(receipts[0]["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipts[0]["down_edge_interval_ns"])
+                self.assertIsNone(receipts[0]["up_edge_interval_ns"])
+
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
