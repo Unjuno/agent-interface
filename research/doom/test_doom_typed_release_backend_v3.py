@@ -29,7 +29,7 @@ parent = types.ModuleType('doom_typed_release_backend_v1')
 parent.Backend = Parent
 parent.suite = object()
 sys.modules['doom_typed_release_backend_v1'] = parent
-wrapper = types.ModuleType('input_transition_owner_v3')
+wrapper = types.ModuleType('input_transition_owner_v4')
 class FakeTransitionInputOwner:
     constructed = []
 
@@ -51,7 +51,7 @@ class FakeTransitionInputOwner:
         return self.inner.close()
 
 wrapper.InputOwner = FakeTransitionInputOwner
-sys.modules['input_transition_owner_v3'] = wrapper
+sys.modules['input_transition_owner_v4'] = wrapper
 spec = importlib.util.spec_from_file_location('doom_typed_release_backend_v3', HERE / 'doom_typed_release_backend_v3.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
@@ -103,6 +103,7 @@ class Owner:
                 'release_call_started_ns': returned - 5,
                 'release_call_returned_ns': returned,
                 'ordinary_release_candidate': self.ordinary,
+                'owner_thread_keyup_verified': True,
                 'owner_transition_verified': None,
                 'grants_input_authority': False,
             }
@@ -159,7 +160,7 @@ class Tests(unittest.TestCase):
         self.assertIn(
             'from doom_typed_release_backend_v1 import Backend as Previous, suite',
             candidate)
-        self.assertIn('from input_transition_owner_v3 import InputOwner', candidate)
+        self.assertIn('from input_transition_owner_v4 import InputOwner', candidate)
         self.assertNotIn('from doom_typed_coast_backend_v1 import', candidate)
 
     def test_current_v39_session_selects_and_hashes_the_successor_backend(self):
@@ -232,6 +233,22 @@ class Tests(unittest.TestCase):
         obj = make_backend({'a'}, Owner(ordinary=False))
         obj.raw('a', False)
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+
+    def test_missing_owner_thread_keyup_receipt_fails_batch_gate(self):
+        owner = Owner()
+        original_call = owner.call
+
+        def without_keyup_receipt(op, lease=None, key=None):
+            row = original_call(op, lease, key)
+            if op == 'up':
+                row['owner_thread_keyup_verified'] = False
+            return row
+
+        owner.call = without_keyup_receipt
+        obj = make_backend({'a'}, owner)
+        obj.raw('a', False)
+        self.assertFalse(obj.emitted[0]['owner_transition_verified'])
+        self.assertFalse(obj.emitted[0]['owner_thread_keyup_verified_after_batch'])
 
     def test_cleanup_inside_explicit_release_bracket_is_not_ordinary(self):
         owner = Owner(cleanup_ns=7)
