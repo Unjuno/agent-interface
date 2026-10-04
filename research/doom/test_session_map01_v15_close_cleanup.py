@@ -2,7 +2,7 @@ import sys, types, unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 for name in ("map01_scorer_stdio_adapter_v1", "independent_progress_clock_v2"):
-    sys.modules[name] = types.ModuleType(name)
+    sys.modules.setdefault(name, types.ModuleType(name))
 sys.modules["map01_scorer_stdio_adapter_v1"].MainThreadScorerStdin = type("Polling", (), {})
 sys.modules["map01_scorer_stdio_adapter_v1"].ScorerFileSink = type("Sink", (), {})
 sys.modules["independent_progress_clock_v2"].ProgressSample = type("ProgressSample", (), {})
