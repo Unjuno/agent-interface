@@ -7,7 +7,7 @@ from doom_typed_release_backend_v2 import Backend as Previous
 
 
 class FakeOwner:
-    owner_id = "owner-v12-test"
+    owner_id = "owner-v13-test"
 
     def __init__(self):
         self.calls = []
@@ -27,7 +27,7 @@ class FakeOwner:
 
 
 class Lease:
-    intent_token = "intent-v12-test"
+    intent_token = "intent-v13-test"
 
 
 class DoomTypedReleaseBackendV3Tests(unittest.TestCase):
@@ -49,12 +49,12 @@ class DoomTypedReleaseBackendV3Tests(unittest.TestCase):
         self.assertIs(backend.owner, selected)
         self.assertIsNone(backend._input_event_context)
 
-    def test_v12_owner_retains_v11_release_interval_receipt_in_backend_event(self):
+    def test_v13_owner_retains_v11_release_interval_receipt_in_backend_event(self):
         backend = object.__new__(candidate.Backend)
         backend.owner = FakeOwner()
         backend.lease = Lease()
         backend.held = {"space"}
-        backend._input_event_context = ("plan-v12", 4)
+        backend._input_event_context = ("plan-v13", 4)
         backend.events = []
         backend.emit = backend.events.append
 
@@ -66,8 +66,8 @@ class DoomTypedReleaseBackendV3Tests(unittest.TestCase):
         release = backend.events[0]
         self.assertEqual(release["event"], "input_release_rpc")
         self.assertEqual(release["release_transition_interval_ns"], [10, 12])
-        self.assertEqual((release["id"], release["step"]), ("plan-v12", 4))
-        self.assertEqual(release["intent_token"], "intent-v12-test")
+        self.assertEqual((release["id"], release["step"]), ("plan-v13", 4))
+        self.assertEqual(release["intent_token"], "intent-v13-test")
 
 
 if __name__ == "__main__":

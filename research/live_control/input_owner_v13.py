@@ -10,7 +10,7 @@ from input_owner_v11 import InputOwner as Previous
 
 
 class InputOwner(Previous):
-    """Preserve v11 telemetry while classifying cancel-triggered cleanup."""
+    """Preserve v11 telemetry and classify cancellation across release I/O."""
 
     def _run(self):
         try:
@@ -123,9 +123,8 @@ class InputOwner(Previous):
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
             bitmap = d.query_keymap()
             down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
-            # Cancellation can arrive after the request-dispatch sample but
-            # while X11 release and state verification are in flight. Preserve
-            # it as the cause of this cleanup before publishing the receipt.
+            # Cancellation may arrive during key-up synchronization and state
+            # verification; classify it immediately before recording the cause.
             if reason == 'release' and active is not None and active.cancel.is_set():
                 reason = 'cancelled'
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
@@ -202,7 +201,9 @@ class InputOwner(Previous):
                     elif op in ('release', 'close'):
                         if op == 'release' and active is not None and active is not lease:
                             raise ValueError('release belongs to another intent')
-                        result = release('cancelled' if lease is not None and lease.cancel.is_set() else op)
+                        reason = ('cancelled' if op == 'release' and active is lease and
+                                  lease is not None and lease.cancel.is_set() else op)
+                        result = release(reason)
                     elif op in ('move', 'button_down', 'button_up', 'wheel'):
                         root = d.screen().root
                         if op == 'button_up':
