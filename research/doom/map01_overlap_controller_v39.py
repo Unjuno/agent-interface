@@ -117,6 +117,22 @@ def ammo_guard_spec(source_signal, index, max_source_age_ms):
     }
 
 
+def _typed_json_equal(left, right):
+    """Compare JSON-shaped identity values without Python bool/int aliases."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        if (any(type(key) is not str for key in left) or
+                any(type(key) is not str for key in right) or
+                left.keys() != right.keys()):
+            return False
+        return all(_typed_json_equal(left[key], right[key]) for key in left)
+    if type(left) is list:
+        return (len(left) == len(right) and
+                all(_typed_json_equal(a, b) for a, b in zip(left, right)))
+    return left == right
+
+
 def _signal_pair_matches(observation, signals):
     sequence = observation.get("sequence")
     capture_ns = observation.get("capture_ns")
@@ -133,7 +149,7 @@ def _signal_pair_matches(observation, signals):
                 type(signal.get("capture_ns")) is not int or
                 signal.get("sequence") != sequence or
                 signal.get("capture_ns") != capture_ns or
-                signal.get("binding") != binding):
+                not _typed_json_equal(signal.get("binding"), binding)):
             return False
     return True
 
@@ -149,6 +165,7 @@ class DoomCoverSignalPairMonitor:
         self.last_values = {name: guard.spec["source_value"]
                             for name, guard in guards.items()}
         self.last_sequence = guards["health"].spec["source_sequence"]
+        self.last_capture_ns = guards["health"].source_capture_ns
         self.soft_event_count = 0
         self.latest_soft_event = None
 
@@ -189,7 +206,11 @@ class DoomCoverSignalPairMonitor:
         if observation["sequence"] <= self.last_sequence:
             return self._invalidation(
                 observation, "signal_pair_nonadvancing_sequence", signals)
+        if observation["capture_ns"] <= self.last_capture_ns:
+            return self._invalidation(
+                observation, "signal_pair_nonadvancing_capture_time", signals)
         self.last_sequence = observation["sequence"]
+        self.last_capture_ns = observation["capture_ns"]
 
         outcomes = {name: guard.evaluate(signals[name])
                     for name, guard in self.guards.items()}

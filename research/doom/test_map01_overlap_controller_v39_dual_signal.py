@@ -190,6 +190,54 @@ class PairedCoverGuardTests(unittest.TestCase):
             })
         self.assertEqual(event["reason"], "signal_pair_nonadvancing_sequence")
 
+    def test_capture_timestamp_must_advance_with_sequence(self):
+        monitor, _ = self.make_monitor(
+            {10: signal("health", 100), 11: signal("health", 100, 11, 1_100_000_000)},
+            {10: signal("ammo", 4), 11: signal("ammo", 4, 11, 1_100_000_000)})
+        for sequence, capture_ns in ((12, 1_200_000_000), (13, 1_150_000_000)):
+            signals = {
+                "health": signal("health", 100, sequence, capture_ns),
+                "ammo": signal("ammo", 4, sequence, capture_ns),
+            }
+            event = monitor.observe({
+                "event": "typed_observation", "sequence": sequence,
+                "capture_ns": capture_ns,
+                "pointer_binding": signals["health"]["binding"],
+                "signals": signals,
+            })
+        self.assertEqual(event["reason"], "signal_pair_nonadvancing_capture_time")
+
+    def test_source_binding_bool_integer_alias_is_rejected(self):
+        binding_int = {"focus": 1, "surface": 9, "geometry": [0, 0, 640, 480]}
+        binding_bool = {"focus": True, "surface": 9, "geometry": [0, 0, 640, 480]}
+        source = observation(binding=binding_int)
+        health = signal("health", 100, binding=binding_int)
+        ammo = signal("ammo", 4, binding=binding_bool)
+        monitor, receipt = self.make_monitor(
+            {10: health}, {10: ammo}, source=source)
+        self.assertEqual(receipt["status"], "rejected_source_health_ammo_pair")
+        self.assertEqual(controller.admitted_cover_commands(
+            [{"action": "fire", "extent": "short"}], receipt), [])
+
+    def test_current_binding_bool_integer_alias_invalidates_pair(self):
+        binding_int = {"focus": 1, "surface": 9, "geometry": [0, 0, 640, 480]}
+        monitor, _ = self.make_monitor(
+            {10: signal("health", 100, binding=binding_int),
+             11: signal("health", 100, 11, 1_100_000_000, binding_int)},
+            {10: signal("ammo", 4, binding=binding_int),
+             11: signal("ammo", 4, 11, 1_100_000_000, binding_int)},
+            source=observation(binding=binding_int))
+        health = signal("health", 100, 11, 1_100_000_000, binding_int)
+        ammo_binding = {"focus": True, "surface": 9, "geometry": [0, 0, 640, 480]}
+        ammo = signal("ammo", 4, 11, 1_100_000_000, ammo_binding)
+        event = monitor.observe({
+            "event": "typed_observation", "sequence": 11,
+            "capture_ns": 1_100_000_000,
+            "pointer_binding": health["binding"],
+            "signals": {"health": health, "ammo": ammo},
+        })
+        self.assertEqual(event["reason"], "signal_pair_epoch_mismatch")
+
     def test_nonfire_cover_keeps_health_only_monitor(self):
         source = observation()
         health = signal("health", 100)
