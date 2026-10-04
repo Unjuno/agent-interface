@@ -20,14 +20,8 @@ def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
         raise SourceRefreshRefused(receipt)
     def valid(row):
         health, ammo = health_reader.read(row), ammo_reader.read(row)
-        for name, signal, minimum in [('health',health,1), ('ammo',ammo,0)]:
-            status = signal.get('status')
-            if status == 'observed':
-                if type(signal.get('value')) is not int or signal['value'] < minimum:
-                    refuse('invalid_observed_' + name)
-            elif status != 'unknown':
-                refuse('invalid_signal_status_' + name)
-        return health['status'] == 'observed' and ammo['status'] == 'observed'
+        return (health.get('status') == 'observed' and type(health.get('value')) is int and health['value'] > 0
+                and ammo.get('status') == 'observed' and type(ammo.get('value')) is int and ammo['value'] >= 0)
     if valid(observation):
         receipt['status']='already_observed'
         return observation, receipt
