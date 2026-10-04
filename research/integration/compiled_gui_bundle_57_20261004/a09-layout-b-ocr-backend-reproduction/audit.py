@@ -118,19 +118,27 @@ def main(path: Path) -> dict:
                         if replay_value != raw_crop.get(field):
                             problems.append(f"independent OCR replay mismatch: {key}/{field}")
 
-    failure_rows = [row for row in raw.get("rows", []) if row.get("id", "").startswith("failure-")]
-    frozen_exact = sum(
-        item.get("matches_expected") is True
-        for row in failure_rows
-        for item in row.get("crop_results", [])
-        if item.get("crop") == "frozen"
-    )
-    candidate_exact = sum(
-        item.get("matches_expected") is True
-        for row in failure_rows
-        for item in row.get("crop_results", [])
-        if item.get("crop") == "candidate"
-    )
+    failure_rows = [row for row in raw.get("rows", []) if row.get("original_task_outcome") == "EXECUTION_INCOMPLETE"]
+    successful_rows = [row for row in raw.get("rows", []) if row.get("original_task_outcome") == "TASK_SUCCEEDED"]
+    exact_by_outcome = {
+        crop_name: {
+            "EXECUTION_INCOMPLETE": sum(
+                item.get("matches_expected") is True
+                for row in failure_rows
+                for item in row.get("crop_results", [])
+                if item.get("crop") == crop_name
+            ),
+            "TASK_SUCCEEDED": sum(
+                item.get("matches_expected") is True
+                for row in successful_rows
+                for item in row.get("crop_results", [])
+                if item.get("crop") == crop_name
+            ),
+        }
+        for crop_name in ("frozen", "candidate")
+    }
+    frozen_exact = exact_by_outcome["frozen"]["EXECUTION_INCOMPLETE"]
+    candidate_exact = exact_by_outcome["candidate"]["EXECUTION_INCOMPLETE"]
     control = next((row for row in raw.get("rows", []) if row.get("id") == "positive-nearmiss-control-b1-t4"), None)
     disposition = (
         "UNCERTAIN_HISTORICAL_FALSE_NEGATIVE_NOT_REPRODUCED"
@@ -143,6 +151,16 @@ def main(path: Path) -> dict:
         "independent_replay": "PASS" if not problems else "FAIL",
         "checks": checks,
         "failure_frame_exact_counts": {"frozen": frozen_exact, "candidate": candidate_exact, "n": len(failure_rows)},
+        "all_six_frame_exact_counts_by_original_outcome": exact_by_outcome,
+        "all_six_near_misses_rejected": {
+            crop_name: sum(
+                item.get("rejects_near_miss") is True
+                for row in raw.get("rows", [])
+                for item in row.get("crop_results", [])
+                if item.get("crop") == crop_name
+            )
+            for crop_name in ("frozen", "candidate")
+        },
         "task4_control": {
             "near_miss_token": "t991073-5",
             "frozen_exact": next((x.get("matches_expected") for x in control.get("crop_results", []) if x.get("crop") == "frozen"), None) if control else None,
