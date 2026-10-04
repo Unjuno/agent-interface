@@ -267,6 +267,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
 
         self.assertEqual(receipt["status"], "paired")
         self.assertEqual(receipt["admission_position"], 0)
+        self.assertEqual(receipt["admission_id"], admission_id)
         self.assertEqual(receipt["admitted_ns"], admission["admitted_ns"])
         self.assertIsNotNone(receipt["admitted_to_owner_keyup_start_ms"])
 
@@ -286,6 +287,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             with self.subTest(surface=surface):
                 projected = controller.input_edge_receipts(changed)
                 self.assertEqual(projected[0]["status"], "release_receipt_incomplete")
+                self.assertIsNone(projected[0]["admission_id"])
                 self.assertIsNone(projected[0]["admitted_to_owner_keyup_start_ms"])
 
         forged_summary = json.loads(json.dumps([admission, release]))
@@ -294,6 +296,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             "owner-7:admission:999")
         projected = controller.input_edge_receipts(forged_summary)
         self.assertEqual(projected[0]["status"], "release_receipt_incomplete")
+        self.assertIsNone(projected[0]["admission_id"])
         self.assertIsNone(projected[0]["admitted_to_owner_keyup_start_ms"])
 
     def test_retained_v39_trace_with_unscoped_admissions_stays_unpaired(self):
@@ -359,6 +362,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                          ["release_receipt_incomplete"] * 2)
         self.assertTrue(all(row["admitted_to_owner_keyup_start_ms"] is None
                             for row in receipts))
+        self.assertTrue(all(row["admission_id"] is None for row in receipts))
 
     def test_input_edge_receipt_rejects_adapter_actuation_identity_mismatch(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /

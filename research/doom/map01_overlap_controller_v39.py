@@ -1109,6 +1109,8 @@ def input_edge_receipts(events):
             "step": step,
             "key": key,
             "admission_position": admission_position,
+            "admission_id": (admission_id_value
+                             if explicit_admission_id_matches else None),
             "admitted_ns": admitted_ns if type(admitted_ns) is int else None,
             "input_ack_ns": input_ack_ns if type(input_ack_ns) is int else None,
             "release_call_started_ns": release_started_ns if type(release_started_ns) is int else None,
