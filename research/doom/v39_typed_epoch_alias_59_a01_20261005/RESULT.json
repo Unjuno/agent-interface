@@ -1,0 +1,373 @@
+{
+  "case_count": 9,
+  "cases": [
+    {
+      "accepted": true,
+      "error": null,
+      "name": "control_exact_integer_epoch",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1,
+          "sequence": 1
+        },
+        "health": {
+          "capture_ns": 1,
+          "sequence": 1
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "health_sequence_boolean_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1,
+          "sequence": 1
+        },
+        "health": {
+          "capture_ns": 1,
+          "sequence": true
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "health_sequence_float_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1,
+          "sequence": 1
+        },
+        "health": {
+          "capture_ns": 1,
+          "sequence": 1.0
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "health_capture_boolean_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1,
+          "sequence": 1
+        },
+        "health": {
+          "capture_ns": true,
+          "sequence": 1
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "health_capture_float_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1,
+          "sequence": 1
+        },
+        "health": {
+          "capture_ns": 1.0,
+          "sequence": 1
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "ammo_sequence_boolean_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1,
+          "sequence": true
+        },
+        "health": {
+          "capture_ns": 1,
+          "sequence": 1
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "ammo_sequence_float_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1,
+          "sequence": 1.0
+        },
+        "health": {
+          "capture_ns": 1,
+          "sequence": 1
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "ammo_capture_boolean_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": true,
+          "sequence": 1
+        },
+        "health": {
+          "capture_ns": 1,
+          "sequence": 1
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "ammo_capture_float_alias",
+      "raw_signal_fields": {
+        "ammo": {
+          "capture_ns": 1.0,
+          "sequence": 1
+        },
+        "health": {
+          "capture_ns": 1,
+          "sequence": 1
+        }
+      },
+      "snapshot": {
+        "binding": {
+          "geometry": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "window": "w1"
+        },
+        "capture_ns": 1,
+        "format": "action-admission-snapshot-v1",
+        "sequence": 1,
+        "signals": {
+          "ammo": {
+            "status": "observed",
+            "value": 10
+          },
+          "health": {
+            "status": "observed",
+            "value": 100
+          }
+        }
+      },
+      "stage": "snapshot"
+    }
+  ],
+  "classification": "FAIL_CLOSED_EPOCH_IDENTITY_GAP",
+  "construction_only": true,
+  "control_accepted": true,
+  "format": "issue59-v39-typed-epoch-alias-result-v1",
+  "live_allocation_invocations": 0,
+  "malformed_aliases_accepted": 8,
+  "malformed_aliases_rejected": 0,
+  "source_pipeline": "extract_typed_observation -> build_action_snapshot"
+}
