@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
+
 - Issue #57: [incomplete-frame byte-frontier A01](integration/frame_byte_frontier_57_20261003_45e9/REPORT.md) — eight-cell construction PASS preserved; production cap and typed-stop integration remain HOLD, with current-main custody checks in [`RESCUE_20261004.md`](integration/frame_byte_frontier_57_20261003_45e9/RESCUE_20261004.md).
 
 - Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
