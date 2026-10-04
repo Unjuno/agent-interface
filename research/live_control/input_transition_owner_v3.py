@@ -96,11 +96,11 @@ class InputOwner:
                 admission_key: marker
                 for admission_key, marker in self._admission_records.items()
                 if not any(
-                    isinstance(marker, tuple) and len(marker) == 3
-                    and type(marker[0]) is int and type(marker[1]) is int
-                    and type(marker[2]) is int
-                    and marker[0] <= index and marker[1] == deadline
-                    and release_ns >= marker[2]
+                    isinstance(marker, tuple) and len(marker) == 4
+                    and type(marker[1]) is int and type(marker[2]) is int
+                    and type(marker[3]) is int
+                    and marker[1] <= index and marker[2] == deadline
+                    and release_ns >= marker[3]
                     for index, deadline, release_ns in completed
                 )
             }
@@ -111,6 +111,12 @@ class InputOwner:
         except TypeError:
             return None
         return id(lease), key
+
+    def _clear_admissions_for_lease(self, lease):
+        with self._admission_records_lock:
+            for admission_key, marker in list(self._admission_records.items()):
+                if marker[0] is lease:
+                    del self._admission_records[admission_key]
 
     def call(self, operation, lease=None, key=None):
         if operation not in ("up", "button_up"):
@@ -140,10 +146,11 @@ class InputOwner:
                     if type(deadline) is int and type(admitted_ns) is int:
                         with self._admission_records_lock:
                             self._admission_records[admission_key] = (
-                                len(records_before), deadline, admitted_ns)
+                                lease, len(records_before), deadline, admitted_ns)
             if isinstance(result, dict) and result.get("event") == "owner_release":
                 result.setdefault("release_call_started_ns", started_ns)
                 result.setdefault("release_call_returned_ns", returned_ns)
+                self._clear_admissions_for_lease(lease)
             return result
 
         # No input_state/keymap query and no event publication occurs here.
@@ -167,8 +174,9 @@ class InputOwner:
         )
         owner_cleanup_intervened = False
         if owner_release_history_complete:
-            record_index, admitted_deadline, admitted_ns = admission_marker
-            if (type(record_index) is not int or record_index < 0
+            admitted_lease, record_index, admitted_deadline, admitted_ns = admission_marker
+            if (admitted_lease is not lease
+                    or type(record_index) is not int or record_index < 0
                     or record_index > len(records_after)
                     or type(admitted_deadline) is not int
                     or type(admitted_ns) is not int):
@@ -218,5 +226,4 @@ class InputOwner:
                 "owner/X11 state sample or telemetry publication occurs inside this call"
             ),
         }
-
 
