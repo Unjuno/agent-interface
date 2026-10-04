@@ -500,7 +500,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         effect = _decision(local("verify_effect", execution), {"succeeded", "failed", "unavailable"})
         if effect["status"] != "succeeded":
             return finish("TASK_NOT_VERIFIED", effect["status"], task_effect=effect["status"],
-                          delivery="confirmed")
+                          delivery="confirmed", execution_progress=execution)
         return finish("TASK_SUCCEEDED", "verified_effect", task_effect="succeeded",
                       delivery="confirmed", execution_progress=execution)
     except ModelFailure as error:

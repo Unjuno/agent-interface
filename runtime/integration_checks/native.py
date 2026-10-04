@@ -24,6 +24,14 @@ SUITES['protocol'].append('test_app_server_utf8')
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
 
+SUITES['protocol'].extend(['test_adaptive_acquisition_cost_coverage', 'test_adaptive_acquisition_aggregate_cost', 'runtime.integration_checks.test_native_catalogue', 'test_cost_invocation_composition_93c2'])
+
+SUITES['protocol'].append('test_adaptive_acquisition_diagnostics_93c2')
+
+SUITES['protocol'].append('test_adaptive_acquisition_failure_metadata_93c2')
+
+SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol-python', default=sys.executable)
@@ -62,7 +70,7 @@ def main():
     print(json.dumps({'status': report['status'], 'report': str(out/'result.json')}))
     return 0 if passed else 1
 
-SUITES['protocol'].extend(['test_adaptive_acquisition_aggregate_cost', 'test_adaptive_acquisition_cost_coverage', 'test_usage_subset_route', 'test_caller_diagnostic_composition', 'test_caller_failure_id_composition', 'test_adaptive_acquisition_failure_metadata_93c2'])
+SUITES['protocol'].extend(['test_usage_subset_route', 'test_caller_diagnostic_composition', 'test_caller_failure_id_composition'])
 
 SUITES['protocol'].append('test_failure_status_composition')
 
