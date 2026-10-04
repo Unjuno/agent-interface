@@ -123,6 +123,21 @@ class RequestLifecycle:
             raise ContractError("execution receipt surface mismatch")
         if receipt.action_count != len(request.actions):
             raise ContractError("execution receipt action count mismatch")
+        input_action_ids = {
+            action.action_id for action in request.actions
+            if action.kind.value in {"key", "pointer"}
+        }
+        if any(event.action_id not in input_action_ids for event in receipt.input_transitions):
+            raise ContractError("input transition refers to an action without input authority")
+        key_action_ids = {
+            action.action_id for action in request.actions if action.kind.value == "key"
+        }
+        reported_key_action_ids = {
+            event.action_id for event in receipt.input_transitions
+            if event.action_id in key_action_ids
+        }
+        if reported_key_action_ids != key_action_ids:
+            raise ContractError("each key action requires per-control transition evidence")
         if not receipt.release.released:
             raise ContractError("terminal execution receipt requires verified empty release")
         self.execution = receipt

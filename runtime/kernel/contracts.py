@@ -51,6 +51,13 @@ class EffectStatus(str, Enum):
     UNAVAILABLE = "unavailable"
 
 
+class InputTransition(str, Enum):
+    """A backend-reported transition request; not proof of physical delivery."""
+
+    DOWN = "down"
+    UP = "up"
+
+
 def _text(name: str, value: str) -> None:
     if type(value) is not str or not value:
         raise ContractError(f"{name} must be a nonempty string")
@@ -211,6 +218,30 @@ class ReleaseReceipt:
 
 
 @dataclass(frozen=True, slots=True)
+class InputTransitionReceipt:
+    """Timestamped per-control transition acknowledged by a backend.
+
+    These timestamps establish backend admission/acknowledgement chronology only.
+    They do not establish physical key state or delivery to the target application.
+    """
+
+    action_id: str
+    control: str
+    transition: InputTransition
+    requested_ns: int
+    acknowledged_ns: int
+
+    def __post_init__(self) -> None:
+        _text("action_id", self.action_id)
+        _text("control", self.control)
+        if not isinstance(self.transition, InputTransition):
+            raise ContractError("transition must be InputTransition")
+        _count("requested_ns", self.requested_ns)
+        _count("acknowledged_ns", self.acknowledged_ns)
+        if self.acknowledged_ns < self.requested_ns:
+            raise ContractError("input acknowledgement predates transition request")
+
+@dataclass(frozen=True, slots=True)
 class ExecutionReceipt:
     command_id: str
     backend_receipt_id: str
@@ -223,6 +254,7 @@ class ExecutionReceipt:
     action_count: int
     effect_occurrence: EffectOccurrence
     release: ReleaseReceipt
+    input_transitions: tuple[InputTransitionReceipt, ...] = ()
 
     def __post_init__(self) -> None:
         for name, value in (
@@ -248,6 +280,29 @@ class ExecutionReceipt:
             raise ContractError("release must be ReleaseReceipt")
         if self.release.observed_ns < self.started_ns:
             raise ContractError("release observation must not precede execution start")
+        if type(self.input_transitions) is not tuple or any(
+            not isinstance(event, InputTransitionReceipt) for event in self.input_transitions
+        ):
+            raise ContractError("input_transitions must be tuple[InputTransitionReceipt, ...]")
+        previous_ns = self.started_ns
+        held: set[tuple[str, str]] = set()
+        for event in self.input_transitions:
+            if event.acknowledged_ns < previous_ns:
+                raise ContractError("input transition acknowledgements must be chronological")
+            if event.acknowledged_ns > self.ended_ns:
+                raise ContractError("input transition acknowledgement follows execution end")
+            identity = (event.action_id, event.control)
+            if event.transition is InputTransition.DOWN:
+                if identity in held:
+                    raise ContractError("duplicate down transition without intervening up")
+                held.add(identity)
+            else:
+                if identity not in held:
+                    raise ContractError("up transition has no preceding down transition")
+                held.remove(identity)
+            previous_ns = event.acknowledged_ns
+        if held:
+            raise ContractError("execution input transitions end with held controls")
 
 
 @dataclass(frozen=True, slots=True)

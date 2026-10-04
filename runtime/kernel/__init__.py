@@ -13,6 +13,8 @@ from .contracts import (
     EffectStatus,
     ExecutionReceipt,
     ExecutionRequest,
+    InputTransition,
+    InputTransitionReceipt,
     Observation,
     PlatformBackend,
     ReleaseReceipt,
@@ -24,7 +26,8 @@ from .lifecycle import KernelOutcome, RequestLifecycle, Stage
 __all__ = [
     "Action", "ActionKind", "AuthorityLease", "BackendInfo", "BackendRegistry",
     "Capability", "ContractError", "EffectOccurrence", "EffectReceipt",
-    "EffectStatus", "ExecutionReceipt", "ExecutionRequest", "KernelOutcome",
+    "EffectStatus", "ExecutionReceipt", "ExecutionRequest", "InputTransition",
+    "InputTransitionReceipt", "KernelOutcome",
     "Observation", "PlatformBackend", "ReleaseReceipt", "RequestLifecycle",
     "Stage", "SupportLevel", "TargetBinding",
 ]
