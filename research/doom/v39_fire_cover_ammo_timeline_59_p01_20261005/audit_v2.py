@@ -1,85 +1,194 @@
 #!/usr/bin/env python3
-"""Versioned independent audit that validates every reported window field."""
+"""Reconstruct every P01 result field from immutable Git-pinned inputs."""
+import argparse
 import hashlib
 import json
+import re
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-F = json.loads((ROOT / "FREEZE.json").read_text(encoding="utf-8"))
+FREEZE = json.loads((ROOT / "AUDIT_V2_FREEZE.json").read_text(encoding="utf-8"))
 
 
-def pinned(path):
-    raw = subprocess.check_output(["git", "show", F["base_commit"] + ":" + path])
-    if hashlib.sha256(raw).hexdigest() != F["source_blobs"][path]["sha256"]:
-        raise SystemExit("STOP_SOURCE_HASH_MISMATCH:" + path)
-    return raw
+class AuditError(RuntimeError):
+    pass
 
 
-def reconstruct(report, records):
-    typed = [row for row in records if row.get("event") == "typed_observation"]
-    scores = sum(row.get("event") == "post_control_score" for row in records)
+def git_blob(commit, path, receipt):
+    oid = subprocess.check_output(
+        ["git", "rev-parse", f"{commit}:{path}"], cwd=ROOT, text=True).strip()
+    if oid != receipt["git_blob"]:
+        raise AuditError(f"git blob identity mismatch: {path}")
+    data = subprocess.check_output(["git", "show", f"{commit}:{path}"], cwd=ROOT)
+    digest = hashlib.sha256(data).hexdigest()
+    if digest != receipt["sha256"]:
+        raise AuditError(f"sha256 mismatch: {path}")
+    return data
+
+
+def load_predecessor():
+    commit = FREEZE["created_from_commit"]
+    blobs = FREEZE["predecessor_blobs"]
+    loaded = {path: git_blob(commit, path, receipt)
+              for path, receipt in blobs.items()}
+    base = FREEZE["predecessor_path"]
+    freeze_path = f"{base}/FREEZE.json"
+    predecessor_freeze = json.loads(loaded[freeze_path])
+    if predecessor_freeze != FREEZE["predecessor_freeze"]:
+        raise AuditError("embedded predecessor freeze differs from pinned freeze blob")
+    raw = {}
+    for path, receipt in predecessor_freeze["source_blobs"].items():
+        raw[path] = git_blob(predecessor_freeze["base_commit"], path, receipt)
+    return predecessor_freeze, loaded, raw
+
+
+def _strict_json(raw, name):
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise AuditError(f"duplicate JSON key {key!r} in {name}")
+            result[key] = value
+        return result
+
+    try:
+        return json.loads(raw, object_pairs_hook=unique_object)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise AuditError(f"invalid JSON in {name}: {exc}") from exc
+
+
+def reconstruct_result():
+    predecessor_freeze, loaded, raw = load_predecessor()
+    base = FREEZE["predecessor_path"]
+    report_path = next(path for path in raw if path.endswith("/report.json"))
+    events_path = next(path for path in raw if path.endswith("/events.jsonl"))
+    report = _strict_json(raw[report_path], report_path)
+    records = [_strict_json(line, events_path) for line in raw[events_path].splitlines() if line]
+    if any(type(row) is not dict or type(row.get("event")) is not str for row in records):
+        raise AuditError("raw event rows must have exact object/event-string types")
+    typed = [row for row in records if row["event"] == "typed_observation"]
     windows = []
     for decision in report["decisions"]:
+        if type(decision) is not dict:
+            raise AuditError("report decisions must be objects")
         cover = decision.get("cover_policy") or []
-        actions = [item["action"] for item in cover]
-        if not any(action in {"fire", "retreat_fire", "advance_fire"} for action in actions):
+        if type(cover) is not list:
+            raise AuditError("cover_policy must be a list when present")
+        if not any(type(item) is dict and item.get("action") in
+                   {"fire", "retreat_fire", "advance_fire"} for item in cover):
             continue
-        start = decision["controller_model_started_ns"]
-        end = decision["controller_model_ended_ns"]
-        rows = [row for row in typed if start <= row.get("capture_ns", -1) <= end]
-
-        def values_for(signal):
-            return [row["signals"][signal]["value"] for row in rows
-                    if row.get("signals", {}).get(signal, {}).get("status") == "observed"
-                    and type(row["signals"][signal].get("value")) is int]
-
-        ammo = values_for("ammo")
-        health = values_for("health")
-        invalidation = decision.get("final_action_admission", {}).get(
-            "policy_invalidation") or {}
+        start = decision.get("controller_model_started_ns")
+        end = decision.get("controller_model_ended_ns")
+        if type(start) is not int or type(end) is not int or not 0 <= start <= end:
+            raise AuditError("invalid model-wait boundaries")
+        rows = [row for row in typed
+                if type(row.get("capture_ns")) is int and start <= row["capture_ns"] <= end]
+        ammo = []
+        health = []
+        for row in rows:
+            signals = row.get("signals")
+            if type(signals) is not dict:
+                continue
+            for name, out in (("ammo", ammo), ("health", health)):
+                signal = signals.get(name)
+                if (type(signal) is dict and signal.get("status") == "observed" and
+                        type(signal.get("value")) is int):
+                    out.append(signal["value"])
+        invalidation = (decision.get("final_action_admission", {}).get(
+            "policy_invalidation") or {})
         windows.append({
             "decision": decision["iteration"],
-            "cover_actions": actions,
+            "cover_actions": [item["action"] for item in cover],
             "model_wait_ms": round((end - start) / 1e6, 3),
             "typed_observations": len(rows),
-            "ammo_first_last_min": [ammo[0], ammo[-1], min(ammo)] if ammo else None,
-            "ammo_decrements": sum(b < a for a, b in zip(ammo, ammo[1:])),
+            "ammo_first_last_min": ([ammo[0], ammo[-1], min(ammo)] if ammo else None),
+            "ammo_decrements": sum(after < before for before, after in zip(ammo, ammo[1:])),
             "ammo_zero_observed": any(value == 0 for value in ammo),
-            "health_first_last": [health[0], health[-1]] if health else None,
+            "health_first_last": ([health[0], health[-1]] if health else None),
             "policy_invalidation_signal": invalidation.get("signal", {}).get("signal_id"),
         })
-    return windows, len(typed), len(records), sorted({row.get("event") for row in records}), scores
+    event_names = sorted({row["event"] for row in records})
+    effect_names = set(FREEZE["result_contract"]["time_local_effect_event_types"])
+    time_local_effects = sum(row["event"] in effect_names for row in records)
+    run_path = f"{base}/RUN.md"
+    run_text = loaded[run_path].decode("utf-8")
+    match = re.search(r"Added live allocation invocations:\s*(\d+)", run_text)
+    if not match:
+        raise AuditError("pinned run record lacks live-allocation count")
+    score_rows = [row for row in records if row["event"] == "post_control_score"]
+    zero_exposure = any(window["ammo_zero_observed"] for window in windows)
+    return {
+        "active_fire_cover_windows": len(windows),
+        "classification": FREEZE["result_contract"]["classification"],
+        "disposition": "ZERO_AMMO_EXPOSED" if zero_exposure else "NO_ZERO_EXPOSURE",
+        "event_names": event_names,
+        "format": FREEZE["result_contract"]["format"],
+        "live_allocation_invocations_added": int(match.group(1)),
+        "per_window_useful_effect_events": time_local_effects,
+        "post_control_score_rows": len(score_rows),
+        "runtime_event_rows_total": len(records),
+        "source_base_commit": predecessor_freeze["base_commit"],
+        "source_hashes_verified": True,
+        "typed_observations_total": len(typed),
+        "windows": windows,
+        "zero_ammo_exposure": zero_exposure,
+    }
+
+
+def mismatch_paths(expected, actual, prefix="$"):
+    if type(expected) is not type(actual):
+        return [prefix]
+    if type(expected) is dict:
+        mismatches = []
+        for key in sorted(set(expected) | set(actual)):
+            child = f"{prefix}.{key}"
+            if key not in expected or key not in actual:
+                mismatches.append(child)
+            else:
+                mismatches.extend(mismatch_paths(expected[key], actual[key], child))
+        return mismatches
+    if type(expected) is list:
+        mismatches = []
+        if len(expected) != len(actual):
+            mismatches.append(prefix + ".length")
+        for index, (left, right) in enumerate(zip(expected, actual)):
+            mismatches.extend(mismatch_paths(left, right, f"{prefix}[{index}]"))
+        return mismatches
+    return [] if expected == actual else [prefix]
+
+
+def audit(candidate_bytes):
+    expected = reconstruct_result()
+    candidate = _strict_json(candidate_bytes, "candidate RESULT.json")
+    if type(candidate) is not dict:
+        raise AuditError("candidate result must be a JSON object")
+    mismatches = mismatch_paths(expected, candidate)
+    return {
+        "format": "59-v39-fire-cover-ammo-full-result-audit-v2",
+        "disposition": "PASS_FULL_RESULT_RECONSTRUCTION" if not mismatches else "FAIL_RESULT_MISMATCH",
+        "source_identities_verified": True,
+        "expected_result_fields": len(expected),
+        "mismatch_paths": mismatches,
+    }
 
 
 def main():
-    report_path, events_path = F["source_blobs"].keys()
-    report = json.loads(pinned(report_path))
-    records = [json.loads(line) for line in pinned(events_path).splitlines() if line]
-    windows, typed_total, event_total, event_names, score_rows = reconstruct(report, records)
-    result = json.loads((ROOT / "RESULT.json").read_text(encoding="utf-8"))
-    zero = any(row["ammo_zero_observed"] for row in windows)
-    expected_disposition = "ZERO_AMMO_EXPOSED" if zero else "NO_ZERO_EXPOSURE"
-
-    checks = {
-        "all_window_fields_reconstructed": result.get("windows") == windows,
-        "active_window_count_matches": result.get("active_fire_cover_windows") == len(windows),
-        "typed_observation_count_matches": result.get("typed_observations_total") == typed_total,
-        "event_row_count_matches": result.get("runtime_event_rows_total") == event_total,
-        "event_names_match": result.get("event_names") == event_names,
-        "score_row_count_matches": result.get("post_control_score_rows") == score_rows,
-        "zero_exposure_matches": result.get("zero_ammo_exposure") is zero,
-        "disposition_matches_raw": result.get("disposition") == expected_disposition,
-        "posthoc_classification_preserved": "posthoc" in result.get("classification", ""),
-        "live_allocations_added_zero": result.get("live_allocation_invocations_added") == 0,
-        "no_per_window_effect_events_claimed": result.get("per_window_useful_effect_events") == 0,
-    }
-    audit = {"format": "59-v39-fire-cover-ammo-posthoc-audit-v2",
-             "checks": checks, "passed": sum(checks.values()), "total": len(checks),
-             "disposition": "PASS" if all(checks.values()) else "AUDIT_FAILED"}
-    (ROOT / "AUDIT_V2.json").write_text(
-        json.dumps(audit, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
-    print(json.dumps(audit, sort_keys=True))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--candidate-result", type=Path)
+    parser.add_argument("--output", type=Path, default=ROOT / "AUDIT_V2.json")
+    args = parser.parse_args()
+    if args.candidate_result:
+        candidate_bytes = args.candidate_result.read_bytes()
+    else:
+        path = f"{FREEZE['predecessor_path']}/RESULT.json"
+        candidate_bytes = git_blob(FREEZE["created_from_commit"], path,
+                                   FREEZE["predecessor_blobs"][path])
+    result = audit(candidate_bytes)
+    args.output.write_text(json.dumps(result, sort_keys=True, separators=(",", ":")) + "\n",
+                           encoding="utf-8")
+    print(json.dumps(result, sort_keys=True))
+    raise SystemExit(0 if result["disposition"] == "PASS_FULL_RESULT_RECONSTRUCTION" else 1)
 
 
 if __name__ == "__main__":

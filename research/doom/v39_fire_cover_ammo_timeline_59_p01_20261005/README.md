@@ -1,21 +1,20 @@
-# Issue #59 — posthoc ammo timeline in retained v39 fire-cover windows
+# Issue #59 — retained v39 fire-cover ammo timeline (posthoc)
 
-## H / T / D / C / U
+**Disposition: `NO_ZERO_EXPOSURE`; full-result reconstruction audit `PASS`.**
 
-**H.** Retained v39 intervals with an active `retreat_fire` cover may contain fresh ammo decreases while inference is pending, but the one retained episode may not reach zero ammo; aggregate end-of-run scoring may be unable to attribute useful effects to a particular window.
+The original `audit.py` and `AUDIT.json` remain unchanged as historical v1 artifacts. A mutation review showed v1 could return `PASS` after reported fields were altered. The first v2 repair reconstructed the window rows and several totals, but its checks did not enforce exact JSON types consistently, and an audit failure still exited successfully. This hardened v2 reconstructs and compares the entire result object against raw data from the frozen Git blobs, with exact type checks and a nonzero exit on mismatch.
 
-**T.** This is an explicitly posthoc, read-only source-bound reanalysis, not a prospective allocation. Pin the current-main report and runtime event JSONL blobs at the exact commit in `FREEZE.json`; filter typed observations by each decision's model-wait interval only when the corresponding prior cover contains a fire action. Summarize ammo/health endpoints, decrements, invalidation signal, and event types. The candidate and auditor read the Git blobs without materializing or altering them.
+`AUDIT_V2_FREEZE.json` pins the P01 package artifacts at commit `ec71c53411055b1d3960ca7c947b52a70c5dca2f` and embeds the original P01 source freeze. `AUDIT_V2.json` is the generated result. `test_audit_v2.py` covers the unchanged result, eight summary mutations, bool/int aliasing, and reproduces the legacy false-PASS.
 
-**D.** Classify direct ammo-zero exposure only if an in-window typed ammo value reaches zero. Report `NO_ZERO_EXPOSURE` otherwise. Separately count ammunition decreases and health-triggered policy invalidations. Do not use a terminal aggregate score to infer per-window usefulness.
+This is audit-integrity work only. The retained trace still has three active fire-cover windows, seven observed ammo decreases, no zero-ammo exposure, and no time-local useful-effect events. It adds no new game trace, gameplay allocation, controller behavior, or causal evidence. Issue #59's live v39 control and useful-effect requirements remain open.
 
-**C.** HUD values may not establish that a physical fire key was held throughout an interval; decrements can arise from other causes. This was one gameplay trajectory, and no counterfactual policy or causal effect is available.
+## Reproduce
 
-**U.** Posthoc telemetry reconstruction only. No candidate/controller/game/model/GUI/input rerun. No causal firing, benefit, harm, survival, or MAP01-clear claim. It cannot grant the separate live allocation required by Issue #59.
+From repository root:
 
-## Why posthoc
+```sh
+python3 -B -m unittest research.doom.v39_fire_cover_ammo_timeline_59_p01_20261005.test_audit_v2 -v
+python3 -B research/doom/v39_fire_cover_ammo_timeline_59_p01_20261005/audit_v2.py
+```
 
-An initial targeted read established that three active fire-cover windows had nonzero ammo decreases. This package makes that exploratory finding reproducible and independently audited, but it is not preregistered and must not be described as one.
-
-## Versioned audit follow-up
-
-The original `audit.py` and `AUDIT.json` are preserved as v1 historical evidence. An independent mutation review found that v1 did not compare several reported window fields or the human-readable disposition against the pinned trace. `audit_v2.py` and `AUDIT_V2.json` add those comparisons without changing `RESULT.json`, the source freeze, or the historical v1 output. `test_audit_v2.py` verifies the unmodified result and rejects five isolated mutations: disposition, health endpoints, invalidation signal, model-wait duration, and cover actions. This repairs audit coverage only; it does not alter the posthoc scientific limitations above.
+The audit requires the pinned Git objects to be available locally and does not rewrite the raw predecessor.
