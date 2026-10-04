@@ -1,0 +1,31 @@
+{
+  "audit_mismatches": 0,
+  "base_main": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "candidate_exit": 0,
+  "candidate_head": "958dbe99bd27e916ba22a523a1c2c7bbbaf4fc35",
+  "candidate_pr": 7602,
+  "cases": 6,
+  "claim": "The legacy identity projection can accept explicit owner-ID conflicts; a candidate check rejects conflicts and partial IDs while retaining the all-IDs-absent compatibility fixture.",
+  "configured_limits": {
+    "cpus": 1,
+    "memory": "512m",
+    "tmpfs": "/tmp 64m"
+  },
+  "container": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "independent_auditor": {
+    "mismatches": 0,
+    "normal": "audit-replay.json; exit 0",
+    "optimized": "audit-optimized.json; exit 0"
+  },
+  "independent_auditor_exit": 0,
+  "limits": [
+    "retained event pair only",
+    "projection evidence only",
+    "no live X11/game/model/GUI/OS input",
+    "no task-effect, recovery, threat-control, or MAP01 claim"
+  ],
+  "network": "none",
+  "platform": "linux/arm64",
+  "run_id": "MAP01-V39-LEGACY-OWNER-IDENTITY-A01-RUN03-20261005",
+  "source_mount": "read-only"
+}
