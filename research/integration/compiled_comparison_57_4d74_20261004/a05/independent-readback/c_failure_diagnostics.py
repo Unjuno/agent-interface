@@ -60,6 +60,17 @@ for block, task_num in ((1, 5), (1, 6), (2, 6)):
     })
 
 assert len(failures) == 3
+visual_review = [
+    {
+        "block": item["block"],
+        "task": item["task"],
+        "evidence_ref": item["evidence_ref"],
+        "image_sha256": item["image_sha256"],
+        "review_result": "full_expected_token_visible_in_input_field",
+        "review_method": "manual visual inspection of the exact archived PNG",
+    }
+    for item in failures
+]
 report = {
     "source_revision": REF,
     "adapter_source": adapter_path,
@@ -67,7 +78,8 @@ report = {
     "scope": "Read-only classification of the three archived A05 C-arm EXECUTION_INCOMPLETE rows; no producer, model, GUI, or study runner executed.",
     "failures": failures,
     "finding": "All three recorded safe-yields follow a completed, verified-release enter action. Each filled-state OCR result omits exactly the leading 't' from the task token, so the exact-match predicate fails and no submit program runs.",
-    "interpretation_limit": "The record identifies an OCR false negative on the retained frames. The narrow layout-B OCR crop is a plausible contributor, but this audit does not prove causation or validate a crop-padding repair. Preserve the formal 9/12 C-arm outcome; any candidate repair requires separate construction and a prospectively frozen allocation.",
+    "visual_review": visual_review,
+    "interpretation_limit": "Manual review confirms the full expected token is visible in each exact archived frame despite the OCR omission. The narrow layout-B OCR crop is a plausible contributor, but this audit does not prove causation or validate a crop-padding repair. Preserve the formal 9/12 C-arm outcome; any candidate repair requires separate construction and a prospectively frozen allocation.",
 }
 out = Path(__file__).with_name("C_FAILURE_DIAGNOSTICS.json")
 out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")

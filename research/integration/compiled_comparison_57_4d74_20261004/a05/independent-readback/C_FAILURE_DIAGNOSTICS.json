@@ -46,7 +46,33 @@
     }
   ],
   "finding": "All three recorded safe-yields follow a completed, verified-release enter action. Each filled-state OCR result omits exactly the leading 't' from the task token, so the exact-match predicate fails and no submit program runs.",
-  "interpretation_limit": "The record identifies an OCR false negative on the retained frames. The narrow layout-B OCR crop is a plausible contributor, but this audit does not prove causation or validate a crop-padding repair. Preserve the formal 9/12 C-arm outcome; any candidate repair requires separate construction and a prospectively frozen allocation.",
+  "interpretation_limit": "Manual review confirms the full expected token is visible in each exact archived frame despite the OCR omission. The narrow layout-B OCR crop is a plausible contributor, but this audit does not prove causation or validate a crop-padding repair. Preserve the formal 9/12 C-arm outcome; any candidate repair requires separate construction and a prospectively frozen allocation.",
   "scope": "Read-only classification of the three archived A05 C-arm EXECUTION_INCOMPLETE rows; no producer, model, GUI, or study runner executed.",
-  "source_revision": "58bcbb4c45501880db8782158ddd3add3b765984"
+  "source_revision": "58bcbb4c45501880db8782158ddd3add3b765984",
+  "visual_review": [
+    {
+      "block": 1,
+      "evidence_ref": "runtime/124.png",
+      "image_sha256": "4abaa062c4a73c7d739fe6bfef856ae37f6f0bda5326732a764183c67b7ab9cd",
+      "review_method": "manual visual inspection of the exact archived PNG",
+      "review_result": "full_expected_token_visible_in_input_field",
+      "task": 5
+    },
+    {
+      "block": 1,
+      "evidence_ref": "runtime/143.png",
+      "image_sha256": "2fce53c538dca90012952147a20ef0efd7b0ead6e067971778e12fed0caf6b26",
+      "review_method": "manual visual inspection of the exact archived PNG",
+      "review_result": "full_expected_token_visible_in_input_field",
+      "task": 6
+    },
+    {
+      "block": 2,
+      "evidence_ref": "runtime/150.png",
+      "image_sha256": "166cd642ffe36474773d592118ddcd08c0202ce722948bdc1747068a02e262f5",
+      "review_method": "manual visual inspection of the exact archived PNG",
+      "review_result": "full_expected_token_visible_in_input_field",
+      "task": 6
+    }
+  ]
 }
