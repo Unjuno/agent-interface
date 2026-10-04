@@ -1,0 +1,40 @@
+FFFE
+======================================================================
+ERROR: test_missing_or_empty_intent_identity_fails_closed (test_attribution.AttributionTests.test_missing_or_empty_intent_identity_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-ack-envelope-fix\research\doom\input_occurrence_identity_59_20261004\test_attribution.py", line 83, in test_missing_or_empty_intent_identity_fails_closed
+    attribute_positive_events(samples, events, [admission],
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-ack-envelope-fix\research\doom\input_occurrence_identity_59_20261004\attribution.py", line 163, in attribute_positive_events
+    "intent_token": admission["intent_token"],
+                    ~~~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'intent_token'
+
+======================================================================
+FAIL: test_missing_or_empty_intent_identity_fails_closed (test_attribution.AttributionTests.test_missing_or_empty_intent_identity_fails_closed) (token=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-ack-envelope-fix\research\doom\input_occurrence_identity_59_20261004\test_attribution.py", line 73, in test_missing_or_empty_intent_identity_fails_closed
+    with self.subTest(token=token), self.assertRaisesRegex(
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_or_empty_intent_identity_fails_closed (test_attribution.AttributionTests.test_missing_or_empty_intent_identity_fails_closed) (token='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-ack-envelope-fix\research\doom\input_occurrence_identity_59_20261004\test_attribution.py", line 73, in test_missing_or_empty_intent_identity_fails_closed
+    with self.subTest(token=token), self.assertRaisesRegex(
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_or_empty_intent_identity_fails_closed (test_attribution.AttributionTests.test_missing_or_empty_intent_identity_fails_closed) (token='   ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-ack-envelope-fix\research\doom\input_occurrence_identity_59_20261004\test_attribution.py", line 73, in test_missing_or_empty_intent_identity_fails_closed
+    with self.subTest(token=token), self.assertRaisesRegex(
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=3, errors=1)

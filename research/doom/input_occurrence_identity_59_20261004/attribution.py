@@ -138,6 +138,9 @@ def attribute_positive_events(samples, events, admissions, releases, bindings):
         if len(release_rows) != 1:
             raise ValueError("each admission requires exactly one release occurrence")
         admission, release = admission_rows[0], release_rows[0]
+        intent_token = admission.get("intent_token")
+        if not isinstance(intent_token, str) or not intent_token.strip():
+            raise ValueError("admission requires non-empty intent_token")
         identity_fields = ("session_id", "owner_id", "intent_token", "keycode")
         if any(admission.get(name) != release.get(name) for name in identity_fields):
             raise ValueError("release identity does not match its admission")
