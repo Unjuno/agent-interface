@@ -12,6 +12,13 @@
     "path": "research/doom/map01_cancel_keycode_identity_59_t0_a01_20261004/probe.py",
     "blob": "3b917891c88096b79a46ebcffeb581fa1e174186"
   },
+  "oracle_baseline": {
+    "commit": "b9402bab7614d4e1ff3205a7d51285142f76e238",
+    "sources": {
+      "research/doom/map01_feedback_release_contract_v1.py": "bf36487461b1cdf28d7826cb2cfd636a52890363a784808219c06cfcc8f8aa49",
+      "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4"
+    }
+  },
   "method": "Run current V10/V11 source and the pinned FakeDisplay, inject one failure before XTest KeyRelease and one failure after FakeDisplay applies KeyRelease but before XSync returns, then observe caller receipts, owner-held state, keymap state, retry requests, syncs, and cleanup.",
   "decision": "A failed call must not fabricate an applied-release receipt. A successful retry receipt is interpreted according to the frozen fields: request+sync completion only, unless independent pre/post key-state evidence proves an edge.",
   "scope": "Synthetic FakeDisplay construction only; no live X server, OS input, game, model, or allocation. The post-XSync-failure injection models a server-processed release with an exception at the client synchronization boundary."

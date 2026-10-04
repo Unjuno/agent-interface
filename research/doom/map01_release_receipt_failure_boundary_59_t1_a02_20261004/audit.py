@@ -21,6 +21,10 @@ def main():
     raw = subprocess.check_output(["git", "show", f"{fixture['commit']}:{fixture['path']}"], cwd=ROOT)
     blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
     assert blob == fixture["blob"]
+    baseline = freeze["oracle_baseline"]
+    for path, expected in baseline["sources"].items():
+        source = subprocess.check_output(["git", "show", f"{baseline['commit']}:{path}"], cwd=ROOT)
+        assert hashlib.sha256(source).hexdigest() == expected, path
     assert result["status"] == "PASS_SCOPED"
     before, after = result["cases"]
     assert before["failed_call"] and after["failed_call"]
@@ -35,14 +39,20 @@ def main():
     assert retry["x11_sync_completed_before_return"] is True
     assert after["after_retry"]["fake_server_key_down"] is False
     assert after["after_retry"]["trace"]["release_attempts"] == 2
+    import types
     import sys
     sys.path.insert(0, str(ROOT / "research/doom"))
-    from map01_feedback_release_contract_v1 import reconcile_key_intervals
+    oracle_source = subprocess.check_output([
+        "git", "show",
+        f"{baseline['commit']}:research/doom/map01_feedback_release_contract_v1.py"],
+        cwd=ROOT)
+    oracle_module = types.ModuleType("frozen_a02_oracle")
+    exec(compile(oracle_source, "frozen_a02_oracle.py", "exec"), oracle_module.__dict__)
     retry_receipt = dict(after["retry_receipt"], id="plan", step=1)
     admission = dict(after["admission"], id="plan", step=0,
                      owner_id=retry_receipt["owner_id"],
                      intent_token=retry_receipt["intent_token"])
-    intervals = reconcile_key_intervals([admission, retry_receipt])
+    intervals = oracle_module.reconcile_key_intervals([admission, retry_receipt])
     assert len(intervals) == 1
     assert intervals[0]["release_transition_interval_ns"] == retry_receipt["release_transition_interval_ns"]
     assert after["after_failure"]["fake_server_key_down"] is False

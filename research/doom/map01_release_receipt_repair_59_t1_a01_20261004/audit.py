@@ -10,6 +10,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 COMMIT = "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b"
+CANDIDATE_COMMIT = "aeb395fb17331761e38c56821eb889d2f600c201"
 
 
 def audit():
@@ -24,7 +25,8 @@ def audit():
         actual = hashlib.sha1(b"blob " + str(len(source)).encode() + b"\0" + source).hexdigest()
         assert actual == expected, (path, actual, expected)
     for path, expected in freeze["tested_sources"].items():
-        actual = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
+        source = subprocess.check_output(["git", "show", f"{CANDIDATE_COMMIT}:{path}"])
+        actual = hashlib.sha256(source).hexdigest()
         assert actual == expected, (path, actual, expected)
     fixture = freeze["fixture"]
     fixture_source = subprocess.check_output(
@@ -39,7 +41,8 @@ def audit():
     assert result["sources"] == freeze["sources"]
     assert result["fixture"] == fixture
     for path, expected in result["candidate_worktree_sha256"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected
+        source = subprocess.check_output(["git", "show", f"{CANDIDATE_COMMIT}:{path}"])
+        assert hashlib.sha256(source).hexdigest() == expected, path
     oracle = freeze["integration_oracle"]
     assert result["candidate_worktree_sha256"][oracle["path"]] == oracle["sha256"]
     unit = json.loads((HERE / "V11_UNIT_TEST.json").read_text(encoding="utf-8-sig"))

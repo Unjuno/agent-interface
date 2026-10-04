@@ -30,6 +30,7 @@ def reconcile_key_intervals(events):
     admissions = defaultdict(list)
     intervals = []
     errors = []
+    uncertain_release_keys = set()
     for row in events:
         kind = row.get("event")
         if kind == "input_admission":
@@ -56,6 +57,45 @@ def reconcile_key_intervals(events):
                              "admitted_ns": admitted, "ack_ns": ack}
                 opens[key].append(admission)
                 admissions[key].append(admission)
+        elif kind == "input_release_rpc_error":
+            token = row.get("intent_token")
+            call_interval = row.get("call_interval_ns")
+            if (row.get("operation") != "up" or
+                    not isinstance(token, str) or not token or
+                    type(row.get("id")) is not str or not row["id"] or
+                    type(row.get("step")) is not int or row["step"] < 0 or
+                    type(row.get("payload")) is not str or not row["payload"] or
+                    type(row.get("owner_id")) is not str or not row["owner_id"] or
+                    type(row.get("outcome_uncertain")) is not bool or
+                    not row["outcome_uncertain"] or
+                    type(call_interval) is not list or len(call_interval) != 2 or
+                    any(type(value) is not int for value in call_interval) or
+                    call_interval[0] > call_interval[1] or
+                    row.get("call_started_ns") != call_interval[0] or
+                    row.get("call_returned_ns") != call_interval[1] or
+                    row.get("grants_input_authority") is not False or
+                    row.get("continuous_physical_state_sampled") is not False or
+                    row.get("application_consumption_observed") is not False):
+                errors.append("invalid_release_rpc_error")
+            else:
+                uncertain_release_keys.add((token, row["id"], row["owner_id"], row["payload"]))
+                matched_codes = {
+                    admission.get("keycode")
+                    for admission_key, rows in admissions.items()
+                    if admission_key[0] == token and admission_key[1] == row["id"]
+                    for admission in rows
+                    if admission["owner_id"] == row["owner_id"] and
+                    admission["key"] == row["payload"] and
+                    type(admission.get("keycode")) is int
+                }
+                for admission_key, rows in admissions.items():
+                    if admission_key[0] != token or admission_key[1] != row["id"]:
+                        continue
+                    for admission in rows:
+                        if (admission["owner_id"] == row["owner_id"] and
+                                admission.get("keycode") in matched_codes):
+                            uncertain_release_keys.add((token, row["id"], row["owner_id"],
+                                                        admission["key"]))
         elif kind == "input_release_rpc":
             token = row.get("intent_token")
             key = (token, row.get("id"), row.get("step"), row.get("payload"))
@@ -121,6 +161,14 @@ def reconcile_key_intervals(events):
                     elif (release_applied and
                           (interval != call_interval or row.get("interval_width_ns") != end-start)):
                         errors.append("invalid_or_unmatched_release_rpc")
+                    elif (release_applied and
+                          (token, row["id"], row["owner_id"], row["payload"])
+                          in uncertain_release_keys):
+                        # An earlier request may have changed key state even
+                        # though its synchronization failed. A later successful
+                        # retry brackets request+sync, not necessarily the edge.
+                        # Keep the admission open for verified cleanup censoring.
+                        pass
                     elif not release_applied:
                         # A no-op is a valid RPC result, not evidence of a
                         # physical transition. The admission must be closed by
@@ -220,7 +268,9 @@ def reconcile_key_intervals(events):
             censored = []
             for key, opened in pending:
                 code = opened["keycode"]
-                if type(code) is int and code in by_keycode:
+                if (type(code) is int and code in by_keycode and
+                        (lease_id, opened["id"], opened["owner_id"], opened["key"])
+                        not in uncertain_release_keys):
                     grouped[code].append((key, opened))
                 else:
                     censored.append((key, opened))

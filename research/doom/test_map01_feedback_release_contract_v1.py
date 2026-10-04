@@ -184,6 +184,46 @@ class FeedbackReleaseContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "open_key_interval"):
             reconcile_key_intervals([admission, noop])
 
+    def test_retry_after_unreceipted_release_error_uses_cleanup_censor(self):
+        admission = {"event": "input_admission", "id": "plan", "step": 0,
+                     "key": "W", "keycode": 77, "owner_id": "owner",
+                     "intent_token": "retry-error", "admitted_ns": 90,
+                     "input_ack_ns": 100}
+        aliased_admission = dict(admission, step=1, key="A", admitted_ns=95,
+                                 input_ack_ns=105)
+        failed = {"event": "input_release_rpc_error", "operation": "up",
+                  "payload": "W", "owner_id": "owner", "intent_token": "retry-error",
+                  "id": "plan", "step": 1, "call_started_ns": 110,
+                  "call_returned_ns": 115, "call_interval_ns": [110, 115],
+                  "outcome_uncertain": True, "grants_input_authority": False,
+                  "continuous_physical_state_sampled": False,
+                  "application_consumption_observed": False}
+        retry = {"event": "input_release_rpc", "id": "plan", "step": 2,
+                 "payload": "A", "owner_id": "owner", "intent_token": "retry-error",
+                 "operation": "up", "keycode": 77, "release_applied": True,
+                 "call_started_ns": 120, "call_returned_ns": 130,
+                 "call_interval_ns": [120, 130], "call_interval_width_ns": 10,
+                 "release_transition_interval_ns": [120, 130], "interval_width_ns": 10,
+                 "x11_release_request_issued": True,
+                 "x11_sync_completed_before_return": True,
+                 "x11_release_and_sync_completed_before_return": True,
+                 "grants_input_authority": False,
+                 "continuous_physical_state_sampled": False,
+                 "application_consumption_observed": False}
+        cleanup = {"event": "input_released", "intent_token": "retry-error",
+                   "grants_input_authority": False,
+                   "owner_release": {"verified": True, "keys_down": [],
+                                     "buttons_down": [], "verified_ns": 160,
+                                     "key_release_intervals_ns": [
+                                         {"keycode": 77, "interval_ns": [145, 150]}]}}
+        with self.assertRaisesRegex(ValueError, "open_key_interval"):
+            reconcile_key_intervals([admission, aliased_admission, failed, retry])
+        result = reconcile_key_intervals([admission, aliased_admission, failed, retry, cleanup])
+        self.assertEqual(len(result), 2)
+        self.assertTrue(all(row["release_transition_interval_ns"] is None for row in result))
+        self.assertEqual([row["occupancy_upper_ns"] for row in result], [60, 55])
+        self.assertTrue(all(row["censored"] for row in result))
+
     def test_malformed_keycode_release_interval_fails_closed(self):
         admission = {"event": "input_admission", "id": "plan", "step": 0,
                      "key": "W", "keycode": 87, "owner_id": "owner",

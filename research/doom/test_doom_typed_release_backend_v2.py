@@ -117,7 +117,15 @@ class BackendV2Tests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "owner failure"):
             backend.raw("a", False)
         self.assertEqual(backend.held, {"a"})
-        self.assertEqual(len(backend.events), 1)
+        self.assertEqual(len(backend.events), 2)
+        failure = backend.events[-1]
+        self.assertEqual(failure["event"], "input_release_rpc_error")
+        self.assertEqual(failure["operation"], "up")
+        self.assertEqual(failure["payload"], "a")
+        self.assertTrue(failure["outcome_uncertain"])
+        self.assertFalse(failure["grants_input_authority"])
+        self.assertEqual(failure["id"], "plan-7")
+        self.assertEqual(failure["step"], 3)
 
     def test_execute_sets_and_clears_context_even_on_error(self):
         backend = object.__new__(Backend)

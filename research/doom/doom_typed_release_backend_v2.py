@@ -7,6 +7,8 @@ already emitted by the inherited session_v9 pointer helper with the same fields.
 """
 from __future__ import annotations
 
+import time
+
 from doom_typed_release_backend_v1 import Backend as Previous, suite
 from input_owner_v11 import InputOwner
 
@@ -37,7 +39,30 @@ class Backend(Previous):
             raise RuntimeError("keyboard input outside program/step telemetry context")
 
         operation = "down" if down else "up"
-        record = self.owner.call(operation, self.lease, key)
+        call_started_ns = time.perf_counter_ns()
+        try:
+            record = self.owner.call(operation, self.lease, key)
+        except Exception as exc:
+            call_returned_ns = time.perf_counter_ns()
+            if not down:
+                self.emit({
+                    "event": "input_release_rpc_error",
+                    "operation": operation,
+                    "payload": key,
+                    "owner_id": self.owner.owner_id,
+                    "intent_token": getattr(self.lease, "intent_token", None),
+                    "call_started_ns": call_started_ns,
+                    "call_returned_ns": call_returned_ns,
+                    "call_interval_ns": [call_started_ns, call_returned_ns],
+                    "outcome_uncertain": True,
+                    "error_type": type(exc).__name__,
+                    "grants_input_authority": False,
+                    "continuous_physical_state_sampled": False,
+                    "application_consumption_observed": False,
+                    "id": context[0],
+                    "step": context[1],
+                })
+            raise
         if down:
             self.held.add(key)
         else:
