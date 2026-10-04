@@ -134,9 +134,6 @@ class Executor(Previous):
             self._publish_cause_once(identifier, lease)
             try:
                 release = self.backend.release_all()
-                if release_batch_publication is not None:
-                    release = dict(release)
-                    release.setdefault("release_batch_delivery", release_batch_publication)
                 if release.get("verified") is not True:
                     status = "failed"; error = "input release not verified"
             except Exception as exc:
@@ -154,6 +151,8 @@ class Executor(Previous):
                 if process_exception is None:
                     process_exception = exc
                     process_traceback = exc.__traceback__
+            if release_batch_publication is not None:
+                release.setdefault("release_batch_delivery", release_batch_publication)
             if status == "completed":
                 try:
                     if lease.is_set(): raise Cancelled()

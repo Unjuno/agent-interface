@@ -31,6 +31,43 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_cleanup_failure_preserves_prior_step_delivery_custody(self):
+        publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "cleanup-failure",
+            "step": 0, "size": 1,
+            "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
+        }
+        step_error = RuntimeError("step publication failed")
+        step_error.release_batch_publication = publication
+
+        class CombinedFailureBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+                raise step_error
+
+            def release_all(self):
+                self.releases += 1
+                raise OSError("cleanup failed without a replacement ledger")
+
+        backend = CombinedFailureBackend()
+        events = []
+        executor = Executor(backend, events.append)
+        try:
+            executor.submit("cleanup-failure", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+        finally:
+            executor.close()
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["release"].get("release_batch_delivery"), publication)
+        self.assertEqual(backend.releases, 1)
+        self.assertTrue(backend.started.is_set())
+        self.assertIsNone(executor.active)
+
     def test_release_all_baseexception_preserves_custody_in_failed_terminal(self):
         publication = {
             "schema": "release-batch-delivery-v1", "identifier": "cleanup-interrupt",
