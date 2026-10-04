@@ -74,30 +74,36 @@ samples. The frozen raw-only auditor ran once and returned
 observer heartbeat interval was 100.002 ms (maximum 104.705 ms); median child
 interval was 99.999 ms.
 
-The eligibility gate remains **`HOLD_INSUFFICIENT_REGIME_COVERAGE`**. Every
-one of the 595 host samples was at least 50% busy: 5,991 reconstructed
-heartbeat intervals were labelled elevated and zero ordinary. Thus the
-capture demonstrates that incarnation-bound heartbeat and external host
-counter streams can be retained and reconstructed on this host. It does not
-provide the two-regime sample required by the frozen gate, and is not detector
-calibration, a fixed/global/regime-conditioned comparison, or a performance
-result. The prior N01 and all earlier #5531 outcomes remain unchanged.
+**Current disposition: `HOLD_INVALID_UNAUDITABLE_HOST_REGIME_LABELS`.** A later
+review found that `GetSystemTimes` includes idle time in the kernel counter,
+while the collector adds idle, kernel, and user deltas before deriving busy
+percent. This double-counts idle, so the recorded 595 `elevated` labels and
+5,991 elevated intervals are historical outputs of an invalid formula; they
+cannot establish actual host regimes. The collector retained no raw counter
+deltas, so the labels cannot be reconstructed or corrected from A01. The
+heartbeat/raw event streams were retained, but the regime-comparison result is
+invalid and remains HOLD. See the additive
+[`review-correction-02/RECHECK.json`](results/review-correction-02/RECHECK.json).
 
-`results/a01/OUTPUT_SHA256SUMS.txt` is the collector's pre-audit manifest. It
-intentionally covers candidate outputs but not the later auditor output. The
-additive `results/a01/POST_AUDIT_SHA256SUMS.txt` covers every retained result
-file including `AUDIT.json` and the original manifest. SHA-256 of that
-post-audit manifest is recorded in `results/a01/POST_AUDIT_SHA256SUMS.sha256`.
-The empty candidate stdout-tail and stderr files are preserved; the exact
-worker stream is `worker-stdout.jsonl`.
+The original audit's `PASS_TRACE_CAPTURE_SCOPED` remains preserved as a
+historical structural/timing result; it did not independently derive the
+Windows busy-percent arithmetic. This trace is not detector calibration, a
+fixed/global/regime-conditioned comparison, or a performance result. Earlier
+#5531 outcomes remain unchanged.
+
+`results/a01/OUTPUT_SHA256SUMS.txt` is the collector's pre-audit manifest. The
+post-audit seals were initially committed with newline-normalized JSON/text
+files, so the recorded hashes did not match several committed blobs. The
+evidence files have been re-staged under byte-preservation attributes and the
+additive review recheck verifies both local and committed bytes. The candidate
+stdout-tail and stderr files remain as captured; the exact worker stream is
+`worker-stdout.jsonl`.
 
 ### Handoff
 
-Do not rerun A01 or change its 50% threshold. The next useful action is a
-separately frozen and authorized acquisition of naturally occurring host
-samples below 50%, with the same independently timed heartbeat identity and
-counter provenance, followed by a fresh per-regime held-out sample-size
-analysis before any detector comparison. If the ordinary regime cannot be
-observed without induced load or changing this allocation, keep the comparison
-on HOLD and seek a scientifically justified new allocation. This trace alone
-does not authorize suspicion-policy or runtime changes.
+Do not rerun A01 or retune its threshold after seeing the data. Any later trace
+requires a new, prospectively reviewed allocation that retains raw idle,
+kernel, and user counter deltas and derives busy percent without double-counting
+idle. Per-regime held-out sample-size review is required before any detector
+comparison. This trace alone does not authorize suspicion-policy or runtime
+changes.
