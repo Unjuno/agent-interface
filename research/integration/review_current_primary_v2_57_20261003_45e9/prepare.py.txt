@@ -1,0 +1,42 @@
+"""Prepare an isolated V2 composition and freeze new ordinary regression inputs."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,shutil,subprocess,uuid
+r=Path(__file__).resolve().parent;ws=r.parent.parent;e=json.loads((r/'EXPORT.json').read_bytes())
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+assert e['current_used_changed_paths']==[]
+names=['primary_stdio.mjs','primary_caller.mjs','primary_exchange.mjs','relay_host.mjs','relay_client.mjs','test_primary_stdio.mjs','test_primary_stdio_backpressure.mjs','test_primary_stdio_failure_order.mjs','test_relay_client.mjs']
+for variant in ['peer','combined']:
+ p=r/variant/'runtime/host_v1';p.mkdir(parents=True,exist_ok=False)
+ for name in names:shutil.copyfile(r/'head/runtime/host_v1'/name,p/name)
+own=r.parent/'stdio-utf8-repair-45e9/source/runtime/host_v1';pub=json.loads((ws/'outputs/primary-utf8-publication.json').read_bytes())
+for name in ['primary_stdio.mjs','test_primary_stdio_utf8.mjs']:
+ expected=next(x for x in pub['files'] if x['path']=='runtime/host_v1/'+name);assert sha((own/name).read_bytes())==expected['sha256']
+peer=(r/'peer/runtime/host_v1/primary_stdio.mjs').read_text(encoding='utf-8');utf8=(own/'primary_stdio.mjs').read_text(encoding='utf-8')
+start='async function serveOwnedPrimaryLines({exchange,input,output},observeFailure=()=>{}) {';stop="  output.on('error',failed);"
+a=peer.index(start);b=peer.index(stop,a);ownstart='export async function servePrimaryLines({exchange,input,output}) {'
+u=utf8[utf8.index(ownstart):utf8.index(stop,utf8.index(ownstart))]
+u=u.replace(ownstart,start,1).replace('function failed(error) {failure??=error;input.pause();lines?.close();}','function failed(error) {failure??=error;observeFailure(failure);input.pause();lines?.close();}',1)
+assert u.count('observeFailure(failure);')==1 and "lines.on('error'" not in u
+combined=peer[:a]+u+"  lines.on('error',failed);\n"+peer[b:]
+needle="import {pathToFileURL} from 'node:url';\n";assert combined.count(needle)==1;combined=combined.replace(needle,needle+"import {TextDecoder} from 'node:util';\n",1)
+needle="        output.removeListener('error',failed);input.removeListener('error',failed);";assert combined.count(needle)==1
+combined=combined.replace(needle,"        input.removeListener('data',validateBytes);input.removeListener('end',finishBytes);\n"+needle,1)
+assert 'await serveOwnedPrimaryLines({exchange,input,output},failed);' in combined and "if(rejectedWrites.size){failed(Error('primary busy response backlog'));return;}" in combined
+(r/'combined/runtime/host_v1/primary_stdio.mjs').write_text(combined,encoding='utf-8',newline='\n')
+shutil.copyfile(own/'test_primary_stdio_utf8.mjs',r/'combined/runtime/host_v1/test_primary_stdio_utf8.mjs')
+node=Path(shutil.which('node'));jobs=[]
+for channel in ['none','input','output']:
+ out=r/'check-first'/('decoder-'+channel);out.mkdir(parents=True,exist_ok=False);nonce=str(uuid.uuid4())
+ config={'nonce':nonce,'host':{'command':str(node),'args':[str(r/'owner-fixture.mjs'),str(out),nonce],'evidenceDirectory':str(out/'host')},'route':'guarded-local','exchangeDirectory':str(out/'exchange')};put(out/'config.json',config)
+ jobs.append({'name':'decoder-'+channel,'channel':channel,'output':str(out),'config_sha256':sha((out/'config.json').read_bytes()),'argv':[str(node),str(r/'decoder-worker.mjs'),str(out/'config.json'),(r/'combined/runtime/host_v1/primary_stdio.mjs').as_uri(),channel],'cwd':str(r),'environment_delta':{'TMP':str(r/'tmp'),'TEMP':str(r/'tmp')}})
+tests=['test_primary_stdio.mjs','test_primary_stdio_backpressure.mjs','test_primary_stdio_failure_order.mjs','test_primary_stdio_utf8.mjs','test_relay_client.mjs']
+jobs.append({'name':'combined-maintained56','argv':[str(node),'--test','--test-concurrency=1','--test-reporter=tap']+['runtime/host_v1/'+n for n in tests],'cwd':str(r/'combined'),'output':str(r/'check-first/combined-maintained56'),'environment_delta':{'TMP':str(r/'tmp'),'TEMP':str(r/'tmp'),'PRIMARY_STDIO_STARTUP_EVIDENCE':str(r/'maintained-startup-cases'),'PRIMARY_FAILURE_EVIDENCE':str(r/'maintained-failure-cases')}})
+source=[{'variant':v,'path':p.relative_to(r/v).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for v in ['peer','combined'] for p in sorted((p for p in (r/v).rglob('*') if p.is_file()),key=lambda p:p.relative_to(r/v).as_posix())]
+put(r/'COMPOSITION_SOURCE.json',{'peer_head':e['head'],'current_main':e['current_main'],'owned_utf8_head':pub['head'],'combined_stdio_sha256':sha(combined.encode()),'recipe':'Exact V2 public wrapper/private immediate owner notification/startup/busy/Readline binding retained; owned strictUTF8 prefix imported into private core, with immediate observeFailure(failure), byte cleanup/import. Exact adopted6935 relay. Isolated reviewer source only, no joint source installation.','standard_decoder_observer':'In new three cells only, wrap TextDecoder.prototype.decode to record the same original thrown Error and rethrow it unchanged; restore before completion. Source product bytes unchanged.'})
+intent={'worker_id':'01a0ff2e-17a3-70a1-908e-0d6dd78c45e9','policy_version':'FINAL-v5','proposal_digest':e['proposal_digest'],'H':'V2 synchronous notification also retains strict raw decoder first diagnosis at whole owner despite later input/output errors and pending original work.','T':'Three NEW ordinary isolated V2+owned6961 decoder-first cells: no later error, later input, later output; same original inert real relay. Affected composed56 methods on this new source. Author41 reused through data-only audit, no identical peer41 replay.','D':'All three outer endpoints are the same observed first ERR_ENCODING_INVALID_ENCODED_DATA TypeError; no early settlement/second command/replay; same one request/result/host0/fixture0/absent/foreign listeners and observer restored. Composed56 zero fail/cancel/skip. Record first failures, do not alter D or runtime source to manufacture pass.','C':'Controlled builtin observation and stream error induction; own WindowsNode24 vs authorMacNode26. Saved6978 cause informs new changed-source regression and is not replayed.','U':'No actual native/backend/task/physical input/release/clock/efficiency/deadline/bytecap/general-goal proof; separate owned UTF8 remains excluded from6979 head.'}
+put(r/'INTENT.json',intent)
+put(r/'FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'source':source,'helpers':[{'path':name,'sha256':sha((r/name).read_bytes())} for name in ['decoder-worker.mjs','owner-fixture.mjs','prepare.py','capture.py']], 'intent_sha256':sha((r/'INTENT.json').read_bytes()),'node_binary':str(node),'node_binary_sha256':sha(node.read_bytes()),'node_version':subprocess.check_output([str(node),'--version']).decode().strip(),'jobs':jobs,'job_timeout_seconds':25})
+print(json.dumps({'prepared':True,'new_decoder_cells':3,'composed_expected':56,'combined_stdio_sha256':sha(combined.encode()),'node':subprocess.check_output([str(node),'--version']).decode().strip()}))
+

@@ -1,0 +1,10 @@
+[1/4] FROM docker.io/library/python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+[1/4] CACHED
+[2/4] WORKDIR /opt/agent-interface-wslc-build-smoke
+[3/4] COPY payload.txt /opt/agent-interface-wslc-build-smoke/payload.txt
+[4/4] COPY probe.py /opt/agent-interface-wslc-build-smoke/probe.py
+exporting to image
+  | exporting layers
+  | writing image sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716
+  | naming to docker.io/agent-interface/wslc-build-smoke:20261003t0
+ 

@@ -16,7 +16,7 @@ class CodexAppServerClient:
         self._journal_lock = threading.Lock()
         self.process = process_factory(
             command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, text=True, bufsize=1)
+            stderr=subprocess.PIPE, text=True, encoding="utf-8", bufsize=1)
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
@@ -66,6 +66,8 @@ class CodexAppServerClient:
                 self._record("received", message)
                 with self._condition:
                     if "id" in message:
+                        if type(message["id"]) is bool:
+                            continue
                         self._responses[message["id"]] = message
                     else:
                         self._notifications.append(message)

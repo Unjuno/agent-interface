@@ -1,0 +1,17 @@
+{"event": "request_start", "ns": 31939504515847, "seq": 1}
+{"event": "request_deadline_wait_observed", "ns": 31939506477856, "seq": 2}
+{"event": "notification_start", "ns": 31939506741982, "seq": 3}
+{"event": "predicate_enter", "message": {"method": "fixture/notice", "params": {"token": "condition-C01"}}, "ns": 31939506764107, "seq": 4}
+{"event": "response_gate_write_before", "ns": 31939506836399, "seq": 5}
+{"event": "response_gate_write_after", "ns": 31939506906316, "seq": 6}
+{"event": "checkpoint", "notification_alive": true, "ns": 31939758156146, "request_alive": true, "seq": 7}
+{"event": "owner_release", "ns": 31939907405195, "seq": 8}
+{"event": "predicate_return", "message": {"method": "fixture/notice", "params": {"token": "condition-C01"}}, "ns": 31939908210324, "seq": 9}
+{"event": "notification_return", "ns": 31939908384075, "seq": 10, "value": {"method": "fixture/notice", "params": {"token": "condition-C01"}}}
+{"event": "request_return", "ns": 31939908994828, "seq": 11, "value": {"fixture": "interrupt-ack", "token": "condition-C01"}}
+{"event": "callers_retired", "ns": 31939909310829, "seq": 12}
+{"event": "peer_finish_gate_write_before", "ns": 31939909365871, "seq": 13}
+{"event": "peer_finish_gate_write_after", "ns": 31939910277084, "seq": 14}
+{"event": "client_close_start", "ns": 31939932500857, "seq": 15}
+{"event": "client_close_return", "ns": 31939932800692, "seq": 16}
+{"errors": 0, "event": "driver_end", "ns": 31939933381570, "seq": 17}

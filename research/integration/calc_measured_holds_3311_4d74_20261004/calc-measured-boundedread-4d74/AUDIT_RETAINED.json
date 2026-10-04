@@ -1,0 +1,127 @@
+{
+  "disposition": "HOLD_OCR_FALSE_NEGATIVE_CONTINUATION_UNEXERCISED",
+  "errors": [],
+  "saved_effect": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "19",
+        "19",
+        null
+      ],
+      [
+        1,
+        1,
+        "29",
+        "29",
+        null
+      ],
+      [
+        1,
+        2,
+        "551",
+        "551",
+        "of:=[.A2]*[.B2]"
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "19",
+        "19",
+        null
+      ],
+      [
+        1,
+        1,
+        "29",
+        "29",
+        null
+      ],
+      [
+        1,
+        2,
+        "551",
+        "551",
+        "of:=[.A2]*[.B2]"
+      ]
+    ]
+  },
+  "graph": "SAFE_YIELD",
+  "reason": "effect_failed",
+  "native_programs": 1,
+  "second_save_exists": false,
+  "read_continuations": 0,
+  "ocr_stdout": [
+    "",
+    "19\n",
+    "29\n",
+    "951\n"
+  ],
+  "ocr_total_ns": 294882665,
+  "model_summary": {
+    "label": "batch",
+    "usage": {
+      "totalTokens": 17987,
+      "inputTokens": 17738,
+      "cachedInputTokens": 14848,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 249,
+      "reasoningOutputTokens": 136
+    },
+    "thread_id": "01a10312-f3dc-74f2-98b2-37d4d6903b37",
+    "dynamic_calls": 1,
+    "wall_ns": 9198405600
+  },
+  "limitations": [
+    "Correct saved XML and visually inspected PNG show551; OCR returned951.",
+    "No unavailable post-action decode, so bounded continuation hypothesis untested.",
+    "Dormant source defect: ROI hash is computed before continuation and would refer to initial capture if continuation used.",
+    "Parent cleanup receipts do not prove graceful application close or every descendant."
+  ]
+}

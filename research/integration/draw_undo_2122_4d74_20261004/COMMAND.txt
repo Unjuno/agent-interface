@@ -1,0 +1,4 @@
+wslc run --rm --network none --cpus 1 --memory 512M --user 65534:65534 --volume SOURCE:/study:ro --volume OUTPUT:/out --env PYTHONDONTWRITEBYTECODE=1 IMAGE /usr/bin/python3 /study/probe.py
+SOURCE=C:\Users\junny\Documents\Codex\2026-09-19\new-chat\work\draw-undo-2122-4d74
+OUTPUT=C:\Users\junny\Documents\Codex\2026-09-19\new-chat\work\draw-undo-2122-4d74\output
+IMAGE=sha256:bab4dc0dff6ffa8270e86873c3987e0e3203c1b198a08ff971580a6c04c3ba1d

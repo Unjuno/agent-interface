@@ -4,6 +4,14 @@
 
 ## Navigate
 
+Retained [constructor-journal ownership comparison](appserver_constructor_journal_59_20261003_01a0ff34/REPORT.md): original twelve cells and traceback-retention counterexample, not a production repair or permanent-leak/cleanup-bound claim. [Saved-data rescue checks](../../runtime/results/constructor_journal_rescue_f4cc/README.md) do not replay the original factory/collector or certify current source.
+
+Retained [late/unowned response boundary](appserver_late_reply_59_20261003_df63/README.md): original Queue-backed construction, pending-ID counterfactual and first publication failures, not a production repair or real-server certificate. [Saved-data rescue](../../runtime/results/late_reply_rescue_d5ab/README.md) does not replay the original subject/collector or certify current-main behavior.
+
+Retained [reader-close precursor](reader_close_59_b04b/README.md): original RED, first checker/packaging STOPs and two qualified construction cells. Current main already includes its reader guard plus newer journal-lock repair; this archive grants no cancelled #6944 adoption. [Fresh rescue checks](../../runtime/results/reader_close_rescue_fb80/README.md) distinguish saved public data from current component tests and do not replay the original producer.
+
+Retained [predicate Condition boundary](appserver_predicate_condition_17_20261003_01a0ff52_b64b/README.md): four original directed Linux-pipe cells, ten copied-data refusals and first failures. This is not a production repair or callback hard deadline. [Local rescue verification](../../runtime/results/predicate_condition_rescue_78ae/README.md) checks saved evidence without native experiment replay.
+
 | Need | Read |
 |---|---|
 | Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
@@ -19,6 +27,9 @@
 | Reproduction notes | [Reproduce](#reproduce) |
 | Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
 | #59 closed app-server stdout diagnostic timeout | [Native pipe counterexample](appserver_closed_diagnostic_59_20261003_01a0ff52/README.md) |
+| #6067 A03 native phase-effect first STOP (no efficacy promotion) | [Readiness and formal STOP](phase_effect_6067_t1_a03_20261004_3cbf/REPORT.md) |
+| #6067 D02 post-wait snapshot-cost diagnostic (HOLD, no efficacy promotion) | [Actual result and custody](postwait_cost_6067_d02_20261004_3cbf/REPORT.md) |
+| #6067 D03 imposed sibling-load pure-sleep experiment (HOLD, no cause promotion) | [Actual result and custody](sleep_load_6067_d03_20261004_3cbf/REPORT.md) |
 
 ## Track map
 
@@ -653,3 +664,5 @@ or human-tempo claim.
 - [Bounded journal-mutex retirement repair](appserver_journal_close_57_20261003_01a0ff2d/README.md): preserves journal custody and explicit incomplete cleanup; Windows ordinary regressions, not an overall OS-I/O deadline.
 
 - [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.
+- [Boolean reply-ID correlation regression](appserver_reply_id_5156_20261003/REPORT.md): Boolean IDs cannot correlate to numeric requests; numeric float replies and server errors retained, no genuine-provider or general protocol-conformance claim.
+- [Send before response deadline: original comparison and audit qualification](appserver_send_boundary_59_20261003_01a0ff52/README.md): six historical Mac cells, response-only timeout and finite uncertain writer; original9/12 control refusals and later12/12 correction, no transport adoption or hard deadline claim.

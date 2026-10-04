@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "C:\\Program Files\\WSL\\wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--cpus",
+    "0.5",
+    "--memory",
+    "512M",
+    "--user",
+    "65534:65534",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a04_firstchar_prepare_20261003:/experiment:ro",
+    "--name",
+    "ai-5260-a04-construction01-candidate-20261003",
+    "--env",
+    "DISPLAY=:97",
+    "--env",
+    "EXPERIMENT_IMAGE_ID=sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a04_results_20261003\\construction01-candidate-data:/out",
+    "sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "/usr/bin/python3",
+    "-B",
+    "/experiment/candidate.py",
+    "/experiment/fixture.json",
+    "/out"
+  ],
+  "exit_code": 0,
+  "finished_utc": "2026-10-03T14:06:17.022354+00:00",
+  "launch_error": null,
+  "output_sha256": {
+    "attempt.json": "683a8e6219e430cf192240da9bb71e5100f2d6137965f22c8b6414e57f5e19de",
+    "stderr.bin": "2562006e62622bcf41c809d627cdc2c6250516b8cf1c9ccd28072c331fcc4096",
+    "stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "started_utc": "2026-10-03T14:06:12.165762+00:00",
+  "wall_seconds": 4.855842900004063
+}

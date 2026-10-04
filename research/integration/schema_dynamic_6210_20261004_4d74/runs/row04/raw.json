@@ -1,0 +1,266 @@
+{
+  "canonical_program": {
+    "authority": {
+      "expires_at_ns": 41418272307,
+      "lease_id": "owned-fixture"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "owned"
+      },
+      {
+        "frame": "screen_physical_px",
+        "op": "pointer_move",
+        "x": 460,
+        "y": 185
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 50
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "schema-native-click",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "cleanup_release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 36583363651,
+    "verified": true
+  },
+  "dispatch_end_ns": 36470283910,
+  "dispatch_start_ns": 36418278918,
+  "effect": {
+    "history": [
+      {
+        "button": 1,
+        "label": "BLUE",
+        "matching_press": true,
+        "time": 36419,
+        "x": 460,
+        "y": 185
+      }
+    ],
+    "press": null,
+    "selected": "BLUE"
+  },
+  "ended_ns": 36601197007,
+  "errors": [],
+  "final": {
+    "artifact": {
+      "bytes": 2381,
+      "height": 360,
+      "mime_type": "image/png",
+      "path": "/out/images/dc5f41b1f9ff400e8df7d59bf797f5be.png",
+      "sha256": "bc1c8c767d85ac12d71ab7e573345a43b3da3c3fb029d6206924598ad49e9e85",
+      "source_raw_sha256": "dcc347966d38109617939b296bc4f57762da7906b16c50cda29c47b35c90227e",
+      "timing_ns": {
+        "converted": 36575811398,
+        "encoded": 36578679038,
+        "hashed": 36582714322,
+        "started": 36575381024,
+        "written": 36582201222
+      },
+      "width": 640
+    },
+    "bytes": 921600,
+    "capture_ended_ns": 36574893475,
+    "capture_started_ns": 36573595942,
+    "frame": "screen_physical_px",
+    "height": 360,
+    "native_window_id": 4194304,
+    "region": [
+      0,
+      0,
+      640,
+      360
+    ],
+    "sha256": "dcc347966d38109617939b296bc4f57762da7906b16c50cda29c47b35c90227e",
+    "target": "owned",
+    "width": 640
+  },
+  "initial": {
+    "artifact": {
+      "bytes": 2127,
+      "height": 360,
+      "mime_type": "image/png",
+      "path": "/out/images/fe9f0f33fa0641cab415e25637c73922.png",
+      "sha256": "91db90589c485b873e64ee4bef0b68cf8d754d9bc13c86e5cf0262e9a26b90f0",
+      "source_raw_sha256": "273307a4c03101ebc28682ce1cab0d448d67f4678ebec151d470ab9bd2961a36",
+      "timing_ns": {
+        "converted": 31710535741,
+        "encoded": 31718161548,
+        "hashed": 31720983930,
+        "started": 31710151547,
+        "written": 31720492603
+      },
+      "width": 640
+    },
+    "bytes": 921600,
+    "capture_ended_ns": 31709696388,
+    "capture_started_ns": 31708316746,
+    "frame": "screen_physical_px",
+    "height": 360,
+    "native_window_id": 4194304,
+    "region": [
+      0,
+      0,
+      640,
+      360
+    ],
+    "sha256": "273307a4c03101ebc28682ce1cab0d448d67f4678ebec151d470ab9bd2961a36",
+    "target": "owned",
+    "width": 640
+  },
+  "initial_effect": {
+    "history": [],
+    "press": null
+  },
+  "physical_button_mask": 0,
+  "physical_keys": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "proposal": {
+    "action": "click",
+    "x": 460,
+    "y": 185
+  },
+  "receipt": {
+    "admission": "accepted",
+    "execution": {
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "emissions": 3,
+      "ended_ns": 36470269867,
+      "observations": [],
+      "program_emissions": 3,
+      "releases": [
+        {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 36470266666,
+          "verified": true
+        }
+      ],
+      "started_ns": 36418782531,
+      "waits": [
+        {
+          "completed": true,
+          "ended_ns": 36469734648,
+          "kind": "fixed_delay",
+          "operation_index": 4,
+          "requested_ms": 50,
+          "started_ns": 36419349575,
+          "update_observed": null
+        }
+      ]
+    },
+    "recovery_required": false,
+    "required_capabilities": [
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.pointer",
+      "input.release_all",
+      "window.focus"
+    ],
+    "status": "completed"
+  },
+  "source_hashes": {
+    "auditor.py": "fae3cc0312c39304f9dffdd1cc16241ba4c1b2420fcb8031f659a3a19435b823",
+    "driver_once.py": "b3e9ed80abe102ee9a09953809ffbdd1b8e4091a09b24547f8e2c2f1a6ff293a",
+    "equivalence.py": "e8a0d0a0334c55b8faa467744e2146c0a61786564b13954cbbfb0d174b700f12",
+    "fixture.py": "6d77093727227d24fb75bf951f2f5bcb2421b400f930179fe7a3f1ff61fabe82",
+    "producer.py": "7b90d6e2ff8e3b4ba98a6fa6e916755701dfd5495e408fe8f8f0072c3a640cb3",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "surface.py": "5753d6258bfd284987585f77f9dbc95ce8ab834fa7f11d19d2dfd81af26b717d"
+  },
+  "spec": {
+    "index": 3,
+    "target": "BLUE",
+    "variant": "A"
+  },
+  "started_ns": 31167749753,
+  "terminal": [
+    {
+      "exit_code": -15,
+      "name": "fixture",
+      "pid": 12
+    },
+    {
+      "exit_code": 0,
+      "name": "Xvfb",
+      "pid": 8
+    }
+  ]
+}

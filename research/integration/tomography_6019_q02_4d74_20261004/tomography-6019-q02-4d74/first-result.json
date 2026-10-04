@@ -1,0 +1,1066 @@
+{
+  "rows": [
+    {
+      "case": "serial_shared",
+      "routes": {
+        "A": "P",
+        "B": "P",
+        "C": "Q"
+      },
+      "probe_routes": {
+        "A": "P",
+        "B": "P",
+        "C": "Q"
+      },
+      "capacity": {
+        "P": 1,
+        "Q": 1
+      },
+      "base": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 3,
+          "end": 5,
+          "endpoint": 5
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "probe": [
+        {
+          "job": "probe",
+          "service": "P",
+          "offer": 0,
+          "start": 0,
+          "end": 8,
+          "endpoint": 8
+        },
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 8,
+          "end": 10,
+          "endpoint": 10
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 10,
+          "end": 12,
+          "endpoint": 12
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "global_control": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 3,
+          "end": 5,
+          "endpoint": 13
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        }
+      ],
+      "route_stable": true,
+      "result": "COUPLED_AB_UNDER_PROBE",
+      "observable": {
+        "base": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 3,
+            "end": 5,
+            "endpoint": 5
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "probe": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 8,
+            "end": 10,
+            "endpoint": 10
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 10,
+            "end": 12,
+            "endpoint": 12
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "global_control": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 3,
+            "end": 5,
+            "endpoint": 13
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          }
+        ]
+      }
+    },
+    {
+      "case": "parallel_shared",
+      "routes": {
+        "A": "P",
+        "B": "P",
+        "C": "Q"
+      },
+      "probe_routes": {
+        "A": "P",
+        "B": "P",
+        "C": "Q"
+      },
+      "capacity": {
+        "P": 2,
+        "Q": 1
+      },
+      "base": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "probe": [
+        {
+          "job": "probe",
+          "service": "P",
+          "offer": 0,
+          "start": 0,
+          "end": 8,
+          "endpoint": 8
+        },
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 3,
+          "end": 5,
+          "endpoint": 5
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "global_control": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        }
+      ],
+      "route_stable": true,
+      "result": "UNIDENTIFIED",
+      "observable": {
+        "base": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "probe": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 3,
+            "end": 5,
+            "endpoint": 5
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "global_control": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          }
+        ]
+      }
+    },
+    {
+      "case": "disjoint",
+      "routes": {
+        "A": "P",
+        "B": "Q",
+        "C": "R"
+      },
+      "probe_routes": {
+        "A": "P",
+        "B": "Q",
+        "C": "R"
+      },
+      "capacity": {
+        "P": 1,
+        "Q": 1,
+        "R": 1
+      },
+      "base": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "R",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "probe": [
+        {
+          "job": "probe",
+          "service": "P",
+          "offer": 0,
+          "start": 0,
+          "end": 8,
+          "endpoint": 8
+        },
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 8,
+          "end": 10,
+          "endpoint": 10
+        },
+        {
+          "job": "B",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "R",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "global_control": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "B",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "C",
+          "service": "R",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        }
+      ],
+      "route_stable": true,
+      "result": "UNIDENTIFIED",
+      "observable": {
+        "base": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "probe": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 8,
+            "end": 10,
+            "endpoint": 10
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "global_control": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          }
+        ]
+      }
+    },
+    {
+      "case": "hidden_shared_no_contention",
+      "routes": {
+        "A": "P",
+        "B": "P",
+        "C": "Q"
+      },
+      "probe_routes": {
+        "A": "P",
+        "B": "P",
+        "C": "Q"
+      },
+      "capacity": {
+        "P": 3,
+        "Q": 1
+      },
+      "base": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "probe": [
+        {
+          "job": "probe",
+          "service": "P",
+          "offer": 0,
+          "start": 0,
+          "end": 8,
+          "endpoint": 8
+        },
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "global_control": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        }
+      ],
+      "route_stable": true,
+      "result": "UNIDENTIFIED",
+      "observable": {
+        "base": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "probe": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "global_control": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          }
+        ]
+      }
+    },
+    {
+      "case": "hidden_disjoint_equivalent",
+      "routes": {
+        "A": "Q",
+        "B": "R",
+        "C": "S"
+      },
+      "probe_routes": {
+        "A": "Q",
+        "B": "R",
+        "C": "S"
+      },
+      "capacity": {
+        "P": 1,
+        "Q": 1,
+        "R": 1,
+        "S": 1
+      },
+      "base": [
+        {
+          "job": "A",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "R",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "S",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "probe": [
+        {
+          "job": "probe",
+          "service": "P",
+          "offer": 0,
+          "start": 0,
+          "end": 8,
+          "endpoint": 8
+        },
+        {
+          "job": "A",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "R",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "S",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "global_control": [
+        {
+          "job": "A",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "B",
+          "service": "R",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "C",
+          "service": "S",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        }
+      ],
+      "route_stable": true,
+      "result": "UNIDENTIFIED",
+      "observable": {
+        "base": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "probe": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "global_control": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          }
+        ]
+      }
+    },
+    {
+      "case": "switched_route",
+      "routes": {
+        "A": "P",
+        "B": "P",
+        "C": "Q"
+      },
+      "probe_routes": {
+        "A": "P",
+        "B": "Q",
+        "C": "Q"
+      },
+      "capacity": {
+        "P": 1,
+        "Q": 1
+      },
+      "base": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 3,
+          "end": 5,
+          "endpoint": 5
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        }
+      ],
+      "probe": [
+        {
+          "job": "probe",
+          "service": "P",
+          "offer": 0,
+          "start": 0,
+          "end": 8,
+          "endpoint": 8
+        },
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 8,
+          "end": 10,
+          "endpoint": 10
+        },
+        {
+          "job": "B",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 3
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 3,
+          "end": 5,
+          "endpoint": 5
+        }
+      ],
+      "global_control": [
+        {
+          "job": "A",
+          "service": "P",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        },
+        {
+          "job": "B",
+          "service": "P",
+          "offer": 1,
+          "start": 3,
+          "end": 5,
+          "endpoint": 13
+        },
+        {
+          "job": "C",
+          "service": "Q",
+          "offer": 1,
+          "start": 1,
+          "end": 3,
+          "endpoint": 11
+        }
+      ],
+      "route_stable": false,
+      "result": "HOLD_ROUTE_CHANGED",
+      "observable": {
+        "base": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 3,
+            "end": 5,
+            "endpoint": 5
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          }
+        ],
+        "probe": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 8,
+            "end": 10,
+            "endpoint": 10
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 3
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 3,
+            "end": 5,
+            "endpoint": 5
+          }
+        ],
+        "global_control": [
+          {
+            "job": "A",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          },
+          {
+            "job": "B",
+            "offer": 1,
+            "start": 3,
+            "end": 5,
+            "endpoint": 13
+          },
+          {
+            "job": "C",
+            "offer": 1,
+            "start": 1,
+            "end": 3,
+            "endpoint": 11
+          }
+        ]
+      }
+    }
+  ],
+  "equivalent_pair": true,
+  "source_sha256": "5945aba9f29d1a02176c8911d43917808d3dcce2338578d88cb22241e79ee933",
+  "scope": "deterministic finite queue interference, not topology certification"
+}

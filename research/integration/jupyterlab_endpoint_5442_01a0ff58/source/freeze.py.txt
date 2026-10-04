@@ -1,0 +1,18 @@
+import hashlib,json,sys
+from datetime import datetime,timezone
+from pathlib import Path
+root=Path(__file__).resolve().parent
+names=['prepare_primary.py','launch_owned.py','primary_launch.py','shutdown_owned.py','disk_observer.py','external_actor.py','audit_raw.py','test_audit.py','freeze.py','controller_helpers.js.txt','PROTOCOL.md','INPUTS.json','AUTOSAVE_OFF.jupyterlab-settings','DEPENDENCY_RECORDS.json','install-report.json','UPSTREAM_CONTEXT_4.6.4.ts.txt','UPSTREAM_LICENSE.txt','UPSTREAM_FETCH.json']
+pins={name:dict(bytes=len((root/name).read_bytes()),sha256=hashlib.sha256((root/name).read_bytes()).hexdigest()) for name in names}
+installed=[]
+env=root/'env/Lib/site-packages'
+for p in sorted((env/'jupyterlab/static').glob('*')):
+    if p.is_file():installed.append(p)
+for name in ['jupyter_server/services/contents/filemanager.py','jupyter_server/services/contents/manager.py','jupyter_server/services/contents/handlers.py']:
+    installed.append(env/name)
+assets={str(p.relative_to(env)).replace('\\','/'):dict(bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in installed}
+raw=dict(experiment='JUPYTER-STOCK-J01',phase='primary-J01',frozen_utc=datetime.now(timezone.utc).isoformat(),source_main=sys.argv[1],sources=pins,installed_assets=assets,
+    primary_launches_planned=1,primary_path=str(root/'primary-J01'),resources='owned one CPU loopback child and DOM-only hidden browser tab; no shared/native resources',allocation='new app/version/inputs/backend; no prior producer replay')
+with (root/'FREEZE.json').open('x',encoding='utf-8') as f:json.dump(raw,f,ensure_ascii=False,indent=2)
+data=(root/'FREEZE.json').read_bytes()
+print(json.dumps(dict(frozen_utc=raw['frozen_utc'],sources=len(pins),assets=len(assets),sha256=hashlib.sha256(data).hexdigest(),bytes=len(data))))

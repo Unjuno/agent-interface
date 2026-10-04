@@ -1,0 +1,31 @@
+import ast, hashlib, json, pathlib, shutil
+root = pathlib.Path(__file__).resolve().parent
+target = root / 'candidate'
+if target.exists():
+    raise RuntimeError('candidate already exists')
+shutil.copytree(root / 'baseline', target)
+file = target / 'runtime/backends/win32_v1/backend.py'
+before = file.read_bytes()
+text = before.decode('utf-8')
+deletions = ['        else:\n            self.held_keys.pop(key, None)\n',
+             '        else:\n            self.held_buttons.discard(button)\n']
+if any(text.count(s) != 1 for s in deletions):
+    raise RuntimeError('exact two source deletions unavailable')
+after = text
+for s in deletions:
+    after = after.replace(s, '')
+def methods(source):
+    return {n.name:ast.dump(n, include_attributes=False) for c in ast.parse(source).body if isinstance(c, ast.ClassDef) and c.name == 'Win32Backend' for n in c.body if isinstance(n, ast.FunctionDef)}
+old, new = methods(text), methods(after)
+changed = [k for k in old if old[k] != new[k]]
+if set(old) != set(new) or changed != ['key_state', 'pointer_button']:
+    raise RuntimeError('unexpected method delta')
+file.write_bytes(after.encode('utf-8'))
+result = {'peer_proposed_minimal_retention': '45e9 advisory5968779460/5968779910', 'changed_methods': changed,
+          'release_all_AST_unchanged_from_v1': old['release_all'] == new['release_all'],
+          'baseline_bytes': len(before), 'baseline_sha256': hashlib.sha256(before).hexdigest(),
+          'candidate_bytes': file.stat().st_size, 'candidate_sha256': hashlib.sha256(file.read_bytes()).hexdigest(),
+          'candidate_equals_published_peer_private_source': hashlib.sha256(file.read_bytes()).hexdigest() == '916fac81b586acd1c7ee1c47b4d905ce902a50c5b25a952a9650f6b3b74f840a',
+          'v1_votes_carried_forward': 0, 'native_calls': 0, 'main_sends': 0}
+(root / 'SOURCE_DELTA.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+print(json.dumps(result))

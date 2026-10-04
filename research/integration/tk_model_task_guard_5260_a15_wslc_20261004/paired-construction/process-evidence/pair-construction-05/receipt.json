@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "C:/Program Files/WSL/wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--cpus",
+    "0.5",
+    "--memory",
+    "512M",
+    "--user",
+    "65534:65534",
+    "--name",
+    "ai-5260-a15-pair-qualified05-20261004",
+    "--mount",
+    "type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-x20/_research_6003_a01_20261003,target=/src,readonly",
+    "--env",
+    "PYTHONPATH=/src:/src/research/integration/tk_model_task_guard_5260_a15_wslc_20261004",
+    "--workdir",
+    "/src",
+    "sha256:a67fdc7786a9245adf081382c35dfdee2d3e8506859d397972750428aede6461",
+    "research/integration/tk_model_task_guard_5260_a15_wslc_20261004/construction_x11.py",
+    "test_live_pair",
+    "-v"
+  ],
+  "exit_code": 0,
+  "finished_utc": "2026-10-03T22:57:28.735963+00:00",
+  "launch_error": null,
+  "output_sha256": {
+    "attempt.json": "efc3634f6b851ee6031640c83d9d69de2ede6f3864f75385547560ac93b245fa",
+    "stderr.bin": "42fa1f89a07f6f3ccf3c602111b20017c21279c809f1f7fefa504a2b7e7182bb",
+    "stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "started_utc": "2026-10-03T22:57:06.402153+00:00",
+  "wall_seconds": 22.333713500003796
+}

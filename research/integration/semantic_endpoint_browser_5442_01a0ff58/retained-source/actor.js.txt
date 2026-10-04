@@ -1,0 +1,37 @@
+// Load into the existing CUA REPL; never invoke this through another browser API.
+// Parameters contain trial IDs and desired strings only, with no endpoint mode.
+async function runEndpointTrial(trialId, desiredText, phase) {
+  if (!['initial', 'repair'].includes(phase)) throw Error('invalid phase');
+  const key = trialId + ':' + phase;
+  if (semanticConsumed.has(key)) throw Error('consumed submit; no retry');
+  const record = async (stage, state, extra = {}) => {
+    await semanticFs.appendFile(semanticTrace, JSON.stringify({trial_id: trialId, phase,
+      stage, utc: new Date().toISOString(), state, ...extra}) + '\n', 'utf8');
+  };
+  await semanticTab.playwright.getByRole('link', {name: (phase === 'repair' ? 'Repair ' : 'Trial ') + trialId, exact: true}).click();
+  let state = await semanticTab.getAXState({emit: false, disableDiffing: true});
+  await record('editor', state);
+  const heading = (phase === 'repair' ? 'Fresh repair ' : 'Trial ') + trialId;
+  if (!state.includes(heading) || !state.includes('New value') || !state.includes('Target: Document A'))
+    throw Error('unexpected editor; HOLD');
+  await semanticTab.playwright.getByLabel('New value', {exact: true}).fill(desiredText);
+  state = await semanticTab.getAXState({emit: false, disableDiffing: true});
+  await record('intent-before-submit', state, {desired_text: desiredText, nonce: '5442-01a0ff58-' + trialId + ':' + phase});
+  if (!state.includes(desiredText)) throw Error('input value absent; HOLD before submit');
+  semanticConsumed.add(key);
+  try {
+    await semanticTab.playwright.getByRole('button', {name: phase === 'repair' ? 'Repair safely' : 'Save', exact: true}).click();
+    state = await semanticTab.getAXState({emit: false, disableDiffing: true});
+    await record('submit-returned', state);
+    if (!state.includes('Request processed') || !state.includes('Dispatcher accepted') || !state.includes('Trial ' + trialId))
+      throw Error('unexpected submit outcome; HOLD');
+    await semanticTab.playwright.getByRole('link', {name: 'All trials', exact: true}).click();
+    state = await semanticTab.getAXState({emit: false, disableDiffing: true});
+    await record('dashboard-returned', state);
+    if (!state.includes('Endpoint receipt experiment')) throw Error('unexpected dashboard; HOLD');
+    nodeRepl.write({trial_id: trialId, phase, ui: 'accepted'});
+  } catch (error) {
+    await record('HOLD-after-consumed-submit', state, {reason: String(error)});
+    throw error;
+  }
+}

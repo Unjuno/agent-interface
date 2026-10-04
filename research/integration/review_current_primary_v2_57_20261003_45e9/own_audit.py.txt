@@ -1,0 +1,91 @@
+"""Separate saved-data-only oracle for new V2 composition, with semantic copied controls."""
+from pathlib import Path
+from datetime import datetime
+import hashlib,json,re,copy
+r=Path(__file__).resolve().parent
+def j(p):return json.loads(p.read_bytes())
+def sha(b):return hashlib.sha256(b).hexdigest()
+def integer(v,minimum=0):assert type(v) is int and v>=minimum
+def dt(v):return datetime.fromisoformat(v.replace('Z','+00:00'))
+def verify_receipt(out,expected,freeze):
+ rec=j(out/'RECEIPT.json');start=j(out/'START.json')
+ for v in [rec['pid'],rec['ppid'],rec['exit_code']]:integer(v)
+ assert rec['exit_code']==expected and rec['original_pid_observed_absent'] is True and rec['confirmed_live_at_timeout'] is False
+ assert start['pid']==rec['pid'] and start['ppid']==rec['ppid']
+ assert start['freeze_sha256']==sha(freeze.read_bytes())
+ assert dt(j(freeze)['frozen_utc'])<=dt(rec['started_utc'])<=dt(rec['ended_or_observed_utc'])
+ for stream in ['stdout','stderr']:
+  b=(out/(stream+'.txt')).read_bytes();assert len(b)==rec[stream+'_bytes'] and sha(b)==rec[stream+'_sha256']
+ assert rec['stderr_bytes']==0;return rec,start
+f=j(r/'FREEZE.json')
+assert sha((r/'INTENT.json').read_bytes())==f['intent_sha256'] and sha(Path(f['node_binary']).read_bytes())==f['node_binary_sha256']
+for x in f['source']:assert sha((r/x['variant']/x['path']).read_bytes())==x['sha256']
+for x in f['helpers']:assert sha((r/x['path']).read_bytes())==x['sha256']
+def decoder(x,job,rec,start):
+ config=j(Path(job['output'])/'config.json');assert x['nonce']==config['nonce'] and x['channel']==job['channel']
+ for v in [x['worker_pid'],x['worker_ppid'],x['fixtureStart']['pid'],x['fixtureStart']['ppid'],x['fixtureExit']['pid'],x['fixtureExit']['ppid'],x['fixtureExit']['code'],x['fixtureExit']['bytes'],x['fixtureExit']['requests'],x['fixtureExit']['replyCount'],x['hostExit']['code']]:integer(v)
+ assert x['worker_pid']==rec['pid']==start['pid']==x['fixtureStart']['ppid']==x['fixtureExit']['ppid'] and x['worker_ppid']==rec['ppid']
+ assert x['fixtureStart']['pid']==x['fixtureExit']['pid'] and x['fixtureExit']['pid']!=x['worker_pid']
+ assert x['fixtureStart']['nonce']==x['fixtureExit']['nonce']==x['nonce']
+ assert x['fixtureExit']['code']==0 and x['fixtureExit']['bytes']==49 and x['fixtureExit']['requests']==x['fixtureExit']['replyCount']==1
+ assert x['hostExit']=={'code':0,'signal':None} and x['childAbsent'] is True
+ assert x['foreign_retained'] is True and x['listeners']=={'input':1,'output':1}
+ for v in x['listeners'].values():integer(v)
+ assert x['decoder_observer_restored'] is True and x['before_release_settled'] is False
+ assert [z['status'] for z in x['rows']]==['ready','returned'] and x['rows'][1]['result']==x['presentation']
+ assert x['first_error']=={'name':'TypeError','message':'The encoded data was not valid for encoding utf-8','code':'ERR_ENCODING_INVALID_ENCODED_DATA'}
+ assert x['endpoint_error']==dict(x['first_error'],first_identity=True,later_identity=False)
+ reply=x['originalReply'];assert reply['id']==1 and type(reply['id']) is int and reply['attempt']==1 and type(reply['attempt']) is int and reply['next_id']==2 and reply['tool']=='interface_close' and reply['status']=='returned'
+ assert reply['result']['isError'] is False and json.loads(reply['result']['content'][0]['text'])=={'status':'closed','nonce':x['nonce']}
+ presentation=x['presentation'];assert presentation['id']==1 and presentation['attempt']==1 and presentation['next_id']==2 and presentation['method']=='call'
+ assert presentation['presented_text']==[{'schema':'agent-interface/mcp-result-status-v1','isError':False},json.dumps({'status':'closed','nonce':x['nonce']},separators=(',',':'))]
+ events=x['events'];assert [v['seq'] for v in events]==list(range(1,len(events)+1))
+ for v in events:integer(v['seq'],1)
+ assert dt(rec['started_utc'])<=dt(events[0]['utc'])<=dt(events[-1]['utc'])<=dt(rec['ended_or_observed_utc']) and all(dt(a['utc'])<=dt(b['utc']) for a,b in zip(events,events[1:]))
+ names=[v['kind'] for v in events];assert names.count('first_decoder_error_observed')==1
+ first=names.index('first_decoder_error_observed');release=names.index('release_original_fixture');endpoint=names.index('owner_endpoint')
+ assert names.index('one_original_request_observed')<first<names.index('decoder_first_original_pending')<release<endpoint
+ assert events[names.index('decoder_first_original_pending')]['settled'] is False
+ assert events[endpoint]['first_identity'] is True and events[endpoint]['later_identity'] is False and events[endpoint]['status']=='rejected'
+ if job['channel']=='none':assert 'later_channel_error_emit' not in names
+ else:assert first<names.index('later_channel_error_emit')<release and events[names.index('later_channel_error_emit')]['channel']==job['channel']
+cells=[];controls=[]
+for job in f['jobs']:
+ if not job['name'].startswith('decoder-'):continue
+ out=Path(job['output']);assert sha((out/'config.json').read_bytes())==job['config_sha256']
+ rec,start=verify_receipt(out,0,r/'FREEZE.json');x=j(out/'RAW.json');decoder(x,job,rec,start)
+ assert json.loads((out/'stdout.txt').read_text(encoding='utf-8').strip())==x
+ for filename,key in [('fixture-start.json','fixtureStart'),('fixture-exit.json','fixtureExit'),('host/exit.json','hostExit'),('exchange/original-reply-1.json','originalReply'),('exchange/presentation-1.json','presentation')]:assert j(out/filename)==x[key]
+ assert j(out/'fixture-request.json')['request']==j(out/'host/request-1.json')
+ response=j(out/'fixture-response.json')['response'];assert {k:v for k,v in x['originalReply'].items() if k!='attempt'}==response==j(out/'host/reply-1.json')
+ assert not (out/'exchange/request-2.json').exists()
+ cells.append({'channel':job['channel'],'status':'PASS_FIRST_DECODER_IDENTITY_PRESERVED','worker_pid':rec['pid'],'fixture_pid':x['fixtureStart']['pid'],'original_pids_observed_absent':True,'started_utc':rec['started_utc'],'ended_utc':rec['ended_or_observed_utc']})
+ if job['channel']=='output':
+  for name,path,value in [('bool-exit',['fixtureExit','code'],False),('float-pid',['worker_pid'],float(x['worker_pid'])),('early-settle',['before_release_settled'],True),('lost-foreign',['foreign_retained'],False),('duplicate-request',['fixtureExit','requests'],2),('later-error-promoted',['endpoint_error','first_identity'],False),('wrong-type-code',['first_error','code'],'OTHER'),('lost-child',['childAbsent'],False),('observer-left-installed',['decoder_observer_restored'],False),('changed-original-nonce',['fixtureExit','nonce'],'wrong')]:
+   changed=copy.deepcopy(x);target=changed
+   for k in path[:-1]:target=target[k]
+   target[path[-1]]=value
+   try:decoder(changed,job,rec,start)
+   except AssertionError:controls.append({'name':name,'rejected':True})
+   else:raise AssertionError('ineffective copied control '+name)
+def tap(out,passcount,failcount):
+ text=(out/'stdout.txt').read_text(encoding='utf-8');summary={k:int(v) for k,v in re.findall(r'^# (tests|pass|fail|cancelled|skipped|todo) (\d+)$',text,re.M)}
+ assert summary=={'tests':56,'pass':passcount,'fail':failcount,'cancelled':0,'skipped':0,'todo':0};return text
+first=r/'check-first/combined-maintained56';rec,_=verify_receipt(first,1,r/'FREEZE.json');s=tap(first,54,2)
+assert re.findall(r'^not ok \d+ - (.+)$',s,re.M)==['startup exchange creation healthy control publishes ready and terminal','startup exchange creation failure never publishes ready']
+assert s.count('Error: ENOENT: no such file or directory, mkdir')==2 and '3 !== 0' in s
+fixed=r/'check-repaired/combined-maintained56';rr,_=verify_receipt(fixed,0,fixed/'FREEZE.json');s=tap(fixed,56,0)
+assert sha((r/'repair_startup_environment.py').read_bytes())==j(fixed/'FREEZE.json')['helper_sha256']
+witnesses=[json.loads(v) for v in re.findall(r'^# STARTUP_EXCHANGE_WITNESS (.+)$',s,re.M)];assert len(witnesses)==2
+for w in witnesses:
+ for v in [w['hookCalls'],w['fixtureStart']['pid'],w['fixtureStart']['ppid'],w['fixtureExit']['pid'],w['fixtureExit']['code'],w['fixtureExit']['bytes'],w['hostExit']['code']]:integer(v)
+ assert w['hookCalls']==1 and w['fixtureStart']['pid']==w['fixtureExit']['pid'] and w['fixtureExit']['code']==w['fixtureExit']['bytes']==w['hostExit']['code']==0
+ assert w['childAbsent'] is True and w['listeners']=={'input':0,'output':0}
+ assert w['statuses']==(['ready','terminal'] if w['phase']=='healthy' else []) and w['errorObserved'] is (w['phase']=='fault')
+for root in [r/'maintained-failure-cases',r/'repaired-failure-cases']:
+ for channel in ['input','output']:
+  w=j(root/channel/'WITNESS.json');assert w['fixture_absent'] is True and w['before_release_settled'] is False and w['fixture_exit']['code']==0 and w['fixture_exit']['requests']==1 and w['host_exit']=={'code':0,'signal':None}
+  assert w['error']['message']=='primary busy response backlog' and w['statuses']==['ready','busy','returned']
+result={'status':'PASS_SCOPED_V2_ISOLATED_UTF8_OWNER_COMPOSITION','new_three_decoder_cells':cells,'copied_data_controls':controls,'first_composed56':{'actual_exit':1,'pass':54,'fail':2,'failure':'own missing startup parent directory before product startup'},'ordinary_env_repair_composed56':{'actual_exit':0,'pass':56,'fail':0,'skipped':0,'cancelled':0,'source_test_D_unchanged':True,'started_utc':rr['started_utc'],'ended_utc':rr['ended_or_observed_utc']},'three_cells_replayed':False,'two_saved_startup_witnesses':True,'first_and_fixed_four_busy_fixture_histories':True,'limits':'Changed isolated source; builtin observer only in three new cases, original thrown object rethrown/restored. No author41/original/formal/native replay, installed combined source, future-main certificate, real backend/task/input-release/clock/bounds/efficiency/full-goal proof.'}
+(r/'OWN_AUDIT.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps(result))
+

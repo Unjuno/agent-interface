@@ -1,0 +1,72 @@
+"""Independent fixed-head image/custody export; explicit imports, no lazy maintenance."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+r=Path(__file__).resolve().parent;repo=r.parent/'agent-interface'
+w=json.loads((r/'PROPOSAL.json').read_bytes());d=w['proposal'];head=d['head'];base=d['review_base'];main='e54128b7ed4bfe1cd39177fa6c7d1a7c1c45d462'
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1')
+prefix=['git','-c','maintenance.auto=false','-c','gc.auto=0']
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+def git(*a,**kw):return subprocess.check_output(prefix+list(a),cwd=repo,env=env,**kw)
+def capture_fetch(label,oids,depth=None):
+ out=r/'command-first'/label;out.mkdir(parents=True,exist_ok=False)
+ argv=prefix+['-c','fetch.negotiationAlgorithm=noop','fetch','origin','--no-auto-maintenance','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','--stdin']
+ if depth:argv.append('--depth='+str(depth))
+ started=datetime.now(timezone.utc).isoformat();code=None;live=False
+ with (out/'stdout.txt').open('wb') as stdout,(out/'stderr.txt').open('wb') as stderr:
+  p=subprocess.Popen(argv,cwd=repo,env=env,stdin=subprocess.PIPE,stdout=stdout,stderr=stderr)
+  put(out/'START.json',{'argv':argv,'cwd':str(repo),'pid':p.pid,'started_utc':started,'oids':oids,'GIT_NO_LAZY_FETCH':'1'})
+  p.stdin.write(('\n'.join(oids)+'\n').encode());p.stdin.close()
+  try:code=p.wait(timeout=55)
+  except subprocess.TimeoutExpired:live=True
+ put(out/'RECEIPT.json',{'argv':argv,'pid':p.pid,'started_utc':started,'observed_utc':datetime.now(timezone.utc).isoformat(),'exit_code':code,'confirmed_live_at_observation':live,'stdout_bytes':(out/'stdout.txt').stat().st_size,'stderr_bytes':(out/'stderr.txt').stat().st_size,'stdout_sha256':sha((out/'stdout.txt').read_bytes()),'stderr_sha256':sha((out/'stderr.txt').read_bytes()),'oids':oids})
+ assert code==0 and not live,('fetch not complete; inspect same PID, do not restart',p.pid,code,live)
+def tree(ref,paths):
+ t={}
+ for row in git('ls-tree','-r',ref,'--',*paths).decode().splitlines():
+  meta,path=row.split('\t');mode,kind,oid=meta.split();t[path]={'mode':mode,'kind':kind,'blob':oid}
+ return t
+primary_index=sha((repo/'.git/index').read_bytes());primary_head=git('rev-parse','HEAD').decode().strip()
+refs=[head,base,main];checks=git('cat-file','--batch-check',input=('\n'.join(refs)+'\n').encode()).decode().splitlines()
+missing=[oid for oid,row in zip(refs,checks) if row.endswith(' missing')]
+if missing:capture_fetch('metadata-fetch',missing,2)
+assert git('rev-parse',head+'^{tree}').decode().strip()==d['head_tree']
+names=sorted(git('diff','--name-only','--no-renames',base,head).decode().splitlines());assert len(names)==d['diff_paths']==41
+before=tree(base,names);after=tree(head,names);rows=[{'path':p,'before':before.get(p),'after':after.get(p)} for p in names]
+plan=json.loads((r/'custody/PLAN.json').read_bytes());pins=[x['path'] for x in plan['source_pins']];assert len(pins)==27
+context=['README.md','ROADMAP.md','docs/CURRENT_GOAL.md','docs/WORKER_QUICKSTART.md','docs/RESEARCH_METHOD.md','docs/ISSUE_FAILURE_CLASSIFICATION.md','runtime/integration_checks/native.py','runtime/distribution_v2/build.py']
+head_pins=tree(head,pins);current_pins=tree(main,pins+context)
+extra=[{'side':side,'ref':ref,'path':p,'image':t[p]} for side,ref,t,paths in [('head',head,head_pins,pins),('current',main,current_pins,pins+context)] for p in paths if p in t]
+assert len(head_pins)==27;assert all(p in current_pins for p in pins if p!='runtime/host_v1/test_primary_stdio_backpressure.mjs')
+oids=sorted({im['blob'] for row in rows for im in [row['before'],row['after']] if im}|{e['image']['blob'] for e in extra})
+check=git('cat-file','--batch-check',input=('\n'.join(oids)+'\n').encode()).decode().splitlines();missing_blobs=[oid for oid,row in zip(oids,check) if row.endswith(' missing')]
+if missing_blobs:capture_fetch('explicit-blob-fetch',missing_blobs)
+raw=git('cat-file','--batch',input=('\n'.join(oids)+'\n').encode());offset=0;contents={}
+for wanted in oids:
+ end=raw.index(b'\n',offset);oid,kind,size=raw[offset:end].decode().split();assert oid==wanted and kind=='blob'
+ offset=end+1;n=int(size);b=raw[offset:offset+n];offset+=n;assert raw[offset:offset+1]==b'\n';offset+=1
+ assert hashlib.sha1(b'blob '+str(n).encode()+b'\0'+b).hexdigest()==oid;contents[oid]=b
+assert offset==len(raw)
+for row in rows:
+ for side in ['before','after']:
+  im=row[side]
+  if not im:continue
+  assert im['kind']=='blob';b=contents[im['blob']];im.update(bytes=len(b),sha256=sha(b));p=r/('before' if side=='before' else 'source')/row['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+canonical=lambda x:json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+assert sha(canonical(rows))==d['changed_images_sha256'];assert rows==json.loads((r/'custody/CHANGED_IMAGES.json').read_bytes())
+assert sha(canonical(d))==w['proposal_digest_sha256']
+for e in extra:
+ im=e['image'];b=contents[im['blob']];im.update(bytes=len(b),sha256=sha(b));p=r/e['side']/e['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+for pin in plan['source_pins']:
+ im=head_pins[pin['path']];assert im['bytes']==pin['bytes'] and im['sha256']==pin['sha256']
+agent_paths=['AGENTS.md','.github/AGENTS.md','.github/workflows/AGENTS.md','runtime/AGENTS.md','runtime/host_v1/AGENTS.md','research/AGENTS.md','research/integration/AGENTS.md','research/live_control/AGENTS.md','runtime/integration_checks/AGENTS.md','docs/AGENTS.md']
+agents={ref:git('ls-tree',ref,'--',*agent_paths).decode().splitlines() for ref in [head,main]}
+assert not any(agents.values()),('read governing AGENTS before further work',agents)
+current_delta=git('diff','--name-only','--no-renames',base,main).decode().splitlines()
+put(r/'CURRENT_DELTA_PATHS.json',current_delta)
+current_used_changes=[p for p in pins+context if current_pins.get(p)!=tree(base,[p]).get(p)]
+assert primary_index==sha((repo/'.git/index').read_bytes()) and primary_head==git('rev-parse','HEAD').decode().strip()
+put(r/'CHANGED_IMAGES.json',rows)
+put(r/'EXPORT.json',{'head':head,'tree':d['head_tree'],'base':base,'current_main':main,'changed_images':41,'changed_map_sha256':sha(canonical(rows)),'proposal_digest':w['proposal_digest_sha256'],'extra_pins':extra,'author27pins_exact':True,'missing_commits_imported':missing,'missing_explicit_blobs_imported':len(missing_blobs),'current_delta_paths':len(current_delta),'current_used_changed_paths':current_used_changes,'agents_ancestors':agents,'primary_index_unchanged':True,'primary_head_unchanged':True,'primary_head':primary_head,'primary_index_sha256':primary_index})
+print(json.dumps({'all41images_exact':True,'proposal_digest_exact':True,'author27pins_exact':True,'metadata_imports':missing,'explicit_blob_imports':len(missing_blobs),'current_delta_paths':len(current_delta),'current_used_changes':current_used_changes,'primary_head_index_unchanged':True}))

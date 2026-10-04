@@ -1,0 +1,303 @@
+{
+  "V3_and_combined_ready_violations": 0,
+  "author_first_taps": [
+    {
+      "actual_exit": 1,
+      "fails": 2,
+      "label": "red-new-boundary",
+      "passes": 0,
+      "tests": 2
+    },
+    {
+      "actual_exit": 1,
+      "fails": 1,
+      "label": "red-boundary-fixture-repair",
+      "passes": 1,
+      "tests": 2
+    },
+    {
+      "actual_exit": 0,
+      "fails": 0,
+      "label": "green-new-boundary",
+      "passes": 2,
+      "tests": 2
+    },
+    {
+      "actual_exit": 0,
+      "fails": 0,
+      "label": "green-focused19",
+      "passes": 19,
+      "tests": 19
+    },
+    {
+      "actual_exit": 0,
+      "fails": 0,
+      "label": "green-combined22",
+      "passes": 22,
+      "tests": 22
+    }
+  ],
+  "author_original_FD_observations": [
+    {
+      "actual_exit": 0,
+      "case": "healthy-empty-file",
+      "original_children_absent": true,
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "actual_exit": 0,
+      "case": "directory-read-error",
+      "original_children_absent": true,
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "actual_exit": 2,
+      "case": "writeonly-file-read-error",
+      "original_children_absent": true,
+      "statuses": [
+        "ready"
+      ]
+    }
+  ],
+  "author_startup_witnesses": [
+    {
+      "label": "red-boundary-fixture-repair",
+      "phase": "healthy",
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "label": "red-boundary-fixture-repair",
+      "phase": "fault",
+      "statuses": [
+        "ready"
+      ]
+    },
+    {
+      "label": "green-new-boundary",
+      "phase": "healthy",
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "label": "green-new-boundary",
+      "phase": "fault",
+      "statuses": []
+    },
+    {
+      "label": "green-focused19",
+      "phase": "healthy",
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "label": "green-focused19",
+      "phase": "fault",
+      "statuses": []
+    },
+    {
+      "label": "green-combined22",
+      "phase": "healthy",
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "label": "green-combined22",
+      "phase": "fault",
+      "statuses": []
+    }
+  ],
+  "changed_images": 413,
+  "known_V2_ready_violations": 2,
+  "limits": "Only first public bytes/hash claims for149 private-prefix derivatives;private originals not independently recovered/authenticated. Deterministic builtin hooks/inert fixture,not OS-device/native/input/task/release/atomicready/hard IObound/efficiency or latermain. Author originalFDs/formal/producers/auditor not replayed.",
+  "manifest_checks": [
+    {
+      "all_public_bytes_exact": true,
+      "members": 50,
+      "prefix": "research/integration/primary_input_error_57_20261003_01a0ff53"
+    },
+    {
+      "all_public_bytes_exact": true,
+      "members": 203,
+      "prefix": "research/integration/primary_stream_lifecycle_57_20261003_01a0ff53"
+    },
+    {
+      "all_public_bytes_exact": true,
+      "members": 153,
+      "prefix": "research/integration/primary_startup_ready_57_20261003_01a0ff53"
+    }
+  ],
+  "own_combined_maintained_methods": 51,
+  "own_copied_controls": [
+    {
+      "name": "bool-worker-code",
+      "rejected": true
+    },
+    {
+      "name": "bool-fixture-code",
+      "rejected": true
+    },
+    {
+      "name": "float-worker-pid",
+      "rejected": true
+    },
+    {
+      "name": "wrong-fault-identity",
+      "rejected": true
+    },
+    {
+      "name": "foreign-listener-removed",
+      "rejected": true
+    },
+    {
+      "name": "guard-promoted",
+      "rejected": true
+    },
+    {
+      "name": "invented-request",
+      "rejected": true
+    },
+    {
+      "name": "wrong-ancestry",
+      "rejected": true
+    },
+    {
+      "name": "hidden-child",
+      "rejected": true
+    },
+    {
+      "name": "reversed-clock",
+      "rejected": true
+    },
+    {
+      "name": "bool-hook",
+      "rejected": true
+    },
+    {
+      "name": "changed-nonce",
+      "rejected": true
+    }
+  ],
+  "own_new_startup_rows": [
+    {
+      "case": "healthy-exchange-eof",
+      "known_ready_violation": false,
+      "statuses": [
+        "ready",
+        "terminal"
+      ],
+      "variant": "v2"
+    },
+    {
+      "case": "host-input-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "v2"
+    },
+    {
+      "case": "host-output-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "v2"
+    },
+    {
+      "case": "exchange-input-error",
+      "known_ready_violation": true,
+      "statuses": [
+        "ready"
+      ],
+      "variant": "v2"
+    },
+    {
+      "case": "exchange-output-error",
+      "known_ready_violation": true,
+      "statuses": [
+        "ready"
+      ],
+      "variant": "v2"
+    },
+    {
+      "case": "healthy-exchange-eof",
+      "known_ready_violation": false,
+      "statuses": [
+        "ready",
+        "terminal"
+      ],
+      "variant": "v3"
+    },
+    {
+      "case": "host-input-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "v3"
+    },
+    {
+      "case": "host-output-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "v3"
+    },
+    {
+      "case": "exchange-input-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "v3"
+    },
+    {
+      "case": "exchange-output-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "v3"
+    },
+    {
+      "case": "healthy-exchange-eof",
+      "known_ready_violation": false,
+      "statuses": [
+        "ready",
+        "terminal"
+      ],
+      "variant": "combined"
+    },
+    {
+      "case": "host-input-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "combined"
+    },
+    {
+      "case": "host-output-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "combined"
+    },
+    {
+      "case": "exchange-input-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "combined"
+    },
+    {
+      "case": "exchange-output-error",
+      "known_ready_violation": false,
+      "statuses": [],
+      "variant": "combined"
+    }
+  ],
+  "proposal_digest": "e728eadc90ba427ee62c5af0fac650aa1db32aca07aed012801f613992e4c11a",
+  "public_derivatives_exact": 149,
+  "status": "PASS_SCOPED_V3_AND_FROZEN_COMPOSITION"
+}

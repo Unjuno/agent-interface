@@ -1,0 +1,72 @@
+"""Raw-only repair-result checker; does not import or run either audit implementation."""
+import hashlib
+import json
+from pathlib import Path
+
+
+def verify(package: Path, matrix: dict) -> dict:
+    pins = json.loads((package / 'SOURCE_PINS.json').read_text())
+    source = package.parents[2] / pins['path']
+    names = ['Dockerfile', 'payload.txt', 'probe.py', 'build.output.txt', 'run.output.txt', 'POSTRUN_CHECK.json', 'RUN.json']
+    # An independent frozen-table read, rather than trusting candidate constants.
+    freeze = (source / 'AUDIT_FREEZE.md').read_text()
+    for name, pin in pins['files'].items():
+        data = (source / name).read_bytes()
+        assert len(data) == pin['bytes'] and hashlib.sha256(data).hexdigest() == pin['sha256'], name
+        if name != 'AUDIT_FREEZE.md':
+            assert f"`{pin['sha256']}`" in freeze, name
+    expected = {'original'} | {'hash_' + n for n in names[3:]} | {'source_' + n for n in names[:3]} | {'missing_' + n for n in names} | {'image_build', 'image_postrun'}
+    rows = matrix['rows']
+    assert len(rows) == len(expected) and {r['id'] for r in rows} == expected
+    original_id = json.loads((source / 'POSTRUN_CHECK.json').read_text())['image_id']
+    false_accepts = 0
+    for row in rows:
+        case = package / 'cases' / row['id']
+        changed = []
+        for name in names:
+            path = case / name
+            digest = hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
+            assert row['inputs'][name] == digest
+            if digest != pins['files'][name]['sha256']:
+                changed.append(name)
+        if row['id'] == 'original':
+            assert not changed
+        else:
+            if row['id'].startswith(('hash_', 'source_', 'missing_')):
+                name = row['id'].split('_', 1)[1]
+                assert changed == [name]
+                if row['id'].startswith('missing_'):
+                    assert not (case / name).exists()
+                else:
+                    assert (case / name).read_bytes() == (source / name).read_bytes() + b' '
+            else:
+                assert changed == ['RUN.json']
+                actual = json.loads((case / 'RUN.json').read_text())
+                wanted = json.loads((source / 'RUN.json').read_text())
+                section, key = ('build', 'result_image_id') if row['id'] == 'image_build' else ('postrun_check', 'image_id')
+                assert actual[section][key] != original_id
+                actual[section][key] = original_id
+                assert actual == wanted
+        for version, receipt in row['audits'].items():
+            assert version in ('legacy', 'v2')
+            assert receipt['ended_utc'] >= receipt['started_utc']
+            assert type(receipt['pid']) is int and receipt['pid'] > 0
+            assert receipt['stderr'] == ''
+            parsed = json.loads(receipt['stdout'])
+            if version == 'v2':
+                assert receipt['exit_code'] == (0 if row['id'] == 'original' else 1)
+                assert parsed['status'] == ('PASS_RETAINED_RECEIPT_V2_ENGINEERING' if row['id'] == 'original' else 'STOP_RETAINED_RECEIPT_V2_INVALID')
+                if row['id'] == 'original':
+                    assert parsed['frozen_inputs_checked'] == 7
+            else:
+                assert row['id'] == 'original' or row['id'].startswith('hash_') or row['id'].startswith('image_')
+                assert receipt['exit_code'] == 0 and parsed['status'] == 'PASS_T0_RECEIPT_AUDITED'
+                false_accepts += row['id'] != 'original'
+        assert 'v2' in row['audits']
+        assert ('legacy' in row['audits']) == (row['id'] == 'original' or row['id'].startswith(('hash_', 'image_')))
+    assert false_accepts == 6
+    return {'status': 'PASS_SAVED_DATA_REPAIR_SCOPED', 'rows': len(rows), 'legacy_false_accepts': false_accepts, 'v2_negative_rejections': len(rows)-1, 'candidate_imported': False}
+
+if __name__ == '__main__':
+    p = Path(__file__).resolve().parent
+    print(json.dumps(verify(p, json.loads((p/'matrix.json').read_text())), sort_keys=True))
