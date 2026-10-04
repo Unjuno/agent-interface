@@ -290,8 +290,34 @@ The formal05 readiness mistake exposed that the host plan is itself a sealed
 directory (`payload.bin` plus `ready.json`), not a regular file. The launcher
 now validates that marker's exact byte count/hash and byte-compares the sealed
 payload with the frozen host-plan before it can start WSLc. Seven focused
-launcher tests pass, including missing/changed seal refusal. The preceding
-93-test WSLc package run passed after the latest-main merge; this small
-readiness-only fix also passed all seven focused tests. formal06 will be the
-first allocation using sealed-directory readiness; none of the saved stops is
-upgraded by that code change.
+launcher tests pass, including missing/changed seal refusal and both-stream
+process custody. The preceding 93-test WSLc package run passed after the
+latest-main merge; the seal-specific change then passed all seven focused
+tests.
+
+### formal06 finite matched result (2026-10-04)
+
+formal06 used the A14 counterexample (`TARGET=dv`, requested `hdv`) as one of
+four fresh pairs. Its source, plan, host-plan, outer-plan, WSLc image and
+137-file source capsule were frozen; prospective host/container launch attempts
+and byte receipts were captured. The independent paired auditor exited 0 with
+`METHOD_PASS_FINITE_LOCAL` and no gaps. Five actual CLI calls occurred: four
+shared first responses and one changed-evidence recovery on pair-001.
+
+The retained pair-001 first answer again reported `observed_target=hdv` and
+`NO_REPAIR` despite the live target being `dv`. Control saved the wrong `dv`
+file. Guard returned `YIELD/MODEL_STATE_MISMATCH` with no native input; after a
+new current app snapshot the one recovery answered `INSERT_PREFIX`, observed
+`dv`, prefix `h`, and the guarded arm saved exact `hdv`. Across all rows, file
+scores were control 2 exact / 1 wrong / 1 unfinished and guard 3 exact / 1
+unfinished; wrong-recipient events and decoy changes were zero. Pair-002's
+refusal remained unfinished. Full details and original raw custody are under
+`paired-construction/formal06/`.
+
+This is finite evidence that the guarded changed-evidence path recovered this
+specific repeated visual counterexample while the unguarded control did not.
+The requested model was `gpt-5.6-luna` / `low`, but identity is not attested;
+four pairs do not support a general model-performance claim. The result does
+not establish that a 50 ms delay caused the original first-character loss, nor
+close #5260 or the integrated research milestones #57/#59. formal01–formal05
+remain immutable stops/incomplete packets; formal06 does not upgrade them.
