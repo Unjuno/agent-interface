@@ -36,7 +36,7 @@ def _measurement_now(clock):
 def _measurement_emit(owner, lease, event, code, started, clock):
     try:
         owner.records.append(dict(event=event, owner_id=owner.owner_id,
-            intent=getattr(lease, 'token', None), keycode=code,
+            intent=getattr(lease, 'intent_token', None), keycode=code,
             request_started_ns=started, sync_completed_ns=_measurement_now(clock),
             grants_input_authority=False))
     except Exception:
@@ -44,7 +44,7 @@ def _measurement_emit(owner, lease, event, code, started, clock):
 
 def _measurement_mark(rows, owner, lease, code, clock):
     try:
-        rows.append(dict(owner_id=owner.owner_id, intent=getattr(lease, 'token', None),
+        rows.append(dict(owner_id=owner.owner_id, intent=getattr(lease, 'intent_token', None),
             keycode=code, request_started_ns=_measurement_now(clock),
             sync_completed_ns=None, grants_input_authority=False))
     except Exception:
