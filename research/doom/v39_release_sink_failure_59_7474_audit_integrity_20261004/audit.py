@@ -19,7 +19,9 @@ def audit(raw):
         errors.append("schema")
     rows = raw.get("rows")
     if not isinstance(rows, list) or len(rows) != 3:
-        return {"pass": False, "errors": errors + ["case_count"]}
+        errors.append("case_count")
+        if not isinstance(rows, list):
+            rows = []
     cases = {}
     for row in rows:
         mode = row.get("sink_mode") if isinstance(row, dict) else None

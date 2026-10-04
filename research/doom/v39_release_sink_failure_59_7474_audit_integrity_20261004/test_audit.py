@@ -16,7 +16,9 @@ class AuditIntegrityTests(unittest.TestCase):
     def test_missing_attempt_trace_fails(self):
         raw = copy.deepcopy(RAW)
         raw["rows"][1]["attempts"] = []
-        self.assertFalse(audit(raw)["pass"])
+        result = audit(raw)
+        self.assertFalse(result["pass"])
+        self.assertIn("fail_before_accept:attempt_count", result["errors"])
 
     def test_sink_call_count_must_match_trace(self):
         raw = copy.deepcopy(RAW)
@@ -31,7 +33,9 @@ class AuditIntegrityTests(unittest.TestCase):
     def test_duplicate_case_cannot_overwrite_original(self):
         raw = copy.deepcopy(RAW)
         raw["rows"].append(copy.deepcopy(raw["rows"][0]))
-        self.assertFalse(audit(raw)["pass"])
+        result = audit(raw)
+        self.assertFalse(result["pass"])
+        self.assertIn("duplicate_case", result["errors"])
 
 
 if __name__ == "__main__":
