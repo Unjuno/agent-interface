@@ -26,9 +26,11 @@ class Executor(Previous):
                 failure = self.release_publication_errors.get(active[0])
                 if failure is not None:
                     event["input_release_publication"] = {
-                        "status": "failed", "error": failure}
+                        "status": "delivery_unknown", "error": failure}
                 event["terminal_ns"] = time.perf_counter_ns()
         self._external_emit(event)
+        if type(event) is dict and event.get("event") == "terminal":
+            self.release_publication_errors.pop(event.get("id"), None)
 
     def submit(self, identifier, steps, expected_sequence, valid_until_ns):
         with self.lock:
