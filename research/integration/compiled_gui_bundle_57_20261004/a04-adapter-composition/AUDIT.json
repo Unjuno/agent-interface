@@ -1,0 +1,25 @@
+{
+  "assertions": {
+    "all_routes_have_zero_model_attempts_and_empty_ledgers": true,
+    "changed_submit_target_stops_after_one_action": true,
+    "intermediate_field_evidence_gates_submit": true,
+    "outer_unavailable_keeps_delivery_but_main_drops_execution_progress": true,
+    "positive_path_uses_two_distinct_released_actions": true,
+    "validated_model_method_compiles_to_effect_gated_graph": true
+  },
+  "scope": "caller-v3 + form-method adapter + compiled-core test doubles; no GUI, model, target handle, or live efficiency claim",
+  "sha256": {
+    "RUN.json": "ee930c9555980b657d05e2436d4cd9e3939dd09df6478585e8012d9b0033db31",
+    "audit.py": "de71efd3864d607955ed3adb94e2ca690ef14b9efd08ba4c86cd722a76c4a3ec",
+    "run.py": "cb8d61f0fee7a30e727adb64d9e55ccd8a6d0a1653420ae217d64fb2ec7b1c14",
+    "test_audit_coverage.py": "0d38c12d2b6b6d555daf222d2e9f58b6c04c25544fba16a83289b6ba4ae04f86",
+    "test_runner.py": "142dd76cf42f70725e34d0a424a553ac2331c39ff4f6f50fa470bdabe98290e3"
+  },
+  "source_sha256": {
+    "adapter": "0856ad8d7a522ee239040e0c878d43472e6211a7360e4dad3195032fac9d713e",
+    "caller": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca",
+    "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014",
+    "runner": "cb8d61f0fee7a30e727adb64d9e55ccd8a6d0a1653420ae217d64fb2ec7b1c14"
+  },
+  "status": "PASS_SCOPED_TEST_DOUBLE_ADAPTER_COMPOSITION"
+}
