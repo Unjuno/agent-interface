@@ -26,11 +26,8 @@ class AcknowledgedSampler:
         self.sequence = 0
         self.last = None
         self.game = None
-        self._failure = None
 
     def __call__(self, game, variables, timeout_seconds, **kwargs):
-        if self._failure is not None:
-            raise RuntimeError("scorer failed; update retry refused") from self._failure
         if threading.get_ident() != self.owner_thread:
             raise RuntimeError("scorer update left session main thread")
         if self.game is None:
@@ -78,21 +75,11 @@ class AcknowledgedSampler:
                 producer)
             row.update(status=producer["observation_status"], sample=result.as_dict())
         except BaseException as error:
-            self._failure = error
             row.update(status="UPDATE_UNAVAILABLE", error_type=type(error).__name__,
                        error=str(error))
             raise
         finally:
             # No retry after an ambiguous evidence-sink exception.
-            try:
-                self.emit(row)
-            except BaseException as evidence_error:
-                if self._failure is not None:
-                    self._failure = BaseExceptionGroup(
-                        "scorer sampling and evidence publication failed",
-                        [self._failure, evidence_error])
-                else:
-                    self._failure = evidence_error
-                raise self._failure
+            self.emit(row)
         self.last = result
         return result

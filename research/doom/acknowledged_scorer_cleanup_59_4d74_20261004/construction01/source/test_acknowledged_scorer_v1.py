@@ -136,7 +136,7 @@ class AcknowledgedScorerTests(unittest.TestCase):
         proxy.initialized = True
         with self.assertRaises(OSError):
             sampler(game, None, 10)
-        with self.assertRaises(BaseException):
+        with self.assertRaises(RuntimeError):
             proxy.close()
         self.assertEqual((game.calls, len(attempts), closed), (1, 1, [True]))
 
@@ -144,9 +144,8 @@ class AcknowledgedScorerTests(unittest.TestCase):
         def fail(row):
             raise ValueError('evidence failed')
         sampler = AcknowledgedSampler(sample, 'run-a', fail, clock_ns=lambda: 10)
-        with self.assertRaises(BaseException) as caught:
+        with self.assertRaises(BaseExceptionGroup) as caught:
             sampler(Game(failure=True), None, 10)
-        self.assertIsInstance(caught.exception, BaseExceptionGroup)
         self.assertEqual([type(e) for e in caught.exception.exceptions], [OSError, ValueError])
 
 
