@@ -725,6 +725,7 @@ def effect_receipts(commands, before, observations, accepted_ns,
         samples=[row for row in observations if row["step"]==index]
         if not samples:
             raise RuntimeError(f"hold step {index} produced no effect observation")
+        feedback_observation=samples[0]
         observation=samples[-1]
         current=descriptor(Path(observation["image"]));mae=normalized_mae(previous,current)
         receipts.append({"action":command["action"],"extent":command["extent"],
@@ -735,16 +736,17 @@ def effect_receipts(commands, before, observations, accepted_ns,
           "executor_step":observation.get("step"),
           "after_sequence":observation["sequence"],
           "effect_observed_ns":observation["capture_ns"],
-          "feedback_capture_ns":observation["capture_ns"],
+          "feedback_sequence":feedback_observation["sequence"],
+          "feedback_capture_ns":feedback_observation["capture_ns"],
           "samples":len(samples),
           "plan_accept_to_first_capture_ms":(samples[0]["capture_ns"]-accepted_ns)/1e6,
           "plan_accept_to_last_capture_ms":(observation["capture_ns"]-accepted_ns)/1e6,
           "capture_ms_total":sum(row["capture_ms"] for row in samples),
           "scope":"viewport pixels only",
           "state_feedback":action_state_feedback(
-              previous_observation, observation, typed_observations)})
+              previous_observation, feedback_observation, typed_observations)})
         previous=current
-        previous_observation = observation
+        previous_observation = feedback_observation
     return receipts
 
 
