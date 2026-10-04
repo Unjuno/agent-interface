@@ -16,7 +16,7 @@
 - Auditor source SHA-256: `c492efcf7ec0f75d5df62df363987a40ad9b72737da138e08d5a9367896e2889`.
 - Auditor result: 20/20 reconstructed; 0 errors; six effective mutations rejected (actor, action ID, target, effect ID, event order, causal-link status); unknown control remained `UNKNOWN`; `PASS_METHOD_SCOPED`.
 - No candidate or auditor retry; no participant, model, GUI, app, user data, action dispatch, or product operation.
-- After the formal pair, main advanced from the run base to `dd6b2c5307d412870e1f94df60de5021c57e0809` through two unrelated commits (#7502 tracked-backend integration). The publication branch was rebased without modifying the frozen package or formal output blobs; no experiment was repeated. `FREEZE.json` and this record keep the run's original base/source identity.
+- After the formal pair, main advanced from the run base to `dd6b2c5307d412870e1f94df60de5021c57e0809` through two unrelated commits (#7502 tracked-backend integration), then to `93e95942e86104069faaf5b6a6540a939d7c9a33` through two unrelated commits (#7492 close-boundary evidence). The publication branch was rebased to current main without modifying the frozen package or formal output blobs; no experiment was repeated. `FREEZE.json` and this record keep the run's original base/source identity.
 - Local checks after result capture: package contract `unittest` 1/1; repository sparse-checkout dependency test 1/1; analytical index 662/662; all retained SHA-256 entries verified; `git diff --check` clean. The analysis-index workflow now invokes the same package contract test on PR CI.
 
 One construction-test command was initially invoked from repository root as
