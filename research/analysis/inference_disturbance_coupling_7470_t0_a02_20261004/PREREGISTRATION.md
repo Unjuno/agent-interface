@@ -12,7 +12,7 @@ A02 is a fresh successor after A01's `STOP_MAIN_ADVANCED_PRELAUNCH` (#5976972848
 
 ## Freeze / launch gates
 
-Base main: `b63b8ad7872f3d19407dce8ed0862ec0aa4a4925`. Branch: `research/inference-disturbance-coupling-7470-t0-a02-20261004`. Additive path: `research/analysis/inference_disturbance_coupling_7470_t0_a02_20261004/`; formal `results/` must be absent. Candidate/auditor/spec/test identities are pinned in `PRELAUNCH_FREEZE.json`. If main changes, the Issue gains a conflicting owner/allocation, output becomes occupied, or hashes differ before launch, STOP before candidate. Formal candidate and audit each run at most once.
+Base main: `fb49a59295093629997821159a1be2f7df6ef936`. Branch: `research/inference-disturbance-coupling-7470-t0-a02-20261004`. Additive path: `research/analysis/inference_disturbance_coupling_7470_t0_a02_20261004/`; formal `results/` must be absent. Candidate/auditor/spec/test identities are pinned in `PRELAUNCH_FREEZE.json`. If main changes, the Issue gains a conflicting owner/allocation, output becomes occupied, or hashes differ before launch, STOP before candidate. Formal candidate and audit each run at most once.
 
 ## Environment
 
