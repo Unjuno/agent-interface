@@ -1,0 +1,786 @@
+{
+  "schema": "agent-interface-map01-astra-timeline-v1",
+  "source_run": "map01-astra-attempt-v1",
+  "scope": "posthoc telemetry reconstruction; no new game run and no causal attribution",
+  "time_origin": "monotonic nanoseconds as recorded in both report and event stream; interval endpoints use controller model start and next model start",
+  "source_sha256": {
+    "report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "failure-analysis-v1.json": "b5383b9407198cd88e9aec712018965a27081701812619e9aeb84ba3e042e1ca"
+  },
+  "decision_interval_convention": "each row starts at its controller model start and ends at the next decision model start; final row ends at post-control score emission",
+  "limitations": [
+    "HUD values are existing manual transcription from exact decision frames, not per-observation readings",
+    "visible threat presence is represented only by the model's recorded assessment; this is not independent detection",
+    "input admissions and viewport effect receipts do not establish damage causality or task success"
+  ],
+  "decisions": [
+    {
+      "iteration": 0,
+      "interval_start_s": 0.0,
+      "next_decision_or_score_s": 12.648,
+      "model_latency_s": 11.491,
+      "assessment": "Starting area is clear; a passage and door are directly ahead.",
+      "planned_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-0-primary-0-0",
+          "step": 0,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 11.566
+        }
+      ],
+      "input_admission_count": 2,
+      "observation_count": 38,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 6
+        }
+      ],
+      "health_at_decision": 100,
+      "ammo_at_decision": 50,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 1,
+      "interval_start_s": 12.648,
+      "next_decision_or_score_s": 22.949,
+      "model_latency_s": 9.152,
+      "assessment": "Moved into the corridor; the closed door ahead is closer, with no visible threats.",
+      "planned_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-1-primary-0-0",
+          "step": 0,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 21.893
+        },
+        {
+          "id": "plan-1-primary-1-1",
+          "step": 0,
+          "keys": [
+            "e"
+          ],
+          "ack_s": 22.428
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 37,
+      "verified_release_count": 3,
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 4
+        },
+        {
+          "action": "use",
+          "result": "visible_change",
+          "samples": 2
+        }
+      ],
+      "health_at_decision": 100,
+      "ammo_at_decision": 50,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 2,
+      "interval_start_s": 22.949,
+      "next_decision_or_score_s": 35.246,
+      "model_latency_s": 11.106,
+      "assessment": "Now directly against the AGM door; it remains visibly closed.",
+      "planned_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-2-primary-0-1",
+          "step": 0,
+          "keys": [
+            "e"
+          ],
+          "ack_s": 34.121
+        },
+        {
+          "id": "plan-2-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 34.335
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 41,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "use",
+          "result": "visible_change",
+          "samples": 2
+        },
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 4
+        }
+      ],
+      "health_at_decision": 100,
+      "ammo_at_decision": 50,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 3,
+      "interval_start_s": 35.246,
+      "next_decision_or_score_s": 44.055,
+      "model_latency_s": 7.304,
+      "assessment": "Door opened into a larger room with visible enemies ahead across the lowered floor.",
+      "planned_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        },
+        {
+          "action": "fire",
+          "extent": "medium"
+        }
+      ],
+      "contingencies_authored": 0,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-3-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Shift_L",
+            "Up",
+            "space"
+          ],
+          "ack_s": 42.661
+        },
+        {
+          "id": "plan-3-primary-0-1",
+          "step": 1,
+          "keys": [
+            "space"
+          ],
+          "ack_s": 43.197
+        },
+        {
+          "id": "cover-4",
+          "step": 0,
+          "keys": [
+            "a",
+            "space"
+          ],
+          "ack_s": 43.779
+        }
+      ],
+      "input_admission_count": 6,
+      "observation_count": 32,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "advance_fire",
+          "result": "visible_change",
+          "samples": 4
+        },
+        {
+          "action": "fire",
+          "result": "visible_change",
+          "samples": 4
+        }
+      ],
+      "health_at_decision": 100,
+      "ammo_at_decision": 50,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 4,
+      "interval_start_s": 44.055,
+      "next_decision_or_score_s": 57.127,
+      "model_latency_s": 11.845,
+      "assessment": "Now close against a hazard-striped ledge, with the room mostly obscured. Back away and inspect the right side for a route.",
+      "planned_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "short"
+        }
+      ],
+      "contingencies_authored": 0,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "cover-4",
+          "step": 2,
+          "keys": [
+            "d",
+            "space"
+          ],
+          "ack_s": 46.04
+        },
+        {
+          "id": "cover-4",
+          "step": 4,
+          "keys": [
+            "a",
+            "space"
+          ],
+          "ack_s": 48.28
+        },
+        {
+          "id": "cover-4",
+          "step": 6,
+          "keys": [
+            "d",
+            "space"
+          ],
+          "ack_s": 50.533
+        },
+        {
+          "id": "cover-4",
+          "step": 8,
+          "keys": [
+            "a",
+            "space"
+          ],
+          "ack_s": 52.767
+        },
+        {
+          "id": "plan-4-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Down"
+          ],
+          "ack_s": 55.966
+        },
+        {
+          "id": "plan-4-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Right"
+          ],
+          "ack_s": 56.417
+        }
+      ],
+      "input_admission_count": 10,
+      "observation_count": 62,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "backward",
+          "result": "visible_change",
+          "samples": 4
+        },
+        {
+          "action": "turn_right",
+          "result": "visible_change",
+          "samples": 3
+        }
+      ],
+      "health_at_decision": 100,
+      "ammo_at_decision": 48,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 5,
+      "interval_start_s": 57.127,
+      "next_decision_or_score_s": 72.363,
+      "model_latency_s": 13.733,
+      "assessment": "In the lower channel and taking damage; a dark stairway is visible at the right end of the ledge.",
+      "planned_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-5-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "ack_s": 70.925
+        },
+        {
+          "id": "plan-5-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 71.294
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 41,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "turn_right",
+          "result": "visible_change",
+          "samples": 3
+        },
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 6
+        }
+      ],
+      "health_at_decision": 84,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 6,
+      "interval_start_s": 72.363,
+      "next_decision_or_score_s": 83.559,
+      "model_latency_s": 10.151,
+      "assessment": "Reached a tight corner beside the ledge; the dark panel ahead may be a lift or door.",
+      "planned_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-6-primary-0-1",
+          "step": 0,
+          "keys": [
+            "e"
+          ],
+          "ack_s": 82.581
+        },
+        {
+          "id": "plan-6-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 82.78
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 41,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "use",
+          "result": "no_visible_effect",
+          "samples": 2
+        },
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 4
+        }
+      ],
+      "health_at_decision": 84,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 1
+    },
+    {
+      "iteration": 7,
+      "interval_start_s": 83.559,
+      "next_decision_or_score_s": 94.532,
+      "model_latency_s": 9.218,
+      "assessment": "Still facing the corner and losing health rapidly. Pull away and turn toward the open channel.",
+      "planned_commands": [
+        {
+          "action": "backward",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "contingencies_authored": 0,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-7-primary-0-2",
+          "step": 0,
+          "keys": [
+            "Down"
+          ],
+          "ack_s": 92.877
+        },
+        {
+          "id": "plan-7-primary-0-2",
+          "step": 1,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 93.508
+        },
+        {
+          "id": "plan-7-primary-0-2",
+          "step": 2,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 93.885
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 43,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "backward",
+          "result": "visible_change",
+          "samples": 5
+        },
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        },
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        }
+      ],
+      "health_at_decision": 53,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 8,
+      "interval_start_s": 94.532,
+      "next_decision_or_score_s": 107.427,
+      "model_latency_s": 11.38,
+      "assessment": "Health is falling near the raised barrier; move away from the corner and look for a clear route left.",
+      "planned_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-8-primary-0-2",
+          "step": 0,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 105.971
+        },
+        {
+          "id": "plan-8-primary-0-2",
+          "step": 1,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 106.308
+        },
+        {
+          "id": "plan-8-primary-0-2",
+          "step": 2,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 106.646
+        }
+      ],
+      "input_admission_count": 4,
+      "observation_count": 42,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        },
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        },
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 4
+        }
+      ],
+      "health_at_decision": 49,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 9,
+      "interval_start_s": 107.427,
+      "next_decision_or_score_s": 118.188,
+      "model_latency_s": 9.283,
+      "assessment": "Stairs are visible on the left, while health has dropped to 22%. Turn toward them and climb out of the exposed lower area.",
+      "planned_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-9-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 116.793
+        },
+        {
+          "id": "plan-9-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 117.159
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 39,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        },
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 6
+        }
+      ],
+      "health_at_decision": 22,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 10,
+      "interval_start_s": 118.188,
+      "next_decision_or_score_s": 129.245,
+      "model_latency_s": 9.683,
+      "assessment": "Still alive at 11% health. The stair route continues left around the close hazard-striped wall.",
+      "planned_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "contingencies_authored": 1,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-10-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 127.94
+        },
+        {
+          "id": "plan-10-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 128.248
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 42,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        },
+        {
+          "action": "forward",
+          "result": "visible_change",
+          "samples": 6
+        }
+      ],
+      "health_at_decision": 11,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 11,
+      "interval_start_s": 129.245,
+      "next_decision_or_score_s": 141.426,
+      "model_latency_s": 10.693,
+      "assessment": "Alive at 4% health, facing a close wall. Back away and turn left to recover a view of the stairs.",
+      "planned_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "contingencies_authored": 0,
+      "contingency_taken": false,
+      "keys_held": [
+        {
+          "id": "plan-11-primary-0-2",
+          "step": 0,
+          "keys": [
+            "Down"
+          ],
+          "ack_s": 139.996
+        },
+        {
+          "id": "plan-11-primary-0-2",
+          "step": 1,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 140.462
+        },
+        {
+          "id": "plan-11-primary-0-2",
+          "step": 2,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 140.8
+        }
+      ],
+      "input_admission_count": 3,
+      "observation_count": 45,
+      "verified_release_count": 2,
+      "effect_receipts": [
+        {
+          "action": "backward",
+          "result": "visible_change",
+          "samples": 4
+        },
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        },
+        {
+          "action": "turn_left",
+          "result": "visible_change",
+          "samples": 3
+        }
+      ],
+      "health_at_decision": 4,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 0
+    },
+    {
+      "iteration": 12,
+      "interval_start_s": 141.426,
+      "next_decision_or_score_s": 149.617,
+      "model_latency_s": 8.134,
+      "assessment": "Health is 0% and the viewpoint has collapsed to floor level: unmistakable death.",
+      "planned_commands": [],
+      "contingencies_authored": 0,
+      "contingency_taken": false,
+      "keys_held": [],
+      "input_admission_count": 0,
+      "observation_count": 25,
+      "verified_release_count": 1,
+      "effect_receipts": [],
+      "health_at_decision": 0,
+      "ammo_at_decision": 37,
+      "armor_at_decision": 0
+    }
+  ]
+}
