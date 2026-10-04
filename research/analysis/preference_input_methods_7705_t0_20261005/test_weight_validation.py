@@ -2,6 +2,7 @@
 import copy
 import json
 import shutil
+import sys
 import pathlib
 import subprocess
 import sys
@@ -41,6 +42,19 @@ class WeightValidationFollowup(unittest.TestCase):
         base["input"]["weights"] = {key: 1e308 for key in DATA["criteria"]}
         self.assertEqual(hardened_evaluate(base)["status"], "HOLD_INPUT_INVALID")
         self.assertTrue(weight_input_errors(base, DATA["criteria"]))
+
+        # This sum is within the documented 1e-9 normalization tolerance,
+        # but applying it to finite near-maximum outcomes overflows the score.
+        base["input"]["weights"] = {key: 0.250000000125 for key in DATA["criteria"]}
+        routes = [{
+            "id": "score-overflow",
+            "eligible": True,
+            "outcomes": {key: sys.float_info.max for key in DATA["criteria"]},
+        }]
+        self.assertEqual(
+            hardened_evaluate(base, routes=routes)["status"], "HOLD_INPUT_INVALID"
+        )
+        self.assertEqual(weight_input_errors(base, DATA["criteria"]), [])
 
     def test_oversized_integer_and_non_object_inputs_fail_closed(self):
         base = copy.deepcopy(next(c for c in DATA["cases"] if c["id"] == "weights-fast"))
