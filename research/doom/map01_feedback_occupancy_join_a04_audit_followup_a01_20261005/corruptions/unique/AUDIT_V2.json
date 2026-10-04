@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "all_candidate_rows_match": true,
+    "ambiguous_summary_matches": true,
+    "candidate_histogram_matches": true,
+    "decision_matches_gate": true,
+    "pinned_source_matches": true,
+    "source_counts_match": true,
+    "unique_summary_matches": false,
+    "unmatched_summary_matches": true
+  },
+  "pass": false,
+  "recomputed": {
+    "admissions": 39,
+    "aggregate_holds": 28,
+    "ambiguous": 33,
+    "candidate_count_histogram": {
+      "1": 6,
+      "10": 1,
+      "2": 4,
+      "3": 5,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 3
+    },
+    "events": 634,
+    "unique": 6,
+    "unmatched": 0
+  },
+  "schema": "map01-admission-hold-a04-summary-audit-v2",
+  "scope": "raw event and saved-result consistency only; candidate matches are not identity proof"
+}

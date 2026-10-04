@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "all_mutations_change_only_named_summary": true,
+    "candidate_summary_matches_raw": true,
+    "original_auditor_false_accepts_all_mutations": true,
+    "pristine_original_audit_passed": true,
+    "raw_input_counts_match": true,
+    "source_sha_matches_freeze": true,
+    "v2_rejects_only_named_summary_mismatches": true
+  },
+  "decision": "PASS_RAW_OUTPUTS_RECONCILED",
+  "pass": true,
+  "reconstructed": {
+    "admissions": 39,
+    "aggregate_holds": 28,
+    "ambiguous": 33,
+    "events": 634,
+    "unique": 6,
+    "unmatched": 0
+  },
+  "schema": "map01-a04-audit-followup-independent-raw-audit-v1",
+  "scope": "source-bound audit mutation evidence only; no true identity or live-control inference",
+  "summary_corruptions": {
+    "ambiguous": 0,
+    "unique": 0,
+    "unmatched": 39
+  }
+}
