@@ -361,15 +361,19 @@ class TargetSocketSubmitTests(unittest.TestCase):
         import contextlib
         import io
         import os
+        import subprocess
         import sys
         import time
 
+        original_popen = subprocess.Popen
         live = Path(__file__).resolve().parents[2] / "live_control"
         live_path = str(live)
         inserted_live_path = live_path not in sys.path
         if inserted_live_path:
             sys.path.insert(0, live_path)
-        import stopped_socket_v2 as bridge
+        import mindustry_three_arm_socket_v2 as wrapper
+
+        bridge = wrapper.bridge
 
         processes = []
         bridge_errors = []
@@ -379,6 +383,7 @@ class TargetSocketSubmitTests(unittest.TestCase):
             """Pipe-backed test child; never starts the interactive runtime."""
 
             def __init__(self, *_args, **_kwargs):
+                self.args = list(_args[0])
                 child_input, parent_input = os.pipe()
                 parent_output, child_output = os.pipe()
                 self.stdin = os.fdopen(parent_input, "wb", buffering=0)
@@ -415,12 +420,15 @@ class TargetSocketSubmitTests(unittest.TestCase):
 
         def run_bridge():
             try:
-                with patch.object(bridge.subprocess, "Popen", FakeRuntime), \
-                        patch.object(sys, "argv", ["stopped_socket_v2.py", "serve"]), \
+                wrapper.original = FakeRuntime
+                bridge.subprocess.Popen = wrapper.spawn
+                with patch.object(sys, "argv", ["mindustry_three_arm_socket_v2.py", "serve"]), \
                         contextlib.redirect_stdout(bridge_output):
                     bridge.main()
             except BaseException as error:
                 bridge_errors.append(error)
+            finally:
+                bridge.subprocess.Popen = original_popen
 
         server_thread = threading.Thread(target=run_bridge, daemon=True)
         server_thread.start()
@@ -471,6 +479,8 @@ class TargetSocketSubmitTests(unittest.TestCase):
 
         self.assertFalse(server_thread.is_alive(), "bridge server did not exit")
         self.assertEqual(bridge_errors, [])
+        self.assertEqual(Path(processes[0].args[2]).name,
+                         "mindustry_three_arm_interactive_v1.py")
 
     def test_transport_exception_consumes_action_without_retry(self):
         calls = []

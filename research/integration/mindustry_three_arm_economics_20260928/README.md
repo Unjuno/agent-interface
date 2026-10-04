@@ -419,10 +419,11 @@ connect a live Mindustry socket, capture real images, dispatch input, call a
 model, score a game task, or demonstrate live three-arm execution/economics.
 The synthetic raw-v2 and target-dispatch auditors are implemented, but there
 is no live raw capture or source-identity proof. Under WSL, socket tests pass
-through both a local synthetic server and the actual `stopped_socket_v2`
-server implementation with a pipe-backed fake runtime. Windows skips these
-AF_UNIX tests because its Python runtime lacks AF_UNIX. The interactive
-runtime child and full runner remain unverified. No game, model, Docker command,
+through both a local synthetic server and the actual `mindustry_three_arm_socket_v2`
+wrapper plus `stopped_socket_v2` server with a pipe-backed fake runtime.
+Windows skips these AF_UNIX tests because its Python runtime lacks AF_UNIX.
+The wrapper's child-entrypoint rewrite is asserted, but the interactive runtime
+child and full runner remain unverified. No game, model, Docker command,
 workflow, or formal allocation was invoked; the #5130 resource gate remains
 controlling.
 
@@ -453,8 +454,8 @@ through current `main` `0db425b379f9438bf6b13c95dce1b763750b06d5`: 118 pass
 and two AF_UNIX cases skip on Windows. Thirteen sparse-checkout support blobs
 were materialized from that Git tree only for the tests and removed afterward.
 Both AF_UNIX tests pass under WSL; one runs a local synthetic server, while
-the other exercises the actual `stopped_socket_v2` server with a pipe-backed
-fake runtime. Python compilation and `git diff --check` also pass. A fresh
+the other exercises the actual v2 wrapper/server with a pipe-backed fake
+runtime. Python compilation and `git diff --check` also pass. A fresh
 read-only recomputation after this main refresh of
 the retained raw-v2 and dispatch-sidecar audits exactly matches the committed
 audit JSON: `PASS_CONSTRUCTION_ONLY` with source identity false, and
