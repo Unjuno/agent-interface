@@ -35,7 +35,7 @@ class Tests(unittest.TestCase):
         ]
         result = candidate.analyze(events)
         self.assertFalse(result["measurement_ready"])
-        self.assertEqual(result["unmatched_admission_count"], 1)
+        self.assertEqual(result["invalid_admission_count"], 1)
 
     def test_unverified_release_is_rejected(self):
         events = [
@@ -161,6 +161,40 @@ class Tests(unittest.TestCase):
                 self.assertFalse(result["measurement_ready"], result)
                 self.assertEqual(result["hold_count"], 1)
                 self.assertEqual(result["invalid_admission_count"], 1)
+
+
+    def test_malformed_token_and_key_admissions_fail_closed(self):
+        malformed = (None, "", 17, True, [], {})
+        for field in ("intent_token", "key"):
+            for value in malformed:
+                with self.subTest(field=field, value=value):
+                    admission = {"event": "input_admission", "intent_token": "t", "key": "Up",
+                                 "admitted_ns": 100, "input_ack_ns": 110}
+                    admission[field] = value
+                    release = {"event": "input_release_transition", "intent_token": "t",
+                               "operation": "up", "key": "Up", "release_call_started_ns": 130,
+                               "release_call_returned_ns": 140, "owner_transition_verified": True}
+                    result = candidate.analyze([admission, release])
+                    self.assertFalse(result["measurement_ready"], result)
+                    self.assertEqual(result["hold_count"], 0, result)
+                    self.assertEqual(result["invalid_admission_count"], 1, result)
+
+    def test_malformed_token_and_key_releases_fail_closed(self):
+        malformed = (None, "", 17, True, [], {})
+        for field in ("intent_token", "key"):
+            for value in malformed:
+                with self.subTest(field=field, value=value):
+                    admission = {"event": "input_admission", "intent_token": "t", "key": "Up",
+                                 "admitted_ns": 100, "input_ack_ns": 110}
+                    release = {"event": "input_release_transition", "intent_token": "t",
+                               "operation": "up", "key": "Up", "release_call_started_ns": 130,
+                               "release_call_returned_ns": 140, "owner_transition_verified": True}
+                    release[field] = value
+                    result = candidate.analyze([admission, release])
+                    self.assertFalse(result["measurement_ready"], result)
+                    self.assertEqual(result["hold_count"], 0, result)
+                    self.assertEqual(result["invalid_release_count"], 1, result)
+
 
 
 if __name__ == "__main__":
