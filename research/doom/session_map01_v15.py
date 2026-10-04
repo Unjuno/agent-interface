@@ -46,8 +46,29 @@ class _GameProxy:
     def init(self):
         result=self._inner.init();self.initialized=True;return result
     def close(self):
-        if self.initialized and not self.closed:self._final_sample()
-        self.closed=True;return self._inner.close()
+        if self.closed:
+            return None
+        sample_error = None
+        sample_traceback = None
+        if self.initialized:
+            try:
+                self._final_sample()
+            except BaseException as error:
+                sample_error = error
+                sample_traceback = error.__traceback__
+        try:
+            result = self._inner.close()
+        except BaseException as close_error:
+            self.closed = True
+            if sample_error is not None:
+                raise BaseExceptionGroup(
+                    'final scorer sample and game close both failed',
+                    [sample_error, close_error])
+            raise
+        self.closed = True
+        if sample_error is not None:
+            raise sample_error.with_traceback(sample_traceback)
+        return result
 
 def main():
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))

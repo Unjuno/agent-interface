@@ -92,5 +92,35 @@ class SessionSelectionTests(unittest.TestCase):
                     sys.modules["independent_progress_clock_v2"] = old_clock
 
 
+class GameProxyCloseTests(unittest.TestCase):
+    def test_final_sample_failure_still_attempts_game_close(self):
+        sample_error = RuntimeError("scorer failed")
+        calls = []
+        inner = types.SimpleNamespace(close=lambda: calls.append("close") or "closed")
+        proxy = candidate._GameProxy(inner, lambda: (_ for _ in ()).throw(sample_error))
+        proxy.initialized = True
+        with self.assertRaisesRegex(RuntimeError, "scorer failed") as caught:
+            proxy.close()
+        self.assertIs(caught.exception, sample_error)
+        self.assertEqual(calls, ["close"])
+        self.assertTrue(proxy.closed)
+
+    def test_both_failures_are_preserved(self):
+        sample_error = RuntimeError("scorer failed")
+        close_error = OSError("game close failed")
+        calls = []
+        def close():
+            calls.append("close")
+            raise close_error
+        proxy = candidate._GameProxy(types.SimpleNamespace(close=close),
+                                     lambda: (_ for _ in ()).throw(sample_error))
+        proxy.initialized = True
+        with self.assertRaises(BaseExceptionGroup) as caught:
+            proxy.close()
+        self.assertEqual(caught.exception.exceptions, (sample_error, close_error))
+        self.assertEqual(calls, ["close"])
+        self.assertTrue(proxy.closed)
+
+
 if __name__ == "__main__":
     unittest.main()
