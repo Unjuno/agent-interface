@@ -1,0 +1,38 @@
+{
+  "schema": "map01-v39-mutable-owner-record-result-v1",
+  "disposition": "PASS_CANDIDATE_MECHANICS",
+  "baseline": {
+    "pr": 7805,
+    "head": "311f834bf63111b344297f947f8546128c7a1844",
+    "bridge_blob": "9028c652d2134b3f748b99069069748e1aef2cdf",
+    "observed_stale_held_key": "F8",
+    "tdd_red": true
+  },
+  "candidate": {
+    "pending_record_revisit": true,
+    "published_rows_deduplicated_by_record_and_row": true,
+    "same_record_verified_empty_clears_held": true,
+    "fake_physical_state_empty": true,
+    "unconfirmed_measurement_not_promoted_to_confirmed_up": true
+  },
+  "validation": {
+    "host_runtime": "CPython 3.14.5",
+    "candidate_normal": "14/14",
+    "candidate_optimized": "14/14",
+    "current_main_overlay": "0015aea71eeef36ed53513ace5a952dc9cb265c6",
+    "current_main_candidate_normal": "14/14",
+    "current_main_candidate_optimized": "14/14",
+    "executor_v12_composition": "3/3",
+    "owner_compatibility": "10/10",
+    "existing_v39_bridge": "2/2",
+    "py_compile": "PASS"
+  },
+  "unverified": [
+    "real X11 behavior or race frequency",
+    "runtime integration",
+    "application consumption",
+    "useful feedback",
+    "safety",
+    "live gameplay or MAP01 outcome"
+  ]
+}
