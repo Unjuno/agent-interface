@@ -31,7 +31,10 @@ def synthetic_bridge_exchange(request: dict) -> dict:
     return {
         "status": "boundary",
         "records": [{"event": "terminal", "id": action_id,
-                     "status": "completed", "release": {"verified": True}}],
+                     "status": "completed", "release": {
+                         "event": "owner_release", "reason": "release",
+                         "verified": True, "buttons_down": [], "keys_down": [],
+                         "verified_ns": 1, "valid_until_ns": 2}}],
         "cursor": request["after"] + 1,
         "authority": "none",
         "acknowledgement": "not implied",
