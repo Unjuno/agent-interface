@@ -1,6 +1,8 @@
+import ast
 import importlib.util
 import sys
 import threading
+import time
 import types
 import unittest
 from pathlib import Path
@@ -124,6 +126,74 @@ def make_backend(held, owner, lease=None):
 
 
 class Tests(unittest.TestCase):
+    def test_hold_cancel_finally_release_keeps_per_key_admission_identity(self):
+        session_path = HERE.parent / "live_control" / "session_v4.py"
+        source = ast.parse(session_path.read_bytes())
+        backend_class = next(
+            node for node in source.body
+            if isinstance(node, ast.ClassDef) and node.name == "Backend"
+        )
+        execute = next(
+            node for node in backend_class.body
+            if isinstance(node, ast.FunctionDef) and node.name == "execute"
+        )
+        class Cancelled(Exception):
+            pass
+
+        namespace = {
+            "Cancelled": Cancelled,
+            "DecisionRequired": type("DecisionRequired", (Exception,), {}),
+            "time": time,
+        }
+        exec(compile(ast.Module(body=[execute], type_ignores=[]),
+                     str(session_path) + "::Backend.execute", "exec"), namespace)
+
+        original_execute = Parent.execute
+        Parent.execute = namespace["execute"]
+        try:
+            cancel = threading.Event()
+            owner = Owner([], cancel_requested=True, ordinary=False)
+            obj = make_backend(set(), owner)
+            class ReverseIterationSet(set):
+                def __iter__(self):
+                    return iter(sorted(list(super().__iter__()), reverse=True))
+
+            obj.held = ReverseIterationSet()
+            rows = []
+            obj.emit = rows.append
+            obj.snapshot = lambda identifier, step: cancel.set()
+
+            with self.assertRaises(Cancelled):
+                obj.execute({"op": "hold", "keys": ["a", "space"],
+                             "duration_ms": 5_000}, cancel, "cancel-hold", 7)
+        finally:
+            Parent.execute = original_execute
+
+        admissions = {row["key"]: row for row in rows
+                      if row.get("event") == "input_admission"}
+        releases = {row["key"]: row for row in rows
+                    if row.get("event") == "input_release_transition"}
+        self.assertEqual(set(admissions), {"a", "space"})
+        self.assertEqual(set(releases), {"a", "space"})
+        for key, admission in admissions.items():
+            release = releases[key]
+            self.assertEqual(
+                (release["release_batch_identifier"],
+                 release["release_batch_step"], release["key"],
+                 release["admission_position"],
+                 release["admission_identity_status"]),
+                (admission["id"], admission["step"], admission["key"],
+                 admission["admission_position"], "matched"),
+            )
+            self.assertFalse(release["post_cancel_clear"])
+            self.assertFalse(release["ordinary_release_candidate"])
+            self.assertFalse(release["owner_transition_verified"])
+        self.assertEqual({key: row["admission_position"]
+                          for key, row in admissions.items()}, {"a": 0, "space": 1})
+        self.assertEqual(owner.log, [("down", "a"), ("down", "space"),
+                                     ("up", "space"), ("up", "a"),
+                                     ("input_state", None)])
+
     def test_down_emits_executor_admission_identity_and_ordinal(self):
         log = []
         owner = Owner(log)
