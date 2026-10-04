@@ -1,0 +1,47 @@
+{
+  "base_main": "3dbbda05eb8d5067ee2c2969615e472a0f20f562",
+  "candidate_source_head": "0c3627d63072b89d1c769fd0048e93baf157f5c7",
+  "decision": "FAIL only if fast control returns command_ready, both overrun cases keep unread command bytes and terminate after at least 3 scorer callbacks with no readiness polling; otherwise UNCERTAIN or HOLD",
+  "head_freshness": "head reported in preceding API inspection; source bytes frozen below; current remote head not re-queried",
+  "prior_construction_failures": 4,
+  "runtime": {
+    "clock": "time.perf_counter_ns",
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9",
+    "read_behavior": "MSG_PEEK after tail only; no command consumption",
+    "readiness": "select.select on actual socketpair receiver through frozen polling helper"
+  },
+  "scenario": {
+    "arrival_during_callback_after_ns": 5000000,
+    "cases": [
+      "ready_fast_control",
+      "ready_at_entry_overrun",
+      "command_arrives_during_overrun"
+    ],
+    "deadline_ns": 100000000,
+    "fast_call_ns": 1000000,
+    "max_samples": 10,
+    "overrun_call_ns": 25000000,
+    "sample_period_ns": 10000000
+  },
+  "schema": "issue59-scorer-tail-command-priority-a02-freeze-v1",
+  "source_files": {
+    "candidate.py": {
+      "bytes": 5804,
+      "sha256": "0f4e1c62fe3fd58da439d46b089ea0d5b0db75a0ecfefe47e28ae3c59bdfe973"
+    },
+    "inputs/independent_progress_clock_v2.py": {
+      "bytes": 8754,
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    },
+    "inputs/main_thread_scorer_polling_v1.py": {
+      "bytes": 6011,
+      "sha256": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84"
+    },
+    "inputs/map01_scorer_stdio_adapter_v1.py": {
+      "bytes": 12677,
+      "sha256": "32e5ce32990644dc6c2b32759cd50d0c27013676c5cbab063b6c4611b3ca28f1"
+    }
+  },
+  "unregistered_pre_freeze_run": "RESULT_V2.json, retained but excluded from preregistered disposition"
+}
