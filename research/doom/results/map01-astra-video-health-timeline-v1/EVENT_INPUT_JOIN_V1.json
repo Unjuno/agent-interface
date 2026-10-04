@@ -1,0 +1,685 @@
+{
+  "schema": "agent-interface-map01-astra-video-health-input-event-join-v1",
+  "source_run": "map01-astra-attempt-v1",
+  "scope": "posthoc temporal join of video health-pixel transitions and raw event telemetry; descriptive only",
+  "time_mapping": "video source seconds are relative to the ready event; the parent timeline's 13 model-window endpoints exactly match report model timestamps relative to ready",
+  "source_sha256": {
+    "video_TIMELINE.json": "b73c720ba9c56430a5db9895a74e34b9a844befc647baaa1582bae9d59021755",
+    "report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "video.mp4": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4"
+  },
+  "alignment": {
+    "model_windows_checked": 13,
+    "max_abs_endpoint_difference_seconds": 0.0
+  },
+  "limitations": [
+    "transition timing is bounded by the 10 fps 2x video export and its annotated source-time intervals",
+    "key_ack_to_step_complete_overlaps are event lifecycle envelopes, not exact physical key-up times or proof that a key remained down throughout",
+    "temporal overlap does not establish damage cause, input effectiveness, threat identity, or policy causality",
+    "HUD changes are video-derived manual numeric annotations from the parent posthoc analysis, not game-state telemetry"
+  ],
+  "transition_count": 30,
+  "transitions_with_input_admission_inside_video_interval": 5,
+  "transitions_overlapping_key_ack_to_step_complete_envelope": 8,
+  "annotations": [
+    {
+      "event": 1,
+      "health_delta_percent_points": -4,
+      "health_before_percent": 100,
+      "health_after_percent": 96,
+      "source_time_interval_seconds": [
+        46.8,
+        47.0
+      ],
+      "cover_modes": [
+        "active_hold"
+      ],
+      "model_call_indices": [
+        4
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "cover-4",
+          "step": 2,
+          "keys": [
+            "d",
+            "space"
+          ],
+          "ack_s": 46.461358,
+          "step_complete_s": 47.053535,
+          "overlap_start_s": 46.8,
+          "overlap_stop_s": 47.0
+        }
+      ]
+    },
+    {
+      "event": 2,
+      "health_delta_percent_points": -2,
+      "health_before_percent": 96,
+      "health_after_percent": 94,
+      "source_time_interval_seconds": [
+        54.6,
+        54.8
+      ],
+      "cover_modes": [
+        "active_hold"
+      ],
+      "model_call_indices": [
+        4
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 3,
+      "health_delta_percent_points": -7,
+      "health_before_percent": 94,
+      "health_after_percent": 87,
+      "source_time_interval_seconds": [
+        56.2,
+        56.4
+      ],
+      "cover_modes": [
+        "active_hold"
+      ],
+      "model_call_indices": [
+        4
+      ],
+      "input_admissions_inside_video_interval": [
+        {
+          "key": "Down",
+          "at_s": 56.37439
+        }
+      ],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "plan-4-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Down"
+          ],
+          "ack_s": 56.38718,
+          "step_complete_s": 56.800783,
+          "overlap_start_s": 56.38718,
+          "overlap_stop_s": 56.4
+        }
+      ]
+    },
+    {
+      "event": 4,
+      "health_delta_percent_points": -3,
+      "health_before_percent": 87,
+      "health_after_percent": 84,
+      "source_time_interval_seconds": [
+        56.8,
+        57.0
+      ],
+      "cover_modes": [],
+      "model_call_indices": [],
+      "input_admissions_inside_video_interval": [
+        {
+          "key": "Right",
+          "at_s": 56.827814
+        }
+      ],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "plan-4-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Down"
+          ],
+          "ack_s": 56.38718,
+          "step_complete_s": 56.800783,
+          "overlap_start_s": 56.8,
+          "overlap_stop_s": 56.800783
+        },
+        {
+          "id": "plan-4-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Right"
+          ],
+          "ack_s": 56.838377,
+          "step_complete_s": 57.147069,
+          "overlap_start_s": 56.838377,
+          "overlap_stop_s": 57.0
+        }
+      ]
+    },
+    {
+      "event": 5,
+      "health_delta_percent_points": -1,
+      "health_before_percent": 84,
+      "health_after_percent": 83,
+      "source_time_interval_seconds": [
+        60.2,
+        60.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        5
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 6,
+      "health_delta_percent_points": -6,
+      "health_before_percent": 83,
+      "health_after_percent": 77,
+      "source_time_interval_seconds": [
+        62.0,
+        62.2
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        5
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 7,
+      "health_delta_percent_points": -3,
+      "health_before_percent": 77,
+      "health_after_percent": 74,
+      "source_time_interval_seconds": [
+        63.4,
+        63.6
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        5
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 8,
+      "health_delta_percent_points": -6,
+      "health_before_percent": 74,
+      "health_after_percent": 68,
+      "source_time_interval_seconds": [
+        65.0,
+        65.2
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        5
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 9,
+      "health_delta_percent_points": -1,
+      "health_before_percent": 68,
+      "health_after_percent": 67,
+      "source_time_interval_seconds": [
+        67.2,
+        67.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        5
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 10,
+      "health_delta_percent_points": -7,
+      "health_before_percent": 67,
+      "health_after_percent": 60,
+      "source_time_interval_seconds": [
+        71.2,
+        71.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        5
+      ],
+      "input_admissions_inside_video_interval": [
+        {
+          "key": "Right",
+          "at_s": 71.335264
+        }
+      ],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "plan-5-primary-0-1",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "ack_s": 71.346539,
+          "step_complete_s": 71.668014,
+          "overlap_start_s": 71.346539,
+          "overlap_stop_s": 71.4
+        }
+      ]
+    },
+    {
+      "event": 11,
+      "health_delta_percent_points": 24,
+      "health_before_percent": 60,
+      "health_after_percent": 84,
+      "source_time_interval_seconds": [
+        71.8,
+        72.0
+      ],
+      "cover_modes": [],
+      "model_call_indices": [],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "plan-5-primary-0-1",
+          "step": 1,
+          "keys": [
+            "Shift_L",
+            "Up"
+          ],
+          "ack_s": 71.715237,
+          "step_complete_s": 72.435753,
+          "overlap_start_s": 71.8,
+          "overlap_stop_s": 72.0
+        }
+      ]
+    },
+    {
+      "event": 12,
+      "health_delta_percent_points": -6,
+      "health_before_percent": 84,
+      "health_after_percent": 78,
+      "source_time_interval_seconds": [
+        73.8,
+        74.0
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        6
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 13,
+      "health_delta_percent_points": -7,
+      "health_before_percent": 78,
+      "health_after_percent": 71,
+      "source_time_interval_seconds": [
+        76.8,
+        77.0
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        6
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 14,
+      "health_delta_percent_points": -7,
+      "health_before_percent": 71,
+      "health_after_percent": 64,
+      "source_time_interval_seconds": [
+        80.2,
+        80.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        6
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 15,
+      "health_delta_percent_points": -7,
+      "health_before_percent": 64,
+      "health_after_percent": 57,
+      "source_time_interval_seconds": [
+        81.4,
+        81.6
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        6
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 16,
+      "health_delta_percent_points": -4,
+      "health_before_percent": 57,
+      "health_after_percent": 53,
+      "source_time_interval_seconds": [
+        82.4,
+        82.6
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        6
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 17,
+      "health_delta_percent_points": -1,
+      "health_before_percent": 53,
+      "health_after_percent": 52,
+      "source_time_interval_seconds": [
+        85.0,
+        85.2
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        7
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 18,
+      "health_delta_percent_points": -3,
+      "health_before_percent": 52,
+      "health_after_percent": 49,
+      "source_time_interval_seconds": [
+        87.2,
+        87.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        7
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 19,
+      "health_delta_percent_points": -7,
+      "health_before_percent": 49,
+      "health_after_percent": 42,
+      "source_time_interval_seconds": [
+        98.8,
+        99.0
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        8
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 20,
+      "health_delta_percent_points": -3,
+      "health_before_percent": 42,
+      "health_after_percent": 39,
+      "source_time_interval_seconds": [
+        101.0,
+        101.2
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        8
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 21,
+      "health_delta_percent_points": -7,
+      "health_before_percent": 39,
+      "health_after_percent": 32,
+      "source_time_interval_seconds": [
+        103.6,
+        103.8
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        8
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 22,
+      "health_delta_percent_points": -6,
+      "health_before_percent": 32,
+      "health_after_percent": 26,
+      "source_time_interval_seconds": [
+        106.2,
+        106.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        8
+      ],
+      "input_admissions_inside_video_interval": [
+        {
+          "key": "Left",
+          "at_s": 106.382322
+        }
+      ],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "plan-8-primary-0-2",
+          "step": 0,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 106.392664,
+          "step_complete_s": 106.698126,
+          "overlap_start_s": 106.392664,
+          "overlap_stop_s": 106.4
+        }
+      ]
+    },
+    {
+      "event": 23,
+      "health_delta_percent_points": -4,
+      "health_before_percent": 26,
+      "health_after_percent": 22,
+      "source_time_interval_seconds": [
+        106.8,
+        107.0
+      ],
+      "cover_modes": [],
+      "model_call_indices": [],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "plan-8-primary-0-2",
+          "step": 1,
+          "keys": [
+            "Left"
+          ],
+          "ack_s": 106.729487,
+          "step_complete_s": 107.0223,
+          "overlap_start_s": 106.8,
+          "overlap_stop_s": 107.0
+        }
+      ]
+    },
+    {
+      "event": 24,
+      "health_delta_percent_points": -1,
+      "health_before_percent": 22,
+      "health_after_percent": 21,
+      "source_time_interval_seconds": [
+        109.2,
+        109.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        9
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 25,
+      "health_delta_percent_points": -6,
+      "health_before_percent": 21,
+      "health_after_percent": 15,
+      "source_time_interval_seconds": [
+        111.2,
+        111.4
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        9
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 26,
+      "health_delta_percent_points": -3,
+      "health_before_percent": 15,
+      "health_after_percent": 12,
+      "source_time_interval_seconds": [
+        114.0,
+        114.2
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        9
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 27,
+      "health_delta_percent_points": -1,
+      "health_before_percent": 12,
+      "health_after_percent": 11,
+      "source_time_interval_seconds": [
+        116.0,
+        116.2
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        9
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 28,
+      "health_delta_percent_points": -1,
+      "health_before_percent": 11,
+      "health_after_percent": 10,
+      "source_time_interval_seconds": [
+        121.0,
+        121.2
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        10
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 29,
+      "health_delta_percent_points": -6,
+      "health_before_percent": 10,
+      "health_after_percent": 4,
+      "source_time_interval_seconds": [
+        123.4,
+        123.6
+      ],
+      "cover_modes": [
+        "coast"
+      ],
+      "model_call_indices": [
+        10
+      ],
+      "input_admissions_inside_video_interval": [],
+      "key_ack_to_step_complete_overlaps": []
+    },
+    {
+      "event": 30,
+      "health_delta_percent_points": -4,
+      "health_before_percent": 4,
+      "health_after_percent": 0,
+      "source_time_interval_seconds": [
+        140.4,
+        140.6
+      ],
+      "cover_modes": [],
+      "model_call_indices": [],
+      "input_admissions_inside_video_interval": [
+        {
+          "key": "Down",
+          "at_s": 140.407803
+        }
+      ],
+      "key_ack_to_step_complete_overlaps": [
+        {
+          "id": "plan-11-primary-0-2",
+          "step": 0,
+          "keys": [
+            "Down"
+          ],
+          "ack_s": 140.417758,
+          "step_complete_s": 140.845477,
+          "overlap_start_s": 140.417758,
+          "overlap_stop_s": 140.6
+        }
+      ]
+    }
+  ]
+}
