@@ -108,7 +108,9 @@ class Backend(Previous):
             and all(type(count) is int and 0 <= count <= len(records) for count in counts)
         )
         first_count = min(counts) if counts_valid else None
-        cleanup_records = records[first_count:] if counts_valid else None
+        owner_history = records[first_count:] if counts_valid else None
+        explicit_keyups = []
+        cleanup_records = []
         after = self.owner.call("input_state")
         token = getattr(self.lease, "intent_token", None)
         latest_return = max(row["release_call_returned_ns"] for row in rows)
@@ -123,10 +125,16 @@ class Backend(Previous):
         owner_empty = after.get("owned_keycodes") == []
         owned_before = all(row.get("backend_owned_before_release") is True for row in rows)
         ordinary = all(row.get("ordinary_release_candidate") is True for row in rows)
-        records_valid = isinstance(cleanup_records, list) and counts_valid
+        records_valid = isinstance(owner_history, list) and counts_valid
         if records_valid:
-            for record in cleanup_records:
-                if not isinstance(record, dict) or record.get("event") != "owner_release":
+            for record in owner_history:
+                if not isinstance(record, dict):
+                    records_valid = False
+                    break
+                if record.get("event") == "owner_explicit_keyup":
+                    explicit_keyups.append(record)
+                    continue
+                if record.get("event") != "owner_release":
                     records_valid = False
                     break
                 if not (
@@ -138,6 +146,14 @@ class Backend(Previous):
                 ):
                     records_valid = False
                     break
+                cleanup_records.append(record)
+        expected_keyups = [row.get("owner_thread_keyup_receipt") for row in rows]
+        if (
+            len(explicit_keyups) != len(rows)
+            or any(not isinstance(receipt, dict) or explicit_keyups.count(receipt) != 1
+                   for receipt in expected_keyups)
+        ):
+            records_valid = False
         brackets_valid = all(
             type(row.get("release_call_started_ns")) is int
             and type(row.get("release_call_returned_ns")) is int
