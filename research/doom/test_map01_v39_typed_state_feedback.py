@@ -163,6 +163,68 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                          ["adapter_edge_brackets_paired"] * 2)
         self.assertEqual(len({row["actuation_id_sha256"] for row in receipts}), 2)
 
+    def test_input_edge_receipt_accepts_v11_owner_keyup_context_contract(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        events = []
+        for position, source_step in enumerate((0, 2)):
+            admission = next(row for row in source
+                             if row.get("event") == "input_admission" and
+                             row.get("step") == source_step)
+            release = next(row for row in source
+                           if row.get("event") == "input_release_transition" and
+                           row.get("step") == source_step)
+            admission, release = [json.loads(json.dumps(row))
+                                  for row in (admission, release)]
+            admission.update(id="v11-repeat-program", step=11,
+                             admission_position=position)
+            owner = release.pop("owner_thread_keyup_receipt")
+            for name in ("owner_thread_keyup_verified",
+                         "owner_thread_keyup_history_complete"):
+                release.pop(name, None)
+            release.update(
+                id="v11-repeat-program", step=11,
+                admission_position=position,
+                admission_identity_status="matched",
+                owner_keyup_join="MATCHED_EXPLICIT_KEYUP",
+                owner_release_history_complete=True,
+                owner_cleanup_intervened=False,
+                ordinary_release_candidate=True,
+                owner_keyup_receipt={
+                    "event": "owner_keyup", "schema": "owner-keyup-v11",
+                    "owner_id": owner["owner_id"],
+                    "intent_token": owner["intent_token"],
+                    "key": owner["key"], "reason": "explicit_up",
+                    "owner_keyup_started_ns": owner["owner_keyrelease_started_ns"],
+                    "owner_sync_returned_ns": owner["owner_sync_returned_ns"],
+                    "xsync_completed": True, "sync_error": None,
+                    "physical_verification_authoritative": False,
+                    "grants_input_authority": False,
+                })
+            events.extend((admission, release))
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual([row["status"] for row in receipts], ["paired", "paired"])
+        self.assertEqual([row["admission_position"] for row in receipts], [0, 1])
+        mutations = (
+            lambda row: row.update(owner_keyup_join="MISSING_OR_AMBIGUOUS_OWNER_RECEIPT"),
+            lambda row: row["owner_keyup_receipt"].update(xsync_completed=False),
+            lambda row: row.update(owner_release_history_complete=False),
+            lambda row: row["owner_keyup_receipt"].update(owner_id="other-owner"),
+            lambda row: row.update(admission_identity_status="ambiguous_multiple_admissions"),
+            lambda row: row.pop("owner_keyup_receipt"),
+        )
+        for mutate in mutations:
+            changed = json.loads(json.dumps(events))
+            mutate(changed[1])
+            with self.subTest(mutation=repr(mutate)):
+                projected = controller.input_edge_receipts(changed)
+                by_position = {row.get("admission_position"): row
+                               for row in projected if "admission_position" in row}
+                self.assertNotEqual(by_position[0]["status"], "paired")
+
     def test_retained_v39_trace_with_unscoped_admissions_stays_unpaired(self):
         retained = (HERE / "results" / "map01-v39-coast-liveness-live-01" /
                     "runtime" / "events.jsonl")

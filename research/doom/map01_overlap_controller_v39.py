@@ -986,13 +986,60 @@ def input_edge_receipts(events):
         releases = bucket["release"]
         admission = admissions[0] if len(admissions) == 1 else None
         release = releases[0] if len(releases) == 1 else None
-        owner = release.get("owner_thread_keyup_receipt") if release else None
+        owner_v11 = release.get("owner_keyup_receipt") if release else None
+        v11_contract = bool(release and (
+            "owner_keyup_receipt" in release or "owner_keyup_join" in release))
+        owner = (owner_v11 if v11_contract else
+                 (release.get("owner_thread_keyup_receipt") if release else None))
         admitted_ns = admission.get("admitted_ns") if admission else None
         input_ack_ns = admission.get("input_ack_ns") if admission else None
         release_started_ns = release.get("release_call_started_ns") if release else None
         release_returned_ns = release.get("release_call_returned_ns") if release else None
-        keyup_started_ns = owner.get("owner_keyrelease_started_ns") if type(owner) is dict else None
+        admission_owner_id = (admission.get("owner_id")
+                              if type(admission) is dict else None)
+        keyup_started_ns = (owner.get("owner_keyup_started_ns")
+                            if v11_contract and type(owner) is dict else
+                            (owner.get("owner_keyrelease_started_ns")
+                             if type(owner) is dict else None))
         sync_returned_ns = owner.get("owner_sync_returned_ns") if type(owner) is dict else None
+        if v11_contract:
+            sync_completed = (type(owner) is dict and
+                              owner.get("xsync_completed") is True and
+                              owner.get("sync_error") is None)
+            owner_history_complete = (
+                release.get("owner_release_history_complete") is True and
+                release.get("owner_cleanup_intervened") is False)
+            owner_verified = (
+                release.get("owner_keyup_join") == "MATCHED_EXPLICIT_KEYUP" and
+                release.get("owner_transition_verified") is True and
+                release.get("admission_identity_status") == "matched" and
+                release.get("admission_position") == admission_position and
+                release.get("ordinary_release_candidate") is True)
+            owner_contract_valid = (
+                type(owner) is dict and
+                owner.get("event") == "owner_keyup" and
+                owner.get("schema") == "owner-keyup-v11" and
+                owner.get("reason") == "explicit_up" and
+                owner.get("key") == key and owner.get("intent_token") == token and
+                type(admission_owner_id) is str and bool(admission_owner_id) and
+                release.get("owner_id") == admission_owner_id and
+                owner.get("owner_id") == admission_owner_id and
+                type(admission_position) is int and
+                admission.get("admission_position") == admission_position and
+                owner.get("physical_verification_authoritative") is False and
+                owner.get("grants_input_authority") is False and
+                release.get("physical_verification_authoritative") is False and
+                release.get("grants_input_authority") is False)
+        else:
+            sync_completed = (type(owner) is dict and
+                              owner.get("server_sync_completed") is True)
+            owner_history_complete = (
+                release.get("owner_thread_keyup_history_complete") is True
+                if release else False)
+            owner_verified = (release.get("owner_thread_keyup_verified") is True
+                              if release else False)
+            owner_contract_valid = (
+                type(owner) is dict and owner.get("event") == "owner_explicit_keyup")
 
         if len(admissions) > 1 or len(releases) > 1:
             status = "ambiguous_input_edges"
@@ -1001,11 +1048,10 @@ def input_edge_receipts(events):
         elif release is None:
             status = "admission_without_release"
         elif (release.get("operation") != "up" or type(owner) is not dict or
-              owner.get("event") != "owner_explicit_keyup" or
+              not owner_contract_valid or
               owner.get("key") != key or owner.get("intent_token") != token or
-              owner.get("server_sync_completed") is not True or
-              release.get("owner_thread_keyup_verified") is not True or
-              release.get("owner_thread_keyup_history_complete") is not True or
+              not sync_completed or not owner_verified or
+              not owner_history_complete or
               type(admitted_ns) is not int or type(input_ack_ns) is not int or
               input_ack_ns < admitted_ns or
               type(release_started_ns) is not int or type(release_returned_ns) is not int or
@@ -1043,12 +1089,9 @@ def input_edge_receipts(events):
                                                   if status == "paired" else None),
             "input_ack_to_owner_keyup_start_ms": (delta_ms(input_ack_ns, keyup_started_ns)
                                                   if status == "paired" else None),
-            "server_sync_completed": (owner.get("server_sync_completed") is True
-                                      if type(owner) is dict else False),
-            "owner_thread_keyup_verified": (release.get("owner_thread_keyup_verified") is True
-                                             if release else False),
-            "owner_keyup_history_complete": (release.get("owner_thread_keyup_history_complete") is True
-                                              if release else False),
+            "server_sync_completed": sync_completed,
+            "owner_thread_keyup_verified": owner_verified,
+            "owner_keyup_history_complete": owner_history_complete,
             "physical_verification_authoritative": (
                 release.get("physical_verification_authoritative") is True
                 if release else False),
