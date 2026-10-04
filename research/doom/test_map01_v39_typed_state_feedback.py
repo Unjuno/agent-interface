@@ -601,6 +601,21 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertEqual(result["status"], "unavailable")
                 self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
 
+    def test_feedback_refuses_boolean_or_float_observation_step_aliases(self):
+        for side in ("before", "after"):
+            for aliased_step in (True, 1.0):
+                before, after = observation(83, 100), observation(89, 200)
+                before["step"], after["step"] = 0, 1
+                (before if side == "before" else after)["step"] = aliased_step
+                with self.subTest(side=side, step=aliased_step):
+                    result = controller.action_state_feedback(
+                        before, after,
+                        [typed_observation(83, 100, 91, 45),
+                         typed_observation(89, 200, 91, 44)])
+                    self.assertEqual(result["status"], "unavailable")
+                    self.assertEqual(result["reason"],
+                                     "typed_frame_identity_mismatch")
+
     def test_feedback_refuses_typed_event_schema_and_top_level_binding_mismatch(self):
         before, after = observation(83, 100), observation(89, 200)
         wrong_schema = typed_observation(89, 200, 91, 44)
