@@ -198,6 +198,20 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipt["down_edge_interval_ns"])
                 self.assertIsNone(receipt["up_edge_interval_ns"])
 
+    def test_adapter_edge_pairs_reject_interval_conflicting_with_owner_bracket(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+        for event_name in ("input_admission", "input_release_measurement"):
+            events = json.loads(json.dumps(template))
+            row = next(row for row in events if row.get("event") == event_name)
+            row["physical_key_measurement"]["adapter_edge"]["interval"] = [1, 2]
+            receipt = controller.input_edge_receipts(events)[0]
+            with self.subTest(event=event_name):
+                self.assertEqual(receipt["status"], "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
@@ -215,7 +229,11 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                           if row.get("event") == "input_release_measurement")
                 down["physical_key_measurement"]["adapter_edge"]["interval"] = [
                     down_start, down_end]
+                down["physical_key_measurement"]["bracket"]["physical_down_interval"] = [
+                    down_start, down_end]
                 up["physical_key_measurement"]["adapter_edge"]["interval"] = [
+                    up_start, up_end]
+                up["physical_key_measurement"]["bracket"]["physical_up_interval"] = [
                     up_start, up_end]
 
                 receipt = controller.input_edge_receipts(events)[0]
