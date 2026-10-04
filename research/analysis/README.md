@@ -1,6 +1,7 @@
-
 # Analytical research
+
 - [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
+
 
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
 - [Issue #7387 A02 method result](serial_cue_interference_7387_t0_20261004_a02/REPORT.md) — WSLc candidate and raw-only auditor each ran once; 144 trials, 288 presentations, 16 isolated controls and 1,280 image files (five distinct pixel payloads) independently reconstructed; `PASS_METHOD_SCOPED`; model hypothesis remains untested.
