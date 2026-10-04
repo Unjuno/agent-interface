@@ -44,9 +44,14 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                             "owner_id": self.owner_id, "intent_token": "lease-1"}
                 if operation == "up":
                     count = len(self.records)
-                    self.records.append({"event": "owner_release", "verified_ns": 30,
-                                         "verified": True, "keys_down": [],
-                                         "buttons_down": [], "reason": "release"})
+                    receipt = {
+                        "event": "owner_explicit_keyup", "operation": "up", "key": key,
+                        "owner_id": self.owner_id, "intent_token": "lease-1",
+                        "valid_until_ns": 99, "owner_keyrelease_started_ns": 12,
+                        "owner_sync_returned_ns": 13, "server_sync_completed": True,
+                        "physical_verification_authoritative": False,
+                    }
+                    self.records.append(receipt)
                     return {
                         "event": "input_release_transition",
                         "operation": operation,
@@ -56,7 +61,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                         "release_call_returned_ns": 20,
                         "owner_cleanup_record_count_before_release": count,
                         "owner_thread_keyup_verified": True,
-                        "owner_thread_keyup_receipt": {"event": "owner_explicit_keyup"},
+                        "owner_thread_keyup_receipt": receipt,
                         "ordinary_release_candidate": True,
                         "intent_token": "lease-1",
                     }
@@ -119,6 +124,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                 ("program-7", 3),
             )
             self.assertTrue(release["owner_thread_keyup_verified_after_batch"])
+            self.assertTrue(release["owner_transition_verified"])
             self.assertEqual((release["id"], release["step"]), ("program-7", 3))
         finally:
             sys.path.remove(str(HERE))

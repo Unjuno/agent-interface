@@ -108,7 +108,7 @@ class Backend(Previous):
             and all(type(count) is int and 0 <= count <= len(records) for count in counts)
         )
         first_count = min(counts) if counts_valid else None
-        cleanup_records = records[first_count:] if counts_valid else None
+        records_since_first_release = records[first_count:] if counts_valid else None
         after = self.owner.call("input_state")
         token = getattr(self.lease, "intent_token", None)
         latest_return = max(row["release_call_returned_ns"] for row in rows)
@@ -123,12 +123,27 @@ class Backend(Previous):
         owner_empty = after.get("owned_keycodes") == []
         owned_before = all(row.get("backend_owned_before_release") is True for row in rows)
         ordinary = all(row.get("ordinary_release_candidate") is True for row in rows)
-        records_valid = isinstance(cleanup_records, list) and counts_valid
+        cleanup_records = []
+        explicit_receipts = [row.get("owner_thread_keyup_receipt") for row in rows]
+        explicit_records = (
+            [record for record in records_since_first_release
+             if isinstance(record, dict) and record.get("event") == "owner_explicit_keyup"]
+            if isinstance(records_since_first_release, list) else None
+        )
+        records_valid = (
+            isinstance(records_since_first_release, list)
+            and counts_valid
+            and all(isinstance(record, dict) for record in records_since_first_release)
+            and explicit_records == explicit_receipts
+        )
         if records_valid:
-            for record in cleanup_records:
-                if not isinstance(record, dict) or record.get("event") != "owner_release":
+            for record in records_since_first_release:
+                if record.get("event") == "owner_explicit_keyup":
+                    continue
+                if record.get("event") != "owner_release":
                     records_valid = False
                     break
+                cleanup_records.append(record)
                 if not (
                     type(record.get("verified_ns")) is int
                     and record.get("verified") is True
