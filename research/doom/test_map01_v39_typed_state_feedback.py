@@ -84,6 +84,20 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertIn("X-server", receipt["scope"])
         self.assertNotIn("intent-v39-a01", repr(receipts))
 
+    def test_retained_v39_trace_with_unscoped_admissions_stays_unpaired(self):
+        retained = (HERE / "results" / "map01-v39-coast-liveness-live-01" /
+                    "runtime" / "events.jsonl")
+        events = [json.loads(line) for line in retained.read_text().splitlines()]
+        admissions = [row for row in events if row.get("event") == "input_admission"]
+
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual(len(admissions), 39)
+        self.assertEqual(len(receipts), len(admissions))
+        self.assertEqual({row["status"] for row in receipts}, {"identity_unavailable"})
+        self.assertTrue(all(row.get("input_ack_to_owner_keyup_start_ms") is None
+                            for row in receipts))
+
     def test_input_edge_receipt_rejects_adapter_actuation_identity_mismatch(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
