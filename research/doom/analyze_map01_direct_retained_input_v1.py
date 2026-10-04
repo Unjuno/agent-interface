@@ -19,18 +19,14 @@ def analyze(events):
         if event == "input_admission":
             key = row.get("key")
             token = row.get("intent_token")
-            if key is None:
+            if type(key) is not str or not key or type(token) is not str or not token:
                 invalid_admissions.append(row)
-                continue
-            if token is None:
-                invalid_admissions.append(row)
-                pending[(None, key)].append(row)
                 continue
             pending[(token, key)].append(row)
         elif event == "input_release_transition" and row.get("operation") == "up":
             token = row.get("intent_token")
             key = row.get("key")
-            if token is None:
+            if type(key) is not str or not key or type(token) is not str or not token:
                 invalid_releases.append(row)
                 continue
             queue = pending[(token, key)]
