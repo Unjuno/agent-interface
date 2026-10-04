@@ -1,0 +1,61 @@
+{
+  "schema": "cross-component-post-sample-cancel-composition-v1",
+  "current_main_commit": "48405df03913bbe94f29b2e576f7fe5532972095",
+  "sources": [
+    {
+      "pr": 7440,
+      "commit": "99b7d130742b4e884709a862bc074d15e6b42ac9",
+      "files": {
+        "dependencies/pr7440/input_owner_v12.py": {
+          "git_blob": "4623b7858f639c6a70531651b0c39a67701d5223",
+          "sha256": "7cc6b3bcac201624992657203cbb9459120956ad65c1fb6e56e4ac85aafad8f2"
+        },
+        "dependencies/pr7440/input_transition_owner_v4.py": {
+          "git_blob": "bd27bbddf277cfc0b26cffbfcd77af49954c21e3",
+          "sha256": "9b2b4c597bfb9c89a21781599a1fb2b7e9f456ab2b3b4ab3da54effcb28c381f"
+        }
+      }
+    },
+    {
+      "pr": 7429,
+      "commit": "8fe1160c89cba797dacc235e28441d1660c13845",
+      "files": {
+      "dependencies/pr7429/executor_v12.py": {
+        "git_blob": "b0551ad46776eaa4f5d1a8226c22a99ca529abd9",
+        "sha256": "c7273b9e5dc7b2ab3513bcafc2898177b453c3c7e47aa8ee0a23c03f987e2f65"
+        }
+      }
+    }
+  ],
+  "main_dependency_blobs": {
+    "dependencies/main/executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "dependencies/main/executor_v5.py": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+    "dependencies/main/executor_v11.py": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+    "dependencies/main/lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1",
+    "dependencies/main/lease_cause_v1.py": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+    "dependencies/main/lease_cause_v2.py": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+    "dependencies/main/lease_release_v1.py": "e325bd358874ae003e066f5d592c045b0ebef56e"
+  },
+  "artifacts_sha256": {
+    "RUN-01.json": "92398cf32328ac9d4e7cae90847bc13a1ce636c4f2ebffa5517110e8037849c4",
+    "RUN-02.json": "90d5f3c71be0de37dea7eabb214f07a32debf2c27a265a01ceaf1191752f3999",
+    "AUDIT-01.json": "68cedb1294603faf300717a9e55111a5ffc49e4c5a1328d116629ab2e0610ace",
+    "test_postsample_composition.py": "a0b1aabaafea219c7967a0098721e6ad7a77aaa0b19bd485fcf276b093a76c7f",
+    "test_ordinary_release_control.py": "c9782990acdfbf1236b33b690b1cebde177c12db17e675f95ee532ddc72e6f6e",
+    "audit_pair.py": "8e63b8842441e17f9072b1b1d4635395eb00663c1e2fc3a2cdfff48368fefd21"
+  },
+  "commands": [
+    "python -B research/live_control/cancel_release_publication_59/late_cancel_composition_v1/test_postsample_composition.py",
+    "python -B research/live_control/cancel_release_publication_59/late_cancel_composition_v1/test_ordinary_release_control.py",
+    "python -B research/live_control/cancel_release_publication_59/late_cancel_composition_v1/audit_pair.py"
+  ],
+  "outcome": "PASS_SCOPED_REPRODUCTION: current forced cancellation path published one verified-empty cancellation receipt before terminal; ordinary release remained completed without interruption",
+  "exclusions": [
+    "frequency of interleaving",
+    "physical input",
+    "live application/game effect",
+    "useful feedback",
+    "bounded recovery",
+    "MAP01 progress"
+  ]
+}
