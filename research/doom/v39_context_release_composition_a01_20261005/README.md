@@ -9,6 +9,9 @@ The immutable source identities and decision gate are in [FREEZE.json](FREEZE.js
 and [PROTOCOL.md](PROTOCOL.md). [COMPOSITION.json](COMPOSITION.json) records the
 synthetic merge graph; the test stdout/stderr, run interpretation, independent
 saved-result audit, and source-blob readback are retained in this directory.
+The local workspace suite (22/22), workspace index CLI (159 directories), and
+WSL replay-gate test (2/2) are also recorded here; the WSL run is not presented
+as equivalent to the unavailable Docker workflow container.
 
 The result reduces one integration uncertainty: these exact candidate branches
 can compose and their focused contracts coexist. It remains an offline
