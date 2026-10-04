@@ -42,12 +42,23 @@ not invoke OS input, game, model, GUI capture, Docker, or a live allocation.
   audit confirmed both matched IDs, sample brackets, and verified neutral
   state. Raw SHA-256 is
   `36b60282cfc2a7c328cdb7c62ec0d37b029808dc7cf2f6e327d0fd954fd3c99d`.
+- **A04:** The exact current-main
+  `RunningActionGuardV3.record_input_released` method was source-extracted and
+  replayed over the retained A03 owner-release record. The receipt retained the
+  complete owner-release object, including both per-key brackets and actuation
+  IDs, unchanged. Independent raw audit: `PASS_RECONSTRUCTED_SCOPED`; receipt
+  SHA-256 is
+  `70f286304eaa28593797be6fb20893b36dcb6c1f056f2297c09179f5334f372a`.
+  This verifies the release receipt's nested-data contract, not execution of the
+  controller, session, or game runtime.
 
 The A03 source freeze includes hashes for its full imported fake-display/control
-dependency closure. Reproduce only the read-only A03 audit with:
+dependency closure. The A04 freeze includes the exact guard method source and
+A03 raw input. Reproduce only the read-only audits with:
 
 ```powershell
 python research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a03.py
+python research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a04.py
 ```
 
 All candidate outputs are consumed. Do not rerun them or overwrite any retained
