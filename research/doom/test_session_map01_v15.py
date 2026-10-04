@@ -150,6 +150,20 @@ class GameProxyLifecycleTests(unittest.TestCase):
         )
         self.assertEqual(events, ["init", "inner_close"])
 
+    def test_repeated_close_reports_the_original_cleanup_failure(self):
+        events = []
+        inner = self.InnerGame(events, OSError("underlying close failed"))
+        proxy = candidate._GameProxy(inner, lambda: events.append("final_sample"))
+        proxy.init()
+
+        with self.assertRaisesRegex(OSError, "underlying close failed") as first:
+            proxy.close()
+        with self.assertRaisesRegex(OSError, "underlying close failed") as second:
+            proxy.close()
+
+        self.assertIs(second.exception, first.exception)
+        self.assertEqual(events, ["init", "final_sample", "inner_close"])
+
     def test_reentrant_close_during_final_sample_does_not_repeat_cleanup(self):
         events = []
         inner = self.InnerGame(events)

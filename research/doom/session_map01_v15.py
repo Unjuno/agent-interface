@@ -47,6 +47,7 @@ class _GameProxy:
         self.initialized = False
         self.closing = False
         self.closed = False
+        self._close_error = None
 
     def __getattr__(self, name):
         return getattr(self._inner, name)
@@ -57,7 +58,11 @@ class _GameProxy:
         return result
 
     def close(self):
-        if self.closed or self.closing:
+        if self.closed:
+            if self._close_error is not None:
+                raise self._close_error
+            return None
+        if self.closing:
             return None
 
         # Preserve a controller error already unwinding through the session's
@@ -79,6 +84,7 @@ class _GameProxy:
             result = self._inner.close()
         except BaseException as error:
             close_error = error
+            self._close_error = error
         finally:
             self.closing = False
 
