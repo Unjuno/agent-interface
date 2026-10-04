@@ -13,7 +13,8 @@ or unverified cleanup records must not support an ordinary-release claim.
 
 ## T — Test
 
-Based on PR #7385 head `2834209601483503a316863cf9964c9f966cede5`. The test
+Based on the refreshed PR #7385 head
+`90e65c932a8a487d9657713e5a243cba25125c4f`. The test
 extracts and executes the actual `Backend.release_all` method from
 `research/live_control/session_v5.py` in an isolated test parent (avoiding GUI
 imports). It exercises a final buffered batch, an unverified terminal cleanup,
@@ -30,13 +31,10 @@ cleanup record predating the current batch.
   image pull, container, or live allocation was attempted in this run.
 - `test_input_owner_v11`: not run; import is unavailable because this Python
   environment lacks `python-xlib` (`No module named 'Xlib'`).
-- Two initial test invocations used an unavailable test module name and the
-  sparse-checkout command was first issued below the repository root; corrected
-  invocation/path then passed. These were setup errors, not product failures.
-- A source-compile helper was invoked with repository-relative paths from the
-  nested test directory and failed to locate them; syntax is nevertheless
-  exercised by the passing Python imports. Re-run the helper from repository
-  root before publication.
+- Initial setup used unavailable module naming/working directories; corrected
+  invocations then passed. These were setup errors, not product failures.
+- After refreshing onto #7385's newer head, the targeted suites and compile
+  check were rerun and passed again.
 
 ## C — Conclusion
 
