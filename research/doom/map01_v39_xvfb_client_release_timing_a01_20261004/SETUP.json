@@ -1,0 +1,37 @@
+{
+  "schema": "map01-v39-xvfb-client-release-timing-setup-a01-v1",
+  "orb_machine": "v39-x11-routing-a05-20261004",
+  "orb_machine_id": "01M42N2F303RHWR42A763DRBNJ",
+  "orb_state_after_run": "stopped",
+  "orb_disk_size_after_bytes": 1219424256,
+  "orb_isolated": true,
+  "orb_network_isolated": true,
+  "network_used_by_candidate": false,
+  "guest": {
+    "distribution": "Ubuntu 24.04 Noble",
+    "architecture": "arm64",
+    "python": "3.12.3",
+    "packages": {
+      "python3": "3.12.3-0ubuntu2.1",
+      "python3-xlib": "0.33-2",
+      "xserver-common": "2:21.1.12-1ubuntu1.8",
+      "xvfb": "2:21.1.12-1ubuntu1.8"
+    },
+    "cgroup_cpu_max": "max 100000",
+    "cgroup_memory_max": "max",
+    "effective_cpu_memory_caps": "not established"
+  },
+  "xvfb": {
+    "display": ":117",
+    "arguments": ["-screen", "0", "640x480x24", "-nolisten", "tcp", "-ac"],
+    "tcp_listener": false,
+    "exit": 0
+  },
+  "source": {
+    "repository_main_commit": "c9a02437e8565b340464ed9cde736fa9e5642ab4",
+    "input_owner_path": "research/live_control/input_owner_v10.py",
+    "input_owner_git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "input_owner_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+  },
+  "scope": "private virtual X server and synthetic key events only; no game, model, GPU, physical input, or useful application effect"
+}
