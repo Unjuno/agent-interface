@@ -2,32 +2,36 @@
 from __future__ import annotations
 
 import hashlib
+import re
 import tarfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ARCHIVE = HERE / "f03-final-freeze-40b57f74f4.tar"
-EXPECTED_ARCHIVE_SHA256 = (
-    "a70555a7c3c356c3c0175abb9a4a8497df5cfe93bdaf1b71082169cdb6bddcc9"
-)
-EXPECTED_MEMBERS = {
-    "research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py":
-        "623fc63fb7d7f0ea87bd39109eb0a1bdcb5da7d5615cca2f85fcf2921821d386",
-    "research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit.py":
-        "fd6d766f162ce7bc4e42890bb720245fc906ea11985303b0b9b97dd30203d5d2",
-    "research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit_saved.py":
-        "ebfcef6197e7f121c9eb7d1c6822ac5d6fc3c1c9c3a4b2530517ad8a6de6d1d6",
-    "research/doom/v39_eof_formal_59_f03_20261004_3cbf/PROTOCOL.md":
-        "4438143d2ae3b8ea5448ffb9f6fd4ebe6c57785dc53951f6e2f35c0d32784d68",
-    "research/doom/v39_eof_formal_59_f03_20261004_3cbf/CUSTODY_PROTOCOL.md":
-        "fc38b137d3140b7c6951e3481762598922f30c27316721a9af4610751227a1d2",
-    "research/doom/v39_eof_59_f02_20261004_3cbf/candidate.py":
-        "2b569e6697720bef1f9d0381af6bc4876770132f26e418f697f136c40fc8a1a1",
-    "research/doom/v39_os_pipe_59_f01_20261004_3cbf/probe.py":
-        "8359de6a8c714eabc08e88b6d22d51935be23fc3cfde5663fdc85bf44d1d1ae0",
-    "research/doom/v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz":
-        "d1ad6dcb8720b27766702361b4898d13259d2efe0b173e7d0fbc970fe3d988db",
-}
+FREEZE_MANIFEST = HERE / "freeze-manifests" / "PRELAUNCH_FREEZE-fe2dbe361940.md"
+EXPECTED_FREEZE_COMMIT = "fe2dbe3619403b4b356bc0bd365f548a21030812"
+EXPECTED_FREEZE_TREE = "868b6ef0d40e73a429e92d5127fbfac05b40c366"
+EXPECTED_FREEZE_BLOB_SHA1 = "8a8fab7ec3da0c6b9fac17cff87c50b228b93b87"
+EXPECTED_FREEZE_SHA256 = "bf812996ae896282ba9bc311fa68cb65206d3e5984ff958710fe73b382fb90a1"
+
+
+def frozen_manifest() -> tuple[str, dict[str, str]]:
+    raw = FREEZE_MANIFEST.read_bytes()
+    if sha256(raw) != EXPECTED_FREEZE_SHA256:
+        raise ValueError("historical freeze snapshot SHA-256 mismatch")
+    blob = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+    if blob != EXPECTED_FREEZE_BLOB_SHA1:
+        raise ValueError(f"historical freeze Git blob mismatch: {blob}")
+
+    manifest = raw.decode("utf-8")
+    archive_matches = re.findall(
+        r"Exact eight-file archive SHA-256: `([0-9a-f]{64})`", manifest
+    )
+    member_pairs = re.findall(r"(?m)^([0-9a-f]{64})  (research/[^\n]+)$", manifest)
+    if len(archive_matches) != 1 or len(member_pairs) != 8:
+        raise ValueError("historical freeze archive/member manifest is malformed")
+    expected_members = {path: digest for digest, path in member_pairs}
+    return archive_matches[0], expected_members
 
 
 def sha256(data: bytes) -> str:
@@ -35,9 +39,10 @@ def sha256(data: bytes) -> str:
 
 
 def verify(archive: Path = ARCHIVE) -> dict:
+    expected_archive_sha256, expected_members = frozen_manifest()
     archive_bytes = archive.read_bytes()
     observed_archive_hash = sha256(archive_bytes)
-    if observed_archive_hash != EXPECTED_ARCHIVE_SHA256:
+    if observed_archive_hash != expected_archive_sha256:
         raise ValueError(f"outer archive hash mismatch: {observed_archive_hash}")
 
     observed_members = {}
@@ -52,13 +57,17 @@ def verify(archive: Path = ARCHIVE) -> dict:
                 raise ValueError(f"unreadable archive member: {member.name}")
             observed_members[member.name] = sha256(stream.read())
 
-    if observed_members != EXPECTED_MEMBERS:
+    if observed_members != expected_members:
         raise ValueError("archive member set or member hash mismatch")
     return {"archive_sha256": observed_archive_hash,
             "archive_size_bytes": len(archive_bytes),
             "member_count": len(observed_members),
+            "freeze_manifest_source_commit": EXPECTED_FREEZE_COMMIT,
+            "freeze_manifest_source_tree": EXPECTED_FREEZE_TREE,
+            "freeze_manifest_git_blob": EXPECTED_FREEZE_BLOB_SHA1,
+            "freeze_manifest_sha256": EXPECTED_FREEZE_SHA256,
             "member_hashes_match": True,
-            "status": "PASS_F03_ARCHIVE_BYTES_AND_MEMBERS"}
+            "status": "PASS_F03_ARCHIVE_BYTES_MEMBERS_AND_HISTORICAL_MANIFEST"}
 
 
 if __name__ == "__main__":
