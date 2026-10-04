@@ -46,8 +46,20 @@ class _GameProxy:
     def init(self):
         result=self._inner.init();self.initialized=True;return result
     def close(self):
-        if self.initialized and not self.closed:self._final_sample()
-        self.closed=True;return self._inner.close()
+        if self.closed:return None
+        sample_error=None
+        try:
+            if self.initialized:self._final_sample()
+        except BaseException as error:
+            sample_error=error
+        self.closed=True
+        try:
+            result=self._inner.close()
+        except BaseException as close_error:
+            if sample_error is not None:raise close_error from sample_error
+            raise
+        if sample_error is not None:raise sample_error
+        return result
 
 def main():
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))

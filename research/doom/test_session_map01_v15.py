@@ -92,5 +92,61 @@ class SessionSelectionTests(unittest.TestCase):
                     sys.modules["independent_progress_clock_v2"] = old_clock
 
 
+class GameProxyLifecycleTests(unittest.TestCase):
+    class InnerGame:
+        def __init__(self, events, close_error=None):
+            self.events = events
+            self.close_error = close_error
+
+        def init(self):
+            self.events.append("init")
+            return "initialized"
+
+        def close(self):
+            self.events.append("inner_close")
+            if self.close_error is not None:
+                raise self.close_error
+            return "closed"
+
+    def test_inner_game_is_closed_when_final_sample_raises(self):
+        events = []
+        inner = self.InnerGame(events)
+
+        def final_sample():
+            self.assertFalse(proxy.closed)
+            events.append("final_sample")
+            raise RuntimeError("final scorer sample failed")
+
+        proxy = candidate._GameProxy(inner, final_sample)
+        proxy.init()
+        with self.assertRaisesRegex(RuntimeError, "final scorer sample failed"):
+            proxy.close()
+        self.assertEqual(events, ["init", "final_sample", "inner_close"])
+        self.assertTrue(proxy.closed)
+        self.assertIsNone(proxy.close())
+        self.assertEqual(events.count("inner_close"), 1)
+
+    def test_successful_sample_preserves_inner_close_result_and_is_idempotent(self):
+        events = []
+        inner = self.InnerGame(events)
+        proxy = candidate._GameProxy(inner, lambda: events.append("final_sample"))
+        proxy.init()
+        self.assertEqual(proxy.close(), "closed")
+        self.assertIsNone(proxy.close())
+        self.assertEqual(events, ["init", "final_sample", "inner_close"])
+
+    def test_cleanup_error_keeps_scorer_error_as_cause(self):
+        events = []
+        inner = self.InnerGame(events, OSError("underlying close failed"))
+        proxy = candidate._GameProxy(
+            inner, lambda: (_ for _ in ()).throw(RuntimeError("sample failed")))
+        proxy.init()
+        with self.assertRaisesRegex(OSError, "underlying close failed") as raised:
+            proxy.close()
+        self.assertIsInstance(raised.exception.__cause__, RuntimeError)
+        self.assertEqual(str(raised.exception.__cause__), "sample failed")
+        self.assertEqual(events, ["init", "inner_close"])
+
+
 if __name__ == "__main__":
     unittest.main()
