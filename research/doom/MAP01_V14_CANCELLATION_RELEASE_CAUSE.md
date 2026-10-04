@@ -14,6 +14,12 @@ C01 on exact current-main v10 produced the predicted false classification (`rele
 
 This supports integrating the cancellation-cause repair into an opt-in current-main session version. It does not establish that the higher-level v39 terminal event publishes an `input_released` receipt or that the live MAP01 path is repaired end to end. A fresh integrated construction or separately allocated live study is still required for those claims.
 
+## Owner-to-executor construction integration (C03)
+
+A subsequent local integration regression joins the actual `ExecutorV12` implementation and `_publish_release` watcher with the actual v12 owner request thread and its explicit-release handler. A minimal backend calls the owner for a held key and final release; fake Xlib records the physical-state transition. The forced cancellation schedule makes cancellation visible to the executor immediately but only to the owner's release dispatch after dequeue, preserving the target interleaving deterministically. It passes: a verified empty-state `owner_release(reason=cancelled)` becomes `input_released` before the `terminal(status=cancelled)` event, and the fake display observes key press then key release. The existing ExecutorV12 unit regression also passes 2/2, and the C02 12-check source/raw/wiring audit remains green.
+
+This closes the specific construction gap between the owner cause and executor publication. Evidence is in [`results/map01-v39-cancel-release-cause-integration-v1/`](results/map01-v39-cancel-release-cause-integration-v1/), with source/output SHA-256 manifest. This is a local non-formal regression using fake Xlib and a minimal backend. It still does not run the complete v14 session/backend in a live MAP01 allocation or establish application effects, useful feedback, bounded recovery, or comparative benefit; Issue #59 remains unresolved.
+
 ## Reproduction and evidence
 
 Run `python -B test_cancel_release_cause.py` from either C01 or C02's result directory. C01 uses `input_owner_v10.py`; C02 sets `OWNER_UNDER_TEST` to `research/live_control/input_owner_v12.py`. C01 and C02 retain their own FREEZE, raw output, exit receipt, and audit. No retries were made.
