@@ -39,10 +39,15 @@ container first; retain full Engine inspect while it is still in `created`
 state. Its entry shell then prints and verifies `/input.tar` SHA-256, prints
 all eight frozen input SHA-256 values, observes UID/GID and actual cgroup
 `cpu.max`, `memory.max`, `memory.swap.max`, and `pids.max`, and checks each
-against fixed expected-value literals supplied from PRELAUNCH_FREEZE.md in the
-recorded create command. PRELAUNCH_FREEZE.md stays an external custody record,
-not an unpinned member of the producer's eight-file input archive. Only after
-all checks pass may the entry shell `exec` the producer exactly once:
+against fixed expected-value literals supplied from PRELAUNCH_FREEZE.md. The
+complete exact native and auditor entry-shell scripts, their SHA256 values,
+complete `docker create` invocations, inspect-before-start commands, one-use
+start commands, output/export receipts and auditor command are frozen in the
+`Executable launch bundle` appendix of PRELAUNCH_FREEZE.md. That appendix is an
+external custody record, not a member of the producer's eight-file input
+archive, avoiding a self-referential archive digest. Review the exact scripts
+and commands there; do not reconstruct, edit, or improvise them at launch.
+Only after all checks pass may the entry shell `exec` the producer exactly once:
 
 ```
 python3 -B /input/research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py /output/data
@@ -64,8 +69,10 @@ independent export to host and compare again. Five cells/summary inventory is
 only applicable to complete four-cell result; STOP retains exposed subset.
 
 If native exits0 with full data, run one distinct fresh saved-only auditor with
-input readonly and exported data readonly at /saved. Audit output at /audit is
-outside /saved, so exact five-file source inventory stays intact:
+input readonly and exported data readonly at /saved, using the exact one-use
+auditor create/inspect/start commands frozen in the same PRELAUNCH appendix.
+Audit output at /audit is outside /saved, so exact five-file source inventory
+stays intact:
 python3 -B /input/research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit_saved.py /saved /audit/AUDIT.json
 Never run producer in auditor. Native nonzero: retain STOP and saved diagnostic
 review without calling a PASS audit or replaying allocation. Auditor failure:
