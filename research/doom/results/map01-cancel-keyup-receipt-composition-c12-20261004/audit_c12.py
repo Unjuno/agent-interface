@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import hashlib
+import base64
+import gzip
 import json
 import re
-import subprocess
+import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -83,23 +85,16 @@ def has_pinned_owner_sources(pins: dict, freeze: dict) -> bool:
         )
         if not path.startswith(prefix):
             return False
-        upstream_path = path[len(prefix):]
+        blob_archive = ROOT / prefix / "input_owner_v12.blob.gz.b64"
         try:
-            blob_id = subprocess.check_output(
-                ["git", "rev-parse", f"{source_ref}:{upstream_path}"],
-                cwd=ROOT,
-                stderr=subprocess.DEVNULL,
-                text=True,
-            ).strip()
-            blob = subprocess.check_output(
-                ["git", "cat-file", "blob", blob_id],
-                cwd=ROOT,
-                stderr=subprocess.DEVNULL,
+            compressed_blob = base64.b64decode(
+                blob_archive.read_text(encoding="ascii").strip(), validate=True
             )
+            blob = gzip.decompress(compressed_blob)
             archived = (ROOT / path).read_bytes()
-        except (OSError, subprocess.CalledProcessError):
+        except (OSError, ValueError, EOFError, zlib.error):
             return False
-        if blob_id != expected_blob or not archive_pin_matches(
+        if not archive_pin_matches(
             archived, pin["sha256"], blob, expected_blob
         ):
             return False

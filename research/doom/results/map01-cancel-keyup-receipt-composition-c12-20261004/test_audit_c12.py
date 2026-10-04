@@ -1,9 +1,10 @@
 """Regression tests for the retained-failure evidence audit."""
 from pathlib import Path
+import base64
+import gzip
 import hashlib
 import json
 import re
-import subprocess
 import unittest
 
 import audit_c12
@@ -111,15 +112,16 @@ class FrozenSourcePinTests(unittest.TestCase):
         path = "FROZEN/pr7441/research/live_control/input_owner_v12.py"
         freeze = json.loads((ROOT / "FREEZE.json").read_text())
         expected_blob = freeze["candidate_derivation"]["base_git_blob_sha1"]
-        source_ref = freeze["pr7441_head"]
-        blob_id = subprocess.check_output(
-            ["git", "rev-parse", f"{source_ref}:research/live_control/input_owner_v12.py"],
-            cwd=ROOT,
-            text=True,
-        ).strip()
-        blob = subprocess.check_output(["git", "cat-file", "blob", blob_id], cwd=ROOT)
+        blob = gzip.decompress(
+            base64.b64decode(
+                (ROOT / "FROZEN/pr7441/input_owner_v12.blob.gz.b64").read_text(
+                    encoding="ascii"
+                ).strip(),
+                validate=True,
+            )
+        )
         archived = (ROOT / path).read_bytes()
-        self.assertEqual(blob_id, expected_blob)
+        self.assertTrue(audit_c12.archived_blob_matches(archived, blob, expected_blob))
         pins = json.loads((ROOT / "SOURCE_PINS.json").read_text())
         pin_sha256 = pins[path]["sha256"]
         self.assertTrue(
