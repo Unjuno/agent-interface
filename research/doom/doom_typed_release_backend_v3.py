@@ -46,6 +46,20 @@ class Backend(Previous):
                 pass
         return result
 
+    def release_all(self):
+        result = super().release_all()
+        context = getattr(self._release_batch, "context", None)
+        if context is not None and context["rows"]:
+            cleanup_verified = isinstance(result, dict) and result.get("verified") is True
+            self._publish_release_batch(
+                context, terminal_cleanup_verified=cleanup_verified
+            )
+            try:
+                del self._release_batch.context
+            except AttributeError:
+                pass
+        return result
+
     def raw(self, key, down):
         if down:
             record = self.owner.call("down", self.lease, key)
@@ -78,6 +92,10 @@ class Backend(Previous):
         if self.held:
             return None
 
+        self._publish_release_batch(context)
+        return None
+
+    def _publish_release_batch(self, context, *, terminal_cleanup_verified=None):
         rows = context["rows"]
         after = self.owner.call("input_state")
         current_token = getattr(self.lease, "intent_token", None)
@@ -96,8 +114,9 @@ class Backend(Previous):
         owner_empty = owned_after == []
         backend_ownership = all(row.get("backend_owned_before_release") is True for row in rows)
         ordinary = all(row.get("ordinary_release_candidate") is True for row in rows)
+        cleanup_ok = terminal_cleanup_verified is not False
         batch_verified = bool(
-            rows and sample_ordered and owner_identity_matches and token_matches
+            rows and cleanup_ok and sample_ordered and owner_identity_matches and token_matches
             and owner_empty and backend_ownership and ordinary
         )
         batch_size = len(rows)
@@ -119,7 +138,9 @@ class Backend(Previous):
                     "the one owner-state sample and before per-key telemetry publication"
                 ),
             })
+            if terminal_cleanup_verified is not None:
+                receipt["release_batch_finalized_by_terminal_cleanup"] = True
+                receipt["terminal_cleanup_verified"] = terminal_cleanup_verified
         for receipt in rows:
             self.emit(receipt)
         rows.clear()
-        return None
