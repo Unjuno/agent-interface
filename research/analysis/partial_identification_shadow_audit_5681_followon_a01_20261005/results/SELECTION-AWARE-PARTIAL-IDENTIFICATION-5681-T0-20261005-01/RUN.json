@@ -1,0 +1,61 @@
+{
+  "schema": "partial-identification-run-v1",
+  "allocation": "SELECTION-AWARE-PARTIAL-IDENTIFICATION-5681-T0-20261005-01",
+  "source_commit": "4791915140d86211274cdc0d41479e45689a4559",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "container_id": "e7380a3eec7b",
+    "status": "Exited (0)",
+    "output": "CANDIDATE_RAW.json",
+    "output_sha256": "eed997934645548ff6813cf5eefce938e9f9156c4c4e3828ac37ec5670702258",
+    "source_mount_read_only": true,
+    "network": "none",
+    "container_removed": true
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "container_id": "82fc0f2796e6",
+    "status": "Exited (0)",
+    "raw_input": "candidate/candidate.json",
+    "raw_input_sha256": "eed997934645548ff6813cf5eefce938e9f9156c4c4e3828ac37ec5670702258",
+    "auditor_stdout": "AUDITOR_RAW.json",
+    "source_mount_read_only": true,
+    "raw_mount_read_only": true,
+    "network": "none",
+    "container_removed": true,
+    "output_mount_persisted_after_container_removal": false
+  },
+  "audit": {
+    "completion_count": 30,
+    "errors": [],
+    "mutation_controls_rejected": 10,
+    "mutation_controls_total": 10
+  },
+  "construction": {
+    "host": "Windows CPython 3.11.9",
+    "unit_tests": "12 passed",
+    "py_compile_exit_code": 0,
+    "preformal_wslc_mount_smoke": "passed; construction only",
+    "memory_limit": "128 MiB requested; effective enforcement unverified per WSLc warning"
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "scope": "Exact binary-label completion arithmetic on eight frozen finite fixtures only; no GUI, real capture, prevalence, effect, safety, runtime, or action-authority claim.",
+  "invocation_anomalies": [
+    "WSLc rejected --cidfile path formats before entrypoint; unique container names recovered IDs.",
+    "WSLc list --format accepted only json or table.",
+    "Preformal wrapper path-format failures occurred before candidate/auditor execution and are retained.",
+    "WSLc emitted audit to stdout, not /audit. Bind-mounted outputs were present immediately after execution and hash-checked but inaccessible after container removal; byte-preserving copies are retained at allocation root.",
+    "WSLc emitted audit to stdout rather than /audit. Bind-mounted outputs were present and hashed immediately after execution but inaccessible after container removal; byte-preserving copies are retained at allocation root."
+  ],
+  "formal_counts_before": {
+    "candidate": 0,
+    "auditor": 0
+  },
+  "formal_counts_after": {
+    "candidate": 1,
+    "auditor": 1
+  },
+  "prior_t1": "STOP_CANDIDATE_COMMAND_DIVERGENCE preserved and not rerun"
+}
