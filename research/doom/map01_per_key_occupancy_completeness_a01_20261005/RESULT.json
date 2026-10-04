@@ -19,13 +19,16 @@
   "independent_audit_version": "v3 (v2 retained as historical; v3 enforces frozen input and source pins)",
   "independent_audit_checks_passed": 8,
   "audit_v3_unit_tests": {
-    "passed": 4,
+    "passed": 7,
     "failed": 0,
     "cases": [
       "canonical_bytes_and_source_match_freeze",
       "changed_raw_bytes_fail_frozen_digest",
       "changed_audit_source_fails_frozen_digest",
-      "duplicate_or_invalid_inventory_fails_closed"
+      "duplicate_or_invalid_inventory_fails_closed",
+      "report_writer_uses_canonical_crlf_bytes",
+      "archived_v2_source_matches_its_historical_freeze",
+      "retired_v2_entrypoint_cannot_report_pass"
     ]
   },
   "main_branch_copy_audit_revalidation": "PASS_METHOD_SCOPED; exit 0",

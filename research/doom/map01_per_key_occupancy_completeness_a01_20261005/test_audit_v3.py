@@ -1,5 +1,8 @@
 """Mutation tests for the independent audit's freeze enforcement."""
 import json
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -35,6 +38,27 @@ class AuditPinTests(unittest.TestCase):
                 checks, expected = audit_v3.validate_pins(self.raw, self.source, freeze)
                 self.assertFalse(checks["frozen_expected_inventory_is_valid"])
                 self.assertEqual(expected, set())
+
+    def test_report_writer_uses_canonical_crlf_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "result.json"
+            audit_v3.write_report(output, {"status": "PASS"})
+            data = output.read_bytes()
+        self.assertIn(b"\r\n", data)
+        self.assertNotIn(b"\n", data.replace(b"\r\n", b""))
+
+    def test_archived_v2_source_matches_its_historical_freeze(self):
+        freeze = json.loads((HERE / "AUDIT_V2_FREEZE.json").read_text(encoding="utf-8"))
+        archived = (HERE / "audit_v2_historical.py").read_bytes()
+        self.assertEqual(audit_v3.sha256(archived), freeze["audit_v2_sha256"])
+        self.assertEqual(audit_v3.sha256((HERE / "audit_v2.py").read_bytes()),
+                         freeze["retired_entrypoint_sha256"])
+
+    def test_retired_v2_entrypoint_cannot_report_pass(self):
+        result = subprocess.run([sys.executable, str(HERE / "audit_v2.py")],
+                                capture_output=True, text=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("superseded", result.stderr)
 
 
 if __name__ == "__main__":
