@@ -5,7 +5,7 @@ main = json.loads((root/'RUN-MAIN.json').read_text())
 candidate = json.loads((root/'RUN-PR7330.json').read_text())
 expected = {
  'main_caller':'8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca',
- 'candidate_caller':'983d22edfd1232a42765804688e990249887723f849220fae6407f58a04dca8c',
+ 'candidate_caller':'7a891f4737d37984c7af5a41e65b6ef863a4d81e336d742f75d930e8e75cd462',
  'compiled':'d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014',
 }
 assert main['source_sha256']=={'caller':expected['main_caller'],'compiled':expected['compiled']}

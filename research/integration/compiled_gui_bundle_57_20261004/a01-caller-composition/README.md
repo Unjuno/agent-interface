@@ -5,7 +5,7 @@ Issue: [#57](https://github.com/Unjuno/agent-interface/issues/57). This is a loc
 The runner invokes the compiled GUI runtime through the shared adaptive caller's warm-reuse execute adapter. It tests three cases: positive two-action completion, changed/unknown intermediate state, and a completed compiled action sequence followed by unavailable outer task-effect verification. Both arms use the same compiled-runtime blob (`d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014`). Caller source blobs are exact and recorded in each raw result.
 
 - Main source was checked out at `bfaa12181f81cac133747ca8a1b7eb277aa64424`; caller SHA-256 `8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca`.
-- The candidate source was PR #7330 branch `fix/caller-current-main-composition-i76`, commit `89492d17b3`; caller SHA-256 `983d22edfd1232a42765804688e990249887723f849220fae6407f58a04dca8c`.
+- The candidate source was PR #7330 branch `fix/caller-current-main-composition-i76`, commit `8e6673432e13e27c6fea5c3c8df9ee59b13ee9ad`; caller SHA-256 `7a891f4737d37984c7af5a41e65b6ef863a4d81e336d742f75d930e8e75cd462`.
 - At later main checks `8d9940c4e0afe7895715bce77fa9f7e455e06cad`, `96f7041fe6b3eb71127ac4eca0ed31d313c29ad2` and `2f72c6474167f93a2e1a6e2b8a497a1a8a6d266a`, both caller and compiled-runtime file hashes were unchanged from the tested main source.
 
 Reproduce from either checkout using Python 3:
