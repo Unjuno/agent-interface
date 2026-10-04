@@ -147,8 +147,12 @@ class ControllerFailureCleanup:
             type(row) is dict and row.get('event')=='post_control_score' for row in events)
         score_path=None if self.runtime is None else self.runtime/'score.json'
         owner_path=None if self.runtime is None else self.runtime/'owner-events.json'
-        receipt['score_file_present']=score_path is not None and score_path.is_file()
-        receipt['owner_events_present']=owner_path is not None and owner_path.is_file()
+        receipt['score_file_present']=False
+        if score_path is not None and attempt('score_file_presence',score_path.is_file):
+            receipt['score_file_present']=receipt['stages'][-1]['result'] is True
+        receipt['owner_events_present']=False
+        if owner_path is not None and attempt('owner_events_presence',owner_path.is_file):
+            receipt['owner_events_present']=receipt['stages'][-1]['result'] is True
         receipt['owner_events_closed']=False
         if receipt['owner_events_present']:
             try:

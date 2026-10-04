@@ -198,6 +198,46 @@ class Tests(unittest.TestCase):
             planner=Planner();child=Child()
             with ControllerFailureCleanup(planner,Path(tmp)) as scope: scope.track(child)
             self.assertFalse(planner.closed);self.assertEqual(child.stdin.data,'')
+
+    def test_score_file_presence_permission_error_preserves_primary_and_writes_receipt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);runtime=out/'runtime';runtime.mkdir()
+            original_is_file=Path.is_file
+            def denied(path):
+                if path.name=='score.json': raise PermissionError('score stat denied')
+                return original_is_file(path)
+            error=ValueError('primary controller failure')
+            with patch.object(Path,'is_file',new=denied):
+                with self.assertRaises(ValueError) as caught:
+                    with ControllerFailureCleanup(Planner(),out) as scope:
+                        scope.observe_output([],None,None,runtime,[])
+                        raise error
+            self.assertIs(caught.exception,error)
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertFalse(receipt['score_file_present'])
+            self.assertFalse(receipt['cleanup_complete'])
+            self.assertEqual(next(row for row in receipt['stages']
+                                  if row['stage']=='score_file_presence')['status'],'failed')
+
+    def test_owner_events_presence_permission_error_preserves_primary_and_writes_receipt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);runtime=out/'runtime';runtime.mkdir()
+            original_is_file=Path.is_file
+            def denied(path):
+                if path.name=='owner-events.json': raise PermissionError('owner stat denied')
+                return original_is_file(path)
+            error=ValueError('primary controller failure')
+            with patch.object(Path,'is_file',new=denied):
+                with self.assertRaises(ValueError) as caught:
+                    with ControllerFailureCleanup(Planner(),out) as scope:
+                        scope.observe_output([],None,None,runtime,[])
+                        raise error
+            self.assertIs(caught.exception,error)
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertFalse(receipt['owner_events_present'])
+            self.assertFalse(receipt['cleanup_complete'])
+            self.assertEqual(next(row for row in receipt['stages']
+                                  if row['stage']=='owner_events_presence')['status'],'failed')
     def test_poll_fault_preserves_primary_and_attempts_planner_close(self):
         class BrokenPoll(Child):
             def poll(self): raise RuntimeError('poll failed')
