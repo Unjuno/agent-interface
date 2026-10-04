@@ -140,9 +140,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertTrue(all(row["event"] == "input_admission"
                             and row["operation"] == "down"
                             and row["intent_token"] == "lease-1"
+                            and (row["id"], row["step"]) == ("program-1", 0)
                             and row["admitted_ns"] <= row["input_ack_ns"]
                             for row in admissions))
         self.assertEqual([row["key"] for row in releases], ["a", "b"])
+        self.assertTrue(all(row["operation"] == "up"
+                            and row["intent_token"] == "lease-1"
+                            and (row["id"], row["step"]) == ("program-1", 0)
+                            for row in releases))
         self.assertEqual([row["owner_thread_keyup_receipt"]["key"] for row in releases],
                          ["a", "b"])
         self.assertTrue(all(
