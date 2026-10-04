@@ -2,7 +2,253 @@ import json,os,tempfile,threading,time,unittest
 from pathlib import Path
 from independent_progress_clock_v2 import ProgressSample
 from map01_scorer_stdio_adapter_v1 import MainThreadScorerStdin,ScorerFileSink
+
+def verified_release(release_ns=0, *, keycodes=None):
+ return {'event':'input_release_transition','operation':'up','id':'program-1','step':2,
+  'key':'d','owner_id':'owner-1','intent_token':'token-1',
+  'owner_transition_verified':True,'owner_thread_keyup_verified':True,
+  'owner_thread_keyup_verified_after_batch':True,
+  'owner_identity_matches_after_batch':True,
+  'intent_token_matches_after_batch':True,
+  'owned_keycodes_after_batch':[] if keycodes is None else keycodes,
+  'release_call_returned_ns':release_ns,
+  'owner_thread_keyup_receipt':{'event':'owner_explicit_keyup','operation':'up',
+   'owner_id':'owner-1','intent_token':'token-1','server_sync_completed':True}}
+
 class Tests(unittest.TestCase):
+ def test_post_release_tail_samples_until_neutral_without_reading_commands(self):
+  class Clock:
+   def __init__(self):self.ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c;self.waits=[];self.reads=0
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.waits.append((fd,timeout));self.c.ns+=round(timeout*1e9);return False
+  clock=Clock();loop=Loop(clock);values=iter([{'right':1},{'right':0}]);rows=[];commands=[]
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:7})(),
+      lambda:next(values),rows.append,loop=loop)
+  adapter.command_handler=lambda value:commands.append(value)
+  release=clock.ns
+  result=adapter.sample_tail(release_receipt=verified_release(release),max_duration_ns=50,
+      max_samples=5,stop_when=lambda sample:sample['right']==0)
+  self.assertEqual(result['disposition'],'STOP_CONDITION_OBSERVED')
+  self.assertEqual(result['termination'],'predicate')
+  self.assertEqual(result['tail_samples'],2)
+  self.assertTrue(all(row['post_release_tail'] for row in rows))
+  self.assertEqual([row['release_returned_ns'] for row in rows],[release,release])
+  self.assertEqual([row['intent_token'] for row in rows],['token-1','token-1'])
+  self.assertEqual(commands,[]);self.assertEqual(loop.reads,0)
+
+ def test_post_release_tail_deadline_is_censored(self):
+  class Clock:
+   def __init__(self):self.ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.c.ns+=round(timeout*1e9);return False
+  clock=Clock();rows=[];loop=Loop(clock)
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:9})(),
+      lambda:{'right':1},rows.append,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=25,
+      max_samples=5,stop_when=lambda sample:sample['right']==0)
+  self.assertEqual(result['disposition'],'CENSORED')
+  self.assertEqual(result['termination'],'deadline')
+  self.assertFalse(result['deadline_overrun'])
+  self.assertLessEqual(result['ended_ns'],result['deadline_ns'])
+  self.assertEqual(result['tail_samples'],3)
+
+ def test_post_release_tail_sample_cap_is_censored(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.c.ns+=round(timeout*1e9);return False
+  clock=Clock();loop=Loop(clock);adapter=MainThreadScorerStdin(
+      type('Stream',(),{'fileno':lambda _self:9})(),lambda:1,lambda _row:None,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=100,
+      max_samples=2,stop_when=lambda _sample:False)
+  self.assertEqual(result['termination'],'sample_cap')
+  self.assertEqual(result['disposition'],'CENSORED')
+  self.assertEqual(result['tail_samples'],2)
+
+ def test_post_release_tail_does_not_start_sample_beyond_deadline(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.c.ns+=round(timeout*1e9);return False
+  clock=Clock();loop=Loop(clock);calls=[]
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:9})(),
+      lambda:calls.append(clock.ns) or 1,lambda _row:None,loop=loop)
+  adapter.next_sample_ns=30
+  result=adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=25,
+      max_samples=5,stop_when=lambda _sample:False)
+  self.assertEqual(result['tail_samples'],0)
+  self.assertEqual(result['termination'],'deadline')
+  self.assertEqual(calls,[])
+
+ def test_post_release_tail_returns_when_command_is_ready_then_adapter_resumes(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   max_buffer_bytes=1024
+   def __init__(self,c):self.c=c;self.chunks=[b'{"op":"finish"}\n']
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,*_args):return bool(self.chunks)
+   def read_fn(self,_fd,_size):return self.chunks.pop(0)
+  clock=Clock();loop=Loop(clock);rows=[]
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      lambda:1,rows.append,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(0),
+      max_duration_ns=25,max_samples=5,stop_when=lambda _sample:False)
+  self.assertEqual(result['termination'],'command_ready')
+  self.assertEqual(result['disposition'],'CENSORED')
+  self.assertEqual(len(rows),1)
+  self.assertIs(rows[0]['post_release_tail'],True)
+  self.assertEqual(next(adapter),'{"op":"finish"}')
+  self.assertEqual(adapter.commands,1)
+
+ def test_post_release_tail_wait_overshoot_is_censored_without_sample(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.c.ns=30;return False
+  clock=Clock();calls=[];loop=Loop(clock)
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      lambda:calls.append(clock.ns) or 1,lambda _row:None,loop=loop)
+  adapter.next_sample_ns=10
+  result=adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=25,
+      max_samples=5,stop_when=lambda _sample:False)
+  self.assertEqual(result['termination'],'deadline')
+  self.assertEqual(result['tail_samples'],0)
+  self.assertEqual(calls,[])
+
+ def test_post_release_tail_getter_overrun_is_censored_even_if_neutral(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.c.ns+=round(timeout*1e9);return False
+  clock=Clock();loop=Loop(clock)
+  def slow_neutral():clock.ns=30;return {'right':0}
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      slow_neutral,lambda _row:None,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=25,
+      max_samples=5,stop_when=lambda sample:sample['right']==0)
+  self.assertEqual(result['disposition'],'CENSORED')
+  self.assertEqual(result['termination'],'deadline_overrun')
+  self.assertTrue(result['deadline_overrun'])
+  self.assertFalse(result['stop_condition_met'])
+
+ def test_post_release_tail_sink_overrun_is_censored(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.c.ns+=round(timeout*1e9);return False
+  clock=Clock();loop=Loop(clock)
+  def slow_sink(_row):clock.ns=30
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      lambda:{'right':0},slow_sink,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=25,
+      max_samples=5,stop_when=lambda sample:sample['right']==0)
+  self.assertEqual(result['termination'],'deadline_overrun')
+  self.assertFalse(result['stop_condition_met'])
+
+ def test_post_release_tail_predicate_overrun_is_censored(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def __init__(self,c):self.c=c
+   def clock_ns(self):return self.c.now()
+   def wait_readable(self,fd,timeout):self.c.ns+=round(timeout*1e9);return False
+  clock=Clock();loop=Loop(clock)
+  def slow_predicate(_sample):clock.ns=30;return True
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      lambda:{'right':0},lambda _row:None,loop=loop)
+  result=adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=25,
+      max_samples=5,stop_when=slow_predicate)
+  self.assertEqual(result['termination'],'deadline_overrun')
+  self.assertFalse(result['stop_condition_met'])
+
+ def test_post_release_tail_rejects_invalid_bounds_and_pre_release_start(self):
+  class Clock:
+   def now(self):return 4
+  class Loop:
+   period_ns=10
+   def clock_ns(self):return 4
+   def wait_readable(self,*_args):return False
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      lambda:1,lambda _row:None,loop=Loop())
+  for kwargs in (
+      {'release_receipt':verified_release(True),'max_duration_ns':10,'max_samples':1},
+      {'release_receipt':verified_release(0),'max_duration_ns':-1,'max_samples':1},
+      {'release_receipt':verified_release(0),'max_duration_ns':10,'max_samples':0},
+  ):
+   with self.assertRaises(ValueError):adapter.sample_tail(**kwargs)
+  with self.assertRaisesRegex(ValueError,'before verified release'):
+   adapter.sample_tail(release_receipt=verified_release(5),max_duration_ns=10,max_samples=1)
+
+ def test_post_release_tail_rejects_unverified_or_nonempty_release(self):
+  class Loop:
+   period_ns=10
+   def clock_ns(self):return 0
+   def wait_readable(self,*_args):return False
+  adapter=MainThreadScorerStdin(type('Stream',(),{'fileno':lambda _self:0})(),
+      lambda:1,lambda _row:None,loop=Loop())
+  invalid=[None,{},
+   {**verified_release(),'owner_thread_keyup_verified':False},
+   {**verified_release(),'owner_thread_keyup_verified_after_batch':False},
+   verified_release(keycodes=[40]),
+   {**verified_release(),'owner_thread_keyup_receipt':{
+    'event':'owner_explicit_keyup','operation':'up','owner_id':'owner-1',
+    'intent_token':'other-token','server_sync_completed':True}},
+  ]
+  for receipt in invalid:
+   with self.subTest(receipt=receipt),self.assertRaises(ValueError):
+    adapter.sample_tail(release_receipt=receipt,max_duration_ns=10,max_samples=1)
+
+ def test_post_release_tail_requires_quiescent_command_stream(self):
+  class Clock:
+   ns=0
+   def now(self):return self.ns
+  class Loop:
+   period_ns=10
+   def clock_ns(self):return 0
+   def wait_readable(self,fd,timeout):return False
+  stream=type('Stream',(),{'fileno':lambda _self:0})()
+  adapter=MainThreadScorerStdin(stream,lambda:1,lambda _row:None,loop=Loop())
+  adapter.buffer.extend(b'queued\n')
+  with self.assertRaisesRegex(RuntimeError,'empty command buffer'):
+   adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=10,max_samples=1)
+  adapter.buffer.clear();adapter.eof=True
+  with self.assertRaisesRegex(RuntimeError,'after command EOF'):
+   adapter.sample_tail(release_receipt=verified_release(0),max_duration_ns=10,max_samples=1)
+
+ @unittest.skipIf(os.name=='nt','select() cannot wait on anonymous pipes on Windows')
  def test_pipe_wait_samples_and_wakes_on_command(self):
   r,w=os.pipe();stream=os.fdopen(r,'r');owner=threading.get_ident();counter=[0]
   with tempfile.TemporaryDirectory() as tmp:

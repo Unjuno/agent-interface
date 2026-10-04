@@ -68,3 +68,138 @@ class MainThreadScorerStdin:
         # Snapshot skips the next sample would account; do not mutate them twice.
         pending=0 if self.next_sample_ns is None else max(0,(self.loop.clock_ns()-self.next_sample_ns)//self.loop.period_ns)
         return {'owner_thread_id':self.owner_thread,'samples':self.samples,'commands':self.commands,'missed_sample_periods':self.missed+pending,'eof':self.eof,'sample_hz':1e9/self.loop.period_ns}
+
+    def sample_tail(self, *, release_receipt, max_duration_ns, max_samples,
+                    stop_when=None):
+        """Take a bounded scorer tail after a verified empty owner release.
+
+        This validates an existing release record; it does not release input
+        or grant authority. Sampling remains on the scorer owner thread. The
+        tail never consumes a ready command: it returns censored immediately
+        so the caller can resume normal command handling. Deadline, sample-cap
+        and synchronous callback overruns are also censored.
+        """
+        if threading.get_ident()!=self.owner_thread:
+            raise RuntimeError('scorer tail left session main thread')
+        if self.buffer:
+            raise RuntimeError('scorer tail requires an empty command buffer')
+        if self.eof:
+            raise RuntimeError('scorer tail unavailable after command EOF')
+        if not isinstance(release_receipt,dict):
+            raise ValueError('release_receipt must be a verified release event')
+        owner_receipt=release_receipt.get('owner_thread_keyup_receipt')
+        release_returned_ns=release_receipt.get('release_call_returned_ns')
+        if (release_receipt.get('event')!='input_release_transition'
+                or release_receipt.get('operation')!='up'
+                or release_receipt.get('owner_transition_verified') is not True
+                or release_receipt.get('owner_thread_keyup_verified') is not True
+                or release_receipt.get('owner_thread_keyup_verified_after_batch') is not True
+                or release_receipt.get('owner_identity_matches_after_batch') is not True
+                or release_receipt.get('intent_token_matches_after_batch') is not True
+                or release_receipt.get('owned_keycodes_after_batch')!=[]
+                or not isinstance(owner_receipt,dict)
+                or owner_receipt.get('event')!='owner_explicit_keyup'
+                or owner_receipt.get('operation')!='up'
+                or owner_receipt.get('owner_id')!=release_receipt.get('owner_id')
+                or owner_receipt.get('intent_token')!=release_receipt.get('intent_token')
+                or owner_receipt.get('server_sync_completed') is not True
+                or type(release_returned_ns) is not int):
+            raise ValueError('release_receipt does not prove a verified empty owner key-up')
+        if type(release_returned_ns) is not int or release_returned_ns < 0:
+            raise ValueError('release_returned_ns must be a non-negative integer')
+        if type(max_duration_ns) is not int or max_duration_ns < 0:
+            raise ValueError('max_duration_ns must be a non-negative integer')
+        if type(max_samples) is not int or max_samples < 1:
+            raise ValueError('max_samples must be a positive integer')
+        if stop_when is not None and not callable(stop_when):
+            raise TypeError('stop_when must be callable')
+        started_ns=self.loop.clock_ns()
+        if started_ns < release_returned_ns:
+            raise ValueError('scorer tail began before verified release returned')
+        deadline_ns=release_returned_ns+max_duration_ns
+        tail_samples=0
+        matched=False
+        deadline_overrun=False
+        while tail_samples < max_samples:
+            now=self.loop.clock_ns()
+            if now >= deadline_ns:
+                break
+            if self.next_sample_ns is None:
+                self.next_sample_ns=now
+            if now < self.next_sample_ns:
+                if self.next_sample_ns > deadline_ns:
+                    break
+                remaining=min((self.next_sample_ns-now)/1e9,
+                              (deadline_ns-now)/1e9)
+                if self.loop.wait_readable(self.fd,remaining):
+                    ended_ns=self.loop.clock_ns()
+                    return {'schema':'map01-scorer-post-release-tail-v1',
+                            'release_returned_ns':release_returned_ns,
+                            'release_id':release_receipt.get('id'),
+                            'release_step':release_receipt.get('step'),
+                            'release_key':release_receipt.get('key'),
+                            'intent_token':release_receipt.get('intent_token'),
+                            'started_ns':started_ns,'ended_ns':ended_ns,
+                            'deadline_ns':deadline_ns,'tail_samples':tail_samples,
+                            'total_samples':self.samples,'stop_condition_met':False,
+                            'deadline_overrun':False,'disposition':'CENSORED',
+                            'termination':'command_ready'}
+                now=self.loop.clock_ns()
+                if now >= deadline_ns:
+                    break
+                if now < self.next_sample_ns:
+                    continue
+            elapsed=((now-self.next_sample_ns)//self.loop.period_ns)+1
+            skipped=max(0,elapsed-1)
+            scheduled=self.next_sample_ns
+            self.next_sample_ns+=elapsed*self.loop.period_ns
+            sample_started=self.loop.clock_ns()
+            if sample_started > deadline_ns:
+                deadline_overrun=True
+                break
+            payload=self.sample_fn()
+            sample_finished=self.loop.clock_ns()
+            self.sink({'scheduled_ns':scheduled,'sample_started_ns':sample_started,
+                       'sample_finished_ns':sample_finished,
+                       'start_lateness_ns':max(0,sample_started-scheduled),
+                       'missed_periods_before':skipped,'payload':payload,
+                       'post_release_tail':True,
+                       'release_returned_ns':release_returned_ns,
+                       'release_id':release_receipt.get('id'),
+                       'release_step':release_receipt.get('step'),
+                       'release_key':release_receipt.get('key'),
+                       'intent_token':release_receipt.get('intent_token')})
+            self.samples+=1
+            self.missed+=skipped
+            tail_samples+=1
+            if self.loop.clock_ns() > deadline_ns:
+                deadline_overrun=True
+                break
+            condition_met=stop_when is not None and stop_when(payload)
+            if self.loop.clock_ns() > deadline_ns:
+                deadline_overrun=True
+                break
+            if condition_met:
+                matched=True
+                break
+        ended_ns=self.loop.clock_ns()
+        if matched:
+            termination='predicate'
+        elif deadline_overrun:
+            termination='deadline_overrun'
+        elif ended_ns>=deadline_ns or self.next_sample_ns > deadline_ns:
+            termination='deadline'
+        else:
+            termination='sample_cap'
+        return {'schema':'map01-scorer-post-release-tail-v1',
+                'release_returned_ns':release_returned_ns,
+                'release_id':release_receipt.get('id'),
+                'release_step':release_receipt.get('step'),
+                'release_key':release_receipt.get('key'),
+                'intent_token':release_receipt.get('intent_token'),
+                'started_ns':started_ns,'ended_ns':ended_ns,
+                'deadline_ns':deadline_ns,'tail_samples':tail_samples,
+                'total_samples':self.samples,'stop_condition_met':matched,
+                'deadline_overrun':deadline_overrun,
+                'disposition':'STOP_CONDITION_OBSERVED' if matched else 'CENSORED',
+                'termination':termination}
