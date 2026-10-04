@@ -1,0 +1,18 @@
+# H/T/D/C/U — #57 desktop handoff reconstruction A01
+
+**H — Hypothesis.** In the retained Calc episode, capture-time window context and focus agreement are not enough to determine whether a modal dialog is visually ready for a guarded decision; an additional observation may deliver the first visibly painted dialog frame.
+
+**T — Treatment.** Posthoc analysis only: select sequences 6–9 from `recovery-assistant-01`, verify timestamps/focus flags and image hashes, then compare decoded PNG pixels and image-ready timestamp deltas.
+
+**D — Design / strongest comparison.** The strongest available comparison is within-episode adjacency: #006→#007 brackets the unpainted-to-painted dialog transition; #007→#008 follows the Return action; #008→#009 follows an explicit observe-only recovery. It is not randomized or matched, and intervals include unspecified application, orchestration, planner, and tool time.
+
+**C — Criterion.** Reconstruction passes if source event identities and hashes validate, the existing audit confirms its nine-frame/four-program task and release record, and independent image comparisons reproduce the transition magnitudes. A pass validates the reconstruction only.
+
+**U — Update / uncertainty.** The reconstruction confirms a large visual change #006→#007, a small change #007→#008 while the dialog remains visible and focus samples differ, and another large change #008→#009 to the worksheet. It supports a bounded handoff question, not useful-feedback onset, causal timing improvement, general modal reliability, a new sensor, or any default wait policy. Next useful experiment needs an authorized fresh allocation with prespecified useful-feedback criteria and matched timing; this record does not authorize that run.
+
+## Identity and provenance
+
+- Parent question: Issue #57 desktop observation/decision handoff.
+- Input package: `research/live_control/results/recovery-assistant-01/` at base commit `108c2fe307226c575dd858e6d3d92f7200b08558`.
+- Type: posthoc single-trajectory reconstruction; no live allocation consumed.
+- `analyze.py` is the reproducer; `RESULT.json` is generated output; `SHA256SUMS` pins all directly-read source artifacts and the analysis script.
