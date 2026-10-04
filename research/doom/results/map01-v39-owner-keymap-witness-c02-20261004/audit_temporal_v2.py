@@ -36,11 +36,14 @@ def evaluate_temporal_binding(raw, cases):
             times.append(value if type(value) is int else None)
         admitted = admissions[0].get("admitted_ns") if len(admissions) == 1 else None
         acknowledged = admissions[0].get("input_ack_ns") if len(admissions) == 1 else None
+        valid_until = admissions[0].get("valid_until_ns") if len(admissions) == 1 else None
         valid = (
             len(admissions) == 1
             and all(type(value) is int for value in times)
             and type(admitted) is int and type(acknowledged) is int
+            and type(valid_until) is int
             and times[0] <= admitted <= acknowledged <= times[1] <= times[2]
+            and acknowledged < valid_until
         )
         rows.append({
             "intent_token": token,
@@ -48,6 +51,7 @@ def evaluate_temporal_binding(raw, cases):
             "pre_down_finished_ns": times[0],
             "admitted_ns": admitted,
             "input_ack_ns": acknowledged,
+            "valid_until_ns": valid_until,
             "post_down_started_ns": times[1],
             "post_down_finished_ns": times[2],
             "ordered_within_down_interval": valid,

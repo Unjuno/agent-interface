@@ -18,6 +18,7 @@ class TemporalBindingTests(unittest.TestCase):
             offset = index * 100
             raw["events"][index * 2]["admitted_ns"] = 12 + offset
             raw["events"][index * 2]["input_ack_ns"] = 15 + offset
+            raw["events"][index * 2]["valid_until_ns"] = 40 + offset
         return temp, raw, cases, freeze, started, environment
 
     def test_ordered_admission_and_ack_inside_down_witness_pass(self):
@@ -34,6 +35,13 @@ class TemporalBindingTests(unittest.TestCase):
     def test_ack_after_post_down_sample_fails(self):
         _, raw, cases, _, _, _ = self._fixture()
         raw["events"][0]["input_ack_ns"] = 22
+        result = audit_v2.evaluate_temporal_binding(raw, cases)
+        self.assertFalse(result["all_occurrences_temporally_bound"])
+
+    def test_admission_after_down_witness_fails(self):
+        _, raw, cases, _, _, _ = self._fixture()
+        raw["events"][0]["admitted_ns"] = 22
+        raw["events"][0]["input_ack_ns"] = 23
         result = audit_v2.evaluate_temporal_binding(raw, cases)
         self.assertFalse(result["all_occurrences_temporally_bound"])
 
@@ -60,6 +68,19 @@ class TemporalBindingTests(unittest.TestCase):
     def test_duplicate_admission_fails(self):
         _, raw, cases, _, _, _ = self._fixture()
         raw["events"].append(copy.deepcopy(raw["events"][0]))
+        result = audit_v2.evaluate_temporal_binding(raw, cases)
+        self.assertFalse(result["all_occurrences_temporally_bound"])
+
+    def test_ack_at_or_after_lease_deadline_fails(self):
+        _, raw, cases, _, _, _ = self._fixture()
+        raw["events"][0]["valid_until_ns"] = 15
+        result = audit_v2.evaluate_temporal_binding(raw, cases)
+        self.assertFalse(result["all_occurrences_temporally_bound"])
+
+    def test_cross_occurrence_timestamps_fail(self):
+        _, raw, cases, _, _, _ = self._fixture()
+        raw["events"][0]["admitted_ns"] = 112
+        raw["events"][0]["input_ack_ns"] = 115
         result = audit_v2.evaluate_temporal_binding(raw, cases)
         self.assertFalse(result["all_occurrences_temporally_bound"])
 
