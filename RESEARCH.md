@@ -1,3 +1,19 @@
+# Issue #6367 T0 — matched protective-adaptation method fixture (2026-10-04)
+
+`METHOD_PASS_SCOPED`: candidate and independent raw-only auditor each ran once
+with zero retries. All 18 externally scheduled offers and 9 matched pairs were
+reconstructed; benefit, null, suppressed-action, late/exposure-shift, stale
+generation, missing occupancy, successful-but-unsafe, and selection-trap cases
+received their frozen case dispositions. Three auditor mutations were rejected.
+The selection trap remained all-offer null and no adapted-only estimate was
+emitted. Host Python 3.14.5 was used because OrbStack's exact image inspection
+failed on a containerd content-blob error; no image pull/retry/container was
+run. This is a synthetic method test only, not evidence for live #59 efficacy,
+MAP01 recovery, physical occupancy, human tempo, or product benefit. The
+fixture-wide arithmetic across heterogeneous cases is not an estimand. See the
+[report and checksummed artifacts](research/analysis/protective_local_adaptation_6367_t0_20261004/REPORT.md)
+and [Issue #6367](https://github.com/Unjuno/agent-interface/issues/6367).
+
 # Issue #7383 T0 — freshness-gated observation hedging (2026-10-04)
 
 One host-CPU deterministic simulator allocation (no container, model, GUI, GPU or network) passed the finite method gate. A 6 ms threshold from 200 disjoint calibration traces reduced p95 from 89 to 12 ms in the declared independent-heavy-tail fixture; consumed secondary work was 4.46% of baseline primary work and deadline misses fell 20→0. The independent 1,000-row auditor rejected partial-response, stale-generation, double-admission and omitted-loser-work mutations. Strongly correlated delays and a serialized queue showed no p95 gain. This establishes a synthetic conditional method result only: actual capture tails, current critical-path attribution, end-to-end benefit, and application-effect non-interference remain unmeasured; do not adopt or launch T1 without fresh critical-path evidence and a separately authorized private-fixture allocation. See the [report and exact artifacts](research/analysis/observation_hedging_7383_t0_20261004/REPORT.md) and [Issue #7383](https://github.com/Unjuno/agent-interface/issues/7383).

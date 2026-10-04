@@ -17,3 +17,4 @@ See [REPORT.md](REPORT.md) for H/T/D/C/U, exact execution and scope, and
 [FREEZE.json](FREEZE.json) for source and input identities. Formal CLI limits:
 one candidate invocation, one independent audit after candidate exit 0, zero
 retries. Unit/preflight tests are counted separately.
+`FILES.sha256` covers candidate, auditor, fixture, formal outputs and report.

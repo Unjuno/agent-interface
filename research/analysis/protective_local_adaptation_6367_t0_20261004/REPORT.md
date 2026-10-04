@@ -47,3 +47,23 @@ aborted on typed health/ammo UNKNOWN; its first result remains unchanged.
 - OrbStack exact-image inspection/list fails with a containerd content-blob
   `operation not supported`; no pull/retry or container launch. This CPU-only,
   no-GUI/no-model test uses the registered host-Python fallback.
+
+## Formal outcome
+
+Candidate CLI ran once and exited 0, producing 18 per-offer rows / 9 matched
+pairs. Its overall `FAIL_SAFETY` is the expected highest-priority disposition
+because the fixture contains a planted successful-but-unsafe case. The
+independent raw-only auditor ran once, exited 0 with `PASS_AUDIT`, no findings,
+and reconstructed all 18 events / 9 pairs. The complete case dispositions are
+in `RESULT.json` and `out/AUDIT.json`. The frozen candidate source commit is
+`836d6e32f7f7854edd01503b5dbc4d202869ed89`.
+
+The selection trap remains an all-offer null (0.0 across its two matched pairs)
+and no adapted-only estimate is emitted. Missing occupancy and stale/late cues
+remain HOLD; action suppression remains in the denominator and is a
+disadvantage. The fixture-wide `paired_success_delta` in the raw candidate is
+only arithmetic across deliberately heterogeneous controls; it is explicitly
+not an estimand and must not be used to claim a benefit.
+
+Preflight: 11/11 unit/fixture tests pass, including all three planned mutation
+rejections. Formal retries: 0. Overall result: `METHOD_PASS_SCOPED` only.
