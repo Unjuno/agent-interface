@@ -556,12 +556,33 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 "signal_id": name, "sequence": 89, "capture_ns": 200,
                 "binding": BINDING, "status": "observed", "value": value}
 
-        for invalid_step in (True, 1.0, -1):
-            with self.subTest(invalid_step=invalid_step):
-                malformed = dict(event, step=invalid_step)
+        for field, invalid_value in (
+                ("step", True), ("step", 1.0), ("step", -1),
+                ("id", True), ("id", 1), ("id", "")):
+            with self.subTest(field=field, invalid_value=invalid_value):
+                malformed = dict(event, **{field: invalid_value})
 
                 with self.assertRaisesRegex(ValueError, "exact early typed"):
                     controller.build_typed_action_snapshot(malformed, contract)
+
+    def test_feedback_rejects_nonstring_observation_and_typed_row_ids(self):
+        invalid_pairs = ((True, 1), (1, True), (1, 1), ("", ""))
+        for observation_id, typed_row_id in invalid_pairs:
+            before = observation(83, 100)
+            after = observation(89, 200)
+            before_typed = typed_observation(83, 100, 91, 45)
+            after_typed = typed_observation(89, 200, 85, 44)
+            after["id"] = observation_id
+            after_typed["id"] = typed_row_id
+
+            with self.subTest(observation_id=observation_id,
+                              typed_row_id=typed_row_id):
+                result = controller.action_state_feedback(
+                    before, after, [before_typed, after_typed])
+
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"],
+                                 "typed_frame_identity_mismatch")
 
     def test_feedback_reports_exact_health_and_ammo_deltas_for_matching_frames(self):
         before = observation(83, 100)
