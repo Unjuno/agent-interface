@@ -45,7 +45,9 @@ class InputState:
         self.events.append({'query': vk})
         if self.query_error:
             raise RuntimeError('inert read unavailable')
-        return 0x8000 if vk in self.down else 0
+        # A documented all-zero result is ambiguous with API failure; use the
+        # legacy low-bit witness for healthy up in these fixtures.
+        return 0x8000 if vk in self.down else 1
 
 
 class ExplicitUpLedgerTests(unittest.TestCase):

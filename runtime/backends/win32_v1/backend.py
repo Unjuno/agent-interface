@@ -282,6 +282,14 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
+        elif key in self.held_keys:
+            try:
+                state = self._key_down_state(vk)
+            except Exception:
+                state = None
+            if state is False:
+                # Send completion alone cannot retire an unresolved release.
+                self.held_keys.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:
@@ -313,6 +321,13 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
+        elif button in self.held_buttons:
+            try:
+                state = self._key_down_state(BUTTON_FLAGS[button][2])
+            except Exception:
+                state = None
+            if state is False:
+                self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
         for value, flag in ((dy, MOUSEEVENTF_WHEEL), (dx, MOUSEEVENTF_HWHEEL)):
@@ -426,6 +441,12 @@ class Win32Backend:
             elif kind == "pointer_button" and op["button"] not in BUTTON_FLAGS:
                 raise Win32BackendError(f"unsupported button {op['button']}")
 
+    def _key_down_state(self, vk: int) -> bool | None:
+        # Zero aliases healthy up and documented API failure. Without a
+        # separate availability witness it cannot discharge input custody.
+        state = self.user32.GetAsyncKeyState(vk) & 0x8001
+        return bool(state & 0x8000) if state else None
+
     def release_all(self) -> dict[str, Any]:
         # Compensate unmatched Unicode delivery once; failure retains the unit.
         # This acknowledges UP insertion, not physical or application state.
@@ -439,7 +460,7 @@ class Win32Backend:
                 self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
-        for vk in list(self.held_keys.values()):
+        for vk in sorted(set(tracked_keys.values())):
             self._send_key(vk, False)
         for button in list(self.held_buttons):
             _, up_flag, _ = BUTTON_FLAGS[button]
@@ -447,20 +468,28 @@ class Win32Backend:
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
         time.sleep(0.01)
-        keys = sorted(name for name, vk in tracked_keys.items()
-                      if self.user32.GetAsyncKeyState(vk) & 0x8000)
-        buttons = sorted(button for button in tracked_buttons
-                         if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
+        # Aliases share one physical state observation; repeated queries can
+        # consume the legacy low bit and create an artificial zero ambiguity.
+        states_by_vk = {vk: self._key_down_state(vk)
+                        for vk in sorted(set(tracked_keys.values()))}
+        key_states = {name: states_by_vk[vk]
+                      for name, vk in tracked_keys.items()}
+        button_states = {button: self._key_down_state(BUTTON_FLAGS[button][2])
+                         for button in tracked_buttons}
+        keys = sorted(name for name, down in key_states.items() if down is True)
+        buttons = sorted(name for name, down in button_states.items() if down is True)
+        unknown_keys = sorted(name for name, down in key_states.items() if down is None)
+        unknown_buttons = sorted(name for name, down in button_states.items() if down is None)
+        # Preserve original tracking on query exceptions and retain unknowns.
+        self.held_keys = {name: vk for name, vk in tracked_keys.items()
+                          if key_states[name] is not False}
+        self.held_buttons = {name for name in tracked_buttons
+                             if button_states[name] is not False}
         if unicode_error is not None:
             raise unicode_error
-        # Retire obligations only after complete, successful neutral-state reads.
-        # Sending UP or an incomplete read is not evidence of neutrality.
-        for name in tracked_keys:
-            if name not in keys:
-                self.held_keys.pop(name, None)
-        self.held_buttons.difference_update(tracked_buttons - set(buttons))
         return {"keys_down": keys, "buttons_down": buttons,
-                "verified": not keys and not buttons,
+                "keys_unknown": unknown_keys, "buttons_unknown": unknown_buttons,
+                "verified": not keys and not buttons and not unknown_keys and not unknown_buttons,
                 "monotonic_ns": time.monotonic_ns()}
 
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
@@ -504,6 +533,20 @@ class Win32Backend:
                     releases.append(self.release_all())
                 else:
                     raise Win32BackendError(f"unsupported op {kind}")
+                release_attempt = (
+                    kind == "key_chord"
+                    or (kind == "key_state" and not op["down"])
+                    or (kind == "pointer_button" and not op["down"])
+                    or kind == "release_all"
+                )
+                if release_attempt and (self.held_keys or self.held_buttons or
+                                        getattr(self, "pending_unicode_ups", ())):
+                    # An unconfirmed UP ends this program's task effects. Try
+                    # cleanup once more, retain custody, and let the session
+                    # report release_unverified without sending later ops.
+                    if kind != "release_all":
+                        releases.append(self.release_all())
+                    break
         except Exception:
             releases.append(self.release_all())
             raise

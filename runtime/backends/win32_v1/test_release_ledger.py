@@ -42,7 +42,9 @@ class InertAPI:
         self.queries.append(vk)
         if len(self.queries) == self.query_failure:
             raise RuntimeError("inert query unavailable")
-        return 0x8000 if vk in self.down else 0
+        # A documented all-zero result is ambiguous with API failure; use the
+        # legacy low-bit witness for healthy up in these fixtures.
+        return 0x8000 if vk in self.down else 1
 
 
 class ReleaseLedgerTests(unittest.TestCase):
