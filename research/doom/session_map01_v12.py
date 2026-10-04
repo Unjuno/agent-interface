@@ -18,7 +18,7 @@ sys.path.insert(0, str(HERE.parent / "observation_gating"))
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from executor_v12 import Executor
 from lease import Expired
-from doom_typed_release_backend_v1 import Backend, suite
+from doom_typed_release_backend_v3 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
 
 
@@ -117,11 +117,13 @@ def main():
                  HERE.parent / "live_control/lease_cause_v1.py",
                  HERE.parent / "live_control/lease.py",
                  HERE.parent / "live_control/input_owner_v10.py",
+                 HERE.parent / "live_control/input_transition_owner_v3.py",
                  HERE.parent / "live_control/input_owner_v5.py",
                  HERE.parent / "live_control/session_v9.py",
                  HERE.parent / "live_control/session_v10.py",
                  HERE.parent / "live_control/coast_backend_v1.py",
                  HERE / "doom_typed_release_backend_v1.py",
+                 HERE / "doom_typed_release_backend_v3.py",
                  HERE / "doom_typed_coast_backend_v1.py",
                  HERE / "doom_typed_observation_v1.py",
                  HERE / "doom_hud_signal_v3.py",
