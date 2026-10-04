@@ -27,7 +27,7 @@ The current mainline `research/doom/doom_typed_release_backend_v3.py` was subseq
 - `map01-v39-release-cleanup-followup-v1/`
 - `results/map01-v39-per-key-release-telemetry-port-v1/`
 
-The latest observed `origin/main` is `f406e21e2430e40602d49dcd021e9a8365200430`. The intervening #7599/#7601/#7603 updates add evidence under separate paths and do not change these release-cleanup implementation/test sources.
+The latest observed `origin/main` is `41df296f3ce4d03c801c998d38f6e537e64a83ab`. Since the first rescue commit, main added the #7593 caller union, #7600 portable-manifest correction, and additional #7599/#7601/#7603/#7605 evidence plus #7501 source-conflict research. These merge cleanly and do not alter the rescued release-cleanup implementation/test sources.
 
 ## Revalidation on current main
 
@@ -35,8 +35,8 @@ The latest observed `origin/main` is `f406e21e2430e40602d49dcd021e9a8365200430`.
 - Cleanup-overlap retained-log auditor mutation suite: 5/5 PASS. The package audit's current-source check fails because the current main test file no longer contains the historical `test_cleanup_inside_explicit_release_bracket_is_not_ordinary` case. The other retained-log checks pass; this is recorded source drift, not a rewritten historical PASS.
 - #7395 follow-up auditor: all saved-log/source-pin checks pass except `all_adversarial_tests_present`, because the live test module has evolved since the stacked branch. Historical run receipts remain byte-for-byte preserved.
 - Frozen SHA manifests were checked without rewriting them: package-local evidence hashes match, while entries pointing at the current root backend/test source differ from old pinned bytes. The updated T0 candidate also intentionally no longer matches the historical freeze. These are recorded source-evolution mismatches; the STOP and raw receipts were not altered.
-- Current-main retained-input backend v3 tests: 11/11 PASS; v4 tests: 8/8 PASS. The typed v3 test command could not import optional Pillow in the available Python 3.12 environment (`ModuleNotFoundError: PIL`), so no result is claimed for that command.
-- Cleanup-overlap auditor-mutation suite: 5/5 PASS in normal and optimized Python. The workspace index passes (159 directories); analysis index passes (670 directories).
+- Current-main retained-input backend v3 tests: 11/11 PASS; v4 tests: 8/8 PASS; input-owner v3 tests: 15/15 PASS. The typed v3 test command could not import optional Pillow in the available Python 3.12 environment (`ModuleNotFoundError: PIL`), so no result is claimed for that command.
+- Cleanup-overlap auditor-mutation suite: 5/5 PASS in normal and optimized Python. The workspace index passes (159 directories); analysis index passes (672 directories) on the latest merged tree.
 - Whole imported evidence has one preserved blank line at EOF in `SPLIT_STEP_FIX_01_CONSTRUCTION.txt`; it was not normalized. All other scoped diff checks pass.
 - No container or live X11 experiment was rerun. The earlier branch record says the OrbStack container preflight was blocked and records the first T0 candidate STOP.
 
