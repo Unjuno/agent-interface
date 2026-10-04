@@ -147,9 +147,16 @@ class Executor(Previous):
                     release["release_batch_delivery"] = dict(publication)
             except BaseException as exc:
                 release = {"verified": False, "error": repr(exc)}
-                status = "failed"; error = repr(exc)
+                status = "failed"
+                if error is None:
+                    error = repr(exc)
                 publication = getattr(exc, "release_batch_publication", None)
-                if isinstance(publication, dict):
+                if release_batch_publication is not None:
+                    release["release_batch_delivery"] = dict(release_batch_publication)
+                    if (isinstance(publication, dict) and
+                            publication != release_batch_publication):
+                        release["release_batch_cleanup_delivery"] = dict(publication)
+                elif isinstance(publication, dict):
                     release["release_batch_delivery"] = dict(publication)
                 if process_exception is None:
                     process_exception = exc
