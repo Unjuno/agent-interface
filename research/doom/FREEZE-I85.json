@@ -1,0 +1,32 @@
+{
+  "auditor_command": "python research/doom/audit_cross_layer_I85.py < research/doom/candidate-results-I85.json > research/doom/audit-results-I85.json",
+  "auditor_invocations": 1,
+  "candidate_command": "python research/doom/cross_layer_probe_I85.py > research/doom/candidate-results-I85.json",
+  "candidate_invocations": 1,
+  "environment": {
+    "executable": "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "formal_allocation": false,
+  "live_resource_used": false,
+  "schema": "map01-release-producer-analyzer-cross-layer-freeze-I85-v1",
+  "scope": "synthetic CPU-only producer/analyzer construction experiment",
+  "sha256": {
+    "research/doom/analyze_map01_direct_retained_input_v1.py": "afab371b3dd8272fca1fc2b25eedd444567cebf8727d4de4f2a79667b4b9f51c",
+    "research/doom/audit_cross_layer_I85.py": "fca2764e45ffa9d630f3caa77097b2176401793d1877208f65ec5d9ce8e23f17",
+    "research/doom/cross_layer_probe_I85.py": "a5166ad35942dbefa3ba53d685924850e826d39f8a98d9513ed741d42e2dc4d7",
+    "research/doom/doom_retained_input_backend_v3.py": "6db0845c42f285b43c42639a390fb535a522bc913f417c1ccad9a1153d15484e",
+    "research/doom/raw-cases.json": "7bcdf55068116f9709eb96194fc973dbfe2b9ae677096621762871aec313dc2a",
+    "research/doom/test_analyze_map01_direct_retained_input_v1.py": "0db1b0fa4941c645015413c9d40fe14240165c45db41a1f5ded20be1db0bf933",
+    "research/doom/test_doom_retained_input_backend_v3.py": "da6e974ee8b69d6df5bdca1afc7899f1373460b345e724e644b8a99c3fa9b227",
+    "research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+  },
+  "sources": {
+    "PR7352 backend blob": "f047600ea1ed706c8db079d99e17c12327b47b3b",
+    "PR7352 producer tests blob": "fb7c32c4321554d63ae088793effa873e20be7e1",
+    "PR7352 wrapper blob": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "PR7356 analyzer blob": "bd5c929691cd7e8336e814ab4c3f1f4ed6f9b812",
+    "PR7356 analyzer tests blob": "b468f4fdf28a8d1fedea951e92a0e5fc54da91ca"
+  }
+}
