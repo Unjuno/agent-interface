@@ -109,6 +109,14 @@ class CancelReleasePublicationTest(unittest.TestCase):
         backend = Backend(owner)
         events = []
         executor = self.Executor(backend, events.append)
+        watcher_started = threading.Event()
+        watcher_gate = threading.Event()
+        publish = executor._publish_release
+        def gated_publish(identifier, lease):
+            watcher_started.set()
+            watcher_gate.wait(2)
+            return publish(identifier, lease)
+        executor._publish_release = gated_publish
         try:
             executor.submit("cancel-release-test", [{"op": "hold_w_until_cancel"}], 1,
                             time.perf_counter_ns() + 10_000_000_000)
@@ -118,8 +126,11 @@ class CancelReleasePublicationTest(unittest.TestCase):
             self.assertIsNotNone(backend.admission)
             self.assertEqual(backend.admission["event"], "input_admission")
             self.assertTrue(executor.cancel("cancel-release-test"))
+            self.assertTrue(watcher_started.wait(2))
             worker = executor.active[2]
             worker.join(3)
+            self.assertFalse(worker.is_alive())
+            watcher_gate.set()
             for watcher in executor.release_watchers:
                 watcher.join(3)
             self.assertFalse(worker.is_alive())
@@ -141,6 +152,7 @@ class CancelReleasePublicationTest(unittest.TestCase):
             self.assertEqual(release["owner_release"]["keys_down"], [])
             self.assertFalse(SERVER["down"])
         finally:
+            watcher_gate.set()
             executor.close()
             owner.close()
 
