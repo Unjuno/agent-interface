@@ -45,6 +45,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis -p 'test_analysis_checkout.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test Issue #7487 delayed GUI effect attribution T0 contract
+        run: python -B -m unittest discover -s research/analysis/delayed_gui_effect_attribution_7487_t0_20261004 -p 'test_*.py' -v
       - name: Re-run Issue #7466 exploratory checkpoint construction and raw audit
         run: |
           python -B research/analysis/hazard_checkpoint_7466_t0_20261004/sim.py research/analysis/hazard_checkpoint_7466_t0_20261004
