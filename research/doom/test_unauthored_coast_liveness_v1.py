@@ -28,13 +28,30 @@ def typed_event(sequence, value, *, status="observed"):
 
 
 class UnauthoredCoastLivenessTests(unittest.TestCase):
-    def test_typed_health_crossing_invalidates_without_granting_authority(self):
+    def test_one_low_health_sample_does_not_interrupt(self):
         monitor = UnauthoredCoastMonitor(source_signal(), 2)
-        event = monitor.observe(typed_event(11, 79))
+        event = monitor.observe(typed_event(11, 80))
+        self.assertIsNone(event)
+
+    def test_two_of_latest_three_low_samples_invalidate_without_authority(self):
+        monitor = UnauthoredCoastMonitor(source_signal(), 2)
+        self.assertIsNone(monitor.observe(typed_event(11, 80)))
+        self.assertIsNone(monitor.observe(typed_event(12, 82)))
+        event = monitor.observe(typed_event(13, 80))
         self.assertEqual(event["outcome"]["status"], "HARD_INVALIDATED")
+        self.assertEqual(event["outcome"]["reason"],
+                         "two_of_three_below_candidate_baseline")
+        self.assertEqual(event["outcome"]["low_samples_in_window"], 2)
         self.assertTrue(event["outcome"]["requires_new_decision"])
         self.assertFalse(event["outcome"]["grants_input_authority"])
         self.assertEqual(monitor.event_types, frozenset({"typed_observation"}))
+
+    def test_old_low_sample_ages_out_of_three_sample_window(self):
+        monitor = UnauthoredCoastMonitor(source_signal(), 2)
+        self.assertIsNone(monitor.observe(typed_event(11, 80)))
+        self.assertIsNone(monitor.observe(typed_event(12, 82)))
+        self.assertIsNone(monitor.observe(typed_event(13, 83)))
+        self.assertIsNone(monitor.observe(typed_event(14, 84)))
 
     def test_small_health_change_coalesces_without_interrupt(self):
         monitor = UnauthoredCoastMonitor(source_signal(), 2)
