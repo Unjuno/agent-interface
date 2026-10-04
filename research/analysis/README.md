@@ -627,6 +627,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
 - [`origin_effect_binding_6500_t0_20261002/`](origin_effect_binding_6500_t0_20261002/)
 - [`owner_keyup_a18_boundary_audit_5156_20261003/`](owner_keyup_a18_boundary_audit_5156_20261003/)
+- [`owner_keyup_completion_sentinel_terminality_5156_20261003/`](owner_keyup_completion_sentinel_terminality_5156_20261003/)
 - [`owner_keyup_invocation_race_5156_t1_20261001/`](owner_keyup_invocation_race_5156_t1_20261001/)
 - [`owner_keyup_invocation_race_5156_t2_20261001/`](owner_keyup_invocation_race_5156_t2_20261001/)
 - [`owner_keyup_serializer_5156_t0_20261001_v1/`](owner_keyup_serializer_5156_t0_20261001_v1/)
