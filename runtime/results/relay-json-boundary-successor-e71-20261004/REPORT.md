@@ -46,6 +46,13 @@ success, GUI reliability, performance, or a formal candidate result.
 
 ## Results
 
+- Second current-main refresh on 2026-10-04: rebased onto
+  `origin/main` `156312eb6b733edf0c6ac47903c52016efe9da31`. The range from
+  the prior `f2aa59c8` base contains no changes to the four candidate paths.
+  Re-ran the focused suite with the same isolated dependency versions and
+  CPython 3.12.10: 18/18 tests and 37 subtests PASS; `git diff --check`
+  against this current base is clean.
+
 - Follow-up local verification on 2026-10-04: rebased the additive candidate
   onto current `origin/main` `f2aa59c8bac88f0091eb24c4f462f55a72303d2f`;
   no main-side changes touched the four candidate paths. With isolated uv
