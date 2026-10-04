@@ -205,6 +205,46 @@ class BuilderTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 exec(code, env)
 
+    def test_repository_lease_intent_token_is_emitted_for_key_and_cleanup(self):
+        import copy
+        import threading
+        import time
+        import uuid
+
+        base_source = subprocess.check_output(
+            ['git', 'show', PIN + ':research/live_control/lease.py'], cwd=HERE)
+        cause_source = subprocess.check_output(
+            ['git', 'show', PIN + ':research/live_control/lease_cause_v1.py'], cwd=HERE)
+        base_tree = ast.parse(base_source)
+        base_node = next(n for n in base_tree.body
+                         if isinstance(n, ast.ClassDef) and n.name == 'Lease')
+        base_env = dict(threading=threading, time=time)
+        exec(compile(ast.Module(body=[base_node], type_ignores=[]),
+                     '<repository-lease-base>', 'exec'), base_env)
+        cause_tree = ast.parse(cause_source)
+        cause_node = next(n for n in cause_tree.body
+                          if isinstance(n, ast.ClassDef) and n.name == 'Lease')
+        cause_env = dict(copy=copy, threading=threading, uuid=uuid,
+                         Previous=base_env['Lease'])
+        exec(compile(ast.Module(body=[cause_node], type_ignores=[]),
+                     '<repository-cause-lease>', 'exec'), cause_env)
+        lease = cause_env['Lease'](time.perf_counter_ns() + 2_000_000_000)
+        self.assertTrue(lease.intent_token)
+        self.assertFalse(hasattr(lease, 'token'))
+
+        tree = ast.parse(self.builder().instrument(self.source()))
+        helpers = [n for n in tree.body if isinstance(n, ast.FunctionDef)
+                   and n.name.startswith('_measurement_')]
+        env = dict(time=time)
+        exec(compile(ast.Module(body=helpers, type_ignores=[]),
+                     '<measurement-helpers>', 'exec'), env)
+        owner = types.SimpleNamespace(owner_id='owner-real-lease', records=[])
+        rows = []
+        env['_measurement_emit'](owner, lease, 'owner_key_press', 38, 1, time)
+        env['_measurement_mark'](rows, owner, lease, 38, time)
+        self.assertEqual(owner.records[0]['intent'], lease.intent_token)
+        self.assertEqual(rows[0]['intent'], lease.intent_token)
+
     def key_case(self, identity_failure=False):
         tree = ast.parse(self.builder().instrument(self.source()))
         branch = next(n for n in ast.walk(tree) if isinstance(n, ast.If)
@@ -218,7 +258,7 @@ class BuilderTests(unittest.TestCase):
         class Lease:
             deadline = 100000
             @property
-            def token(self):
+            def intent_token(self):
                 if identity_failure:
                     raise ValueError('injected key telemetry identity failure')
                 return 'intent-one'
@@ -300,7 +340,7 @@ def factory(held, active, self, d, xtest, X, time):
         class Lease:
             deadline = 10000
             @property
-            def token(self):
+            def intent_token(self):
                 if identity_failure:
                     raise ValueError('injected telemetry identity failure')
                 return 'intent-one'
