@@ -1,0 +1,32 @@
+{
+  "allocation_id": "MAP01-V39-X11-EVENT-ROUTING-A03-20261004-01",
+  "artifact_sha256": {
+    "ENVIRONMENT.json": "ee6bc63f5272473b031b2ff759a164653885d7a898a8d1e7309b93a6170b46b0",
+    "PLAN.md": "9206f129126c251de0c6d98ce95a0f2f6d87af918023b145fab42cb35a46c09e",
+    "SETUP.json": "b61c11df9de853861d0493e7028ea540ff9753bd5fcc5a043190d4cff72f0a83",
+    "SOURCE_MANIFEST.json": "b7ad2ae28b082a652d4ce96f88e8ae45a458cec5b525cd24fef43fea9f0d9e3a",
+    "audit.py": "e060a661b27687e849b0d8737347ef3cefa4ae83bab6d8e43a49752c11f8d720",
+    "candidate.py": "45d24f8fe0248ad5d8a40129f8049650d8640b4c47f12a708b78bd3bd6c8b031",
+    "capture_environment.py": "a826cf04152cb89c6a02ac0e393ec0898168abcc14d36b74fe063a3ea2668ab2",
+    "dependencies/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "setup_check.py": "f3093a73706459a20df2e9759db4dfe7733038aeb0e83c28a26293fa335e6792",
+    "test_audit.py": "a8ce67d70db381a5fa6a8942d267baf4768c213634e1acd24f834eb80184fd5b"
+  },
+  "auditor_only_after_candidate_exit_zero": true,
+  "candidate_invocations_allowed": 1,
+  "candidate_network_calls": "none",
+  "environment": {
+    "architecture": "arm64",
+    "distro": "Ubuntu 24.04",
+    "guest_network": "available; candidate makes no network calls",
+    "machine": "v39-x11-client-event-effect-a02-20261004",
+    "machine_id": "01M42F4H1TA74D5P5PA9N3YVNE"
+  },
+  "input_owner_v10_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+  "issue": 59,
+  "retry_candidate_or_auditor": false,
+  "schema": "v39-x11-event-routing-freeze-a03-v1",
+  "source_commit": "13bab54ea6d91978247ecc1b70e5060db752367a",
+  "source_git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+  "xvfb_tcp_enabled": false
+}
