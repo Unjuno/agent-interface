@@ -1,0 +1,25 @@
+{
+  "assertions": {
+    "cold_positive_accounts_both_model_stages_and_executes_two_transitions": true,
+    "current_main_and_candidate_agree_on_cold_cases": true,
+    "failed_model_attempt_retains_missing_usage_image_and_wait_metadata": true,
+    "no_match_stops_without_selected_target_or_execution": true
+  },
+  "scope": "synthetic cold acquisition through caller v3 into compiled graph; no GUI, physical input, provider, schema endpoint or efficiency claim",
+  "sha256": {
+    "RUN-MAIN.json": "2c5323e38b970b339d7341aa18c38e2c20386c0012c8acbf012553314e2b1842",
+    "RUN-PR7330.json": "7b51e6432a5cf710df85dc5c8bfeb981b45be819865bf751236f76c4d708b655",
+    "run.py": "b2bb6965ebaa1530a0c592a35ca9baf9ea3d4eae3123319c059afdb4535ba736"
+  },
+  "source_sha256": {
+    "candidate": {
+      "caller": "983d22edfd1232a42765804688e990249887723f849220fae6407f58a04dca8c",
+      "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
+    },
+    "main": {
+      "caller": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca",
+      "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
+    }
+  },
+  "status": "PASS_SCOPED_COLD_COMPOSITION"
+}
