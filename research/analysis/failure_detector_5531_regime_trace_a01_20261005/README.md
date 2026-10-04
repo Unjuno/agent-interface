@@ -74,17 +74,35 @@ samples. The frozen raw-only auditor ran once and returned
 observer heartbeat interval was 100.002 ms (maximum 104.705 ms); median child
 interval was 99.999 ms.
 
-**Current disposition: `HOLD_INVALID_UNAUDITABLE_HOST_REGIME_LABELS`.** A later
-review found that `GetSystemTimes` includes idle time in the kernel counter,
-while the collector adds idle, kernel, and user deltas before deriving busy
-percent. This double-counts idle, so the recorded 595 `elevated` labels and
-5,991 elevated intervals are historical outputs of an invalid formula; they
-cannot establish actual host regimes. The collector retained no raw counter
-deltas, so the labels cannot be reconstructed or corrected from A01. The
-heartbeat/raw event streams were retained, but the regime-comparison result is
-invalid and remains HOLD. See the additive
-[`review-correction-02/RECHECK.json`](results/review-correction-02/RECHECK.json).
+**Current disposition: `HOLD_INSUFFICIENT_REGIME_COVERAGE`.** The first review
+correctly found an idle double-counting error in the recorded percentages, but
+its correction-02 conclusion that the regimes could not be reconstructed was
+too strong. `GetSystemTimes` includes idle time in the kernel delta. Let `I` be
+the idle delta and `S` be kernel plus user delta; the retained percentage was
+`B = 100*S/(I+S)`. It is algebraically invertible to true aggregate busy
+`C = 200 - 10000/B`. The stored `B` values were rounded to six decimal places;
+correction-03 propagates the ±0.0000005 percentage-point rounding bound and
+finds no threshold-ambiguous sample (the nearest recorded `B` is 0.0343817
+percentage points from the equivalent 66.6666667% boundary).
 
+| Symbol | Meaning | SI unit | Definition / range / assumption | Type |
+|---|---|---|---|---|
+| `I` | Idle-counter delta | s (counter ticks are 100 ns) | Nonnegative; Windows kernel delta includes this idle time | Finite nonnegative counter delta |
+| `S` | Kernel plus user delta | s (counter ticks are 100 ns) | Positive; same sampling interval as `I` | Finite positive counter delta |
+| `B` | Recorded erroneous busy percentage | % (dimensionless) | `100*S/(I+S)`, rounded to 6 decimal places; `50 ≤ B ≤ 100` | Finite numeric scalar |
+| `C` | Reconstructed true aggregate busy percentage | % (dimensionless) | `200-10000/B`; valid under the `GetSystemTimes` counter relationship above | Finite numeric scalar |
+| `T` | Frozen elevated-regime threshold | % (dimensionless) | `50.0`; elevated when `C ≥ T` | Numeric constant |
+
+Of 595 host samples, 577 reconstruct as ordinary and 18 as elevated. Applying
+the same midpoint-to-heartbeat-interval mapping as the frozen auditor yields
+5,811 ordinary intervals and 180 elevated intervals. Only 10 elevated
+intervals fall in the second chronological half, below the frozen minimum of
+100; total elevated intervals are also below 200. Therefore A01 still does not
+qualify for a regime comparison. See the preserved first correction at
+[`review-correction-02/RECHECK.json`](results/review-correction-02/RECHECK.json)
+and the superseding offline reconstruction at
+[`review-correction-03/RECHECK.json`](results/review-correction-03/RECHECK.json).
+No candidate or formal auditor was rerun.
 The original audit's `PASS_TRACE_CAPTURE_SCOPED` remains preserved as a
 historical structural/timing result; it did not independently derive the
 Windows busy-percent arithmetic. This trace is not detector calibration, a

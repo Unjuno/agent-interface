@@ -24,3 +24,19 @@ class ReviewRecheckTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class ReconstructedBusyFormulaTests(unittest.TestCase):
+    def test_inverse_corrects_the_double_counted_idle_formula(self):
+        from recheck_regimes import corrected_busy_bounds, reconstructed_regime
+        # I=30, K includes I and is 70, U=20: recorded B=75, actual busy=60/90.
+        low, high = corrected_busy_bounds(75.0)
+        self.assertLessEqual(low, 100 * (70 + 20 - 30) / (70 + 20))
+        self.assertGreaterEqual(high, 100 * (70 + 20 - 30) / (70 + 20))
+        self.assertEqual(reconstructed_regime(75.0), "elevated")
+
+    def test_rounded_threshold_boundary_is_not_silently_classified(self):
+        from recheck_regimes import reconstructed_regime
+        self.assertEqual(reconstructed_regime(20000 / 300), "threshold_ambiguous")
+        self.assertEqual(reconstructed_regime(66.666667), "threshold_ambiguous")
+        self.assertEqual(reconstructed_regime(66.666668), "elevated")
+        self.assertEqual(reconstructed_regime(66.666665), "ordinary")
