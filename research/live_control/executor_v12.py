@@ -15,6 +15,7 @@ class Executor(Previous):
         self.emit = self._emit_with_release_barrier
         self.release_watchers = []
         self.published_release_ids = set()
+        self.release_publication_errors = {}
 
     def _emit_with_release_barrier(self, event):
         if type(event) is dict and event.get("event") == "terminal":
@@ -22,6 +23,11 @@ class Executor(Previous):
             if active is not None and active[0] == event.get("id"):
                 cause = active[1].interruption_snapshot()
                 self._publish_release_cause(active[0], active[1], cause)
+                failure = self.release_publication_errors.get(active[0])
+                if failure is not None:
+                    event["input_release_publication"] = {
+                        "status": "failed", "error": failure}
+                event["terminal_ns"] = time.perf_counter_ns()
         self._external_emit(event)
 
     def submit(self, identifier, steps, expected_sequence, valid_until_ns):
@@ -66,7 +72,6 @@ class Executor(Previous):
                 return
             if identifier in self.published_release_ids:
                 return
-            self.published_release_ids.add(identifier)
             event = {"event": "input_released", "id": identifier,
                    "intent_token": cause["intent_token"],
                    "owner_release": record,
@@ -77,7 +82,14 @@ class Executor(Previous):
                     record.get("keys_down") != [] or
                     record.get("buttons_down") != []):
                 event["event"] = "input_release_unverified"
-            self.emit(event)
+            try:
+                self._external_emit(event)
+            except Exception as exc:
+                self.release_publication_errors[identifier] = {
+                    "type": type(exc).__name__, "message": str(exc)}
+                return
+            self.published_release_ids.add(identifier)
+            self.release_publication_errors.pop(identifier, None)
 
     def cancel(self, identifier):
         with self.lock:
