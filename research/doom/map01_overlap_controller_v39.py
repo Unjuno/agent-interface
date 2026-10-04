@@ -642,6 +642,14 @@ def input_edge_receipts(events):
         up_actuation = up_edge.get("actuation_id") if type(up_edge) is dict else None
         down_owner = down_edge.get("owner_id") if type(down_edge) is dict else None
         up_owner = up_edge.get("owner_id") if type(up_edge) is dict else None
+        no_application_consumption_conflict = all(
+            type(row) is dict and
+            ("application_consumption_observed" not in row or
+             row.get("application_consumption_observed") is False)
+            for row in (
+                down, up, down_data, up_data, down_edge, up_edge,
+                down_data.get("bracket") if type(down_data) is dict else None,
+                up_data.get("bracket") if type(up_data) is dict else None))
         complete = (
             len(downs) == 1 and len(ups) == 1 and
             type(down_data) is dict and type(up_data) is dict and
@@ -676,6 +684,7 @@ def input_edge_receipts(events):
                 for edge in (down_edge, up_edge)) and
             down_data.get("application_consumption_observed") is False and
             up_data.get("application_consumption_observed") is False and
+            no_application_consumption_conflict and
             bracket_matches(down_data, down_edge, "down", "CONFIRMED_PHYSICAL_DOWN") and
             bracket_matches(up_data, up_edge, "up", "CONFIRMED_PHYSICAL_UP") and
             admission_window_matches(down, down_data) and
