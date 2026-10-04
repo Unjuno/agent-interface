@@ -34,5 +34,5 @@ Source map: release-result predicate and sticky flag, `session.py:16-21`; explic
 - Integration base at validation: `96f7041fe6b3eb71127ac4eca0ed31d313c29ad2`; the three source blobs listed below were unchanged from the analytical source commit.
 - Source blobs: `runtime/backends/x11_v1/session.py` `4dbd6dd219e2ec7313cd32d3e4cb154e0efcfbb1`; `runtime/backends/x11_v1/backend.py` `0b168d6e8b840f39f21cdd35cdf6d959da53fbde`; `runtime/backends/x11_v1/test_partial_execution.py` `5e5055b83c368ef55e09f89829156e4aa39ec3e6`.
 - Command: `/tmp/unjuno-7042-x11-test-venv/bin/python -B -m unittest runtime.backends.x11_v1.test_partial_execution -v`.
-- Runtime: CPython 3.12.10; `python-xlib==0.33`, `Pillow==10.2.0`, `six==1.17.0`; macOS arm64 host. The suite passed 12/12 with exit 0; stdout is retained in `test-partial-execution.log`, with start/end UTC and exit code alongside it.
+- Runtime: CPython 3.12.10; `python-xlib==0.33`, `Pillow==10.2.0`, `six==1.17.0`; macOS arm64 host. The suite passed 12/12 with exit 0; stdout is retained in `test-partial-execution.txt`, with start/end UTC and exit code alongside it.
 - This validates only mocked X11 session/release behavior. It does not validate server delivery, live readback, GUI effects, recovery rate, or benefit over YIELD.
