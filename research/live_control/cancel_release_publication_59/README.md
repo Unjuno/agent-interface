@@ -29,3 +29,11 @@ python -B research/live_control/cancel_release_publication_59/test_cancel_releas
 All five cases pass on the candidate; `research/live_control/test_running_action_guard_v3.py` passes 3/3. `py_compile` and `git diff --check` pass. Scope remains deterministic fake-Xlib event-path construction only: it does not establish delivery over a production transport, physical key-up, application effect, useful task feedback, bounded recovery, or MAP01 success.
 
 Repeated validation on Windows CPython 3.11.9: 30/30 focused process runs passed (150 test executions total), plus the 3/3 client-guard tests, `py_compile`, and `git diff --check`. Candidate SHA-256: `research/live_control/executor_v12.py` `8390b9c1f31a489638ab8b0e0116f029b2ee5d6bfcac6a6d1aea0f4b8e16faf4`; `research/live_control/cancel_release_publication_59/test_cancel_release_publication.py` `b6b74a9181dc025d42525502dc41e43b515b945d8080119026aefce5040eb04e`.
+
+### Current-head correction
+
+The above describes the earlier candidate at commit `52f62d96ab`. PR head `619ee0eeb48ac245e1ccc4588ba2a6336089f720` later replaced its terminal cleanup policy with explicit local `terminal_publication_errors` and retains the active slot after a terminal-sink exception, so further input is rejected as busy. This is fail-closed and supersedes the earlier claim that terminal failure should clear the slot.
+
+That head still retries an `input_released` event if the sink accepts it and then raises before acknowledging: `published_release_ids` is set only after the sink returns. The new `test_accept_then_raise_release_delivery_is_not_retried` failed first on `619ee0eeb4` with two attempts. The candidate adds an attempt-ID guard before calling the sink; on any exception the terminal retains `delivery_unknown` and the event is not retried. This prevents the duplicate early-release event rejected by `RunningActionGuardV3`.
+
+The five-test suite passed 30/30 process runs (150 executions), and the current client-guard suite passed 3/3; `py_compile` and `git diff --check` passed. Candidate SHA-256: `executor_v12.py` `86bbd0b25530c8d0a2c153ac0d4fa70047cb5febc92253e60585ba0be9485c9e`; `test_cancel_release_publication.py` `358052551acf3cc7c0c4efca58bb054eb4d9a4e0d7e6bd3e6ff562e4ad6d1f24`.

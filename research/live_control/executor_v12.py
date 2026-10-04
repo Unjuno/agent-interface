@@ -14,6 +14,7 @@ class Executor(Previous):
         self._external_emit = emit
         self.emit = self._emit_with_release_barrier
         self.release_watchers = []
+        self.release_publication_attempted_ids = set()
         self.published_release_ids = set()
         self.release_publication_errors = {}
         self.terminal_publication_errors = {}
@@ -82,8 +83,11 @@ class Executor(Previous):
         with self.lock:
             if self.active is None or self.active[0] != identifier:
                 return
-            if identifier in self.published_release_ids:
+            if identifier in self.release_publication_attempted_ids:
                 return
+            # A sink can accept the event and still lose its acknowledgement.
+            # Keep the boundary at-most-once and report delivery uncertainty.
+            self.release_publication_attempted_ids.add(identifier)
             event = {"event": "input_released", "id": identifier,
                    "intent_token": cause["intent_token"],
                    "owner_release": record,

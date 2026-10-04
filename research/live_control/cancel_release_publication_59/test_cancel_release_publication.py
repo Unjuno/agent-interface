@@ -156,7 +156,7 @@ class CancelReleasePublicationTest(unittest.TestCase):
             executor.close()
             owner.close()
 
-    def test_release_emitter_failure_is_retried_before_terminal(self):
+    def test_release_emitter_failure_is_not_retried_before_terminal(self):
         SERVER["down"].clear()
         owner = self.InputOwner(None)
         backend = Backend(owner)
@@ -186,15 +186,16 @@ class CancelReleasePublicationTest(unittest.TestCase):
                 watcher.join(3)
             terminal = next((e for e in events if e.get("event") == "terminal"), None)
             release_events = [e for e in events if e.get("event") == "input_released"]
-            self.assertEqual(len(attempts), 2)
-            self.assertEqual(len(release_events), 1)
+            self.assertEqual(len(attempts), 1)
+            self.assertEqual(len(release_events), 0)
             self.assertIsNotNone(terminal, events)
-            self.assertLess(events.index(release_events[0]), events.index(terminal))
-            self.assertLess(release_events[0]["published_ns"], terminal["terminal_ns"])
+            self.assertEqual(terminal["input_release_publication"]["status"],
+                             "delivery_unknown")
             self.assertFalse(worker.is_alive())
             self.assertTrue(all(not watcher.is_alive() for watcher in executor.release_watchers))
             self.assertIsNone(executor.active)
-            self.assertIn("release-emitter-retry", executor.published_release_ids)
+            self.assertIn("release-emitter-retry", executor.release_publication_attempted_ids)
+            self.assertNotIn("release-emitter-retry", executor.published_release_ids)
         finally:
             executor.close()
             owner.close()
@@ -269,6 +270,57 @@ class CancelReleasePublicationTest(unittest.TestCase):
             self.assertTrue(any(isinstance(exc, OSError) for exc in thread_errors))
         finally:
             threading.excepthook = original_hook
+            executor.close()
+            owner.close()
+
+    def test_accept_then_raise_release_delivery_is_not_retried(self):
+        SERVER["down"].clear()
+        owner = self.InputOwner(None)
+        backend = Backend(owner)
+        events = []
+        accepted_releases = []
+        watcher_finished = threading.Event()
+        release_all = backend.release_all
+        attempts = 0
+        def emit(event):
+            nonlocal attempts
+            if event.get("event") == "input_released":
+                attempts += 1
+                accepted_releases.append(event)
+                if attempts == 1:
+                    raise OSError("ack lost after acceptance")
+            events.append(event)
+        executor = self.Executor(backend, emit)
+        publish = executor._publish_release
+        def publish_and_signal(identifier, lease):
+            try:
+                publish(identifier, lease)
+            finally:
+                watcher_finished.set()
+        executor._publish_release = publish_and_signal
+        def release_then_wait_for_watcher():
+            result = release_all()
+            if not watcher_finished.wait(2):
+                raise AssertionError("release watcher did not complete before terminal")
+            return result
+        backend.release_all = release_then_wait_for_watcher
+        try:
+            executor.submit("release-ack-lost", [{"op": "hold_w_until_cancel"}], 1,
+                            time.perf_counter_ns() + 10_000_000_000)
+            deadline = time.monotonic() + 2
+            while backend.admission is None and time.monotonic() < deadline:
+                time.sleep(.001)
+            self.assertIsNotNone(backend.admission)
+            self.assertTrue(executor.cancel("release-ack-lost"))
+            worker = executor.active[2]
+            worker.join(3)
+            self.assertFalse(worker.is_alive())
+            self.assertEqual(attempts, 1)
+            self.assertEqual(len(accepted_releases), 1)
+            terminal = next(e for e in events if e.get("event") == "terminal")
+            self.assertEqual(terminal["input_release_publication"]["status"],
+                             "delivery_unknown")
+        finally:
             executor.close()
             owner.close()
 
