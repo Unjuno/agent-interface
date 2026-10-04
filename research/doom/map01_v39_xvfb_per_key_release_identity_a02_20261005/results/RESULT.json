@@ -1,0 +1,38 @@
+{
+  "allocation_id": "xvfb-per-key-a02",
+  "auditor_exit": 1,
+  "auditor_invocations": 1,
+  "auditor_status": "FAIL",
+  "candidate_errors": [
+    "ValueError('field revert_to: argument <Window 0x00200000> not in (0, 1, 2)')"
+  ],
+  "candidate_exit": 2,
+  "candidate_invocations": 1,
+  "cleanup": {
+    "xvfb_exit": 0,
+    "xvfb_stopped": true
+  },
+  "client_events": 0,
+  "disposition": "STOP",
+  "edge_observations": 0,
+  "emitted_rows": 0,
+  "guest": {
+    "id": "01M445YWPYZW7J590V4R3P7PSR",
+    "image": "Ubuntu 24.04.5 arm64",
+    "isolate_network": true,
+    "isolated": true,
+    "name": "research-59-v39-xvfb-release-a02-20261005",
+    "state_after_result": "stopped"
+  },
+  "hashes": {
+    "audit_sha256": "6ffaf3702d5cecb7f6f42c6175dcc9962f6df04251bb35be9caa7f82646a3e17",
+    "environment_sha256": "9accdd88779ead4a9ec09f90a48c74d7d93596e61f27c10b2363fcb72575ff51",
+    "raw_sha256": "cdf6881b664f6cc2a796e67aca6519e5dcbd41b94719ac88d7fe352c4d699242",
+    "setup_log_sha256": "dfdaa95b273e1714d9ddc76ff9138bf9dc4307c7588e023954d292ab359e62ea"
+  },
+  "raw_status": "CANDIDATE_ERROR",
+  "reason": "Python-Xlib 0.33 Display.set_input_focus was called with (revert_to, focus, time), but Display expects (focus, revert_to, time). Candidate caught ValueError before InputOwner construction and before any key request.",
+  "schema": "map01-v39-xvfb-per-key-release-result-a02-v1",
+  "scope": "No XTEST key edge, admission/release receipt, game, model, useful feedback, threat response, recovery, or MAP01 effect was measured. This STOP does not change Issue #59 live allocation status.",
+  "stop_phase": "candidate_client_focus_setup_before_any_input"
+}
