@@ -109,7 +109,7 @@ class ExecutorV13Tests(unittest.TestCase):
             executor.close()
 
     def test_release_sink_error_is_reported_by_terminal_without_retry(self):
-        events = []; attempted = threading.Event(); attempts = []
+        events = []; attempted = threading.Event(); attempts = []; accepted = []
 
         class SinkErrorBackend(Backend):
             def execute(self, step, lease, identifier, index):
@@ -124,6 +124,9 @@ class ExecutorV13Tests(unittest.TestCase):
         def emit(event):
             if event.get("event") == "input_released":
                 attempts.append(event)
+                # Model a sink that durably accepts the event, then loses its ack.
+                accepted.append(event)
+                events.append(event)
                 attempted.set()
                 raise OSError("release acknowledgement lost")
             events.append(event)
@@ -137,6 +140,7 @@ class ExecutorV13Tests(unittest.TestCase):
                 time.sleep(.002)
             terminal = next(row for row in events if row["event"] == "terminal")
             self.assertEqual(len(attempts), 1)
+            self.assertEqual(accepted, attempts)
             self.assertEqual(terminal["input_release_publication"],
                              {"status": "delivery_unknown", "error": {
                                  "type": "OSError", "message": "release acknowledgement lost"}})
