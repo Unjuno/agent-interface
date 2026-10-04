@@ -60,6 +60,30 @@ def verify_frozen(freeze):
             any(state != "DOWN" for state in link_states.values()) or
             ipv4_routes or ipv6_routes):
         raise RuntimeError("STOP_NETWORK_NAMESPACE:" + repr(interfaces))
+    return {
+        "network_interfaces": interfaces,
+        "network_link_states": link_states,
+        "network_ipv4_routes": ipv4_routes,
+        "network_ipv6_routes": ipv6_routes,
+    }
+
+
+def initial_candidate_record(freeze, network_receipt):
+    expected_network_fields = {
+        "network_interfaces", "network_link_states",
+        "network_ipv4_routes", "network_ipv6_routes",
+    }
+    if (not isinstance(network_receipt, dict)
+            or set(network_receipt) != expected_network_fields):
+        raise RuntimeError("STOP_NETWORK_RECEIPT_INCOMPLETE")
+    return {
+        "allocation_id": freeze["allocation_id"],
+        "candidate_completed": False,
+        "model_calls": 0,
+        "runtime_environment_sha256": freeze["runtime_environment_sha256"],
+        **network_receipt,
+        "trials": [], "cleanup": {}, "issues": [],
+    }
 
 
 def install_support(path, expected_sha):
@@ -107,7 +131,7 @@ def main():
     freeze = json.loads((PACKAGE / "FREEZE.json").read_text(encoding="utf-8"))
     if out != (ROOT / freeze["output_root"]).resolve():
         raise RuntimeError("STOP_OUTPUT_ROOT_MISMATCH")
-    verify_frozen(freeze)
+    network_receipt = verify_frozen(freeze)
     support = install_support(PACKAGE / "source-support.tar.gz",
                               freeze["source_support_sha256"])
     (out / "candidate_started.json").write_text(json.dumps({
@@ -115,20 +139,10 @@ def main():
         "started_ns": time.perf_counter_ns(),
         "platform": platform.platform(), "python": sys.version,
         "support_root": str(support), "model_calls": 0,
-        "network": "container --network none",
+        "execution_route": freeze["execution_route"],
+        "network_isolation": freeze["network_isolation"],
         "scope": "current-v39 backend and executor on private Xvfb; no game/task",
     }, indent=2) + "\n", encoding="utf-8")
-
-    import Xlib.display as xdisplay
-    from Xlib import XK
-    sys.path[:0] = [str(ROOT / "research/doom"),
-                    str(ROOT / "research/live_control")]
-    import session_map01_v12 as runtime
-
-    if runtime.Backend.__module__ != "doom_typed_release_backend_v3":
-        raise RuntimeError("FAIL_V39_BACKEND_SELECTION")
-    if runtime.Executor.__module__ != "executor_v12":
-        raise RuntimeError("FAIL_V39_EXECUTOR_SELECTION")
 
     events = []
     observer_rows = []
@@ -174,16 +188,20 @@ def main():
             condition.notify_all()
 
     session = backend = executor = None
-    candidate = {"allocation_id": freeze["allocation_id"],
-                 "candidate_completed": False, "model_calls": 0,
-                 "runtime_environment_sha256": freeze["runtime_environment_sha256"],
-                 "network_interfaces": interfaces,
-                 "network_link_states": link_states,
-                 "network_ipv4_routes": ipv4_routes,
-                 "network_ipv6_routes": ipv6_routes,
-                 "trials": [], "cleanup": {}, "issues": []}
+    candidate = initial_candidate_record(freeze, network_receipt)
     exit_code = 2
     try:
+        import Xlib.display as xdisplay
+        from Xlib import XK
+        sys.path[:0] = [str(ROOT / "research/doom"),
+                        str(ROOT / "research/live_control")]
+        import session_map01_v12 as runtime
+
+        if runtime.Backend.__module__ != "doom_typed_release_backend_v3":
+            raise RuntimeError("FAIL_V39_BACKEND_SELECTION")
+        if runtime.Executor.__module__ != "executor_v12":
+            raise RuntimeError("FAIL_V39_EXECUTOR_SELECTION")
+
         session = runtime.suite.Session()
         for key in ("DISPLAY", "XAUTHORITY", "HOME", "XDG_CONFIG_HOME",
                     "XDG_CACHE_HOME", "XDG_RUNTIME_DIR"):
