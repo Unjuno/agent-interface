@@ -46,22 +46,30 @@ class _GameProxy:
     def init(self):
         result=self._inner.init();self.initialized=True;return result
     def close(self):
-        sample_error = None
-        try:
-            if self.initialized and not self.closed:
+        if self.closed:
+            return None
+        active_error = sys.exception()
+        self.closed = True
+        errors = []
+        if self.initialized:
+            try:
                 self._final_sample()
-        except BaseException as exc:
-            sample_error = exc
-        finally:
-            self.closed = True
+            except BaseException as exc:
+                errors.append(exc)
         try:
             result = self._inner.close()
-        except BaseException as close_error:
-            if sample_error is not None:
-                raise sample_error from close_error
-            raise
-        if sample_error is not None:
-            raise sample_error
+        except BaseException as exc:
+            errors.append(exc)
+            result = None
+        if active_error is not None and errors:
+            raise BaseExceptionGroup(
+                'controller and game cleanup failed',
+                [active_error, *errors],
+            )
+        if len(errors) == 1:
+            raise errors[0]
+        if len(errors) > 1:
+            raise BaseExceptionGroup('game cleanup failed', errors)
         return result
 
 def main():
