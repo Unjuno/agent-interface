@@ -29,4 +29,3 @@ If a discriminating result and an eligible real trace class exist, this gives #5
 ## Execution and custody
 
 WSLc 3.0.1.0; pinned cached image `python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016`; stdlib only. Run construction tests before freeze. Then hash `fixture.json`, `candidate.py`, `audit.py`, `test_protocol.py`, and this plan. Formal outputs must be absent before exactly one candidate and one auditor invocation. Run with `--pull never --network none --cpus 1 --memory 128m --rm`; retain any WSLc cgroup/swap enforcement warning and do not infer configured memory as verified. No retry. Package path: `research/analysis/vector_constraint_approachability_7808_a01_20261005/`.
-
