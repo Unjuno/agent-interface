@@ -196,7 +196,8 @@ class _Adapter:
         try:
             result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
                 'execute':self.execute,'verify_effect':self.verify_effect,'cancelled':self.cancelled,
-                'journal':lambda event:self.retain('event',event)}, clock=time.monotonic_ns)
+                'journal':lambda event:self.retain('event',event)},
+                clock=time.monotonic_ns, propagate_observation_errors=True)
         except Exception as error:
             self.retain('exception', {'error':repr(error),'replay_allowed':False,
                 'effect_status':'unknown; inspect retained bridge receipts before any new action'})

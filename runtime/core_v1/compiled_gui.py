@@ -160,7 +160,8 @@ def _matches(actual, expected):
     return type(actual) is type(expected) and actual == expected
 
 
-def run(interface, adapters, *, clock=time.perf_counter_ns):
+def run(interface, adapters, *, clock=time.perf_counter_ns,
+        propagate_observation_errors=False):
     """Execute a bounded method locally; return an auditable compact receipt."""
     interface = validate(interface)
     required = {"observe", "admit", "execute", "verify_effect", "cancelled"}
@@ -249,6 +250,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         except Exception:
             # Adapter failures (for example an OCR timeout) invalidate this
             # observation. Return the verified prefix and never infer a branch.
+            if propagate_observation_errors:
+                raise
             return finish("RUNTIME_FAILED", "observation_failed")
         observed_ns = clock()
         observation, refusal = _observation(raw, interface, previous_sequence)

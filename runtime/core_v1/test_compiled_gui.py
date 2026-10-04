@@ -87,6 +87,13 @@ class CompiledBoundaryTests(unittest.TestCase):
   self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','observation_failed'))
   self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')
   self.assertEqual(len(d.calls['observe']),2);self.assertEqual(len(d.calls['admit']),1);self.assertEqual(len(d.calls['execute']),1)
+ def test_observation_adapter_failure_can_be_propagated_for_outer_retention(self):
+  d=Driver();d.observe=lambda p: (_ for _ in ()).throw(TimeoutError('native capture failed'))
+  with self.assertRaisesRegex(TimeoutError,'native capture failed'):
+   run(interface(),{'observe':d.observe,'admit':d.admit,'execute':d.execute,
+       'verify_effect':d.verify,'cancelled':lambda:False,'journal':d.journal},
+       clock=lambda:d.now,propagate_observation_errors=True)
+  self.assertEqual(d.calls['admit'],[]);self.assertEqual(d.calls['execute'],[])
  def test_late_final_observation_never_claims_completion(self):
   d=Driver('observe',3);r=self.stopped(d,2,2);self.assertEqual(r['pending_effect']['action'],'save')
  def test_late_admission_never_dispatches(self):self.stopped(Driver('admit'),0,0)
