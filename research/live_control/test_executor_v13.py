@@ -31,6 +31,35 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_base_exception_with_release_batch_custody_cannot_emit_completed(self):
+        expected = {
+            "status": "delivery_unknown", "identifier": "base-sink-failure",
+            "step": 0, "size": 2, "position": 1,
+            "confirmed_positions": [0], "not_attempted_positions": [],
+            "event": "input_release_transition", "key": "b",
+            "error_type": "KeyboardInterrupt",
+        }
+
+        class PublicationBaseExceptionBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error = KeyboardInterrupt("release sink acknowledgement interrupted")
+                error.release_batch_publication = dict(expected)
+                raise error
+
+        events = []
+        executor = Executor(PublicationBaseExceptionBackend(), events.append)
+        executor.submit("base-sink-failure", [{"op": "pointer_drag"}], 1,
+                        time.perf_counter_ns() + 1_000_000_000)
+        deadline = time.monotonic() + 1
+        while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+            time.sleep(.002)
+        executor.close()
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertIn("KeyboardInterrupt", terminal["error"])
+        self.assertEqual(terminal["release"]["release_batch_delivery"], expected)
+        self.assertFalse(any(row.get("event") == "completed" for row in events))
+
     def test_terminal_preserves_release_batch_sink_delivery_uncertainty(self):
         class PublicationFailureBackend(Backend):
             def execute(self, step, lease, identifier, index):

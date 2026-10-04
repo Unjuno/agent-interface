@@ -18,7 +18,8 @@ class ActualReleaseCompositionTests(unittest.TestCase):
              failure_position=0, capture_step_exception=False,
              fail_incomplete_publication=False,
              incomplete_publication_rows=False,
-             release_all_publication_failure=False):
+             release_all_publication_failure=False,
+             sink_exception_type=RuntimeError):
         emitted = []
         attempts = []
         fail_emit = [emit_accept_then_raise or release_all_publication_failure]
@@ -38,7 +39,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 fail_emit[0] = False
                 if sink_accept_before_raise:
                     emitted.append(dict(row))
-                raise RuntimeError("sink failed after accepting release row")
+                raise sink_exception_type("sink failed after accepting release row")
             emitted.append(dict(row))
         low_level = types.ModuleType("input_owner_v12")
         transition = types.ModuleType("input_transition_owner_v3")
@@ -185,9 +186,11 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             elif emit_accept_then_raise:
                 try:
                     candidate.execute({}, None, "program-1", 0)
-                except RuntimeError as exc:
+                except BaseException as exc:
                     if capture_publication_error:
                         return exc, attempts, emitted
+                    if not isinstance(exc, RuntimeError):
+                        raise
                     self.assertEqual(str(exc), "sink failed after accepting release row")
             elif release_all_publication_failure:
                 for key in ("a", "b"):
@@ -275,11 +278,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertEqual(releases[0]["release_batch_disposition"], "release_all_exception")
 
     def test_accept_then_raise_does_not_duplicate_release_batch_rows(self):
-        for accepted in (False, True):
-            with self.subTest(sink_accept_before_raise=accepted):
-                error, attempts, emitted = self._run(
-                    emit_accept_then_raise=True, capture_publication_error=True,
-                    sink_accept_before_raise=accepted, failure_position=1)
+        for exception_type in (RuntimeError, KeyboardInterrupt):
+            for accepted in (False, True):
+                with self.subTest(sink_accept_before_raise=accepted,
+                                  exception_type=exception_type.__name__):
+                    error, attempts, emitted = self._run(
+                        emit_accept_then_raise=True, capture_publication_error=True,
+                        sink_accept_before_raise=accepted, failure_position=1,
+                        sink_exception_type=exception_type)
                 release_attempts = [row for row in attempts
                                     if row.get("event") == "input_release_transition"]
                 self.assertEqual([row["release_batch_position"] for row in release_attempts],
@@ -301,44 +307,48 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 })
 
     def test_executor_terminal_retains_actual_backend_delivery_positions(self):
-        error, _, _ = self._run(
-            emit_accept_then_raise=True, capture_publication_error=True,
-            sink_accept_before_raise=False, failure_position=1)
-        previous = sys.modules.get("executor_v13")
-        sys.path.insert(0, str(LIVE))
-        try:
-            executor_module = importlib.import_module("executor_v13")
+        for exception_type in (RuntimeError, KeyboardInterrupt):
+            with self.subTest(exception_type=exception_type.__name__):
+                error, _, _ = self._run(
+                    emit_accept_then_raise=True, capture_publication_error=True,
+                    sink_accept_before_raise=False, failure_position=1,
+                    sink_exception_type=exception_type)
+                previous = sys.modules.get("executor_v13")
+                sys.path.insert(0, str(LIVE))
+                try:
+                    executor_module = importlib.import_module("executor_v13")
 
-            class FailedPublicationBackend:
-                sequence = 1
+                    class FailedPublicationBackend:
+                        sequence = 1
 
-                def validate(self, steps):
-                    pass
+                        def validate(self, steps):
+                            pass
 
-                def execute(self, step, cancel, identifier, index):
-                    raise error
+                        def execute(self, step, cancel, identifier, index):
+                            raise error
 
-                def release_all(self):
-                    return {"verified": True}
+                        def release_all(self):
+                            return {"verified": True}
 
-            events = []
-            executor = executor_module.Executor(FailedPublicationBackend(), events.append)
-            executor.submit("program-1", [{"op": "probe"}], 1,
-                            time.perf_counter_ns() + 1_000_000_000)
-            deadline = time.monotonic() + 1
-            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
-                time.sleep(.002)
-            executor.close()
-            terminal = next(row for row in events if row.get("event") == "terminal")
-            self.assertEqual(terminal["status"], "failed")
-            self.assertEqual(terminal["release"]["release_batch_delivery"],
-                             error.release_batch_publication)
-        finally:
-            sys.path.remove(str(LIVE))
-            if previous is None:
-                sys.modules.pop("executor_v13", None)
-            else:
-                sys.modules["executor_v13"] = previous
+                    events = []
+                    executor = executor_module.Executor(FailedPublicationBackend(), events.append)
+                    executor.submit("program-1", [{"op": "probe"}], 1,
+                                    time.perf_counter_ns() + 1_000_000_000)
+                    deadline = time.monotonic() + 1
+                    while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                        time.sleep(.002)
+                    executor.close()
+                    terminal = next(row for row in events if row.get("event") == "terminal")
+                    self.assertEqual(terminal["status"], "failed")
+                    self.assertEqual(terminal["release"]["release_batch_delivery"],
+                                     error.release_batch_publication)
+                    self.assertFalse(any(row.get("event") == "completed" for row in events))
+                finally:
+                    sys.path.remove(str(LIVE))
+                    if previous is None:
+                        sys.modules.pop("executor_v13", None)
+                    else:
+                        sys.modules["executor_v13"] = previous
 
     def test_incomplete_publication_failure_keeps_row_status_in_cleanup_result(self):
         error, attempts, emitted, release = self._run(
