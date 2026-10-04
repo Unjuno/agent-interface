@@ -16,7 +16,19 @@ class Tests(unittest.TestCase):
             {"event": "input_release_transition", "intent_token": "t", "operation": "up",
              "key": "Up", "release_call_started_ns": 410_000_000,
              "release_call_returned_ns": 420_000_000, "owner_transition_verified": True,
-             "owner_thread_keyup_verified_after_batch": True},
+             "owner_id": "owner", "valid_until_ns": 500_000_000,
+             "owner_thread_keyup_verified": True,
+             "owner_thread_keyup_verified_after_batch": True,
+             "owner_thread_keyup_history_complete": True,
+             "owner_thread_keyup_receipt_count": 1,
+             "owner_thread_keyup_receipt": {
+                 "event": "owner_explicit_keyup", "operation": "up", "key": "Up",
+                 "keycode": 111, "owner_id": "owner", "intent_token": "t",
+                 "valid_until_ns": 500_000_000,
+                 "owner_keyrelease_started_ns": 411_000_000,
+                 "owner_sync_returned_ns": 412_000_000,
+                 "server_sync_completed": True,
+                 "physical_verification_authoritative": False}},
         ]
         result = candidate.analyze(events)
         self.assertTrue(result["measurement_ready"])
@@ -57,6 +69,23 @@ class Tests(unittest.TestCase):
              "key": "Up", "release_call_started_ns": 3, "release_call_returned_ns": 4,
              "owner_transition_verified": True,
              "owner_thread_keyup_verified_after_batch": False},
+        ]
+        result = candidate.analyze(events)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["invalid_release_count"], 1)
+
+    def test_forged_owner_keyup_boolean_without_nested_receipt_is_rejected(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "Up",
+             "admitted_ns": 1, "input_ack_ns": 2},
+            {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+             "key": "Up", "owner_id": "owner", "valid_until_ns": 100,
+             "release_call_started_ns": 3, "release_call_returned_ns": 10,
+             "owner_transition_verified": True,
+             "owner_thread_keyup_verified": True,
+             "owner_thread_keyup_verified_after_batch": True,
+             "owner_thread_keyup_history_complete": True,
+             "owner_thread_keyup_receipt_count": 1},
         ]
         result = candidate.analyze(events)
         self.assertFalse(result["measurement_ready"])

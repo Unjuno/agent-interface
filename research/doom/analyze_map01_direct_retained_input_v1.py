@@ -9,6 +9,36 @@ def load_events(path):
     return [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def has_valid_owner_keyup(row, key, token):
+    receipt = row.get("owner_thread_keyup_receipt")
+    started = row.get("release_call_started_ns")
+    returned = row.get("release_call_returned_ns")
+    owner_started = receipt.get("owner_keyrelease_started_ns") if isinstance(receipt, dict) else None
+    owner_returned = receipt.get("owner_sync_returned_ns") if isinstance(receipt, dict) else None
+    return bool(
+        row.get("owner_thread_keyup_verified") is True
+        and row.get("owner_thread_keyup_verified_after_batch") is True
+        and row.get("owner_thread_keyup_history_complete") is True
+        and type(row.get("owner_thread_keyup_receipt_count")) is int
+        and row.get("owner_thread_keyup_receipt_count") == 1
+        and isinstance(receipt, dict)
+        and receipt.get("event") == "owner_explicit_keyup"
+        and receipt.get("operation") == "up"
+        and receipt.get("key") == key
+        and type(receipt.get("keycode")) is int
+        and receipt.get("owner_id") == row.get("owner_id")
+        and isinstance(row.get("owner_id"), str) and bool(row["owner_id"])
+        and receipt.get("intent_token") == token
+        and isinstance(token, str) and bool(token)
+        and receipt.get("valid_until_ns") == row.get("valid_until_ns")
+        and receipt.get("server_sync_completed") is True
+        and receipt.get("physical_verification_authoritative") is False
+        and type(started) is int and type(owner_started) is int
+        and type(owner_returned) is int and type(returned) is int
+        and started <= owner_started <= owner_returned <= returned
+    )
+
+
 def analyze(events):
     pending = defaultdict(deque)
     holds = []
@@ -23,7 +53,7 @@ def analyze(events):
             key = row.get("key")
             queue = pending[(token, key)]
             if (not queue or row.get("owner_transition_verified") is not True
-                    or row.get("owner_thread_keyup_verified_after_batch") is not True):
+                    or not has_valid_owner_keyup(row, key, token)):
                 invalid_releases.append(row)
                 continue
             start = queue.popleft()
