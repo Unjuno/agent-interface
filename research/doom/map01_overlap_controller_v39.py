@@ -582,6 +582,20 @@ def input_edge_receipts(events):
             return (type(value) is list and len(value) == 2 and
                     all(type(item) is int for item in value) and value[0] <= value[1])
 
+        def bracket_matches(data, edge, edge_name, status):
+            bracket = data.get("bracket") if type(data) is dict else None
+            interval_name = ("physical_down_interval" if edge_name == "down"
+                             else "physical_up_interval")
+            return (
+                type(bracket) is dict and type(edge) is dict and
+                bracket.get("key") == edge.get("key") and
+                bracket.get("owner_id") == edge.get("owner_id") and
+                bracket.get("intent_token") == edge.get("intent_token") and
+                bracket.get(interval_name) == edge.get("interval") and
+                bracket.get("status") == status and
+                bracket.get("grants_input_authority") is False and
+                bracket.get("application_consumption_observed") is False)
+
         down_data = down.get("physical_key_measurement") if down else None
         up_data = up.get("physical_key_measurement") if up else None
         down_edge, up_edge = edge_of(down), edge_of(up)
@@ -623,7 +637,9 @@ def input_edge_receipts(events):
                 edge.get("grants_input_authority") is False
                 for edge in (down_edge, up_edge)) and
             down_data.get("application_consumption_observed") is False and
-            up_data.get("application_consumption_observed") is False)
+            up_data.get("application_consumption_observed") is False and
+            bracket_matches(down_data, down_edge, "down", "CONFIRMED_PHYSICAL_DOWN") and
+            bracket_matches(up_data, up_edge, "up", "CONFIRMED_PHYSICAL_UP"))
         receipts.append({
             "status": "adapter_edge_brackets_paired" if complete else
                       "adapter_edge_receipt_incomplete",
