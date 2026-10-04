@@ -6,13 +6,13 @@ If a step raises an exception carrying `release_batch_publication` and the subse
 
 ## T
 
-Frozen parent: PR #7635 head `636f61941e3da887a1641e4399c2f0e3373a7974`.
+Current stack parent: PR #7635 head `dd5e7fa4b26c66fe1de3bfa24152ad8e4e8a9cfd`. Its `executor_v13.py` blob is identical to the prior frozen parent `636f61941e3da887a1641e4399c2f0e3373a7974`, where the RED reproduction was recorded.
 
 The regression uses the real ExecutorV13 worker with a controlled backend. Its step raises a `RuntimeError` carrying a one-position `unknown` ledger; cleanup then raises an `OSError` with no ledger. The expected terminal is `failed`, carries the exact step ledger, invokes cleanup once, and retires the active intent.
 
 ## D
 
-- RED on the frozen parent: terminal was `failed`, but `release.release_batch_delivery` was absent (`None` instead of the expected exact ledger).
+- RED on the prior parent: terminal was `failed`, but `release.release_batch_delivery` was absent (`None` instead of the expected exact ledger). The executor source blob is unchanged at the current parent.
 - Candidate regression: 1/1 PASS.
 - Focused release backend, session, and executor suites: 34/34 PASS.
 - Python byte-compilation and `git diff --check`: PASS.
