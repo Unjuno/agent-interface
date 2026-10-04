@@ -4,7 +4,7 @@ H=Path(__file__).resolve().parent;D=H.parent;REPO=D.parents[1];checks=[]
 def ck(v,n):checks.append((bool(v),n))
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def load(n):return json.loads((H/n).read_text(encoding="utf-8-sig"))
-final=load("FINAL_VALIDATION.json");freeze9=load("A09_FREEZE.json");freeze10=load("A10_FREEZE.json");freeze11=load("A11_FREEZE.json");replay=load("REPLAY_RESULT.json");audit=load("REPLAY_AUDIT.json");a11=load("A11_RESULT.json");a11audit=load("A11_AUDIT.json")
+final=load("FINAL_VALIDATION.json");freeze9=load("A09_FREEZE.json");freeze10=load("A10_FREEZE.json");freeze11=load("A11_FREEZE.json");replay=load("REPLAY_RESULT.json");audit=load("REPLAY_AUDIT.json");a11=load("A11_RESULT.json");a11audit=load("A11_AUDIT.json");integration=load("PR_BASE_INTEGRATION.json")
 ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==final["candidate_source_sha256"],"current controller pin")
 ck(sha(REPO/"research/doom/test_map01_v39_typed_state_feedback.py")==final["candidate_test_sha256"],"current test pin")
 ck(sha(D/"map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl")==final["fixture_sha256"],"retained fixture pin")
@@ -20,6 +20,8 @@ ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==freeze11["candidat
 ck(sha(H/"A11_FREEZE.json")==a11["freeze_sha256"],"A11 freeze binding")
 ck(a11["baseline_false_pair_count"]==4 and a11["candidate_false_pair_count"]==0 and a11["candidate_closed_count"]==4,"A11 outcome matrix")
 ck(a11audit["audit"]=="PASS" and a11audit["checks"]==13,"A11 independent audit")
+ck(integration["base_sha"]==integration["merge_base"] and integration["merge_conflicts"]==0,"PR base integration identity")
+ck(integration["validation"]["tests"]==41 and integration["validation"]["result"]=="PASS" and integration["package_verifier"]["result"]=="PASS","PR base integration validation")
 ck("41 tests" in (H/"A11_FULL_SUITE.txt").read_text(encoding="utf-8") and "OK" in (H/"A11_FULL_SUITE.txt").read_text(encoding="utf-8"),"full local test log")
 manifest=H/"SHA256SUMS_A09.txt"; entries={};valid=True
 for line in manifest.read_text(encoding="utf-8-sig").splitlines():
