@@ -19,6 +19,11 @@ return boundary. No unique active key or causal effect is claimed.
 Test timestamps are deterministic integer nanoseconds and tic values are
 synthetic engine-tic counts.
 
+After the run, current main `93090bcb` was checked: its merged acknowledged
+sampler and progress-clock blobs still match the tested dependency snapshots
+byte-for-byte. This does not test the full V16 entrypoint or its finalization
+path.
+
 Eleven focused tests pass on Windows 11 Pro/Python 3.13 and Ubuntu WSL/Python
 3.12. They cover exact update-sidecar/sample equality, explicit and cancellation
 release records, terminal-repeat state, external terminal update acknowledgments,

@@ -25,6 +25,17 @@ def audit() -> dict:
         actual = hashlib.sha256(
             (ROOT / "dependencies" / dependency_name).read_bytes()).hexdigest()
         assert actual == expected, f"source snapshot mismatch: {dependency_name}"
+    equivalence = source_base["post_run_current_main_equivalence"]
+    for dependency_name in (
+        "acknowledged_scorer_v1.py",
+        "independent_progress_clock_v2.py",
+    ):
+        evidence = equivalence[dependency_name]
+        actual = hashlib.sha256(
+            (ROOT / "dependencies" / dependency_name).read_bytes()).hexdigest()
+        assert evidence["matches_dependency_snapshot"] is True
+        assert actual == evidence["sha256"], (
+            f"current-main equivalence mismatch: {dependency_name}")
     raw = json.loads((ROOT / "results" / "t1-01" / "raw.json").read_text(encoding="utf-8"))
     assert raw["schema"] == "producer-scorer-session-envelope-raw-v1"
     assert len(raw["producer_samples"]) == len(raw["producer_updates"]) == 2
@@ -104,6 +115,7 @@ def audit() -> dict:
         "actual_owner_session_wiring": False,
         "actual_session_qualification": False,
         "frozen_source_hashes": len(source_pairs),
+        "post_run_current_main_equivalence": "PASS",
     }
 
 
