@@ -1,0 +1,122 @@
+{
+  "binding": {
+    "focus": 41,
+    "surface": 42,
+    "geometry": [0, 0, 640, 480]
+  },
+  "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "frame_size": [640, 480],
+  "source_event": {
+    "event": "typed_observation",
+    "schema": "doom-typed-observation-v1",
+    "id": "source",
+    "step": 0,
+    "sequence": 1,
+    "capture_ns": 100000000,
+    "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+    "signals": {
+      "health": {"signal_id": "health", "status": "observed", "value": 100, "sequence": 1, "capture_ns": 100000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+      "ammo": {"signal_id": "ammo", "status": "observed", "value": 4, "sequence": 1, "capture_ns": 100000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+    },
+    "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "frame_size": [640, 480],
+    "typed_extraction_started_ns": 100000001,
+    "typed_ready_ns": 100000010,
+    "capture_to_typed_ready_ms": 0.00001,
+    "artifact_published": false,
+    "grants_input_authority": false
+  },
+  "cases": [
+    {
+      "name": "coherent_positive",
+      "decision": "preserve",
+      "event": {
+        "event": "typed_observation", "schema": "doom-typed-observation-v1", "id": "current", "step": 0, "sequence": 2, "capture_ns": 200000000,
+        "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+        "signals": {
+          "health": {"signal_id": "health", "status": "observed", "value": 100, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "ammo": {"signal_id": "ammo", "status": "observed", "value": 4, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        },
+        "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "frame_size": [640, 480], "typed_extraction_started_ns": 200000001, "typed_ready_ns": 200000010, "capture_to_typed_ready_ms": 0.00001, "artifact_published": false, "grants_input_authority": false
+      }
+    },
+    {
+      "name": "minimum_positive_ammo",
+      "decision": "preserve",
+      "event": {
+        "event": "typed_observation", "schema": "doom-typed-observation-v1", "id": "current", "step": 0, "sequence": 2, "capture_ns": 200000000,
+        "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+        "signals": {
+          "health": {"signal_id": "health", "status": "observed", "value": 100, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "ammo": {"signal_id": "ammo", "status": "observed", "value": 1, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        },
+        "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "frame_size": [640, 480], "typed_extraction_started_ns": 200000001, "typed_ready_ns": 200000010, "capture_to_typed_ready_ms": 0.00001, "artifact_published": false, "grants_input_authority": false
+      }
+    },
+    {
+      "name": "zero_ammo",
+      "decision": "replan",
+      "event": {
+        "event": "typed_observation", "schema": "doom-typed-observation-v1", "id": "current", "step": 0, "sequence": 2, "capture_ns": 200000000,
+        "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+        "signals": {
+          "health": {"signal_id": "health", "status": "observed", "value": 100, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "ammo": {"signal_id": "ammo", "status": "observed", "value": 0, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        },
+        "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "frame_size": [640, 480], "typed_extraction_started_ns": 200000001, "typed_ready_ns": 200000010, "capture_to_typed_ready_ms": 0.00001, "artifact_published": false, "grants_input_authority": false
+      }
+    },
+    {
+      "name": "health_below_floor",
+      "decision": "replan",
+      "event": {
+        "event": "typed_observation", "schema": "doom-typed-observation-v1", "id": "current", "step": 0, "sequence": 2, "capture_ns": 200000000,
+        "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+        "signals": {
+          "health": {"signal_id": "health", "status": "observed", "value": 89, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "ammo": {"signal_id": "ammo", "status": "observed", "value": 4, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        },
+        "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "frame_size": [640, 480], "typed_extraction_started_ns": 200000001, "typed_ready_ns": 200000010, "capture_to_typed_ready_ms": 0.00001, "artifact_published": false, "grants_input_authority": false
+      }
+    },
+    {
+      "name": "signal_sequence_skew",
+      "decision": "replan",
+      "event": {
+        "event": "typed_observation", "schema": "doom-typed-observation-v1", "id": "current", "step": 0, "sequence": 2, "capture_ns": 200000000,
+        "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+        "signals": {
+          "health": {"signal_id": "health", "status": "observed", "value": 100, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "ammo": {"signal_id": "ammo", "status": "observed", "value": 1, "sequence": 3, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        },
+        "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "frame_size": [640, 480], "typed_extraction_started_ns": 200000001, "typed_ready_ns": 200000010, "capture_to_typed_ready_ms": 0.00001, "artifact_published": false, "grants_input_authority": false
+      }
+    },
+    {
+      "name": "signal_capture_skew",
+      "decision": "replan",
+      "event": {
+        "event": "typed_observation", "schema": "doom-typed-observation-v1", "id": "current", "step": 0, "sequence": 2, "capture_ns": 200000000,
+        "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+        "signals": {
+          "health": {"signal_id": "health", "status": "observed", "value": 100, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "ammo": {"signal_id": "ammo", "status": "observed", "value": 1, "sequence": 2, "capture_ns": 200000001, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        },
+        "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "frame_size": [640, 480], "typed_extraction_started_ns": 200000001, "typed_ready_ns": 200000010, "capture_to_typed_ready_ms": 0.00001, "artifact_published": false, "grants_input_authority": false
+      }
+    },
+    {
+      "name": "signal_binding_skew",
+      "decision": "replan",
+      "event": {
+        "event": "typed_observation", "schema": "doom-typed-observation-v1", "id": "current", "step": 0, "sequence": 2, "capture_ns": 200000000,
+        "pointer_binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]},
+        "signals": {
+          "health": {"signal_id": "health", "status": "observed", "value": 100, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 42, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "ammo": {"signal_id": "ammo", "status": "observed", "value": 1, "sequence": 2, "capture_ns": 200000000, "binding": {"focus": 41, "surface": 43, "geometry": [0, 0, 640, 480]}, "format": "observable-signal-v1", "wad_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        },
+        "frame_rgb_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "frame_size": [640, 480], "typed_extraction_started_ns": 200000001, "typed_ready_ns": 200000010, "capture_to_typed_ready_ms": 0.00001, "artifact_published": false, "grants_input_authority": false
+      }
+    }
+  ]
+}

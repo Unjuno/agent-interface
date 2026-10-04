@@ -1,0 +1,280 @@
+{
+  "a02_split_epoch_control": {
+    "ammo": {
+      "current_value": 1,
+      "format": "observable-signal-guard-outcome-v1",
+      "grants_input_authority": false,
+      "guard_id": "a02-ammo",
+      "hard_minimum": 1,
+      "keep_existing_policy": true,
+      "may_only_preserve_or_reduce_existing_authority": true,
+      "reason": "within_validity_envelope",
+      "requires_new_decision": false,
+      "semantic_change_identified": true,
+      "signal_id": "ammo",
+      "source_age_ms": 100.0,
+      "source_value": 4,
+      "status": "SOFT_CHANGED",
+      "task_success_verified": false
+    },
+    "health": {
+      "current_value": 100,
+      "format": "observable-signal-guard-outcome-v1",
+      "grants_input_authority": false,
+      "guard_id": "a02-health",
+      "hard_minimum": 90,
+      "keep_existing_policy": true,
+      "may_only_preserve_or_reduce_existing_authority": true,
+      "reason": "signal_unchanged",
+      "requires_new_decision": false,
+      "semantic_change_identified": false,
+      "signal_id": "health",
+      "source_age_ms": 100.0,
+      "source_value": 100,
+      "status": "UNCHANGED",
+      "task_success_verified": false
+    }
+  },
+  "all_expected": true,
+  "grants_input_authority": false,
+  "mode": "offline-construction",
+  "rows": [
+    {
+      "expected": "preserve",
+      "name": "coherent_positive",
+      "result": {
+        "current_frame": {
+          "capture_ns": 200000000,
+          "sequence": 2
+        },
+        "decision": "preserve",
+        "grants_input_authority": false,
+        "reason": "paired_frame_valid",
+        "signals": {
+          "ammo": {
+            "current_value": 4,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-ammo",
+            "hard_minimum": 1,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "ammo",
+            "source_age_ms": 100.0,
+            "source_value": 4,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          },
+          "health": {
+            "current_value": 100,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-health",
+            "hard_minimum": 90,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "health",
+            "source_age_ms": 100.0,
+            "source_value": 100,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          }
+        },
+        "source_frame": {
+          "capture_ns": 100000000,
+          "sequence": 1
+        }
+      }
+    },
+    {
+      "expected": "preserve",
+      "name": "minimum_positive_ammo",
+      "result": {
+        "current_frame": {
+          "capture_ns": 200000000,
+          "sequence": 2
+        },
+        "decision": "preserve",
+        "grants_input_authority": false,
+        "reason": "paired_frame_valid",
+        "signals": {
+          "ammo": {
+            "current_value": 1,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-ammo",
+            "hard_minimum": 1,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "within_validity_envelope",
+            "requires_new_decision": false,
+            "semantic_change_identified": true,
+            "signal_id": "ammo",
+            "source_age_ms": 100.0,
+            "source_value": 4,
+            "status": "SOFT_CHANGED",
+            "task_success_verified": false
+          },
+          "health": {
+            "current_value": 100,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-health",
+            "hard_minimum": 90,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "health",
+            "source_age_ms": 100.0,
+            "source_value": 100,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          }
+        },
+        "source_frame": {
+          "capture_ns": 100000000,
+          "sequence": 1
+        }
+      }
+    },
+    {
+      "expected": "replan",
+      "name": "zero_ammo",
+      "result": {
+        "current_frame": {
+          "capture_ns": 200000000,
+          "sequence": 2
+        },
+        "decision": "replan",
+        "grants_input_authority": false,
+        "reason": "guard_requires_new_decision",
+        "signals": {
+          "ammo": {
+            "current_value": 0,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-ammo",
+            "hard_minimum": 1,
+            "keep_existing_policy": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "below_hard_minimum",
+            "requires_new_decision": true,
+            "semantic_change_identified": true,
+            "signal_id": "ammo",
+            "source_age_ms": 100.0,
+            "source_value": 4,
+            "status": "HARD_INVALIDATED",
+            "task_success_verified": false
+          },
+          "health": {
+            "current_value": 100,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-health",
+            "hard_minimum": 90,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "health",
+            "source_age_ms": 100.0,
+            "source_value": 100,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          }
+        },
+        "source_frame": {
+          "capture_ns": 100000000,
+          "sequence": 1
+        }
+      }
+    },
+    {
+      "expected": "replan",
+      "name": "health_below_floor",
+      "result": {
+        "current_frame": {
+          "capture_ns": 200000000,
+          "sequence": 2
+        },
+        "decision": "replan",
+        "grants_input_authority": false,
+        "reason": "guard_requires_new_decision",
+        "signals": {
+          "ammo": {
+            "current_value": 4,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-ammo",
+            "hard_minimum": 1,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "ammo",
+            "source_age_ms": 100.0,
+            "source_value": 4,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          },
+          "health": {
+            "current_value": 89,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "a03-health",
+            "hard_minimum": 90,
+            "keep_existing_policy": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "below_hard_minimum",
+            "requires_new_decision": true,
+            "semantic_change_identified": true,
+            "signal_id": "health",
+            "source_age_ms": 100.0,
+            "source_value": 100,
+            "status": "HARD_INVALIDATED",
+            "task_success_verified": false
+          }
+        },
+        "source_frame": {
+          "capture_ns": 100000000,
+          "sequence": 1
+        }
+      }
+    },
+    {
+      "expected": "replan",
+      "name": "signal_sequence_skew",
+      "result": {
+        "decision": "replan",
+        "reason": "current_typed_frame_invalid"
+      }
+    },
+    {
+      "expected": "replan",
+      "name": "signal_capture_skew",
+      "result": {
+        "decision": "replan",
+        "reason": "current_typed_frame_invalid"
+      }
+    },
+    {
+      "expected": "replan",
+      "name": "signal_binding_skew",
+      "result": {
+        "decision": "replan",
+        "reason": "current_typed_frame_invalid"
+      }
+    }
+  ],
+  "schema": "a03-paired-epoch-probe-v1"
+}
