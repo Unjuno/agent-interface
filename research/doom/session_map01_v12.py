@@ -18,7 +18,7 @@ sys.path.insert(0, str(HERE.parent / "observation_gating"))
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from executor_v12 import Executor
 from lease import Expired
-from doom_typed_release_backend_v1 import Backend, suite
+from doom_typed_release_backend_v3 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
 
 
@@ -117,11 +117,13 @@ def main():
                  HERE.parent / "live_control/lease_cause_v1.py",
                  HERE.parent / "live_control/lease.py",
                  HERE.parent / "live_control/input_owner_v10.py",
+                 HERE.parent / "live_control/input_transition_owner_v3.py",
                  HERE.parent / "live_control/input_owner_v5.py",
                  HERE.parent / "live_control/session_v9.py",
                  HERE.parent / "live_control/session_v10.py",
                  HERE.parent / "live_control/coast_backend_v1.py",
                  HERE / "doom_typed_release_backend_v1.py",
+                 HERE / "doom_typed_release_backend_v3.py",
                  HERE / "doom_typed_coast_backend_v1.py",
                  HERE / "doom_typed_observation_v1.py",
                  HERE / "doom_hud_signal_v3.py",
@@ -132,6 +134,7 @@ def main():
     try:
         with (args.out / "setup.txt").open("w") as diagnostics, contextlib.redirect_stdout(diagnostics):
             session = suite.Session()
+            (args.out / "x11-display.txt").write_text(session.name, encoding="utf-8")
             atom = session.d.intern_atom("_NET_SUPPORTING_WM_CHECK")
             session._wait(lambda: session.d.screen().root.get_full_property(atom, 0) is not None,
                           4, "WM readiness")
