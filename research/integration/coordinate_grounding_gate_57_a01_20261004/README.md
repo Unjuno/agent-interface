@@ -1,4 +1,4 @@
-# A01 — model-coordinate grounding through current target handles
+# A01 — model-coordinate grounding through pinned target handles
 
 ## Question and boundary
 

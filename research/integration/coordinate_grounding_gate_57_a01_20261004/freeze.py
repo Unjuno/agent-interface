@@ -1,4 +1,4 @@
-"""Create the immutable current-main source pin file for A01."""
+"""Create the immutable source pin for a frozen main snapshot file for A01."""
 from __future__ import annotations
 
 import hashlib
