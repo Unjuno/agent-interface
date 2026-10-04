@@ -6,7 +6,7 @@ import types
 import unittest
 from pathlib import Path
 
-SERVER = {"down": set(), "lock": threading.Lock()}
+SERVER = {"down": set(), "lock": threading.Lock(), "on_sync": None}
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
@@ -26,6 +26,9 @@ class FakeDisplay:
         return 25
 
     def sync(self):
+        callback = SERVER.get("on_sync")
+        if callback is not None:
+            callback()
         return None
 
     def query_keymap(self):
@@ -100,7 +103,7 @@ class CancelReleasePublicationTest(unittest.TestCase):
     def setUpClass(cls):
         install_fake_xlib()
         from executor_v12 import Executor
-        from input_owner_v12 import InputOwner
+        from input_owner_v13 import InputOwner
         cls.Executor, cls.InputOwner = Executor, InputOwner
 
     def test_cancel_while_key_held_publishes_receipt_before_terminal(self):
@@ -358,6 +361,43 @@ class CancelReleasePublicationTest(unittest.TestCase):
                              "delivery_unknown")
         finally:
             executor.close()
+            owner.close()
+
+    def test_cancel_during_release_sync_is_preserved_as_release_cause(self):
+        SERVER["down"].clear()
+        SERVER["on_sync"] = None
+        owner = self.InputOwner(None)
+
+        class Lease:
+            def __init__(self):
+                self.cancel = threading.Event()
+                self.deadline = time.perf_counter_ns() + 10_000_000_000
+                self.expected_focus = 42
+                self.interruptions = []
+
+            def check(self):
+                pass
+
+            def record_interruption(self, record):
+                self.interruptions.append(record)
+
+        lease = Lease()
+        try:
+            owner.call("down", lease, "w")
+            # Force cancellation after key-up is sent, inside Display.sync().
+            SERVER["on_sync"] = lease.cancel.set
+            result = owner.call("release", lease)
+            self.assertTrue(result["verified"])
+            self.assertEqual(len(lease.interruptions), 1)
+            self.assertEqual(lease.interruptions[0]["reason"], "cancelled")
+
+            ordinary = Lease()
+            owner.call("down", ordinary, "w")
+            SERVER["on_sync"] = None
+            owner.call("release", ordinary)
+            self.assertEqual(ordinary.interruptions[0]["reason"], "release")
+        finally:
+            SERVER["on_sync"] = None
             owner.close()
 
 

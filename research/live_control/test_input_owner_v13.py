@@ -4,18 +4,18 @@ from unittest.mock import ANY, patch
 
 from input_owner_v10 import InputOwner as Base
 from input_owner_v11 import InputOwner as Telemetry
-from input_owner_v12 import InputOwner
+from input_owner_v13 import InputOwner
 
 
 class Lease:
     deadline = 1_000
-    intent_token = "intent-v12"
+    intent_token = "intent-v13"
 
 
-class InputOwnerV12Tests(unittest.TestCase):
-    def test_v12_preserves_v11_release_interval_telemetry(self):
+class InputOwnerV13Tests(unittest.TestCase):
+    def test_v13_preserves_v11_release_interval_telemetry(self):
         owner = object.__new__(InputOwner)
-        owner.owner_id = "owner-v12"
+        owner.owner_id = "owner-v13"
         self.assertTrue(issubclass(InputOwner, Telemetry))
 
         with patch.object(Base, "call", return_value=None) as base_call, \
@@ -25,7 +25,7 @@ class InputOwnerV12Tests(unittest.TestCase):
         base_call.assert_called_once_with("up", ANY, "space")
         self.assertEqual(receipt["event"], "input_release_rpc")
         self.assertEqual(receipt["release_transition_interval_ns"], [100, 145])
-        self.assertEqual(receipt["intent_token"], "intent-v12")
+        self.assertEqual(receipt["intent_token"], "intent-v13")
         self.assertFalse(receipt["grants_input_authority"])
 
 

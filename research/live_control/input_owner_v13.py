@@ -10,7 +10,7 @@ from input_owner_v11 import InputOwner as Previous
 
 
 class InputOwner(Previous):
-    """Preserve v11 telemetry while classifying cancel-triggered cleanup."""
+    """Preserve v11 telemetry and classify cancellation across release I/O."""
 
     def _run(self):
         try:
@@ -123,6 +123,10 @@ class InputOwner(Previous):
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
             bitmap = d.query_keymap()
             down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+            # Cancellation may arrive during key-up synchronization and state
+            # verification; classify it immediately before recording the cause.
+            if reason == 'release' and active is not None and active.cancel.is_set():
+                reason = 'cancelled'
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
                           keys_down=down, verified_ns=time.perf_counter_ns(),
                           valid_until_ns=active.deadline if active else None)
