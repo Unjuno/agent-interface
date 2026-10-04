@@ -6,6 +6,7 @@ import sys
 import time
 import unittest
 from types import SimpleNamespace
+from unittest.mock import patch
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -381,6 +382,51 @@ class PairedCoverGuardTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "rejected_source_health_ammo_pair")
         self.assertEqual(controller.admitted_cover_commands(
             [{"action": "fire", "extent": "short"}], receipt), [])
+
+
+    def test_current_action_admission_rejects_noninteger_epoch_metadata(self):
+        binding = {"focus": 7, "surface": 9, "geometry": [0, 0, 640, 480]}
+        contract = {"source": {"signals": ["health", "ammo"]}}
+        command = {"commands": [{"action": "fire", "extent": "short"}]}
+        authored = {}
+        source_health = signal("health", 100, sequence=3, capture_ns=30, binding=binding)
+        source_ammo = signal("ammo", 4, sequence=3, capture_ns=30, binding=binding)
+        current_health = signal("health", 100, sequence=4, capture_ns=40, binding=binding)
+
+        for field, alias in (("sequence", 4.0), ("sequence", True),
+                             ("capture_ns", 40.0), ("capture_ns", False)):
+            with self.subTest(field=field, alias=alias):
+                current_ammo = signal("ammo", 2, sequence=4, capture_ns=40,
+                                      binding=binding)
+                current_ammo[field] = alias
+                with patch.object(controller, "build_action_contract",
+                                  return_value=contract), \\
+                     patch.object(controller, "evaluate_action_validity") as evaluate, \\
+                     patch.object(controller, "record_action_validity") as record:
+                    with self.assertRaisesRegex(
+                            ValueError, "epoch metadata must be exact integers"):
+                        controller.prepare_action_admission(
+                            {}, command, authored, source_health, source_ammo,
+                            current_health, current_ammo, 41)
+                    evaluate.assert_not_called()
+                    record.assert_not_called()
+
+        current_ammo = signal("ammo", 2, sequence=4, capture_ns=40,
+                              binding=binding)
+        validity = {"status": "VALID_CURRENT"}
+        with patch.object(controller, "build_action_contract",
+                          return_value=contract), \\
+             patch.object(controller, "evaluate_action_validity",
+                          return_value=validity) as evaluate, \\
+             patch.object(controller, "record_action_validity",
+                          return_value=validity):
+            result = controller.prepare_action_admission(
+                {}, command, authored, source_health, source_ammo,
+                current_health, current_ammo, 41)
+        self.assertEqual(result["status"], "VALID_CURRENT")
+        snapshot = evaluate.call_args.args[2]
+        self.assertEqual(snapshot["sequence"], 4)
+        self.assertEqual(snapshot["capture_ns"], 40)
 
 
 if __name__ == "__main__":
