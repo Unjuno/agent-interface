@@ -1,0 +1,60 @@
+{
+  "run_id": "map01-v39-cancel-cleanup-producer-consumer-a06-20261005",
+  "base_commit": "79eca6a9437f6fdb04f4c74bf0fd8894496a4897",
+  "python_version": "3.11.9",
+  "sources": {
+    "lease_cause_v1.py": {
+      "sha256": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+      "git_blob": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+      "path": "research/live_control/lease_cause_v1.py"
+    },
+    "lease_cause_v2.py": {
+      "sha256": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+      "git_blob": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+      "path": "research/live_control/lease_cause_v2.py"
+    },
+    "lease_release_v1.py": {
+      "sha256": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "git_blob": "e325bd358874ae003e066f5d592c045b0ebef56e",
+      "path": "research/live_control/lease_release_v1.py"
+    },
+    "executor_v12.py": {
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+      "git_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "path": "research/live_control/executor_v12.py"
+    },
+    "map01_overlap_controller_v39.py": {
+      "sha256": "df4d90bf8cf9972955bfe13a9303432ab83c5c60e7ee2a587425881033dbf663",
+      "git_blob": "304ec68c03eb5f10e9130d40f8af8d2bcf5c889f",
+      "path": "research/doom/map01_overlap_controller_v39.py"
+    },
+    "running_action_guard_v3.py": {
+      "sha256": "bcc0dc5961a54a315a05558d800f94ff119fa6106ed91e0fa0ba14131d470732",
+      "git_blob": "bbefdba8edfd83e886baf556caf28aca66ac88fb",
+      "path": "research/live_control/running_action_guard_v3.py"
+    },
+    "a03_candidate_events.jsonl": {
+      "sha256": "36b60282cfc2a7c328cdb7c62ec0d37b029808dc7cf2f6e327d0fd954fd3c99d",
+      "git_blob": "b87846da9e055c41432bce5ca831a3492de93a85",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/results/a03/candidate-events.jsonl"
+    },
+    "a03_result.json": {
+      "sha256": "063015f77f8ac6c94752b6f397a51ec4dfa74cc2715a5795ae163cd70d0cfcca",
+      "git_blob": "8ef9c009c07f005f8cccd6f2748889ae9754f43a",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/results/a03/RESULT.json"
+    },
+    "run_a06.py": {
+      "sha256": "cf47e1e565486feaed0e0c0d15276066fb71ad18fbd849de00af750adac82b38",
+      "git_blob": "dc470e2ff2ad0499e09cc7ab32f23b08e7ea7a3b",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/run_a06.py"
+    },
+    "audit_a06.py": {
+      "sha256": "088c142e178f168393388bcdee42f0761cfdc71abf5e8dd725274c03105b25c9",
+      "git_blob": "477250456b29d7a5222a6c2aef48325c850e154a",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a06.py"
+    }
+  },
+  "method": "source-extract current-main lease interruption, executor publication, controller handoff and guard receipt methods; replay retained A03 cleanup",
+  "retries": 0,
+  "scope": "offline source composition only; not actual process/runtime/game execution"
+}
