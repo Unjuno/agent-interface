@@ -6,7 +6,7 @@ The runner invokes the compiled GUI runtime through the shared adaptive caller's
 
 - Main source was checked out at `bfaa12181f81cac133747ca8a1b7eb277aa64424`; caller SHA-256 `8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca`.
 - The candidate source was PR #7330 branch `fix/caller-current-main-composition-i76`, commit `89492d17b3`; caller SHA-256 `983d22edfd1232a42765804688e990249887723f849220fae6407f58a04dca8c`.
-- At later main checks `8d9940c4e0afe7895715bce77fa9f7e455e06cad` and `96f7041fe6b3eb71127ac4eca0ed31d313c29ad2`, both caller and compiled-runtime file hashes were unchanged from the tested main source.
+- At later main checks `8d9940c4e0afe7895715bce77fa9f7e455e06cad`, `96f7041fe6b3eb71127ac4eca0ed31d313c29ad2` and `2f72c6474167f93a2e1a6e2b8a497a1a8a6d266a`, both caller and compiled-runtime file hashes were unchanged from the tested main source.
 
 Reproduce from either checkout using Python 3:
 
