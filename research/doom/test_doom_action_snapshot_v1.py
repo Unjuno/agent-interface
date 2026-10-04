@@ -77,7 +77,7 @@ class DoomActionSnapshotTests(unittest.TestCase):
             "sequence": 2, "capture_ns": 200, "pointer_binding": BINDING,
             "frame_rgb_sha256": "a" * 64, "frame_size": [640, 480],
             "typed_extraction_started_ns": 201, "typed_ready_ns": 202,
-            "capture_to_typed_ready_ms": 0.002,
+            "capture_to_typed_ready_ms": 0.000002,
             "artifact_published": False, "grants_input_authority": False,
             "signals": {
                 "health": {"signal_id": "health", "status": "observed",
