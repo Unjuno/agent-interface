@@ -38,6 +38,7 @@ flowchart TD
 | Theme | Representative entry points |
 |---|---|
 | Finite observation-loss YIELD guard | [`intermittent_observation_yield_59_t0_20261002/REPORT.md`](intermittent_observation_yield_59_t0_20261002/REPORT.md) — synthetic contract PASS only; live T1 remains held |
+| MAP01 v15 scorer-close cleanup successor | [`SESSION_MAP01_V15_CLEANUP.md`](SESSION_MAP01_V15_CLEANUP.md) — separate source-level fix for v14 cleanup finding; v14 frozen evidence remains unchanged, and no game run was performed |
 | Initial engine/X11 integration | [`MAP01_LIVE_CONTROL_V1.md`](MAP01_LIVE_CONTROL_V1.md), [`SHARED_RUNTIME.md`](SHARED_RUNTIME.md) |
 | Planner overlap and cover | [`MAP01_COVER_POLICY_V1.md`](MAP01_COVER_POLICY_V1.md), [`MAP01_COVER_RENEWAL_V1.md`](MAP01_COVER_RENEWAL_V1.md) |
 | Typed validity/current evidence | [`MAP01_TYPED_COVER_VALIDITY_V29.md`](MAP01_TYPED_COVER_VALIDITY_V29.md), [`MAP01_ACTION_VALIDITY_SIGNALS_V1.md`](MAP01_ACTION_VALIDITY_SIGNALS_V1.md) |
