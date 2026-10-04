@@ -431,7 +431,8 @@ def action_state_feedback(before, after, typed_observations):
     """Compare public HUD values only across source-bound typed captures."""
     def read(observation):
         if (type(observation.get("sequence")) is not int or
-                type(observation.get("capture_ns")) is not int):
+                type(observation.get("capture_ns")) is not int or
+                type(observation.get("step")) is not int):
             return None, "typed_frame_identity_mismatch"
         matches = [row for row in typed_observations
                    if type(row) is dict and row.get("event") == "typed_observation" and
@@ -446,6 +447,7 @@ def action_state_feedback(before, after, typed_observations):
                 type(row.get("capture_ns")) is not int or
                 row.get("capture_ns") != observation.get("capture_ns") or
                 row.get("id") != observation.get("id") or
+                type(row.get("step")) is not int or
                 row.get("step") != observation.get("step") or
                 type(frame_hash) is not str or len(frame_hash) != 64 or
                 any(char not in "0123456789abcdef" for char in frame_hash) or

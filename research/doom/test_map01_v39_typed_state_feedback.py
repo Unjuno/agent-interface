@@ -577,6 +577,42 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(result["status"], "unavailable")
         self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
 
+    def test_feedback_refuses_boolean_step_identity_fields(self):
+        before = observation(1, 100)
+        before["step"] = 0
+        after = observation(2, 200)
+        after["step"] = 1
+        typed = [typed_observation(1, 100, 97, 48),
+                 typed_observation(2, 200, 91, 45)]
+        typed[0]["step"] = 0
+        typed[1]["step"] = 1
+
+        self.assertEqual(
+            controller.action_state_feedback(before, after, typed)["status"],
+            "observed")
+
+        bad_before = json.loads(json.dumps(before))
+        bad_before["step"] = False
+        bad_after = json.loads(json.dumps(after))
+        bad_after["step"] = True
+        bad_typed_before = json.loads(json.dumps(typed))
+        bad_typed_before[0]["step"] = False
+        bad_typed_after = json.loads(json.dumps(typed))
+        bad_typed_after[1]["step"] = True
+        cases = (
+            ("before observation", bad_before, after, typed),
+            ("after observation", before, bad_after, typed),
+            ("before typed row", before, after, bad_typed_before),
+            ("after typed row", before, after, bad_typed_after),
+        )
+        for name, before_row, after_row, typed_rows in cases:
+            with self.subTest(field=name):
+                result = controller.action_state_feedback(
+                    before_row, after_row, typed_rows)
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"],
+                                 "typed_frame_identity_mismatch")
+
     def test_feedback_refuses_typed_frame_from_another_program(self):
         before = observation(83, 100)
         after = observation(89, 200)
