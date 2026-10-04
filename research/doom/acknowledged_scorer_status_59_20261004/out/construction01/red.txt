@@ -1,0 +1,18 @@
+F
+======================================================================
+FAIL: test_sample_failure_preserves_successful_update_acknowledgment (test_acknowledged_scorer_v1.AcknowledgedScorerTests.test_sample_failure_preserves_successful_update_acknowledgment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-scorer-status-fix\research\doom\test_acknowledged_scorer_v1.py", line 80, in test_sample_failure_preserves_successful_update_acknowledgment
+    self.assertEqual(rows[0]['status'], 'SAMPLE_UNAVAILABLE')
+AssertionError: 'UPDATE_UNAVAILABLE' != 'SAMPLE_UNAVAILABLE'
+- UPDATE_UNAVAILABLE
+? ^ ^^^
++ SAMPLE_UNAVAILABLE
+? ^^^ ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
