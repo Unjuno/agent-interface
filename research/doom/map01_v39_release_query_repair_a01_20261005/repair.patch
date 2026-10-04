@@ -1,0 +1,52 @@
+--- a/research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py
++++ b/research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py
+@@ -285,7 +285,7 @@
+                 raise Cancelled()
+ 
+         def release(reason):
+-            nonlocal active,revision
++            nonlocal active,revision,fault
+             revision += 1
+             per_key_release_measurements=[]
+             for code in list(held):
+@@ -310,6 +310,11 @@
+                         physical_interval=[pre['finished_ns'],post['finished_ns']]
+                 identity_status,retired_id=hold_identity.on_up(
+                     code,key_name,intent_token,classification=='CONFIRMED_PHYSICAL_UP') if key_name is not None else ('NO_ACTIVE_ID',None)
++                if classification == 'CONFIRMED_PHYSICAL_UP':
++                    # The owner ledger tracks this owner's live hold, not the
++                    # aggregate device bitmap. Retire the hold at its confirmed
++                    # per-key up edge even if later aggregate verification fails.
++                    held.pop(code, None)
+                 if retired_id is not None:
+                     actuation_id=retired_id
+                 bracket=None
+@@ -333,10 +338,24 @@
+             for button in list(buttons):
+                 xtest.fake_input(d, X.ButtonRelease, button)
+             d.sync()
+-            mask = d.screen().root.query_pointer().mask
+-            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+-            bitmap = d.query_keymap()
+-            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
++            try:
++                mask = d.screen().root.query_pointer().mask
++                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
++                bitmap = d.query_keymap()
++                down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
++            except Exception:
++                # Keep already measured per-key up edges observable even when
++                # the later aggregate verification sample fails. This partial
++                # record explicitly does not claim whole-device neutrality.
++                partial = dict(event='owner_release', reason=reason, verified=False,
++                               buttons_down=None, keys_down=None,
++                               verified_ns=time.perf_counter_ns(),
++                               valid_until_ns=active.deadline if active else None,
++                               per_key_release_measurements=per_key_release_measurements)
++                self.records.append(partial)
++                fault = RuntimeError('aggregate release verification failed')
++                active = None
++                raise
+             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
+                           keys_down=down, verified_ns=time.perf_counter_ns(),
+                           valid_until_ns=active.deadline if active else None,
