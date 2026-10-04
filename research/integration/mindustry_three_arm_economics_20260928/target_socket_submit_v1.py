@@ -84,8 +84,16 @@ class TargetSocketSubmitter:
         self.used_action_ids: set[str] = set()
         self.trace_sink = trace_sink
         self.trace_events: list[dict] = []
+        self._submit_lock = threading.Lock()
 
     def __call__(self, command: dict) -> dict:
+        # A socket cursor is shared by this submitter instance. Serialize the
+        # full exchange so concurrent callers cannot race action consumption,
+        # observe the same cursor, or interleave input actions.
+        with self._submit_lock:
+            return self._submit_once(command)
+
+    def _submit_once(self, command: dict) -> dict:
         if (type(command) is not dict or command.get("op") != "submit"
                 or type(command.get("id")) is not str or not command["id"]):
             raise SocketSubmitStop("one identified submit command required")

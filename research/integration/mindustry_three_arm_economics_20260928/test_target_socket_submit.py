@@ -4,6 +4,7 @@ import unittest
 import json
 from pathlib import Path
 import tempfile
+import threading
 from unittest.mock import patch
 
 from arm_coordinator import ArmCoordinator
@@ -83,6 +84,65 @@ class TargetSocketSubmitTests(unittest.TestCase):
         self.assertEqual(sent[0]["action_id"], sent[0]["request_id"])
         self.assertEqual(sent[0]["command"], self.command())
         self.assertEqual(submitter.cursor, 11)
+
+    def test_concurrent_submissions_are_serialized_and_share_cursor(self):
+        ready = threading.Barrier(3)
+        first_entered = threading.Event()
+        second_entered = threading.Event()
+        release_first = threading.Event()
+        state_lock = threading.Lock()
+        requests = []
+        active = 0
+        maximum_active = 0
+        submitter = TargetSocketSubmitter("/tmp/unused.sock",
+                                          trace_sink=test_trace_sink)
+
+        def exchange(request):
+            nonlocal active, maximum_active
+            with state_lock:
+                requests.append(request)
+                active += 1
+                maximum_active = max(maximum_active, active)
+                ordinal = len(requests)
+            if ordinal == 1:
+                first_entered.set()
+                if not release_first.wait(2):
+                    raise TimeoutError("test did not release first exchange")
+            else:
+                second_entered.set()
+            with state_lock:
+                active -= 1
+            return success(request["action_id"], cursor=request["after"] + 1)
+
+        submitter._exchange = exchange
+        outcomes = []
+
+        def send(command):
+            ready.wait(timeout=2)
+            try:
+                outcomes.append(submitter(command))
+            except SocketSubmitStop as error:
+                outcomes.append(error)
+
+        threads = [
+            threading.Thread(target=send, args=(self.command("action-one"),)),
+            threading.Thread(target=send, args=(self.command("action-two"),)),
+        ]
+        for thread in threads:
+            thread.start()
+        ready.wait(timeout=2)
+        self.assertTrue(first_entered.wait(1))
+        overlapped = second_entered.wait(0.1)
+        release_first.set()
+        for thread in threads:
+            thread.join(2)
+
+        self.assertTrue(all(not thread.is_alive() for thread in threads))
+        self.assertFalse(overlapped, "a second socket action overlapped the first")
+        self.assertEqual(maximum_active, 1)
+        self.assertEqual([request["after"] for request in requests], [0, 1])
+        self.assertEqual(len(outcomes), 2)
+        self.assertTrue(all(type(outcome) is dict for outcome in outcomes))
 
     def test_unattributed_rejection_fails_closed_and_is_not_retried(self):
         calls = []
