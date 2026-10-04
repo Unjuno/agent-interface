@@ -1,0 +1,40 @@
+{
+  "schema": "map01_v39_perkey_bridge_a03_audit_seal_correction_a01_v1",
+  "created_at": "2026-10-04T22:35:33Z",
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-A03-AUDIT-SEAL-CORRECTION-A01-20261005",
+  "H": "The retained A03 v2 tests can be bound to their exact committed bytes by a separate audit-seal successor, leaving the prior mismatched claim and all candidate evidence unchanged.",
+  "T": "Read the exact PR #7774 head bytes for FREEZE-AUDIT-V2.json and test_a03_v2.py; independently compute SHA-256/byte count; execute the three retained audit tests plus two correction tests in a pinned, network-disabled WSLc Python container. Do not invoke probe_a03.py or any candidate.",
+  "D": "PASS only when all three retained A03 audit tests and both seal-correction tests pass; the V3 freeze binds the actual unchanged test and verifier bytes; the original V2 freeze, A03 freeze, raw, and result remain byte-identical. Otherwise STOP.",
+  "C": "This corrects source identity and replays only the retained audit; it does not rerun the one-shot candidate or establish current-main composition, runtime, X11, application effect, useful feedback, recovery, or MAP01 progress.",
+  "U": "Audit-seal correction and retained-data audit tests only. Zero candidate invocations, model calls, GUI, OS input, game, or live allocation.",
+  "predecessor_pr": 7774,
+  "predecessor_branch": "research/59-cleanup-telemetry-bridge-a01-20261005",
+  "predecessor_head": "535254f816eff34755722067e646f9071d69b22a",
+  "current_main_at_recheck": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "supersedes": "FREEZE-AUDIT-V2.json",
+  "predecessor_freeze_sha256": "4873e71ece66f5aa24be08c350085364d222a6b53170a433908e9093cf88354a",
+  "superseded_v2_claim_sha256": "7fda2f70d5406cb9ad6317ce58456a582cda42932005a4a8feeb76be5e57b0a6",
+  "test_source_path": "../map01_v39_perkey_bridge_a03_down_cleanup_race_20261005/test_a03_v2.py",
+  "test_source_bytes": 1212,
+  "test_source_sha256": "14ececdbeb241c953fa2986edfda4f5cecf12fb1c94f89ef47c4c3b450d67ddd",
+  "validator_source_path": "test_seal_correction_v3.py",
+  "validator_source_bytes": 1869,
+  "validator_source_sha256": "ec3d77d76d71f4402645218df6a746a1cb2b74ee73c43255d3e6d3ca31dd8c2d",
+  "candidate_invocations": 0,
+  "preserved_inputs": {
+    "original_a03_freeze_sha256": "53af7c12deb776759774376cb404703bdf37f87a52deae960084088329aa2b70",
+    "original_raw_sha256": "38daf1220b9fcfb06a239b5f34a3bfa7b6a51403059f58b7b4a05e5e0653501d",
+    "original_result_sha256": "644bc30b17752d27d7017f7eb4a52df64ffcf4cd2634df88c1ca6a1b0492d763"
+  },
+  "validation_container": {
+    "image": "python:3.12-slim",
+    "image_digest": "sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "python_version": "3.12.15",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 1,
+    "memory_mib": 512,
+    "source_mount": "read-only"
+  },
+  "scope": "audit-seal correction only; retained candidate/raw/result/freeze are unchanged"
+}
