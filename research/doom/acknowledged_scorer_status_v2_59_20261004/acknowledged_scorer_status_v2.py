@@ -104,7 +104,14 @@ class AcknowledgedSamplerV2:
                      "error_type": type(error).__name__, "error": str(error)}
             if producer is not None:
                 event["producer"] = producer
-            self._emit(event)
+            try:
+                self._emit(event)
+            except BaseException as evidence_error:
+                combined = BaseExceptionGroup(
+                    "scorer sampling and evidence publication failed",
+                    [error, evidence_error])
+                self._failure = combined
+                raise combined
             raise
         self._emit({**base, "event": "sample_result",
                     "update_status": "UPDATE_RETURNED" if producer["observation_status"] == "UPDATE_RETURNED" else producer["observation_status"],

@@ -70,6 +70,22 @@ class AcknowledgedStatusV2Tests(unittest.TestCase):
         self.assertEqual(events[0]["sample_status"], "NOT_ATTEMPTED")
         self.assertNotIn("producer", events[0])
 
+    def test_sample_and_evidence_errors_are_both_retained(self):
+        events = []
+        def emit(event):
+            events.append(event)
+            if event["event"] == "sample_result":
+                raise OSError("evidence sink failed")
+        sampler = AcknowledgedSamplerV2(
+            lambda *a, **k: (_ for _ in ()).throw(ValueError("scorer read failed")),
+            "run-v2", emit, clock_ns=lambda: 10)
+        with self.assertRaises(BaseExceptionGroup) as caught:
+            sampler(Game(), None, 5)
+        self.assertEqual([type(e) for e in caught.exception.exceptions],
+                         [ValueError, OSError])
+        self.assertEqual(events[-1]["update_status"], "UPDATE_RETURNED")
+        self.assertEqual(events[-1]["sample_status"], "UNAVAILABLE")
+
 
 if __name__ == "__main__":
     unittest.main()
