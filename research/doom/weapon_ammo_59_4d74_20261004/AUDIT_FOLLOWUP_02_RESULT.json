@@ -1,0 +1,50 @@
+{
+  "audit": {
+    "all_neutral": true,
+    "checks": {
+      "HUD_API_values_agree": true,
+      "HUD_signals_validly_bound_to_initial_capture": true,
+      "capture_binding_well_formed": true,
+      "clean_child_and_reader_exit": true,
+      "coherent_samples_finite_and_ordered": true,
+      "initial_frame_digest_well_formed": true,
+      "nearest_api_sample_neutral": true,
+      "no_external_rescue": true,
+      "one_initial_observation": true,
+      "sample_window_nonempty": true,
+      "selected_ammo_matches_selected_slot": true,
+      "selected_weapon_and_ammo_well_formed": true,
+      "typed_capture_matches_observation_event": true,
+      "window_samples_neutral": true
+    },
+    "disposition": "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED",
+    "hud_api_differences": {
+      "ammo": 0.0,
+      "health": 0.0
+    },
+    "initial_hud_values": {
+      "ammo": 48.0,
+      "health": 97.0
+    },
+    "limits": "Near-time selected-fixture binding only; not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
+    "matching_slot_ammo": 48.0,
+    "nearest_api_offset_ns": 240412225,
+    "sample_count": 90,
+    "selected_weapon": 2.0,
+    "selected_weapon_ammo": 48.0
+  },
+  "audit_id": "weapon-ammo-audit-followup-02",
+  "base_commit": "8532022e2828aaf06e847f2932d9205e42fa6361",
+  "followup_files": {
+    "AUDIT_FOLLOWUP_02.md": "df4c20953367235f538129413a97b7e40967af8a9c0f51400b3986b87d4559d5",
+    "audit_weapon_ammo_followup_02.py": "1f31b682a46124934855e84ab3b93f1b63b176b9cd90b386e4e0d441ebe4fdf6",
+    "test_audit_weapon_ammo_followup_02.py": "5603d5e7ec3da8b8d2bc6863276290378da8d421c226d7f36632a2746de86e14"
+  },
+  "scope": "Post-result audit hardening; retained original evidence and manifest unchanged; no new game allocation.",
+  "tests": {
+    "command": "python -m unittest -v test_audit_weapon_ammo_followup_02.py",
+    "count": 7,
+    "failed": 0,
+    "passed": 7
+  }
+}
