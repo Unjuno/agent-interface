@@ -261,3 +261,26 @@ both per-key event and cleanup-bracket identity. A separate local construction
 reproduction passed against current-main source bytes. No A01 replay, X11, game,
 controller, or input was executed. This repairs measurement attribution only;
 it does not qualify the composed runtime, useful task effect, or formal cells.
+
+
+## Full construction suite on current-main source freeze (2026-10-04)
+
+The targeted intent identity regression was extended to read pinned runtime source
+from `OWNER_MEASUREMENT_SOURCE_ROOT`, so it can execute the repository Lease
+class definitions without relying on a local Git history checkout. The same
+source-root option was already used for the exact four composition inputs.
+
+Windows local Python run used current main `853a867fb554c04d8f1223f9525f9eaf7d2792b6`
+source files for input owner, Lease/base Lease, backend, session and controller;
+the builder's embedded SHA checks accepted the four pinned composition sources.
+Command:
+`python -m unittest discover -s research/doom/owner_measurement_59_5ce3_20261004 -v`
+with `OWNER_MEASUREMENT_SOURCE_ROOT` set to that source fixture. Final result:
+14 tests PASS, exit 0, 0.316s. The first Windows run exposed a POSIX-only expected
+path in the existing command-construction assertion; a follow-up exposed that
+the command resolves the fixture path. Both comparisons now use host-native
+`Path` string/resolution. The first failing outputs remain visible in the local
+work record; the final rerun passed. This is Windows construction-suite evidence,
+not WSLc resource enforcement or a live/native/controller/game result. No X11,
+model, GUI, or input ran; consumed A01 and all scientific dispositions are
+unchanged.
