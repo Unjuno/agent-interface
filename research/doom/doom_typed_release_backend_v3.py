@@ -243,4 +243,3 @@ class Backend(Previous):
         for receipt in rows:
             self.emit(receipt)
         rows.clear()
-
