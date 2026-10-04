@@ -1,6 +1,6 @@
 # Analytical research
 
-- [Issue #7778 demand-guarded slack reclamation T0](slack_reclamation_7778_t0_20261005/REPORT.md) — 9 finite traces, 27 policy rows, independent exhaustive audit PASS_METHOD_SCOPED/H_PASS_SCOPED for the frozen zero-overhead model; dispatch-overhead sensitivity remains an Issue-level follow-up.
+- [Issue #7778 demand-guarded slack reclamation T0](slack_reclamation_7778_t0_20261005/REPORT.md) — zero-overhead T0: 9 traces / 27 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED; separate [T0b dispatch sensitivity](slack_reclamation_7778_dispatch_sensitivity_t0_20261005/REPORT.md): 18 traces / 108 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED. Priority-only completed more optional work than guarded slack over the full overhead-0 matrix, so no scheduler promotion follows.
 
 - [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
 
