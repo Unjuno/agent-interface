@@ -46,6 +46,18 @@ success, GUI reliability, performance, or a formal candidate result.
 
 ## Results
 
+- Follow-up local verification on 2026-10-04: rebased the additive candidate
+  onto current `origin/main` `f2aa59c8bac88f0091eb24c4f462f55a72303d2f`;
+  no main-side changes touched the four candidate paths. With isolated uv
+  dependencies (`mcp==1.30.0`, `pydantic==2.13.5`, `pytest`) and CPython
+  3.12.10, `runtime/cli_v1/test_mcp_relay.py` passed 18/18 tests and 37
+  subtests. The previously observed four deep-nesting expectation failures
+  occurred on CPython 3.14.5 only; the supported/CI Python 3.12 run passes.
+- Container follow-up was attempted but stopped before test execution:
+  OrbStack's Linux/aarch64 daemon failed opening an image-layer blob with
+  `operation not supported` (Docker exit 125). No container experiment ran;
+  no repeated attempt against the same daemon content-store path was made.
+
 - Test-first RED on the initial baseline above: 18 tests discovered, 31
   expected failures,
   zero test errors after repairing the fixture and matching the current relay
