@@ -1,0 +1,36 @@
+{
+  "allocation_id": "MAP01-V39-XLIB-QUERY-PREFETCH-A02-20261005-01",
+  "architecture": "arm64",
+  "auditor_invocations": "at most 1, only after candidate exit 0",
+  "candidate_invocations": 1,
+  "delta_from_a01": "fresh guest and explicit root setup; A01 candidate/auditor invocation counts remain 0/0",
+  "expected_packages": {
+    "python3-xlib": "0.33-2",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "expected_python": "3.12.3",
+  "freeze_time_utc": "2026-10-04T19:59:22Z",
+  "guest_image": "ubuntu:noble",
+  "main_sha": "a9352dc53c783f1501046d762bc36c34bc6ab480",
+  "predecessor_a01_sha256": {
+    "SETUP_STOP.json": "520cadb6180e750af69a6fa6e7b3f81f28f7d4ce97667741fd257115652ae8b4",
+    "setup.log": "8bd5a9758be7ebbebf0d6bfab5cfd19b093f1566955321a5e4d67adbe1cb5df3"
+  },
+  "retries": 0,
+  "schema": "xlib-query-keymap-prefetch-freeze-a02-v1",
+  "setup_user": "root (UID 0 checked by setup script)",
+  "source_sha256": {
+    "COMMANDS.txt": "034fd3f84b6f56a280b2e276b9ef95625facd4653ae27e947dac8c3a8ff73a8b",
+    "PLAN.md": "c307bf702251e6831f297e17dfbb56db10af7be761e09c54b2d53c9a39f2c6ac",
+    "README.md": "5e59e183d83cc91aae9e2efcd9a2449bfb7b8dd88c1ed83d38fda44e9ecdb4d4",
+    "audit.py": "e1ee9e2a980c1d81cc22b9cefdb3d09a70a6f6efe4722dd63408f8ecf757bd57",
+    "predecessor/A01/SETUP_STOP.json": "520cadb6180e750af69a6fa6e7b3f81f28f7d4ce97667741fd257115652ae8b4",
+    "predecessor/A01/SHA256SUMS": "5f296a6ebd698980fe1abce9569e3c1b3bc863430b69c8f652c93933ed532335",
+    "predecessor/A01/setup.log": "8bd5a9758be7ebbebf0d6bfab5cfd19b093f1566955321a5e4d67adbe1cb5df3",
+    "probe.py": "4a257546726ca272cbb1048af0fb4306dbf6f7de433fd5ea6eb4baf05a5d64c2",
+    "run_candidate.sh": "4d48a5b615e5ec67eba1011f1c99955f0ff2c4374e9717c96a431bbfd602ac4d",
+    "setup_guest.sh": "c2158468bdc0d27cb50e168d9224725476a51b75be88cc4d074650b888aa57df",
+    "test_audit.py": "ae237132954038f8356fdbdf25ca3cc783a227ddae96377f19b4517fcade28d1",
+    "verify_bundle.py": "9555264a51513268e04d8867d292bbe7e62c915986e035f753cd1f7c7bfb940d"
+  }
+}

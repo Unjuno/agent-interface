@@ -1,0 +1,75 @@
+{
+  "allocation_id": "MAP01-V39-XLIB-QUERY-PREFETCH-A05-20261005-02",
+  "auditor_status": "PASS_QUEUE_PREFETCH_DIAGNOSTIC",
+  "bundle_sha256": "c4d0edb8755b58edb2dfd19f0a2a19e8508212184018906b569953ccf3faf4a1",
+  "checks_passed": 16,
+  "edges": {
+    "down": {
+      "events_in_queue": [
+        "MappingNotify",
+        "MappingNotify",
+        "KeyPress"
+      ],
+      "keymap_state": true,
+      "queue_depth": 3,
+      "socket_readable": false,
+      "target_present_in_preselect_queue": true
+    },
+    "up": {
+      "events_in_queue": [
+        "KeyRelease"
+      ],
+      "keymap_state": false,
+      "queue_depth": 1,
+      "socket_readable": false,
+      "target_present_in_preselect_queue": true
+    }
+  },
+  "environment": {
+    "os": "Ubuntu 24.04.5 arm64",
+    "python": "3.12.3",
+    "python_xlib": "0.33-2",
+    "raw_xvfb_version_field": "Unrecognized option: -version (package version established by setup log)",
+    "xvfb_package": "2:21.1.12-1ubuntu1.8"
+  },
+  "freeze_sha256": "b02403027a3f799dd256bd921bfe4649b413a4670b299238580358e000997fd3",
+  "hashes": {
+    "audit_sha256": "9e08eb145f7f893665d695f0ee7dd3100ea44556a8a93b082a472e5d1972f39f",
+    "auditor_stdout_sha256": "bdd6c8285420edea1131703a85d004f916f67f4ec4bbbf64a2965c8abb877ed5",
+    "candidate_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight_sha256": "69684246ea52b4fbccb04b38f8a7b2812519c017069fc044b77c19365b572328",
+    "raw_sha256": "77383eb9eaaf9d9c586b43d89b9e6d2ad14217f64b3710cd34625249c0da5c14",
+    "setup_log_sha256": "9f4127943c57a1be363129c9f277e8bcab5ca509c8450430aef2fed874c43606",
+    "status_sha256": "84751d08c6adbd5017cd226859341d48d37faa535ddf7ca2746ded0c8e5dd6f7"
+  },
+  "invocations": {
+    "auditor": 1,
+    "auditor_exit": 0,
+    "candidate": 1,
+    "candidate_exit": 0,
+    "retry": 0
+  },
+  "limitations": [
+    "No live MAP01/game/model was used.",
+    "Does not establish useful task effect, threat response, recovery, real input authority, or latency.",
+    "Does not prove the cause of A03 AttributeError; A03 retained no event identity.",
+    "Raw environment xvfb field is an unsupported CLI response, not a version; package version comes from setup log."
+  ],
+  "live_map01_or_model_used": false,
+  "main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "schema": "xlib-query-keymap-prefetch-a05-result-v1",
+  "scientific_scope": "synthetic Python-Xlib/Xvfb queue behavior only",
+  "status": "PASS_QUEUE_PREFETCH_DIAGNOSTIC",
+  "vm": {
+    "arch": "arm64",
+    "forward_ssh_agent": false,
+    "id": "01M448Z00KVEDG47DE560N8TGJ",
+    "isolated": true,
+    "name": "map01-v39-xlib-prefetch-a05-20261005",
+    "network_isolated": true,
+    "state": "stopped"
+  },
+  "xkbcomp_warnings": "Unknown XF86 keysyms were logged; Xvfb reported them non-fatal.",
+  "xvfb_exit": 0,
+  "xvfb_stopped_by_candidate": true
+}
