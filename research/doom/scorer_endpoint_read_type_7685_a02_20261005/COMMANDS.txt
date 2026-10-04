@@ -1,0 +1,5 @@
+Freeze and runner/auditor hashes recorded before candidate execution.
+python research/doom/scorer_endpoint_read_type_7685_a02_20261005/run.py
+python research/doom/scorer_endpoint_read_type_7685_a02_20261005/audit.py
+python -m py_compile research/doom/scorer_endpoint_read_type_7685_a02_20261005/run.py research/doom/scorer_endpoint_read_type_7685_a02_20261005/audit.py
+git diff --check

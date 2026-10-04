@@ -1,0 +1,21 @@
+{
+  "allocation_id": "SCORER-ENDPOINT-READ-TYPE-7685-A02-20261005",
+  "main_commit": "d12d451ae5e7661adc3b261403196b1af72e2851",
+  "subject_pr_head": "5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0",
+  "source_path": "research/doom/scorer_endpoint_composition_59_a01_20261005/checkpoint_candidate.py",
+  "source_sha256": "c48c1a734ae32505d7adf000028e618b2d0cfe73a4aa969892b8aada6a6407f5",
+  "runner_sha256": "7a660b50357edc11c7e6ac39df515ac7b275044ddcb0c2a4870402bda57faca2",
+  "auditor_sha256": "8572bc54682b6de4c9aa0ba25d2df8a459c5a9c5f1cefd8cd3fc40fa522adfb9",
+  "run_type": "deterministic_local_cpu_construction_regression",
+  "hypothesis": "The pinned #7685 candidate accepts non-integer post-snapshot episode-time values when equality aliases them to the acknowledged integer tic.",
+  "test": "Execute pinned candidate with valid integer control 10→11/readback 11, float alias 10→11/readback 11.0, and Boolean alias 0→1/readback True. Stub exposes the configured game-variable order required by this candidate head. Retain receipt status and private log row. Independent auditor checks source hash, exact case inventory, control qualification, malformed alias outcomes, and decision from raw saved rows.",
+  "decision": "FAIL_OPEN_ENDPOINT_TYPE if integer control qualifies and either float or Boolean alias also qualifies; PASS_FAIL_CLOSED only if integer control qualifies and both aliases return UNKNOWN without values; HOLD if control fails, target guard is not reached, source mismatches, or audit fails.",
+  "competing_explanation": "Official API results may always be integers; the test checks fail-closed contract behavior, not a live API type violation.",
+  "uncertainty": "Deterministic stub construction against an unmerged PR candidate. No live scorer, game, GUI, input, useful task effect, or recovery behavior is tested.",
+  "candidate_command": "python research/doom/scorer_endpoint_read_type_7685_a02_20261005/run.py",
+  "audit_command": "python research/doom/scorer_endpoint_read_type_7685_a02_20261005/audit.py",
+  "candidate_runs": 1,
+  "retry": false,
+  "live_calls": 0,
+  "container_calls": 0
+}
