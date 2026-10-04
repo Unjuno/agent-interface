@@ -760,6 +760,14 @@ def action_state_feedback(before, after, typed_observations):
 
 def input_edge_receipts(events):
     """Project legacy owner receipts and measured X-adapter edge brackets separately."""
+    events = list(events)
+    explicit_admission_id_counts = Counter(
+        (event.get("owner_id"), event.get("admission_id"))
+        for event in events
+        if type(event) is dict and event.get("event") == "input_admission"
+        and type(event.get("owner_id")) is str and bool(event.get("owner_id"))
+        and type(event.get("admission_id")) is str
+        and bool(event.get("admission_id")))
     grouped = {}
     adapter_grouped = {}
     invalid_adapter_contexts = set()
@@ -1026,6 +1034,32 @@ def input_edge_receipts(events):
         release_returned_ns = release.get("release_call_returned_ns") if release else None
         admission_owner_id = (admission.get("owner_id")
                               if type(admission) is dict else None)
+        owner_keyup_admission_id = (
+            owner.get("admission_id") if type(owner) is dict else None)
+        admission_id_surfaces = (admission, release, owner)
+        explicit_admission_id_present = any(
+            type(row) is dict and "admission_id" in row
+            for row in admission_id_surfaces)
+        admission_id_value = (admission.get("admission_id")
+                              if type(admission) is dict else None)
+        release_admission_id = (release.get("admission_id")
+                                if type(release) is dict else None)
+        explicit_admission_id_matches = (
+            type(admission_id_value) is str
+            and bool(admission_id_value)
+            and release_admission_id == admission_id_value
+            and owner_keyup_admission_id == admission_id_value
+            and type(admission_owner_id) is str and bool(admission_owner_id)
+            and release.get("owner_id") == admission_owner_id
+            and owner.get("owner_id") == admission_owner_id
+            and explicit_admission_id_counts.get(
+                (admission_owner_id, admission_id_value)) == 1)
+        admission_identity_matches = (
+            type(release) is dict and (
+                (release.get("admission_identity_status") == "matched_explicit_id"
+                 and explicit_admission_id_matches)
+                if explicit_admission_id_present else
+                release.get("admission_identity_status") == "matched"))
         keyup_started_ns = (owner.get("owner_keyup_started_ns")
                             if v11_contract and type(owner) is dict else
                             (owner.get("owner_keyrelease_started_ns")
@@ -1041,7 +1075,7 @@ def input_edge_receipts(events):
             owner_verified = (
                 release.get("owner_keyup_join") == "MATCHED_EXPLICIT_KEYUP" and
                 release.get("owner_transition_verified") is True and
-                release.get("admission_identity_status") == "matched" and
+                admission_identity_matches and
                 release.get("admission_position") == admission_position and
                 release.get("ordinary_release_candidate") is True)
             owner_contract_valid = (
@@ -1078,6 +1112,7 @@ def input_edge_receipts(events):
             status = "admission_without_release"
         elif (release.get("operation") != "up" or type(owner) is not dict or
               not owner_contract_valid or
+              (explicit_admission_id_present and not explicit_admission_id_matches) or
               owner.get("key") != key or owner.get("intent_token") != token or
               not sync_completed or not owner_verified or
               not owner_history_complete or
@@ -1106,6 +1141,8 @@ def input_edge_receipts(events):
             "step": step,
             "key": key,
             "admission_position": admission_position,
+            "admission_id": (admission_id_value
+                             if explicit_admission_id_matches else None),
             "admitted_ns": admitted_ns if type(admitted_ns) is int else None,
             "input_ack_ns": input_ack_ns if type(input_ack_ns) is int else None,
             "release_call_started_ns": release_started_ns if type(release_started_ns) is int else None,

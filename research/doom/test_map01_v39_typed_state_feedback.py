@@ -1322,5 +1322,259 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertNotEqual(by_position[0]["status"], "paired")
 
 
+    def test_v11_explicit_admission_id_must_match_all_raw_surfaces(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        admission = next(row for row in source
+                         if row.get("event") == "input_admission" and
+                         row.get("step") == 0)
+        release = next(row for row in source
+                       if row.get("event") == "input_release_transition" and
+                       row.get("step") == 0)
+        admission, release = [json.loads(json.dumps(row))
+                              for row in (admission, release)]
+        admission_id = "owner-7:admission:4"
+        admission.update(id="v11-explicit-id-program", step=4,
+                         admission_position=0, admission_id=admission_id,
+                         admission_sequence=4)
+        owner = release.pop("owner_thread_keyup_receipt")
+        for name in ("owner_thread_keyup_verified",
+                     "owner_thread_keyup_history_complete"):
+            release.pop(name, None)
+        owner_receipt = {
+            "event": "owner_keyup", "schema": "owner-keyup-v11",
+            "owner_id": owner["owner_id"], "intent_token": owner["intent_token"],
+            "key": owner["key"], "reason": "explicit_up",
+            "admission_id": admission_id,
+            "owner_keyup_started_ns": owner["owner_keyrelease_started_ns"],
+            "owner_sync_returned_ns": owner["owner_sync_returned_ns"],
+            "xsync_completed": True, "sync_error": None,
+            "physical_verification_authoritative": False,
+            "grants_input_authority": False,
+        }
+        release.update(
+            id="v11-explicit-id-program", step=4, admission_position=0,
+            admission_id=admission_id, admission_identity_status="matched_explicit_id",
+            owner_keyup_join="MATCHED_EXPLICIT_KEYUP",
+            owner_release_history_complete=True, owner_cleanup_intervened=False,
+            ordinary_release_candidate=True, owner_keyup_receipt=owner_receipt)
+
+        receipt = controller.input_edge_receipts([admission, release])[0]
+
+        self.assertEqual(receipt["status"], "paired")
+        self.assertEqual(receipt["admission_position"], 0)
+        self.assertEqual(receipt["admission_id"], admission_id)
+        self.assertEqual(receipt["admitted_ns"], admission["admitted_ns"])
+        self.assertIsNotNone(receipt["admitted_to_owner_keyup_start_ms"])
+
+        for aliased_position in (False, 0.0):
+            aliased = json.loads(json.dumps([admission, release]))
+            aliased[1]["admission_position"] = aliased_position
+            with self.subTest(release_admission_position=aliased_position):
+                projected = controller.input_edge_receipts(aliased)
+                self.assertEqual(projected[0]["status"], "identity_unavailable")
+                self.assertIsNone(projected[0].get("admitted_to_owner_keyup_start_ms"))
+
+        for surface in ("admission", "release", "owner"):
+            changed = json.loads(json.dumps([admission, release]))
+            target = {"admission": changed[0], "release": changed[1],
+                      "owner": changed[1]["owner_keyup_receipt"]}[surface]
+            target["admission_id"] = "owner-7:admission:5"
+            with self.subTest(surface=surface):
+                projected = controller.input_edge_receipts(changed)
+                self.assertEqual(projected[0]["status"], "release_receipt_incomplete")
+                self.assertIsNone(projected[0]["admission_id"])
+                self.assertIsNone(projected[0]["admitted_to_owner_keyup_start_ms"])
+
+        forged_summary = json.loads(json.dumps([admission, release]))
+        forged_summary[1]["admission_identity_status"] = "matched"
+        forged_summary[1]["owner_keyup_receipt"]["admission_id"] = (
+            "owner-7:admission:999")
+        projected = controller.input_edge_receipts(forged_summary)
+        self.assertEqual(projected[0]["status"], "release_receipt_incomplete")
+        self.assertIsNone(projected[0]["admission_id"])
+        self.assertIsNone(projected[0]["admitted_to_owner_keyup_start_ms"])
+
+    def test_v11_duplicate_owner_admission_id_cannot_pair_two_edges(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        source_admission = next(row for row in source
+                                if row.get("event") == "input_admission" and
+                                row.get("step") == 0)
+        source_release = next(row for row in source
+                              if row.get("event") == "input_release_transition" and
+                              row.get("step") == 0)
+        duplicate_id = "owner-7:admission:4"
+
+        def pair(position):
+            admission, release = [json.loads(json.dumps(row)) for row in
+                                  (source_admission, source_release)]
+            admission.update(id="duplicate-id-program", step=4,
+                             admission_position=position,
+                             admission_id=duplicate_id, admission_sequence=4)
+            owner = release.pop("owner_thread_keyup_receipt")
+            for name in ("owner_thread_keyup_verified",
+                         "owner_thread_keyup_history_complete"):
+                release.pop(name, None)
+            release.update(
+                id="duplicate-id-program", step=4,
+                admission_position=position, admission_id=duplicate_id,
+                admission_identity_status="matched_explicit_id",
+                owner_keyup_join="MATCHED_EXPLICIT_KEYUP",
+                owner_release_history_complete=True, owner_cleanup_intervened=False,
+                ordinary_release_candidate=True,
+                owner_keyup_receipt={
+                    "event": "owner_keyup", "schema": "owner-keyup-v11",
+                    "owner_id": owner["owner_id"],
+                    "intent_token": owner["intent_token"], "key": owner["key"],
+                    "reason": "explicit_up", "admission_id": duplicate_id,
+                    "owner_keyup_started_ns": owner["owner_keyrelease_started_ns"],
+                    "owner_sync_returned_ns": owner["owner_sync_returned_ns"],
+                    "xsync_completed": True, "sync_error": None,
+                    "physical_verification_authoritative": False,
+                    "grants_input_authority": False,
+                })
+            return admission, release
+
+        events = [row for position in (0, 1) for row in pair(position)]
+        receipts = controller.input_edge_receipts(events)
+
+        self.assertEqual([row["status"] for row in receipts],
+                         ["release_receipt_incomplete"] * 2)
+        self.assertTrue(all(row["admitted_to_owner_keyup_start_ms"] is None
+                            for row in receipts))
+        self.assertTrue(all(row["admission_id"] is None for row in receipts))
+
+
+    def test_legacy_explicit_admission_ids_fail_closed(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        pair = [next(row for row in source if row.get("event") == event
+                     and row.get("step") == 0)
+                for event in ("input_admission", "input_release_transition")]
+        pair = json.loads(json.dumps(pair))
+        surfaces = (pair[0], pair[1], pair[1]["owner_thread_keyup_receipt"])
+        self.assertTrue(all("admission_id" not in row for row in surfaces))
+        no_id = controller.input_edge_receipts(pair)[0]
+        self.assertEqual(no_id["status"], "paired")
+        self.assertIsNone(no_id["admission_id"])
+        timing_fields = ("admitted_to_owner_keyup_start_ms",
+                         "input_ack_to_owner_keyup_start_ms")
+        self.assertTrue(all(no_id[name] is not None for name in timing_fields))
+
+        admission_id = pair[0]["owner_id"] + ":admission:legacy-test"
+        for row in surfaces:
+            row["admission_id"] = admission_id
+        matching = controller.input_edge_receipts(pair)[0]
+        self.assertEqual(matching["status"], "paired")
+        self.assertEqual(matching["admission_id"], admission_id)
+        self.assertEqual([matching[name] for name in timing_fields],
+                         [no_id[name] for name in timing_fields])
+
+        for surface in ("admission", "release", "owner"):
+            for mutation in ("missing", "empty", "conflicting"):
+                changed = json.loads(json.dumps(pair))
+                target = {"admission": changed[0], "release": changed[1],
+                          "owner": changed[1]["owner_thread_keyup_receipt"]}[surface]
+                if mutation == "missing":
+                    target.pop("admission_id")
+                else:
+                    target["admission_id"] = (
+                        "" if mutation == "empty" else admission_id + "-other")
+                with self.subTest(surface=surface, mutation=mutation):
+                    projected = controller.input_edge_receipts(changed)[0]
+                    self.assertEqual(
+                        {name: projected[name] for name in
+                         ("status", "admission_id", *timing_fields)},
+                        {"status": "release_receipt_incomplete",
+                         "admission_id": None,
+                         timing_fields[0]: None, timing_fields[1]: None})
+
+    def test_legacy_explicit_admission_id_cannot_be_reused(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        events = []
+        for step in (0, 2):
+            pair = [next(row for row in source if row.get("event") == event
+                         and row.get("step") == step)
+                    for event in ("input_admission", "input_release_transition")]
+            pair = json.loads(json.dumps(pair))
+            admission_id = pair[0]["owner_id"] + f":admission:legacy-test-{step}"
+            for row in (pair[0], pair[1], pair[1]["owner_thread_keyup_receipt"]):
+                row["admission_id"] = admission_id
+            events.extend(pair)
+        positive = controller.input_edge_receipts(events)
+        self.assertEqual([row["status"] for row in positive], ["paired"] * 2)
+        self.assertEqual(len({row["admission_id"] for row in positive}), 2)
+
+        # Change only the second pair's three explicit ID fields.
+        duplicate_id = events[0]["admission_id"]
+        for row in (events[2], events[3], events[3]["owner_thread_keyup_receipt"]):
+            row["admission_id"] = duplicate_id
+        receipts = controller.input_edge_receipts(events)
+        self.assertEqual(len(receipts), 2)
+        for row in receipts:
+            with self.subTest(step=row["step"]):
+                self.assertEqual(
+                    {name: row[name] for name in
+                     ("status", "admission_id",
+                      "admitted_to_owner_keyup_start_ms",
+                      "input_ack_to_owner_keyup_start_ms")},
+                    {"status": "release_receipt_incomplete", "admission_id": None,
+                     "admitted_to_owner_keyup_start_ms": None,
+                     "input_ack_to_owner_keyup_start_ms": None})
+
+    def test_explicit_admission_id_export_requires_matching_owner_context(self):
+        retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
+                    "runtime" / "events.jsonl")
+        source = [json.loads(line) for line in retained.read_text().splitlines()]
+        template = [next(row for row in source if row.get("event") == event
+                         and row.get("step") == 0)
+                    for event in ("input_admission", "input_release_transition")]
+        for contract in ("v10", "v11"):
+            pair = json.loads(json.dumps(template))
+            admission_id = pair[0]["owner_id"] + ":admission:owner-context-test"
+            for row in (pair[0], pair[1], pair[1]["owner_thread_keyup_receipt"]):
+                row["admission_id"] = admission_id
+            owner_field = "owner_thread_keyup_receipt"
+            if contract == "v11":
+                owner = pair[1].pop(owner_field)
+                owner.update(
+                    event="owner_keyup", schema="owner-keyup-v11",
+                    reason="explicit_up",
+                    owner_keyup_started_ns=owner["owner_keyrelease_started_ns"],
+                    xsync_completed=True, sync_error=None,
+                    grants_input_authority=False)
+                pair[0]["admission_position"] = 0
+                pair[1].update(
+                    admission_position=0, admission_identity_status="matched_explicit_id",
+                    owner_keyup_join="MATCHED_EXPLICIT_KEYUP",
+                    owner_release_history_complete=True, owner_cleanup_intervened=False,
+                    owner_keyup_receipt=owner)
+                owner_field = "owner_keyup_receipt"
+            positive = controller.input_edge_receipts(pair)[0]
+            self.assertEqual(positive["status"], "paired")
+            self.assertEqual(positive["admission_id"], admission_id)
+
+            for surface in ("release", "owner"):
+                changed = json.loads(json.dumps(pair))
+                target = changed[1] if surface == "release" else changed[1][owner_field]
+                target["owner_id"] = "different-owner"
+                with self.subTest(contract=contract, surface=surface):
+                    row = controller.input_edge_receipts(changed)[0]
+                    self.assertEqual(
+                        {name: row[name] for name in
+                         ("status", "admission_id",
+                          "admitted_to_owner_keyup_start_ms",
+                          "input_ack_to_owner_keyup_start_ms")},
+                        {"status": "release_receipt_incomplete", "admission_id": None,
+                         "admitted_to_owner_keyup_start_ms": None,
+                         "input_ack_to_owner_keyup_start_ms": None})
+
+
 if __name__ == "__main__":
     unittest.main()
