@@ -31,6 +31,80 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_keyboard_interrupt_with_release_batch_custody_cannot_report_completed(self):
+        publication = {
+            "status": "delivery_unknown", "identifier": "sink-interrupted",
+            "step": 0, "size": 2, "position": 1,
+            "confirmed_positions": [0], "not_attempted_positions": [],
+            "event": "input_release_transition", "key": "b",
+            "error_type": "KeyboardInterrupt",
+        }
+
+        class PublicationInterruptedBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error = KeyboardInterrupt("release sink interrupted")
+                error.release_batch_publication = dict(publication)
+                raise error
+
+        events = []
+        terminal_received = threading.Event()
+        worker_errors = []
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        old_excepthook = threading.excepthook
+        threading.excepthook = lambda args: worker_errors.append(args.exc_value)
+        executor = Executor(PublicationInterruptedBackend(), emit)
+        try:
+            executor.submit("sink-interrupted", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            executor.close()
+        finally:
+            threading.excepthook = old_excepthook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["steps_completed"], 0)
+        self.assertEqual(terminal["release"]["release_batch_delivery"], publication)
+        self.assertEqual(terminal["error"], "KeyboardInterrupt('release sink interrupted')")
+        self.assertEqual(worker_errors, [])
+
+    def test_unrelated_keyboard_interrupt_is_rethrown_after_failed_terminal(self):
+        events = []
+        terminal_received = threading.Event()
+        worker_errors = []
+
+        class InterruptedBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                raise KeyboardInterrupt("unrelated worker interruption")
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        old_excepthook = threading.excepthook
+        threading.excepthook = lambda args: worker_errors.append(args.exc_value)
+        executor = Executor(InterruptedBackend(), emit)
+        try:
+            executor.submit("unrelated-interruption", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            executor.close()
+        finally:
+            threading.excepthook = old_excepthook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["steps_completed"], 0)
+        self.assertNotIn("release_batch_publication", terminal)
+        self.assertEqual(len(worker_errors), 1)
+        self.assertIsInstance(worker_errors[0], KeyboardInterrupt)
+
     def test_terminal_preserves_release_batch_sink_delivery_uncertainty(self):
         class PublicationFailureBackend(Backend):
             def execute(self, step, lease, identifier, index):

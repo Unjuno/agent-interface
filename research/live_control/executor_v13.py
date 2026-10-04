@@ -116,11 +116,13 @@ class Executor(Previous):
             status = "needs_decision"; decision_reason = str(exc) or None
         except Cancelled:
             status = "cancelled"
-        except Exception as exc:
+        except BaseException as exc:
             status = "failed"; error = repr(exc)
             publication = getattr(exc, "release_batch_publication", None)
             if isinstance(publication, dict):
                 release_batch_publication = dict(publication)
+            elif not isinstance(exc, Exception):
+                raise
         finally:
             # An owner-originated focus/surface event is already available here.
             # For explicit cancellation, allow one owner polling interval before
