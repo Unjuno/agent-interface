@@ -4,7 +4,7 @@
 
 **H.** The current-main input-owner V12 can preserve a separate request-start-to-common-XSync-return bound for every key in an autonomous cancellation cleanup batch, without changing explicit-up cancellation receipts. The resulting owner-release record remains nested in Executor V13's early `input_released` event.
 
-**T.** On the current-main lineage at branch start `5489741c1efa2d25bedf5aa64e60a68fb2f74e3c`, use fake Xlib with two held keys. Cancel the lease, observe one owner cleanup record, and independently check each keycode's ordered interval ends no later than final owner verification. Also cancel from inside the existing explicit-up XSync hook and require `cancel_requested_after_sync=true`. Pass the cancellation record through Executor V13's release-event constructor and check that the interval array is retained byte-for-value.
+**T.** On the current-main lineage at branch start `5489741c1efa2d25bedf5aa64e60a68fb2f74e3c`, use fake Xlib with two held keys. Cancel the lease, observe one owner cleanup record, and independently check each keycode's ordered interval ends no later than final owner verification. Also cancel from inside the existing explicit-up XSync hook and require `cancel_requested_after_sync=true`. Pass the cancellation record through Executor V13's release-event constructor and check that the interval array is retained value-for-value.
 
 **D.** The pre-change test must fail because `key_release_intervals_ns` is absent. The repaired current V12 owner must pass the two-key and post-sync-cancellation cases; adjacent executor, cancellation, and V4 owner-join tests must pass. Intervals are valid only as request-start through shared XSync-return bounds, with final owner keymap verification separately retained.
 
