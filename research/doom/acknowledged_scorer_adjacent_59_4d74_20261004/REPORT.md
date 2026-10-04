@@ -1,0 +1,7 @@
+# V16 adjacent scorer/proxy construction checks
+
+First construction01 used minimal flat source stage and oneprocess. Original34tests/27PASS/7ERROR retained: V15fixture import lackedexecutor13, then its import-time fakeScorerFileSink/ProgressSample contaminated other tests. This is staging/fixture coupling, not established runtime regression. Do not regrade first output.
+
+Distinct construction02 stages exact75fb0f7ea5e9a7d61522b3c64c81c8086668ff4e top-level doom/live_control Python files in canonical research layout; each of five testmodules runs in separateprocess within one cachedWSLc CPU/networknone/nonroot sourceRO/outRW container. V15proxy/session8,ProgressClock15,polling12,stdioadapter5,newacknowledgedsampler9:49PASS/allfiveexit0/outerexit0. Actualstdoutstderr/results/exit/frozenargv/sourcepins retained. Runnerbytes copied; original full stage external but all members Git-pinned at sourcecommit. Firstminimalstage copiedfully. This archive does not claim all unrelated repository tests pass or combinedfixture isolation.
+
+H/D: existing adjacent contracts remain valid with sourcecandidate, after correcting staging and isolating preexistingtestfixtures. No nativeengine/fullV16session/realX11/input/model/GPU/usefuleffects/fieldfreshness/controllerneutrality/release/recovery qualification. RequestedCPU1/512MiB enforcementunproven warningretained. Exact historical source/outputmounts and cachedimage external. Source repair remainsdraft, originalscorer7PASS andcleanupfailures/results unchanged.
