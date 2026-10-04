@@ -211,6 +211,24 @@ class RuntimeBundleJoinTests(unittest.TestCase):
         _jsonl(path, rows)
         self._assert_invalid_bundle()
 
+    def test_scorer_event_integer_fields_reject_bool_and_float_aliases(self):
+        mutations = (
+            ("before", "kill_count", False),
+            ("after", "delta", 1.0),
+            (None, "event_sequence", 1.0),
+        )
+        for section, key, value in mutations:
+            with self.subTest(section=section, key=key, value=value):
+                self._write_bundle()
+                path = self.run_dir / "scorer-events.jsonl"
+                rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+                if section is None:
+                    rows[0][key] = value
+                else:
+                    rows[0][section][key] = value
+                _jsonl(path, rows)
+                self._assert_invalid_bundle()
+
     def test_progress_event_kinds_match_adjacent_samples(self):
         samples = [_sample(110, 0), _sample(130, 1), _sample(140, 1),
                    _sample(150, 1)]
