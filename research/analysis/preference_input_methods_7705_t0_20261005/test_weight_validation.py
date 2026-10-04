@@ -1,8 +1,11 @@
 """Post-freeze regression tests; formal_01 and frozen sources remain untouched."""
 import copy
 import json
-import math
+import shutil
 import pathlib
+import subprocess
+import sys
+import tempfile
 import unittest
 
 import auditor
@@ -38,6 +41,34 @@ class WeightValidationFollowup(unittest.TestCase):
         base["input"]["weights"] = {key: 1e308 for key in DATA["criteria"]}
         self.assertEqual(hardened_evaluate(base)["status"], "HOLD_INPUT_INVALID")
         self.assertTrue(weight_input_errors(base, DATA["criteria"]))
+
+    def test_oversized_integer_and_non_object_inputs_fail_closed(self):
+        base = copy.deepcopy(next(c for c in DATA["cases"] if c["id"] == "weights-fast"))
+        base["input"]["weights"]["wait_ms"] = 10**400
+        self.assertEqual(hardened_evaluate(base)["status"], "HOLD_INPUT_INVALID")
+        self.assertTrue(weight_input_errors(base, DATA["criteria"]))
+        for invalid_input in (None, [], "weights"):
+            case = copy.deepcopy(next(c for c in DATA["cases"] if c["id"] == "weights-fast"))
+            case["input"] = invalid_input
+            self.assertEqual(hardened_evaluate(case)["status"], "HOLD_INPUT_INVALID")
+            self.assertTrue(weight_input_errors(case, DATA["criteria"]))
+        case = copy.deepcopy(next(c for c in DATA["cases"] if c["id"] == "weights-fast"))
+        case["input"]["weights"] = None
+        self.assertEqual(hardened_evaluate(case)["status"], "HOLD_INPUT_INVALID")
+        self.assertTrue(weight_input_errors(case, DATA["criteria"]))
+
+    def test_direct_execution_writes_only_followup_output_and_labels_command(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = pathlib.Path(temp_dir)
+            shutil.copy2(ROOT / "cases.json", temp_path / "cases.json")
+            shutil.copy2(ROOT / "candidate_hardened.py", temp_path / "candidate_hardened.py")
+            proc = subprocess.run([sys.executable, "-B", "candidate_hardened.py"],
+                                  cwd=temp_dir, capture_output=True, text=True, check=False)
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            self.assertTrue((temp_path / "followup_01" / "RAW.json").is_file())
+            self.assertFalse((temp_path / "formal_01").exists())
+            receipt = json.loads((temp_path / "followup_01" / "CANDIDATE_RECEIPT.json").read_text())
+            self.assertEqual(receipt["command"], "python3 -B candidate_hardened.py")
 
 
 if __name__ == "__main__":

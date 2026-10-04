@@ -6,12 +6,24 @@ DATA=json.loads((ROOT/"cases.json").read_text())
 CRITERIA=tuple(DATA["criteria"])
 
 
+def finite_number(value):
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return False
+    try:
+        return math.isfinite(value)
+    except (OverflowError, TypeError):
+        return False
+
+
 def dominates(a,b,criteria):
     av=[a["outcomes"][k] for k in criteria]; bv=[b["outcomes"][k] for k in criteria]
     return all(x<=y for x,y in zip(av,bv)) and any(x<y for x,y in zip(av,bv))
 
 
 def evaluate(case,routes=None,criteria=None):
+    inp=case.get("input",{})
+    if not isinstance(inp,dict):
+        return {"status":"HOLD_INPUT_INVALID","selected":[],"pareto":[]}
     routes=case.get("routes",DATA["routes"]) if routes is None else routes
     criteria=CRITERIA if criteria is None else tuple(criteria)
     valid=[]
@@ -19,20 +31,21 @@ def evaluate(case,routes=None,criteria=None):
         if set(r.get("outcomes",{}))!=set(criteria): return {"status":"HOLD_MENU_INCOMPLETE","selected":[],"pareto":[]}
         if r.get("eligible"):
             values=list(r["outcomes"].values())
-            if any(not isinstance(x,(int,float)) or not math.isfinite(x) or x<0 for x in values):
+            if any(not finite_number(x) or x<0 for x in values):
                 return {"status":"HOLD_MENU_INVALID","selected":[],"pareto":[]}
             valid.append(r)
     front=[r["id"] for r in valid if not any(dominates(q,r,criteria) for q in valid if q is not r)]
-    mode=case.get("mode"); inp=case.get("input",{})
+    mode=case.get("mode")
     if mode=="weights":
         w=inp.get("weights",{})
         if (not isinstance(w,dict) or set(w)!=set(criteria) or
-                any(not isinstance(x,(int,float)) or isinstance(x,bool) or
-                    not math.isfinite(x) or x<0 for x in w.values()) or
-                not math.isfinite(sum(w.values())) or abs(sum(w.values())-1)>1e-9):
+                any(not finite_number(x) or x<0 for x in w.values())):
+            return {"status":"HOLD_INPUT_INVALID","selected":[],"pareto":front}
+        total=sum(w.values())
+        if not finite_number(total) or abs(total-1)>1e-9:
             return {"status":"HOLD_INPUT_INVALID","selected":[],"pareto":front}
         score=lambda r:sum(w[k]*r["outcomes"][k] for k in criteria)
-        if any(not math.isfinite(score(r)) for r in valid):
+        if any(not finite_number(score(r)) for r in valid):
             return {"status":"HOLD_INPUT_INVALID","selected":[],"pareto":front}
         best=min(score(r) for r in valid)
         selected=[r["id"] for r in valid if abs(score(r)-best)<=1e-12]
@@ -57,11 +70,11 @@ def evaluate(case,routes=None,criteria=None):
 
 def main():
     rows=[{"case_id":c["id"],"result":evaluate(c)} for c in DATA["cases"]]
-    out=ROOT/"formal_01";out.mkdir(exist_ok=True)
+    out=ROOT/"followup_01";out.mkdir(exist_ok=True)
     raw=json.dumps(rows,indent=2)+"\n"
     (out/"RAW.json").write_text(raw)
     import hashlib
-    (out/"CANDIDATE_RECEIPT.json").write_text(json.dumps({"command":"python3 -B candidate.py","exit_code":0,"cases":len(rows),"raw_sha256":hashlib.sha256(raw.encode()).hexdigest()},indent=2)+"\n")
+    (out/"CANDIDATE_RECEIPT.json").write_text(json.dumps({"command":"python3 -B candidate_hardened.py","exit_code":0,"cases":len(rows),"raw_sha256":hashlib.sha256(raw.encode()).hexdigest()},indent=2)+"\n")
     print(json.dumps(rows))
 
 
