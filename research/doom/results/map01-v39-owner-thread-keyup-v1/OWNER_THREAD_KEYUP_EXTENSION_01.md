@@ -12,8 +12,8 @@ Added fake-Xlib owner controls for explicit up and cleanup-before-queued-up, a t
 
 ## D — Data and execution
 
-- Base: #7405 refreshed head `50c5d5ffe69f67c6ad56811496cec93694929cfe`, stacked on #7395.
-- Candidate code and tests: `562c10d2a0635a7a8f1b83acffbeb28519e062ff`.
+- Base: #7405 refreshed head `4284bd89d9876a6ce0fa5b350a84025dd6e5806f`, stacked on #7395.
+- Candidate implementation and tests: `a119881f70211ffd428a28b96677e689d35db263`.
 - `python -m unittest discover -s research/doom -p "test_doom_typed_release_backend_v3.py" -v`: **28/28 PASS**.
 - `python -m unittest discover -s research/doom -p "test_analyze_map01_direct_retained_input_v1.py" -v`: **5/5 PASS**.
 - `python -m unittest discover -s research/live_control -p "test_input_transition_owner_v4_receipt.py" -v`: **4/4 PASS**, including two inherited owner tests.
