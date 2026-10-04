@@ -175,11 +175,19 @@ class InputOwner:
         def release(reason):
             nonlocal active,revision
             revision += 1
+            key_release_starts = []
             for code in list(held):
+                request_started_ns = time.perf_counter_ns()
                 xtest.fake_input(d, X.KeyRelease, code)
+                key_release_starts.append((code, request_started_ns))
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
+            xserver_sync_completed_ns = time.perf_counter_ns()
+            key_release_intervals_ns = [
+                {"keycode": code, "interval_ns": [started, xserver_sync_completed_ns]}
+                for code, started in key_release_starts
+            ]
             mask = d.screen().root.query_pointer().mask
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
             bitmap = d.query_keymap()
@@ -188,6 +196,7 @@ class InputOwner:
                 reason = 'cancelled'
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
                           keys_down=down, verified_ns=time.perf_counter_ns(),
+                          key_release_intervals_ns=key_release_intervals_ns,
                           valid_until_ns=active.deadline if active else None)
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
