@@ -47,3 +47,8 @@ The candidate preserves the existing timeout-before-stream-close order in source
 
 
 The candidate timeout boundary was subsequently exercised with a live inherited descendant and the default five-second close wait (`integrate_candidate_timeout.py`, A05). It raised the expected reader timeout while the descendant remained active, the reader stayed alive, and all three pipes stayed open. After the test explicitly terminated only that recorded descendant PID, the reader exited and all three pipe objects closed during harness cleanup. `audit-integrated-streams-v2.py` verifies the normal-path RED/GREEN and this bounded-timeout state; it passes. This checks the candidate's key ordering invariant on both branches, without claiming successful process-tree retirement on the uncontained timeout branch.
+
+
+## Experimental factory failure-path qualification
+
+`test_factory_failure_paths.py` injects three failures after a private Job Object has been created: Popen startup raises before returning a child; process assignment is denied after a real suspended child is created; primary-thread resume raises after successful job assignment. In all three cases the factory surfaced the injected failure and closed the created Job handle. For assignment and resume failures, the real suspended child was killed/reaped and Win32 process query confirmed it inactive. The saved auditor `audit_factory_failures.py` checks the recorded branch outcomes, per-case handle closure and child inactivity; it passes. The Popen failure is injected before the OS process is started, so it does not simulate a partially successful/ambiguous `CreateProcess` result. Job Object creation/configuration errors and secondary exceptions during kill, wait or handle close remain untested.

@@ -1,6 +1,6 @@
 {
   "format": "agent-interface-evidence-capsule-v1",
-  "created_utc": "2026-10-04T01:04:12.260656+00:00",
+  "created_utc": "2026-10-04T01:07:40.613570+00:00",
   "source_read_snapshot": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
   "evidence_branch_base": "853a867fb554c04d8f1223f9525f9eaf7d2792b6",
   "source_path": "research/live_control/codex_app_server_client_v2.py",
@@ -8,8 +8,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 8127,
-      "sha256": "92831b1776190a84c0ec6204265353c5ae99519d5bc6ddad9e3a48b7fdad9817"
+      "bytes": 9089,
+      "sha256": "718c04ba71dadab5bcd097cd92adcd101aac63d4fe93f035e258bc1849497ad6"
     },
     {
       "path": "codex_app_server_client_v2.py",
@@ -155,7 +155,27 @@
       "path": "integrated-audit-streams-a02.json",
       "bytes": 741,
       "sha256": "2afd000d873d1c9f38ac117ddf25ac712694f1793bcb4cafbb12cfbb92a01ce3"
+    },
+    {
+      "path": "test_factory_failure_paths.py",
+      "bytes": 4805,
+      "sha256": "cbd1d40283c251684ce4af477bf51ecca012110fcad1d08ed9f2ffc7c4eee5b8"
+    },
+    {
+      "path": "factory-failure-results.json",
+      "bytes": 2172,
+      "sha256": "475ce8beb7f493f0367cae4ad2d41f7c75fa2a63d14a48974c1df3d7c49f73df"
+    },
+    {
+      "path": "audit_factory_failures.py",
+      "bytes": 2285,
+      "sha256": "81bac7ea6750a131d9051bb549df176964430946969f9b03a534c1fa6bbbea0a"
+    },
+    {
+      "path": "factory-failure-audit.json",
+      "bytes": 609,
+      "sha256": "7174eea4112806fe37a6d2cd6d3335d0899c7502cadc6bb45cd72dbab88f60ae"
     }
   ],
-  "scope": "Windows Python 3.12.10 synthetic client subprocess/pipe boundary, experimental Job Object process-factory composition, normal/timeout pipe-close candidate checks; no model, game, GUI or task effect"
+  "scope": "Windows Python 3.12.10 synthetic client subprocess/pipe boundary, experimental Job Object process-factory composition, normal/timeout pipe-close checks and injected startup/assignment/resume failures; no model, game, GUI or task effect"
 }
