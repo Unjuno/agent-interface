@@ -84,4 +84,4 @@ snapshot whose closing tic did not have the required integer representation.
 candidate returns `UNKNOWN` and removes private score values. On the exact PR
 head used for this regression, the new test failed for both inputs before the
 guard and passed afterward. The documented package discovery run then passed
-14 tests; see `test-output.txt`. This adds only fake-game type-boundary evidence.
+16 tests; see `test-output.txt`. This adds only fake-game type-boundary evidence.
