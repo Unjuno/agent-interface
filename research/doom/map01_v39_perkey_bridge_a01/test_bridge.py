@@ -117,46 +117,94 @@ class PerKeyBridgeConstructionTests(unittest.TestCase):
         original_execute = parent.__dict__.get("execute")
         parent.execute = namespace["execute"]
         harness = None
+        keysym = None
+        original_string_to_keysym = None
         try:
             owner_harness_module = load_v12_test_harness()
             harness = owner_harness_module.Harness(owner_harness_module.owner_module)
+            keysym = owner_harness_module.owner_module.XK
+            original_string_to_keysym = keysym.string_to_keysym
+            keysyms = {"a": 11, "space": 12}
+            keysym.string_to_keysym = lambda key: keysyms.get(key, 0)
+            harness.d.keysym_to_keycode = lambda sym: {11: 74, 12: 65}.get(sym, 0)
+            original_xtest = owner_harness_module.owner_module.xtest
+
+            class OwnerXTest:
+                @staticmethod
+                def fake_input(display, event_type, code=None, **kwargs):
+                    display.injections.append((event_type, code))
+                    if event_type == owner_harness_module.owner_module.X.KeyPress:
+                        display.physical.add(code)
+                    elif event_type == owner_harness_module.owner_module.X.KeyRelease:
+                        display.physical.discard(code)
+
+            owner_harness_module.owner_module.xtest = OwnerXTest()
             lease = owner_harness_module.Lease(intent="intent-cancel-v39")
             backend = object.__new__(Backend)
             backend.owner = harness.owner
             backend.lease = lease
-            backend.held = set()
+
+            class ReverseIterationSet(set):
+                def __iter__(self):
+                    return iter(sorted(list(super().__iter__()), reverse=True))
+
+            backend.held = ReverseIterationSet()
             backend._input_event_context = None
             backend.events = []
             backend.emit = backend.events.append
             backend.snapshot = lambda identifier, step: lease.cancel.set()
 
             with self.assertRaises(Cancelled):
-                backend.execute({"op": "hold", "keys": ["F8"],
+                backend.execute({"op": "hold", "keys": ["a", "space"],
                                  "duration_ms": 5_000}, lease.cancel,
                                 "cancel-hold", 9)
         finally:
             if harness is not None:
                 harness.close()
+            if keysym is not None:
+                keysym.string_to_keysym = original_string_to_keysym
+            if harness is not None:
+                owner_harness_module.owner_module.xtest = original_xtest
             if original_execute is None:
                 del parent.execute
             else:
                 parent.execute = original_execute
 
-        admission = next(row for row in backend.events
-                         if row.get("event") == "input_admission")
-        release = next(row for row in backend.events
-                       if row.get("event") == "input_release_measurement")
-        down = admission["physical_key_measurement"]
-        up = release["physical_key_measurement"]
-        self.assertEqual((admission["id"], admission["step"],
-                          release["id"], release["step"]),
-                         ("cancel-hold", 9, "cancel-hold", 9))
-        self.assertEqual(down["classification"], "CONFIRMED_PHYSICAL_DOWN")
-        self.assertEqual(up["classification"], "CONFIRMED_PHYSICAL_UP")
-        self.assertEqual(up["identity_status"], "RETIRED")
-        self.assertEqual(up["actuation_id"], down["actuation_id"])
-        self.assertFalse(up["grants_input_authority"])
-        self.assertFalse(up["application_consumption_observed"])
+        admissions = {row["key"]: row for row in backend.events
+                      if row.get("event") == "input_admission"}
+        releases = {row["key"]: row for row in backend.events
+                    if row.get("event") == "input_release_measurement"}
+        self.assertEqual(set(admissions), {"a", "space"})
+        self.assertEqual(set(releases), {"a", "space"})
+        self.assertEqual([row["key"] for row in backend.events
+                          if row.get("event") == "input_release_measurement"],
+                         ["space", "a"])
+        for key, admission in admissions.items():
+            release = releases[key]
+            down = admission["physical_key_measurement"]
+            up = release["physical_key_measurement"]
+            self.assertEqual((admission["id"], admission["step"],
+                              release["id"], release["step"]),
+                             ("cancel-hold", 9, "cancel-hold", 9))
+            self.assertEqual(down["classification"], "CONFIRMED_PHYSICAL_DOWN")
+            self.assertFalse(up["grants_input_authority"])
+            self.assertFalse(up["application_consumption_observed"])
+        # The owner's independent cancellation monitor may emergency-release
+        # remaining keys between sequential finally-path up calls. Only the
+        # explicitly issued up has a measured edge; aggregate cleanup proves
+        # neutral state but does not fabricate a matching per-key edge.
+        space_up = releases["space"]["physical_key_measurement"]
+        a_up = releases["a"]["physical_key_measurement"]
+        self.assertEqual(space_up["classification"], "CONFIRMED_PHYSICAL_UP")
+        self.assertEqual(space_up["identity_status"], "RETIRED")
+        self.assertEqual(space_up["actuation_id"],
+                         admissions["space"]["physical_key_measurement"]["actuation_id"])
+        self.assertEqual(a_up["classification"], "NOOP_ALREADY_UP")
+        self.assertIsNone(a_up["actuation_id"])
+        cleanup = next(row for row in harness.owner.records
+                       if row.get("event") == "owner_release"
+                       and row.get("reason") == "cancelled")
+        self.assertTrue(cleanup["verified"])
         self.assertEqual(backend.held, set())
         self.assertEqual(harness.d.physical, set())
 
