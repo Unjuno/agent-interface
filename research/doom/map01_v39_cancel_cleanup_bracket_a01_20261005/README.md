@@ -77,6 +77,13 @@ not invoke OS input, game, model, GUI capture, Docker, or a live allocation.
   This remains source composition, not execution through the actual executor,
   process protocol, session, controller runtime, or game.
 
+The current `session_map01_v12.py` transport statically serializes event
+dictionaries with `json.dumps`, appends the same line to `events.jsonl` and
+`delivered.jsonl`, and prints it; the V39 controller's stdout reader parses
+each line with `json.loads`. This is a direct JSON round-trip transport, but
+A08 does not execute that writer/reader boundary. No live session or game was
+started for this check.
+
 The A03 source freeze includes hashes for its full imported fake-display/control
 dependency closure. The A04 freeze includes the exact guard method source and
 A03 raw input. The A08 freeze includes the current producer/consumer source
