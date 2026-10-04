@@ -363,14 +363,18 @@ def validate_action(action):
 
 
 def begin_model_turn(planner, root, image, effect_memory, source_health, source_ammo,
-                     prior_soft_event_summary, output_schema):
+                     prior_soft_event_summary, output_schema,
+                     prior_state_feedback=None):
     prompt_text = ("Select the next bounded MAP01 action from the new temporal sheet.\n"
                    + f"Current locally verified health: {source_health}.\n"
                    + f"Current locally verified ammo: {source_ammo}.\n"
                    + "Newest typed soft event from the preceding control interval: "
                    + json.dumps(prior_soft_event_summary, separators=(",", ":")) + "\n"
                    + "Previous no-visible-effect actions: "
-                   + json.dumps(effect_memory, separators=(",", ":")) + "\n")
+                   + json.dumps(effect_memory, separators=(",", ":")) + "\n"
+                   + "Previous action-interval public HUD evidence (observed after action; "
+                   + "not causal or beneficial evidence): "
+                   + json.dumps(prior_state_feedback or [], separators=(",", ":")) + "\n")
     (root / "prompt.txt").write_text(prompt_text)
     return planner.begin_turn(prompt_text, output_schema=output_schema,
                               image_path=win(image))
@@ -420,8 +424,89 @@ def compile_cover(commands):
     return steps
 
 
-def effect_receipts(commands, before, observations, accepted_ns):
+def action_state_feedback(before, after, typed_observations):
+    """Compare public HUD values only across source-bound typed captures."""
+    def read(observation):
+        if (type(observation.get("sequence")) is not int or
+                type(observation.get("capture_ns")) is not int):
+            return None, "typed_frame_identity_mismatch"
+        matches = [row for row in typed_observations
+                   if type(row) is dict and row.get("event") == "typed_observation" and
+                   row.get("sequence") == observation.get("sequence")]
+        if len(matches) != 1:
+            return None, "typed_frame_missing_or_ambiguous"
+        row = matches[0]
+        frame_hash = observation.get("frame_rgb_sha256")
+        if (type(row.get("sequence")) is not int or
+                type(row.get("capture_ns")) is not int or
+                row.get("capture_ns") != observation.get("capture_ns") or
+                row.get("id") != observation.get("id") or
+                row.get("step") != observation.get("step") or
+                type(frame_hash) is not str or len(frame_hash) != 64 or
+                any(char not in "0123456789abcdef" for char in frame_hash) or
+                row.get("frame_rgb_sha256") != frame_hash):
+            return None, "typed_frame_identity_mismatch"
+        signals = row.get("signals")
+        binding = observation.get("pointer_binding")
+        if (type(binding) is not dict or type(signals) is not dict or
+                set(signals) != {"health", "ammo"}):
+            return None, "typed_signal_unavailable"
+        normalized = {}
+        wad_sha256 = None
+        for name in ("health", "ammo"):
+            signal = signals.get(name)
+            if (type(signal) is not dict or signal.get("status") != "observed" or
+                    signal.get("signal_id") != name or
+                    type(signal.get("value")) is not int or
+                    type(signal.get("sequence")) is not int or
+                    signal.get("sequence") != observation.get("sequence") or
+                    type(signal.get("capture_ns")) is not int or
+                    signal.get("capture_ns") != observation.get("capture_ns") or
+                    signal.get("binding") != binding):
+                return None, "typed_signal_unavailable"
+            lower, upper = (1, 200) if name == "health" else (0, 999)
+            if not lower <= signal["value"] <= upper:
+                return None, "typed_signal_unavailable"
+            signal_wad = signal.get("wad_sha256")
+            if (type(signal_wad) is not str or len(signal_wad) != 64 or
+                    any(char not in "0123456789abcdef" for char in signal_wad)):
+                return None, "typed_signal_unavailable"
+            if wad_sha256 is not None and signal_wad != wad_sha256:
+                return None, "typed_signal_binding_mismatch"
+            wad_sha256 = signal_wad
+            normalized[name] = signal["value"]
+        return {"binding": binding, "wad_sha256": wad_sha256,
+                "signals": normalized}, None
+
+    previous, reason = read(before)
+    if previous is None:
+        return {"status": "unavailable", "reason": reason}
+    current, reason = read(after)
+    if current is None:
+        return {"status": "unavailable", "reason": reason}
+    if (after["sequence"] <= before["sequence"] or
+            after["capture_ns"] <= before["capture_ns"]):
+        return {"status": "unavailable", "reason": "typed_frame_order_invalid"}
+    if (current["binding"] != previous["binding"] or
+            current["wad_sha256"] != previous["wad_sha256"]):
+        return {"status": "unavailable", "reason": "typed_signal_binding_mismatch"}
+    return {
+        "status": "observed",
+        "from_sequence": before["sequence"],
+        "to_sequence": after["sequence"],
+        "signals": {
+            name: {"before": previous["signals"][name],
+                   "after": current["signals"][name],
+                   "delta": current["signals"][name] - previous["signals"][name]}
+            for name in ("health", "ammo")},
+        "scope": "public HUD transition observed after action; not causal or beneficial evidence",
+    }
+
+
+def effect_receipts(commands, before, observations, accepted_ns,
+                    typed_observations=()):
     previous=descriptor(Path(before["image"]));receipts=[]
+    previous_observation = before
     for index,command in enumerate(commands):
         samples=[row for row in observations if row["step"]==index]
         if not samples:
@@ -437,8 +522,11 @@ def effect_receipts(commands, before, observations, accepted_ns):
           "plan_accept_to_first_capture_ms":(samples[0]["capture_ns"]-accepted_ns)/1e6,
           "plan_accept_to_last_capture_ms":(observation["capture_ns"]-accepted_ns)/1e6,
           "capture_ms_total":sum(row["capture_ms"] for row in samples),
-          "scope":"viewport pixels only"})
+          "scope":"viewport pixels only",
+          "state_feedback":action_state_feedback(
+              previous_observation, observation, typed_observations)})
         previous=current
+        previous_observation = observation
     return receipts
 
 
@@ -577,6 +665,12 @@ def main():
             prior_receipts=[] if not decisions else decisions[-1].get("effect_receipts",[])
             effect_memory=[row["action"] for row in prior_receipts
                            if row["result"]=="no_visible_effect"]
+            prior_state_feedback=[{
+                "action":row["action"],"extent":row["extent"],
+                "viewport_result":row["result"],
+                "state_feedback":row.get("state_feedback",{
+                    "status":"unavailable","reason":"not_recorded"})}
+                for row in prior_receipts]
             prior_soft_event_summary=latest_soft_event_summary(decisions)
             image=model_root/"temporal-sheet.png"
             prior=[Path(row["source_image"]) for row in decisions]
@@ -585,7 +679,7 @@ def main():
             planner_handle=begin_model_turn(
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
-                prior_soft_event_summary,output_schema)
+                prior_soft_event_summary,output_schema,prior_state_feedback)
             planner_interrupt=None
             with ThreadPoolExecutor(max_workers=1) as pool:
                 future=pool.submit(planner.await_turn,planner_handle,90)
@@ -822,7 +916,7 @@ def main():
                                if row.get("event")=="observation" and row.get("id")==identifier]
                 completed=len(commands) if not invalidated else terminal["steps_completed"]
                 receipts=(effect_receipts(commands[:completed],before,observations,
-                                          accepted["accepted_ns"])
+                                          accepted["accepted_ns"],all_events)
                           if completed else [])
                 records=[]
                 for local_index,(command,receipt) in enumerate(zip(commands[:completed],receipts)):
@@ -994,6 +1088,7 @@ def main():
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+          "state_feedback_contract":"compare hash-bound typed public health/ammo values at exact before/after action observations and expose the observed transition in the next planner prompt as correlation only; never infer a hit or benefit",
           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
           "final_action_admission_contract":"historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
           "running_action_contract":"the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
@@ -1069,4 +1164,3 @@ def main():
           "model_wall_seconds":report["model_wall_seconds"]},indent=2))
 
 if __name__ == "__main__": main()
-
