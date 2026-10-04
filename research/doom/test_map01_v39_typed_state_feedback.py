@@ -13,6 +13,7 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import map01_overlap_controller_v39 as controller
+from perkey_measurement_source_closure_v1 import with_per_key_measurement_sources
 
 
 WAD_SHA256 = "a" * 64
@@ -52,6 +53,14 @@ class FakePlanner:
 
 
 class V39TypedStateFeedbackTests(unittest.TestCase):
+    def test_per_key_manifest_pins_transitive_executor_dependency_only_when_opted_in(self):
+        base = [HERE / "session_map01_v12.py"]
+        default_paths = with_per_key_measurement_sources(base, HERE, False)
+        measured_paths = with_per_key_measurement_sources(base, HERE, True)
+        self.assertEqual(default_paths, base)
+        self.assertEqual(measured_paths[:1], base)
+        self.assertIn(HERE.parent / "live_control" / "executor_v3.py", measured_paths)
+        self.assertEqual(len(measured_paths), 4)
     def test_session_command_forwards_per_key_measurement_only_when_opted_in(self):
         args = SimpleNamespace(seed=7, load_fixture_manifest=HERE / "fixture.json",
                                per_key_input_measurement=True)
@@ -524,6 +533,66 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                     self.assertIsNone(receipt["admitted_to_owner_keyup_start_ms"])
                     self.assertIsNone(receipt["input_ack_to_owner_keyup_start_ms"])
 
+    def test_running_action_snapshot_rejects_noninteger_step_aliases(self):
+        source_health = {"format": "observable-signal-v1",
+                         "status": "observed", "signal_id": "health",
+                         "value": 91, "sequence": 88, "capture_ns": 100,
+                         "binding": BINDING}
+        contract = controller.build_action_contract(
+            [{"action": "move", "extent": "pulse"}],
+            {"critical_health_minimum": 1, "maximum_health_loss": 5,
+             "minimum_ammo": 0, "max_current_age_ms": 1000},
+            source_health)
+        event = {
+            "event": "typed_observation",
+            "schema": "doom-typed-observation-v1",
+            "id": "cover-1",
+            "step": 1,
+            "sequence": 89,
+            "capture_ns": 200,
+            "pointer_binding": BINDING,
+            "signals": {},
+            "frame_rgb_sha256": "a" * 64,
+            "frame_size": [640, 480],
+            "typed_extraction_started_ns": 200,
+            "typed_ready_ns": 200,
+            "capture_to_typed_ready_ms": 0,
+            "artifact_published": False,
+            "grants_input_authority": False,
+        }
+        for name, value in (("health", 91), ("ammo", 45)):
+            event["signals"][name] = {
+                "signal_id": name, "sequence": 89, "capture_ns": 200,
+                "binding": BINDING, "status": "observed", "value": value}
+
+        for field, invalid_value in (
+                ("step", True), ("step", 1.0), ("step", -1),
+                ("id", True), ("id", 1), ("id", "")):
+            with self.subTest(field=field, invalid_value=invalid_value):
+                malformed = dict(event, **{field: invalid_value})
+
+                with self.assertRaisesRegex(ValueError, "exact early typed"):
+                    controller.build_typed_action_snapshot(malformed, contract)
+
+    def test_feedback_rejects_nonstring_observation_and_typed_row_ids(self):
+        invalid_pairs = ((True, 1), (1, True), (1, 1), ("", ""))
+        for observation_id, typed_row_id in invalid_pairs:
+            before = observation(83, 100)
+            after = observation(89, 200)
+            before_typed = typed_observation(83, 100, 91, 45)
+            after_typed = typed_observation(89, 200, 85, 44)
+            after["id"] = observation_id
+            after_typed["id"] = typed_row_id
+
+            with self.subTest(observation_id=observation_id,
+                              typed_row_id=typed_row_id):
+                result = controller.action_state_feedback(
+                    before, after, [before_typed, after_typed])
+
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"],
+                                 "typed_frame_identity_mismatch")
+
     def test_feedback_reports_exact_health_and_ammo_deltas_for_matching_frames(self):
         before = observation(83, 100)
         after = observation(89, 200)
@@ -553,6 +622,22 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(result["signals"]["ammo"],
                          {"before": 45, "after": 45, "delta": 0})
 
+    def test_feedback_rejects_negative_step_identity_pair(self):
+        before = observation(83, 100)
+        after = observation(89, 200)
+        before["step"] = 0
+        after["step"] = -1
+        before_typed = typed_observation(83, 100, 91, 45)
+        after_typed = typed_observation(89, 200, 90, 44)
+        before_typed["step"] = 0
+        after_typed["step"] = -1
+
+        result = controller.action_state_feedback(
+            before, after, [before_typed, after_typed])
+
+        self.assertEqual(result["status"], "unavailable")
+        self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
+
     def test_feedback_refuses_typed_frame_with_mismatched_capture_time(self):
         before = observation(83, 100)
         after = observation(89, 200)
@@ -575,6 +660,42 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
 
         self.assertEqual(result["status"], "unavailable")
         self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
+
+    def test_feedback_refuses_boolean_step_identity_fields(self):
+        before = observation(1, 100)
+        before["step"] = 0
+        after = observation(2, 200)
+        after["step"] = 1
+        typed = [typed_observation(1, 100, 97, 48),
+                 typed_observation(2, 200, 91, 45)]
+        typed[0]["step"] = 0
+        typed[1]["step"] = 1
+
+        self.assertEqual(
+            controller.action_state_feedback(before, after, typed)["status"],
+            "observed")
+
+        bad_before = json.loads(json.dumps(before))
+        bad_before["step"] = False
+        bad_after = json.loads(json.dumps(after))
+        bad_after["step"] = True
+        bad_typed_before = json.loads(json.dumps(typed))
+        bad_typed_before[0]["step"] = False
+        bad_typed_after = json.loads(json.dumps(typed))
+        bad_typed_after[1]["step"] = True
+        cases = (
+            ("before observation", bad_before, after, typed),
+            ("after observation", before, bad_after, typed),
+            ("before typed row", before, after, bad_typed_before),
+            ("after typed row", before, after, bad_typed_after),
+        )
+        for name, before_row, after_row, typed_rows in cases:
+            with self.subTest(field=name):
+                result = controller.action_state_feedback(
+                    before_row, after_row, typed_rows)
+                self.assertEqual(result["status"], "unavailable")
+                self.assertEqual(result["reason"],
+                                 "typed_frame_identity_mismatch")
 
     def test_feedback_refuses_typed_frame_from_another_program(self):
         before = observation(83, 100)

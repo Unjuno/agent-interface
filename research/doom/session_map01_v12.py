@@ -21,14 +21,15 @@ from executor_v12 import Executor
 from lease import Expired
 from doom_typed_release_backend_v1 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
+from perkey_measurement_source_closure_v1 import (
+    per_key_measurement_sources, with_per_key_measurement_sources)
 
 
 FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
 SETUP_INPUT_CONTRACT = ("fixture state reached through the same X11 Executor and "
                         "recorded OS-input/coast programs; save is setup-only")
-PERKEY_BRIDGE = HERE / "map01_v39_perkey_bridge_a01" / "bridge.py"
-PERKEY_OWNER = (HERE / "map01_attack_onset_phase_allocation_02_v1" /
-                "dependencies" / "v12" / "input_owner_v12.py")
+PERKEY_SOURCE_FILES = per_key_measurement_sources(HERE)
+PERKEY_BRIDGE, PERKEY_OWNER = PERKEY_SOURCE_FILES[:2]
 
 
 def file_sha256(path):
@@ -133,10 +134,10 @@ def main():
                  HERE / "doom_hud_signal_v3.py",
                  HERE / "doom_hud_signal_v2.py",
                  HERE / "doom_hud_signal_v1.py"]
+    source_paths = with_per_key_measurement_sources(
+        source_paths, HERE, args.per_key_input_measurement)
     selected_backend = Backend
     if args.per_key_input_measurement:
-        if not PERKEY_BRIDGE.is_file() or not PERKEY_OWNER.is_file():
-            raise FileNotFoundError("per-key measurement source closure is incomplete")
         sys.path.insert(0, str(PERKEY_OWNER.parent))
         bridge_spec = importlib.util.spec_from_file_location(
             "map01_v39_perkey_bridge_a01_backend", PERKEY_BRIDGE)
@@ -145,7 +146,6 @@ def main():
         bridge_module = importlib.util.module_from_spec(bridge_spec)
         bridge_spec.loader.exec_module(bridge_module)
         selected_backend = bridge_module.Backend
-        source_paths.extend((PERKEY_BRIDGE, PERKEY_OWNER))
     for path in source_paths:
         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))

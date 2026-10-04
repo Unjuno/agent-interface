@@ -75,6 +75,8 @@ def build_action_snapshot(event, contract):
             type(contract["source"].get("signals")) is not dict or
             event.get("artifact_published") is not False or
             event.get("grants_input_authority") is not False or
+            type(event.get("id")) is not str or not event.get("id") or
+            type(event.get("step")) is not int or event.get("step") < 0 or
             not isinstance(digest, str) or len(digest) != 64 or
             any(character not in "0123456789abcdef" for character in digest) or
             type(frame_size) is not list or len(frame_size) != 2 or
