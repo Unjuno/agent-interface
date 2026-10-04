@@ -20,7 +20,8 @@ class Backend(Previous):
     def execute(self, step, cancel, identifier, index):
         previous = getattr(self._release_batch, "context", None)
         self._release_batch.context = {
-            "rows": [], "identifier": identifier, "step": index
+            "rows": [], "identifier": identifier, "step": index,
+            "next_admission_position": 0, "admissions_by_key": {},
         }
         try:
             return super().execute(step, cancel, identifier, index)
@@ -82,6 +83,36 @@ class Backend(Previous):
             record = self.owner.call("down", self.lease, key)
             self.held.add(key)
             if record is not None:
+                context = getattr(self._release_batch, "context", None)
+                if (isinstance(record, dict)
+                        and record.get("event") == "input_admission"
+                        and context is not None):
+                    record = dict(record)
+                    owner_id = getattr(self.owner, "owner_id", None)
+                    admission_key_matches = (
+                        type(key) is str
+                        and type(record.get("key")) is str
+                        and record["key"] == key
+                    )
+                    record.update({
+                        "id": context["identifier"],
+                        "step": context["step"],
+                        "admission_key_matches_request": admission_key_matches,
+                        "admission_position": context.setdefault(
+                            "next_admission_position", 0
+                        ),
+                    })
+                    if type(owner_id) is str and owner_id:
+                        record.setdefault("owner_id", owner_id)
+                    context["next_admission_position"] += 1
+                    if admission_key_matches:
+                        context.setdefault("admissions_by_key", {}).setdefault(
+                            key, []
+                        ).append({
+                            "id": record["id"],
+                            "step": record["step"],
+                            "admission_position": record["admission_position"],
+                        })
                 self.emit(record)
             return None
 
@@ -98,6 +129,19 @@ class Backend(Previous):
             raise AssertionError("v4 requires input-release-transition receipt")
         row = dict(row)
         row["backend_owned_before_release"] = was_backend_owned
+        row["release_key_matches_request"] = (
+            type(key) is str and type(row.get("key")) is str and row["key"] == key
+        )
+        admissions = context.setdefault("admissions_by_key", {}).pop(key, [])
+        if not row["release_key_matches_request"]:
+            row["admission_identity_status"] = "release_key_mismatch"
+        elif len(admissions) == 1:
+            row.update(admissions[0])
+            row["admission_identity_status"] = "matched"
+        elif admissions:
+            row["admission_identity_status"] = "ambiguous_multiple_admissions"
+        else:
+            row["admission_identity_status"] = "unmatched_no_admission"
         context["rows"].append(row)
 
         # Preserve v3's proven non-staggering invariant.
@@ -126,6 +170,9 @@ class Backend(Previous):
         request_time_ordinary = all(
             row.get("ordinary_release_candidate") is True for row in rows
         )
+        release_keys_match_requests = all(
+            row.get("release_key_matches_request") is True for row in rows
+        )
         authority = self._post_batch_authority(self.lease, after)
         batch_verified = bool(
             rows
@@ -135,6 +182,7 @@ class Backend(Previous):
             and owner_empty
             and backend_ownership
             and request_time_ordinary
+            and release_keys_match_requests
             and authority["post_batch_authority_verified"]
         )
 
@@ -152,6 +200,7 @@ class Backend(Previous):
                 "owner_identity_matches_after_batch": owner_identity_matches,
                 "intent_token_matches_after_batch": token_matches,
                 "owned_keycodes_after_batch": owned_after,
+                "release_batch_keys_match_requests": release_keys_match_requests,
                 **authority,
                 "owner_transition_verified": batch_verified,
                 "physical_verification_authoritative": False,

@@ -4,6 +4,10 @@
 
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
 - [Issue #7387 A02 method result](serial_cue_interference_7387_t0_20261004_a02/REPORT.md) — WSLc candidate and raw-only auditor each ran once; 144 trials, 288 presentations, 16 isolated controls and 1,280 image files (five distinct pixel payloads) independently reconstructed; `PASS_METHOD_SCOPED`; model hypothesis remains untested.
+- [Issue #7470 A02](inference_disturbance_coupling_7470_t0_a02_20261004/README.md) — harness diagnostic over 24 arbitrary pairings; does not meet the later circular-shift design clarification. A01 prelaunch STOP preserved.
+- [Issue #7470 A03](inference_disturbance_coupling_7470_t0_a03_20261004/README.md) — four intact-sequence phase rotations detect planted sensitivity, but omit the explicit period-to-period seam transition required by the clarified design.
+- [Issue #7470 A04](inference_disturbance_coupling_7470_t0_a04_20261004/README.md) — eight trajectories include the seam, but the frozen centered-correlation formula has an extra 1/n normalization; not an Issue-level PASS.
+- [Issue #7470 A05](inference_disturbance_coupling_7470_t0_a05_20261004/README.md) — standard Pearson fixture, four intact circular shifts, and two periods with explicit seam; 8/8 reconstructed and 3/3 mutations rejected; finite method-scoped pass only.
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
 - [Issue #7383 freshness-gated observation hedging T0](observation_hedging_7383_t0_20261004/REPORT.md) — synthetic independent-heavy-tail p95 improved 86.52% under the frozen threshold/work/deadline gates; correlated and shared-queue controls showed no gain. Independent audit passed 1,000 rows and rejected four mutations. Host CPU only; real capture critical-path evidence remains absent.
 - [`circuit_rejection_cost_5375_a02_20261004/REPORT.md`](circuit_rejection_cost_5375_a02_20261004/REPORT.md) — #5375 A02 WSLc one-tick finite result; 10 raw rows independently reconstructed, 4/4 mutation controls rejected, PASS_METHOD_SCOPED; A01 construction failure and auditor STOP preserved separately. No empirical production-cost, live-resilience, GUI/model, or product claim.
@@ -309,6 +313,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
+- [`benefit_threshold_7411_t0_20261005/`](benefit_threshold_7411_t0_20261005/)
 - [`benign_error_recovery_scope_6469_t0_20261002_v1/`](benign_error_recovery_scope_6469_t0_20261002_v1/)
 - [`blackstart_allwindow_trace_5970_t6_20261002/`](blackstart_allwindow_trace_5970_t6_20261002/)
 - [`blackstart_causal_cut_5970_t0_20261001/`](blackstart_causal_cut_5970_t0_20261001/)
@@ -363,6 +368,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`claim_scoped_clip_trace_6536_t0_20261002/`](claim_scoped_clip_trace_6536_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
+- [`client_energy_per_effect_7728_t0_20261005/`](client_energy_per_effect_7728_t0_20261005/)
 - [`clipboard_formats_36_t0_01a0ff51/`](clipboard_formats_36_t0_01a0ff51/)
 - [`clipboard_formats_36_x11_transfer_01a0ff51/`](clipboard_formats_36_x11_transfer_01a0ff51/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)
@@ -513,10 +519,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
-- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/) — Issue #7470 A02 harness diagnostic: 24 arbitrary pairings audited across null/planted plants; does not meet the later circular-shift design clarification. A01 prelaunch STOP preserved.
-- [`inference_disturbance_coupling_7470_t0_a03_20261004/`](inference_disturbance_coupling_7470_t0_a03_20261004/) — Issue #7470 A03: four intact-sequence phase rotations audited; planted phase sensitivity detected, but explicit period-to-period seam transition is omitted, so not full clarification conformance.
-- [`inference_disturbance_coupling_7470_t0_a04_20261004/`](inference_disturbance_coupling_7470_t0_a04_20261004/) — Issue #7470 A04: explicit seam and 8/8 trajectories audited, but frozen centered-correlation formula has extra 1/n normalization; not an Issue-level PASS.
-- [`inference_disturbance_coupling_7470_t0_a05_20261004/`](inference_disturbance_coupling_7470_t0_a05_20261004/) — Issue #7470 A05: standard Pearson fixture, four intact circular shifts, two periods with explicit seam; 8/8 reconstructed and 3/3 mutations rejected; finite method-scoped pass only.
+- [`inference_disturbance_coupling_7470_t0_a02_20261004/`](inference_disturbance_coupling_7470_t0_a02_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a03_20261004/`](inference_disturbance_coupling_7470_t0_a03_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a04_20261004/`](inference_disturbance_coupling_7470_t0_a04_20261004/)
+- [`inference_disturbance_coupling_7470_t0_a05_20261004/`](inference_disturbance_coupling_7470_t0_a05_20261004/)
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/)
 - [`integrated_decision_scope_57_t0_v1/`](integrated_decision_scope_57_t0_v1/)
