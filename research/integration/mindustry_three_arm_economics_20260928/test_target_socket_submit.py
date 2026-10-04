@@ -3,6 +3,10 @@
 import unittest
 from pathlib import Path
 
+from arm_coordinator import ArmCoordinator
+from target_execution_v1 import dispatch_task_targets
+from target_receipts_v1 import (build_palette_receipt,
+                                build_world_receipt)
 from target_socket_submit_v1 import SocketSubmitStop, TargetSocketSubmitter
 
 
@@ -104,6 +108,64 @@ class TargetSocketSubmitTests(unittest.TestCase):
         self.assertIn("import stopped_socket_v2 as bridge", source)
         self.assertIn("mindustry_three_arm_interactive_v1.py", source)
         self.assertIn("bridge.main()", source)
+
+    def test_dispatch_compiler_composes_with_socket_submit_adapter(self):
+        coordinator = ArmCoordinator("plain")
+        def observation(sequence):
+            return {"sequence": sequence, "pointer_binding": {
+                "surface": 91, "geometry": [0, 24, 1280, 760]}}
+        candidate = {"op": "target_reference",
+                     "point_space": "source_observation_pixels",
+                     "points": [{"x": 150, "y": 220}, {"x": 640, "y": 410}],
+                     "motion_model": "surface_origin_translation",
+                     "confidence_basis": "visually_unambiguous"}
+        coordinator.resolve(observation(1), 1280, 760,
+                            [{"row": 0, "column": 0, "point": [150, 220]}],
+                            lambda _image: candidate)
+        sequence = {"value": 1}
+        fresh = iter((observation(2), observation(3)))
+        submitter = TargetSocketSubmitter("/tmp/unused.sock")
+        wire_requests = []
+
+        def exchange(request):
+            wire_requests.append(request)
+            return success(request["action_id"], cursor=request["after"] + 1)
+
+        submitter._exchange = exchange
+
+        def observe():
+            value = next(fresh)
+            sequence["value"] = value["sequence"]
+            return value
+
+        def receipt(locator, target):
+            dependency = [{"sequence": 1, "box": [8, 8, 24, 24]}]
+            if target == "palette_point":
+                return build_palette_receipt(locator,
+                    exact_dependencies=dependency)
+            return build_world_receipt(locator,
+                exact_dependencies=dependency,
+                selection_baseline_sequence=1,
+                selection_receipt_sequence=2,
+                selection_box=[88, 8, 104, 24], minimum_changed_pixels=16)
+
+        result = dispatch_task_targets(
+            coordinator=coordinator, task_id="A1", layout="A",
+            observe=observe,
+            read_clock=lambda: {"sequence": sequence["value"],
+                                "runtime_ns": 100 + sequence["value"]},
+            build_receipt=receipt, submit=submitter)
+
+        self.assertEqual([row["target"] for row in result],
+                         ["palette_point", "target_point"])
+        self.assertEqual([row["execution_receipt"] for row in result], [
+            {"request_id": "A1-select-conveyor", "terminal": True,
+             "released": True},
+            {"request_id": "A1-place-conveyor", "terminal": True,
+             "released": True},
+        ])
+        self.assertEqual([row["action_id"] for row in wire_requests], [
+            "A1-select-conveyor", "A1-place-conveyor"])
 
 
 if __name__ == "__main__":
