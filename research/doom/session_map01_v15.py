@@ -58,11 +58,11 @@ class _GameProxy:
         return result
 
     def close(self):
+        if self.closing:
+            return None
         if self.closed:
             if self._close_error is not None:
                 raise self._close_error
-            return None
-        if self.closing:
             return None
 
         # Preserve a controller error already unwinding through the session's
@@ -70,7 +70,7 @@ class _GameProxy:
         active_error = sys.exception()
         self.closing = True
         sample_error = None
-        close_error = None
+        game_close_error = None
         result = None
         if self.initialized:
             try:
@@ -83,23 +83,26 @@ class _GameProxy:
         try:
             result = self._inner.close()
         except BaseException as error:
-            close_error = error
+            game_close_error = error
             self._close_error = error
         finally:
             self.closing = False
 
-        cleanup_errors = [error for error in (sample_error, close_error)
+        cleanup_errors = [error for error in (sample_error, game_close_error)
                           if error is not None]
         if cleanup_errors and active_error is not None:
-            raise BaseExceptionGroup(
+            self._close_error = BaseExceptionGroup(
                 "session and game-close cleanup failed",
                 [active_error, *cleanup_errors],
             )
+            raise self._close_error
         if len(cleanup_errors) == 1:
-            raise cleanup_errors[0]
+            self._close_error = cleanup_errors[0]
+            raise self._close_error
         if len(cleanup_errors) > 1:
-            raise BaseExceptionGroup(
+            self._close_error = BaseExceptionGroup(
                 "final scorer sample and game close both failed", cleanup_errors)
+            raise self._close_error
         return result
 
 def main():

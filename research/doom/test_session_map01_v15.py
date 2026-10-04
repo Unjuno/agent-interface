@@ -111,20 +111,22 @@ class GameProxyLifecycleTests(unittest.TestCase):
     def test_inner_game_is_closed_when_final_sample_raises(self):
         events = []
         inner = self.InnerGame(events)
+        sample_error = RuntimeError("final scorer sample failed")
 
         def final_sample():
             self.assertFalse(proxy.closed)
             self.assertTrue(proxy.closing)
             events.append("final_sample")
-            raise RuntimeError("final scorer sample failed")
+            raise sample_error
 
         proxy = candidate._GameProxy(inner, final_sample)
         proxy.init()
-        with self.assertRaisesRegex(RuntimeError, "final scorer sample failed"):
-            proxy.close()
+        for _ in range(2):
+            with self.assertRaisesRegex(RuntimeError, "final scorer sample failed") as raised:
+                proxy.close()
+            self.assertIs(raised.exception, sample_error)
         self.assertEqual(events, ["init", "final_sample", "inner_close"])
         self.assertTrue(proxy.closed)
-        self.assertIsNone(proxy.close())
         self.assertEqual(events.count("inner_close"), 1)
 
     def test_successful_sample_preserves_inner_close_result_and_is_idempotent(self):
@@ -178,6 +180,21 @@ class GameProxyLifecycleTests(unittest.TestCase):
         proxy = candidate._GameProxy(inner, final_sample)
         proxy.init()
         self.assertEqual(proxy.close(), "closed")
+        self.assertEqual(events, ["init", "final_sample", "inner_close"])
+
+    def test_wrapped_close_failure_is_replayed_without_a_false_success(self):
+        events = []
+        close_error = OSError("underlying close failed")
+        inner = self.InnerGame(events, close_error)
+        proxy = candidate._GameProxy(inner, lambda: events.append("final_sample"))
+        proxy.init()
+
+        for _ in range(2):
+            with self.assertRaisesRegex(OSError, "underlying close failed") as raised:
+                proxy.close()
+            self.assertIs(raised.exception, close_error)
+
+        self.assertTrue(proxy.closed)
         self.assertEqual(events, ["init", "final_sample", "inner_close"])
 
     def test_session_unwind_preserves_controller_sample_and_close_errors(self):
