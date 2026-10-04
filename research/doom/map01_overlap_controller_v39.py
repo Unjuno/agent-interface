@@ -60,6 +60,11 @@ def reusable_cover(decisions):
     return [], None, None
 
 
+def open_child_stderr_capture(path):
+    """Open a durable stderr sink that cannot fill an unread child pipe."""
+    return Path(path).open("wb")
+
+
 class UnauthoredCoastMonitor:
     """No policy can become invalid when coast grants no action authority.
 
@@ -481,8 +486,10 @@ def main():
         signal_reader = DoomStatusNumberReader(WAD, signal_id="health")
         ammo_reader = DoomStatusNumberReader(WAD, signal_id="ammo")
         runtime = args.out / "runtime"
+        stderr_capture = open_child_stderr_capture(args.out / "stderr.txt")
+        atexit.register(stderr_capture.close)
         process = subprocess.Popen(session_command(args, runtime),
-            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=stderr_capture,
             text=True, bufsize=1)
         failure_cleanup.track(process)
         incoming = queue.Queue()
@@ -500,7 +507,7 @@ def main():
                     row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
                 except queue.Empty:
                     if process.poll() is not None:
-                        detail="stderr not synchronously drained"
+                        detail="child stderr saved in stderr.txt"
                         raise RuntimeError(f"session exited before expected event: {detail}")
                     continue
                 if row["event"] == "observation":
@@ -967,9 +974,11 @@ def main():
         process.stdin.write('{"op":"finish"}\n');process.stdin.flush()
         score=wait(lambda r:r["event"]=="post_control_score")
         process.wait(timeout=20)
+        stderr_capture.flush()
+        atexit.unregister(stderr_capture.close)
+        stderr_capture.close()
         planner_client.close()
         atexit.unregister(planner_client.close)
-        (args.out/"stderr.txt").write_text(process.stderr.read())
         typed_events = {row["sequence"]:row for row in all_events
                         if row.get("event")=="typed_observation"}
         full_events = {row["sequence"]:row for row in all_events
@@ -1069,4 +1078,3 @@ def main():
           "model_wall_seconds":report["model_wall_seconds"]},indent=2))
 
 if __name__ == "__main__": main()
-

@@ -1,0 +1,14 @@
+test_exited_session_does_not_enter_unbounded_stderr_read (test_overlap_controller_v39_wait.WaitTests.test_exited_session_does_not_enter_unbounded_stderr_read) ... FAIL
+
+======================================================================
+FAIL: test_exited_session_does_not_enter_unbounded_stderr_read (test_overlap_controller_v39_wait.WaitTests.test_exited_session_does_not_enter_unbounded_stderr_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-stderr-capture\research\doom\test_overlap_controller_v39_wait.py", line 121, in test_exited_session_does_not_enter_unbounded_stderr_read
+    self.assertIn("stderr.txt", str(caught.exception))
+AssertionError: 'stderr.txt' not found in 'session exited before expected event: stderr not synchronously drained'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)

@@ -3,6 +3,9 @@ import ast
 import os
 from pathlib import Path
 import queue
+import subprocess
+import sys
+import tempfile
 import types
 import unittest
 
@@ -65,11 +68,86 @@ def extract_wait(process, rows):
 
 
 class WaitTests(unittest.TestCase):
+    def test_controller_connects_file_sink_to_child_stderr(self):
+        tree = ast.parse(SOURCE.read_bytes())
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        opens_sink = any(
+            isinstance(node, ast.Assign) and
+            any(isinstance(target, ast.Name) and target.id == "stderr_capture"
+                for target in node.targets) and
+            isinstance(node.value, ast.Call) and
+            isinstance(node.value.func, ast.Name) and
+            node.value.func.id == "open_child_stderr_capture"
+            for node in ast.walk(main))
+        self.assertTrue(opens_sink, "controller must create the file-backed stderr sink")
+        launches = [node for node in ast.walk(main)
+                    if isinstance(node, ast.Call) and
+                    isinstance(node.func, ast.Attribute) and
+                    isinstance(node.func.value, ast.Name) and
+                    node.func.value.id == "subprocess" and node.func.attr == "Popen"]
+        self.assertEqual(len(launches), 1)
+        stderr_arg = next((keyword.value for keyword in launches[0].keywords
+                           if keyword.arg == "stderr"), None)
+        self.assertIsInstance(stderr_arg, ast.Name)
+        self.assertEqual(stderr_arg.id, "stderr_capture")
+
+    def test_startup_stderr_is_saved_without_a_child_pipe(self):
+        tree = ast.parse(SOURCE.read_bytes())
+        helper = next((node for node in tree.body
+                       if isinstance(node, ast.FunctionDef) and
+                       node.name == "open_child_stderr_capture"), None)
+        self.assertIsNotNone(
+            helper, "v39 must open a file-backed child-stderr sink")
+        if helper is None:
+            return
+
+        module = ast.fix_missing_locations(
+            ast.Module(body=[helper], type_ignores=[]))
+        scope = {"Path": Path}
+        exec(compile(module, str(SOURCE), "exec"), scope)
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "stderr.txt"
+            payload_size = 256 * 1024
+            capture = scope["open_child_stderr_capture"](target)
+            child = subprocess.Popen(
+                [sys.executable, "-c",
+                 "import os; os.write(2,b'x'*262144); "
+                 "os.write(1,b'ready\\n')"],
+                stdout=subprocess.PIPE, stderr=capture)
+            stdout, _ = child.communicate(timeout=10)
+            capture.flush()
+            capture.close()
+            self.assertEqual(child.returncode, 0)
+            self.assertEqual(stdout, b"ready\n")
+            self.assertEqual(target.read_bytes(), b"x" * payload_size)
+
+            failure_hex = (
+                "54726163656261636b3a206669787475726520"
+                "73746172747570206661696c65640a")
+            failure_log = bytes.fromhex(failure_hex)
+            failed_target = Path(directory) / "failed-stderr.txt"
+            capture = scope["open_child_stderr_capture"](failed_target)
+            script = (
+                "import os,sys; "
+                f"os.write(2,bytes.fromhex('{failure_hex}')); "
+                "sys.exit(1)")
+            failed_child = subprocess.Popen(
+                [sys.executable, "-c", script],
+                stdout=subprocess.PIPE, stderr=capture)
+            failed_stdout, _ = failed_child.communicate(timeout=10)
+            capture.flush()
+            capture.close()
+            self.assertEqual(failed_child.returncode, 1)
+            self.assertEqual(failed_stdout, b"")
+            self.assertEqual(failed_target.read_bytes(), failure_log)
+
     def test_exited_session_does_not_enter_unbounded_stderr_read(self):
         process = Process(0)
         wait, latest = extract_wait(process, [])
-        with self.assertRaisesRegex(RuntimeError, "session exited before expected event"):
+        with self.assertRaisesRegex(RuntimeError, "session exited before expected event") as caught:
             wait(lambda row: False)
+        self.assertIn("stderr.txt", str(caught.exception))
         self.assertEqual(process.stderr.calls, 0)
 
     def test_bad_stderr_decoding_does_not_replace_session_exit(self):
