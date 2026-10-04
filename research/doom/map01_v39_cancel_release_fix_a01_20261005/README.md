@@ -27,3 +27,5 @@ A real ExecutorV3 expiry path is now covered over the fake display: the lease ex
 This raises the focused set to 9 and total source-audited receipts to 21. The r135 replay A03 record replays this expiry integration test on current main.
 
 The added real ExecutorV3 expiry-terminal regression was replayed on the same detached r135 main tree `16c74566b64f32d7fe035c7724bcfe3865863a91`: candidate 9/9, owner compatibility 10/10, bridge 2/2, the 21-receipt source audit, then-current SHA256 list, and full-PR `git diff --check` pass. Raw output is `current-main-r135-replay-a03.log`.
+
+Main subsequently advanced to `aa2e4b623b2f4ccdcbc8e294535bab09c0092f30` with V13/ExecutorV12 cancellation composition. The selected frozen owner, V39 bridge, ExecutorV3, and lease source blobs remain identical to the lock; the lock was refreshed to this main. The candidate delta replay at this exact main SHA passes candidate 9/9, owner compatibility 10/10, existing bridge 2/2, source audit, then-current package checksums, and full-PR `git diff --check`. Raw output is `current-main-post-r135-replay-a04.log`. This adds composition evidence only, not a live result.
