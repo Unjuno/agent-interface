@@ -26,3 +26,14 @@ python -B .\audit-v2.py
 ```
 
 The reproduction writes its raw JSON before returning. It intentionally terminates only the exact descendant PID/tree it created after capturing the timeout state.
+
+
+## Integration follow-up: process containment at client startup
+
+A Windows-only experimental `process_factory` prototype was then connected to the exact same `CodexAppServerClient`. It creates a private Job Object with `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`, starts the Popen child with `CREATE_SUSPENDED`, assigns it to the job before the primary thread resumes, and wraps Popen so closing the job after direct-child wait terminates inherited descendants. The primary thread is located while the child is suspended and resumed only after successful assignment.
+
+The first integration harness run (`integrated-job-result-a01.json`) returned from client close, ended the reader and removed the descendant, but its final cleanup field recorded an attribute typo (`client.close_job` rather than `client.process.close_job`). The raw first outcome is preserved. A02 corrected only that harness accessor and repeated the bounded integration probe. The actual client `close()` returned normally; the Win32 state query found the descendant active before close and absent after it; the reader had ended at return. `audit-integrated-v2.py` independently checks both baseline failure and A02, candidate source hash, the exact assignment-call-before-resume order, retained A01 harness error and process absence. `integrated-audit-a02.json` returns PASS. The initial audit and result are retained as `integrated-audit-a01.json`; A02 strengthens the ordering check so the declaration site cannot satisfy it accidentally.
+
+This is feasibility evidence for an adapter on this Windows host, not an adopted client fix. The prototype uses Popen's private `_handle` and requires exactly one suspended initial thread. Nested job constraints, breakaway descendants, broader startup failures, interpreter/process-factory compatibility, macOS/Linux behavior, and physical app-server sessions remain untested. The existing `CodexAppServerClient.close()` also does not close its parent-side stdin/stdout/stderr stream objects; the harness explicitly closes them after measuring reader completion. Therefore the experiment resolves the demonstrated descendant-held reader boundary only within its tested composition, not all process/client resource-retirement requirements.
+
+Relevant platform contracts: [AssignProcessToJobObject](https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-assignprocesstojobobject), [suspended thread startup](https://learn.microsoft.com/en-us/windows/win32/procthread/suspending-thread-execution), and [`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`](https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information).

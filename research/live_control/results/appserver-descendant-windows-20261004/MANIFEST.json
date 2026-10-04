@@ -1,6 +1,6 @@
 {
   "format": "agent-interface-evidence-capsule-v1",
-  "created_utc": "2026-10-04T00:43:15.871627+00:00",
+  "created_utc": "2026-10-04T00:53:23.437716+00:00",
   "source_read_snapshot": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
   "evidence_branch_base": "853a867fb554c04d8f1223f9525f9eaf7d2792b6",
   "source_path": "research/live_control/codex_app_server_client_v2.py",
@@ -8,8 +8,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 3419,
-      "sha256": "97422984b86177147bc7d5679792eeae150645be0413a92379ba0bcbfb4ff705"
+      "bytes": 6094,
+      "sha256": "69d75a422fbbc9c5c7d6ced9c0d976eff2ddfb191937e5841baa08dc1f76aaa9"
     },
     {
       "path": "codex_app_server_client_v2.py",
@@ -55,7 +55,52 @@
       "path": "audit-v2.json",
       "bytes": 663,
       "sha256": "2d2f296c6c0e7d07f42cbf198b66332774f19f1030fca5e092299743c77b4087"
+    },
+    {
+      "path": "windows_job_popen_factory.py",
+      "bytes": 6404,
+      "sha256": "d182aa759cdc8c243d7389e7031757bef67e39fdaf182a32e7f708f44244aac1"
+    },
+    {
+      "path": "integrate_client_job.py",
+      "bytes": 3557,
+      "sha256": "d1f1b1d847dc756c7085b08b4bdc9b2ee739c560ee8d9b1c30267e417c706095"
+    },
+    {
+      "path": "integrate_client_job_v2.py",
+      "bytes": 3620,
+      "sha256": "568894540f606ace6767dbf038f3e196db351620ecb8f832a3a4623dc6a2f9ed"
+    },
+    {
+      "path": "integrated-job-result-a01.json",
+      "bytes": 989,
+      "sha256": "e1c513dd083d355f9a3a466eea384199068bc876e74bb83f01109934c9e72db3"
+    },
+    {
+      "path": "integrated-job-result-a02.json",
+      "bytes": 877,
+      "sha256": "8f6cddd92f1bd3ade57ed60de282cc3548390ef6a2ea903db91dc16efd264167"
+    },
+    {
+      "path": "audit-integrated.py",
+      "bytes": 2971,
+      "sha256": "7c05590e52a4b0d3e5849501657e54b3b9327202954437f6c54bcda3b8d87e44"
+    },
+    {
+      "path": "integrated-audit-a01.json",
+      "bytes": 947,
+      "sha256": "085e440cb90c7e9212c3131324f0ced617b6619f04ec2e423b2f071e85eaa4b0"
+    },
+    {
+      "path": "audit-integrated-v2.py",
+      "bytes": 3112,
+      "sha256": "6cb55ec606bfe76f7bfa768e906951f054113d60bfeac57ef76fc1f57d8c1a51"
+    },
+    {
+      "path": "integrated-audit-a02.json",
+      "bytes": 1012,
+      "sha256": "449ce52f2cac941adcb19986b8d04472504f8d30668715f2d971382d0685c07b"
     }
   ],
-  "scope": "Windows Python 3.12.10 synthetic subprocess/pipe boundary; no model, game, GUI or task effect"
+  "scope": "Windows Python 3.12.10 synthetic client subprocess/pipe boundary and experimental Job Object process-factory composition; no model, game, GUI or task effect"
 }
