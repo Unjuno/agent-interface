@@ -4,9 +4,9 @@ from pathlib import Path
 
 lines = Path(__file__).with_name("RAW_STDOUT.txt").read_text(encoding="utf-8").splitlines()
 assert lines[0] == (
-    "source_ref=f7730ad400eb29addcd6a8c747e06c7d79af32fd "
+    "source_ref=1030a47894cb4f30a8c92bd577432e7962560741 "
     "source_path=research/doom/doom_owner_thread_release_batch_backend_v1.py "
-    "blob=5b1d4ef00ad5d6812093c2308eea9677bc6abc5b"
+    "blob=9bd000ad5614940f2bd59e3e5e8143b3a29a77b9"
 )
 cases = [json.loads(line) for line in lines[1:]]
 assert len(cases) == 6

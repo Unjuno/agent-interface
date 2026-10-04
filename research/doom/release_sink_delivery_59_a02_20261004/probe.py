@@ -5,7 +5,7 @@ import sys
 import threading
 import types
 
-SOURCE_REF = "f7730ad400eb29addcd6a8c747e06c7d79af32fd"
+SOURCE_REF = "1030a47894cb4f30a8c92bd577432e7962560741"
 SOURCE_PATH = "research/doom/doom_owner_thread_release_batch_backend_v1.py"
 
 
