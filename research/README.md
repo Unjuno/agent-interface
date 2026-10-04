@@ -166,6 +166,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 ### Runtime, input, and text delivery
 
 - `runtime_*` directories — backend/native/runtime experiments.
+- [`native-suite-wslc-a03/`](native-suite-wslc-a03/) — Issue #3352 WSLc A03 stopped after two harness errors because the test image lacks Git; retained setup-failure evidence, not a product failure.
 - [`container_control/`](container_control/) — containerized control work.
 - [`control_codec/`](control_codec/) — control-codec experiments.
 - [`x11_text_german_layout_3668_v2/`](x11_text_german_layout_3668_v2/) — Issue #3741 German XKB text-delivery evidence; retained audit FAIL and missing de-01 raw row are detailed in RECOVERY_REVIEW.md.
