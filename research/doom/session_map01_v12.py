@@ -20,7 +20,8 @@ from executor_v12 import Executor
 from lease import Expired
 from doom_typed_release_backend_v1 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
-from session_identity_v1 import bind_session_identity, encode_event_with_private_identity
+from session_identity_v1 import (bind_session_identity, SessionBoundEventSidecar,
+                                 emit_event_row)
 
 
 FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
@@ -93,6 +94,7 @@ def main():
     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
         parser.error("fixture-out must be a .png save container")
     args.out.mkdir(parents=True, exist_ok=False)
+    session_sidecar = SessionBoundEventSidecar(args.out, session_id)
     lock = threading.RLock()
     session = game = executor = backend = None
     control_started_ns = None
@@ -106,15 +108,8 @@ def main():
                 latest_observation = dict(row)
             row["emit_ns"] = time.perf_counter_ns()
             event_ordinal += 1
-            encoded, bound = encode_event_with_private_identity(row, session_id, event_ordinal)
-            with (args.out / "events.jsonl").open("a") as stream:
-                stream.write(encoded + "\n")
-            with (args.out / "delivered.jsonl").open("a") as stream:
-                stream.write(encoded + "\n")
-            print(encoded, flush=True)
-            if bound is not None:
-                with (args.out / "session-bound-events.jsonl").open("a") as stream:
-                    stream.write(json.dumps(bound, sort_keys=True) + "\n")
+            emit_event_row(args.out, row, event_ordinal, session_sidecar,
+                           lambda encoded: print(encoded, flush=True))
 
     sources = {}
     for path in (Path(__file__), HERE / "session_identity_v1.py",
@@ -369,6 +364,10 @@ def main():
                             json.dumps([bind_session_identity(row, session_id)
                                         for row in backend.owner.records], indent=2))
         finally:
+            try:
+                session_sidecar.finalize()
+            except Exception:
+                pass
             try:
                 if game is not None:
                     game.close()

@@ -7,8 +7,9 @@ from pathlib import Path
 from unittest.mock import patch
 
 from session_identity_v1 import (bind_session_identity,
-                                 encode_event_with_private_identity,
-                                 session_bound_event_sidecar)
+                                 session_bound_event_sidecar,
+                                 SessionBoundEventSidecar,
+                                 emit_event_row)
 import session_map01_v16 as session_v16
 
 
@@ -55,11 +56,68 @@ class SessionIdentityTests(unittest.TestCase):
     def test_serialized_controller_row_is_unchanged_when_identity_is_opted_in(self):
         row = {"event": "input_admission", "key": "w", "emit_ns": 42}
         expected = json.dumps(row)
-        encoded, bound = encode_event_with_private_identity(row, "session-a", 1)
-        self.assertEqual(encoded, expected)
-        self.assertNotIn("session_id", json.loads(encoded))
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory)
+            sidecar = SessionBoundEventSidecar(out, "session-a")
+            sidecar.record(row, expected, 1)
+            sidecar.finalize()
+            self.assertEqual(json.dumps(row), expected)
+            self.assertNotIn("session_id", json.loads(expected))
+            bound = json.loads((out / "session-bound-events.jsonl").read_text())
+        self.assertIsInstance(bound, dict)
         self.assertEqual(bound["source_event_sha256"], __import__("hashlib").sha256(
-            encoded.encode("utf-8")).hexdigest())
+            expected.encode("utf-8")).hexdigest())
+
+    def test_sidecar_write_failure_does_not_escape_and_marks_incomplete(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory)
+            (out / "session-bound-events.jsonl").mkdir()
+            sidecar = SessionBoundEventSidecar(out, "session-a")
+            row = {"event": "cancel_requested", "id": "plan-1"}
+            encoded = json.dumps(row)
+
+            sidecar.record(row, encoded, 1)
+            sidecar.record(row, encoded, 2)
+            status = sidecar.finalize()
+
+            self.assertEqual(status["event_count"], 2)
+            self.assertEqual(status["records_written"], 0)
+            self.assertFalse(status["complete"])
+            self.assertEqual(status["failure"], {
+                "first_failed_ordinal": 1,
+                "error_type": "IsADirectoryError",
+            })
+            saved = json.loads((out / "session-bound-events-status.json").read_text())
+            self.assertEqual(saved, status)
+
+    def test_sidecar_write_failure_preserves_legacy_event_sinks(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory)
+            (out / "session-bound-events.jsonl").mkdir()
+            sidecar = SessionBoundEventSidecar(out, "session-a")
+            stdout_rows = []
+            row = {"event": "cancel_requested", "id": "plan-1", "emit_ns": 42}
+            expected = json.dumps(row)
+
+            encoded = emit_event_row(out, row, 1, sidecar, stdout_rows.append)
+
+            self.assertEqual(encoded, expected)
+            self.assertEqual(stdout_rows, [expected])
+            self.assertEqual((out / "events.jsonl").read_text(), expected + "\n")
+            self.assertEqual((out / "delivered.jsonl").read_text(), expected + "\n")
+            self.assertFalse(sidecar.finalize()["complete"])
+
+    def test_complete_sidecar_status_counts_all_serialized_events(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory)
+            sidecar = SessionBoundEventSidecar(out, "session-a")
+            rows = [{"event": "input_admission"}, {"event": "terminal"}]
+            for ordinal, row in enumerate(rows, 1):
+                sidecar.record(row, json.dumps(row), ordinal)
+            status = sidecar.finalize()
+            self.assertTrue(status["complete"])
+            self.assertEqual(status["event_count"], 2)
+            self.assertEqual(status["records_written"], 2)
 
     def test_private_event_sidecar_rejects_invalid_ordinal(self):
         for ordinal in (0, -1, True, 1.5):
