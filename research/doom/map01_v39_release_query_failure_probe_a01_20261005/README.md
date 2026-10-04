@@ -14,13 +14,14 @@
 
 ## Reproduction
 
-Run once from the repository root:
+The probe already ran once. Do **not** rerun it to reproduce the retained result. The following audit command checks the frozen source snapshots and retained raw output without importing or executing the candidate, and it works in a clean source checkout without the original base-main or PR-head Git objects:
 
 ```powershell
-python research/doom/map01_v39_release_query_failure_probe_a01_20261005/run_probe.py
-python research/doom/map01_v39_release_query_failure_probe_a01_20261005/audit_probe.py
+python research/doom/map01_v39_release_query_failure_probe_a01_20261005/audit_probe_v3.py
 ```
 
-The input source snapshots are exact bytes from PR #7805. The harness and its current-main dependencies remain repository paths pinned by `FREEZE.json`. `results/construction-a01/outcome.json` retains the raw case observations. The independent auditor reads those bytes and the raw JSON; it does not import or rerun the candidate.
+The independently auditable package contains the six exact base-main dependency files under `SOURCE/base/` and both exact PR #7805 candidate files under `SOURCE/`. `FREEZE.json` and `AUDIT_FREEZE.json` retain the original run and audit bindings; `REPRODUCTION_FREEZE.json` binds the self-contained snapshots, retained raw outcome, scripts, and logs for clean-checkout replay. The auditor verifies SHA-256 and Git blob identities from package bytes, checks the release ordering and raw case outcomes, then prints a result. It does not call Git, import the candidate, write files, or rerun the probe.
+
+`SHA256SUMS` covers all retained package files except itself. The three original `.log` files are included as tracked evidence even though the repository's ignore rules match that extension.
 
 The first wrapper invocation stopped at its source-hash precheck before loading the owner or executing any case; the original freeze and command output are retained under `results/preflight-stop-a01/`. The comparison bug was corrected before the sole probe invocation. This preflight STOP is not a candidate or probe outcome.
