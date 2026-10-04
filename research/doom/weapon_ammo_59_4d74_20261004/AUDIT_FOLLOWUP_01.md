@@ -14,17 +14,33 @@ invalid format, a different focus binding, and sequence 999 still yielded
 `PASS_HUD_WEAPON_AMMO_BINDING_SCOPED`. The original PASS predicate compared
 signal values but did not validate their observation metadata.
 
+Review of the first follow-up found additional false-pass cases: the typed HUD
+capture was not cross-bound to the ordinary screen-observation event, the
+nearest HUD-comparison API row sat before the neutral scoring window and was
+not itself required to be neutral, and `not any(action)` accepted malformed
+vectors such as `[null]`. Shifting the HUD time by 1,000 seconds also continued
+to pass because the auditor selected the nearest row without a time bound.
+
 `audit_weapon_ammo_followup_01.py` reads the committed layout directly (and
 accepts the earlier runner layout), computes the scoped HUD/API comparison from
-raw JSON/JSONL, and requires the HUD signals to be observed, correctly typed,
-bound to the same capture time, sequence and pointer binding, and carry a
-well-formed common WAD digest. It also checks coherent finite samples, neutral
-actions in the window, selected-slot ammo agreement, and clean child/reader and
-rescue fields. It reports the existing scoped PASS on the unmodified evidence.
+raw JSON/JSONL, and requires the typed capture to match the ordinary initial
+screen observation's step, sequence, capture time, binding, frame digest,
+focus checks, typed-ready time, and retained image. HUD signals must be
+observed, correctly typed, bound to that same capture, and carry a well-formed
+common WAD digest. The API comparison sample must be a coherent neutral sample
+between the initial HUD capture and the scoring window start; the allowed
+offset therefore derives from that retained pre-window interval
+(362,926,866 ns), rather than selecting an arbitrary distant sample. Both that
+comparison row and every scoring-window row must contain a finite numeric zero
+action vector matching the nine unique recorded buttons. The audit also checks
+selected-slot ammo agreement and clean child/reader/rescue fields.
 
-The mutation suite passed 4/4 cases: committed-layout baseline, unobserved and
-misbound HUD signal rejection, capture-time mismatch rejection, and non-neutral
-window rejection. Commands:
+The mutation suite passed 9/9 cases, including a pinned `FILES.json` digest check and rejection of a modified raw `RESULT.json`: committed-layout baseline, unobserved
+signal rejection, signal capture-time mismatch, typed/screen observation
+divergence, non-neutral pre-window comparison row, malformed and wrong-width
+window action vectors, and a shifted HUD timestamp with no eligible pre-window
+API sample. The audit verifies the fixed manifest hash and byte count/SHA-256 of
+the result, final record, event log, scorer log, and retained comparison image. Commands:
 
 ```text
 python3 audit_weapon_ammo_followup_01.py
@@ -35,6 +51,7 @@ git diff --check
 
 This is a post-result audit repair and mutation test, not a prospectively frozen
 independent auditor or a new game allocation. It supports only the retained
-fixture's near-time HUD/selected-ammo mapping; it does not establish damage
-exposure, recovery efficacy, simultaneous HUD/API truth, or live controller
-trust/adoption. Preserve the earlier #7605 AMMO1 mismatch result unchanged.
+fixture's pre-window near-time HUD/selected-ammo mapping; it does not establish
+damage exposure, recovery efficacy, simultaneous HUD/API truth, or live
+controller trust/adoption. Preserve the earlier #7605 AMMO1 mismatch result
+unchanged.
