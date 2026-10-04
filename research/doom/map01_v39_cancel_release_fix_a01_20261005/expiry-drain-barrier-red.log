@@ -1,0 +1,16 @@
+test_executor_expiry_waits_for_owner_cleanup_that_follows_execute_drain (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_waits_for_owner_cleanup_that_follows_execute_drain)
+Force Executor's post-execute state request into the owner's expiry poll. ... FAIL
+
+======================================================================
+FAIL: test_executor_expiry_waits_for_owner_cleanup_that_follows_execute_drain (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_waits_for_owner_cleanup_that_follows_execute_drain)
+Force Executor's post-execute state request into the owner's expiry poll.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/pr7805-admission-race-probe/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py", line 490, in test_executor_expiry_waits_for_owner_cleanup_that_follows_execute_drain
+    self.assertEqual(len(ups), 1, repr(events))
+AssertionError: 0 != 1 : [{'event': 'accepted', 'id': 'expiry-drain-barrier-a01', 'steps': 1, 'valid_until_ns': 165097400626416, 'accepted_ns': 165097360642791}, {'event': 'step_started', 'id': 'expiry-drain-barrier-a01', 'step': 0, 'operation': 'hold', 'issued_ns': 165097360673916}, {'event': 'input_admission', 'key': 'F8', 'admitted_ns': 165097360698500, 'input_ack_ns': 165097360707583, 'valid_until_ns': 165097400626416, 'physical_key_measurement': {'edge': 'down', 'classification': 'CONFIRMED_PHYSICAL_DOWN', 'bracket': {'status': 'CONFIRMED_PHYSICAL_DOWN', 'physical_down_interval': [165097360704750, 165097360709333], 'press_id': '03d8fb12e2174936ba5be2aa24dd2817:r1:down:74', 'owner_id': '03d8fb12e2174936ba5be2aa24dd2817', 'intent_token': 'intent-expiry-drain-barrier-a01', 'key': 'F8', 'grants_input_authority': False, 'application_consumption_observed': False}, 'actuation_id': '03d8fb12e2174936ba5be2aa24dd2817:g1:F8', 'identity_status': 'MINTED', 'pre_sample': {'available': True, 'down': False, 'started_ns': 165097360698791, 'finished_ns': 165097360704750, 'error': None}, 'post_sample': {'available': True, 'down': True, 'started_ns': 165097360707833, 'finished_ns': 165097360709333, 'error': None}, 'press_request_ns': 165097360705541, 'sync_return_ns': 165097360707583, 'adapter_edge': {'edge': 'down', 'status': 'CONFIRMED_PHYSICAL_DOWN', 'actuation_id': '03d8fb12e2174936ba5be2aa24dd2817:g1:F8', 'owner_id': '03d8fb12e2174936ba5be2aa24dd2817', 'intent_token': 'intent-expiry-drain-barrier-a01', 'key': 'F8', 'interval': [165097360704750, 165097360709333], 'grants_input_authority': False}, 'grants_input_authority': False, 'application_consumption_observed': False}, 'id': 'expiry-drain-barrier-a01', 'step': 0, 'owner_id': '03d8fb12e2174936ba5be2aa24dd2817', 'intent_token': 'intent-expiry-drain-barrier-a01'}, {'event': 'terminal', 'id': 'expiry-drain-barrier-a01', 'status': 'failed', 'error': 'input release not verified', 'steps_completed': 0, 'release': {'verified': False}, 'terminal_ns': 165097403085750, 'semantic_completion': 'program status only; task scoring is separate'}]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.049s
+
+FAILED (failures=1)

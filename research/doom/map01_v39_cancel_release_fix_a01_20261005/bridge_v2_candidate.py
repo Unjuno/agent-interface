@@ -1,4 +1,6 @@
 """Successor measurement bridge for cancellation-owned per-key releases."""
+import time
+
 from map01_v39_perkey_bridge_a01.bridge import Backend as Previous
 from input_owner_v13_candidate import InputOwner
 
@@ -16,11 +18,22 @@ class Backend(Previous):
             return super().execute(step, cancel, identifier, index)
         finally:
             try:
-                if self.lease.cancel.is_set():
-                    # This owner-thread request is ordered after cancellation cleanup.
+                cancelled = self.lease.cancel.is_set()
+                expired = time.perf_counter_ns() >= self.lease.deadline
+                if cancelled or expired:
+                    # Serialize with the owner before Executor's later release_all.
                     state = self.owner.call("input_state", self.lease)
                     if state.get("owned_keycodes") == [] and state.get("owned_buttons") == []:
                         self.held.clear()
+                    else:
+                        # The owner may have dequeued input_state across the lease
+                        # deadline before its next expiry poll. Force cleanup on
+                        # the owner thread and wait for its verified receipt.
+                        cleanup = self.owner.call("release", self.lease)
+                        if (cleanup.get("verified") is True
+                                and cleanup.get("keys_down") == []
+                                and cleanup.get("buttons_down") == []):
+                            self.held.clear()
             finally:
                 # Owner cleanup also occurs on expiry and other exits that do
                 # not set the cancellation event. Always preserve rows already

@@ -1,0 +1,7 @@
+The new pending-expiry-drain regression was run with the host's bundled CPython 3.12.14 against the repository fake-display harness. OrbStack is running, but a non-mutating inspect of the existing `python:3.12-slim` image returned the containerd content-store error below:
+
+```text
+Error response from daemon: rpc error: code = Unknown desc = blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported
+```
+
+Disposition: `STOP_ORBSTACK_IMAGE_BLOB_IO`. This is infrastructure evidence; it is not a candidate failure. No pull, daemon reset, or repeated Docker command was attempted. Host-side test results are not represented as container-equivalent.
