@@ -3,7 +3,7 @@
   "source_blob": "776b3f32ada0b24d171908e595227e00e2ad9508",
   "source_sha256": "48aa1c791ddaa7965a6c1374fc95a7a695d192b62e5fb3b859c0a56e11b7293a",
   "function": "input_edge_receipts",
-  "fixture_sha256": "aa90e0ffeb18b2e3d5b28c159ceb4d6924c6b22da549b0014a184d28a1ec5519",
+  "fixture_sha256": "f552a6bf5999260696feae8447ab29fc585386de0305397974a52b61ce9878dd",
   "classifications": {
     "ordered": {
       "status": "adapter_edge_brackets_paired",
@@ -14,6 +14,17 @@
       "up_interval_ns": [
         200,
         210
+      ]
+    },
+    "touching": {
+      "status": "adapter_edge_brackets_paired",
+      "down_interval_ns": [
+        100,
+        200
+      ],
+      "up_interval_ns": [
+        200,
+        250
       ]
     },
     "overlapping": {
@@ -39,8 +50,11 @@
       ]
     }
   },
-  "reversed_interval_pair_reproduced": true,
+  "chronology_matrix_fail_open_reproduced": true,
   "overlapping_interval_pair_classified_complete": true,
+  "touching_interval_pair_classified_complete": true,
+  "ordered_pair_classified_complete": true,
+  "strict_chronology_fail_open_reproduced": true,
   "scope": "Synthetic static counterexample only; does not establish any retained run was mismeasured.",
   "reversed_receipt": {
     "status": "adapter_edge_brackets_paired",

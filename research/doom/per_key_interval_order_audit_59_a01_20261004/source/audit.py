@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce the PR #7602 reversed edge-bracket classification."""
+"""Reproduce PR #7602 edge-bracket chronology classifications."""
 
 import ast
 import copy
@@ -35,6 +35,7 @@ def main():
     cases = {}
     for name, down_interval, up_interval in (
         ("ordered", [100, 110], [200, 210]),
+        ("touching", [100, 200], [200, 250]),
         ("overlapping", [100, 200], [150, 250]),
         ("reversed", [200, 210], [100, 110]),
     ):
@@ -44,10 +45,11 @@ def main():
         cases[name] = namespace["input_edge_receipts"](events)[0]
 
     reversed_receipt = cases["reversed"]
-    reversed_intervals = reversed_receipt.get("up_edge_interval_ns", [0, 0])[1] < \
-        reversed_receipt.get("down_edge_interval_ns", [0, 0])[0]
-    reproduced = (reversed_intervals and
-                  reversed_receipt.get("status") == "adapter_edge_brackets_paired")
+    invalid_chronology = ("touching", "overlapping", "reversed")
+    reproduced = (
+        cases["ordered"].get("status") == "adapter_edge_brackets_paired" and
+        all(cases[name].get("status") == "adapter_edge_brackets_paired"
+            for name in invalid_chronology))
 
     result = {
         "source_commit": "76886c5cc41ef801bf1d0cb153b1dabf444d9127",
@@ -63,18 +65,25 @@ def main():
             }
             for name, receipt in cases.items()
         },
-        "reversed_interval_pair_reproduced": reproduced,
+        "chronology_matrix_fail_open_reproduced": reproduced,
         "overlapping_interval_pair_classified_complete": (
             cases["overlapping"].get("status") == "adapter_edge_brackets_paired"),
+        "touching_interval_pair_classified_complete": (
+            cases["touching"].get("status") == "adapter_edge_brackets_paired"),
+        "ordered_pair_classified_complete": (
+            cases["ordered"].get("status") == "adapter_edge_brackets_paired"),
+        "strict_chronology_fail_open_reproduced": reproduced,
         "scope": "Synthetic static counterexample only; does not establish any retained run was mismeasured.",
         "reversed_receipt": reversed_receipt,
     }
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in (
-        "classifications", "reversed_interval_pair_reproduced",
-        "overlapping_interval_pair_classified_complete")}, indent=2))
+        "classifications", "chronology_matrix_fail_open_reproduced",
+        "overlapping_interval_pair_classified_complete",
+        "touching_interval_pair_classified_complete",
+        "strict_chronology_fail_open_reproduced")}, indent=2))
     if not reproduced:
-        raise SystemExit("expected reversed-interval misclassification was not reproduced")
+        raise SystemExit("expected strict-chronology classification matrix changed")
 
 
 if __name__ == "__main__":
