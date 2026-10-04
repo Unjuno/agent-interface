@@ -13,6 +13,8 @@ The candidate ran once against frozen PR #7692 source commit
 
 The candidate invocation passed these behavioral observations. The first independent audit (A01) incorrectly expected the normal iterator to return the newline delimiter; its failure is preserved in results/a03/AUDIT_V1.json and TEST_AUDIT_V1.*. The corrected A02 auditor recognizes that the adapter returns a decoded command line without the delimiter; it independently checks all three rows, all four source snapshots, and passes 28/28 checks. Four mutation tests pass in test_audit_v2.py.
 
+The exact candidate was not rerun after the later test-only branch commit. The implementation source blob stayed unchanged; the combined current PR head passes the 69-test V39/scorer/lifecycle suite (one POSIX-only pipe test skipped), and the A02 independent audit plus six audit tests pass again. These are source regression checks, not another candidate allocation.
+
 The candidate's post-tail iterator handling remains separately visible in the raw: an already-ready command can be delivered after one normal iterator sample. The tail itself performs no sample after detecting readiness and does not consume command bytes. The measured call durations (about 0.029 ms, 25.456 ms, and 2.295 ms for these individual constructions) are single observations, not latency estimates or performance claims.
 
 ## H / T / D / C / U
