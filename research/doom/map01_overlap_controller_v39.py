@@ -1021,6 +1021,8 @@ def input_edge_receipts(events):
             and release_admission_id == admission_id_value
             and owner_keyup_admission_id == admission_id_value
             and type(admission_owner_id) is str and bool(admission_owner_id)
+            and release.get("owner_id") == admission_owner_id
+            and owner.get("owner_id") == admission_owner_id
             and explicit_admission_id_counts.get(
                 (admission_owner_id, admission_id_value)) == 1)
         admission_identity_matches = (
@@ -1081,6 +1083,7 @@ def input_edge_receipts(events):
             status = "admission_without_release"
         elif (release.get("operation") != "up" or type(owner) is not dict or
               not owner_contract_valid or
+              (explicit_admission_id_present and not explicit_admission_id_matches) or
               owner.get("key") != key or owner.get("intent_token") != token or
               not sync_completed or not owner_verified or
               not owner_history_complete or
