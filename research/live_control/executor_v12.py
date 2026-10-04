@@ -161,4 +161,3 @@ class Executor(Previous):
             job[2].join()
         for watcher in self.release_watchers:
             watcher.join()
-
