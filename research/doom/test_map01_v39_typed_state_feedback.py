@@ -459,6 +459,45 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(receipt["state_feedback"]["to_sequence"], 89)
         self.assertEqual(receipt["state_feedback"]["signals"]["ammo"]["delta"], -1)
 
+    def test_missing_prior_final_typed_frame_does_not_fall_back_to_earlier_sample(self):
+        before = observation(80, 100)
+        before.update({"image": "before.png", "step": 0})
+        step0_first = observation(81, 200)
+        step0_first.update({"image": "step0-first.png", "step": 0,
+                            "capture_ms": 0.5})
+        step0_last = observation(82, 300)
+        step0_last.update({"image": "step0-last.png", "step": 0,
+                           "capture_ms": 0.5})
+        step1_first = observation(83, 400)
+        step1_first.update({"image": "step1-first.png", "step": 1,
+                            "capture_ms": 0.5})
+        step1_last = observation(84, 500)
+        step1_last.update({"image": "step1-last.png", "step": 1,
+                           "capture_ms": 0.5})
+        typed = [
+            typed_observation(80, 100, 100, 50),
+            typed_observation(81, 200, 90, 49),
+            # The final sample of step 0 has no typed counterpart.
+            typed_observation(83, 400, 79, 47),
+            typed_observation(84, 500, 78, 46),
+        ]
+        for row in typed:
+            row["step"] = 0 if row["sequence"] <= 81 else 1
+
+        with patch.object(controller, "descriptor",
+                          side_effect=["before", "step0-last", "step1-last"]), \
+             patch.object(controller, "normalized_mae", return_value=0.1):
+            receipts = controller.effect_receipts(
+                [{"action": "fire", "extent": "pulse"},
+                 {"action": "advance", "extent": "pulse"}],
+                before, [step0_first, step0_last, step1_first, step1_last],
+                150, typed_observations=typed)
+
+        self.assertEqual(receipts[1]["state_feedback"]["status"], "unavailable")
+        self.assertEqual(receipts[1]["state_feedback"]["reason"],
+                         "typed_frame_missing_or_ambiguous")
+        self.assertNotIn("signals", receipts[1]["state_feedback"])
+
     def test_next_action_state_feedback_uses_previous_step_final_observation(self):
         before = observation(80, 100)
         before.update({"image": "before.png", "step": 0})
