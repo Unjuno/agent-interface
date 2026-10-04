@@ -112,15 +112,20 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
         try:
             with patch.object(candidate, "InputOwner", Owner):
                 backend = candidate.Backend(types.SimpleNamespace(name="display"), None,
-                                             emitted.append, {"health": 1, "ammo": 1})
+                                             emitted.append, {"health": 1, "ammo": 1},
+                                             run_id="scorer-run-7")
             backend.lease = types.SimpleNamespace(intent_token="lease-1")
             backend.execute({"key": "w", "down": True}, None, "program-7", 3)
             admission = emitted.pop()
             self.assertEqual((admission["id"], admission["step"]), ("program-7", 3))
+            self.assertEqual(admission["run_id"], "scorer-run-7")
+            self.assertEqual(admission["session_id"], "scorer-run-7")
             backend.execute({"key": "w", "down": False}, None, "program-7", 3)
 
             release = emitted.pop()
             self.assertEqual(release["event"], "input_release_transition")
+            self.assertEqual(release["run_id"], "scorer-run-7")
+            self.assertEqual(release["session_id"], "scorer-run-7")
             self.assertEqual(
                 (release["release_batch_identifier"], release["release_batch_step"]),
                 ("program-7", 3),

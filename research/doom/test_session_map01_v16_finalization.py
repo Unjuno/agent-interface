@@ -9,25 +9,29 @@ class FinalizationTests(unittest.TestCase):
     def exercise(self, session_error=None, malformed=False):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
+            seen_run_ids = []
             sources = out / "sources.json"
             sources.write_text("{bad" if malformed else "{}", encoding="utf-8")
             previous = candidate.previous
             old_sample, old_proxy = previous._coherent_progress_sample, previous._GameProxy
-            def run():
+            def run(*, run_id):
+                seen_run_ids.append(run_id)
                 if session_error is not None:
                     raise session_error
                 return 37
             with patch.object(previous, "_option", return_value=tmp), patch.object(previous, "main", side_effect=run):
                 try:
                     result = candidate.main()
-                    return result, json.loads(sources.read_text())
+                    return result, json.loads(sources.read_text()), seen_run_ids
                 finally:
                     self.assertIs(previous._coherent_progress_sample, old_sample)
                     self.assertIs(previous._GameProxy, old_proxy)
 
     def test_success_preserves_result_and_records_sources(self):
-        value, sources = self.exercise()
+        value, sources, run_ids = self.exercise()
         self.assertEqual(value, 37)
+        self.assertEqual(len(run_ids), 1)
+        self.assertTrue(isinstance(run_ids[0], str) and run_ids[0])
         for key in ("doom/session_map01_v16.py", "doom/acknowledged_scorer_v1.py"):
             self.assertEqual(len(sources[key]), 64)
 

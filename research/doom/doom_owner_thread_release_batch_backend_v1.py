@@ -10,8 +10,19 @@ from input_transition_owner_v4 import InputOwner
 class Backend(Previous):
     """Opt-in release composition; controller and default backend are unchanged."""
 
-    def __init__(self, session, out, emit, signal_readers):
-        super().__init__(session, out, emit, signal_readers)
+    def __init__(self, session, out, emit, signal_readers, *, run_id=None):
+        if run_id is not None and (not isinstance(run_id, str) or not run_id):
+            raise ValueError("run_id must be a nonempty string when supplied")
+        self.run_id = run_id
+
+        def emit_for_run(row):
+            if run_id is not None and isinstance(row, dict):
+                row = dict(row)
+                row.setdefault("run_id", run_id)
+                row.setdefault("session_id", run_id)
+            return emit(row)
+
+        super().__init__(session, out, emit_for_run, signal_readers)
         self.owner.close()
         self.owner = InputOwner(session.name)
         self._release_batch = threading.local()

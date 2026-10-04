@@ -115,7 +115,8 @@ class AcknowledgedScorerTests(unittest.TestCase):
     def test_session_installs_sampler_and_restores_on_failure(self):
         original = session.previous._coherent_progress_sample
         with tempfile.TemporaryDirectory() as directory:
-            def run():
+            def run(*, run_id):
+                self.assertTrue(isinstance(run_id, str) and run_id)
                 self.assertIsInstance(session.previous._coherent_progress_sample, AcknowledgedSampler)
                 raise OSError('session failure')
             with patch.object(session.previous, '_option', return_value=directory), patch.object(session.previous, 'main', side_effect=run):
