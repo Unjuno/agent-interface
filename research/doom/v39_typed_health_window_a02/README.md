@@ -16,7 +16,7 @@ A01 was frozen but STOPped before candidate evaluation because its Node command 
 
 At W=2.0s, the rule triggers in one of two worsening no-policy waits: decision 2 at sequence 81, 3.194s after model start with 3.113s until natural model end. At W=2.5s, it triggers in both worsening no-policy waits: decision 2 at sequence 81 (3.194s after start; 3.113s remaining) and decision 3 at sequence 103 (3.405s after start; 3.320s remaining). The one stable no-policy wait, decision 0, has zero decreases and never triggers at any horizon.
 
-Important counterevidence: W=2.5s also triggers in authored-policy decisions 4 and 5. Decision 4's trigger is only 0.726s before natural completion; decision 5's is at sequence 200, 3.379s before its later existing hard invalidation/interrupt at sequence 218. The candidate therefore needs strict unauthored-coast scoping and must not replace existing authored hard bounds. Even that scope has only 2 worsening and 1 stable retained examples.
+Important counterevidence: W=2.5s also triggers in authored-policy decisions 4 and 5. Decision 4's trigger is only 0.726s before natural completion. Decision 5's trigger is sequence 200. The interval from sequence 200 to the existing hard-invalidation event at sequence 218 is **3.186s** (timestamps 55546847220240 and 55550033032859 ns). The separately reported **3.379s** is remaining time from sequence 200 until `controller_model_ended_ns`, not time to sequence 218. This correction does not alter the saved candidate result. The candidate therefore needs strict unauthored-coast scoping and must not replace existing authored hard bounds. Even that scope has only 2 worsening and 1 stable retained examples.
 
 ## Validation and raw outcomes
 
