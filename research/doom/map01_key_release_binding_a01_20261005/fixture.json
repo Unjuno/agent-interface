@@ -1,0 +1,15 @@
+{
+  "execution": {"id": "exec-1", "step": 2},
+  "admissions": [{"admission_id": "adm-1", "execution_id": "exec-1", "step": 2, "key": "Down", "outcome": "admitted", "seq": 1}],
+  "key_ups": [{"admission_id": "adm-1", "execution_id": "exec-1", "step": 2, "key": "Down", "outcome": "up_confirmed", "seq": 2}],
+  "releases": [{"execution_id": "exec-1", "outcome": "empty_verified", "seq": 3}],
+  "expected": {"status": "PASS", "class": "complete"},
+  "mutations": [
+    {"name": "duplicate_admission_id", "fault": "duplicate_admission_id"},
+    {"name": "cross_execution_up", "fault": "cross_execution_up"},
+    {"name": "up_before_admission", "fault": "up_before_admission"},
+    {"name": "missing_per_key_up", "fault": "missing_per_key_up"},
+    {"name": "duplicate_up", "fault": "duplicate_up"},
+    {"name": "release_not_empty_verified", "fault": "release_not_empty_verified"}
+  ]
+}
