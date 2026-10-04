@@ -1,0 +1,237 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_admission_tied_to_lower_sample_is_unresolved (test_attribution.AttributionTests.test_admission_tied_to_lower_sample_is_unresolved) ... ok
+test_duplicate_per_key_interval_is_rejected (test_attribution.AttributionTests.test_duplicate_per_key_interval_is_rejected) ... ok
+test_envelope_does_not_claim_hold_when_inner_lifecycle_bounds_are_narrow (test_attribution.AttributionTests.test_envelope_does_not_claim_hold_when_inner_lifecycle_bounds_are_narrow) ... ok
+test_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) ... ok
+test_missing_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_missing_positive_event_kind_is_rejected) ... ok
+test_partial_overlap_is_unresolved (test_attribution.AttributionTests.test_partial_overlap_is_unresolved) ... ok
+test_rejects_event_not_bound_to_scorer_sample (test_attribution.AttributionTests.test_rejects_event_not_bound_to_scorer_sample) ... ok
+test_release_tied_to_event_sample_is_unresolved (test_attribution.AttributionTests.test_release_tied_to_event_sample_is_unresolved) ... ok
+test_same_intent_key_intervals_may_jointly_cover_without_a_gap (test_attribution.AttributionTests.test_same_intent_key_intervals_may_jointly_cover_without_a_gap) ... ok
+test_same_intent_key_intervals_with_gap_are_unresolved (test_attribution.AttributionTests.test_same_intent_key_intervals_with_gap_are_unresolved) ... ok
+test_strict_envelope_is_possible_only_not_confirmed_hold (test_attribution.AttributionTests.test_strict_envelope_is_possible_only_not_confirmed_hold) ... ok
+test_strictly_bracketing_interval_remains_a_possible_envelope (test_attribution.AttributionTests.test_strictly_bracketing_interval_remains_a_possible_envelope) ... ok
+test_two_intents_intersecting_detection_interval_are_ambiguous (test_attribution.AttributionTests.test_two_intents_intersecting_detection_interval_are_ambiguous) ... ok
+test_unverified_older_release_remains_possible_overlap (test_attribution.AttributionTests.test_unverified_older_release_remains_possible_overlap) ... ok
+test_unverified_release_cannot_establish_unique_coverage (test_attribution.AttributionTests.test_unverified_release_cannot_establish_unique_coverage) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.002s
+
+OK
+PASS test_actual_producer_positive_vocabulary_is_frozen_to_two_kinds
+PASS test_misspelled_known_kind_is_rejected
+PASS test_producer_defined_negative_event_stays_excluded
+PASS test_unknown_nonempty_positive_kind_is_rejected
+{
+  "cases": [
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 1,
+            "intent_token": null,
+            "kind": "KILL_COUNT_INCREASE",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 1,
+            "intent_token": null,
+            "kind": "KILL_COUNT_INCREASE",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "case": "01-KILL_COUNT_INCREASE",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 1,
+        "kind": "KILL_COUNT_INCREASE",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 2,
+            "intent_token": null,
+            "kind": "MAP_EXIT",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 2,
+            "intent_token": null,
+            "kind": "MAP_EXIT",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "case": "02-MAP_EXIT",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 2,
+        "kind": "MAP_EXIT",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 3,
+            "intent_token": null,
+            "kind": "FUTURE_SCORER_EVENT_V3",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": false,
+        "error": "positive useful event kind is outside v2 producer vocabulary"
+      },
+      "case": "03-FUTURE_SCORER_EVENT_V3",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 3,
+        "kind": "FUTURE_SCORER_EVENT_V3",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 4,
+            "intent_token": null,
+            "kind": "KILL_COUNT_INCREASEE",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": false,
+        "error": "positive useful event kind is outside v2 producer vocabulary"
+      },
+      "case": "04-KILL_COUNT_INCREASEE",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 4,
+        "kind": "KILL_COUNT_INCREASEE",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": []
+      },
+      "a05": {
+        "accepted": true,
+        "rows": []
+      },
+      "case": "05-PLAYER_DEAD",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 5,
+        "kind": "PLAYER_DEAD",
+        "observed_ns": 200,
+        "polarity": "negative",
+        "schema": "independent-progress-event-v2",
+        "useful": false
+      }
+    }
+  ],
+  "formal_live_allocation": false,
+  "producer_negative_vocab": [
+    "DEATH_COUNT_INCREASE",
+    "PLAYER_DEAD",
+    "EPISODE_FINISHED_NO_EXIT"
+  ],
+  "producer_vocab": [
+    "KILL_COUNT_INCREASE",
+    "MAP_EXIT"
+  ],
+  "schema": "scorer-feedback-attribution-a05-raw-v1",
+  "scope": "synthetic schema-construction; no task/game/model/input"
+}
