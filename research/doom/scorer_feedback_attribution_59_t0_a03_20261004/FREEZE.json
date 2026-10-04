@@ -1,0 +1,13 @@
+{
+  "schema": "scorer-feedback-attribution-a03-freeze-v1",
+  "parent_issue": 59,
+  "purpose": "Correct endpoint equality ambiguity identified in review of PR 7537; retain A01 and A02 unchanged",
+  "source": "scorer_feedback_attribution_v2.py",
+  "test": "test_attribution.py",
+  "runner": "run_a03.py",
+  "auditor": "audit.py",
+  "inputs": "fixed synthetic timestamp cases embedded in run_a03.py",
+  "decision": "Endpoint equality without authenticated event ordering is unresolved; strict bracketing may be temporally unique; causal attribution remains not established",
+  "resource_scope": "local CPU construction only; no live lane, GUI, game, model, or input",
+  "formal_allocation": false
+}
