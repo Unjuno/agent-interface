@@ -53,7 +53,7 @@ class ExecutorV13Tests(unittest.TestCase):
             time.sleep(.002)
         executor.close()
         terminal = next(row for row in events if row.get("event") == "terminal")
-        self.assertEqual(terminal["release_batch_publication"], {
+        self.assertEqual(terminal["release"]["release_batch_delivery"], {
             "status": "delivery_unknown", "identifier": "sink-failure",
             "step": 0, "size": 2, "position": 1,
             "confirmed_positions": [0], "not_attempted_positions": [],

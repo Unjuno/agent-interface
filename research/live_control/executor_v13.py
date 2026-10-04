@@ -130,11 +130,17 @@ class Executor(Previous):
             self._publish_cause_once(identifier, lease)
             try:
                 release = self.backend.release_all()
+                if release_batch_publication is not None:
+                    release = dict(release)
+                    release.setdefault("release_batch_delivery", release_batch_publication)
                 if release.get("verified") is not True:
                     status = "failed"; error = "input release not verified"
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
                 status = "failed"
+                publication = getattr(exc, "release_batch_publication", None)
+                if isinstance(publication, dict):
+                    release["release_batch_delivery"] = dict(publication)
             if status == "completed":
                 try:
                     if lease.is_set(): raise Cancelled()
@@ -159,8 +165,6 @@ class Executor(Previous):
                            "decision_reason": decision_reason,
                            "terminal_ns": time.perf_counter_ns(),
                            "semantic_completion": "program status only; task scoring is separate"}
-                if release_batch_publication is not None:
-                    terminal["release_batch_publication"] = release_batch_publication
                 self.emit(terminal)
                 self.active = None
             stop = self.release_watch_stops.get(identifier)

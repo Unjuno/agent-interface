@@ -15,6 +15,56 @@ class Backend(Previous):
         self.owner.close()
         self.owner = InputOwner(session.name)
         self._release_batch = threading.local()
+        self._last_release_batch_delivery = None
+
+    def _delivery_ledger(self, context):
+        ledger = context.get("delivery_ledger")
+        if ledger is None:
+            rows = context["rows"]
+            positions = []
+            for position, row in enumerate(rows):
+                row.setdefault("release_batch_position", position)
+                row.setdefault("release_batch_size", len(rows))
+                positions.append({
+                    "position": row["release_batch_position"],
+                    "key": row.get("key"),
+                    "state": "not_attempted",
+                })
+            ledger = {
+                "schema": "release-batch-delivery-v1",
+                "identifier": context["identifier"],
+                "step": context.get("step"),
+                "size": len(positions),
+                "positions": positions,
+            }
+            context["delivery_ledger"] = ledger
+            self._last_release_batch_delivery = ledger
+        return ledger
+
+    @staticmethod
+    def _copy_delivery_ledger(ledger):
+        if not isinstance(ledger, dict):
+            return None
+        return {**ledger, "positions": [dict(position)
+                                         for position in ledger.get("positions", [])]}
+
+    def _set_delivery_state(self, context, row, state):
+        ledger = self._delivery_ledger(context)
+        position = row.get("release_batch_position")
+        for entry in ledger["positions"]:
+            if entry["position"] == position:
+                entry["state"] = state
+                return
+
+    def _attach_delivery_ledger(self, error, context=None):
+        ledger = (context.get("delivery_ledger") if context is not None
+                  else self._last_release_batch_delivery)
+        publication = self._copy_delivery_ledger(ledger)
+        if publication is not None:
+            try:
+                error.release_batch_publication = publication
+            except (AttributeError, TypeError):
+                pass
 
     def execute(self, step, cancel, identifier, index):
         previous = getattr(self._release_batch, "context", None)
@@ -22,6 +72,7 @@ class Backend(Previous):
             context = previous
         else:
             context = {"rows": [], "identifier": identifier}
+            self._last_release_batch_delivery = None
         context["step"] = index
         self._release_batch.context = context
         try:
@@ -47,6 +98,7 @@ class Backend(Previous):
     def _publish_incomplete_release_batch(self, context, error, *, disposition):
         """Keep observed per-key up receipts when later cleanup cannot finish."""
         rows = context["rows"]
+        self._delivery_ledger(context)
         size = len(rows)
         for position, row in enumerate(rows):
             row.setdefault("release_batch_size", size)
@@ -65,22 +117,14 @@ class Backend(Previous):
                     "release_batch_disposition identifies the exception boundary"
                 ),
             })
-            self.emit(row)
+            try:
+                self.emit(row)
+            except BaseException:
+                self._set_delivery_state(context, row, "unknown")
+                raise
+            self._set_delivery_state(context, row, "confirmed_incomplete")
 
     def _finish_incomplete_release_batch(self, context, error, disposition):
-        if context.get("publication_error_type") is not None:
-            publication = context.get("publication_failure")
-            if isinstance(publication, dict):
-                try:
-                    error.release_batch_publication = dict(publication)
-                except (AttributeError, TypeError):
-                    pass
-            context["rows"].clear()
-            try:
-                del self._release_batch.context
-            except AttributeError:
-                pass
-            return
         try:
             self._publish_incomplete_release_batch(
                 context, error, disposition=disposition
@@ -93,6 +137,7 @@ class Backend(Previous):
                     + type(publish_exc).__name__
                 )
         finally:
+            self._attach_delivery_ledger(error, context)
             context["rows"].clear()
             try:
                 del self._release_batch.context
@@ -114,18 +159,33 @@ class Backend(Previous):
                         del self._release_batch.context
                     except AttributeError:
                         pass
+            if self._last_release_batch_delivery is not None:
+                self._attach_delivery_ledger(exc)
             raise
         if context is not None and context["rows"]:
-            self._publish_release_batch(
-                context,
-                terminal_cleanup_verified=(
-                    isinstance(result, dict) and result.get("verified") is True
-                ),
-            )
             try:
-                del self._release_batch.context
-            except AttributeError:
-                pass
+                self._publish_release_batch(
+                    context,
+                    terminal_cleanup_verified=(
+                        isinstance(result, dict) and result.get("verified") is True
+                    ),
+                )
+            except BaseException as exc:
+                self._finish_incomplete_release_batch(
+                    context, exc, "publication_exception"
+                )
+                raise
+            else:
+                try:
+                    del self._release_batch.context
+                except AttributeError:
+                    pass
+        if (self._last_release_batch_delivery is not None
+                and isinstance(result, dict)):
+            result = dict(result)
+            result["release_batch_delivery"] = self._copy_delivery_ledger(
+                self._last_release_batch_delivery
+            )
         return result
 
     def raw(self, key, down):
@@ -170,6 +230,7 @@ class Backend(Previous):
 
     def _publish_release_batch(self, context, *, terminal_cleanup_verified=None):
         rows = context["rows"]
+        self._delivery_ledger(context)
         records = getattr(self.owner, "records", None)
         counts = [row.get("owner_cleanup_record_count_before_release") for row in rows]
         counts_valid = (
@@ -280,24 +341,7 @@ class Backend(Previous):
             try:
                 self.emit(row)
             except BaseException as exc:
+                self._set_delivery_state(context, row, "unknown")
                 context["publication_error_type"] = type(exc).__name__
-                context["publication_failure"] = {
-                    "status": "delivery_unknown",
-                    "identifier": context.get("identifier"),
-                    "step": context.get("step"),
-                    "size": size,
-                    "position": row.get("release_batch_position"),
-                    "confirmed_positions": list(
-                        context.get("publication_confirmed_positions", ())
-                    ),
-                    "not_attempted_positions": list(range(
-                        row.get("release_batch_position", 0) + 1, size
-                    )),
-                    "event": row.get("event"),
-                    "key": row.get("key"),
-                    "error_type": type(exc).__name__,
-                }
                 raise
-            context.setdefault("publication_confirmed_positions", []).append(
-                row.get("release_batch_position")
-            )
+            self._set_delivery_state(context, row, "confirmed")
