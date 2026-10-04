@@ -627,6 +627,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
 - [`needle_role_skill_lifecycle_5133_v2/`](needle_role_skill_lifecycle_5133_v2/)
+- [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
+- [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`notification_sampling_reactivity_6657_t0_20261002/`](notification_sampling_reactivity_6657_t0_20261002/)
 - [`object_bound_context_capsules_7160_t0_20261004/`](object_bound_context_capsules_7160_t0_20261004/)
 - [`obligation_capacity_6121_t0_20261002/`](obligation_capacity_6121_t0_20261002/)
