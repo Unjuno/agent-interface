@@ -15,7 +15,8 @@ class Tests(unittest.TestCase):
              "admitted_ns": 100_000_000, "input_ack_ns": 110_000_000},
             {"event": "input_release_transition", "intent_token": "t", "operation": "up",
              "key": "Up", "release_call_started_ns": 410_000_000,
-             "release_call_returned_ns": 420_000_000, "owner_transition_verified": True},
+             "release_call_returned_ns": 420_000_000, "owner_transition_verified": True,
+             "owner_thread_keyup_verified_after_batch": True},
         ]
         result = candidate.analyze(events)
         self.assertTrue(result["measurement_ready"])
@@ -43,6 +44,19 @@ class Tests(unittest.TestCase):
             {"event": "input_release_transition", "intent_token": "t", "operation": "up",
              "key": "Up", "release_call_started_ns": 3, "release_call_returned_ns": 4,
              "owner_transition_verified": False},
+        ]
+        result = candidate.analyze(events)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["invalid_release_count"], 1)
+
+    def test_batch_without_owner_thread_keyup_receipt_is_rejected(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "Up",
+             "admitted_ns": 1, "input_ack_ns": 2},
+            {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+             "key": "Up", "release_call_started_ns": 3, "release_call_returned_ns": 4,
+             "owner_transition_verified": True,
+             "owner_thread_keyup_verified_after_batch": False},
         ]
         result = candidate.analyze(events)
         self.assertFalse(result["measurement_ready"])

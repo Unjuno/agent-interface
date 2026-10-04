@@ -22,7 +22,8 @@ def analyze(events):
             token = row.get("intent_token")
             key = row.get("key")
             queue = pending[(token, key)]
-            if not queue or row.get("owner_transition_verified") is not True:
+            if (not queue or row.get("owner_transition_verified") is not True
+                    or row.get("owner_thread_keyup_verified_after_batch") is not True):
                 invalid_releases.append(row)
                 continue
             start = queue.popleft()

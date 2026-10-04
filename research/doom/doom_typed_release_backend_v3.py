@@ -2,7 +2,7 @@
 import threading
 
 from doom_typed_release_backend_v1 import Backend as Previous, suite
-from input_transition_owner_v3 import InputOwner
+from input_transition_owner_v4 import InputOwner
 
 
 class Backend(Previous):
@@ -204,6 +204,7 @@ class Backend(Previous):
             ordinary and cleanup_records_available and cleanup_records_valid
             and all(release_brackets_valid) and not any(cleanup_overlaps)
         )
+        owner_keyup_verified = all(row.get("owner_thread_keyup_verified") is True for row in rows)
         cleanup_ok = terminal_cleanup_verified is not False
         if terminal_cleanup_verified is True:
             cleanup_ok = cleanup_ok and cleanup_records_valid and any(
@@ -218,7 +219,7 @@ class Backend(Previous):
             )
         batch_verified = bool(
             rows and cleanup_ok and sample_ordered and owner_identity_matches and token_matches
-            and owner_empty and backend_ownership and ordinary
+            and owner_empty and backend_ownership and ordinary and owner_keyup_verified
         )
         batch_size = len(rows)
         for position, receipt in enumerate(rows):
@@ -233,6 +234,8 @@ class Backend(Previous):
                 "intent_token_matches_after_batch": token_matches,
                 "owned_keycodes_after_batch": owned_after,
                 "owner_transition_verified": batch_verified,
+                "owner_thread_keyup_verified_after_batch": owner_keyup_verified,
+                "owner_thread_keyup_verified_after_batch": owner_keyup_verified,
                 "physical_verification_authoritative": False,
                 "measurement_contract_v3": (
                     "all explicit key-up calls in this backend-held batch complete before "
