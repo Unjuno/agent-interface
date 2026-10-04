@@ -1,0 +1,58 @@
+{
+  "audit": {
+    "all_neutral": true,
+    "checks": {
+      "HUD_API_values_agree": true,
+      "HUD_signals_validly_bound_to_initial_capture": true,
+      "api_timeline_brackets_hud_capture": true,
+      "capture_binding_well_formed": true,
+      "clean_child_and_reader_exit": true,
+      "coherent_samples_finite_and_ordered": true,
+      "comparison_offset_bounded_by_prefire_interval": true,
+      "comparison_sample_finite_and_ordered": true,
+      "comparison_sample_neutral": true,
+      "initial_frame_digest_well_formed": true,
+      "no_external_rescue": true,
+      "one_initial_observation": true,
+      "one_matching_screen_observation": true,
+      "prewindow_comparison_sample_exists": true,
+      "raw_inputs_match_pinned_manifest": true,
+      "sample_window_nonempty": true,
+      "selected_ammo_matches_selected_slot": true,
+      "selected_weapon_and_ammo_well_formed": true,
+      "typed_capture_matches_screen_observation": true,
+      "window_samples_neutral": true
+    },
+    "disposition": "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED",
+    "hud_api_differences": {
+      "ammo": 0.0,
+      "health": 0.0
+    },
+    "initial_hud_values": {
+      "ammo": 48.0,
+      "health": 97.0
+    },
+    "limits": "Selected-fixture binding only; the retained nearest sample offset is observed, but no maximum sample age within the timeline bracket is established. Not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
+    "matching_slot_ammo": 48.0,
+    "maximum_hud_api_offset_ns": 362926866,
+    "nearest_api_offset_ns": 240412225,
+    "sample_count": 90,
+    "selected_weapon": 2.0,
+    "selected_weapon_ammo": 48.0
+  },
+  "audit_id": "weapon-ammo-audit-followup-01",
+  "base_commit": "af6d0f9842a2377fba736d2d65643b02690f99d9",
+  "followup_files": {
+    "AUDIT_FOLLOWUP_01.md": "8f189ab4303a15c0a84c190def4b12a6fe21b84d0f05beb8d9b9d1c92fa8fcca",
+    "audit_weapon_ammo_followup_01.py": "65c23b2696a73fd11680c3937a93c6e7669666bd692f1b77ae61bf12d7cd18af",
+    "test_audit_weapon_ammo_followup_01.py": "6d9669d17f647fcbe1ed1a833a90f87feda739524872a101aa9168fb928e7617"
+  },
+  "original_files_manifest_sha256": "ce54ec199bd9e3940b9b6b366670afb2372ba0d07dba61207d1a19a5b2c6c996",
+  "scope": "Post-result audit repair and mutation test; not a prospectively frozen independent auditor or new game allocation. Timeline bracketing does not establish a maximum age within the bracket or simultaneous HUD/API truth.",
+  "tests": {
+    "command": "python3 -m unittest -v test_audit_weapon_ammo_followup_01.py",
+    "count": 11,
+    "failed": 0,
+    "passed": 11
+  }
+}
