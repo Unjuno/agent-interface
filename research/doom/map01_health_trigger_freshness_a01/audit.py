@@ -7,6 +7,13 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 ROOT = BASE.parents[2]
 
+REQUIRED_INPUT_PATHS = {
+    "v38_events": "research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl",
+    "v38_report": "research/doom/results/map01-v38-integrated-threat-live-01/report.json",
+    "v39_events": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl",
+    "v39_report": "research/doom/results/map01-v39-coast-liveness-live-01/report.json",
+}
+
 
 def read_jsonl(path):
     with path.open(encoding="utf-8") as handle:
@@ -43,6 +50,7 @@ def validate_v39_pair(pair, expected_name, expected_sequences, indexed):
         assert typed["frame_rgb_sha256"] == observed["frame_rgb_sha256"] == row["frame_rgb_sha256"]
         assert typed["signals"]["health"]["value"] == row["health"]
         assert typed["signals"]["health"]["sequence"] == row["sequence"]
+        assert typed["emit_ns"] == row["emit_ns"]
     assert rows[0]["id"] == rows[1]["id"] == f"cover-{expected_name[-1]}"
     capture_spacing = ms(rows[1]["capture_ns"] - rows[0]["capture_ns"])
     emit_spacing = ms(rows[1]["emit_ns"] - rows[0]["emit_ns"])
@@ -51,6 +59,15 @@ def validate_v39_pair(pair, expected_name, expected_sequences, indexed):
     assert pair["emit_spacing_ms"] == emit_spacing
     assert pair["capture_to_emit_ms"] == capture_to_emit
     assert pair["distinct_frame_hashes"] is True
+
+
+def validate_input_custody(inputs, frozen_hashes):
+    required = set(REQUIRED_INPUT_PATHS)
+    assert set(frozen_hashes) == required
+    assert set(inputs) == required
+    for name, expected_path in REQUIRED_INPUT_PATHS.items():
+        assert inputs[name]["path"] == expected_path
+        assert inputs[name]["sha256"] == frozen_hashes[name]
 
 
 def reconstruct_v38_context(report, events):
@@ -93,6 +110,7 @@ def main():
     freeze = json.loads((BASE / "FREEZE.json").read_text(encoding="utf-8"))
     assert result["status"] == "PASS_SCOPED"
     assert len(result["v39_candidate_pairs"]) == 2
+    validate_input_custody(result["inputs"], freeze["source_sha256"])
     all_ok = True
     for pair in result["v39_candidate_pairs"]:
         rows = pair["rows"]
@@ -104,27 +122,26 @@ def main():
         assert rows[0]["emit_ns"] < rows[1]["emit_ns"]
         for row in rows:
             assert row["emit_ns"] >= row["capture_ns"]
-    for name, item in result["inputs"].items():
-        source = ROOT / item["path"]
-        assert freeze["source_sha256"][name] == item["sha256"], name
-        assert hashlib.sha256(source.read_bytes()).hexdigest() == item["sha256"], name
-    events = read_jsonl(ROOT / result["inputs"]["v39_events"]["path"])
+    for name, relative_path in REQUIRED_INPUT_PATHS.items():
+        source = ROOT / relative_path
+        assert hashlib.sha256(source.read_bytes()).hexdigest() == freeze["source_sha256"][name], name
+    events = read_jsonl(ROOT / REQUIRED_INPUT_PATHS["v39_events"])
     indexed = {(e.get("event"), e.get("sequence")): e for e in events if e.get("event") in ("typed_observation", "observation")}
     expected_pairs = (("d2", (81, 82)), ("d3", (103, 104)))
     pairs = result["v39_candidate_pairs"]
     assert len(pairs) == len(expected_pairs)
     for pair, (expected_name, expected_sequences) in zip(pairs, expected_pairs):
         validate_v39_pair(pair, expected_name, expected_sequences, indexed)
-    v38report = json.loads((ROOT / result["inputs"]["v38_report"]["path"]).read_text(encoding="utf-8"))
-    v38events = read_jsonl(ROOT / result["inputs"]["v38_events"]["path"])
+    v38report = json.loads((ROOT / REQUIRED_INPUT_PATHS["v38_report"]).read_text(encoding="utf-8"))
+    v38events = read_jsonl(ROOT / REQUIRED_INPUT_PATHS["v38_events"])
     reconstructed = reconstruct_v38_context(v38report, v38events)
     recorded = result["v38_censoring_context"]
     for key, value in reconstructed.items():
         assert recorded[key] == value, key
     assert recorded["next_row_capture_after_terminal"] is True
     assert recorded["single_below_baseline_health_row"] is True
-    audit = {"status": "PASS_SCOPED", "independent_checks": ["source hashes match freeze", "monotonic capture and emission", "different frame hashes within each candidate pair", "typed/exact same-sequence capture identity", "health value and sequence preservation", "v38 d2 source baseline, terminal boundary, qualifying-row count, and censor relation independently recomputed"], "v38_censoring_reconstruction": reconstructed, "semantic_independence_proven": False, "all_checks_passed": all_ok}
-    with (BASE / "AUDIT.json").open("w", encoding="utf-8", newline="\n") as stream:
+    audit = {"schema": "map01-health-trigger-freshness-a01-audit-v2", "status": "PASS_SCOPED", "independent_checks": ["complete frozen input key/path/hash set", "raw v39 typed emission timestamps", "required d2/d3 sequence pairs and derived timing fields", "source hashes match freeze", "monotonic capture and emission", "different frame hashes within each candidate pair", "typed/exact same-sequence capture identity", "health value and sequence preservation", "v38 d2 source baseline, terminal boundary, qualifying-row count, and censor relation independently recomputed"], "v38_censoring_reconstruction": reconstructed, "semantic_independence_proven": False, "all_checks_passed": all_ok}
+    with (BASE / "AUDIT_V2.json").open("w", encoding="utf-8", newline="\n") as stream:
         json.dump(audit, stream, indent=2)
         stream.write("\n")
     print(json.dumps(audit, indent=2))
