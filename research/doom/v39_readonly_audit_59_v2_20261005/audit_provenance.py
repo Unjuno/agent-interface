@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 
 
 PACKAGE = Path(__file__).resolve().parent
@@ -12,6 +13,24 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def git_blob(commit, relative):
+    return subprocess.run(
+        ["git", "show", f"{commit}:{relative}"],
+        cwd=REPO, check=True, capture_output=True).stdout
+
+
+def manifest_rows(raw):
+    rows = {}
+    for line in raw.decode("utf-8").splitlines():
+        if not line:
+            continue
+        expected, separator, relative = line.partition("  ")
+        if not separator or len(expected) != 64 or relative in rows:
+            raise ValueError(f"invalid or duplicate SHA256SUMS row: {line!r}")
+        rows[relative] = expected
+    return rows
+
+
 def main():
     freeze = json.loads((PACKAGE / "FREEZE.json").read_text(encoding="utf-8"))
     correction = json.loads((PACKAGE / "CORRECTIONS.json").read_text(encoding="utf-8"))
@@ -19,14 +38,63 @@ def main():
     runs = json.loads((PACKAGE / "RUNS.json").read_text(encoding="utf-8"))
     errors = []
     archive = REPO / freeze["source_archive_path"]
-    if digest(archive / "SHA256SUMS") != freeze["source_archive_sha256s_sha256"]:
-        errors.append("source archive SHA256SUMS identity mismatch")
+    source_commit = freeze["source_archive_commit"]
+    source_manifest_path = freeze["source_archive_path"] + "/SHA256SUMS"
+    try:
+        frozen_manifest_raw = git_blob(source_commit, source_manifest_path)
+        if hashlib.sha256(frozen_manifest_raw).hexdigest() != freeze["source_archive_sha256s_sha256"]:
+            errors.append("frozen Git-tree SHA256SUMS identity mismatch")
+        frozen_rows = manifest_rows(frozen_manifest_raw)
+    except (subprocess.CalledProcessError, ValueError) as error:
+        frozen_rows = {}
+        errors.append(f"cannot verify frozen Git-tree manifest: {error}")
+
     for relative, expected in freeze["source_archive_members"].items():
+        git_path = freeze["source_archive_path"] + "/" + relative
+        try:
+            frozen_bytes = git_blob(source_commit, git_path)
+            if hashlib.sha256(frozen_bytes).hexdigest() != expected:
+                errors.append(f"frozen Git-tree member hash mismatch: {relative}")
+        except subprocess.CalledProcessError:
+            errors.append(f"frozen Git-tree member missing: {relative}")
         path = (archive / relative).resolve()
         if archive.resolve() not in path.parents or not path.is_file():
             errors.append(f"source archive member missing or escaping: {relative}")
         elif digest(path) != expected:
             errors.append(f"source archive member hash mismatch: {relative}")
+        if frozen_rows.get(relative) != expected:
+            errors.append(f"frozen Git-tree manifest row mismatch: {relative}")
+
+    # The parent PR appended its source-replay and unit-test receipts to the
+    # same evidence directory after A02. Keep them distinct from the frozen run.
+    appended = {
+        "raw/PARENT_SYNC.exit.txt",
+        "raw/PARENT_SYNC.json",
+        "raw/PARENT_SYNC.stdout",
+        "raw/UNIT_TESTS.exit.txt",
+        "raw/UNIT_TESTS.json",
+        "raw/UNIT_TESTS.stdout",
+        "run_current_parent_projection.py",
+    }
+    try:
+        current_rows = manifest_rows((archive / "SHA256SUMS").read_bytes())
+        actual = {
+            path.relative_to(archive).as_posix()
+            for path in archive.rglob("*") if path.is_file() and
+            "__pycache__" not in path.parts
+        } - {"SHA256SUMS"}
+        if actual != set(current_rows):
+            errors.append("current source archive inventory differs from SHA256SUMS")
+        if not set(freeze["source_archive_members"]).issubset(current_rows):
+            errors.append("current manifest omits one or more frozen source members")
+        for relative, expected in current_rows.items():
+            if not (archive / relative).is_file() or digest(archive / relative) != expected:
+                errors.append(f"current source archive manifest mismatch: {relative}")
+        extra = set(current_rows) - set(freeze["source_archive_members"])
+        if extra != appended:
+            errors.append(f"current parent-sync append set mismatch: {sorted(extra)}")
+    except (OSError, ValueError) as error:
+        errors.append(f"cannot verify current source archive manifest: {error}")
 
     for name, expected in freeze["source_sha256"].items():
         actual = digest(PACKAGE / name)
@@ -64,6 +132,8 @@ def main():
                   "FAIL_A02_PROVENANCE_AUDIT",
         "errors": errors,
         "archive_members_verified": len(freeze["source_archive_members"]),
+        "current_archive_members_verified": len(current_rows) if "current_rows" in locals() else 0,
+        "post_freeze_parent_sync_members": len(appended),
         "source_files_pinned": len(freeze["source_sha256"]),
         "run_commands": len(runs.get("runs", [])),
         "a02_result": result.get("status"),

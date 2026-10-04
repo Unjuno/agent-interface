@@ -1,0 +1,29 @@
+{
+  "schema": "v39-readonly-audit-parent-sync-provenance-v1",
+  "record_type": "post_freeze_provenance_audit",
+  "recorded_utc_date": "2026-10-05",
+  "a02_experiment_id": "V39-READONLY-AUDIT-59-A02-V2-20261005",
+  "frozen_source_commit": "719ef679c977a925db3a6d1fe15f9cd93cf2b42c",
+  "frozen_manifest_sha256": "7ecbce601ca686142dd8d9de27c05c39e14295d68f97b76bb251ed79df3f62a5",
+  "frozen_member_count": 18,
+  "current_parent_synchronized_member_count": 25,
+  "post_freeze_appended_members": [
+    "raw/PARENT_SYNC.exit.txt",
+    "raw/PARENT_SYNC.json",
+    "raw/PARENT_SYNC.stdout",
+    "raw/UNIT_TESTS.exit.txt",
+    "raw/UNIT_TESTS.json",
+    "raw/UNIT_TESTS.stdout",
+    "run_current_parent_projection.py"
+  ],
+  "checks": {
+    "frozen_git_tree_manifest_and_member_hashes": "PASS",
+    "original_18_members_unchanged_in_current_checkout": "PASS",
+    "current_25_member_manifest_and_file_hashes": "PASS",
+    "parent_sync_append_set": "PASS",
+    "read_only_v2_current_archive_audit": "PASS_READ_ONLY_ARCHIVE_AUDIT",
+    "v2_unit_tests": "PASS_3_OF_3"
+  },
+  "raw_stdout": "out/provenance_sync_audit.stdout.txt",
+  "scope": "post-freeze provenance verification only; A02 was not rerun and no game, model, GUI, input, or container was used"
+}
