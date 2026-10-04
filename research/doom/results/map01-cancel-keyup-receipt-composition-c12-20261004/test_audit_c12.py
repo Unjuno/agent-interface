@@ -1,6 +1,7 @@
 """Regression tests for the retained-failure evidence audit."""
 from pathlib import Path
 import json
+import re
 import unittest
 
 import audit_c12
@@ -45,8 +46,27 @@ StopIteration
 Ran 7 tests in 0.022s
 
 FAILED (errors=1)
-"""
+        """
         self.assertFalse(audit_c12.has_expected_initial_failure(wrong_context))
+
+    def test_rejects_lookup_failure_chained_to_unrelated_stop_iteration(self) -> None:
+        initial = (ROOT / "raw/initial-combined-suite-output.txt").read_text(
+            encoding="utf-8"
+        )
+        chained, replacements = re.subn(
+            r'(?m)^(    released = next\(row for row in events if row\["event"\] == "input_released"\))\n'
+            r"( +\^.*)\nStopIteration$",
+            r"\1\n\2\nKeyError: 'input_released'\n\n"
+            "During handling of the above exception, another exception occurred:\n\n"
+            "Traceback (most recent call last):\n"
+            '  File "test_executor_owner_cancel_cause_v1.py", line 200, in helper\n'
+            "    raise StopIteration\nStopIteration",
+            initial,
+            count=1,
+        )
+        self.assertEqual(replacements, 1)
+        self.assertNotEqual(chained, initial)
+        self.assertFalse(audit_c12.has_expected_initial_failure(chained))
 
 
 class OwnerDerivationTests(unittest.TestCase):

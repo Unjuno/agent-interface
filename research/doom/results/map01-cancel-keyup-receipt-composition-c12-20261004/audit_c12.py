@@ -29,11 +29,12 @@ def has_expected_initial_failure(output: str) -> bool:
     if error is None:
         return False
     traceback = error.group("traceback")
-    return (
-        'released = next(row for row in events if row["event"] == "input_released")'
-        in traceback
-        and re.search(r"^StopIteration$", traceback, re.MULTILINE) is not None
-    )
+    return re.search(
+        r'(?m)^    released = next\(row for row in events if row\["event"\] == "input_released"\)$\n'
+        r"^ +\^.*$\n"
+        r"^StopIteration$",
+        traceback,
+    ) is not None
 
 
 def has_exact_owner_derivation(base_source: str, patch_source: str, candidate: str) -> bool:
