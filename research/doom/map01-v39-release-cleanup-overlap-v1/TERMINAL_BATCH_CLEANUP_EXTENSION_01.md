@@ -1,0 +1,68 @@
+# Terminal cleanup extension 01
+
+Status: candidate PASS for the synthetic contract; container and live-control
+gates STOP/not run. This is additive to the existing cleanup-overlap evidence;
+it does not replace or rewrite predecessor results.
+
+## H — Hypothesis
+
+When `session_v5.Backend.release_all()` releases keys at program termination,
+buffered per-key release receipts can be lost because production cleanup calls
+the owner directly rather than iterating through `raw()`. In addition, malformed
+or unverified cleanup records must not support an ordinary-release claim.
+
+## T — Test
+
+Based on PR #7395's malformed-evidence hardening head
+`b17d492aee852e7eff114fb0f4a7d3dcb0531ee7`, itself based on refreshed #7385.
+The test
+extracts and executes the actual `Backend.release_all` method from
+`research/live_control/session_v5.py` in an isolated test parent (avoiding GUI
+imports). It exercises a final buffered batch, an unverified terminal cleanup,
+a malformed cleanup timestamp, overlap within explicit-up brackets, and a valid
+cleanup record predating the current batch.
+
+## D — Data and execution
+
+- Baseline adapter at #7395 head: SHA-256
+  `5478a4bde87f59db545818e30f31f0afb4934bb5851e441eebf8136b49639a0e`.
+- Baseline test at #7395 head: SHA-256
+  `eaa8fe562393c9534fc7df62f9262637c7c5e9c26b67c22802e71cbd349ae791`.
+- Candidate adapter: SHA-256
+  `895fd4c5edbb09e2f843ddc20a74d569d4196c9aba9654c870f0dafadd11d4d6`.
+- Candidate test: SHA-256
+  `1cba55ec4b37fd697baaabc8690935004ec88bf30c640f1c8e124225294eba5d`.
+- `python3 -B -m unittest -v test_doom_typed_release_backend_v3`: **27/27 PASS**.
+- `python3 -B -m unittest -v test_input_transition_owner_v3`: **8/8 PASS**.
+- `python3 -B -m unittest -v test_overlap_controller_v39_wait`: **7/7 PASS**.
+- `git diff --check`: PASS.
+- `python3 -B` source compilation: PASS.
+- Current container gate: STOP. Docker server reports OrbStack 29.4.0, but
+  read-only `docker ps` again fails on content blob
+  `sha256:08e8b41ebd1476eff067939e0192d49e4014c21bab11a4d793429187e4242704`
+  with `operation not supported`; image inventory and container execution were
+  not attempted after that failure. No repair, pull, or live allocation ran.
+- A few initial test invocations used an unavailable module name or wrong
+  working directory; corrected commands passed. These were setup errors, not
+  product failures.
+- Candidate refreshed onto #7395 after discovering parallel malformed-log and
+  bracket coverage on the same backend; combined tests retain both sets.
+
+## C — Conclusion
+
+Synthetic evidence supports publishing the terminal buffered receipt after the
+single post-cleanup owner-state sample. Records are scoped from the first
+explicit release call's pre-call record count, so prior valid cleanup history
+does not invalidate the current batch. A malformed cleanup timestamp, failed
+cleanup, non-empty owner state, or unverified terminal cleanup prevents
+`owner_transition_verified`. This is telemetry/owner-state evidence only; it
+does not establish physical release, GUI safety, real-time deadline guarantees,
+or Issue #59's matched threat-control gate.
+
+## U — Uncertainty and next gate
+
+Run the complete relevant suite in the prescribed container with retained image
+identity, then independently review the PR on its final head. Restore Xlib for
+the owner wrapper suite, and only after the exclusive live allocation gate is
+granted proceed to the bounded, non-destructive experiment specified by the
+current roadmap. No live claim is made here.

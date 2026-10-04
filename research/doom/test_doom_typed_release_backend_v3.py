@@ -1,3 +1,4 @@
+import ast
 import importlib.util
 from pathlib import Path
 import sys
@@ -23,11 +24,6 @@ class Parent:
         for key in step.get('keys', []):
             self.raw(key, False)
         return 'ok'
-
-    def release_all(self):
-        for key in list(self.held):
-            self.raw(key, False)
-        return {'verified': True, 'keys_down': [], 'buttons_down': []}
 
 parent = types.ModuleType('doom_typed_release_backend_v1')
 parent.Backend = Parent
@@ -68,7 +64,8 @@ class Lease:
 
 class Owner:
     def __init__(self, *, owned_after=None, owner_id='owner-1', sample_started=100,
-                 ordinary=True, receipt_token='intent-1', cleanup_ns=None):
+                 ordinary=True, receipt_token='intent-1', cleanup_ns=None,
+                 cleanup_verified=True):
         self.calls = []
         self.owned_after = [] if owned_after is None else list(owned_after)
         self.owner_id = owner_id
@@ -78,6 +75,7 @@ class Owner:
         self.records = []
         self.cleanup_ns = cleanup_ns
         self.explicit_key_release_requests = []
+        self.cleanup_verified = cleanup_verified
         self.release_index = 0
         self.closed = False
 
@@ -94,7 +92,8 @@ class Owner:
             if self.cleanup_ns is not None:
                 self.records.append({
                     'event': 'owner_release', 'verified': True,
-                    'reason': 'cancelled', 'verified_ns': self.cleanup_ns,
+                    'reason': 'cancelled', 'keys_down': [], 'buttons_down': [],
+                    'valid_until_ns': None, 'verified_ns': self.cleanup_ns,
                 })
             else:
                 self.explicit_key_release_requests.append(key)
@@ -114,6 +113,16 @@ class Owner:
                 'sample_started_ns': self.sample_started,
                 'sample_finished_ns': self.sample_started + 10,
             }
+        if op == 'release':
+            self.owned_after = []
+            verified_ns = self.cleanup_ns if self.cleanup_ns is not None else 1
+            reason = 'cancelled' if self.cleanup_ns is not None else 'release'
+            self.records.append({
+                'event': 'owner_release', 'verified': self.cleanup_verified,
+                'reason': reason, 'keys_down': [], 'buttons_down': [],
+                'valid_until_ns': None, 'verified_ns': verified_ns,
+            })
+            return {'verified': self.cleanup_verified, 'keys_down': [], 'buttons_down': []}
         raise AssertionError(op)
 
 
@@ -128,6 +137,20 @@ def make_backend(held, owner=None, token='intent-1', with_context=True):
     obj.emitted = []
     obj.emit = obj.emitted.append
     return obj
+
+
+def install_production_release_all():
+    source = (HERE.parent / 'live_control' / 'session_v5.py').read_text(encoding='utf-8')
+    tree = ast.parse(source)
+    backend = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'Backend')
+    method = next(n for n in backend.body
+                  if isinstance(n, ast.FunctionDef) and n.name == 'release_all')
+    isolated = ast.ClassDef(name='ProductionCleanup', bases=[], keywords=[],
+                            body=[method], decorator_list=[])
+    module = ast.fix_missing_locations(ast.Module(body=[isolated], type_ignores=[]))
+    namespace = {}
+    exec(compile(module, str(HERE.parent / 'live_control' / 'session_v5.py'), 'exec'), namespace)
+    Parent.release_all = namespace['ProductionCleanup'].release_all
 
 
 class Tests(unittest.TestCase):
@@ -273,6 +296,17 @@ class Tests(unittest.TestCase):
         self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
         self.assertFalse(obj.emitted[0]['owner_transition_verified'])
 
+    def test_malformed_cleanup_timestamp_fails_closed(self):
+        obj = make_backend({'a'}, Owner(cleanup_ns='not-a-monotonic-timestamp'))
+        obj.raw('a', False)
+
+        row = obj.emitted[0]
+
+        self.assertTrue(row['owner_cleanup_records_available'])
+        self.assertFalse(row.get('owner_cleanup_records_valid'))
+        self.assertFalse(row['ordinary_release_candidate'])
+        self.assertFalse(row['owner_transition_verified'])
+
     def test_intent_token_mismatch_fails_closed(self):
         obj = make_backend({'a'}, Owner(receipt_token='other'))
         obj.raw('a', False)
@@ -312,6 +346,7 @@ class Tests(unittest.TestCase):
         self.assertEqual([row['release_batch_step'] for row in rows], [0])
 
     def test_final_release_all_flushes_buffered_program_rows(self):
+        install_production_release_all()
         obj = make_backend({'a', 'space'}, with_context=False)
         obj.execute({'keys': ['a']}, None, 'p', 0)
         self.assertEqual(obj.emitted, [])
@@ -320,9 +355,40 @@ class Tests(unittest.TestCase):
 
         rows = [r for r in obj.emitted if r.get('event') == 'input_release_transition']
         self.assertEqual(release['verified'], True)
-        self.assertEqual([row['key'] for row in rows], ['a', 'space'])
-        self.assertEqual([row['release_batch_step'] for row in rows], [0, 0])
+        self.assertEqual([row['key'] for row in rows], ['a'])
+        self.assertEqual([row['release_batch_step'] for row in rows], [0])
+        self.assertTrue(rows[0]['owner_cleanup_records_available'])
+        self.assertFalse(rows[0]['owner_cleanup_overlapped_release_call'])
+        self.assertTrue(rows[0]['owner_cleanup_records_valid'])
+        self.assertTrue(rows[0]['release_batch_finalized_by_terminal_cleanup'])
+        self.assertTrue(rows[0]['terminal_cleanup_verified'])
+        self.assertTrue(rows[0]['owner_transition_verified'])
         self.assertEqual(sum(op[0] == 'input_state' for op in obj.owner.calls), 1)
+
+    def test_unverified_terminal_cleanup_keeps_buffered_receipt_unverified(self):
+        install_production_release_all()
+        obj = make_backend({'a', 'space'}, Owner(cleanup_verified=False), with_context=False)
+        obj.execute({'keys': ['a']}, None, 'p', 0)
+
+        release = obj.release_all()
+
+        rows = [r for r in obj.emitted if r.get('event') == 'input_release_transition']
+        self.assertFalse(release['verified'])
+        self.assertEqual([row['key'] for row in rows], ['a'])
+        self.assertFalse(rows[0]['terminal_cleanup_verified'])
+        self.assertFalse(rows[0]['owner_transition_verified'])
+
+    def test_prior_cleanup_record_does_not_invalidate_new_explicit_release(self):
+        owner = Owner()
+        owner.records.append({
+            'event': 'owner_release', 'verified': True, 'reason': 'cancelled',
+            'keys_down': [], 'buttons_down': [], 'valid_until_ns': None,
+            'verified_ns': 5,
+        })
+        obj = make_backend({'a'}, owner)
+        obj.raw('a', False)
+
+        self.assertTrue(obj.emitted[0]['owner_transition_verified'])
 
     def test_later_step_exception_discards_prior_buffered_rows(self):
         obj = make_backend({'a', 'space', 'd'}, with_context=False)
