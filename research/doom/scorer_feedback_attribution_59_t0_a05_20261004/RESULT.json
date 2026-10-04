@@ -1,0 +1,82 @@
+{
+  "schema": "scorer-feedback-attribution-a05-result-v1",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "base_commit": "8ddf0925539d03733d803b469586fb74a5b444e0",
+  "current_main_commit": "af6d0f9842a2377fba736d2d65643b02690f99d9",
+  "producer_contract": {
+    "path": "research/doom/independent_progress_clock_v2.py",
+    "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "positive_useful_kinds": [
+      "KILL_COUNT_INCREASE",
+      "MAP_EXIT"
+    ],
+    "other_source_kinds": [
+      "DEATH_COUNT_INCREASE",
+      "PLAYER_DEAD",
+      "EPISODE_FINISHED_NO_EXIT"
+    ]
+  },
+  "source_sha256": {
+    "scorer_feedback_attribution_v3.py": "c96b4565452c6095c5f51410226e154ce91be42daa7f042052ff25d140b4a87f",
+    "scorer_feedback_attribution_v4.py": "1c8160b839e1be8014d194ce665893f23b27e1f2c9f643270f2d856d339d5f74",
+    "a04_unknown_kind_baseline_probe.py": "5813e8fe54889ef682c0b224cbe57287edc864979572100ad02f137efc76eed8",
+    "test_unknown_kind_probe.py": "f8eec91582dbaf4590fbac5feac5d3dc73ad844262b7786cc1dc4de5d286c3c1",
+    "A05_UNKNOWN_KIND_FREEZE.json": "652095ae04a206f9b6e5f81ba05d16a85e49e81281ead0ed9e0bff698642d2ae",
+    "A05_README.md": "1731f73d75b471db691d91d41a51b81c7d8b5b2dbf998150979bfb2e758c366e",
+    "run_a05.py": "61736d17e4a6c807f73c59ddcd0a2ba930342c7cc71a95332515b8b9e665b03d"
+  },
+  "red_baseline": {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "a04_unknown_kind_baseline_probe.py"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "F\n======================================================================\nFAIL: test_unknown_positive_kind_is_not_promoted (__main__.UnknownKindBaselineTests.test_unknown_positive_kind_is_not_promoted)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/unjuno-a05-cIvRXJ/repo/research/doom/scorer_feedback_attribution_59_t0_a04_20261004/a04_unknown_kind_baseline_probe.py\", line 29, in test_unknown_positive_kind_is_not_promoted\n    with self.assertRaisesRegex(ValueError, \"unsupported positive useful scorer event kind\"):\n         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+  },
+  "green_focused": {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "test_unknown_kind_probe.py"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n"
+  },
+  "green_full_suite": {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      ".",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_admission_tied_to_lower_sample_is_unresolved (test_attribution.AttributionTests.test_admission_tied_to_lower_sample_is_unresolved) ... ok\ntest_duplicate_per_key_interval_is_rejected (test_attribution.AttributionTests.test_duplicate_per_key_interval_is_rejected) ... ok\ntest_envelope_does_not_claim_hold_when_inner_lifecycle_bounds_are_narrow (test_attribution.AttributionTests.test_envelope_does_not_claim_hold_when_inner_lifecycle_bounds_are_narrow) ... ok\ntest_malformed_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_malformed_positive_event_kind_is_rejected) ... ok\ntest_missing_positive_event_kind_is_rejected (test_attribution.AttributionTests.test_missing_positive_event_kind_is_rejected) ... ok\ntest_partial_overlap_is_unresolved (test_attribution.AttributionTests.test_partial_overlap_is_unresolved) ... ok\ntest_rejects_event_not_bound_to_scorer_sample (test_attribution.AttributionTests.test_rejects_event_not_bound_to_scorer_sample) ... ok\ntest_release_tied_to_event_sample_is_unresolved (test_attribution.AttributionTests.test_release_tied_to_event_sample_is_unresolved) ... ok\ntest_same_intent_key_intervals_may_jointly_cover_without_a_gap (test_attribution.AttributionTests.test_same_intent_key_intervals_may_jointly_cover_without_a_gap) ... ok\ntest_same_intent_key_intervals_with_gap_are_unresolved (test_attribution.AttributionTests.test_same_intent_key_intervals_with_gap_are_unresolved) ... ok\ntest_strict_envelope_is_possible_only_not_confirmed_hold (test_attribution.AttributionTests.test_strict_envelope_is_possible_only_not_confirmed_hold) ... ok\ntest_strictly_bracketing_interval_remains_a_possible_envelope (test_attribution.AttributionTests.test_strictly_bracketing_interval_remains_a_possible_envelope) ... ok\ntest_two_intents_intersecting_detection_interval_are_ambiguous (test_attribution.AttributionTests.test_two_intents_intersecting_detection_interval_are_ambiguous) ... ok\ntest_unverified_older_release_remains_possible_overlap (test_attribution.AttributionTests.test_unverified_older_release_remains_possible_overlap) ... ok\ntest_unverified_release_cannot_establish_unique_coverage (test_attribution.AttributionTests.test_unverified_release_cannot_establish_unique_coverage) ... ok\ntest_known_positive_kinds_keep_possible_only_semantics (test_unknown_kind_probe.UnknownKindTests.test_known_positive_kinds_keep_possible_only_semantics) ... ok\ntest_unknown_positive_kind_is_not_promoted (test_unknown_kind_probe.UnknownKindTests.test_unknown_positive_kind_is_not_promoted) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 0.001s\n\nOK\n"
+  },
+  "py_compile": {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-m",
+      "py_compile",
+      "scorer_feedback_attribution_v4.py",
+      "test_unknown_kind_probe.py",
+      "a04_unknown_kind_baseline_probe.py"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "docker": {
+    "status": "STOP_NOT_RUN",
+    "commands": [
+      "docker image ls --digests",
+      "docker pull python:3.12-slim"
+    ],
+    "reason": "OrbStack containerd blob open failed with operation not supported"
+  },
+  "disposition": "PASS_HOST_CONSTRUCTION_STOP_CONTAINER"
+}
