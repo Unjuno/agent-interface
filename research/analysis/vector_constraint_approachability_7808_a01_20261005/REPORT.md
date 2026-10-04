@@ -41,4 +41,3 @@ Main advanced six commits (36 paths) after the experiment freeze. The current `d
 
 Run a read-only eligibility check for repeated retained route opportunities with comparable task strata, independent per-opportunity effect scoring, and complete source-bound soft-cost vectors. If none exist, retain this as method-only evidence and do not allocate a live experiment from this result.
 
-
