@@ -89,6 +89,9 @@ class Backend:
         # Exact body in research/live_control/session_v5.py.
         result = self.owner.call("release", getattr(self, "lease", None))
         self.held.clear()
+        gate = getattr(self, "release_gate", None)
+        if gate is not None:
+            gate.wait(2)
         return result
 
 
@@ -141,7 +144,80 @@ class CancelReleasePublicationTest(unittest.TestCase):
             executor.close()
             owner.close()
 
+    def test_release_emitter_failure_is_retried_before_terminal(self):
+        SERVER["down"].clear()
+        owner = self.InputOwner(None)
+        backend = Backend(owner)
+        backend.release_gate = threading.Event()
+        events, attempts = [], []
+        def emit(event):
+            if event.get("event") in ("input_released", "input_release_unverified"):
+                attempts.append(event)
+                if len(attempts) == 1:
+                    try:
+                        raise OSError("sink rejected release event")
+                    finally:
+                        backend.release_gate.set()
+            events.append(event)
+        executor = self.Executor(backend, emit)
+        try:
+            executor.submit("release-emitter-retry", [{"op": "hold_w_until_cancel"}], 1,
+                            time.perf_counter_ns() + 10_000_000_000)
+            deadline = time.monotonic() + 2
+            while backend.admission is None and time.monotonic() < deadline:
+                time.sleep(.001)
+            self.assertIsNotNone(backend.admission)
+            self.assertTrue(executor.cancel("release-emitter-retry"))
+            worker = executor.active[2]
+            worker.join(3)
+            for watcher in executor.release_watchers:
+                watcher.join(3)
+            terminal = next((e for e in events if e.get("event") == "terminal"), None)
+            release_events = [e for e in events if e.get("event") == "input_released"]
+            self.assertEqual(len(attempts), 2)
+            self.assertEqual(len(release_events), 1)
+            self.assertIsNotNone(terminal, events)
+            self.assertLess(events.index(release_events[0]), events.index(terminal))
+            self.assertLess(release_events[0]["published_ns"], terminal["terminal_ns"])
+            self.assertFalse(worker.is_alive())
+            self.assertTrue(all(not watcher.is_alive() for watcher in executor.release_watchers))
+            self.assertIsNone(executor.active)
+        finally:
+            executor.close()
+            owner.close()
+
+    def test_persistent_release_emitter_failure_is_reported_on_terminal(self):
+        SERVER["down"].clear()
+        owner = self.InputOwner(None)
+        backend = Backend(owner)
+        events = []
+        def emit(event):
+            if event.get("event") in ("input_released", "input_release_unverified"):
+                raise OSError("sink unavailable")
+            events.append(event)
+        executor = self.Executor(backend, emit)
+        try:
+            executor.submit("release-emitter-unavailable", [{"op": "hold_w_until_cancel"}], 1,
+                            time.perf_counter_ns() + 10_000_000_000)
+            deadline = time.monotonic() + 2
+            while backend.admission is None and time.monotonic() < deadline:
+                time.sleep(.001)
+            self.assertIsNotNone(backend.admission)
+            self.assertTrue(executor.cancel("release-emitter-unavailable"))
+            worker = executor.active[2]
+            worker.join(3)
+            terminal = next((e for e in events if e.get("event") == "terminal"), None)
+            self.assertIsNotNone(terminal, events)
+            self.assertEqual(terminal["input_release_publication"]["status"], "failed")
+            self.assertEqual(terminal["input_release_publication"]["error"]["type"], "OSError")
+            self.assertFalse(worker.is_alive())
+            self.assertIsNone(executor.active)
+        finally:
+            executor.close()
+            owner.close()
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
 
