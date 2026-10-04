@@ -6,7 +6,7 @@
 - Base: main `4a8049327eb44b54cfcf55167adb102a710a7051`
 - Branch: `research/7822-bounded-progress-t0-a01-20261005`
 - Package: `research/analysis/bounded_progress_7822_a01_20261005/`
-- Model: five small labelled transition systems; only transition counts, no wall-clock claim. Marker status is supplied to the auditor only, never to the controller trace.
+- Model: four small labelled transition systems and five policy/case checks; only transition counts, no wall-clock claim. Marker status is supplied to the auditor only, never to the controller trace.
 - Safety: edges marked unsafe are excluded from all policies.
 - Fairness: none. Every enabled uncontrollable edge is adversarially selectable indefinitely.
 - Evidence: a task marker is true only in the separate frozen oracle; event dispatch, waiting, repetition, and sequence advancement do not establish it.
