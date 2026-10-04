@@ -46,6 +46,7 @@ SUITES['protocol'].append('test_planner_start_admission_01a0ff2d')
 SUITES['protocol'].append('test_grounding_start_admission_01a0ff2d')
 
 SUITES['protocol'].append('test_planner_result_finalization_01a0ff2d')
+SUITES['protocol'].append('test_planner_schema_interrupt_custody_01a0ff2d')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -92,5 +93,3 @@ SUITES['protocol'].append('runtime.cli_v1.test_receipt_empty_index_r7p4')
 
 if __name__ == '__main__':
     raise SystemExit(main())
-
-SUITES['protocol'].append('test_planner_schema_interrupt_custody_01a0ff2d')
