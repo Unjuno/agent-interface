@@ -1,0 +1,138 @@
+"""Cancellation cleanup exposes one XSync-bounded request interval per key."""
+import sys
+import threading
+import types
+import unittest
+
+LIVE = __import__("pathlib").Path(__file__).resolve().parent
+sys.path.insert(0, str(LIVE))
+
+import executor_v3
+from executor_v13 import Executor as ExecutorV13
+
+
+class FakeDisplay:
+    def __init__(self):
+        self.down = set()
+        self.root = types.SimpleNamespace(
+            query_pointer=lambda: types.SimpleNamespace(mask=0))
+
+    def get_input_focus(self):
+        return types.SimpleNamespace(focus=41)
+
+    def keysym_to_keycode(self, _keysym):
+        return _keysym
+
+    def screen(self):
+        return types.SimpleNamespace(root=self.root)
+
+    def query_keymap(self):
+        bitmap = bytearray(32)
+        for code in self.down:
+            bitmap[code // 8] |= 1 << (code % 8)
+        return bytes(bitmap)
+
+    def sync(self):
+        pass
+
+    def close(self):
+        pass
+
+
+class Lease:
+    def __init__(self):
+        self.deadline = 2**62
+        self.cancel = threading.Event()
+        self.expected_focus = 41
+        self.focus_invalid = False
+        self.interrupted = threading.Event()
+        self.interruptions = []
+
+    def check(self):
+        pass
+
+    def record_interruption(self, row):
+        self.interruptions.append(row)
+        self.interrupted.set()
+
+
+class BatchReleaseIntervalTests(unittest.TestCase):
+    def test_cancelled_release_records_each_key_to_shared_sync_bound(self):
+        names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
+                 "Xlib.ext", "Xlib.ext.xtest")
+        saved = {name: sys.modules.get(name) for name in names}
+        display_instance = FakeDisplay()
+        xlib = types.ModuleType("Xlib")
+        xlib.X = types.SimpleNamespace(
+            KeyPress=2, KeyRelease=3, ButtonRelease=5,
+            Button1Mask=256, AnyPropertyType=0)
+        xk = types.ModuleType("Xlib.XK")
+        xk.string_to_keysym = lambda key: ord(key[0])
+        display = types.ModuleType("Xlib.display")
+        display.Display = lambda _name: display_instance
+        error = types.ModuleType("Xlib.error")
+        error.BadWindow = type("BadWindow", (Exception,), {})
+        error.BadDrawable = type("BadDrawable", (Exception,), {})
+        ext = types.ModuleType("Xlib.ext")
+        xtest = types.ModuleType("Xlib.ext.xtest")
+
+        def fake_input(_display, event, code):
+            if event == xlib.X.KeyPress:
+                display_instance.down.add(code)
+            elif event == xlib.X.KeyRelease:
+                display_instance.down.discard(code)
+
+        xtest.fake_input = fake_input
+        ext.xtest = xtest
+        xlib.XK, xlib.display, xlib.error, xlib.ext = xk, display, error, ext
+        sys.modules.update({
+            "Xlib": xlib, "Xlib.X": types.ModuleType("Xlib.X"),
+            "Xlib.XK": xk, "Xlib.display": display, "Xlib.error": error,
+            "Xlib.ext": ext, "Xlib.ext.xtest": xtest,
+        })
+        owner = None
+        try:
+            sys.modules.pop("input_owner_v12", None)
+            from input_owner_v12 import InputOwner
+
+            owner = InputOwner(":fake")
+            lease = Lease()
+            owner.call("down", lease, "W")
+            owner.call("down", lease, "A")
+            lease.cancel.set()
+
+            self.assertTrue(lease.interrupted.wait(1))
+            self.assertEqual(len(lease.interruptions), 1)
+            record = lease.interruptions[0]
+            self.assertEqual(record["reason"], "cancelled")
+            self.assertTrue(record["verified"])
+            intervals = record["key_release_intervals_ns"]
+            self.assertEqual([row["keycode"] for row in intervals], [ord("W"), ord("A")])
+            self.assertEqual(len(intervals), 2)
+            for row in intervals:
+                start_ns, sync_end_ns = row["interval_ns"]
+                self.assertIs(type(start_ns), int)
+                self.assertIs(type(sync_end_ns), int)
+                self.assertLessEqual(start_ns, sync_end_ns)
+                self.assertLessEqual(sync_end_ns, record["verified_ns"])
+
+            publisher = object.__new__(ExecutorV13)
+            event = publisher._release_event(
+                "run-1", {"intent_token": "intent-1", "record": record})
+            self.assertEqual(event["event"], "input_released")
+            self.assertIs(event["owner_release"], record)
+            self.assertEqual(event["owner_release"]["key_release_intervals_ns"], intervals)
+            self.assertFalse(event["grants_input_authority"])
+        finally:
+            if owner is not None:
+                owner.close()
+            sys.modules.pop("input_owner_v12", None)
+            for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
