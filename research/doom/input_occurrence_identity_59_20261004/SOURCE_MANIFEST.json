@@ -1,0 +1,74 @@
+{
+  "schema": "map01-input-occurrence-identity-source-manifest-v1",
+  "base_commit": "5d5748a85816297905ba16bbc0b342e41af22559",
+  "base_sources": {
+    "research/doom/session_map01_v15.py": {
+      "blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+      "bytes": 6406
+    },
+    "research/doom/map01_scorer_stdio_adapter_v1.py": {
+      "blob": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+      "sha256": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+      "bytes": 5200
+    },
+    "research/doom/independent_progress_clock_v2.py": {
+      "blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+      "bytes": 8754
+    },
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": {
+      "blob": "93be5c2d05d946d43a7f063008e591dd66de2779",
+      "sha256": "a9e109f07dbfdefbf33e87840528c4e24195b2d435782d92f0880049721d0b7d",
+      "bytes": 12222
+    },
+    "research/doom/doom_typed_release_backend_v2.py": {
+      "blob": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+      "sha256": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+      "bytes": 2164
+    },
+    "research/live_control/input_owner_v12.py": {
+      "blob": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+      "sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+      "bytes": 20676
+    },
+    "research/live_control/input_transition_owner_v4.py": {
+      "blob": "02c23c34e9382650a46e80d75fe49d5409153b75",
+      "sha256": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+      "bytes": 4022
+    },
+    "research/live_control/executor_v13.py": {
+      "blob": "89a629efec0d30b0ec6eab0a7ea15057f5e44ec5",
+      "sha256": "90b5c7e5e7309a9f815d82dd0bd8dae0a6b109d04587b565f97195076bfb7683",
+      "bytes": 7679
+    }
+  },
+  "candidate_artifacts": {
+    "research/live_control/input_owner_v12.py": {
+      "sha256": "038a36ddf2e78961e99f0490acb14d1bcbf71d16e32bdb796ecdbc02397a25dd",
+      "bytes": 22175
+    },
+    "research/doom/input_occurrence_identity_59_20261004/attribution.py": {
+      "sha256": "ae80acbf9007a866600b7431a7e29a7c7eb5b0820d2b3d94fde313bfa546b6f2",
+      "bytes": 7979
+    },
+    "research/doom/input_occurrence_identity_59_20261004/test_attribution.py": {
+      "sha256": "37c042a58ff3518a1ece9f3008c9402885de650b664b4888593af0baec9df47b",
+      "bytes": 5589
+    },
+    "research/doom/input_occurrence_identity_59_20261004/test_owner_occurrence_identity.py": {
+      "sha256": "80bd9d24e8b6271c2a84bcde0ac589f9e8dca5441309f81cc4c3a04e8e29fc1c",
+      "bytes": 5575
+    },
+    "research/doom/input_occurrence_identity_59_20261004/README.md": {
+      "sha256": "18fafdf632fb7849498029ee157b3e10c5ef9c6e2369f0f7bb8c26bf4e0e7a15",
+      "bytes": 3596
+    }
+  },
+  "known_composition": {
+    "pr": 7533,
+    "head": "88cbb17c8661f94a9b7e89aba82af2eef8da6ae7",
+    "field": "key_release_intervals_ns",
+    "status": "stacked construction against open draft PR #7533; its base snapshot is current main 5d5748a85816297905ba16bbc0b342e41af22559; not current-main integration"
+  }
+}

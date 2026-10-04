@@ -81,6 +81,8 @@ class InputOwner:
             self.ready.set()
             return
         held = {}
+        held_occurrences = {}
+        occurrence_sequence = 0
         touched = set()
         buttons = {}
         touched_buttons = set()
@@ -185,7 +187,13 @@ class InputOwner:
             d.sync()
             xserver_sync_completed_ns = time.perf_counter_ns()
             key_release_intervals_ns = [
-                {"keycode": code, "interval_ns": [started, xserver_sync_completed_ns]}
+                {
+                    'keycode': code,
+                    'interval_ns': [started, xserver_sync_completed_ns],
+                    'input_occurrence_id': held_occurrences.get(code),
+                    'owner_id': self.owner_id,
+                    'intent_token': getattr(held[code], 'intent_token', None),
+                }
                 for code, started in key_release_starts
             ]
             mask = d.screen().root.query_pointer().mask
@@ -206,6 +214,7 @@ class InputOwner:
             buttons.clear()
             touched_buttons.clear()
             held.clear()
+            held_occurrences.clear()
             touched.clear()
             active = None
             return record
@@ -335,14 +344,20 @@ class InputOwner:
                             if lease.cancel.is_set():
                                 raise Cancelled()
                             admitted = time.perf_counter_ns()
+                            occurrence_sequence += 1
+                            occurrence_id = f'{self.owner_id}:{occurrence_sequence}'
                             active = lease
                             active_pointer = False
                             touched.add(code)
                             held[code] = lease
+                            held_occurrences[code] = occurrence_id
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
                             result = dict(event='input_admission', key=key, admitted_ns=admitted,
-                                          input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
+                                          input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline,
+                                          keycode=code, input_occurrence_id=occurrence_id,
+                                          owner_id=self.owner_id,
+                                          intent_token=getattr(lease, 'intent_token', None))
                         else:
                             # Cleanup from an old intent must never release a newer hold.
                             if code in held and held[code] is not lease:
@@ -357,10 +372,12 @@ class InputOwner:
                                     cancel.is_set() if callable(getattr(cancel, 'is_set', None))
                                     else None
                                 )
+                                occurrence_id = held_occurrences.pop(code, None)
                                 del held[code]
                                 self.records.append(dict(
                                     event='owner_explicit_keyup', operation='up',
                                     owner_id=self.owner_id, key=key, keycode=code,
+                                    input_occurrence_id=occurrence_id,
                                     intent_token=getattr(lease, 'intent_token', None),
                                     valid_until_ns=getattr(lease, 'deadline', None),
                                     owner_keyrelease_started_ns=owner_keyrelease_started_ns,
