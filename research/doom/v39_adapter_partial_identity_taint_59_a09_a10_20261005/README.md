@@ -22,11 +22,13 @@ The repair tracks stable partial nested-identity signatures across complete grou
 
 - A09: frozen baseline and pre-fix composition each exposed paired timing in 8/8 cases; repaired source exposed 0/8.
 - A10: pre-A10 source exposed paired timing in 8/8 cases; repaired source exposed 0/8.
+- A11: malformed outer `id`/`step` with intact nested identity exposed paired timing in the frozen baseline in 4/4 cases; candidate returned `identity_unavailable` and an incomplete, null-interval receipt in 4/4.
 - Independent raw replay: 54 checks, PASS across all 16 repaired cases.
-- The full `test_map01_v39_typed_state_feedback` module passes 40/40 on the branch and on the current-main merge tree.
+- A11 independent raw audit: 13 checks, PASS across all four malformed outer identity cases.
+- Before A11, the full `test_map01_v39_typed_state_feedback` module passed 40/40 on the branch and on the then-current main merge tree. A11 adds one test method; its updated branch and main-composition suite results are recorded in `A11_FULL_SUITE.txt` and the refreshed current-main integration record.
 - Python 3.11 byte-compilation and `git diff --check` pass.
 
-The exact A09 and A10 freezes and pre-repair source snapshots are retained here. The raw fixture and A08 baseline remain at their original paths under `../map01_v39_perkey_bridge_a01/` and `../v39_adapter_nested_identity_taint_59_a08_20261005/`. `run_replay.py` and `audit_replay.py` reproduce the combined result on a checkout containing these files. `CURRENT_MAIN_INTEGRATION.json` plus its replay and suite logs record the current-main merge result.
+The exact A09, A10, and A11 freezes and pre-repair source/test snapshots are retained here. The raw fixture and A08 baseline remain at their original paths under `../map01_v39_perkey_bridge_a01/` and `../v39_adapter_nested_identity_taint_59_a08_20261005/`. `run_replay.py`, `audit_replay.py`, and `audit_a11.py` reproduce the results on a checkout containing these files. `CURRENT_MAIN_INTEGRATION.json` plus its replay and suite logs record current-main composition; it predates the A11 test-only addition and must be refreshed before merge.
 
 The merge-tree package-verifier run has one expected failure: its PR-branch source pin differs from the composed current-main controller hash. The pinned branch package itself passes its 30 checks. Keep immutable experiment-source verification separate from current-main integration verification.
 

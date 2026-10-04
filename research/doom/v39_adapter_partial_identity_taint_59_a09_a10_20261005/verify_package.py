@@ -4,7 +4,7 @@ H=Path(__file__).resolve().parent;D=H.parent;REPO=D.parents[1];checks=[]
 def ck(v,n):checks.append((bool(v),n))
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def load(n):return json.loads((H/n).read_text(encoding="utf-8-sig"))
-final=load("FINAL_VALIDATION.json");freeze9=load("A09_FREEZE.json");freeze10=load("A10_FREEZE.json");replay=load("REPLAY_RESULT.json");audit=load("REPLAY_AUDIT.json")
+final=load("FINAL_VALIDATION.json");freeze9=load("A09_FREEZE.json");freeze10=load("A10_FREEZE.json");freeze11=load("A11_FREEZE.json");replay=load("REPLAY_RESULT.json");audit=load("REPLAY_AUDIT.json");a11=load("A11_RESULT.json");a11audit=load("A11_AUDIT.json")
 ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==final["candidate_source_sha256"],"current controller pin")
 ck(sha(REPO/"research/doom/test_map01_v39_typed_state_feedback.py")==final["candidate_test_sha256"],"current test pin")
 ck(sha(D/"map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl")==final["fixture_sha256"],"retained fixture pin")
@@ -14,7 +14,12 @@ ck(sha(H/"A10_PRETEST_TEST.py")==freeze10["a09_test_sha256"],"A10 pretest test s
 ck(replay["A09"]["baseline_false_pairs"]==8 and replay["A09"]["pre_fix_false_pairs"]==8 and replay["A09"]["repaired_false_pairs"]==0,"A09 red/green matrix")
 ck(replay["A10"]["pre_fix_false_pairs"]==8 and replay["A10"]["repaired_false_pairs"]==0,"A10 red/green matrix")
 ck(audit["audit"]=="PASS" and audit["checks"]==54 and audit["recomputed_mutations"]==16,"independent replay audit")
-ck("40 tests" in (H/"A09_A10_FULL_SUITE.txt").read_text(encoding="utf-8") and "OK" in (H/"A09_A10_FULL_SUITE.txt").read_text(encoding="utf-8"),"full local test log")
+ck(sha(H/"A11_TEST_PRE_ADDITION.py")==freeze11["candidate_test_sha256"],"A11 pre-test source snapshot")
+ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==freeze11["candidate_source_sha256"],"A11 candidate source pin")
+ck(sha(H/"A11_FREEZE.json")==a11["freeze_sha256"],"A11 freeze binding")
+ck(a11["baseline_false_pair_count"]==4 and a11["candidate_false_pair_count"]==0 and a11["candidate_closed_count"]==4,"A11 outcome matrix")
+ck(a11audit["audit"]=="PASS" and a11audit["checks"]==13,"A11 independent audit")
+ck("41 tests" in (H/"A11_FULL_SUITE.txt").read_text(encoding="utf-8") and "OK" in (H/"A11_FULL_SUITE.txt").read_text(encoding="utf-8"),"full local test log")
 manifest=H/"SHA256SUMS_A09.txt"; entries={};valid=True
 for line in manifest.read_text(encoding="utf-8-sig").splitlines():
  if "  " not in line:valid=False;continue
