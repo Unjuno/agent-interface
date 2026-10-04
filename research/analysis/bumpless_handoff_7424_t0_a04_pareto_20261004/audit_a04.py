@@ -6,8 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 ALPHA, RATE, REF, HORIZON, FIRST_CAP = 0.25, 0.2, 1.0, 20, 0.15
 EXPECTED = {
-    "no-disturbance": (0.4, 0.6, 6.0238),
-    "step-disturbance-at-switch": (0.5, 0.6, 5.65),
+    "no-disturbance": (0.4, 0.6, 6.023787768676, 6.0238),
+    "step-disturbance-at-switch": (0.5, 0.6, 5.646697966151, 5.65),
 }
 PREDECESSOR_RAW_BLOB = "720a314e1859ddca9580c1fc46b751cd515ec65c"
 
@@ -23,6 +23,12 @@ def rollout_iae(initial_y, commands):
 
 def audit(raw):
     errors = []
+    comparator = json.loads((ROOT / "A03_COLD_MATCH.json").read_text(encoding="utf-8"))
+    if comparator.get("schema") != "issue7424-a04-a03-cold-comparator-v1":
+        errors.append("comparator_schema")
+    if comparator.get("predecessor_raw_git_blob") != PREDECESSOR_RAW_BLOB:
+        errors.append("comparator_source_pin")
+    comparator_rows = {row.get("name"): row for row in comparator.get("cases", [])}
     if raw.get("schema") != "issue7424-a04-pareto-bound-raw-v1":
         errors.append("schema")
     source = raw.get("source", {})
@@ -37,7 +43,7 @@ def audit(raw):
         errors.append("case_set")
     by_name = {row.get("name"): row for row in rows}
     results = {}
-    for name, (initial_y, applied, pinned_cold_iae) in EXPECTED.items():
+    for name, (initial_y, applied, pinned_cold_iae, rounded_cold_iae) in EXPECTED.items():
         row = by_name.get(name)
         if row is None:
             continue
@@ -51,8 +57,13 @@ def audit(raw):
             continue
         cold_iae, _ = rollout_iae(initial_y, cold)
         oracle_iae, oracle_states = rollout_iae(initial_y, oracle)
-        # A03's README records these baseline metrics to 4 and 2 decimals.
-        if abs(cold_iae - pinned_cold_iae) > 0.005:
+        source_row = comparator_rows.get(name, {})
+        if source_row.get("commands") != cold:
+            errors.append(name + ":predecessor_cold_command_match")
+        if not math.isclose(source_row.get("integrated_abs_error_21_samples", math.nan),
+                            pinned_cold_iae, abs_tol=1e-12):
+            errors.append(name + ":predecessor_cold_iae_pin")
+        if not math.isclose(cold_iae, pinned_cold_iae, abs_tol=1e-9):
             errors.append(name + ":pinned_cold_baseline")
         if not math.isclose(row.get("replayed_cold_iae", math.nan), cold_iae, abs_tol=1e-9):
             errors.append(name + ":cold_iae_recompute")
@@ -74,8 +85,9 @@ def audit(raw):
         jump, cold_jump = abs(oracle[0]-applied), abs(cold[0]-applied)
         reduction = 1.0-jump/cold_jump if cold_jump else 0.0
         delta = oracle_iae-pinned_cold_iae
+        rounded_delta = oracle_iae-rounded_cold_iae
         for key, value in (("oracle_first_jump",jump),("continuity_reduction",reduction),
-                           ("iae_delta_vs_pinned_cold",delta)):
+                           ("iae_delta_vs_pinned_cold",rounded_delta)):
             if not math.isclose(row.get(key,math.nan),value,abs_tol=1e-9):
                 errors.append(name+":"+key+"_summary")
         results[name] = {

@@ -27,6 +27,10 @@ class ParetoBoundAuditTests(unittest.TestCase):
         raw=copy.deepcopy(RAW); raw["cases"][0]["oracle_commands"][1]=1.0
         self.assertIn("no-disturbance:slew_bound",audit(raw)["errors"])
 
+    def test_cold_comparator_must_match_pinned_a03_trace(self):
+        raw=copy.deepcopy(RAW); raw["cases"][0]["cold_commands"][0]=0.75
+        self.assertIn("no-disturbance:predecessor_cold_command_match",audit(raw)["errors"])
+
 
 if __name__=="__main__":
     unittest.main(verbosity=2)
