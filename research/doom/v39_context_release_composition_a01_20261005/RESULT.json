@@ -1,0 +1,20 @@
+{
+  "schema": "v39-context-release-composition-result-v1",
+  "disposition": "PASS_COMPOSITION_SCOPED",
+  "base_main": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "components": {
+    "pr_7602": "4c0123339e43bd80333118a32bc1ce625b79ff3f",
+    "pr_7750": "4c7ab51a4512015a70e0e9ab90510b256b8b9cfd",
+    "pr_7769": "905816607eef1552b5e8073d95db1975de00776d"
+  },
+  "synthetic_composition_tree": "22615a96e2166619933cd7fb375fc612ec30579d",
+  "merge_conflicts": 0,
+  "focused_suites": [
+    {"suite": "V39 typed state/per-key projection", "tests": 35, "failures": 0, "errors": 0, "exit_code": 0},
+    {"suite": "owner-issued admission identity", "tests": 3, "failures": 0, "errors": 0, "exit_code": 0},
+    {"suite": "per-key cleanup bridge", "tests": 3, "failures": 0, "errors": 0, "exit_code": 0}
+  ],
+  "total_focused_tests": 41,
+  "environment": "Windows 11 desktop; CPython 3.11.9",
+  "scope": "Synthetic source composition and fake/source-level unit tests only. No X server, ViZDoom, model, planner, GUI, OS input, task effect, independently useful feedback, bounded recovery, or MAP01 result was tested."
+}

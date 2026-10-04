@@ -1,0 +1,26 @@
+{
+  "schema": "git-synthetic-composition-v1",
+  "merges": [
+    {
+      "parents": ["origin/main", "refs/remotes/pr/7602"],
+      "tree": "329d1ea710dcd7957298300acac2a6c97b9856a9",
+      "commit": "8b23a9fc80e041f8b9cef5d786301d70e7e52428"
+    },
+    {
+      "parents": ["8b23a9fc80e041f8b9cef5d786301d70e7e52428", "refs/remotes/pr/7750"],
+      "tree": "e74d0dd8992f9d515ea5f534eda84eef2d083bb5",
+      "commit": "814945f6839bdcd886a483a54665c353fad0a318"
+    },
+    {
+      "parents": ["814945f6839bdcd886a483a54665c353fad0a318", "refs/remotes/pr/7769"],
+      "tree": "22615a96e2166619933cd7fb375fc612ec30579d",
+      "commit": "0c2b763799101527ab4a0105aa13cb54ba090086"
+    }
+  ],
+  "commit_messages": [
+    "Temporary source composition main+7602",
+    "Temporary source composition main+7602+7750",
+    "Temporary source composition main+7602+7750+7769"
+  ],
+  "note": "These commits are local synthetic merge nodes; they do not update any branch or PR. The final tree is the source exported for A01."
+}
