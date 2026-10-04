@@ -6,4 +6,4 @@ The design and independent pixel auditor are reused byte-for-byte from the froze
 
 Construction history: the first A02 unittest attempt imported A01's same-named `candidate` module due Python path precedence; the clean-empty-root test therefore reproduced A01's STOP. The test now imports the A02 file by explicit path and the three construction tests pass. No A02 formal invocation occurred during construction.
 
-T0 remains no-model construction only: 144 matched cue sequences, 288 presentations, 16 isolated controls and 1,280 small PPM image files. The files contain five distinct pixel payloads (one blank frame and four glyphs); file/path count is not stimulus-image diversity. No serial-interference/model hypothesis is tested.
+T0 remains no-model construction only: 144 matched cue sequences, 288 presentations, 16 isolated controls, 1,280 unique small PPM images. No serial-interference/model hypothesis is tested.
