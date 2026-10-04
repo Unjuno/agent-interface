@@ -47,7 +47,15 @@ def verify_frozen(freeze):
             ["dpkg-query", "-W", dpkg_format], text=True).strip():
         raise RuntimeError("STOP_OS_PACKAGE_DRIFT")
     interfaces = sorted(name for _index, name in socket.if_nameindex())
-    if interfaces != ["lo"]:
+    allowed_interfaces = ["ip6tnl0", "lo", "sit0", "tunl0"]
+    links = subprocess.check_output(["ip", "-brief", "link"], text=True).splitlines()
+    link_states = {
+        line.split()[0].split("@", 1)[0]: line.split()[1]
+        for line in links if len(line.split()) >= 2
+    }
+    ipv4_routes = subprocess.check_output(["ip", "route"], text=True).strip()
+    ipv6_routes = subprocess.check_output(["ip", "-6", "route"], text=True).strip()
+    if interfaces != allowed_interfaces or set(link_states) != set(allowed_interfaces) or +            any(state != "DOWN" for state in link_states.values()) or +            ipv4_routes or ipv6_routes:
         raise RuntimeError("STOP_NETWORK_NAMESPACE:" + repr(interfaces))
 
 
@@ -167,6 +175,9 @@ def main():
                  "candidate_completed": False, "model_calls": 0,
                  "runtime_environment_sha256": freeze["runtime_environment_sha256"],
                  "network_interfaces": interfaces,
+                 "network_link_states": link_states,
+                 "network_ipv4_routes": ipv4_routes,
+                 "network_ipv6_routes": ipv6_routes,
                  "trials": [], "cleanup": {}, "issues": []}
     exit_code = 2
     try:

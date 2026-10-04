@@ -74,7 +74,10 @@ def fixture():
     candidate = {
         "candidate_completed": True, "model_calls": 0,
         "runtime_environment_sha256": "environment",
-        "network_interfaces": ["lo"],
+        "network_interfaces": ["ip6tnl0", "lo", "sit0", "tunl0"],
+        "network_link_states": {"ip6tnl0": "DOWN", "lo": "DOWN",
+                                "sit0": "DOWN", "tunl0": "DOWN"},
+        "network_ipv4_routes": "", "network_ipv6_routes": "",
         "backend_class": "doom_typed_release_backend_v3.Backend",
         "executor_class": "executor_v12.Executor", "owner_id": owner,
         "runtime_source_hashes": {}, "trials": trials,

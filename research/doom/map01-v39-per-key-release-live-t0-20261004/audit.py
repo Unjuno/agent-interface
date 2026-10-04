@@ -40,8 +40,12 @@ def evaluate_checks(freeze, candidate, events, observer_rows):
     checks["runtime_environment_matches_freeze"] = (
         candidate.get("runtime_environment_sha256") ==
         freeze.get("runtime_environment_sha256"))
-    checks["network_namespace_has_loopback_only"] = (
-        candidate.get("network_interfaces") == ["lo"])
+    checks["network_namespace_has_no_routes_and_links_down"] = (
+        candidate.get("network_interfaces") == ["ip6tnl0", "lo", "sit0", "tunl0"] and
+        candidate.get("network_link_states") == {
+            "ip6tnl0": "DOWN", "lo": "DOWN", "sit0": "DOWN", "tunl0": "DOWN"} and
+        candidate.get("network_ipv4_routes") == "" and
+        candidate.get("network_ipv6_routes") == "")
     checks["current_v39_backend_selected"] = (
         candidate.get("backend_class") == "doom_typed_release_backend_v3.Backend" and
         candidate.get("executor_class") == "executor_v12.Executor")
