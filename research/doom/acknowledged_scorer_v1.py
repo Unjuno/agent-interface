@@ -29,6 +29,7 @@ class AcknowledgedSampler:
         self._failure = None
         self.external_ack = None
         self.update_sequence = 0
+        self._ack_emit_failed = False
 
     def before_external_update(self, game):
         if self._failure is not None:
@@ -50,6 +51,23 @@ class AcknowledgedSampler:
                              "tic_before": before, "tic_after": after,
                              "update_started_ns": started,
                              "update_returned_ns": returned}
+        self._emit_ack(self.external_ack)
+
+    def _emit_ack(self, producer):
+        try:
+            self.emit({"schema": "scorer-client-update-v2",
+                   "event": "update_acknowledged", "run_id": self.run_id,
+                   "update_sequence": producer["update_sequence"],
+                   "tic_before": producer["tic_before"],
+                   "tic_after": producer["tic_after"],
+                   "update_started_ns": producer["update_started_ns"],
+                   "update_returned_ns": producer["update_returned_ns"],
+                   "update_status": "UPDATE_RETURNED",
+                   "sample_status": "NOT_ATTEMPTED",
+                   "producer": copy.deepcopy(producer)})
+        except BaseException:
+            self._ack_emit_failed = True
+            raise
 
     def __call__(self, game, variables, timeout_seconds, **kwargs):
         if self._failure is not None:
@@ -61,7 +79,8 @@ class AcknowledgedSampler:
         elif self.game is not game:
             raise RuntimeError("new game requires a new scorer run")
         self.sequence += 1
-        row = {"schema": "scorer-client-update-v1", "run_id": self.run_id,
+        self._ack_emit_failed = False
+        row = {"schema": "scorer-client-update-v2", "event": "sample_result", "run_id": self.run_id,
                "sample_sequence": self.sequence, "controller_visible": False,
                "status": "UPDATE_UNAVAILABLE",
                "update_status": "UPDATE_NOT_ATTEMPTED",
@@ -102,6 +121,8 @@ class AcknowledgedSampler:
                             "update_started_ns": row["update_started_ns"],
                             "update_returned_ns": row["update_returned_ns"]}
                 row["update_status"] = "UPDATE_RETURNED"
+                if self.external_ack is external_before:
+                    self._emit_ack(producer)
             row["producer"] = copy.deepcopy(producer)
             row["sample_status"] = "SAMPLE_IN_PROGRESS"
             sample = self.sample_fn(game, variables, timeout_seconds, **kwargs)
@@ -117,7 +138,7 @@ class AcknowledgedSampler:
                 sample.episode_finished, sample.player_dead, sample.map_exit,
                 producer)
             row.update(status=producer["observation_status"],
-                       sample_status="SAMPLE_RETURNED", sample=result.as_dict())
+                       sample_status="AVAILABLE", sample=result.as_dict())
         except BaseException as error:
             self._failure = error
             sample_started = row["sample_status"] == "SAMPLE_IN_PROGRESS"
@@ -129,14 +150,16 @@ class AcknowledgedSampler:
                 row["update_status"] = "UPDATE_UNAVAILABLE"
             update_unavailable = update_failed
             row.update(
-                status="SAMPLE_UNAVAILABLE" if sample_started or not update_unavailable
+                status="SAMPLE_UNAVAILABLE" if sample_started or "producer" in row or not update_unavailable
                 else "UPDATE_UNAVAILABLE",
-                sample_status="SAMPLE_UNAVAILABLE" if sample_started
-                else "SAMPLE_NOT_ATTEMPTED",
+                sample_status="UNAVAILABLE" if sample_started
+                else "NOT_ATTEMPTED",
                 error_type=type(error).__name__, error=str(error))
             raise
         finally:
             # No retry after an ambiguous evidence-sink exception.
+            if self._ack_emit_failed:
+                raise self._failure
             try:
                 self.emit(row)
             except BaseException as evidence_error:

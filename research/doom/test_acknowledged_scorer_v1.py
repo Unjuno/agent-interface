@@ -50,15 +50,15 @@ class AcknowledgedScorerTests(unittest.TestCase):
             payload = sink.samples[0]['payload']
             self.assertEqual(payload['producer']['run_id'], 'run-a')
             self.assertEqual(payload['producer']['tic_after'], 11)
-            self.assertEqual(rows[0]['sample'], payload)
+            self.assertEqual(rows[-1]['sample'], payload)
 
     def test_noop_never_returns_a_sample(self):
         sampler, rows = self.sampler()
         with self.assertRaisesRegex(RuntimeError, 'did not advance'):
             sampler(Game(delta=0), None, 10)
-        self.assertEqual(rows[0]['status'], 'UPDATE_UNAVAILABLE')
-        self.assertEqual(rows[0]['update_status'], 'UPDATE_RETURNED_NO_TIC_ADVANCE')
-        self.assertEqual(rows[0]['sample_status'], 'SAMPLE_NOT_ATTEMPTED')
+        self.assertEqual(rows[-1]['status'], 'UPDATE_UNAVAILABLE')
+        self.assertEqual(rows[-1]['update_status'], 'UPDATE_RETURNED_NO_TIC_ADVANCE')
+        self.assertEqual(rows[-1]['sample_status'], 'NOT_ATTEMPTED')
         self.assertIsNone(sampler.last)
 
     def test_failed_update_is_recorded_without_retry(self):
@@ -67,7 +67,7 @@ class AcknowledgedScorerTests(unittest.TestCase):
         with self.assertRaises(OSError):
             sampler(game, None, 10)
         self.assertEqual(game.calls, 1)
-        self.assertEqual(rows[0]['error_type'], 'OSError')
+        self.assertEqual(rows[-1]['error_type'], 'OSError')
 
     def test_sample_failure_retains_successful_update_identity(self):
         game = Game()
@@ -80,16 +80,52 @@ class AcknowledgedScorerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'scorer sample failed'):
             sampler(game, None, 10)
 
-        self.assertEqual(rows[0]['status'], 'SAMPLE_UNAVAILABLE')
-        self.assertEqual(rows[0]['update_status'], 'UPDATE_RETURNED')
-        self.assertEqual(rows[0]['sample_status'], 'SAMPLE_UNAVAILABLE')
-        self.assertEqual(rows[0]['producer'], {
+        self.assertEqual(rows[-1]['status'], 'SAMPLE_UNAVAILABLE')
+        self.assertEqual(rows[-1]['update_status'], 'UPDATE_RETURNED')
+        self.assertEqual(rows[-1]['sample_status'], 'UNAVAILABLE')
+        self.assertEqual(rows[-1]['producer'], {
             'run_id': 'run-a', 'sample_sequence': 1, 'update_sequence': 1,
             'observation_status': 'UPDATE_RETURNED', 'tic_before': 2,
             'tic_after': 11, 'update_started_ns': 10, 'update_returned_ns': 10,
         })
         self.assertEqual(game.calls, 1)
         self.assertIsNone(sampler.last)
+
+    def test_update_ack_is_emitted_before_sample_callback(self):
+        game = Game()
+        events = []
+        def check_ack_before_sample(*args, **kwargs):
+            self.assertEqual(events[0]['event'], 'update_acknowledged')
+            self.assertEqual(events[0]['producer']['tic_after'], 11)
+            return ProgressSample(100, 0, 0, False, False, False)
+        sampler = AcknowledgedSampler(check_ack_before_sample, 'run-a', events.append,
+                                      clock_ns=lambda: 10)
+
+        sampler(game, None, 10)
+
+        self.assertEqual([event['event'] for event in events],
+                         ['update_acknowledged', 'sample_result'])
+        self.assertEqual(events[1]['sample_status'], 'AVAILABLE')
+
+    def test_ack_write_failure_stops_sampling_and_refuses_retry(self):
+        game = Game()
+        attempts = []
+        sample_calls = []
+        def fail_ack(event):
+            attempts.append(event)
+            raise OSError('ack sidecar write failed')
+        def sample_called(*args, **kwargs):
+            sample_calls.append(True)
+            return ProgressSample(100, 0, 0, False, False, False)
+        sampler = AcknowledgedSampler(sample_called, 'run-a', fail_ack,
+                                      clock_ns=lambda: 10)
+
+        with self.assertRaisesRegex(OSError, 'ack sidecar write failed'):
+            sampler(game, None, 10)
+        with self.assertRaisesRegex(RuntimeError, 'retry refused'):
+            sampler(game, None, 10)
+
+        self.assertEqual((game.calls, sample_calls, len(attempts)), (1, [], 1))
 
     def test_sample_validation_failure_retains_successful_update_identity(self):
         game = Game()
@@ -102,11 +138,11 @@ class AcknowledgedScorerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'kill_count'):
             sampler(game, None, 10)
 
-        self.assertEqual(rows[0]['status'], 'SAMPLE_UNAVAILABLE')
-        self.assertEqual(rows[0]['update_status'], 'UPDATE_RETURNED')
-        self.assertEqual(rows[0]['sample_status'], 'SAMPLE_UNAVAILABLE')
-        self.assertEqual(rows[0]['producer']['tic_after'], 11)
-        self.assertEqual(rows[0]['producer']['sample_sequence'], 1)
+        self.assertEqual(rows[-1]['status'], 'SAMPLE_UNAVAILABLE')
+        self.assertEqual(rows[-1]['update_status'], 'UPDATE_RETURNED')
+        self.assertEqual(rows[-1]['sample_status'], 'UNAVAILABLE')
+        self.assertEqual(rows[-1]['producer']['tic_after'], 11)
+        self.assertEqual(rows[-1]['producer']['sample_sequence'], 1)
         self.assertEqual(game.calls, 1)
         self.assertIsNone(sampler.last)
 
@@ -122,10 +158,10 @@ class AcknowledgedScorerTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'tic changed'):
             sampler(game, None, 10)
 
-        self.assertEqual(rows[0]['status'], 'SAMPLE_UNAVAILABLE')
-        self.assertEqual(rows[0]['update_status'], 'UPDATE_RETURNED')
-        self.assertEqual(rows[0]['sample_status'], 'SAMPLE_UNAVAILABLE')
-        self.assertEqual(rows[0]['producer']['tic_after'], 11)
+        self.assertEqual(rows[-1]['status'], 'SAMPLE_UNAVAILABLE')
+        self.assertEqual(rows[-1]['update_status'], 'UPDATE_RETURNED')
+        self.assertEqual(rows[-1]['sample_status'], 'UNAVAILABLE')
+        self.assertEqual(rows[-1]['producer']['tic_after'], 11)
         self.assertEqual(game.calls, 1)
         self.assertIsNone(sampler.last)
 
@@ -163,10 +199,10 @@ class AcknowledgedScorerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'terminal scorer sample failed'):
             sampler(game, None, 10)
 
-        row = rows[1]
+        row = rows[-1]
         self.assertEqual(row['status'], 'SAMPLE_UNAVAILABLE')
         self.assertEqual(row['update_status'], 'TERMINAL_REPEAT_NO_UPDATE')
-        self.assertEqual(row['sample_status'], 'SAMPLE_UNAVAILABLE')
+        self.assertEqual(row['sample_status'], 'UNAVAILABLE')
         self.assertEqual(row['producer'], {
             'run_id': 'run-a', 'sample_sequence': 2, 'update_sequence': 1,
             'observation_status': 'TERMINAL_REPEAT_NO_UPDATE', 'tic_before': 2,
@@ -197,7 +233,7 @@ class AcknowledgedScorerTests(unittest.TestCase):
         row = rows[-1]
         self.assertEqual(row['status'], 'SAMPLE_UNAVAILABLE')
         self.assertEqual(row['update_status'], 'EXTERNAL_UPDATE_RETURNED')
-        self.assertEqual(row['sample_status'], 'SAMPLE_UNAVAILABLE')
+        self.assertEqual(row['sample_status'], 'UNAVAILABLE')
         self.assertEqual(row['producer']['tic_before'], 11)
         self.assertEqual(row['producer']['tic_after'], 20)
         self.assertEqual(row['producer']['update_sequence'], 2)
