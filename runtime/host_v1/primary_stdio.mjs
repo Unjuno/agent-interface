@@ -161,7 +161,8 @@ export async function runPrimaryStdio(config,{input=process.stdin,output=process
       throw error;
     }
     if(failure)throw failure;
-    await emit(output,{schema,status:'terminal',exit,state:exchange.state()});
+    try {await emit(output,{schema,status:'terminal',exit,state:exchange.state()});}
+    catch(error){failure??=error;}
     if(failure)throw failure;
   } finally {
     output.removeListener('close',outputClosed);
