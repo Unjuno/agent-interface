@@ -39,16 +39,17 @@ class AttributionTests(unittest.TestCase):
     def require_implementation(self):
         self.assertIsNotNone(
             attribute_positive_events,
-            "scorer_feedback_attribution_v1 must implement the tested contract",
+            "scorer_feedback_attribution_v2 must implement the tested contract",
         )
 
-    def test_unique_intent_must_cover_entire_scorer_detection_interval(self):
+    def test_strict_envelope_is_possible_only_not_confirmed_hold(self):
         self.require_implementation()
         rows = attribute_positive_events(
             samples([100, 200]), [event(200)], [interval("intent-a", "ATTACK", 90, 210)]
         )
-        self.assertEqual(rows[0]["status"], "TEMPORALLY_UNIQUE")
-        self.assertEqual(rows[0]["intent_token"], "intent-a")
+        self.assertEqual(rows[0]["status"], "SINGLE_POSSIBLE_INTENT_ENVELOPE")
+        self.assertIsNone(rows[0]["intent_token"])
+        self.assertEqual(rows[0]["possible_intent_tokens"], ["intent-a"])
         self.assertEqual(rows[0]["detection_interval_ns"], [100, 200])
         self.assertEqual(rows[0]["causal_attribution"], "NOT_ESTABLISHED")
 
@@ -76,7 +77,8 @@ class AttributionTests(unittest.TestCase):
             [event(200)],
             [interval("intent-a", "ATTACK", 90, 150), interval("intent-a", "FORWARD", 150, 210)],
         )
-        self.assertEqual(rows[0]["status"], "TEMPORALLY_UNIQUE")
+        self.assertEqual(rows[0]["status"], "SINGLE_POSSIBLE_INTENT_ENVELOPE")
+        self.assertIsNone(rows[0]["intent_token"])
 
     def test_unverified_release_cannot_establish_unique_coverage(self):
         self.require_implementation()
@@ -135,13 +137,23 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(rows[0]["reason"], "endpoint_tie_without_authenticated_order")
         self.assertIsNone(rows[0]["intent_token"])
 
-    def test_strictly_bracketing_interval_remains_unique(self):
+    def test_strictly_bracketing_interval_remains_a_possible_envelope(self):
         self.require_implementation()
         rows = attribute_positive_events(
             samples([100, 200]), [event(200)], [interval("intent-a", "ATTACK", 90, 210)]
         )
-        self.assertEqual(rows[0]["status"], "TEMPORALLY_UNIQUE")
-        self.assertEqual(rows[0]["intent_token"], "intent-a")
+        self.assertEqual(rows[0]["status"], "SINGLE_POSSIBLE_INTENT_ENVELOPE")
+        self.assertIsNone(rows[0]["intent_token"])
+
+    def test_envelope_does_not_claim_hold_when_inner_lifecycle_bounds_are_narrow(self):
+        self.require_implementation()
+        action = interval("intent-a", "ATTACK", 90, 210)
+        action["input_ack_ns"] = 150
+        action["release_request_ns"] = 160
+        rows = attribute_positive_events(samples([100, 200]), [event(200)], [action])
+        self.assertEqual(rows[0]["status"], "SINGLE_POSSIBLE_INTENT_ENVELOPE")
+        self.assertEqual(rows[0]["possible_intent_tokens"], ["intent-a"])
+        self.assertIsNone(rows[0]["intent_token"])
 
 
 if __name__ == "__main__":

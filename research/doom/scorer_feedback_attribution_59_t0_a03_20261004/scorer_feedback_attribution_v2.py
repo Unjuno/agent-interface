@@ -1,8 +1,8 @@
-"""Fail-closed temporal association of independent positive events to input intents.
+"""Fail-closed possible-envelope association of scorer events to input intents.
 
-This utility does not infer causation. It only reports an intent when verified
-per-key input intervals cover the complete scorer detection interval and no
-other intent could overlap that interval.
+This utility does not infer causation or confirmed held-key coverage. Admission
+and release/XSync timestamps bound a possible input envelope; they do not prove
+the key remained down throughout it.
 """
 from __future__ import annotations
 
@@ -85,11 +85,11 @@ def attribute_positive_events(
 ) -> list[dict]:
     """Return conservative event-to-intent temporal associations.
 
-    Each positive event is bracketed by its immediately preceding scorer sample
-    and its own observed sample. A unique result requires a single intent token
-    to cover that entire interval with verified per-key bounds; overlap by a
-    different token is ambiguous. Partial, missing, or unverified coverage is
-    unresolved. The output explicitly leaves causal attribution unestablished.
+Each positive event is bracketed by its immediately preceding scorer sample
+    and its own observed sample. A single possible-intent envelope is reported
+    only when its verified bounds strictly span that bracket and no other
+    intent could overlap. Timestamp ties remain unresolved. This is not proof
+    the key was held throughout the bracket or that it caused the event.
     """
     times = _validated_samples(samples)
     sample_positions = {time_ns: index for index, time_ns in enumerate(times)}
@@ -156,9 +156,8 @@ def attribute_positive_events(
             elif any(row["start"] == lower or row["end"] == upper for row in rows):
                 reason = "endpoint_tie_without_authenticated_order"
             elif _covers_bracket(rows, lower, upper):
-                status = "TEMPORALLY_UNIQUE"
-                reason = "one_verified_intent_covers_full_detection_interval"
-                intent_token = token
+                status = "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+                reason = "one_verified_envelope_spans_detection_interval"
 
         output.append({
             "event_sequence": sequence,

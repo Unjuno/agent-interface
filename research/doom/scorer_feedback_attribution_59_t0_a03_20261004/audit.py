@@ -13,7 +13,8 @@ for name in ("admission_tied_to_lower", "release_tied_to_upper"):
     assert new["reason"] == "endpoint_tie_without_authenticated_order"
     assert new["causal_attribution"] == "NOT_ESTABLISHED"
 strict = data["cases"]["strictly_bracketed"]["a03"][0]
-assert strict["status"] == "TEMPORALLY_UNIQUE" and strict["intent_token"] == "intent-a"
+assert strict["status"] == "SINGLE_POSSIBLE_INTENT_ENVELOPE" and strict["intent_token"] is None
+assert strict["possible_intent_tokens"] == ["intent-a"]
 assert all(row["causal_attribution"] == "NOT_ESTABLISHED"
            for case in data["cases"].values() for variant in case.values() for row in variant)
 print("A03 saved-result audit: PASS (3 comparisons; endpoint ties fail closed; causal labels absent)")
