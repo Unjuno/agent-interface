@@ -58,6 +58,12 @@ def main():
     assert "Ran 11 tests" in followup_tests and "OK" in followup_tests
     for key in ("test_exit", "compile_exit", "diff_check_exit"):
         assert (PACKET / followup[key]).read_text(encoding="utf-8").strip() == "0"
+    post_merge = freeze["followup_02"]
+    assert sha256(REPO / post_merge["test_source_path"]) == post_merge["test_source_sha256"]
+    post_merge_tests = (PACKET / post_merge["test_output"]).read_text(encoding="utf-8")
+    assert "Ran 11 tests" in post_merge_tests and "OK" in post_merge_tests
+    for key in ("test_exit", "compile_exit", "diff_check_exit"):
+        assert (PACKET / post_merge[key]).read_text(encoding="utf-8").strip() == "0"
     print(json.dumps({"status": "PASS", "baseline_red": 2,
                       "candidate_tests": "10_PASS",
                       "followup_tests": "11_PASS",

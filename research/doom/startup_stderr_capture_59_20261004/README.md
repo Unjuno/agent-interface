@@ -19,3 +19,7 @@ The candidate wait and V39 controller modules pass 10/10; Python compilation and
 After reviewing the first result, I found that the subprocess test exercised the file-sink helper but did not assert that V39 passes that sink to its actual `subprocess.Popen` call. The follow-up adds an AST regression that requires one V39 launch, an `open_child_stderr_capture(...)` assignment to `stderr_capture`, and `stderr=stderr_capture`. This is a construction-level wiring check; it does not launch the V39 game session. The original 10-test raw output remains unchanged.
 
 The new wiring regression fails on the exact baseline source (1 expected failure), then the updated wait/controller suites pass 11/11. Python compilation and `git diff --check` pass. The exact outputs are in `out/followup-01-*`; `FREEZE.json` records the source hashes, and `audit.py` checks this follow-up while validating the original 10-test candidate source from its retained Git commit.
+
+## Follow-up 02 — current-main integration
+
+After main advanced through #7577, I merged current main commit `ab63eeb452f5f305f08e9d358efe2296f4c26211` into this PR branch. The stderr change remained isolated from the comparison archive and UNKNOWN recovery changes. The wait/controller suites still pass 11/11 after the merge; compilation, whitespace checks, and the artifact audit pass. The test, compile, and diff-check outputs are retained in `out/followup-02-post-merge-*`.
