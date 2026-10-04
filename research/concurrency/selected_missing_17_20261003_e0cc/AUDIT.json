@@ -1,0 +1,123 @@
+{
+  "schema": "selected-missing-independent-saved-audit-v1",
+  "decision": "PASS_SCOPED_SELECTED_MISSING_COUNTEREXAMPLE",
+  "passed": true,
+  "source_check": {
+    "source_images": 4,
+    "other_methods_and_module_AST_unchanged": true,
+    "present_match_precedes_guard": true,
+    "source_execution": 0
+  },
+  "graphs": [
+    {
+      "policy": "baseline",
+      "states": 4,
+      "edges": 4,
+      "A_progress_cycle": false,
+      "all3_progress_cycle": false,
+      "witness_true_callbacks": 0,
+      "max_A_steps_to_terminal_if_A_progresses": 1
+    },
+    {
+      "policy": "outside",
+      "states": 18,
+      "edges": 32,
+      "A_progress_cycle": true,
+      "all3_progress_cycle": true,
+      "witness_true_callbacks": 1,
+      "max_A_steps_to_terminal_if_A_progresses": null
+    },
+    {
+      "policy": "false_deadline_first",
+      "states": 19,
+      "edges": 32,
+      "A_progress_cycle": true,
+      "all3_progress_cycle": true,
+      "witness_true_callbacks": 1,
+      "max_A_steps_to_terminal_if_A_progresses": null
+    },
+    {
+      "policy": "retry_guard",
+      "states": 19,
+      "edges": 28,
+      "A_progress_cycle": false,
+      "all3_progress_cycle": false,
+      "witness_true_callbacks": 0,
+      "max_A_steps_to_terminal_if_A_progresses": 4
+    }
+  ],
+  "semantic_refusals": [
+    {
+      "name": "missing_B",
+      "reason": "complete independent relation"
+    },
+    {
+      "name": "duplicate_edge",
+      "reason": "duplicate transition"
+    },
+    {
+      "name": "Boolean_handle",
+      "reason": "typed handle"
+    },
+    {
+      "name": "cycle_false",
+      "reason": "cycle decision"
+    },
+    {
+      "name": "fairness_false",
+      "reason": "cycle decision"
+    },
+    {
+      "name": "lasso_actor",
+      "reason": "saved lasso edge/adjacency"
+    },
+    {
+      "name": "missing_retry_erased",
+      "reason": "complete independent relation"
+    },
+    {
+      "name": "present_match_erased",
+      "reason": "complete independent relation"
+    },
+    {
+      "name": "forged_source_pin",
+      "reason": "full source pins"
+    },
+    {
+      "name": "forged_decision",
+      "reason": "restricted decision"
+    }
+  ],
+  "parser_refusals": [
+    {
+      "name": "duplicate",
+      "reason": "duplicate JSON key"
+    },
+    {
+      "name": "NaN",
+      "reason": "nonfinite JSON"
+    },
+    {
+      "name": "infinity",
+      "reason": "nonfinite float"
+    },
+    {
+      "name": "malformed",
+      "reason": "Expecting value: line 1 column 6 (char 5)"
+    }
+  ],
+  "model_sha256": "93239b47417ad16c825c538c09d1c8c0fc913cf77a5a6f447f1e8f5b2cac30d8",
+  "checker_sha256": "973c443a749a7d3bd3632e7ad35ad7e9811aa15191d5848e85d9621345986baf",
+  "pid": 98964,
+  "native_calls": 0,
+  "source_calls": 0,
+  "limits": [
+    "finite pureTrueA/pureTrueB/queuecap1/expired-open equality quotient only",
+    "B macro is one legal finite no-interference schedule, not complete B/native linearizability",
+    "matching closedwalk is existential actor progress, not strongtransition/OS fairness",
+    "two comparison handles, not total livePythonreferences/object allocation bound",
+    "guard preserves source initialstillpresent matching return before expiry; fresh-match/selected-late priority remains qualified",
+    "guard max4 A macrosteps conditional on A advancing is not 4seconds, lockdeadline, arbitrarycallback bound or whole-call liveness",
+    "new sourceprojection only; no native/model/task/gui/input release/production adoption/whole17/59/57 goal PASS"
+  ]
+}

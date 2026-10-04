@@ -1,0 +1,60 @@
+"""New source-projected finite matching-churn model; no client/native execution."""
+import collections,json,pathlib
+ROOT=pathlib.Path(__file__).resolve().parent
+SPEC=json.loads((ROOT/'SPEC.json').read_text());PINS=json.loads((ROOT/'SOURCE_PINS.json').read_text())
+def canonical(pc,q,s):
+    labels={};next_label=0
+    for value in [s,q]:
+        if value is not None and value not in labels:labels[value]=next_label;next_label+=1
+    return (pc,None if q is None else labels[q],None if s is None else labels[s])
+def steps(policy,state):
+    pc,q,s=state
+    if pc.startswith('DONE_'):return []
+    events=[]
+    def add(actor,event,pc2,q2=q,s2=s):events.append((actor,event,canonical(pc2,q2,s2)))
+    if policy=='baseline':
+        if q is None:add('A','A_ATOMIC_TIMEOUT','DONE_TIMEOUT')
+        else:add('A','A_ATOMIC_MATCH','DONE_MATCH',None)
+    elif pc=='SNAP':add('A','A_SNAPSHOT','SCAN',q,q)
+    elif pc=='SCAN':add('A','A_EMPTY_SCAN' if s is None else 'A_TRUE_SCAN','FALSE_CHECK' if s is None else 'MATCH_CHECK')
+    elif pc=='MATCH_CHECK':
+        if q==s:add('A','A_MATCH_REMOVE','DONE_MATCH',None)
+        else:add('A','A_SELECTED_MISSING','MISSING')
+    elif pc=='MISSING':add('A','A_MISSING_TIMEOUT' if policy=='retry_guard' else 'A_MISSING_RETRY','DONE_TIMEOUT' if policy=='retry_guard' else 'SNAP')
+    elif pc=='FALSE_CHECK':
+        if policy=='outside' and q!=s:add('A','A_CHANGED_RETRY','SNAP')
+        else:add('A','A_FALSE_TIMEOUT','DONE_TIMEOUT')
+    else:raise ValueError('unknown pc')
+    if q is not None:add('B','B_CONSUME',pc,None)
+    else:add('R','R_FRESH_APPEND',pc,2)
+    return events
+def closed_walk(states,edges,mask):
+    bits={'A':1,'B':2,'R':4};by=collections.defaultdict(list)
+    for e in edges:by[e['from']].append(e)
+    for origin in range(len(states)):
+        if states[origin]['pc'].startswith('DONE_'):continue
+        todo=collections.deque([(origin,0,[])]);seen={(origin,0)}
+        while todo:
+            node,progress,path=todo.popleft()
+            for e in by[node]:
+                m=progress|bits[e['actor']]|(8 if e['event']=='A_TRUE_SCAN' else 0)|(16 if e['event']=='A_SELECTED_MISSING' else 0);walk=path+[e]
+                if e['to']==origin and m&mask==mask:return {'start':origin,'edges':walk}
+                key=(e['to'],m)
+                if key not in seen:seen.add(key);todo.append((e['to'],m,walk))
+    return None
+def graph(policy):
+    first=('SNAP',0,None);states=[first];ids={first:0};todo=collections.deque([first]);edges=[]
+    while todo:
+        st=todo.popleft()
+        for actor,event,target in steps(policy,st):
+            if target not in ids:ids[target]=len(states);states.append(target);todo.append(target)
+            edges.append({'from':ids[st],'to':ids[target],'actor':actor,'event':event})
+    records=[dict(pc=pc,q=q,snap=s) for pc,q,s in states];a=closed_walk(records,edges,1);fair=closed_walk(records,edges,31)
+    return dict(policy=policy,states=records,edges=edges,initial=0,A_progress_cycle=a is not None,all3_progress_cycle=fair is not None,lasso=fair)
+graphs=[graph(p) for p in SPEC['policies']]
+expected={p:p in ['outside','false_deadline_first'] for p in SPEC['policies']}
+passed=all(g['A_progress_cycle']==expected[g['policy']] and g['all3_progress_cycle']==expected[g['policy']] for g in graphs)
+result=dict(schema='selected-missing-quotient-model-v1',allocation=SPEC['id'],source_pins=PINS,graphs=graphs,decision='PASS_SCOPED_SELECTED_MISSING_COUNTEREXAMPLE' if passed else 'FAIL_FROZEN_MODEL_GATE',limits=SPEC['limits'])
+(ROOT/'MODEL.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'decision':result['decision'],'graphs':[(g['policy'],len(g['states']),len(g['edges']),g['A_progress_cycle']) for g in graphs]}))
+if not passed:raise SystemExit(1)
