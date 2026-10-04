@@ -1,0 +1,26 @@
+{
+  "allocation_id": "MAP01-V39-OWNER-KEYMAP-WITNESS-C01-20261004-01",
+  "candidate_complete": false,
+  "candidate_invocations": 1,
+  "environment_sha256": "ac2ed7508e62d5051315277b6ea154e393e1b3eccbd0e064a9aec2a446f77808",
+  "failure": "ValueError('another intent owns input')",
+  "freeze_sha256": "fc23b23bab750fae1acc722afbd2117ba5c5371e103547fb50ad3db384488ba2",
+  "owner_records_after_cleanup": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "close",
+      "valid_until_ns": 93192828957200,
+      "verified": true,
+      "verified_ns": 93184830661501
+    }
+  ],
+  "schema": "map01-v39-owner-keymap-witness-raw-v1",
+  "source_sha256": {
+    "sources/doom_typed_release_backend_v3.py": "61f66e3b6afc92b2b646d0fe9e38ffc841e405e8955fc98eed3c2b6f2b843adb",
+    "sources/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "sources/input_transition_owner_v3.py": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078"
+  },
+  "xvfb_exit_code_after_cleanup": 0
+}
