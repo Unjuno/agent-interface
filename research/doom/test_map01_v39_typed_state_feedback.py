@@ -271,6 +271,7 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
             measurement[request_name] = start
             measurement["sync_return_ns"] = start
             if edge_name == "down":
+                row["admitted_ns"] = start - 1
                 row["input_ack_ns"] = start
 
         for down_start, down_end in intervals:
