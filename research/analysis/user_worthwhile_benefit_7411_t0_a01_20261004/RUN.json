@@ -21,6 +21,14 @@
   "formal_result": "PASS_METHOD_SCOPED",
   "post_run_disposition": "HOLD_AUDIT_INCOMPLETE",
   "post_run_review": "The frozen audit counted/analyzed raw rows and its four mutation checks only confirmed a changed SHA-256; it did not implement the preregistered row-by-row raw validation and reject mutations through the audit path. First outcome preserved; no candidate or frozen-auditor retry.",
+  "posthoc_revalidation": {
+    "command": "python3 -B research/analysis/user_worthwhile_benefit_7411_t0_a01_20261004/posthoc_audit.py",
+    "exit_code": 0,
+    "invocations": 1,
+    "result": "POSTHOC_RAW_REVALIDATION_PASS",
+    "scope": "Not preregistered and does not replace the formal disposition.",
+    "stdout_file": "posthoc_audit.stdout.txt"
+  },
   "host": {
     "python": "CPython 3.14.5",
     "runtime": "macOS host; standard library only"

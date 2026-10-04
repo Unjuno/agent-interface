@@ -6,7 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
-- Issue #7411 T0 A01: [user-worthwhile route-benefit estimator](analysis/user_worthwhile_benefit_7411_t0_a01_20261004/REPORT.md) — synthetic estimates recovered planted medians within 1 s, but the frozen auditor missed preregistered row/mutation validation; disposition HOLD, with first result preserved and no retry.
+- Issue #7411 T0 A01: [user-worthwhile route-benefit estimator](analysis/user_worthwhile_benefit_7411_t0_a01_20261004/REPORT.md) — post-run verification regenerated 4,160 rows and rejected four corruptions, but does not replace the incomplete preregistered audit; formal disposition HOLD.
 
 - Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
 

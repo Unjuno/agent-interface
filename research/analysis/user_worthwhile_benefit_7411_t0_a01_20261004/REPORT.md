@@ -20,6 +20,8 @@ The candidate emitted 4,160 response rows over 160 simulated respondents, 13 sav
 
 The frozen auditor recomputed both estimates from the raw ledger, checked cross-location dose pairing, returned `UNKNOWN` on the low-support control, and confirmed that the correctness-regression control stayed ineligible. However, it only count-checked the raw rows; the four mutation checks merely confirmed that altered JSON has a different SHA-256. It did not validate the frozen generator/schema row-for-row or run the mutations against its audit validation path, as D required. Its nominal pass therefore does not establish the preregistered method gate. The first outcome is preserved without rerunning the candidate or formal auditor.
 
+A separately versioned post-run verifier regenerated all 4,160 records from the frozen seed, independently recomputed both estimates, preserved `UNKNOWN` under low support, and rejected all four effective corrupted-record controls. This strengthens the internal consistency evidence but was not preregistered, so it does not replace the formal HOLD. Its exact command and stdout are retained in `posthoc_audit.stdout.txt`.
+
 Raw ledger SHA-256: `b6245ff2f2afee4b97ad4f63ff69fa7af26aa8011ebc4256753775593741ea04`. Full machine output and stdout are retained in `formal_01/`; [RESULT.json](RESULT.json) records the post-run disposition. The candidate outcome is preserved with no retry.
 
 ## Execution and limits
@@ -30,8 +32,8 @@ All respondents, thresholds, ties, missing answers, lapses, and choices were gen
 
 ## Reproduction
 
-Source and protocol hashes are in [FREEZE.json](FREEZE.json). To check the saved result without rerunning the candidate, run from the repository root:
+Source and protocol hashes are in [FREEZE.json](FREEZE.json). The post-run revalidation can be inspected by running from the repository root; this is a separate post-run check and does not promote the formal result:
 
 ```sh
-python3 -B research/analysis/user_worthwhile_benefit_7411_t0_a01_20261004/audit.py
+python3 -B research/analysis/user_worthwhile_benefit_7411_t0_a01_20261004/posthoc_audit.py
 ```
