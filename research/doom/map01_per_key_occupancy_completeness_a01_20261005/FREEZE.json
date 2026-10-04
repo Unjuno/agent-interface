@@ -1,0 +1,23 @@
+{
+  "allocation": "MAP01-PER-KEY-OCCUPANCY-COMPLETENESS-A01-20261005",
+  "selected_main": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "historical_raw_main_sha": "6cd70ad4bfad74e11658057bf024918bffb24add",
+  "source_git_blobs_on_selected_main": {
+    "ledger.py": "4b800dcdb8e9507a996135a8e21b013973aa3bac",
+    "raw.json": "ce8168bae64ee4b7ce2f16a601e3b632d6132e56"
+  },
+  "expected_keys": ["SPACE", "W"],
+  "pre_execution_sha256": {
+    "ledger.py": "EABE5CFD04A79C4D770ACD3E339B88201254E09B519F463F95680C05981A48A9",
+    "raw.json": "890D8C5AD8ECA2C6D5583007029BB6E71F7A87DF725945FA7BF2CE8F45B04161",
+    "candidate.py": "9BBD33AAB716887752F5010DD8C0087DA7F2A3F9BD55777717162ECA09FE5970",
+    "audit.py": "E005FC09609780EC9498262C90A467D3E05233B75AB8643CBCE74742A6C07788",
+    "test_candidate.py": "44B942BD433EDF1D82961C400F64B29FCA6AD658B273810FF4EAE1F800CB8FCF",
+    "PREREGISTRATION.md": "EF87E0E73DFA50DCC3E8D51C8F52E918C360F845ECA5E4CDB4B59EDD3A72835B"
+  },
+  "planned_execution": [
+    "python -m unittest -v test_candidate.py",
+    "python audit.py"
+  ],
+  "environment_scope": "Windows host, Python stdlib; synthetic retained event mutation only; no network/game/model/GUI/input/GPU/container"
+}
