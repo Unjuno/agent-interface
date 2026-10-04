@@ -89,6 +89,17 @@ class Executor(Previous):
                        "matched": matched, "requested_ns": time.perf_counter_ns()})
             return matched
 
+    @staticmethod
+    def _preserve_release_batch_custody(release, worker_publication, cleanup_publication):
+        has_worker_publication = isinstance(worker_publication, dict)
+        if has_worker_publication:
+            release["release_batch_delivery"] = dict(worker_publication)
+        if (isinstance(cleanup_publication, dict)
+                and cleanup_publication != worker_publication):
+            field = ("release_batch_cleanup_delivery" if has_worker_publication
+                     else "release_batch_delivery")
+            release[field] = dict(cleanup_publication)
+
     def _run(self, identifier, steps, lease):
         try:
             self._run_with_watcher_cleanup(identifier, steps, lease)
@@ -136,21 +147,28 @@ class Executor(Previous):
                 release = self.backend.release_all()
                 if release_batch_publication is not None:
                     release = dict(release)
-                    release.setdefault("release_batch_delivery", release_batch_publication)
+                    cleanup_publication = release.get("release_batch_delivery")
+                    self._preserve_release_batch_custody(
+                        release, release_batch_publication, cleanup_publication
+                    )
                 if release.get("verified") is not True:
                     status = "failed"; error = "input release not verified"
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
                 status = "failed"
                 publication = getattr(exc, "release_batch_publication", None)
-                if isinstance(publication, dict):
-                    release["release_batch_delivery"] = dict(publication)
+                self._preserve_release_batch_custody(
+                    release, release_batch_publication, publication
+                )
             except BaseException as exc:
                 release = {"verified": False, "error": repr(exc)}
-                status = "failed"; error = repr(exc)
+                status = "failed"
+                if error is None:
+                    error = repr(exc)
                 publication = getattr(exc, "release_batch_publication", None)
-                if isinstance(publication, dict):
-                    release["release_batch_delivery"] = dict(publication)
+                self._preserve_release_batch_custody(
+                    release, release_batch_publication, publication
+                )
                 if process_exception is None:
                     process_exception = exc
                     process_traceback = exc.__traceback__

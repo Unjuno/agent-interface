@@ -18,7 +18,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
              failure_position=0, capture_step_exception=False,
              fail_incomplete_publication=False,
              incomplete_publication_rows=False,
-             release_all_publication_failure=False):
+             release_all_publication_failure=False, return_backend=False):
         emitted = []
         attempts = []
         fail_emit = [emit_accept_then_raise or release_all_publication_failure]
@@ -204,6 +204,8 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     candidate.raw(key, False)
             releases = [row for row in emitted if row.get("event") == "input_release_transition"]
             admissions = [row for row in emitted if row.get("event") == "input_admission"]
+            if return_backend:
+                return admissions, releases, candidate
             return admissions, releases
         finally:
             for path in (str(LIVE), str(HERE)):
@@ -214,6 +216,17 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     sys.modules.pop(name, None)
                 else:
                     sys.modules[name] = value
+
+    def test_release_all_without_current_batch_does_not_return_prior_program_ledger(self):
+        _, releases, backend = self._run(
+            emit_accept_then_raise=True, failure_position=None, return_backend=True)
+        self.assertEqual([row["release_batch_position"] for row in releases], [0, 1, 2])
+        self.assertIsNone(getattr(backend._release_batch, "context", None))
+        self.assertEqual(backend._last_release_batch_delivery["identifier"], "program-1")
+
+        release = backend.release_all()
+        self.assertTrue(release["verified"])
+        self.assertNotIn("release_batch_delivery", release)
 
     def test_current_v4_wrapper_joins_each_key_admission_to_its_release(self):
         admissions, releases = self._run()
@@ -340,7 +353,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             else:
                 sys.modules["executor_v13"] = previous
 
-    def test_incomplete_publication_failure_keeps_row_status_in_cleanup_result(self):
+    def test_incomplete_publication_failure_keeps_row_status_on_original_exception(self):
         error, attempts, emitted, release = self._run(
             step_exception=True, capture_step_exception=True,
             fail_incomplete_publication=True, sink_accept_before_raise=False)
@@ -349,13 +362,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                           if row.get("event") == "input_release_transition"], [0])
         self.assertEqual([row["release_batch_position"] for row in emitted
                           if row.get("event") == "input_release_transition"], [])
-        self.assertEqual(release.get("release_batch_delivery"), {
+        self.assertEqual(error.release_batch_publication, {
             "schema": "release-batch-delivery-v1", "identifier": "program-1",
             "step": 0, "size": 1,
             "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
         })
+        self.assertNotIn("release_batch_delivery", release)
 
-    def test_incomplete_publication_middle_failure_preserves_remaining_positions(self):
+    def test_incomplete_publication_middle_failure_preserves_positions_on_original_exception(self):
         for accepted in (False, True):
             with self.subTest(sink_accept_before_raise=accepted):
                 error, attempts, emitted, release = self._run(
@@ -372,7 +386,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     [0, 1] if accepted else [0],
                 )
                 self.assertEqual(str(error), "later step failed")
-                self.assertEqual(release.get("release_batch_delivery"), {
+                self.assertEqual(error.release_batch_publication, {
                     "schema": "release-batch-delivery-v1",
                     "identifier": "program-1", "step": 0, "size": 3,
                     "positions": [
@@ -383,6 +397,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                          "state": "not_attempted"},
                     ],
                 })
+                self.assertNotIn("release_batch_delivery", release)
 
     def test_release_all_publication_failure_retains_delivery_ledger(self):
         error, attempts, emitted = self._run(

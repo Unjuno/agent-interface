@@ -160,8 +160,8 @@ class Backend(Previous):
                         del self._release_batch.context
                     except AttributeError:
                         pass
-            if self._last_release_batch_delivery is not None:
-                self._attach_delivery_ledger(exc)
+            if context is not None:
+                self._attach_delivery_ledger(exc, context)
             raise
         if context is not None and context["rows"]:
             try:
@@ -181,12 +181,10 @@ class Backend(Previous):
                     del self._release_batch.context
                 except AttributeError:
                     pass
-        if (self._last_release_batch_delivery is not None
-                and isinstance(result, dict)):
+        ledger = context.get("delivery_ledger") if context is not None else None
+        if isinstance(ledger, dict) and isinstance(result, dict):
             result = dict(result)
-            result["release_batch_delivery"] = self._copy_delivery_ledger(
-                self._last_release_batch_delivery
-            )
+            result["release_batch_delivery"] = self._copy_delivery_ledger(ledger)
         return result
 
     def raw(self, key, down):
