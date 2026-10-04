@@ -1,0 +1,115 @@
+{
+  "schema": "scorer-feedback-attribution-a03-result-v1",
+  "cases": {
+    "admission_tied_to_lower": {
+      "a01": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "TEMPORALLY_UNIQUE",
+          "reason": "one_verified_intent_covers_full_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": "intent-a",
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "UNRESOLVED",
+          "reason": "endpoint_tie_without_authenticated_order",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    "release_tied_to_upper": {
+      "a01": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "TEMPORALLY_UNIQUE",
+          "reason": "one_verified_intent_covers_full_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": "intent-a",
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "UNRESOLVED",
+          "reason": "endpoint_tie_without_authenticated_order",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    "strictly_bracketed": {
+      "a01": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "TEMPORALLY_UNIQUE",
+          "reason": "one_verified_intent_covers_full_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": "intent-a",
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ]
+    }
+  },
+  "command": "python run_a03.py",
+  "causal_attribution": "NOT_ESTABLISHED"
+}
