@@ -8,3 +8,8 @@ The test asks whether a verified `owner_release` cleanup timestamp falls
 inside each explicit `up` call's monotonic bracket. Missing records fail
 closed. The test keeps the one-batch sample/publication behavior from PR #7378.
 
+The first WSLc log auditor and its output are retained but superseded: it only
+searched for expected pass strings. The corrected host-side audit parses one
+terminal unittest summary, checks the retained exit receipts, and rejects
+contradictory-summary/exit mutations; see `results/RAW_AUDIT.txt` and
+`results/RAW_AUDITOR_TESTS.txt`.

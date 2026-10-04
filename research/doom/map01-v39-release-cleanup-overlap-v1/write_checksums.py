@@ -15,6 +15,7 @@ paths = [
     "research/doom/map01-v39-release-cleanup-overlap-v1/RESULT.md",
     "research/doom/map01-v39-release-cleanup-overlap-v1/RESULT.json",
     "research/doom/map01-v39-release-cleanup-overlap-v1/audit.py",
+    "research/doom/map01-v39-release-cleanup-overlap-v1/test_audit.py",
     "research/doom/map01-v39-release-cleanup-overlap-v1/run_baseline.py",
     "research/doom/map01-v39-release-cleanup-overlap-v1/write_checksums.py",
     "research/doom/map01-v39-release-cleanup-overlap-v1/WSLC_INFO.txt",
@@ -24,7 +25,10 @@ paths = [
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_CANDIDATE.txt",
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/CANDIDATE_EXIT.txt",
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_ADJACENT.txt",
+    "research/doom/map01-v39-release-cleanup-overlap-v1/results/ADJACENT_EXIT.txt",
+    "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_AUDIT_WSLC_INITIAL.txt",
     "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_AUDIT.txt",
+    "research/doom/map01-v39-release-cleanup-overlap-v1/results/RAW_AUDITOR_TESTS.txt",
 ]
 lines = []
 for rel in paths:
