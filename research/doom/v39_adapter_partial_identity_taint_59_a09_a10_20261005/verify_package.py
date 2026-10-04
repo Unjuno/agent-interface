@@ -20,7 +20,7 @@ ck(sha(REPO/"research/doom/map01_overlap_controller_v39.py")==freeze11["candidat
 ck(sha(H/"A11_FREEZE.json")==a11["freeze_sha256"],"A11 freeze binding")
 ck(a11["baseline_false_pair_count"]==4 and a11["candidate_false_pair_count"]==0 and a11["candidate_closed_count"]==4,"A11 outcome matrix")
 ck(a11audit["audit"]=="PASS" and a11audit["checks"]==13,"A11 independent audit")
-ck(integration["base_sha"]==integration["merge_base"] and integration["merge_conflicts"]==0,"PR base integration identity")
+ck(integration["base_sha"]==integration["merge_base"] and integration["merge_conflicts"]==0 and len(integration["validated_head_sha"])==40 and len(integration["validated_merge_tree"])==40,"PR base integration identity")
 ck(integration["validation"]["tests"]==41 and integration["validation"]["result"]=="PASS" and integration["package_verifier"]["result"]=="PASS","PR base integration validation")
 ck("41 tests" in (H/"A11_FULL_SUITE.txt").read_text(encoding="utf-8") and "OK" in (H/"A11_FULL_SUITE.txt").read_text(encoding="utf-8"),"full local test log")
 manifest=H/"SHA256SUMS_A09.txt"; entries={};valid=True
