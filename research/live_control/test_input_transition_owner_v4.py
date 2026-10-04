@@ -72,6 +72,7 @@ class OwnerReceiptJoinTests(unittest.TestCase):
         sys.modules["input_transition_owner_v3"] = transition_module
         sys.path.insert(0, str(HERE))
         try:
+            sys.modules.pop("input_transition_owner_v4", None)
             import input_transition_owner_v4 as candidate
             with patch.object(candidate, "OwnerWithKeyUpReceipt", Owner):
                 wrapper = candidate.InputOwner("display")
