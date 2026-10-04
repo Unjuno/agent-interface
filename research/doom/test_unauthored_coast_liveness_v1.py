@@ -1,7 +1,8 @@
 import unittest
 
 from unauthored_coast_liveness_v1 import (
-    UnauthoredCoastMonitor, wait_for_fresh_observation)
+    UnauthoredCoastMonitor, invalidation_handoff_sequence,
+    wait_for_fresh_observation)
 
 
 def source_signal(value=85):
@@ -65,6 +66,11 @@ class UnauthoredCoastLivenessTests(unittest.TestCase):
     def test_boolean_sequence_is_rejected(self):
         with self.assertRaises(ValueError):
             wait_for_fresh_observation(lambda _predicate: None, True)
+
+    def test_malformed_invalidation_sequence_waits_for_next_frame(self):
+        latest = {"event": "observation", "sequence": 10}
+        self.assertEqual(invalidation_handoff_sequence(True, latest), 11)
+        self.assertEqual(invalidation_handoff_sequence(12, latest), 12)
 
 
 if __name__ == "__main__":
