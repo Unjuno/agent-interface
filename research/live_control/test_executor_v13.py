@@ -135,6 +135,42 @@ class ExecutorV13Tests(unittest.TestCase):
             "error_type": "OSError",
         })
 
+    def test_release_all_baseexception_fails_closed_and_preserves_custody(self):
+        custody = {
+            "schema": "release-batch-delivery-v1", "identifier": "cleanup-baseexception",
+            "step": 0, "size": 1,
+            "positions": [
+                {"position": 0, "step": 0, "key": "a", "state": "unknown"},
+            ],
+        }
+
+        class CleanupBaseExceptionBackend(Backend):
+            def release_all(self):
+                error = KeyboardInterrupt("cleanup sink interruption")
+                error.release_batch_publication = dict(custody)
+                raise error
+
+        class Lease:
+            def __init__(self):
+                self.cancel = threading.Event()
+            def is_set(self): return False
+            def interruption_snapshot(self): return None
+            def wait_interruption(self, timeout): return None
+
+        events = []
+        executor = Executor(CleanupBaseExceptionBackend(), events.append)
+        lease = Lease()
+        executor.active = ("cleanup-baseexception", lease)
+        with self.assertRaisesRegex(KeyboardInterrupt, "cleanup sink interruption"):
+            executor._run_with_watcher_cleanup(
+                "cleanup-baseexception", [{"op": "pointer_drag"}], lease)
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertIsNotNone(terminal["error"])
+        self.assertFalse(terminal["release"]["verified"])
+        self.assertEqual(terminal["release"]["release_batch_delivery"], custody)
+
     def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
         backend = Backend()
         events = []
