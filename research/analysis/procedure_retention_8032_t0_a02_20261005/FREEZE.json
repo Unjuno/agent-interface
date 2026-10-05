@@ -1,0 +1,32 @@
+{
+  "allocation": "ISSUE-8032-T0-A02-ORDINAL-POWER-20261005-01",
+  "issue": 8032,
+  "frozen_main_sha": "7a9398add78d9095e5a85a60d324513fc3c2a1e3",
+  "created_local_date": "2026-10-05",
+  "sha256": {
+    "protocol.json": "87c1feb7417c64cdaf9162d361b98a63f9652ea9d80a325ca42776e03e2f46b0",
+    "power_model.py": "47b758d22be448785e14ac45d6a06088ed704c4720d81b277c79ad988dff0b51",
+    "run_candidate.py": "113e21277c44862a6dc79531b7c7fd6a7b04a953f320c44823ea00c30b43081e",
+    "audit_power.py": "a0d51fb7c3f9e319451b20bb3d927873ab98a2fee3904f9d6f340b22d13163c6",
+    "test_power_model.py": "98db13b471014e424984110a5cd4b6a7f4f59641551dce231cdb98d3d9929a96"
+  },
+  "wslc": {
+    "client_version": "3.0.1.0",
+    "kernel_version": "6.18.40.1-1",
+    "local_image_tag": "python:3.12-slim",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "image_repo_digest": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "network": "none",
+    "requested_cpus": 1,
+    "requested_memory": "512M",
+    "mount": "one read-only bind mount of this package at /work",
+    "resource_enforcement_claim": false
+  },
+  "invocation_policy": {
+    "unit_test_suite": "construction validation, one run in normal mode and one in optimized mode; does not count as formal candidate",
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0,
+    "stop_rule": "Any WSLc/client/process failure is retained as the first terminal outcome; do not restart, relaunch, or relabel it."
+  }
+}

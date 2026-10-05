@@ -1,0 +1,44 @@
+{
+  "allocation": "ISSUE-8032-T0-A02-ORDINAL-POWER-20261005-01",
+  "issue": 8032,
+  "candidate": "Monte Carlo sensitivity of a two-sample tie-corrected normal-approximation Wilcoxon rank-sum test on five ordered step-score categories.",
+  "question": "How do ordinal score distribution shape and the same score-scale standardized mean difference alter per-contrast completer counts relative to A01's two-independent-means approximation?",
+  "scope": "No participants, participant data, GUI, model, external service, user data, or runtime action. Synthetic distribution assumptions only.",
+  "hypothesis": "At the same score-scale standardized mean difference, ceiling/floor/skew in a five-category outcome can change the sample size required for 80% marginal power under the frozen rank-sum test; therefore a single d-to-n conversion is insufficient for T1 feasibility.",
+  "decision": {
+    "alpha_familywise": 0.05,
+    "co_primary_contrasts": 4,
+    "alpha_each_two_sided": 0.0125,
+    "target_marginal_power": 0.8,
+    "pass_gate": "Report power only for frozen ordinal distributions; mark a grid n as at/above target only when the lower 95% Wilson bound is at least 0.80. Do not infer joint four-contrast power, human feasibility, or an effect.",
+    "uncertain_gate": "If no grid point has lower 95% Wilson bound >=0.80, report the tested range as inconclusive/underpowered, not as proof of infeasibility."
+  },
+  "outcome": {
+    "categories": [0.0, 0.25, 0.5, 0.75, 1.0],
+    "meaning": "fraction of four ordered required actions at their correct ordinal positions; independent final-state equality, critical target errors, and missingness remain separate outcomes",
+    "test": "Two-sided Mann-Whitney/Wilcoxon rank-sum U; tie-corrected null variance; normal z approximation with fixed conservative |z| >= 2.498 threshold for alpha 0.0125.",
+    "effect_calibration": "For each baseline PMF and target d in {0.35,0.50}, solve a common cumulative proportional-odds shift so the difference in 0..1 score means divided by pooled marginal SD equals d."
+  },
+  "ordinal_scenarios": [
+    {"id": "middle", "baseline_pmf": [0.10, 0.15, 0.25, 0.30, 0.20]},
+    {"id": "ceiling", "baseline_pmf": [0.02, 0.06, 0.18, 0.34, 0.40]},
+    {"id": "floor_skew", "baseline_pmf": [0.20, 0.25, 0.30, 0.18, 0.07]}
+  ],
+  "simulation": {
+    "method": "independent synthetic cohorts per cell, sampled by frozen SplitMix64 stream and inverse-CDF categorical draws; candidate trace contains per-replicate z digest plus rejection count",
+    "sample_sizes_per_arm": [60, 80, 100, 120, 150, 180, 220, 260, 320],
+    "replicates_per_power_cell": 2400,
+    "null_control": {"n_per_arm": 120, "replicates": 20000, "seed": 80320261005},
+    "seed_base": 80322000,
+    "seed_rule": "seed_base + scenario_index*1000 + effect_index*100 + sample_size",
+    "confidence_interval": "Wilson 95% interval for simulated rejection proportion",
+    "recruitment": "ceil(completers / 0.85), independently rounded per arm; 15% attrition assumption from A01"
+  },
+  "limitations": [
+    "The proportional-odds model and three PMFs are authored scenarios, not estimated from people or pilot data.",
+    "The fixed normal rank-sum critical approximation is not an exact finite-sample permutation test; null-control calibration is reported.",
+    "The four co-primary contrasts share two controls and two outcomes; cross-outcome and cross-contrast dependence is not modeled, so marginal 80% is not joint 80%.",
+    "No smallest meaningful effect, recruitment capacity, exact final analysis plan, independent human review, ethics/privacy approval, participant consent, or T1 authorization is established.",
+    "This analysis cannot convert A01's assumed d values into empirical effects or resolve T1 feasibility."
+  ]
+}
