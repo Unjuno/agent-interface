@@ -1,0 +1,19 @@
+{
+  "variant": "baseline",
+  "mode": "normal",
+  "command": [
+    "/usr/local/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/src/source/baseline",
+    "-p",
+    "test_input_owner_v10_release_retry.py",
+    "-v"
+  ],
+  "cwd": "/src/source/baseline",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "test_cleanup_retries_a_key_still_down_after_explicit_up (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_key_still_down_after_explicit_up) ... ERROR\ntest_cleanup_retries_a_wheel_release_omitted_by_server (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_wheel_release_omitted_by_server) ... FAIL\ntest_persistent_key_release_failure_remains_unverified (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_persistent_key_release_failure_remains_unverified) ... ok\ntest_unverified_release_blocks_a_new_lease_admission (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_unverified_release_blocks_a_new_lease_admission) ... ok\n\n======================================================================\nERROR: test_cleanup_retries_a_key_still_down_after_explicit_up (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_key_still_down_after_explicit_up)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/source/baseline/test_input_owner_v10_release_retry.py\", line 166, in test_cleanup_retries_a_key_still_down_after_explicit_up\n    receipt = self.owner.call(\"release\", lease)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/source/baseline/input_owner_v10.py\", line 61, in call\n    if not ok: raise result\n               ^^^^^^^^^^^^\n  File \"/src/source/baseline/input_owner_v10.py\", line 261, in _run\n    result = release(op)\n             ^^^^^^^^^^^\n  File \"/src/source/baseline/input_owner_v10.py\", line 194, in release\n    raise RuntimeError('owner release not verified: ' + repr(down))\nRuntimeError: owner release not verified: [65]\n\n======================================================================\nFAIL: test_cleanup_retries_a_wheel_release_omitted_by_server (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_wheel_release_omitted_by_server)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/src/source/baseline/test_input_owner_v10_release_retry.py\", line 182, in test_cleanup_retries_a_wheel_release_omitted_by_server\n    self.assertEqual(self.display.buttons, set())\nAssertionError: Items in the first set but not the second:\n4\n\n----------------------------------------------------------------------\nRan 4 tests in 0.054s\n\nFAILED (failures=1, errors=1)\n"
+}
