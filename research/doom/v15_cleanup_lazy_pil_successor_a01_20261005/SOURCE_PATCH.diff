@@ -5,9 +5,9 @@ index d95d382ee9..fbcd856823 100644
 @@ -1,7 +1,6 @@
  """DOOM backend that emits typed capture evidence before full artifact publication."""
  import time
- 
+
 -from PIL import ImageGrab
- 
+
  from coast_backend_v1 import Backend as Previous, suite
  from doom_typed_observation_v1 import extract_typed_observation
 @@ -18,6 +17,7 @@ class Backend(Previous):
