@@ -1,0 +1,55 @@
+{
+  "schema": "issue59-usage-qualification-run-log-v1",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "cwd": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004",
+  "runs": [
+    {
+      "name": "tests",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "research.doom.v16_readmission_usage_qualification_59_4d74_20261004.test_usage_qualification"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/tests.txt",
+      "exit_file": "out/tests.exit.txt"
+    },
+    {
+      "name": "pycompile",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "py_compile",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004\\research\\doom\\v16_readmission_usage_qualification_59_4d74_20261004\\audit_usage_qualification.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004\\research\\doom\\v16_readmission_usage_qualification_59_4d74_20261004\\audit_qualified_usage.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004\\research\\doom\\v16_readmission_usage_qualification_59_4d74_20261004\\audit_manifest.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004\\research\\doom\\v16_readmission_usage_qualification_59_4d74_20261004\\test_usage_qualification.py"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/pycompile.txt",
+      "exit_file": "out/pycompile.exit.txt"
+    },
+    {
+      "name": "qualified_audit",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004\\research\\doom\\v16_readmission_usage_qualification_59_4d74_20261004\\audit_usage_qualification.py"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/qualified_audit.txt",
+      "exit_file": "out/qualified_audit.exit.txt"
+    },
+    {
+      "name": "independent_audit",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004\\research\\doom\\v16_readmission_usage_qualification_59_4d74_20261004\\audit_qualified_usage.py"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/independent_audit.txt",
+      "exit_file": "out/independent_audit.exit.txt"
+    }
+  ]
+}
