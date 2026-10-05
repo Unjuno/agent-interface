@@ -398,3 +398,5 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 # Issue #59 retained v39 ammo-timeline posthoc package
 
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
+
+- [A04 V39/V15 live MAP01 threat exposure](map01_v39_threat_exposure_a04_20261005/README.md) — six current-main decisions with a visible approaching enemy, typed health/ammo changes, one source-expiry interruption and per-key XSync receipts; limited exposure evidence only, with no kill or MAP01 exit.

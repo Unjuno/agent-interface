@@ -1,0 +1,29 @@
+{
+  "schema": "issue59-v39-startup-stop-ledger-v1",
+  "formal_stops": [
+    {
+      "id": "A01",
+      "main_sha": "53ec001a334e4077caf665ff56372cd4b0ccb068",
+      "result": "App Server initialize failed on invalid config targeting undefined MCP; no model turn, game child, fixture input, or observation."
+    },
+    {
+      "id": "A02",
+      "main_sha": "53ec001a334e4077caf665ff56372cd4b0ccb068",
+      "result": "V15 child did not emit ready before timeout; no model call or GUI input."
+    },
+    {
+      "id": "A03",
+      "main_sha": "86748499a89141396902a00d1f5793390ccf6d9d",
+      "result": "App Server initialize passed; V15 child did not emit ready before timeout. No thread/model turn, score or owner terminal. Raw cleanup report preserved."
+    }
+  ],
+  "diagnostic_constructions": {
+    "mixed": "The display-122, stack, same-seed 991030, and process-state V15 zero-model constructions reached initial observation and scorer; separate 991032 cache-free construction hung.",
+    "stack_location": "session_map01_v15._GameProxy.init -> session_map01_v12.main -> native DoomGame.init",
+    "interpretation": "Intermittent native startup stall; root trigger unresolved. The A04 cache-free run later completed. No startup STOP was counted as live exposure."
+  },
+  "bundles": {
+    "prior_startup_stops_zip_sha256": "c233fe04d5aa690c57b468a8d5f453ac02eb29408c73902d2c01e48bac7b96bc",
+    "startup_diagnostics_zip_sha256": "6e226f58b8733d97dcace34b4e1e8b80dfe804cc2869e451dc49a888fbebccab"
+  }
+}
