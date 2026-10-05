@@ -25,7 +25,7 @@ if not removed or not inserted: raise SystemExit('frozen import relocation absen
 patched=b''.join(new); target.write_bytes(patched)
 expected='8570b509576994746edbac46848d3b6f7e1827d9b918d06b433588222c817329'
 if hashlib.sha256(base).hexdigest()!='fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079' or hashlib.sha256(patched).hexdigest()!=expected: raise SystemExit('candidate base/overlay digest mismatch')
-helper=(PACKAGE/'NO_PIL_SITECUSTOMIZE.py').read_bytes(); plan=json.loads((PACKAGE/'RUN_PLAN.json').read_text(encoding='utf-8-sig'))
+helper=(REPO/'research/doom/v15_cleanup_lazy_pil_successor_a05_20261005/NO_PIL_SITECUSTOMIZE.py').read_bytes(); plan=json.loads((REPO/'research/doom/v15_cleanup_lazy_pil_successor_a05_20261005/RUN_PLAN.json').read_text(encoding='utf-8-sig'))
 if hashlib.sha256(helper).hexdigest()!=plan['blocker_sha256']: raise SystemExit('PIL blocker digest mismatch')
 (OUT/'sitecustomize.py').write_bytes(helper)
 record={'tree':TREE,'manifest_files_verified':len(staged),'source_bytes_verified':sum(x['bytes'] for x in staged),'base_sha256':hashlib.sha256(base).hexdigest(),'patched_sha256':hashlib.sha256(patched).hexdigest(),'helper_sha256':hashlib.sha256(helper).hexdigest(),'candidate_imported':False}

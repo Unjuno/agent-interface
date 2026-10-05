@@ -1,0 +1,9 @@
+{
+  "schema":"v15-cleanup-lazy-pil-a06-preparation-stop-v1",
+  "disposition":"STOP_HELPER_REFERENCE_PATH_MISMATCH",
+  "cause":"prepare_a06.py looked for the no-PIL helper in A06 although the frozen helper is in A05",
+  "candidate_runner_invoked":false,
+  "candidate_tests_invoked":false,
+  "repair":"read and hash-check the exact helper from the A05 predecessor package",
+  "partial_scratch":"C:\\s15e; task-created staging only, no candidate runner output"
+}
