@@ -1,0 +1,29 @@
+{
+  "supplemental_log_retention": "local-only; raw JSONL is not included in repository artifacts",
+  "raw_log_bytes": 49244,
+  "raw_log_sha256": "c2720e13767141974da21ebe67735a6267a760e6af5133aa106ada73514fe74c",
+  "jsonl_rows": 21,
+  "observation_function_call_output_events": {
+    "201": [
+      {
+        "text_present": true,
+        "exact_fixture_base64_present": true,
+        "turn_id_sha256": "f01403e9819d84974e1bf3c9303167255a872c37b012a2b96199f00533514f5e"
+      }
+    ],
+    "202": [
+      {
+        "text_present": true,
+        "exact_fixture_base64_present": true,
+        "turn_id_sha256": "f01403e9819d84974e1bf3c9303167255a872c37b012a2b96199f00533514f5e"
+      }
+    ]
+  },
+  "same_logged_turn_id_for_observation_items": true,
+  "task_complete_events": 1,
+  "last_agent_message_matches_fixed_mock_text": true,
+  "raw_http_responses_request_bodies_retained": false,
+  "raw_app_server_rpc_replies_retained": false,
+  "raw_turn_completed_protocol_notification_retained": false,
+  "scope": "supplemental Codex rollout trace only; insufficient to classify HTTP request coalescing"
+}

@@ -1,0 +1,21 @@
+# A04 post-run disposition
+
+## Result
+
+The one frozen candidate was invoked exactly once as run `3199364e-8daa-4897-8e6b-9232579c4168` from source checkout `20a3958cfd46becb45e861bba744861f01058679`. It exited 1. `candidate.stdout.json` is empty; the retained stderr ends in `PermissionError: [WinError 32]` while Python tried to remove the temporary `CODEX_HOME` and a Codex-started `.tmp/plugins-clone-*/.git/FETCH_HEAD` was still in use. Because the probe had not persisted HTTP requests or RPC replies before this cleanup point, the decisive raw data was lost. The post-run failure auditor completed with four focused tests passing and no integrity errors; its candidate verdict is `FAIL_A04_CANDIDATE_PARTIAL_RAW_AND_ISOLATION_DEVIATION`. The delivery result is `PARTIAL_OR_UNVERIFIABLE`; none of the observation-coalescing outcome labels can be assigned.
+
+The supplemental local rollout trace (not published in this repository) has SHA-256 `c2720e13767141974da21ebe67735a6267a760e6af5133aa106ada73514fe74c`, 49,244 bytes. A sanitized reconstruction records both exact text+fixture `function_call_output` items under the same logged turn ID and one `task_complete` with the fixed mock response text. It does not contain the raw Responses HTTP bodies, the two App Server RPC replies, or the `turn/completed` protocol notification; it cannot classify whether both observations were serialized into a follow-up request.
+
+Repository copies of stderr and run metadata replace local paths with placeholders. The unredacted copies, including the raw Codex rollout JSONL, remain in a local-only evidence directory outside the repository. `results/postrun-artifact-hashes.json` records sizes and SHA-256 values without publishing their contents or absolute local paths.
+
+## Isolation deviation
+
+The mock Responses endpoint was configured on `127.0.0.1`, and the child environment had API-key/base-URL/organization/project and proxy variables removed. That constrained the intended Responses path, but it did not block all App Server egress. The retained `.git/FETCH_HEAD` shows that startup fetched commit `5fd93af4cd0c623e020d0cc7e9ce178b4ac1f70f` from `https://github.com/openai/plugins`. This was external plugin-catalog bootstrap traffic, distinct from the loopback model mock. Therefore A04 did contact an external service, and the run did not meet a no-external-network boundary. No external model inference is recorded, but we cannot claim all other egress was absent.
+
+The temporary root had no remaining process whose command line referenced its unique name; an exclusive read-open of `FETCH_HEAD` succeeded. The temporary root is retained because the cleanup command was rejected before execution; no alternative deletion path was used. The C: volume had about 9.6 MB free during post-run report construction, so later writes were limited to small sanitized records; no further cleanup was attempted. The full rollout and temporary config remain outside the repository under a local-only evidence directory. Their hashes and sizes are in `results/postrun-artifact-hashes.json`.
+
+## Follow-up gate
+
+The final post-run audit and its four tests are recorded in `results/POSTRUN_AUDIT_FINAL.json` and `results/postrun-audit-tests-postredaction.txt`; the latter's exit receipt comes directly from the Python subprocess, while earlier PowerShell `$LASTEXITCODE` receipts disagree and remain preserved in `results/tooling-failure-notes.txt`. Earlier failed auditor/test attempts are also retained there. The installed CLI reports `remote_plugin` as a stable feature and successfully writes `remote_plugin = false` in a disposable `CODEX_HOME`; see `environment/plugin-disable-schema-test.txt`. This verifies the setting is supported, but not that App Server startup with it disabled suppresses plugin synchronization or all external traffic. Any successor allocation needs a distinct ID/path, `remote_plugin = false`, incremental durable HTTP/RPC evidence, cleanup errors that cannot mask the serialized candidate result, and a startup construction check that confirms no plugin clone appears before its one-shot candidate is authorized to run. A04 remains consumed and must not be rerun.
+
+This result neither closes Issue #59 nor demonstrates model comprehension, useful feedback, task effect, recovery, or live threat control.
