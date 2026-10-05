@@ -110,8 +110,29 @@ class CompiledExecutionCompositionTests(unittest.TestCase):
         self.assertNotIn("verify_effect", [event["stage"]
                                            for event in result["phase_timings"]])
 
+    def test_caller_composition_propagates_cancel_after_released_action(self):
+        result, receipt = self._run_through_caller([
+            self._predicates(value=False),
+            self._predicates(value=True),
+        ], expect_submit=False, cancel_after_first_action=True)
+
+        self.assertEqual(result["outcome"], "EXECUTION_INCOMPLETE")
+        self.assertEqual(result["reason"], "cancelled")
+        self.assertEqual(result["delivery"], "confirmed_partial")
+        self.assertEqual(result["execution_progress"], {
+            "status": "safe_yield", "reason": "cancelled",
+            "completed_actions": 1})
+        self.assertEqual(result["accounting"]["attempted_calls"], 1)
+        self.assertEqual(result["accounting"]["completed_calls"], 1)
+        self.assertEqual(receipt[0]["outcome"], "SAFE_YIELD")
+        self.assertEqual(receipt[0]["reason"], "cancelled")
+        self.assertEqual(receipt[0]["completed_transitions"], 1)
+        self.assertTrue(receipt[0]["transitions"][0]["release_verified"])
+        self.assertNotIn("verify_effect", [event["stage"]
+                                           for event in result["phase_timings"]])
+
     def _run_through_caller(self, predicate_rows, refuse=None,
-                            expect_submit=True):
+                            expect_submit=True, cancel_after_first_action=False):
         interface = compile_form_method(
             interface_id="caller-composition-interface-v1",
             session_scope="caller-composition-session-v1", surface="form",
@@ -121,6 +142,7 @@ class CompiledExecutionCompositionTests(unittest.TestCase):
         executed = []
         receipts = []
         sequence = 0
+        cancellation_checks = 0
 
         def observe(_payload):
             nonlocal sequence
@@ -148,6 +170,11 @@ class CompiledExecutionCompositionTests(unittest.TestCase):
                     "release": {"verified": True, "keys_down": [],
                                 "buttons_down": []}}
 
+        def cancelled():
+            nonlocal cancellation_checks
+            cancellation_checks += 1
+            return cancel_after_first_action and cancellation_checks >= 4
+
         caller_adapters = {
             "observe_source": lambda _payload: {"source": "frame-0"},
             "acquire_anchor": lambda _payload: {"anchor": "frame-0"},
@@ -171,7 +198,7 @@ class CompiledExecutionCompositionTests(unittest.TestCase):
              "verify_effect": lambda payload: {
                  "status": "succeeded",
                  "evidence_ref": payload["observation"]["evidence_ref"]},
-             "cancelled": lambda: False}, on_receipt=receipts.append,
+             "cancelled": cancelled}, on_receipt=receipts.append,
             id_factory=lambda: "caller-attempt")
         self.assertEqual([row["operation"] for row in executed],
                          ["enter_exact_token", "activate_submit"]
