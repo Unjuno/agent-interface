@@ -56,6 +56,7 @@ def _valid_pair(admission, release):
     receipt = release.get("owner_thread_keyup_receipt")
     if not isinstance(receipt, dict) or receipt.get("event") != "owner_explicit_keyup":
         return False
+    batch_key_order = receipt.get("release_batch_key_order")
     if (receipt.get("operation") != "up"
             or receipt.get("key") != identity[2]
             or receipt.get("owner_id") != identity[3]
@@ -71,6 +72,14 @@ def _valid_pair(admission, release):
             or receipt.get("key_state_source") != "x11_query_keymap"
             or receipt.get("physical_verification_authoritative") is not False
             or receipt.get("cancel_requested_after_sync") is not False):
+        return False
+    if (not _is_int(receipt.get("release_batch_initial_up_count"))
+            or receipt["release_batch_initial_up_count"] != release["release_batch_size"]
+            or type(batch_key_order) is not list
+            or len(batch_key_order) != release["release_batch_size"]
+            or any(type(key) is not str or not key for key in batch_key_order)
+            or not 0 <= release["release_batch_position"] < len(batch_key_order)
+            or batch_key_order[release["release_batch_position"]] != identity[2]):
         return False
     times = [admission.get("admitted_ns"), admission.get("input_ack_ns"),
              release.get("release_call_started_ns"),
@@ -137,8 +146,7 @@ def project(records):
             return {"measurement_ready": False, "rows": []}
         batch = (release["owner_id"], release["intent_token"],
                  release["release_batch_identifier"], release["release_batch_step"])
-        batch_positions.setdefault(batch, []).append(
-            (release.get("release_batch_position"), release.get("release_batch_size")))
+        batch_positions.setdefault(batch, []).append(release)
         receipt = release["owner_thread_keyup_receipt"]
         projected.append({
             "event": "input_release_measurement",
@@ -157,10 +165,18 @@ def project(records):
         })
     if by_identity:
         return {"measurement_ready": False, "rows": []}
-    for positions in batch_positions.values():
-        sizes = {size for _, size in positions}
-        indexes = [position for position, _ in positions]
-        if (len(sizes) != 1 or sorted(indexes) != list(range(len(positions)))
-                or next(iter(sizes)) != len(positions)):
+    for batch_rows in batch_positions.values():
+        sizes = {row["release_batch_size"] for row in batch_rows}
+        indexes = [row["release_batch_position"] for row in batch_rows]
+        if (len(sizes) != 1 or sorted(indexes) != list(range(len(batch_rows)))
+                or next(iter(sizes)) != len(batch_rows)):
             return {"measurement_ready": False, "rows": []}
+        ordered_rows = sorted(batch_rows, key=lambda row: row["release_batch_position"])
+        previous_initial_sync = None
+        for row in ordered_rows:
+            first_attempt = row["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]
+            if (previous_initial_sync is not None
+                    and previous_initial_sync > first_attempt["keyrelease_started_ns"]):
+                return {"measurement_ready": False, "rows": []}
+            previous_initial_sync = first_attempt["sync_returned_ns"]
     return {"measurement_ready": True, "rows": projected}

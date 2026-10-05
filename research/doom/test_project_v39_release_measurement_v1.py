@@ -21,6 +21,8 @@ def valid_pair():
         "server_key_down_after_keyup": False, "key_state_source": "x11_query_keymap",
         "physical_verification_authoritative": False,
         "cancel_requested_after_sync": False,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": ["space"],
         "server_keyup_attempt_count": 1,
         "server_keyup_attempts": [{"attempt": 1, "keyrelease_started_ns": 150,
             "sync_returned_ns": 160, "keymap_sampled_ns": 165,
@@ -61,6 +63,31 @@ class StrictProjectionTests(unittest.TestCase):
         repeated_release["release_batch_position"] = 1
         self.assertEqual(project([admission, other_admission, release, repeated_release]),
                          {"measurement_ready": False, "rows": []})
+
+    def test_rejects_initial_owner_up_times_reversed_against_batch_positions(self):
+        first, second = valid_pair(), valid_pair()
+        for position, pair, key, admitted, ack, owner_start, owner_sync in (
+            (0, first, "W", 100, 120, 150, 160),
+            (1, second, "A", 101, 121, 145, 155),
+        ):
+            admission, release = pair
+            admission.update(key=key, admitted_ns=admitted, input_ack_ns=ack)
+            release.update(
+                key=key, release_batch_position=position, release_batch_size=2,
+                release_call_started_ns=140, release_call_returned_ns=190,
+                owner_sample_after_started_ns=200, owner_sample_after_finished_ns=205)
+            receipt = release["owner_thread_keyup_receipt"]
+            receipt.update(
+                key=key, release_batch_initial_up_count=2,
+                release_batch_key_order=["W", "A"],
+                owner_keyrelease_started_ns=owner_start,
+                owner_sync_returned_ns=owner_sync,
+                owner_keymap_sampled_ns=165)
+            receipt["server_keyup_attempts"][0].update(
+                keyrelease_started_ns=owner_start,
+                sync_returned_ns=owner_sync,
+                keymap_sampled_ns=165)
+        self.assertEqual(project(first + second), {"measurement_ready": False, "rows": []})
 
     def test_malformed_identity_fails_closed_without_hashing_untrusted_values(self):
         for position in (0, 1):
