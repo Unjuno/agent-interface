@@ -1,4 +1,15 @@
 // Opt-in sequential primary caller policy; not runtime input authority.
+function safeIntegerPair(value) {
+  try {
+    if (!Array.isArray(value) || value.length !== 2 ||
+        !Object.hasOwn(value, 0) || !Object.hasOwn(value, 1)) return null;
+    const pair = [value[0], value[1]];
+    return pair.every(Number.isSafeInteger) ? pair : null;
+  } catch {
+    return null;
+  }
+}
+
 export function createPrimaryCaller(host, route, sinks, expectations = [], options = {}) {
   const controls = new Map(expectations.map(e => [e.id, structuredClone(e)]));
   if (controls.size !== expectations.length) throw Error('duplicate control id');
@@ -34,10 +45,11 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   }
   function inputArguments(values) {
     const [alias, offset, interaction, tail] = values;
+    const copiedOffset = route === 'guarded-local' && values.length === 4
+      ? safeIntegerPair(offset) : null;
     if (route !== 'guarded-local' || values.length !== 4 ||
         typeof alias !== 'string' || !alias.trim() ||
-        !Array.isArray(offset) || offset.length !== 2 ||
-        !Array.from(offset).every(Number.isSafeInteger) ||
+        !copiedOffset ||
         !['click', 'keyboard', 'move'].includes(interaction) || !Array.isArray(tail)) {
       stop('invalid primary input arguments');
       throw TypeError(stopped);
@@ -45,7 +57,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     let copiedTail;
     try { copiedTail = structuredClone(tail); }
     catch (error) { stop('invalid primary input tail'); throw error; }
-    return { alias, offset: [...offset], interaction, tail: copiedTail,
+    return { alias, offset: copiedOffset, interaction, tail: copiedTail,
       detail: 'brief', observation_refs: true };
   }
   const caller = {
@@ -81,40 +93,57 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     },
     async mint(...values) {
       const [alias, sourceSequence, point, regionSize] = values;
-      const pair = value => Array.isArray(value) && value.length === 2 &&
-        Array.from(value).every(Number.isSafeInteger);
+      const validCall = route === 'guarded-local' && values.length === 4 &&
+        Number.isSafeInteger(sourceSequence) && sourceSequence >= 1;
+      const copiedPoint = validCall ? safeIntegerPair(point) : null;
+      const copiedRegionSize = validCall ? safeIntegerPair(regionSize) : null;
       if (route !== 'guarded-local' || values.length !== 4 ||
           typeof alias !== 'string' || !alias.trim() ||
           !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
-          !pair(point) || !pair(regionSize) || regionSize.some(v => v < 4 || v > 96)) {
+          !copiedPoint || !copiedRegionSize ||
+          copiedRegionSize.some(v => v < 4 || v > 96)) {
         stop('invalid primary mint arguments');
         throw TypeError(stopped);
       }
       return caller.call('interface_guarded_mint', {
         alias, source_sequence: sourceSequence,
-        point: [...point], region_size: [...regionSize]
+        point: copiedPoint, region_size: copiedRegionSize
       });
     },
     async mintMany(...values) {
       const [sourceSequence, references] = values;
-      const pair = value => Array.isArray(value) && value.length === 2 &&
-        Array.from(value).every(Number.isSafeInteger);
-      const validReference = reference => reference && typeof reference === 'object' &&
-        !Array.isArray(reference) &&
-        Object.keys(reference).sort().join(',') === 'alias,point,region_size' &&
-        typeof reference.alias === 'string' && /^[a-z][a-z0-9_]{0,31}$/.test(reference.alias) &&
-        pair(reference.point) && pair(reference.region_size) &&
-        reference.region_size.every(value => value >= 4 && value <= 96);
+      let copiedReferences = null;
+      try {
+        if (route === 'guarded-local' && values.length === 2 &&
+            Number.isSafeInteger(sourceSequence) && sourceSequence >= 1 &&
+            Array.isArray(references) && references.length >= 1 && references.length <= 8) {
+          const normalized = [];
+          for (let index = 0; index < references.length; index++) {
+            if (!Object.hasOwn(references, index)) break;
+            const reference = references[index];
+            if (!reference || typeof reference !== 'object' || Array.isArray(reference) ||
+                Object.keys(reference).sort().join(',') !== 'alias,point,region_size') break;
+            const alias = reference.alias;
+            const point = safeIntegerPair(reference.point);
+            const regionSize = safeIntegerPair(reference.region_size);
+            if (typeof alias !== 'string' || !/^[a-z][a-z0-9_]{0,31}$/.test(alias) ||
+                !point || !regionSize || regionSize.some(value => value < 4 || value > 96)) break;
+            normalized.push({ alias, point, region_size: regionSize });
+          }
+          if (normalized.length === references.length) copiedReferences = normalized;
+        }
+      } catch {
+        copiedReferences = null;
+      }
       if (route !== 'guarded-local' || values.length !== 2 ||
           !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
-          !Array.isArray(references) || references.length < 1 || references.length > 8 ||
-          !Array.from(references).every(validReference) ||
-          new Set(references.map(reference => reference.alias)).size !== references.length) {
+          !copiedReferences ||
+          new Set(copiedReferences.map(reference => reference.alias)).size !== copiedReferences.length) {
         stop('invalid primary batch mint arguments');
         throw TypeError(stopped);
       }
       return caller.call('interface_guarded_mint_many', {
-        source_sequence: sourceSequence, references: structuredClone(references)
+        source_sequence: sourceSequence, references: copiedReferences
       });
     },
     async observe(...unexpected) {
