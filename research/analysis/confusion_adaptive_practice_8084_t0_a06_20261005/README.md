@@ -1,3 +1,5 @@
-# Issue #8084 T0 A06 — fixed-gate operating frontier
+# Issue #8084 T0 A06
 
-**Status:** frozen as `CONFUSION-ADAPTIVE-PRACTICE-8084-A06-20261005-01`; no fixture, candidate, or auditor has run yet. This is a new finite synthetic threshold-grid allocation after A05; it does not reuse A03–A05 observations or alter their outcomes. See [PROTOCOL.md](PROTOCOL.md) for H/T/D/C/U, profiles, gate grid and stopping rules, and [FREEZE.json](FREEZE.json) for source hashes and construction checks.
+`STOP_AUDITOR_NOT_STARTED_LAUNCHER_UNAVAILABLE`. The frozen fixture generator and candidate each completed once, but the one allowed auditor launch could not start because the prescribed Windows launcher `py` was unavailable. No auditor result or scientific inference exists; the allocation was not retried. See [STOP.md](STOP.md), [PROTOCOL.md](PROTOCOL.md), and retained `results/` evidence.
+
+The branch contains the frozen allocation and execution evidence for integration. This is not a method pass, failure, or participant/GUI claim.

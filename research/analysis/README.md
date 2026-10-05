@@ -426,6 +426,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`confusion_adaptive_practice_8084_t0_a01_20261005/`](confusion_adaptive_practice_8084_t0_a01_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a02_20261005/`](confusion_adaptive_practice_8084_t0_a02_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a03_20261005/`](confusion_adaptive_practice_8084_t0_a03_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a06_20261005/`](confusion_adaptive_practice_8084_t0_a06_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
@@ -1087,3 +1088,4 @@ The checker compares the generated block against every child directory with a re
 - [Issue #6655 / PR #6694 preregistration custody](incidental_state_legacy_6655_prereg_archive_226b426/README.md) — Eight exact published preregistration blobs; host outputs, process receipts and claimed report/results remain unrecovered. Consumed 1/1/0 host allocation and source-hash mismatches retained; no scientific promotion or rerun.
 - [Issue #8084 T0 A04 diagnostic-reliability fresh allocation](confusion_adaptive_practice_8084_t0_a04_20261005/README.md) — `HOLD_METHOD_GATE`: candidate/auditor each ran once, 6,000 base rows independently reconstructed with no errors, but the duplicate-row auditor mutation survived. Provisional counts show low-dispersion false activation 169/500 at n=20; not accepted/calibrated. Fresh A05 corrects cardinality checking with disjoint seeds.
 - [Issue #8084 T0 A05 diagnostic-reliability independent revalidation](confusion_adaptive_practice_8084_t0_a05_20261005/README.md) — `METHOD_PASS_SCOPED`; separate diagnostic screen `DOES_NOT_SUPPORT_CURRENT_GATE_AS_RELIABLE_AT_N_GE_20`: low-dispersion false activation 376/1,000 at n=20 vs ≤0.05 criterion (47/1,000 at n=100). Independent reconstruction of 12,000 rows; all five mutations rejected. Synthetic only, no human/GUI inference.
+- [Issue #8084 T0 A06 fixed-gate frontier successor](confusion_adaptive_practice_8084_t0_a06_20261005/STOP.md) — `STOP_AUDITOR_NOT_STARTED_LAUNCHER_UNAVAILABLE`; generator and candidate each ran once, but frozen one-shot auditor launch could not start because `py` was unavailable. No retry or scientific inference.
