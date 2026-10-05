@@ -1,0 +1,15 @@
+{
+  "worker": "e0cc",
+  "parent": 59,
+  "implementation_pr": 8065,
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "candidate_base": "11445a7ca200404ddc80bf7ebb1dbef86eb059de",
+  "main_observed": "7c6f610fe73fe8135895e8715a81053ffb46b2a7",
+  "evidence_branch_head_before_freeze": "44ab184ada4a2a5229c4e18826c93c3acc59630f",
+  "kind": "ordinary post-repair source startup-selection regression, not formal allocation",
+  "H": "PR #8065 head 4158d9b preserves the archived A01 owner identity on the V15 plus per-key route while retaining the current release-batch composition; V12 per-key and default V15 remain valid controls.",
+  "T": "Run exact exported V12/V15 sources from 4158d9b in three fresh Python processes. Replace only optional GUI bindings and stop at suite.Session construction after source/backend selection. Record selected backend MRO, backend-bound InputOwner class file, owner class file/hash and source manifest identity. No Session or InputOwner instance is constructed.",
+  "D": "PASS repair if V12-perkey binds archived A01 owner, V15-default retains the V4 release-batch backend chain, and V15-perkey binds archived A01 owner while retaining the release-batch chain. FAIL repair if V15-perkey owner is current raw live_control/input_owner_v12.py or if source manifest identity disagrees. Probe must exit 0 for all three routes with no forbidden calls; otherwise construction is INCONCLUSIVE and first raw failure is retained.",
+  "C": "A process-global input_owner_v12 cache can survive V12 sys.path prepending; the #8065 helper preserves the selected Backend but may not change that cached module identity. Do not infer input timing or runtime behavior from class selection.",
+  "U": "Construction-boundary observation only. No owner or session instantiation, GUI/X server, game, input, physical release, timing, task effect, threat exposure or live lane. Static snapshots do not establish source-independent ownership."
+}

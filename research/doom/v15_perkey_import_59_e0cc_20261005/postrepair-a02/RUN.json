@@ -1,0 +1,19 @@
+{
+  "schema": "v15_perkey_postrepair_a02_run_v1",
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "frozen_source_manifest": "source-manifest.json",
+  "frozen_source_files": 56,
+  "command": "python research/doom/v15_perkey_import_59_e0cc_20261005/postrepair-a02/replay_startup.py research/doom/v15_perkey_import_59_e0cc_20261005/postrepair-a02/run-20261005T03",
+  "interpreter": "/run/current-system/sw/bin/python",
+  "python_version": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "result_directory": "run-20261005T03",
+  "routes": [
+    {"route": "v12-perkey", "exit_code": 0},
+    {"route": "v15-default", "exit_code": 0},
+    {"route": "v15-perkey", "exit_code": 0}
+  ],
+  "first_construction_failures": ["run-20261005T01", "run-20261005T02"],
+  "dependency_policy": "No package installation. Inert PIL, NumPy, openpyxl, Xlib, and VizDoom stubs were used only to permit import-time source selection; dangerous operations raise immediately.",
+  "scope": "Construction boundary only; no Session/owner instantiation, GUI, game, input, physical release, timing, task effect, or live-lane execution."
+}

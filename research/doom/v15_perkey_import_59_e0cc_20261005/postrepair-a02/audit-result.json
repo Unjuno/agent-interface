@@ -1,0 +1,135 @@
+{
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "checks": [
+    {
+      "check": "SHA256SUMS agrees with artifact manifest",
+      "ok": true
+    },
+    {
+      "check": "all packaged artifacts match size and SHA-256 manifest",
+      "ok": true
+    },
+    {
+      "check": "all frozen source blobs match size and SHA-256",
+      "ok": true
+    },
+    {
+      "check": "three route probes exited zero",
+      "ok": true
+    },
+    {
+      "check": "v12-perkey imported production paths are covered by frozen source manifest",
+      "ok": true
+    },
+    {
+      "check": "v12-perkey stdout equals retained result",
+      "ok": true
+    },
+    {
+      "check": "v12-perkey stopped before construction with no forbidden calls",
+      "ok": true
+    },
+    {
+      "check": "v15-default imported production paths are covered by frozen source manifest",
+      "ok": true
+    },
+    {
+      "check": "v15-default stdout equals retained result",
+      "ok": true
+    },
+    {
+      "check": "v15-default stopped before construction with no forbidden calls",
+      "ok": true
+    },
+    {
+      "check": "v15-perkey imported production paths are covered by frozen source manifest",
+      "ok": true
+    },
+    {
+      "check": "v15-perkey stdout equals retained result",
+      "ok": true
+    },
+    {
+      "check": "v15-perkey stopped before construction with no forbidden calls",
+      "ok": true
+    },
+    {
+      "check": "V12 per-key selects archived A01 owner and matching recorded hash",
+      "ok": true
+    },
+    {
+      "check": "default V15 retains release-batch backend and V4 owner binding",
+      "ok": true
+    },
+    {
+      "check": "V15 per-key fails owner identity despite archived A01 manifest hash",
+      "ok": true
+    }
+  ],
+  "route_summary": {
+    "v12-perkey": {
+      "backend_mro": [
+        "map01_v39_perkey_bridge_a01_backend.Backend",
+        "doom_typed_release_backend_v1.Backend",
+        "doom_typed_coast_backend_v1.Backend",
+        "coast_backend_v1.Backend",
+        "session_v10.Backend",
+        "session_v9.Backend",
+        "session_v8.Backend",
+        "session_v7.Backend",
+        "session_v6.Backend",
+        "session_v5.Backend",
+        "session_v4.Backend",
+        "builtins.object"
+      ],
+      "backend_owner_binding_file": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "owner_file": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "recorded_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+    },
+    "v15-default": {
+      "backend_mro": [
+        "doom_owner_thread_release_batch_backend_v1.Backend",
+        "doom_typed_release_backend_v2.Backend",
+        "doom_typed_release_backend_v1.Backend",
+        "doom_typed_coast_backend_v1.Backend",
+        "coast_backend_v1.Backend",
+        "session_v10.Backend",
+        "session_v9.Backend",
+        "session_v8.Backend",
+        "session_v7.Backend",
+        "session_v6.Backend",
+        "session_v5.Backend",
+        "session_v4.Backend",
+        "builtins.object"
+      ],
+      "backend_owner_binding_file": "research/live_control/input_transition_owner_v4.py",
+      "owner_file": "research/live_control/input_transition_owner_v4.py",
+      "owner_sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+      "recorded_a01_owner_sha256": null
+    },
+    "v15-perkey": {
+      "backend_mro": [
+        "map01_v39_perkey_bridge_a01_backend.Backend",
+        "doom_typed_release_backend_v1.Backend",
+        "doom_typed_coast_backend_v1.Backend",
+        "coast_backend_v1.Backend",
+        "session_v10.Backend",
+        "session_v9.Backend",
+        "session_v8.Backend",
+        "session_v7.Backend",
+        "session_v6.Backend",
+        "session_v5.Backend",
+        "session_v4.Backend",
+        "builtins.object"
+      ],
+      "backend_owner_binding_file": "research/live_control/input_owner_v12.py",
+      "owner_file": "research/live_control/input_owner_v12.py",
+      "owner_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "recorded_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+    }
+  },
+  "schema": "v15_perkey_postrepair_a02_readback_v1",
+  "scope": "startup source-selection boundary only; no Session or owner instance, GUI, game, input, physical release, timing, task effect, or live threat exposure",
+  "status": "FAIL_REPAIR_INEFFECTIVE_AT_4158d9b"
+}

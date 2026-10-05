@@ -43,3 +43,7 @@ python research/doom/v15_perkey_import_59_e0cc_20261005/independent-audit/audit_
 The guarded replay wrapper materializes the pinned source snapshots and runs only this startup boundary. It was syntax checked; retained runs used `original-runner.py.txt`. The path-adjusted auditor refuses existing output and was executed on the public artifact copies. That readback is not another startup run. The retained original auditor is inert `.py.txt` because its historical fixed output path could overwrite a result.
 
 H/T/D/C/U were recorded in `PLAN.json` before execution. This was ordinary local construction/regression, not a formal allocation or live-control experiment. No model, game, GUI, X server, container, owner thread, input command, provider timing, release/recovery behavior, threat exposure, application feedback or MAP01 outcome was exercised. No main merge or content-quorum vote is claimed; Issue #59 remains open.
+
+## Post-repair check of PR #8065
+
+`postrepair-a02/` freezes the updated implementation head `4158d9b063e7cbf56828f1b0667ec2714af0ff2b` and reruns the three guarded startup-selection routes. The owner identity mismatch persists on V15 + per-key despite all probes reaching the boundary. See its H/T/D/C/U plan, first construction failures, raw run, 12-check independent readback, and scoped limitation. A02 supplements the original cceb9d result without replacing it; neither run exercised an owner instance, session, input, game, physical release, or live threat lane.
