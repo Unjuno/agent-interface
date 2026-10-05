@@ -1,21 +1,20 @@
-# V15 scorer episode-tick guard A01
+# V15 scorer input-integrity guard A01
 
 This follow-up repairs a source-contract gap in the opt-in V39 measurement
 session from PR #7843. That session selects `session_map01_v15.py`; its scorer
-used `int(get_episode_time())`, which accepted Boolean/fractional ticks and
-could publish scores against a truncated episode-time bracket.
+used `int(...)` for episode tics, progress counters, and tic rate. Boolean or
+fractional values could therefore be silently converted into plausible score
+inputs, and invalid rates could contaminate timeout fallback calculations.
 
 ## H / T / D / C / U
 
-- **H:** Exact selected V15 scorer code accepts `10.5 → 10.5` as a coherent
-  integer tick `10`, accepts `True` as tick `1`, and can accept a fractional
-  post-sample tick after truncation.
-- **T:** Run an AST-isolated regression against the exact selected V15 source.
-  Reject Boolean, fractional, or negative pre/post ticks; preserve an exact
-  integer control. No game, model, GUI, display, or OS input is initialized.
-- **D:** The baseline fails the malformed-tick assertions. The candidate passes
-  all three focused tests in normal and optimized Python and retains the
-  existing V15 lifecycle/selection tests.
+- **H:** Exact selected V15 scorer code accepts Boolean/fractional/negative
+  counters and tic rates by coercing them with `int(...)`.
+- **T:** AST-isolated regression against the exact selected V15 source. Reject
+  malformed tic, kill/death, and terminal-flag values; preserve exact controls.
+  No game, model, GUI, display, or OS input is initialized.
+- **D:** The baseline fails all malformed-input checks. The candidate passes
+  focused tests in normal and optimized Python.
 - **C:** This is deterministic scorer-contract evidence. It does not establish
   ViZDoom's actual return types or the end-to-end V39/V15 process composition.
 - **U:** No useful-feedback attribution, threat response, recovery, live
@@ -25,17 +24,19 @@ could publish scores against a truncated episode-time bracket.
 
 ## Result
 
-The exact-source baseline regression failed all three malformed cases:
+The exact-source baseline regression failed all ten malformed counter/rate
+cases:
 
 - `10.5 → 11.5` is reduced to integer bounds `10 → 11`;
 - `True → 2` is reduced to integer bounds `1 → 2`;
 - `10 → 10.5` is reduced to `10 → 10` and incorrectly appears stable.
 
-The candidate now checks the raw episode clock with exact `int` type and
-nonnegative range before and after sampling. The focused suite passes 3/3 in
-normal and optimized Python. Existing V15 lifecycle/selection coverage passes
-8/8 with an inert `executor_v13` import stub; the sparse checkout omitted
-runtime modules, so this does not qualify full runtime startup.
+The candidate requires exact nonnegative `int` values for episode tics and
+kill/death counters, a positive exact `int` tic rate, and exact `bool`
+terminal flags. The five focused tests pass in normal and optimized Python.
+Existing V15 lifecycle/selection coverage previously passed 8/8 with an inert
+`executor_v13` import stub; the sparse checkout omitted runtime modules, so
+this does not qualify full runtime startup.
 
 ## Reproduction
 

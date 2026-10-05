@@ -34,13 +34,17 @@ def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.p
     for _ in range(attempts):
         tic_before=game.get_episode_time()
         if type(tic_before) is not int or tic_before<0:raise ValueError('invalid pre-sample episode tic')
-        finished=bool(game.is_episode_finished());dead=bool(game.is_player_dead())
-        kills=int(game.get_game_variable(game_variable.KILLCOUNT));deaths=int(game.get_game_variable(game_variable.DEATHCOUNT));ticrate=int(game.get_ticrate())
+        finished=game.is_episode_finished();dead=game.is_player_dead()
+        if type(finished) is not bool or type(dead) is not bool:raise ValueError('invalid terminal scorer flags')
+        kills=game.get_game_variable(game_variable.KILLCOUNT);deaths=game.get_game_variable(game_variable.DEATHCOUNT);ticrate=game.get_ticrate()
+        if type(kills) is not int or kills<0:raise ValueError('invalid kill count')
+        if type(deaths) is not int or deaths<0:raise ValueError('invalid death count')
+        if type(ticrate) is not int or ticrate<1:raise ValueError('invalid tic rate')
         timeout_method=getattr(game,'is_episode_timeout_reached',None);timeout_reached=bool(timeout_method()) if callable(timeout_method) else tic_before>=timeout_seconds*ticrate
         tic_after=game.get_episode_time()
         if type(tic_after) is not int or tic_after<0:raise ValueError('invalid post-sample episode tic')
         if tic_before==tic_after:
-            return ProgressSample(clock_ns(),kills,deaths,finished,dead,bool(finished and not dead and not timeout_reached))
+            return ProgressSample(clock_ns(),kills,deaths,finished,dead,finished and not dead and not timeout_reached)
     raise RuntimeError('independent scorer could not obtain one-tic coherent sample')
 
 class _GameProxy:

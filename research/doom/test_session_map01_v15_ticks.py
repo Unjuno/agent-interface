@@ -30,10 +30,13 @@ def load_sample_function():
 
 
 class FakeGame:
-    def __init__(self, before, after):
+    def __init__(self, before, after, kills=0, deaths=0, ticrate=35):
         self.tics = iter((before, after))
         self.last_tic = after
         self.scorer_reads = 0
+        self.kills = kills
+        self.deaths = deaths
+        self.ticrate = ticrate
 
     def get_episode_time(self):
         try:
@@ -50,13 +53,13 @@ class FakeGame:
         self.scorer_reads += 1
         return False
 
-    def get_game_variable(self, _variable):
+    def get_game_variable(self, variable):
         self.scorer_reads += 1
-        return 0
+        return self.kills if variable == 1 else self.deaths
 
     def get_ticrate(self):
         self.scorer_reads += 1
-        return 35
+        return self.ticrate
 
     def is_episode_timeout_reached(self):
         self.scorer_reads += 1
@@ -88,6 +91,21 @@ class ExactScorerTickTests(unittest.TestCase):
         sample = self.sample(game, self.variables, 600, clock_ns=lambda: 1)
         self.assertEqual(sample.sample_ns, 1)
         self.assertEqual((sample.kills, sample.deaths), (0, 0))
+
+    def test_malformed_progress_counters_are_rejected(self):
+        for field, value in (("kills", 1.5), ("kills", True), ("kills", -1),
+                             ("deaths", 2.5), ("deaths", False), ("deaths", -1)):
+            with self.subTest(field=field, value=value):
+                game = FakeGame(10, 10, **{field: value})
+                with self.assertRaises(ValueError):
+                    self.sample(game, self.variables, 600, clock_ns=lambda: 1)
+
+    def test_invalid_ticrate_is_rejected(self):
+        for value in (35.5, True, 0, -1):
+            with self.subTest(value=value):
+                game = FakeGame(10, 10, ticrate=value)
+                with self.assertRaises(ValueError):
+                    self.sample(game, self.variables, 600, clock_ns=lambda: 1)
 
 
 if __name__ == "__main__":

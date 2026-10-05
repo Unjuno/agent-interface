@@ -5,9 +5,9 @@
   "stacked_base": "758d803ff2842a0e4f9ded8db119d84c02360a9f",
   "baseline_source_blob": "f71ca01426a703e4160c9403395fed03416c772e",
   "candidate_sha256": {
-    "research/doom/session_map01_v15.py": "c0657cb868d1c4ea6135f0d67dd2ea2f4006e987dc945dc04b609ca2a8b4094e",
-    "research/doom/test_session_map01_v15_ticks.py": "c8ebee9e4238702a1e0aa1662ff9e1cc9a181f7833fff59a5d7018c2c615a70f"
+    "research/doom/session_map01_v15.py": "60066f5f197dbb44cff5f708c66b0871427a65bdace3a249b8d198429602c1f5",
+    "research/doom/test_session_map01_v15_ticks.py": "4152b0ae04f2bbae97bb7dff39648f4b4b520d447e03b0ad7a72513c487f096f"
   },
-  "scope": "AST-isolated scorer tick contract tests; no game, model, GUI, display, or OS input",
-  "gate": "PASS iff exact nonnegative integer tick bounds are required before and after sampling, malformed bool/fraction/negative values reject, and integer control plus V15 lifecycle tests pass"
+  "scope": "AST-isolated scorer input contract tests; no game, model, GUI, display, or OS input",
+  "gate": "PASS iff exact nonnegative integer episode tics and kill/death counters plus positive integer tic rate are required; exact bool terminal flags are preserved; malformed bool/fraction/negative values reject; integer controls pass"
 }
