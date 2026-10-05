@@ -154,3 +154,5 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/preference_manipulation_7678_t0_a02_20261005 -p 'test_*.py' -v
       - name: Test Issue #7790 opportunity-bound preference evidence T0 A01
         run: python -B -m unittest discover -s research/analysis/opportunity_bound_preference_7790_t0_a01_v1 -p 'test_*.py' -v
+      - name: Test Issue #7678 preference manipulation T0 A01 custody checks
+        run: python -B -m unittest discover -s research/analysis/preference_manipulation_7678_t0_20261005 -p 'test_*.py' -v
