@@ -23,7 +23,11 @@ tests = (PACKAGE / "candidate_test.py").read_text()
 integrated_source = (ROOT / "research/doom/map01_overlap_controller_v39.py").read_text()
 raw = (PACKAGE / "candidate.stdout.txt").read_text()
 integrated_raw = (PACKAGE / "integrated.stdout.txt").read_text()
+integrated_opt_raw = (PACKAGE / "integrated_opt.stdout.txt").read_text()
 controller_raw = (PACKAGE / "controller.stdout.txt").read_text()
+controller_opt_raw = (PACKAGE / "controller_opt.stdout.txt").read_text()
+source_refresh_raw = (PACKAGE / "source_refresh.stdout.txt").read_text()
+source_refresh_opt_raw = (PACKAGE / "source_refresh_opt.stdout.txt").read_text()
 baseline_source = (PACKAGE / "baseline_controller.py").read_bytes()
 baseline_raw = __import__("json").loads((PACKAGE / "baseline.stdout.json").read_text())
 assert sha256(baseline_source).hexdigest() == BASELINE_SHA256
@@ -39,5 +43,9 @@ assert "test_rejected_initial_submission_is_not_cancelled_as_an_admitted_program
 assert '"initial_cover_admission_resolution"]["status"],\n                         "rejected"' in tests
 assert "Ran 12 tests" in raw and "OK" in raw
 assert "Ran 12 tests" in integrated_raw and "OK" in integrated_raw
+assert "Ran 12 tests" in integrated_opt_raw and "OK" in integrated_opt_raw
 assert "Ran 6 tests" in controller_raw and "OK" in controller_raw
+assert "Ran 6 tests" in controller_opt_raw and "OK" in controller_opt_raw
+assert "Ran 13 tests" in source_refresh_raw and "OK" in source_refresh_raw
+assert "Ran 13 tests" in source_refresh_opt_raw and "OK" in source_refresh_opt_raw
 print("PASS: baseline hash/rejection timeout, repaired source gate, regression assertions, and 12-test raw result")

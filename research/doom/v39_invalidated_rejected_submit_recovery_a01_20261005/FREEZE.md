@@ -19,7 +19,7 @@ Exact A01 candidate files (PR #7904 plus this repair), recovered from commit `bf
 - `candidate_controller.py` SHA-256 `ee966869d45f4b3f261c5f675e100edd9ed2f20fa9fc42b9523e2aeb7b065c14`
 - `candidate_test.py` SHA-256 `da4628b61d255c4d53426e41c85b01665c26e3289bb3c4a587b75b5c3cdca827`
 
-The open PR branch advanced to `bd455dd9df392ce2c792d501053cd427b1af0ccd` with a separate cover-renewal fix while this test was underway. The repaired A01 regression was rerun against its frozen candidate snapshot; the combined PR branch was also tested after rebasing this fix.
+The open PR branch advanced to `bd455dd9df392ce2c792d501053cd427b1af0ccd` with a separate cover-renewal fix while this test was underway. The repaired A01 regression was rerun against its frozen candidate snapshot; the combined PR branch was also tested after rebasing this fix. The review branch now includes this result at `54c59940b80de27b3955ace69d1a8223840c0ee7`.
 
 Candidate command: `python -m unittest research.doom.test_overlap_controller_v39_wait -v`.
 Baseline reproduction command: `python research/doom/v39_invalidated_rejected_submit_recovery_a01_20261005/baseline_replay.py`.
