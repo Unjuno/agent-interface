@@ -1,5 +1,8 @@
 # Analytical research
 
+- [Issue #5905 image-only cue A02](looming_yield_5905_image_only_t0_2_a02_20261005/README.md) — `STOP_MAIN_ADVANCED_AFTER_FREEZE`; candidate/auditor 0/0, with an additional preregistration comparator-gate/identifiability flaw preserved.
+- [Issue #5905 image-only cue A03](looming_yield_5905_image_only_t0_2_a03_20261005/README.md) — `STOP_CONSTRUCTION_GATE_REJECTS_ALL_RASTER_CIRCLES`; raster circularity gate rejects every authored disk, and the proposed auditor reuses candidate code; formal candidate/auditor 0/0.
+
 - [Issue #7986 action-conditioned incorrect-belief exposure T0 A01](incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED` over eight authored intervals; old-correct age 10 yielded zero exposure, fresh-misbound age 1 yielded five ticks; truth stayed audit-only. No live/safety claim.
 
 - Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — PASS_METHOD_SCOPED/H_PASS_SCOPED for the authored finite one-CPU model; OrbStack image-content access was unavailable, so host-only stdlib execution was used; no full-CBS, runtime, or scheduler claim.
@@ -490,6 +493,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`frame_qualified_collateral_6533_t0_20261002/`](frame_qualified_collateral_6533_t0_20261002/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
+- [`generalizability_budget_7889_t0_a01_20261005/`](generalizability_budget_7889_t0_a01_20261005/)
 - [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
 - [`generation_bound_evidence_2047_v1/`](generation_bound_evidence_2047_v1/)
 - [`gluing_approx_irreversible_5537_t10_v1/`](gluing_approx_irreversible_5537_t10_v1/)
