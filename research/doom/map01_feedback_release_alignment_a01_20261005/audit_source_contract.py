@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
-BASE = "e7c916989da30741b00c234efd264067d0899851"
+BASE = "40f15b8b04fbdc33327fd18d52250930fb03aee1"
 SOURCES = (
     "research/live_control/input_transition_owner_v3.py",
     "research/live_control/input_transition_owner_v4.py",
