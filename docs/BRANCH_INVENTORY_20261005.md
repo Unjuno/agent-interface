@@ -661,3 +661,8 @@ Removed `research/59-v39-startup-edge-identity-audit-a01-20261005` at audited ti
 - The branch endpoint now returns NOT_FOUND. The earlier provenance hold is resolved for the packaged evidence: all 12 files are on `main`, and PR/commit history remains available.
 
 This removes one source ref only; #7901 remains closed unmerged, #7988 remains the merged preservation record, and no experiment was rerun.
+
+
+## Ref disappearance observed — 2026-10-05 14:20 UTC
+
+A later recheck found `research/59-v39-startup-edge-identity-audit-a01-20261005` absent from both `git ls-remote` and the GitHub branch API (NOT_FOUND). My exact-tip conditional deletion attempt was rejected as stale information, so this record does not attribute the removal to that command. Closed PR #7901 still records head `108d22491db4baf6aa7214ae3f94122f3a7bf849`; the #7901 result blob is still readable at the same SHA on `main`. PR #7988, which carried all 12 matching package blobs, is merged. The disappearance therefore does not lose the rescued package or closed-PR evidence.
