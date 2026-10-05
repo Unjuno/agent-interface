@@ -52,6 +52,16 @@ class FakePlanner:
 
 
 class V39TypedStateFeedbackTests(unittest.TestCase):
+    def test_measurement_session_composes_v15_scorer_with_per_key_bridge_flag(self):
+        args = SimpleNamespace(seed=7, load_fixture_manifest=HERE / "fixture.json",
+                               measurement_session=True,
+                               per_key_input_measurement=True)
+
+        command = controller.session_command(args, HERE / "runtime")
+
+        self.assertEqual(Path(command[1]).name, "session_map01_v15.py")
+        self.assertEqual(command[-1], "--per-key-input-measurement")
+
     def test_session_command_forwards_per_key_measurement_only_when_opted_in(self):
         args = SimpleNamespace(seed=7, load_fixture_manifest=HERE / "fixture.json",
                                per_key_input_measurement=True)
