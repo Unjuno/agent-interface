@@ -1,0 +1,145 @@
+{
+  "cases": [
+    {
+      "after_retry": {
+        "delivered.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        },
+        "events.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        }
+      },
+      "before_retry": {
+        "delivered.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        },
+        "events.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        }
+      },
+      "fault": null,
+      "first_error": null,
+      "name": "baseline"
+    },
+    {
+      "after_retry": {
+        "delivered.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        },
+        "events.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        }
+      },
+      "before_retry": {
+        "delivered.jsonl": {
+          "release_ids": [],
+          "rows": 0
+        },
+        "events.jsonl": {
+          "release_ids": [],
+          "rows": 0
+        }
+      },
+      "fault": "before_events_append",
+      "first_error": "injected open failure: events.jsonl",
+      "name": "before_first_append"
+    },
+    {
+      "after_retry": {
+        "delivered.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        },
+        "events.jsonl": {
+          "release_ids": [
+            "probe-release-001",
+            "probe-release-001"
+          ],
+          "rows": 2
+        }
+      },
+      "before_retry": {
+        "delivered.jsonl": {
+          "release_ids": [],
+          "rows": 0
+        },
+        "events.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        }
+      },
+      "fault": "after_events_before_delivered_append",
+      "first_error": "injected open failure: delivered.jsonl",
+      "name": "after_first_append"
+    },
+    {
+      "after_retry": {
+        "delivered.jsonl": {
+          "release_ids": [
+            "probe-release-001",
+            "probe-release-001"
+          ],
+          "rows": 2
+        },
+        "events.jsonl": {
+          "release_ids": [
+            "probe-release-001",
+            "probe-release-001"
+          ],
+          "rows": 2
+        }
+      },
+      "before_retry": {
+        "delivered.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        },
+        "events.jsonl": {
+          "release_ids": [
+            "probe-release-001"
+          ],
+          "rows": 1
+        }
+      },
+      "fault": "after_delivered_before_stdout",
+      "first_error": "injected stdout failure after both appends",
+      "name": "after_second_append"
+    }
+  ],
+  "event_id": "probe-release-001",
+  "executor_policy_source_review": {
+    "attempt_recorded_before_emit": true,
+    "automatic_retry": false,
+    "failure_disposition": "delivery_unknown",
+    "v12_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "v13_blob": "b9510765f34907bcfdbf25a5700e9d31d17c76b7"
+  },
+  "main_sha": "6a2826d391b77496b69752609a6f07b6971b4b6f",
+  "schema": "event_emit_fault_boundary_a01_raw_v1",
+  "source_git_blob": "e701035302da4802e0db463035c4d653a7e7618b",
+  "source_sha256": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2"
+}

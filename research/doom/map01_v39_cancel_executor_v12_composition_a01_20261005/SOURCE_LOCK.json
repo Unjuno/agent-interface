@@ -1,0 +1,25 @@
+{
+  "schema": "map01-v39-cancel-executor-v12-composition-source-lock-v1",
+  "main_commit": "16c74566b64f32d7fe035c7724bcfe3865863a91",
+  "candidate_pr": 7805,
+  "candidate_head": "9d14deb26587da662a085b9d139310a386e6cf5a",
+  "candidate_source_sha256": {
+    "candidate_source/bridge_v2_candidate.py": "ed17e52429d96122c394b88001d84d9b4841a2bc004df0108be4c3768e922b0d",
+    "candidate_source/input_owner_v13_candidate.py": "f359d6a4f25f9dc6a9c2e479d8c401884b7aaa8c37ddeb44c25c4bfaa3e78413"
+  },
+  "main_tree_paths": [
+    "research/live_control/executor_v12.py",
+    "research/live_control/executor_v11.py",
+    "research/live_control/executor_v5.py",
+    "research/live_control/executor_v3.py",
+    "research/live_control/lease_release_v1.py",
+    "research/live_control/lease_cause_v2.py",
+    "research/live_control/lease_cause_v1.py",
+    "research/live_control/lease.py",
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py"
+  ],
+  "outcome_policy": "one candidate execution; preserve first output; no retry"
+}

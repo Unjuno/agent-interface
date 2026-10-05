@@ -1,0 +1,25 @@
+{
+  "audit": "PASS",
+  "decision": {
+    "gt_beats_last_k_on_exact_missing_mass": true,
+    "gt_beats_last_k_on_finite_validation": true,
+    "iid_replicates": 199,
+    "method_controls_pass": true
+  },
+  "eligible_iid_rows": 200,
+  "errors": [],
+  "held_control_rows": 4,
+  "mean_absolute_errors": {
+    "gt_truth": 0.013366834170854273,
+    "gt_validation": 0.013798994974874372,
+    "last_k_truth": 0.02105527638190955,
+    "last_k_validation": 0.021306532663316585
+  },
+  "mutation_controls": {
+    "correlated_duplicate_rejected": true,
+    "distribution_shift_held": true,
+    "missing_denominator_rejected": true,
+    "taxonomy_drift_held": true
+  },
+  "rows": 204
+}

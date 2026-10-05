@@ -583,7 +583,12 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    command = [sys.executable, str(HERE / "session_map01_v12.py"),
+    # Keep V12 as the default; the measurement opt-in wraps it in V15 while
+    # retaining the same per-key bridge argument for V12's backend selection.
+    session = ("session_map01_v15.py"
+               if getattr(args, "measurement_session", False)
+               else "session_map01_v12.py")
+    command = [sys.executable, str(HERE / session),
                "--out", str(runtime), "--seed", str(args.seed),
                "--timeout-seconds", "600", "--skill", "1",
                "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
@@ -1188,6 +1193,8 @@ def main():
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
     parser.add_argument("--per-key-input-measurement", action="store_true",
                         help="load the source-hashed A01 per-key X-adapter measurement bridge")
+    parser.add_argument("--measurement-session", action="store_true",
+                        help="opt into V15 scorer-only and per-key release telemetry")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
@@ -1752,6 +1759,8 @@ def main():
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
+          "measurement_session":("v15_scorer_only_per_key_release"
+                                  if args.measurement_session else "v12_default"),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",

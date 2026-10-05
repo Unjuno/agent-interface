@@ -1,0 +1,10 @@
+import pathlib,json,hashlib
+R=pathlib.Path(__file__).resolve().parent
+ax=(R/'INITIAL_AX.txt').read_text().rstrip('\n')
+changed=ax.replace('- textbox "What needs to be done?" [active]','- textbox "What needs to be done?": D01 owned reload witness').replace('- checkbox "❯Mark all as complete"','- checkbox "❯Mark all as complete" [active]')
+raw={'unit':'stock-todomvc-durable-57-D01-01a0ff35-20261003','started_utc':'2026-10-03T12:44:34.375Z','states':[{'stage':'initial','utc':'2026-10-03T12:44:34.405Z','ax':ax,'dom':{'counter':'','input':'','rows':[]}},{'stage':'created','utc':'2026-10-03T12:44:35.935Z','ax':changed,'dom':{'counter':'','input':'D01 owned reload witness','rows':[]}}],'actions':['type title','Tab'],'status':'FIRST_STOP','error':'Error: STOP_TASK_EFFECT','ended_utc':'2026-10-03T12:44:35.935Z'}
+b=json.dumps(raw,ensure_ascii=False,separators=(',',':')).encode();h=0
+for x in b:h=(h*131+x)&0xffffffff
+assert len(b)==3683 and len(b.decode())==3665 and h==1618756162
+(R/'FIRST_RAW.json').write_bytes(b)
+(R/'BROWSER_CUSTODY.json').write_text(json.dumps({'raw_original_emitted_utf8_bytes':3683,'raw_original_emitted_chars':3665,'transport_checksum':1618756162,'raw_saved_sha256':hashlib.sha256(b).hexdigest(),'transport':'same retained object JSON/string output, saved reconstruction byte-checked with length/rolling checksum; not emitter authentication','actor_source':'function.toString displayed, matches frozen source except final line ending normalized; no independent byte-authentication','screenshot':'actual6130-byte clip displayed and full base64 retained in tool; local transfer pending','dev_errors_warnings':[],'cleanup_navigation':'reported net::ERR_BLOCKED_BY_CLIENT for /__stop; native actual requests/effect later confirms sole request did stop server; no resend','tab_closed_utc':'2026-10-03T12:45:51.688Z','actual_owned_tab_inventory':[]},indent=2),encoding='utf-8');print(len(b),hashlib.sha256(b).hexdigest())

@@ -1,0 +1,36 @@
+{
+  "experiment": "#59 incomplete release publication failure A01",
+  "frozen_at": "2026-10-04",
+  "question": "Does a sink exception while publishing residual per-key receipts preserve per-position delivery custody in the original step exception?",
+  "hypothesis": "When incomplete-batch publication fails at position 1, both current main and PR #7635 will leave the original step exception without structured delivery metadata, despite position 0 being confirmed, position 1 being delivery-unknown, and position 2 remaining unattempted.",
+  "minimum_test": "Invoke the exact frozen backend's _finish_incomplete_release_batch with three residual rows. Inject one sink exception at position 1, once before acceptance and once after acceptance; record attempts, externally delivered rows, original exception attributes, notes, and residual buffer state.",
+  "decision": {
+    "pass": "The original exception carries a structured batch record identifying confirmed, delivery-unknown, and not-attempted positions for both sink acceptance modes, without retrying the failed position.",
+    "fail": "The original exception lacks this record or any position is retried/misclassified.",
+    "scope": "Deterministic source-construction evidence only; no physical release, game, model, GUI, native input, or product claim."
+  },
+  "competing_explanation": "The incomplete publisher may be considered a separate telemetry boundary whose failure is already sufficiently represented by an exception note; this experiment tests whether that is enough to preserve the Issue #59 per-row custody needed by ExecutorV13.",
+  "uncertainty": "A controlled emitter cannot characterize real sink persistence/acknowledgement semantics. A sink that accepts then raises remains delivery-unknown to the backend. The test invokes the backend cleanup boundary directly and does not exercise a live executor or game.",
+  "sources": {
+    "base": {
+      "commit": "d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6",
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "sha256": "a9e109f07dbfdefbf33e87840528c4e24195b2d435782d92f0880049721d0b7d"
+    },
+    "candidate_pr": {
+      "number": 7635,
+      "head": "bf57eb60009867bfa36243a9b48e37bd576682c7",
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "sha256": "ee4872770ad4f3009883e6472e59c6584d3f1b3bed145b9bee7cefc8ad13e834"
+    }
+  },
+  "host": {
+    "os": "macOS 27 ARM64",
+    "python": "3.12.13",
+    "container_status": "OrbStack engine reports running, but docker image listing failed with an unsupported containerd blob operation; no image was pulled or container launched. The bounded deterministic construction probe ran on host CPU."
+  },
+  "attempts": 1,
+  "retries": 0,
+  "network_in_probe": false,
+  "game_model_gui_or_native_input": false
+}

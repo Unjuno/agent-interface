@@ -114,6 +114,24 @@ Inspect and review `later.attempt` before judging completion. Set the number or
 time budget for these reads before issuing input; stop with an unresolved outcome
 when it is exhausted. This API does not automatically poll until success.
 
+For a caller-enforced count ceiling, pass `maxExplicitObservations` when creating
+the primary caller:
+
+```js
+const primary = createPrimaryCaller(client, 'guarded-local', sinks, [], {
+  maxExplicitObservations: 2,
+});
+```
+
+The cap counts valid explicit observation requests over that caller's lifetime,
+whether sent through `primary.observe()` or the lower-level `primary.call()` path
+with the active route's observation tool. Each attempt consumes a slot before
+host dispatch. At the cap, the next observation is refused locally and latches
+STOP; explicit close remains available. Omit the option to preserve the existing
+uncapped behavior. Zero prevents all explicit observations. The cap does not
+bound request duration, classify an image, or prove useful feedback or task
+success.
+
 On current main, a stopped primary permits explicit close, not another ordinary
 observation or result request:
 
