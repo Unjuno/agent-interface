@@ -1,0 +1,69 @@
+{
+  "cases": [
+    {
+      "case_status": "STOP",
+      "error": "'Backend' object has no attribute 'emit'",
+      "error_type": "AttributeError",
+      "partial": {
+        "backend_class": "doom_owner_thread_release_batch_backend_v1.Backend",
+        "backend_held_after": [],
+        "events": [],
+        "fake_physical_after": [
+          74
+        ],
+        "operations": [
+          {
+            "at_ns": 175083580673900,
+            "keycode": 74,
+            "op": "key-down"
+          },
+          {
+            "at_ns": 175083581740300,
+            "op": "sync"
+          }
+        ],
+        "owner_class": "input_transition_owner_v4.InputOwner",
+        "scenario": "sequential",
+        "schema": "v39-repeat-samekey-partial-v1",
+        "selector_source": "def session_command(args, runtime):\n    # Keep the established v12 session as the default. The opt-in v15 wrapper\n    # adds scorer-only progress sampling and per-key release telemetry without\n    # exposing scorer state through the controller event stream.\n    session = (\"session_map01_v15.py\"\n               if getattr(args, \"measurement_session\", False)\n               else \"session_map01_v12.py\")\n    return [sys.executable, str(HERE / session),\n            \"--out\", str(runtime), \"--seed\", str(args.seed),\n            \"--timeout-seconds\", \"600\", \"--skill\", \"1\",\n            \"--load-fixture-manifest\", str(args.load_fixture_manifest.resolve())]",
+        "selector_source_verified": true
+      },
+      "scenario": "sequential",
+      "schema": "v39-repeat-samekey-case-stop-v1",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a02_20261005\\candidate.py\", line 129, in <module>\n    result = run(actions, name)\n             ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a02_20261005\\candidate.py\", line 99, in run\n    backend.execute({'actions':actions},None,'cover-samekey-a02-'+scenario,2)\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\doom_owner_thread_release_batch_backend_v1.py\", line 89, in execute\n    result = super().execute(step, cancel, identifier, index)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\doom_typed_release_backend_v2.py\", line 28, in execute\n    return super().execute(step, cancel, identifier, index)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a02_20261005\\candidate.py\", line 30, in execute\n    self.raw(key, down)\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\doom_owner_thread_release_batch_backend_v1.py\", line 212, in raw\n    self.emit(row)\n    ^^^^^^^^^\nAttributeError: 'Backend' object has no attribute 'emit'\n"
+    },
+    {
+      "case_status": "STOP",
+      "error": "'Backend' object has no attribute 'emit'",
+      "error_type": "AttributeError",
+      "partial": {
+        "backend_class": "doom_owner_thread_release_batch_backend_v1.Backend",
+        "backend_held_after": [],
+        "events": [],
+        "fake_physical_after": [
+          74
+        ],
+        "operations": [
+          {
+            "at_ns": 175083631994700,
+            "keycode": 74,
+            "op": "key-down"
+          },
+          {
+            "at_ns": 175083633085200,
+            "op": "sync"
+          }
+        ],
+        "owner_class": "input_transition_owner_v4.InputOwner",
+        "scenario": "overlapping_duplicate_down",
+        "schema": "v39-repeat-samekey-partial-v1",
+        "selector_source": "def session_command(args, runtime):\n    # Keep the established v12 session as the default. The opt-in v15 wrapper\n    # adds scorer-only progress sampling and per-key release telemetry without\n    # exposing scorer state through the controller event stream.\n    session = (\"session_map01_v15.py\"\n               if getattr(args, \"measurement_session\", False)\n               else \"session_map01_v12.py\")\n    return [sys.executable, str(HERE / session),\n            \"--out\", str(runtime), \"--seed\", str(args.seed),\n            \"--timeout-seconds\", \"600\", \"--skill\", \"1\",\n            \"--load-fixture-manifest\", str(args.load_fixture_manifest.resolve())]",
+        "selector_source_verified": true
+      },
+      "scenario": "overlapping_duplicate_down",
+      "schema": "v39-repeat-samekey-case-stop-v1",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a02_20261005\\candidate.py\", line 129, in <module>\n    result = run(actions, name)\n             ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a02_20261005\\candidate.py\", line 99, in run\n    backend.execute({'actions':actions},None,'cover-samekey-a02-'+scenario,2)\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\doom_owner_thread_release_batch_backend_v1.py\", line 89, in execute\n    result = super().execute(step, cancel, identifier, index)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\doom_typed_release_backend_v2.py\", line 28, in execute\n    return super().execute(step, cancel, identifier, index)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a02_20261005\\candidate.py\", line 30, in execute\n    self.raw(key, down)\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\doom_owner_thread_release_batch_backend_v1.py\", line 212, in raw\n    self.emit(row)\n    ^^^^^^^^^\nAttributeError: 'Backend' object has no attribute 'emit'\n"
+    }
+  ],
+  "schema": "v39-repeat-samekey-raw-v1"
+}
