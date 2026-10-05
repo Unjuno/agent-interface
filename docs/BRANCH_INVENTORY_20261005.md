@@ -476,3 +476,14 @@ A fresh local `git worktree list --porcelain` after the 12:44 remote-ref census 
 - `fix/59-v15-per-key-keyup-retry-a01-20261005` has no remote branch ref after the earlier audited removal, but a clean local worktree is currently on local commit `6edb4ce5107a6f99fce7dc94613e160fe0777ba4`. The earlier removal was based on the 12:33 no-worktree observation; this later checkout does not restore the remote ref automatically. Preserve the local checkout and its history, and do not prune it. The archival tag and closed PR refs cited above remain the remote recovery points.
 
 The current 12:44 table remains a remote-ref snapshot. Worktree ownership is local state and must be checked again before any later branch deletion.
+
+
+## Additional local worktree holds — 2026-10-05 12:46 UTC
+
+A subsequent read of the shared local repository's worktree registry found three of the 65 remote refs in clean local worktrees at the exact remote tips recorded in the 12:44 table. Keep these remote refs while the checkouts exist; do not delete them as unclassified refs:
+
+- `fix/59-v39-hashsafe-adapter-id-20261005` at `40c056e322b39bbb11cb0d02aec7d8edf66367aa`.
+- `fix/59-v39-app-consumption-sample-depth-a01-20261005` at `826329b2ff0adf0bd963c26c5b4ced2ec3fc69cb`.
+- `research/59-v39-v15-cleanup-a07-current-main-20261005` at `fdfcbb03d8bec4bbb532a3f46325fd5ef62205ef` (also noted in the preceding correction).
+
+The three observed worktrees had clean status. The two first refs have no open PR head. Their branch owners and closed-PR history still need review before any later disposition. Including the local worktree for the already-removed #7974 ref noted above, four relevant checkouts remain; only three correspond to refs in the current 65-ref remote snapshot. This corrects the shorthand “two now have worktree holds” in the PR description.
