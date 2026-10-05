@@ -713,8 +713,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predictive_safety_filter_5317_t3_v1/`](predictive_safety_filter_5317_t3_v1/)
 - [`preference_explicit_choice_6274_t0_20261002/`](preference_explicit_choice_6274_t0_20261002/)
 - [`preference_input_methods_7705_t0_20261005/`](preference_input_methods_7705_t0_20261005/)
-- [`preference_manipulation_7678_t0_a02_20261005/`](preference_manipulation_7678_t0_a02_20261005/)
 - [`preference_manipulation_7678_a02_four_routes_20261005/`](preference_manipulation_7678_a02_four_routes_20261005/) — supplemental four-route A02-FOUR-ROUTES; formal HOLD with independent post-run matrix recheck and preserved control failures.
+- [`preference_manipulation_7678_t0_a02_20261005/`](preference_manipulation_7678_t0_a02_20261005/)
 - [`preference_uncertainty_5749_t0_v1/`](preference_uncertainty_5749_t0_v1/)
 - [`prefix_obligations_6749_t0_wslc_20261003/`](prefix_obligations_6749_t0_wslc_20261003/)
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)
