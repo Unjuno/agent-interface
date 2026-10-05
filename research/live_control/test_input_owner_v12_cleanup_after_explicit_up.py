@@ -245,6 +245,27 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(display_instance.buttons_down, set())
             self.assertGreater(display_instance.button_release_attempts, 3)
 
+            recovered_failed_release = owner.call("release", failing_lease)
+            self.assertTrue(recovered_failed_release["verified"])
+
+            explicit_up_lease = Lease()
+            owner.call("down", explicit_up_lease, "W")
+            display_instance.fail_key_release_attempts = 3
+            with self.assertRaisesRegex(RuntimeError, "explicit key-up not observed"):
+                owner.call("up", explicit_up_lease, "W")
+            presses_before_rejected_down = display_instance.key_press_attempts
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("down", explicit_up_lease, "W")
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("button_down", explicit_up_lease, 1)
+            self.assertEqual(display_instance.key_press_attempts, presses_before_rejected_down)
+            self.assertEqual(display_instance.buttons_down, set())
+
+            recovered_explicit_up = owner.call("release", explicit_up_lease)
+            self.assertTrue(recovered_explicit_up["verified"])
+            owner.call("down", explicit_up_lease, "W")
+            owner.call("release", explicit_up_lease)
+
         finally:
             if owner is not None:
                 owner.close()
