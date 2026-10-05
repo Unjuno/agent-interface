@@ -1,0 +1,11 @@
+{
+  "schema": "v15-cleanup-crosspython-prepare-stop-v1",
+  "attempt": 1,
+  "operation": "prefreeze Python-only source manifest from Git virtual-merge tree",
+  "tree": "2ce07e058ed6b868ea97799e9a7b65deff21da71",
+  "command": "python prepare_sources.py --manifest-only --manifest SOURCE_MANIFEST.json",
+  "outcome": "STOP_PREPARE_PIPE_DEADLOCK",
+  "observation": "The script queued all Git object IDs before reading cat-file output; the stdout pipe filled, then input writing blocked. No manifest was written and no candidate tests ran.",
+  "disposition": "Only the calling prepare_sources.py process and its git cat-file child were interrupted. No unrelated process, container, image, candidate, game, model, or allocation was touched.",
+  "repair": "Change blob transfer to one request followed by consuming its complete response before sending the next request."
+}
