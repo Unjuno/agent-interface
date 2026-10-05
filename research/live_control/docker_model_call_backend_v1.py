@@ -47,9 +47,11 @@ def _host_repo_mapping_lock():
     with (host_repo / ".host-model-ipc-path-map.lock").open("a+b") as lock_file:
         if os.name == "nt":
             import msvcrt
-            lock_file.seek(0)
-            if lock_file.read(1) == b"":
-                lock_file.seek(0)
+            # Windows byte-range locks also prevent reads from the locked
+            # byte. Inspect file length instead of reading byte 0 so a
+            # contender can reach the nonblocking lock attempt.
+            lock_file.seek(0, os.SEEK_END)
+            if lock_file.tell() == 0:
                 lock_file.write(b"0")
                 lock_file.flush()
             lock_file.seek(0)
@@ -110,12 +112,19 @@ def _stage_host_repo(root: Path, runner: Path, schema: Path,
         link = host_repo / name
         if link.exists() and not link.is_symlink():
             raise FileExistsError("host IPC mapping target is not a symlink: " + str(link))
-        temporary = host_repo / ("." + name + "." + uuid.uuid4().hex + ".tmp")
-        try:
-            temporary.symlink_to(target, target_is_directory=(name == "workspace"))
-            os.replace(temporary, link)
-        finally:
-            temporary.unlink(missing_ok=True)
+        same_mapping = False
+        if link.is_symlink():
+            try:
+                same_mapping = link.resolve(strict=True) == target
+            except FileNotFoundError:
+                pass
+        if not same_mapping:
+            temporary = host_repo / ("." + name + "." + uuid.uuid4().hex + ".tmp")
+            try:
+                temporary.symlink_to(target, target_is_directory=(name == "workspace"))
+                os.replace(temporary, link)
+            finally:
+                temporary.unlink(missing_ok=True)
         key = name.removesuffix(".py").removesuffix(".json").removesuffix(".txt").removesuffix(".png")
         mapping[key] = {"host_path": str(target),
                         "sha256": hashlib.sha256(target.read_bytes()).hexdigest()

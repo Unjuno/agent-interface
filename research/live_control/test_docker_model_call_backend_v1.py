@@ -179,6 +179,32 @@ with backend._host_repo_mapping_lock():
             self.assertEqual((host_repo / "schema.json").resolve(), compiled_schema.resolve())
             self.assertEqual((host_repo / "workspace").resolve(), workspace.resolve())
 
+    def test_existing_workspace_mapping_is_reused(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            paths = self._preflight_inputs(root)
+            out = root / "preflight"
+            out.mkdir()
+            prompt = out / "prompt.txt"
+            prompt.write_text("probe", encoding="utf-8")
+            args = (out, paths["runner.py"], paths["schema.json"],
+                    paths["instructions.txt"], prompt, paths["workspace"])
+            with patch.dict(os.environ, {
+                    "AGENT_INTERFACE_DOCKER_HOST_REPO": str(paths["host-repo"])}):
+                backend._stage_host_repo(*args)
+                replace = backend.os.replace
+
+                def reject_workspace_replacement(source, destination):
+                    if Path(destination).name == "workspace":
+                        raise AssertionError("unchanged workspace mapping must be reused")
+                    return replace(source, destination)
+
+                with patch.object(backend.os, "replace",
+                                  side_effect=reject_workspace_replacement):
+                    backend._stage_host_repo(*args)
+            self.assertEqual((paths["host-repo"] / "workspace").resolve(),
+                             paths["workspace"].resolve())
+
     def test_command_publishes_auditable_host_repo_mapping(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -229,6 +255,23 @@ with backend._host_repo_mapping_lock():
                     backend._verify_host_repo_mapping(
                         out, paths["schema.json"], paths["instructions.txt"],
                         paths["workspace"], None)
+
+    def test_host_repo_mapping_repairs_a_broken_schema_link(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            paths = self._preflight_inputs(root)
+            out = root / "preflight"
+            out.mkdir()
+            prompt = out / "prompt.txt"
+            prompt.write_text("probe", encoding="utf-8")
+            link = paths["host-repo"] / "schema.json"
+            link.symlink_to(root / "removed-schema.json")
+            with patch.dict(os.environ, {
+                    "AGENT_INTERFACE_DOCKER_HOST_REPO": str(paths["host-repo"])}):
+                backend._stage_host_repo(
+                    out, paths["runner.py"], paths["schema.json"],
+                    paths["instructions.txt"], prompt, paths["workspace"])
+            self.assertEqual(link.resolve(strict=True), paths["schema.json"].resolve())
 
     def _preflight_inputs(self, root):
         paths = {name: root / name for name in
