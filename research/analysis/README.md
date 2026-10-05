@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8185 A01 post-run qualification](epoch_transform_chain_8185_t0_20261005_POST_RUN_QUALIFICATION.md) — the retained finite-model PASS does not establish the issue hypothesis: the baseline refuses composed paths, the epoch fixture stays at 1, and the auditor uses expected points rather than independently composed hidden matrices. Frozen A01 artifacts remain unchanged; A02 has a pre-candidate OrbStack STOP.
+
 - [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
 
 
