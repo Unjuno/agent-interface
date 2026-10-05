@@ -150,3 +150,5 @@ jobs:
         run: python -B -m unittest -v test_keymap_witness test_audit_formal_x11 test_serialize_release test_cli_boundary
       - name: Test Issue #7831 discrete deadline/spacing T0 A02
         run: python -B -m unittest discover -s research/analysis/deadline_spacing_7831_t0_a02_20261005 -p 'test_*.py' -v
+      - name: Test Issue #7678 manipulation-sensitivity T0 A02 construction contract
+        run: python -B -m unittest discover -s research/analysis/preference_manipulation_7678_t0_a02_20261005 -p 'test_*.py' -v
