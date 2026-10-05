@@ -487,3 +487,13 @@ A subsequent read of the shared local repository's worktree registry found three
 - `research/59-v39-v15-cleanup-a07-current-main-20261005` at `fdfcbb03d8bec4bbb532a3f46325fd5ef62205ef` (also noted in the preceding correction).
 
 The three observed worktrees had clean status. The two first refs have no open PR head. Their branch owners and closed-PR history still need review before any later disposition. Including the local worktree for the already-removed #7974 ref noted above, four relevant checkouts remain; only three correspond to refs in the current 65-ref remote snapshot. This corrects the shorthand “two now have worktree holds” in the PR description.
+
+
+## Follow-up transactions — 2026-10-05 12:57 UTC
+
+This is a delta record, not a refresh of the repository-wide CSV census above.
+
+- Local `main` was fast-forwarded from `2c1c90c80389dc6aab6a950c7058528272979f2d` to the already observed `origin/main` tip `b5be19963454ce5edafc945b78b100012952dd15`; the remote `main` ref was not changed.
+- Removed three local-only cached PR-head aliases (`origin/pr-8110-head`, `origin/pr-8139-head`, `origin/pr-8146-head`) after confirming each SHA exactly matched its still-existing live PR head branch. No remote branch or PR was deleted. Mismatched historical aliases were retained.
+- Consolidated Issue #8088 A02's full evidence directory into the corrected A03 branch for PR #8204. All 18 original Git blobs match the original A02 branch; the 17 SHA256SUMS entries pass. PR #8198 was closed unmerged as superseded, while its remote branch at `af7b4af7072aa519d6ec4845731eab3b309bf80d` remains intact. PR #8204 stays open for review at `1bac5efaa02a1f198ac22347915a0a4e11a6fcf0` on base `b5be19963454ce5edafc945b78b100012952dd15`. No formal allocation was rerun.
+- The local `work/pr8096-refresh` checkout is now on the A03 inventory-rescue branch. Its A05 V15 closure commit remains on branch `research/59-v15-release-closure-a03-20261005` and remote PR #8096; no evidence branch was deleted.
