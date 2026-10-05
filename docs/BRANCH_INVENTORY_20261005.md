@@ -7,7 +7,7 @@ This is a dated, read-only inventory to support safe consolidation. It is not an
 - Repository: [Unjuno/agent-interface](https://github.com/Unjuno/agent-interface)
 - API default branch tip observed: `11445a7ca200404ddc80bf7ebb1dbef86eb059de` (2026-10-05 16:24 JST).
 - A `git fetch origin main` and `git ls-remote origin refs/heads/main` check confirmed the same tip after an earlier stale `origin/main` at `7a9398add78d9095e5a85a60d324513fc3c2a1e3`.
-- During review, `main` advanced again to `9146507c2689da7d4444d8febda848fa7dd4bcd1`; this inventory branch was rebased onto that tip. The CSVs remain the earlier fixed snapshot rather than a live view.
+- During review, `main` advanced to `9146507c2689da7d4444d8febda848fa7dd4bcd1` and then `380c3d2b0e550a1b1defd6f1f5a0e3be80632028`; this inventory branch was rebased onto the latter tip. The CSVs remain the earlier fixed snapshot rather than a live view.
 - Open PRs: **338** (52 ready, 286 draft); 282 target `main`, 56 target another branch.
 - Open PR check rollup: **294 success, 12 failure, 1 pending, 31 without a check state**. All 338 had an unset GitHub review decision at capture; that field alone does not prove no comments exist.
 - Remote branches: **391**; no branch-protection rule or repository ruleset was reported. Repository metadata has `delete_branch_on_merge=false`.
