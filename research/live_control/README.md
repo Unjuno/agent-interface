@@ -4,6 +4,8 @@
 
 ## Navigate
 
+Retained [Issue #59 journal-wire custody packet](appserver_journal_wire_custody_59_20261003_93c2_A01/README.md): exact saved nested-data proof and qualified rescue records, with observer/authentication and outer-auditor limits preserved; no source replay or runtime adoption.
+
 Retained [ExecutorV13 release-custody BaseException boundary experiment](baseexception_release_custody_59_20261005/README.md): synthetic worker-step result with custody-preserving terminal behavior, independent source audit, and scoped limits; the implementation is historical evidence, not a runtime adoption.
 
 Retained [ExecutorV13 `release_all()` BaseException custody-boundary experiment](executor_v13_release_cleanup_baseexception_59_20261005/README.md): the frozen parent regressions demonstrate the no-terminal failure; the synthetic candidate/AST audit passes, and the later integrated #7635 repair supersedes the candidate implementation. Historical evidence only; no live-control or task-effect claim.
