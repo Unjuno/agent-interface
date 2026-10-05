@@ -417,6 +417,15 @@ def cancel_invalidated_cover_before_plan(process, wait, cover_id):
             "terminal": terminal}
 
 
+def resolve_invalidated_cover_submission(wait, cover_id):
+    """Distinguish an accepted cover from a submit rejected during invalidation."""
+    response = wait(lambda row: row.get("event") in ("accepted", "rejected") and
+                    (row.get("id") == cover_id or row.get("event") == "rejected"))
+    if response.get("event") == "rejected":
+        return {"status": "rejected", "response": response}
+    return {"status": "accepted", "response": response}
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -870,9 +879,14 @@ def main():
             initial_cover_admission = submit_cover(cover)
             if initial_cover_admission["event"] == "policy_invalidation":
                 invalidation = initial_cover_admission["invalidation"]
-                cancellation = cancel_invalidated_cover_before_plan(
-                    process, wait, cover)
-                cover_terminals.append(cancellation["terminal"])
+                admission_resolution = resolve_invalidated_cover_submission(
+                    wait, cover)
+                cancellation = None
+                if admission_resolution["status"] == "accepted":
+                    cover_ids.append(cover)
+                    cancellation = cancel_invalidated_cover_before_plan(
+                        process, wait, cover)
+                    cover_terminals.append(cancellation["terminal"])
                 decisions.append({
                     "iteration": index,
                     "source_image": str(latest["image"]),
@@ -893,6 +907,7 @@ def main():
                         "reason": "cover_invalidated_before_planner"},
                     "initial_cover_submission_id": cover,
                     "initial_cover_admission_result": initial_cover_admission,
+                    "initial_cover_admission_resolution": admission_resolution,
                     "planner_cancellation_requested": False,
                     "planner_interrupt": None,
                     "controller_model_started_ns": None,
@@ -907,9 +922,10 @@ def main():
                     "cover_validity_latest_soft_event": validity_monitor.latest_soft_event,
                     "policy_invalidation": invalidation,
                     "cover_admission_cancellation": cancellation,
+                    "cover_program_admitted": admission_resolution["status"] == "accepted",
                     "model_action_discarded": False,
                     "discard_reason": "planner_not_started_cover_invalidated",
-                    "cover_terminal_before_plan": True,
+                    "cover_terminal_before_plan": cancellation is not None,
                     "plan_terminal": "not_started"})
                 continue
             failure_cleanup.set_stage("decision_artifact_prepare")

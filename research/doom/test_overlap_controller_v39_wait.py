@@ -118,6 +118,8 @@ def extract_initial_cover_gate():
                         for node in ast.walk(stmt.test)))
     cancel = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
                   and node.name == "cancel_invalidated_cover_before_plan")
+    resolve = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                   and node.name == "resolve_invalidated_cover_submission")
     factory = ast.parse(
         "def factory(process, wait, latest, cover_steps, validity_monitor, "
         "validity_admission, cover_semantic, cover_policy_source_iteration, "
@@ -131,7 +133,7 @@ def extract_initial_cover_gate():
         "    effect_memory = []\n"
         "    prior_soft_event_summary = None\n"
         "    planner_started = False\n").body[0]
-    factory.body.extend([submit_cover, cancel])
+    factory.body.extend([submit_cover, cancel, resolve])
     factory.body.append(ast.For(
         target=ast.Name(id="index", ctx=ast.Store()),
         iter=ast.Call(func=ast.Name(id="range", ctx=ast.Load()),
@@ -288,7 +290,7 @@ class WaitTests(unittest.TestCase):
             "thread-1", failure_cleanup)
 
         self.assertFalse(planner_started)
-        self.assertEqual(cover_ids, [])
+        self.assertEqual(cover_ids, ["cover-0"])
         self.assertEqual(len(decisions), 1)
         self.assertEqual(decisions[0]["planner_turn_status"], "not_started")
         self.assertFalse(decisions[0]["model_action_discarded"])
@@ -297,6 +299,46 @@ class WaitTests(unittest.TestCase):
         self.assertEqual(decisions[0]["initial_cover_admission_result"]["event"],
                          "policy_invalidation")
         self.assertEqual(cover_terminals[0]["status"], "cancelled")
+
+    def test_rejected_initial_submission_is_not_cancelled_as_an_admitted_program(self):
+        observation = {"event": "observation", "sequence": 8, "health": 70,
+                       "image": "fresh.png"}
+        invalidation = {"reason": "health_below_floor", "sequence": 8}
+        rows = [observation,
+                {"event": "rejected", "reason": "latest observation sequence required before input"},
+                {"event": "cancel_requested", "id": "cover-0", "matched": False}]
+        monitor = types.SimpleNamespace(
+            event_types={"observation"}, soft_event_count=0, latest_soft_event=None,
+            observe=lambda row: invalidation if row is observation else None)
+        process = types.SimpleNamespace(stdin=io.StringIO())
+        wait_impl, observed_latest = extract_wait(Process(None), rows)
+        latest = {"sequence": 7, "image": "stale.png"}
+        def wait(predicate, timeout=40, observation_monitor=None):
+            result = wait_impl(predicate, timeout=timeout,
+                               observation_monitor=observation_monitor)
+            if observed_latest() is not None:
+                latest.update(observed_latest())
+            return result
+        failure_cleanup = types.SimpleNamespace(set_stage=lambda _stage: None)
+
+        planner_started, decisions, cover_ids, cover_terminals = extract_initial_cover_gate()(
+            process, wait, latest, [{"op": "wait"}], monitor,
+            {"status": "admitted"}, [], None, "thread-1", failure_cleanup)
+
+        self.assertFalse(planner_started)
+        self.assertEqual(len(decisions), 1)
+        self.assertEqual(decisions[0]["initial_cover_admission_resolution"]["status"],
+                         "rejected")
+        self.assertEqual(decisions[0]["initial_cover_admission_resolution"]["response"],
+                         {"event": "rejected",
+                          "reason": "latest observation sequence required before input"})
+        self.assertIsNone(decisions[0]["cover_admission_cancellation"])
+        self.assertFalse(decisions[0]["cover_program_admitted"])
+        self.assertFalse(decisions[0]["cover_terminal_before_plan"])
+        self.assertEqual(cover_ids, [])
+        self.assertEqual(cover_terminals, [])
+        writes = [json.loads(line) for line in process.stdin.getvalue().splitlines()]
+        self.assertEqual([row["op"] for row in writes], ["submit"])
 
     def test_running_invalidation_retains_typed_event_and_result(self):
         typed = {"event": "typed_observation", "sequence": 9}
