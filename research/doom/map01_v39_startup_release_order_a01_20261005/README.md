@@ -14,6 +14,8 @@ Re-run the read-only audit with:
 python research/doom/map01_v39_startup_release_order_a01_20261005/audit.py
 ```
 
+The audit prints its current reconstruction to stdout and never replaces the retained `results/AUDIT.json`. `build_freeze.py` prints a proposed freeze to stdout and never replaces `FREEZE.json`; review and save any new freeze as a separate run artifact. `test_readonly_tools.py` checks both preservation guarantees.
+
 The corrected candidate has already run once and is retained; do not invoke it again as an experimental retry. The `candidate.py` source is included so the seam and call path remain reviewable.
 
 Scope: deterministic fake X display and one two-key sequence. The V39 selector is checked from its exact source; V15 backend, typed-release-v2, release-batch backend, owner-v4 and runtime owner-v12 sources execute. The typed command interpreter/capture superclass is a deterministic seam. There was no full V39 process launch, live X11 or OS input, DoomGame, model call, application effect, latency bound, recovery, threat-response, or MAP01 result. The fake-display sample is construction evidence only.
