@@ -61,7 +61,8 @@ not claimed.
   or daemon change was attempted.
 - The fixture/source hashes and observed command/results are recorded in
   `FREEZE.json` and `SHA256SUMS`. The package was built in a standalone
-  workspace directory; it has not yet been committed or published to GitHub.
+  workspace directory, then added on a dedicated branch and submitted as draft
+  PR #8011 for review; it is not merged into `main`.
 
 ## Reproduction
 
