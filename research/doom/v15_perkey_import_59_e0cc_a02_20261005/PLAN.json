@@ -1,0 +1,33 @@
+{
+  "schema": "v15-perkey-owner-revalidation-plan-v1",
+  "allocation": "ordinary local construction; not a live or formal allocation",
+  "issue": 59,
+  "candidate_pr": 8065,
+  "baseline_evidence_pr": 8079,
+  "source_freeze": {
+    "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+    "latest_main_observed": "d5afff08116722563a016d4e1eb1d63b7d1ccd23",
+    "prior_probe_head": "cceb9d2856796cc9b04364806dd67e91610cfabb",
+    "prior_main_freeze": "7a9398add78d9095e5a85a60d324513fc3c2a1e3",
+    "probe_source": "research/doom/v15_perkey_import_59_e0cc_20261005/probe_startup.py",
+    "probe_origin": "PR #8079 commit 44ab184ada4a2a5229c4e18826c93c3acc59630f"
+  },
+  "H": "After the V39 release-safety dependencies advanced from the #8079 freeze, V15 plus --per-key-input-measurement still selects the cached current raw V12 owner instead of the archived A01 owner.",
+  "T": "Run the retained fresh-process V12-perkey, V15-default, and V15-perkey startup probes against this candidate worktree. Patch only optional VizDoom/Xlib bindings and stop at suite.Session construction after backend selection and sources.json writing. Refuse subprocesses, thread starts, X display/input calls, and owner/session construction.",
+  "D": {
+    "pass": "V12-perkey selects the archived A01 owner, V15-default selects the current V4 transition owner, and V15-perkey selects the archived A01 owner; all routes reach the guarded boundary with no forbidden calls.",
+    "fail": "Any route selects a different owner identity; especially V15-perkey selecting the raw current V12 owner reproduces the import-cache mismatch.",
+    "stop": "A route cannot reach the guarded boundary because of environment/setup failure or a forbidden operation is attempted. Preserve the first stop and do not relabel it as a feature result."
+  },
+  "C": "The later release-batch and InputOwner updates could have changed import order or owner selection, so the exact #8079 result may not transfer unchanged.",
+  "U": "This boundary test establishes Python startup owner identity only. It does not instantiate an owner, execute DOWN/UP, measure X or OS key state, establish application consumption, test threat response, useful feedback, recovery, ammo/progress, or terminal task outcome.",
+  "environment": {
+    "candidate_runtime": "Windows Python 3.11.9 with Pillow 10.4.0 and NumPy 2.4.6; no game, GUI, X server, model, owner thread, or native input.",
+    "wslc_preflight": "No container was running. Cached python:latest digest 1ae5b32b33f502335ed9f5ee7afa4387192e9566b1328fc66da836c77c1cfb65 lacks Pillow, which the startup source closure imports. WSLc warned that host swap-limit cgroup capability is unavailable. Preserve the preflight stop; use host Python for this mocked startup-only construction."
+  },
+  "commands": [
+    "python research/doom/v15_perkey_import_59_e0cc_a02_20261005/probe_startup.py <repo-root> <fresh-results-dir>/v12-perkey v12-perkey",
+    "python research/doom/v15_perkey_import_59_e0cc_a02_20261005/probe_startup.py <repo-root> <fresh-results-dir>/v15-default v15-default",
+    "python research/doom/v15_perkey_import_59_e0cc_a02_20261005/probe_startup.py <repo-root> <fresh-results-dir>/v15-perkey v15-perkey"
+  ]
+}
