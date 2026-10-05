@@ -1,0 +1,3 @@
+Auditor invocation 1 did not reach raw checks. Exit code 1.
+Traceback: audit.py line 7 attempted to read `/src/map01_v39_v15_perkey_cleanup_a07_20261005/FREEZE.json`; FileNotFoundError.
+Cause: frozen auditor resolves PACKAGE at /src/map01..., while materializer placed package at /src/research/doom/map01... . Candidate was not rerun. The same unchanged frozen auditor and raw were then provided through an additional identical package copy at its expected path.

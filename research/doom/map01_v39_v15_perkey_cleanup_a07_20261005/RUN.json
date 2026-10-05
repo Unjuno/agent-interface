@@ -1,0 +1,43 @@
+{
+  "audit_sha256": "1998e334a6e90055690c9d1f012a0adaf80f791f749390ad6aaeeb396b9030fa",
+  "auditor_attempt_01": "STOP_BEFORE_RAW_CHECK_FILE_NOT_FOUND_PACKAGE_PATH",
+  "auditor_attempt_02": {
+    "exit_code": 1,
+    "passed": 18,
+    "status": "FAIL_RAW_OR_SOURCE_AUDIT",
+    "total": 30
+  },
+  "auditor_invocations": 2,
+  "both_release_rows": [
+    null,
+    null
+  ],
+  "both_steps_completed": [
+    0,
+    0
+  ],
+  "both_terminal_errors": [
+    "ValueError('observed input focus required')",
+    "ValueError('observed input focus required')"
+  ],
+  "both_terminal_status": [
+    "failed",
+    "failed"
+  ],
+  "candidate_cases": 2,
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "candidate_stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "candidate_stdout": "{\"raw\": \"/out/candidate.json\", \"cases\": 2, \"loss_server_down\": [], \"loss_terminal_status\": \"failed\"}",
+  "freeze_commit": "c048c2b57ad",
+  "interpretation": "STOP_BEFORE_TREATMENT_ACTION: pre-step observed input focus admission failed in both arms. No KeyPress/KeyRelease treatment occurred; empty keymap reflects no input issued, not dropped-KeyRelease recovery.",
+  "keys_down_after_cleanup": [
+    [],
+    []
+  ],
+  "raw_sha256": "9557dfce93106e41a6a33d3bc48fa6171c50bab0ebe1b198acdc2e6d4f10c2b3",
+  "run_id": "a07-current-main-9febfe4-20261005-one-shot",
+  "schema": "v39-v15-perkey-cleanup-a07-run-v1",
+  "source_commit": "9febfe4926cde6629f9751d6444f6b802cf31328",
+  "swap_limit_observation": "memory.swap.max=max; WSLc emitted unsupported swap/cgroup warning"
+}

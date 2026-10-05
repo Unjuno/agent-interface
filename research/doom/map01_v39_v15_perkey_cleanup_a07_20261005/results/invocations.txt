@@ -1,0 +1,8 @@
+candidate (one invocation):
+wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\a07src:/src:ro --volume C:\a07out:/out:rw --volume C:\a07out:/raw:ro python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/candidate.py
+
+auditor attempt 1 (packaging path STOP, no raw check):
+wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\a07src:/src:ro --volume C:\a07out:/out:rw --volume C:\a07out:/raw:ro python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/audit.py /raw/candidate.json
+
+auditor attempt 2 (same frozen code/raw, alias package path populated):
+wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\a07src:/src:ro --volume C:\a07out:/out:rw --volume C:\a07out:/raw:ro python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/audit.py /raw/candidate.json

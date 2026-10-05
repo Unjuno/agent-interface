@@ -1,0 +1,218 @@
+{
+  "cases": [
+    {
+      "base_backend_touched_after_batch": [],
+      "container_resource_observation": {
+        "/sys/fs/cgroup/cgroup.controllers": "cpuset cpu io memory hugetlb pids rdma",
+        "/sys/fs/cgroup/cpu.max": "25000 100000",
+        "/sys/fs/cgroup/memory.max": "536870912",
+        "/sys/fs/cgroup/memory.swap.max": "max"
+      },
+      "events": [
+        {
+          "accepted_ns": 32859265176,
+          "event": "accepted",
+          "id": "normal-case",
+          "intent_token": "ab8ec5e47dea4463ba6d96bb8abdfd98",
+          "program_sha256": "c099f336628d4eb6031c0a67c64c1d3ba62a6578165ace93498fded136e327e4",
+          "steps": 1,
+          "valid_until_ns": 42859147995
+        },
+        {
+          "event": "step_started",
+          "id": "normal-case",
+          "issued_ns": 32859442607,
+          "operation": "key_batch",
+          "step": 0
+        },
+        {
+          "decision_reason": null,
+          "error": "ValueError('observed input focus required')",
+          "event": "terminal",
+          "id": "normal-case",
+          "interruption": null,
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "ab8ec5e47dea4463ba6d96bb8abdfd98",
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "release",
+            "release_batch_delivery": {
+              "identifier": "normal-case",
+              "positions": [],
+              "schema": "release-batch-delivery-v1",
+              "size": 0,
+              "step": 0
+            },
+            "release_call_returned_ns": 32859830611,
+            "release_call_started_ns": 32859666789,
+            "valid_until_ns": null,
+            "verified": true,
+            "verified_ns": 32859728130
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "failed",
+          "steps_completed": 0,
+          "terminal_ns": 32859865070
+        }
+      ],
+      "executor_terminal": {
+        "decision_reason": null,
+        "error": "ValueError('observed input focus required')",
+        "event": "terminal",
+        "id": "normal-case",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "ab8ec5e47dea4463ba6d96bb8abdfd98",
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "release",
+          "release_batch_delivery": {
+            "identifier": "normal-case",
+            "positions": [],
+            "schema": "release-batch-delivery-v1",
+            "size": 0,
+            "step": 0
+          },
+          "release_call_returned_ns": 32859830611,
+          "release_call_started_ns": 32859666789,
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 32859728130
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 32859865070
+      },
+      "injected_keyrelease_loss": false,
+      "owner_close_error": null,
+      "owner_close_recovered": true,
+      "release_row": null,
+      "server_keycodes_down_after_executor_release": []
+    },
+    {
+      "base_backend_touched_after_batch": [],
+      "container_resource_observation": {
+        "/sys/fs/cgroup/cgroup.controllers": "cpuset cpu io memory hugetlb pids rdma",
+        "/sys/fs/cgroup/cpu.max": "25000 100000",
+        "/sys/fs/cgroup/memory.max": "536870912",
+        "/sys/fs/cgroup/memory.swap.max": "max"
+      },
+      "events": [
+        {
+          "accepted_ns": 32871551718,
+          "event": "accepted",
+          "id": "lost-up-case",
+          "intent_token": "bbdf2cafbd914d719a98e9b32457159c",
+          "program_sha256": "c099f336628d4eb6031c0a67c64c1d3ba62a6578165ace93498fded136e327e4",
+          "steps": 1,
+          "valid_until_ns": 42871472566
+        },
+        {
+          "event": "step_started",
+          "id": "lost-up-case",
+          "issued_ns": 32871626878,
+          "operation": "key_batch",
+          "step": 0
+        },
+        {
+          "decision_reason": null,
+          "error": "ValueError('observed input focus required')",
+          "event": "terminal",
+          "id": "lost-up-case",
+          "interruption": null,
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "bbdf2cafbd914d719a98e9b32457159c",
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "release",
+            "release_batch_delivery": {
+              "identifier": "lost-up-case",
+              "positions": [],
+              "schema": "release-batch-delivery-v1",
+              "size": 0,
+              "step": 0
+            },
+            "release_call_returned_ns": 32896622141,
+            "release_call_started_ns": 32896478678,
+            "valid_until_ns": null,
+            "verified": true,
+            "verified_ns": 32896594862
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "failed",
+          "steps_completed": 0,
+          "terminal_ns": 32896643960
+        }
+      ],
+      "executor_terminal": {
+        "decision_reason": null,
+        "error": "ValueError('observed input focus required')",
+        "event": "terminal",
+        "id": "lost-up-case",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "bbdf2cafbd914d719a98e9b32457159c",
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "release",
+          "release_batch_delivery": {
+            "identifier": "lost-up-case",
+            "positions": [],
+            "schema": "release-batch-delivery-v1",
+            "size": 0,
+            "step": 0
+          },
+          "release_call_returned_ns": 32896622141,
+          "release_call_started_ns": 32896478678,
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 32896594862
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 32896643960
+      },
+      "injected_keyrelease_loss": true,
+      "owner_close_error": null,
+      "owner_close_recovered": true,
+      "release_row": null,
+      "server_keycodes_down_after_executor_release": []
+    }
+  ],
+  "claims": {
+    "application_effect": false,
+    "doom": false,
+    "gui": false,
+    "model": false,
+    "physical_keyboard": false,
+    "real_x11": false
+  },
+  "schema": "v39-v15-keyup-loss-a07-raw-v1",
+  "source_base": "9febfe4926cde6629f9751d6444f6b802cf31328"
+}
