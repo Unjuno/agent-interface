@@ -28,6 +28,7 @@
 
 - [Issue #8061 successor to #7748 — unknown job-class boundary](processor_demand_witness_7748_class_enum_a01_20261005/REPORT.md) — `PASS_CLASS_BOUNDARY_SCOPED` on seven rows; unknown/malformed labels HOLD before control-only demand. OrbStack OCI preflight STOP; host-only stdlib run, no scheduler/runtime claim.
 
+- [Issue #7678 manipulation-sensitivity T0 A01](preference_manipulation_7678_t0_20261005/README.md) — `HOLD`: the first auditor exited 1 after the candidate; post-run audit/freeze edits make later diagnostic PASSes non-confirmatory, and the original auditor stdout/stderr were not retained.
 - [Issue #7678 manipulation-sensitivity successor T0 A02](preference_manipulation_7678_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 7,774 candidate/oracle rows; exhaustive null under the declared set utility (0 safe-beneficial deviations in both partitions); A01 HOLD preserved.
 
 - [Issue #7831 deadline-spacing successor T0 A02](deadline_spacing_7831_t0_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: 128 trace/config rows and 512 policy rows matched an exhaustive integer-tick oracle; synthetic model only, A01 HOLD preserved.
