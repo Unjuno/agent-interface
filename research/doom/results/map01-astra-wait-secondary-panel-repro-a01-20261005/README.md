@@ -2,7 +2,7 @@
 
 ## H / T / D / C / U
 
-- **H:** Re-running the retained A01 source/frame audit in the current macOS ARM64 environment reproduces the historical 60 decoded RGB frame digests.
+- **H:** Test whether the retained A01 source/frame audit reproduces the historical 60 decoded RGB frame digests in the current macOS ARM64 environment.
 - **T:** Read only the video blob pinned by the immutable A01 freeze and compare all decoded timestamps, dimensions, and RGB SHA-256 values against its retained `raw.json`. Do not rerun the original decoder/candidate and do not modify the original package.
 - **D:** `PASS_REPRODUCED` only if all 60 complete rows match. Any mismatch is `STOP_DECODER_REPRODUCIBILITY`; report counts and examples without substituting new digests into the old record.
 - **C:** The original freeze names PyAV 18.1.0 but does not identify the host, FFmpeg libraries/build, decoder flags, or a container image. Matching PyAV versions do not guarantee matching decoded RGB bytes.
