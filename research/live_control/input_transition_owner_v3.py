@@ -171,7 +171,20 @@ class InputOwner:
         if admission_key is not None:
             with self._admission_records_lock:
                 admission_marker = self._admission_records.pop(admission_key, None)
-        result = self._inner.call(operation, lease, key)
+        explicit_keyup_failure = None
+        try:
+            result = self._inner.call(operation, lease, key)
+        except RuntimeError as error:
+            failed_receipt = getattr(error, "owner_explicit_keyup_record", None)
+            if (operation != "up" or type(failed_receipt) is not dict or
+                    failed_receipt.get("event") != "owner_explicit_keyup" or
+                    failed_receipt.get("operation") != "up" or
+                    failed_receipt.get("key") != key or
+                    failed_receipt.get("server_keyup_verified") is not False or
+                    failed_receipt.get("key_state_source") != "x11_query_keymap"):
+                raise
+            explicit_keyup_failure = failed_receipt
+            result = None
         release_call_returned_ns = time.perf_counter_ns()
         if result is not None:
             raise AssertionError("InputOwner v10 explicit release unexpectedly returned payload")
@@ -224,12 +237,17 @@ class InputOwner:
             "release_call_started_ns": release_call_started_ns,
             "release_call_returned_ns": release_call_returned_ns,
             "release_call_bracket_ns": release_call_returned_ns - release_call_started_ns,
-            "owner_transition_verified": None,
+            "owner_transition_verified": (False if explicit_keyup_failure is not None else None),
+            "owner_explicit_keyup_failure": (
+                dict(explicit_keyup_failure) if explicit_keyup_failure is not None else None
+            ),
             "grants_input_authority": False,
             **lease_state,
             "owner_release_history_complete": owner_release_history_complete,
             "owner_cleanup_intervened": owner_cleanup_intervened,
-            "ordinary_release_candidate": ordinary_release_candidate,
+            "ordinary_release_candidate": (
+                ordinary_release_candidate and explicit_keyup_failure is None
+            ),
             "measurement_contract": (
                 "caller brackets unchanged InputOwner v10 explicit release; the release "
                 "history since admission must contain no same-lease owner cleanup; no "
