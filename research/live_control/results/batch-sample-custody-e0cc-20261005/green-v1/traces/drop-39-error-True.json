@@ -1,0 +1,158 @@
+{
+  "case": "drop-39-error-True",
+  "clock": "synthetic monotonic nanosecond labels; no latency inference",
+  "final_fake_keys_down": [],
+  "following_down_error": "input owner release pending; retry release before actuation",
+  "following_press_count": 0,
+  "owner_stopped": true,
+  "physical_verification_authoritative": false,
+  "real_x11": false,
+  "rows": [
+    {
+      "cancel_requested_after_sync": false,
+      "event": "owner_explicit_keyup",
+      "intent_token": "test-intent",
+      "key": "A",
+      "key_state_source": "x11_query_keymap",
+      "keycode": 39,
+      "operation": "up",
+      "owner_id": "a4369a68de224e7cb7d9ca7ceb780887",
+      "owner_keymap_sampled_ns": 101500,
+      "owner_keyrelease_started_ns": 100800,
+      "owner_sync_returned_ns": 101400,
+      "physical_verification_authoritative": false,
+      "release_batch_initial_up_count": 2,
+      "release_batch_key_order": [
+        "A",
+        "W"
+      ],
+      "server_key_down_after_keyup": null,
+      "server_keyup_attempt_count": 2,
+      "server_keyup_attempts": [
+        {
+          "attempt": 1,
+          "keymap_after_error": null,
+          "keymap_before_error": null,
+          "keymap_sampled_ns": 101200,
+          "keyrelease_error": null,
+          "keyrelease_started_ns": 100800,
+          "server_key_down_after": true,
+          "server_key_down_before": true,
+          "sync_error": null,
+          "sync_returned_ns": 100900
+        },
+        {
+          "attempt": 2,
+          "keymap_after_error": {
+            "message": "synthetic retry-only keymap failure",
+            "type": "RuntimeError"
+          },
+          "keymap_before_error": null,
+          "keymap_sampled_ns": 101500,
+          "keyrelease_error": null,
+          "keyrelease_started_ns": 101300,
+          "server_key_down_after": null,
+          "server_key_down_before": true,
+          "sync_error": null,
+          "sync_returned_ns": 101400
+        }
+      ],
+      "server_keyup_verified": false,
+      "server_sync_completed": true,
+      "valid_until_ns": 4611686018427387904
+    },
+    {
+      "cancel_requested_after_sync": false,
+      "event": "owner_explicit_keyup",
+      "intent_token": "test-intent",
+      "key": "W",
+      "key_state_source": "x11_query_keymap",
+      "keycode": 38,
+      "operation": "up",
+      "owner_id": "a4369a68de224e7cb7d9ca7ceb780887",
+      "owner_keymap_sampled_ns": 101200,
+      "owner_keyrelease_started_ns": 101000,
+      "owner_sync_returned_ns": 101100,
+      "physical_verification_authoritative": false,
+      "release_batch_initial_up_count": 2,
+      "release_batch_key_order": [
+        "A",
+        "W"
+      ],
+      "server_key_down_after_keyup": false,
+      "server_keyup_attempt_count": 1,
+      "server_keyup_attempts": [
+        {
+          "attempt": 1,
+          "keymap_after_error": null,
+          "keymap_before_error": null,
+          "keymap_sampled_ns": 101200,
+          "keyrelease_error": null,
+          "keyrelease_started_ns": 101000,
+          "server_key_down_after": false,
+          "server_key_down_before": true,
+          "sync_error": null,
+          "sync_returned_ns": 101100
+        }
+      ],
+      "server_keyup_verified": true,
+      "server_sync_completed": true,
+      "valid_until_ns": 4611686018427387904
+    }
+  ],
+  "state_after_batch": {
+    "active_lease_deadline_ns": 4611686018427387904,
+    "active_lease_time_valid": true,
+    "cancel_requested": false,
+    "focus": 41,
+    "owned_buttons": [],
+    "owned_keycodes": [
+      39
+    ],
+    "owner_id": "a4369a68de224e7cb7d9ca7ceb780887",
+    "physical_pointer_mask": 0,
+    "pointer": [
+      0,
+      0
+    ],
+    "release_pending": true,
+    "revision": 3,
+    "sample_finished_ns": 101900,
+    "sample_started_ns": 101800
+  },
+  "trace": [
+    [
+      "query_keymap",
+      [
+        38,
+        39
+      ]
+    ],
+    [
+      "key_event",
+      3,
+      39
+    ],
+    [
+      "key_event",
+      3,
+      38
+    ],
+    [
+      "query_keymap",
+      [
+        39
+      ]
+    ],
+    [
+      "key_event",
+      3,
+      39
+    ],
+    [
+      "query_error",
+      3,
+      []
+    ]
+  ]
+}
