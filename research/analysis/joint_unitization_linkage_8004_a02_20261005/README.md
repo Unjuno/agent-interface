@@ -60,6 +60,18 @@ auditor therefore ran on host as exploratory work; no image pull, container
 launch, prune, VM start, daemon mutation, model, GUI, network or live allocation
 was used.
 
+## Parallel-work disposition
+
+After this exploratory run, GitHub Issue #8004 received a separate preregistered
+formal T0 A02 allocation, frozen on branch
+`research/8004-joint-unitization-linkage-t0-a02-20261005` and reported in PR
+[#8020](https://github.com/Unjuno/agent-interface/pull/8020). That independent
+allocation exercises the issue's fuller four-channel joint-only H gate and
+reports `PASS_METHOD_SCOPED` / `H_PASS_SCOPED`. This exploratory package is not
+that allocation, was not reused in it, and must not be counted as a second
+independent confirmation. Prefer PR #8020 as the issue-level T0 result; retain
+this package only as separately scoped development/preflight history.
+
 ```sh
 python3 -m unittest -v test_method
 python3 -O -m unittest -v test_method
