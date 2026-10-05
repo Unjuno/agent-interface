@@ -1,0 +1,40 @@
+{
+  "base_commit": "e7c916989da30741b00c234efd264067d0899851",
+  "candidate_invocations_allowed": 1,
+  "candidate_sha256": "e2228de1b4d67577f39fc5c38dbbbb7b7bc69f88111a17c2bd01620ec924fe86",
+  "container": {
+    "cpus": 1,
+    "image": "python:3.12.11-slim",
+    "image_digest": "sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "memory_bytes": 1073741824,
+    "network": "none",
+    "pids_limit": 64
+  },
+  "hypothesis": "A single keymap query inside the existing post-batch input_state call can give same-sample per-key up/down status without inter-release queries; unavailable samples must remain unknown.",
+  "output_path": "research/doom/map01_v39_postbatch_perkey_sample_a02_20261005/results/a02/raw.json",
+  "predecessor_stop": "research/doom/map01_v39_postbatch_perkey_sample_a01_20261005/results/a01/STOP.json",
+  "run_id": "MAP01-V39-POSTBATCH-PERKEY-SAMPLE-A02-20261005",
+  "scenarios": [
+    "normal",
+    "release_stuck",
+    "sample_error"
+  ],
+  "schema": "map01-v39-postbatch-perkey-sample-freeze-v1",
+  "scope": "Exact current release-batch backend and V3/V4 owner adapters; only input_owner_v12 is replaced by a pinned experiment-only copy. Typed key sequence and X display are inert fakes.",
+  "source_sha256": {
+    "docs/CURRENT_GOAL.md": "38d0234d6a57fd03e7cdf574eb6b3b0c4fc277f9067f6c0f8f50ebfd23f96766",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "research/doom/map01_v39_postbatch_perkey_sample_a01_20261005/results/a01/STOP.json": "747633a2f36f834217d866a1ec89e3aee7d659f7f3d46c18e082425bc865478c",
+    "research/doom/map01_v39_postbatch_perkey_sample_a01_20261005/results/a01/STOP.stderr.txt": "032a2f22473919d196c04cea41b7e2823d30f940c08a8d7357877f91ccd9e4be",
+    "research/doom/map01_v39_postbatch_perkey_sample_a02_20261005/experimental_source/input_owner_v13_postbatch_candidate.py": "7b0c34231026d1e15ea5aa4cb26e86a1de37c1fb9144e02087df665949f77e71",
+    "research/doom/map01_v39_release_order_closure_a01_20261005/FREEZE.json": "6bcd3db617ca87929e73bdba686b3e8fbb00a9ecd0b30f1e7c645bb6248e4482",
+    "research/doom/map01_v39_release_order_closure_a01_20261005/probe.py": "deb6137e156db401d6770236c25443b77c88d34951d7bf2c3879421fa9380649",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/live_control/executor_v13.py": "5c54927e5087af42006c712ec906e2ec69e9155586730dee494dd3b5d43ced9a",
+    "research/live_control/input_owner_v12.py": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+    "research/live_control/input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "research/live_control/input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3"
+  }
+}

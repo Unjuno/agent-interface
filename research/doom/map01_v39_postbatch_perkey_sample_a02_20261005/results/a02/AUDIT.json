@@ -1,0 +1,28 @@
+{
+  "application_consumption_observed": false,
+  "authority_granted": false,
+  "base_commit": "e7c916989da30741b00c234efd264067d0899851",
+  "inter_release_keymap_queries": 0,
+  "raw_sha256": "39623c7ca20bd431f1bdc9db7dbcdc7b53fc3cbf9dc668ccd8eaccb2c7d0278b",
+  "run_id": "MAP01-V39-POSTBATCH-PERKEY-SAMPLE-A02-20261005",
+  "scenarios": [
+    {
+      "disposition": "PASS_TWO_PER_KEY_RESULTS_AT_SHARED_POSTBATCH_SAMPLE",
+      "rows": 2,
+      "scenario": "normal"
+    },
+    {
+      "disposition": "PASS_RESIDUAL_KEY_IDENTIFIED",
+      "rows": 2,
+      "scenario": "release_stuck"
+    },
+    {
+      "disposition": "UNKNOWN_FAIL_CLOSED_NO_PER_KEY_CONFIRMATION",
+      "rows": 2,
+      "scenario": "sample_error"
+    }
+  ],
+  "schema": "map01-v39-postbatch-perkey-sample-audit-v1",
+  "scope": "actual current release-batch backend and V3/V4 owner adapters with an experimental V12 input_state keymap sample; typed step loop and X display are inert fakes",
+  "status": "PASS_METHOD_SCOPED_POSTBATCH_SAMPLE_AND_FAIL_CLOSED_CONTROLS"
+}

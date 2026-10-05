@@ -1,0 +1,25 @@
+A02 candidate execution record
+
+Run ID: MAP01-V39-POSTBATCH-PERKEY-SAMPLE-A02-20261005
+Frozen base: e7c916989da30741b00c234efd264067d0899851
+Candidate invocation count: 1 (do not rerun)
+Container: python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f (linux/arm64)
+Requested limits: --network none --cpus=1 --memory=1g --pids-limit=64
+Source mount: /private/tmp/agent-interface-scorer-join-20261005:/src:ro
+Dedicated result mount: /private/tmp/agent-interface-scorer-join-20261005/research/doom/map01_v39_postbatch_perkey_sample_a02_20261005/results/a02:/out
+
+Exact command:
+
+docker run --rm --network none --cpus=1 --memory=1g --pids-limit=64 \
+  -e BASE_COMMIT=e7c916989da30741b00c234efd264067d0899851 \
+  -e CONTAINER_RUN=1 -e RESULT_DIR=/out \
+  -v /private/tmp/agent-interface-scorer-join-20261005:/src:ro \
+  -v /private/tmp/agent-interface-scorer-join-20261005/research/doom/map01_v39_postbatch_perkey_sample_a02_20261005/results/a02:/out \
+  -w /src python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f \
+  python3 -B research/doom/map01_v39_postbatch_perkey_sample_a02_20261005/run_candidate.py
+
+Exit code: 0
+Candidate stdout:
+{"raw_sha256": "39623c7ca20bd431f1bdc9db7dbcdc7b53fc3cbf9dc668ccd8eaccb2c7d0278b", "scenarios": [{"candidate_exception": null, "owner_close_exception": null, "sample_returned": true, "scenario": "normal"}, {"candidate_exception": null, "owner_close_exception": "RuntimeError: owner release not verified: [65]", "sample_returned": true, "scenario": "release_stuck"}, {"candidate_exception": "RuntimeError: injected keymap sample failure", "owner_close_exception": null, "sample_returned": false, "scenario": "sample_error"}], "status": "CANDIDATE_EXECUTED"}
+
+The independent host-side raw audit is recorded in results/a02/AUDIT.json. The A01 empty-mount setup failure remains in the A01 package and was not retried.
