@@ -325,6 +325,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`anytime_t5/`](anytime_t5/)
 - [`aoii_observation_freshness_43_t0_v1/`](aoii_observation_freshness_43_t0_v1/)
 - [`application_qualified_draft_7409_t0_a01_20261005/`](application_qualified_draft_7409_t0_a01_20261005/)
+- [`application_qualified_draft_7409_t0_a02_20261005/`](application_qualified_draft_7409_t0_a02_20261005/)
 - [`approval_sequence_assay_6405_t0_20261002/`](approval_sequence_assay_6405_t0_20261002/)
 - [`approval_sequence_discrimination_6405_t0_v1/`](approval_sequence_discrimination_6405_t0_v1/)
 - [`arena_v1_cv_grounding_rescue_4695_v1/`](arena_v1_cv_grounding_rescue_4695_v1/)
@@ -432,6 +433,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`confusion_adaptive_practice_8084_t0_a06_20261005/`](confusion_adaptive_practice_8084_t0_a06_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a07_20261005/`](confusion_adaptive_practice_8084_t0_a07_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a08_20261005/`](confusion_adaptive_practice_8084_t0_a08_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a09_20261005/`](confusion_adaptive_practice_8084_t0_a09_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a10_20261005/`](confusion_adaptive_practice_8084_t0_a10_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
@@ -696,6 +699,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
 - [`needle_role_skill_lifecycle_5133_v2/`](needle_role_skill_lifecycle_5133_v2/)
+- [`negative_evidence_delivery_5865_t0a_20261005/`](negative_evidence_delivery_5865_t0a_20261005/)
+- [`negative_evidence_delivery_5865_t0a_a02_20261005/`](negative_evidence_delivery_5865_t0a_a02_20261005/)
+- [`negative_evidence_delivery_5865_t0a_a03_20261005/`](negative_evidence_delivery_5865_t0a_a03_20261005/)
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)
@@ -1098,3 +1104,5 @@ The checker compares the generated block against every child directory with a re
 - [Issue #8084 T0 A06 fixed-gate frontier successor](confusion_adaptive_practice_8084_t0_a06_20261005/STOP.md) — `STOP_AUDITOR_NOT_STARTED_LAUNCHER_UNAVAILABLE`; generator and candidate each ran once, but frozen one-shot auditor launch could not start because `py` was unavailable. No retry or scientific inference.
 - [Issue #8084 T0 A07 fresh-seed threshold successor](confusion_adaptive_practice_8084_t0_a07_20261005/STOP.md) — `STOP_FREEZE_COMMIT_FAILED_GENERATOR_RAN_UNFROZEN`; one generator ran after freeze commit failed, but no candidate/auditor or scientific inference; raw output retained and not reused.
 - [Issue #8084 T0 A08 fixed-gate frontier fresh-seed screen](confusion_adaptive_practice_8084_t0_a08_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; 80,000 fresh synthetic rows independently reconstructed, all five mutation controls rejected, and two frozen span/peak gates met the Wilson criteria for every authored profile at n=20 and n=100. No human/GUI inference.
+- [Issue #8084 T0 A09 overdispersion robustness screen](confusion_adaptive_practice_8084_t0_a09_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; independent audit passed 80,000 fresh Beta-binomial stress rows and all five mutations, but none of the unchanged gates met both sensitivity/specificity bounds across authored profiles. Synthetic only.
+- [Issue #8084 T0 A10 finite overdispersion frontier](confusion_adaptive_practice_8084_t0_a10_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; independent audit of 160,000 rows and five mutations; no gate qualifies at finite κ=20/40/80/160, while fixed-rate reference arm qualifies span .40/peak .80. Synthetic-only frontier, no human/GUI claim.
