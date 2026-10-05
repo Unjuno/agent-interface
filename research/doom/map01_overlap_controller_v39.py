@@ -958,6 +958,13 @@ def main():
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
+                    if next_accepted["event"] == "policy_invalidation":
+                        invalidation=next_accepted["invalidation"]
+                        current_cover=next_cover
+                        planner_interrupt,current_terminal=cancel_invalidated_cover(
+                            planner,planner_handle,process,wait,current_cover)
+                        cover_terminals.append(current_terminal)
+                        break
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None

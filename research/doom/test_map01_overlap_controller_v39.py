@@ -1,13 +1,44 @@
 """Regression for the v38 rejected-action -> unauthored coast interrupt loop."""
+import ast
+import json
 import sys
 import unittest
 from argparse import Namespace
 from pathlib import Path
+import types
 
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
+
+
+def extract_renewal_invalidation_branch():
+    tree = ast.parse(Path(controller.__file__).read_bytes())
+    main = next(node for node in tree.body
+                if isinstance(node, ast.FunctionDef) and node.name == "main")
+    branch = next(node for node in ast.walk(main)
+                  if isinstance(node, ast.If) and
+                  any(isinstance(child, ast.Name) and child.id == "next_accepted"
+                      for child in ast.walk(node.test)) and
+                  "policy_invalidation" in ast.dump(node.test))
+    factory = ast.parse(
+        "def factory(next_accepted, next_cover, planner, planner_handle, "
+        "process, wait, cover_terminals):\n"
+        "    invalidation = None\n"
+        "    current_cover = 'cover-0'\n"
+        "    current_terminal = None\n"
+        "    planner_interrupt = None\n").body[0]
+    factory.body.extend([branch, ast.parse("break").body[0]])
+    factory.body = [ast.While(test=ast.Constant(value=True),
+                              body=factory.body, orelse=[])]
+    factory.body += ast.parse(
+        "return invalidation, current_cover, planner_interrupt, "
+        "current_terminal, cover_terminals\n").body
+    module = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
+    scope = {"cancel_invalidated_cover": controller.cancel_invalidated_cover}
+    exec(compile(module, str(controller.__file__), "exec"), scope)
+    return scope["factory"]
 
 
 class Map01V39CoastTests(unittest.TestCase):
@@ -100,6 +131,44 @@ class Map01V39CoastTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                     controller.cancel_invalidated_cover(
                         Planner(), object(), Process(), lambda predicate: terminal, "cover-0")
+
+    def test_renewal_invalidation_interrupts_planner_and_cancels_current_cover(self):
+        invalidation = {"reason": "health_below_floor", "sequence": 18}
+        terminal = {"event": "terminal", "id": "cover-renew-1",
+                    "status": "cancelled", "release": {
+                        "verified": True, "keys_down": [], "buttons_down": []}}
+
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+
+        process = types.SimpleNamespace(stdin=Stdin())
+        planner = Planner()
+        handle = object()
+
+        def wait(predicate):
+            self.assertTrue(predicate(terminal))
+            return terminal
+
+        cover_terminals = []
+        result = extract_renewal_invalidation_branch()(
+            {"event": "policy_invalidation", "invalidation": invalidation},
+            "cover-renew-1", planner, handle, process, wait, cover_terminals)
+
+        self.assertEqual(result[:2], (invalidation, "cover-renew-1"))
+        self.assertEqual(result[2], {"status": "interrupted"})
+        self.assertIs(result[3], terminal)
+        self.assertEqual(result[4], [terminal])
+        self.assertEqual(planner.interrupted, [handle])
+        self.assertEqual(json.loads(process.stdin.writes[0]),
+                         {"op": "cancel", "id": "cover-renew-1"})
 
 
 if __name__ == "__main__":
