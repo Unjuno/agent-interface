@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "drop_then_retry": true,
+    "no_real_io_claim": true,
+    "querymap_between_up_injections": true,
+    "release_rows_match_key_identity": true,
+    "remaining_keyup_completed": true,
+    "retry_attempts_verified": true,
+    "verified_empty_batch": true
+  },
+  "failure_explanation": "Frozen auditor compared receipt.keycode with release_row.keycode; release rows expose key and nest keycode in owner_thread_keyup_receipt.",
+  "frozen_auditor_failed_check": "per_key_receipts_match_rows",
+  "frozen_auditor_status": "FAIL",
+  "raw_output_sha256": "b831f1229c08d8d61ab47a200f7fa634047fb9ddb4afe2e308eb7d65d76bbe33",
+  "schema": "v39-v15-retry-wrapper-a06-posthoc-audit-v1",
+  "source": "Captured RUNNER_OUTPUT.json only; candidate was not rerun.",
+  "status": "RAW_BEHAVIOR_CONFIRMED_AUDITOR_SCHEMA_BUG"
+}
