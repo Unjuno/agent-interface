@@ -20,4 +20,3 @@ results = [
     check("release_batch_step_true_only", lambda rows: rows[1].update(release_batch_step=True)),
 ]
 print(json.dumps(results, sort_keys=True))
-
