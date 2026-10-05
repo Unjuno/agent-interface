@@ -1,0 +1,34 @@
+{
+  "cc_bias_vs_population": -0.07520254188053474,
+  "cc_population_sd": 0.02652166046067016,
+  "cohort_n": 400,
+  "cohorts": 20000,
+  "complete_case_mean": 0.17479745811946526,
+  "environment": "host Python; no container; exploratory only",
+  "followup": "independent Bernoulli conditional on balanced X; pi=(0.25,0.75), known",
+  "ht_bias_vs_population": 0.00027483333333333526,
+  "ht_bias_vs_realized_cohort_mean": 0.00042833333333332983,
+  "ht_mean": 0.25027483333333334,
+  "ht_population_sd": 0.04458055779491275,
+  "mean_observed": 200.09565,
+  "observational_equivalence": {
+    "candidate_disposition": "UNKNOWN without a justified observation model",
+    "candidate_visible_equal": true,
+    "world_a_true_risk": 0,
+    "world_b_true_risk": 1
+  },
+  "outcome_by_stratum": {
+    "x0": 0.4,
+    "x1": 0.1
+  },
+  "population_risk": 0.25,
+  "positivity_case": {
+    "disposition": "UNKNOWN",
+    "pi_high": 0.75,
+    "pi_low": 0.0,
+    "reason": "zero support in X=0"
+  },
+  "protocol": "issue-7993-superpopulation-ipcw-a01-exploratory",
+  "seed": 7993001,
+  "truth_mean": 0.24984650000000003
+}
