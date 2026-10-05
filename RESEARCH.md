@@ -170,6 +170,10 @@ explanation or a global MLE. All three run packages, failed starts, raw outputs
 and hashes are retained separately; formal six-case T0 and physical release
 evidence remain pending.
 
+# Issue #6358 C01 — private service-capacity transfer (2026-10-03)
+
+One retained six-arm, 24-request synthetic HTTP/SQLite comparison shows 2/4 exact effects for shared generic advice, 4/4 for explicit routing at the same shared capacity, 4/4 for both ample-capacity arms, 0/4 for expired authority, and 3/4 when one recipient is forbidden from a route. The saved-only independent interpreter agrees with the retained effects, and all four copied corruption controls are refused. This is limited to an intentionally held-slot synthetic capacity premise: static assignment to existing parallel capacity explains the difference. It does not estimate natural arrival patterns, queue/latency distributions, production congestion, task efficiency, physical release, application truth, or #6358 H_PASS. The original candidate/auditor allocation was not replayed. See the [retained report and evidence](research/integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) and [#6358](https://github.com/Unjuno/agent-interface/issues/6358).
+
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
 T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candidate ran once, the independent auditor ran once, retries were zero, and the wrapper's literal backslash-n caused JSON parsing to fail. No raw auditor result exists. The original STOP and receipts are immutable in [the predecessor package](research/analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md).
