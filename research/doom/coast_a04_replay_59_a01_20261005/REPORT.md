@@ -2,7 +2,7 @@
 
 ## Result
 
-`PASS_SCOPED_TRACE_APPLICATION`. The fixed five-point, two-of-three candidate and an independently written raw-row oracle both first triggered in each of the five preregistered unauthored coast windows: decisions 0, 1, 2, 3, and 5. Decision 4 remains excluded. The five trigger sequences are 5, 98, 130, 178, and 221. All occurred before the corresponding recorded planner terminal.
+`FAIL_PROTOCOL_POSTHOC_WINDOW_FREEZE`. The issue comment fixed the candidate, five eligible intervals, and decision-4 exclusion, but the exact timestamp-window formula and independent-oracle implementation were only frozen after examining the replay outputs. The five triggers below are therefore descriptive post-hoc trace applications, not a preregistered pass. The fixed candidate and raw-row oracle both triggered in each selected interval: decisions 0, 1, 2, 3, and 5. Decision 4 remains excluded. The five trigger sequences are 5, 98, 130, 178, and 221. All occurred before the corresponding recorded planner terminal.
 
 | Decision | Baseline health | Window samples | First trigger sequence / health | Trigger after window start | Before planner terminal |
 | --- | ---: | ---: | --- | ---: | ---: |
@@ -15,6 +15,8 @@
 The runtime predicate can identify these saved trace crossings before the recorded planner terminal. This is only a component replay over existing emitted typed observations; it does not establish that a real consumer would have received the signal, canceled work, or changed subsequent behavior.
 
 ## Method
+
+The original preregistration comment is [Issue #59 comment 5988485217](https://github.com/Unjuno/agent-interface/issues/59#issuecomment-5988485217). It established the exploratory candidate, selected five intervals, and excluded authored decision 4. Exact timestamp boundaries and the independent-oracle code were specified after the trace had been inspected. This violates the requested freeze-before-comparison ordering. The first output is preserved and classified as `FAIL_PROTOCOL_POSTHOC_WINDOW_FREEZE`; no rerun or relabeling as a pass is allowed.
 
 The candidate rule and source were frozen from PR #7527 head `1c12f87d9316f2faa3b2e4b5da55f23ceb2296d4`: minimum health drop 5, 2 low observations in the latest 3. Input is A04 PR #7990 head `3c6862937f30a22aad6380699f23da92d5d2c6f9`, retained ZIP SHA-256 `b6e8529a51e89e6f1c51374fbd27f121bab594c92014ee2fe73aa2f94ef98163`.
 
