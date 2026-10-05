@@ -9,6 +9,7 @@ import hashlib,json,sys,time
 from pathlib import Path
 from map01_scorer_stdio_adapter_v1 import MainThreadScorerStdin,ScorerFileSink
 from independent_progress_clock_v2 import ProgressSample
+from v39_measurement_backend_selection_v1 import preserve_opt_in_measurement_backend
 HERE=Path(__file__).resolve().parent;RESEARCH=HERE.parent
 
 def _option(name,default=None):
@@ -24,7 +25,7 @@ def _merge_sources(out):
     path=Path(out)/'sources.json'
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
-    additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
+    additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py',HERE/'v39_measurement_backend_selection_v1.py']
     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
@@ -105,6 +106,7 @@ class _GameProxy:
             raise self._close_error
         return result
 
+
 def main():
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
     if timeout_seconds<10:raise ValueError('timeout must leave scoring slack')
@@ -120,7 +122,10 @@ def main():
     original_ctor=base.vd.DoomGame;original_stdin=sys.stdin;polling=MainThreadScorerStdin(original_stdin,sample_game,sink,sample_hz=35.0)
     def ctor(*args,**kwargs):
         proxy=_GameProxy(original_ctor(*args,**kwargs),final_sample);holder['game']=proxy;return proxy
-    base.vd.DoomGame=ctor;base.Backend=TelemetryBackend;base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
+    base.vd.DoomGame=ctor
+    preserve_opt_in_measurement_backend(
+        base, TelemetryBackend, sys.argv[1:])
+    base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
     try:base.main()
     finally:
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
