@@ -1,0 +1,38 @@
+{
+  "schema": "retired-record-review-custody-v1",
+  "inspected_main": "273093f7e950dbe92163479cbb1c9adcd579e414",
+  "selected_archive_entries": 64,
+  "original_changed_path_rows": 149,
+  "dispositions": {
+    "EXACT_ARCHIVE_IMAGE": 64,
+    "EXACT_EXISTING_MAIN_IMAGE": 83,
+    "HISTORICAL_ONLY_CURRENT_MAIN_KEPT": 2
+  },
+  "original_ref_policy": "KEEP_BOTH",
+  "existing_path_policy": "KEEP_CURRENT_MAIN_AND_EXACTLY_ONE_ADDITIVE_NAVIGATION_LINK",
+  "source_prs": {
+    "6918": "CLOSED_UNMERGED_SOURCE_RECOVERED_SEPARATELY_IN_7138",
+    "6923": "CLOSED_UNMERGED_RUNTIME_RECOVERED_SEPARATELY_IN_7144"
+  },
+  "original_programs_invoked": 0,
+  "records": [
+    {
+      "branch": "research/review-delivery-6918-45e9-20261003",
+      "tip": "2ab5886b8ca535e299296671cf30be832752f9e3",
+      "merge_base": "8386402b40c51d7c8f9403acd88c3711ebd27bd6",
+      "expected_changes": 71,
+      "packet_paths": [
+        "research/reviews/checkpoint_delivery_6918_45e9"
+      ]
+    },
+    {
+      "branch": "research/review-nominal-records-6923-45e9-20261003",
+      "tip": "4df05893d1cb2f1082cc70bb338866c401305192",
+      "merge_base": "3e93df3755b8ae8e2e063ed8f61524989e4bf3df",
+      "expected_changes": 78,
+      "packet_paths": [
+        "research/reviews/nominal_records_6923_45e9"
+      ]
+    }
+  ]
+}

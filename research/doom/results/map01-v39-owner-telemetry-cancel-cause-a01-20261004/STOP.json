@@ -1,0 +1,10 @@
+{
+  "allocation_id": "map01-v39-owner-telemetry-cancel-cause-a01-20261004",
+  "status": "STOP_SETUP_IMPORT",
+  "command": "python3 -B research/doom/results/map01-v39-owner-telemetry-cancel-cause-a01-20261004/candidate.py",
+  "exit_code": 1,
+  "error": "ModuleNotFoundError: No module named 'input_owner_v11'",
+  "phase": "The candidate runner failed while importing the owner class, before owner construction and before any forced schedule/candidate case executed.",
+  "cause": "The runner did not add research/live_control to sys.path before importing the frozen owner dependency closure.",
+  "disposition": "Preserved as STOP; no candidate outcome exists. Successor A02 uses a separately frozen runner wrapper that adds the exact live_control path and writes to its own result directory."
+}

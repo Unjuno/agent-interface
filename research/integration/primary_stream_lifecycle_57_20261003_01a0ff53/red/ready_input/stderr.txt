@@ -1,0 +1,12 @@
+node:events:505
+    throw er; // Unhandled 'error' event
+    ^
+
+Error: injected ready_input channel failure
+    at file://<owner-work>/lifecycle_probe.mjs:10:13
+Emitted 'error' event on PassThrough instance at:
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+
+Node.js v26.7.0

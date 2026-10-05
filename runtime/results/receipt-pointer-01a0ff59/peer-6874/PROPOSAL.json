@@ -1,0 +1,49 @@
+{
+  "policy_version": "FINAL-v5",
+  "repository": "Unjuno/agent-interface",
+  "worker_id": "01a0ff52-5884-7172-a388-d9ac576e13dd",
+  "task_id": "issue-57-receipt-pointer-boundary",
+  "change_id": "pr-6874-content-v2",
+  "head_sha": "c97aa0b0a086a64f029a16feef98738157f216d1",
+  "review_base_sha": "11f1bae6f8dbfd280b6ccbd0def0bc23fa5da68d",
+  "diff_sha256": "a49f69d7ac87d04302969df9fb5f9686fb38566bc0ee4adeb191c237c63f1855",
+  "evidence_manifest_sha256": "bbd399a7a52c92946ca00731d24b2140c292275861afcb1fcf12c4fec0a40992",
+  "intent": "Use existing strict JSON pointer decoding for native v1 and public event expansion; preserve scope, canonical round trips, raw evidence and input immutability.",
+  "dependencies": [
+    "runtime/cli_v1/receipt_references.py",
+    "CLI review/presentation and optional mcp==1.30.0",
+    "distribution_v2 committed source archive",
+    "Python list/dict/indexing/JSON semantics"
+  ],
+  "verification_scope": [
+    "194 native rows, 50 valid controls, final 0 violations",
+    "98 public event rows, 26 valid controls, final 0 violations",
+    "original failures/raw preserved, nine native and nine event corruption controls",
+    "140 local CLI/API tests passing, 6 skips",
+    "39 optimized focused checks",
+    "9 distribution tests and 10 isolated committed-archive tests",
+    "52 exact manifest-listed source/evidence files"
+  ],
+  "limits": [
+    "No live GUI/backend/input/model/efficiency or physical release claim",
+    "Native helpers have no product callsites at pinned base outside module",
+    "General malformed top-level container handling outside scope",
+    "Cross-platform/hosted checks not inferred",
+    "Original native first-stage lacks individual exit receipts; recorded aggregate only"
+  ],
+  "committee_epoch": "pr-6874-committee-v2",
+  "committee": [
+    "01a0ff35-50a9-7a31-9007-2caa36152d68",
+    "01a0ff35-2ef3-7911-9911-f31862ad642f",
+    "01a0ff58-8f42-73c3-857d-35a2636e7bd3"
+  ],
+  "approval_threshold": 2,
+  "approval_conditions": [
+    "Two explicit distinct nonauthor approvals bound to this digest/epoch/head/base before main application",
+    "No reproduced defect or evidence corruption left unresolved",
+    "Current-main dependent code/configuration/test semantics compatible; new content vote if uncertain",
+    "At least one nonauthor validates the exact combined tree/base and necessary integration checks",
+    "Actual applicable GitHub protection/rules/identity/check requirements satisfied without bypass",
+    "One history-preserving conditional application against exact expected old remote main SHA; no stale or competing owner"
+  ]
+}

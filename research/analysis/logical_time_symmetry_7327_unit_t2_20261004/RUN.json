@@ -1,0 +1,63 @@
+{
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-UNIT-T2-20261004-01",
+  "issue": 7327,
+  "main_sha": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+  "preregistration_comment": "https://github.com/Unjuno/agent-interface/issues/7327#issuecomment-5975139736",
+  "predecessor": {
+    "allocation": "LOGICAL-TIME-SYMMETRY-7327-UNIT-T1-20261004-01",
+    "result": "STOP_CANDIDATE_INPUT_SCHEMA_MISMATCH",
+    "preserved": true
+  },
+  "source_sha256": {
+    "spec.json": "ddf948f91cb8943211a560737b4314344e0aecaf52303e22499e58139a5564b2",
+    "candidate.py": "63db6fbd98d2658b3746c3c562d03672f1933a8883564778cd72aa7375263116",
+    "audit.py": "04a4cb67f66bd988baff8e3f248cb68bd4bcded602fac5a9d11d7de15fde12e7"
+  },
+  "runtime": {
+    "python": "3.14.5",
+    "dependencies": "standard library only",
+    "container": "not used; OrbStack image inspection failed on cached content blob; no pull/retry",
+    "network": "none used by candidate/auditor",
+    "gui_model_game_input": "none"
+  },
+  "construction_preflight": {
+    "candidate_exit": 0,
+    "auditor_exit": 0,
+    "rows": 6,
+    "mutation_rejections": "4/4",
+    "formal_pooling": false
+  },
+  "formal": {
+    "candidate_count": 1,
+    "candidate_exit": 0,
+    "candidate_command": "python3 candidate.py spec.json output/candidate.raw.json",
+    "candidate_stdout": "{\"representations\": [\"s\", \"ms\"], \"result\": \"CANDIDATE_COMPLETE\", \"rows\": 6}",
+    "candidate_raw_sha256": "9df949d948d83ea4ac9a682606345e91f944e9cb0968f09ebd676a718cba1729",
+    "auditor_count": 1,
+    "auditor_exit": 0,
+    "auditor_command": "python3 audit.py spec.json output/candidate.raw.json output/audit.receipt.json",
+    "audit_receipt_sha256": "e2cff7fb295d5688a643a211fec0f177e859e6c1ea3ffa3e8742ae949be1cb26",
+    "receipt": {
+      "status": "PASS_UNIT_REPRESENTATION_SCOPED",
+      "errors": [],
+      "scenario_pairs": 6,
+      "distinct_raw_pairs": 6,
+      "mutation_controls": 4,
+      "mutation_rejections": 4
+    },
+    "independent_review": {
+      "status": "PASS",
+      "field_conversions": 48,
+      "event_conversions": 7,
+      "equal_trace_pairs": 6
+    },
+    "retries": 0
+  },
+  "limits": [
+    "finite synthetic exact-rational model only",
+    "no nonzero fixed backend delay",
+    "no nonzero clock quantization",
+    "no physical/semantic rate transformation",
+    "no live GUI, controller, safety, speed, or accelerated-runtime result"
+  ]
+}

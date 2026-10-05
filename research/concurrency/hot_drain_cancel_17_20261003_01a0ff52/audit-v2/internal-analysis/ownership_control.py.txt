@@ -1,0 +1,37 @@
+"""One additional ownership-ledger copy control; load only pure audit AST defs."""
+import ast
+import copy
+import hashlib
+import json
+from pathlib import Path
+
+base = Path('<OWNED_WORKSPACE>/outputs/hot-drain-17/artifact')
+out = Path(__file__).resolve().parent
+tree = ast.parse((base / 'audit.py.txt').read_text())
+defs = [node for node in tree.body if isinstance(node, ast.FunctionDef)]
+if {node.name for node in defs} != {'check', 'integer', 'inspect', 'inspect_all'} or any(node.decorator_list for node in defs):
+    raise RuntimeError('unexpected pure function set')
+ns = {}
+exec(compile(ast.Module(body=defs, type_ignores=[]), str(base / 'audit.py.txt') + ':pure_defs', 'exec'), ns)
+raw = [json.loads(line) for line in (base / 'results/raw.jsonl').read_text().splitlines()]
+specs = json.loads((base / 'input.json').read_text())
+row = copy.deepcopy(raw[6])
+row['events'].append(dict(tag='open', seq=len(row['events']), t=row['events'][-1]['t'] + 1,
+                         fds=dict(DR=dict(fd=9, inode=300001), DW=dict(fd=10, inode=300001),
+                                  CR=dict(fd=11, inode=300002), CW=dict(fd=12, inode=300002)),
+                         selector_fd=13))
+path = out / 'unclosed_second_open.json'
+path.write_text(json.dumps(row, indent=2, sort_keys=True) + '\n')
+full15 = copy.deepcopy(raw)
+full15[6] = row
+fullpath = out / 'unclosed_second_open_full15.jsonl'
+fullpath.write_text(''.join(json.dumps(record, sort_keys=True) + '\n' for record in full15))
+result = dict(scope='one retained-row append; no native resource use or formal run',
+              expected='reject a new 5-FD owned group without cleanup/close witnesses',
+              accepted_result=ns['inspect'](copy.deepcopy(row), specs[6]),
+              full15_result=ns['inspect_all'](copy.deepcopy(full15), copy.deepcopy(specs)),
+              appended_event=row['events'][-1],
+              hashes={str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__), path, fullpath, base / 'audit.py.txt', base / 'results/raw.jsonl']})
+resultpath = out / 'OWNERSHIP_RESULT.json'
+resultpath.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
+print(json.dumps(result, indent=2, sort_keys=True))

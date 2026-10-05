@@ -1,0 +1,108 @@
+test_authoritative_epoch_mismatch (test_cell.CellTests.test_authoritative_epoch_mismatch) ... FAIL
+test_boolean_pid (test_cell.CellTests.test_boolean_pid) ... FAIL
+test_complete_cell_preserves_bad_exposure_outcome (test_cell.CellTests.test_complete_cell_preserves_bad_exposure_outcome) ... ok
+test_cpu_regression_even_with_matching_raw (test_cell.CellTests.test_cpu_regression_even_with_matching_raw) ... FAIL
+test_future_cue_pixels_temporally_impossible (test_cell.CellTests.test_future_cue_pixels_temporally_impossible) ... FAIL
+test_killed_server_is_not_normal_shutdown (test_cell.CellTests.test_killed_server_is_not_normal_shutdown) ... ok
+test_optional_thread_cpu_corruption (test_cell.CellTests.test_optional_thread_cpu_corruption) ... FAIL
+test_planned_sigterm_keeps_native_children_zero (test_cell.CellTests.test_planned_sigterm_keeps_native_children_zero) ... ERROR
+test_private_display_owner_mismatch (test_cell.CellTests.test_private_display_owner_mismatch) ... FAIL
+test_readiness_window_mismatch (test_cell.CellTests.test_readiness_window_mismatch) ... FAIL
+test_unexpected_server_zero_exit_not_planned_shutdown (test_cell.CellTests.test_unexpected_server_zero_exit_not_planned_shutdown) ... FAIL
+test_boolean_delay_rejected (test_decision.DecisionTests.test_boolean_delay_rejected) ... ok
+test_consistent_finite_reduction (test_decision.DecisionTests.test_consistent_finite_reduction) ... ok
+test_duplicate_pair_rejected (test_decision.DecisionTests.test_duplicate_pair_rejected) ... ok
+test_equal_delays_are_hold (test_decision.DecisionTests.test_equal_delays_are_hold) ... ok
+test_exact_half_millisecond_boundary_inclusive (test_decision.DecisionTests.test_exact_half_millisecond_boundary_inclusive) ... ok
+test_exactly_five_qualifying_pairs (test_decision.DecisionTests.test_exactly_five_qualifying_pairs) ... ok
+test_five_pairs_still_require_pooled_threshold (test_decision.DecisionTests.test_five_pairs_still_require_pooled_threshold) ... ok
+test_incomplete_pairs_rejected (test_decision.DecisionTests.test_incomplete_pairs_rejected) ... ok
+test_three_large_pairs_cannot_replace_five_pair_gate (test_decision.DecisionTests.test_three_large_pairs_cannot_replace_five_pair_gate) ... ok
+
+======================================================================
+ERROR: test_planned_sigterm_keeps_native_children_zero (test_cell.CellTests.test_planned_sigterm_keeps_native_children_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 93, in test_planned_sigterm_keeps_native_children_zero
+    self.assertEqual(len(validate_cell(spec,data)['events']),8)
+                         ~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/validation.py", line 77, in validate_cell
+    raise ValueError('all three children terminal0')
+ValueError: all three children terminal0
+
+======================================================================
+FAIL: test_authoritative_epoch_mismatch (test_cell.CellTests.test_authoritative_epoch_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 70, in test_authoritative_epoch_mismatch
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_boolean_pid (test_cell.CellTests.test_boolean_pid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 78, in test_boolean_pid
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_cpu_regression_even_with_matching_raw (test_cell.CellTests.test_cpu_regression_even_with_matching_raw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 108, in test_cpu_regression_even_with_matching_raw
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_future_cue_pixels_temporally_impossible (test_cell.CellTests.test_future_cue_pixels_temporally_impossible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 89, in test_future_cue_pixels_temporally_impossible
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_optional_thread_cpu_corruption (test_cell.CellTests.test_optional_thread_cpu_corruption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 112, in test_optional_thread_cpu_corruption
+    with self.assertRaises(ValueError): snapshot_valid(s)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_private_display_owner_mismatch (test_cell.CellTests.test_private_display_owner_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 82, in test_private_display_owner_mismatch
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_readiness_window_mismatch (test_cell.CellTests.test_readiness_window_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 74, in test_readiness_window_mismatch
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unexpected_server_zero_exit_not_planned_shutdown (test_cell.CellTests.test_unexpected_server_zero_exit_not_planned_shutdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 97, in test_unexpected_server_zero_exit_not_planned_shutdown
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.013s
+
+FAILED (failures=8, errors=1)

@@ -1,0 +1,51 @@
+/* One bounded ordinary pass through the actual public CLI, all five rows retained. */
+import {spawn} from 'node:child_process';
+import {readFile,writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('.',import.meta.url));
+const plan=JSON.parse(await readFile(join(root,'PLAN.json'),'utf8'));const rows=[];
+const put=async(p,v)=>writeFile(p,JSON.stringify(v,null,2)+'\n',{flag:'wx'});
+function alive(pid){try{process.kill(pid,0);return true;}catch(e){if(e.code==='ESRCH')return false;throw e;}}
+for(const cell of plan.cells){
+ const dir=join(root,'first',cell.name),command=[join(root,'source/runtime/host_v1/primary_stdio.mjs'),'--config',join(dir,'config.json')];
+ const started=new Date().toISOString();const child=spawn(process.execPath,command,{stdio:['pipe','pipe','pipe'],windowsHide:true});
+ let stdout=[],stderr=[],buffer='',rowsOut=[],sendCount=0,timedOut=false,streamErrors=[],parseErrors=[],writerError=null;
+ child.on('error',e=>streamErrors.push(String(e)));child.stdin.on('error',e=>streamErrors.push(String(e)));
+ const guard=setTimeout(()=>{timedOut=true;child.kill();},7000);
+ async function send(){
+  sendCount++;
+  try{for(const hex of cell.chunks_hex){await new Promise((resolve,reject)=>child.stdin.write(Buffer.from(hex,'hex'),e=>e?reject(e):resolve()));await new Promise(resolve=>setImmediate(resolve));}}
+  catch(e){writerError=String(e);child.stdin.end();}
+ }
+ child.stderr.on('data',c=>stderr.push(Buffer.from(c)));
+ child.stdout.on('data',c=>{
+  stdout.push(Buffer.from(c));buffer+=c.toString('utf8');
+  while(buffer.includes('\n')){
+   const at=buffer.indexOf('\n'),line=buffer.slice(0,at);buffer=buffer.slice(at+1);
+   try{const row=JSON.parse(line);rowsOut.push(row);if(row.status==='ready'&&sendCount===0)void send();
+    if(['returned','refused','command_error'].includes(row.status))child.stdin.end();}
+   catch(e){parseErrors.push(String(e));child.stdin.end();}
+  }
+ });
+ const endpoint=await new Promise(resolve=>child.once('close',(code,signal)=>resolve({code,signal})));clearTimeout(guard);
+ const out=Buffer.concat(stdout),err=Buffer.concat(stderr);
+ await writeFile(join(dir,'cli.stdout.hex.txt'),out.toString('hex')+'\n',{flag:'wx'});
+ await writeFile(join(dir,'cli.stderr.hex.txt'),err.toString('hex')+'\n',{flag:'wx'});
+ await writeFile(join(dir,'cli.stdout.txt'),out,{flag:'wx'});await writeFile(join(dir,'cli.stderr.txt'),err,{flag:'wx'});
+ let fixtureStart=null,fixtureExit=null,hostExit=null,cleanup=null;
+ try{
+  fixtureStart=JSON.parse(await readFile(join(dir,'fixture-start.json'),'utf8'));
+  if(fixtureStart.nonce!==cell.nonce||fixtureStart.ppid!==child.pid)throw Error('own fixture identity mismatch');
+  if(alive(fixtureStart.pid)){process.kill(fixtureStart.pid);cleanup='guard-owned-fixture-kill';await new Promise(r=>setTimeout(r,100));}
+  fixtureExit=JSON.parse(await readFile(join(dir,'fixture-exit.json'),'utf8'));
+  hostExit=JSON.parse(await readFile(join(dir,'host/exit.json'),'utf8'));
+ }catch(e){cleanup=String(e);}
+ const record={name:cell.name,argv:[process.execPath,...command],pid:child.pid,started_utc:started,ended_utc:new Date().toISOString(),...endpoint,
+  timed_out:timedOut,send_count:sendCount,stream_errors:streamErrors,parse_errors:parseErrors,writer_error:writerError,stdout_bytes:out.length,stderr_bytes:err.length,
+  observed_statuses:rowsOut.map(x=>x.status),fixture_start:fixtureStart,fixture_exit:fixtureExit,host_exit:hostExit,cleanup,
+  cli_absent:!alive(child.pid),fixture_absent:fixtureStart?!alive(fixtureStart.pid):null};
+ await put(join(dir,'CLI_RECEIPT.json'),record);rows.push(record);
+}
+await put(join(root,'first','COLLECTOR.json'),{actual_cases:rows.length,rows,original_author_producer_or_formal_replays:0});
+console.log(JSON.stringify({status:'CAPTURED_NOT_ADJUDICATED',cases:rows.length,codes:rows.map(x=>x.code),guards:rows.map(x=>x.timed_out)}));

@@ -1,0 +1,48 @@
+# Retired checkpoint and nominal-record review custody
+
+This archive preserves **64 exact reviewer files and two full source histories** for retired source PRs #6918 and #6923. It is evidence custody, not a new experiment, historic vote transfer, sender/application authority, production adoption or global CI/scientific PASS.
+
+At inspected main `273093f7e950dbe92163479cbb1c9adcd579e414`, both source PRs remain closed and unmerged: #6918 source `5e02b30977dc8412c715aa22dab718630906f4ad` and #6923 source `b84aa6a1260128bd70e2cbe1598a9c80b55f75ee`. Separate rescue PR #7138 already preserved the checkpoint packet in merge `f9e066f98a6802599c3c1893706ecbe32ef6212a`; separate rescue PR #7144 recovered nominal guards with fresh current-main evidence in merge `023edb41855ff78add49ddd3b028541b393951e2`. Neither prior rescue included these reviewer packets. This archival change does not rerun or claim credit for those rescues.
+
+## Source and disposition map
+
+| Reviewer branch | Exact tip | Review packet | New files |
+| --- | --- | --- | ---: |
+| research/review-delivery-6918-45e9-20261003 | 2ab5886b8ca535e299296671cf30be832752f9e3 | research/reviews/checkpoint_delivery_6918_45e9/ | 24 |
+| research/review-nominal-records-6923-45e9-20261003 | 4df05893d1cb2f1082cc70bb338866c401305192 | research/reviews/nominal_records_6923_45e9/ | 40 |
+
+SOURCE_ENTRIES.tsv enumerates **every one of the 149 source changed-path rows**, including inherited author changes. 64 rows become exact archive additions. 83 existing main images already match the original source mode/type/blob OIDs and are left untouched (45 checkpoint evidence images; 35 nominal-result images plus three current kernel code/test/README images). Two historical checkpoint analysis navigation/attribute images differ from current main and are not applied: their exact blobs remain reachable through preserved source history. Existing current navigation and attributes are not rolled back. Four new custody documents and exactly one additive integration navigation link accompany the 64 reviewer files.
+
+The custody commit has ordered parents: inspected current main followed by both exact reviewer tips. Whole source history is therefore preserved, not merely selected files or a screenshot of a PR. Original reviewer refs remain **KEEP_BOTH** after this merge; this batch proposes deletion only of its own temporary rescue branch after actual-merge/current-main conservation and live dependency checks. The source PRs are not directly closed/reopened/merged by this archive.
+
+## #6918: advisory checkpoint-delivery review, not physical safety
+
+The original 45e9 worker was outside the prospective committee. Its review is advisory, not a counted vote or current-main application authority. It reviewed exact author head 5e02b309 with fixed content base 8386402b40c51d7c8f9403acd88c3711ebd27bd6 and declared proposal digest.
+
+The historical independent reader reconstructs 24 retained rows from twelve declared inputs and exact dimensionless interval support [0,2j]. Three legacy empty-deck rows invent freshness; normalized rows have zero mismatches, nine nonempty pairs remain equal, and three normalized empty rows equal explicit MISSING. Twelve copied-raw corruptions are refused, including numeric primitive aliases, freshness, ordering/coverage and owner changes. The k=1 witness distinguishes legacy optimistic A's six slots/maximum twelve, explicit MISSING's seven slots/unsafe step seven at fourteen, and robust C's four. These are stipulated integer grids and slot counts, not measured physical acquisition or safety bounds. A first checkpoint is stipulated due; unscheduled emptiness is outside scope.
+
+Historical v2 record consistency joins include 47 changed paths, unchanged 45 author archive images, 44 manifest entries, 16 frozen files and six legacy source snapshots. Producer/raw and raw-auditor/audit.json bytes and published exit/time/hash/ordering receipts reconcile. This is consistency of retained records, not independent observation of the original execution. Five pre-freeze tests lack exact UTC. Normalization does not certify the optimistic comparator or a deployed controller; old T1 HOLD and legacy seven nonempty outcomes remain unchanged. No loss cause, real release, GUI/game/model/task effect, clock/acquisition bound, latency or performance follows.
+
+The generated analysis inventory covered 605 qualifying retained-result directories among 814 total child directories; the older 604 inventory is historical. The first reviewer helper incorrectly demanded 814 equal 605 and stopped before the raw-only repeat. Its source/failure and partial successful joins remain. The first independent verifier returned zero but had no independent UTC or full separated stream-file custody; the later ordinary read-only repeat has its own UTC/exit/streams and **does not recover missing first timing or bytes**. First publication setup failed because Windows Path sorting differed from Git byte order despite equal path sets; the historical repair used sorted duplicate-free string paths before any tree/ref/push mutation.
+
+Existing conftest/test-collection receipts are retained historical data; no fresh pytest collection is claimed. New review tools are inert .py.txt witnesses and no __init__.py or test-prefixed file is added.
+
+## #6923: old nominal-type review and preparation are not current adoption
+
+The nominated nonauthor review bound author head b84aa6a1, content base 3e93df3755b8ae8e2e063ed8f61524989e4bf3df, nomination/acceptance, epoch and proposal digest. These are historical provenance, not transferable approval votes for this archive or any new proposal.
+
+The reviewed historical delta was twelve lifecycle lines: six nominal-instance guards before submitted-record field access. Observation already had its guard. Historical accepted-begin, receipt-start and cancellation-release temporal checks remain. Trusted subclasses were permitted; hostile overrides, public mutation, concurrency and clock authenticity were excluded. This did not adopt separately owned missing-receipt uncertainty or effect-start changes, establish physical effect/release, or grant broader authority.
+
+Historical Windows CPython3.12.10 evidence comprises exact-head seven nominal methods and a separately written literal fourteen-case oracle that imported no author test helpers. Field traps reject before submitted-record fields are read while state/object identity remains; nominal and trusted-subclass positives and temporal-refusal boundaries are retained. No registry/backend factory/native GUI/model/producer was called. The archived reader joined nine complete author process records, fifty method identities, historical normal/optimized GREEN, the original five FAIL plus one ERROR and existing observation PASS, and six single-guard omission witnesses. Eight altered copies were refused. Author fifty-case deck and omission code were not replayed.
+
+Seventeen public path derivatives carry separate published hashes/original stdout claims. Original private bytes were inaccessible to the reviewer and remain author-attested, **not recovered or independently proven here**. The first reader's Counter(mapping) mistake treated outcome strings as counts; source/diagnostic metadata and conversation output remain, but exact first-process UTC and separated full streams were not captured. The corrected version has separate receipts; no author/raw/frozen outcome was rewritten. Initial Add File syntax failure occurred before mutation.
+
+Both directories named current-application are historical **git merge-tree --write-tree preparation**, not actual main merge/send receipts. The first named main 4cd7649777c8a042d486b2058fd1bcbc18a90727 yielded tree bf211646fcc4e87595c2d8b865302fd0d849e711. The second main 636986a804a6004cd047db7e8cc5e62c02d585d8 yielded 1b191177e8a1606cf3e0a805bbcc88dc4191df30 after a then-inert main advance. Exact delta/source-image and used import/workflow closure checks were tied only to those named tuples. No main ref, merge commit, application lock or actual sender action was created. They are not authority over today's main, future compositions or fresh adoption. Current implementation recovery belongs to already-merged #7144 and its own evidence, not these historic votes.
+
+## Custody verification and limits
+
+Before this archive was built, 122 unique missing source-history/navigation objects were explicitly fetched as data; the additional source-history missing-object count became zero. No historical producer, auditor, test deck, omission mutant, native/model/container/GUI or archived tool was executed. Reading old commands is not permission to run them.
+
+A metadata-only isolated index constructs the candidate without switching the shared checkout or loading unrelated promisor blobs. Conservation checks compare every base tree entry, all 64 new review images, all four owned document images, both source ancestors, complete manifest rows and the exactly additive navigation text. Missing-parent and altered-image negative controls must refuse invalid candidates. Actual GitHub mergerules, exact head/state/closing-reference checks, independent scope review and actual merge versus its true first parent remain separate gates. Raw historical whitespace, first failures, incomplete timing/stream custody and privacy derivative qualifications are intentionally preserved, not normalized or upgraded.
+
+This custody archive does not settle broader Issues #6089, #57, lifecycle/effect/currentness, physical safety or the repository roadmap. Any genuinely new experiment or implementation proposal requires its own scope, authority and evidence.

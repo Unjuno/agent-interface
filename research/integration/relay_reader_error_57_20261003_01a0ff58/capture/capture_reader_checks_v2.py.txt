@@ -1,0 +1,40 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, subprocess, sys
+root = Path(__file__).resolve().parent / 'relay-output-read-error'
+phase = sys.argv[1]
+out = root / phase
+out.mkdir(exist_ok=False)
+node = Path(r'<USER_HOME>\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe')
+files = ['relay_client.mjs', 'relay_host.mjs', 'test_relay_client.mjs', 'test_relay_host.mjs']
+sources = {}
+for name in files:
+    b = (root / name).read_bytes()
+    (out / (name + '.txt')).write_bytes(b)
+    sources[name] = hashlib.sha256(b).hexdigest()
+command = [str(node), '--test']
+if phase.startswith('red'):
+    command += ['--test-name-pattern=reply reader']
+command += ['test_relay_client.mjs']
+if phase.startswith('green'):
+    command += ['test_relay_host.mjs']
+start = datetime.now(timezone.utc).isoformat()
+try:
+    p = subprocess.run(command, cwd=root, capture_output=True, timeout=35)
+    stdout, stderr, code, timeout = p.stdout, p.stderr, p.returncode, False
+except subprocess.TimeoutExpired as error:
+    stdout, stderr, code, timeout = error.stdout or b'', error.stderr or b'', None, True
+(out / 'stdout.log').write_bytes(stdout)
+(out / 'stderr.log').write_bytes(stderr)
+record = {'phase': phase, 'start_utc': start, 'end_utc': datetime.now(timezone.utc).isoformat(),
+          'node': subprocess.run([str(node), '--version'], capture_output=True, check=True).stdout.decode().strip(),
+          'node_binary_sha256': hashlib.sha256(node.read_bytes()).hexdigest(),
+          'command': command, 'cwd': str(root), 'exit_code': code, 'timeout': timeout,
+          'source': sources, 'stdout_sha256': hashlib.sha256(stdout).hexdigest(),
+          'stderr_sha256': hashlib.sha256(stderr).hexdigest(), 'stdout_bytes': len(stdout),
+          'stderr_bytes': len(stderr), 'scope': 'ordinary native Node stream-error regressions/inert real children; no formal allocation or actual MCP/input/effect'}
+with (out / 'receipt.json').open('x', encoding='utf-8') as f:
+    json.dump(record, f, indent=2); f.write('\n')
+print(json.dumps(record))
+print(json.dumps({'saved_node_stdout_tail': stdout.decode(errors='replace')[-3500:]}, ensure_ascii=True))
+sys.exit(1 if timeout else code)

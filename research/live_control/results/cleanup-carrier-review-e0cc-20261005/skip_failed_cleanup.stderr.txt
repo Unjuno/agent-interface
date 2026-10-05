@@ -1,0 +1,34 @@
+test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap) ... ERROR
+
+======================================================================
+ERROR: test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-evidence>/source/research/live_control/test_input_owner_v12_explicit_up_cancel.py", line 301, in test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap
+    self.assertTrue(cleanup_after_failure["verified"])
+AssertionError: False is not true
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<private-evidence>/source/research/live_control/test_input_owner_v12_explicit_up_cancel.py", line 308, in test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap
+    owner.close()
+  File "<private-evidence>/source/research/live_control/input_transition_owner_v3.py", line 29, in close
+    return self._inner.close()
+           ^^^^^^^^^^^^^^^^^^^
+  File "<private-evidence>/source/research/live_control/input_owner_v12.py", line 68, in close
+    self.call('close')
+  File "<private-evidence>/source/research/live_control/input_owner_v12.py", line 61, in call
+    if not ok: raise result
+               ^^^^^^^^^^^^
+  File "<private-evidence>/source/research/live_control/input_owner_v12.py", line 506, in _run
+    result = release(reason)
+             ^^^^^^^^^^^^^^^
+  File "<private-evidence>/source/research/live_control/input_owner_v12.py", line 431, in release
+    raise error
+RuntimeError: owner release not verified: [38]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.015s
+
+FAILED (errors=1)

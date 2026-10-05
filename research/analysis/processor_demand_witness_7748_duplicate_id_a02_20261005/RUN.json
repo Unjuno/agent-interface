@@ -1,0 +1,38 @@
+{
+  "allocation_id": "7748-DUPLICATE-ID-A02-20261005-01",
+  "frozen_main": "3c2254ddc4446bec9a8ab4871ed05defa0a900f9",
+  "issue_preregistration": "https://github.com/Unjuno/agent-interface/issues/7748#issuecomment-5993606909",
+  "formal": {
+    "candidate_invocations": 1,
+    "candidate_exit_code": 0,
+    "candidate_stderr_empty": true,
+    "auditor_invocations": 1,
+    "auditor_exit_code": 0,
+    "auditor_stderr_empty": true,
+    "audit_status": "PASS_DUPLICATE_ID_BOUNDARY_SCOPED",
+    "audit_errors": [],
+    "case_count": 3,
+    "retries": 0
+  },
+  "supplemental_post_run_controls": {"type": "auditor function mutation probes, not formal CLI invocations", "mutations_rejected": ["duplicate_marked_eligible", "post_candidate_identity_mutation", "omitted_row"]},
+  "disposition": "PASS_DUPLICATE_ID_BOUNDARY_SCOPED",
+  "result_scope": "Three frozen synthetic traces; unique nonempty job identity input boundary and finite integer-tick single-processor demand/policy diagnostic only.",
+  "excluded_claims": [
+    "general schedulability",
+    "full CBS",
+    "host or container timing",
+    "Agent Interface runtime or resource behavior",
+    "GUI or model behavior",
+    "safety",
+    "task effect",
+    "physical input release",
+    "independent human review"
+  ],
+  "predecessor": {
+    "allocation_id": "7748-DUPLICATE-ID-A01-20261005-01",
+    "disposition": "STOP_AUDITOR_EXIT_MISMATCH",
+    "preserved_separately": true,
+    "pooled": false
+  },
+  "environment": "Host-only CPython 3.14.5 on macOS arm64; Docker/OrbStack read-only inventory failure was observed and retained in ENVIRONMENT.json; no isolation/resource claim."
+}

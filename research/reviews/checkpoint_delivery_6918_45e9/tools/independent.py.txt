@@ -1,0 +1,170 @@
+"""A third implementation: exact interval envelopes, no author-code imports."""
+from copy import deepcopy
+import hashlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+PACKAGE = ROOT / "source/research/analysis/checkpoint_delivery_6089_20261003_01a0ff59"
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
+
+
+def require(condition, label):
+    if not condition:
+        raise ValueError(label)
+
+
+def literal_cases():
+    result = []
+    for context, boundary, bound, invalid in (("k0", 18, 0, False),
+            ("k1_boundary", 14, 1, False), ("invalidated", 18, 1, True)):
+        for encoding in ("empty", "missing", "fresh", "stale"):
+            deck = {"empty": [], "missing": [{"kind": "MISSING"}],
+                "fresh": [{"kind": "FRESH", "generation": 5, "age": 0}],
+                "stale": [{"kind": "STALE_OLD_GENERATION", "generation": 4, "age": 1}]}[encoding]
+            case = {"id": context + "__" + encoding, "initial_states": [0], "action": 1,
+                "disturbances": [-1, 0, 1], "boundary_by_step": [boundary] * 9,
+                "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+                "max_consecutive_misses": bound, "loss_bound_supported": True,
+                "source_generation": 5, "max_receipt_age": 0,
+                "checkpoint_events": deck, "target_invalidated": invalid}
+            result.append({"context": context, "encoding": encoding,
+                "first_checkpoint_is_due": True, "case": case})
+    return result
+
+
+CASES = literal_cases()
+require(canonical({"schema": "checkpoint-delivery-assay-v1", "cases": CASES}) ==
+        canonical(json.loads((PACKAGE / "CASES.json").read_bytes())), "complete independently declared input grid")
+
+
+def envelope(boundary, duration):
+    # Only this fixed declared domain: initial0, action1, disturbances{-1,0,1}.
+    # The exact support after j dimensionless slots is every integer in [0,2j].
+    require(type(duration) is int and 0 <= duration <= 8, "declared duration domain")
+    for prefix in range(duration + 1):
+        upper = 2 * prefix
+        if upper >= boundary:
+            return {"safe": False, "first_unsafe_step": prefix, "worst_position": upper}
+    return {"safe": True, "first_unsafe_step": None, "worst_position": 2 * duration}
+
+
+def output(item, synthetic_fresh_for_empty):
+    case = item["case"]
+    boundary = case["boundary_by_step"][0]
+    invalid, bound = case["target_invalidated"], case["max_consecutive_misses"]
+    missing = item["encoding"] in ("missing", "stale") or (
+        item["encoding"] == "empty" and not synthetic_fresh_for_empty)
+    fresh = not missing
+    misses = int(missing)
+    base = max(h for h in range(6) if envelope(boundary, 0 if h == 0 else h + 1)["safe"])
+    a_duration = 0 if invalid else base + 1 + int(missing)
+    b_duration = 0 if invalid else base + 1
+    a_safe = envelope(boundary, a_duration)["safe"] and not invalid
+    b_safe = envelope(boundary, b_duration)["safe"] and not invalid
+    table = []
+    if invalid:
+        selected, disposition = 0, "YIELD_INVALIDATED_TARGET"
+    else:
+        for h in range(6):
+            checks = [{"misses": m, **envelope(boundary, 0 if h == 0 else h + m + 1)}
+                      for m in range(bound + 1)]
+            table.append({"horizon": h, "checks": checks,
+                          "safe_for_all_loss_patterns": all(check["safe"] for check in checks)})
+        selected = max(row["horizon"] for row in table if row["safe_for_all_loss_patterns"])
+        disposition = "ROBUST_LOSS_HORIZON"
+    stress = None
+    if not invalid and misses > bound and selected:
+        length = selected + bound + 2
+        stress = {"misses": bound + 1, "safe": envelope(boundary, length)["safe"],
+                  "disposition": "OUT_OF_BOUND_NOT_CERTIFIED", "held_steps_if_illegally_continued": length}
+    status = ("YIELD_INVALIDATED_TARGET" if invalid else "BOUND_EXCEEDED_STOP_AT_FROZEN_DEADLINE"
+              if misses > bound else "IN_BOUND_ERASURE_PATTERN" if missing else "NO_LOSS_CONTROL")
+    return {"case_id": case["id"], "base_no_loss_horizon": base,
+        "policy_a_optimistic": {"assumes_checkpoint_success": True, "receipt_was_usable": fresh,
+            "held_steps_before_release": a_duration, "safe": a_safe,
+            "disposition": "INVALIDATED" if invalid else "SAFE_IN_THIS_FIXTURE" if a_safe else "UNSAFE_OPTIMISTIC_EXTENSION"},
+        "policy_b_release_on_absence": {"release_on_missing_or_stale": missing,
+            "receipt_was_usable": fresh, "held_steps_before_release": b_duration, "safe": b_safe,
+            "disposition": "YIELD_INVALIDATED_TARGET" if invalid else "RELEASED_ON_ABSENT_OR_STALE" if missing else "FRESH_CHECKPOINT"},
+        "policy_c_loss_robust": {"selected_horizon": selected, "disposition": disposition,
+            "safe_for_all_declared_patterns": True, "horizon_table": table,
+            "actual_consecutive_misses": misses, "actual_status": status}, "stress": stress}
+
+
+def validate(raw):
+    require(raw["schema"] == "checkpoint-delivery-raw-v1", "schema")
+    require(raw["source_map_sha256"] == hashlib.sha256((PACKAGE / "SOURCE_MAP.json").read_bytes()).hexdigest(), "source pin")
+    require(raw["cases_sha256"] == hashlib.sha256((PACKAGE / "CASES.json").read_bytes()).hexdigest(), "input pin")
+    require(type(raw["owner_thread_id"]) is int and raw["owner_thread_id"] > 0, "owner header")
+    require(type(raw["rows"]) is list and len(raw["rows"]) == 24, "complete24 rows")
+    misses = []
+    for index, item in enumerate(CASES):
+        original = item["case"]
+        for offset, arm in enumerate(("legacy", "explicit_absence")):
+            row = raw["rows"][index * 2 + offset]
+            actual = deepcopy(original)
+            if arm == "explicit_absence" and item["encoding"] == "empty":
+                actual["checkpoint_events"] = [{"kind": "MISSING"}]
+            expected = output(item, arm == "legacy")
+            require(row["case_id"] == original["id"] and row["arm"] == arm, "row order/identity")
+            require(row["context"] == item["context"] and row["encoding"] == item["encoding"], "labels")
+            require(canonical(row["evaluated_case"]) == canonical(actual), "full evaluated input")
+            require(row["original_case_sha256"] == hashlib.sha256(canonical(original)).hexdigest(), "original case digest")
+            require(row["evaluated_case_sha256"] == hashlib.sha256(canonical(actual)).hexdigest(), "evaluated case digest")
+            require(row["input_unchanged"] is True, "unmutated flag")
+            require(type(row["owner_thread_id"]) is int and row["owner_thread_id"] == raw["owner_thread_id"], "owner row")
+            require(canonical(row["output"]) == canonical(expected), "every output field/type")
+            require(canonical(row["retained_audit"]) == canonical({"status": "PASS_METHOD_SCOPED", "rows": 1, "errors": []}), "retained verdict")
+            if canonical(expected) != canonical(output(item, False)):
+                misses.append({"case_id": original["id"], "arm": arm,
+                    "receipt_was_usable": expected["policy_b_release_on_absence"]["receipt_was_usable"],
+                    "actual_status": expected["policy_c_loss_robust"]["actual_status"]})
+    require(len(misses) == 3 and all(m["arm"] == "legacy" and m["case_id"].endswith("__empty") for m in misses), "semantic counterexample scope")
+    return {"rows": 24, "complete_typed_row_reconstruction_errors": 0,
+        "legacy_empty_contract_mismatches": misses, "normalized_mismatches": 0,
+        "nonempty_pairs_unchanged": 9, "normalized_empty_matches_missing": 3}
+
+
+def controls(raw):
+    mutations = []
+    def add(label, mutate):
+        copied = deepcopy(raw)
+        mutate(copied)
+        mutations.append((label, copied))
+    add("omitted", lambda r: r["rows"].pop())
+    add("reordered", lambda r: r["rows"].reverse())
+    add("nested_zero_bool_alias", lambda r: r["rows"][0]["output"]["policy_c_loss_robust"]["horizon_table"][0]["checks"][0].update(misses=False))
+    add("safe_bool_to_integer", lambda r: r["rows"][0]["output"]["policy_b_release_on_absence"].update(safe=1))
+    add("horizon_integer_to_float", lambda r: r["rows"][0]["output"].update(base_no_loss_horizon=5.0))
+    add("wrong_nested_prefix", lambda r: r["rows"][0]["output"]["policy_c_loss_robust"]["horizon_table"][1]["checks"][0].update(worst_position=999))
+    add("extra_output_field", lambda r: r["rows"][0]["output"].update(undeclared_effect=True))
+    add("freshness_invented", lambda r: r["rows"][1]["output"]["policy_b_release_on_absence"].update(receipt_was_usable=True))
+    add("retained_verdict_integer_bool", lambda r: r["rows"][0]["retained_audit"].update(rows=True))
+    add("unmutated_integer_bool", lambda r: r["rows"][0].update(input_unchanged=1))
+    add("fresh_age_integer_bool", lambda r: r["rows"][4]["evaluated_case"]["checkpoint_events"][0].update(age=False))
+    add("owner_bool", lambda r: r["rows"][0].update(owner_thread_id=True))
+    results = []
+    for label, copied in mutations:
+        try:
+            validate(copied)
+        except (ValueError, TypeError, KeyError) as exc:
+            results.append({"control": label, "rejected": True, "reason": str(exc)})
+        else:
+            raise AssertionError("accepted corruption " + label)
+    return results
+
+
+if __name__ == "__main__":
+    raw = json.loads((PACKAGE / "raw.json").read_bytes())
+    result = validate(raw)
+    result["new_copied_raw_controls"] = controls(raw)
+    result["independent_method"] = "literal fixed-input grid + exact interval envelope for every prefix; imports no producer/author-auditor code"
+    result["counter_A_boundary_witness"] = {"context": "k1_boundary", "legacy_duration": 6,
+        "legacy_worst_position": 12, "missing_duration": 7, "missing_first_unsafe_step": 7,
+        "missing_worst_position": 14, "boundary": 14, "C_selected_horizon": 4,
+        "units": "dimensionless integer grid/slot counts only; no physical efficacy"}
+    print(json.dumps(result, indent=2, sort_keys=True))

@@ -1,0 +1,9 @@
+# Ordinary private repair boundary tests, before execution
+
+H: The private three-line fresh-identity rescan should examine fresh queued rows before a nonexpired sleep, stop rescanning at an expired deadline, and retain linear deque traversal for an unchanged queue. This is a deterministic method-level scheduler projection, using an instrumented Condition and direct append as a reader proxy. It is not a reachable public-only concurrent witness, a formal allocation, or a performance measurement.
+
+T: Run the same new four-method definition against pinned R02 and private candidate in separate ordinary Python processes (10s ceiling each). Sizes 0/16/64/256/1024 for unchanged queues; fake clock for expiry/churn; sentinel wait records custody and rejects any unintended real sleep. No server, threads, GUI, native or historical experiment replay. Preserve first raw outcomes and PID/UTC/hash receipts. Existing test sources remain immutable.
+
+D: Candidate PASS requires exactly one wait and at most 2n deque visits for unchanged pure-false queues, no wait on expired fresh arrival, consumption of new match before wait, and finite churn ending in TimeoutError with all identities retained. R02 may fail fresh-before-wait/churn by reaching sentinel wait. Stop on harness errors and retain them before repair. These gates do not establish callback-duration, wall-time or total-resource bounds.
+
+C/U: Direct append and simulated clock eliminate scheduler uncertainty but limit reachability claims. The peer's independent actual Condition/public-entry construction must be read separately, without replay, before runtime adoption. Object mutation/private reinsertion, arbitrary predicate duration, and real continuous streams are outside this gate. No source revision, vote, main update, resource allocation or new worker is authorized by this test result alone.

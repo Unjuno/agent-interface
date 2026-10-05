@@ -1,0 +1,39 @@
+{
+  "schema": "unjuno.issue7487.t0.ledger.v1",
+  "cases": [
+    {
+      "case_id": "agent_linked",
+      "actions": [{"action_id": "a_agent_1", "actor": "agent", "target": "doc_A", "time_ms": 100}],
+      "effect": {"effect_id": "e_agent_1", "target": "doc_A", "observed_at_ms": 140, "causal_link_status": "LINKED_UNDER_DECLARED_EVIDENCE", "source_action_id": "a_agent_1", "source_actor": "agent", "evidence_id": "receipt_m_001"}
+    },
+    {
+      "case_id": "human_external_linked",
+      "actions": [{"action_id": "a_user_1", "actor": "human", "target": "doc_B", "time_ms": 110}],
+      "effect": {"effect_id": "e_user_1", "target": "doc_B", "observed_at_ms": 135, "causal_link_status": "LINKED_UNDER_DECLARED_EVIDENCE", "source_action_id": "a_user_1", "source_actor": "human", "evidence_id": "receipt_m_002"}
+    },
+    {
+      "case_id": "delayed_unrelated_external",
+      "actions": [
+        {"action_id": "a_agent_2", "actor": "agent", "target": "doc_C", "time_ms": 100},
+        {"action_id": "a_external_2", "actor": "external_system", "target": "doc_C", "time_ms": 700}
+      ],
+      "effect": {"effect_id": "e_external_2", "target": "doc_C", "observed_at_ms": 1600, "causal_link_status": "LINKED_UNDER_DECLARED_EVIDENCE", "source_action_id": "a_external_2", "source_actor": "external_system", "evidence_id": "receipt_m_003"}
+    },
+    {
+      "case_id": "overlapping_actions",
+      "actions": [
+        {"action_id": "a_agent_3", "actor": "agent", "target": "doc_D", "time_ms": 100},
+        {"action_id": "a_human_3", "actor": "human", "target": "doc_D", "time_ms": 105}
+      ],
+      "effect": {"effect_id": "e_overlap_3", "target": "doc_D", "observed_at_ms": 130, "causal_link_status": "LINKED_UNDER_DECLARED_EVIDENCE", "source_action_id": "a_agent_3", "source_actor": "agent", "evidence_id": "receipt_m_004"}
+    },
+    {
+      "case_id": "unknown_conflicting_provenance",
+      "actions": [
+        {"action_id": "a_agent_4", "actor": "agent", "target": "doc_E", "time_ms": 100},
+        {"action_id": "a_external_4", "actor": "external_system", "target": "doc_E", "time_ms": 101}
+      ],
+      "effect": {"effect_id": "e_unknown_4", "target": "doc_E", "observed_at_ms": 120, "causal_link_status": "UNKNOWN", "source_action_id": null, "source_actor": "UNKNOWN", "evidence_id": null}
+    }
+  ]
+}

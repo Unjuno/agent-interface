@@ -1,0 +1,7 @@
+# G21 first keyboard reference boundary STOP
+
+STOP_KEY_ALIAS_BEFORE_KEYBOARD_TRIAL; H_UNTESTED. Four planned fresh sessions ABBA direct/keyboard/keyboard/direct. Row1 direct19/23/437 exact; row2 prime13/17/221 exact, keyboard trial refused before execution with BACKEND_CONSTRAINT: unmapped key HOME, use Home. Original trial program_execution_startedFalse/program_emissions0, verified empty release and physical keyboard/buttons neutral. Remaining rows2/3 (zero-based) censored. No repeat, no mode comparison or inference of keyboard semantic failure.
+
+Frozen historical common X11 closure from D01; known Calc setup. Zero model/GPU. Private CPU WSLc requested1CPU512MiB/user65534, swap warnings preserved/effective cgroups in each raw. Driver87301 terminal exit1 because second container exit2; original host/native traces retained. Saved-only first auditor checks original document effects and refusal/neutrality, errors[]. The refused trial's saved document remains priming values; this is expected incomplete effect, not task success. Same-worker independent domain oracle, not blinded nonauthor scoring. Parent/group cleanup does not prove all descendant retirement.
+
+This configuration error is retained within #3311 and requires no fleet-wide issue. A prospective successor may correct Home in separate source and use new fixed task inputs/fresh sessions without pooling/regrading G21. No fix or producer replay has yet occurred. PR delivery pending; fullgoal open.

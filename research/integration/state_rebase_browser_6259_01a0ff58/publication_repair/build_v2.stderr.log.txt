@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\build_rebase_stop_archive.py", line 62, in <module>
+    (DEST/"README.md").write_text((ROOT/"REPORT.md").read_text())
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PROFILE>\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1059, in read_text
+    return f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'cp932' codec can't decode byte 0x93 in position 1758: illegal multibyte sequence

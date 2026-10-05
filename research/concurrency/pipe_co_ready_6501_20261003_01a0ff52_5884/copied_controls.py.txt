@@ -1,0 +1,66 @@
+"""Ordinary retained-data controls; no OS comparison or producer imports."""
+import copy
+import hashlib
+import importlib.machinery
+import importlib.util
+import json
+import pathlib
+import time
+
+ROOT = pathlib.Path(__file__).resolve().parent
+
+
+def main():
+    loader = importlib.machinery.SourceFileLoader("raw_custody_audit", str(ROOT / "audit.py.txt"))
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    audit = importlib.util.module_from_spec(spec); loader.exec_module(audit)
+    original = (ROOT / "run-01/raw.jsonl").read_bytes()
+    baseline = audit.validate(original)
+    records = [json.loads(line) for line in original.splitlines()]
+    controls = ROOT / "copied-controls"
+    controls.mkdir(exist_ok=False)
+    outcomes = []
+    for name in ("boolean_fd", "boolean_count", "primary_wrong_byte", "hidden_control_ready",
+                 "missing_row", "cleanup_relabelled_primary", "poll_before_write", "unclosed_fd"):
+        changed = copy.deepcopy(records)
+        first = changed[1]["events"]
+        def event(kind, purpose=None):
+            return next(e for e in first if e["kind"] == kind and (purpose is None or e.get("purpose") == purpose))
+        if name == "boolean_fd":
+            first[0]["fd"] = True
+        elif name == "boolean_count":
+            event("write_return")["count"] = True
+        elif name == "primary_wrong_byte":
+            event("read_return", "primary")["hex"] = "58"
+        elif name == "hidden_control_ready":
+            event("poll_return")["ready"] = [k for k in event("poll_return")["ready"] if k["resource"] != "control"]
+        elif name == "missing_row":
+            del changed[2]
+        elif name == "cleanup_relabelled_primary":
+            event("read_return", "cleanup")["purpose"] = "primary"
+        elif name == "poll_before_write":
+            poll = next(i for i,e in enumerate(first) if e["kind"] == "poll_requested")
+            write = next(i for i,e in enumerate(first) if e["kind"] == "write_requested")
+            first[poll]["kind"], first[write]["kind"] = first[write]["kind"], first[poll]["kind"]
+        elif name == "unclosed_fd":
+            event("close_checked")["open"] = True
+        data = b"".join((json.dumps(r,sort_keys=True,separators=(",",":"))+"\n").encode() for r in changed)
+        if data == original:
+            raise RuntimeError("ineffective control")
+        (controls / (name + ".jsonl")).write_bytes(data)
+        try:
+            audit.validate(data)
+            outcomes.append(dict(name=name, rejected=False))
+        except ValueError as exc:
+            outcomes.append(dict(name=name, rejected=True, reason=str(exc), sha256=hashlib.sha256(data).hexdigest()))
+    result = dict(utc_ns=time.time_ns(), baseline_method=baseline["method"], outcomes=outcomes,
+                  original_sha256_before=hashlib.sha256(original).hexdigest(),
+                  original_sha256_after=hashlib.sha256((ROOT / "run-01/raw.jsonl").read_bytes()).hexdigest(),
+                  producer_replays=0, role="private copied raw controls; separate from primary audit")
+    (controls / "summary.json").write_text(json.dumps(result,indent=2)+"\n")
+    print(json.dumps(dict(controls=len(outcomes), rejected=sum(x["rejected"] for x in outcomes))))
+    return 0 if all(x["rejected"] for x in outcomes) else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

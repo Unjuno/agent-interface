@@ -1,0 +1,46 @@
+test_explicit_none_timeout_preserves_unlimited_mode (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_explicit_none_timeout_preserves_unlimited_mode) ... ok
+test_join_error_instance_preserved_without_journal_access (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_join_error_instance_preserved_without_journal_access) ... ok
+test_journal_error_instance_preserved_and_lock_released (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_journal_error_instance_preserved_and_lock_released) ... ok
+test_live_reader_preserves_open_journal_and_existing_holder (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_live_reader_preserves_open_journal_and_existing_holder) ... FAIL
+test_live_reader_with_closed_journal_reports_incomplete (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_live_reader_with_closed_journal_reports_incomplete) ... FAIL
+test_live_reader_without_journal_reports_incomplete (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_live_reader_without_journal_reports_incomplete) ... FAIL
+test_retired_reader_closes_open_journal (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_retired_reader_closes_open_journal) ... ok
+test_retired_reader_without_journal_returns_normally (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_retired_reader_without_journal_returns_normally) ... ok
+
+======================================================================
+FAIL: test_live_reader_preserves_open_journal_and_existing_holder (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_live_reader_preserves_open_journal_and_existing_holder)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "@READER_CLOSE_WORK@\src\research\live_control\test_appserver_reader_close_01a0ff33.py", line 55, in test_live_reader_preserves_open_journal_and_existing_holder
+    with self.assertRaisesRegex(TimeoutError,'app-server reader close timed out'):self.attempt(c)
+                                                                                  ^^^^^^^^^^^^^^^
+  File "@READER_CLOSE_WORK@\src\research\live_control\test_appserver_reader_close_01a0ff33.py", line 41, in attempt
+    value=c.close(timeout=timeout);result['return_value']=value;return value
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "@READER_CLOSE_WORK@\src\research\live_control\codex_app_server_client_v2.py", line 146, in close
+    with self._journal_lock:
+  File "@READER_CLOSE_WORK@\src\research\live_control\test_appserver_reader_close_01a0ff33.py", line 27, in __enter__
+    if self.forbidden:raise AssertionError('journal touched while reader remains live')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: journal touched while reader remains live
+
+======================================================================
+FAIL: test_live_reader_with_closed_journal_reports_incomplete (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_live_reader_with_closed_journal_reports_incomplete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "@READER_CLOSE_WORK@\src\research\live_control\test_appserver_reader_close_01a0ff33.py", line 63, in test_live_reader_with_closed_journal_reports_incomplete
+    with self.assertRaisesRegex(TimeoutError,'reader close timed out'):self.attempt(c)
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_live_reader_without_journal_reports_incomplete (test_appserver_reader_close_01a0ff33.ReaderRetirementTests.test_live_reader_without_journal_reports_incomplete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "@READER_CLOSE_WORK@\src\research\live_control\test_appserver_reader_close_01a0ff33.py", line 59, in test_live_reader_without_journal_reports_incomplete
+    with self.assertRaisesRegex(TimeoutError,'reader close timed out'):self.attempt(c)
+AssertionError: TimeoutError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.005s
+
+FAILED (failures=3)

@@ -1,0 +1,196 @@
+"""Controlled local HTML form and persisted endpoint; no external dependencies."""
+import argparse
+import hashlib
+import html
+import json
+import os
+import sqlite3
+import time
+from contextlib import closing
+from datetime import datetime, timezone
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+
+ROOT = Path(__file__).resolve().parent
+
+
+def initialize(path, scenarios):
+    if path.exists():
+        raise ValueError('existing database; no reset/restart')
+    with closing(sqlite3.connect(path)) as db:
+        db.executescript('''
+        CREATE TABLE documents(room TEXT, target TEXT, version INTEGER, value TEXT,
+                               PRIMARY KEY(room,target));
+        CREATE TABLE events(room TEXT, phase TEXT, nonce TEXT UNIQUE,
+          requested_target TEXT, actual_target TEXT, applied_pre INTEGER,
+          applied_post INTEGER, written INTEGER, text TEXT, observed_ns INTEGER,
+          PRIMARY KEY(room,phase));
+        CREATE TABLE requests(sequence INTEGER PRIMARY KEY AUTOINCREMENT,
+          method TEXT, path TEXT, status INTEGER, observed_ns INTEGER);
+        ''')
+        for item in scenarios:
+            db.executemany('INSERT INTO documents VALUES(?,?,0,?)',
+                           [(item['trial_id'], 'A', ''), (item['trial_id'], 'B', '')])
+        db.commit()
+
+
+def snapshot(path, room):
+    with closing(sqlite3.connect(path)) as db:
+        return {target: {'version': version, 'value': value}
+                for target, version, value in db.execute(
+                    'SELECT target,version,value FROM documents WHERE room=? ORDER BY target', (room,))}
+
+
+def apply(path, scenario, phase, value, expected=None):
+    room = scenario['trial_id']
+    nonce = scenario['operation_id'] + (':repair' if phase == 'repair' else ':initial')
+    with closing(sqlite3.connect(path)) as db:
+        db.execute('BEGIN IMMEDIATE')
+        if db.execute('SELECT 1 FROM events WHERE room=? AND phase=?', (room, phase)).fetchone():
+            raise ValueError('duplicate operation')
+        state = {t: (v, text) for t, v, text in db.execute(
+            'SELECT target,version,value FROM documents WHERE room=?', (room,))}
+        if phase == 'repair':
+            if expected != {t: state[t][0] for t in ('A', 'B')}:
+                raise ValueError('fresh-version comparison failed')
+            pre = state['A'][0]
+            if state['B'][1]:
+                db.execute('UPDATE documents SET value=?,version=version+1 WHERE room=? AND target=?', ('', room, 'B'))
+            db.execute('UPDATE documents SET value=?,version=version+1 WHERE room=? AND target=?', (value, room, 'A'))
+            target, written, post = 'A', 1, pre + 1
+        else:
+            target = 'B' if scenario['mode'] == 'wrong_target' else 'A'
+            if scenario['mode'] == 'stale_precondition':
+                db.execute('UPDATE documents SET version=version+1 WHERE room=? AND target=?', (room, 'A'))
+            pre = db.execute('SELECT version FROM documents WHERE room=? AND target=?', (room, target)).fetchone()[0]
+            written = int(scenario['mode'] != 'noop')
+            post = pre + written
+            if written:
+                db.execute('UPDATE documents SET value=?,version=? WHERE room=? AND target=?', (value, post, room, target))
+        db.execute('INSERT INTO events VALUES(?,?,?,?,?,?,?,?,?,?)',
+            (room, phase, nonce, 'A', target, pre, post, written, value, time.perf_counter_ns()))
+        db.commit()
+    return nonce
+
+
+def serve(out):
+    freeze = json.loads((ROOT / 'FREEZE.json').read_bytes())
+    for name, digest in freeze['files'].items():
+        if hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != digest:
+            raise ValueError('source freeze drift:' + name)
+    scenarios = json.loads((ROOT / 'scenarios.json').read_bytes())
+    by_id = {r['trial_id']: r for r in scenarios}
+    database = out / 'endpoint.sqlite'
+    initialize(database, scenarios)
+    (out / 'initial-database.sha256').write_text(hashlib.sha256(database.read_bytes()).hexdigest() + '\n')
+
+    class Handler(BaseHTTPRequestHandler):
+        def request_log(self, status):
+            with closing(sqlite3.connect(database)) as db:
+                db.execute('INSERT INTO requests(method,path,status,observed_ns) VALUES(?,?,?,?)',
+                           (self.command, self.path, status, time.perf_counter_ns()))
+                db.commit()
+
+        def send_page(self, body, status=200):
+            self.request_log(status)
+            data = ('<!doctype html><html><head><meta charset="utf-8"><title>Endpoint receipt test</title>'
+                '<style>body{font:16px system-ui;margin:30px;color:#172230}table{border-collapse:collapse;width:100%}'
+                'th,td{padding:9px;border-bottom:1px solid #ccd5dd;text-align:left}input,button{font:inherit;padding:9px}'
+                '.card{display:inline-block;vertical-align:top;padding:15px;background:#edf2f6;margin:8px 8px 20px 0}'
+                'h1{font-size:25px}h2{font-size:20px}.note{color:#536271}</style></head><body>' + body + '</body></html>').encode()
+            self.send_response(status)
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            self.send_header('Content-Length', str(len(data)))
+            self.send_header('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'")
+            self.end_headers()
+            self.wfile.write(data)
+
+        def document_cards(self, room):
+            current = snapshot(database, room)
+            return ''.join('<section class="card"><h2>Document ' + target + '</h2><p>Version ' + str(row['version']) +
+                '</p><p>Saved value: ' + html.escape(row['value'] or '(empty)') + '</p></section>' for target, row in current.items())
+
+        def dashboard(self):
+            initial_file, repair_file = out / 'initial-observation.json', out / 'repair-observation.json'
+            initial = {r['trial_id']: r for r in json.loads(initial_file.read_bytes())['rows']} if initial_file.exists() else {}
+            repair = {r['trial_id']: r for r in json.loads(repair_file.read_bytes())['rows']} if repair_file.exists() else {}
+            rows = []
+            for scenario in scenarios:
+                room = scenario['trial_id']
+                state = snapshot(database, room)
+                observed = initial.get(room, {})
+                repaired = repair.get(room, {})
+                recovery = '<a href="/repair/' + room + '">Repair ' + room + '</a>' if observed.get('semantic_status') == 'UNKNOWN' and not repaired else ''
+                rows.append('<tr><td><a href="/trial/' + room + '">Trial ' + room + '</a></td><td>' +
+                    html.escape(scenario['desired_text']) + '</td><td>' + observed.get('dispatch_status', 'not run') +
+                    '</td><td>' + observed.get('semantic_status', 'not observed') + '</td><td>' +
+                    repaired.get('semantic_status', recovery or 'not needed') + '</td><td>' + html.escape(state['A']['value'] or '(empty)') + '</td></tr>')
+            return '<h1>Endpoint receipt experiment</h1><p class="note">Private test records. Initial decisions remain unchanged after repair.</p>' +
+                '<table><tr><th>Trial</th><th>Goal value for A</th><th>Dispatch</th><th>Initial endpoint</th><th>Fresh repair</th><th>Saved A now</th></tr>' + ''.join(rows) + '</table>'
+
+        def editor(self, room, phase):
+            state = snapshot(database, room)
+            nonce = by_id[room]['operation_id'] + (':repair' if phase == 'repair' else ':initial')
+            hidden = ''.join('<input type="hidden" name="' + key + '" value="' + html.escape(str(value)) + '">' for key, value in {
+                'room': room, 'phase': phase, 'nonce': nonce, 'target': 'A',
+                'version_A': state['A']['version'], 'version_B': state['B']['version']}.items())
+            return '<h1>' + ('Fresh repair ' if phase == 'repair' else 'Trial ') + room + '</h1><p>Target: Document A</p>' +
+                self.document_cards(room) + '<form action="/apply" method="post">' + hidden +
+                '<label for="value">New value</label><br><input id="value" name="value" maxlength="128" required><button type="submit">' +
+                ('Repair safely' if phase == 'repair' else 'Save') + '</button></form><p><a href="/">All trials</a></p>'
+
+        def do_GET(self):
+            path = urlparse(self.path).path
+            if path == '/':
+                self.send_page(self.dashboard())
+            elif path.startswith('/trial/') or path.startswith('/repair/'):
+                room = path.rsplit('/', 1)[1]
+                if room not in by_id:
+                    self.send_page('Unknown trial', 404)
+                    return
+                phase = 'repair' if path.startswith('/repair/') else 'initial'
+                self.send_page(self.editor(room, phase))
+            else:
+                self.send_page('Not found', 404)
+
+        def do_POST(self):
+            if self.path != '/apply' or self.headers.get('Origin') != 'http://127.0.0.1:' + str(self.server.server_port):
+                self.send_page('Refused origin or route', 403)
+                return
+            count = int(self.headers.get('Content-Length', '0'))
+            if not 0 < count <= 2048:
+                self.send_page('Refused body size', 400)
+                return
+            fields = {k: v[0] for k, v in parse_qs(self.rfile.read(count).decode(), keep_blank_values=True).items()}
+            room, phase = fields.get('room'), fields.get('phase')
+            if room not in by_id or phase not in ('initial', 'repair') or fields.get('target') != 'A' or not 0 < len(fields.get('value', '')) <= 128:
+                self.send_page('Refused fields', 400)
+                return
+            wanted_nonce = by_id[room]['operation_id'] + (':repair' if phase == 'repair' else ':initial')
+            if fields.get('nonce') != wanted_nonce:
+                self.send_page('Refused nonce', 400)
+                return
+            try:
+                expected = {t: int(fields['version_' + t]) for t in ('A', 'B')}
+                apply(database, by_id[room], phase, fields['value'], expected)
+            except (ValueError, KeyError):
+                self.send_page('Refused duplicate or stale repair', 409)
+                return
+            self.send_page('<h1>Request processed</h1><p role="status">Dispatcher accepted</p><p>Trial ' + room +
+                '</p>' + self.document_cards(room) + '<p><a href="/">All trials</a></p>')
+
+    server = HTTPServer(('127.0.0.1', 0), Handler)
+    metadata = {'pid': os.getpid(), 'port': server.server_port, 'host': '127.0.0.1',
+                'started_utc': datetime.now(timezone.utc).isoformat(), 'freeze_sha256': hashlib.sha256((ROOT / 'FREEZE.json').read_bytes()).hexdigest(),
+                'sqlite_version': sqlite3.sqlite_version, 'instance_id': freeze['study']}
+    with (out / 'server.json').open('x', encoding='utf-8') as handle:
+        json.dump(metadata, handle, sort_keys=True, indent=2)
+    server.serve_forever()
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--out', required=True, type=Path)
+    args = parser.parse_args()
+    serve(args.out)

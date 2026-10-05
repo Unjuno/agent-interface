@@ -1,0 +1,9 @@
+Source commit: ec28dbeb9a85e453647c7589c9821405615635af
+
+Candidate (one invocation):
+python3 research/concurrency/machine_crash_durability_7802_effect_oracle_a02_20261005/candidate.py /tmp/7802-effect-oracle-a02-output
+
+Independent audit (one invocation):
+python3 research/concurrency/machine_crash_durability_7802_effect_oracle_a02_20261005/audit.py /tmp/7802-effect-oracle-a02-output/candidate.json
+
+No container, VM, filesystem fault injection, or external effect was used.

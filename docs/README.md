@@ -153,3 +153,5 @@ README.md
 ```
 
 For current claims, prefer the canonical documents above over inferring status from directory names or historical experiment filenames.
+
+- [Repository cleanup inventory — 2026-10-05](BRANCH_INVENTORY_20261005.md) and [remote branch tips](BRANCH_TIPS_20261005.csv) preserve a dated PR/branch snapshot for safe consolidation.

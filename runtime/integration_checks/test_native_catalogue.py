@@ -1,0 +1,47 @@
+import json,os,runpy,subprocess,sys,tempfile,unittest,uuid
+from pathlib import Path
+source=Path(os.environ.get('CATALOGUE_SOURCE', str(Path(__file__).with_name('native.py'))));out=Path(os.environ['COLLECTOR_OUTPUT']) if 'COLLECTOR_OUTPUT' in os.environ else None
+class Collected(BaseException):pass
+def capture_cli():
+    commands=[];original_run=subprocess.run;original_argv=sys.argv[:]
+    def stop_before_actor(command,**kwargs):
+        if commands:raise RuntimeError('unexpected second launch')
+        if command[:4]!=[sys.executable,'-m','unittest','-v']:raise RuntimeError('unexpected actor command')
+        if kwargs.get('capture_output') is not True or set(kwargs)!= {'cwd','env','capture_output'}:raise RuntimeError('unexpected launch contract')
+        commands.append(list(command));raise Collected()
+    scratch=tempfile.TemporaryDirectory(prefix='native-catalogue-');output=out/uuid.uuid4().hex if out is not None else Path(scratch.name)/'capture'
+    subprocess.run=stop_before_actor;sys.argv=[str(source),'--output',str(output)]
+    try:
+        try:runpy.run_path(str(source),run_name='__main__')
+        except Collected:pass
+        else:raise RuntimeError('native main failed to reach launch collector')
+    finally:subprocess.run=original_run;sys.argv=original_argv;scratch.cleanup()
+    if len(commands)!=1:raise RuntimeError('one selected command required')
+    return commands[0][4:]
+def imported():return runpy.run_path(str(source),run_name='catalogue_import_only')['SUITES']
+class Catalogue(unittest.TestCase):
+    def record(self,name,script,loaded):
+        if out is None:return
+        with (out/'rows.jsonl').open('a',encoding='utf-8') as f:f.write(json.dumps(dict(case=name,script_selected=script,import_protocol=loaded['protocol'],import_harness=loaded['harness'],intercepted_launches=1,actor_processes_started=0),sort_keys=True)+'\n')
+    def test_cli_selects_aggregate_once(self):
+        selected=capture_cli();loaded=imported();self.record('aggregate_once',selected,loaded);self.assertEqual(selected.count('test_adaptive_acquisition_aggregate_cost'),1)
+    def test_cli_matches_import_catalogue(self):
+        selected=capture_cli();loaded=imported();self.record('script_import_equal',selected,loaded);self.assertEqual(selected,loaded['protocol'])
+    def test_cli_keeps_existing_cost_suite(self):
+        selected=capture_cli();loaded=imported();self.record('coverage_once',selected,loaded);self.assertEqual(selected.count('test_adaptive_acquisition_cost_coverage'),1)
+    def test_cli_keeps_existing_eof_suite(self):
+        selected=capture_cli();loaded=imported();self.record('eof_once',selected,loaded);self.assertEqual(selected.count('test_app_server_eof_stop'),1)
+
+    def test_cli_selects_caller_refusal_dispatch_and_uncertain_tail_once(self):
+        selected = capture_cli()
+        loaded = imported()
+        modules = (
+            'test_adaptive_acquisition_caller_refusal_v3',
+            'test_adaptive_acquisition_caller_dispatch_v3',
+            'test_adaptive_acquisition_caller_uncertain_tail_v3',
+        )
+        for module in modules:
+            with self.subTest(module=module):
+                self.assertEqual(selected.count(module), 1)
+                self.assertEqual(loaded['protocol'].count(module), 1)
+                self.assertEqual(sum(suite.count(module) for suite in loaded.values()), 1)

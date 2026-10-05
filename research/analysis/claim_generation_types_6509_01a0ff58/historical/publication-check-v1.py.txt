@@ -1,0 +1,139 @@
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[1]
+REPO = ROOT / 'work/agent-interface'
+WORK = ROOT / 'work/claim-generation-types6509'
+PACKET = WORK / 'packet'
+OUTPUT = ROOT / 'outputs/claim-generation-types6509'
+BASE = '636986a804a6004cd047db7e8cc5e62c02d585d8'
+BRANCH = 'research/claim-generation-types-6509-01a0ff58-20261003'
+PREFIX = 'research/analysis/claim_generation_types_6509_01a0ff58/'
+INDEX = WORK / 'publication.private.index'
+COMMANDS = []
+def sha(b): return hashlib.sha256(b).hexdigest()
+def now(): return datetime.now(timezone.utc).isoformat()
+def dump(p, obj): p.write_text(json.dumps(obj, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+def git(*args, data=None, index=False, allowed=(0,)):
+    env = dict(os.environ, GIT_TERMINAL_PROMPT='0')
+    if index: env['GIT_INDEX_FILE'] = str(INDEX)
+    p = subprocess.run(['git', *args], cwd=REPO, env=env, input=data, capture_output=True, timeout=30)
+    COMMANDS.append({'argv': ['git', *args], 'private_index': index, 'exit': p.returncode, 'stdout_sha256': sha(p.stdout), 'stderr_sha256': sha(p.stderr), 'stderr': p.stderr.decode(errors='replace')})
+    dump(WORK / 'publication-commands.json', COMMANDS)
+    if p.returncode not in allowed: raise RuntimeError(p.stderr.decode(errors='replace'))
+    return p.stdout
+
+if INDEX.exists() or OUTPUT.exists(): raise RuntimeError('new publication only; inspect existing receipt, do not repeat')
+freeze = json.loads((PACKET / 'FREEZE.json').read_bytes())
+raw = json.loads((PACKET / 'results/raw.json').read_bytes())
+audit = json.loads((PACKET / 'results/AUDIT.json').read_bytes())
+boundary = json.loads((PACKET / 'results/BOUNDARY.json').read_bytes())
+if audit['classification'] != 'PASS_SCOPED_ARGUMENT_BOUNDARY': raise RuntimeError('first result must remain qualified')
+for name, expected in freeze['source_input_sha256'].items():
+    if sha((PACKET / name).read_bytes()) != expected: raise RuntimeError('frozen source drift')
+for pin in json.loads((PACKET / 'SOURCE_PINS.json').read_bytes()):
+    if git('show', pin['git_commit'] + ':' + pin['git_path']) != (PACKET / pin['published_copy']).read_bytes(): raise RuntimeError('legacy source/input drift')
+report = '''# #6509: caller-generation aliases cross the receipt reader boundary
+
+The unchanged reader accepted caller generation `True` and `1.0` as matching retained receipt generation integer `1`, returning `COMPLETE_VERDICT` in both cases. Its earlier declared contract requires a positive integer generation, excluding bool. Checking only the receipt scalar type leaves this caller-input gap. This is an ordinary isolated API construction result, not an observed production incident.
+
+| Frozen request | Unchanged reader | Positive-int request gate |
+|---|---|---|
+| int 1 | COMPLETE_VERDICT | COMPLETE_VERDICT |
+| int 2 | PARTIAL_UNKNOWN / GENERATION_OR_SCOPE | Same |
+| bool True | COMPLETE_VERDICT | PARTIAL_UNKNOWN / REQUEST_GENERATION_TYPE |
+| float 1.0 | COMPLETE_VERDICT | PARTIAL_UNKNOWN / REQUEST_GENERATION_TYPE |
+
+One first boundary child ran on native Windows CPython3.12.14 at2026-10-03T06:22:33Z, exit0, using unchanged complete c03 receipt bytes copied from main636986a8. The four requests were frozen at06:21:42Z. All eight calls completed; source/input hashes were unchanged before/after. Raw f51b9a93900daed30258eb0dd02e26ff260560d1cbbd71398199829c368da25d retains full typed inputs and outputs. One separate raw-only audit child exited0, checks all four complete field sets, and rejects5/5 effective copied-data controls: changed legacy outcome, false candidate COMPLETE, erased bool type, deleted row, and changed input hash. Both child PIDs, actual UTC bounds/exits/stdout/stderr hashes and freeze linkage are in results/BOUNDARY.json. Exact absolute invocation paths are retained privately; the public command uses a pinned interpreter hash, actual relative filename and cwd. These timestamps are custody, not latency measurements.
+
+The simple isolated gate checks `type(generation) is int and generation > 0` before delegating to the unchanged reader. For this four-request corpus it refuses the two out-of-contract aliases while retaining the two integer outcomes. Adopt this requirement for future reuse of this archived reader; the current PR preserves evidence only and changes no live reader/runtime. The earlier nine-case process-exit study used integer caller generations, remains unchanged and is not invalidated within that scope. Its writer, 27-child matrix and formal allocations were not rerun.
+
+The reference audit uses a separately written closed four-case table and strict input type checks without importing either evaluated reader. Its five controls were effective JSON changes; this supports only those controls, not universal audit soundness. The generated source/input freeze, first raw, outputs and all first outcomes remain immutable. Captured Windows stdout retains its original CRLF; a new results/.gitattributes rule records that byte-preservation treatment without rewriting frozen files.
+
+Limitations remain: this retained synthetic journal is not proof of truthful semantic verification, live authority or task effects, durability under power loss, concurrent access, arbitrary invalid generations, platform transfer or speed. No GPU/model/container/GUI/input/network experiment or shared configuration change occurred. The small wrapper is a source copy with .py.txt suffix and is not promoted to an executable runtime module. See PLAN.md for prospective H/T/D/C/U, variable meanings, range/types and stop rules.
+'''
+(PACKET / 'REPORT.md').write_text(report, encoding='utf-8', newline='\n')
+(PACKET / 'README.md').write_text('''# Retained caller-generation argument boundary (#6509)
+
+Read [REPORT.md](REPORT.md) for the four first outcomes and limits; [PLAN.md](PLAN.md) and [FREEZE.json](FREEZE.json) preceded the boundary. [SOURCE_PINS.json](SOURCE_PINS.json) ties the exact legacy source, contract and retained c03 input to actual Git blobs. [results/raw.json](results/raw.json), [results/AUDIT.json](results/AUDIT.json) and [results/BOUNDARY.json](results/BOUNDARY.json) preserve the first result and separate raw-only audit.
+
+All evaluated/auditor source is inert `.py.txt`, with no package initializer, test-discovery name, import/default/distribution/workflow integration. The raw-only audit can be explicitly executed from this archive with `python -B audit.py.txt`; it does not call either reader. Do not replay `probe.py.txt` or the old writer/process matrix to validate preservation. `SHA256SUMS` covers every packet file except itself. No runtime adoption or permission is implied by a COMPLETE label.
+''', encoding='utf-8', newline='\n')
+(PACKET / 'results/.gitattributes').write_text('*.stdout whitespace=cr-at-eol\n', encoding='utf-8', newline='\n')
+entries = [(p.relative_to(PACKET).as_posix(), sha(p.read_bytes())) for p in sorted(PACKET.rglob('*')) if p.is_file()]
+(PACKET / 'SHA256SUMS').write_text(''.join(digest + '  ' + name + '\n' for name, digest in entries), encoding='utf-8', newline='\n')
+
+original_index_bytes = (REPO / '.git/index').read_bytes()
+original_head = git('rev-parse', 'HEAD').decode().strip()
+original_tree = git('rev-parse', 'HEAD^{tree}').decode().strip()
+if git('status', '--porcelain', '--untracked-files=no'): raise RuntimeError('preexisting tracked changes')
+if git('rev-parse', 'refs/heads/' + BRANCH).decode().strip() != BASE: raise RuntimeError('branch already moved')
+paths = git('ls-tree', '-r', '--name-only', BASE, '--', 'research/analysis/').decode().splitlines()
+retained = sorted({p.split('/')[2] for p in paths if len(p.split('/')) == 4 and p.split('/')[-1] in ('REPORT.md', 'FORMAL_FAILURE.md', 'STOP.md')})
+readme = git('show', BASE + ':research/analysis/README.md')
+text = readme.decode('utf-8')
+begin = '<!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->'
+end = '<!-- END GENERATED ANALYSIS RESULT INDEX -->'
+section = text.split(begin, 1)[1].split(end, 1)[0]
+existing = re.findall(r'\[`([^`]+?)/`\]\(([^)]+)/\)', section)
+if [a for a,b in existing] != retained or any(a != b for a,b in existing): raise RuntimeError('preexisting full-tree index mismatch')
+new_name = PREFIX.rstrip('/').split('/')[-1]
+new_entries = sorted(retained + [new_name])
+pos = new_entries.index(new_name)
+new_line = f'- [`{new_name}/`]({new_name}/)\n'
+next_line = f'- [`{new_entries[pos + 1]}/`]({new_entries[pos + 1]}/)' if pos + 1 < len(new_entries) else '</details>'
+if text.count(next_line) != 1: raise RuntimeError('ambiguous insert')
+updated = text.replace(next_line, new_line + next_line, 1).encode('utf-8')
+if updated.replace(new_line.encode(), b'', 1) != readme: raise RuntimeError('index byte preservation')
+(WORK / 'README.after.md').write_bytes(updated)
+
+# Qualified execution of unchanged index checker: directory membership only.
+skeleton = WORK / 'index-membership-check/research/analysis'
+skeleton.mkdir(parents=True, exist_ok=False)
+(skeleton / 'README.md').write_bytes(updated)
+(skeleton / 'check_index.py').write_bytes(git('show', BASE + ':research/analysis/check_index.py'))
+for name in new_entries:
+    (skeleton / name).mkdir()
+    (skeleton / name / 'REPORT.md').write_bytes(b'')
+import sys
+check = subprocess.run([sys.executable, '-B', str(skeleton / 'check_index.py')], capture_output=True, timeout=15)
+for kind in ('stdout', 'stderr'): (WORK / ('index-check.' + kind)).write_bytes(getattr(check, kind))
+if check.returncode: raise RuntimeError(check.stdout.decode() + check.stderr.decode())
+
+git('read-tree', BASE, index=True)
+published = []
+for p in sorted(PACKET.rglob('*')):
+    if p.is_file():
+        name = PREFIX + p.relative_to(PACKET).as_posix()
+        blob = git('hash-object', '-w', '--stdin', data=p.read_bytes()).decode().strip()
+        git('update-index', '--add', '--cacheinfo', '100644,' + blob + ',' + name, index=True)
+        published.append({'path': name, 'mode': '100644', 'blob': blob, 'bytes': p.stat().st_size, 'sha256': sha(p.read_bytes())})
+blob = git('hash-object', '-w', '--stdin', data=updated).decode().strip()
+git('update-index', '--add', '--cacheinfo', '100644,' + blob + ',research/analysis/README.md', index=True)
+published.append({'path': 'research/analysis/README.md', 'mode': '100644', 'blob': blob, 'bytes': len(updated), 'sha256': sha(updated)})
+tree = git('write-tree', '--missing-ok', index=True).decode().strip()
+commit = git('commit-tree', tree, '-p', BASE, data=b'research(#6509): retain caller-generation scalar alias boundary\n').decode().strip()
+delta = git('diff-tree', '-r', '--no-commit-id', '--name-status', '--no-renames', BASE, commit).decode().splitlines()
+expected = sorted(['A\t' + x['path'] for x in published if x['path'].startswith(PREFIX)] + ['M\tresearch/analysis/README.md'])
+if delta != expected: raise RuntimeError('unexpected path change')
+git('diff', '--check', BASE, commit)
+patch = git('diff', '--binary', '--full-index', '--no-ext-diff', '--no-renames', BASE, commit)
+(WORK / 'proposal.diff').write_bytes(patch)
+git('update-ref', 'refs/heads/' + BRANCH, commit, BASE)
+if (REPO / '.git/index').read_bytes() != original_index_bytes or git('rev-parse', 'HEAD').decode().strip() != original_head or git('rev-parse', 'HEAD^{tree}').decode().strip() != original_tree or git('status', '--porcelain', '--untracked-files=no'): raise RuntimeError('primary checkout changed')
+descriptor = {'policy': 'FINAL-v5', 'task_id': '6509-caller-generation-types', 'change_id': '6509-caller-generation-types-v1', 'repository': 'Unjuno/agent-interface', 'author_worker': '01a0ff58-6178-7ea1-a6d5-cf09260b91e3', 'head_sha': commit, 'head_tree_sha': tree, 'review_base_sha': BASE, 'branch': BRANCH, 'full_index_patch_sha256': sha(patch), 'full_index_patch_bytes': len(patch), 'objects': sorted(published, key=lambda x: x['path']), 'dependencies_and_verification': 'Inert archive; unchanged legacy source/input/contract; one frozen4-request ordinary boundary, separately implemented raw-only4-row audit and5 effective controls; one generated-index line checked against every actual Git retained-result directory; no producer/formal/test-matrix replay, no runtime/workflow/distribution change.', 'reuse_conditions': 'All fixed proposed bytes/head remain unchanged; every old evidence/source byte preserved. Intervening main must preserve these exact legacy source/input/contract dependencies and index/checker/test/import/distribution treatment. Current-base exact combination proof and live author-only expected-old one-ref forward update are separate and required after genuine content quorum.', 'committee_epoch': '6509-generation-types-v1-before-votes', 'committee_workers': ['01a0ff35-0b9f-7d13-bcfa-22d064ff4fec', '01a0ff59-2f23-7ff0-ba99-cc5cb8d494fc', '01a0ff52-70ab-7f10-82b3-e60375a032fb'], 'required_content_approvals': 2, 'committee_state': 'Prospectively fixed existing nonauthor nominees before any vote; actual eligibility and FINAL-v5 acceptance must be confirmed by each before counting. Silence/nomination are not votes; shared GitHub login not distinct-user mandatory review.', 'scientific_scope': 'Authored synthetic request-type boundary only; no runtime adoption, semantic truth, real task/input effect, power loss, concurrency, performance or overall goal completion.'}
+digest = sha(json.dumps(descriptor, sort_keys=True, separators=(',', ':')).encode())
+descriptor['proposal_digest'] = digest
+descriptor['recorded_utc'] = now()
+OUTPUT.mkdir(exist_ok=False)
+shutil.copytree(PACKET, OUTPUT / 'packet')
+dump(OUTPUT / 'PROPOSAL.json', descriptor)
+dump(OUTPUT / 'PUBLICATION_CHECKS.json', {'recorded_utc': now(), 'index_checker_exit': check.returncode, 'index_checker_stdout': check.stdout.decode(), 'index_checker_source': BASE + ':research/analysis/check_index.py', 'index_scope': 'Full actual Git-tree-derived retained-directory membership; sentinel files for is_file only, not copied/verified sibling scientific results.', 'directory_count_before': len(retained), 'directory_count_after': len(new_entries), 'primary_head_unchanged': original_head, 'primary_tree_unchanged': original_tree, 'primary_index_sha256_unchanged': sha(original_index_bytes), 'original_scope_pins': json.loads((PACKET / 'SOURCE_PINS.json').read_bytes()), 'archive_file_count': len(published) - 1, 'manifest_target_count': len(entries), 'packet_bytes': sum(p.stat().st_size for p in PACKET.rglob('*') if p.is_file()), 'delta': delta, 'diff_check_exit': 0, 'private_index_only': True, 'no_ref_send_yet': True})
+shutil.copyfile(WORK / 'proposal.diff', OUTPUT / 'proposal.diff')
+print(json.dumps({'head': commit, 'tree': tree, 'digest': digest, 'changed_files': len(published), 'manifest_targets': len(entries), 'index_count': len(new_entries), 'patch_sha256': sha(patch), 'patch_bytes': len(patch), 'packet_bytes': sum(p.stat().st_size for p in PACKET.rglob('*') if p.is_file())}, sort_keys=True))
