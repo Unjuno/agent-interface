@@ -95,6 +95,6 @@ stop=load("vm-stop.json")
 check("owned_vm_stopped_readback", stop.get("exit_code")==0 and stop.get("readback",{}).get("exit_code")==0 and "State: stopped" in stop.get("readback",{}).get("stdout",""), f"stop_exit={stop.get('exit_code')}, readback={stop.get('readback',{}).get('stdout','').splitlines()[:3]}")
 
 result={"schema":"independent-v15-native-x11-raw-audit-a01-v1","classification":"read-only audit of one retained native virtual-X11 construction run; no candidate replay","evidence_commit":EVIDENCE_COMMIT,"source_head":SOURCE_HEAD,"raw_sha256":sha(raw_bytes),"checks":checks,"passed":sum(c["pass"] for c in checks),"total":len(checks),"disposition":"PASS_SCOPED" if all(c["pass"] for c in checks) else "FAIL_OR_REVIEW","limitations":["single run, not reliability evidence","private Xvfb / XTEST virtual server only","driver directly invokes backend batch methods; not V39 or production execute","no game, model, physical keyboard, application effect, useful feedback, recovery, or gameplay result","raw-only audit shares the one archived execution record"]}
-OUT.write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
+OUT.write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\n",encoding="utf-8",newline="\n")
 print(json.dumps(result,indent=2,ensure_ascii=False))
 if not all(c["pass"] for c in checks): raise SystemExit(1)
