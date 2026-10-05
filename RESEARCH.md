@@ -2302,3 +2302,9 @@ synthetic scenarios, not a real model/interface crossover, recommendation,
 safety or performance result. A01 and A02 main-advance STOPs remain distinct.
 See [the report and checksummed formal artifacts](research/analysis/model_interface_crossover_6035_t0_a03_20261002/REPORT.md)
 and [Issue #6035](https://github.com/Unjuno/agent-interface/issues/6035).
+# Issue #7944 successor T0 A01 — bounded offline bandwidth inheritance (2026-10-05)
+
+The frozen candidate and separate raw-only audit passed the declared authored finite-model gate (`PASS_METHOD_SCOPED` / `H_PASS_SCOPED`): BWI met the verifier freshness deadline in the budget-inversion and nested-chain cases where home-charged PI missed; no-contention traces were identical; waiter-budget exhaustion and multiple waiters exposed bounded tradeoffs. OrbStack's image-content store was unreadable, so the standard-library model ran host-only with no isolation claim. This is not a full CBS theorem or OS/runtime/scheduler result. See [report and retained raw evidence](research/analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) and [successor allocation Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
+# Issue #7986 T0 A01 — action-conditioned incorrect-belief exposure (2026-10-05)
+
+Eight authored event intervals passed the frozen method gate: exposure is zero for an old-but-correct belief (age 10), positive for stale and freshly misbound beliefs (6 and 5 ticks; the latter age 1), excluded outside live authority/opportunity, and distinct from one realized unsafe effect. Missing truth and ambiguous clock return `UNKNOWN`. Candidate receives no truth sidecar. This is a finite method result only—not harm reduction, safety, human, GUI, live, or runtime evidence. See [report and frozen artifacts](research/analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) and [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
