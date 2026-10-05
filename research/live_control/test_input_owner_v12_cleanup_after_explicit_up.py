@@ -21,6 +21,7 @@ class FakeDisplay:
         self.fail_key_release_attempts = 0
         self.fail_sync_attempts = 0
         self.fail_keymap_queries = 0
+        self.fail_pointer_queries = 0
         self.root = FakeRoot(self)
 
     def get_input_focus(self):
@@ -80,6 +81,9 @@ class FakeRoot:
         self.display = display
 
     def query_pointer(self):
+        if self.display.fail_pointer_queries:
+            self.display.fail_pointer_queries -= 1
+            raise RuntimeError("synthetic pointer sample failure")
         mask = sum(256 << (button - 1) for button in self.display.buttons_down)
         return types.SimpleNamespace(mask=mask, root_x=0, root_y=0)
 
@@ -244,7 +248,7 @@ class ExplicitUpCleanupTests(unittest.TestCase):
                 else:
                     sys.modules[name] = module
 
-    def test_terminal_release_retains_receipt_when_keymap_remains_unknown(self):
+    def test_terminal_release_retains_receipt_when_state_samples_fail(self):
         names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
                  "Xlib.ext", "Xlib.ext.xtest", "executor_v3")
         saved = {name: sys.modules.get(name) for name in names}
@@ -294,6 +298,7 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             owner.call("down", lease, "W")
             owner.call("button_down", lease, 1)
             display_instance.fail_keymap_queries = 8
+            display_instance.fail_pointer_queries = 1
             with self.assertRaises(RuntimeError) as caught:
                 owner.call("release", lease)
 
@@ -302,6 +307,8 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(receipt["keys_unknown"], [65])
             self.assertTrue(any(
                 row["source"] == "keymap_after" for row in receipt["key_state_errors"]))
+            self.assertTrue(any(
+                row["source"] == "pointer_before" for row in receipt["key_state_errors"]))
             self.assertEqual(display_instance.down, set())
             self.assertEqual(display_instance.buttons_down, set())
         finally:
