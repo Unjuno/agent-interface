@@ -1,0 +1,27 @@
+{
+  "experiment_id": "UNJUNO-7741-ADOPTION-QUEUE-T0D-20261005-01",
+  "predecessors": [
+    "T0 v1 METHOD_FAIL_OR_INCONCLUSIVE",
+    "T0b STOP_CANDIDATE_RUNTIME",
+    "T0c METHOD_FAIL_OR_INCONCLUSIVE; retained unchanged"
+  ],
+  "issue": 7741,
+  "source_commit": "7e79b4d5fa02d4877f5c53c7f6f234f181e7a5cd",
+  "hypothesis": "With synthetic peer-mediated adoption, reduced interaction cost increases shared-one-server p95 and unfinished obligations more than the matched per-principal local-queue effect, by at least one modeled service interval in at least six of eight fresh seeds in each topology-by-imitation cell.",
+  "protocol_file": "protocol.json",
+  "protocol_sha256": "d79d9a0b943c8dec33236ae461a3c4140693a55661825f9c566d5390c94af20c",
+  "frozen_sha256": {
+    "protocol.json": "d79d9a0b943c8dec33236ae461a3c4140693a55661825f9c566d5390c94af20c",
+    "candidate.py": "9ef43a8e852ea71caa9a4724c39ab1b5b6a08ed0ac62a180f07669896448a8ea",
+    "auditor.py": "8a920f1daa3b777b20165ad43afd3cdbcb2bc6d64c9c655f7eee524ad8fe80a0",
+    "test_method.py": "4d830923f31ab7da30793ab06e8200751cd2e6080c25dc60db4616f7a5a7e3de",
+    "test_evidence.py": "726810e668cce3528fffef5c3542fcd3817ecdaa846150e40cfcc2a36da14cac",
+    "run_formal.py": "ad1a53995ad8041270d6135f508fc3cf2a0882f06547afd6e93c8d63ee23cb8a"
+  },
+  "candidate_and_auditor_invocations": 1,
+  "execution": "One candidate invocation and one independent raw-only auditor invocation; CPU-only deterministic integer-tick enumeration; no host timing or resource claim.",
+  "predecessor_t0c_freeze_sha256": "154dcac0e3843235b9dd923e6975db3aecdeb92d4ee75c458f3360877d9590a1",
+  "predecessor_t0c_raw_gzip_sha256": "eb604ac26838fc96a413ed7ac733fdec1284a4b262eb94f825b5ce116b7fd190",
+  "prior_outcomes_immutable": true,
+  "no_retry": "If candidate or auditor exits nonzero, output is invalid, or audit errors occur, preserve exact state and do not rerun this allocation."
+}
