@@ -261,10 +261,11 @@ class InputOwner:
                     admitted_ns = result.get("admitted_ns")
                     if type(deadline) is int and type(admitted_ns) is int:
                         with self._admission_records_lock:
+                            identity_field = "key" if operation == "down" else "payload"
                             admission_receipt = {
                                 "event": result.get("event"),
                                 "operation": operation,
-                                "key": result.get("key"),
+                                identity_field: result.get(identity_field),
                                 "owner_id": self._inner.owner_id,
                                 "intent_token": result.get("intent_token"),
                                 "valid_until_ns": result.get("valid_until_ns"),

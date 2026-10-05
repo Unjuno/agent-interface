@@ -86,6 +86,16 @@ class BatchReleaseInner(FakeInner):
         return None
 
 
+class PointerReleaseInner(FakeInner):
+    def call(self, operation, lease=None, key=None):
+        self.calls.append((operation, key))
+        if operation == 'button_down':
+            return {'event': 'pointer_admission', 'operation': operation,
+                    'payload': key, 'admitted_ns': 80, 'input_ack_ns': 90,
+                    'valid_until_ns': lease.deadline}
+        return None
+
+
 base = types.ModuleType('input_owner_v10')
 base.InputOwner = FakeInner
 sys.modules['input_owner_v10'] = base
@@ -216,6 +226,19 @@ class Tests(unittest.TestCase):
         self.assertEqual([row['admission_receipt']['key'] for row in rows], ['a', 'b'])
         self.assertEqual([row['admission_receipt']['admitted_ns'] for row in rows], [80, 85])
         self.assertTrue(all(row['admission_receipt_valid'] for row in rows))
+
+    def test_button_up_carries_its_exact_pointer_admission_payload(self):
+        owner = mod.InputOwner(':fake', _owner_cls=PointerReleaseInner)
+        lease = Lease(deadline=1000)
+        owner.call('button_down', lease, 1)
+        with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+            row = owner.call('button_up', lease, 1)
+        self.assertEqual(row['admission_receipt'], {
+            'event': 'pointer_admission', 'operation': 'button_down', 'payload': 1,
+            'admitted_ns': 80, 'input_ack_ns': 90, 'valid_until_ns': 1000,
+            'intent_token': 'intent-1', 'owner_id': 'owner-1',
+        })
+        self.assertTrue(row['admission_receipt_valid'])
 
     def test_cancel_cleanup_before_dequeued_up_invalidates_receipt(self):
         owner = mod.InputOwner(':fake', _owner_cls=CleanupBeforeUpInner)
