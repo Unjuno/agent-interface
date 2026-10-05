@@ -1,0 +1,24 @@
+import json,hashlib,subprocess,datetime
+from pathlib import Path
+base=Path(__file__).resolve().parent
+repo=base.parent/'perkey-owner-guard-repo-e0cc-20261005'
+git='/run/current-system/sw/bin/git'
+head=subprocess.check_output([git,'rev-parse','HEAD'],cwd=repo,text=True).strip()
+main=subprocess.check_output([git,'rev-parse','origin/main'],cwd=repo,text=True).strip()
+assert head=='daa156edd8df541dfe0192c3f6f0c69b36b92fa2'
+assert not subprocess.check_output([git,'status','--porcelain'],cwd=repo)
+old=json.loads((base.parent/'v15-native-readiness-e0cc-20261005/source-lock.json').read_text())
+rows=[]
+for r in old['files']:
+ path=r['path']; data=subprocess.check_output([git,'show',f'{head}:{path}'],cwd=repo)
+ p=base/'source'/path;p.parent.mkdir(parents=True,exist_ok=True)
+ with p.open('xb') as f:f.write(data)
+ rows.append({'path':path,'blob':subprocess.check_output([git,'rev-parse',f'{head}:{path}'],cwd=repo,text=True).strip(),'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data)})
+merged=subprocess.check_output([git,'merge-tree','--write-tree',head,main],cwd=repo,text=True).strip()
+changed=[]
+for r in rows:
+ b=subprocess.check_output([git,'show',f'{merged}:{r["path"]}'],cwd=repo)
+ if hashlib.sha256(b).hexdigest()!=r['sha256']:changed.append(r['path'])
+lock={'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':head,'main':main,'virtual_merge_tree':merged,'selected_merge_differences':changed,'files':rows}
+with (base/'source-lock.json').open('x') as f:json.dump(lock,f,indent=2);f.write('\n')
+print(json.dumps({'head':head,'main':main,'files':len(rows),'virtual_merge_tree':merged,'changed':changed}))

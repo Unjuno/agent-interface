@@ -1,0 +1,21 @@
+import datetime,hashlib,io,json,subprocess,tarfile
+from pathlib import Path
+base=Path(__file__).resolve().parent
+orb=['/opt/homebrew/bin/orb','-m','v15-native-e0cc-20261005','-u','study','-w','/home/study']
+def save(n,d):
+ with (base/n).open('x') as f:json.dump(d,f,indent=2);f.write('\n')
+def run(n,args,**kw):
+ save(n+'-request.json',{'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'argv':args})
+ p=subprocess.run(args,capture_output=True,timeout=45,**kw)
+ save(n+'-result.json',{'exit_code':p.returncode,'stdout':p.stdout.decode(),'stderr':p.stderr.decode()});assert p.returncode==0
+ return p
+p=run('vm-info-before',['/opt/homebrew/bin/orbctl','info','v15-native-e0cc-20261005'])
+assert b'01M45XCN5QP1RX0FXKCA68PBPM' in p.stdout and b'stopped' in p.stdout
+run('private-directory',orb+['mkdir','/home/study/native-executor','/home/study/native-executor/runs'])
+b=io.BytesIO()
+with tarfile.open(fileobj=b,mode='w') as t:
+ for n in ['source','source-lock.json','PROTOCOL.md']:t.add(base/n,arcname=n)
+save('source-transfer-sha.json',{'tar_sha256':hashlib.sha256(b.getvalue()).hexdigest(),'bytes':len(b.getvalue())})
+run('source-transfer',orb+['tar','-x','-C','/home/study/native-executor'],input=b.getvalue())
+p=run('environment',orb+['python3','-c',"import json,platform,subprocess,pathlib; print(json.dumps({'python':platform.python_version(),'platform':platform.platform(),'packages':subprocess.check_output(['dpkg-query','-W','-f=${Package}=${Version}\\n'],text=True),'isolation':pathlib.Path('/proc/1/cgroup').read_text()}))"])
+print(json.dumps({'setup':'complete','environment_receipt':'environment-result.json'}))

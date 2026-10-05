@@ -1,0 +1,1363 @@
+{
+  "classification": "FAIL_NATIVE_EXECUTOR_COMPOSITION_SCOPED",
+  "checks": [
+    {
+      "check": "schema",
+      "pass": true
+    },
+    {
+      "check": "fatal_absent",
+      "pass": true
+    },
+    {
+      "check": "source_head",
+      "pass": true
+    },
+    {
+      "check": "source_before_after",
+      "pass": true
+    },
+    {
+      "check": "autorepeat_off",
+      "pass": true
+    },
+    {
+      "check": "cgroup.cpu.max",
+      "pass": true
+    },
+    {
+      "check": "cgroup.memory.max",
+      "pass": true
+    },
+    {
+      "check": "cgroup.memory.swap.max",
+      "pass": true
+    },
+    {
+      "check": "cgroup.pids.max",
+      "pass": true
+    },
+    {
+      "check": "only_loopback",
+      "pass": false
+    },
+    {
+      "check": "loaded_nonempty",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/doom/doom_batch_key_measurement_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/doom/doom_typed_coast_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/doom/doom_typed_observation_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/doom/doom_typed_release_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/doom/doom_typed_release_backend_v2.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/action_validity_admission_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/coast_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/executor_v11.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/executor_v12.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/executor_v13.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/executor_v3.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/executor_v5.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_owner.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_owner_v10.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_owner_v11.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_owner_v12.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_owner_v2.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_owner_v5.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_transition_owner_v3.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/input_transition_owner_v4.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/key_edge_measurement_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/lease.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/lease_cause_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/lease_cause_v2.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/lease_release_v1.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/quiet_window.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/session_v10.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/session_v4.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/session_v5.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/session_v6.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/session_v7.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/session_v8.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/live_control/session_v9.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/observation_gating/exact_gate.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/observation_gating/gui_suite.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/observation_tiles/image_artifact.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/observation_tiles/tile_transport.py",
+      "pass": true
+    },
+    {
+      "check": "loaded.research/real_apps_v1/real_app_suite_v1.py",
+      "pass": true
+    },
+    {
+      "check": "required_loaded.research/live_control/executor_v13.py",
+      "pass": true
+    },
+    {
+      "check": "required_loaded.research/live_control/executor_v12.py",
+      "pass": true
+    },
+    {
+      "check": "required_loaded.research/live_control/input_owner_v12.py",
+      "pass": true
+    },
+    {
+      "check": "required_loaded.research/live_control/input_transition_owner_v4.py",
+      "pass": true
+    },
+    {
+      "check": "required_loaded.research/doom/doom_batch_key_measurement_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "required_loaded.research/doom/doom_typed_coast_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "required_loaded.research/live_control/session_v4.py",
+      "pass": true
+    },
+    {
+      "check": "initial_neutral",
+      "pass": true
+    },
+    {
+      "check": "final_neutral",
+      "pass": true
+    },
+    {
+      "check": "no_late_native_events",
+      "pass": true
+    },
+    {
+      "check": "shutdown.executor_close",
+      "pass": true
+    },
+    {
+      "check": "shutdown.owner_close",
+      "pass": true
+    },
+    {
+      "check": "shutdown.session_display_close",
+      "pass": true
+    },
+    {
+      "check": "shutdown.window_destroy",
+      "pass": true
+    },
+    {
+      "check": "shutdown.observer_close",
+      "pass": true
+    },
+    {
+      "check": "owner_stopped",
+      "pass": true
+    },
+    {
+      "check": "xvfb_exit",
+      "pass": true
+    },
+    {
+      "check": "watchers_stopped",
+      "pass": true
+    },
+    {
+      "check": "shutdown_no_errors",
+      "pass": true
+    },
+    {
+      "check": "case_set",
+      "pass": true
+    },
+    {
+      "check": "distinct_keycodes",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.definition",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.one_accept",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.one_terminal",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.program_digest",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.latest_observation",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.bounded_accept",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.sequential",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.submit_after_previous_inactive",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.inactive_after_terminal",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.one_step_start",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.terminal_status",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.terminal_release",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.case_terminal_copy",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.inactive_and_joined",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.keymap_before",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.keymap_after_terminal",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.keymap_after_case",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.native_down_witness",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.admissions",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.admission_copy",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.release_copy",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down_context.a",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.a.class",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.a.key_token",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.a.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.a.no_authority",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.a.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.a.post_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.a.time_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down_context.s",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.s.class",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.s.key_token",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.s.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.s.no_authority",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.s.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.s.post_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.s.time_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down_context.w",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.w.class",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.w.key_token",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.w.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.w.no_authority",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.w.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.w.post_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.down.w.time_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.native_recipient",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.native_down_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.native_up_members",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.no_extra_events",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.complete_batch",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.batch_positions",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.native_receipt_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.a.class",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.a.key_token",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.a.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.a.no_authority",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.a.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.a.post_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.a.time_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.edge_join.a",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.ordinary.a",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.receipt_join.a",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.w.class",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.w.key_token",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.w.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.w.no_authority",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.w.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.w.post_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.w.time_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.edge_join.w",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.ordinary.w",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.receipt_join.w",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.s.class",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.s.key_token",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.s.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.s.no_authority",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.s.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.s.post_sample",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.up.s.time_order",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.edge_join.s",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.ordinary.s",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.receipt_join.s",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.completed_event",
+      "pass": true
+    },
+    {
+      "check": "ordered_normal.no_cancel",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.definition",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.one_accept",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.one_terminal",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.program_digest",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.latest_observation",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.bounded_accept",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.sequential",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.submit_after_previous_inactive",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.inactive_after_terminal",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.one_step_start",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.terminal_status",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.terminal_release",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.case_terminal_copy",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.inactive_and_joined",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.keymap_before",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.keymap_after_terminal",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.keymap_after_case",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.native_down_witness",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.admissions",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.admission_copy",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.release_copy",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down_context.a",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.a.class",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.a.key_token",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.a.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.a.no_authority",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.a.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.a.post_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.a.time_order",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down_context.s",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.s.class",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.s.key_token",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.s.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.s.no_authority",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.s.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.s.post_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.down.s.time_order",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.native_recipient",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.native_down_order",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.native_up_members",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.no_extra_events",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancel_matched",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.release_once",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.no_step_completed",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancel_after_witness",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.release_verified",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.release_token",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.release_order",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.pending_no_authority",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancel_edge_join.a",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.a.0.class",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.a.0.key_token",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.a.0.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.a.0.no_authority",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.a.0.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.a.0.post_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.a.0.time_order",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancel_edge_join.s",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.s.0.class",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.s.0.key_token",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.s.0.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.s.0.no_authority",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.s.0.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.s.0.post_sample",
+      "pass": true
+    },
+    {
+      "check": "cancel_hold.cancelup.s.0.time_order",
+      "pass": true
+    },
+    {
+      "check": "follow_on.definition",
+      "pass": true
+    },
+    {
+      "check": "follow_on.one_accept",
+      "pass": true
+    },
+    {
+      "check": "follow_on.one_terminal",
+      "pass": true
+    },
+    {
+      "check": "follow_on.program_digest",
+      "pass": true
+    },
+    {
+      "check": "follow_on.latest_observation",
+      "pass": true
+    },
+    {
+      "check": "follow_on.bounded_accept",
+      "pass": true
+    },
+    {
+      "check": "follow_on.sequential",
+      "pass": true
+    },
+    {
+      "check": "follow_on.submit_after_previous_inactive",
+      "pass": true
+    },
+    {
+      "check": "follow_on.inactive_after_terminal",
+      "pass": true
+    },
+    {
+      "check": "follow_on.one_step_start",
+      "pass": true
+    },
+    {
+      "check": "follow_on.terminal_status",
+      "pass": true
+    },
+    {
+      "check": "follow_on.terminal_release",
+      "pass": true
+    },
+    {
+      "check": "follow_on.case_terminal_copy",
+      "pass": true
+    },
+    {
+      "check": "follow_on.inactive_and_joined",
+      "pass": true
+    },
+    {
+      "check": "follow_on.keymap_before",
+      "pass": true
+    },
+    {
+      "check": "follow_on.keymap_after_terminal",
+      "pass": true
+    },
+    {
+      "check": "follow_on.keymap_after_case",
+      "pass": true
+    },
+    {
+      "check": "follow_on.native_down_witness",
+      "pass": true
+    },
+    {
+      "check": "follow_on.admissions",
+      "pass": true
+    },
+    {
+      "check": "follow_on.admission_copy",
+      "pass": true
+    },
+    {
+      "check": "follow_on.release_copy",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down_context.w",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down.w.class",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down.w.key_token",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down.w.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down.w.no_authority",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down.w.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down.w.post_sample",
+      "pass": true
+    },
+    {
+      "check": "follow_on.down.w.time_order",
+      "pass": true
+    },
+    {
+      "check": "follow_on.native_recipient",
+      "pass": true
+    },
+    {
+      "check": "follow_on.native_down_order",
+      "pass": true
+    },
+    {
+      "check": "follow_on.native_up_members",
+      "pass": true
+    },
+    {
+      "check": "follow_on.no_extra_events",
+      "pass": true
+    },
+    {
+      "check": "follow_on.complete_batch",
+      "pass": true
+    },
+    {
+      "check": "follow_on.batch_positions",
+      "pass": true
+    },
+    {
+      "check": "follow_on.native_receipt_order",
+      "pass": true
+    },
+    {
+      "check": "follow_on.up.w.class",
+      "pass": true
+    },
+    {
+      "check": "follow_on.up.w.key_token",
+      "pass": true
+    },
+    {
+      "check": "follow_on.up.w.bound_identity",
+      "pass": true
+    },
+    {
+      "check": "follow_on.up.w.no_authority",
+      "pass": true
+    },
+    {
+      "check": "follow_on.up.w.pre_sample",
+      "pass": true
+    },
+    {
+      "check": "follow_on.up.w.post_sample",
+      "pass": true
+    },
+    {
+      "check": "follow_on.up.w.time_order",
+      "pass": true
+    },
+    {
+      "check": "follow_on.edge_join.w",
+      "pass": true
+    },
+    {
+      "check": "follow_on.ordinary.w",
+      "pass": true
+    },
+    {
+      "check": "follow_on.receipt_join.w",
+      "pass": true
+    },
+    {
+      "check": "follow_on.completed_event",
+      "pass": true
+    },
+    {
+      "check": "follow_on.no_cancel",
+      "pass": true
+    },
+    {
+      "check": "three_distinct_tokens",
+      "pass": true
+    },
+    {
+      "check": "unique_actuations",
+      "pass": true
+    },
+    {
+      "check": "real_observations_exist",
+      "pass": true
+    },
+    {
+      "check": "observation_sequences",
+      "pass": true
+    },
+    {
+      "check": "frame_match.1",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.1",
+      "pass": true
+    },
+    {
+      "check": "frame_match.2",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.2",
+      "pass": true
+    },
+    {
+      "check": "frame_match.3",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.3",
+      "pass": true
+    },
+    {
+      "check": "frame_match.4",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.4",
+      "pass": true
+    },
+    {
+      "check": "frame_match.5",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.5",
+      "pass": true
+    },
+    {
+      "check": "frame_match.6",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.6",
+      "pass": true
+    },
+    {
+      "check": "frame_match.7",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.7",
+      "pass": true
+    },
+    {
+      "check": "frame_match.8",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.8",
+      "pass": true
+    },
+    {
+      "check": "frame_match.9",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.9",
+      "pass": true
+    },
+    {
+      "check": "frame_match.10",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.10",
+      "pass": true
+    },
+    {
+      "check": "frame_match.11",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.11",
+      "pass": true
+    },
+    {
+      "check": "frame_match.12",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.12",
+      "pass": true
+    },
+    {
+      "check": "frame_match.13",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.13",
+      "pass": true
+    },
+    {
+      "check": "frame_match.14",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.14",
+      "pass": true
+    },
+    {
+      "check": "frame_match.15",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.15",
+      "pass": true
+    },
+    {
+      "check": "frame_match.16",
+      "pass": true
+    },
+    {
+      "check": "unknown_fixture.16",
+      "pass": true
+    },
+    {
+      "check": "artifact_inventory_nonempty",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/001.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/001.png",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/002.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/003.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/004.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/005.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/006.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/007.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/008.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/009.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/010.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/011.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/012.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/013.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/014.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/015.ait",
+      "pass": true
+    },
+    {
+      "check": "artifact.backend-artifacts/016.ait",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.1",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.2",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.3",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.4",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.5",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.6",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.7",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.8",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.9",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.10",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.11",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.12",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.13",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.14",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.15",
+      "pass": true
+    },
+    {
+      "check": "png_rgb.16",
+      "pass": true
+    }
+  ],
+  "passed": 337,
+  "total": 338,
+  "failures": [
+    "only_loopback"
+  ],
+  "raw_sha256": "6d7b7acc4fcbb5b5b01e10affbd2e55711549819309f13b01d4460858550cd21"
+}

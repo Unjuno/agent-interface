@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orb",
+    "-m",
+    "v15-native-e0cc-20261005",
+    "-u",
+    "study",
+    "-w",
+    "/home/study/native-executor",
+    "python3",
+    "-c",
+    "import json,pathlib,hashlib,subprocess; b=pathlib.Path('/home/study/native-executor');l=json.loads((b/'source-lock.json').read_bytes());matches=[hashlib.sha256((b/'source'/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in l['files']]; procs=subprocess.check_output(['ps','-eo','pid,comm'],text=True).splitlines(); print(json.dumps({'source_matches':sum(matches),'source_total':len(matches),'raw_sha256':hashlib.sha256((b/'runs/v15-native-executor-01/raw.json').read_bytes()).hexdigest(),'xvfb_processes':[s for s in procs if s.split()[-1]=='Xvfb'],'unit_state':subprocess.run(['systemctl','show','v15-native-executor-01-e0cc.service','--property=ActiveState','--value'],capture_output=True,text=True).stdout.strip()}))"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"source_matches\": 81, \"source_total\": 81, \"raw_sha256\": \"6d7b7acc4fcbb5b5b01e10affbd2e55711549819309f13b01d4460858550cd21\", \"xvfb_processes\": [], \"unit_state\": \"inactive\"}\n",
+  "stderr": ""
+}

@@ -1,0 +1,115 @@
+{
+  "raw_sha256": "6d7b7acc4fcbb5b5b01e10affbd2e55711549819309f13b01d4460858550cd21",
+  "controls": [
+    {
+      "control": "missing_normal_up",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "ordered_normal.complete_batch",
+        "ordered_normal.batch_positions",
+        "ordered_normal.native_receipt_order"
+      ],
+      "additional_failures": [
+        "ordered_normal.batch_positions",
+        "ordered_normal.complete_batch",
+        "ordered_normal.native_receipt_order"
+      ]
+    },
+    {
+      "control": "wrong_release_token",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "ordered_normal.up.a.key_token",
+        "ordered_normal.up.a.bound_identity",
+        "ordered_normal.edge_join.a",
+        "ordered_normal.receipt_join.a"
+      ],
+      "additional_failures": [
+        "ordered_normal.edge_join.a",
+        "ordered_normal.receipt_join.a",
+        "ordered_normal.up.a.bound_identity",
+        "ordered_normal.up.a.key_token"
+      ]
+    },
+    {
+      "control": "nonempty_cancel_terminal",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "cancel_hold.terminal_release"
+      ],
+      "additional_failures": [
+        "cancel_hold.terminal_release"
+      ]
+    },
+    {
+      "control": "follow_on_before_cancel_terminal",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "follow_on.latest_observation",
+        "follow_on.bounded_accept",
+        "follow_on.sequential"
+      ],
+      "additional_failures": [
+        "follow_on.bounded_accept",
+        "follow_on.latest_observation",
+        "follow_on.sequential"
+      ]
+    },
+    {
+      "control": "missing_cancel_release",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "cancel_hold.release_once"
+      ],
+      "additional_failures": [
+        "cancel_hold.release_once"
+      ]
+    },
+    {
+      "control": "wrong_native_order",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "ordered_normal.native_receipt_order"
+      ],
+      "additional_failures": [
+        "ordered_normal.native_receipt_order"
+      ]
+    },
+    {
+      "control": "wrong_capture_epoch",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "frame_match.1",
+        "unknown_fixture.1"
+      ],
+      "additional_failures": [
+        "frame_match.1",
+        "unknown_fixture.1"
+      ]
+    },
+    {
+      "control": "no_native_down_witness",
+      "rejected": true,
+      "failures": [
+        "only_loopback",
+        "cancel_hold.native_down_witness"
+      ],
+      "additional_failures": [
+        "cancel_hold.native_down_witness"
+      ]
+    }
+  ],
+  "rejected": 8,
+  "total": 8,
+  "baseline_failures": [
+    "only_loopback"
+  ],
+  "method": "Post-run diagnostic version preserves the original baseline FAIL; rejection requires new semantic failures. Copies only; re-synchronize duplicated per-case event views before audit so rejection does not rely on stale copies."
+}

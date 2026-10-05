@@ -1,0 +1,31 @@
+"""Freeze and run one new ordinary native construction; never overwrite receipts."""
+import datetime,hashlib,io,json,subprocess,tarfile
+from pathlib import Path
+base=Path(__file__).resolve().parent
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+def save(n,d):
+ with (base/n).open('x') as f:json.dump(d,f,indent=2);f.write('\n')
+lock=json.loads((base/'source-lock.json').read_bytes())
+for r in lock['files']:assert sha(base/'source'/r['path'])==r['sha256']
+files=['source-lock.json','native_executor_probe.py','audit_executor.py','audit_mutations.py','PROTOCOL.md','run_frozen.py','environment-result.json']
+for n in ['native_executor_probe.py','audit_executor.py']:compile((base/n).read_text(),n,'exec')
+freeze={'at_utc':now(),'run_id':'v15-native-executor-01-e0cc','classification':'ordinary native construction, not formal/game allocation','source_head':lock['head'],'files':{n:sha(base/n) for n in files}}
+save('freeze.json',freeze)
+b=io.BytesIO()
+with tarfile.open(fileobj=b,mode='w') as t:
+ for n in files+['freeze.json']:t.add(base/n,arcname=n)
+orb=['/opt/homebrew/bin/orb','-m','v15-native-e0cc-20261005']
+p=subprocess.run(orb+['-u','study','-w','/home/study/native-executor','tar','-x'],input=b.getvalue(),capture_output=True,timeout=30)
+save('harness-transfer.json',{'at_utc':now(),'exit_code':p.returncode,'stdout':p.stdout.decode(),'stderr':p.stderr.decode(),'tar_sha256':hashlib.sha256(b.getvalue()).hexdigest()});assert p.returncode==0
+check="""import hashlib,json,pathlib; b=pathlib.Path('/home/study/native-executor'); f=json.loads((b/'freeze.json').read_bytes()); l=json.loads((b/'source-lock.json').read_bytes()); checks=[{'path':n,'pass':hashlib.sha256((b/n).read_bytes()).hexdigest()==h} for n,h in f['files'].items()]+[{'path':'source/'+r['path'],'pass':hashlib.sha256((b/'source'/r['path']).read_bytes()).hexdigest()==r['sha256']} for r in l['files']]; print(json.dumps({'checks':checks})); assert all(x['pass'] for x in checks)"""
+p=subprocess.run(orb+['-u','study','-w','/home/study/native-executor','python3','-c',check],capture_output=True,text=True,timeout=20)
+save('guest-freeze-check.json',{'at_utc':now(),'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr});assert p.returncode==0
+props=['User=study','PrivateNetwork=yes','PrivateTmp=yes','CPUQuota=100%','MemoryMax=1G','MemorySwapMax=0','TasksMax=64','RuntimeMaxSec=60','ProtectSystem=strict','ReadWritePaths=/home/study/native-executor/runs','NoNewPrivileges=yes','WorkingDirectory=/home/study/native-executor','Environment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1','LimitFSIZE=250M']
+argv=orb+['-u','root','-w','/root','systemd-run','--quiet','--wait','--pipe','--collect','--unit=v15-native-executor-01-e0cc']
+for p in props:argv+=['-p',p]
+argv+=['/usr/bin/python3','/home/study/native-executor/native_executor_probe.py','/home/study/native-executor/runs/v15-native-executor-01']
+save('run-01-request.json',{'at_utc':now(),'argv':argv,'freeze_sha256':sha(base/'freeze.json')})
+p=subprocess.run(argv,capture_output=True,text=True,timeout=85)
+save('run-01-result.json',{'at_utc':now(),'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
+print(json.dumps({'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr}))
