@@ -1,6 +1,9 @@
 """Regression for the v38 rejected-action -> unauthored coast interrupt loop."""
+import ast
+import json
 import sys
 import unittest
+import types
 from argparse import Namespace
 from pathlib import Path
 
@@ -10,7 +13,111 @@ sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
 
 
+def extract_submit_cover():
+    source = Path(controller.__file__).read_bytes()
+    tree = ast.parse(source)
+    main = next(node for node in tree.body
+                if isinstance(node, ast.FunctionDef) and node.name == "main")
+    submit = next(node for node in ast.walk(main)
+                  if isinstance(node, ast.FunctionDef) and node.name == "submit_cover")
+    factory = ast.parse(
+        "def factory(time, json, latest, cover_steps, process, wait, "
+        "validity_monitor, cover_ids):\n    clock_ns = 0\n"
+    ).body[0]
+    factory.body.append(submit)
+    factory.body.extend(ast.parse("return submit_cover").body)
+    module = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
+    scope = {"wait_for_cover_acceptance": controller.wait_for_cover_acceptance}
+    exec(compile(module, str(controller.__file__), "exec"), scope)
+    return scope["factory"]
+
+
 class Map01V39CoastTests(unittest.TestCase):
+    def test_submit_cover_wait_passes_validity_monitor_before_acceptance(self):
+        invalidation = {"reason": "health_below_floor"}
+        monitor = types.SimpleNamespace(
+            observe=lambda row: invalidation if row.get("sequence") == 17 else None)
+        observed_monitors = []
+
+        def wait(predicate, observation_monitor=None):
+            observed_monitors.append(observation_monitor)
+            observation = {"event": "observation", "sequence": 17}
+            if observation_monitor is not None:
+                result = observation_monitor.observe(observation)
+                if result is not None:
+                    return {"event": "policy_invalidation", "invalidation": result}
+            accepted = {"event": "accepted", "id": "cover-0", "accepted_ns": 200}
+            self.assertTrue(predicate(accepted))
+            return accepted
+
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+
+        process = types.SimpleNamespace(stdin=Stdin())
+        cover_ids = []
+        submit_cover = extract_submit_cover()(
+            types.SimpleNamespace(perf_counter_ns=lambda: 100), json,
+            {"sequence": 16}, [], process, wait, monitor, cover_ids)
+
+        result = submit_cover("cover-0")
+
+        self.assertIs(observed_monitors[0], monitor)
+        self.assertEqual(result["event"], "policy_invalidation")
+        self.assertEqual(result["invalidation"], invalidation)
+        self.assertEqual(cover_ids, [])
+        self.assertIn('"op": "submit"', process.stdin.writes[0])
+
+    def test_unplanned_invalidation_requires_verified_empty_release(self):
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+
+        process = types.SimpleNamespace(stdin=Stdin())
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+        result = controller.cancel_unplanned_invalidated_cover(
+            process, lambda predicate: terminal, "cover-0")
+        self.assertIs(result, terminal)
+        self.assertIn('"op": "cancel"', process.stdin.writes[0])
+        invalid = dict(terminal, release={"verified": False,
+                                          "keys_down": [], "buttons_down": []})
+        with self.assertRaisesRegex(RuntimeError, "verify empty release"):
+            controller.cancel_unplanned_invalidated_cover(
+                process, lambda predicate: invalid, "cover-0")
+
+    def test_initial_cover_invalidation_cancels_and_skips_planner_turn(self):
+        tree = ast.parse(Path(controller.__file__).read_bytes())
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        loop = next(node for node in ast.walk(main)
+                    if isinstance(node, ast.For)
+                    and isinstance(node.target, ast.Name)
+                    and node.target.id == "index")
+        accept_index = next(index for index, statement in enumerate(loop.body)
+                            if any(isinstance(node, ast.Call)
+                                   and isinstance(node.func, ast.Name)
+                                   and node.func.id == "submit_cover"
+                                   for node in ast.walk(statement))
+                            and any(isinstance(node, ast.Name)
+                                    and node.id == "cover_acceptance"
+                                    for node in ast.walk(statement)))
+        branch = loop.body[accept_index + 1]
+        self.assertIsInstance(branch, ast.If)
+        self.assertIn("policy_invalidation", ast.dump(branch.test))
+        called = {node.func.id for node in ast.walk(branch)
+                  if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)}
+        self.assertIn("cancel_unplanned_invalidated_cover", called)
+        self.assertTrue(any(isinstance(node, ast.Continue)
+                            for node in ast.walk(branch)))
+        self.assertTrue(any(isinstance(node, ast.Call)
+                            and isinstance(node.func, ast.Attribute)
+                            and node.func.attr == "mkdir"
+                            for statement in loop.body[accept_index + 2:]
+                            for node in ast.walk(statement)))
+
     def test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in(self):
         args = Namespace(seed=990605, load_fixture_manifest=Path("fixture.json"))
         default = controller.session_command(args, Path("runtime"))

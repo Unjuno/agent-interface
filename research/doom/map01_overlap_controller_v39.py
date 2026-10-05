@@ -388,6 +388,23 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     return planner_interrupt, terminal
 
 
+def wait_for_cover_acceptance(wait, identifier, monitor):
+    return wait(lambda row: row["event"] in ("accepted", "rejected") and
+                (row.get("id") == identifier or row["event"] == "rejected"),
+                observation_monitor=monitor)
+
+
+def cancel_unplanned_invalidated_cover(process, wait, cover_id):
+    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+    process.stdin.flush()
+    terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+    release = terminal.get("release", {})
+    if (terminal.get("status") != "cancelled" or release.get("verified") is not True or
+            release.get("buttons_down") != [] or release.get("keys_down") != []):
+        raise RuntimeError("invalidated cover before planning did not verify empty release")
+    return terminal
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -780,7 +797,7 @@ def main():
         if runtime_fixture is None:
             raise RuntimeError("v28 requires a loaded fixture receipt")
         latest = wait(lambda r:r["event"] == "observation")
-        decisions=[];model_session_id=planner.thread_id
+        decisions=[];cover_admission_events=[];model_session_id=planner.thread_id
         source_refreshes=[]
         program_admissions=0
         for index in range(args.iterations):
@@ -826,12 +843,27 @@ def main():
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
                 process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
-                accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"))
+                accepted=wait_for_cover_acceptance(wait,identifier,validity_monitor)
+                if accepted["event"] == "policy_invalidation":
+                    return accepted
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 cover_ids.append(identifier);return accepted
             failure_cleanup.set_stage("cover_program_admission")
-            submit_cover(cover)
+            cover_acceptance=submit_cover(cover)
+            if cover_acceptance["event"] == "policy_invalidation":
+                terminal=cancel_unplanned_invalidated_cover(process,wait,cover)
+                cover_admission_events.append({
+                    "iteration":index,"cover_id":cover,
+                    "source_refresh":source_refresh,
+                    "cover_validity_admission":validity_admission,
+                    "cover_validity_soft_events":validity_monitor.soft_event_count,
+                    "cover_validity_latest_soft_event":validity_monitor.latest_soft_event,
+                    "policy_invalidation":cover_acceptance["invalidation"],
+                    "terminal":terminal,"terminal_before_plan":True,
+                    "planner_turn_started":False,
+                    "verified_empty_release":True,
+                })
+                continue
             failure_cleanup.set_stage("decision_artifact_prepare")
             model_root=args.out/f"decision-{index}"
             model_root.mkdir()
@@ -882,6 +914,13 @@ def main():
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
+                    if next_accepted["event"] == "policy_invalidation":
+                        invalidation=next_accepted["invalidation"]
+                        current_cover=next_cover
+                        planner_interrupt,current_terminal=cancel_invalidated_cover(
+                            planner,planner_handle,process,wait,current_cover)
+                        cover_terminals.append(current_terminal)
+                        break
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
@@ -1271,7 +1310,7 @@ def main():
                 reconciliation["sequence"]=sequence
                 typed_reconciliations.append(reconciliation)
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
-          "source_refreshes":source_refreshes,
+          "source_refreshes":source_refreshes,"cover_admission_events":cover_admission_events,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
@@ -1331,9 +1370,10 @@ def main():
           "planner_interruption_requests":sum(x.get("planner_interrupt") is not None for x in decisions),
           "planner_interrupted_completions":sum(x.get("planner_turn_status")=="interrupted" for x in decisions),
           "planner_ineligible_answers":sum(not x.get("planner_answer_eligible",False) for x in decisions),
-          "policy_invalidation_contract":"authored cover health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; unauthored empty coast has no policy to invalidate and does not interrupt a pending answer on damage; exact observations and fresh immediate action validity remain mandatory; this never grants input authority or proves success",
-          "policy_invalidations":sum(x.get("policy_invalidation") is not None for x in decisions),
-          "cover_validity_soft_events":sum(x.get("cover_validity_soft_events",0) for x in decisions),
+          "policy_invalidation_contract":"authored cover health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and either skips a not-yet-started planner turn or discards the dependent model action; unauthored empty coast has no policy to invalidate and does not interrupt a pending answer on damage; exact observations and fresh immediate action validity remain mandatory; this never grants input authority or proves success",
+          "policy_invalidations":len(cover_admission_events)+sum(x.get("policy_invalidation") is not None for x in decisions),
+          "cover_admission_skips":len(cover_admission_events),
+          "cover_validity_soft_events":sum(x.get("cover_validity_soft_events",0) for x in decisions)+sum(x.get("cover_validity_soft_events",0) for x in cover_admission_events),
           "cover_validity_admission_rejections":sum(
               x.get("cover_validity_admission",{}).get("status") != "admitted" for x in decisions),
           "model_actions_discarded":sum(x.get("model_action_discarded",False) for x in decisions),
