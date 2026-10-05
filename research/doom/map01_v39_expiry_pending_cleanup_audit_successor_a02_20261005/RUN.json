@@ -1,5 +1,5 @@
 {
-  "command": "wslc.exe run --rm --name wslc-a02-audit-20261005c --pull never --network none --cpus 1 --memory 512m --tmpfs /tmp:rw,size=64m --volume <worktree>:/input:ro --workdir /input python:3.12-slim sh -lc '<copy read-only source to /tmp/a02; run audit, 7-case predecessor suite, 10-case successor suite, 3-case differential probe, and py_compile>'",
+  "command": "wslc.exe run --rm --name wslc-a02-audit-20261005c --pull never --network none --cpus 1 --memory 512m --tmpfs /tmp:rw,size=64m --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-10-05\\a02-audit-successor:/input:ro\" --workdir /input python:3.12-slim sh -lc 'mkdir -p /tmp/a02 && cp -a /input/research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a01_20261005 /tmp/a02/a01 && cp -a /input/research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261005/. /tmp/a02/ && cd /tmp/a02 && python audit_successor_v2.py && python test_mutation_gate_v1.py audit_successor_v1.py && python test_mutation_gate_v2.py audit_successor_v2.py && python baseline_gap_probe.py && python -B -m py_compile audit_successor_v1.py audit_successor_v2.py test_mutation_gate_v1.py test_mutation_gate_v2.py baseline_gap_probe.py'",
   "container": {
     "configured_cpus": "1",
     "configured_memory": "512 MiB; WSLc warned swap/cgroup enforcement unavailable, so enforcement is not claimed",
