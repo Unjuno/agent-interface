@@ -1,7 +1,7 @@
 import copy
+import auditor
 import unittest
 
-import auditor
 import candidate
 from generate_fixture import generate
 
@@ -23,6 +23,8 @@ class ProtocolTests(unittest.TestCase):
         bad = copy.deepcopy(self.oracle)
         idx = next(i for i, row in enumerate(self.public["rows"]) if not row["observed"])
         bad["rows"][idx]["y"] ^= 1
+        # Unobserved truth is unknowable from public data; raw auditor still verifies
+        # identity only through the independent source record, not candidate access.
         result = auditor.audit(self.public, bad, self.output, self.oracle_sha256)
         self.assertIn("oracle_hash_mismatch", result["errors"])
 
