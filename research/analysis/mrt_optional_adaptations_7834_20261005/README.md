@@ -17,3 +17,10 @@ Within the authored finite distribution, known-current-propensity assignment wei
 This is construction/method evidence only. It is not an empirical micro-randomized trial, a causal effect in a real interface, or evidence of user/task benefit. Two fixed latent session types, deterministic adherence, complete proximal windows, known propensities, and bounded carryover do not represent actual users or application behavior.
 
 A01/A02 were frozen before WSLc inventory became available and used host V8; their historical runtime deviations remain unchanged. A03 separately confirms this source-bound finite construction in WSLc; it does not re-label the earlier runs, demonstrate a GPU use case, or establish container performance, memory enforcement, or broader runtime parity.
+
+
+| A04 | PASS_METHOD_SCOPED_A04_QUALIFIED; 2,600 rows; proximal IPW/oracle 2.583333 (arm 1 vs 0) and 0.166667 (arm 2 vs 0); observation rate 0.8; distal scores U=0: 8.44375, U=1: 9.44375; 17/17 mutations rejected. Six nonidentifiability controls returned NONIDENTIFIABLE. The freeze text said “five”; see qualification #5986498125. | 1 / 1, zero retries | WSLc 3.0.1.0, pinned Node 22 image |
+
+A04 expands the finite construction to three arms and an observation/censoring mechanism. The quoted five-control minimum was a freeze-text count error: the hash-frozen fixture contains six distinct controls, and all six were tested and returned NONIDENTIFIABLE. The original freeze and post-run qualification are both preserved; this is a qualified pass, not a rewritten preregistration. See freeze #5986448843, construction/qualification #5986498125 and outcome #5986505971.
+
+A04 remains synthetic, method-scoped evidence. It does not establish empirical treatment effects or product benefit, and does not address GPU performance.
