@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #7799 T0 A01 pairwise eligibility](pairwise_interaction_7799_t0_a01_20261005/REPORT.md) — `HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR`; selected #57 protocol exposes only `(0,0)` and `(1,1)` for the two co-selected factors; independent raw audit 11/11, design rank 2/4. Source-bound eligibility only; no interaction estimate or live/model run.
+
 - [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
 
 
