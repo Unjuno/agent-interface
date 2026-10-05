@@ -17,8 +17,9 @@ Keep V15's back-to-back release ordering and per-key identity-bound XTest/XSync 
 ## Freeze and reproduction
 
 - Source checkout: `Unjuno/agent-interface` PR head `8a9e76d56be60fdaf96fa87ccbc9c7defd29e20d`; V15 input/release files are SHA-256 pinned in `SOURCE_SHA256SUMS`. The scorer-only change to `session_map01_v15.py` is also pinned; it does not change the tested input/release code.
-- Run `python run_exact_closure.py` with Python 3.11 or compatible. Its raw ordered trace is `raw-exact-closure-01.txt`.
+- Run `python run_exact_closure.py` with Python 3.11 or compatible from this directory inside a repository checkout. The scripts derive the checkout root from their location. If the evidence directory is outside the checkout, set `ISSUE59_SOURCE_ROOT` to the checkout path. Its raw ordered trace is `raw-exact-closure-01.txt`.
 - `ISSUE59_INSERT_INTERKEY_QUERY=1` is modeled inside the harness as an inserted owner `input_state` between the explicit ups; the expected negative control is retained in the same raw file.
 - `run_experiment.py` and `raw-run-01.txt` retain the earlier focused wrapper-only baseline. `raw-negative-control-01.txt` retains its independent injected-order negative control.
 - `audit_evidence.py` validates result assertions and every file hash in `ARTIFACT_SHA256SUMS`; its output is `AUDIT.txt`.
+
 
