@@ -1,0 +1,50 @@
+{
+  "reason": "Remove local worktree/home paths and an ephemeral local Codex thread identifier before publication to the public repository.",
+  "preservation": "Unredacted original bytes are retained under raw/private-local with directory mode 0700 and files mode 0600; that exact path is locally excluded from Git.",
+  "original_sha256": {
+    "events.jsonl": {
+      "sha256": "fe45956d0f6a3af6e99cf1ccbb4aabceb74dabce3f4e6150cf84321b5ac9619e",
+      "private_copy": "events.jsonl.original"
+    },
+    "stderr.txt": {
+      "sha256": "f986f0907472eb106e51c3a2247ac5e8fbb61d7090e42369a4b1d5bce8b0aeb4",
+      "private_copy": "stderr.txt.original"
+    },
+    "invocation.json": {
+      "sha256": "567aa2068ddb9a259d72d48c4e8c7e79790d096e06218599150253164962866b",
+      "private_copy": "invocation.json.original"
+    },
+    "../audit.json": {
+      "sha256": "cf0973b53513611b91ec5d44c2d4b88d0a4113fda5274deca7c7cbc6ff8e2728",
+      "private_copy": "audit.json.original"
+    },
+    "source_events.jsonl": {
+      "sha256": "00be5954201dcd78912934775cdf5e606c17a7240d01e5a782e8dd331d359818",
+      "private_copy": "source_events.jsonl.original"
+    }
+  },
+  "published_sha256": {
+    "events.jsonl": {
+      "sha256": "1ffabdaef8a16667895af874e52eb621a5c13f064fcf3c4b1bf7dfd385de04d5"
+    },
+    "stderr.txt": {
+      "sha256": "90b24cb162ce4d616c7ff54c748eaf6d1b581f0e276e5644de8d40ab2f117889"
+    },
+    "invocation.json": {
+      "sha256": "1eabc669d7ad996120c474dee6d36f9f16ed7130df46ea6bf576cc4e86acb368"
+    },
+    "../audit.json": {
+      "sha256": "e903189de83726aad1d5d6dc3e07d5f5892895d3c18da0ed167eb77180e5b628"
+    },
+    "source_events.jsonl": {
+      "sha256": "da01db9c42b7cd945120c6beb4466d4c5b7b843eb6cace0a20c214a3304ba1cd"
+    }
+  },
+  "transformations": {
+    "events.jsonl": "thread_id replaced with <REDACTED_LOCAL_THREAD_ID>; home path in warning text replaced with <HOME>; remaining event fields retained.",
+    "stderr.txt": "home path replaced with <HOME>; package absolute paths replaced with <PACKAGE>.",
+    "invocation.json": "home path replaced with <HOME>; complete package absolute paths replaced with <PACKAGE>.",
+    "audit.json": "absolute package path in missing-final parse diagnostic replaced with <PACKAGE>.",
+    "source_events.jsonl": "image path replaced with <SOURCE_IMAGE_PATH>; observation identity, sequence, frame digest, and typed values retained."
+  }
+}

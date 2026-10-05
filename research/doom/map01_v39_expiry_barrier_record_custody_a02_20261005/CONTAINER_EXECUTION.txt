@@ -1,0 +1,30 @@
+Command:
+
+docker run --rm --network none --cpus=1 --memory=1g --pids-limit=64 -e PR_ROOT=/pr -v /private/tmp/agent-interface-59-record-custody-a02:/work:ro -v /private/tmp/agent-interface-pr7829:/pr:ro -w /work python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python research/doom/map01_v39_expiry_barrier_record_custody_a02_20261005/test_record_custody.py
+
+Exit: 0
+
+stdout/stderr:
+
+test_partial_record_consumed_before_aggregate_update_is_not_replayed (__main__.MutableReleaseRecordCustody.test_partial_record_consumed_before_aggregate_update_is_not_replayed) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.036s
+
+OK
+
+Related candidate regression suite (same PR #7829 commit/image):
+
+docker run --rm --network none --cpus=1 --memory=1g --pids-limit=64 -v /private/tmp/agent-interface-pr7829:/repo:ro -w /repo python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release -v
+
+Exit: 0; Ran 12 tests in 0.265s; OK.
+
+The successful run covered: cancel receipt/context, per-key context, verified cancel/expiry terminals, the existing pending-expiry barrier, expiry cleanup without cancel, keymap/pointer reconciliation failures, ordinary up, no-fabrication on unavailable samples, and held-state reconciliation.
+
+Final rerun after adding the non-cancelled DecisionRequired/release-barrier cross-product:
+
+Command: same focused command above.
+
+Exit: 0; both `test_focus_invalid_exit_drains_partial_before_release_barrier` and `test_partial_record_consumed_before_aggregate_update_is_not_replayed` passed; 2 tests in 0.061s.
+
+The 12-test candidate suite was rerun with the same image and exact PR #7829 source checkout: exit 0; 12 tests in 0.280s; OK.

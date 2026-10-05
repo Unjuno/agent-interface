@@ -1,0 +1,41 @@
+{
+  "schema": "v39-release-order-closure-result-v1",
+  "disposition": "PASS_RELEASE_ORDER_COMPOSITION_ONLY",
+  "source_commit": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "trace": {
+    "explicit_key_ups": 2,
+    "key_order": [
+      "a",
+      "space"
+    ],
+    "release_rows_identity_bound": true,
+    "owner_state_samples_after_batch": 1,
+    "query_keymap_between_explicit_ups": 0,
+    "query_keymap_after_batch_during_owner_close": 1,
+    "empty_owned_keys_after_sample": true,
+    "physical_verification_authoritative": false
+  },
+  "verification": {
+    "independent_source_and_trace_audit": "PASS",
+    "audit_mutation_controls": "4/4 passed",
+    "v15_selection_and_lifecycle": "8/8 passed",
+    "py_compile": "passed",
+    "v39_controller_selector_suite": "STOP before tests: ModuleNotFoundError: PIL"
+  },
+  "environment": "macOS local CPython 3.14; inert fake Xlib modules and display",
+  "live_game": false,
+  "real_x_server": false,
+  "gui": false,
+  "model_calls": 0,
+  "os_input": false,
+  "allocation": false,
+  "limitation": "The lower typed-backend step loop and X display are inert fakes; the trace does not exercise full V39 controller/Executor startup, physical key state, application effect, useful feedback, recovery, threat exposure, latency, or MAP01. It resolves only ordering in the selected release backend plus production V4/V3/V12 owner-adapter composition. Issue #59 remains unassigned and live allocation is not authorized.",
+  "trace_sha256": "7d6095bfab2028dcc62a4a31bc25ae815234641cb9f2ef4d19877c8e8a3bc612",
+  "raw_log_sha256": {
+    "RUN.stdout.log": "d28394e2ee138905435acba84efd026263dbce46eb8bb16ffe8a169efd2029a7",
+    "AUDIT.stdout.log": "b5f01144a6001c862903864548bcee92b61e5785e6794d194fb6e1bd5d8a7751",
+    "TEST.stdout.log": "524a18fb65df765b4ec960c01dbfb9cb8655d92520bdfc198966acef23c4a751",
+    "V15_SELECTION_TEST.stdout.log": "6f94686cc11d8a8eab6e2bbee6d81b42ceddd93dd88436e8b1fb8a1bdc62e8c4",
+    "V39_SELECTOR_TEST.stdout.log": "27f689c112e804d9158f2051a3dd551964d71690e9c09764e7d062ceab2e855c"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "map01-v39-startup-release-order-stop-v1",
+  "run_id": "MAP01-V39-STARTUP-RELEASE-ORDER-A01-PREFLIGHT-20261005",
+  "base_commit": "b347d6f1ede81f6980932f2d7cba6d4758bf49c9",
+  "status": "STOP_HARNESS_SOURCE_MISMATCH",
+  "candidate_started": true,
+  "candidate_completed": false,
+  "candidate_invocations": 2,
+  "failure": {
+    "exception": "AssertionError",
+    "message": "InputOwner v10 explicit release unexpectedly returned payload",
+    "site": "research/live_control/input_transition_owner_v3.py:167",
+    "trigger": "actual backend raw calling owner-v4 over the nested A02 dependency owner module, not runtime live_control owner-v12"
+  },
+  "phase": "two fake key-down edges were requested on each attempt; execution stopped on first explicit key-up",
+  "operation_trace_retained": false,
+  "finally_cleanup_called": true,
+  "cleanup_verified": false,
+  "physical_state_at_exit": "unknown for both wrong-harness runs",
+  "scope": "fake X display only; no OS input, GUI, DoomGame, model, or live allocation",
+  "interpretation": "Harness-source mismatch only. Runtime owner-v12 is research/live_control/input_owner_v12.py. This STOP is not a production-closure failure and has no query-order result. The corrected owner-v12 candidate is retained separately under results/a03."
+}

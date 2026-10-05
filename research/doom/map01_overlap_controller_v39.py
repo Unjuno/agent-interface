@@ -382,7 +382,11 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     process.stdin.flush()
     terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
     release = terminal.get("release", {})
-    if (terminal.get("status") != "cancelled" or release.get("verified") is not True or
+    # The bounded cover can naturally finish or lease-expire between policy
+    # invalidation and delivery of the cancel request. Accept those terminal
+    # races only when they independently verify that no input remains held.
+    if (terminal.get("status") not in ("cancelled", "completed", "expired") or
+            release.get("verified") is not True or
             release.get("buttons_down") != [] or release.get("keys_down") != []):
         raise RuntimeError("invalidated cover did not verify empty release")
     return planner_interrupt, terminal
@@ -583,7 +587,13 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    return [sys.executable, str(HERE / "session_map01_v12.py"),
+    # Keep the established v12 session as the default. The opt-in v15 wrapper
+    # adds scorer-only progress sampling and per-key release telemetry without
+    # exposing scorer state through the controller event stream.
+    session = ("session_map01_v15.py"
+               if getattr(args, "measurement_session", False)
+               else "session_map01_v12.py")
+    return [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
@@ -708,6 +718,8 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
+    parser.add_argument("--measurement-session", action="store_true",
+                        help="opt into V15 scorer-only and per-key release telemetry")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
@@ -1265,6 +1277,8 @@ def main():
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
+          "measurement_session":("v15_scorer_only_per_key_release"
+                                  if args.measurement_session else "v12_default"),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",

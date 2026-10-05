@@ -1,0 +1,15 @@
+{
+  "publication_kind": "privacy-redacted replay copy; not the executed candidate",
+  "executed_freeze_sha256": "0b43313d5c625d4985f5b7faccd601e78d9ea69e4482a78c15c87f1eee865202",
+  "executed_candidate_sha256": "583d514c55fcde5da26812476b99cd791f87b8413b3748511440c45b3f5871f6",
+  "executed_freeze_preparation_sha256": "95f7c8103069fb4871f5b51bcd4b52dd911ff71d85a344e7b71e60068fc3c396",
+  "public_candidate_file": "candidate_public.py",
+  "public_candidate_sha256": "f3803b7c35eca725b846484b8a91096f6efa256b84dd190eeac6f9dd0dde19e7",
+  "redaction": "Removed the local absolute WAD path literal. The public copy reads FREEDOOM2_WAD; an optional PALETTE_A03_OUTPUT selects a fresh output path. No scoring, palette enumeration, thresholds, resolver, inputs, or recorded raw output changed in the executed run.",
+  "execution_source_limit": "The executed candidate, freeze-preparation helper, and original audit script are not published because their literals disclose local paths. Their hashes remain recorded in the executed freeze record where available; this publication does not claim independent byte verification of those withheld source bytes.",
+  "withheld_executed_files": [
+    "candidate.py",
+    "prepare_freeze.py",
+    "audit.py"
+  ]
+}

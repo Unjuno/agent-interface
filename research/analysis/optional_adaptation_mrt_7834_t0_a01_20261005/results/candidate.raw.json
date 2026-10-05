@@ -1,0 +1,1807 @@
+{
+  "base_main": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "candidate_summary": {
+    "distal_episode_success_by_execution_policy": {
+      "none": 1.0,
+      "some": 0.0
+    },
+    "executed_only_contrast": 0.48664761904761883,
+    "expected_eligible_opportunities": 6.0,
+    "ipw_excursion_estimate": 0.14999999999999994,
+    "ipw_excursion_estimate_by_carryover_history": {
+      "none": 0.12545454545454543,
+      "some": 0.2999999999999999
+    },
+    "mandatory_control_violations": 0,
+    "proximal_and_distal_are_separate_endpoints": true,
+    "unweighted_assignment_contrast": 0.16044973544973545
+  },
+  "cross_session_interference": false,
+  "fixture_id": "mrt-optional-adaptation-finite-v1",
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 1,
+  "frozen_source_sha256": {
+    "ENVIRONMENT.json": "1e19ce5b69b039172f2ce8d9069f18918d686a5b617002b56d81720dad9644ce",
+    "PROTOCOL.md": "be59e1cbc1e49b8e0c91d8bf704ed7ee9889310f8b3a357ce5aeb3f92c1c0021",
+    "README.md": "da33e5c7667752924ed3ef35252b94701c51fed080bc6818fbe64c84fac1ab57",
+    "audit.py": "099598b102af8897159e6a036eea5b3b386553b11154e89077bc68b418f88fe9",
+    "candidate.py": "aea233f52a0eb1aecf3e2fa622a4cc8c1a29653f46365beddb3b6816e0d24216",
+    "fixture.json": "7068441b2a6982b1a6a7a3caf01e623c68e0533244d995ee1ae0d0c959e32ac6",
+    "test_construction.py": "8ae2199b953ae2514872a0ee7c73d0737589db293ba341297778ca1063d0e70c"
+  },
+  "paths": [
+    {
+      "assignments": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 2
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.2109375,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 2
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.0703125,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        0,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 1
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 2
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.09375,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 2
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.0703125,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 2
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.0234375,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        0,
+        1,
+        1
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 1
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.2,
+          "time": 2
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.03125,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        1,
+        0,
+        0
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.75,
+          "proximal": 0.2,
+          "time": 2
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.75,
+          "proximal": 0.2,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.03125,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        1,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.75,
+          "proximal": 0.2,
+          "time": 2
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.75,
+          "proximal": 0.2,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.09375,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        1,
+        1
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.2,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.75,
+          "proximal": 0.2,
+          "time": 2
+        }
+      ],
+      "executions": [
+        0,
+        0
+      ],
+      "latent_stratum": 0,
+      "path_probability": 0.375,
+      "session_id": "cluster-0"
+    },
+    {
+      "assignments": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "distal_episode_outcome": 1,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.44,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.44,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.44,
+          "time": 2
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.44,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.2109375,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.44,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.44,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.44,
+          "time": 2
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.74,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.0703125,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        0,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.44,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.44,
+          "time": 1
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.74,
+          "time": 2
+        }
+      ],
+      "executions": [
+        0,
+        0,
+        1
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.09375,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.44,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.74,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            1
+          ],
+          "propensity": 0.25,
+          "proximal": 0.54,
+          "time": 2
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            1,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.54,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.0703125,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.44,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.74,
+          "time": 1
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            1
+          ],
+          "propensity": 0.25,
+          "proximal": 0.54,
+          "time": 2
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            1,
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.84,
+          "time": 3
+        }
+      ],
+      "executions": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.0234375,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        0,
+        1,
+        1
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.44,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0
+          ],
+          "propensity": 0.25,
+          "proximal": 0.74,
+          "time": 1
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            0,
+            1
+          ],
+          "propensity": 0.25,
+          "proximal": 0.84,
+          "time": 2
+        }
+      ],
+      "executions": [
+        0,
+        1,
+        1
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.03125,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        1,
+        0,
+        0
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.74,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            1
+          ],
+          "propensity": 0.75,
+          "proximal": 0.54,
+          "time": 2
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            1,
+            0
+          ],
+          "propensity": 0.75,
+          "proximal": 0.54,
+          "time": 3
+        }
+      ],
+      "executions": [
+        1,
+        0,
+        0
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.03125,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        1,
+        0,
+        1
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.74,
+          "time": 0
+        },
+        {
+          "assignment": 0,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 0,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            1
+          ],
+          "propensity": 0.75,
+          "proximal": 0.54,
+          "time": 2
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            1,
+            0
+          ],
+          "propensity": 0.75,
+          "proximal": 0.84,
+          "time": 3
+        }
+      ],
+      "executions": [
+        1,
+        0,
+        1
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.09375,
+      "session_id": "cluster-1"
+    },
+    {
+      "assignments": [
+        1,
+        1
+      ],
+      "distal_episode_outcome": 0,
+      "events": [
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [],
+          "propensity": 0.5,
+          "proximal": 0.74,
+          "time": 0
+        },
+        {
+          "assignment": 1,
+          "authority_added": false,
+          "eligibility": "PRE_ASSIGNMENT_ELIGIBLE",
+          "eligibility_basis": "prior_history_only",
+          "execution": 1,
+          "mandatory_controls_after": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_before": [
+            "required_observation",
+            "freshness_gate",
+            "release_guard"
+          ],
+          "mandatory_controls_intact": true,
+          "prior_executions": [
+            1
+          ],
+          "propensity": 0.75,
+          "proximal": 0.84,
+          "time": 2
+        }
+      ],
+      "executions": [
+        1,
+        1
+      ],
+      "latent_stratum": 1,
+      "path_probability": 0.375,
+      "session_id": "cluster-1"
+    }
+  ],
+  "schema": "issue7834-mrt-t0-a01-raw-v1"
+}
