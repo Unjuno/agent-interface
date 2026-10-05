@@ -684,12 +684,17 @@ class Win32Backend:
                 else:
                     raise Win32BackendError(f"unsupported op {kind}")
         except Exception:
-            releases.append(self.release_all())
-            self.last_input_transitions = list(self._current_input_transitions)
-            self._current_input_transitions = None
-            self._current_program_id = None
-            self._current_operation_index = None
-            self._current_admitted_ns = None
+            try:
+                releases.append(self.release_all())
+            finally:
+                # Cleanup may itself fail after appending partial UP receipts.
+                # Preserve every transition and clear per-execution context
+                # even on that path so the session failure reply can report it.
+                self.last_input_transitions = list(self._current_input_transitions)
+                self._current_input_transitions = None
+                self._current_program_id = None
+                self._current_operation_index = None
+                self._current_admitted_ns = None
             raise
         ended_ns = time.monotonic_ns()
         self.last_input_transitions = list(self._current_input_transitions)

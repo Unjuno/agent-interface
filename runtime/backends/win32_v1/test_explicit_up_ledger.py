@@ -157,6 +157,43 @@ class ExplicitUpLedgerTests(unittest.TestCase):
         self.assertEqual(obj.last_input_transitions[0]['os_key_state_classification'],
                          'OS_KEY_STATE_UNAVAILABLE')
 
+    def test_failed_execution_preserves_transitions_when_cleanup_also_fails(self):
+        obj = self.backend()
+        obj.pending_unicode_ups = {ord('x')}
+        real_query = obj.user32.GetAsyncKeyState
+        query_count = 0
+
+        def fail_aggregate_query(vk):
+            nonlocal query_count
+            query_count += 1
+            # The key DOWN's pre/post samples and cleanup's pre-sample succeed.
+            # Fail the strict aggregate sample after cleanup UP was recorded.
+            if query_count == 4:
+                raise native.Win32BackendError('aggregate state unavailable')
+            return real_query(vk)
+
+        obj.user32.GetAsyncKeyState = fail_aggregate_query
+        program = {'schema': SCHEMA_PROGRAM, 'program_id': 'cleanup_failure',
+                   'source': {'observation_seq': 7, 'binding_revision': 3},
+                   'authority': {'lease_id': 'ordinary-explicit-up', 'expires_at_ns': 100},
+                   'terminal': {'release_all_required': True},
+                   'ops': [{'op': 'key_state', 'key': 'Q', 'down': True},
+                           {'op': 'text', 'text': 'x'},
+                           {'op': 'release_all'}]}
+
+        reply = Win32RuntimeSession(obj).dispatch(
+            program, current_observation_seq=7, current_binding_revision=3, now_ns=1)
+
+        self.assertEqual(reply['status'], 'execution_failed', reply)
+        transitions = reply['input_transitions']
+        self.assertEqual([(row['operation'], row['cleanup']) for row in transitions],
+                         [('down', False), ('up', True)])
+        self.assertEqual(transitions[0]['hold_id'], transitions[1]['hold_id'])
+        self.assertEqual(transitions[1]['os_key_state_classification'],
+                         'OS_KEY_STATE_POST_SAMPLE_PENDING')
+        self.assertFalse(transitions[1]['physical_keyboard_state_proven'])
+        self.assertFalse(transitions[1]['application_delivery_proven'])
+
     def test_button_pair_terminal_rejects_reported_down_input(self):
         self.family('button_pair', [{'op': 'pointer_button', 'button': 'left', 'down': True},
                                     {'op': 'pointer_button', 'button': 'left', 'down': False}], 1, button='left')
