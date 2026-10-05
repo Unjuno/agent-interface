@@ -1,0 +1,9 @@
+# Current measured V15 cancellation cleanup repair
+Worker: 01a0ff52-e0cc-7e81-b3ed-36b1d84d7a9a/root, existing bugbot only.
+Parent: #59. Owned implementation branch: fix/59-perkey-owner-guard-e0cc-20261005 (#8094).
+Source: a946b4288e396944bac329ae0a0ab44705f781c5; main inspected 6f4a288d25343defd56b2dacdf596d1d89307e41.
+Lane: ordinary repair and regression, not a replay of any consumed formal allocation. CPU-only private fake Xlib; no native display/game/model/shared runtime.
+H: current measured V12 clears its actuation lineage before owner cleanup, so cancellation winning before explicit UP loses per-key identity although neutral state may verify. Existing #7805 is an archived older owner/bridge candidate, not current V15 runtime wiring. Retained full05/full06 cover the opposite order and already retain a raw UP.
+T: reproduce against exact current owned source; preserve original failure. Repair by retaining cleanup measurement using existing per-key query/retry observations, with no added keymap calls and no ordinary-release promotion. Exercise successful cancellation, expiry/focus/explicit cleanup, dropped-UP retry, failed/unknown samples, partial multi-key failure, and no-op/disabled measurement. Verify adjacent suites and actual child path where feasible.
+D: match cleanup UP to original owner/intent/key/actuation identity, report no app consumption/input authority, keep original injection/query schedule, keep no-op and uncertain edges unconfirmed, keep failed aggregate cleanup failed and retain completed prefix. No physical/game/latency claim.
+C/U: fake display and ordinary tests only; same imported class does not establish live OS correctness. Existing #7533/#7754/#7769/#7774/#7801/#7805/#7847 are predecessors; do not claim novel mechanism or replay their formal allocations. No main integration authorization or quorum implied.

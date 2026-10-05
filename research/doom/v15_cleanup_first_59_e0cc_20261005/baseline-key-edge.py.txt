@@ -2,7 +2,7 @@
 
 The A01 field names are retained for the existing projection. The version and
 interval basis distinguish individual DOWN samples from correlated batch UP
-samples, and per-key emergency cleanup observations. This recorder owns no input authority and runs on the owner thread.
+samples. This recorder owns no input authority and runs on the owner thread.
 """
 
 
@@ -21,7 +21,7 @@ class KeyEdgeMeasurements:
 
     def edge(self, edge, code, key, token, pre, post, request_ns, sync_ns,
              *, owned_before=False, operation_ok=True, batch_id=None,
-             post_sample_basis=None, cleanup=False):
+             post_sample_basis=None):
         previous = self.active.pop(code, None)
         expected_pre, expected_post = (False, True) if edge == "down" else (True, False)
         confirmed = (
@@ -48,8 +48,7 @@ class KeyEdgeMeasurements:
                 identity = previous[2]
         status = ("CONFIRMED_PHYSICAL_" + edge.upper() if confirmed
                   else "KEYMAP_EDGE_UNCONFIRMED")
-        basis = ("key_snapshot" if edge == "down" else
-                 "per_key_cleanup_snapshot" if cleanup else "shared_batch_snapshot")
+        basis = "key_snapshot" if edge == "down" else "shared_batch_snapshot"
         interval = [pre["finished_ns"], post["finished_ns"]] if confirmed else None
         common = dict(owner_id=self.owner_id, intent_token=token, key=key,
                       grants_input_authority=False, application_consumption_observed=False)

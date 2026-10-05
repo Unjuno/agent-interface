@@ -1,0 +1,83 @@
+test_already_up_does_not_create_cleanup_edge (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_already_up_does_not_create_cleanup_edge) ... ok
+test_cancel_before_explicit_up_retains_both_identities (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_cancel_before_explicit_up_retains_both_identities) ... FAIL
+test_expiry_cleanup_retains_identity (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_expiry_cleanup_retains_identity) ... FAIL
+test_focus_cleanup_retains_identity (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_focus_cleanup_retains_identity) ... FAIL
+test_measurement_off_keeps_cleanup_uninstrumented (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_measurement_off_keeps_cleanup_uninstrumented) ... ok
+test_measurement_on_adds_no_cleanup_keymap_queries (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_measurement_on_adds_no_cleanup_keymap_queries) ... FAIL
+test_partial_failed_cleanup_retains_confirmed_prefix_and_fences_input (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_partial_failed_cleanup_retains_confirmed_prefix_and_fences_input) ... FAIL
+test_retry_retains_initial_pre_sample_and_identity (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_retry_retains_initial_pre_sample_and_identity) ... FAIL
+test_unknown_initial_sample_does_not_become_confirmed (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_unknown_initial_sample_does_not_become_confirmed) ... FAIL
+
+======================================================================
+FAIL: test_cancel_before_explicit_up_retains_both_identities (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_cancel_before_explicit_up_retains_both_identities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 55, in test_cancel_before_explicit_up_retains_both_identities
+    self.check_up(row, admissions["W"], 38)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 31, in check_up
+    self.assertIsInstance(measured, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_expiry_cleanup_retains_identity (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_expiry_cleanup_retains_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 66, in test_expiry_cleanup_retains_identity
+    self.check_up(row, admissions["W"], 38)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 31, in check_up
+    self.assertIsInstance(measured, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_focus_cleanup_retains_identity (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_focus_cleanup_retains_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 73, in test_focus_cleanup_retains_identity
+    self.check_up(row, admissions["W"], 38)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 31, in check_up
+    self.assertIsInstance(measured, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_measurement_on_adds_no_cleanup_keymap_queries (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_measurement_on_adds_no_cleanup_keymap_queries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 135, in test_measurement_on_adds_no_cleanup_keymap_queries
+    self.check_up(row, admissions["W"], 38)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 31, in check_up
+    self.assertIsInstance(measured, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_partial_failed_cleanup_retains_confirmed_prefix_and_fences_input (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_partial_failed_cleanup_retains_confirmed_prefix_and_fences_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 93, in test_partial_failed_cleanup_retains_confirmed_prefix_and_fences_input
+    self.check_up(row, admissions["W"], 38)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 31, in check_up
+    self.assertIsInstance(measured, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_retry_retains_initial_pre_sample_and_identity (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_retry_retains_initial_pre_sample_and_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 80, in test_retry_retains_initial_pre_sample_and_identity
+    measured = self.check_up(row, admissions["W"], 38)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 31, in check_up
+    self.assertIsInstance(measured, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_unknown_initial_sample_does_not_become_confirmed (test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests.test_unknown_initial_sample_does_not_become_confirmed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 108, in test_unknown_initial_sample_does_not_become_confirmed
+    self.assertIsInstance(measured, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.014s
+
+FAILED (failures=7)

@@ -11,7 +11,6 @@ from Xlib import X, XK, display, error
 from Xlib.ext import xtest
 from executor_v3 import Cancelled, DecisionRequired
 from key_edge_measurement_v1 import KeyEdgeMeasurements, key_sample
-from lease import Expired
 
 
 class InputOwner:
@@ -88,7 +87,6 @@ class InputOwner:
         buttons = {}
         touched_buttons = set()
         active = None
-        last_cleanup = None  # exact lease object and verified interruption reason
         active_pointer = False
         revision = 0
         fault = None
@@ -106,10 +104,9 @@ class InputOwner:
             except Exception as exc:
                 return None, {"type": type(exc).__name__, "message": str(exc)[:200]}, time.perf_counter_ns()
 
-        def release_key(code, *, max_attempts=3, force_first=False, capture_measurement=False):
+        def release_key(code, *, max_attempts=3, force_first=False):
             attempts = []
-            before_started_ns = time.perf_counter_ns() if capture_measurement else None
-            server_down, before_error, before_finished_ns = sample_key_down(code)
+            server_down, before_error, _ = sample_key_down(code)
             for attempt in range(1, max_attempts + 1):
                 if server_down is False and not (force_first and attempt == 1):
                     break
@@ -126,7 +123,6 @@ class InputOwner:
                 except Exception as exc:
                     sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
                 sync_returned_ns = time.perf_counter_ns() if sync_error is None else None
-                after_started_ns = time.perf_counter_ns() if capture_measurement else None
                 server_down, after_error, sampled_ns = sample_key_down(code)
                 attempts.append({
                     "attempt": attempt,
@@ -140,19 +136,6 @@ class InputOwner:
                     "keyrelease_error": release_error,
                     "sync_error": sync_error,
                 })
-                if capture_measurement:
-                    # Retain observations already required for release/retry.
-                    # Do not insert another keymap request into cleanup.
-                    attempts[-1].update(
-                        measurement_pre_sample=dict(
-                            available=observed_down_before is not None and before_error is None,
-                            down=observed_down_before, error=before_error,
-                            started_ns=before_started_ns, finished_ns=before_finished_ns),
-                        measurement_post_sample=dict(
-                            available=server_down is not None and after_error is None,
-                            down=server_down, error=after_error,
-                            started_ns=after_started_ns, finished_ns=sampled_ns))
-                before_started_ns, before_finished_ns = after_started_ns, sampled_ns
                 before_error = after_error
                 if server_down is False:
                     break
@@ -173,18 +156,6 @@ class InputOwner:
                     len(set(keys)) != len(keys)):
                 raise ValueError('unique non-empty key list required for up_batch')
             if active is not lease or lease is None:
-                # The owner watchdog can finish cleanup before the caller's
-                # finally-path UP batch arrives. Preserve that exact lease's
-                # interruption; do not inject or manufacture explicit-UP rows.
-                if (active is None and last_cleanup is not None
-                        and last_cleanup[0] is lease):
-                    reason = last_cleanup[1]
-                    if reason == 'cancelled':
-                        raise Cancelled()
-                    if reason == 'expired':
-                        raise Expired()
-                    if reason in ('focus_changed', 'surface_changed'):
-                        raise DecisionRequired(reason)
                 raise ValueError('up_batch requires the active input lease')
             codes = []
             for key in keys:
@@ -428,9 +399,11 @@ class InputOwner:
                 raise Cancelled()
 
         def release(reason):
-            nonlocal active,revision,fault,release_pending,last_cleanup
+            nonlocal active,revision,fault,release_pending
             revision += 1
             release_pending = True
+            if measurement:
+                measurement.clear()
             key_release_attempts = {}
             key_state_errors = []
             # Include every key this owner touched, not only keys still present
@@ -438,26 +411,10 @@ class InputOwner:
             release_codes = list(held)
             release_codes.extend(sorted(set(touched) - set(held)))
             for code in release_codes:
-                lineage = measurement.active.get(code) if measurement else None
-                owned_lease = held.get(code)
-                attempts, verified = release_key(code, capture_measurement=measurement is not None)
+                attempts, verified = release_key(code)
                 key_release_attempts[str(code)] = {
                     "attempts": attempts, "verified": verified,
                 }
-                if lineage is not None and attempts:
-                    key_release_attempts[str(code)]["physical_key_measurement"] = measurement.edge(
-                        'up', code, lineage[0], getattr(owned_lease, 'intent_token', None),
-                        attempts[0]['measurement_pre_sample'],
-                        attempts[-1]['measurement_post_sample'],
-                        attempts[0]['keyrelease_started_ns'], attempts[-1]['sync_returned_ns'],
-                        owned_before=owned_lease is not None,
-                        operation_ok=owned_lease is not None and verified and all(
-                            a['keyrelease_error'] is None and a['sync_error'] is None
-                            for a in attempts), cleanup=True)
-            if measurement:
-                # Any no-op, failed or unobserved lineage ends at this cleanup
-                # boundary too. It must not be reused by a later explicit UP.
-                measurement.clear()
             # An explicit ButtonRelease may be acknowledged by XSync while
             # the server still reports the button down. Retry every touched
             # button that remains down, including one removed from `buttons`.
@@ -523,8 +480,6 @@ class InputOwner:
             touched_buttons.clear()
             held.clear()
             touched.clear()
-            if active is not None:
-                last_cleanup = (active, reason)
             active = None
             fault = None
             release_pending = False
@@ -678,7 +633,6 @@ class InputOwner:
                                 if lease.cancel.is_set():
                                     raise Cancelled()
                             active = lease
-                            last_cleanup = None
                             active_pointer = False
                             touched.add(code)
                             held[code] = lease

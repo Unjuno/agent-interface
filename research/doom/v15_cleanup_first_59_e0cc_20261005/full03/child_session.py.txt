@@ -1,0 +1,58 @@
+"""Launch actual selected Session main with external synthetic dependencies."""
+import importlib
+import json
+import os
+from pathlib import Path
+import sys
+
+from fake_environment import HudReader, install
+
+selected = Path(sys.argv[1]).resolve()
+source = selected.parents[2]
+sys.path.insert(0, str(source))
+for name in ("observation_tiles", "observation_gating", "live_control", "doom"):
+    sys.path.insert(0, str(source / "research" / name))
+argv = sys.argv[2:]
+out = Path(argv[argv.index("--out") + 1])
+state = Path(os.environ["E0CC_TEST_EXTERNAL_DIR"])
+Session, finish = install(state)
+try:
+    import session_map01_v12 as base
+    base.suite.Session = Session
+    base.DoomStatusNumberReader = HudReader
+    if os.environ.get("E0CC_TEST_CLEANUP_FIRST") == "1":
+        # Schedule-only shim: delay the caller at an already requested batch
+        # UP until the real owner thread records its asynchronous cleanup.
+        import time
+        import input_transition_owner_v4 as joined
+        original_call = joined.InputOwner.call
+        def wait_before_batch(self, operation, lease=None, key=None):
+            if operation == "up_batch" and lease.cancel.is_set():
+                start = time.perf_counter_ns()
+                deadline = time.monotonic() + 1.5
+                while time.monotonic() < deadline:
+                    rows = [r for r in self._inner.records if r.get("event") == "owner_release"
+                            and r.get("reason") == "cancelled"
+                            and r.get("valid_until_ns") == lease.deadline]
+                    if rows:
+                        with (state / "cleanup-first-barriers.jsonl").open("a") as f:
+                            f.write(json.dumps({"started_ns": start, "released_ns": time.perf_counter_ns(),
+                                                "owner_release": rows[-1]}) + "\n")
+                        break
+                    time.sleep(.001)
+                else:
+                    raise RuntimeError("synthetic schedule: owner cleanup barrier timed out")
+            return original_call(self, operation, lease, key)
+        joined.InputOwner.call = wait_before_batch
+    sys.argv = [str(selected), *argv]
+    module = importlib.import_module(selected.stem)
+    module.main()
+finally:
+    loaded = {}
+    for name, module in tuple(sys.modules.items()):
+        path = getattr(module, "__file__", None)
+        if path and Path(path).is_file() and Path(path).is_relative_to(source):
+            import hashlib
+            loaded[str(Path(path).relative_to(source))] = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    (state / "loaded-sources.json").write_text(json.dumps(loaded, indent=2) + "\n")
+    finish()

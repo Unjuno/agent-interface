@@ -1,0 +1,22 @@
+test_input_owner_v12_cleanup_measurement (unittest.loader._FailedTest.test_input_owner_v12_cleanup_measurement) ... ERROR
+
+======================================================================
+ERROR: test_input_owner_v12_cleanup_measurement (unittest.loader._FailedTest.test_input_owner_v12_cleanup_measurement)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_input_owner_v12_cleanup_measurement
+Traceback (most recent call last):
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_cleanup_measurement.py", line 8, in <module>
+    from test_input_owner_v12_key_measurement import KeyMeasurementTests, FakeLease
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005/research/live_control/test_input_owner_v12_key_measurement.py", line 21, in <module>
+    import executor_v3  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'executor_v3'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

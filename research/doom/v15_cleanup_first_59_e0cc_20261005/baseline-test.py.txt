@@ -1,0 +1,140 @@
+"""Emergency cleanup uses existing queries and retains only confirmed lineage.
+
+Real owner threads, synthetic Xlib only. These are ordinary regression tests,
+not physical input or performance measurements.
+"""
+import unittest
+
+from test_input_owner_v12_key_measurement import KeyMeasurementTests, FakeLease
+
+
+class CleanupMeasurementTests(unittest.TestCase):
+    setUp = KeyMeasurementTests.setUp
+    tearDown = KeyMeasurementTests.tearDown
+    start_owner = KeyMeasurementTests.start_owner
+
+    def admit(self, keys=("W", "A")):
+        owner = self.start_owner()
+        lease = FakeLease()
+        admissions = {key: owner.call("down", lease, key) for key in keys}
+        return owner, lease, admissions
+
+    def cleanup_record(self, owner, lease):
+        # The owner may process cancellation before dequeuing this barrier.
+        owner.call("release", lease)
+        return next(row for row in owner.records
+                    if row.get("event") == "owner_release" and
+                    any(v["attempts"] for v in row["key_release_attempts"].values()))
+
+    def check_up(self, record, admission, code):
+        measured = record["key_release_attempts"][str(code)].get("physical_key_measurement")
+        self.assertIsInstance(measured, dict)
+        down = admission["physical_key_measurement"]
+        self.assertEqual(measured["classification"], "CONFIRMED_PHYSICAL_UP")
+        for field in ("owner_id", "intent_token", "key", "actuation_id"):
+            self.assertEqual(measured[field], down[field])
+        self.assertEqual(measured["identity_status"], "RETIRED")
+        self.assertEqual(measured["interval_basis"], "per_key_cleanup_snapshot")
+        self.assertIsNone(measured["batch_id"])
+        self.assertFalse(measured["grants_input_authority"])
+        self.assertFalse(measured["application_consumption_observed"])
+        pre, post = measured["pre_sample"], measured["post_sample"]
+        self.assertLessEqual(pre["finished_ns"], measured["release_request_ns"])
+        self.assertLessEqual(measured["sync_return_ns"], post["started_ns"])
+        self.assertEqual(measured["bracket"]["physical_up_interval"],
+                         [pre["finished_ns"], post["finished_ns"]])
+        self.assertLessEqual(post["finished_ns"], record["verified_ns"])
+        return measured
+
+    def test_cancel_before_explicit_up_retains_both_identities(self):
+        owner, lease, admissions = self.admit()
+        lease.cancel.set()
+        row = self.cleanup_record(owner, lease)
+        self.assertEqual(row["reason"], "cancelled")
+        self.assertTrue(row["verified"])
+        self.check_up(row, admissions["W"], 38)
+        self.check_up(row, admissions["A"], 39)
+        self.assertEqual(self.fake.down, set())
+        # Repeated aggregate cleanup must not manufacture a second edge.
+        again = owner.call("release", lease)
+        self.assertEqual(again["key_release_attempts"], {})
+
+    def test_expiry_cleanup_retains_identity(self):
+        owner, lease, admissions = self.admit(("W",))
+        lease.deadline = 0
+        row = self.cleanup_record(owner, lease)
+        self.check_up(row, admissions["W"], 38)
+        self.assertTrue(row["verified"])
+
+    def test_focus_cleanup_retains_identity(self):
+        owner, lease, admissions = self.admit(("W",))
+        self.fake.focus = 42
+        row = self.cleanup_record(owner, lease)
+        self.check_up(row, admissions["W"], 38)
+        self.assertTrue(row["verified"])
+
+    def test_retry_retains_initial_pre_sample_and_identity(self):
+        owner, lease, admissions = self.admit(("W",))
+        self.fake.drop_counts[38] = 1
+        row = self.cleanup_record(owner, lease)
+        measured = self.check_up(row, admissions["W"], 38)
+        attempts = row["key_release_attempts"]["38"]["attempts"]
+        self.assertEqual(len(attempts), 2)
+        self.assertEqual(measured["pre_sample"], attempts[0]["measurement_pre_sample"])
+        self.assertEqual(measured["post_sample"], attempts[-1]["measurement_post_sample"])
+
+    def test_partial_failed_cleanup_retains_confirmed_prefix_and_fences_input(self):
+        owner, lease, admissions = self.admit()
+        self.fake.persistent_drop_codes.add(39)
+        with self.assertRaises(RuntimeError):
+            owner.call("release", lease)
+        row = next(r for r in owner.records if r.get("event") == "owner_release")
+        self.assertFalse(row["verified"])
+        self.check_up(row, admissions["W"], 38)
+        failed = row["key_release_attempts"]["39"].get("physical_key_measurement")
+        self.assertIsInstance(failed, dict)
+        self.assertEqual(failed["classification"], "KEYMAP_EDGE_UNCONFIRMED")
+        self.assertIsNone(failed["actuation_id"])
+        presses_before = [x for x in self.fake.trace if x[:2] == ("key_event", 2)]
+        with self.assertRaises(RuntimeError):
+            owner.call("down", FakeLease("new-intent"), "S")
+        self.assertEqual([x for x in self.fake.trace if x[:2] == ("key_event", 2)], presses_before)
+
+    def test_unknown_initial_sample_does_not_become_confirmed(self):
+        owner, lease, _ = self.admit(("W",))
+        self.fake.fail_queries.add(self.fake.query_count + 1)
+        row = self.cleanup_record(owner, lease)
+        measured = row["key_release_attempts"]["38"].get("physical_key_measurement")
+        self.assertIsInstance(measured, dict)
+        self.assertEqual(measured["classification"], "KEYMAP_EDGE_UNCONFIRMED")
+        self.assertIsNone(measured["bracket"])
+        self.assertTrue(row["verified"])
+
+    def test_already_up_does_not_create_cleanup_edge(self):
+        owner, lease, _ = self.admit(("W",))
+        self.fake.down.clear()  # External/no longer observed down: no edge claim.
+        row = owner.call("release", lease)
+        self.assertTrue(row["verified"])
+        self.assertEqual(row["key_release_attempts"]["38"]["attempts"], [])
+        self.assertNotIn("physical_key_measurement", row["key_release_attempts"]["38"])
+
+    def test_measurement_off_keeps_cleanup_uninstrumented(self):
+        owner = self.start_owner(measure=False)
+        lease = FakeLease()
+        owner.call("down", lease, "W")
+        self.fake.trace.clear()
+        row = owner.call("release", lease)
+        self.assertNotIn("physical_key_measurement", row["key_release_attempts"]["38"])
+        self.assertNotIn("measurement_pre_sample", row["key_release_attempts"]["38"]["attempts"][0])
+        self.assertEqual(sum(x[0] == "query_keymap" for x in self.fake.trace), 3)
+
+    def test_measurement_on_adds_no_cleanup_keymap_queries(self):
+        owner, lease, admissions = self.admit(("W",))
+        self.fake.trace.clear()
+        row = self.cleanup_record(owner, lease)
+        self.check_up(row, admissions["W"], 38)
+        self.assertEqual(sum(x[0] == "query_keymap" for x in self.fake.trace), 3)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -11,7 +11,6 @@ from Xlib import X, XK, display, error
 from Xlib.ext import xtest
 from executor_v3 import Cancelled, DecisionRequired
 from key_edge_measurement_v1 import KeyEdgeMeasurements, key_sample
-from lease import Expired
 
 
 class InputOwner:
@@ -88,7 +87,6 @@ class InputOwner:
         buttons = {}
         touched_buttons = set()
         active = None
-        last_cleanup = None  # exact lease object and verified interruption reason
         active_pointer = False
         revision = 0
         fault = None
@@ -173,18 +171,6 @@ class InputOwner:
                     len(set(keys)) != len(keys)):
                 raise ValueError('unique non-empty key list required for up_batch')
             if active is not lease or lease is None:
-                # The owner watchdog can finish cleanup before the caller's
-                # finally-path UP batch arrives. Preserve that exact lease's
-                # interruption; do not inject or manufacture explicit-UP rows.
-                if (active is None and last_cleanup is not None
-                        and last_cleanup[0] is lease):
-                    reason = last_cleanup[1]
-                    if reason == 'cancelled':
-                        raise Cancelled()
-                    if reason == 'expired':
-                        raise Expired()
-                    if reason in ('focus_changed', 'surface_changed'):
-                        raise DecisionRequired(reason)
                 raise ValueError('up_batch requires the active input lease')
             codes = []
             for key in keys:
@@ -428,7 +414,7 @@ class InputOwner:
                 raise Cancelled()
 
         def release(reason):
-            nonlocal active,revision,fault,release_pending,last_cleanup
+            nonlocal active,revision,fault,release_pending
             revision += 1
             release_pending = True
             key_release_attempts = {}
@@ -523,8 +509,6 @@ class InputOwner:
             touched_buttons.clear()
             held.clear()
             touched.clear()
-            if active is not None:
-                last_cleanup = (active, reason)
             active = None
             fault = None
             release_pending = False
@@ -678,7 +662,6 @@ class InputOwner:
                                 if lease.cancel.is_set():
                                     raise Cancelled()
                             active = lease
-                            last_cleanup = None
                             active_pointer = False
                             touched.add(code)
                             held[code] = lease

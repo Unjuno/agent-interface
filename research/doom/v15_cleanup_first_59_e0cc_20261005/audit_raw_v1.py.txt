@@ -1,0 +1,60 @@
+"""Read-only raw audit for ordinary synthetic cleanup-first composition runs."""
+from pathlib import Path
+import hashlib
+import json
+import sys
+
+root=Path(sys.argv[1]) if len(sys.argv)>1 else Path(__file__).resolve().parent
+checks=[]
+def check(name,value):
+    checks.append({'name':name,'pass':bool(value)})
+def read(p): return json.loads(p.read_text())
+def lines(p): return [json.loads(x) for x in p.read_text().splitlines()]
+summary=[]
+for run in ('full01','full02','full03','full04'):
+    p=root/run; ev=lines(p/'controller/runtime/events.jsonl'); timeline=lines(p/'harness-timeline.jsonl')
+    terminal=next(x for x in ev if x.get('event')=='terminal' and x.get('id')=='cover-1')
+    admissions=[x for x in ev if x.get('event')=='input_admission' and x.get('id')=='cover-1']
+    release=next(x for x in ev if x.get('event')=='input_released' and x.get('id')=='cover-1')
+    barrier=lines(p/'external/cleanup-first-barriers.jsonl')[0]
+    state=read(p/'external/fake-state.json'); result=read(p/'receipt.json')
+    check(run+':single admission',len(admissions)==1)
+    down=admissions[0]['physical_key_measurement']
+    up=next(iter(release['owner_release']['key_release_attempts'].values()))['physical_key_measurement']
+    check(run+':source record delivered intact',barrier['owner_release']==release['owner_release']==terminal['interruption']['record'])
+    check(run+':program intent joined',release['intent_token']==down['intent_token']==up['intent_token']==terminal['interruption']['intent_token'])
+    check(run+':no authority/effect',up['grants_input_authority'] is False and up['application_consumption_observed'] is False)
+    check(run+':cleanup-specific basis',up['interval_basis']=='per_key_cleanup_snapshot' and up['batch_id'] is None)
+    check(run+':no stale action',[x for x in ev if str(x.get('id','')).startswith('plan-1')]==[])
+    check(run+':connections closed',state['connections']==state['closed_connections']==5 and state['forbidden_calls']==[])
+    interruption=next(x for x in timeline if x['event']=='fake_model_interrupt')
+    check(run+':interrupt before terminal',interruption['at_ns']<terminal['terminal_ns'])
+    check(run+':owner cleanup before late UP returns',release['owner_release']['verified_ns']<=barrier['released_ns']<terminal['terminal_ns'])
+    next_turn=[x for x in timeline if x['event']=='fake_model_begin' and x['turn']==3]
+    if run!='full04':
+        for name in ('owner_id','intent_token','key','actuation_id'):
+            check(run+':matching '+name,up[name]==down[name])
+        check(run+':confirmed up',up['classification']=='CONFIRMED_PHYSICAL_UP' and up['identity_status']=='RETIRED')
+        pre,post=up['pre_sample'],up['post_sample']
+        check(run+':UP sample order',pre['available'] and post['available'] and pre['down'] is True and post['down'] is False and pre['started_ns']<=pre['finished_ns']<=up['release_request_ns']<=up['sync_return_ns']<=post['started_ns']<=post['finished_ns'])
+        check(run+':bracket uses original samples',up['bracket']['physical_up_interval']==[pre['finished_ns'],post['finished_ns']])
+        check(run+':neutral owner',state['fake_keys_down']==[] and release['owner_release']['verified'] is True)
+    else:
+        check(run+':failed cleanup not confirmed',up['classification']=='KEYMAP_EDGE_UNCONFIRMED' and up['actuation_id'] is None and up['bracket'] is None)
+        check(run+':failed cleanup remains failed',release['owner_release']['verified'] is False and terminal['status']=='failed' and terminal['release']['verified'] is False and state['fake_keys_down']!=[])
+    if run=='full01':
+        check(run+':retained cause bug',terminal['status']=='failed' and 'up_batch requires the active input lease' in terminal['error'] and result['error'] is not None and next_turn==[])
+    elif run in ('full02','full03'):
+        check(run+':valid cancellation resumes',terminal['status']=='cancelled' and terminal['error'] is None and terminal['release']['verified'] is True and result['error'] is None and result['child_exit_codes']==[0])
+        check(run+':next model after terminal',len(next_turn)==1 and next_turn[0]['at_ns']>terminal['terminal_ns'])
+        report=read(p/'controller/report.json')
+        check(run+':ordinary gate not weakened',not any(r.get('key')=='a' and r.get('status')=='adapter_edge_brackets_paired' for r in report['input_edge_receipts']))
+        check(run+':three-key primary still measured',len([r for r in report['input_edge_receipts'] if r.get('status')=='adapter_edge_brackets_paired'])==3)
+        check(run+':one policy invalidation',len(report['policy_invalidations'])==1)
+    else:
+        check(run+':negative stops before next model',result['error'] is not None and result['child_exit_codes']==[1] and next_turn==[])
+    summary.append({'run':run,'status':terminal['status'],'cleanup_verified':release['owner_release']['verified'],'next_model':bool(next_turn),'up_classification':up['classification'],'fake_keys_down':state['fake_keys_down']})
+result={'checks':checks,'passed':sum(c['pass'] for c in checks),'total':len(checks),'runs':summary,'claim':'synthetic schedule and retained raw only; no live OS/task/latency result'}
+(root/'raw-audit.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({k:v for k,v in result.items() if k!='checks'},indent=2))
+sys.exit(0 if all(c['pass'] for c in checks) else 1)
