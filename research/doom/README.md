@@ -396,6 +396,7 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [A10 exact paired fire-binding regression](v39_ammo_exact_binding_contract_59_a10_20261005/README.md) — reproduced and rejected a nested `true`/`1` health/ammo binding alias; 48 focused synthetic tests pass. No live allocation.
 - [A11 current fire-admission binding recheck](v39_ammo_current_binding_recheck_59_a11_20261005/README.md) — the fresh-snapshot controller boundary also rejects the nested `true`/`1` alias; pre-fix regression fails and 49 focused tests pass after the fix. Synthetic only.
 - [A12 current-main paired-ammo regression rerun](v39_ammo_current_main_rebase_validation_59_a12_20261005/README.md) — 49 focused synthetic tests pass on the branch rebased onto current `main`; no live allocation or task effect is claimed.
+- [C02 retained keymap-witness audit lineage](results/map01-v39-owner-keymap-witness-c02-20261004/LINEAGE_RESCUE_20261005.md) — fail-closed v2/v3 audit and retained-result temporal recheck pass locally; the candidate was not rerun and no physical-input or task-effect claim is made.
 # Issue #59 retained v39 ammo-timeline posthoc package
 
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
