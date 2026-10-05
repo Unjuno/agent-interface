@@ -138,7 +138,7 @@ This additive snapshot was collected from GitHub REST pagination across the open
 - 332 open PRs were returned over four pages: 301 drafts and 31 ready. Of these, 280 target main and 52 target another branch.
 - All 332 distinct open-PR head branch names were present in the 385-branch listing. The other 53 branch names are not heads of an open PR; their closed-PR, dependency, and unique-commit status was not audited here.
 - Among the 52 non-main-base PRs, 46 base branch names map to another open PR head. For those 46, 28 base SHAs equal that parent PR's current head SHA and 18 differ; six base branches have no matching open-PR head.
-- All 280 PRs targeting main recorded a base SHA different from the observed main tip. Refresh/rebase them and re-check their checks before considering merge.
+- All 280 PRs targeting main recorded a base SHA different from the observed main tip. Treat these as potentially stale review epochs; compare each head with current main and re-check its CI before considering merge.
 
 This is a pagination/count and branch-name stack map only. It does not inspect each PR's review requirements, CI, file overlap, closed PR history, or commit ancestry, and it does not identify any branch safe to delete. Preserve all 385 branches pending the all-branch unique-commit and dependency audit.
 
@@ -151,7 +151,7 @@ This snapshot follows the merge of PR #8120 and is later than the 09:14 census a
 - 335 open PRs were listed: 303 drafts and 32 ready. 283 targeted main and 52 targeted another branch.
 - All 335 distinct open-PR head refs appeared in the 386-branch listing. The other 51 branch names are not open-PR heads and remain unclassified.
 - Of 52 non-main-base PRs, 46 base branch names map to open-PR heads: 28 base SHAs match the parent head and 18 do not; six base refs have no matching open-PR head.
-- Of 283 main-target PRs, eight recorded the current main SHA and 275 recorded an older SHA. Re-check each individual head/base relation and its CI before merge.
+- Of 283 main-target PRs, eight payloads recorded the current main SHA and 275 recorded a different SHA. This is a stale-epoch indicator, not a per-PR behind calculation; compare each head with current main and re-check CI before merge.
 - PR #8120 merged at 09:13:34Z as 846acff11e60093da551986583ac525452480b0c. Its seven head checks passed, including Analysis Index; GitHub's submitted-review endpoint returned no reviews. This was a merge without the required non-author review and is a process deviation, like #8114. Keep the A03 STOP, A04 HOLD, A05 result, raw data, and their scoped conclusions intact; do not use the deviation as a reason to rewrite or discard that evidence.
 
 This remains a reference census, not a unique-commit audit. No branch is classified safe to delete.
