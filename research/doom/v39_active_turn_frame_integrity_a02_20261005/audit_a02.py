@@ -11,7 +11,19 @@ SOURCES={
 }
 def require(ok,msg):
     if not ok: raise SystemExit("FAIL: "+msg)
+def verify_package_hashes():
+    manifest=ROOT/"SHA256SUMS"
+    require(manifest.is_file(),"SHA256SUMS missing")
+    rows=manifest.read_text(encoding="ascii").splitlines()
+    require(rows,"SHA256SUMS is empty")
+    for row in rows:
+        expected,relative=row.split("  ",1)
+        path=ROOT/relative
+        require(path.is_file(),f"manifest file missing: {relative}")
+        actual=hashlib.sha256(path.read_bytes()).hexdigest()
+        require(actual==expected,f"manifest hash mismatch: {relative}")
 def audit():
+    verify_package_hashes()
     report=json.loads((ROOT/"results"/"audit.json").read_text(encoding="utf-8"))
     total=0
     for name,count in EXPECTED.items():
@@ -28,5 +40,5 @@ def audit():
         actual=hashlib.sha256((ROOT.parents[2]/rel).read_bytes()).hexdigest()
         require(actual==expected,f"source hash mismatch: {rel}")
     require(report.get("source_sha256")==SOURCES,"report source mismatch")
-    return {"status":"PASS_A02_INDEPENDENT_AUDIT","tested_commit":report.get("tested_commit"),"test_counts":EXPECTED,"total_tests":total,"py_compile":"PASS","sources":"PASS"}
+    return {"status":"PASS_A02_INDEPENDENT_AUDIT","tested_commit":report.get("tested_commit"),"test_counts":EXPECTED,"total_tests":total,"py_compile":"PASS","sources":"PASS","package_hashes":"PASS"}
 if __name__=="__main__": print(json.dumps(audit(),indent=2))
