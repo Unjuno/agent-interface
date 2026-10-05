@@ -1,0 +1,29 @@
+{
+  "schema": "v39-pending-model-invalidation-construction-result-v1",
+  "attempt": "A04",
+  "status": "PASS_CONSTRUCTION_SCOPED",
+  "repository_commit": "d3a51bc4c962b223d05280225042b96a033df8bf",
+  "cases": {
+    "hard_health": {
+      "status": "REJECTED_POLICY_INVALIDATED",
+      "pending_observation_before_answer": true,
+      "interrupt_then_cancel_then_verified_empty_release_before_late_answer": true,
+      "input_authority_admitted": false
+    },
+    "unknown_pair_binding": {
+      "status": "REJECTED_POLICY_INVALIDATED",
+      "pending_observation_before_answer": true,
+      "interrupt_then_cancel_then_verified_empty_release_before_late_answer": true,
+      "input_authority_admitted": false
+    },
+    "soft_change": {
+      "status": "READY_FOR_ACTION_VALIDITY",
+      "planner_interrupted": false,
+      "cover_cancelled": false,
+      "input_authority_admitted": false
+    }
+  },
+  "independent_audit": "PASS_SNAPSHOT_AND_REPLAY_AUDIT",
+  "scope": "Deterministic source-loop construction only; no live threat, model, game, GUI, input, latency, task effect, recovery, or MAP01 claim.",
+  "failed_prior_attempts": ["A01: pre-candidate WSLc git-pointer infrastructure STOP", "A02: malformed fake clock rejected by final-admission guard", "A03: duplicate terminal receipt in test harness"]
+}

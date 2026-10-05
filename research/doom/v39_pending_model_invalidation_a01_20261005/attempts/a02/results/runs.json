@@ -1,0 +1,41 @@
+[
+  {
+    "label": "candidate",
+    "argv": [
+      "wslc.exe",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--network",
+      "none",
+      "--cpus",
+      "1",
+      "--name",
+      "v39-pending-a02-candidate",
+      "--mount",
+      "type=bind,source=<repo>,target=/src,readonly",
+      "--workdir",
+      "/src",
+      "--env",
+      "PYTHONPATH=/src/research/doom:/src/research/live_control:/src",
+      "--entrypoint",
+      "python",
+      "agent-interface/native-suite-wslc-a08:20261004",
+      "-B",
+      "research/doom/v39_pending_model_invalidation_a01_20261005/candidate.py"
+    ],
+    "executed_argv_sha256": "c217342d959dfc6207e525f5724b64817225bd25cb2bd145288f458a32ee6bb6",
+    "mount_path_redacted": true,
+    "started_unix_ns": 1791183462400017900,
+    "finished_unix_ns": 1791183465554725800,
+    "returncode": 1,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "8f8c0e4278519bff8f4337dfbe3a70cc0faf92008ff9a500bcae0a2412a10492",
+    "image": "agent-interface/native-suite-wslc-a08:20261004",
+    "image_id": "sha256:1b4a8bd7c0fe372cc0cafa74af433b8ae1f73f1bee0f11a028f126b08b2c128a",
+    "network": "none",
+    "cpu_limit": 1,
+    "source_mount": "read-only"
+  }
+]

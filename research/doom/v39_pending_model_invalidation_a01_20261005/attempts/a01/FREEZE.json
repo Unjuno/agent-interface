@@ -1,0 +1,39 @@
+{
+  "schema": "v39-pending-model-invalidation-construction-a01-freeze-v1",
+  "repository_commit": "d3a51bc4c962b223d05280225042b96a033df8bf",
+  "repository_tree": "f41871d5451e299a887c9c7d8ae6931118743cc2",
+  "protocol": "frozen synthetic source-replay construction; no game/model/GUI/native input",
+  "implementation_files": [
+    "research/doom/map01_overlap_controller_v39.py",
+    "research/live_control/observable_signal_guard_v2.py",
+    "research/live_control/final_action_admission_v1.py",
+    "research/live_control/final_action_admission_v2.py"
+  ],
+  "implementation_file_sha256": {
+    "research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "research/live_control/observable_signal_guard_v2.py": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "research/live_control/final_action_admission_v1.py": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+    "research/live_control/final_action_admission_v2.py": "16f785d2542335a857163b9afa6c6e84b776b77d62ce36345fc28987a5ca897b"
+  },
+  "study_scripts_sha256": {
+    "candidate.py": "c8377320d61fe94584918d22e54cd66821151dfd63a5fdda6b6dfd9dfb74d064",
+    "audit.py": "fda113bb97b6ba566bdfb54a09c4c6618b4b5bf38fd282b6fd25c6ca566dc8e8",
+    "run.py": "8b15c8138304e67def098daa0d3b8d571f099fbf0da51b15251e6f6beef6bdae",
+    "README.md": "9fb10e2a71c9b371bdbe31f6193d04b337c03feca0ca232370dd4da628d5e2aa"
+  },
+  "image": "agent-interface/native-suite-wslc-a08:20261004",
+  "image_id": "sha256:1b4a8bd7c0fe372cc0cafa74af433b8ae1f73f1bee0f11a028f126b08b2c128a",
+  "python_expected": "3.12.14",
+  "container": {
+    "network": "none",
+    "cpus": 1,
+    "source_mount": "read-only"
+  },
+  "cases": [
+    "hard_health:source 100 -> 89 with frozen hard_minimum 90",
+    "unknown_pair_binding:health/ammo binding mismatch at sequence 11",
+    "soft_change:source 100 -> 95 inside maximum loss 10"
+  ],
+  "decision_rule": "hard and unknown invalidate while future pending; planner interrupt and session cancel precede a verified empty release; only then late planner result is requested and rejected; soft change is preserved without interrupt and remains subject to fresh action validity",
+  "retry_policy": "none; preserve first result"
+}
