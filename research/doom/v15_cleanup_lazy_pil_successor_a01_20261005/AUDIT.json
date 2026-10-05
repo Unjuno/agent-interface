@@ -1,0 +1,18 @@
+{
+  "schema": "v15-cleanup-lazy-pil-successor-a01-audit-v1",
+  "disposition": "PASS_AUDIT_STOP_INCOMPLETE_SOURCE_CLOSURE",
+  "checks": {
+    "materialized-file-set": true,
+    "source-blob-hashes": true,
+    "single-import-relocation": true,
+    "normal-stdout-raw": true,
+    "normal-stderr-raw": true,
+    "normal-stop-classification": true,
+    "optimized-stdout-raw": true,
+    "optimized-stderr-raw": true,
+    "optimized-stop-classification": true
+  },
+  "check_count": 9,
+  "source_blobs_checked": 1996,
+  "scope": "read-only Git object and captured raw audit; no candidate module imported or test executed"
+}
