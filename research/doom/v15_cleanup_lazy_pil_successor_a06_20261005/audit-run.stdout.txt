@@ -1,0 +1,20 @@
+{
+  "schema": "v15-cleanup-lazy-pil-a06-audit-v1",
+  "disposition": "PASS_AUDIT_FAIL_SINGLE_IMPORT_RELOCATION_INSUFFICIENT",
+  "checks": {
+    "source-file-set": true,
+    "source-blob-hashes": true,
+    "single-import-relocation": true,
+    "frozen-blocker-hash": true,
+    "staging-provenance": true,
+    "normal-stdout-raw": true,
+    "normal-stderr-raw": true,
+    "normal-fail-classification": true,
+    "optimized-stdout-raw": true,
+    "optimized-stderr-raw": true,
+    "optimized-fail-classification": true
+  },
+  "check_count": 11,
+  "source_blobs_checked": 2013,
+  "scope": "read-only Git object, blocker and retained-raw audit; no candidate code imported or rerun"
+}
