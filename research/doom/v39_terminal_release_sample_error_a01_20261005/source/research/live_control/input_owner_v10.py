@@ -1,4 +1,4 @@
-"""Research input owner v12: one X11 connection with explicit key-up receipts.
+"""Research input owner: one X11 connection, independent of capture and logging.
 
 This is scheduler-dependent deadline enforcement, not hard real-time control.
 No user callback, image work, file write or stdout write runs on this thread.
@@ -175,40 +175,23 @@ class InputOwner:
         def release(reason):
             nonlocal active,revision
             revision += 1
-            state_errors = []
             for code in list(held):
                 xtest.fake_input(d, X.KeyRelease, code)
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
-            try:
-                mask = d.screen().root.query_pointer().mask
-                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-            except Exception as exc:
-                state_errors.append({"source": "pointer", "type": type(exc).__name__, "message": str(exc)[:200]})
-                buttons_down = sorted(set(buttons) | set(touched_buttons))
-            try:
-                bitmap = d.query_keymap()
-                down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
-                unknown_keys = []
-            except Exception as exc:
-                state_errors.append({"source": "keymap", "type": type(exc).__name__, "message": str(exc)[:200]})
-                down = []
-                unknown_keys = sorted(touched)
-            if reason == 'release' and active is not None and active.cancel.is_set():
-                reason = 'cancelled'
-            record = dict(event='owner_release', reason=reason,
-                          verified=not down and not buttons_down and not unknown_keys and not state_errors,
-                          buttons_down=buttons_down, keys_down=down, keys_unknown=unknown_keys,
-                          key_state_errors=state_errors, verified_ns=time.perf_counter_ns(),
+            mask = d.screen().root.query_pointer().mask
+            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+            bitmap = d.query_keymap()
+            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
+                          keys_down=down, verified_ns=time.perf_counter_ns(),
                           valid_until_ns=active.deadline if active else None)
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
-            if down or buttons_down or unknown_keys or state_errors:
-                failure = RuntimeError('owner release not verified: ' + repr(down))
-                failure.owner_release_record = record
-                raise failure
+            if down or buttons_down:
+                raise RuntimeError('owner release not verified: ' + repr(down))
             buttons.clear()
             touched_buttons.clear()
             held.clear()
@@ -275,8 +258,7 @@ class InputOwner:
                     elif op in ('release', 'close'):
                         if op == 'release' and active is not None and active is not lease:
                             raise ValueError('release belongs to another intent')
-                        reason = ('cancelled' if op == 'release' and active is lease and lease is not None and lease.cancel.is_set() else op)
-                        result = release(reason)
+                        result = release(op)
                     elif op in ('move', 'button_down', 'button_up', 'wheel'):
                         root = d.screen().root
                         if op == 'button_up':
@@ -354,26 +336,9 @@ class InputOwner:
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
-                                owner_keyrelease_started_ns = time.perf_counter_ns()
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
-                                owner_sync_returned_ns = time.perf_counter_ns()
-                                cancel = getattr(lease, 'cancel', None)
-                                cancel_requested_after_sync = (
-                                    cancel.is_set() if callable(getattr(cancel, 'is_set', None))
-                                    else None
-                                )
                                 del held[code]
-                                self.records.append(dict(
-                                    event='owner_explicit_keyup', operation='up',
-                                    owner_id=self.owner_id, key=key, keycode=code,
-                                    intent_token=getattr(lease, 'intent_token', None),
-                                    valid_until_ns=getattr(lease, 'deadline', None),
-                                    owner_keyrelease_started_ns=owner_keyrelease_started_ns,
-                                    owner_sync_returned_ns=owner_sync_returned_ns,
-                                    cancel_requested_after_sync=cancel_requested_after_sync,
-                                    server_sync_completed=True,
-                                    physical_verification_authoritative=False))
                             result = None
                     else:
                         raise ValueError('unknown input operation')

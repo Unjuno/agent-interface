@@ -1,0 +1,22 @@
+{
+  "auditor_exit_code": 1,
+  "auditor_failure": "FileNotFoundError: /out/cleanup-sample-failure.raw.json",
+  "candidate_exit_code": 0,
+  "candidate_passed": true,
+  "candidate_tests_run": 1,
+  "cause": "Formal candidate command omitted AI_RESEARCH_OUT=/out. The candidate writes the raw trace only when this environment variable is set.",
+  "formal_output_files": {
+    "candidate.result.json": {
+      "bytes": 162,
+      "sha256": "aac374690e94ce080a180df77b687a014e41a60fa7e01ec15cab35cd14821185"
+    },
+    "candidate.stdout": {
+      "bytes": 329,
+      "sha256": "db5d831ef322ecc41d1f62ef61b1e3ac9ee321d9f29b01e05b39875c05c27078"
+    }
+  },
+  "outcome_policy": "Preserve the first formal outcome. No candidate or auditor retry was run.",
+  "retry_count": 0,
+  "schema": "v39-terminal-release-sample-error-formal-stop-v1",
+  "status": "STOP_AUDIT_RAW_TRACE_MISSING"
+}\n
