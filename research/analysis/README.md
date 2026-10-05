@@ -1,6 +1,7 @@
 # Analytical research
 
 - [Issue #8068 imperfect-repair T0 A01](imperfect_repair_8068_t0_a01_20261005/README.md) — host finite method check passed 12 cells and three mutation controls; WSLc candidate STOPPED before output on read-only path (no retry); independent WSLc audit of retained host raw passed. No interface repair law or runtime claim.
+- [Issue #8072 controlled-feedback T0 A02](controlled_feedback_8072_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED` on 100 paired synthetic seeds; controlled median optimism 0.117 vs 0.438 and mean fresh utility 0.818 vs 0.500. Separate raw-only audit reconstructed all rows and rejected four mutations. A01 audit defect preserved; no real evaluation, human, GUI, privacy, or product claim.
 
 - [Issue #5905 A05 all-frame regression-TTC screen](looming_yield_5905_image_only_t0_2_a05_20261005/REPORT.md) — unregistered host-only exploratory result; independent raw audit 13/13, 18/18 local tests. OLS TTC improved over secant (6/6 vs 5/6) but not pixel/area baselines (both 6/6): `EXPLORATORY_NO_INCREMENTAL_VALUE`. OrbStack nested-OCI preflight STOP; no formal/container or live-control claim.
 
@@ -416,6 +417,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
+- [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1_v1/`](counterexample_guard_coverage_gate_6645_t1_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/`](counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/)
@@ -603,6 +605,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_yield_5905_image_only_t0_2_a05_20261005/`](looming_yield_5905_image_only_t0_2_a05_20261005/)
 - [`looming_yield_5905_image_only_t0_6_a06_20261005/`](looming_yield_5905_image_only_t0_6_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_7_a07_20261005/`](looming_yield_5905_image_only_t0_7_a07_20261005/)
+- [`looming_yield_5905_image_only_t0_8_a08_20261005/`](looming_yield_5905_image_only_t0_8_a08_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
