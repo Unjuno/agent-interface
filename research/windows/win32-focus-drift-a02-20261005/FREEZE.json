@@ -1,0 +1,28 @@
+{
+  "schema": "win32-native-focus-drift-freeze-v1",
+  "created_utc": "2026-10-05T01:42:00Z",
+  "parent_commit": "ef190e1037ff2f9df0cb2e941578a79a9fe0019b",
+  "parent_backend_blob": "95d975f3d085ecc22999aca2e8871de8dc6da1d2",
+  "parent_fixture_blob": "29e51116a121689251a0d4a911ed71bfa8600498",
+  "candidate_branch_commit": "10e22ce82a97cd4feedf84805e0563f0ec2b6f5d",
+  "candidate_sources": {
+    "runtime/backends/win32_v1/backend.py": "f2ff7166f1e14193e68cb458a046bec114f8163696619298b47d3b5c823f992d",
+    "runtime/backends/win32_v1/fixture_app.py": "e9de6cf0cdde81ae760529a27f809b8377f26c3c1860f0b863f0f6d83eb57f87",
+    "runtime/backends/win32_v1/test_focus_drift.py": "ff9f9b0efe9b0b84feea185091955e7cea42e665f56ca1dfd339c8888f2d38d8",
+    "research/windows/win32-focus-drift-a02-20261005/prepare_baseline.py": "d1967fb580a22ce96104ec30753e2e4b5799a49b1b37b4b94de8313e3b26ea2f"
+  },
+  "environment": {
+    "os": "Windows",
+    "python": "3.11.9",
+    "input_boundary": "SendInput replaced by a sentinel that records calls and returns zero; no OS input emitted",
+    "apps": "two self-owned Win32 fixture windows"
+  },
+  "protocol": {
+    "baseline_runs": 1,
+    "candidate_runs": 1,
+    "retries": 0,
+    "command": "python -m unittest runtime.backends.win32_v1.test_focus_drift.NativeForegroundFenceTests -v",
+    "baseline_raw": "results/a02/baseline.raw.json",
+    "candidate_raw": "results/a02/candidate.raw.json"
+  }
+}

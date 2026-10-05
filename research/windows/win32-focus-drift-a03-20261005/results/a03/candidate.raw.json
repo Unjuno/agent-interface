@@ -1,0 +1,34 @@
+{
+  "decoy_effect_exists": false,
+  "decoy_events": [
+    "{\"hwnd\": 38406518, \"kind\": \"ready\"}"
+  ],
+  "decoy_hwnd": 38406518,
+  "foreground_switch": [
+    {
+      "foreground": 38406518,
+      "message_posted": true
+    }
+  ],
+  "reply": {
+    "admitted_ns": 174369093000000,
+    "backend_emissions": 0,
+    "detail": "foreground focus changed: expected 178063542, got 38406518",
+    "error": "BACKEND_EXECUTION",
+    "input_transitions": [],
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 174369125000000,
+      "verified": true
+    },
+    "status": "execution_failed"
+  },
+  "sendinput_calls": [],
+  "target_effect_exists": false,
+  "target_events": [
+    "{\"hwnd\": 178063542, \"kind\": \"ready\"}",
+    "{\"hwnd\": 38406518, \"kind\": \"switch_foreground\", \"success\": true}"
+  ],
+  "target_hwnd": 178063542
+}

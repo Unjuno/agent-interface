@@ -21,6 +21,7 @@ WM_KEYDOWN = 0x0100
 WM_CHAR = 0x0102
 WM_LBUTTONDOWN = 0x0201
 WM_PRINTCLIENT = 0x0318
+WM_APP_SWITCH_FOREGROUND = 0x8001
 VK_CONTROL = 0x11
 VK_S = 0x53
 WS_OVERLAPPEDWINDOW = 0x00CF0000
@@ -83,6 +84,7 @@ def main() -> int:
     parser.add_argument("--meta", required=True, type=Path)
     parser.add_argument("--effect", required=True, type=Path)
     parser.add_argument("--events", required=True, type=Path)
+    parser.add_argument("--switch-to", type=int)
     args = parser.parse_args()
     args.meta.parent.mkdir(parents=True, exist_ok=True)
     state = {"text": "", "clicked": False}
@@ -102,6 +104,10 @@ def main() -> int:
         if msg == WM_DESTROY:
             user32.PostQuitMessage(0)
             return 0
+        if msg == WM_APP_SWITCH_FOREGROUND and args.switch_to:
+            success = bool(user32.SetForegroundWindow(args.switch_to))
+            event("switch_foreground", hwnd=args.switch_to, success=success)
+            return int(success)
         if msg == WM_LBUTTONDOWN:
             state["clicked"] = True
             event("click")

@@ -1,0 +1,22 @@
+{
+  "schema": "win32-native-focus-drift-candidate-blob-inventory-v1",
+  "purpose": "Map the raw Windows-tested source bytes to the staged Git blobs after the paired run.",
+  "qualification": "core.autocrlf normalized CRLF working files to LF in the Git index; each normalized working source is byte-identical to the staged blob. This inventory was added after execution and does not alter test logic or decision gates.",
+  "sources": {
+    "runtime/backends/win32_v1/backend.py": {
+      "working_sha256": "f2ff7166f1e14193e68cb458a046bec114f8163696619298b47d3b5c823f992d",
+      "normalized_sha256": "e4de7385c049864ebc3a83cd3b14ccaae23da370f05925e6e028593b4c9d12fd",
+      "git_blob": "2b689b47a1f9a0b92cc8b2520ca7046f49ee0171"
+    },
+    "runtime/backends/win32_v1/fixture_app.py": {
+      "working_sha256": "e9de6cf0cdde81ae760529a27f809b8377f26c3c1860f0b863f0f6d83eb57f87",
+      "normalized_sha256": "6eccea91401efc7b80ae9c3cbfc3c30fc2224f857fa31e2d985a1ab890f2d27f",
+      "git_blob": "8da630548896649d7b69cab3deda34b05acf2b8a"
+    },
+    "runtime/backends/win32_v1/test_focus_drift.py": {
+      "working_sha256": "ff9f9b0efe9b0b84feea185091955e7cea42e665f56ca1dfd339c8888f2d38d8",
+      "normalized_sha256": "ff9f9b0efe9b0b84feea185091955e7cea42e665f56ca1dfd339c8888f2d38d8",
+      "git_blob": "4f28cafb5581a10b99d3cf475f453c34d2ecb9db"
+    }
+  }
+}
