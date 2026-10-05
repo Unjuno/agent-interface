@@ -16,11 +16,14 @@ def _valid_pair(admission, release):
     if release.get("event") != "input_release_transition" or release.get("operation") != "up":
         return False
     identity = _identity(admission)
+    release_identity = _identity(release)
     if (not all(isinstance(value, str) and value for value in
                 (identity[0], identity[2], identity[3], identity[4]))
-            or not _is_int(identity[1]) or identity != _identity(release)):
+            or not _is_int(identity[1]) or not _is_int(release_identity[1])
+            or identity != release_identity):
         return False
     if (release.get("release_batch_identifier") != admission.get("id")
+            or not _is_int(release.get("release_batch_step"))
             or release.get("release_batch_step") != admission.get("step")
             or release.get("release_batch_complete") is not True
             or not _is_int(release.get("release_batch_size"))
