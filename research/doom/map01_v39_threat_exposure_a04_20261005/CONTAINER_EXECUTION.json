@@ -1,0 +1,31 @@
+{
+  "schema": "issue59-v39-container-execution-v1",
+  "execution_date": "2026-10-05",
+  "formal_exit_code": 0,
+  "docker_server": "29.8.1",
+  "docker_context": "desktop-linux",
+  "engine_os": "linux",
+  "architecture": "x86_64",
+  "engine_cpus": 24,
+  "image": "issue59-v39-live-env:main-3a759c7-vizdoom1.3.0",
+  "image_id": "sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84",
+  "network": "bridge",
+  "requested_limits": {
+    "cpus": 2,
+    "memory_bytes": 6442450944,
+    "memory_swap_total_bytes": 6442450944
+  },
+  "same_flags_cgroup_probe": {
+    "cgroup_version": 2,
+    "memory.max": "6442450944",
+    "memory.swap.max": "0",
+    "cpu.max": "200000 100000",
+    "pids.max": "max",
+    "note": "A04 container was --rm; the values above were read in a separate same-image container with identical resource flags. They validate the engine mapping but are not per-container post-run measurements."
+  },
+  "codex_cli": "0.160.0",
+  "vizdoom": "1.3.0",
+  "fixture_manifest_sha256": "80fec0649eba43132b9eb0ba90304cb1231d9146be14efa845470f377413a889",
+  "run_stdout": "console.log",
+  "run_exit_code": "exit_code.txt"
+}
