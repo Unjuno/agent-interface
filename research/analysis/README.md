@@ -1,5 +1,8 @@
 # Analytical research
 
+- [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
+
+
 - [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
 
 - [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
@@ -9,6 +12,7 @@
 - [Issue #8049 A02 pre-container STOP](ipcw_repeated_uncertainty_7993_a02_20261005/STOP.md) — Docker rejected invalid bare `rw` mount syntax before candidate/auditor execution; distinct fresh-seed A03 follows.
 - [Issue #7924 WSLc private-session portability smoke](wslc_private_session_portability_20261005/STOP.md) — `STOP_SESSION_STORAGE_NOT_FOUND`: one named `system session enter` invocation rejected the proposed fresh storage path before any container invocation; no retry, default-session operation, Docker use, or scientific/runtime inference.
 
+- [Issue #8088 specification-diverse challenge T0 A01](spec_diversity_8088_t0_a01_20261005/REPORT.md) — `NO_INCREMENTAL_VALUE_SCOPED`: 8 synthetic contracts; zero adjudicated explicit omissions, 4/4 ordinary controls rejected, independent audit 12/12. No production or general efficacy claim.
 - [Issue #8080 blocked vs interleaved practice T0 A01](blocked_interleaved_practice_8080_t0_a01_20261005/REPORT.md) — `METHOD_PASS_SCOPED` for equal synthetic exposure, reversible effects, held-out exclusion, and scorer controls; no human-learning or transfer claim.
 - [Issue #8084 T0 A03 diagnostic-reliability screen](confusion_adaptive_practice_8084_t0_a03_20261005/README.md) — `STOP_AUDIT_INPUT_HANDOFF_PATH_ERROR`: fixture 6,000 rows; candidate exit 0, single auditor exit 1 because a host relative-path copy missed the auditor input mount; accepted audit 0/6,000; no scientific inference. Exact candidate output and failed logs retained, not rerun.
 - [Issue #8084 confusion-adaptive practice T0 A02](confusion_adaptive_practice_8084_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED` on six synthetic matrices / 12 schedules; equal exposure, pre-outcome heterogeneity gate, exact neutral fallback, held-out isolation, and independent scorer controls. A01 pre-formal mount-isolation STOP preserved; no human-learning claim.
@@ -292,10 +296,6 @@ The table below summarizes major analytical chains and representative retained o
 This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
-
-<details>
-<summary><strong>Expand all retained result/failure directories</strong></summary>
-
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
@@ -603,6 +603,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue59_launch_gate_correction_t1_20261001/`](issue59_launch_gate_correction_t1_20261001/)
 - [`issue59_wsl_cuda_model_route_smoke_20261003/`](issue59_wsl_cuda_model_route_smoke_20261003/)
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
+- [`issue7367_audit_binding_a02_20261005/`](issue7367_audit_binding_a02_20261005/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
@@ -933,6 +934,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spatial_block_position_6590_t1_geometry_design_v2/`](spatial_block_position_6590_t1_geometry_design_v2/)
 - [`spatial_block_position_6590_t1_geometry_feasibility_v1/`](spatial_block_position_6590_t1_geometry_feasibility_v1/)
 - [`spatial_block_position_6590_t1_orbstack_v2/`](spatial_block_position_6590_t1_orbstack_v2/)
+- [`spec_diversity_8088_t0_a01_20261005/`](spec_diversity_8088_t0_a01_20261005/)
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
@@ -1044,9 +1046,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
-
-</details>
-
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
