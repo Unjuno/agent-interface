@@ -1,6 +1,6 @@
 H/T/D/C/U — MAP01 V39 event emit fault boundary A01
 
-H: The current main event sink writes a release event synchronously to events.jsonl, then delivered.jsonl, then stdout, without an event-ID dedupe/transaction. An exception after an earlier append leaves a partial durable prefix; blind retry duplicates the logical row in an earlier destination. ExecutorV13 instead marks release publication attempted before invoking emit and retains delivery_unknown without automatic retry.
+H: The current main event sink writes a release event synchronously to events.jsonl, then delivered.jsonl, then stdout, without an event-ID dedupe/transaction. An exception after an earlier append leaves a partial prefix in the observed files; blind retry duplicates the logical row in an earlier destination. ExecutorV13 instead marks release publication attempted before invoking emit and retains delivery_unknown without automatic retry.
 
 T: Current main 6a2826d391b77496b69752609a6f07b6971b4b6f. Extract only the literal nested emit function from the pinned session_map01_v12.py Git blob e701035302da4802e0db463035c4d653a7e7618b. Inject one-shot exceptions at events open, delivered open, and stdout after both file appends. Record each destination's logical release-ID multiplicity before and after one synthetic retry. Include no-fault baseline. Candidate and raw-only auditor are separate WSLc runs with no network, one CPU, 512 MiB requested, read-only source. Executor source pins v12/v13 are inspected for the no-retry policy; they are not instantiated.
 
