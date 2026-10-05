@@ -24,7 +24,7 @@ The replay refuses an existing output directory. It materializes the 56 retained
 
 ## Current-main relevance check
 
-Main has advanced to `0f10195c07bef4e73d510e0bd090d81fd643019d` since the tested PR head was frozen. `CURRENT_MAIN_RECHECK.json` records a byte comparison of the 56-path probe closure against candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`: all 55 shared source paths are unchanged; the sole candidate-only path is `research/doom/v39_measurement_backend_selection_v1.py`. The independent auditor checks this comparison. The original failed v0 comparison and audit remain as previews; v1 classifies the helper as candidate-only.
+Main has advanced to `db749b182224842defd6556cc82f88ac5e6448fa` since the tested PR head was frozen. `CURRENT_MAIN_RECHECK.json` records a byte comparison of the 56-path probe closure against candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`: all 55 shared source paths are unchanged; the sole candidate-only path is `research/doom/v39_measurement_backend_selection_v1.py`. The independent auditor checks this comparison. The original failed v0 comparison and audit remain as previews; v1 classifies the helper as candidate-only.
 
 
 ## Latest PR #8065 source-closure cross-check

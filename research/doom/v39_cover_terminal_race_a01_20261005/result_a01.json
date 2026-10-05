@@ -1,0 +1,312 @@
+{
+  "cases": [
+    {
+      "baseline": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "cancelled"
+          }
+        ],
+        "result": {
+          "outcome": "accepted",
+          "planner_interrupt": {
+            "status": "interrupted"
+          },
+          "terminal_status": "cancelled"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "cancelled"
+        }
+      },
+      "candidate": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "cancelled"
+          }
+        ],
+        "result": {
+          "outcome": "accepted",
+          "planner_interrupt": {
+            "status": "interrupted"
+          },
+          "terminal_status": "cancelled"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "cancelled"
+        }
+      },
+      "case": "cancelled_neutral"
+    },
+    {
+      "baseline": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "completed"
+          }
+        ],
+        "result": {
+          "error": "invalidated cover did not verify empty release",
+          "error_type": "RuntimeError",
+          "outcome": "raised"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "completed"
+        }
+      },
+      "candidate": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "completed"
+          }
+        ],
+        "result": {
+          "outcome": "accepted",
+          "planner_interrupt": {
+            "status": "interrupted"
+          },
+          "terminal_status": "completed"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "completed"
+        }
+      },
+      "case": "completed_neutral"
+    },
+    {
+      "baseline": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "completed"
+          }
+        ],
+        "result": {
+          "error": "invalidated cover did not verify empty release",
+          "error_type": "RuntimeError",
+          "outcome": "raised"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [
+              "space"
+            ],
+            "verified": true
+          },
+          "status": "completed"
+        }
+      },
+      "candidate": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "completed"
+          }
+        ],
+        "result": {
+          "error": "invalidated cover did not verify empty release",
+          "error_type": "RuntimeError",
+          "outcome": "raised"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [
+              "space"
+            ],
+            "verified": true
+          },
+          "status": "completed"
+        }
+      },
+      "case": "completed_nonempty"
+    },
+    {
+      "baseline": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "failed"
+          }
+        ],
+        "result": {
+          "error": "invalidated cover did not verify empty release",
+          "error_type": "RuntimeError",
+          "outcome": "raised"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "failed"
+        }
+      },
+      "candidate": {
+        "operations": [
+          {
+            "event": "interrupt",
+            "value": "planner-turn"
+          },
+          {
+            "event": "write",
+            "value": "{\"op\": \"cancel\", \"id\": \"cover-race\"}\n"
+          },
+          {
+            "event": "flush",
+            "value": "None"
+          },
+          {
+            "event": "wait",
+            "value": "failed"
+          }
+        ],
+        "result": {
+          "error": "invalidated cover did not verify empty release",
+          "error_type": "RuntimeError",
+          "outcome": "raised"
+        },
+        "terminal": {
+          "event": "terminal",
+          "id": "cover-race",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          },
+          "status": "failed"
+        }
+      },
+      "case": "failed_neutral"
+    }
+  ],
+  "probe_sha256": "e2f97587a540f11c968b4304429d47d722bdaa2b371dd14b62e5e58d18a8bbdd",
+  "schema": "v39-cover-terminal-race-probe-a01-v1",
+  "scope": "exact helper function body from frozen current-main blob, with planner/process/test-terminal doubles only",
+  "source_commit": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca"
+}
