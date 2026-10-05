@@ -1,5 +1,7 @@
 # Analytical research
 
+- Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — PASS_METHOD_SCOPED/H_PASS_SCOPED for the authored finite one-CPU model; OrbStack image-content access was unavailable, so host-only stdlib execution was used; no full-CBS, runtime, or scheduler claim.
+
 - [Issue #7678 manipulation-sensitivity successor T0 A02](preference_manipulation_7678_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 7,774 candidate/oracle rows; exhaustive null under the declared set utility (0 safe-beneficial deviations in both partitions); A01 HOLD preserved.
 
 - [Issue #7831 deadline-spacing successor T0 A02](deadline_spacing_7831_t0_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: 128 trace/config rows and 512 policy rows matched an exhaustive integer-tick oracle; synthetic model only, A01 HOLD preserved.
@@ -312,6 +314,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`backward_observable_guards_6256_stale_generation_t1_20261002/`](backward_observable_guards_6256_stale_generation_t1_20261002/)
 - [`backward_observable_guards_6256_t0_20261002/`](backward_observable_guards_6256_t0_20261002/)
 - [`backward_observable_guards_6256_t2_false_stop_t5_20261002/`](backward_observable_guards_6256_t2_false_stop_t5_20261002/)
+- [`bandwidth_inheritance_7944_t0_a01_20261005/`](bandwidth_inheritance_7944_t0_a01_20261005/)
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
 - [`belief_external_drift_5368_t0_20261003/`](belief_external_drift_5368_t0_20261003/)
 - [`belief_external_drift_wslc_portability_20261003/`](belief_external_drift_wslc_portability_20261003/)
