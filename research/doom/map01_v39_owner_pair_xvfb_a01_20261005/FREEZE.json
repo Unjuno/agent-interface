@@ -1,0 +1,62 @@
+{
+  "schema": "v39-owner-pair-xvfb-freeze-a01-v1",
+  "experiment_id": "map01-v39-owner-pair-xvfb-a01-20261005",
+  "issue": 59,
+  "source_main_sha": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "candidate_pr": 7974,
+  "candidate_pr_head_sha": "1627581fddb84521e87942cca49ed40310683f65",
+  "environment": {
+    "runtime": "OrbStack Linux VM",
+    "runtime_version": "2.1.3",
+    "distro": "Ubuntu 24.04 Noble",
+    "architecture": "arm64",
+    "machine_name": "research-59-v39-owner-pair-a01-20261005",
+    "machine_id": "01M456AN704HV18M04B0FGC7NM",
+    "isolation": "orbctl create --isolated; no host folder mounts; private Xvfb :99; no TCP listener",
+    "create_command": "orbctl create --isolated ubuntu:noble research-59-v39-owner-pair-a01-20261005",
+    "install_command": "sudo apt-get update && sudo apt-get install -y --no-install-recommends xvfb=2:21.1.12-1ubuntu1.8 python3-xlib=0.33-2",
+    "pre_run_gate": "dpkg-query must report the exact pinned packages; source, candidate, auditor, runner, plan and FREEZE hashes must match before one candidate invocation",
+    "required_packages": {
+      "xvfb": "2:21.1.12-1ubuntu1.8",
+      "python3-xlib": "0.33-2"
+    }
+  },
+  "candidate_invocations_allowed": 1,
+  "candidate_rerun": false,
+  "auditor_may_run_only_after_candidate_exit_zero": true,
+  "candidate": {
+    "path": "candidate.py",
+    "sha256": "cea5800f12a82b7b4f1a5a6ac7e632ed1af1f3810af2701e883d0f81ee2398de"
+  },
+  "auditor": {
+    "path": "audit.py",
+    "sha256": "37b6ffe0adec070a9e5646bba42f45e45d095bda5512d2218bb12bfe1dc1b17a"
+  },
+  "runner": {
+    "path": "run_once.sh",
+    "sha256": "1cb111d8d67849958dba2217ddf96e8ea5b6139b2e14facfbb486aca33064541"
+  },
+  "plan_sha256": "9a1234bde2dcaad2611e8eb19a8708ed9e303b823433a8c0ffdd4777ea3d7d9d",
+  "source_manifest_sha256": "358ab49324492d2f2cc703a11033b75b9571b48daa07df19e94b1700b28862df",
+  "source_sha256sums_sha256": "54034eeae031c17de898c15df094f298de6b8a75bb1e2db1b106b3851f17dc1a",
+  "experimental_source_sha256": {
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "508221548e181b9dd411dac793eae702fb0f0926fae28259b43368ec1d14271d",
+    "input_transition_owner_v3.py": "b6f43676f67855d14130349f6ef836c841a83229e38860366d541194ae99f4b5",
+    "input_transition_owner_v4.py": "c9eff97dcd76a62e535300e04445d25e06dc64810187a37d00212cc90620b5af",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "decision": "CONFIRMED_SHARED_DISPLAY_CROSS_OWNER_RELEASE only when the one-owner control passes and the frozen owner-pair criteria in PLAN.md all match; otherwise preserve the first STOP or mismatch without retry.",
+  "scope_exclusions": [
+    "physical input",
+    "real GUI or game",
+    "model behavior",
+    "application event consumption",
+    "threat response",
+    "useful task feedback",
+    "bounded recovery efficacy",
+    "MAP01 progress or terminal outcome",
+    "production display exclusivity"
+  ]
+}

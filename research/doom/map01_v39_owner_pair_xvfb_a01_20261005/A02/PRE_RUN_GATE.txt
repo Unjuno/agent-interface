@@ -1,0 +1,15 @@
+PRE-RUN GATE — A02
+VM: research-59-v39-owner-pair-a01-20261005 / 01M456AN704HV18M04B0FGC7NM
+Display: private Xvfb :98
+Candidate PR head: 1627581fddb84521e87942cca49ed40310683f65
+Freeze SHA-256: c1ce47f9f27f01ef1a5541ed85889c64fada1d9c82ff8ca82c437c61da123591
+
+- sha256sum -c FREEZE.sha256: FREEZE.json OK
+- sha256sum -c SOURCE_SHA256SUMS: plan, candidate, auditor, runner, source manifest and six vendored source files OK
+- dpkg-query: python3-xlib=0.33-2; xvfb=2:21.1.12-1ubuntu1.8
+- bash -n run_once.sh: exit 0
+- python3 -m py_compile candidate.py audit.py: exit 0
+- /tmp/.X11-unix/X98 absent
+- A01 output remains retained separately; no A02 output path exists
+
+Disposition: PRE_RUN_GATE_PASS. A02 candidate had not been invoked at this point.
