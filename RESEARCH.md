@@ -2328,3 +2328,17 @@ The frozen candidate and separate raw-only audit passed the declared authored fi
 # Issue #7986 T0 A01 — action-conditioned incorrect-belief exposure (2026-10-05)
 
 Eight authored event intervals passed the frozen method gate: exposure is zero for an old-but-correct belief (age 10), positive for stale and freshly misbound beliefs (6 and 5 ticks; the latter age 1), excluded outside live authority/opportunity, and distinct from one realized unsafe effect. Missing truth and ambiguous clock return `UNKNOWN`. Candidate receives no truth sidecar. This is a finite method result only—not harm reduction, safety, human, GUI, live, or runtime evidence. See [report and frozen artifacts](research/analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) and [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+# Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
+
+This archive preserves one bounded ordinary remote-browser task (T01) with
+provider-reported app effects and one compiled-core bridge boundary (I01).
+T01's finite task effect was independently checked in the retained public
+evidence; this does not establish a general GUI result. I01's add action changed
+the application, but the provider supplied no release/neutral-state telemetry:
+the outcome remains `RUNTIME_FAILED` / `HOLD_RELEASE_TELEMETRY` with zero
+completed transitions and release `UNVERIFIED`. Do not infer no effect from
+zero completed transitions and do not resend the action. The prior sessions,
+source pins, raw responses, projections, hashes, and first failures are
+preserved; no consumed remote task was rerun for rescue. See the [complete
+archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
+and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).
