@@ -1,0 +1,12 @@
+Construction container 1 (builder), network disabled, pinned Python 3.12 image, `--cpus 1`; candidate=0/auditor=0/retry=0:
+wslc run --pull never --network none --cpus 1 --rm --name looming-5905-a08-builder -v <evidence>:/src:ro -v <constructed>:/work python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/generate.py /work
+Output: 30 cases, 150 frames; manifest SHA256 `2b643395333446d2ae827b6122a2b177e8c7dc6d8fde5cf489b04c079c7f8d44`; truth SHA256 `7bbca4a986bd3ccec36ce5f012558eca1d401529cc4c83d2d63a257826bd010b`.
+
+Blindness construction check: 30 cases, 30 distinct IDs, each candidate-visible case contains only keys `frames` and `sequence_id`; no `approach`, `control`, `family`, or `contact_ms` text appears in manifest.
+
+Construction container 2 (mount/cgroup preflight), network disabled, same pinned image, `--cpus 1`, observations only mounted read-only at `/input`:
+wslc run --pull never --network none --cpus 1 --rm --name looming-5905-a08-mount-preflight -v <constructed>/observations:/input:ro python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -c <read /input/manifest.json and cgroup values>
+Output confirmed `/input/manifest.json`, 30 cases, first ID `item_00`, fields `frames,sequence_id`, `cpu.max=100000 100000`, `memory.max=max`, `memory.swap.max=max`.
+
+Immediately before the candidate, the registered source gate was checked again. Frozen main was `b422026a83d0cdebbf5aa80df63fa883db4511ab`; current main was `64dcc4c677202eb9b1c9b41ff808e56486c8321f`. The exact-main gate failed, so no candidate command was constructed/invoked. Formal role counts remain 0/0/0. No candidate-output directory or audit was created.
+
