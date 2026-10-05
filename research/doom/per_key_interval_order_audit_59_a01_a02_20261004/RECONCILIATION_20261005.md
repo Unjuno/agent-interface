@@ -17,3 +17,8 @@ Rescue branch refreshed against current main `fd4f9e4533aa5baa5952e89cd830c98b26
 ## Latest synchronization — 2026-10-05
 
 Rescue branch refreshed against current main `21fecd58b9de30073c97234124e73b78c67d4b0c`. The 13 source-pinned evidence package blobs remain unchanged; only the index and reconciliation note are refreshed.
+
+
+## Latest synchronization - 2026-10-05
+
+Rescue branch synchronized with current main `b673c9f1ca9717cbaeec44aa9feb262a28b9097f` as the first parent of merge commit `20a4da196b852fd6fea10fe1300920372cb74ce0`. The 13 A01/A02 evidence-package files remain byte-identical to the preceding rescue head; no candidate or auditor was rerun.
