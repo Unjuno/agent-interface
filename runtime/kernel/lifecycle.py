@@ -129,6 +129,11 @@ class RequestLifecycle:
         }
         if any(event.action_id not in input_action_ids for event in receipt.input_transitions):
             raise ContractError("input transition refers to an action without input authority")
+        requested_key_controls = {
+            (action.action_id, control)
+            for action in request.actions if action.kind.value == "key"
+            for control in action.controls
+        }
         key_action_ids = {
             action.action_id for action in request.actions if action.kind.value == "key"
         }
@@ -138,6 +143,14 @@ class RequestLifecycle:
         }
         if reported_key_action_ids != key_action_ids:
             raise ContractError("each key action requires per-control transition evidence")
+        all_reported_key_controls = {
+            (event.action_id, event.control) for event in receipt.input_transitions
+            if event.action_id in key_action_ids
+        }
+        if all_reported_key_controls != requested_key_controls:
+            raise ContractError(
+                "reported key controls do not match requested key controls"
+            )
         if not receipt.release.released:
             raise ContractError("terminal execution receipt requires verified empty release")
         self.execution = receipt

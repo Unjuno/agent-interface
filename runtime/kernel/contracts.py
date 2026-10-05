@@ -150,12 +150,23 @@ class Action:
     action_id: str
     kind: ActionKind
     operation: str
+    controls: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         _text("action_id", self.action_id)
         if not isinstance(self.kind, ActionKind):
             raise ContractError("kind must be ActionKind")
         _text("operation", self.operation)
+        if type(self.controls) is not tuple or any(
+            type(control) is not str or not control for control in self.controls
+        ):
+            raise ContractError("controls must be a tuple of nonempty strings")
+        if len(set(self.controls)) != len(self.controls):
+            raise ContractError("action controls must be unique")
+        if self.kind is ActionKind.KEY and not self.controls:
+            raise ContractError("key actions require explicit controls")
+        if self.kind is not ActionKind.KEY and self.controls:
+            raise ContractError("controls are only valid for key actions")
 
 
 @dataclass(frozen=True, slots=True)

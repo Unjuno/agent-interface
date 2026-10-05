@@ -17,6 +17,11 @@ manifest identities.  Terminal execution requires a verified empty release.  Eff
 verification is separate from effect occurrence; a contradicted effect is never rewritten
 as pre-effect/no-effect.
 
+Key actions declare their logical controls.  The execution receipt must report a balanced
+transition stream for each exact action/control pair; unrelated controls cannot satisfy
+that coverage.  This binds the backend record to the requested keys but does not prove
+physical key state or delivery to the target application.
+
 Once execution has begun, stopping before a receipt arrives retains possible
 occurrence, without claiming verified effect. Recorded cleanup does not undo
 that uncertainty. Stops before an accepted begin and explicit no-effect receipts

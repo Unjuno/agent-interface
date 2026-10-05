@@ -22,7 +22,7 @@ def executed_flow():
     binding = TargetBinding("target", 7, "surface", B)
     lease = AuthorityLease("lease", 7, "surface", 1000, frozenset({ActionKind.KEY}))
     request = ExecutionRequest("command", M, binding, lease,
-                               (Action("action", ActionKind.KEY, "press-release"),))
+                               (Action("action", ActionKind.KEY, "press-release", ("Return",)),))
     flow.record_observation(observation)
     flow.bind(binding)
     flow.authorize(lease, now_ns=200)
@@ -43,7 +43,7 @@ class EffectStartEpochTests(unittest.TestCase):
         binding = TargetBinding("target", 7, "surface", B)
         lease = AuthorityLease("lease", 7, "surface", 1000, frozenset({ActionKind.KEY}))
         request = ExecutionRequest("command", M, binding, lease,
-                                   (Action("action", ActionKind.KEY, "press-release"),))
+                                   (Action("action", ActionKind.KEY, "press-release", ("Return",)),))
         flow.record_observation(observation)
         flow.bind(binding)
         flow.authorize(lease, now_ns=200)

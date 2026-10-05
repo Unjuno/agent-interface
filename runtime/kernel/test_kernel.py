@@ -52,6 +52,14 @@ def execution(effect=EffectOccurrence.POSSIBLE):
 
 
 class ContractTests(unittest.TestCase):
+    def test_key_action_requires_explicit_control_identity(self):
+        with self.assertRaisesRegex(ContractError, "key actions require explicit controls"):
+            Action("a1", ActionKind.KEY, "press-release")
+
+    def test_key_action_control_names_must_be_unique(self):
+        with self.assertRaisesRegex(ContractError, "action controls must be unique"):
+            Action("a1", ActionKind.KEY, "chord", ("CTRL", "CTRL"))
+
     def test_request_rejects_binding_lease_sequence_mismatch(self):
         with self.assertRaises(ContractError):
             ExecutionRequest(
@@ -63,7 +71,7 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(ContractError):
             ExecutionRequest(
                 "cmd", M, binding(), lease(),
-                (Action("a", ActionKind.KEY, "Return"),),
+                (Action("a", ActionKind.KEY, "press-release", ("Return",)),),
             )
 
     def test_request_rejects_duplicate_action_ids(self):
@@ -274,6 +282,28 @@ class LifecycleTests(unittest.TestCase):
              InputTransitionReceipt("unrequested", "space", InputTransition.UP, 650, 653)),
         )
         with self.assertRaisesRegex(ContractError, "without input authority"):
+            flow.record_execution(receipt)
+
+    def test_input_transitions_must_match_requested_key_controls(self):
+        flow = RequestLifecycle()
+        key_lease = AuthorityLease(
+            "key-lease", 7, "surface-a", 1000, frozenset({ActionKind.KEY})
+        )
+        flow.record_observation(observation())
+        flow.bind(binding())
+        flow.authorize(key_lease, now_ns=200)
+        key_request = ExecutionRequest(
+            "cmd-key", M, binding(), key_lease,
+            (Action("key-action", ActionKind.KEY, "press-release", ("Return",)),),
+        )
+        flow.begin_execution(key_request, now_ns=300)
+        receipt = ExecutionReceipt(
+            "cmd-key", "backend-1", M, "key-lease", 7, "surface-a",
+            500, 700, 1, EffectOccurrence.OBSERVED, released(),
+            (InputTransitionReceipt("key-action", "space", InputTransition.DOWN, 510, 512),
+             InputTransitionReceipt("key-action", "space", InputTransition.UP, 650, 653)),
+        )
+        with self.assertRaisesRegex(ContractError, "requested key controls"):
             flow.record_execution(receipt)
 
     def test_stop_with_active_authority_requires_release(self):
