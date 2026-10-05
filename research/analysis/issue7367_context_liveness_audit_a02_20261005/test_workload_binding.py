@@ -67,40 +67,22 @@ class WorkloadBindingRegression(unittest.TestCase):
             self.assertIn("workload_bytes_match_prerun", errors)
             self.assertIn("raw_artifact_matches_frozen_sha256", errors)
 
-            # Retain the failing-v1 reproduction and both self-consistent mutant
-            # inputs as frozen construction evidence for the audit-only run.
-            dest = ROOT / "construction_mutation"
-            dest.mkdir(exist_ok=True)
-            for source_name, target_name in (("workload.json", "workload.json"),
-                                             ("RAW.json", "RAW.json"),
-                                             ("AUDIT.json", "AUDIT_V1.json")):
-                shutil.copy2(tmp / source_name, dest / target_name)
+            # Construction evidence is already retained in the package. Keep
+            # this regression pure: all mutation inputs and audit output stay
+            # inside TemporaryDirectory so a test run cannot overwrite them.
             original_graph = json.loads(baseline_workload)
             mutant_graph = mutant_workload_obj
             graph_hash = sha(json.dumps({"nodes": original_graph["nodes"], "edges": original_graph["edges"]},
                                         sort_keys=True, separators=(",", ":")).encode())
             mutant_graph_hash = sha(json.dumps({"nodes": mutant_graph["nodes"], "edges": mutant_graph["edges"]},
                                                sort_keys=True, separators=(",", ":")).encode())
-            repro = {
-                "schema": "issue7367-a02-construction-mutation-v1",
-                "mutant_workload_path": "construction_mutation/workload.json",
-                "mutant_raw_path": "construction_mutation/RAW.json",
-                "mutant_audit_path": "construction_mutation/AUDIT_V1.json",
-                "added_payload_bytes": 8192,
-                "original_workload_sha256": sha(baseline_workload),
-                "mutated_workload_sha256": sha((tmp / "workload.json").read_bytes()),
-                "original_raw_sha256": frozen_raw_sha,
-                "mutated_raw_sha256": sha((tmp / "RAW.json").read_bytes()),
-                "mutated_record_sha256": mutant_raw_obj["canonical_record_sha256"]["stale-summary"],
-                "raw_declares_mutated_workload_sha256": mutant_raw_obj["workload_sha256"] == sha((tmp / "workload.json").read_bytes()),
-                "legacy_auditor_passed_mutant": legacy_accepted,
-                "legacy_workload_hash_check_passed": json.loads((tmp / "AUDIT.json").read_text())["checks"]["workload_hash_matches"],
-                "original_graph_sha256": graph_hash,
-                "mutated_graph_sha256": mutant_graph_hash,
-            }
-            (ROOT / "CONSTRUCTION_REPRO.json").write_text(json.dumps(repro, indent=2, sort_keys=True) + "\n")
+            mutated_record = next(r for r in mutant_graph["records"]
+                                  if r["id"] == "stale-summary")
             self.assertEqual(graph_hash, mutant_graph_hash)
-            self.assertGreater(repro["mutated_workload_sha256"], "")
+            self.assertEqual(8192, len(mutated_record["audit_padding"]))
+            self.assertEqual(mutant_raw_obj["workload_sha256"],
+                             sha((tmp / "workload.json").read_bytes()))
+            self.assertTrue(json.loads((tmp / "AUDIT.json").read_text())["checks"]["workload_hash_matches"])
 
 
 if __name__ == "__main__":

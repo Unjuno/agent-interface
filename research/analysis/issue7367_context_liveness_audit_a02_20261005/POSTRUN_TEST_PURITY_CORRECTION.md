@@ -1,0 +1,7 @@
+# Post-run construction-test purity correction
+
+The A02 construction regression previously copied its generated mutation into the package's retained `construction_mutation/` files and rewrote `CONSTRUCTION_REPRO.json` during unittest execution. The regression now keeps all generated workload, raw, and audit output in its `TemporaryDirectory`; the already-retained construction evidence is read-only during tests.
+
+This is a post-run harness correction, not a rerun of the one-shot A02 audit. `FREEZE.json` is unchanged (SHA-256 `046cd10a1b0f1bf861cf7c13b28826395b808f4950f46e9d905ccc6c46ae3b02`). Its original test hash (`545fb58f76ca9119a1e66b3b98f9620c16312e7935891cd3f199a763c46230c3`) matches the exact parent-commit blob at `9a33c71e6ef498c02342ef0052f31c0248a7f3fa`; the corrected test is `bd54d7ecb0c7da4242de6ddaf9585bdd4978fcd3064760edfaf73b8f743b3497`. The original commit remains available for the historical freeze. The old freeze intentionally does not describe the post-run corrected test bytes.
+
+Construction verification: `python -B -m unittest discover -s research/analysis/issue7367_context_liveness_audit_a02_20261005 -p 'test_workload_binding.py' -v` passed 1/1. Before/after SHA-256 and modification-time snapshots of every file in the package showed zero files changed while the test ran. The test exercised the legacy A01 audit only against the synthetic mutation in its temporary directory; candidate and formal A02 auditor invocations were both zero. No frozen raw, result, or construction artifact was rewritten.
