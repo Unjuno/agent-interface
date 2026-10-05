@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-p8102-current-main\research\doom\v15_cleanup_lazy_pil_successor_a04_20261005\audit_a04.py", line 25, in <module>
+    m=run[mode][stream]; b=base64.b64decode((root/m['path']).read_text(encoding='ascii'),validate=True); checks[f'{mode}-{stream}-raw']=len(b)==m['bytes'] and hashlib.sha256(b).hexdigest()==m['sha256']
+      ~~~^^^^^^
+KeyError: 'normal'
