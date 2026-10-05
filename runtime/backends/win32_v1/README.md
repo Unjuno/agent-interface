@@ -14,7 +14,8 @@ The backend is intentionally narrow:
 - per-key DOWN/UP transition records that pair `SendInput` acknowledgement times
   with `GetAsyncKeyState` samples before and after each owned key transition.
 
-The returned `execution.input_transitions` records use a stable per-hold identity,
+The returned `execution.input_transitions` records bind the session's admission time,
+program ID, and operation index to a stable per-hold identity,
 preserve explicit UP and cleanup UP attempts separately, and include a conservative
 `os_state_change_window_ns` when before/after OS samples differ. `SendInput`
 acknowledgement and `GetAsyncKeyState` do not prove

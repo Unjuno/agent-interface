@@ -120,6 +120,7 @@ class ExplicitUpLedgerTests(unittest.TestCase):
         self.assertEqual([row['program_id'] for row in ordinary],
                          ['key_pair_measurement', 'key_pair_measurement'])
         self.assertEqual([row['operation_index'] for row in ordinary], [0, 1])
+        self.assertEqual([row['admitted_ns'] for row in ordinary], [123456, 123456])
         self.assertEqual(ordinary[0]['hold_id'], ordinary[1]['hold_id'])
         self.assertEqual(ordinary[0]['os_key_state_classification'],
                          'OS_KEY_STATE_DOWN_CONFIRMED')
