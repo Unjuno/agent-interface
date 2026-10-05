@@ -1,258 +1,323 @@
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwoiIiJPbmUtc2hvdCBmYWtlLVggY29t
-cG9zaXRpb24gcHJvYmUgb2YgY3VycmVudCBWMzkvVjE1IGV4cGxpY2l0IGtl
-eSByZWxlYXNlLiIiIgpmcm9tIF9fZnV0dXJlX18gaW1wb3J0IGFubm90YXRp
-b25zCgppbXBvcnQganNvbgppbXBvcnQgYXN0CmltcG9ydCBwYXRobGliCmlt
-cG9ydCBzeXMKaW1wb3J0IHRocmVhZGluZwppbXBvcnQgdGltZQppbXBvcnQg
-dHlwZXMKClJPT1QgPSBwYXRobGliLlBhdGgoX19pbXBvcnRfXygib3MiKS5l
-bnZpcm9uLmdldCgiQTA5X1JPT1QiLCAiL3NyYyIpKQpET09NID0gUk9PVCAv
-ICJyZXNlYXJjaCIgLyAiZG9vbSIKTElWRSA9IFJPT1QgLyAicmVzZWFyY2gi
-IC8gImxpdmVfY29udHJvbCIKc3lzLnBhdGhbOjBdID0gW3N0cihET09NKSwg
-c3RyKExJVkUpXQoKWCA9IHR5cGVzLlNpbXBsZU5hbWVzcGFjZShLZXlQcmVz
-cz0yLCBLZXlSZWxlYXNlPTMsIEJ1dHRvblByZXNzPTQsCiAgICAgICAgICAg
-ICAgICAgICAgICAgICAgQnV0dG9uUmVsZWFzZT01LCBNb3Rpb25Ob3RpZnk9
-NiwgQnV0dG9uMU1hc2s9MjU2LAogICAgICAgICAgICAgICAgICAgICAgICAg
-IEFueVByb3BlcnR5VHlwZT0wLCBJc1ZpZXdhYmxlPTIpCmFjdGl2ZV9kaXNw
-bGF5ID0gTm9uZQpkcm9wX2tleV9yZWxlYXNlID0gRmFsc2UKZHJvcHBlZF9r
-ZXlyZWxlYXNlX2NvdW50ID0gMApzZXJ2ZXJfZG93biA9IHNldCgpCgoKY2xh
-c3MgRm9jdXM6CiAgICBpZCA9IDQxCgoKY2xhc3MgUG9pbnRlcjoKICAgIG1h
-c2sgPSAwCiAgICByb290X3ggPSAxMAogICAgcm9vdF95ID0gMTAKCgpjbGFz
-cyBSb290OgogICAgZGVmIHF1ZXJ5X3BvaW50ZXIoc2VsZik6CiAgICAgICAg
-cmV0dXJuIFBvaW50ZXIoKQoKICAgIGRlZiB0cmFuc2xhdGVfY29vcmRzKHNl
-bGYsIF93aW5kb3csIHgsIHkpOgogICAgICAgIHJldHVybiB0eXBlcy5TaW1w
-bGVOYW1lc3BhY2UoeD14LCB5PXkpCgoKY2xhc3MgU2NyZWVuOgogICAgcm9v
-dCA9IFJvb3QoKQoKCmNsYXNzIEZha2VEaXNwbGF5OgogICAgZGVmIF9faW5p
-dF9fKHNlbGYsIF9uYW1lKToKICAgICAgICBnbG9iYWwgYWN0aXZlX2Rpc3Bs
-YXkKICAgICAgICBhY3RpdmVfZGlzcGxheSA9IHNlbGYKICAgICAgICBzZWxm
-LmRvd24gPSBzZXJ2ZXJfZG93bgogICAgICAgIHNlbGYuY2xvc2VkID0gRmFs
-c2UKCiAgICBkZWYgZ2V0X2lucHV0X2ZvY3VzKHNlbGYpOgogICAgICAgIHJl
-dHVybiB0eXBlcy5TaW1wbGVOYW1lc3BhY2UoZm9jdXM9Rm9jdXMoKSkKCiAg
-ICBkZWYga2V5c3ltX3RvX2tleWNvZGUoc2VsZiwgX3N5bSk6CiAgICAgICAg
-cmV0dXJuIDM4CgogICAgZGVmIHF1ZXJ5X2tleW1hcChzZWxmKToKICAgICAg
-ICBiaXRtYXAgPSBieXRlYXJyYXkoMzIpCiAgICAgICAgZm9yIGNvZGUgaW4g
-c2VsZi5kb3duOgogICAgICAgICAgICBiaXRtYXBbY29kZSAvLyA4XSB8PSAx
-IDw8IChjb2RlICUgOCkKICAgICAgICByZXR1cm4gYnl0ZXMoYml0bWFwKQoK
-ICAgIGRlZiBzY3JlZW4oc2VsZik6CiAgICAgICAgcmV0dXJuIFNjcmVlbigp
-CgogICAgZGVmIHN5bmMoc2VsZik6CiAgICAgICAgcGFzcwoKICAgIGRlZiBj
-bG9zZShzZWxmKToKICAgICAgICBzZWxmLmNsb3NlZCA9IFRydWUKCiAgICBk
-ZWYgY3JlYXRlX3Jlc291cmNlX29iamVjdChzZWxmLCBfa2luZCwgX2lkZW50
-KToKICAgICAgICByZXR1cm4gdHlwZXMuU2ltcGxlTmFtZXNwYWNlKAogICAg
-ICAgICAgICBnZXRfYXR0cmlidXRlcz1sYW1iZGE6IHR5cGVzLlNpbXBsZU5h
-bWVzcGFjZShtYXBfc3RhdGU9WC5Jc1ZpZXdhYmxlKSwKICAgICAgICAgICAg
-Z2V0X2dlb21ldHJ5PWxhbWJkYTogdHlwZXMuU2ltcGxlTmFtZXNwYWNlKHg9
-MCwgeT0wLCB3aWR0aD0xMDAsIGhlaWdodD0xMDApLAogICAgICAgICAgICBx
-dWVyeV90cmVlPWxhbWJkYTogdHlwZXMuU2ltcGxlTmFtZXNwYWNlKHBhcmVu
-dD10eXBlcy5TaW1wbGVOYW1lc3BhY2UoaWQ9MSkpLAogICAgICAgICkKCgpk
-ZWYgZmFrZV9pbnB1dChkaXNwbGF5LCBldmVudCwgY29kZSwgKipfa3dhcmdz
-KToKICAgIGdsb2JhbCBkcm9wX2tleV9yZWxlYXNlLCBkcm9wcGVkX2tleXJl
-bGVhc2VfY291bnQKICAgIGlmIGV2ZW50ID09IFguS2V5UHJlc3M6CiAgICAg
-ICAgZGlzcGxheS5kb3duLmFkZChjb2RlKQogICAgZWxpZiBldmVudCA9PSBY
-LktleVJlbGVhc2U6CiAgICAgICAgaWYgZHJvcF9rZXlfcmVsZWFzZToKICAg
-ICAgICAgICAgZHJvcF9rZXlfcmVsZWFzZSA9IEZhbHNlCiAgICAgICAgICAg
-IGRyb3BwZWRfa2V5cmVsZWFzZV9jb3VudCArPSAxCiAgICAgICAgZWxzZToK
-ICAgICAgICAgICAgZGlzcGxheS5kb3duLmRpc2NhcmQoY29kZSkKCgpkZWYg
-aW5zdGFsbF94bGliKCk6CiAgICB4bGliID0gdHlwZXMuTW9kdWxlVHlwZSgi
-WGxpYiIpCiAgICB4bGliLlggPSBYCiAgICB4bGliLlhLID0gdHlwZXMuU2lt
-cGxlTmFtZXNwYWNlKHN0cmluZ190b19rZXlzeW09bGFtYmRhIF9rZXk6IDEp
-CiAgICB4bGliLmVycm9yID0gdHlwZXMuU2ltcGxlTmFtZXNwYWNlKEJhZFdp
-bmRvdz10eXBlKCJCYWRXaW5kb3ciLCAoRXhjZXB0aW9uLCksIHt9KSwKICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBCYWREcmF3YWJs
-ZT10eXBlKCJCYWREcmF3YWJsZSIsIChFeGNlcHRpb24sKSwge30pKQogICAg
-ZGlzcGxheSA9IHR5cGVzLk1vZHVsZVR5cGUoIlhsaWIuZGlzcGxheSIpCiAg
-ICBkaXNwbGF5LkRpc3BsYXkgPSBGYWtlRGlzcGxheQogICAgZXh0ID0gdHlw
-ZXMuTW9kdWxlVHlwZSgiWGxpYi5leHQiKQogICAgeHRlc3QgPSB0eXBlcy5N
-b2R1bGVUeXBlKCJYbGliLmV4dC54dGVzdCIpCiAgICB4dGVzdC5mYWtlX2lu
-cHV0ID0gZmFrZV9pbnB1dAogICAgZXh0Lnh0ZXN0ID0geHRlc3QKICAgIHhs
-aWIuZGlzcGxheSwgeGxpYi5leHQgPSBkaXNwbGF5LCBleHQKICAgIHN5cy5t
-b2R1bGVzLnVwZGF0ZSh7IlhsaWIiOiB4bGliLCAiWGxpYi5YIjogdHlwZXMu
-TW9kdWxlVHlwZSgiWGxpYi5YIiksCiAgICAgICAgICAgICAgICAgICAgICAg
-ICJYbGliLlhLIjogdHlwZXMuTW9kdWxlVHlwZSgiWGxpYi5YSyIpLAogICAg
-ICAgICAgICAgICAgICAgICAgICAiWGxpYi5lcnJvciI6IHR5cGVzLk1vZHVs
-ZVR5cGUoIlhsaWIuZXJyb3IiKSwKICAgICAgICAgICAgICAgICAgICAgICAg
-IlhsaWIuZGlzcGxheSI6IGRpc3BsYXksICJYbGliLmV4dCI6IGV4dCwKICAg
-ICAgICAgICAgICAgICAgICAgICAgIlhsaWIuZXh0Lnh0ZXN0IjogeHRlc3R9
-KQogICAgeGxpYi5YLCB4bGliLlhLID0gWCwgdHlwZXMuU2ltcGxlTmFtZXNw
-YWNlKHN0cmluZ190b19rZXlzeW09bGFtYmRhIF9rZXk6IDEpCgoKZGVmIGlu
-c3RhbGxfcHJvZHVjdGlvbl9vd25lcihvd25lcl9jbHMpOgogICAgIyBCdWls
-ZCB0aGUgdW5jaGFuZ2VkIHRyYW5zaXRpb24tY29tcG9zZWQgVjEyIG93bmVy
-IHdpdGggZmFrZS1YIHByb3ZpZGVycy4KICAgIGZyb20gaW5wdXRfdHJhbnNp
-dGlvbl9vd25lcl92NCBpbXBvcnQgSW5wdXRPd25lciBhcyBQcm9kdWN0aW9u
-VHJhbnNpdGlvbk93bmVyCiAgICBvd25lciA9IFByb2R1Y3Rpb25UcmFuc2l0
-aW9uT3duZXIoIkZBS0UiLCBfb3duZXJfY2xzPW93bmVyX2NscykKICAgIHJl
-dHVybiBvd25lcgoKCmNsYXNzIExlYXNlOgogICAgZGVmIF9faW5pdF9fKHNl
-bGYpOgogICAgICAgIHNlbGYuZGVhZGxpbmUgPSB0aW1lLnBlcmZfY291bnRl
-cl9ucygpICsgMTBfMDAwXzAwMF8wMDAKICAgICAgICBzZWxmLmNhbmNlbCA9
-IHRocmVhZGluZy5FdmVudCgpCiAgICAgICAgc2VsZi5pbnRlbnRfdG9rZW4g
-PSAidjE1LWxvc3MtcHJvYmUtYTA5IgogICAgICAgIHNlbGYuZXhwZWN0ZWRf
-Zm9jdXMgPSA0MQogICAgICAgIHNlbGYuZm9jdXNfaW52YWxpZCA9IEZhbHNl
-CgogICAgZGVmIGNoZWNrKHNlbGYpOgogICAgICAgIHBhc3MKCiAgICBkZWYg
-aW50ZXJydXB0aW9uX3NuYXBzaG90KHNlbGYpOgogICAgICAgIHJldHVybiBO
-b25lCgogICAgZGVmIHJlY29yZF9pbnRlcnJ1cHRpb24oc2VsZiwgX3Jvdyk6
-CiAgICAgICAgcGFzcwoKICAgIGRlZiBpc19zZXQoc2VsZik6CiAgICAgICAg
-cmV0dXJuIHNlbGYuY2FuY2VsLmlzX3NldCgpCgogICAgZGVmIHdhaXQoc2Vs
-Ziwgc2Vjb25kcyk6CiAgICAgICAgcmV0dXJuIHNlbGYuY2FuY2VsLndhaXQo
-c2Vjb25kcykKCiAgICBkZWYgc2V0KHNlbGYpOgogICAgICAgIHNlbGYuY2Fu
-Y2VsLnNldCgpCgogICAgZGVmIHdhaXRfaW50ZXJydXB0aW9uKHNlbGYsIF9z
-ZWNvbmRzKToKICAgICAgICByZXR1cm4gTm9uZQoKCmNsYXNzIER1bW15T3du
-ZXI6CiAgICBkZWYgX19pbml0X18oc2VsZiwgX2Rpc3BsYXlfbmFtZT1Ob25l
-KToKICAgICAgICBwYXNzCgogICAgZGVmIGNsb3NlKHNlbGYpOgogICAgICAg
-IHBhc3MKCgpjbGFzcyBDb250cm9sbGVyQmFja2VuZDoKICAgICIiIlRlc3Qt
-b25seSBhY3Rpb24tbG9vcCBkb3VibGU7IHByb2R1Y3Rpb24gZXhlY3V0ZS9y
-YXcgbWV0aG9kcyByZW1haW4gbG9hZGVkLiIiIgogICAgZGVmIF9faW5pdF9f
-KHNlbGYsIHNlc3Npb24sIF9vdXQsIGVtaXQsIF9zaWduYWxfcmVhZGVycyk6
-CiAgICAgICAgIyBQcm9kdWN0aW9uIFYyIGltbWVkaWF0ZWx5IGNsb3NlcyB0
-aGUgY29uc3RydWN0b3Igb3duZXIgYmVmb3JlCiAgICAgICAgIyBpbnN0YWxs
-aW5nIHRoZSBzZWxlY3RlZCBWMTEvVjQgdHJhbnNpdGlvbiBvd25lci4KICAg
-ICAgICBzZWxmLm93bmVyID0gRHVtbXlPd25lcigpCiAgICAgICAgc2VsZi5s
-ZWFzZSA9IExlYXNlKCkKICAgICAgICBzZWxmLmhlbGQgPSBzZXQoKQogICAg
-ICAgIHNlbGYuc2VxdWVuY2UgPSAwCiAgICAgICAgc2VsZi5lbWl0ID0gZW1p
-dAogICAgICAgIHNlbGYuc2Vzc2lvbiA9IHNlc3Npb24KICAgICAgICBzZWxm
-Ll9pbnB1dF9ldmVudF9jb250ZXh0ID0gTm9uZQogICAgICAgIHNlbGYudG91
-Y2hlZCA9IHNldCgpCgogICAgZGVmIGV4ZWN1dGUoc2VsZiwgc3RlcCwgX2Nh
-bmNlbCwgX2lkZW50aWZpZXIsIF9pbmRleCk6CiAgICAgICAgIyBNYXRjaCB0
-aGUgcHJvZHVjdGlvbiBzZXNzaW9uX3Y3IHByZS1pbnB1dCBjb250cmFjdCB0
-aGF0IHRoZSBBMDcKICAgICAgICAjIGNvbnRyb2xsZXIgZG91YmxlIGJ5cGFz
-c2VkOiBiaW5kIGFuIG9ic2VydmVkIGZvY3VzIGFuZCByZWplY3QgZHJpZnQu
-CiAgICAgICAgaWYgbm90IGhhc2F0dHIoX2NhbmNlbCwgImV4cGVjdGVkX2Zv
-Y3VzIik6CiAgICAgICAgICAgIG9ic2VydmVkID0gc2VsZi5zZXNzaW9uLmNv
-bnRleHQoKS5nZXQoImZvY3VzIikKICAgICAgICAgICAgYWN0dWFsID0gc2Vs
-Zi5zZXNzaW9uLmQuZ2V0X2lucHV0X2ZvY3VzKCkuZm9jdXMuaWQKICAgICAg
-ICAgICAgaWYgb2JzZXJ2ZWQgaW4gKE5vbmUsIDAsIDEpIG9yIGFjdHVhbCAh
-PSBvYnNlcnZlZDoKICAgICAgICAgICAgICAgIHJhaXNlIFZhbHVlRXJyb3Io
-ImZha2Ugb2JzZXJ2ZWQtZm9jdXMgYWRtaXNzaW9uIGZhaWxlZCIpCiAgICAg
-ICAgICAgIF9jYW5jZWwuZXhwZWN0ZWRfZm9jdXMgPSBvYnNlcnZlZAogICAg
-ICAgIHByZXZpb3VzX2NvbnRleHQgPSBzZWxmLl9pbnB1dF9ldmVudF9jb250
-ZXh0CiAgICAgICAgc2VsZi5faW5wdXRfZXZlbnRfY29udGV4dCA9IChfaWRl
-bnRpZmllciwgX2luZGV4KQogICAgICAgIHRyeToKICAgICAgICAgICAgZm9y
-IGtleSwgZG93biBpbiBzdGVwWyJhY3Rpb25zIl06CiAgICAgICAgICAgICAg
-ICBzZWxmLnJhdyhrZXksIGRvd24pCiAgICAgICAgZmluYWxseToKICAgICAg
-ICAgICAgc2VsZi5faW5wdXRfZXZlbnRfY29udGV4dCA9IHByZXZpb3VzX2Nv
-bnRleHQKICAgICAgICByZXR1cm4geyJleGVjdXRlZCI6IGxlbihzdGVwWyJh
-Y3Rpb25zIl0pfQoKICAgIGRlZiB2YWxpZGF0ZShzZWxmLCBfc3RlcHMpOgog
-ICAgICAgIHJldHVybiBOb25lCgogICAgIyByZWxlYXNlX2FsbCBtYXRjaGVz
-IHRoZSBwcm9kdWN0aW9uIG93bmVyLVJQQyBzZWFtOyBWMTUgb3ZlcnJpZGVz
-IGl0LgogICAgZGVmIHJlbGVhc2VfYWxsKHNlbGYpOgogICAgICAgIHJldHVy
-biBzZWxmLm93bmVyLmNhbGwoInJlbGVhc2UiLCBzZWxmLmxlYXNlKQoKCmNs
-YXNzIFNlc3Npb246CiAgICBuYW1lID0gIkZBS0UiCgogICAgZGVmIF9faW5p
-dF9fKHNlbGYpOgogICAgICAgIHNlbGYuZCA9IEZha2VEaXNwbGF5KCJGQUtF
-X1NFU1NJT04iKQogICAgICAgIHNlbGYuY29udGV4dCA9IGxhbWJkYTogeyJm
-b2N1cyI6IDQxLCAic3VyZmFjZSI6IDQyLAogICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICJnZW9tZXRyeSI6IFswLCAwLCAxMDAsIDEwMF19CgoK
-ZGVmIGluc3RhbGxfcHJvZHVjdGlvbl9iYWNrZW5kX2ltcG9ydHMoKToKICAg
-ICMgSXNvbGF0ZSB0aGUgcmVhbCBWMi9WMTUgc2VsZWN0ZWQgYmFja2VuZCBm
-cm9tIFZpWkRvb20vc2Vzc2lvbiBzZXR1cC4gVGhlCiAgICAjIGJhc2UgYmFj
-a2VuZCBzdXBwbGllcyBvbmx5IHRoZSBhY3Rpb24gbG9vcCBhYm92ZTsgYWxs
-IHNlbGVjdGVkIHJlbGVhc2UKICAgICMgY29tcG9zaXRpb24gbWV0aG9kcyBh
-bmQgVjTihpJWM+KGklYxMiBvd25lciBjb2RlIGFyZSBpbXBvcnRlZCBmcm9t
-IHNvdXJjZS4KICAgIGJhc2UgPSB0eXBlcy5Nb2R1bGVUeXBlKCJkb29tX3R5
-cGVkX3JlbGVhc2VfYmFja2VuZF92MSIpCiAgICBiYXNlLkJhY2tlbmQgPSBD
-b250cm9sbGVyQmFja2VuZAogICAgYmFzZS5zdWl0ZSA9IG9iamVjdCgpCiAg
-ICBzeXMubW9kdWxlc1siZG9vbV90eXBlZF9yZWxlYXNlX2JhY2tlbmRfdjEi
-XSA9IGJhc2UKICAgICMgUmVwbGFjZSBvbmx5IHRoZSBpbXBvcnRlZCBYbGli
-IGJpbmRpbmcgdXNlZCBieSBwcm9kdWN0aW9uIG93bmVyIGNvZGUuCiAgICBp
-bXBvcnQgaW5wdXRfb3duZXJfdjEyCiAgICBpbnB1dF9vd25lcl92MTIuWCA9
-IFgKICAgIGlucHV0X293bmVyX3YxMi5YSyA9IHN5cy5tb2R1bGVzWyJYbGli
-Il0uWEsKICAgIGlucHV0X293bmVyX3YxMi5kaXNwbGF5ID0gdHlwZXMuU2lt
-cGxlTmFtZXNwYWNlKERpc3BsYXk9RmFrZURpc3BsYXkpCiAgICBpbnB1dF9v
-d25lcl92MTIuZXJyb3IgPSB0eXBlcy5TaW1wbGVOYW1lc3BhY2UoCiAgICAg
-ICAgQmFkV2luZG93PXR5cGUoIkJhZFdpbmRvdyIsIChFeGNlcHRpb24sKSwg
-e30pLAogICAgICAgIEJhZERyYXdhYmxlPXR5cGUoIkJhZERyYXdhYmxlIiwg
-KEV4Y2VwdGlvbiwpLCB7fSkpCiAgICBpbnB1dF9vd25lcl92MTIueHRlc3Qg
-PSB0eXBlcy5TaW1wbGVOYW1lc3BhY2UoZmFrZV9pbnB1dD1mYWtlX2lucHV0
-KQogICAgYmFzZS5JbnB1dE93bmVyID0gbGFtYmRhIG5hbWU6IGluc3RhbGxf
-cHJvZHVjdGlvbl9vd25lcigKICAgICAgICBpbnB1dF9vd25lcl92MTIuSW5w
-dXRPd25lcikKCiAgICBkZWYgcmVsZWFzZV9hbGwoc2VsZik6CiAgICAgICAg
-cmV0dXJuIHNlbGYub3duZXIuY2FsbCgicmVsZWFzZSIsIHNlbGYubGVhc2Up
-CiAgICBDb250cm9sbGVyQmFja2VuZC5yZWxlYXNlX2FsbCA9IHJlbGVhc2Vf
-YWxsCgoKZGVmIHJ1bl9jYXNlKGRyb3ApOgogICAgZ2xvYmFsIGRyb3Bfa2V5
-X3JlbGVhc2UsIGRyb3BwZWRfa2V5cmVsZWFzZV9jb3VudAogICAgZHJvcF9r
-ZXlfcmVsZWFzZSA9IGRyb3AKICAgIGRyb3BwZWRfa2V5cmVsZWFzZV9jb3Vu
-dCA9IDAKICAgIGZyb20gZG9vbV9vd25lcl90aHJlYWRfcmVsZWFzZV9iYXRj
-aF9iYWNrZW5kX3YxIGltcG9ydCBCYWNrZW5kCgogICAgZW1pdHRlZCA9IFtd
-CiAgICBiYWNrZW5kID0gQmFja2VuZChTZXNzaW9uKCksIE5vbmUsIGVtaXR0
-ZWQuYXBwZW5kLCB7fSkKICAgIGJhY2tlbmQub3duZXIgPSBpbnN0YWxsX3By
-b2R1Y3Rpb25fb3duZXIoCiAgICAgICAgX19pbXBvcnRfXygiaW5wdXRfb3du
-ZXJfdjEyIikuSW5wdXRPd25lcikKICAgIGJhY2tlbmQudG91Y2hlZCA9IHNl
-dCgpCiAgICBmcm9tIGV4ZWN1dG9yX3YxMyBpbXBvcnQgRXhlY3V0b3IKICAg
-IGVuZ2luZSA9IEV4ZWN1dG9yKGJhY2tlbmQsIGVtaXR0ZWQuYXBwZW5kKQog
-ICAgdHJ5OgogICAgICAgIGlkZW50aWZpZXIgPSAibG9zdC11cC1jYXNlLWEw
-OSIgaWYgZHJvcCBlbHNlICJub3JtYWwtY2FzZS1hMDkiCiAgICAgICAgZW5n
-aW5lLnN1Ym1pdChpZGVudGlmaWVyLCBbeyJvcCI6ICJrZXlfYmF0Y2giLCAi
-YWN0aW9ucyI6IFsoIkY4IiwgVHJ1ZSksICgiRjgiLCBGYWxzZSldfV0sCiAg
-ICAgICAgICAgICAgICAgICAgICBleHBlY3RlZF9zZXF1ZW5jZT1iYWNrZW5k
-LnNlcXVlbmNlLAogICAgICAgICAgICAgICAgICAgICAgdmFsaWRfdW50aWxf
-bnM9dGltZS5wZXJmX2NvdW50ZXJfbnMoKSArIDEwXzAwMF8wMDBfMDAwKQog
-ICAgICAgIGRlYWRsaW5lID0gdGltZS5tb25vdG9uaWMoKSArIDMKICAgICAg
-ICB0ZXJtaW5hbCA9IE5vbmUKICAgICAgICB3aGlsZSB0aW1lLm1vbm90b25p
-YygpIDwgZGVhZGxpbmU6CiAgICAgICAgICAgIHRlcm1pbmFsID0gbmV4dCgo
-cm93IGZvciByb3cgaW4gZW1pdHRlZCBpZiByb3cuZ2V0KCJldmVudCIpID09
-ICJ0ZXJtaW5hbCIpLCBOb25lKQogICAgICAgICAgICBpZiB0ZXJtaW5hbCBp
-cyBub3QgTm9uZToKICAgICAgICAgICAgICAgIGJyZWFrCiAgICAgICAgICAg
-IHRpbWUuc2xlZXAoMC4wMDUpCiAgICAgICAgaWYgdGVybWluYWwgaXMgTm9u
-ZToKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCJWMTMgZXhlY3V0
-b3IgZGlkIG5vdCBwdWJsaXNoIHRlcm1pbmFsIHdpdGhpbiAzIHNlY29uZHMi
-KQogICAgICAgIGVuZ2luZS5jbG9zZSgpCiAgICAgICAgc2VydmVyX2Rvd25f
-YWZ0ZXJfZXhlY3V0b3JfcmVsZWFzZSA9IHNvcnRlZChzZXJ2ZXJfZG93bikK
-ICAgICAgICByZWxlYXNlX3Jvd3MgPSBbciBmb3IgciBpbiBlbWl0dGVkIGlm
-IHIuZ2V0KCJldmVudCIpID09ICJpbnB1dF9yZWxlYXNlX3RyYW5zaXRpb24i
-XQogICAgICAgIGJhdGNoID0gcmVsZWFzZV9yb3dzWzBdIGlmIGxlbihyZWxl
-YXNlX3Jvd3MpID09IDEgZWxzZSBOb25lCiAgICAgICAgb3duZXJfY2xvc2Vf
-ZXJyb3IgPSBOb25lCiAgICAgICAgdHJ5OgogICAgICAgICAgICBiYWNrZW5k
-Lm93bmVyLmNsb3NlKCkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGV4
-YzoKICAgICAgICAgICAgb3duZXJfY2xvc2VfZXJyb3IgPSBmInt0eXBlKGV4
-YykuX19uYW1lX199OiB7ZXhjfSIKICAgICAgICByZXNvdXJjZV9vYnNlcnZh
-dGlvbiA9IHt9CiAgICAgICAgZm9yIHJlbCBpbiAoIi9zeXMvZnMvY2dyb3Vw
-L2NwdS5tYXgiLCAiL3N5cy9mcy9jZ3JvdXAvbWVtb3J5Lm1heCIsCiAgICAg
-ICAgICAgICAgICAgICAgIi9zeXMvZnMvY2dyb3VwL21lbW9yeS5zd2FwLm1h
-eCIsICIvc3lzL2ZzL2Nncm91cC9jZ3JvdXAuY29udHJvbGxlcnMiKToKICAg
-ICAgICAgICAgcGF0aCA9IHBhdGhsaWIuUGF0aChyZWwpCiAgICAgICAgICAg
-IHRyeToKICAgICAgICAgICAgICAgIHJlc291cmNlX29ic2VydmF0aW9uW3Jl
-bF0gPSBwYXRoLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKS5zdHJpcCgp
-CiAgICAgICAgICAgIGV4Y2VwdCBPU0Vycm9yIGFzIGV4YzoKICAgICAgICAg
-ICAgICAgIHJlc291cmNlX29ic2VydmF0aW9uW3JlbF0gPSBmInVuYXZhaWxh
-YmxlOnt0eXBlKGV4YykuX19uYW1lX199IgogICAgICAgIHJldHVybiB7CiAg
-ICAgICAgICAgICJpbmplY3RlZF9rZXlyZWxlYXNlX2xvc3MiOiBkcm9wLAog
-ICAgICAgICAgICAiZHJvcHBlZF9rZXlyZWxlYXNlX2NvdW50IjogZHJvcHBl
-ZF9rZXlyZWxlYXNlX2NvdW50LAogICAgICAgICAgICAiZXZlbnRzIjogZW1p
-dHRlZCwKICAgICAgICAgICAgInNlcnZlcl9rZXljb2Rlc19kb3duX2FmdGVy
-X2V4ZWN1dG9yX3JlbGVhc2UiOiBzZXJ2ZXJfZG93bl9hZnRlcl9leGVjdXRv
-cl9yZWxlYXNlLAogICAgICAgICAgICAicmVsZWFzZV9yb3ciOiBiYXRjaCwK
-ICAgICAgICAgICAgImV4ZWN1dG9yX3Rlcm1pbmFsIjogdGVybWluYWwsCiAg
-ICAgICAgICAgICJiYXNlX2JhY2tlbmRfdG91Y2hlZF9hZnRlcl9iYXRjaCI6
-IHNvcnRlZChiYWNrZW5kLnRvdWNoZWQpLAogICAgICAgICAgICAib3duZXJf
-Y2xvc2VfZXJyb3IiOiBvd25lcl9jbG9zZV9lcnJvciwKICAgICAgICAgICAg
-Im93bmVyX2Nsb3NlX3JlY292ZXJlZCI6IG5vdCBzZXJ2ZXJfZG93biwKICAg
-ICAgICAgICAgImNvbnRhaW5lcl9yZXNvdXJjZV9vYnNlcnZhdGlvbiI6IHJl
-c291cmNlX29ic2VydmF0aW9uLAogICAgICAgIH0KICAgIGZpbmFsbHk6CiAg
-ICAgICAgdHJ5OgogICAgICAgICAgICBpZiBiYWNrZW5kLm93bmVyIGlzIG5v
-dCBOb25lOgogICAgICAgICAgICAgICAgYmFja2VuZC5vd25lci5jbG9zZSgp
-CiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgcGFzcwoK
-CmRlZiBtYWluKCk6CiAgICBpbnN0YWxsX3hsaWIoKQogICAgaW5zdGFsbF9w
-cm9kdWN0aW9uX2JhY2tlbmRfaW1wb3J0cygpCiAgICAjIEltcG9ydCB0aGUg
-c2VsZWN0ZWQgYmFja2VuZCBoZXJlLCBhZnRlciB0ZXN0LW9ubHkgY29udHJv
-bGxlciBkZXBlbmRlbmNpZXMKICAgICMgYXJlIHBpbm5lZDsgYWN0dWFsIFYx
-NS9WNC9WMy9WMTIgaW1wbGVtZW50YXRpb24gZmlsZXMgYXJlIHVubW9kaWZp
-ZWQuCiAgICByZXN1bHRzID0gW3J1bl9jYXNlKEZhbHNlKSwgcnVuX2Nhc2Uo
-VHJ1ZSldCiAgICBvdXQgPSBwYXRobGliLlBhdGgoX19pbXBvcnRfXygib3Mi
-KS5lbnZpcm9uWyJBMDlfT1VUIl0pIC8gImNhbmRpZGF0ZS5qc29uIgogICAg
-b3V0LndyaXRlX3RleHQoanNvbi5kdW1wcyh7InNjaGVtYSI6ICJ2MzktdjE1
-LWtleXVwLWxvc3MtYTA5LXJhdy12MSIsCiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAicnVuX2lkIjogImEwOS1jdXJyZW50LW1haW4tNzEyYTcx
-Yi0yMDI2MTAwNS1vbmUtc2hvdCIsCiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAic291cmNlX2Jhc2UiOiAiNzEyYTcxYjI1ZGMwMjRiNTQwNmIy
-NGI1NjgyMjVjMDY2M2U3Mjc4YiIsCiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAiY2xhaW1zIjogeyJyZWFsX3gxMSI6IEZhbHNlLCAiZ3VpIjog
-RmFsc2UsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICJkb29tIjogRmFsc2UsICJtb2RlbCI6IEZhbHNlLAogICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAicGh5c2ljYWxfa2V5
-Ym9hcmQiOiBGYWxzZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgImFwcGxpY2F0aW9uX2VmZmVjdCI6IEZhbHNlfSwKICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjYXNlcyI6IHJlc3VsdHN9
-LCBpbmRlbnQ9Miwgc29ydF9rZXlzPVRydWUpICsgIlxuIiwKICAgICAgICAg
-ICAgICAgICAgIGVuY29kaW5nPSJ1dGYtOCIpCiAgICBwcmludChqc29uLmR1
-bXBzKHsicmF3Ijogc3RyKG91dCksICJjYXNlcyI6IGxlbihyZXN1bHRzKSwK
-ICAgICAgICAgICAgICAgICAgICAgICJsb3NzX3NlcnZlcl9kb3duIjogcmVz
-dWx0c1sxXVsic2VydmVyX2tleWNvZGVzX2Rvd25fYWZ0ZXJfZXhlY3V0b3Jf
-cmVsZWFzZSJdLAogICAgICAgICAgICAgICAgICAgICAgImxvc3NfdGVybWlu
-YWxfc3RhdHVzIjogcmVzdWx0c1sxXVsiZXhlY3V0b3JfdGVybWluYWwiXVsi
-c3RhdHVzIl19KSkKCgppZiBfX25hbWVfXyA9PSAiX19tYWluX18iOgogICAg
-bWFpbigpCg==
+#!/usr/bin/env python3
+"""One-shot fake-X composition probe of current V39/V15 explicit key release."""
+from __future__ import annotations
+
+import json
+import ast
+import pathlib
+import sys
+import threading
+import time
+import types
+
+ROOT = pathlib.Path(__import__("os").environ.get("A09_ROOT", "/src"))
+DOOM = ROOT / "research" / "doom"
+LIVE = ROOT / "research" / "live_control"
+sys.path[:0] = [str(DOOM), str(LIVE)]
+
+X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonPress=4,
+                          ButtonRelease=5, MotionNotify=6, Button1Mask=256,
+                          AnyPropertyType=0, IsViewable=2)
+active_display = None
+drop_key_release = False
+dropped_keyrelease_count = 0
+server_down = set()
+
+
+class Focus:
+    id = 41
+
+
+class Pointer:
+    mask = 0
+    root_x = 10
+    root_y = 10
+
+
+class Root:
+    def query_pointer(self):
+        return Pointer()
+
+    def translate_coords(self, _window, x, y):
+        return types.SimpleNamespace(x=x, y=y)
+
+
+class Screen:
+    root = Root()
+
+
+class FakeDisplay:
+    def __init__(self, _name):
+        global active_display
+        active_display = self
+        self.down = server_down
+        self.closed = False
+
+    def get_input_focus(self):
+        return types.SimpleNamespace(focus=Focus())
+
+    def keysym_to_keycode(self, _sym):
+        return 38
+
+    def query_keymap(self):
+        bitmap = bytearray(32)
+        for code in self.down:
+            bitmap[code // 8] |= 1 << (code % 8)
+        return bytes(bitmap)
+
+    def screen(self):
+        return Screen()
+
+    def sync(self):
+        pass
+
+    def close(self):
+        self.closed = True
+
+    def create_resource_object(self, _kind, _ident):
+        return types.SimpleNamespace(
+            get_attributes=lambda: types.SimpleNamespace(map_state=X.IsViewable),
+            get_geometry=lambda: types.SimpleNamespace(x=0, y=0, width=100, height=100),
+            query_tree=lambda: types.SimpleNamespace(parent=types.SimpleNamespace(id=1)),
+        )
+
+
+def fake_input(display, event, code, **_kwargs):
+    global drop_key_release, dropped_keyrelease_count
+    if event == X.KeyPress:
+        display.down.add(code)
+    elif event == X.KeyRelease:
+        if drop_key_release:
+            drop_key_release = False
+            dropped_keyrelease_count += 1
+        else:
+            display.down.discard(code)
+
+
+def install_xlib():
+    xlib = types.ModuleType("Xlib")
+    xlib.X = X
+    xlib.XK = types.SimpleNamespace(string_to_keysym=lambda _key: 1)
+    xlib.error = types.SimpleNamespace(BadWindow=type("BadWindow", (Exception,), {}),
+                                      BadDrawable=type("BadDrawable", (Exception,), {}))
+    display = types.ModuleType("Xlib.display")
+    display.Display = FakeDisplay
+    ext = types.ModuleType("Xlib.ext")
+    xtest = types.ModuleType("Xlib.ext.xtest")
+    xtest.fake_input = fake_input
+    ext.xtest = xtest
+    xlib.display, xlib.ext = display, ext
+    sys.modules.update({"Xlib": xlib, "Xlib.X": types.ModuleType("Xlib.X"),
+                        "Xlib.XK": types.ModuleType("Xlib.XK"),
+                        "Xlib.error": types.ModuleType("Xlib.error"),
+                        "Xlib.display": display, "Xlib.ext": ext,
+                        "Xlib.ext.xtest": xtest})
+    xlib.X, xlib.XK = X, types.SimpleNamespace(string_to_keysym=lambda _key: 1)
+
+
+def install_production_owner(owner_cls):
+    # Build the unchanged transition-composed V12 owner with fake-X providers.
+    from input_transition_owner_v4 import InputOwner as ProductionTransitionOwner
+    owner = ProductionTransitionOwner("FAKE", _owner_cls=owner_cls)
+    return owner
+
+
+class Lease:
+    def __init__(self):
+        self.deadline = time.perf_counter_ns() + 10_000_000_000
+        self.cancel = threading.Event()
+        self.intent_token = "v15-loss-probe-a09"
+        self.expected_focus = 41
+        self.focus_invalid = False
+
+    def check(self):
+        pass
+
+    def interruption_snapshot(self):
+        return None
+
+    def record_interruption(self, _row):
+        pass
+
+    def is_set(self):
+        return self.cancel.is_set()
+
+    def wait(self, seconds):
+        return self.cancel.wait(seconds)
+
+    def set(self):
+        self.cancel.set()
+
+    def wait_interruption(self, _seconds):
+        return None
+
+
+class DummyOwner:
+    def __init__(self, _display_name=None):
+        pass
+
+    def close(self):
+        pass
+
+
+class ControllerBackend:
+    """Test-only action-loop double; production execute/raw methods remain loaded."""
+    def __init__(self, session, _out, emit, _signal_readers):
+        # Production V2 immediately closes the constructor owner before
+        # installing the selected V11/V4 transition owner.
+        self.owner = DummyOwner()
+        self.lease = Lease()
+        self.held = set()
+        self.sequence = 0
+        self.emit = emit
+        self.session = session
+        self._input_event_context = None
+        self.touched = set()
+
+    def execute(self, step, _cancel, _identifier, _index):
+        # Match the production session_v7 pre-input contract that the A07
+        # controller double bypassed: bind an observed focus and reject drift.
+        if not hasattr(_cancel, "expected_focus"):
+            observed = self.session.context().get("focus")
+            actual = self.session.d.get_input_focus().focus.id
+            if observed in (None, 0, 1) or actual != observed:
+                raise ValueError("fake observed-focus admission failed")
+            _cancel.expected_focus = observed
+        previous_context = self._input_event_context
+        self._input_event_context = (_identifier, _index)
+        try:
+            for key, down in step["actions"]:
+                self.raw(key, down)
+        finally:
+            self._input_event_context = previous_context
+        return {"executed": len(step["actions"])}
+
+    def validate(self, _steps):
+        return None
+
+    # release_all matches the production owner-RPC seam; V15 overrides it.
+    def release_all(self):
+        return self.owner.call("release", self.lease)
+
+
+class Session:
+    name = "FAKE"
+
+    def __init__(self):
+        self.d = FakeDisplay("FAKE_SESSION")
+        self.context = lambda: {"focus": 41, "surface": 42,
+                                "geometry": [0, 0, 100, 100]}
+
+
+def install_production_backend_imports():
+    # Isolate the real V2/V15 selected backend from ViZDoom/session setup. The
+    # base backend supplies only the action loop above; all selected release
+    # composition methods and V4→V3→V12 owner code are imported from source.
+    base = types.ModuleType("doom_typed_release_backend_v1")
+    base.Backend = ControllerBackend
+    base.suite = object()
+    sys.modules["doom_typed_release_backend_v1"] = base
+    # Replace only the imported Xlib binding used by production owner code.
+    import input_owner_v12
+    input_owner_v12.X = X
+    input_owner_v12.XK = sys.modules["Xlib"].XK
+    input_owner_v12.display = types.SimpleNamespace(Display=FakeDisplay)
+    input_owner_v12.error = types.SimpleNamespace(
+        BadWindow=type("BadWindow", (Exception,), {}),
+        BadDrawable=type("BadDrawable", (Exception,), {}))
+    input_owner_v12.xtest = types.SimpleNamespace(fake_input=fake_input)
+    base.InputOwner = lambda name: install_production_owner(
+        input_owner_v12.InputOwner)
+
+    def release_all(self):
+        return self.owner.call("release", self.lease)
+    ControllerBackend.release_all = release_all
+
+
+def run_case(drop):
+    global drop_key_release, dropped_keyrelease_count
+    drop_key_release = drop
+    dropped_keyrelease_count = 0
+    from doom_owner_thread_release_batch_backend_v1 import Backend
+
+    emitted = []
+    backend = Backend(Session(), None, emitted.append, {})
+    backend.owner = install_production_owner(
+        __import__("input_owner_v12").InputOwner)
+    backend.touched = set()
+    from executor_v13 import Executor
+    engine = Executor(backend, emitted.append)
+    try:
+        identifier = "lost-up-case-a09" if drop else "normal-case-a09"
+        engine.submit(identifier, [{"op": "key_batch", "actions": [("F8", True), ("F8", False)]}],
+                      expected_sequence=backend.sequence,
+                      valid_until_ns=time.perf_counter_ns() + 10_000_000_000)
+        deadline = time.monotonic() + 3
+        terminal = None
+        while time.monotonic() < deadline:
+            terminal = next((row for row in emitted if row.get("event") == "terminal"), None)
+            if terminal is not None:
+                break
+            time.sleep(0.005)
+        if terminal is None:
+            raise RuntimeError("V13 executor did not publish terminal within 3 seconds")
+        engine.close()
+        server_down_after_executor_release = sorted(server_down)
+        release_rows = [r for r in emitted if r.get("event") == "input_release_transition"]
+        batch = release_rows[0] if len(release_rows) == 1 else None
+        owner_close_error = None
+        try:
+            backend.owner.close()
+        except Exception as exc:
+            owner_close_error = f"{type(exc).__name__}: {exc}"
+        resource_observation = {}
+        for rel in ("/sys/fs/cgroup/cpu.max", "/sys/fs/cgroup/memory.max",
+                    "/sys/fs/cgroup/memory.swap.max", "/sys/fs/cgroup/cgroup.controllers"):
+            path = pathlib.Path(rel)
+            try:
+                resource_observation[rel] = path.read_text(encoding="utf-8").strip()
+            except OSError as exc:
+                resource_observation[rel] = f"unavailable:{type(exc).__name__}"
+        return {
+            "injected_keyrelease_loss": drop,
+            "dropped_keyrelease_count": dropped_keyrelease_count,
+            "events": emitted,
+            "server_keycodes_down_after_executor_release": server_down_after_executor_release,
+            "release_row": batch,
+            "executor_terminal": terminal,
+            "base_backend_touched_after_batch": sorted(backend.touched),
+            "owner_close_error": owner_close_error,
+            "owner_close_recovered": not server_down,
+            "container_resource_observation": resource_observation,
+        }
+    finally:
+        try:
+            if backend.owner is not None:
+                backend.owner.close()
+        except Exception:
+            pass
+
+
+def main():
+    install_xlib()
+    install_production_backend_imports()
+    # Import the selected backend here, after test-only controller dependencies
+    # are pinned; actual V15/V4/V3/V12 implementation files are unmodified.
+    results = [run_case(False), run_case(True)]
+    out = pathlib.Path(__import__("os").environ["A09_OUT"]) / "candidate.json"
+    out.write_text(json.dumps({"schema": "v39-v15-keyup-loss-a09-raw-v1",
+                               "run_id": "a09-current-main-712a71b-20261005-one-shot",
+                               "source_base": "712a71b25dc024b5406b24b568225c0663e7278b",
+                               "claims": {"real_x11": False, "gui": False,
+                                          "doom": False, "model": False,
+                                          "physical_keyboard": False,
+                                          "application_effect": False},
+                               "cases": results}, indent=2, sort_keys=True) + "\n",
+                   encoding="utf-8")
+    print(json.dumps({"raw": str(out), "cases": len(results),
+                      "loss_server_down": results[1]["server_keycodes_down_after_executor_release"],
+                      "loss_terminal_status": results[1]["executor_terminal"]["status"]}))
+
+
+if __name__ == "__main__":
+    main()

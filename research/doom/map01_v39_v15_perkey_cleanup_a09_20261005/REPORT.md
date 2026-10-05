@@ -1,65 +1,23 @@
-IyBBMDkgcmVzdWx0IOKAlCBmYWtlLVggVjE1IGtleS11cCByZXRyeSBjb25z
-dHJ1Y3Rpb24KCiMjIFJlc3VsdAoKYFBBU1NfQ09OU1RSVUNUSU9OX1NDT1BF
-RGAuIE9uIGN1cnJlbnQtbWFpbiBzb3VyY2UgYDcxMmE3MWIyNWRjMDI0YjU0
-MDZiMjRiNTY4MjI1YzA2NjNlNzI3OGJgLCB0aGUgb25lLXNob3Qgbm9ybWFs
-IGFybSBjb21wbGV0ZWQgb25lIEY4IERPV04vVVAgc3RlcCB3aXRoIG9uZSB2
-ZXJpZmllZCBvd25lciBLZXlSZWxlYXNlIGF0dGVtcHQgYW5kIGFuIGVtcHR5
-IGZha2Utc2VydmVyIGtleW1hcC4gSW4gdGhlIHRyZWF0bWVudCBhcm0sIHRo
-ZSBmYWtlIHNlcnZlciBkcm9wcGVkIGV4YWN0bHkgdGhlIGZpcnN0IEtleVJl
-bGVhc2U7IHRoZSBvd25lciBzYW1wbGVkIHRoZSBrZXkgc3RpbGwgZG93biwg
-aXNzdWVkIGEgc2Vjb25kIEtleVJlbGVhc2UsIHNhbXBsZWQgaXQgdXAsIGFu
-ZCBwdWJsaXNoZWQgb25lIGlkZW50aXR5LWJvdW5kIGBpbnB1dF9yZWxlYXNl
-X3RyYW5zaXRpb25gIGJlZm9yZSBhIGNvbXBsZXRlZCB0ZXJtaW5hbCB3aXRo
-IHZlcmlmaWVkIGVtcHR5IHJlbGVhc2UuIEJvdGggZmluYWwgZmFrZSBrZXlt
-YXBzIHdlcmUgZW1wdHkuIFRoZSBpbmRlcGVuZGVudCBhdWRpdG9yIGZvdW5k
-IHplcm8gZmFpbHVyZXMuCgpUaGUgZGlmZmVyZW5jZSBmcm9tIEEwNy9BMDgg
-d2FzIGNvbmZpbmVkIHRvIHRoZSB0ZXN0IGZpeHR1cmU6IGl0IG5vdyBiaW5k
-cyBhIHN0YWJsZSBvYnNlcnZlZCBmYWtlIGZvY3VzIHRvIHRoZSBhY3R1YWwg
-RXhlY3V0b3JWMTMgbGVhc2UgYW5kIHByb3ZpZGVzIHRoZSBgKGludGVudCwg
-c3RlcClgIGNvbnRleHQgZXhwZWN0ZWQgYnkgdGhlIHByb2R1Y3Rpb24gcmVs
-ZWFzZS1iYXRjaCB0ZWxlbWV0cnkgcGF0aC4gVGhlIFYxMyBleGVjdXRvciBh
-bmQgY3VycmVudC1tYWluIFYxNS9WNC9WMy9WMTIgb3duZXIvcmVsZWFzZSBp
-bXBsZW1lbnRhdGlvbiB3ZXJlIGxvYWRlZCBmcm9tIHRoZSBmcm96ZW4gc291
-cmNlIGNsb3N1cmUuCgpCZWZvcmUgcGFja2FnaW5nLCBgbWFpbmAgYWR2YW5j
-ZWQgZnJvbSB0aGUgZnJvemVuIGJhc2UgdG8gYDM4ZmUzMDNmZWM1OWNkZTE1
-ZjcwODQ4M2NhZTAwYmY2MTdmM2JkZDBgLiBBIEdpdCBwYXRoIGNvbXBhcmlz
-b24gYWNyb3NzIGFsbCAyMSBmcm96ZW4gcHJvZHVjdGlvbiBzb3VyY2UgZmls
-ZXMgZm91bmQgbm8gY2hhbmdlcywgc28gdGhlIGV4ZXJjaXNlZCBzb2Z0d2Fy
-ZSBjbG9zdXJlIGlzIGJ5dGUtaWRlbnRpY2FsIGF0IHRoYXQgbGF0ZXIgbWFp
-biB0aXAuIFRoZSBjYW5kaWRhdGUgaXRzZWxmIHJlbWFpbnMgZXhwbGljaXRs
-eSBwaW5uZWQgdG8gYDcxMmE3MWIyNWRjMDI0YjU0MDZiMjRiNTY4MjI1YzA2
-NjNlNzI3OGJgLgoKIyMgUmVwcm9kdWN0aW9uIGFuZCByZWNvcmRzCgotIEZy
-ZWV6ZSBhbmQgZXhhY3Qgc291cmNlIGhhc2hlczogYEZSRUVaRS5qc29uYCwg
-YHNvdXJjZS1tYW5pZmVzdC5qc29uYC4KLSBDYW5kaWRhdGUgYW5kIGluZGVw
-ZW5kZW50IHJhdyBhdWRpdG9yOiBgY2FuZGlkYXRlLnB5YCwgYGF1ZGl0LnB5
-YC4KLSBGaXJzdCBjYW5kaWRhdGUgb3V0cHV0IGFuZCBpbmRlcGVuZGVudCBh
-dWRpdDogYHJlc3VsdHMvY2FuZGlkYXRlLmpzb25gLCBgcmVzdWx0cy9hdWRp
-dC5zdGRvdXQubG9nYC4KLSBQcm9jZXNzIG91dHB1dHM6IGByZXN1bHRzL2Nh
-bmRpZGF0ZS5zdGRvdXQubG9nYCwgYHJlc3VsdHMvY2FuZGlkYXRlLnN0ZGVy
-ci5sb2dgLCBgcmVzdWx0cy9hdWRpdC5zdGRlcnIubG9nYC4KLSBPbiB0aGUg
-c2FtZSBmcm96ZW4gY2hlY2tvdXQsIHRoZSBleGlzdGluZyBjdXJyZW50LW1h
-aW4gcmVncmVzc2lvbiBzdWl0ZSBgcHl0aG9uIC1tIHVuaXR0ZXN0IC12IHRl
-c3RfaW5wdXRfdHJhbnNpdGlvbl9vd25lcl92NCB0ZXN0X2lucHV0X293bmVy
-X3YxMl9leHBsaWNpdF91cF9jYW5jZWwgdGVzdF9pbnB1dF9vd25lcl92MTJf
-Y2xlYW51cF9hZnRlcl9leHBsaWNpdF91cGAgcGFzc2VkIDkvOSB1bmRlciBi
-dW5kbGVkIFB5dGhvbiAzLjEyLjE0LiBUaGlzIGNvdmVycyB0aGUgam9pbmVk
-IG93bmVyIHJlY2VpcHQsIGRyb3BwZWQgZXhwbGljaXQga2V5LXVwIHJldHJ5
-LCBvcmRlcmVkIGJhdGNoIGJlaGF2aW9yLCBwZXJzaXN0ZW50IGxvc3MgY3Vz
-dG9keSwgYW5kIGNsZWFudXAgYm91bmRhcmllczsgaXQgcmVtYWlucyBzb2Z0
-d2FyZS9mYWtlLWRpc3BsYXkgZXZpZGVuY2UuCi0gQTA3J3MgcHJlLXRyZWF0
-bWVudCBTVE9QIGFuZCBBMDgncyBzcGFyc2UtY2hlY2tvdXQgU1RPUCByZW1h
-aW4gc2VwYXJhdGUgaW4gdGhlaXIgcmVzcGVjdGl2ZSByZXN1bHQgcGFja2Fn
-ZXM7IG5laXRoZXIgd2FzIHJldHJpZWQgb3IgcmVsYWJlbGVkLgotIFRoZSBw
-YWNrYWdlIGhhc2ggbWFuaWZlc3QgaXMgYFNIQTI1NlNVTVNgLgoKIyMgTGlt
-aXRzCgpPcmJTdGFjayBjb3VsZCBub3QgcmVhZCBpdHMgY2FjaGVkIGltYWdl
-IGJsb2IsIHNvIEEwOSByYW4gd2l0aCB0aGUgbG9jYWwgYnVuZGxlZCBQeXRo
-b24gcnVudGltZTsgaXQgaXMgbm90IGEgY29udGFpbmVyIHJlc3VsdC4gTm8g
-cmVhbCBYMTEgc2VydmVyLCBHVUksIHBoeXNpY2FsIGtleWJvYXJkLCBEb29t
-LCBtb2RlbCwgYXBwbGljYXRpb24gZWZmZWN0LCBpbmRlcGVuZGVudCB0YXNr
-IGZlZWRiYWNrLCBib3VuZGVkIHJlY292ZXJ5LCBsaXZlIHRocmVhdCBleHBv
-c3VyZSwgb3IgbGF0ZW5jeSBkaXN0cmlidXRpb24gd2FzIGV4ZXJjaXNlZC4g
-RW1wdHkgYHF1ZXJ5X2tleW1hcGAvZmFrZS1zZXJ2ZXIgc3RhdGUgcHJvdmVz
-IG9ubHkgdGhlIHN5bnRoZXRpYyBzb2Z0d2FyZSBwYXRoLiBUaGUgIzU5IHBy
-aXZhdGUgZ2FtZSBhbGxvY2F0aW9uIHJlbWFpbnMgdW5hc3NpZ25lZCBhbmQg
-dW50b3VjaGVkLiBUaGlzIHJlc3VsdCBkb2VzIG5vdCBlc3RhYmxpc2ggYSBs
-aXZlIG9yIHByb2R1Y3QtbGV2ZWwgY29udHJvbCBpbXByb3ZlbWVudC4K
+# A09 result — fake-X V15 key-up retry construction
+
+## Result
+
+`PASS_CONSTRUCTION_SCOPED`. On current-main source `712a71b25dc024b5406b24b568225c0663e7278b`, the one-shot normal arm completed one F8 DOWN/UP step with one verified owner KeyRelease attempt and an empty fake-server keymap. In the treatment arm, the fake server dropped exactly the first KeyRelease; the owner sampled the key still down, issued a second KeyRelease, sampled it up, and published one identity-bound `input_release_transition` before a completed terminal with verified empty release. Both final fake keymaps were empty. The independent auditor found zero failures.
+
+The difference from A07/A08 was confined to the test fixture: it now binds a stable observed fake focus to the actual ExecutorV13 lease and provides the `(intent, step)` context expected by the production release-batch telemetry path. The V13 executor and current-main V15/V4/V3/V12 owner/release implementation were loaded from the frozen source closure.
+
+Before packaging, `main` advanced from the frozen base to `38fe303fec59cde15f708483cae00bf617f3bdd0`. A Git path comparison across all 21 frozen production source files found no changes, so the exercised software closure is byte-identical at that later main tip. The candidate itself remains explicitly pinned to `712a71b25dc024b5406b24b568225c0663e7278b`.
+
+## Reproduction and records
+
+- Freeze and exact source hashes: `FREEZE.json`, `source-manifest.json`.
+- Candidate and independent raw auditor: `candidate.py`, `audit.py`.
+- First candidate output and independent audit: `results/candidate.json`, `results/audit.stdout.log`.
+- Process outputs: `results/candidate.stdout.log`, `results/candidate.stderr.log`, `results/audit.stderr.log`.
+- On the same frozen checkout, the existing current-main regression suite `python -m unittest -v test_input_transition_owner_v4 test_input_owner_v12_explicit_up_cancel test_input_owner_v12_cleanup_after_explicit_up` passed 9/9 under bundled Python 3.12.14. This covers the joined owner receipt, dropped explicit key-up retry, ordered batch behavior, persistent loss custody, and cleanup boundaries; it remains software/fake-display evidence.
+- A07's pre-treatment STOP and A08's sparse-checkout STOP remain separate in their respective result packages; neither was retried or relabeled.
+- The package hash manifest is `SHA256SUMS`.
+
+## Limits
+
+OrbStack could not read its cached image blob, so A09 ran with the local bundled Python runtime; it is not a container result. No real X11 server, GUI, physical keyboard, Doom, model, application effect, independent task feedback, bounded recovery, live threat exposure, or latency distribution was exercised. Empty `query_keymap`/fake-server state proves only the synthetic software path. The #59 private game allocation remains unassigned and untouched. This result does not establish a live or product-level control improvement.

@@ -1,106 +1,101 @@
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwoiIiJJbmRlcGVuZGVudCBleGFjdC1z
-aGFwZSBhdWRpdCBvZiB0aGUgcmV0YWluZWQgQTA5IGZha2UtWCBjYW5kaWRh
-dGUgcmF3LiIiIgppbXBvcnQganNvbgppbXBvcnQgcGF0aGxpYgppbXBvcnQg
-c3lzCgoKRVhQRUNURURfUlVOID0gImEwOS1jdXJyZW50LW1haW4tNzEyYTcx
-Yi0yMDI2MTAwNS1vbmUtc2hvdCIKCgpkZWYgYXVkaXQocGF0aCk6CiAgICBy
-YXcgPSBqc29uLmxvYWRzKHBhdGhsaWIuUGF0aChwYXRoKS5yZWFkX3RleHQo
-ZW5jb2Rpbmc9InV0Zi04IikpCiAgICBmYWlsdXJlcyA9IFtdCiAgICBpZiBy
-YXcuZ2V0KCJzY2hlbWEiKSAhPSAidjM5LXYxNS1rZXl1cC1sb3NzLWEwOS1y
-YXctdjEiOgogICAgICAgIGZhaWx1cmVzLmFwcGVuZCgid3JvbmcgcmF3IHNj
-aGVtYSIpCiAgICBpZiByYXcuZ2V0KCJydW5faWQiKSAhPSBFWFBFQ1RFRF9S
-VU46CiAgICAgICAgZmFpbHVyZXMuYXBwZW5kKCJ3cm9uZyBydW4gaWRlbnRp
-dHkiKQogICAgaWYgcmF3LmdldCgic291cmNlX2Jhc2UiKSAhPSAiNzEyYTcx
-YjI1ZGMwMjRiNTQwNmIyNGI1NjgyMjVjMDY2M2U3Mjc4YiI6CiAgICAgICAg
-ZmFpbHVyZXMuYXBwZW5kKCJ3cm9uZyBzb3VyY2UgYmFzZSIpCiAgICBpZiBy
-YXcuZ2V0KCJjbGFpbXMiKSAhPSB7CiAgICAgICAgICAgICJyZWFsX3gxMSI6
-IEZhbHNlLCAiZ3VpIjogRmFsc2UsICJkb29tIjogRmFsc2UsICJtb2RlbCI6
-IEZhbHNlLAogICAgICAgICAgICAicGh5c2ljYWxfa2V5Ym9hcmQiOiBGYWxz
-ZSwgImFwcGxpY2F0aW9uX2VmZmVjdCI6IEZhbHNlfToKICAgICAgICBmYWls
-dXJlcy5hcHBlbmQoInNjb3BlIGNsYWltcyBhcmUgbm90IGFsbCBleHBsaWNp
-dGx5IGZhbHNlIikKICAgIGNhc2VzID0gcmF3LmdldCgiY2FzZXMiKQogICAg
-aWYgdHlwZShjYXNlcykgaXMgbm90IGxpc3Qgb3IgbGVuKGNhc2VzKSAhPSAy
-OgogICAgICAgIGZhaWx1cmVzLmFwcGVuZCgiZXhwZWN0ZWQgZXhhY3RseSB0
-d28gZml4ZWQgYXJtcyIpCiAgICAgICAgY2FzZXMgPSBbXQogICAgYnlfYXJt
-ID0ge2Nhc2UuZ2V0KCJpbmplY3RlZF9rZXlyZWxlYXNlX2xvc3MiKTogY2Fz
-ZQogICAgICAgICAgICAgIGZvciBjYXNlIGluIGNhc2VzIGlmIHR5cGUoY2Fz
-ZSkgaXMgZGljdH0KICAgIGlmIHNldChieV9hcm0pICE9IHtGYWxzZSwgVHJ1
-ZX0gb3IgbGVuKGJ5X2FybSkgIT0gMjoKICAgICAgICBmYWlsdXJlcy5hcHBl
-bmQoImFybXMgYXJlIG1pc3Npbmcgb3IgZHVwbGljYXRlZCIpCgogICAgZGVm
-IHJlcXVpcmUoY29uZGl0aW9uLCBtZXNzYWdlKToKICAgICAgICBpZiBub3Qg
-Y29uZGl0aW9uOgogICAgICAgICAgICBmYWlsdXJlcy5hcHBlbmQobWVzc2Fn
-ZSkKCiAgICBmb3IgZHJvcCBpbiAoRmFsc2UsIFRydWUpOgogICAgICAgIGNh
-c2UgPSBieV9hcm0uZ2V0KGRyb3ApCiAgICAgICAgaWYgY2FzZSBpcyBOb25l
-OgogICAgICAgICAgICBjb250aW51ZQogICAgICAgIGxhYmVsID0gInRyZWF0
-bWVudCIgaWYgZHJvcCBlbHNlICJjb250cm9sIgogICAgICAgIHJlcXVpcmUo
-Y2FzZS5nZXQoImRyb3BwZWRfa2V5cmVsZWFzZV9jb3VudCIpID09IGludChk
-cm9wKSwKICAgICAgICAgICAgICAgIGYie2xhYmVsfTogaW5qZWN0ZWQgS2V5
-UmVsZWFzZSBkcm9wIGNvdW50IGRpZmZlcnMiKQogICAgICAgIHRlcm1pbmFs
-ID0gY2FzZS5nZXQoImV4ZWN1dG9yX3Rlcm1pbmFsIikKICAgICAgICByZXF1
-aXJlKHR5cGUodGVybWluYWwpIGlzIGRpY3QsIGYie2xhYmVsfTogdGVybWlu
-YWwgbWlzc2luZyIpCiAgICAgICAgaWYgdHlwZSh0ZXJtaW5hbCkgaXMgZGlj
-dDoKICAgICAgICAgICAgcmVxdWlyZSh0ZXJtaW5hbC5nZXQoInN0YXR1cyIp
-ID09ICJjb21wbGV0ZWQiLAogICAgICAgICAgICAgICAgICAgIGYie2xhYmVs
-fTogdGVybWluYWwgbm90IGNvbXBsZXRlZCIpCiAgICAgICAgICAgIHJlcXVp
-cmUodGVybWluYWwuZ2V0KCJzdGVwc19jb21wbGV0ZWQiKSA9PSAxLAogICAg
-ICAgICAgICAgICAgICAgIGYie2xhYmVsfTogZXhwZWN0ZWQgZXhhY3RseSBv
-bmUgY29tcGxldGVkIHN0ZXAiKQogICAgICAgICAgICByZWxlYXNlID0gdGVy
-bWluYWwuZ2V0KCJyZWxlYXNlIikKICAgICAgICAgICAgcmVxdWlyZSh0eXBl
-KHJlbGVhc2UpIGlzIGRpY3QgYW5kIHJlbGVhc2UuZ2V0KCJ2ZXJpZmllZCIp
-IGlzIFRydWUsCiAgICAgICAgICAgICAgICAgICAgZiJ7bGFiZWx9OiB0ZXJt
-aW5hbCByZWxlYXNlIGlzIG5vdCB2ZXJpZmllZCIpCiAgICAgICAgcmVxdWly
-ZShjYXNlLmdldCgic2VydmVyX2tleWNvZGVzX2Rvd25fYWZ0ZXJfZXhlY3V0
-b3JfcmVsZWFzZSIpID09IFtdLAogICAgICAgICAgICAgICAgZiJ7bGFiZWx9
-OiBmYWtlIHNlcnZlciByZXRhaW5lZCBhIGtleSBhZnRlciBleGVjdXRvciBy
-ZWxlYXNlIikKICAgICAgICByZXF1aXJlKGNhc2UuZ2V0KCJvd25lcl9jbG9z
-ZV9yZWNvdmVyZWQiKSBpcyBUcnVlLAogICAgICAgICAgICAgICAgZiJ7bGFi
-ZWx9OiBvd25lciBjbG9zZSBkaWQgbm90IG9ic2VydmUgZW1wdHkgZmFrZSBr
-ZXltYXAiKQogICAgICAgIHJvdyA9IGNhc2UuZ2V0KCJyZWxlYXNlX3JvdyIp
-CiAgICAgICAgcmVxdWlyZSh0eXBlKHJvdykgaXMgZGljdCwgZiJ7bGFiZWx9
-OiBleHBsaWNpdCByZWxlYXNlIHRyYW5zaXRpb24gbWlzc2luZyIpCiAgICAg
-ICAgaWYgdHlwZShyb3cpIGlzIG5vdCBkaWN0OgogICAgICAgICAgICBjb250
-aW51ZQogICAgICAgIHJlY2VpcHQgPSByb3cuZ2V0KCJvd25lcl90aHJlYWRf
-a2V5dXBfcmVjZWlwdCIpCiAgICAgICAgcmVxdWlyZSh0eXBlKHJlY2VpcHQp
-IGlzIGRpY3QsCiAgICAgICAgICAgICAgICBmIntsYWJlbH06IG93bmVyLXRo
-cmVhZCBrZXktdXAgcmVjZWlwdCBtaXNzaW5nIikKICAgICAgICBpZiB0eXBl
-KHJlY2VpcHQpIGlzIG5vdCBkaWN0OgogICAgICAgICAgICBjb250aW51ZQog
-ICAgICAgIGF0dGVtcHRzID0gcmVjZWlwdC5nZXQoInNlcnZlcl9rZXl1cF9h
-dHRlbXB0cyIpCiAgICAgICAgZXhwZWN0ZWRfY291bnQgPSAyIGlmIGRyb3Ag
-ZWxzZSAxCiAgICAgICAgcmVxdWlyZSh0eXBlKGF0dGVtcHRzKSBpcyBsaXN0
-IGFuZCBsZW4oYXR0ZW1wdHMpID09IGV4cGVjdGVkX2NvdW50LAogICAgICAg
-ICAgICAgICAgZiJ7bGFiZWx9OiBleHBlY3RlZCB7ZXhwZWN0ZWRfY291bnR9
-IG93bmVyIGF0dGVtcHQocykiKQogICAgICAgIGlmIHR5cGUoYXR0ZW1wdHMp
-IGlzIGxpc3QgYW5kIGxlbihhdHRlbXB0cykgPT0gZXhwZWN0ZWRfY291bnQ6
-CiAgICAgICAgICAgIHJlcXVpcmUocmVjZWlwdC5nZXQoInNlcnZlcl9rZXl1
-cF9hdHRlbXB0X2NvdW50IikgPT0gZXhwZWN0ZWRfY291bnQsCiAgICAgICAg
-ICAgICAgICAgICAgZiJ7bGFiZWx9OiByZXBvcnRlZCBhdHRlbXB0IGNvdW50
-IGRpZmZlcnMiKQogICAgICAgICAgICBmaXJzdCA9IGF0dGVtcHRzWzBdCiAg
-ICAgICAgICAgIHJlcXVpcmUoZmlyc3QuZ2V0KCJzZXJ2ZXJfa2V5X2Rvd25f
-YmVmb3JlIikgaXMgVHJ1ZSwKICAgICAgICAgICAgICAgICAgICBmIntsYWJl
-bH06IGZpcnN0IGF0dGVtcHQgZGlkIG5vdCBzdGFydCB3aXRoIGtleSBkb3du
-IikKICAgICAgICAgICAgaWYgZHJvcDoKICAgICAgICAgICAgICAgIHJlcXVp
-cmUoZmlyc3QuZ2V0KCJzZXJ2ZXJfa2V5X2Rvd25fYWZ0ZXIiKSBpcyBUcnVl
-LAogICAgICAgICAgICAgICAgICAgICAgICAidHJlYXRtZW50OiBmaXJzdCBk
-cm9wcGVkIHJlbGVhc2Ugd2FzIG5vdCBvYnNlcnZlZCBzdGlsbCBkb3duIikK
-ICAgICAgICAgICAgICAgIHNlY29uZCA9IGF0dGVtcHRzWzFdCiAgICAgICAg
-ICAgICAgICByZXF1aXJlKHNlY29uZC5nZXQoInNlcnZlcl9rZXlfZG93bl9i
-ZWZvcmUiKSBpcyBUcnVlLAogICAgICAgICAgICAgICAgICAgICAgICAidHJl
-YXRtZW50OiByZXRyeSBkaWQgbm90IGJlZ2luIHdpdGgga2V5IHN0aWxsIGRv
-d24iKQogICAgICAgICAgICAgICAgcmVxdWlyZShzZWNvbmQuZ2V0KCJzZXJ2
-ZXJfa2V5X2Rvd25fYWZ0ZXIiKSBpcyBGYWxzZSwKICAgICAgICAgICAgICAg
-ICAgICAgICAgInRyZWF0bWVudDogcmV0cnkgZGlkIG5vdCBjbGVhciBmYWtl
-IHNlcnZlciBrZXkgc3RhdGUiKQogICAgICAgICAgICBlbHNlOgogICAgICAg
-ICAgICAgICAgcmVxdWlyZShmaXJzdC5nZXQoInNlcnZlcl9rZXlfZG93bl9h
-ZnRlciIpIGlzIEZhbHNlLAogICAgICAgICAgICAgICAgICAgICAgICAiY29u
-dHJvbDogbm9ybWFsIGtleS11cCBkaWQgbm90IGNsZWFyIGZha2Ugc2VydmVy
-IGtleSBzdGF0ZSIpCgogICAgcmV0dXJuIHsic2NoZW1hIjogInYzOS12MTUt
-a2V5dXAtbG9zcy1hMDktYXVkaXQtdjEiLAogICAgICAgICAgICAicnVuX2lk
-IjogRVhQRUNURURfUlVOLAogICAgICAgICAgICAiY2FuZGlkYXRlX2Nhc2Vz
-IjogbGVuKGNhc2VzKSwKICAgICAgICAgICAgImZhaWx1cmVzIjogZmFpbHVy
-ZXMsCiAgICAgICAgICAgICJwYXNzIjogbm90IGZhaWx1cmVzLAogICAgICAg
-ICAgICAiY2xhc3NpZmljYXRpb24iOiAiUEFTU19DT05TVFJVQ1RJT05fU0NP
-UEVEIiBpZiBub3QgZmFpbHVyZXMKICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIGVsc2UgIkZBSUxfT1JfSU5DT01QTEVURV9DT05TVFJVQ1RJT04i
-fQoKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICByZXN1bHQgPSBh
-dWRpdChzeXMuYXJndlsxXSkKICAgIHByaW50KGpzb24uZHVtcHMocmVzdWx0
-LCBpbmRlbnQ9Miwgc29ydF9rZXlzPVRydWUpKQogICAgcmFpc2UgU3lzdGVt
-RXhpdCgwIGlmIHJlc3VsdFsicGFzcyJdIGVsc2UgMSkK
+#!/usr/bin/env python3
+"""Independent exact-shape audit of the retained A09 fake-X candidate raw."""
+import json
+import pathlib
+import sys
+
+
+EXPECTED_RUN = "a09-current-main-712a71b-20261005-one-shot"
+
+
+def audit(path):
+    raw = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    failures = []
+    if raw.get("schema") != "v39-v15-keyup-loss-a09-raw-v1":
+        failures.append("wrong raw schema")
+    if raw.get("run_id") != EXPECTED_RUN:
+        failures.append("wrong run identity")
+    if raw.get("source_base") != "712a71b25dc024b5406b24b568225c0663e7278b":
+        failures.append("wrong source base")
+    if raw.get("claims") != {
+            "real_x11": False, "gui": False, "doom": False, "model": False,
+            "physical_keyboard": False, "application_effect": False}:
+        failures.append("scope claims are not all explicitly false")
+    cases = raw.get("cases")
+    if type(cases) is not list or len(cases) != 2:
+        failures.append("expected exactly two fixed arms")
+        cases = []
+    by_arm = {case.get("injected_keyrelease_loss"): case
+              for case in cases if type(case) is dict}
+    if set(by_arm) != {False, True} or len(by_arm) != 2:
+        failures.append("arms are missing or duplicated")
+
+    def require(condition, message):
+        if not condition:
+            failures.append(message)
+
+    for drop in (False, True):
+        case = by_arm.get(drop)
+        if case is None:
+            continue
+        label = "treatment" if drop else "control"
+        require(case.get("dropped_keyrelease_count") == int(drop),
+                f"{label}: injected KeyRelease drop count differs")
+        terminal = case.get("executor_terminal")
+        require(type(terminal) is dict, f"{label}: terminal missing")
+        if type(terminal) is dict:
+            require(terminal.get("status") == "completed",
+                    f"{label}: terminal not completed")
+            require(terminal.get("steps_completed") == 1,
+                    f"{label}: expected exactly one completed step")
+            release = terminal.get("release")
+            require(type(release) is dict and release.get("verified") is True,
+                    f"{label}: terminal release is not verified")
+        require(case.get("server_keycodes_down_after_executor_release") == [],
+                f"{label}: fake server retained a key after executor release")
+        require(case.get("owner_close_recovered") is True,
+                f"{label}: owner close did not observe empty fake keymap")
+        row = case.get("release_row")
+        require(type(row) is dict, f"{label}: explicit release transition missing")
+        if type(row) is not dict:
+            continue
+        receipt = row.get("owner_thread_keyup_receipt")
+        require(type(receipt) is dict,
+                f"{label}: owner-thread key-up receipt missing")
+        if type(receipt) is not dict:
+            continue
+        attempts = receipt.get("server_keyup_attempts")
+        expected_count = 2 if drop else 1
+        require(type(attempts) is list and len(attempts) == expected_count,
+                f"{label}: expected {expected_count} owner attempt(s)")
+        if type(attempts) is list and len(attempts) == expected_count:
+            require(receipt.get("server_keyup_attempt_count") == expected_count,
+                    f"{label}: reported attempt count differs")
+            first = attempts[0]
+            require(first.get("server_key_down_before") is True,
+                    f"{label}: first attempt did not start with key down")
+            if drop:
+                require(first.get("server_key_down_after") is True,
+                        "treatment: first dropped release was not observed still down")
+                second = attempts[1]
+                require(second.get("server_key_down_before") is True,
+                        "treatment: retry did not begin with key still down")
+                require(second.get("server_key_down_after") is False,
+                        "treatment: retry did not clear fake server key state")
+            else:
+                require(first.get("server_key_down_after") is False,
+                        "control: normal key-up did not clear fake server key state")
+
+    return {"schema": "v39-v15-keyup-loss-a09-audit-v1",
+            "run_id": EXPECTED_RUN,
+            "candidate_cases": len(cases),
+            "failures": failures,
+            "pass": not failures,
+            "classification": "PASS_CONSTRUCTION_SCOPED" if not failures
+                               else "FAIL_OR_INCOMPLETE_CONSTRUCTION"}
+
+
+if __name__ == "__main__":
+    result = audit(sys.argv[1])
+    print(json.dumps(result, indent=2, sort_keys=True))
+    raise SystemExit(0 if result["pass"] else 1)
