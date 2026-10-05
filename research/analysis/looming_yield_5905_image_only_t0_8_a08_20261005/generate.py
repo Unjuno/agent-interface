@@ -87,4 +87,3 @@ print(json.dumps({"cases": len(cases), "frames": len(hashes) - 1,
                   "manifest_sha256": hashes["manifest.json"],
                   "truth_sha256": hashlib.sha256((TRUTH / "sealed_truth.json").read_bytes()).hexdigest()}, sort_keys=True))
 
-
