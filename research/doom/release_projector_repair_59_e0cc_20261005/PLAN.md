@@ -1,0 +1,11 @@
+# Ordinary projector regression repair
+
+Worker e0cc, FINAL-v5, 2026-10-05. Base main 1703ec621dbe12a8be5fc808e9e3d1f77b775829. Branch fix/59-release-projector-e0cc-20261005. No formal allocation, live X/game/model/container, or main update.
+
+H: The merged offline projector can report ready with an unmatched admission when another release identity repeats. Its fabricated positive fixture also hides rejection of normal V12/V4/batch producer rows. Repair should establish one-to-one matching and consume actual emitted protocol without adding authority or application-effect claims.
+
+T: Preserve reviewer's original 3ceac8ba counterexample. Add ordinary regression tests for repeated releases, malformed identity fields, admission acknowledgement/deadline chronology, batch verification flags and actual fake-X V12/V4/batch output. Exercise normal, retry and cancellation boundaries using actual owner thread, wrappers, backend raw and publication methods; stub Xlib and the unused ancestor backend only. Run scoped unit/composition tests before repair and after repair, preserving every result and exact source snapshots. Regression retest after repair is allowed; no consumed formal experiment is replayed.
+
+D: Original duplicate must fail readiness; malformed identities must return not-ready without exceptions. Complete actual normal/retry producer rows must project exactly two distinct matched keys. Incomplete/cancelled/unverified batches and inconsistent identities/clocks must yield no projected rows. Existing valid fixture remains supported after its fields reflect the actual producer protocol. All started fake-owner threads must close. Any harness failure is retained and repaired separately.
+
+C/U: Fake-X checks establish local Python protocol behavior only. No V39 full loop, V15 Session/main, program parser/lowering, physical input, real application consumption, deadline latency bound or MAP01 benefit is established. The new #8119 helper is offline, not the existing V39 input_edge_receipts function. #8108 direct-receipt analyzer remains untouched. Other worker's formal boolean-attempt probe (5991435309) is not replayed; exact-type regression coverage may be added during repair. Current main already contains deadline/retry-continuity fixes beyond #8119's original head.

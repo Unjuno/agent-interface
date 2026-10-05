@@ -1,0 +1,249 @@
+diff --git a/research/doom/project_v39_release_measurement_v1.py b/research/doom/project_v39_release_measurement_v1.py
+index 3683534757..3628389010 100644
+--- a/research/doom/project_v39_release_measurement_v1.py
++++ b/research/doom/project_v39_release_measurement_v1.py
+@@ -1,4 +1,9 @@
+-"""Strictly project V4 per-key owner receipts into bounded release measurements."""
++"""Project unambiguous same-step V4/batch key receipts into release measurements.
++
++Cross-step holds, repeated admissions for one identity, and lease renewal across
++the pair need stronger admission custody; they remain unready in this helper.
++This offline projection does not establish application consumption.
++"""
+ 
+ 
+ def _is_int(value):
+@@ -6,21 +11,28 @@ def _is_int(value):
+ 
+ 
+ def _identity(row):
+-    return tuple(row.get(name) for name in
+-                 ("id", "step", "key", "owner_id", "intent_token"))
++    identity = tuple(row.get(name) for name in
++                     ("id", "step", "key", "owner_id", "intent_token"))
++    if (not all(type(value) is str and value for value in
++                (identity[0], identity[2], identity[3], identity[4]))
++            or not _is_int(identity[1]) or identity[1] < 0):
++        return None
++    return identity
+ 
+ 
+ def _valid_pair(admission, release):
+-    if admission.get("event") != "input_admission" or admission.get("operation") != "down":
++    # The key DOWN producer emits input_admission without an operation field.
++    if (admission.get("event") != "input_admission"
++            or ("operation" in admission and admission["operation"] != "down")):
+         return False
+     if release.get("event") != "input_release_transition" or release.get("operation") != "up":
+         return False
+     identity = _identity(admission)
+-    if (not all(isinstance(value, str) and value for value in
+-                (identity[0], identity[2], identity[3], identity[4]))
+-            or not _is_int(identity[1]) or identity != _identity(release)):
++    if identity is None or identity != _identity(release):
+         return False
+-    if (release.get("release_batch_identifier") != admission.get("id")
++    if (release.get("release_batch_schema") != "input-release-batch-v3"
++            or release.get("release_batch_identifier") != admission.get("id")
++            or not _is_int(release.get("release_batch_step"))
+             or release.get("release_batch_step") != admission.get("step")
+             or release.get("release_batch_complete") is not True
+             or not _is_int(release.get("release_batch_size"))
+@@ -32,7 +44,12 @@ def _valid_pair(admission, release):
+             or release.get("owner_thread_keyup_history_complete") is not True
+             or release.get("owner_thread_keyup_verified") is not True
+             or release.get("owner_transition_verified") is not True
+-            or release.get("owner_sample_after_batch_available") is not True
++            or ("owner_sample_after_batch_available" in release
++                and release["owner_sample_after_batch_available"] is not True)
++            or release.get("owner_sample_ordered_after_batch") is not True
++            or release.get("owner_identity_matches_after_batch") is not True
++            or release.get("intent_token_matches_after_batch") is not True
++            or release.get("owner_thread_keyup_verified_after_batch") is not True
+             or release.get("owned_keycodes_after_batch") != []
+             or release.get("physical_verification_authoritative") is not False):
+         return False
+@@ -44,6 +61,9 @@ def _valid_pair(admission, release):
+             or receipt.get("owner_id") != identity[3]
+             or receipt.get("intent_token") != identity[4]
+             or not _is_int(release.get("valid_until_ns"))
++            or not _is_int(receipt.get("valid_until_ns"))
++            or not _is_int(admission.get("valid_until_ns"))
++            or admission["valid_until_ns"] != release["valid_until_ns"]
+             or receipt.get("valid_until_ns") != release.get("valid_until_ns")
+             or receipt.get("server_sync_completed") is not True
+             or receipt.get("server_keyup_verified") is not True
+@@ -52,14 +72,16 @@ def _valid_pair(admission, release):
+             or receipt.get("physical_verification_authoritative") is not False
+             or receipt.get("cancel_requested_after_sync") is not False):
+         return False
+-    times = [admission.get("admitted_ns"), release.get("release_call_started_ns"),
++    times = [admission.get("admitted_ns"), admission.get("input_ack_ns"),
++             release.get("release_call_started_ns"),
+              receipt.get("owner_keyrelease_started_ns"),
+              receipt.get("owner_sync_returned_ns"),
+              receipt.get("owner_keymap_sampled_ns"),
+              release.get("release_call_returned_ns"),
+              release.get("owner_sample_after_started_ns"),
+              release.get("owner_sample_after_finished_ns")]
+-    if not all(_is_int(value) for value in times) or times != sorted(times):
++    if (not all(_is_int(value) for value in times) or times != sorted(times)
++            or release["release_call_started_ns"] >= release["valid_until_ns"]):
+         return False
+     attempts = receipt.get("server_keyup_attempts")
+     count = receipt.get("server_keyup_attempt_count")
+@@ -74,7 +96,8 @@ def _valid_pair(admission, release):
+         start, sync, sample = (attempt.get("keyrelease_started_ns"),
+                                attempt.get("sync_returned_ns"),
+                                attempt.get("keymap_sampled_ns"))
+-        if (attempt.get("attempt") != index or not all(_is_int(t) for t in (start, sync, sample))
++        if (not _is_int(attempt.get("attempt")) or attempt["attempt"] != index
++                or not all(_is_int(t) for t in (start, sync, sample))
+                 or not start <= sync <= sample
+                 or type(attempt.get("server_key_down_before")) is not bool
+                 or type(attempt.get("server_key_down_after")) is not bool
+@@ -85,9 +108,9 @@ def _valid_pair(admission, release):
+             return False
+         prior_sample = sample
+         prior_down_state = attempt["server_key_down_after"]
+-    return (attempts[0]["keyrelease_started_ns"] == times[2]
+-            and attempts[-1]["sync_returned_ns"] == times[3]
+-            and attempts[-1]["keymap_sampled_ns"] == times[4]
++    return (attempts[0]["keyrelease_started_ns"] == times[3]
++            and attempts[-1]["sync_returned_ns"] == times[4]
++            and attempts[-1]["keymap_sampled_ns"] == times[5]
+             and attempts[-1]["server_key_down_after"] is False)
+ 
+ 
+@@ -102,16 +125,18 @@ def project(records):
+     by_identity = {}
+     for admission in admissions:
+         key = _identity(admission)
+-        if key in by_identity:
++        if key is None or key in by_identity:
+             return {"measurement_ready": False, "rows": []}
+         by_identity[key] = admission
+     projected = []
+     batch_positions = {}
+     for release in releases:
+-        admission = by_identity.get(_identity(release))
++        # Consume the identity: one release cannot stand in for a different key.
++        admission = by_identity.pop(_identity(release), None)
+         if admission is None or not _valid_pair(admission, release):
+             return {"measurement_ready": False, "rows": []}
+-        batch = (release.get("release_batch_identifier"), release.get("release_batch_step"))
++        batch = (release["owner_id"], release["intent_token"],
++                 release["release_batch_identifier"], release["release_batch_step"])
+         batch_positions.setdefault(batch, []).append(
+             (release.get("release_batch_position"), release.get("release_batch_size")))
+         receipt = release["owner_thread_keyup_receipt"]
+@@ -121,6 +146,7 @@ def project(records):
+             "key": admission["key"], "owner_id": admission["owner_id"],
+             "intent_token": admission["intent_token"],
+             "admitted_ns": admission["admitted_ns"],
++            "input_ack_ns": admission["input_ack_ns"],
+             "release_call_started_ns": release["release_call_started_ns"],
+             "owner_keyrelease_started_ns": receipt["owner_keyrelease_started_ns"],
+             "owner_sync_returned_ns": receipt["owner_sync_returned_ns"],
+@@ -129,9 +155,12 @@ def project(records):
+             "application_consumption": "unobserved",
+             "physical_verification_authoritative": False,
+         })
++    if by_identity:
++        return {"measurement_ready": False, "rows": []}
+     for positions in batch_positions.values():
+         sizes = {size for _, size in positions}
+         indexes = [position for position, _ in positions]
+-        if len(sizes) != 1 or len(indexes) != len(positions) or sorted(indexes) != list(range(len(positions))) or next(iter(sizes)) != len(positions):
++        if (len(sizes) != 1 or sorted(indexes) != list(range(len(positions)))
++                or next(iter(sizes)) != len(positions)):
+             return {"measurement_ready": False, "rows": []}
+     return {"measurement_ready": True, "rows": projected}
+diff --git a/research/doom/test_project_v39_release_measurement_v1.py b/research/doom/test_project_v39_release_measurement_v1.py
+index 28e3466342..8f71c101b8 100644
+--- a/research/doom/test_project_v39_release_measurement_v1.py
++++ b/research/doom/test_project_v39_release_measurement_v1.py
+@@ -1,3 +1,4 @@
++import copy
+ import unittest
+ 
+ from project_v39_release_measurement_v1 import project
+@@ -8,6 +9,7 @@ def valid_pair():
+         "event": "input_admission", "operation": "down", "key": "space",
+         "id": "plan-a", "step": 2, "owner_id": "owner-1",
+         "intent_token": "token-1", "admitted_ns": 100,
++        "input_ack_ns": 110, "valid_until_ns": 900,
+     }
+     receipt = {
+         "event": "owner_explicit_keyup", "operation": "up", "key": "space",
+@@ -38,6 +40,11 @@ def valid_pair():
+         "owner_thread_keyup_history_complete": True,
+         "owner_thread_keyup_verified": True, "owner_transition_verified": True,
+         "owner_sample_after_batch_available": True,
++        "release_batch_schema": "input-release-batch-v3",
++        "owner_sample_ordered_after_batch": True,
++        "owner_identity_matches_after_batch": True,
++        "intent_token_matches_after_batch": True,
++        "owner_thread_keyup_verified_after_batch": True,
+         "owner_sample_after_started_ns": 180, "owner_sample_after_finished_ns": 185,
+         "owned_keycodes_after_batch": [],
+         "physical_verification_authoritative": False,
+@@ -46,6 +53,58 @@ def valid_pair():
+ 
+ 
+ class StrictProjectionTests(unittest.TestCase):
++    def test_duplicate_release_cannot_hide_an_unmatched_admission(self):
++        admission, release = valid_pair()
++        other_admission = dict(admission, key="w")
++        release.update(release_batch_size=2, release_batch_position=0)
++        repeated_release = copy.deepcopy(release)
++        repeated_release["release_batch_position"] = 1
++        self.assertEqual(project([admission, other_admission, release, repeated_release]),
++                         {"measurement_ready": False, "rows": []})
++
++    def test_malformed_identity_fails_closed_without_hashing_untrusted_values(self):
++        for position in (0, 1):
++            for field in ("id", "step", "key", "owner_id", "intent_token"):
++                for value in ([], {}, None, True):
++                    with self.subTest(position=position, field=field, value=value):
++                        records = valid_pair()
++                        records[position][field] = value
++                        self.assertEqual(project(records),
++                                         {"measurement_ready": False, "rows": []})
++
++    def test_requires_acknowledged_admission_and_matching_integer_deadline(self):
++        for field, value in (("input_ack_ns", None), ("input_ack_ns", True),
++                             ("input_ack_ns", 99), ("input_ack_ns", 141),
++                             ("valid_until_ns", None), ("valid_until_ns", 140),
++                             ("valid_until_ns", True), ("valid_until_ns", 901)):
++            with self.subTest(field=field, value=value):
++                records = valid_pair()
++                records[0][field] = value
++                self.assertFalse(project(records)["measurement_ready"])
++
++    def test_requires_actual_batch_verification_flags(self):
++        for field in ("owner_sample_ordered_after_batch",
++                      "owner_identity_matches_after_batch", "intent_token_matches_after_batch",
++                      "owner_thread_keyup_verified_after_batch"):
++            for value in (None, False, 1):
++                with self.subTest(field=field, value=value):
++                    records = valid_pair()
++                    records[1][field] = value
++                    self.assertFalse(project(records)["measurement_ready"])
++
++    def test_accepts_emitted_schema_without_fabricated_availability_or_down_operation(self):
++        records = valid_pair()
++        del records[0]["operation"]
++        del records[1]["owner_sample_after_batch_available"]
++        self.assertTrue(project(records)["measurement_ready"])
++        records[1]["owner_sample_after_batch_available"] = False
++        self.assertFalse(project(records)["measurement_ready"])
++
++    def test_rejects_boolean_attempt_ordinal_in_ordinary_regression(self):
++        records = valid_pair()
++        records[1]["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]["attempt"] = True
++        self.assertFalse(project(records)["measurement_ready"])
++
+     def test_projects_identity_bound_owner_release_without_claiming_app_consumption(self):
+         result = project(valid_pair())
+         self.assertTrue(result["measurement_ready"])

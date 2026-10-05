@@ -1,0 +1,44 @@
+{
+  "schema": "independent-projector-repair-review-v1",
+  "status": "NO_MATERIAL_DEFECT_FOUND_IN_SCOPED_REVIEW",
+  "base": "1703ec621dbe12a8be5fc808e9e3d1f77b775829",
+  "review_scope": "static production/test review plus read-only inspection of retained red-v1/green-v1 results; no candidate, unit test, session, executor, game, X, or formal run executed by reviewer",
+  "source_sha256": {
+    "research/doom/project_v39_release_measurement_v1.py": "ac09fe67866ac9621ea3cd9f526f56db588a18c11e039bb6093d47bfe24add5f",
+    "research/doom/test_project_v39_release_measurement_v1.py": "cab121c183f054951d30b0d81b9ba4e8d341982e16961f888105fb8b1e3c7865",
+    "research/doom/test_project_v39_release_measurement_composition.py": "8a5d24b73b54cd44a4a9f7d3c403845f522b7afabbc0792046e57791dfbf0217"
+  },
+  "retained_evidence": {
+    "red": {
+      "path": "../red-v1",
+      "exit_code": 1,
+      "methods": 16,
+      "failures": 25,
+      "errors": 20,
+      "stdout_sha256": "0e1bb1be6a2e368d78ed01352bee69623c790360c35c2572f2631dbcebad31f9",
+      "interpretation": "pre-repair tests reproduce duplicate identity, fabricated producer field assumptions, weak input validation, and absent real-producer composition support; retained unchanged"
+    },
+    "green": {
+      "path": "../green-v1",
+      "exit_code": 0,
+      "methods": 16,
+      "stdout_sha256": "5ecb4d534938423c1b436e6dec05dbb78601ab2387b151d8df069e2a059f3eea",
+      "interpretation": "all projector and composition cases pass; five composition scenarios include normal two-key batch, retry, cancellation, duplicate release, and cross-step rejection"
+    }
+  },
+  "review_findings": [],
+  "confirmed_properties": [
+    "release matching consumes each identity once and rejects unmatched admissions",
+    "identity values are type-checked before tuple dictionary use; malformed values fail closed",
+    "batch grouping includes owner, token, batch id, and batch step; positions must be exact contiguous integer ordinals and size must match",
+    "admission acknowledgement, common deadline, caller/owner receipt times, retry ordering, final key-up state, and post-batch state ordering are checked",
+    "the ordinary regression rejects bool as attempt ordinal and other int-valued booleans",
+    "producer composition fixture uses synthetic Xlib with actual V12 owner, V3/V4 wrappers, and batch backend raw/publisher; direct raw dispatch is used, not backend execute or session loop"
+  ],
+  "limitations": [
+    "same-step/same-deadline identity scope is explicit; cross-step hold pairing remains not-ready",
+    "fake-X composition does not run Session, Executor, V39 main loop, program parser/lowering, V15 main, or game",
+    "not evidence of physical input, application consumption, latency bound, or MAP01 benefit",
+    "the #8132 boolean-ordinal property is included as ordinary regression coverage; it is not a separate formal discovery"
+  ]
+}
