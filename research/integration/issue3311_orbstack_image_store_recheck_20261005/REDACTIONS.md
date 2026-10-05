@@ -1,0 +1,1 @@
+The local-home portion of the Docker socket path and the workspace argument to `df` are redacted in these public evidence files. The Docker daemon's content-store error text, image digest, filesystem capacity and command semantics are unchanged.
