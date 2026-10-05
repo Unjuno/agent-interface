@@ -13,7 +13,7 @@ from executor_v3 import Cancelled, DecisionRequired
 
 
 class InputOwner:
-    def __init__(self, display_name):
+    def __init__(self, display_name, *, sample_keymap_after_each_explicit_up=False):
         self.requests = queue.Queue()
         self.owner_id = uuid.uuid4().hex
         self.records = []
@@ -21,6 +21,9 @@ class InputOwner:
         self.error = None
         self.closed = False
         self.display_name = display_name
+        if type(sample_keymap_after_each_explicit_up) is not bool:
+            raise ValueError('sample_keymap_after_each_explicit_up must be bool')
+        self.sample_keymap_after_each_explicit_up = sample_keymap_after_each_explicit_up
         self.stopped = threading.Event()
         self.stop_requested = threading.Event()
         self.thread = threading.Thread(target=self._thread_main, name='input-owner', daemon=True)
@@ -340,9 +343,33 @@ class InputOwner:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
                                 owner_keyrelease_started_ns = time.perf_counter_ns()
+                                sample_receipt = {}
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
                                 owner_sync_returned_ns = time.perf_counter_ns()
+                                if self.sample_keymap_after_each_explicit_up:
+                                    sample_started_ns = time.perf_counter_ns()
+                                    try:
+                                        keymap = d.query_keymap()
+                                        if not isinstance(keymap, (bytes, bytearray)) or len(keymap) <= code // 8:
+                                            raise ValueError('invalid X11 keymap sample')
+                                        keycode_down = bool(keymap[code // 8] & (1 << (code % 8)))
+                                        sample_available = True
+                                        sample_error_type = None
+                                    except Exception as sample_error:
+                                        keycode_down = None
+                                        sample_available = False
+                                        sample_error_type = type(sample_error).__name__
+                                    sample_finished_ns = time.perf_counter_ns()
+                                    sample_receipt = dict(
+                                        owner_keymap_sample_available=sample_available,
+                                        owner_keymap_state_after_release=(
+                                            'DOWN' if keycode_down is True else
+                                            'UP' if keycode_down is False else 'UNAVAILABLE'),
+                                        owner_keycode_down_after_release=keycode_down,
+                                        owner_keymap_sample_started_ns=sample_started_ns,
+                                        owner_keymap_sample_finished_ns=sample_finished_ns,
+                                        owner_keymap_sample_error_type=sample_error_type)
                                 cancel = getattr(lease, 'cancel', None)
                                 cancel_requested_after_sync = (
                                     cancel.is_set() if callable(getattr(cancel, 'is_set', None))
@@ -358,7 +385,8 @@ class InputOwner:
                                     owner_sync_returned_ns=owner_sync_returned_ns,
                                     cancel_requested_after_sync=cancel_requested_after_sync,
                                     server_sync_completed=True,
-                                    physical_verification_authoritative=False))
+                                    physical_verification_authoritative=False,
+                                    **sample_receipt))
                             result = None
                     else:
                         raise ValueError('unknown input operation')
@@ -378,3 +406,4 @@ class InputOwner:
                 self.records.append(dict(event='cleanup_failed', error=repr(exc), verified=False))
             finally:
                 d.close()
+
