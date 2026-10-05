@@ -19,6 +19,7 @@ The App Server uses the `turn/start` `toolOutput` form established by the separa
 ## Freeze and changed files
 
 - Base: `origin/main` `402c7d1b5147b2a905098f082233db60a47d68db` (2026-10-05).
+- Current-main verification rerun after syncing the branch: `62da4c836a2419d0b1261708b5a59ee3d82db618`. Its changes add an independent V16 lifecycle audit package and do not modify the three runtime files under test. The saved suite outputs and exit codes correspond to this post-sync run.
 - Frozen source SHA-256 at base:
   - `research/doom/map01_overlap_controller_v39.py`: `4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca`
   - `research/live_control/persistent_planner_adapter_v2.py`: `e00ca6b8f20ee1081dc57a0ccd754115fe81f9bf5fa36553ed7c98add873fc0e`
