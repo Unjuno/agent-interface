@@ -38,10 +38,10 @@ cases:
 The candidate requires exact nonnegative `int` values for episode tics, finite
 nonnegative integral-valued kill/death numbers (including ViZDoom's documented
 float), a positive exact `int` tic rate, and exact `bool` terminal flags. The
-six focused tests pass in normal and optimized Python.
-Existing V15 lifecycle/selection coverage previously passed 8/8 with an inert
-`executor_v13` import stub; the sparse checkout omitted runtime modules, so
-this does not qualify full runtime startup.
+six focused tests pass in normal and optimized Python. The V15 lifecycle/
+selection suite passes 8/8 with an inert `executor_v13` import stub against
+this candidate. This does not qualify full runtime startup or the end-to-end
+V39 controller path.
 
 ## Reproduction
 
@@ -56,9 +56,10 @@ git diff --check
 ```
 
 The exact normal and optimized unittest outputs are retained as
-`tests-normal.log` and `tests-optimized.log`; `RESULT.json` records their
-SHA-256 digests, and `audit.py` verifies both logs alongside the candidate
-source/test hashes.
+`tests-normal.log` and `tests-optimized.log`; the lifecycle/selection output is
+`tests-lifecycle-selection.log`. `RESULT.json` records their SHA-256 digests,
+and `audit.py` verifies all three logs alongside the candidate source/test
+hashes.
 
 ## Contract correction
 

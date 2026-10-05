@@ -25,6 +25,7 @@ assert result["baseline"]["boolean_start"]["accepted"] is True
 assert result["baseline"]["fractional_post_sample"]["accepted"] is True
 assert result["candidate"]["focused_tests_normal"] == "6/6 passed"
 assert result["candidate"]["focused_tests_optimized"] == "6/6 passed"
+assert result["candidate"]["v15_lifecycle_selection"] == "8/8 passed with inert executor_v13 import stub against current candidate"
 assert result["candidate"]["integral_float_counter_control"] == "3.0 kills / 2.0 deaths accepted as exact scorer counts"
 assert result["live_game"] is False and result["model_calls"] == 0
 print("AUDIT_PASS: base blob, candidate hashes, recorded test gate, and scope")
