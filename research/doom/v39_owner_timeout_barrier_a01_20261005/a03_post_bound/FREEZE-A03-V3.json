@@ -1,0 +1,33 @@
+{
+  "candidate_pr_7805_head": "61502e45d40b67b6d588b4e8357e42fde05a9dbe",
+  "preflight": "Assert delayed 1.75 s gate timer exists and timeout handler does not open gate immediately.",
+  "run_id": "v39-owner-timeout-post-bound-a03-20261005-v3",
+  "environment": "Native Windows fake-display construction run; WSLc and Docker Linux engine unavailable. No live allocation.",
+  "frozen_at": "2026-10-05T00:15:22Z",
+  "command": "py -3.11 probe_a03_v3.py",
+  "prior_attempt_freezes": {
+    "a03_v2": "19b4a7cb4445d13277b38b4d52c484e8d0b759a05254febc36fb6d4d92aff696",
+    "a03_v1": "d301857adac9927ddf419719234f427539791d50c1629e79ad40062a910c90a8"
+  },
+  "decision": "Run matched baseline/candidate once after passing preflight; preserve result; do not retry.",
+  "locked_files": [
+    {
+      "sha256": "43fa1ec96ca648ba07ee74b8cfb226a0dcbcbbabe0269d9bfaa3e45f578b6c5f",
+      "bytes": 412,
+      "path": "PROTOCOL-A03-V3.md"
+    },
+    {
+      "sha256": "059920e6d785e179177e9387e13d35df92b290fe958259fe4020f45a27d78b37",
+      "bytes": 7400,
+      "path": "probe_a03_v3.py"
+    },
+    {
+      "sha256": "0f50e2cb564201d4eaf52eb5d6197c043213e736854b97271e2778c1ba20dd6f",
+      "bytes": 698,
+      "path": "CONSTRUCTION-A03-V2.md"
+    }
+  ],
+  "schema": "v39-owner-timeout-post-bound-freeze-v3",
+  "base_main": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "a02_freeze_sha256": "30fd54462098117510c183457edfc20e2d912701c94903f8d8863d7e90840e1f"
+}

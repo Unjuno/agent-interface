@@ -1,0 +1,155 @@
+{
+  "schema": "v39-owner-timeout-post-bound-late-drain-v1",
+  "base_main": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "candidate_pr_7805_head": "61502e45d40b67b6d588b4e8357e42fde05a9dbe",
+  "control": {
+    "arm": "baseline",
+    "timing": {
+      "barrier_call_start_ns": 172206632634400,
+      "barrier_call_end_ns": 172208631863600,
+      "timeout_return_ns": 172208631877900
+    },
+    "terminal": {
+      "status": "failed",
+      "release_verified": false
+    },
+    "bridge_events": [
+      "accepted",
+      "step_started",
+      "input_admission",
+      "terminal"
+    ],
+    "up_rows": [],
+    "owner_releases": [
+      {
+        "reason": "expired",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": [
+          "CONFIRMED_PHYSICAL_UP"
+        ]
+      },
+      {
+        "reason": "stop_requested",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": []
+      }
+    ],
+    "owner_stopped_after_terminal": true,
+    "physical_empty": true,
+    "bridge_held": [
+      "F8"
+    ],
+    "event_after_terminal": false
+  },
+  "candidate": {
+    "arm": "candidate",
+    "timing": {
+      "barrier_call_start_ns": 172208690119900,
+      "barrier_call_end_ns": 172210685492800,
+      "timeout_return_ns": 172210685499700,
+      "owner_stopped_within_bound": true,
+      "late_drain_wait_ns": 99400
+    },
+    "terminal": {
+      "status": "failed",
+      "release_verified": false
+    },
+    "bridge_events": [
+      "accepted",
+      "step_started",
+      "input_admission",
+      "input_release_measurement",
+      "terminal"
+    ],
+    "up_rows": [
+      {
+        "event": "input_release_measurement",
+        "key": "F8",
+        "id": "timeout-a03-candidate",
+        "step": 0,
+        "owner_id": "8c488ba6f37047378b792e4ba86f9512",
+        "intent_token": "intent-timeout-a03",
+        "reason": "expired",
+        "physical_key_measurement": {
+          "edge": "up",
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "bracket": {
+            "status": "CONFIRMED_PHYSICAL_UP",
+            "physical_up_interval": [
+              172208690189000,
+              172210685528200
+            ],
+            "release_id": "8c488ba6f37047378b792e4ba86f9512:r2:cleanup-up:74",
+            "owner_id": "8c488ba6f37047378b792e4ba86f9512",
+            "intent_token": "intent-timeout-a03",
+            "key": "F8",
+            "grants_input_authority": false,
+            "application_consumption_observed": false
+          },
+          "actuation_id": "8c488ba6f37047378b792e4ba86f9512:g1:F8",
+          "identity_status": "RETIRED",
+          "pre_sample": {
+            "available": true,
+            "down": true,
+            "started_ns": 172208690182300,
+            "finished_ns": 172208690189000,
+            "error": null
+          },
+          "post_sample": {
+            "available": true,
+            "down": false,
+            "started_ns": 172210685523100,
+            "finished_ns": 172210685528200,
+            "error": null
+          },
+          "release_attempted": true,
+          "release_request_ns": 172208690190300,
+          "sync_return_ns": 172210685522100,
+          "adapter_edge": {
+            "edge": "up",
+            "status": "CONFIRMED_PHYSICAL_UP",
+            "actuation_id": "8c488ba6f37047378b792e4ba86f9512:g1:F8",
+            "owner_id": "8c488ba6f37047378b792e4ba86f9512",
+            "intent_token": "intent-timeout-a03",
+            "key": "F8",
+            "interval": [
+              172208690189000,
+              172210685528200
+            ],
+            "grants_input_authority": false
+          },
+          "grants_input_authority": false,
+          "application_consumption_observed": false
+        },
+        "grants_input_authority": false
+      }
+    ],
+    "owner_releases": [
+      {
+        "reason": "expired",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": [
+          "CONFIRMED_PHYSICAL_UP"
+        ]
+      },
+      {
+        "reason": "stop_requested",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": []
+      }
+    ],
+    "owner_stopped_after_terminal": true,
+    "physical_empty": true,
+    "bridge_held": [],
+    "event_after_terminal": false
+  },
+  "scope": "matched fake-display owner-thread timeout pair with gate released 1.75 s after timeout; no real X11, OS input, game, model, useful feedback, recovery efficacy, or live MAP01 evidence"
+}

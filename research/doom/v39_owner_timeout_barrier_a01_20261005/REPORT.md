@@ -9,3 +9,7 @@ The candidate ran once on native Windows CPython 3.11.9. The frozen source pair 
 The read-only result audit passes the saved summary, exact captured stdout, and all 18 frozen file hashes. It does not independently sample an OS keyboard or re-run the candidate. Candidate stdout is retained in `TOOL_STDOUT_CAPTURE.txt`; structured result is `results/RESULT.json`. Reproduce the saved-result check with `py -3.11 audit_result.py`. Do not rerun A01.
 
 No live X11, OS input, game/task effect, model, independently useful feedback, threat exposure, bounded recovery efficacy, latency distribution, safety rate, or MAP01 result was tested. The #59 live gate remains open and separately unassigned.
+
+## A03 successor: release completes after bounded wait
+
+The A02 late-drain candidate was challenged at its 1.5 s owner-stop wait boundary. See [`a03_post_bound/A03_REPORT.md`](a03_post_bound/A03_REPORT.md). The forced schedule shows the expected limitation when the owner remains blocked past the wait: physical up is later confirmed in the fake backend, but the bridge retains F8 and emits no release row; ExecutorV3 remains failed/unverified. This is not evidence about real X11 frequency or live MAP01 behavior.
