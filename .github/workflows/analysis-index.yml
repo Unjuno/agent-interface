@@ -162,3 +162,11 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/confusion_adaptive_practice_8084_t0_a01_20261005 -p 'test_*.py' -v
       - name: Test Issue #8084 confusion-adaptive practice T0 A02 input-isolated method
         run: python -B -m unittest discover -s research/analysis/confusion_adaptive_practice_8084_t0_a02_20261005 -p 'test_*.py' -v
+      - name: Test Issue #8049 IPCW bootstrap A03 construction contract
+        run: python -B -m unittest discover -s research/analysis/ipcw_repeated_uncertainty_7993_a02_20261005/successor_a03_seed8049021 -p 'test_*.py' -v
+      - name: Verify Issue #8112 A06 boundary-jitter retained result
+        run: python -B -m unittest discover -s research/analysis/looming_yield_5905_boundary_jitter_a06_20261005 -p 'test_*.py' -v
+      - name: Verify Issue #8135 T0 A01 preserved auditor failure
+        run: python -B -m unittest discover -s research/analysis/persistent_counterparty_8135_t0_a01_20261005 -p 'test_failure.py' -v
+      - name: Verify Issue #8135 T0 A02 retained method result
+        run: python -B -m unittest discover -s research/analysis/persistent_counterparty_8135_t0_a02_20261005 -p 'test_*.py' -v

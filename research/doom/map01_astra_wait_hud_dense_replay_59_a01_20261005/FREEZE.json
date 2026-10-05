@@ -1,0 +1,81 @@
+{
+  "auditor_sha256": "7008a863197c6e6566f65a43a057d15600db712a26f2a4c277ef1bab373f2001",
+  "base_commit": "88d875cc0916accb1a5fa36057253686f0586f1e",
+  "candidate_invocations_allowed": 1,
+  "candidate_sha256": "8b69d3dfe6dac7a749954d37bb57b2260f2f33442ac5844f0ab2e4caed8e2b4c",
+  "container": {
+    "architecture": "linux/arm64",
+    "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "network": "none",
+    "requested_cpus": 1,
+    "requested_memory_bytes": 1073741824,
+    "requested_pids_limit": 64
+  },
+  "expected_interpretive_boundary": {
+    "first_changed_game_seconds": 47.0,
+    "first_local_plan_sample_game_seconds": 56.4,
+    "prechange_game_seconds": 46.8,
+    "rule": "Do not assign a health delta spanning the 56.2 pending and 56.4 returned samples to model wait alone.",
+    "wait_last_sample_game_seconds": 56.2
+  },
+  "independent_audit_invocations_allowed": 1,
+  "package_input_sha256": {
+    "VISUAL_READOUT.json": "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+    "audit_independent.py": "7008a863197c6e6566f65a43a057d15600db712a26f2a4c277ef1bab373f2001",
+    "input/health_roi.rgb": "ba7eeedffcf37554cb95a7f433fb8deeacc79904fca9e9d9e316cf43477bc93d",
+    "run_candidate.py": "8b69d3dfe6dac7a749954d37bb57b2260f2f33442ac5844f0ab2e4caed8e2b4c"
+  },
+  "pilot_disclosure": "A read-only visual pilot inspected selected timestamps before this freeze and suggested a health change during decision 4 wait. The frozen candidate below is a full-window pixel-state reconstruction; it is not described as a prospective confirmation.",
+  "run_id": "MAP01-ASTRA-WAIT-HUD-REPLAY-A01-20261005",
+  "schema": "map01-astra-decision4-dense-hud-replay-freeze-v1",
+  "source_sha256": {
+    "research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md": "95216e908b4ba002ea7214e379142ac5169740d25be2923639a9d1e012d76cde",
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "research/doom/results/map01-astra-attempt-v1/failure-analysis-v1.json": "b5383b9407198cd88e9aec712018965a27081701812619e9aeb84ba3e042e1ca",
+    "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+    "research/doom/results/map01-astra-attempt-v1/report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "research/doom/results/map01-astra-attempt-v1/video.json": "adc28ec07940266a577ce4a1353dde7bee5810e3cb46e83afe006c3732f59779"
+  },
+  "status_scope": "posthoc_descriptive_reconstruction_not_live_or_preregistered_allocation",
+  "video": {
+    "duration_seconds": 78,
+    "fps": 10,
+    "frames": 780,
+    "game_seconds_per_encoded_frame": 0.2,
+    "height": 560,
+    "path": "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4",
+    "playback_speed": 2.0,
+    "sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+    "width": 640
+  },
+  "window": {
+    "candidate_first_change_threshold_mean_abs_rgb_delta": 4.0,
+    "fps": 10,
+    "frame_count": 60,
+    "game_time_end_seconds": 56.4,
+    "game_time_start_seconds": 44.6,
+    "health_roi": {
+      "height": 48,
+      "pixel_format": "rgb24",
+      "width": 72,
+      "x": 128,
+      "y": 486
+    },
+    "host_extraction_command": "ffmpeg -ss 22.3 -i research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4 -frames:v 60 -vf crop=72:48:128:486,format=rgb24 -f rawvideo research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/input/health_roi.rgb",
+    "independent_audit_per_pixel_max_channel_abs_delta": 40,
+    "independent_audit_threshold_changed_pixels": 80,
+    "playback_start_seconds": 22.3,
+    "selected_full_frame_playback_seconds": [
+      22.3,
+      23.4,
+      23.5,
+      26.8,
+      26.9,
+      27.3,
+      27.4,
+      28.1,
+      28.2,
+      28.5
+    ]
+  }
+}
