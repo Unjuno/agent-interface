@@ -1,0 +1,5 @@
+# Latest stacked-parent qualification
+
+The child PR base advanced again after the first synchronization. Current parent PR #7662 head at this qualification was `422299f96871cf87bd5d808f727ad0dca6ff6461`, which adds chronology-audit evidence on top of `1ced273cc78fde3d0d9e70a147285126bfabecb0`. The source and test patch was rebased onto that head; no production source/test edits from that parent were displaced. Current candidate commit before this supplemental record: `0c15cf90604ddfd8cd1e311ba2a1ba176d675019`.
+
+The focused application-consumption regression passed 1/1. The full typed-feedback module ran 30 tests: 28 passed; two errors are the same absent retained trace fixtures documented in `PARENT_SYNC.md`. Exact command output and exit status are retained in `raw/PARENT_SYNC2_*`. `py_compile`, `git diff --check`, and the saved-result auditor pass. The A01 baseline and raw mutation matrix remain frozen to `a1cbc360d59ca90ceb6cc5cf2ca31be5e64c0414`; no live game/model/input allocation ran.

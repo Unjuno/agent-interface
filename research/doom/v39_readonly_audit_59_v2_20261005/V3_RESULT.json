@@ -1,0 +1,52 @@
+{
+  "schema": "v39-readonly-audit-v3-postrun-result-v1",
+  "experiment_id": "V39-READONLY-AUDIT-59-A03-V3-20261005",
+  "source_archive_commit": "719ef679c977a925db3a6d1fe15f9cd93cf2b42c",
+  "source_archive_path": "research/doom/v39_application_consumption_conflict_59_a01_20261005",
+  "source_archive_manifest_sha256": "7ecbce601ca686142dd8d9de27c05c39e14295d68f97b76bb251ed79df3f62a5",
+  "hypothesis": "A read-only archive auditor must derive strict interval order from saved bounds and reject coherent status/output label swaps even when the 15/85 aggregate is preserved.",
+  "mutated_archive": {
+    "v3_exit": 1,
+    "v3_status": "FAIL_READ_ONLY_ARCHIVE_AUDIT",
+    "candidate_counts": {
+      "incomplete": 85,
+      "ordered": 15
+    },
+    "v2_exit": 0,
+    "baseline_counts": {
+      "incomplete": 85,
+      "ordered": 15
+    },
+    "v2_status": "PASS_READ_ONLY_ARCHIVE_AUDIT",
+    "archive_bytes_changed": false,
+    "ordering_mismatch_detected": true
+  },
+  "untouched_archive": {
+    "candidate_sweep": {
+      "cases": 100,
+      "ordered": 15,
+      "incomplete": 85
+    },
+    "v3_status": "PASS_READ_ONLY_ARCHIVE_AUDIT",
+    "archive_bytes_changed": false,
+    "candidate_false_accept_count": 0,
+    "v3_exit": 0,
+    "baseline_sweep": {
+      "cases": 100,
+      "ordered": 15,
+      "incomplete": 85
+    },
+    "baseline_false_accept_count": 4
+  },
+  "validation": {
+    "frozen_v2_provenance": "PASS_A02_PROVENANCE_AUDIT",
+    "workspace": "Windows host Python 3.11; CPU only",
+    "py_compile_exit": 0,
+    "unit_tests": "4 passed"
+  },
+  "source_sha256": {
+    "test_v3": "176bcc3de8e64048df1b33b4b2c76a341ef2f52ff9db5eaa95cab4f121af1e95",
+    "auditor_v3": "34f8e8e0b40d38c8ec0cb831a1cc8cd579ef37b160ea4f25bdc6c0cf17d70104"
+  },
+  "scope": "Saved-result chronology and read-only archive behavior only; no source truth, physical input timing, application consumption, live task effect, threat response, or recovery claims."
+}
