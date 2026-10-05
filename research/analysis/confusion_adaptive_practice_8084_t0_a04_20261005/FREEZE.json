@@ -1,0 +1,30 @@
+{
+  "allocation": "CONFUSION-ADAPTIVE-PRACTICE-8084-A04-20261005-01",
+  "frozen_at_local": "2026-10-05",
+  "base_main": "db749b182224842defd6556cc82f88ac5e6448fa",
+  "branch": "research/8084-diagnostic-reliability-a03-20261005",
+  "predecessor": "A03 STOP_AUDIT_INPUT_HANDOFF_PATH_ERROR; no output reused",
+  "hypothesis_and_decision_gates": "PROTOCOL.md",
+  "image": "agent-interface/native-suite-wslc-a08:20261004",
+  "image_id": "sha256:1b4a8bd7c0fe372cc0cafa74af433b8ae1f73f1bee0f11a028f126b08b2c128a",
+  "execution": {"network": "none", "cpus_requested": 1, "memory_requested": "512M", "candidate_runs": 1, "auditor_runs": 1},
+  "sha256": {
+    "PROTOCOL.md": "DC4C4ED7B8CDBEE1247B6ED9145B8EF31BE02EEC6FC6C9F77FCBAD51ADEDDC45",
+    "SCORING.json": "21A3294057E701F89FA0F017D90FBD85BA67C6AD31FFB3326D24A7651DA10808",
+    "generate.py": "8D2F50709728375200D84C325A9BA63E23F003DCFD414910BCFEB561242DA752",
+    "candidate/candidate.py": "1DD16CA2C519508595743903035A47BCE1C243F3C5C32C1018C2446752AE9763",
+    "candidate/observed_counts.json": "D5C3319D549C53FC23A7C1AE8EB83BFCE396FF74D454A6D318B920B68EDD48B8",
+    "auditor/auditor.py": "72A8FB2B6E13C99B72D90796CF0E489FD04F49CED5FB0D95C74C92112290C595",
+    "auditor/observed_counts.json": "D5C3319D549C53FC23A7C1AE8EB83BFCE396FF74D454A6D318B920B68EDD48B8",
+    "auditor/SCORING.json": "21A3294057E701F89FA0F017D90FBD85BA67C6AD31FFB3326D24A7651DA10808",
+    "test_method.py": "B66DCE36E88840C9CA203252357B769914BD738A3DA228F2792F5BE875CB6ACA",
+    "PRE-FLIGHT.md": "0730A4B665BD7DBD0756C1FE28224F198193EE6FD4BE9AEC0EA70F2138ACBD23"
+  },
+  "isolation": {
+    "candidate_visible": ["candidate/candidate.py", "candidate/observed_counts.json"],
+    "auditor_visible": ["auditor/auditor.py", "auditor/observed_counts.json", "auditor/SCORING.json", "auditor/candidate.raw.json"],
+    "latent_truth_excluded_from_candidate": true,
+    "precall_candidate_allowlist_verified": true,
+    "precall_auditor_allowlist_verified": true
+  }
+}
