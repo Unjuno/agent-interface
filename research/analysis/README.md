@@ -1,5 +1,6 @@
 # Analytical research
 
+- [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
 - [Issue #8049 repeated-cohort IPCW uncertainty A03](ipcw_repeated_uncertainty_7993_a02_20261005/successor_a03_seed8049021/REPORT.md) — `PASS_METHOD_SCOPED`: 20,000 synthetic cohorts / 8,000,000 units independently reconstructed; HT mean 0.250325, design SD error 0.111%, bootstrap coverage 0.94935, 4/4 mutations rejected. A02 container-CLI STOP and A01 coverage failure are preserved; no production calibration or safety claim.
 - [Issue #8049 A02 pre-container STOP](ipcw_repeated_uncertainty_7993_a02_20261005/STOP.md) — Docker rejected invalid bare `rw` mount syntax before candidate/auditor execution; distinct fresh-seed A03 follows.
 - [Issue #7924 WSLc private-session portability smoke](wslc_private_session_portability_20261005/STOP.md) — `STOP_SESSION_STORAGE_NOT_FOUND`: one named `system session enter` invocation rejected the proposed fresh storage path before any container invocation; no retry, default-session operation, Docker use, or scientific/runtime inference.
@@ -321,6 +322,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`anytime_t5/`](anytime_t5/)
 - [`aoii_observation_freshness_43_t0_v1/`](aoii_observation_freshness_43_t0_v1/)
+- [`application_qualified_draft_7409_t0_a01_20261005/`](application_qualified_draft_7409_t0_a01_20261005/)
 - [`approval_sequence_assay_6405_t0_20261002/`](approval_sequence_assay_6405_t0_20261002/)
 - [`approval_sequence_discrimination_6405_t0_v1/`](approval_sequence_discrimination_6405_t0_v1/)
 - [`arena_v1_cv_grounding_rescue_4695_v1/`](arena_v1_cv_grounding_rescue_4695_v1/)
@@ -425,6 +427,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`confusion_adaptive_practice_8084_t0_a01_20261005/`](confusion_adaptive_practice_8084_t0_a01_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a02_20261005/`](confusion_adaptive_practice_8084_t0_a02_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a03_20261005/`](confusion_adaptive_practice_8084_t0_a03_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a06_20261005/`](confusion_adaptive_practice_8084_t0_a06_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a07_20261005/`](confusion_adaptive_practice_8084_t0_a07_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a08_20261005/`](confusion_adaptive_practice_8084_t0_a08_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
@@ -620,6 +625,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
 - [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
+- [`looming_yield_5905_boundary_jitter_a02_20261005/`](looming_yield_5905_boundary_jitter_a02_20261005/)
+- [`looming_yield_5905_boundary_jitter_a03_20261005/`](looming_yield_5905_boundary_jitter_a03_20261005/)
+- [`looming_yield_5905_boundary_jitter_a04_20261005/`](looming_yield_5905_boundary_jitter_a04_20261005/)
+- [`looming_yield_5905_boundary_jitter_a05_20261005/`](looming_yield_5905_boundary_jitter_a05_20261005/)
+- [`looming_yield_5905_boundary_jitter_a06_20261005/`](looming_yield_5905_boundary_jitter_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_2_a05_20261005/`](looming_yield_5905_image_only_t0_2_a05_20261005/)
 - [`looming_yield_5905_image_only_t0_6_a06_20261005/`](looming_yield_5905_image_only_t0_6_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_7_a07_20261005/`](looming_yield_5905_image_only_t0_7_a07_20261005/)
@@ -1081,3 +1091,6 @@ The checker compares the generated block against every child directory with a re
 - [Issue #6655 / PR #6694 preregistration custody](incidental_state_legacy_6655_prereg_archive_226b426/README.md) — Eight exact published preregistration blobs; host outputs, process receipts and claimed report/results remain unrecovered. Consumed 1/1/0 host allocation and source-hash mismatches retained; no scientific promotion or rerun.
 - [Issue #8084 T0 A04 diagnostic-reliability fresh allocation](confusion_adaptive_practice_8084_t0_a04_20261005/README.md) — `HOLD_METHOD_GATE`: candidate/auditor each ran once, 6,000 base rows independently reconstructed with no errors, but the duplicate-row auditor mutation survived. Provisional counts show low-dispersion false activation 169/500 at n=20; not accepted/calibrated. Fresh A05 corrects cardinality checking with disjoint seeds.
 - [Issue #8084 T0 A05 diagnostic-reliability independent revalidation](confusion_adaptive_practice_8084_t0_a05_20261005/README.md) — `METHOD_PASS_SCOPED`; separate diagnostic screen `DOES_NOT_SUPPORT_CURRENT_GATE_AS_RELIABLE_AT_N_GE_20`: low-dispersion false activation 376/1,000 at n=20 vs ≤0.05 criterion (47/1,000 at n=100). Independent reconstruction of 12,000 rows; all five mutations rejected. Synthetic only, no human/GUI inference.
+- [Issue #8084 T0 A06 fixed-gate frontier successor](confusion_adaptive_practice_8084_t0_a06_20261005/STOP.md) — `STOP_AUDITOR_NOT_STARTED_LAUNCHER_UNAVAILABLE`; generator and candidate each ran once, but frozen one-shot auditor launch could not start because `py` was unavailable. No retry or scientific inference.
+- [Issue #8084 T0 A07 fresh-seed threshold successor](confusion_adaptive_practice_8084_t0_a07_20261005/STOP.md) — `STOP_FREEZE_COMMIT_FAILED_GENERATOR_RAN_UNFROZEN`; one generator ran after freeze commit failed, but no candidate/auditor or scientific inference; raw output retained and not reused.
+- [Issue #8084 T0 A08 fixed-gate frontier fresh-seed screen](confusion_adaptive_practice_8084_t0_a08_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; 80,000 fresh synthetic rows independently reconstructed, all five mutation controls rejected, and two frozen span/peak gates met the Wilson criteria for every authored profile at n=20 and n=100. No human/GUI inference.

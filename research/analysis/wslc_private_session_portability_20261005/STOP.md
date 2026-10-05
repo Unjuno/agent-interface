@@ -2,7 +2,7 @@
 
 ## Frozen allocation
 
-Follow [PROTOCOL.md](PROTOCOL.md). Frozen base is `0db00a564daff64e47fd6931954ace0f71ab8f2b`, branch `migration/wslc-isolated-session-smoke-20261005`, pinned Python digest `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`. The one planned session name was `ai-wslc-d3484fa5c43d44049228762c850c8257`, with unique proposed storage path `C:\Users\junny\AppData\Local\Temp\agent-interface-wslc-session-66c5dc28b5bf4028a53ffe48c7696a60`.
+Follow [PROTOCOL.md](PROTOCOL.md). Frozen base is `0db00a564daff64e47fd6931954ace0f71ab8f2b`, branch `migration/wslc-isolated-session-smoke-20261005`, pinned Python digest `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`. The one planned session name was `ai-wslc-d3484fa5c43d44049228762c850c8257`, with unique proposed storage path `[REDACTED_USER_TEMP_PATH]`.
 
 ## First outcome
 
@@ -11,13 +11,13 @@ Preflight observed zero live `wslc.exe` clients and 7,048,224,768 bytes free on 
 One invocation was made:
 
 ```powershell
-wslc.exe system session enter 'C:\Users\junny\AppData\Local\Temp\agent-interface-wslc-session-66c5dc28b5bf4028a53ffe48c7696a60' --name ai-wslc-d3484fa5c43d44049228762c850c8257
+wslc.exe system session enter '[REDACTED_USER_TEMP_PATH]' --name ai-wslc-d3484fa5c43d44049228762c850c8257
 ```
 
 It exited 1 in 1.398 seconds before opening a session shell. Raw stderr (Japanese Windows localization):
 
 ```text
-'C:\Users\junny\AppData\Local\Temp\agent-interface-wslc-session-66c5dc28b5bf4028a53ffe48c7696a60' に WSLC セッションが見つかりません
+'[REDACTED_USER_TEMP_PATH]' に WSLC セッションが見つかりません
 エラー コード: ERROR_PATH_NOT_FOUND
 ```
 

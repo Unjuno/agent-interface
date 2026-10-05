@@ -3,3 +3,7 @@
 Prospective one-shot environment test for a fresh named WSLc session and a single cached CPU container. Frozen H/T/D/C/U and stopping rules are in [PROTOCOL.md](PROTOCOL.md). No Docker comparison, resource benefit, CI migration, or general parity is inferred.
 
 **Disposition:** `STOP_SESSION_STORAGE_NOT_FOUND` with an explicit coordination-gate deviation. The single `wslc system session enter` attempt failed before creating an owned session or starting a container. The exact stderr was `'<storage-path>' に WSLC セッションが見つかりません` / `ERROR_PATH_NOT_FOUND`; candidate/container runs: 0. The absent session-storage path remained absent, and the post-attempt process snapshot found zero `wslc.exe` clients. Afterward, review of Issue #7970 revealed its stricter instruction forbidding any WSLc management/RPC until cross-issue ownership and exclusive-lane confirmation; this session-entry operation crossed that gate. The deviation is disclosed on #7970/#7924 and in [STOP.md](STOP.md). No further WSLc call will be made absent explicit gate clearance.
+
+## Public-path redaction
+
+The published command and retained stderr replace the workstation-specific Windows temporary path with `[REDACTED_USER_TEMP_PATH]`. The STOP status, localized error text, command shape, exit code, and attempt count are unchanged. The original evidence commit remains in Git history; this follow-up redacts the current-tree copy.
