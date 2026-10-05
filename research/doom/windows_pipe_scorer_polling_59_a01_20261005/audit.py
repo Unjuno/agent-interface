@@ -11,7 +11,7 @@ freeze = json.loads((HERE / "FREEZE.json").read_text(encoding="utf-8"))
 
 def git_blob_sha(path: Path) -> str:
     data = path.read_bytes()
-    return hashlib.sha1(f"blob {len(data)}\\0".encode("ascii") + data).hexdigest()
+    return hashlib.sha1(f"blob {len(data)}\0".encode("ascii") + data).hexdigest()
 
 for rel, expected in freeze["candidate_blobs"].items():
     actual = git_blob_sha(ROOT / rel)
