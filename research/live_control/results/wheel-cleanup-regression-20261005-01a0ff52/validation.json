@@ -1,0 +1,238 @@
+{
+  "kind": "ordinary_synthetic_regression",
+  "base_commit": "416846ef59b08c862cca84c128d1853e16a6143a",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "source_hashes": {
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "1a9cd1a9565c4b8ca8bb447c20b6bc8cce55d64949e6160cb3e28df7eb6f218c",
+    "input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "test_input_owner_v12_cleanup_after_explicit_up.py": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+    "test_input_owner_v12_explicit_up_cancel.py": "ec3e554b2d279e4d2fb8b5c6728e537a4508c93b27a6a601c6372d268c835fc1",
+    "test_input_owner_v12_wheel_cleanup.py": "2da2cdeff8e28a5e71713ff393511a6b8389de6e367a8efae80a933a860aada4"
+  },
+  "compiled_files": [
+    "executor_v3.py",
+    "input_owner_v10.py",
+    "input_owner_v12.py",
+    "input_transition_owner_v3.py",
+    "input_transition_owner_v4.py",
+    "lease.py",
+    "test_input_owner_v12_cleanup_after_explicit_up.py",
+    "test_input_owner_v12_explicit_up_cancel.py",
+    "test_input_owner_v12_wheel_cleanup.py"
+  ],
+  "runs": [
+    {
+      "stage": "red",
+      "command": [
+        "<python>",
+        "-B",
+        "<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py"
+      ],
+      "source_sha256": "bf3570508d32394ed91b8e747e4ee620fab8668cb7bd4d5b986458ee18295603",
+      "test_sha256": "f61e7d32b238e2f8360113e1666d9719915f1ab3f752e54e018998697562be90",
+      "started_at": "2026-10-05T03:42:27.652396+00:00",
+      "finished_at": "2026-10-05T03:42:27.906776+00:00",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "test_close_retries_dropped_up_without_explicit_release (__main__.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... \n  test_close_retries_dropped_up_without_explicit_release (__main__.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=1) ... FAIL\n  test_close_retries_dropped_up_without_explicit_release (__main__.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=-1) ... FAIL\ntest_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... \n  test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=1) ... FAIL\n  test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-1) ... FAIL\n  test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=3) ... FAIL\n  test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-3) ... FAIL\ntest_exception_after_up_delivery_does_not_cause_duplicate_up (__main__.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok\ntest_exception_before_up_delivery_remains_releasable (__main__.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... \n  test_exception_before_up_delivery_remains_releasable (__main__.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=1) ... FAIL\n  test_exception_before_up_delivery_remains_releasable (__main__.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=-1) ... FAIL\ntest_failed_cleanup_reports_unverified_and_retains_retry (__main__.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... \n  test_failed_cleanup_reports_unverified_and_retains_retry (__main__.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=1) ... FAIL\n  test_failed_cleanup_reports_unverified_and_retains_retry (__main__.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=-1) ... FAIL\ntest_press_delivered_before_exception_remains_releasable (__main__.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... \n  test_press_delivered_before_exception_remains_releasable (__main__.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=1) ... FAIL\n  test_press_delivered_before_exception_remains_releasable (__main__.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=-1) ... FAIL\ntest_successful_notches_do_not_get_duplicate_terminal_up (__main__.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok\n\n======================================================================\nFAIL: test_close_retries_dropped_up_without_explicit_release (__main__.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 143, in test_close_retries_dropped_up_without_explicit_release\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n4\n\n======================================================================\nFAIL: test_close_retries_dropped_up_without_explicit_release (__main__.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=-1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 143, in test_close_retries_dropped_up_without_explicit_release\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n5\n\n======================================================================\nFAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 103, in test_dropped_final_up_is_retried_for_each_wheel_direction\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n4\n\n======================================================================\nFAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 103, in test_dropped_final_up_is_retried_for_each_wheel_direction\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n5\n\n======================================================================\nFAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=3)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 103, in test_dropped_final_up_is_retried_for_each_wheel_direction\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n4\n\n======================================================================\nFAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (__main__.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-3)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 103, in test_dropped_final_up_is_retried_for_each_wheel_direction\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n5\n\n======================================================================\nFAIL: test_exception_before_up_delivery_remains_releasable (__main__.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 124, in test_exception_before_up_delivery_remains_releasable\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n4\n\n======================================================================\nFAIL: test_exception_before_up_delivery_remains_releasable (__main__.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=-1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 124, in test_exception_before_up_delivery_remains_releasable\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n5\n\n======================================================================\nFAIL: test_failed_cleanup_reports_unverified_and_retains_retry (__main__.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 153, in test_failed_cleanup_reports_unverified_and_retains_retry\n    with self.assertRaisesRegex(RuntimeError, \"owner release not verified\"):\n         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: RuntimeError not raised\n\n======================================================================\nFAIL: test_failed_cleanup_reports_unverified_and_retains_retry (__main__.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=-1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 153, in test_failed_cleanup_reports_unverified_and_retains_retry\n    with self.assertRaisesRegex(RuntimeError, \"owner release not verified\"):\n         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: RuntimeError not raised\n\n======================================================================\nFAIL: test_press_delivered_before_exception_remains_releasable (__main__.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 114, in test_press_delivered_before_exception_remains_releasable\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n4\n\n======================================================================\nFAIL: test_press_delivered_before_exception_remains_releasable (__main__.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=-1)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 114, in test_press_delivered_before_exception_remains_releasable\n    self.assert_released(owner, lease, server)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"<worktree>/research/live_control/test_input_owner_v12_wheel_cleanup.py\", line 83, in assert_released\n    self.assertEqual(server.buttons_down, set())\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n5\n\n----------------------------------------------------------------------\nRan 7 tests in 0.109s\n\nFAILED (failures=12)\n"
+    },
+    {
+      "stage": "green-normal",
+      "command": [
+        "<python>",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research/live_control",
+        "-p",
+        "test_input_owner_v12*.py",
+        "-v"
+      ],
+      "files_sha256": {
+        "input_owner_v12.py": "1a9cd1a9565c4b8ca8bb447c20b6bc8cce55d64949e6160cb3e28df7eb6f218c",
+        "test_input_owner_v12_wheel_cleanup.py": "f61e7d32b238e2f8360113e1666d9719915f1ab3f752e54e018998697562be90",
+        "test_input_owner_v12_cleanup_after_explicit_up.py": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+        "test_input_owner_v12_explicit_up_cancel.py": "ec3e554b2d279e4d2fb8b5c6728e537a4508c93b27a6a601c6372d268c835fc1",
+        "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+        "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+      },
+      "started_at": "2026-10-05T03:43:44.252210+00:00",
+      "finished_at": "2026-10-05T03:43:44.396052+00:00",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "test_owner_retries_key_and_button_up_after_sync_left_down (test_input_owner_v12_cleanup_after_explicit_up.ExplicitUpCleanupTests.test_owner_retries_key_and_button_up_after_sync_left_down) ... ok\ntest_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ERROR\ntest_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... ok\ntest_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... ok\ntest_exception_after_up_delivery_does_not_cause_duplicate_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok\ntest_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... ok\ntest_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... ok\ntest_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... ok\ntest_successful_notches_do_not_get_duplicate_terminal_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok\n\n======================================================================\nERROR: test_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_explicit_up_cancel.py\", line 100, in test_cancel_during_keyup_sync_is_not_marked_ordinary\n    from input_transition_owner_v4 import InputOwner\nModuleNotFoundError: No module named 'input_transition_owner_v4'\n\n----------------------------------------------------------------------\nRan 9 tests in 0.059s\n\nFAILED (errors=1)\n"
+    },
+    {
+      "stage": "green-optimized",
+      "command": [
+        "<python>",
+        "-B",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research/live_control",
+        "-p",
+        "test_input_owner_v12*.py",
+        "-v"
+      ],
+      "files_sha256": {
+        "input_owner_v12.py": "1a9cd1a9565c4b8ca8bb447c20b6bc8cce55d64949e6160cb3e28df7eb6f218c",
+        "test_input_owner_v12_wheel_cleanup.py": "f61e7d32b238e2f8360113e1666d9719915f1ab3f752e54e018998697562be90",
+        "test_input_owner_v12_cleanup_after_explicit_up.py": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+        "test_input_owner_v12_explicit_up_cancel.py": "ec3e554b2d279e4d2fb8b5c6728e537a4508c93b27a6a601c6372d268c835fc1",
+        "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+        "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+      },
+      "started_at": "2026-10-05T03:43:44.396536+00:00",
+      "finished_at": "2026-10-05T03:43:44.568310+00:00",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "test_owner_retries_key_and_button_up_after_sync_left_down (test_input_owner_v12_cleanup_after_explicit_up.ExplicitUpCleanupTests.test_owner_retries_key_and_button_up_after_sync_left_down) ... ok\ntest_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ERROR\ntest_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... ok\ntest_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... ok\ntest_exception_after_up_delivery_does_not_cause_duplicate_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok\ntest_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... ok\ntest_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... ok\ntest_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... ok\ntest_successful_notches_do_not_get_duplicate_terminal_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok\n\n======================================================================\nERROR: test_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<worktree>/research/live_control/test_input_owner_v12_explicit_up_cancel.py\", line 100, in test_cancel_during_keyup_sync_is_not_marked_ordinary\n    from input_transition_owner_v4 import InputOwner\nModuleNotFoundError: No module named 'input_transition_owner_v4'\n\n----------------------------------------------------------------------\nRan 9 tests in 0.061s\n\nFAILED (errors=1)\n"
+    },
+    {
+      "stage": "green-combined-normal",
+      "command": [
+        "<python>",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research/live_control",
+        "-p",
+        "test_input_owner_v12*.py",
+        "-v"
+      ],
+      "files_sha256": {
+        "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+        "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+        "input_owner_v12.py": "1a9cd1a9565c4b8ca8bb447c20b6bc8cce55d64949e6160cb3e28df7eb6f218c",
+        "input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+        "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+        "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+        "test_input_owner_v12_cleanup_after_explicit_up.py": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+        "test_input_owner_v12_explicit_up_cancel.py": "ec3e554b2d279e4d2fb8b5c6728e537a4508c93b27a6a601c6372d268c835fc1",
+        "test_input_owner_v12_wheel_cleanup.py": "f61e7d32b238e2f8360113e1666d9719915f1ab3f752e54e018998697562be90"
+      },
+      "started_at": "2026-10-05T03:45:05.224730+00:00",
+      "finished_at": "2026-10-05T03:45:05.376990+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_owner_retries_key_and_button_up_after_sync_left_down (test_input_owner_v12_cleanup_after_explicit_up.ExplicitUpCleanupTests.test_owner_retries_key_and_button_up_after_sync_left_down) ... ok\ntest_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ok\ntest_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... ok\ntest_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... ok\ntest_exception_after_up_delivery_does_not_cause_duplicate_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok\ntest_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... ok\ntest_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... ok\ntest_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... ok\ntest_successful_notches_do_not_get_duplicate_terminal_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.067s\n\nOK\n"
+    },
+    {
+      "stage": "green-combined-optimized",
+      "command": [
+        "<python>",
+        "-B",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research/live_control",
+        "-p",
+        "test_input_owner_v12*.py",
+        "-v"
+      ],
+      "files_sha256": {
+        "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+        "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+        "input_owner_v12.py": "1a9cd1a9565c4b8ca8bb447c20b6bc8cce55d64949e6160cb3e28df7eb6f218c",
+        "input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+        "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+        "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+        "test_input_owner_v12_cleanup_after_explicit_up.py": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+        "test_input_owner_v12_explicit_up_cancel.py": "ec3e554b2d279e4d2fb8b5c6728e537a4508c93b27a6a601c6372d268c835fc1",
+        "test_input_owner_v12_wheel_cleanup.py": "f61e7d32b238e2f8360113e1666d9719915f1ab3f752e54e018998697562be90"
+      },
+      "started_at": "2026-10-05T03:45:05.377514+00:00",
+      "finished_at": "2026-10-05T03:45:05.549023+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_owner_retries_key_and_button_up_after_sync_left_down (test_input_owner_v12_cleanup_after_explicit_up.ExplicitUpCleanupTests.test_owner_retries_key_and_button_up_after_sync_left_down) ... ok\ntest_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ok\ntest_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... ok\ntest_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... ok\ntest_exception_after_up_delivery_does_not_cause_duplicate_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok\ntest_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... ok\ntest_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... ok\ntest_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... ok\ntest_successful_notches_do_not_get_duplicate_terminal_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.066s\n\nOK\n"
+    },
+    {
+      "stage": "final-normal",
+      "command": [
+        "<python>",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research/live_control",
+        "-p",
+        "test_input_owner_v12*.py",
+        "-v"
+      ],
+      "files_sha256": {
+        "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+        "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+        "input_owner_v12.py": "1a9cd1a9565c4b8ca8bb447c20b6bc8cce55d64949e6160cb3e28df7eb6f218c",
+        "input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+        "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+        "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+        "test_input_owner_v12_cleanup_after_explicit_up.py": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+        "test_input_owner_v12_explicit_up_cancel.py": "ec3e554b2d279e4d2fb8b5c6728e537a4508c93b27a6a601c6372d268c835fc1",
+        "test_input_owner_v12_wheel_cleanup.py": "2da2cdeff8e28a5e71713ff393511a6b8389de6e367a8efae80a933a860aada4"
+      },
+      "started_at": "2026-10-05T03:46:47.834752+00:00",
+      "finished_at": "2026-10-05T03:46:48.032740+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_owner_retries_key_and_button_up_after_sync_left_down (test_input_owner_v12_cleanup_after_explicit_up.ExplicitUpCleanupTests.test_owner_retries_key_and_button_up_after_sync_left_down) ... ok\ntest_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ok\ntest_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... ok\ntest_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... ok\ntest_exception_after_up_delivery_does_not_cause_duplicate_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok\ntest_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... ok\ntest_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... ok\ntest_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... ok\ntest_successful_notches_do_not_get_duplicate_terminal_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.072s\n\nOK\n"
+    },
+    {
+      "stage": "final-optimized",
+      "command": [
+        "<python>",
+        "-B",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research/live_control",
+        "-p",
+        "test_input_owner_v12*.py",
+        "-v"
+      ],
+      "files_sha256": {
+        "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+        "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+        "input_owner_v12.py": "1a9cd1a9565c4b8ca8bb447c20b6bc8cce55d64949e6160cb3e28df7eb6f218c",
+        "input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+        "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+        "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+        "test_input_owner_v12_cleanup_after_explicit_up.py": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+        "test_input_owner_v12_explicit_up_cancel.py": "ec3e554b2d279e4d2fb8b5c6728e537a4508c93b27a6a601c6372d268c835fc1",
+        "test_input_owner_v12_wheel_cleanup.py": "2da2cdeff8e28a5e71713ff393511a6b8389de6e367a8efae80a933a860aada4"
+      },
+      "started_at": "2026-10-05T03:46:48.033236+00:00",
+      "finished_at": "2026-10-05T03:46:48.355253+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_owner_retries_key_and_button_up_after_sync_left_down (test_input_owner_v12_cleanup_after_explicit_up.ExplicitUpCleanupTests.test_owner_retries_key_and_button_up_after_sync_left_down) ... ok\ntest_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ok\ntest_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... ok\ntest_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... ok\ntest_exception_after_up_delivery_does_not_cause_duplicate_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok\ntest_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... ok\ntest_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... ok\ntest_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... ok\ntest_successful_notches_do_not_get_duplicate_terminal_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.144s\n\nOK\n"
+    }
+  ],
+  "notes": [
+    "Original RED: 7 test methods, 12 failed subcases. Successful-release controls already passed.",
+    "First combined attempts had ModuleNotFoundError for input_transition_owner_v4 due to sparse checkout. Required parent dependency files were then hydrated unchanged.",
+    "Final: 9 focused test methods pass in normal and optimized Python; wheel tests contain 18 subcases.",
+    "The only test change after original RED was adding the existing sibling-import path convention to support dotted unittest invocation; assertions and fault schedules are unchanged.",
+    "Local absolute paths in public commands and logs replaced with <worktree> and <python>. Original local JSON logs retained.",
+    "No formal allocation, real X server, OS input, GUI, game effect, model call, container, or current-main integration was exercised.",
+    "Global X11 state does not prove per-client ownership. The separate two-client blocker on #7910 remains unresolved."
+  ]
+}
