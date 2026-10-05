@@ -43,6 +43,7 @@ def _valid_pair(admission, release):
             or receipt.get("key") != identity[2]
             or receipt.get("owner_id") != identity[3]
             or receipt.get("intent_token") != identity[4]
+            or not _is_int(release.get("valid_until_ns"))
             or receipt.get("valid_until_ns") != release.get("valid_until_ns")
             or receipt.get("server_sync_completed") is not True
             or receipt.get("server_keyup_verified") is not True
@@ -66,6 +67,7 @@ def _valid_pair(admission, release):
             or count < 1 or count > 3):
         return False
     prior_sample = None
+    prior_down_state = None
     for index, attempt in enumerate(attempts, 1):
         if not isinstance(attempt, dict):
             return False
@@ -76,9 +78,13 @@ def _valid_pair(admission, release):
                 or not start <= sync <= sample
                 or type(attempt.get("server_key_down_before")) is not bool
                 or type(attempt.get("server_key_down_after")) is not bool
-                or (prior_sample is not None and prior_sample > start)):
+                or (prior_sample is not None and prior_sample > start)
+                or (prior_down_state is not None
+                    and attempt["server_key_down_before"] is not prior_down_state)
+                or (index == 1 and attempt["server_key_down_before"] is not True)):
             return False
         prior_sample = sample
+        prior_down_state = attempt["server_key_down_after"]
     return (attempts[0]["keyrelease_started_ns"] == times[2]
             and attempts[-1]["sync_returned_ns"] == times[3]
             and attempts[-1]["keymap_sampled_ns"] == times[4]
