@@ -18,6 +18,12 @@ The original timing reconstruction remains the quantitative control result: seve
 
 This is not a stale cached-model-answer failure: decisions use increasing observation sequences and distinct source-image hashes (for example, sequences 408 and 450 have different image hashes). It is a delayed-reaction failure: cover-4 repeats its preplanned fire/strafe cycle without responding to changing health while inference is pending, then fresh answers spend later turns on repeated route-finding while health is critical. Despite an approaching on-screen enemy and 37 displayed ammo, those later primary answers do not fire. The trace records eight authored no-visible-effect contingencies and zero activated branches, so no local contingency recovery was observed. Repeated fresh actions are evidence of weak useful reaction, not proof that the model reused stale input.
 
+## Current-main mechanism check
+
+On current main `c1074c4dc385bae5b94ce93a5870e92c2e6ab07d`, V39 already carries the prior authored `next_cover` and its bounded validity into the next model wait. `build_cover_monitor` reads visible HUD health and, for a fire cover, paired ammo. While inference is pending, the controller renews an expired cover; if a validity guard trips, it interrupts the model call, cancels the cover, and requires a verified empty release. The frozen source identities are `map01_overlap_controller_v39.py` SHA-256 `4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca` and `session_map01_v15.py` SHA-256 `661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724`.
+
+The monitor's validity inputs are health and optionally ammo; it does not classify enemy appearance from the full scene. Therefore the next live test should check whether a visible threat that changes health/ammo during a slow inference crosses the authored guard soon enough to stop the old cover and discard the pending answer. A visually new enemy with no health/ammo change is outside this guard's detection contract. The current source supplies the mechanism; only a fresh threat-exposure result can show whether its limits require a further general repair.
+
 ## Evidence and reproduction
 
 - Frozen run: [`MAP01_ASTRA_ATTEMPT_V1.md`](MAP01_ASTRA_ATTEMPT_V1.md)
@@ -29,6 +35,7 @@ This is not a stale cached-model-answer failure: decisions use increasing observ
 - Report SHA-256: `586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894`
 - Existing failure-analysis SHA-256: `b5383b9407198cd88e9aec712018965a27081701812619e9aeb84ba3e042e1ca`
 - Source tree reviewed: `b347d6f1ede81f6980932f2d7cba6d4758bf49c9`.
+- Current-main mechanism cross-check: `c1074c4dc385bae5b94ce93a5870e92c2e6ab07d`.
 
 The video overlay records original game time while the clip plays at 2x. Recreate a full two-live-second review sheet and a one-live-second combat sheet from the repository root with:
 
@@ -37,4 +44,4 @@ ffmpeg -hide_banner -loglevel error -i research/doom/results/map01-astra-attempt
 ffmpeg -hide_banner -loglevel error -ss 18 -to 39 -i research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4 -vf 'fps=2,scale=320:280,tile=4x11' -frames:v 1 /tmp/astra-combat-video-review.png
 ```
 
-The next live test should start from a fresh main freeze and include a threat that appears during a long model wait. It must test whether current visible HUD/frame evidence can stop or switch an inappropriate cover before the model returns, while retaining per-key release, independent useful feedback, bounded recovery, ammo, progress, and terminal evidence. No live lane is assigned by this retrospective analysis.
+The next live test should start from a fresh main freeze and include a threat that appears during a long model wait. It must test whether the health/ammo guard can stop an inappropriate cover and discard the pending answer before it returns, while retaining per-key release, independent useful feedback, bounded recovery, ammo, progress, and terminal evidence. No live lane is assigned by this retrospective analysis.
