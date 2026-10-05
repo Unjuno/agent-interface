@@ -1,0 +1,85 @@
+{
+  "schema": "x11-xtest-device-cross-client-freeze-a01-v1",
+  "allocation": "X11-XTEST-DEVICE-CROSS-CLIENT-A01-20261005",
+  "issue": 59,
+  "current_main_sha_at_freeze": "402c7d1b5147b2a905098f082233db60a47d68db",
+  "main_sha_observed_at": "2026-10-05T03:28:32Z",
+  "question": "Does XTestFakeDeviceKeyEvent, used by two separate X client connections opening the same server-provided XTEST virtual keyboard, preserve the core key state and focused-client KeyPress after client A sends UP while client B has not yet sent UP?",
+  "delta_from_existing_evidence": "A05 tested sequential core XTEST versus InputOwner v10 for one client; existing analytical evidence models indistinguishable global keymaps. This new Xvfb run tests overlapping A/B holds on the same key for both core and device-specific XTEST APIs, checking whether the legacy device-specific entry point changes server-visible release behavior.",
+  "frozen_sources": {
+    "PLAN.md": "AD4F593BC6107E4A7B870AC1185823A6C4982CCC2FB84A921A5B932B5B1AAD21",
+    "candidate.py": "5A3BE04B706179227ECF1A628E04645F7E440F8761B940992957216B5FC39548",
+    "audit.py": "C6AFB4F9F1456D6C4E2AB7459C1627AA6002E09134D05EA54B0C3C20978DD69E",
+    "setup.sh": "22350E657AFE888B78A38FC7187141DC5575393F1BCC2108C029EEA72439ABC0",
+    "run.sh": "3C26943185D0290A882F3C2AB24C3C8D543986D3E711B5203B9A1CB6C56C86B8",
+    "audit_precheck.py": "7930B66B5F63716130FF1A7A6B80C24746B9370527E96BBED0A247AE712EACB3",
+    "capture_environment.py": "B466B8D7D4B4510EB206DC94066D4E028DC312C88B4A253CB77148EB0DEE2016",
+    "Xvfb": "d38fa3711bc2568f1d18b7cb7e61d5fb8fe748b6ba0f0ff4b55180663839a038",
+    "xkbcomp": "0967e7e7b03b077327cea74567726b265bd304b4fdf59f87bf7fdfe1074e7591",
+    "libXtst.so.6": "b236448961631bb13464c878e68535f5335b5fa10a5d8411f3ad1a56ff430ec2",
+    "libXi.so.6": "a51348c921ce1a35123fa7c99dc59bfd3e815be6829874fe15ae55172901d3e4",
+    "libX11.so.6": "c5b5d782bd9cab3420a62df88f5c991507edf3331a89f98464ddbc538c37b879",
+    "PACKAGE_MANIFEST.json": "2475376A98CD8EF604D2B54AE07E06D876F8168A92015259E2D13F831952A2BB",
+    "SHA256SUMS": "7DA4FEDB61C1262603192DA5C8E191686028F13FDA3F46879F7051AA8416F8CC",
+    "ENVIRONMENT.json": "45F9D15E3A58E97B10B65DB3C15FFB54222068FF2B7F72F4A7091B57BF706FA5"
+  },
+  "setup": {
+    "status": "PASS_NO_INPUT",
+    "attempt": "a05",
+    "command": "bash setup.sh",
+    "exit": 0,
+    "candidate_runs": 0,
+    "input_events": 0,
+    "package_install": 0,
+    "server": "Xvfb :87 -screen 0 640x480x24 -nolisten tcp -ac -fp built-ins",
+    "socket_isolation": "unshare --user --map-root-user --mount --propagation private; private tmpfs mounted over /tmp/.X11-unix",
+    "shared_socket_dir_before_or_after_mode": "777 root root /tmp/.X11-unix",
+    "private_socket_dir_mode": "1777 root root /tmp/.X11-unix"
+  },
+  "protocol": {
+    "candidate_invocations": 1,
+    "candidate_retry": false,
+    "auditor_invocations": 1,
+    "route_order": [
+      "core",
+      "device"
+    ],
+    "per_route_edges": [
+      [
+        "A",
+        "DOWN"
+      ],
+      [
+        "B",
+        "DOWN"
+      ],
+      [
+        "A",
+        "UP"
+      ],
+      [
+        "B",
+        "UP"
+      ]
+    ],
+    "key": "w",
+    "observer": "separate XOpenDisplay connection calling XQueryKeymap",
+    "sink": "focused core Xlib client selecting KeyPress and KeyRelease on one test window",
+    "device_api": "XTestFakeDeviceKeyEvent using the same XTEST virtual keyboard id opened separately by connections A and B",
+    "decision": {
+      "control_required": "Core route keymap is neutral initially; down after A-DOWN and B-DOWN; after A-UP keymap is neutral and a matching KeyRelease reaches the focused core client while B has not sent UP; final state neutral.",
+      "device_isolation_pass": "Device route keymap stays down after A-UP and there is no matching core KeyRelease until B-UP; final state neutral.",
+      "device_isolation_fail": "Device route becomes neutral after A-UP and a matching core KeyRelease reaches the client while B has not sent UP; final state neutral.",
+      "stop": "Control, event receipt, API completion, keymap, target identity, cleanup, or Xvfb precondition is incomplete/inconsistent."
+    }
+  },
+  "resource_scope": "WSL Ubuntu process-local user/mount namespace; no Docker engine or GPU; one local Xvfb and four X client connections; no CPU/memory caps claimed.",
+  "limitations": [
+    "virtual Xvfb only",
+    "shared server-provided XTEST virtual keyboard only",
+    "no production GUI/game or physical input",
+    "no model, useful feedback, recovery, task outcome, or safety claim",
+    "a positive result would require a distinct per-client virtual-device architecture and further testing"
+  ],
+  "planned_delivery_branch": "research/59-x11-xtest-device-cross-client-a01-20261005"
+}
