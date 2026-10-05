@@ -1,0 +1,31 @@
+{
+  "schema": "v39-v15-keymap-journal-a06-result-v1",
+  "status": "STOP_OWNER_CLEANUP_CANNOT_RECOVER",
+  "preregistration_comment": 5986764896,
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 1,
+    "completed_cases": [
+      "normal"
+    ],
+    "partial_cases": [
+      "one_shot_suppressed_space_up"
+    ],
+    "not_reached": [
+      "sampler_unavailable"
+    ],
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "audit": {
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "STOP_OWNER_CLEANUP_CANNOT_RECOVER"
+  },
+  "observations": {
+    "normal": "Two release rows sampled keycodes_down=[] and each was instrumented_release_verified=true; owner close completed.",
+    "injected_drop": "After both explicit UP calls, sample observed SPACE keycode 65 still down and F8 keycode 74 up. SPACE row became instrumented_release_verified=false; F8 remained true.",
+    "cleanup": "v12 terminal cleanup found [65] down and raised RuntimeError: owner release not verified: [65]. It did not reissue KeyRelease because explicit-UP bookkeeping had already removed SPACE from its held set.",
+    "query_order": "No query_keymap was between the explicit UP calls; the post-batch sampler ran after final UP and before release telemetry."
+  },
+  "limitation": "Sampler-unavailable case did not run; no complete PASS. Fake server only; no hardware, application, task success, real V39/V15 startup, live input, feedback, latency, recovery efficacy, or gameplay conclusion."
+}
