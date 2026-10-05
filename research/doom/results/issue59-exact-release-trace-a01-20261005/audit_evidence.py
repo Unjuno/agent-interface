@@ -23,3 +23,4 @@ checks={
 assert all(checks.values()), checks
 print(json.dumps({'audit':'PASS','checks':checks,'verified_artifact_sha256':manifest},sort_keys=True,indent=2))
 
+
