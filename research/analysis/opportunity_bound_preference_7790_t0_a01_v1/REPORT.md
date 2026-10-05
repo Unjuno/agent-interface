@@ -12,7 +12,7 @@ Five events were admissible: `e01`, `e08a`, `e08b`, `e09a`, and `e09b`. They pro
 
 The naive action-frequency baseline aggregates every recorded action, including forced/default/agent/unknown/expired cases, and reports A=8, B=4; it therefore conflates confounded events and scopes. `DISCARD_HISTORY` yields zero preference comparisons by definition. The opportunity-bound method retains only the five admissible scope-local comparisons. Neither baseline nor candidate output is authority.
 
-All five mutations behaved as expected: removing an alternative, adding a default, changing actor, and withdrawing consent each yielded no identified comparison; changing context version split the scope. Local construction CI passed 5/5 tests before freeze. Formal candidate and auditor each ran exactly once in the frozen container and exited 0; the auditor returned `PASS` (5 scopes, 15 order rows, 5 admissible events, 5 mutations).
+All five mutations behaved as expected: removing an alternative, adding a default, changing actor, and withdrawing consent each yielded no identified comparison; changing context version split the scope. Local construction CI passed 5/5 tests before freeze. Formal candidate and auditor each ran exactly once in the frozen container and exited 0; the auditor returned `PASS` (5 scopes, 15 order rows, 5 admissible events, 5 mutations). The first GitHub Actions run exposed that the test assumed the process working directory; only the test harness was changed to resolve `fixture.json` relative to its own file. Frozen candidate, oracle, fixture, image, and formal outputs remain unchanged; the focused suite and checksums were rerun locally after this portability-only fix.
 
 ## Limits and next test
 

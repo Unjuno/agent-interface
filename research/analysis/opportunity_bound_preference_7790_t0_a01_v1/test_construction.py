@@ -1,5 +1,6 @@
 import json
 import unittest
+from pathlib import Path
 
 import auditor
 import candidate
@@ -8,7 +9,7 @@ import candidate
 class ConstructionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        with open("fixture.json", encoding="utf-8") as f:
+        with open(Path(__file__).with_name("fixture.json"), encoding="utf-8") as f:
             cls.fixture = json.load(f)
         cls.result = candidate.run(cls.fixture)
         cls.oracle = auditor.oracle(cls.fixture)
