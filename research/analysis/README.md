@@ -1020,6 +1020,8 @@ The checker compares the generated block against every child directory with a re
 
 ## Retained construction archives
 
+- [Issue #8032 T0 A01 delayed GUI procedure-retention protocol](procedure_retention_8032_t0_a01_20261005/README.md) — no-participant method construction; authored scoring cases and independent raw-only implementation agree, but final WSLc invocation stopped at client `E_FAIL` before tests, with no retry. T1 remains on hold pending review, power/MDE and recruitment feasibility, ethics/privacy approval and consent.
+
 - [Issue #6808 / PR #6821 S03 pre-invocation STOP](looming_visual_assumption_gate_5905_s03_wslc_20261003/STOP.md) — 35 exact original files preserved; main advanced after freeze, construction/candidate/auditor/container/retry counts all zero; no scientific result or S03 rerun.
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.

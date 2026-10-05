@@ -1,0 +1,63 @@
+{
+  "contains_participant_data": false,
+  "description": "Authored scorer counterexamples, not simulated or observed people.",
+  "retention_cases": [
+    {
+      "case_id": "core_complete",
+      "expected_steps": ["open_preferences", "select_appearance", "choose_dark", "apply"],
+      "expected_state": {"theme": "dark"},
+      "attempt": {"target": "disposable-profile", "actions": ["open_preferences", "select_appearance", "choose_dark", "apply"], "final_state": {"theme": "dark"}, "active_seconds": 42, "elapsed_seconds": 67},
+      "expected_score": {"status": "complete", "step_score": 1.0, "severity": "none", "critical_error": false, "active_seconds": 42, "elapsed_seconds": 67}
+    },
+    {
+      "case_id": "core_wrong_order",
+      "expected_steps": ["open_preferences", "select_appearance", "choose_dark", "apply"],
+      "expected_state": {"theme": "dark"},
+      "attempt": {"target": "disposable-profile", "actions": ["open_preferences", "choose_dark", "select_appearance", "apply"], "final_state": {"theme": "dark"}, "active_seconds": 50, "elapsed_seconds": 70},
+      "expected_score": {"status": "incomplete", "step_score": 0.5, "severity": "major", "critical_error": false, "active_seconds": 50, "elapsed_seconds": 70}
+    },
+    {
+      "case_id": "core_final_state_mismatch",
+      "expected_steps": ["open_preferences", "select_appearance", "choose_dark", "apply"],
+      "expected_state": {"theme": "dark"},
+      "attempt": {"target": "disposable-profile", "actions": ["open_preferences", "select_appearance", "choose_dark", "apply"], "final_state": {"theme": "light"}, "active_seconds": 44, "elapsed_seconds": 62},
+      "expected_score": {"status": "incomplete", "step_score": 1.0, "severity": "major", "critical_error": false, "active_seconds": 44, "elapsed_seconds": 62}
+    },
+    {
+      "case_id": "core_wrong_target_critical",
+      "expected_steps": ["open_preferences", "select_appearance", "choose_dark", "apply"],
+      "expected_state": {"theme": "dark"},
+      "attempt": {"target": "non_disposable-profile", "actions": ["open_preferences", "select_appearance", "choose_dark", "apply"], "final_state": {"theme": "dark"}, "active_seconds": 42, "elapsed_seconds": 67},
+      "expected_score": {"status": "critical_error", "step_score": 1.0, "severity": "critical", "critical_error": true, "active_seconds": 42, "elapsed_seconds": 67}
+    },
+    {
+      "case_id": "core_missing_delayed_outcome",
+      "expected_steps": ["open_preferences", "select_appearance", "choose_dark", "apply"],
+      "expected_state": {"theme": "dark"},
+      "attempt": null,
+      "expected_score": {"status": "missing", "step_score": null, "severity": "unknown", "critical_error": false, "active_seconds": null, "elapsed_seconds": null}
+    },
+    {
+      "case_id": "transfer_complete",
+      "expected_steps": ["open_view_menu", "select_status_bar", "enable_line_numbers", "apply"],
+      "expected_state": {"line_numbers": true},
+      "attempt": {"target": "disposable-profile", "actions": ["open_view_menu", "select_status_bar", "enable_line_numbers", "apply"], "final_state": {"line_numbers": true}, "active_seconds": 37, "elapsed_seconds": 56},
+      "expected_score": {"status": "complete", "step_score": 1.0, "severity": "none", "critical_error": false, "active_seconds": 37, "elapsed_seconds": 56}
+    }
+  ],
+  "takeover_counterexample": {
+    "observed_state": {"theme": "dark", "save_status": "pending"},
+    "answer": {"theme": "dark", "save_status": "saved", "next_safe_step": "verify_save"},
+    "expected_next_safe_step": "verify_save",
+    "expected_score": {"state_correct": false, "next_step_correct": true}
+  },
+  "vigilance_counterexample": {
+    "trials": [
+      {"anomaly": true, "reported": true},
+      {"anomaly": true, "reported": false},
+      {"anomaly": false, "reported": true},
+      {"anomaly": false, "reported": false}
+    ],
+    "expected_score": {"hits": 1, "misses": 1, "false_alarms": 1, "correct_rejections": 1}
+  }
+}
