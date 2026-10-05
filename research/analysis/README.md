@@ -505,6 +505,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
+- [`epoch_transform_chain_8185_a02_20261005/`](epoch_transform_chain_8185_a02_20261005/)
 - [`error_carry_6081_s04_20261003/`](error_carry_6081_s04_20261003/)
 - [`error_carry_6081_successor_orbstack_20261002/`](error_carry_6081_successor_orbstack_20261002/)
 - [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
@@ -1056,6 +1057,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
 </details>
+
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.

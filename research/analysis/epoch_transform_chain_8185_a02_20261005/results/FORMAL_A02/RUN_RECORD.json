@@ -1,0 +1,32 @@
+{
+  "allocation": "UNJUNO-8185-EXACT-ORACLE-A02-20261005-01",
+  "candidate": {
+    "exit_code": 0,
+    "invocations": 1,
+    "sha256": "d749d94fed88382f8724136a6d4e6d43b30a487ae84b0f8444eb8fa69d01df96"
+  },
+  "construction_suite": {
+    "exit_code": 0,
+    "invocations": 1,
+    "runtime": "pinned OrbStack image",
+    "scope": "pre-freeze construction only",
+    "test_count": 5
+  },
+  "container": "docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3",
+  "decision": "PASS_METHOD_SCOPED",
+  "finished_utc": "2026-10-05T13:00:30.014764+00:00",
+  "freeze_manifest_amendment": "RUN_FREEZE_AMENDMENT.json; formal dependencies remain hash-identical; bytecode cache was not mounted or used",
+  "freeze_sha256": "f3e39af8d33beb57579d265fb62685b1e128aeacdce0138cda475e4b0002148f",
+  "independent_auditor": {
+    "exit_code": 0,
+    "invocations": 1,
+    "sha256": "a309709aebca7ce3f9cc851f64c73eb804fd654c0c0d69b03e439ed654fb2989"
+  },
+  "input_sha256": {
+    "oracle/exact_worlds.json": "7e978feac106eaa548fae2bcbdb91cba0917cf787b8db29bf288b70ef9ced04d",
+    "public/corpus.json": "56e9cb59ac8843b6f9db1d507e0a6ea671dc9f8192c5f3aabdc943129c88e593"
+  },
+  "issue": 8201,
+  "no_retries": true,
+  "platform": "linux/arm64"
+}
