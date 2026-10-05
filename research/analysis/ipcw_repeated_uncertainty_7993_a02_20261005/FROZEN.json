@@ -1,0 +1,69 @@
+{
+  "allocation": "UNJUNO-8049-IPCW-REPEATED-UNCERTAINTY-A02-ORBSTACK-20261005",
+  "base_commit": "a6d12178e6ce70b178ba73c5d2d37d483fa3abda",
+  "bootstrap": {
+    "clip_ticks": [
+      0,
+      300
+    ],
+    "quantile_cumulative_thresholds": [
+      0.025000000001,
+      0.975000000001
+    ],
+    "replicate_distribution": "exact conditional binomial product distribution",
+    "scale": "integer numerator / 300"
+  },
+  "branch": "research/8049-ht-bootstrap-a02-20261005",
+  "cohorts": 20000,
+  "formal_invocations_before_freeze": {
+    "auditor": 0,
+    "candidate": 0,
+    "retries": 0
+  },
+  "formal_seed": 8049020,
+  "frozen_at_utc": "2026-10-05T08:20:36.038051+00:00",
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "image": "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+  "image_id": "sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151 linux/arm64",
+  "issue": 8049,
+  "parent_issue": 7993,
+  "population": {
+    "marginal_risk": 0.25,
+    "resolution_probability": {
+      "A": 0.25,
+      "B": 0.75
+    },
+    "risk": {
+      "A": 0.4,
+      "B": 0.1
+    },
+    "stratum_units": 200
+  },
+  "predecessor_pr": 8056,
+  "runtime": {
+    "candidate_truth_mount": false,
+    "cpu_requested": 1,
+    "engine": "OrbStack Docker",
+    "memory_enforcement": "not asserted",
+    "memory_requested": "1g",
+    "network": "none",
+    "separate_rw_output": true,
+    "source_rootfs": "read-only"
+  },
+  "source_sha256": {
+    "CONSTRUCTION_LOG.md": "76a3b765dc4d12a4c018867f88cecfb7fc1aeff18b700ef00595a377ab976e84",
+    "PILOT_RESULTS.json": "c7a5e218c9f83b9198d48eb91195991d2e61ce914500cf147e23dae33ddb27b7",
+    "PROTOCOL.md": "4c4232c8baf4f644d9a37bb06db23fa159f2ce3c79e318afeac90c793ecaf7e3",
+    "auditor.py": "b4c54b307ee73aa545ca6be3c4363476010ba26851138cf0d982765fd6ebcd3b",
+    "candidate.py": "a8d452343ecd1cd2c7d400a1232520af224cdf52a24c111f2812acd343f441e3",
+    "generate.py": "00dedb47cba880c9bbcf8be3086a9f23bde210e7f4e84068742d7cf09ae5838c",
+    "oracle_input.json": "e6eeac2aa6d1de4ab93671c7b8d480e9d450c1f6461e2656a643462e5b8d95c3",
+    "pilot.py": "afa840c0cd3d884d300c10ffcdfd1622e4c00f7e6949ca2e228a3b1373132122",
+    "prepare_freeze.py": "01cb711c678c2dcedf3bf542aeb8178264005262e4d9090b15284cde62bef566",
+    "public_input.json": "3ae64a67084da7b1bdee0c79797e7bf1a2a2af71569ec81e55e09235b90f2c77",
+    "test_protocol.py": "538138d68e85e5b419fd40293ddb78c93f658716d1997a6eb29ea17c5c138f0c"
+  }
+}
