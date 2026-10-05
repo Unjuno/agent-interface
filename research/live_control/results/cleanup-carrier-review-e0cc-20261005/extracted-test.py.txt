@@ -301,7 +301,6 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertTrue(cleanup_after_failure["verified"])
             self.assertEqual(cleanup_after_failure["keys_down"], [])
             self.assertEqual(display_instance.down, set())
-            self.assertIn(failed_receipt, owner.records)
             self.assertFalse(failed_receipt["server_keyup_verified"])
             self.assertEqual(len(cleanup_after_failure["key_release_attempts"]["38"]["attempts"]), 1)
         finally:

@@ -14,6 +14,7 @@ class FakeDisplay:
         self.down = set()
         self.buttons_down = set()
         self.release_attempts = 0
+        self.key_press_attempts = 0
         self.key_release_order = []
         self.button_release_attempts = 0
         self.drop_next_key_release = True
@@ -21,6 +22,8 @@ class FakeDisplay:
         self.fail_key_release_attempts = 0
         self.fail_sync_attempts = 0
         self.fail_keymap_queries = 0
+        self.keymap_query_calls = 0
+        self.fail_keymap_query_at = None
         self.fail_pointer_queries = 0
         self.root = FakeRoot(self)
 
@@ -41,6 +44,9 @@ class FakeDisplay:
         return 1
 
     def query_keymap(self):
+        self.keymap_query_calls += 1
+        if self.keymap_query_calls == self.fail_keymap_query_at:
+            raise RuntimeError("synthetic terminal keymap sample failure")
         if self.fail_keymap_queries:
             self.fail_keymap_queries -= 1
             raise RuntimeError("synthetic keymap sample failure")
@@ -133,6 +139,7 @@ class ExplicitUpCleanupTests(unittest.TestCase):
 
         def fake_input(_display, event, code):
             if event == xlib.X.KeyPress:
+                display_instance.key_press_attempts += 1
                 display_instance.down.add(code)
             elif event == xlib.X.KeyRelease:
                 display_instance.release_attempts += 1
@@ -268,6 +275,7 @@ class ExplicitUpCleanupTests(unittest.TestCase):
 
         def fake_input(_display, event, code):
             if event == xlib.X.KeyPress:
+                display_instance.key_press_attempts += 1
                 display_instance.down.add(code)
             elif event == xlib.X.KeyRelease:
                 display_instance.down.discard(code)
@@ -311,6 +319,43 @@ class ExplicitUpCleanupTests(unittest.TestCase):
                 row["source"] == "pointer_before" for row in receipt["key_state_errors"]))
             self.assertEqual(display_instance.down, set())
             self.assertEqual(display_instance.buttons_down, set())
+            presses_before_rejected_down = display_instance.key_press_attempts
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("down", lease, "W")
+            self.assertEqual(display_instance.key_press_attempts, presses_before_rejected_down)
+
+            display_instance.fail_keymap_queries = 0
+            display_instance.fail_pointer_queries = 0
+            recovered = owner.call("release", lease)
+            self.assertTrue(recovered["verified"])
+            self.assertFalse(owner.call("input_state")["release_pending"])
+
+            owner.call("down", lease, "W")
+            self.assertEqual(display_instance.key_press_attempts, presses_before_rejected_down + 1)
+            owner.call("release", lease)
+
+            sample_failure_lease = Lease()
+            owner.call("down", sample_failure_lease, "W")
+            display_instance.keymap_query_calls = 0
+            display_instance.fail_keymap_query_at = 3
+            with self.assertRaises(RuntimeError) as raised:
+                owner.call("release", sample_failure_lease)
+            display_instance.fail_keymap_query_at = None
+            failed_receipt = getattr(raised.exception, "owner_release_record", None)
+            self.assertIsInstance(failed_receipt, dict)
+            self.assertFalse(failed_receipt["verified"])
+            self.assertEqual(failed_receipt["keys_unknown"], [65])
+            self.assertTrue(any(row["source"] == "keymap_after"
+                                for row in failed_receipt["key_state_errors"]))
+            self.assertIn(failed_receipt, owner.records)
+            presses_before_sample_failure_retry = display_instance.key_press_attempts
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("down", sample_failure_lease, "W")
+            self.assertEqual(display_instance.key_press_attempts,
+                             presses_before_sample_failure_retry)
+            recovered_receipt = owner.call("release", sample_failure_lease)
+            self.assertTrue(recovered_receipt["verified"])
+            self.assertEqual(recovered_receipt["keys_unknown"], [])
         finally:
             if owner is not None:
                 owner.close()
