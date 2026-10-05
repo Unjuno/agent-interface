@@ -32,6 +32,35 @@ def extract_submit_cover():
     return scope["factory"]
 
 
+def extract_renewal_invalidation_branch():
+    tree = ast.parse(Path(controller.__file__).read_bytes())
+    main = next(node for node in tree.body
+                if isinstance(node, ast.FunctionDef) and node.name == "main")
+    branch = next(node for node in ast.walk(main)
+                  if isinstance(node, ast.If) and
+                  any(isinstance(child, ast.Name) and child.id == "next_accepted"
+                      for child in ast.walk(node.test)) and
+                  "policy_invalidation" in ast.dump(node.test))
+    factory = ast.parse(
+        "def factory(next_accepted, next_cover, planner, planner_handle, "
+        "process, wait, "
+        "cover_terminals):\n"
+        "    invalidation = None\n"
+        "    current_cover = 'cover-0'\n"
+        "    current_terminal = None\n"
+        "    planner_interrupt = None\n").body[0]
+    loop = ast.While(test=ast.Constant(value=True), body=[], orelse=[])
+    loop.body.extend([branch, ast.Break()])
+    factory.body.append(loop)
+    factory.body += ast.parse(
+        "return invalidation, current_cover, planner_interrupt, "
+        "current_terminal, cover_terminals\n").body
+    module = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
+    scope = {"cancel_invalidated_cover": controller.cancel_invalidated_cover}
+    exec(compile(module, str(controller.__file__), "exec"), scope)
+    return scope["factory"]
+
+
 class Map01V39CoastTests(unittest.TestCase):
     def test_submit_cover_wait_passes_validity_monitor_before_acceptance(self):
         invalidation = {"reason": "health_below_floor"}
@@ -117,6 +146,45 @@ class Map01V39CoastTests(unittest.TestCase):
                             and node.func.attr == "mkdir"
                             for statement in loop.body[accept_index + 2:]
                             for node in ast.walk(statement)))
+
+    def test_renewal_invalidation_interrupts_planner_and_cancels_current_cover(self):
+        invalidation = {"reason": "health_below_floor", "sequence": 18}
+        terminal = {"event": "terminal", "id": "cover-renew-1",
+                    "status": "cancelled", "release": {
+                        "verified": True, "keys_down": [], "buttons_down": []}}
+
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+
+        process = types.SimpleNamespace(stdin=Stdin())
+        planner = Planner()
+        handle = object()
+
+        def wait(predicate):
+            self.assertTrue(predicate(terminal))
+            return terminal
+
+        cover_terminals = []
+        result = extract_renewal_invalidation_branch()(
+            {"event": "policy_invalidation", "invalidation": invalidation},
+            "cover-renew-1",
+            planner, handle, process, wait, cover_terminals)
+
+        self.assertEqual(result[:2], (invalidation, "cover-renew-1"))
+        self.assertEqual(result[2], {"status": "interrupted"})
+        self.assertIs(result[3], terminal)
+        self.assertEqual(result[4], [terminal])
+        self.assertEqual(planner.interrupted, [handle])
+        self.assertEqual(json.loads(process.stdin.writes[0]),
+                         {"op": "cancel", "id": "cover-renew-1"})
 
     def test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in(self):
         args = Namespace(seed=990605, load_fixture_manifest=Path("fixture.json"))
