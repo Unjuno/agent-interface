@@ -1,0 +1,61 @@
+{
+  "a01_raw_sha256": "10b099427f49972438ac155bb1d5677e4a9c550f417af9ff15e65167056d1b33",
+  "a01_reaudited_semantic_checks": {
+    "aliased-evidence-version_abstains": true,
+    "aliased-evidence-version_does_not_evict": true,
+    "all_enumerated_future_uses_retained": true,
+    "all_mutations_present": true,
+    "audit_source_hash_matches_freeze": true,
+    "candidate_live_set_equals_independent_oracle": true,
+    "canonical_evidence_unchanged": true,
+    "complete_graph_declared": true,
+    "current-consumer-changed-to-historical_abstains": true,
+    "current-consumer-changed-to-historical_does_not_evict": true,
+    "dead_pruning_exists": true,
+    "liveness_context_smaller_than_full": true,
+    "omitted-recovery-edge_abstains": true,
+    "omitted-recovery-edge_does_not_evict": true,
+    "only_independent_oracle_dead_ids_evicted": true,
+    "oracle_nodes_exist": true,
+    "oracle_references_exist": true,
+    "policy_names_complete": true,
+    "run_source_hash_matches_freeze": true,
+    "terminal-obligation-without-receipt_abstains": true,
+    "terminal-obligation-without-receipt_does_not_evict": true,
+    "unmodeled-dynamic-consumer_abstains": true,
+    "unmodeled-dynamic-consumer_does_not_evict": true,
+    "workload_hash_matches": true
+  },
+  "a01_workload_sha256": "37263f1731de25e71285bf1fc3527935380ef1ea315949df4985da1eebd3cc09",
+  "checks": {
+    "a01_frozen_sources_match_prerun": true,
+    "a01_original_raw_reaudited_pass": true,
+    "a01_reaudited_output_matches_preserved_audit": true,
+    "a01_workload_bytes_match_prerun": true,
+    "a02_auditor_invocations": 1,
+    "candidate_invocations": 0,
+    "mutation_graph_unchanged": true,
+    "v1_auditor_accepted_mutant": true,
+    "v1_mutant_all_audit_checks_passed": true,
+    "v1_mutant_policy_bytes_self_consistent": true,
+    "v1_mutant_raw_self_consistent": true,
+    "v1_mutant_record_hash_self_consistent": true,
+    "v2_rejects_mutant_workload_and_raw": true
+  },
+  "classification": "PASS_AUDIT_BINDING_REVALIDATED",
+  "mutation": {
+    "added_payload_bytes": 8192,
+    "legacy_v1_binding_errors": [],
+    "mutant_audit_padding_length": 8192,
+    "mutated_graph_sha256": "1df8112212302419271023751d556037825d6a0a4a82f13251c192b89fef76bd",
+    "original_graph_sha256": "1df8112212302419271023751d556037825d6a0a4a82f13251c192b89fef76bd",
+    "v2_binding_errors": [
+      "workload_bytes_match_prerun",
+      "raw_declares_prerun_workload_sha256",
+      "raw_artifact_matches_frozen_sha256"
+    ]
+  },
+  "passed": true,
+  "schema": "issue7367-a02-audit-v2",
+  "scope": "read-only audit of preserved A01 candidate output; candidate not replayed; finite declared workflow only"
+}
