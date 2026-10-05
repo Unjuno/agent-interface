@@ -1,0 +1,35 @@
+{
+  "archived_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+  "candidate_base": "11445a7ca200404ddc80bf7ebb1dbef86eb059de",
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "candidate_only_paths": [
+    "research/doom/v39_measurement_backend_selection_v1.py"
+  ],
+  "checks": {
+    "55_paths_shared_with_candidate_base": true,
+    "candidate_selection_helper_remains_absent_from_main": true,
+    "frozen_v15_perkey_result_still_records_owner_identity_mismatch": true,
+    "latest_main_owner_bytes_still_differ_from_archived_a01_identity": true,
+    "manifest_has_56_frozen_sources": true,
+    "only_current_main_source_delta_is_owner_v12": true,
+    "v15_selector_source_unchanged_since_candidate_base": true
+  },
+  "classification": "frozen candidate source-selection only; latest-main static identity comparison; no candidate rerun",
+  "current_main_commit": "19a6b723e58ccfd2b8265e88659589ef9223fcc9",
+  "disposition": "PASS_FROZEN_SELECTION_RESULT_WITH_ONE_CURRENT_OWNER_SOURCE_DELTA",
+  "latest_main_owner_sha256": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc",
+  "live_or_physical_release_claim": false,
+  "manifest_paths": 56,
+  "passed": 7,
+  "schema": "v15-perkey-latest-main-source-identity-audit-v1",
+  "shared_path_count": 55,
+  "shared_paths_changed": [
+    {
+      "base_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "current_main_sha256": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc",
+      "path": "research/live_control/input_owner_v12.py",
+      "status": "bytes_changed"
+    }
+  ],
+  "total": 7
+}
