@@ -1,0 +1,90 @@
+{
+  "conclusion": "PASS_IDENTITY_JOIN_SCOPED; HOLD_MISSING_TASK_EFFECT",
+  "current_main_commit": "88d875cc0916accb1a5fa36057253686f0586f1e",
+  "independent_audit": {
+    "overall_status": "PASS_IDENTITY_JOIN_SCOPED; HOLD_MISSING_TASK_EFFECT",
+    "pairs": [
+      {
+        "admitted_ns": 176459808270800,
+        "identity": {
+          "id": "cover-startup-a01",
+          "intent_token": "intent-v39-startup-a01",
+          "key": "F8",
+          "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+          "step": 2
+        },
+        "owner_keyrelease_started_ns": 176459808435000,
+        "owner_sync_returned_ns": 176459808436800,
+        "physical_verification_authoritative": false,
+        "release_call_returned_ns": 176459808453200,
+        "release_call_started_ns": 176459808418300
+      },
+      {
+        "admitted_ns": 176459808329900,
+        "identity": {
+          "id": "cover-startup-a01",
+          "intent_token": "intent-v39-startup-a01",
+          "key": "SPACE",
+          "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+          "step": 2
+        },
+        "owner_keyrelease_started_ns": 176459808381600,
+        "owner_sync_returned_ns": 176459808384300,
+        "physical_verification_authoritative": false,
+        "release_call_returned_ns": 176459808403600,
+        "release_call_started_ns": 176459808363400
+      }
+    ]
+  },
+  "mutation_cases": {
+    "authority_overclaim": "HOLD_RECEIPT_SCOPE_OR_VERIFICATION",
+    "duplicate_admission": "HOLD_AMBIGUOUS_IDENTITY",
+    "duplicate_release": "HOLD_AMBIGUOUS_IDENTITY",
+    "inter_up_keymap_query": "FAIL_INTER_UP_KEYMAP_QUERY",
+    "missing_release": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE",
+    "receipt_key_mismatch": "HOLD_RECEIPT_IDENTITY_MISMATCH",
+    "release_intent_token": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE",
+    "release_key": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE",
+    "release_owner_id": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE",
+    "release_step": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE",
+    "reordered_keyup_operation": "FAIL_RELEASE_OPERATION_ORDER_MISMATCH",
+    "reversed_time": "FAIL_INVALID_OR_REVERSED_TIME_ORDER"
+  },
+  "raw_origin_commit": "e02617b0d806dd05dd0cb24e44dbb4db2d393bd4",
+  "raw_sha256": "93e7d1f56497c40efcd2b559aeb43c17ccda4f27b1545e3320a8f16c1dc9c4f6",
+  "release_order_checks": {
+    "between_up_operations_matches_copy": true,
+    "declared_keymap_queries_between_ups": 0,
+    "event_keycodes": [
+      65,
+      74
+    ],
+    "key_up_count": 2,
+    "keymap_queries_between_ups": 0,
+    "operation_keycodes": [
+      65,
+      74
+    ],
+    "order_matches": true
+  },
+  "schema": "v39-effect-identity-join-result-v1",
+  "scope": "CPU-only replay of retained synthetic fake-X JSON rows; no game, model, live X11, OS input, allocation, or runtime replay",
+  "source_hashes": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9",
+    "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+    "research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/live_control/input_owner_v10.py": "ec4d6969d4c0cae2ee0a2989455a2fe87f930d90aeb3451afd3450c7c85e9718",
+    "research/live_control/input_owner_v12.py": "64c0180d3764e85c5d628bf8de1d63d10c145677e04d52ecff1edd887a1c2208",
+    "research/live_control/input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "research/live_control/input_transition_owner_v4.py": "9558db87d06f532cda2ed9e28e051733192fff8141445be8aa404d4143d9bf3e"
+  },
+  "unit_tests": {
+    "errors": 0,
+    "failures": 0,
+    "run": 11
+  }
+}

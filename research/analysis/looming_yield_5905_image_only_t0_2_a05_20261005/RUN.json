@@ -1,0 +1,81 @@
+{
+  "schema": "looming-yield-container-preflight-stop-a01-v1",
+  "allocation": null,
+  "issue": 5905,
+  "branch": null,
+  "setup_base_main": "5db548aa351c8ccd351831485d5e5940a4967ff3",
+  "reconciled_main": "d3a51bc4c962b223d05280225042b96a033df8bf",
+  "prior_allocations": [
+    "A01: STOP_MAIN_ADVANCED_AFTER_FREEZE",
+    "A02: STOP_MAIN_ADVANCED_AFTER_FREEZE",
+    "A03: STOP_CONSTRUCTION_GATE_REJECTS_ALL_RASTER_CIRCLES"
+  ],
+  "formal_candidate_invocations": 0,
+  "formal_independent_auditor_invocations": 0,
+  "exploratory_candidate_calls": 13,
+  "exploratory_independent_audit": "PASS_RAW_REGRESSION_RECONSTRUCTION",
+  "exploratory_audit_errors": 0,
+  "retries": 0,
+  "disposition": "EXPLORATORY_NO_INCREMENTAL_VALUE",
+  "phase": "UNREGISTERED_HOST_METHOD_SCREEN_AFTER_CONTAINER_START_STOP",
+  "input_sha256": {
+    "observations.json.gz": "3532f7a9460b987aca44a188fdcd39c7a5852d25a6cb6587f10677719dc4ed12",
+    "truth.json.gz": "623bba0b88b1a31a53c9fc20635c5586ed6884f6fb82c040f10540a6ff622ffb"
+  },
+  "container": {
+    "preflight_disposition": "STOP_ORBSTACK_NESTED_OCI_DENIED_BPF_MKNOD",
+    "runtime": "OrbStack isolated Linux machine + Podman 4.9.3",
+    "machine": "obs-5905-a04-20261005",
+    "machine_arch": "linux/arm64",
+    "image_digest": "docker.io/library/python@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d",
+    "image_config": "sha256:04e0b4721883a7b878e91662548cd04ddbc2f256cfa86f43920b92557198c1c3",
+    "built_image": "localhost/looming-a04:source-5db548a",
+    "built_image_id": "sha256:7ce385119cb3e5ae3f55c3399fd4456325c40447a9a8fa70b786efac1cd2f0bd",
+    "container_inventory_before_attempts": "empty",
+    "network": "none on attempted runs",
+    "cpu_memory_cgroup_controls": "not exercised successfully"
+  },
+  "preflight": [
+    {
+      "command": "podman run --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,nosuid,nodev,size=16m ... python3 -m unittest -v test_audit test_candidate test_runner",
+      "exit": 126,
+      "stderr": "crun: bpf create: Operation not permitted: OCI permission denied"
+    },
+    {
+      "command": "podman run --network=none --cgroups=disabled --read-only ... python -c 'print(\"container-ok\")'",
+      "exit": 125,
+      "stderr": "crun: mknod `/dev/null`: Operation not permitted: OCI permission denied"
+    },
+    {
+      "command": "podman run --network=none --cgroups=disabled --privileged --read-only ... python -c 'print(\"container-ok\")'",
+      "exit": 125,
+      "stderr": "crun: mknod `/dev/full`: Operation not permitted: OCI permission denied"
+    }
+  ],
+  "exploratory_result": {
+    "candidate_source_sha256": "3df2286b25d9a5a8145d85220eca3e71245c0bfebd0359a57d0401a78c1a66a0",
+    "screen_output_sha256": "fb1c9ce268e88e0147858786063da6ec1356358e0aa7172601515724c8dca5b5",
+    "independent_auditor_source_sha256": "937dc0e5cd3944d064307194bf0fb695fda40a968aa4c759b1175250775578aa",
+    "independent_audit_sha256": "f059c5537e25526bd75959a1aa5b752b6332456b2792bb5eb757dc850f54fb1f",
+    "frontier_max_tp_at_fp_0": {
+      "pixel": 6,
+      "growth": 6,
+      "last_interval_secant": 5,
+      "five_frame_regression": 6
+    },
+    "approach_yields": "6/6",
+    "identifiable_control_false_yields": 0,
+    "positive_release_lead_s": [2.4, 2.6, 2.8, 3.0, 3.2, 3.4],
+    "identical_twin": "MATCH",
+    "inference": "NO_INCREMENTAL_VALUE over either simple baseline on this fixture; regression is better than secant only"
+  },
+  "local_ci": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v test_audit test_candidate test_runner test_regression_estimator test_regression_probe test_regression_audit",
+    "exit": 0,
+    "tests_passed": 18,
+    "tests_failed": 0,
+    "scope": "host-side unit suite only; not formal corpus scoring"
+  },
+  "stdout": null,
+  "stderr": "No formal candidate or allocation auditor was launched. Exploratory candidate calls=13 and independent host audit PASS are reported separately. Do not label this as a formal/container result."
+}

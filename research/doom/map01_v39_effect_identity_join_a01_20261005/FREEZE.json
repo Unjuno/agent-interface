@@ -1,0 +1,25 @@
+{
+  "analysis_code_sha256": {
+    "audit.py": "1712458f5e75b6ca69ca384b59c5a99bbdfaef03077ac7383b9f174fb5b7dbb3",
+    "join.py": "a82f45ae7c9ad175d37ea52d1285832c3cbb493a4d4e2abee3225d8d81b3a5da",
+    "run.py": "cd8f4906b5bc482b7e2ad39044af0d0c2d7f616978e225f83aa12fbff2550a0a",
+    "test_join.py": "92f50442f6821f1f09f9373637764789328a0132166f819a8dcd023e470b3941"
+  },
+  "current_main_commit": "88d875cc0916accb1a5fa36057253686f0586f1e",
+  "decision": "PASS_IDENTITY_JOIN_SCOPED; HOLD_MISSING_TASK_EFFECT",
+  "environment": {
+    "container_attempted": true,
+    "container_status": "STOP_DOCKER_CONTENT_STORE_READ_ERROR on docker image ls; no candidate/test command ran in a container",
+    "execution": "host Python standard library only",
+    "live_game": false,
+    "model_calls": 0,
+    "x11_or_os_input": false
+  },
+  "hypothesis": "The V39 synthetic release-order trace uniquely joins each key admission to exactly one matching release receipt by program/step/token/owner/key identity and monotonic timestamp order; absent effect evidence must remain HOLD.",
+  "raw_origin_commit": "e02617b0d806dd05dd0cb24e44dbb4db2d393bd4",
+  "raw_path_at_origin": "research/doom/map01_v39_startup_release_order_a01_20261005/results/a03/RAW.json",
+  "raw_sha256": "93e7d1f56497c40efcd2b559aeb43c17ccda4f27b1545e3320a8f16c1dc9c4f6",
+  "schema": "v39-effect-identity-join-freeze-v1",
+  "source_lock": "SOURCE_LOCK.json",
+  "source_lock_sha256": "602a1d9ab829daf2e5bab3c3460a26349dfe1adbe6b3e85d9342141c4ea1d968"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "v39-palette-aware-reader-a03-publication-result",
+  "status": "PASS_COMPATIBILITY_ONLY",
+  "executed_freeze_sha256": "0b43313d5c625d4985f5b7faccd601e78d9ea69e4482a78c15c87f1eee865202",
+  "executed_candidate_sha256": "583d514c55fcde5da26812476b99cd791f87b8413b3748511440c45b3f5871f6",
+  "public_candidate_sha256": "f3803b7c35eca725b846484b8a91096f6efa256b84dd190eeac6f9dd0dde19e7",
+  "public_audit_status": "PASS",
+  "public_audit_checks": 65,
+  "heldout_exact_matches": 33,
+  "heldout_frames": 33,
+  "sequence31": {
+    "health": 97,
+    "ammo": 47,
+    "palette": 0
+  },
+  "sequence35": {
+    "health": 100,
+    "ammo": 47,
+    "palette": 9
+  },
+  "live_issue_59_gate": "OPEN",
+  "limitations": [
+    "Same-episode saved-frame compatibility only; not cross-episode generalization.",
+    "Recorded typed observations are from the same reader family, not independent HUD truth.",
+    "Public redacted candidate is not the executed source and was not rerun.",
+    "Executed candidate and preparation helper byte identity are not independently verifiable from this privacy-redacted publication.",
+    "No live game, live input, model, runtime integration, task effect, or Issue #59 gate closure."
+  ],
+  "publication_redaction": "Local WAD path literal removed from public replay copy; matching WAD identified by SHA-256 and provided externally."
+}
