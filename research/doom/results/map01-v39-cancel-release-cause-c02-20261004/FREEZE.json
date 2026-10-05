@@ -1,0 +1,17 @@
+{
+  "run_id": "MAP01-V39-CANCEL-RELEASE-CAUSE-C02-20261004",
+  "parent": "MAP01-V39-CANCEL-RELEASE-CAUSE-C01-20261004",
+  "hypothesis": "A versioned current-main owner preserves cancellation cause when it arrives after dequeue and before explicit release dispatch, while ordinary release and empty-release verification remain unchanged.",
+  "treatment": "Run the same deterministic fake-Xlib queue interleaving against additive input_owner_v12.py; ordinary release is the positive control.",
+  "decision": "Candidate PASS only if cancelled interleaving records reason cancelled with verified empty state and ordinary control remains reason release; otherwise retain FAIL/STOP.",
+  "scope": "Current-main v10 owner copied as additive v12 with one release-cause classification change; transition/backend/session v14 opt-in wiring.",
+  "limits": "Host-only fake Xlib; no ExecutorV12 worker/finally source, X server, device, game, model, useful task feedback, bounded-recovery timing, matched comparison or formal/live allocation.",
+  "source": "research/live_control/input_owner_v12.py",
+  "source_sha256": "662f28840bd9a84a51611a2da23681c5fec53d2b6ab00b78675a9380855c8077",
+  "test": "research/doom/results/map01-v39-cancel-release-cause-c02-20261004/test_cancel_release_cause.py",
+  "test_sha256": "2d490167f67e9552385d483bc573463923adde9aa37c1d502174ed910b86593b",
+  "runtime": "Local Windows host; CPython 3.11; WSLc held by another active study container",
+  "command": "OWNER_UNDER_TEST=<absolute input_owner_v12.py> python -B test_cancel_release_cause.py",
+  "invocations": 1,
+  "retry_policy": "no retry"
+}

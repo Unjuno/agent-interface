@@ -1,0 +1,36 @@
+{
+  "base_commit": "27f6e9ff02f21afbe56579b72063c19b2dbd74bb",
+  "bounds_ns": {
+    "justification": "XTest down request is issued after admitted_ns and synchronized before input_ack_ns; XTest up is issued after release_call_started_ns and synchronized before release_call_returned_ns.",
+    "lower": "max(0, release_call_started_ns - input_ack_ns)",
+    "upper": "release_call_returned_ns - admitted_ns"
+  },
+  "decision": "PASS iff all 30 rows have matching W admission/up receipts, matching lease token and owner id, ordinary valid release, monotonic timestamps, verified-empty post-up state, fake KeyPress/KeyRelease pair, frozen source hashes, and recomputed finite lower<=upper interval; otherwise FAIL/HOLD. No retries.",
+  "frozen_at_utc": "2026-10-04T04:56:54Z",
+  "hypothesis": "For each normal explicit key-up, admission and release call brackets bound the synthetic key-held interval.",
+  "pilot_excluded": true,
+  "pr_head": "99b7d130742b4e884709a862bc074d15e6b42ac9",
+  "run_id": "MAP01-V39-KEY-HOLD-BOUNDS-CONFIRM-30-MAIN27F-PR99B7-20261004",
+  "runtime": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "scope": "Construction measurement only: current-main Executor stack as import context, current PR InputTransitionOwnerV4/InputOwnerV12 down/up API with in-memory fake Xlib; no application, game, model, GUI, or allocation.",
+  "source_sha256": {
+    "audit_hold_bound_30.py": "f0ebdbf59f16d59487ba162a53a10b4fb97370bc3a2543455d9dac41957db9e0",
+    "freeze_hold_bound.py": "1a56d733ba7f51339199ff94496d87346a3a57f5371b6053dd7232e79d56da0d",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/executor_v12.py": "b81ad839318e3a53edfde4425f61947fbbc6e142a85348e0a1fe730b754fc74d",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "research/live_control/input_owner_v12.py": "7cc6b3bcac201624992657203cbb9459120956ad65c1fb6e56e4ac85aafad8f2",
+    "research/live_control/input_transition_owner_v4.py": "9b2b4c597bfb9c89a21781599a1fb2b7e9f456ab2b3b4ab3da54effcb28c381f",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "research/live_control/test_executor_owner_cancel_cause_v1.py": "e196095fcb84b21e10c48fecf155b2c4ba699d09b3299f168f069bb4d7574cea",
+    "run_hold_bound_30.py": "e9b785d730734a2e75c7cde4e3f38d56cf207f666795d066c67c0af8b0198da0"
+  },
+  "trial_design": "One batch of 30 fresh owner/lease instances; one W down, one W up, then one owner input_state sample per trial. Earlier one-cycle pilot used prior main/PR source identities and is excluded."
+}

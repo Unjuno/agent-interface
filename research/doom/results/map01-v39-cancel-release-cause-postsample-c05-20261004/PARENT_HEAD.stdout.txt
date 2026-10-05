@@ -1,0 +1,4 @@
+test_post_sample_cancel_release_is_published_before_cancel_terminal ... ERROR
+Traceback: assertion seeking event='input_released' raises StopIteration.
+Parent raw event summary: accepted; step_started; cancel_requested; terminal(status=cancelled, release.reason=release, verified=true, keys_down=[], buttons_down=[], interruption=null). No standalone input_released event.
+This is the expected red control for the exact same test bytes.
