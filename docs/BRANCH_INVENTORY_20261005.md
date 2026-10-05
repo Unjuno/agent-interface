@@ -638,3 +638,14 @@ The earlier 12:59 UTC table marked `research/8150-threat-profiled-runtime-eligib
 - Keep the source ref for now: the six-commit preregistration/freeze history itself is not represented by the merged publication branch's final blobs. The evidence files are rescued to `main`; intermediate source history remains a provenance hold pending a separate history-preservation decision. Do not classify this as disposable merely because its final files match.
 
 This is a per-ref custody decision, not a complete audit of the remaining unclassified refs. No experiment was rerun.
+
+
+## Superseded branch cleanup — 2026-10-05 14:16 UTC
+
+Removed `fix/59-feedback-step-bool-identity-20261005` at its audited tip `2bebf57d9eb617bb20ef4fbbfa6ad13f1a4ba5f0`.
+
+- Closed unmerged PR #7699 identifies the implementation as duplicated by #7696 and its unique before-frame Boolean alias regression as carried into #7704, then into #7696's current head.
+- #7696's open Draft head `c56a07db5f680f1e6d6e130aa94b68bae38645fa` is four commits ahead of the removed tip; its changed files include the V39 controller and typed-feedback test. No open PR used the removed ref as head or base. The current shared worktree registry had no checkout on this branch.
+- After deletion, the branch API returned NOT_FOUND. Closed PR #7699 still reports the original head SHA, and the original typed-feedback test blob remains readable at that SHA. No evidence or commit object was rewritten.
+
+This removes one redundant branch ref while retaining its source through descendant #7696 and closed PR history. #7696 remains unmerged and Draft; this deletion does not integrate or approve its changes.
