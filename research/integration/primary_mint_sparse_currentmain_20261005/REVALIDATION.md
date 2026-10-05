@@ -13,8 +13,9 @@ deletion is authorized by this report.
   Expect local rejection and zero host calls. The fixture returns a valid
   `interface_guarded_mint` envelope if dispatched, preventing response-shape
   errors from masquerading as the validation failure.
-- **D:** Main snapshots `11445a7ca200404ddc80bf7ebb1dbef86eb059de` and, after
-  unrelated fast-forward updates, `9146507c2689da7d4444d8febda848fa7dd4bcd1`;
+- **D:** Main snapshots `11445a7ca200404ddc80bf7ebb1dbef86eb059de`,
+  `9146507c2689da7d4444d8febda848fa7dd4bcd1`, and latest
+  `1fa854d537bfd711b5dfd99f8c04ab6c35bad286` after unrelated advances;
   predecessor PR #7188 head `0f53b3e32f20e7b270643f1dc87baf66919ef7c3`. First ran the new
   regression against unchanged main: it failed with “Missing expected
   rejection,” demonstrating that the sparse pair passed validation. Applied
@@ -53,5 +54,6 @@ git diff --check
 The VM-modules option is documented by `test_primary_terminal_failure.mjs`;
 `PRIMARY_FAILURE_EVIDENCE` is required by `test_primary_stdio_failure_order.mjs`.
 The entire host_v1 suite was rerun after each main fast-forward, including the
-latest recorded snapshot. These are local tests; no claim is made about GitHub
-Actions.
+latest snapshot `1fa854d537bfd711b5dfd99f8c04ab6c35bad286`; the latest rescue
+branch sync merge is `4dec5b9314dc7e9c3647a405d5ccd87fe8459b4f`. These are local
+tests; no claim is made about GitHub Actions.
