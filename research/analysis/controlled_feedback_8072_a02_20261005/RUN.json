@@ -1,0 +1,16 @@
+{
+  "allocation": "CONTROLLED-FEEDBACK-8072-A02-20261005-01",
+  "formal_started_utc": "2026-10-05T07:24:34Z",
+  "candidate_command": "docker run --pull=never --rm --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop=ALL --security-opt=no-new-privileges -v <package>:/work:rw -w /work <python-image-digest> sh -c 'python candidate.py > results/candidate.raw.json'",
+  "candidate_exit": 0,
+  "auditor_command": "docker run --pull=never --rm --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop=ALL --security-opt=no-new-privileges -v <package>:/work:ro -v <results>:/results:rw -w /work <python-image-digest> sh -c 'python auditor.py /results/candidate.raw.json > /results/AUDIT.json'",
+  "auditor_exit": 0,
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "raw_sha256": "3d06d2a2f3e7d3d4805c676d02415e653e59458c6c8aaac3309768e95ac41512",
+  "audit_sha256": "19fe4619ce6e040fb3e841158b10e2302c054c7f5f391eb3bc4be7a95f72e56a",
+  "outcome": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "scope": "authored finite synthetic mechanism only"
+}

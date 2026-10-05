@@ -1,0 +1,11 @@
+{
+  "family": ["vA","vB","vC"],
+  "heldout": ["hA","hB","hC"],
+  "expected_effect": {"vA":"state-A", "vB":"state-B", "vC":"state-C"},
+  "traces": [
+    {"id":"valid", "intent":"vA", "observed_target":"vA", "observed_effect":"state-A", "success_claim":true},
+    {"id":"wrong-target", "intent":"vA", "observed_target":"vB", "observed_effect":"state-B", "success_claim":true},
+    {"id":"false-success", "intent":"vB", "observed_target":"vB", "observed_effect":null, "success_claim":true},
+    {"id":"outside-family", "intent":"hA", "observed_target":"hA", "observed_effect":"state-A", "success_claim":true}
+  ]
+}

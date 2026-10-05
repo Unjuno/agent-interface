@@ -15,6 +15,20 @@ Compatibility smoke checks were recorded on 2026-10-02 and 2026-10-04 with WSL `
 
 Existing WSLc research evidence is also recorded in [PR #6114](https://github.com/Unjuno/agent-interface/pull/6114): a read-only, network-disabled Python replay ran two tests successfully. [PR #7020](https://github.com/Unjuno/agent-interface/pull/7020) records a narrow Dockerfile build/run. These results establish scoped Dockerless capability, not complete Docker flag parity, GUI performance, memory relief, or blanket Docker Desktop removal readiness.
 
+## Local iteration on WSL 3.x
+
+On this host, `wsl --version` reports WSL `3.0.1.0`, and `wslc version` reports WSLc `3.0.1`. These are the Windows WSL platform/container CLI versions; the installed Ubuntu distribution remains WSL2. `wslc` is included with WSL and can run eligible Linux containers without Docker Desktop or a separately installed Docker Engine.
+
+A scoped local validation on current `main` (`1eac6ea9f5b91cc10a8c3dc20374b9d79ffcf179`) used the cached `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f` (`linux/amd64`), read-only source bind, `--pull never`, `--network none`, `--cpus 1`, and `--rm`:
+
+- `python -B -m unittest -v research.analysis.test_check_index`: 17/17 PASS.
+- `research.test_workspace_git_tree` and `research.test_check_workspace_index` are not runnable with that minimal image because they spawn the `git` executable, which is absent. The attempted invocation returned 18 errors and one failure (39 tests discovered); this is an environment/image dependency mismatch, not a product test failure. It was not retried with a different image.
+- The WSLc invocation returned exit code 0 for the 17-test suite. `wslc container list --all` showed no additional container after completion. Existing stopped containers/images predated this check and were left untouched.
+
+This checks only a low-risk CPU-only subset and confirms the new local iteration route is usable on this WSL 3.x host. It does not establish faster iteration, reduced memory use, hard memory limits, complete Docker compatibility, application behavior, or readiness to replace Docker-required CI. For a test that calls Git, use an already-qualified image containing the exact needed Git version, or validate a pinned Git-bearing image as a separate construction step; do not install dependencies into the existing immutable digest at runtime.
+
+Use the normal repository guidance below for other local runs. Preserve study-specific runtime requirements and prior allocations; this check is not authorization to rewrite or repeat them.
+
 ## Recommended local invocation
 
 Run from PowerShell with the source tree in the WSL Linux filesystem when practical; Microsoft recommends keeping Linux-tool projects there for filesystem performance. For a source tree on a Windows drive, use a read-only bind mount and treat its slower I/O as a separate measurement condition.

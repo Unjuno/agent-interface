@@ -1,0 +1,218 @@
+{
+  "cases": [
+    {
+      "base_backend_touched_after_batch": [],
+      "events": [
+        {
+          "accepted_ns": 19506417179083,
+          "event": "accepted",
+          "id": "normal-case",
+          "intent_token": "f90485b41a2d4e53be00ec2936a462b7",
+          "program_sha256": "c881241d9328ed5031fbd692f6d701f790f3817be549618403ba747cd466a711",
+          "steps": 1,
+          "valid_until_ns": 19516417084666
+        },
+        {
+          "event": "step_started",
+          "id": "normal-case",
+          "issued_ns": 19506417315375,
+          "operation": "fixture_actions",
+          "step": 0
+        },
+        {
+          "decision_reason": null,
+          "error": "ValueError('observed input focus required')",
+          "event": "terminal",
+          "id": "normal-case",
+          "interruption": null,
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "f90485b41a2d4e53be00ec2936a462b7",
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "release",
+            "release_batch_delivery": {
+              "identifier": "normal-case",
+              "positions": [],
+              "schema": "release-batch-delivery-v1",
+              "size": 0,
+              "step": 0
+            },
+            "release_call_returned_ns": 19506417494083,
+            "release_call_started_ns": 19506417447208,
+            "valid_until_ns": null,
+            "verified": true,
+            "verified_ns": 19506417479208
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "failed",
+          "steps_completed": 0,
+          "terminal_ns": 19506417506125
+        }
+      ],
+      "executor_terminal": {
+        "decision_reason": null,
+        "error": "ValueError('observed input focus required')",
+        "event": "terminal",
+        "id": "normal-case",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "f90485b41a2d4e53be00ec2936a462b7",
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "release",
+          "release_batch_delivery": {
+            "identifier": "normal-case",
+            "positions": [],
+            "schema": "release-batch-delivery-v1",
+            "size": 0,
+            "step": 0
+          },
+          "release_call_returned_ns": 19506417494083,
+          "release_call_started_ns": 19506417447208,
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 19506417479208
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 19506417506125
+      },
+      "injected_keyrelease_loss": false,
+      "owner_close_error": null,
+      "owner_close_recovered": true,
+      "release_row": null,
+      "runtime_resource_observation": {
+        "/sys/fs/cgroup/cgroup.controllers": "unavailable:FileNotFoundError",
+        "/sys/fs/cgroup/cpu.max": "unavailable:FileNotFoundError",
+        "/sys/fs/cgroup/memory.max": "unavailable:FileNotFoundError",
+        "/sys/fs/cgroup/memory.swap.max": "unavailable:FileNotFoundError"
+      },
+      "server_keycodes_down_after_executor_release": []
+    },
+    {
+      "base_backend_touched_after_batch": [],
+      "events": [
+        {
+          "accepted_ns": 19506430098500,
+          "event": "accepted",
+          "id": "lost-up-case",
+          "intent_token": "ff9402652f714d3085ebc1b34d1196dd",
+          "program_sha256": "c881241d9328ed5031fbd692f6d701f790f3817be549618403ba747cd466a711",
+          "steps": 1,
+          "valid_until_ns": 19516430029416
+        },
+        {
+          "event": "step_started",
+          "id": "lost-up-case",
+          "issued_ns": 19506430131166,
+          "operation": "fixture_actions",
+          "step": 0
+        },
+        {
+          "decision_reason": null,
+          "error": "ValueError('observed input focus required')",
+          "event": "terminal",
+          "id": "lost-up-case",
+          "interruption": null,
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "ff9402652f714d3085ebc1b34d1196dd",
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "release",
+            "release_batch_delivery": {
+              "identifier": "lost-up-case",
+              "positions": [],
+              "schema": "release-batch-delivery-v1",
+              "size": 0,
+              "step": 0
+            },
+            "release_call_returned_ns": 19506430229625,
+            "release_call_started_ns": 19506430201708,
+            "valid_until_ns": null,
+            "verified": true,
+            "verified_ns": 19506430212958
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "failed",
+          "steps_completed": 0,
+          "terminal_ns": 19506430239416
+        }
+      ],
+      "executor_terminal": {
+        "decision_reason": null,
+        "error": "ValueError('observed input focus required')",
+        "event": "terminal",
+        "id": "lost-up-case",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "ff9402652f714d3085ebc1b34d1196dd",
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "release",
+          "release_batch_delivery": {
+            "identifier": "lost-up-case",
+            "positions": [],
+            "schema": "release-batch-delivery-v1",
+            "size": 0,
+            "step": 0
+          },
+          "release_call_returned_ns": 19506430229625,
+          "release_call_started_ns": 19506430201708,
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 19506430212958
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 19506430239416
+      },
+      "injected_keyrelease_loss": true,
+      "owner_close_error": null,
+      "owner_close_recovered": true,
+      "release_row": null,
+      "runtime_resource_observation": {
+        "/sys/fs/cgroup/cgroup.controllers": "unavailable:FileNotFoundError",
+        "/sys/fs/cgroup/cpu.max": "unavailable:FileNotFoundError",
+        "/sys/fs/cgroup/memory.max": "unavailable:FileNotFoundError",
+        "/sys/fs/cgroup/memory.swap.max": "unavailable:FileNotFoundError"
+      },
+      "server_keycodes_down_after_executor_release": []
+    }
+  ],
+  "claims": {
+    "application_effect": false,
+    "doom": false,
+    "gui": false,
+    "model": false,
+    "physical_keyboard": false,
+    "real_x11": false
+  },
+  "schema": "v39-v15-keyup-loss-a07-raw-v1",
+  "source_base": "9febfe4926cde6629f9751d6444f6b802cf31328"
+}
