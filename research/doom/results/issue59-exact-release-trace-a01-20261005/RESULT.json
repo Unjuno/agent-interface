@@ -1,0 +1,37 @@
+{
+  "schema": "issue59-release-order-result-v1",
+  "id": "issue59-release-order-a01",
+  "source_checkout_head": "8a9e76d56be60fdaf96fa87ccbc9c7defd29e20d",
+  "source_base_main": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "hypothesis": "The selected V15 release composition sends both explicit key-up calls before one terminal owner-state sample; each key receives a separate identity-bound XTest/XSync receipt, and no query_keymap sample falls between them.",
+  "trial_count": 4,
+  "formal_allocation": false,
+  "environment": "Windows Python 3.11; deterministic fake Xlib Display; no live X11 or ViZDoom",
+  "exact_closure_baseline": {
+    "status": "pass",
+    "call_order": ["KeyRelease(38)", "XSync", "KeyRelease(65)", "XSync", "input_state"],
+    "query_keymap_in_batch": 0,
+    "query_keymap_after_batch_during_owner_close_cleanup": 1,
+    "per_key_receipts": 2,
+    "physical_verification_authoritative": false
+  },
+  "exact_closure_negative_control": {
+    "status": "expected_fail",
+    "mutation": "insert input_state between explicit releases",
+    "detected": true,
+    "failed_check": "one_terminal_input_state"
+  },
+  "wrapper_only_control": {
+    "status": "pass",
+    "note": "actual batch wrapper with fake base owner/executor seams; preserved as a focused secondary construction check"
+  },
+  "limitations": [
+    "The V39 controller selection, V15 session constructor and executor loop were not launched; a fake outer executor drove two keys.",
+    "The V15 batch wrapper, v4/v3 adapters and V12 owner-thread implementation were actual source; Xlib and display were fake.",
+    "No real XTest request, physical-key state, target application, game effect, or live latency was measured.",
+    "This construction result neither allocates nor authorizes the physical-latency lane."
+  ],
+  "source_sha256_manifest": "SOURCE_SHA256SUMS",
+  "artifact_sha256_manifest": "ARTIFACT_SHA256SUMS"
+}
+
