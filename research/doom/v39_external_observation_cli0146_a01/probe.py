@@ -28,6 +28,7 @@ SEQ = 200
 EVENT_TEXT = "Fresh observation seq=200; HUD health 51, ammo 38."
 IMAGE_SHA256 = "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c"
 MOCK_TEXT = "mock final"
+PENDING_AFTER_ACK_SECONDS = 2.0
 
 
 def _turn_id(reply: dict[str, Any]) -> str | None:
@@ -112,6 +113,7 @@ class _MockState:
         self.release_first = threading.Event()
         self.errors: list[str] = []
         self.lock = threading.Lock()
+        self.first_request_seen_ns: int | None = None
 
 
 def run_probe(image: bytes, detail: str, timing: str, timeout: float = 20.0) -> dict[str, Any]:
@@ -131,6 +133,7 @@ def run_probe(image: bytes, detail: str, timing: str, timeout: float = 20.0) -> 
                     state.requests.append(request)
                     index = len(state.requests)
                 if index == 1:
+                    state.first_request_seen_ns = time.monotonic_ns()
                     state.first_request.set()
                     if not state.release_first.wait(timeout):
                         state.errors.append("initial mock response release timed out")
@@ -239,7 +242,9 @@ supports_websockets = false
             },
         }
         original_completed = False
+        initial_response_released_ns = None
         if timing == "after-turn":
+            initial_response_released_ns = time.monotonic_ns()
             state.release_first.set()
             deadline = time.monotonic() + 12
             while time.monotonic() < deadline:
@@ -250,9 +255,13 @@ supports_websockets = false
                 if message.get("method") == "turn/completed" and message.get("params", {}).get("turn", {}).get("id") == turn_id:
                     original_completed = True
                     break
+        external_message_sent_ns = time.monotonic_ns()
         send({"id": 4, "method": "turn/start", "params": tool_output})
         external_reply = wait_for(lambda m: m.get("id") == 4)
+        external_message_ack_ns = time.monotonic_ns()
         if timing == "during-turn":
+            state.release_first.wait(PENDING_AFTER_ACK_SECONDS)
+            initial_response_released_ns = time.monotonic_ns()
             state.release_first.set()
         deadline = time.monotonic() + timeout
         completed_ids = {turn_id} if original_completed else set()
@@ -275,6 +284,15 @@ supports_websockets = false
             "probe_started_at_utc": run_started_utc,
             "observed_at_utc": datetime.now(timezone.utc).isoformat(),
             "probe_elapsed_seconds": round(time.monotonic() - run_started, 3),
+            "first_mock_request_seen_monotonic_ns": state.first_request_seen_ns,
+            "external_message_sent_monotonic_ns": external_message_sent_ns,
+            "external_message_ack_monotonic_ns": external_message_ack_ns,
+            "initial_response_released_monotonic_ns": initial_response_released_ns,
+            "ack_while_initial_response_pending": (
+                timing == "during-turn" and initial_response_released_ns is not None
+                and state.first_request_seen_ns <= external_message_sent_ns
+                and external_message_ack_ns <= initial_response_released_ns
+            ),
             "loopback_only": True,
             "temporary_codex_home": True,
             "initialization_ok": "result" in init,

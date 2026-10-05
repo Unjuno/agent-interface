@@ -6,7 +6,7 @@ Does the `turn/start` + `toolOutput` observation shape used by the V39 active-tu
 
 No. Both timing conditions accepted the RPC, but the reply carried a different turn ID. When sent while the initial mocked Responses request was held open, only that initial request was observed; the initial turn completed after release, while the external turn remained incomplete through the 20-second observation window. When sent after the initial turn completed, a second independent turn and request completed, but the exact health/ammo observation and PNG were absent from the Responses input.
 
-This is a client-version compatibility result for the `turn/start` + `toolOutput` shape. It complements the separately retained Codex CLI 0.160.0 positive protocol result in PR #7951; it does not invalidate that newer-version result. The local CLI version is not evidence that the deployed V39 runtime uses this binary.
+This is a client-version compatibility result for the `turn/start` + `toolOutput` shape. It complements the Codex CLI 0.160.0 transport result in PR #7951 and request-ordering result in PR #7969; it does not invalidate those newer-version results. The local CLI version is not evidence that the deployed V39 runtime uses this binary.
 
 ## Fixed inputs and isolation
 
@@ -15,14 +15,14 @@ This is a client-version compatibility result for the `turn/start` + `toolOutput
 - The App Server subprocess received a minimal environment with temporary `HOME`, `CODEX_HOME`, and `TMPDIR`; its only configured model provider was an HTTP server bound to `127.0.0.1`. No API key, remote model, game, GUI, or input backend was used. Each run was bounded to a 20-second external-turn observation window.
 - The JSON files under `raw/` preserve actual mock Responses request bodies, the App Server reply fields, runner summaries, and the independent audit output. The retained PNG remains referenced by its path/hash rather than duplicated.
 
-Recorded intervals were 2026-10-05 04:07:54.705681–04:08:15.175639 UTC (20.470 s, during-turn) and 04:08:16.701384–04:08:36.932542 UTC (20.231 s, after-turn). The first case ended with one model request and no external-turn completion; the second completed its second request and external turn.
+Recorded intervals were 2026-10-05 04:18:24.839228–04:18:47.360709 UTC (22.521 s, during-turn) and 04:18:47.962366–04:19:08.369542 UTC (20.407 s, after-turn). In the first case the external-message reply arrived 2.711 ms after send; the initial Responses request then remained held for 2.005 s before release. Only one model request arrived and the external turn did not complete. In the after-turn case, the second request and external turn completed.
 
 ## H / T / D / C / U
 
 - **H:** On CLI 0.146.1, sending the V39 `toolOutput` observation with `turn/start` either during or after an initial turn does not deliver that observation to the model request as an active-turn update.
 - **T:** Hold the initial loopback Responses response open and send the external message during that turn; in a second bounded run, finish the initial turn first. Save raw mocked requests and compare both returned turn IDs, turn completions, observation text, and exact PNG data URL.
 - **D:** Compatibility fails if the observation is absent, the turn ID changes, or the external turn does not complete in the in-flight case. The independent audit separately verifies the observed request count, raw-body hashes, fixture hash, timing precondition, and completion shape.
-- **C:** CLI 0.146.1 is older than the CLI 0.160.0 positive result in #7951. This may be an introduced-version boundary. The probe says nothing about a different method or client build.
+- **C:** CLI 0.146.1 is older than the CLI 0.160.0 results in #7951 and #7969. This may be an introduced-version boundary. The probe says nothing about a different method or client build.
 - **U:** Loopback protocol only; no real inference, model comprehension, runtime integration on the target host, cancellation/release behavior, independently useful feedback, recovery, task effect, live threat exposure, or MAP01 outcome was tested. Do not claim this closes any Issue #59 gate.
 
 ## Reproduction and audit
@@ -41,4 +41,4 @@ python3 research/doom/v39_external_observation_cli0146_a01/audit.py
 
 The probe intentionally exits 1 because its positive-delivery assertion is unmet. That exit is the measured negative result; the independent auditor exits 0 when the raw evidence matches the expected negative compatibility outcome.
 
-`raw/audit.json` passed all 28 case-level checks across the two runs, including recomputation of request-body hashes and matching request-type summaries against the preserved raw bodies.
+`raw/audit.json` passed all 30 case-level checks across the two runs, including recomputation of request-body hashes, monotonic send/ack/release ordering, and matching request-type summaries against the preserved raw bodies.

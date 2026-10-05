@@ -21,16 +21,17 @@
         "server_error_free": true,
         "completion_shape": true,
         "precondition_timing": true,
-        "one_request_and_external_still_incomplete": true
+        "one_request_and_external_still_incomplete": true,
+        "external_ack_precedes_initial_response_release": true
       },
       "pass": true,
       "mock_request_count": 1,
       "request_sha256": [
-        "0f938176f0c7213c092e98f86c5cf4e099a97991a5d0c423f9515bdaf2136d43"
+        "60f5c73cb7776ef3826b79ddd0310e5796b5d4d3240b34514914df26a3ca564e"
       ],
-      "all_mock_input_sha256": "f1742a969fe7980ad142b6416cfcf2d0ae758ebab0985bb5bcdbf1ffec951ed7",
-      "initial_turn_id": "01a10a3f-2dbd-7633-a76a-316479f9014a",
-      "external_turn_id": "01a10a3f-2def-7943-9f59-b238b36b4382",
+      "all_mock_input_sha256": "145740ca394de2f6cdcb000b94b5f93fcb6f11cffe95a6b86b0ed1d8ae36e156",
+      "initial_turn_id": "01a10a48-cb47-70a1-b0e2-320268b88ff3",
+      "external_turn_id": "01a10a48-cb6d-76e3-9a46-4fcabd889840",
       "server_errors": []
     },
     {
@@ -49,17 +50,18 @@
         "server_error_free": true,
         "completion_shape": true,
         "precondition_timing": true,
-        "separate_followup_request": true
+        "separate_followup_request": true,
+        "initial_response_released_before_external_message": true
       },
       "pass": true,
       "mock_request_count": 2,
       "request_sha256": [
-        "c2ac080874f82dbfa626cbba157a54944b7bdf6063df56dbf1769833bc4b7692",
-        "3566f5acc28c0553acbeced31b5ba7ef498fa95a183f0ad9dcd867c70f8046aa"
+        "f380768e77abac73eda7f1b2c1db9a8d4b739214e0eef1b5be2c3e81437983de",
+        "28cd29455cff9cdb779755a41d2216d203868eb35c243160d532157fd85b8d1e"
       ],
-      "all_mock_input_sha256": "016d22919c5d20eecdb116e5b3bed5f6c29909989e9befb10371313dc6eb11e7",
-      "initial_turn_id": "01a10a3f-82b5-7aa3-8850-f7f197d83eb3",
-      "external_turn_id": "01a10a3f-82c9-7c63-8816-25c3ffbce7bd",
+      "all_mock_input_sha256": "ccc94038cbc50ef2a794bb3d419278c7f4437f8580252a7d88c606bdd95faf63",
+      "initial_turn_id": "01a10a49-253e-7f10-9865-545aa555924d",
+      "external_turn_id": "01a10a49-256e-7b31-b476-11fbe9718024",
       "server_errors": []
     }
   ],

@@ -70,8 +70,26 @@ def audit_case(name: str, expected_requests: int, original_done: bool,
     }
     if name == "during-turn.json":
         checks["one_request_and_external_still_incomplete"] = len(requests) == 1 and not external_done
+        checks["external_ack_precedes_initial_response_release"] = (
+            data.get("first_mock_request_seen_monotonic_ns")
+            <= data.get("external_message_sent_monotonic_ns")
+            <= data.get("external_message_ack_monotonic_ns")
+            <= data.get("initial_response_released_monotonic_ns")
+            and data.get("ack_while_initial_response_pending") is True
+            and 1_900_000_000 <= (
+                data.get("initial_response_released_monotonic_ns")
+                - data.get("external_message_ack_monotonic_ns")
+            ) <= 3_000_000_000
+        )
     else:
         checks["separate_followup_request"] = len(requests) == 2 and external_done
+        checks["initial_response_released_before_external_message"] = (
+            data.get("first_mock_request_seen_monotonic_ns")
+            <= data.get("initial_response_released_monotonic_ns")
+            <= data.get("external_message_sent_monotonic_ns")
+            <= data.get("external_message_ack_monotonic_ns")
+            and data.get("ack_while_initial_response_pending") is False
+        )
     return {
         "file": name,
         "checks": checks,
