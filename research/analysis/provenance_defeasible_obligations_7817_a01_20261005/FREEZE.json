@@ -1,0 +1,56 @@
+{
+  "allocation_id": "PROVENANCE-DEFEASIBLE-7817-T0-A01-20261005-01",
+  "branch": "research/7817-provenance-defeasible-t0-a01-20261005",
+  "commands": [
+    "python -B research/analysis/provenance_defeasible_obligations_7817_a01_20261005/candidate.py research/analysis/provenance_defeasible_obligations_7817_a01_20261005/fixture.json research/analysis/provenance_defeasible_obligations_7817_a01_20261005/raw/candidate.json",
+    "python -B research/analysis/provenance_defeasible_obligations_7817_a01_20261005/audit.py research/analysis/provenance_defeasible_obligations_7817_a01_20261005/raw/candidate.json research/analysis/provenance_defeasible_obligations_7817_a01_20261005/raw/audit.json"
+  ],
+  "decision": "PROTOCOL_A01.md",
+  "formal_limits": {
+    "candidate_invocations": 1,
+    "independent_audit_invocations": 1,
+    "retries": 0
+  },
+  "fresh_main_base": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "invocations_at_freeze": {
+    "candidate": 0,
+    "independent_audit": 0,
+    "retries": 0
+  },
+  "issue": 7817,
+  "runtime": {
+    "backend": "Windows host CPU; Python standard library",
+    "container": false,
+    "network": "unused",
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9",
+    "shared_wslc": "not used; separate unresolved allocation/readiness records"
+  },
+  "source_files": {
+    "PROTOCOL_A01.md": {
+      "bytes": 2857,
+      "sha256": "70c9eac6fb4a595e7d777415d94fbef116e48c4b32f3a516deee32a0826adf5f"
+    },
+    "README.md": {
+      "bytes": 847,
+      "sha256": "f5d06e9ad724c1e83a8c77517aa4e7110bb0f322d8b77045fde6d955dfc168b0"
+    },
+    "audit.py": {
+      "bytes": 4104,
+      "sha256": "5d8ba721f4fec0af25384e9f2b3d3914bb831ffa09368bb4e2657968c01d427c"
+    },
+    "candidate.py": {
+      "bytes": 7738,
+      "sha256": "f72adb534b2ed17495ec098732ef139c1c44b16f519938ff03a0562cf7ed4319"
+    },
+    "fixture.json": {
+      "bytes": 6984,
+      "sha256": "e834e7a1eaafa731694c73c82194eb8d254ef0a569d6f1b511398006c79a37d5"
+    },
+    "test_construction.py": {
+      "bytes": 2315,
+      "sha256": "9e77f12fccefae511753a0e10f4a165ac0ae404845a6368d4aeee7d3ed6f02e5"
+    }
+  },
+  "working_head_at_freeze": "add03cbc0c432bb07947d2ddf18adfedf71f059e"
+}

@@ -1,0 +1,225 @@
+{
+  "cases": [
+    {
+      "baseline": "ADMIT",
+      "case_id": "DIRECT_STABLE",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          10,
+          10
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "mapped_target_bounds": [
+        8,
+        8,
+        12,
+        12
+      ]
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "DIRECT_TRANSLATION_REFRESH",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          15,
+          15
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "mapped_target_bounds": [
+        13,
+        8,
+        17,
+        12
+      ]
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "DIRECT_UNIFORM_SCALE_REFRESH",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          10,
+          10
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "mapped_target_bounds": [
+        8,
+        8,
+        12,
+        12
+      ]
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "COMPOSE_MIXED_DPI_VALID_UPDATE",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          128,
+          128
+        ],
+        [
+          25,
+          25
+        ]
+      ],
+      "mapped_target_bounds": [
+        128,
+        24,
+        132,
+        26
+      ]
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "COMPOSE_EPOCH_7_8_9",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          22,
+          22
+        ],
+        [
+          20,
+          20
+        ]
+      ],
+      "mapped_target_bounds": [
+        22,
+        20,
+        22,
+        20
+      ]
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "INVERSE_SHEAR_PAIR_IDENTITY",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "mapped_target_bounds": [
+        4,
+        4,
+        6,
+        6
+      ]
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "COMPOSE_NONCOMMUTING_ORDER",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          6
+        ]
+      ],
+      "mapped_target_bounds": [
+        5,
+        6,
+        5,
+        6
+      ]
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "COMMON_MODE_UNCERTAINTY_CONTROL",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "mapped_target_bounds": [
+        -1,
+        0,
+        5,
+        4
+      ]
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "INDEPENDENT_ERROR_CONTROL",
+      "exact_decision": "ADMIT",
+      "graph": "ADMIT",
+      "mapped_point_bounds": [
+        [
+          4,
+          6
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "mapped_target_bounds": [
+        -1,
+        0,
+        11,
+        10
+      ]
+    }
+  ],
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "summary": {
+    "baseline_false_unknown_composed": 3,
+    "cases": 20,
+    "composed_false_unknown_reduction": 1.0,
+    "epoch_path": [
+      [
+        7,
+        8
+      ],
+      [
+        8,
+        9
+      ]
+    ],
+    "exact_safe_composed": 3,
+    "false_admissions": 0,
+    "graph_false_unknown_composed": 0,
+    "invalid_controls": 11,
+    "invalid_fail_closed": 11,
+    "inverse_shear_identity_verified": true
+  }
+}

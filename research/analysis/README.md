@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #7817 provenance-checked defeasible obligations T0 A01](provenance_defeasible_obligations_7817_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: ten finite obligation contexts and five hostile mutations independently audited; advisory-only synthetic semantics.
+
 - [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
 
 
@@ -13,6 +15,8 @@
 - [Issue #7924 WSLc private-session portability smoke](wslc_private_session_portability_20261005/STOP.md) — `STOP_SESSION_STORAGE_NOT_FOUND`: one named `system session enter` invocation rejected the proposed fresh storage path before any container invocation; no retry, default-session operation, Docker use, or scientific/runtime inference.
 
 - [Issue #8088 specification-diverse challenge T0 A01](spec_diversity_8088_t0_a01_20261005/REPORT.md) — `HOLD_BASELINE_ORACLE_COVERAGE`: C06 “All restores visibility” was not observed; candidate and auditor shared a predicate gap. One-shot outputs preserved, no rerun.
+- [Issue #8088 specification-diverse challenge T0 A02](spec_diversity_8088_t0_a02_20261005/REPORT.md) — `HOLD_C02_LIST_IDENTITY_COVERAGE`: cross-list preservation escaped the flattened C02 predicate; raw and one-shot counts retained, no rerun.
+- [Issue #8088 specification-diverse challenge T0 A03](spec_diversity_8088_t0_a03_20261005/REPORT.md) — `NO_INCREMENTAL_VALUE_SCOPED`: 8 baselines, 6/6 single-clause controls, independent audit 14/14; A01/A02 oracle-coverage HOLDs preserved. Synthetic packet only.
 - [Issue #8080 blocked vs interleaved practice T0 A01](blocked_interleaved_practice_8080_t0_a01_20261005/REPORT.md) — `METHOD_PASS_SCOPED` for equal synthetic exposure, reversible effects, held-out exclusion, and scorer controls; no human-learning or transfer claim.
 - [Issue #8084 T0 A03 diagnostic-reliability screen](confusion_adaptive_practice_8084_t0_a03_20261005/README.md) — `STOP_AUDIT_INPUT_HANDOFF_PATH_ERROR`: fixture 6,000 rows; candidate exit 0, single auditor exit 1 because a host relative-path copy missed the auditor input mount; accepted audit 0/6,000; no scientific inference. Exact candidate output and failed logs retained, not rerun.
 - [Issue #8084 confusion-adaptive practice T0 A02](confusion_adaptive_practice_8084_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED` on six synthetic matrices / 12 schedules; equal exposure, pre-outcome heterogeneity gate, exact neutral fallback, held-out isolation, and independent scorer controls. A01 pre-formal mount-isolation STOP preserved; no human-learning claim.
@@ -505,6 +509,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
+- [`epoch_transform_chain_8185_a02_20261005/`](epoch_transform_chain_8185_a02_20261005/)
 - [`error_carry_6081_s04_20261003/`](error_carry_6081_s04_20261003/)
 - [`error_carry_6081_successor_orbstack_20261002/`](error_carry_6081_successor_orbstack_20261002/)
 - [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
@@ -756,6 +761,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_timestamp_order_5156_t3_20261004/`](owner_keyup_timestamp_order_5156_t3_20261004/)
 - [`owner_keyup_timestamp_order_5156_t4_20261004/`](owner_keyup_timestamp_order_5156_t4_20261004/)
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
+- [`pairwise_interaction_7799_t0_a01_20261005/`](pairwise_interaction_7799_t0_a01_20261005/)
 - [`partial_order_audit_6505_orbstack_a01_20261003/`](partial_order_audit_6505_orbstack_a01_20261003/)
 - [`partial_order_audit_6505_orbstack_a02_20261003/`](partial_order_audit_6505_orbstack_a02_20261003/)
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
@@ -818,6 +824,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`processor_demand_witness_7748_t0_20261005/`](processor_demand_witness_7748_t0_20261005/)
 - [`protective_local_adaptation_6367_reaudit_v1/`](protective_local_adaptation_6367_reaudit_v1/)
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
+- [`provenance_defeasible_obligations_7817_a01_20261005/`](provenance_defeasible_obligations_7817_a01_20261005/)
 - [`provenance_memory_authority_7167_t0_20261004/`](provenance_memory_authority_7167_t0_20261004/)
 - [`quality_diversity_5908_t1_20261002/`](quality_diversity_5908_t1_20261002/)
 - [`query_version_writer_atomicity_v1/`](query_version_writer_atomicity_v1/)
@@ -943,6 +950,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spatial_block_position_6590_t1_geometry_feasibility_v1/`](spatial_block_position_6590_t1_geometry_feasibility_v1/)
 - [`spatial_block_position_6590_t1_orbstack_v2/`](spatial_block_position_6590_t1_orbstack_v2/)
 - [`spec_diversity_8088_t0_a01_20261005/`](spec_diversity_8088_t0_a01_20261005/)
+- [`spec_diversity_8088_t0_a02_20261005/`](spec_diversity_8088_t0_a02_20261005/)
+- [`spec_diversity_8088_t0_a03_20261005/`](spec_diversity_8088_t0_a03_20261005/)
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
@@ -1056,6 +1065,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
 </details>
+
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.

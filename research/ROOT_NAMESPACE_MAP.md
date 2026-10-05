@@ -27,6 +27,7 @@ New work should normally use a category directory. Existing direct-root paths re
 | Safe overlap / phase scheduling / concurrency | [`concurrency/`](concurrency/) |
 | Live desktop control and caller integration | [`live_control/`](live_control/) |
 | Continuous / real-time DOOM control | [`doom/`](doom/) |
+| Vision and perception research | [`vision/`](vision/) — source-bound computer-vision and temporal-cue evidence |
 | Observation/temporal representation | [`observation/`](observation/) |
 | Observation gating / exact delta transport | [`observation_gating/`](observation_gating/), [`observation_tiles/`](observation_tiles/) |
 | Fast bounded local decision research | [`system1/`](system1/), [`local_system1/`](local_system1/), [`needle_lora_3441_pilot_03_router/`](needle_lora_3441_pilot_03_router/) |
