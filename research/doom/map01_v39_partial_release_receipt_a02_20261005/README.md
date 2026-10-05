@@ -50,3 +50,15 @@ candidate's structured observed state. `AUDIT.json` records the raw-only audit.
 Issue #59 remains open. Threat exposure, independently useful live feedback,
 bounded recovery, a separately identified MAP01 attempt, and matched live
 comparison remain unverified.
+
+## A03 container revalidation disposition
+
+A follow-up read-only OrbStack check on 2026-10-05 reached daemon `29.4.0`
+(`linux/aarch64`), but the first image inventory read failed because a
+containerd content-store blob returned `operation not supported`. No pull,
+build, container start, or retry was attempted. The exact command and error are
+preserved in
+[`map01_v39_partial_release_receipt_a03_20261005_DOCKER_STOP.md`](map01_v39_partial_release_receipt_a03_20261005_DOCKER_STOP.md).
+A02 remains host-side construction evidence; container validation is not
+claimed. Resume only after the image store is independently readable, using a
+pre-existing digest-pinned Python image without pulling or building.
