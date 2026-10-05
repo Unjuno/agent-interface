@@ -1,6 +1,6 @@
 from pathlib import Path
 import hashlib,json,subprocess
-REPO=Path.cwd(); PACKAGE=REPO/'research/doom/v15_cleanup_lazy_pil_successor_a06_20261005'; OUT=Path(r'C:\s15e'); TREE='78b8636f08bef691944da8bb536437586f0d116a'
+REPO=Path.cwd(); PACKAGE=REPO/'research/doom/v15_cleanup_lazy_pil_successor_a06_20261005'; OUT=Path(r'C:\s15f'); TREE='78b8636f08bef691944da8bb536437586f0d116a'
 if OUT.exists(): raise SystemExit('REFUSE: frozen A06 scratch root already exists')
 source=json.loads((REPO/'research/doom/v15_cleanup_lazy_pil_successor_a04_20261005/SOURCE_MANIFEST.json').read_text(encoding='utf-8-sig'))
 if source['tree']!=TREE or len(source['files'])!=2013: raise SystemExit('A04 source manifest identity mismatch')

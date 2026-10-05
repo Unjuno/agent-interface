@@ -1,18 +1,34 @@
 {
-  "schema":"v15-cleanup-lazy-pil-successor-a06-run-plan-v1",
-  "predecessor":"v15_cleanup_lazy_pil_successor_a05_20261005",
-  "delta":"A06 stages unpatched Git blobs from frozen A04 manifest, validates all source hashes, then applies the frozen relocation; run_a06.py refuses to invoke unittest unless PREPARED.json exists and output path is new",
-  "main":"b5be19963454ce5edafc945b78b100012952dd15",
-  "pr":8094,
-  "pr_head":"d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
-  "virtual_merge_tree":"78b8636f08bef691944da8bb536437586f0d116a",
-  "source_manifest":"A04 exact 2013-file root closure; every Git blob identity and SHA-256 must match before patch",
-  "candidate":"single import relocation with expected patched SHA-256 8570b509576994746edbac46848d3b6f7e1827d9b918d06b433588222c817329",
-  "blocker":"committed NO_PIL_SITECUSTOMIZE.py; hash fixed by predecessor plan; marker required in both stderr streams",
-  "modules":["test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests","test_input_owner_v12_key_measurement","test_input_owner_v12_batch_sample_custody","test_batch_key_measurement_composition","test_input_owner_v12_explicit_up_cancel","test_input_owner_v12_wheel_cleanup","test_input_transition_owner_v4"],
-  "expected_tests":47,
-  "modes":["one normal -B run","one optimized -O -B run"],
-  "runtime":"desktop bundled CPython 3.12.14 Windows AMD64; PIL blocked by frozen meta_path finder; no installs/network",
-  "decision":"PASS 47/47 each with blocker marker; FAIL_REMAINING_PIL_IMPORT if candidate chain raises PIL import error; STOP for other setup failure; no retries",
-  "scripts":["prepare_a06.py","run_a06.py"]
+  "schema": "v15-cleanup-lazy-pil-successor-a06-run-plan-v1",
+  "predecessor": "v15_cleanup_lazy_pil_successor_a05_20261005",
+  "delta": "A06 stages unpatched Git blobs from frozen A04 manifest, validates all source hashes, then applies the frozen relocation; run_a06.py refuses to invoke unittest unless PREPARED.json exists and output path is new",
+  "main": "b5be19963454ce5edafc945b78b100012952dd15",
+  "pr": 8094,
+  "pr_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "virtual_merge_tree": "78b8636f08bef691944da8bb536437586f0d116a",
+  "source_manifest": "A04 exact 2013-file root closure; every Git blob identity and SHA-256 must match before patch",
+  "candidate": "single import relocation with expected patched SHA-256 8570b509576994746edbac46848d3b6f7e1827d9b918d06b433588222c817329",
+  "blocker": "committed NO_PIL_SITECUSTOMIZE.py; hash fixed by predecessor plan; marker required in both stderr streams",
+  "modules": [
+    "test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests",
+    "test_input_owner_v12_key_measurement",
+    "test_input_owner_v12_batch_sample_custody",
+    "test_batch_key_measurement_composition",
+    "test_input_owner_v12_explicit_up_cancel",
+    "test_input_owner_v12_wheel_cleanup",
+    "test_input_transition_owner_v4"
+  ],
+  "expected_tests": 47,
+  "modes": [
+    "one normal -B run",
+    "one optimized -O -B run"
+  ],
+  "runtime": "desktop bundled CPython 3.12.14 Windows AMD64; PIL blocked by frozen meta_path finder; no installs/network",
+  "decision": "PASS 47/47 each with blocker marker; FAIL_REMAINING_PIL_IMPORT if candidate chain raises PIL import error; STOP for other setup failure; no retries",
+  "scripts": [
+    "prepare_a06.py",
+    "run_a06.py"
+  ],
+  "scratch_root": "C:\\s15f",
+  "predecessor_partial_scratch": "C:\\s15e; retained untouched after cleanup rejection"
 }

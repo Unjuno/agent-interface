@@ -1,6 +1,6 @@
 from pathlib import Path
 import hashlib,json,os,subprocess,sys
-root=Path(r'C:\s15e'); runs=root/'runs'
+root=Path(r'C:\s15f'); runs=root/'runs'
 if not (root/'PREPARED.json').is_file(): raise SystemExit('REFUSE: A06 staging did not complete')
 if runs.exists(): raise SystemExit('REFUSE: A06 run output already exists')
 runs.mkdir()
