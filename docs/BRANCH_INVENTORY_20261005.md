@@ -497,3 +497,76 @@ This is a delta record, not a refresh of the repository-wide CSV census above.
 - Removed three local-only cached PR-head aliases (`origin/pr-8110-head`, `origin/pr-8139-head`, `origin/pr-8146-head`) after confirming each SHA exactly matched its still-existing live PR head branch. No remote branch or PR was deleted. Mismatched historical aliases were retained.
 - Consolidated Issue #8088 A02's full evidence directory into the corrected A03 branch for PR #8204. All 18 original Git blobs match the original A02 branch; the 17 SHA256SUMS entries pass. PR #8198 was closed unmerged as superseded, while its remote branch at `af7b4af7072aa519d6ec4845731eab3b309bf80d` remains intact. PR #8204 stays open for review at `1bac5efaa02a1f198ac22347915a0a4e11a6fcf0` on base `b5be19963454ce5edafc945b78b100012952dd15`. No formal allocation was rerun.
 - The local `work/pr8096-refresh` checkout is now on the A03 inventory-rescue branch. Its A05 V15 closure commit remains on branch `research/59-v15-release-closure-a03-20261005` and remote PR #8096; no evidence branch was deleted.
+
+
+## Current remote-ref recheck — 2026-10-05 12:59 UTC
+
+A new paginated, non-atomic census after the 12:44 snapshot observed main `b5be19963454ce5edafc945b78b100012952dd15`, **406 branch refs**, and **344 open PRs** (315 Draft, 29 Ready). All 344 open PR heads existed and matched the branch-tip SHA (344/344). Sixty-one other refs were not open-PR heads. Exact current tips and dispositions are listed here; earlier tables remain historical snapshots.
+
+Since 12:44 UTC, `fix/7849-preflight-cleanup-result-20261005` was removed from remote after a closed-PR/successor/worktree audit. Its closed PR #7859 head remains available, and the A01 result blob matches the exact result on the active #7849 branch. Other remote refs changed while this non-atomic census was being collected; use only the current list below for this snapshot. #8198's former branch is now held as evidence provenance for successor #8204. Current local worktree checks hold two of these 61 remote refs; the removed #7974 remote branch still has a separate clean local checkout as recorded above.
+
+| Ref | Tip SHA | Current disposition |
+| --- | --- | --- |
+| `codex/fix-7997-evidence-wording` | `819f2c302109d961b8f9578f12e1d81d26b12786` | unclassified |
+| `fix/compiled-observation-exception-propagation-20261005` | `68a5f26670f359bd5085dd47ccfcb43ce2c74151` | unclassified |
+| `fix/retain-unverified-x11-key-holds-20261005` | `416846ef59b08c862cca84c128d1853e16a6143a` | unclassified |
+| `fix/scorer-endpoint-read-type-7685-a01` | `fc8d12f13519811491015f4e2ecdd847246c55d4` | unclassified |
+| `fix/x11-explicit-up-01a0ff2c` | `64b143a78f23d3e9acb229300eb195fcaf66851e` | unclassified |
+| `fix/x11-wheel-ledger-01a0ff2c` | `ed7bb24e45fac16114e1247e00c8ed86cebda5c8` | unclassified |
+| `fix/59-a05-audit-integrity-20261005` | `0dcd3abb9ce99b6a3f596277f124e304ed62a5fc` | unclassified |
+| `fix/59-feedback-step-bool-identity-20261005` | `2bebf57d9eb617bb20ef4fbbfa6ad13f1a4ba5f0` | unclassified |
+| `fix/59-projector-attempt-ordinal-type-e0cc-20261005` | `6be323b3f3ccb7c94f2bd684864e246eab8e6914` | unclassified |
+| `fix/59-scorer-readback-type-20261005` | `614348df05ae603526a6a74a8feec17f039e7927` | unclassified |
+| `fix/59-v39-admission-id-projection-a01-20261005` | `191ba71fbfc339cd57e80bcf69dfcc856e6a2feb` | unclassified |
+| `fix/59-v39-app-consumption-contradiction-20261005` | `efb712b1aa6f01d67ed119b266ef479645cfb96a` | unclassified |
+| `fix/59-v39-bracket-interval-bool-20261005` | `a427bdf9c2e76f8cc905946aa8b08f0ed26597cc` | unclassified |
+| `fix/59-v39-cover-admission-invalidation-edd067-20261004` | `763ff69a531eb47a6a3f033f56171dffc80afa23` | unclassified |
+| `fix/59-v39-hashsafe-adapter-id-20261005` | `40c056e322b39bbb11cb0d02aec7d8edf66367aa` | hold: clean local worktree at this exact tip; no deletion |
+| `fix/59-v39-raw-bracket-consistency-a01-20261004` | `971234f7a186960cbd519c655beccbab42854a67` | unclassified |
+| `fix/59-v39-typed-state-feedback-20261004` | `8bfe24520490e2bf2c6ef0288edf3e1f3c03a65a` | unclassified |
+| `fix/59-wheel-release-ledger-20261005` | `e14c8267854e24e5978767cd53065622abdee3f6` | unclassified |
+| `fix/59-windows-anonymous-pipe-readiness-20261005` | `67905decc40a468b9dfe45ecfbcc8a6b83999689` | unclassified |
+| `fix/7974-release-lockout-a01-20261005` | `5d18a471c9463a660d97e24eed9c2f863ff55bd6` | unclassified |
+| `maintenance/inventory-followup-20261005` | `3b1c12ca6ebc01101aad443c71601efbc17c85c0` | unclassified |
+| `rescue/constructor-close-fdfd-20261004` | `203cd69ad14aea0a05d5600ee9ace177578b51d5` | unclassified |
+| `rescue/todomvc-route-b714-20261004` | `004174810fdb8cb93b95f052ebf1a764f0e64478` | unclassified |
+| `rescue/59-per-key-interval-a01-a02-20261005` | `ec44484c35075994d72b25a2ae021a91041da75d` | unclassified |
+| `research/scorer-endpoint-readback-type-20261005` | `39bf575ccf0c4795a0a81d06baf08e1a36a2d114` | unclassified |
+| `research/spec-diversity-8088-t0-a02-20261005` | `af7b4af7072aa519d6ec4845731eab3b309bf80d` | hold: #8198 closed unmerged; evidence copied with blob identity to successor PR #8204; source branch retained |
+| `research/strict-attempt-ordinal-v39-20261005` | `4d79f5b97d0c467d7af62046cdfcf1af69754252` | unclassified |
+| `research/v15-perkey-owner-evidence-only-20261005` | `0758b536b7b02265c8375ef70bc6703dcee77bc9` | unclassified |
+| `research/v39-attempt-ordinal-exact-int-20261005` | `c405b129e83c613e815160f841070ed68267be1d` | unclassified |
+| `research/v39-dual-signal-epoch-a03-20261005` | `1665dff09fca6d367e41d469492935604c65f0fd` | unclassified |
+| `research/v39-partial-record-drain-race-20261005` | `d76e9945bce4b6ef0b8df79fbabf1b8ee5516815` | unclassified |
+| `research/59-cancel-release-cause-postsample-c03-20261004` | `e101c63ac4938ed4017e3021338ebd1c333d8c29` | unclassified |
+| `research/59-effect-identity-join-a01-20261005` | `b9dbe5f6f4086b402e3ce23c347d38fe155d5b7f` | unclassified |
+| `research/59-exact-release-trace-a01-20261005` | `583732554c2ca687fd005e79f5497bb660872bc1` | unclassified |
+| `research/59-expected-key-provenance-a01-20261005` | `9ec46a5782257f6e47b6bd4cc28c5bdb1babd58f` | unclassified |
+| `research/59-owner-expiry-drain-barrier-a01-20261005` | `70c76483c46108bdd70bf2fb90679d948a5f156f` | unclassified |
+| `research/59-owner-hold-retirement-a01-20261005` | `2f98bebc6352a3dd42da37487f7c340c0cf12f50` | unclassified |
+| `research/59-per-key-release-receipts-20261005` | `30cdf5f575a64142077c305e110ed5d276c1458c` | unclassified |
+| `research/59-release-query-failure-probe-a01-20261005` | `4c429ef3a58f14dd26b1c0e98632bb739de173a6` | unclassified |
+| `research/59-renewal-soft-stale-admission-a01-20261005` | `66ba74f69d1373399811f62ad950743caad770ed` | unclassified |
+| `research/59-v12-source-closure-20261005` | `9984f00db3b8d4b94c55d64b58f9c4014a760906` | unclassified |
+| `research/59-v15-owner-evidence-current-main-20261005` | `8f5beb06d99eed093176c37a74f3620511f984fc` | hold: 20 branch-only commits; unresolved reproduction finding |
+| `research/59-v39-cover-admission-main-port-a01` | `a49d08f4def42ca5d8c2e7962b639ba4f277bfcb` | unclassified |
+| `research/59-v39-current-admission-fix-a01-20261005` | `1403c822609395f9ab21e0cdbb36b7b4c8ee044d` | unclassified |
+| `research/59-v39-fire-cover-ammo-audit-a01-20261005` | `52a51142b10aeb54db3f7b782385d3b941b7429e` | unclassified |
+| `research/59-v39-frame-only-threat-a01-20261005` | `8e03ae802e98f70491506082b74e99baa4bbc98c` | unclassified |
+| `research/59-v39-keymap-batch-a06-20261005` | `0a43cd9528c1de28af389945c8ce31b3e33e8bf5` | unclassified |
+| `research/59-v39-renewal-invalidation-a01-20261005` | `fc3d88686ef17d3d9b721592eb64d862890cff8b` | unclassified |
+| `research/59-v39-renewal-reject-race-a01-20261005` | `9234613a2396040eb5352318e50b06a2467d432e` | unclassified |
+| `research/59-v39-startup-edge-identity-audit-a01-20261005` | `108d22491db4baf6aa7214ae3f94122f3a7bf849` | unclassified |
+| `research/59-v39-v15-cleanup-a05-current-main-20261005` | `4ede220fc567e74d4d7432b6eda3ade7652d8550` | hold: source history pending #8161 integration/review |
+| `research/59-v39-v15-cleanup-a07-current-main-20261005` | `fdfcbb03d8bec4bbb532a3f46325fd5ef62205ef` | hold: clean local worktree at this exact tip; closed #8130 calls it corroborating A07 STOP |
+| `research/59-xvfb-audit-v3-a02-20261005` | `1ec6556ba8568de289625b5f167e7b8c21e1f72c` | hold: run/result custody unresolved |
+| `research/7993-superpopulation-ipcw-a02-construction-20261005` | `0a26e2e5802ee26fbb8198184b95856c336c7bda` | unclassified |
+| `research/8068-imperfect-repair-t0-a01-20261005` | `c3cdedfe68ef4adb240d5ab5313b8285c9140d9f` | unclassified |
+| `research/8150-threat-profiled-runtime-eligibility-t0-20261005` | `e9ad794f0b4b98c5fcb8532777c40c16a9070306` | unclassified |
+| `research/8185-transform-graph-a02-20261005` | `c0f8e1b690d86a7ff10cecf47d9bb16fcd79d053` | unclassified; current tip not in prior snapshot |
+| `test/59-feedback-before-step-bool-20261005` | `6bde1d9bd634d94f59a20c898ec1c67d737dbcf9` | unclassified |
+| `test/59-v39-adapter-edge-cardinality-a01-20261005` | `af2ba4249a9f282f6b7c3fa3e0cca68c077aaa63` | unclassified |
+| `test/59-v39-observation-step-alias-20261005` | `bb2b3f4d81b18ec85b13e079e46debd6c3b1b05f` | unclassified |
+| `test/7974-single-query-failure-boundary` | `95666c514f142b58cebafc1920b86bcd87a0d8be` | unclassified |
+
+The snapshot is not deletion authority. Refresh each ref's PR use, commit/content custody, dependencies, and local worktree status immediately before acting.
