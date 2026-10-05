@@ -1,0 +1,229 @@
+{
+  "schema": "static-python-import-closure-v1",
+  "run_id": "MAP01-V39-V15-RELEASE-CLOSURE-A05-CURRENT-MAIN-20261005",
+  "classification": "current-main static source preflight only; not candidate or formal experiment",
+  "source_ref": "origin/main",
+  "source_commit": "b5be19963454ce5edafc945b78b100012952dd15",
+  "entrypoints": [
+    "research/doom/session_map01_v15.py",
+    "research/doom/session_map01_v12.py",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+    "research/doom/doom_typed_release_backend_v2.py",
+    "research/live_control/executor_v13.py",
+    "research/live_control/input_transition_owner_v4.py"
+  ],
+  "closure_method": "Recursive Python AST scan of import/import-from statements over flat module directories research/doom, research/live_control, research/observation_gating; repository-only module resolution prefers research/doom then research/live_control.",
+  "source_count": 38,
+  "sources": [
+    {
+      "path": "research/doom/doom_hud_signal_v1.py",
+      "git_blob_sha1": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "sha256": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v2.py",
+      "git_blob_sha1": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "sha256": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v3.py",
+      "git_blob_sha1": "083338b4565176aaea560d800ce0210f17b6852f",
+      "sha256": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7"
+    },
+    {
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "git_blob_sha1": "193c2bd231795e7ee57de64aedfd741c8b814013",
+      "sha256": "c6595afa6314fbee73669ae1258fdf4ec8658ebb4c41be5f7365ba327f533581"
+    },
+    {
+      "path": "research/doom/doom_typed_coast_backend_v1.py",
+      "git_blob_sha1": "d95d382ee9c234dab652fa8af93b233baa5225a4",
+      "sha256": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079"
+    },
+    {
+      "path": "research/doom/doom_typed_observation_v1.py",
+      "git_blob_sha1": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+      "sha256": "038537fac0b155025bec50e92eaa9ca434cc3789498199634ded095b151ef555"
+    },
+    {
+      "path": "research/doom/doom_typed_release_backend_v1.py",
+      "git_blob_sha1": "080fa353bc14afc8bc620e80abc38e6cf64d1259",
+      "sha256": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f"
+    },
+    {
+      "path": "research/doom/doom_typed_release_backend_v2.py",
+      "git_blob_sha1": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+      "sha256": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4"
+    },
+    {
+      "path": "research/doom/independent_progress_clock_v2.py",
+      "git_blob_sha1": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    },
+    {
+      "path": "research/doom/main_thread_scorer_polling_v1.py",
+      "git_blob_sha1": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+      "sha256": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84"
+    },
+    {
+      "path": "research/doom/map01_scorer_stdio_adapter_v1.py",
+      "git_blob_sha1": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+      "sha256": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab"
+    },
+    {
+      "path": "research/doom/session_map01_v12.py",
+      "git_blob_sha1": "e701035302da4802e0db463035c4d653a7e7618b",
+      "sha256": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2"
+    },
+    {
+      "path": "research/doom/session_map01_v15.py",
+      "git_blob_sha1": "f71ca01426a703e4160c9403395fed03416c772e",
+      "sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+    },
+    {
+      "path": "research/doom/session_v2.py",
+      "git_blob_sha1": "1256e5bea022b1cd3a49eddad9cbb90af56f9044",
+      "sha256": "aa513145589ae46611e9a86f46f76a955f841e3145f5258199a41e2c06c8c7cb"
+    },
+    {
+      "path": "research/doom/session_v4.py",
+      "git_blob_sha1": "b17cd86b3e88ce8c03865fc4c1c897284f8ea7a5",
+      "sha256": "0592544cd62385169d8a49ad3da26e71cec0e255419f262758a21bfa370b799a"
+    },
+    {
+      "path": "research/doom/session_v7.py",
+      "git_blob_sha1": "b8f044cd52449f2a72538232bb162a7a01155d2b",
+      "sha256": "34899e4b9b40e495814775e1c8e43a0e137f2ed228d3f71514db541436de1a05"
+    },
+    {
+      "path": "research/live_control/action_validity_admission_v1.py",
+      "git_blob_sha1": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "sha256": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a"
+    },
+    {
+      "path": "research/live_control/coast_backend_v1.py",
+      "git_blob_sha1": "094a800151b4d2b357a9aeca8b018f45d1e7f368",
+      "sha256": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009"
+    },
+    {
+      "path": "research/live_control/executor_v11.py",
+      "git_blob_sha1": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+      "sha256": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676"
+    },
+    {
+      "path": "research/live_control/executor_v12.py",
+      "git_blob_sha1": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    },
+    {
+      "path": "research/live_control/executor_v13.py",
+      "git_blob_sha1": "b9510765f34907bcfdbf25a5700e9d31d17c76b7",
+      "sha256": "5c54927e5087af42006c712ec906e2ec69e9155586730dee494dd3b5d43ced9a"
+    },
+    {
+      "path": "research/live_control/executor_v2.py",
+      "git_blob_sha1": "78935941e380f35f986dcdddedc8ad02180e3d17",
+      "sha256": "0258fc6773d7aa7b9b765530acc67d45db691c84dcbfe529dcb2e9a4751e14ac"
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "git_blob_sha1": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    {
+      "path": "research/live_control/executor_v5.py",
+      "git_blob_sha1": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+      "sha256": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400"
+    },
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "git_blob_sha1": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    {
+      "path": "research/live_control/input_owner_v11.py",
+      "git_blob_sha1": "842071284156d3ccc647f47135ee62a9e512cb56",
+      "sha256": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c"
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "git_blob_sha1": "d11a9b1328bf76e5045022c581d6a9a721bf9585",
+      "sha256": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc"
+    },
+    {
+      "path": "research/live_control/input_owner_v5.py",
+      "git_blob_sha1": "74e8ff65bba874eb49f5a30520c918162f316200",
+      "sha256": "ee72de489aa8da2f5276ab44927c5c13df777336dd3a8b88b1a77be53e6e2ea7"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "git_blob_sha1": "0a1772d1687d49bd49f048b9d7ba659ed18247a5",
+      "sha256": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "git_blob_sha1": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55",
+      "sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "git_blob_sha1": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    {
+      "path": "research/live_control/lease_cause_v1.py",
+      "git_blob_sha1": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+      "sha256": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918"
+    },
+    {
+      "path": "research/live_control/lease_cause_v2.py",
+      "git_blob_sha1": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+      "sha256": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47"
+    },
+    {
+      "path": "research/live_control/lease_release_v1.py",
+      "git_blob_sha1": "e325bd358874ae003e066f5d592c045b0ebef56e",
+      "sha256": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+    },
+    {
+      "path": "research/live_control/quiet_window.py",
+      "git_blob_sha1": "a6ce76076a8f018672ed4bd7cbbd89cfd8d00b47",
+      "sha256": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0"
+    },
+    {
+      "path": "research/live_control/session_v10.py",
+      "git_blob_sha1": "1f5e0550770d383b5dec59242ea9ddf77d718890",
+      "sha256": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d"
+    },
+    {
+      "path": "research/live_control/session_v8.py",
+      "git_blob_sha1": "4f33111fa27474d6eb4d3f8db22fae4bae7626c8",
+      "sha256": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943"
+    },
+    {
+      "path": "research/live_control/session_v9.py",
+      "git_blob_sha1": "1d214a353d728b30b9b18d6120760b6703d9086e",
+      "sha256": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0"
+    }
+  ],
+  "external_import_roots": [
+    "PIL",
+    "Xlib",
+    "numpy",
+    "vizdoom"
+  ],
+  "unresolved_repository_imports": [],
+  "limitations": [
+    "Does not execute or import candidate or production code.",
+    "Does not prove dynamic imports, native/runtime dependency closure, package side effects, GUI/display behavior, or OS input release.",
+    "A future candidate needs a new exact source, image, dependency, configuration, and raw-output freeze.",
+    "Does not satisfy Issue #59 live threat-exposure, useful-recovery, or task-effect gates."
+  ],
+  "execution": {
+    "candidate_executed": false,
+    "container_started": false,
+    "display_or_game_used": false,
+    "model_or_input_used": false
+  },
+  "next_gate": "Treat this exact static source closure as input to a separately frozen deterministic Fake-X startup/owner-identity candidate only after the relevant local resource and allocation policy permit it; never treat static closure as dynamic startup evidence."
+}
