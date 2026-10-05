@@ -37,7 +37,34 @@ class Win32RuntimeSession:
         try:
             self.backend.preflight(program)
         except Win32BackendError as error:
-            release = self.backend.release_all()
+            previous_transitions = list(
+                getattr(self.backend, "last_input_transitions", ()) or ()
+            )
+            try:
+                release = self.backend.release_all()
+            except Exception as cleanup_error:
+                release = {
+                    "verified": False,
+                    "error": type(cleanup_error).__name__,
+                    "detail": str(cleanup_error),
+                }
+                transitions = list(
+                    getattr(self.backend, "last_input_transitions", ()) or ()
+                )[len(previous_transitions):]
+                return {
+                    "status": "execution_failed",
+                    "error": "BACKEND_CLEANUP",
+                    "detail": str(cleanup_error),
+                    "preflight_error": str(error),
+                    "required_capabilities": list(admission.required_capabilities),
+                    "backend_emissions": self.backend.emissions,
+                    "release": release,
+                    "input_transitions": transitions,
+                    "admitted_ns": admitted_ns,
+                }
+            transitions = list(
+                getattr(self.backend, "last_input_transitions", ()) or ()
+            )[len(previous_transitions):]
             return {
                 "status": "refused",
                 "error": "BACKEND_CONSTRAINT",
@@ -45,6 +72,7 @@ class Win32RuntimeSession:
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
                 "release": release,
+                "input_transitions": transitions,
                 "admitted_ns": admitted_ns,
             }
         try:
