@@ -1,0 +1,40 @@
+{
+  "protocol": "issue-7955-t0-a01-v1",
+  "run_id": "decision-value-credal-7955-t0-a01-20261005",
+  "issue": 7955,
+  "base_commit": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "command": "python3 -B run_candidate.py",
+  "candidate_launches": 1,
+  "candidate_retries": 0,
+  "auditor_command": "python3 -B audit.py",
+  "decision_gates": {
+    "method": "PASS only for exact auditor agreement on posterior, VOI, envelopes, rankings, model gates, UNKNOWN and route regret; all ineligible checks must remain unselectable.",
+    "in_set_hypothesis": "Worst-case envelope-policy route regret must be strictly below point-model regret on the reversal case and equal on singleton/invariant cases; cost tolerance is exactly zero for those unchanged choices.",
+    "uncertain_ranking": "Any overlap or reversal between per-check fixed-measure VOI intervals returns UNCERTAIN_MODEL_DEPENDENT_RANKING and invokes only the separately named minimax-regret fallback.",
+    "outside_set": "Truth outside the finite credal set is an explicit limitation probe; it is not counted toward the in-set hypothesis gate."
+  },
+  "fallback_rule": "Among no_check and admissible checks, minimize maximum regret over the finite credal model set; tie-break by lower acquisition cost, then lexical check id. This is not the fixed-measure envelope and is not labeled Gamma-maximin VOI.",
+  "construction_preflight": {
+    "classification": "unfrozen implementation/auditor development output; not a formal T0 outcome",
+    "file": "CONSTRUCTION_PREFLIGHT.json",
+    "sha256": "574adbab0616be0f8f65859ad4660bcc9c69e3c81b4ad9a7b04b2eac1be2f794"
+  },
+  "source_sha256": {
+    "README.md": "b9dc72676b469a5c3c6eb5e8fdfb3178d995c933747439716ae4aa58938cbc83",
+    "model.json": "815cbbbb8c30c98a852ef9aeefe800e87d55e4a00f5122df6db506458c3552bd",
+    "candidate.py": "5223d1ed7915c2687c6abe93fc8f11b43343e243dd4ede4ed78705476a274ff7",
+    "audit.py": "2c7d14c9d46a546adfd51568fa6284f85547517c87ea2f71630881f1e6a5a621",
+    "run_candidate.py": "632b4e2a7699fa282227a3787b7bba6c4332f8e5cc5d6d408423d9b167a011a1"
+  },
+  "environment": {
+    "platform": "darwin",
+    "machine": "arm64",
+    "python": "3.14.5",
+    "host_release": "27.0.0",
+    "cpu_workers": 1,
+    "network_used_by_candidate": false,
+    "gui_or_model_or_input": false,
+    "data": "authored synthetic finite tables only"
+  },
+  "scope": "CPU-only deterministic finite simulator; no live likelihood calibration, GUI, user data, runtime policy, authorization or safety claim."
+}

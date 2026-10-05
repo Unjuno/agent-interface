@@ -1,0 +1,434 @@
+{
+  "protocol": "issue-7955-t0-a01-v1",
+  "issue": 7955,
+  "states": [
+    "ready",
+    "not_ready"
+  ],
+  "prior": {
+    "ready": "1/2",
+    "not_ready": "1/2"
+  },
+  "routes": {
+    "yield": {
+      "ready": 0,
+      "not_ready": 0
+    },
+    "act": {
+      "ready": 10,
+      "not_ready": -10
+    }
+  },
+  "outcomes": [
+    "positive",
+    "negative"
+  ],
+  "likelihood_model": "Symmetric binary check: for accuracy a, P(positive|ready)=a, P(positive|not_ready)=1-a; negative likelihoods are complements.",
+  "ranking_rule": "A check is robustly top-ranked only when its minimum fixed-measure net VOI is strictly greater than every other check's maximum. Otherwise emit UNCERTAIN_MODEL_DEPENDENT_RANKING.",
+  "fallback_rule": "On an uncertain ranking, choose the action in {no_check} union admissible checks with minimum worst-case net-VOI regret across the frozen credal set; ties prefer lower cost, then lexical id. This is separate from the fixed-measure envelope.",
+  "cases": [
+    {
+      "id": "singleton_calibrated",
+      "point_accuracy": {
+        "check_A": "0.90",
+        "check_B": "0.70"
+      },
+      "calibration_sample": {
+        "n_per_state": 100,
+        "correct_per_state": {
+          "check_A": 90,
+          "check_B": 70
+        }
+      },
+      "credal_accuracy_grid": {
+        "check_A": [
+          "0.90"
+        ],
+        "check_B": [
+          "0.70"
+        ]
+      },
+      "evaluation_accuracy": {
+        "in_set_truth": [
+          {
+            "check_A": "0.90",
+            "check_B": "0.70"
+          }
+        ]
+      },
+      "current_epoch": 4,
+      "evidence_available": [],
+      "checks": [
+        {
+          "id": "check_A",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        },
+        {
+          "id": "check_B",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        }
+      ]
+    },
+    {
+      "id": "invariant_ranking",
+      "point_accuracy": {
+        "check_A": "0.86",
+        "check_B": "0.65"
+      },
+      "calibration_sample": {
+        "n_per_state": 100,
+        "correct_per_state": {
+          "check_A": 86,
+          "check_B": 65
+        }
+      },
+      "credal_accuracy_grid": {
+        "check_A": [
+          "0.82",
+          "0.86",
+          "0.90"
+        ],
+        "check_B": [
+          "0.55",
+          "0.65",
+          "0.70"
+        ]
+      },
+      "evaluation_accuracy": {
+        "in_set_truth": [
+          {
+            "check_A": "0.82",
+            "check_B": "0.55"
+          },
+          {
+            "check_A": "0.82",
+            "check_B": "0.65"
+          },
+          {
+            "check_A": "0.82",
+            "check_B": "0.70"
+          },
+          {
+            "check_A": "0.86",
+            "check_B": "0.55"
+          },
+          {
+            "check_A": "0.86",
+            "check_B": "0.65"
+          },
+          {
+            "check_A": "0.86",
+            "check_B": "0.70"
+          },
+          {
+            "check_A": "0.90",
+            "check_B": "0.55"
+          },
+          {
+            "check_A": "0.90",
+            "check_B": "0.65"
+          },
+          {
+            "check_A": "0.90",
+            "check_B": "0.70"
+          }
+        ]
+      },
+      "current_epoch": 4,
+      "evidence_available": [],
+      "checks": [
+        {
+          "id": "check_A",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        },
+        {
+          "id": "check_B",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        }
+      ]
+    },
+    {
+      "id": "ranking_reversal",
+      "point_accuracy": {
+        "check_A": "0.82",
+        "check_B": "0.75"
+      },
+      "calibration_sample": {
+        "n_per_state": 100,
+        "correct_per_state": {
+          "check_A": 82,
+          "check_B": 75
+        }
+      },
+      "credal_accuracy_grid": {
+        "check_A": [
+          "0.58",
+          "0.82",
+          "0.90"
+        ],
+        "check_B": [
+          "0.65",
+          "0.75",
+          "0.85"
+        ]
+      },
+      "evaluation_accuracy": {
+        "in_set_truth": [
+          {
+            "check_A": "0.58",
+            "check_B": "0.65"
+          },
+          {
+            "check_A": "0.58",
+            "check_B": "0.75"
+          },
+          {
+            "check_A": "0.58",
+            "check_B": "0.85"
+          },
+          {
+            "check_A": "0.82",
+            "check_B": "0.65"
+          },
+          {
+            "check_A": "0.82",
+            "check_B": "0.75"
+          },
+          {
+            "check_A": "0.82",
+            "check_B": "0.85"
+          },
+          {
+            "check_A": "0.90",
+            "check_B": "0.65"
+          },
+          {
+            "check_A": "0.90",
+            "check_B": "0.75"
+          },
+          {
+            "check_A": "0.90",
+            "check_B": "0.85"
+          }
+        ]
+      },
+      "current_epoch": 4,
+      "evidence_available": [],
+      "checks": [
+        {
+          "id": "check_A",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        },
+        {
+          "id": "check_B",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        }
+      ]
+    },
+    {
+      "id": "truth_outside_credal_set",
+      "point_accuracy": {
+        "check_A": "0.82",
+        "check_B": "0.75"
+      },
+      "calibration_sample": {
+        "n_per_state": 100,
+        "correct_per_state": {
+          "check_A": 82,
+          "check_B": 75
+        }
+      },
+      "credal_accuracy_grid": {
+        "check_A": [
+          "0.82"
+        ],
+        "check_B": [
+          "0.75"
+        ]
+      },
+      "evaluation_accuracy": {
+        "outside_set_truth": [
+          {
+            "check_A": "0.58",
+            "check_B": "0.85"
+          }
+        ]
+      },
+      "current_epoch": 4,
+      "evidence_available": [],
+      "checks": [
+        {
+          "id": "check_A",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        },
+        {
+          "id": "check_B",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        }
+      ]
+    },
+    {
+      "id": "dependency_and_staleness_gates",
+      "point_accuracy": {
+        "check_A": "0.90",
+        "check_B_dep": "0.80",
+        "check_C_stale": "0.90",
+        "check_D_hard": "0.99"
+      },
+      "calibration_sample": {
+        "n_per_state": 100,
+        "correct_per_state": {
+          "check_A": 90,
+          "check_B_dep": 80,
+          "check_C_stale": 90,
+          "check_D_hard": 99
+        }
+      },
+      "credal_accuracy_grid": {
+        "check_A": [
+          "0.90"
+        ],
+        "check_B_dep": [
+          "0.80"
+        ],
+        "check_C_stale": [
+          "0.90"
+        ],
+        "check_D_hard": [
+          "0.99"
+        ]
+      },
+      "evaluation_accuracy": {
+        "in_set_truth": [
+          {
+            "check_A": "0.90",
+            "check_B_dep": "0.80",
+            "check_C_stale": "0.90",
+            "check_D_hard": "0.99"
+          }
+        ]
+      },
+      "current_epoch": 4,
+      "evidence_available": [],
+      "checks": [
+        {
+          "id": "check_A",
+          "cost": "1/5",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": []
+        },
+        {
+          "id": "check_B_dep",
+          "cost": "1/10",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": [
+            "prior_check_A:v3"
+          ]
+        },
+        {
+          "id": "check_C_stale",
+          "cost": "1/20",
+          "safe": true,
+          "source_epoch": 3,
+          "requires_evidence": []
+        },
+        {
+          "id": "check_D_hard",
+          "cost": "1/100",
+          "safe": false,
+          "source_epoch": 4,
+          "requires_evidence": []
+        }
+      ]
+    },
+    {
+      "id": "no_admissible_check",
+      "point_accuracy": {
+        "check_B_dep": "0.80",
+        "check_C_stale": "0.90",
+        "check_D_hard": "0.99"
+      },
+      "calibration_sample": {
+        "n_per_state": 100,
+        "correct_per_state": {
+          "check_B_dep": 80,
+          "check_C_stale": 90,
+          "check_D_hard": 99
+        }
+      },
+      "credal_accuracy_grid": {
+        "check_B_dep": [
+          "0.80"
+        ],
+        "check_C_stale": [
+          "0.90"
+        ],
+        "check_D_hard": [
+          "0.99"
+        ]
+      },
+      "evaluation_accuracy": {
+        "in_set_truth": [
+          {
+            "check_B_dep": "0.80",
+            "check_C_stale": "0.90",
+            "check_D_hard": "0.99"
+          }
+        ]
+      },
+      "current_epoch": 4,
+      "evidence_available": [],
+      "checks": [
+        {
+          "id": "check_B_dep",
+          "cost": "1/10",
+          "safe": true,
+          "source_epoch": 4,
+          "requires_evidence": [
+            "prior_check_A:v3"
+          ]
+        },
+        {
+          "id": "check_C_stale",
+          "cost": "1/20",
+          "safe": true,
+          "source_epoch": 3,
+          "requires_evidence": []
+        },
+        {
+          "id": "check_D_hard",
+          "cost": "1/100",
+          "safe": false,
+          "source_epoch": 4,
+          "requires_evidence": []
+        }
+      ]
+    }
+  ]
+}
