@@ -1,0 +1,6 @@
+Command: wslc.exe run --rm --pull never --cpus 1 --memory 512M --mount type=bind,source=<package-path>,target=/work,readonly --workdir /work --entrypoint python agent-interface/native-suite-wslc-a08:20261004 -m unittest -v
+Exit: 1 (client-side; test process did not emit test names or execute a reported test)
+Output:
+エラーを特定できません
+エラー コード: E_FAIL
+The subsequent wslc.exe list status query also returned E_FAIL. No restart or retry was performed. Final-candidate WSLc test count: 0.

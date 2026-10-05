@@ -1,0 +1,143 @@
+{
+  "issue": 8032,
+  "scope": "T0 method only; no participants; no runtime or GUI automation change",
+  "procedure": {
+    "name": "change appearance on a disposable mock editor profile",
+    "risk": "low-stakes, reversible, synthetic profile only",
+    "training_task_version": "theme-procedure-v1",
+    "transfer_task_version": "status-bar-procedure-v1",
+    "disposable_profile_required": true
+  },
+  "baseline": {
+    "attempts": 3,
+    "competency_rule": "at least 2 complete attempts, zero critical errors",
+    "eligibility_before_randomization": true,
+    "failed_screening_retained_as_screened_not_randomized": true
+  },
+  "opportunities_per_arm": 6,
+  "heldout_transfer_task": "status-bar-procedure-v1",
+  "arms": [
+    {
+      "arm": "manual", "mode": "manual",
+      "opportunities": [1, 2, 3, 4, 5, 6], "task_version": "theme-procedure-v1",
+      "reset_each_opportunity": true, "starting_state_source": "disposable-profile-v1",
+      "goal_card": "change the disposable profile appearance",
+      "interface_evidence_version": "same-visible-state-v1", "retrieval_prompts": [],
+      "training_packets": [
+        {"opportunity": 1, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 2, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 3, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 4, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 5, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 6, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null}
+      ]
+    },
+    {
+      "arm": "automation_only", "mode": "agent",
+      "opportunities": [1, 2, 3, 4, 5, 6], "task_version": "theme-procedure-v1",
+      "reset_each_opportunity": true, "starting_state_source": "disposable-profile-v1",
+      "goal_card": "change the disposable profile appearance",
+      "interface_evidence_version": "same-visible-state-v1", "retrieval_prompts": [],
+      "training_packets": [
+        {"opportunity": 1, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 2, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 3, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 4, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 5, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 6, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null}
+      ]
+    },
+    {
+      "arm": "automation_retrieval", "mode": "agent",
+      "opportunities": [1, 2, 3, 4, 5, 6], "task_version": "theme-procedure-v1",
+      "reset_each_opportunity": true, "starting_state_source": "disposable-profile-v1",
+      "goal_card": "change the disposable profile appearance",
+      "interface_evidence_version": "same-visible-state-v1",
+      "retrieval_prompts": [
+        {"opportunity": 2, "before_agent_action": true, "before_feedback": true, "allow_unsure": true, "text": "Without acting, state or select the next safe step; you may answer unsure."},
+        {"opportunity": 4, "before_agent_action": true, "before_feedback": true, "allow_unsure": true, "text": "Without acting, state or select the next safe step; you may answer unsure."},
+        {"opportunity": 6, "before_agent_action": true, "before_feedback": true, "allow_unsure": true, "text": "Without acting, state or select the next safe step; you may answer unsure."}
+      ],
+      "training_packets": [
+        {"opportunity": 1, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 2, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 3, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 4, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 5, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null},
+        {"opportunity": 6, "task_key": "theme-procedure-v1", "delayed_test_scoring_key": null, "heldout_transfer_answer_key": null}
+      ]
+    }
+  ],
+  "randomization": {
+    "arms": ["manual", "automation_only", "automation_retrieval"],
+    "allocation": "1:1:1 after baseline eligibility",
+    "stratification": ["baseline score band", "prior mock-editor familiarity"]
+  },
+  "exposure": {
+    "opportunities_per_arm": 6,
+    "task_resets": "fresh disposable profile before each opportunity",
+    "task_goal": "change the disposable profile appearance",
+    "starting_state_source": "disposable-profile-v1",
+    "interface_evidence_version": "same-visible-state-v1",
+    "manual": "participant performs all six opportunities",
+    "automation_only": "agent performs all six; complete visible action/evidence trace is retained",
+    "automation_retrieval": "agent performs all six; complete visible action/evidence trace is retained",
+    "retrieval_opportunities": [2, 4, 6],
+    "retrieval_prompt": "Without acting, state or select the next safe step; you may answer unsure. The task goal and current state remain visible.",
+    "retrieval_prompt_timing": "before agent action and before any correctness feedback",
+    "feedback": "only after a response or explicit unsure; same action trace as automation-only",
+    "retrieval_active_time_cap_seconds": 45,
+    "per_prompt_timeout_seconds": 15,
+    "active_and_elapsed_time": "record separately; neither is inferred from the other"
+  },
+  "delayed_test": {
+    "interval_hours": 48,
+    "tolerance_hours": 12,
+    "unaided": true,
+    "core_task_first": "theme-procedure-v1",
+    "heldout_transfer_task_second": "status-bar-procedure-v1",
+    "fresh_disposable_profiles": true,
+    "no_retrieval_prompt_or_feedback": true,
+    "scoring_keys_withheld_from_training_materials": true,
+    "agent execution traces remain visible during automation exposure": true
+  },
+  "constructs": {
+    "delayed_retention": "unaided ordered procedure plus final state after the 48-hour interval",
+    "transfer": "unaided ordered procedure plus final state on the held-out status-bar variant",
+    "immediate_takeover": "state reconstruction and next-safe-step judgment at explicit stop; separate instrument, not retained-procedure score",
+    "vigilance": "unprompted hit/miss/false-alarm/correct-rejection counts for rare cues; separate signal-detection endpoint",
+    "scope_note": "T0 validates separable rubric fields only; immediate takeover and vigilance are not pooled into the delayed-retention endpoint"
+  },
+  "scoring": {
+    "ordered_steps": "exact required action order; positional fraction also reported",
+    "primary_outcomes": ["delayed core-task step_score", "held-out transfer step_score"],
+    "secondary_outcomes": ["complete with final-state match", "critical/major error", "missingness", "active time", "elapsed time"],
+    "postcondition": "exact final-state equality",
+    "critical": "any action targets a non-disposable profile",
+    "major": "wrong order, missing/extra action, or final state mismatch",
+    "missingness": "retain randomized row as missing; no imputation in primary summaries; report by arm and provide worst/best bounds",
+    "analysis": "intention-to-treat after randomization; do not use complete-case comparisons as causal estimates"
+  },
+  "exclusions_and_stops": {
+    "pre_randomization": "exclude only failure to meet baseline competency or inability to use the disposable mock with approved accessibility accommodations; retain screened counts/reasons",
+    "post_randomization": "no outcome-based exclusions; retain all assigned records and missingness",
+    "stop_session": ["wrong or non-disposable target", "any consequential/external write", "participant distress or withdrawal", "integrity/privacy breach"],
+    "no_recruitment_or_observation_in_T0": true
+  },
+  "sample_feasibility": {
+    "contrasts": "manual vs automation-only and automation-retrieval vs automation-only for core and transfer (four co-primary contrasts)",
+    "familywise_alpha": 0.05,
+    "per_contrast_two_sided_alpha": 0.0125,
+    "target_power": 0.80,
+    "planning_approximation": "two independent means, normal approximation, z_alpha/2 + z_power approximately 3.34; conservative no baseline-covariate credit",
+    "attrition_assumption": 0.15,
+    "standardized_effect_sensitivity": [
+      {"assumed_d": 0.5, "completers_per_arm": 90, "recruited_per_arm": 106, "total_recruited": 318},
+      {"assumed_d": 0.35, "completers_per_arm": 183, "recruited_per_arm": 216, "total_recruited": 648}
+    ],
+    "interpretation": "assumption sensitivity only, not an observed effect or final power analysis",
+    "per_participant_burden_estimate": "about 20 minutes for baseline/training and 10 minutes for the delayed core+transfer session; each retrieval prompt is capped at 15 seconds (45 seconds total)",
+    "feasibility_disposition": "HOLD_T1: 318-648 recruited is substantial; refine the smallest meaningful effect, use exact ordinal-outcome power simulation, and confirm recruitment capacity/ethics before any participant work"
+  },
+  "T1_gate": "independent protocol review, ethics/privacy approval, consent, recruitment plan, final preregistration, and separate explicit authorization; this T0 grants none"
+}
