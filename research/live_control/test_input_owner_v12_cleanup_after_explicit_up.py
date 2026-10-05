@@ -12,9 +12,10 @@ sys.path.insert(0, str(LIVE))
 class FakeDisplay:
     def __init__(self):
         self.down = set()
+        self.buttons_down = set()
         self.release_attempts = 0
-        self.root = types.SimpleNamespace(
-            query_pointer=lambda: types.SimpleNamespace(mask=0, root_x=0, root_y=0))
+        self.button_release_attempts = 0
+        self.root = FakeRoot(self)
 
     def get_input_focus(self):
         return types.SimpleNamespace(focus=41)
@@ -24,6 +25,13 @@ class FakeDisplay:
 
     def screen(self):
         return types.SimpleNamespace(root=self.root)
+
+    def create_resource_object(self, _kind, window_id):
+        parent = FakeWindow(self, 52)
+        return FakeWindow(self, window_id, parent=parent if window_id == 41 else None)
+
+    def intern_atom(self, _name):
+        return 1
 
     def query_keymap(self):
         bitmap = bytearray(32)
@@ -36,6 +44,41 @@ class FakeDisplay:
 
     def close(self):
         pass
+
+
+class FakeWindow:
+    def __init__(self, display, window_id, parent=None):
+        self.display = display
+        self.id = window_id
+        self.parent = parent
+
+    def get_geometry(self):
+        return types.SimpleNamespace(width=100, height=100)
+
+    def get_attributes(self):
+        return types.SimpleNamespace(map_state=2)
+
+    def query_tree(self):
+        return types.SimpleNamespace(parent=self.parent)
+
+
+class FakeRoot:
+    id = 1
+
+    def __init__(self, display):
+        self.display = display
+
+    def query_pointer(self):
+        mask = sum(256 << (button - 1) for button in self.display.buttons_down)
+        return types.SimpleNamespace(mask=mask, root_x=0, root_y=0)
+
+    def get_full_property(self, _atom, _property_type):
+        return types.SimpleNamespace(value=[52])
+
+    def translate_coords(self, source, x, y):
+        if isinstance(source, FakeRoot):
+            return types.SimpleNamespace(child=FakeWindow(self.display, 52), x=x, y=y)
+        return types.SimpleNamespace(child=None, x=0, y=0)
 
 
 class Lease:
@@ -54,14 +97,15 @@ class Lease:
 
 
 class ExplicitUpCleanupTests(unittest.TestCase):
-    def test_owner_retries_keyup_after_sync_left_key_down(self):
+    def test_owner_retries_key_and_button_up_after_sync_left_down(self):
         names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
                  "Xlib.ext", "Xlib.ext.xtest", "executor_v3")
         saved = {name: sys.modules.get(name) for name in names}
         display_instance = FakeDisplay()
         xlib = types.ModuleType("Xlib")
-        xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
-                                       Button1Mask=256, AnyPropertyType=0)
+        xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonPress=4,
+                                       ButtonRelease=5, Button1Mask=256,
+                                       AnyPropertyType=0, IsViewable=2)
         xk = types.ModuleType("Xlib.XK")
         xk.string_to_keysym = lambda _key: 1
         display = types.ModuleType("Xlib.display")
@@ -79,6 +123,12 @@ class ExplicitUpCleanupTests(unittest.TestCase):
                 display_instance.release_attempts += 1
                 if display_instance.release_attempts > 1:
                     display_instance.down.discard(code)
+            elif event == xlib.X.ButtonPress:
+                display_instance.buttons_down.add(code)
+            elif event == xlib.X.ButtonRelease:
+                display_instance.button_release_attempts += 1
+                if display_instance.button_release_attempts > 1:
+                    display_instance.buttons_down.discard(code)
 
         xtest.fake_input = fake_input
         ext.xtest = xtest
@@ -108,6 +158,20 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(result["keys_down"], [])
             self.assertEqual(display_instance.down, set())
             self.assertEqual(display_instance.release_attempts, 2)
+
+            pointer_lease = Lease()
+            pointer_lease.expected_surface = 52
+            pointer_lease.expected_geometry = [0, 0, 100, 100]
+            owner.call("button_down", pointer_lease, 1)
+            owner.call("button_up", pointer_lease, 1)
+            self.assertEqual(display_instance.buttons_down, {1})
+
+            pointer_result = owner.call("release", pointer_lease)
+
+            self.assertTrue(pointer_result["verified"])
+            self.assertEqual(pointer_result["buttons_down"], [])
+            self.assertEqual(display_instance.buttons_down, set())
+            self.assertEqual(display_instance.button_release_attempts, 2)
         finally:
             if owner is not None:
                 owner.close()

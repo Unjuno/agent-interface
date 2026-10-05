@@ -176,12 +176,12 @@ class InputOwner:
             nonlocal active,revision
             revision += 1
             # Explicit XSync completion does not prove that the server applied
-            # each key-up. Retry every key touched by this owner before the
-            # final keymap check, including keys removed from `held` after an
-            # explicit key-up request.
+            # each release. Retry every key and button touched by this owner
+            # before final state checks, including inputs removed from their
+            # held maps after explicit up requests.
             for code in list(touched):
                 xtest.fake_input(d, X.KeyRelease, code)
-            for button in list(buttons):
+            for button in list(touched_buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
             mask = d.screen().root.query_pointer().mask
