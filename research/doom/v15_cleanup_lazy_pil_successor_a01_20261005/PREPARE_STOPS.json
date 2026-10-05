@@ -2,9 +2,30 @@
   "schema": "v15-cleanup-lazy-pil-preparation-stops-v1",
   "candidate_execution_started": false,
   "stops": [
-    {"attempt":1,"cause":"materializer shell started outside repository; git ls-tree found no repository","candidate_test_invoked":false,"side_effect":"empty scratch directory only"},
-    {"attempt":2,"cause":"PowerShell text pipeline coerced git cat-file binary blob output to bytes and failed","candidate_test_invoked":false,"side_effect":"partial scratch materialization failed; no repository source changed"},
-    {"attempt":3,"cause":"full nested research Python snapshot paths exceeded Windows MAX_PATH during materialization","candidate_test_invoked":false,"side_effect":"partial scratch materialization; no repository source changed"}
+    {
+      "attempt": 1,
+      "cause": "materializer shell started outside repository; git ls-tree found no repository",
+      "candidate_test_invoked": false,
+      "side_effect": "empty scratch directory only"
+    },
+    {
+      "attempt": 2,
+      "cause": "PowerShell text pipeline coerced git cat-file binary blob output to bytes and failed",
+      "candidate_test_invoked": false,
+      "side_effect": "partial scratch materialization failed; no repository source changed"
+    },
+    {
+      "attempt": 3,
+      "cause": "full nested research Python snapshot paths exceeded Windows MAX_PATH during materialization",
+      "candidate_test_invoked": false,
+      "side_effect": "partial scratch materialization; no repository source changed"
+    },
+    {
+      "attempt": 4,
+      "cause": "binary-safe source extractor launcher attempted to write prepare.py before creating the short C:\\s15 root",
+      "candidate_test_invoked": false,
+      "side_effect": "no materialized source and no repository source changed"
+    }
   ],
   "repair": "amend frozen source materialization scope to immediate-child Python modules under the two explicit unittest search roots and use short scratch root C:\\s15; continue to use binary-safe Git object reads",
   "scientific_result": "none; frozen candidate modes have not run"
