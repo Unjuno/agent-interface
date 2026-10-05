@@ -45,7 +45,10 @@ The first candidate attempt stopped before the boundary because `openpyxl`
 was absent. That STOP remains under `results/current-head-4158-run01/`.
 `CONSTRUCTION_REPAIR_01.md` records the inert optional-import stub used for
 the separate successful attempt. The first auditor's singleton-array bug and
-its repaired readback are also both retained.
+its repaired readback are also both retained. The replay-materialized source
+trees were independently confirmed 56/56 against the frozen manifest, then
+pruned as exact duplicates of `source-snapshots/`; see
+`MATERIALIZED_SOURCE_CUSTODY.md` and `MATERIALIZED_SOURCE_AUDIT.json`.
 
 ## Reproduction and audit
 
