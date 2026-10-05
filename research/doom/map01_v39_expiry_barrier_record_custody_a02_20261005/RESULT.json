@@ -2,7 +2,7 @@
   "schema": "map01-v39-expiry-barrier-record-custody-a02-v1",
   "disposition": "FAIL_CANDIDATE_RECEIPT_CUSTODY",
   "hypothesis_reproduced": true,
-  "scope": "Exact PR #7829 candidate bridge/owner in a current-main fake-Xlib harness, one deterministic interleaving",
+  "scope": "Exact PR #7829 candidate bridge/owner in a current-main fake-Xlib harness, two deterministic interleavings: cancel/expiry and non-cancelled DecisionRequired/release-barrier composition",
   "main_commit": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
   "candidate_commit": "70c76483c46108bdd70bf2fb90679d948a5f156f",
   "container": {
@@ -16,6 +16,10 @@
   "tests": {
     "mutable_record_custody_schedules": {
       "count": 2,
+      "exit": 0
+    },
+    "existing_candidate_regressions": {
+      "count": 12,
       "exit": 0
     }
   },
