@@ -1,0 +1,49 @@
+{
+  "candidate_pr_head_sha": "b5fbfed1c896f587dd5dfeb30c2735d63f670264",
+  "files": {
+    "PLAN.md": "53c67cba0ecf5a0fe386c97960d3b6061b08df7258ce453a0a14021e137c728d",
+    "audit.py": "091a44fd092071019d7ebe163be665bc96516debcfb172db933000988faec4e1",
+    "candidate.py": "d8ea3b00fb0b5f2ad7464404fdda5da04474a8a287fcde919a63f58947d9c9ac",
+    "experimental_source/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "experimental_source/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "experimental_source/input_owner_v12.py": "f8145816d80952b10249098625e31e72d42dd4c85b04180f82fe6640d83d1607",
+    "experimental_source/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "experimental_source/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "experimental_source/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "run_once.sh": "f45f87546a3046663e7749692043a51496a0be60aacffc0984308cb337a24bc0"
+  },
+  "operation_under_test": "InputOwner.call(\"up_batch\", lease, [\"W\"]) for each owner; one-key batch only",
+  "predecessors": [
+    {
+      "auditor_invocations": 0,
+      "candidate_exit": 1,
+      "disposition": "STOP_BEFORE_KEY_DOWN_QUERY_KEYMAP_LIST_HEX_ATTRIBUTE_ERROR",
+      "id": "A01",
+      "raw_sha256": "8d19a5a47c68c982c50dfbdf9d42f297b5b6b831ed118276a4f4baa8a0e13b75"
+    },
+    {
+      "auditor_invocations": 0,
+      "candidate_invocations": 0,
+      "disposition": "STOP_RUNNER_POLLED_X99_WHILE_XVFB_STARTED_X98",
+      "id": "A02",
+      "runner_exit": 20
+    },
+    {
+      "auditor_exit": 0,
+      "candidate_exit": 0,
+      "disposition": "CONFIRMED_SINGLE_KEY_UP_CLEARS_SERVER_KEYMAP_WHILE_PEER_LOCAL_HOLD_REMAINS; SINGLE UP ONLY",
+      "id": "A03",
+      "raw_sha256": "579a22672ac58a00f4d52ce80f64fc2e189411fc871fa9f943c0ca97f3f91bc7"
+    },
+    {
+      "auditor_invocations": 0,
+      "candidate_invocations": 0,
+      "disposition": "STOP_SOURCE_CHANGED_BEFORE_CANDIDATE",
+      "frozen_main_sha": "ff677c7fc04ba72923ee375527ae39489728a0bd",
+      "frozen_pr_head_sha": "2a79899f41bf71ab41df8dd5dcf1cd9e70f9eca8",
+      "id": "A04"
+    }
+  ],
+  "schema": "v39-owner-pair-xvfb-sources-a05-v1",
+  "source_main_sha": "2f2c83c3da36566bac410b13b2ed5202c9641f1a"
+}

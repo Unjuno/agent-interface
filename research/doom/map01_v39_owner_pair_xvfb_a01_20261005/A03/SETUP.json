@@ -1,0 +1,60 @@
+{
+  "audit_stdout_sha256": "fbe8137a9384fd61faf922f765d442390f001318127b11624c75a2844e109f5a",
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_invoked": true,
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_invoked": true,
+  "candidate_raw_sha256": "579a22672ac58a00f4d52ce80f64fc2e189411fc871fa9f943c0ca97f3f91bc7",
+  "commands": [
+    "ssh 'research-59-v39-owner-pair-a01-20261005@orb' 'cd /home/taka/owner-pair-a03 && bash run_once.sh'",
+    "ssh 'research-59-v39-owner-pair-a01-20261005@orb' 'cd /home/taka/owner-pair-a03 && test \"$(cat results/candidate.exit)\" = 0 && test ! -e results/A03/audit.json && python3 audit.py results/A03/raw.json > results/A03/audit.stdout 2> results/A03/audit.stderr; audit_rc=$?; printf \"%s\\n\" \"$audit_rc\" > results/A03/audit.exit; test \"$audit_rc\" -eq 0'"
+  ],
+  "experiment_id": "map01-v39-owner-pair-xvfb-a03-20261005",
+  "first_result_retained": true,
+  "freeze_sha256": "22fd6aaee73f1b580b4175a46aa5856a09020fd0b45b8b19c70612ffe6019364",
+  "issue_state": "GitHub Issue #59 reports CLOSED/COMPLETED as of 2026-10-05; checked against current main d9bb339. The current-goal document at d9bb339 still says open. This experiment is local Xvfb only and changes neither Issue state nor live allocation.",
+  "machine": {
+    "architecture": "arm64",
+    "id": "01M456AN704HV18M04B0FGC7NM",
+    "kernel": "7.0.5-orbstack-00330-ge3df4e19b0a0-dirty",
+    "name": "research-59-v39-owner-pair-a01-20261005",
+    "orbstack": "2.1.3 (7a3258b7336a8a47b75771e87ef7b74ba4bba8eb)",
+    "os": "Ubuntu 24.04.5 LTS",
+    "python": "3.12.3"
+  },
+  "output_checksum_file": "results/OUTPUT_SHA256SUMS",
+  "packages": {
+    "python3-xlib": "0.33-2",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "post_run_scope_note": "At freeze and execution the candidate was PR #7974 head c896362a. PR #7974 subsequently advanced to 2a79899f and now describes V15 up_batch; A03 exercised each owner\u2019s single-key up operation. Preserve A03 as exact-head evidence; it is not a test of the later up_batch path.",
+  "pre_run_checks": {
+    "display_97_socket_absent": true,
+    "packages": "orbctl dpkg-query returned exact pinned versions",
+    "python": "Python 3.12.3",
+    "remote_main_sha": "d9bb339b0ba9285cdef57fc347437d25e5943ef1",
+    "remote_pr_7974_head_sha": "c896362a40a1abb279d95e338fe7dfb52a7ee1be",
+    "remote_refs_verified": "git ls-remote origin refs/heads/main refs/pull/7974/head",
+    "source_checksums": "SOURCE_SHA256SUMS passed locally",
+    "syntax": "bash -n and python3 -m py_compile passed locally"
+  },
+  "predecessors": [
+    {
+      "candidate_exit": 1,
+      "candidate_invocations": 1,
+      "disposition": "stopped before any down injection; query_keymap list had no hex method",
+      "id": "A01"
+    },
+    {
+      "candidate_invocations": 0,
+      "disposition": "runner started display :98 but polled X99 socket",
+      "id": "A02",
+      "runner_exit": 20
+    }
+  ],
+  "run_finished_utc": "2026-10-05 05:15 UTC (minute-level recording; raw uses monotonic clocks)",
+  "schema": "v39-owner-pair-xvfb-setup-a03-v1",
+  "xvfb_exit": 0
+}

@@ -1,0 +1,43 @@
+{
+  "A_up_receipt_verified": true,
+  "B_local_owned_keycodes_after_A_up": [
+    25
+  ],
+  "B_up_receipt_verified": true,
+  "audit_stdout_sha256": "fbe8137a9384fd61faf922f765d442390f001318127b11624c75a2844e109f5a",
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_pr": 7974,
+  "candidate_pr_head_sha": "c896362a40a1abb279d95e338fe7dfb52a7ee1be",
+  "cleanup_errors": [],
+  "control_server_keymap": [
+    false,
+    true,
+    false
+  ],
+  "experiment_id": "map01-v39-owner-pair-xvfb-a03-20261005",
+  "final_server_keymap_down": false,
+  "freeze_sha256": "22fd6aaee73f1b580b4175a46aa5856a09020fd0b45b8b19c70612ffe6019364",
+  "keycode": 25,
+  "limits": [
+    "Does not test PR #7974 head 2a79899f up_batch path added after this freeze.",
+    "Does not establish physical keyboard state, GUI/game delivery, production display arbitration, useful feedback, recovery, or MAP01 progress.",
+    "GitHub Issue #59 is CLOSED/COMPLETED while current-goal on main d9bb339 says it remains open; no status mutation was made."
+  ],
+  "outputs_sha256": "84e027a84e91ddeabe4f243da34dea9dcc5c451c95efd3ae990dba0a82aad2fc",
+  "pair_server_keymap": [
+    false,
+    true,
+    true,
+    false,
+    false
+  ],
+  "raw_sha256": "579a22672ac58a00f4d52ce80f64fc2e189411fc871fa9f943c0ca97f3f91bc7",
+  "result": "CONFIRMED_SHARED_DISPLAY_CROSS_OWNER_RELEASE",
+  "schema": "v39-owner-pair-xvfb-result-a03-v1",
+  "scope": "One private Xvfb server; two current candidate V4/V3/V12 InputOwner instances and distinct leases; single-key up calls. Server-global X11 keymap only.",
+  "source_main_sha": "d9bb339b0ba9285cdef57fc347437d25e5943ef1",
+  "xvfb_exit": 0
+}

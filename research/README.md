@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #59 shared-display owner-pair experiments: [A01/A02/A04 stops and A03/A05 results](doom/map01_v39_owner_pair_xvfb_a01_20261005/README.md) — A03 single-key `up` and A05 one-key `up_batch` both showed A's verified release clear the server-global keymap while B still held W locally. This supports an exclusive-display/cooperative-arbiter precondition; multi-key V15 ordering and all live/game behavior remain untested.
+
 - Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
 
 - Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — finite-model PASS_METHOD_SCOPED/H_PASS_SCOPED; OrbStack unavailable, host-only; no full-CBS or runtime claim. [Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
