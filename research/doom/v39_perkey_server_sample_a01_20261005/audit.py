@@ -70,7 +70,7 @@ counts = []
 for mode in ("normal", "optimized"):
     for suite, expected_count in (("v5_integration",4),("v15_selection",8),("owner_v12_cancel",1),("owner_v4_join",1),("batch_actual",12),("batch_construction",2)):
         output = (HERE / f"{mode}_{suite}.stdout.txt").read_text(encoding="utf-8")
-        found = re.search(r"Ran (\\d+) tests?", output)
+        found = re.search(r"Ran (\d+) tests?", output)
         if not found or int(found.group(1)) != expected_count or "OK" not in output:
             raise SystemExit(f"FAIL test receipt for {mode}_{suite}")
         counts.append(expected_count)
