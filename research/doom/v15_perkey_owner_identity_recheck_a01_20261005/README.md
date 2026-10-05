@@ -25,3 +25,8 @@ The replay refuses an existing output directory. It materializes the 56 retained
 ## Current-main relevance check
 
 Main has advanced to `0f10195c07bef4e73d510e0bd090d81fd643019d` since the tested PR head was frozen. `CURRENT_MAIN_RECHECK.json` records a byte comparison of the 56-path probe closure against candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`: all 55 shared source paths are unchanged; the sole candidate-only path is `research/doom/v39_measurement_backend_selection_v1.py`. The independent auditor checks this comparison. The original failed v0 comparison and audit remain as previews; v1 classifies the helper as candidate-only.
+
+
+## Latest PR #8065 source-closure cross-check
+
+After the startup-selection run was frozen at PR #8065 head `4158d9b063e7cbf56828f1b0667ec2714af0ff2b`, the PR advanced to `6591b5703862c73d375a6646374ad82a26505bcb`. The 56 paths in `source-manifest.json` were byte-compared between those two exact commits: all 56 are unchanged. `LATEST_CANDIDATE_RECHECK.json` records the comparison, and the independent auditor recomputes it. The startup probe itself remains the run at the frozen head; it was not rerun on the later head.

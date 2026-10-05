@@ -73,6 +73,34 @@ def main() -> None:
         missing_current_paths == ["research/doom/v39_measurement_backend_selection_v1.py"] and
         current_recheck.get("candidate_only_paths") == missing_current_paths)
 
+    latest_candidate = json.loads((ROOT / "LATEST_CANDIDATE_RECHECK.json").read_text())
+    latest_head = latest_candidate.get("latest_candidate_head", "")
+    latest_candidate_changed = []
+    latest_candidate_missing = []
+    for rel in files:
+        try:
+            frozen_bytes = subprocess.check_output(
+                ["git", "show", f"{freeze['candidate_head']}:{rel}"], cwd=ROOT,
+                stderr=subprocess.DEVNULL)
+            latest_bytes = subprocess.check_output(
+                ["git", "show", f"{latest_head}:{rel}"], cwd=ROOT,
+                stderr=subprocess.DEVNULL)
+        except subprocess.CalledProcessError:
+            latest_candidate_missing.append(rel)
+            continue
+        if frozen_bytes != latest_bytes:
+            latest_candidate_changed.append(rel)
+    checks["latest_candidate_record_matches_manifest"] = (
+        latest_candidate.get("candidate_pr") == 8065 and
+        latest_candidate.get("frozen_candidate_head") == freeze["candidate_head"] and
+        latest_candidate.get("manifest_paths") == len(files) == 56 and
+        latest_candidate.get("unchanged_paths") == 56 and
+        latest_candidate.get("changed_paths") == [] and
+        latest_candidate.get("missing_paths") == [] and
+        latest_candidate.get("result") == "PASS_SOURCE_CLOSURE_UNCHANGED")
+    checks["latest_candidate_56_source_bytes_match_frozen_head"] = (
+        not latest_candidate_changed and not latest_candidate_missing)
+
     status = json.loads((RESULTS / "run-status.json").read_text())
     expected_routes = {"v12-perkey", "v15-default", "v15-perkey"}
     checks["all_three_routes_exit_zero"] = {row["route"] for row in status} == expected_routes and all(row["exit_code"] == 0 for row in status)
