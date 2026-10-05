@@ -32,7 +32,7 @@ class RetainedResultTests(unittest.TestCase):
             actual = hashlib.sha256((RESULTS / name).read_bytes()).hexdigest()
             self.assertEqual(expected, actual, name)
 
-    def test_audit_gate_and_mutations(self):
+    def test_original_audit_and_post_run_qualification(self):
         audit = read_json(RESULTS / "audit.json")
         self.assertEqual("METHOD_PASS_SCOPED", audit["disposition"])
         self.assertEqual(6, audit["reconstructed_rows"])
@@ -40,6 +40,10 @@ class RetainedResultTests(unittest.TestCase):
         self.assertEqual(6, audit["mutation_controls_rejected"])
         self.assertEqual(6, audit["mutation_controls_total"])
         self.assertTrue(all(audit["mutations"].values()))
+        qualification = read_json(ROOT / "results" / "post_run_review" / "qualification.json")
+        self.assertEqual("HOLD_AUDIT_WEAKNESS", qualification["post_run_disposition"])
+        self.assertEqual({"candidate": 0, "auditor": 0, "retries": 0}, qualification["formal_invocations_after_original_run"])
+        self.assertEqual(audit["disposition"], qualification["preserved_original_audit"]["disposition"])
 
     def test_staged_outcomes_preserve_conflict_and_scope_gates(self):
         raw = read_json(RESULTS / "candidate.raw.json")

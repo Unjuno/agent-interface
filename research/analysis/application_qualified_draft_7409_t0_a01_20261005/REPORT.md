@@ -2,20 +2,22 @@
 
 ## Result
 
-Disposition: **`METHOD_PASS_SCOPED`** for the authored deterministic fixture. The frozen candidate ran once and the independent raw-only auditor ran once, both in OrbStack containers with exit code 0; retries: 0. The auditor reconstructed all 6/6 rows with no errors and rejected 6/6 frozen output mutations.
+The original formal `audit.json` reports **`METHOD_PASS_SCOPED`** for this authored fixture. A post-run source/raw review found that the required revision-check criterion was self-asserted, so the final qualified disposition is **`HOLD_AUDIT_WEAKNESS`**; do not accept the recorded PASS as satisfying the T0 gate. The frozen candidate ran once and the raw-only auditor once, both in OrbStack containers with exit code 0; retries: 0. The original auditor reconstructed 6/6 rows and reported 6/6 mutations rejected. Its revision mutation, however, only checked that a boolean matched an expected boolean.
 
-The direct shared-live comparator silently overwrote the human's same-field title in C2 and combined a changed formula with the human's new source value in C3. The staged path held both cases without promoting the agent draft. It preserved both writers' disjoint edits in C1, and merged disjoint edits against a changed `r2` live revision in C4 only after checking revision state. C5 deliberately used a separate UI context with a shared autosave backend; staging was refused before draft creation. C6 included a notification side effect; staging was refused and the staged effect list remained empty.
+The direct shared-live comparator silently overwrote the human's same-field title in C2 and combined a changed formula with the human's new source value in C3. The staged output held both cases without promoting the agent draft. It preserved both writers' disjoint edits in C1 and reported a disjoint merge against `r2` in C4. Source review found no actual base/current revision comparison behind C4's `revision_checked=true` field, so the revision-validation claim is not established. C5 deliberately used a separate UI context with a shared autosave backend; staging was refused before draft creation. C6 included a notification side effect; staging was refused and the staged effect list remained empty.
 
 | Fixture | Staged result | Agent promoted? | Audit implication |
 |---|---|---:|---|
 | C1 disjoint writes | `PROMOTED` | yes | Both human and agent fields survive |
 | C2 same-field writes | `CONFLICT_HOLD` | no | Human value remains live |
 | C3 hidden read/write dependency | `CONFLICT_HOLD` | no | Formula edit held when its source changed |
-| C4 later live revision, disjoint writes | `PROMOTED` | yes | `r2` checked; merged artifact advances to `r3` |
+| C4 later live revision, disjoint writes | `PROMOTED` in raw output | yes in raw output | Reports `r3`, but no comparison receipt proves that `r2` was checked |
 | C5 isolated UI, shared backend | `REFUSED_ELIGIBILITY` | no | No draft created or staged write made |
 | C6 external side effect present | `REFUSED_ELIGIBILITY` | no | No draft or staged side effect emitted |
 
-The mutation checks changed the raw candidate output to simulate a premature live write, silent same-field overwrite, ignored hidden dependency, unchecked revision, acceptance of the shared backend, and a draft external effect. The auditor rejected every mutation.
+The original mutation checks changed raw output to simulate a premature live write, silent same-field overwrite, ignored hidden dependency, unchecked revision, acceptance of the shared backend, and a draft external effect. The raw auditor reports all six rejected. Post-run review found the revision mutation is insufficient: it flips only the `revision_checked` field, while both candidate and auditor hardcode that field as true. The original six mutation outcomes remain unchanged and are not accepted as proof of the revision check.
+
+The post-run source/raw qualification is retained in [`results/post_run_review/REVIEW_QUALIFICATION.md`](results/post_run_review/REVIEW_QUALIFICATION.md). It does not modify or rerun the frozen candidate, auditor, or raw outputs.
 
 ## Execution and provenance
 
@@ -32,10 +34,10 @@ The mutation checks changed the raw candidate output to simulate a premature liv
 - Auditor raw SHA-256: `9b74747dad9938159f76d7139ebcdc5c760173b389f724f33ce339839e2547eb`.
 - Frozen source and input SHA-256 values are in [`frozen/FREEZE.json`](frozen/FREEZE.json) and [`frozen/SHA256SUMS`](frozen/SHA256SUMS). Exact invocation commands, exit codes, stdout/stderr hashes and run counts are in [`results/a01/run_metadata.json`](results/a01/run_metadata.json).
 
-Post-run archival verification passed 4/4 checks for frozen source hashes, raw-output hashes, the scoped audit gate and staged outcomes. Two local test commands initially used the wrong working directory; the errors and both corrected 4/4 runs are recorded in [`results/construction/post_run_verification.json`](results/construction/post_run_verification.json). Neither reran candidate or auditor.
+Post-run archival verification passed 4/4 checks for frozen source hashes, raw-output hashes, the original audit record, and its qualification. Two local test commands initially used the wrong working directory; the errors and both corrected 4/4 runs are recorded in [`results/construction/post_run_verification.json`](results/construction/post_run_verification.json). Neither reran candidate or auditor.
 
 The candidate saw only the six frozen case definitions. The auditor was a separate implementation that consumed the frozen cases and candidate raw JSON; it did not import the candidate. Both implementations and the oracle fixture were authored by the same worker, so this is not independent human review.
 
 ## Scope and next gate
 
-This establishes only that a finite fixture can distinguish staged draft behavior from a direct shared-live patch under the declared model. It does not establish draft/revision semantics in any real app, reduced live-view or focus interference, human preference, safe real-app merging, correctness of hidden application metadata, a runtime feature, product effect, or safety. The Issue's higher-level T1 hypothesis remains **not evaluated** and requires a separately frozen disposable application with genuine app-native draft/revision semantics and separately governed consented or scripted concurrent edits.
+The retained output supports only the listed finite field-conflict/refusal observations; because the revision-check gate is not evidenced, the overall T0 method PASS is **not accepted**. Nothing here establishes draft/revision semantics in a real app, reduced live-view or focus interference, human preference, safe real-app merging, correctness of hidden application metadata, a runtime feature, product effect, or safety. The Issue's higher-level T1 hypothesis remains **not evaluated** and requires a separate allocation with genuine app-native draft/revision semantics and separately governed concurrent edits. The consumed A01 is not to be rerun.
