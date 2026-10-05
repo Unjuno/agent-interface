@@ -10,5 +10,8 @@
   "D": "PASS boundary if both normal modes confirm both keys and end neutral; the shared-boundary batch uses 2 total keymap queries and 0 between release calls; second-injection failure preserves first confirmed up and marks second unconfirmed, with no authority grants.",
   "C": "Same-connection ordered XTest events and successful sync make accepted releases visible in the shared final bitmap; each key has its own prior bit, injection status, and result. Does not simulate server races, external owners, thread queue/lease/focus/cancel, event publication, or startup selection.",
   "U": "Deterministic fake-device model only; no real Xlib/X server, V39 startup, OS input, GUI, useful effect, threat response, bounded recovery, or latency.",
-  "decision": "One A02 execution; retain raw result and independent audit."
+  "decision": "One A02 execution; retain raw result and independent audit.",
+  "candidate_status": "CONSUMED_ARCHIVAL_ONLY",
+  "archived_candidate_path": "results/a02/archived_candidate_probe.py",
+  "rerun_guard": "Package-root probe.py now fails closed; the byte-identical candidate is retained for inspection only."
 }

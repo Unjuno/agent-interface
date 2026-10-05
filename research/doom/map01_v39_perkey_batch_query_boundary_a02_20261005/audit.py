@@ -3,7 +3,10 @@ from pathlib import Path
 here=Path(__file__).resolve().parent
 freeze=json.loads((here/'FREEZE.json').read_text(encoding='utf-8-sig'))
 lock=json.loads((here/'SOURCE_LOCK.json').read_text(encoding='utf-8-sig'))
-assert hashlib.sha256((here/'probe.py').read_bytes()).hexdigest()==lock['candidate_probe_sha256']
+candidate=here/lock['candidate_probe_path']
+assert hashlib.sha256(candidate.read_bytes()).hexdigest()==lock['candidate_probe_sha256']
+guard=(here/'probe.py').read_text(encoding='utf-8')
+assert 'raise SystemExit' in guard and 'A02 is consumed' in guard
 assert freeze['source_sha256']==lock['source_sha256']
 assert freeze['source_github_blob_sha']==lock['source_github_blob_sha']
 r=json.loads((here/'results'/'a02'/'RESULT.json').read_text(encoding='utf-8'))

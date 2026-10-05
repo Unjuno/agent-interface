@@ -33,7 +33,7 @@ Evaluate a batch-scoped physical sample around the actual opt-in V15 sequence: o
 
 ## Reproduction and evidence
 
-The one-shot A02 candidate is consumed; do not rerun or replace `results/a02/RESULT.json`. The candidate script and archived source snapshot are retained at package root. Read-only checks may be rerun:
+The one-shot A02 candidate is consumed; do not rerun or replace `results/a02/RESULT.json`. Its byte-identical candidate source is retained for inspection only at `results/a02/archived_candidate_probe.py`; the package-root `probe.py` now fails closed before any experiment code can run. Read-only checks may be rerun:
 
 ```sh
 python audit.py
