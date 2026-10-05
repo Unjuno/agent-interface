@@ -570,3 +570,8 @@ Since 12:44 UTC, `fix/7849-preflight-cleanup-result-20261005` was removed from r
 | `test/7974-single-query-failure-boundary` | `95666c514f142b58cebafc1920b86bcd87a0d8be` | unclassified |
 
 The snapshot is not deletion authority. Refresh each ref's PR use, commit/content custody, dependencies, and local worktree status immediately before acting.
+
+
+## Follow-up custody decision — X11 cleanup source branch — 2026-10-05 13:15 UTC
+
+Keep remote branch `fix/retain-unverified-x11-key-holds-20261005` at `416846ef59b08c862cca84c128d1853e16a6143a`. Closed PR [#7910](https://github.com/Unjuno/agent-interface/pull/7910) is explicitly superseded and unmerged. Its author's final mapping comment says the implementation and button recovery/no-duplicate behavior are carried by #7974, key recovery tests by #8012, and explicitly says the remote branch remains intact for provenance and recovery. The branch still has three commits beyond merge base `018934cdf45fcabffcc4efe25b5c7b3d59bd459f` and differs in `research/live_control/input_owner_v12.py` plus its cleanup regression; it is not fully represented by current main. A current local worktree search found no checkout on this branch. The explicit provenance hold governs, so no branch deletion or rewrite is made. This supplements the 12:59 census row marked unclassified; it does not change the historical census.
