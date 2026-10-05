@@ -6,7 +6,7 @@ The finite synthetic result is useful as a bounded negative comparison: in this 
 
 ## T — Local preservation checks
 
-- Preserved the original frozen package unchanged on current main `1eac6ea9f5b91cc10a8c3dc20374b9d79ffcf179`.
+- Preserved the original frozen package unchanged on current main `d3a51bc4c962b223d05280225042b96a033df8bf`. The branch was advanced from `1eac6ea9f5b91cc10a8c3dc20374b9d79ffcf179`; the intervening main commits touched separate release-cleanup evidence paths, not this package.
 - Package manifest: 42/42 files verified; frozen-input manifest: 34/34 verified.
 - Construction-only tests: `python3.12 -m unittest -v construction_tests` — 4/4 passed.
 - Did not rerun the frozen formal candidate or independent formal auditor. `SOURCE_PLAN.md` prohibits retries; this PR preserves the original one-shot result and raw outputs.
