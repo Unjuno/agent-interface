@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8024 calibrated recovery deadline T0 A01](recovery_deadline_a01_20261005/RESULT.md) — `METHOD_PASS_SCOPED`: independent finite-row audit and five mutation controls pass on an authored fixture; nominal 9/9 recovery coverage with zero delayed hard events. Fixed timeout 9 matches its retention, so comparative advantage is not demonstrated; no GUI or live claim.
+
 - [Issue #7986 action-conditioned incorrect-belief exposure T0 A01](incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED` over eight authored intervals; old-correct age 10 yielded zero exposure, fresh-misbound age 1 yielded five ticks; truth stayed audit-only. No live/safety claim.
 
 - Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — PASS_METHOD_SCOPED/H_PASS_SCOPED for the authored finite one-CPU model; OrbStack image-content access was unavailable, so host-only stdlib execution was used; no full-CBS, runtime, or scheduler claim.
