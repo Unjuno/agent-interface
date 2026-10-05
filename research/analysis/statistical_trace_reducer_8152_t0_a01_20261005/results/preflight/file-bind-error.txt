@@ -1,0 +1,5 @@
+Construction preflight only; formal allocation not started. First role-mount attempt used individual read-only file bind mounts and Docker returned before Python launch:
+
+docker: Error response from daemon: rpc error: code = Unknown desc = blob sha256:be8ccd085666c34273c9dc5607c9842f8b2e3116128aae45148ce164c07ce09d expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/be8ccd085666c34273c9dc5607c9842f8b2e3116128aae45148ce164c07ce09d: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/be8ccd085666c34273c9dc5607c9842f8b2e3116128aae45148ce164c07ce09d: operation not supported
+
+No identical retry was made. A no-mount image start then succeeded. Role-specific staged directories with the same exact source bytes passed both subsequent construction preflights. No candidate/auditor code ran in the failed mount attempt.

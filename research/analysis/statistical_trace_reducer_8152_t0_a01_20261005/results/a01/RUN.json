@@ -1,0 +1,34 @@
+{
+  "allocation": "UNJUNO-8152-STAT-TRACE-A01-20261005",
+  "source_freeze_commit": "89283d3d0e46ae916f8c452b4942a70c0170ac53",
+  "base_main": "84be79757c8bc18eea1ecaf5edb8f392e3e6e425",
+  "image": "python@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "image_id": "sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "platform": "linux/arm64",
+  "docker_server_client": "29.4.0 / 29.5.2",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "cpu_request": "1",
+  "cpu_enforcement_verified": false,
+  "memory_limit_claimed": false,
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "empty",
+    "stderr": "empty",
+    "command": "docker run --rm --name unjuno-8152-a01-candidate-20261005 --pull never --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-05/agent-interface-8152-stat-trace/research/analysis/statistical_trace_reducer_8152_t0_a01_20261005/results/preflight/candidate-src,dst=/src,readonly --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-05/agent-interface-8152-stat-trace/research/analysis/statistical_trace_reducer_8152_t0_a01_20261005/results/a01,dst=/out --workdir / python@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c python /src/candidate.py /src/protocol.json /out/candidate.raw.json"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "disposition": "PASS_METHOD_SCOPED",
+    "errors": [],
+    "stdout_file": "auditor.stdout.txt",
+    "stderr": "empty",
+    "command": "docker run --rm --name unjuno-8152-a01-auditor-20261005 --pull never --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-05/agent-interface-8152-stat-trace/research/analysis/statistical_trace_reducer_8152_t0_a01_20261005/results/preflight/auditor-src,dst=/src,readonly --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-05/agent-interface-8152-stat-trace/research/analysis/statistical_trace_reducer_8152_t0_a01_20261005/results/a01/raw-input,dst=/in,readonly --mount type=bind,src=/Users/taka/Documents/Codex/2026-10-05/agent-interface-8152-stat-trace/research/analysis/statistical_trace_reducer_8152_t0_a01_20261005/results/a01/auditor-output,dst=/out --workdir / python@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c python /src/auditor.py /src/protocol.json /in/candidate.raw.json /out/audit.json"
+  },
+  "search_confirmation_seed_sets_disjoint": true,
+  "retry_count": 0,
+  "post_formal_candidate_or_auditor_reruns": 0,
+  "review_readback_observed_utc": "2026-10-05T11:01:46Z"
+}

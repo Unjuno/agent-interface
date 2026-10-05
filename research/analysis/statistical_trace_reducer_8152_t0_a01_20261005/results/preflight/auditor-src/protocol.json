@@ -1,0 +1,19 @@
+{
+  "allocation": "UNJUNO-8152-STAT-TRACE-A01-20261005",
+  "hypothesis": "A sequentially screened statistical reducer can preserve an exact flaky failure fingerprint on independent held-out seeds while using fewer replay queries than fixed-repetition reduction; a one-run reducer can accept a shortened trace by luck.",
+  "base_trace": ["AUTH", "SETUP", "CORE_A", "CORE_B", "NOISE_1", "NOISE_2", "DECOY", "RELEASE"],
+  "candidate_removal_order": ["NOISE_1", "NOISE_2", "CORE_A", "CORE_B", "DECOY"],
+  "mandatory": ["AUTH", "SETUP", "RELEASE"],
+  "dependency_edges": [["AUTH", "CORE_A"], ["SETUP", "CORE_A"], ["CORE_A", "CORE_B"], ["AUTH", "RELEASE"]],
+  "target_fingerprint": "TARGET:LEASE_TIMEOUT:EXIT42",
+  "competing_fingerprint": "COMPETING:BAD_ROUTE:EXIT42",
+  "no_failure_fingerprint": "NO_FAILURE",
+  "invalid_fingerprint": "INVALID_AUTH_OR_RELEASE",
+  "query_budget_per_candidate": 80,
+  "fixed_repetitions": 80,
+  "sequential_batches": [10, 20, 40, 80],
+  "noninferiority_margin": 0.25,
+  "familywise_alpha": 0.05,
+  "search_seeds": ["s001", "s002", "s003", "s004", "s005", "s006", "s007", "s008", "s009", "s010", "s011", "s012", "s013", "s014", "s015", "s016", "s017", "s018", "s019", "s020", "s021", "s022", "s023", "s024", "s025", "s026", "s027", "s028", "s029", "s030", "s031", "s032", "s033", "s034", "s035", "s036", "s037", "s038", "s039", "s040", "s041", "s042", "s043", "s044", "s045", "s046", "s047", "s048", "s049", "s050", "s051", "s052", "s053", "s054", "s055", "s056", "s057", "s058", "s059", "s060", "s061", "s062", "s063", "s064", "s065", "s066", "s067", "s068", "s069", "s070", "s071", "s072", "s073", "s074", "s075", "s076", "s077", "s078", "s079", "s080"],
+  "confirmation_seeds": ["h201", "h202", "h203", "h204", "h205", "h206", "h207", "h208", "h209", "h210", "h211", "h212", "h213", "h214", "h215", "h216", "h217", "h218", "h219", "h220", "h221", "h222", "h223", "h224", "h225", "h226", "h227", "h228", "h229", "h230", "h231", "h232", "h233", "h234", "h235", "h236", "h237", "h238", "h239", "h240", "h241", "h242", "h243", "h244", "h245", "h246", "h247", "h248", "h249", "h250", "h251", "h252", "h253", "h254", "h255", "h256", "h257", "h258", "h259", "h260", "h261", "h262", "h263", "h264", "h265", "h266", "h267", "h268", "h269", "h270", "h271", "h272", "h273", "h274", "h275", "h276", "h277", "h278", "h279", "h280", "h281", "h282", "h283", "h284", "h285", "h286", "h287", "h288", "h289", "h290", "h291", "h292", "h293", "h294", "h295", "h296", "h297", "h298", "h299", "h300", "h301", "h302", "h303", "h304", "h305", "h306", "h307", "h308", "h309", "h310", "h311", "h312", "h313", "h314", "h315", "h316", "h317", "h318", "h319", "h320", "h321", "h322", "h323", "h324", "h325", "h326", "h327", "h328", "h329", "h330", "h331", "h332", "h333", "h334", "h335", "h336", "h337", "h338", "h339", "h340", "h341", "h342", "h343", "h344", "h345", "h346", "h347", "h348", "h349", "h350", "h351", "h352", "h353", "h354", "h355", "h356", "h357", "h358", "h359", "h360", "h361", "h362", "h363", "h364", "h365", "h366", "h367", "h368", "h369", "h370", "h371", "h372", "h373", "h374", "h375", "h376", "h377", "h378", "h379", "h380", "h381", "h382", "h383", "h384", "h385", "h386", "h387", "h388", "h389", "h390", "h391", "h392", "h393", "h394", "h395", "h396", "h397", "h398", "h399", "h400"]
+}
