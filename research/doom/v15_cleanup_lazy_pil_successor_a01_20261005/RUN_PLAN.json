@@ -10,7 +10,10 @@
     "operation": "move top-level `from PIL import ImageGrab` into Backend.snapshot immediately before its existing ImageGrab.grab call",
     "other_changes": "none"
   },
-  "python_search_path": ["research/live_control", "research/doom"],
+  "python_search_path": [
+    "research/live_control",
+    "research/doom"
+  ],
   "modules": [
     "test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests",
     "test_input_owner_v12_key_measurement",
@@ -22,17 +25,41 @@
   ],
   "expected_tests": 47,
   "modes": [
-    {"name":"normal","args":["-B","-m","unittest","-v"]},
-    {"name":"optimized","args":["-O","-B","-m","unittest","-v"]}
+    {
+      "name": "normal",
+      "args": [
+        "-B",
+        "-m",
+        "unittest",
+        "-v"
+      ]
+    },
+    {
+      "name": "optimized",
+      "args": [
+        "-O",
+        "-B",
+        "-m",
+        "unittest",
+        "-v"
+      ]
+    }
   ],
   "runtime": {
-    "python_path":"C:\\Users\\junny\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
-    "python":"3.12.14",
-    "pillow":"12.3.0",
-    "platform":"Windows AMD64",
-    "xlib":"absent; must remain unused",
-    "network":"not used",
-    "dependency_install":"forbidden"
+    "python_path": "C:\\Users\\junny\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "python": "3.12.14",
+    "pillow": "12.3.0",
+    "platform": "Windows AMD64",
+    "xlib": "absent; must remain unused",
+    "network": "not used",
+    "dependency_install": "forbidden"
   },
-  "candidate_disposition_if_missing_dependency_or_any_test_error":"retain STOP/FAIL; no retries"
+  "candidate_disposition_if_missing_dependency_or_any_test_error": "retain STOP/FAIL; no retries",
+  "source_materialization": {
+    "selection": "only immediate-child *.py files directly under research/live_control and research/doom",
+    "reason": "all seven frozen unittest modules and their local test dependencies import from these two explicit module search roots; nested archived source snapshots are not placed on either module search path",
+    "artifact_exclusions": "all non-Python files and nested subdirectories",
+    "root": "C:\\s15",
+    "candidate_tree_still": "78b8636f08bef691944da8bb536437586f0d116a"
+  }
 }
