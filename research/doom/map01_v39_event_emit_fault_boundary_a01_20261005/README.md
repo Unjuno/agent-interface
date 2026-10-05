@@ -9,3 +9,7 @@ D: PASS_SCOPED requires exact SHA-256 source pins; AST extraction of exactly mai
 C: Injected Python exceptions test call boundaries, not process death, fsync/device failure, cross-file transaction or filesystem crash durability. A synthetic retry does not claim production code retries. ExecutorV13 policy is source-reviewed, not runtime-integrated here.
 
 U: Offline deterministic source-bound sink contract probe only. No game, GUI, X11, OS input, application effect, recovery, useful feedback, threat response or Issue #59 completion. It does not repair or qualify the full #7805 owner/bridge/Executor composition.
+
+## Post-run scope clarification
+
+The frozen A01/A03 protocol files use the phrase durable prefix counts. That wording overstates what the run established: it injected Python exceptions around ordinary file operations and measured the file contents observed afterward. It did not test `fsync`, process termination, power loss, or filesystem crash durability. The frozen protocols and raw results remain unchanged; the additive correction and its limits are recorded in [A04_SCOPE_CORRECTION.md](results/A04_SCOPE_CORRECTION.md).
