@@ -30,6 +30,10 @@ flowchart LR
 
 Integration work should make the composed boundary explicit: runtime + caller, authority + effect, platform + backend, or mechanism + application/domain. It should not silently upgrade isolated component evidence into an end-to-end claim.
 
+## Retained source-route reconstruction
+
+- [Issue #57 TodoMVC source-event route](todomvc_event_route_57_20261003_01a0ff59/README.md) — the frozen eight-row source-level reconstruction records that input/blur and Tab without a `change` event created no item, while explicit `change` reached the original model/storage route. The first saved-data auditor failure and corrected V2 audit remain preserved. This does not establish actual SDK/browser event delivery or explain the earlier browser stop. [Rescue custody qualification](../../runtime/results/todomvc_route_rescue_b714/README.md); no historical allocation was replayed.
+
 ## Typical composition scopes
 
 | Scope | Examples of what is being joined |
