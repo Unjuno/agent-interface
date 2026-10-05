@@ -964,6 +964,7 @@ def main():
                 future=pool.submit(planner.await_turn,planner_handle,90)
                 current_cover=cover
                 current_terminal=None
+                renewal_admission_resolution=None
                 while not future.done():
                     try:
                         boundary=wait(lambda r:r["event"]=="terminal" and
@@ -984,10 +985,19 @@ def main():
                     next_accepted=submit_cover(next_cover)
                     if next_accepted["event"] == "policy_invalidation":
                         invalidation=next_accepted["invalidation"]
-                        current_cover=next_cover
-                        planner_interrupt,current_terminal=cancel_invalidated_cover(
-                            planner,planner_handle,process,wait,current_cover)
-                        cover_terminals.append(current_terminal)
+                        renewal_admission_resolution=resolve_invalidated_cover_submission(
+                            wait,next_cover)
+                        if renewal_admission_resolution["status"] == "accepted":
+                            cover_ids.append(next_cover)
+                            current_cover=next_cover
+                            planner_interrupt,current_terminal=cancel_invalidated_cover(
+                                planner,planner_handle,process,wait,current_cover)
+                            cover_terminals.append(current_terminal)
+                        else:
+                            # The prior terminal is already observed and released. A
+                            # rejected renewal has no program to cancel, but policy
+                            # invalidation still makes the pending answer ineligible.
+                            planner_interrupt=planner.interrupt(planner_handle)
                         break
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
@@ -1033,6 +1043,7 @@ def main():
                   "controller_model_started_ns":model_started_ns,"controller_model_ended_ns":model_ended_ns,
                   "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
                   "cover_renewal_gaps_ms":cover_renewal_gaps_ms,
+                  "cover_renewal_admission_resolution":renewal_admission_resolution,
                   "cover_policy":cover_semantic,"cover_policy_source_iteration":cover_policy_source_iteration,
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
