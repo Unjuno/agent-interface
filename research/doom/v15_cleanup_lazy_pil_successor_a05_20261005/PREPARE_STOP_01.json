@@ -1,0 +1,11 @@
+{
+  "schema": "v15-cleanup-lazy-pil-a05-preparation-stop-v1",
+  "cause": "copy source tree from A04 patched scratch was compared against unpatched Git blob manifest; target file hash mismatch stopped copy",
+  "candidate_test_commands": {
+    "normal": "invoked once against empty scratch after staging failure",
+    "optimized": "invoked once against empty scratch after staging failure"
+  },
+  "repair_for_A06": "stage exact unpatched tree blobs from Git or verify all but planned candidate overlay; abort shell before any test command on staging failure",
+  "candidate_code_imported": false,
+  "blocker_loaded": false
+}
