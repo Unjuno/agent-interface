@@ -1,0 +1,5 @@
+# #8094 current-main integration and complete review scope
+Worker e0cc/root, existing bugbot only. Parent #59. Own branch fix/59-perkey-owner-guard-e0cc-20261005.
+Prior head cc5884ed802260b6236880e3b4ad2ea4abc8a4d8. Pinned main 21fecd58b9de30073c97234124e73b78c67d4b0c.
+Scope: address PR review 5992684632 about full-tree review scope. Preserve history, merge pinned main in own branch only, retarget own draft PR to main after verifying inclusion of parent #8065 head6591. No source mechanism expansion, formal replay, main update, quorum assertion, or foreign branch mutation.
+Candidate virtual merge is clean: tree50b4fb7b6870776d82a440a5bde67a737e779ac6. Expected GitHub comparison shrinks3179 to1341 files before this integration report. Partition every remaining path and compare the complete executed source/resource/test closure. If closure unchanged, reuse source-appropriate retained ordinary evidence without describing it as a new run. If any dependency differs, inspect and test the affected part before publication.
