@@ -114,6 +114,14 @@ class StrictProjectionTests(unittest.TestCase):
         second[1].update(release_batch_size=2)
         self.assertFalse(project(first + second)["measurement_ready"])
 
+    def test_rejects_boolean_attempt_ordinal_that_aliases_one(self):
+        records = valid_pair()
+        records[1]["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]["attempt"] = True
+        result = project(records)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["rows"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
+
