@@ -20,8 +20,9 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def audit(directory: Path) -> dict:
+def audit(directory: Path, source_root: Path = ROOT) -> dict:
     d = Path(directory).resolve()
+    source_root = Path(source_root).resolve()
     errors = []
     execution = load(d / "execution.json")
     environment = load(d / "environment.json")
@@ -34,7 +35,18 @@ def audit(directory: Path) -> dict:
     sources = load(d / "source_sha256.json")
     source_results = {}
     for name, expected in sources.items():
-        actual = digest(ROOT / name)
+        try:
+            relative = Path(name)
+            if not isinstance(name, str) or relative.is_absolute() or ".." in relative.parts:
+                raise ValueError("source path is not repository-relative")
+            source = (source_root / relative).resolve(strict=True)
+            source.relative_to(source_root)
+            if not source.is_file():
+                raise OSError("source is not a file")
+            actual = digest(source)
+        except (OSError, RuntimeError, TypeError, ValueError):
+            actual = None
+            errors.append("source_path_unavailable:" + str(name))
         source_results[name] = {"expected": expected, "actual": actual,
                                 "match": actual == expected}
         if actual != expected: errors.append("source_hash:" + name)
@@ -155,6 +167,8 @@ def audit(directory: Path) -> dict:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2: raise SystemExit("usage: audit_experiment.py EVIDENCE_DIRECTORY")
-    result = audit(Path(sys.argv[1]))
+    if len(sys.argv) not in (2, 4) or (len(sys.argv) == 4 and sys.argv[2] != "--source-root"):
+        raise SystemExit("usage: audit_experiment.py EVIDENCE_DIRECTORY [--source-root REPOSITORY_SNAPSHOT]")
+    source_root = Path(sys.argv[3]) if len(sys.argv) == 4 else ROOT
+    result = audit(Path(sys.argv[1]), source_root=source_root)
     raise SystemExit(0 if result["decision"] == "PASS_BOUNDARY_ONLY" else 1)

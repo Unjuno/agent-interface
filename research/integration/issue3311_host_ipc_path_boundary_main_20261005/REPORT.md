@@ -95,3 +95,20 @@ temporary host path. The path-target records themselves remain hashed.
 
 The focused latest-main regression command and raw unittest output are retained
 in `VALIDATION.md` and `focused-tests.stdout.txt`.
+
+The audit defaults to the current checkout. To re-audit an older run after its
+source files have changed, provide the exact source snapshot named by the run's
+`source_sha256.json`, for example:
+
+```sh
+python research/integration/issue3311_host_ipc_path_boundary_main_20261005/audit_experiment.py \
+  /absolute/path/to/the/output-directory \
+  --source-root /absolute/path/to/the/frozen-source-snapshot
+```
+
+The `evidence-02/` source hashes match candidate commit
+`3eeefc1c5726a85de2e51eaaa6ce51062048c6e4`. Later Windows staging/locking fixes
+changed `docker_model_call_backend_v1.py`; auditing that historical evidence
+against the current checkout correctly returns `HOLD` for the source mismatch.
+The audit resolves only repository-relative source entries inside the selected
+snapshot; missing or escaping paths produce `HOLD` without reading outside it.
