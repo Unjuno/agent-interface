@@ -685,7 +685,8 @@ def action_state_feedback(before, after, typed_observations):
         row = matches[0]
         frame_hash = observation.get("frame_rgb_sha256")
         if (row.get("schema") != "doom-typed-observation-v1" or
-                row.get("pointer_binding") != observation.get("pointer_binding") or
+                not bindings_equal_exact(
+                    row.get("pointer_binding"), observation.get("pointer_binding")) or
                 type(row.get("sequence")) is not int or
                 type(row.get("capture_ns")) is not int or
                 type(row.get("step")) is not int or
@@ -698,8 +699,8 @@ def action_state_feedback(before, after, typed_observations):
             return None, "typed_frame_identity_mismatch"
         signals = row.get("signals")
         binding = observation.get("pointer_binding")
-        if (type(binding) is not dict or type(signals) is not dict or
-                set(signals) != {"health", "ammo"}):
+        if (not bindings_equal_exact(binding, binding) or
+                type(signals) is not dict or set(signals) != {"health", "ammo"}):
             return None, "typed_signal_unavailable"
         normalized = {}
         wad_sha256 = None
@@ -712,7 +713,7 @@ def action_state_feedback(before, after, typed_observations):
                     signal.get("sequence") != observation.get("sequence") or
                     type(signal.get("capture_ns")) is not int or
                     signal.get("capture_ns") != observation.get("capture_ns") or
-                    signal.get("binding") != binding):
+                    not bindings_equal_exact(signal.get("binding"), binding)):
                 return None, "typed_signal_unavailable"
             lower, upper = (1, 200) if name == "health" else (0, 999)
             if not lower <= signal["value"] <= upper:
