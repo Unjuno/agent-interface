@@ -1,0 +1,3 @@
+Construction attempt 01 (before controller run): STOP / harness passed an undeclared predicate to the v1 interface; runtime rejected it before any action. The final harness projects the same underlying synthetic rows onto each interface's declared predicate list.
+
+Audit attempt 01 (after controller run): STOP / audit assumed receipt.terminal.release, but release verification is stored in critical_events action_terminal rows. Corrected assertion-only audit reads release_verified there. The immutable controller raw file was not changed.

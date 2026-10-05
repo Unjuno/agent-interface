@@ -1,0 +1,13 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-preflight-stop-v1",
+  "disposition": "STOP_BEFORE_CASE_EXECUTION",
+  "command": "python research/doom/map01_v39_release_query_failure_probe_a01_20261005/run_probe.py",
+  "observed": "STOP_SOURCE_HASH research/doom/map01_v39_perkey_bridge_a01/test_bridge.py",
+  "cause": "Runner compared digest string with the full expected-hash entry object.",
+  "cases_started": 0,
+  "owner_threads_started": 0,
+  "fake_display_key_events": 0,
+  "candidate_source_execution": false,
+  "live_or_os_input": false,
+  "action": "Preserved original command output and initial freeze; corrected only the source-integrity wrapper before the first actual probe invocation."
+}

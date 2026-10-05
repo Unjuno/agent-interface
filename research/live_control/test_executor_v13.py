@@ -31,6 +31,263 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_release_all_baseexception_preserves_custody_in_failed_terminal(self):
+        publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "cleanup-interrupt",
+            "step": 0, "size": 1,
+            "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
+        }
+        error = KeyboardInterrupt("release sink interrupted during cleanup")
+
+        class CleanupInterruptedBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+
+            def release_all(self):
+                error.release_batch_publication = publication
+                raise error
+
+        backend = CleanupInterruptedBackend()
+        events = []
+        terminal_received = threading.Event()
+        escaped = []
+        escaped_event = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        previous_hook = threading.excepthook
+        threading.excepthook = lambda args: (escaped.append(args.exc_value),
+                                             escaped_event.set())
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("cleanup-interrupt", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            self.assertTrue(escaped_event.wait(1), "worker interruption did not propagate")
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(error))
+        self.assertEqual(terminal["release"]["release_batch_delivery"], publication)
+        self.assertEqual(escaped, [error])
+        self.assertTrue(backend.started.is_set())
+        self.assertIsNone(executor.active)
+
+    def test_release_all_unrelated_baseexception_fails_terminal_then_propagates(self):
+        error = KeyboardInterrupt("unrelated release cleanup interruption")
+
+        class InterruptedCleanupBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+
+            def release_all(self):
+                raise error
+
+        backend = InterruptedCleanupBackend()
+        events = []
+        terminal_received = threading.Event()
+        escaped = []
+        escaped_event = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        previous_hook = threading.excepthook
+        threading.excepthook = lambda args: (escaped.append(args.exc_value),
+                                             escaped_event.set())
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("unrelated-cleanup-interrupt", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            self.assertTrue(escaped_event.wait(1), "worker interruption did not propagate")
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(error))
+        self.assertEqual(terminal["release"]["verified"], False)
+        self.assertNotIn("release_batch_delivery", terminal["release"])
+        self.assertEqual(escaped, [error])
+        self.assertTrue(backend.started.is_set())
+        self.assertIsNone(executor.active)
+
+    def test_worker_and_successful_cleanup_preserve_both_custody_records(self):
+        worker_publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "dual-ledger",
+            "positions": [{"position": 0, "state": "unknown", "source": "worker"}],
+        }
+        cleanup_publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "dual-ledger",
+            "positions": [{"position": 0, "state": "confirmed", "source": "cleanup"}],
+        }
+        error = OSError("worker publication failed")
+
+        class DualLedgerBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+                error.release_batch_publication = worker_publication
+                raise error
+
+            def release_all(self):
+                return {"verified": True, "release_batch_delivery": cleanup_publication}
+
+        backend = DualLedgerBackend()
+        events = []
+        executor = Executor(backend, events.append)
+        try:
+            executor.submit("dual-ledger", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            self.assertTrue(any(row.get("event") == "terminal" for row in events))
+        finally:
+            executor.close()
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(error))
+        self.assertEqual(terminal["release"]["release_batch_delivery"], worker_publication)
+        self.assertEqual(terminal["release"]["release_batch_cleanup_delivery"], cleanup_publication)
+        self.assertIsNone(executor.active)
+
+    def test_worker_and_cleanup_baseexceptions_preserve_both_custody_records(self):
+        worker_publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "double-failure",
+            "positions": [{"position": 0, "state": "unknown", "source": "worker"}],
+        }
+        cleanup_publication = {
+            "schema": "release-batch-delivery-v1", "identifier": "double-failure",
+            "positions": [{"position": 0, "state": "unknown", "source": "cleanup"}],
+        }
+        worker_error = KeyboardInterrupt("worker interruption")
+        cleanup_error = SystemExit("cleanup interruption")
+
+        class DoubleFailureBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+                worker_error.release_batch_publication = worker_publication
+                raise worker_error
+
+            def release_all(self):
+                cleanup_error.release_batch_publication = cleanup_publication
+                raise cleanup_error
+
+        backend = DoubleFailureBackend()
+        events = []
+        terminal_received = threading.Event()
+        escaped = []
+        escaped_event = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        previous_hook = threading.excepthook
+        threading.excepthook = lambda args: (escaped.append(args.exc_value),
+                                             escaped_event.set())
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("double-failure", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+            self.assertTrue(escaped_event.wait(1), "worker interruption did not propagate")
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(worker_error))
+        self.assertEqual(terminal["release"]["release_batch_delivery"], worker_publication)
+        self.assertEqual(terminal["release"]["release_batch_cleanup_delivery"], cleanup_publication)
+        self.assertEqual(escaped, [worker_error])
+        self.assertTrue(backend.started.is_set())
+        self.assertIsNone(executor.active)
+
+    def test_base_exception_fails_terminal_before_propagating_publication_custody(self):
+        publication = {
+            "status": "delivery_unknown", "identifier": "interrupt-failure",
+            "step": 0, "size": 2, "position": 1,
+            "confirmed_positions": [0], "not_attempted_positions": [],
+            "event": "input_release_transition", "key": "b",
+            "error_type": "OSError",
+        }
+        error = KeyboardInterrupt("process-level interruption")
+
+        class InterruptedBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error.release_batch_publication = publication
+                raise error
+
+        events = []
+        escaped = []
+        escaped_event = threading.Event()
+        executor = Executor(InterruptedBackend(), events.append)
+        previous_hook = threading.excepthook
+        def capture_process_exception(args):
+            escaped.append(args.exc_value)
+            escaped_event.set()
+        threading.excepthook = capture_process_exception
+        try:
+            executor.submit("interrupt-failure", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            deadline = time.monotonic() + 1
+            while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+                time.sleep(.002)
+            self.assertTrue(escaped_event.wait(max(0, deadline - time.monotonic())))
+            executor.close()
+        finally:
+            threading.excepthook = previous_hook
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertIn("KeyboardInterrupt", terminal["error"])
+        self.assertEqual(terminal["release"]["release_batch_delivery"], publication)
+        self.assertEqual(escaped, [error])
+
+    def test_terminal_preserves_release_batch_sink_delivery_uncertainty(self):
+        class PublicationFailureBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error = OSError("release sink acknowledgement lost")
+                error.release_batch_publication = {
+                    "status": "delivery_unknown", "identifier": identifier,
+                    "step": index, "size": 2, "position": 1,
+                    "confirmed_positions": [0], "not_attempted_positions": [],
+                    "event": "input_release_transition", "key": "b",
+                    "error_type": "OSError",
+                }
+                raise error
+
+        events = []
+        executor = Executor(PublicationFailureBackend(), events.append)
+        executor.submit("sink-failure", [{"op": "pointer_drag"}], 1,
+                        time.perf_counter_ns() + 1_000_000_000)
+        deadline = time.monotonic() + 1
+        while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+            time.sleep(.002)
+        executor.close()
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["release"]["release_batch_delivery"], {
+            "status": "delivery_unknown", "identifier": "sink-failure",
+            "step": 0, "size": 2, "position": 1,
+            "confirmed_positions": [0], "not_attempted_positions": [],
+            "event": "input_release_transition", "key": "b",
+            "error_type": "OSError",
+        })
+
     def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
         backend = Backend()
         events = []

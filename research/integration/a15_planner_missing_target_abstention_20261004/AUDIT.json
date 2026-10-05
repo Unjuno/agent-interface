@@ -1,0 +1,78 @@
+{
+  "a14_visual_review_correction": {
+    "exact_image_sha256": "a8bbea511d0dc2e28317a0146f0b8463a17adf5ca89650dee50ae07b186a0961",
+    "finding": "The exact pinned frame contains Value and Save controls; its recorded model points target them. The adjacent sequence 053 is the no-current-target transition frame.",
+    "source_path": "A14_TASK3_VISUAL_REVIEW.md"
+  },
+  "audit_note": "The first frozen audit helper rejected field x=130 using an extra x>=220 right-half predicate absent from PLAN.md and PROMPT.txt. This second audit applies the preregistered field-region and right-of-caret requirements; the original failure is preserved as AUDIT_INITIAL.json.",
+  "cases": {
+    "ready_054": {
+      "compiler": "A12 lifecycle guard + frozen R02 compiler accepted",
+      "field_point": [
+        130,
+        401
+      ],
+      "lifecycle_guards_valid": true,
+      "status": "READY",
+      "submit_point": [
+        376,
+        401
+      ],
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 13853,
+        "output_tokens": 512,
+        "reasoning_output_tokens": 193
+      },
+      "value_crop": [
+        120,
+        394,
+        331,
+        408
+      ]
+    },
+    "transition_053": {
+      "reason": "targets_not_visible",
+      "status": "ABSTAIN",
+      "target_data_null": true,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 13853,
+        "output_tokens": 74,
+        "reasoning_output_tokens": 28
+      }
+    }
+  },
+  "disposition": "PASS_SELECTIVE_ABSTENTION_CONSTRUCTION_SCOPED",
+  "efficiency_or_transfer_claimed": false,
+  "formal_allocation_or_gui_input": false,
+  "historical_result_changed": false,
+  "raw_output_paths": {
+    "ready_054": {
+      "answer": "outputs/ready_054/answer.json",
+      "argv": "outputs/ready_054/argv.json",
+      "call_result": "outputs/ready_054/CALL_RESULT.json",
+      "call_started": "outputs/ready_054/CALL_STARTED.json",
+      "stderr": "outputs/ready_054/stderr.txt",
+      "stdout_jsonl": "outputs/ready_054/stdout.jsonl"
+    },
+    "transition_053": {
+      "answer": "outputs/transition_053/answer.json",
+      "argv": "outputs/transition_053/argv.json",
+      "call_result": "outputs/transition_053/CALL_RESULT.json",
+      "call_started": "outputs/transition_053/CALL_STARTED.json",
+      "stderr": "outputs/transition_053/stderr.txt",
+      "stdout_jsonl": "outputs/transition_053/stdout.jsonl"
+    }
+  },
+  "schema": "a15_transition_abstention_audit_v2",
+  "usage_totals": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 27706,
+    "output_tokens": 586,
+    "reasoning_output_tokens": 221
+  }
+}

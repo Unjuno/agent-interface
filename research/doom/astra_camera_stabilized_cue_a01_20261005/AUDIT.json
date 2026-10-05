@@ -1,0 +1,34 @@
+{
+  "status": "PASS_RAW_RECONSTRUCTION",
+  "errors": [],
+  "row_count": 10,
+  "video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "frames_rgb_sha256": "e0ce64678e5a246186c442a1bf88a3d34bb6d52d721438dde9a3e7b8e941a8b1",
+  "wall_sample": {
+    "video_time_s": 22.7,
+    "frame": 6,
+    "estimated_shift_current_vs_previous_px": [
+      12,
+      0
+    ],
+    "registration_median_luma_error": 29.0,
+    "new_warm_pixels_unregistered": 186,
+    "new_warm_pixels_registered": 186,
+    "trigger_unregistered": true,
+    "trigger_registered": true
+  },
+  "pre_window_muzzle_control": {
+    "frame": 2,
+    "estimated_shift_current_vs_previous_px": [
+      0,
+      0
+    ],
+    "registration_median_luma_error": 27.0,
+    "new_warm_pixels_unregistered": 96,
+    "new_warm_pixels_registered": 96,
+    "trigger_unregistered": true,
+    "trigger_registered": true
+  },
+  "disposition": "FAIL_WALL_CUE_NOT_SUPPRESSED",
+  "scope": "arithmetic reconstruction and one reference-frame cue suppression only; no enemy classification or controller effect"
+}

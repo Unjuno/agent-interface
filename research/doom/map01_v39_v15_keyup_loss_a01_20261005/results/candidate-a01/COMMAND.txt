@@ -1,0 +1,4 @@
+wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume 'C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\work\v39-v15-keyup-loss-a01:/src:ro' --volume 'C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\work\v39-v15-keyup-loss-a01\research\doom\map01_v39_v15_keyup_loss_a01_20261005\results\candidate-a01:/out' --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/research/doom/map01_v39_v15_keyup_loss_a01_20261005/candidate.py
+Exit: 1
+stderr: WSLc kernel warning: memory limited without swap; swap-limit capability unavailable or cgroup not mounted.
+stderr: TypeError: DummyOwner() takes no arguments
