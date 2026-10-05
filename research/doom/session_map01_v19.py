@@ -6,7 +6,10 @@ import json
 from pathlib import Path
 
 import session_map01_v15 as previous
-from map01_scorer_stdio_adapter_v3 import MainThreadScorerStdin as MeasuredScorerStdin
+from map01_scorer_stdio_adapter_v3 import (
+    MainThreadScorerStdin as MeasuredScorerStdin,
+    MeasuredReleaseError,
+)
 
 HERE = Path(__file__).resolve().parent
 TAIL_DURATION_NS = 250_000_000
@@ -60,6 +63,13 @@ def _run_measured_tail(polling, out, candidate, final_sample, *,
                 "tail_samples": tail.get("tail_samples", 0),
                 "tail": tail,
             })
+    except MeasuredReleaseError as error:
+        outcome.update({
+            "termination": "no_matched_release_pair",
+            "disposition": "CENSORED",
+            "reason": str(error),
+            "error_type": type(error).__name__,
+        })
     except Exception as error:
         outcome["termination"] = "tail_error"
         outcome["error_type"] = type(error).__name__

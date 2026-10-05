@@ -13,6 +13,53 @@ import session_map01_v19 as candidate
 
 
 class MeasuredTailCompositionTests(unittest.TestCase):
+    def test_unmatched_release_pair_is_censored_and_final_sample_runs(self):
+        import map01_scorer_stdio_adapter_v3 as adapter
+
+        raw = HERE / "map01_v39_perkey_measurement_consumer_a03_20261005" / "INPUT_EVENTS.jsonl"
+        events = [json.loads(line) for line in raw.read_text(encoding="utf-8").splitlines()]
+        down = next(row for row in events if row["event"] == "input_admission")
+        up = copy.deepcopy(next(row for row in events
+                                if row["event"] == "input_release_measurement"))
+        # A reverse-order multi-key release can pair B's down with A's up.
+        up["key"] = "F9"
+        measurement = up["physical_key_measurement"]
+        measurement["adapter_edge"]["key"] = "F9"
+        measurement["bracket"]["key"] = "F9"
+
+        class Polling:
+            def sample_measured_tail(self, **kwargs):
+                return adapter.validate_measured_release_pair(
+                    kwargs["admission_event"], kwargs["release_measurement"],
+                    backend_held_after=kwargs["backend_held_after"])
+
+        events_seen = []
+        with tempfile.TemporaryDirectory() as tmp:
+            result = candidate._run_measured_tail(
+                Polling(), tmp, (down, up, []), lambda: events_seen.append("final"))
+            saved = json.loads((Path(tmp) / "scorer-post-release-tail.json").read_text())
+        self.assertEqual(result["termination"], "no_matched_release_pair")
+        self.assertEqual(result["disposition"], "CENSORED")
+        self.assertEqual(result["error_type"], "MeasuredReleaseError")
+        self.assertEqual(result, saved)
+        self.assertEqual(events_seen, ["final"])
+        self.assertFalse(result["grants_input_authority"])
+
+    def test_unexpected_tail_error_remains_distinct_from_censoring(self):
+        class Polling:
+            def sample_measured_tail(self, **_kwargs):
+                raise RuntimeError("polling failed")
+
+        events_seen = []
+        pair = ({"event": "input_admission"},
+                {"event": "input_release_measurement"}, [])
+        with tempfile.TemporaryDirectory() as tmp:
+            result = candidate._run_measured_tail(
+                Polling(), tmp, pair, lambda: events_seen.append("final"))
+        self.assertEqual(result["termination"], "tail_error")
+        self.assertEqual(result["error_type"], "RuntimeError")
+        self.assertEqual(events_seen, ["final"])
+
     def test_backend_capture_keeps_raw_event_names_and_requires_empty_backend(self):
         events, state = [], {}
 
