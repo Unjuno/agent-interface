@@ -17,17 +17,27 @@ def require(ok, message):
     checks.append(message)
 
 
-require(subprocess.check_output(["git", "rev-parse", "origin/main"], cwd=ROOT,
-                                text=True).strip() == freeze["main_commit"],
-        "current main commit matches freeze")
+current_main_tip = subprocess.check_output(["git", "rev-parse", "origin/main"],
+                                            cwd=ROOT, text=True).strip()
+subprocess.run(["git", "cat-file", "-e", freeze["main_commit"]], cwd=ROOT,
+               check=True, stdout=subprocess.DEVNULL)
+subprocess.run(["git", "merge-base", "--is-ancestor", freeze["main_commit"],
+                current_main_tip], cwd=ROOT, check=True,
+               stdout=subprocess.DEVNULL)
+require(True, "frozen main commit exists and remains an ancestor of current main")
 for relative, expected in freeze["sha256"].items():
     actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
     require(actual == expected, f"source hash matches: {relative}")
     if relative in freeze["main_sources"]:
-        blob = subprocess.check_output(["git", "show", f"origin/main:{relative}"],
+        frozen_blob = subprocess.check_output(
+            ["git", "show", f"{freeze['main_commit']}:{relative}"],
+            cwd=ROOT)
+        current_blob = subprocess.check_output(["git", "show", f"origin/main:{relative}"],
                                        cwd=ROOT)
-        require(hashlib.sha256(blob).hexdigest() == expected,
-                f"source matches frozen current main: {relative}")
+        require(hashlib.sha256(frozen_blob).hexdigest() == expected,
+                f"source matches frozen main commit: {relative}")
+        require(hashlib.sha256(current_blob).hexdigest() == expected,
+                f"source closure is unchanged on current main: {relative}")
 
 raw_path = HERE / freeze["raw_file"]
 raw_bytes = raw_path.read_bytes()
@@ -79,6 +89,7 @@ audit = {
     "result": "PASS_CURRENT_MAIN_SOURCE_AND_COMPOSITION_REVALIDATION",
     "checks": len(checks),
     "main_commit": freeze["main_commit"],
+    "current_main_tip": current_main_tip,
     "raw_sha256": hashlib.sha256(raw_bytes).hexdigest(),
     "scope": "same deterministic fake-display composition, exact current-main ExecutorV12 closure",
     "unverified": ["real X11", "application effect", "live control", "recovery efficacy"],
