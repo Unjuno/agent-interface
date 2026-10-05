@@ -1,0 +1,16 @@
+{
+  "schema": "windows-pipe-scorer-polling-freeze-v1",
+  "base_commit": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "baseline_blobs": {
+    "research/doom/main_thread_scorer_polling_v1.py": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+    "research/doom/test_main_thread_scorer_polling_v1.py": "0fb33a1f03432f11d1f0f89283197d16464145f4"
+  },
+  "candidate_blobs": {
+    "research/doom/main_thread_scorer_polling_v1.py": "9ff5069ba41a53ed7afb3bbef9851128b06b5f4a",
+    "research/doom/test_main_thread_scorer_polling_v1.py": "619e8451a1a593fa65834f49838f59c9a9674ef0"
+  },
+  "environment": "Windows host, CPython 3.11 (exact patch version recorded in RESULT.json)",
+  "hypothesis": "On Windows, the V15 stdin polling loop can process anonymous CRT pipe input and EOF while keeping sample and command callbacks on the owner thread.",
+  "treatment": "Replace Windows select.select on stdin handles with Win32 handle-type-aware waiting: WaitForSingleObject for console handles and PeekNamedPipe polling for pipes; retain select.select for non-Windows.",
+  "decision_gate": "PASS_CONSTRUCTION_PORTABILITY iff focused 14-test suite passes on Windows in normal and optimized Python, including delayed commands, owner-thread callback identity, and EOF after pipe writer closure."
+}
