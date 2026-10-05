@@ -79,8 +79,8 @@ class ExactScorerTickTests(unittest.TestCase):
                     self.sample(game, self.variables, 600, clock_ns=lambda: 1)
                 self.assertEqual(game.scorer_reads, 0)
 
-    def test_fractional_post_sample_tick_is_rejected(self):
-        for invalid in (10.5, -1):
+    def test_malformed_post_sample_tick_is_rejected(self):
+        for invalid in (10.5, True, -1):
             with self.subTest(invalid=invalid):
                 game = FakeGame(10, invalid)
                 with self.assertRaises(ValueError):
