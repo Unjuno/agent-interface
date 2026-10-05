@@ -6,12 +6,15 @@
   "cpus": 1,
   "memory": "512M (swap/cgroup limit capability unavailable)",
   "source_mount": "read-only",
-  "test_invocations": 2,
+  "construction_test_invocations": 2,
   "tests_passed_per_run": 8,
   "tests_total_per_run": 8,
+  "post_formal_local_test_invocations": 1,
+  "post_formal_local_tests_passed": 8,
+  "post_formal_local_tests_total": 8,
   "formal_a04_auditor_invocations_at_construction": 0,
   "a02_and_a03_formal_roles_reinvoked": false,
   "retries_of_a04_formal_allocation": 0,
   "scope": "audit implementation construction only; not the formal raw audit or a TTC method result",
-  "note": "A04 construction was rerun after binding the A03 STOP/freeze hashes; both runs passed 8/8."
+  "note": "Both pre-freeze construction runs passed 8/8 after binding the A03 STOP/freeze hashes. A separate post-formal local verification also passed 8/8; it did not invoke the formal auditor."
 }
