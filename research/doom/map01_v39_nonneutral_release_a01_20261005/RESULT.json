@@ -1,0 +1,20 @@
+{
+  "experiment": "owner-nonneutral-release-a01",
+  "classification": "PASS_CONSTRUCTION_SCOPED",
+  "main_sha_at_intake": "3f24e85bff32a93fbc1ca244f7f249b843710743",
+  "parent_commit": "e00c7f5e5c949095d40ade458355e55ea5990b9d",
+  "parent_owner_blob": "e7889a7a34fe76df5f230d4108a77055b105a680",
+  "published_candidate_commit": "e412e2e70f69183512b88e54d69a483dfa8589e4",
+  "published_candidate_owner_blob": "df5c046eb55d81aa2ae6feb0a7bcf4fee9b07828",
+  "outcomes": {
+    "parent_focused_red": {"tests": 1, "failures": 1, "expected": true},
+    "published_candidate_red": {"tests": 3, "failures": 1, "controls_passed": 2, "expected": true},
+    "patched_candidate_green": {"tests": 3, "failures": 0, "errors": 0}
+  },
+  "residual_keys_reported": [75],
+  "followup_keycode": 98,
+  "followup_injections_after_fault": 0,
+  "native_display_or_os_input": false,
+  "live_allocation": false,
+  "integration_or_product_claim": false
+}
