@@ -6,7 +6,23 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
-- Issue #7411 T0 A01: [user-worthwhile route-benefit estimator](analysis/user_worthwhile_benefit_7411_t0_a01_20261004/REPORT.md) — post-run verification regenerated 4,160 rows and rejected four corruptions, but does not replace the incomplete preregistered audit; formal disposition HOLD.
+- Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+
+- Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — finite-model PASS_METHOD_SCOPED/H_PASS_SCOPED; OrbStack unavailable, host-only; no full-CBS or runtime claim. [Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
+
+- Issue #6367 T0: [matched protective-adaptation method fixture](analysis/protective_local_adaptation_6367_t0_20261004/REPORT.md) — synthetic `METHOD_PASS_SCOPED` only; host-only after OrbStack inspection failed; not live #59 evidence. [Post-review top-level audit](analysis/protective_local_adaptation_6367_reaudit_v1/README.md) rejects the frozen V1 auditor's top-level safety-disposition blind spot.
+
+- Issue #7834 T0 A01: [carryover-aware optional-adaptation estimator](analysis/optional_adaptation_mrt_7834_t0_a01_20261005/REPORT.md) — exact two-cluster finite enumeration passed its scoped oracle/audit gate; host-only because OrbStack's content store was unavailable; no live-interface or user-effect claim.
+- Issue #17: [notification identity R03 arrival-before-wait evidence](concurrency/notification_identity_r03_17_20261004_b64b/RESCUE_20261004.md) — preserves R01/R02/R03 evidence and failures as inert archive; active client patch is excluded, and all FINAL-v5 vote/applicability/application gates remain open.
+- Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
+
+- Issue #7709 T1: [retained-trace feasibility audit](analysis/latency_regime_coverage_7709_t1_feasibility_20261005/REPORT.md) — one fixed-order model-visible pair only; 1,051 archived files independently hash-checked; HOLD for insufficient independent runs.
+
+- Issue #7728 T0: [client energy-counter eligibility](analysis/client_energy_per_effect_7728_t0_20261005/REPORT.md) — unprivileged macOS probe requires superuser; estimated power/process proxy is not a joule counter; HOLD, no GUI task/route run.
+
+- Issue #57: [incomplete-frame byte-frontier A01](integration/frame_byte_frontier_57_20261003_45e9/REPORT.md) — eight-cell construction PASS preserved; production cap and typed-stop integration remain HOLD, with current-main custody checks in [`RESCUE_20261004.md`](integration/frame_byte_frontier_57_20261003_45e9/RESCUE_20261004.md).
+- Issue #57: [historical stock TodoMVC D01 task-creation STOP](integration/stock_todomvc_durable_57_D01_20261003_01a0ff35/README.md) — immutable 44-member evidence archive; first create effect stopped with zero rows, no reload/durability claim, and no replay.
+- Issue #6526 C03: [WAL snapshot/write recovery boundary](integration/wal_snapshot_recovery_6526_01a0ff58_c03/REPORT.md) — six native compatibility cells preserved; original audit PASS and its SQL-copy gap remain alongside the separately versioned V2 audit that rejects all eight effective controls. No runtime recovery policy or task authority follows.
 
 - Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
 
@@ -20,6 +36,10 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #6581 path-width constrained GUI T0b: [`analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md`](analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md) — six synthetic scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent path claim.
 - Issue #6617 revision-timed cutover T0: [`analysis/revision_timed_cutover_6617_t0_v1/REPORT.md`](analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) — WSLc `PASS_METHOD_SCOPED` on 30 logical-time traces; no speech, GUI, human, or measured-latency claim.
 - Issue #6604 disturbance-timescale T0: [isolated OrbStack Docker method result](analysis/disturbance_timescale_6604_t0_v1/REPORT.md) — 14 rows independently audited; synthetic method scope only, with the predecessor shared-engine HOLD retained separately.
+- Issue #7470 A02 harness diagnostic: [formal report](analysis/inference_disturbance_coupling_7470_t0_a02_20261004/REPORT.md) — 24 arbitrary assignments / 48 trajectories independently reconstructed, but the later circular-shift design clarification is not met; no Issue-level PASS claimed.
+- Issue #7470 A03 circular-phase successor: [formal report](analysis/inference_disturbance_coupling_7470_t0_a03_20261004/REPORT.md) — four intact rotations audited; planted phase effect detected, but period-to-period seam transition remains untested, so the clarification is not fully satisfied.
+- Issue #7470 A04 circular-phase + seam successor: [formal report](analysis/inference_disturbance_coupling_7470_t0_a04_20261004/REPORT.md) — seam-inclusive trajectories audited, but preregistered correlation statistic has an extra 1/n factor; no Issue-level PASS claimed.
+- Issue #7470 A05 corrected circular-phase + seam successor: [formal report](analysis/inference_disturbance_coupling_7470_t0_a05_20261004/REPORT.md) — correct Pearson values, intact periods, explicit seam, independent audit 8/8 and mutations 3/3; method-scoped only.
 
 - Issue #6533 frame-qualified collateral T0: [`analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md`](analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md) — OrbStack synthetic method pass; 44/44 independently reconstructed, aggregate checker-byte reduction with a small-fixture regression; no real GUI/product claim.
 
@@ -61,6 +81,8 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #6413 evaluation-cue T0 | [WSLc report](analysis/evaluation_cue_reactivity_6413_t0_wslc_20261003/REPORT.md) — static synthetic construction passed independent audit; no model-behavior or evaluation-awareness claim |
 | Issue #6074 interval-robustness finite-method T0 | [analysis/interval_robustness_6074_t0_20261002/REPORT.md](analysis/interval_robustness_6074_t0_20261002/REPORT.md) |
 | Issue #6045 opportunity-conditioned age T0 container method result | [analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md](analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) |
+| Issue #7709 latency coverage under synthetic regimes T0 | [analysis/latency_regime_coverage_7709_t0_20261005/REPORT.md](analysis/latency_regime_coverage_7709_t0_20261005/REPORT.md) — pooled row intervals under-cover in the frozen autocorrelated/session-heterogeneous fixture; session-cluster all-window intervals pass scoped method gates; initial auditor failure preserved. |
+| Issue #7709 independent T0 stress extension | [analysis/latency_coverage_7709_t0_20261005/REPORT.md](analysis/latency_coverage_7709_t0_20261005/REPORT.md) — broader 8/16-session, warm-up, nonzero-effect and censoring stress variant; session-cluster coverage passes, while the descriptive detector over-segments stationary null. |
 | Issue #6351 cross-role meaning drift synthetic T0 | [analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md](analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md) |
 | Issue #6373 context-preserving delegation synthetic T0 | [analysis/context_preserving_delegation_6373_t0_v1/REPORT.md](analysis/context_preserving_delegation_6373_t0_v1/REPORT.md) |
 | Issue #6435 deadline/slack measurement-method T0 | [analysis/deadline_slack_equivalence_6435_t0_v1/REPORT.md](analysis/deadline_slack_equivalence_6435_t0_v1/REPORT.md) |

@@ -1,0 +1,18 @@
+{
+  "record_type": "current_main_source_revalidation",
+  "repository": "Unjuno/agent-interface",
+  "issue": 59,
+  "current_main_commit": "785f291fee56dad6bd6aaaa4d7c2871a90ec92ad",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "current_main_controller_blob": "d42df13b36ec56eaaf316a12675deab08736b003",
+  "baseline_source_blob": "d42df13b36ec56eaaf316a12675deab08736b003",
+  "result": "REPRODUCED_TWO_FLOAT_EPOCH_COUNTEREXAMPLES",
+  "H": "Fresh fire admission must require exact int types for health and ammo sequence and capture_ns before equal-epoch comparison and metadata projection; coherent integer control remains accepted.",
+  "T": "Confirm GitHub current-main controller blob equals frozen baseline blob, execute exact extracted prepare_action_admission function with float sequence and capture_ns aliases against that baseline, and execute the same focused method against the candidate.",
+  "D": "Current-main source blob equals baseline; RED has two expected failures (4.0 and 40.0); candidate GREEN has one test passing and preserves the integer control.",
+  "C": "The offline source-only metadata-boundary hypothesis is reproduced on current main; minimal candidate rejects both float aliases.",
+  "U": "Bool aliases True/False against 4/40 are outside the equality-mismatch matrix and were not validated as exploit cases. No full suite, live producer/game/model/GUI/OS input, release, task effect, recovery, or MAP01 outcome established.",
+  "protocol": "Exploratory float retest; original freeze matrix was bool aliases. This package does not claim preregistered float evidence.",
+  "environment": "WSLc offline cached image post-guard-game-59-4d74:20261004; 1 CPU and 1 GiB requested; host reports cgroup/swap memory enforcement unavailable.",
+  "sha256_entries": 19
+}

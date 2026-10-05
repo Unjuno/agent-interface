@@ -1,0 +1,86 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-freeze-v1",
+  "base_main_sha": "16c74566b64f32d7fe035c7724bcfe3865863a91",
+  "candidate_pr_head": "1ef5611356ff217f0981843ae854ef871967e999",
+  "candidate_source_refs": {
+    "SOURCE/input_owner_v13_candidate.py": "Unjuno/agent-interface PR #7805 path research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py",
+    "SOURCE/bridge_v2_candidate.py": "Unjuno/agent-interface PR #7805 path research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py"
+  },
+  "hypothesis": "Per-key up evidence is lost if aggregate pointer/keymap reconciliation raises after the physical release but before owner_release is appended.",
+  "test_cases": [
+    "uninjected cancellation-cleanup control",
+    "single aggregate query_pointer failure after physical key-up",
+    "single aggregate query_keymap failure after physical key-up"
+  ],
+  "decision": "PASS_REPRODUCED_RECORD_LOSS iff control retains one confirmed-up row and both injected failures lose owner/bridge release rows while fake physical key is up and stale F8 owner/bridge ledgers remain; else FAIL/STOP.",
+  "invocation_count": 1,
+  "retry_count": 0,
+  "timeouts_seconds": {
+    "fake_release_wait": 1.0,
+    "owner_harness": 2.0
+  },
+  "stop_conditions": [
+    "source hash mismatch before owner/display construction",
+    "output path already exists",
+    "fake physical F8 fails to release within one second"
+  ],
+  "inputs": {
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": {
+      "sha256": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+      "git_blob_sha": "f2bbae7e7ca436d28c42b18154a0bcfc19e809a0",
+      "base_main_path": "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py"
+    },
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py": {
+      "sha256": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+      "git_blob_sha": "6c2f59d2c6e55d8fab2d5f43de96e333c7825ba5",
+      "base_main_path": "research/doom/map01_v39_perkey_bridge_a01/bridge.py"
+    },
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": {
+      "sha256": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+      "git_blob_sha": "9c5aa19c76199eff9a3defc2e87912a226d92353",
+      "base_main_path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py"
+    },
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": {
+      "sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "git_blob_sha": "82aae20cec847e3766df2eb6ff5269506a74a2e4",
+      "base_main_path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py"
+    },
+    "research/live_control/executor_v3.py": {
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "git_blob_sha": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "base_main_path": "research/live_control/executor_v3.py"
+    },
+    "research/live_control/lease.py": {
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+      "git_blob_sha": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "base_main_path": "research/live_control/lease.py"
+    }
+  },
+  "local_inputs": {
+    "SOURCE/input_owner_v13_candidate.py": {
+      "sha256": "f359d6a4f25f9dc6a9c2e479d8c401884b7aaa8c37ddeb44c25c4bfaa3e78413"
+    },
+    "SOURCE/bridge_v2_candidate.py": {
+      "sha256": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1"
+    },
+    "README.md": {
+      "sha256": "68e27e535ae7ddf71260e45609b2f51c90bbb764e951b7a9b7cecc83765ad4c6"
+    },
+    "run_probe.py": {
+      "sha256": "841113bb0246bdcd253d3a46d179153adeab1336b7af703ec854905597b3e8e8"
+    },
+    "audit_probe.py": {
+      "sha256": "da232c00989eeb487aea79edada665f8a79a7087506aa79b3e7e3287106414c6"
+    },
+    "results/preflight-stop-a01/FREEZE-initial.json": {
+      "sha256": "60751e7a4e8f81443bc2164957bc2b06923a744114e6f76391b8251197e406ba"
+    },
+    "results/preflight-stop-a01/STOP.json": {
+      "sha256": "6a9e8459872db4a81e8cbacc8f4fca2d2f78631bd4f6219e2c1b2be969b6d0c1"
+    },
+    "results/preflight-stop-a01/runner-attempt01.log": {
+      "sha256": "24881f698f7c9fd05cf6b114e02a7fc2a4baf10257dab66c0c56c7a401e790c1"
+    }
+  },
+  "scope": "host-only deterministic fake-display control-flow construction; no candidate allocation, real X server, OS input, GUI, game, model, container, or live allocation"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "blocked-interleaved-8080-construction-attempt-v1",
+  "attempt_id": "A01-CONSTRUCTION-01",
+  "observed_at_date_utc": "2026-10-05",
+  "exact_time": "not captured",
+  "disposition": "PASS_CONSTRUCTION_ONLY",
+  "base_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
+  "source_was_frozen": false,
+  "source_hashes": {
+    "design.json": "5058f8819c2fb2fd94132a8ee2378c19be29893f319329ce5b6e6e5d977281fa",
+    "scorer_fixture.json": "beda8841fb16a6f56fbffd49ff35e05729c2e159d8260301917ab2bfecdac412",
+    "candidate.py": "530c07f1caf2e58291fe545bbe3e579189dca7b0c33b30044bf9efdcb983b9b6",
+    "auditor.py": "3a5fed34b1bff95546679c6fc9b9b57948b48714bfcc1280914519600243b66c",
+    "selftest.py": "c2c1d7d8ce8a87f2071a981a74432e4decbb469ab4effb6bb7d83f74b7317ef7"
+  },
+  "commands": [
+    {"command": "PYTHONDONTWRITEBYTECODE=1 python3 candidate.py --output /tmp/blocked_interleaved_8080_a01_construction.json", "exit_code": 0},
+    {"command": "PYTHONDONTWRITEBYTECODE=1 python3 auditor.py --raw /tmp/blocked_interleaved_8080_a01_construction.json --output /tmp/blocked_interleaved_8080_a01_construction_audit.json", "exit_code": 0},
+    {"command": "PYTHONDONTWRITEBYTECODE=1 python3 selftest.py --raw /tmp/blocked_interleaved_8080_a01_construction.json", "exit_code": 0},
+    {"command": "python3 -c 'import ast,pathlib; [ast.parse(p.read_text()) for p in pathlib.Path(\".\").glob(\"*.py\")]; print(\"AST_PARSE_PASS\")'", "exit_code": 0}
+  ],
+  "stdout": [
+    "RAW_WRITTEN /tmp/blocked_interleaved_8080_a01_construction.json\n",
+    "METHOD_PASS_SCOPED errors=0 output=/tmp/blocked_interleaved_8080_a01_construction_audit.json\n",
+    "{\"candidate_reproduced\": true, \"initial\": \"METHOD_PASS_SCOPED\", \"mutations_rejected\": {\"duplicated_variant_attempt\": true, \"failed_inverse\": true, \"false_forward_effect\": true, \"heldout_leak\": true, \"omitted_attempt\": true}, \"status\": \"PASS\"}\n",
+    "AST_PARSE_PASS\n"
+  ],
+  "hashes": {
+    "raw_sha256": "5783e26d7bcd4472405fbdb3960c4c3e54d581719abd37f8afbec5dc82fb3fc6",
+    "audit_sha256": "26150a5c6c90b6b158ed3d4aa16b83679c026d1b4bd65c4d65ebaea9838eec72"
+  },
+  "limitations": "Pre-freeze construction only; source not frozen and no participant/GUI execution."
+}

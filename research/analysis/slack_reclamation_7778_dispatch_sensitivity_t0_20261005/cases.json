@@ -1,0 +1,999 @@
+{
+  "cases": [
+    {
+      "case_id": "late_single-01",
+      "controls": [
+        {
+          "actual_release": 18,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 4,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 2
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_single",
+      "seed": 777800,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "late_single-02",
+      "controls": [
+        {
+          "actual_release": 16,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 5,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_single",
+      "seed": 777801,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "late_single-03",
+      "controls": [
+        {
+          "actual_release": 18,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 4,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 2
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_single",
+      "seed": 777802,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "late_single-04",
+      "controls": [
+        {
+          "actual_release": 18,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 8,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_single",
+      "seed": 777803,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "early_single-01",
+      "controls": [
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 4,
+          "release_choices": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "early_single",
+      "seed": 777804,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "early_single-02",
+      "controls": [
+        {
+          "actual_release": 9,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 4,
+          "release_choices": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 2
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "early_single",
+      "seed": 777805,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "early_single-03",
+      "controls": [
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 8,
+          "release_choices": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "early_single",
+      "seed": 777806,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "early_single-04",
+      "controls": [
+        {
+          "actual_release": 7,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 2
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "early_single",
+      "seed": 777807,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "boundary_burst_pair-01",
+      "controls": [
+        {
+          "actual_release": 9,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 1
+        },
+        {
+          "actual_release": 7,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s1",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "boundary_burst_pair",
+      "seed": 777808,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "boundary_burst_pair-02",
+      "controls": [
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 1
+        },
+        {
+          "actual_release": 7,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s1",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "boundary_burst_pair",
+      "seed": 777809,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "boundary_burst_pair-03",
+      "controls": [
+        {
+          "actual_release": 7,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 1
+        },
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s1",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "boundary_burst_pair",
+      "seed": 777810,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "boundary_burst_pair-04",
+      "controls": [
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s0",
+          "wcet": 1
+        },
+        {
+          "actual_release": 9,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 4,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            7,
+            8,
+            9
+          ],
+          "stream": "s1",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "boundary_burst_pair",
+      "seed": 777811,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "late_separated_three-01",
+      "controls": [
+        {
+          "actual_release": 17,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 1
+        },
+        {
+          "actual_release": 17,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 5,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s1",
+          "wcet": 1
+        },
+        {
+          "actual_release": 26,
+          "class": "control",
+          "id": "c2",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            24,
+            25,
+            26
+          ],
+          "stream": "s0",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_separated_three",
+      "seed": 777812,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "late_separated_three-02",
+      "controls": [
+        {
+          "actual_release": 17,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 8,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 2
+        },
+        {
+          "actual_release": 16,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 5,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s1",
+          "wcet": 1
+        },
+        {
+          "actual_release": 25,
+          "class": "control",
+          "id": "c2",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            24,
+            25,
+            26
+          ],
+          "stream": "s0",
+          "wcet": 2
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_separated_three",
+      "seed": 777813,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "late_separated_three-03",
+      "controls": [
+        {
+          "actual_release": 17,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 2
+        },
+        {
+          "actual_release": 16,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 4,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s1",
+          "wcet": 2
+        },
+        {
+          "actual_release": 26,
+          "class": "control",
+          "id": "c2",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            24,
+            25,
+            26
+          ],
+          "stream": "s0",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_separated_three",
+      "seed": 777814,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "late_separated_three-04",
+      "controls": [
+        {
+          "actual_release": 16,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s0",
+          "wcet": 2
+        },
+        {
+          "actual_release": 17,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            16,
+            17,
+            18
+          ],
+          "stream": "s1",
+          "wcet": 1
+        },
+        {
+          "actual_release": 26,
+          "class": "control",
+          "id": "c2",
+          "min_interarrival": 6,
+          "preemptible": true,
+          "relative_deadline": 6,
+          "release_choices": [
+            24,
+            25,
+            26
+          ],
+          "stream": "s0",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": true,
+      "profile": "late_separated_three",
+      "seed": 777815,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "exact-boundary",
+      "controls": [
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 1,
+          "preemptible": true,
+          "relative_deadline": 2,
+          "release_choices": [
+            8
+          ],
+          "stream": "s0",
+          "wcet": 1
+        },
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 1,
+          "preemptible": true,
+          "relative_deadline": 2,
+          "release_choices": [
+            8
+          ],
+          "stream": "s1",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "exact-boundary",
+      "seed": 777899,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    },
+    {
+      "case_id": "joint-infeasible",
+      "controls": [
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c0",
+          "min_interarrival": 1,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            8
+          ],
+          "stream": "s0",
+          "wcet": 1
+        },
+        {
+          "actual_release": 8,
+          "class": "control",
+          "id": "c1",
+          "min_interarrival": 1,
+          "preemptible": true,
+          "relative_deadline": 1,
+          "release_choices": [
+            8
+          ],
+          "stream": "s1",
+          "wcet": 1
+        }
+      ],
+      "horizon": 32,
+      "min_interarrival_contract": "same-stream releases separated by the job's frozen minimum_interarrival",
+      "positive_slack_subset": false,
+      "profile": "joint-infeasible",
+      "seed": 777898,
+      "soft_jobs": [
+        {
+          "class": "best_effort",
+          "id": "b0",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 12
+        },
+        {
+          "class": "best_effort",
+          "id": "b1",
+          "preemptible": true,
+          "release": 0,
+          "wcet": 16
+        }
+      ]
+    }
+  ],
+  "model": {
+    "overhead_sensitivity_units_per_job_dispatch": [
+      0,
+      1
+    ],
+    "period": 8,
+    "processor_count": 1,
+    "service_per_tick": 1,
+    "soft_deadline": "horizon only; no soft deadline guarantee",
+    "static_best_effort_budget": 6,
+    "static_control_budget": 2,
+    "tick_semantics": "one unit of CPU service occupies [t,t+1)"
+  },
+  "policy_definitions": {
+    "DEMAND_GUARDED_SLACK_STEAL": "EDF control service; a best-effort tick is admitted only if exhaustive future release choices in the frozen finite envelope remain control-feasible",
+    "PRIORITY_ONLY": "preemptive EDF among released controls; otherwise FIFO best-effort; no reserved quota",
+    "STATIC_RESERVATION": "each 8-tick period grants at most 2 control service ticks and 6 best-effort service ticks; unused control budget expires and cannot be borrowed"
+  },
+  "refusal_controls": [
+    {
+      "expected": "HOLD_UNKNOWN_WCET",
+      "id": "unknown-wcet",
+      "job": {
+        "class": "control",
+        "id": "c0",
+        "preemptible": true,
+        "wcet": null
+      }
+    },
+    {
+      "expected": "UNKNOWN_MODEL_MISMATCH",
+      "id": "nonpreemptible",
+      "job": {
+        "class": "control",
+        "id": "c0",
+        "preemptible": false,
+        "wcet": 1
+      }
+    },
+    {
+      "expected": "REJECT_INVALID_JOB_CLASS",
+      "id": "invalid-job-class",
+      "job": {
+        "class": "unrecognized",
+        "id": "c0",
+        "preemptible": true,
+        "wcet": 1
+      }
+    }
+  ],
+  "schema": "7778-slack-reclamation-cases-v1"
+}

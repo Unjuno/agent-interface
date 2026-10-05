@@ -1,0 +1,31 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_changed_a05_disposition_rejected (test_audit.StrictRawAuditTests.test_changed_a05_disposition_rejected) ... ok
+test_duplicate_case_rejected (test_audit.StrictRawAuditTests.test_duplicate_case_rejected) ... ok
+test_exact_retained_candidate_bytes_pass (test_audit.StrictRawAuditTests.test_exact_retained_candidate_bytes_pass) ... ok
+test_json_bool_to_integer_type_confusion_rejected (test_audit.StrictRawAuditTests.test_json_bool_to_integer_type_confusion_rejected) ... ok
+test_label_payload_kind_mismatch_rejected (test_audit.StrictRawAuditTests.test_label_payload_kind_mismatch_rejected) ... ok
+test_omitted_case_rejected (test_audit.StrictRawAuditTests.test_omitted_case_rejected) ... ok
+test_polarity_change_rejected (test_audit.StrictRawAuditTests.test_polarity_change_rejected) ... ok
+test_relabelled_case_rejected (test_audit.StrictRawAuditTests.test_relabelled_case_rejected) ... ok
+test_unexpected_extra_case_rejected (test_audit.StrictRawAuditTests.test_unexpected_extra_case_rejected) ... ok
+test_useful_flag_change_rejected (test_audit.StrictRawAuditTests.test_useful_flag_change_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.014s
+
+OK
+{
+  "candidate_code_imported": false,
+  "cases_checked": 5,
+  "expected_case_labels": [
+    "01-KILL_COUNT_INCREASE",
+    "02-MAP_EXIT",
+    "03-FUTURE_SCORER_EVENT_V3",
+    "04-KILL_COUNT_INCREASEE",
+    "05-PLAYER_DEAD"
+  ],
+  "input_sha256": "9506457a371565b489b5e1b9f7313c05d3f13a28bd5448b4b2944211ee4f313e",
+  "schema": "scorer-feedback-attribution-a06-candidate-audit-v1",
+  "scope": "retained synthetic raw-output integrity only",
+  "status": "PASS_STRICT_RAW_AUDIT"
+}
