@@ -1,0 +1,264 @@
+"""Read-only oracle over retained keymap-batch-edge-v1 test evidence.
+
+No candidate, owner test, live input, or GUI execution is performed here.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+JOB = Path(__file__).resolve().parents[1]
+RUNS = ("startup-red-v1", "startup-green-v1", "owner-red-v1",
+        "owner-green-v1", "composition-green-v1", "composition-green-v2",
+        "composition-green-v3", "adjacent-v1")
+BASE = json.loads((JOB / "base-source-manifest.json").read_text())
+CHANGED = json.loads((JOB / "changed-source-manifest.json").read_text())
+
+
+def sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def lines_json(path: Path) -> list[dict]:
+    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+
+def measure_dicts(value):
+    if isinstance(value, dict):
+        if value.get("schema") == "keymap-batch-edge-v1":
+            yield value
+        for child in value.values():
+            yield from measure_dicts(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from measure_dicts(child)
+
+
+def add(checks, name, condition, **details):
+    checks.append({"name": name, "pass": bool(condition), **details})
+
+
+def main():
+    checks = []
+    retained = {}
+    allowed_source_hashes = {
+        path: {digest} for path, digest in BASE.items()
+    }
+    for path, digest in CHANGED.items():
+        allowed_source_hashes.setdefault(path, set()).add(digest)
+    # Composition test snapshots from retained green-v1/v2 and adjacent-v1
+    # predate the final v3 test extension; their exact hashes remain in maps.
+    composition_path = "research/live_control/test_batch_key_measurement_composition.py"
+    allowed_source_hashes.setdefault(composition_path, set()).update({
+        "393e19b4c3c5f55fe729c0842647782585e3d2f7f9217926bc08ae5cd461e47a",
+        "022201a4d8d6e04d916ad23eaa0cfcf8d6a2923f8da72422ce8818cbe6a1cdd3",
+    })
+
+    for name in RUNS:
+        run = JOB / name
+        receipt = json.loads((run / "receipt.json").read_text())
+        stdout, stderr = run / "stdout.txt", run / "stderr.txt"
+        failures = []
+        if receipt.get("stdout_sha256") != sha(stdout):
+            failures.append("stdout_sha256")
+        if receipt.get("stderr_sha256") != sha(stderr):
+            failures.append("stderr_sha256")
+        for trace_name, digest in receipt.get("traces", {}).items():
+            trace_path = run / "traces" / trace_name
+            if not trace_path.is_file() or sha(trace_path) != digest:
+                failures.append("trace:" + trace_name)
+        source_map = json.loads((run / "sources.json").read_text())
+        unknown_source_hashes = [
+            (path, digest) for path, digest in source_map.items()
+            if digest not in allowed_source_hashes.get(path, set())
+        ]
+        retained[name] = {
+            "receipt": receipt,
+            "rows": lines_json(stdout),
+            "stderr": stderr.read_text(),
+            "source_map": source_map,
+            "receipt_failures": failures,
+            "unknown_source_hashes": unknown_source_hashes,
+        }
+        add(checks, name + "_receipt_and_source_map_pins",
+            not failures and not unknown_source_hashes,
+            exit_code=receipt.get("exit_code"),
+            receipt_failures=failures,
+            source_map_count=len(source_map),
+            unknown_source_hashes=unknown_source_hashes)
+
+    red_startup = retained["startup-red-v1"]
+    green_startup = retained["startup-green-v1"]
+    expected_routes = {
+        "v12-cached-perkey": "rejected",
+        "v12-perkey": "selected",
+        "v15-archived-perkey": "rejected",
+        "v15-default": "selected",
+        "v15-perkey": "selected",
+    }
+    rows = green_startup["rows"]
+    by_route = {row.get("route"): row for row in rows}
+    startup_ok = (
+        len(rows) == 5 and set(by_route) == set(expected_routes)
+        and all(by_route[k].get("outcome") == v for k, v in expected_routes.items())
+        and all(row.get("forbidden_calls") == []
+                and row.get("session_started") is False
+                and row.get("owner_instantiated") is False for row in rows)
+        and by_route["v15-perkey"].get("owner_file") == "research/live_control/input_owner_v12.py"
+        and by_route["v15-default"].get("owner_file") == "research/live_control/input_transition_owner_v4.py"
+        and by_route["v15-archived-perkey"].get("session_boundary_reached") is False
+    )
+    add(checks, "green_startup_selects_explicit_current_owner_without_starting_session",
+        startup_ok, routes={k: v.get("outcome") for k, v in by_route.items()})
+    add(checks, "red_startup_retains_two_pre_guard_failures",
+        red_startup["receipt"].get("exit_code") == 1
+        and "FAILED (failures=2)" in red_startup["stderr"]
+        and len(red_startup["rows"]) == 5,
+        failures_summary=[line for line in red_startup["stderr"].splitlines()
+                          if line.startswith("FAILED")])
+
+    owner_red = retained["owner-red-v1"]
+    owner_green = retained["owner-green-v1"]
+    add(checks, "owner_red_is_pre_keyword_fixture_failure_not_a_green_run",
+        owner_red["receipt"].get("exit_code") == 1
+        and "Ran 9 tests" in owner_red["stderr"]
+        and "FAILED (errors=13)" in owner_red["stderr"])
+    owner_rows = owner_green["rows"]
+    owner_tests = {row.get("test", "").rsplit(".", 1)[-1] for row in owner_rows}
+    expected_owner_tests = {
+        "test_batch_pre_or_post_sample_failure_suppresses_every_bracket",
+        "test_cleanup_then_same_key_cannot_reuse_retired_identity",
+        "test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press",
+        "test_duplicate_down_cannot_create_or_complete_a_second_pair",
+        "test_first_and_last_key_retry_keep_per_key_up_brackets",
+        "test_measurement_disabled_keeps_legacy_query_count",
+        "test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down",
+        "test_rehold_same_key_mints_a_distinct_identity",
+        "test_two_key_down_and_batch_up_preserve_a01_pairs",
+    }
+    all_measurements = list(measure_dicts(owner_rows))
+    measurement_valid = True
+    measurement_errors = []
+    for measurement in all_measurements:
+        edge = measurement.get("edge")
+        if measurement.get("grants_input_authority") is not False or measurement.get("application_consumption_observed") is not False:
+            measurement_errors.append("authority_or_application_flag")
+        if measurement.get("classification") in ("CONFIRMED_PHYSICAL_DOWN", "CONFIRMED_PHYSICAL_UP"):
+            pre, post = measurement.get("pre_sample"), measurement.get("post_sample")
+            adapter, bracket = measurement.get("adapter_edge"), measurement.get("bracket")
+            expected_pre, expected_post = (False, True) if edge == "down" else (True, False)
+            expected_basis = "key_snapshot" if edge == "down" else "shared_batch_snapshot"
+            interval_field = "physical_down_interval" if edge == "down" else "physical_up_interval"
+            if (measurement.get("interval_basis") != expected_basis
+                    or type(pre) is not dict or type(post) is not dict
+                    or pre.get("available") is not True or post.get("available") is not True
+                    or pre.get("down") is not expected_pre or post.get("down") is not expected_post
+                    or type(adapter) is not dict or type(bracket) is not dict
+                    or adapter.get("interval") != [pre.get("finished_ns"), post.get("finished_ns")]
+                    or bracket.get(interval_field) != adapter.get("interval")
+                    or bracket.get("status") != measurement.get("classification")
+                    or adapter.get("actuation_id") != measurement.get("actuation_id")
+                    or not measurement.get("actuation_id")):
+                measurement_errors.append("confirmed_bracket_mismatch")
+        elif measurement.get("bracket") is not None or measurement.get("adapter_edge") is not None:
+            measurement_errors.append("unconfirmed_has_edge")
+    owner_ok = (
+        owner_green["receipt"].get("exit_code") == 0
+        and "Ran 9 tests" in owner_green["stderr"] and "OK" in owner_green["stderr"]
+        and expected_owner_tests <= owner_tests and not measurement_errors
+        and len(all_measurements) > 0
+    )
+    add(checks, "owner_green_raw_measurement_shapes_and_scope",
+        owner_ok, test_names=sorted(owner_tests), measurement_count=len(all_measurements),
+        measurement_errors=measurement_errors)
+
+    by_test = {}
+    for row in owner_rows:
+        by_test.setdefault(row.get("test", "").rsplit(".", 1)[-1], []).append(row)
+    unverified_rows = []
+    for test_name in ("test_batch_pre_or_post_sample_failure_suppresses_every_bracket",
+                      "test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down"):
+        unverified_rows.extend(measure_dicts(by_test.get(test_name, [])))
+    unverified_ok = (
+        len(unverified_rows) >= 6
+        and all(m.get("classification") != "CONFIRMED_PHYSICAL_UP"
+                and m.get("bracket") is None and m.get("adapter_edge") is None
+                for m in unverified_rows)
+    )
+    add(checks, "owner_green_unknown_and_persistent_up_are_unconfirmed",
+        unverified_ok, measurements=len(unverified_rows))
+    invalidator_rows = [row for row in owner_rows
+                        if row.get("test", "").endswith(
+                            "test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press")]
+    invalidators_ok = (
+        {row.get("invalidator") for row in invalidator_rows} == {"cancel", "focus", "expiry"}
+        and all(any(event[0] == "query_keymap" for event in row.get("trace", []))
+                and not any(event[:2] == ["key_event", 2]
+                            or event[:2] == ("key_event", 2)
+                            for event in row.get("trace", []))
+                for row in invalidator_rows)
+    )
+    add(checks, "down_query_hooks_reached_and_invalidated_cases_sent_no_press",
+        invalidators_ok, count=len(invalidator_rows))
+    disabled_rows = by_test.get("test_measurement_disabled_keeps_legacy_query_count", [])
+    add(checks, "disabled_measurement_keeps_old_query_count",
+        len(disabled_rows) == 1 and disabled_rows[0].get("query_count_delta") == 2
+        and disabled_rows[0].get("measurement_present") is False)
+
+    comp_v1 = retained["composition-green-v1"]
+    comp_v2 = retained["composition-green-v2"]
+    comp = retained["composition-green-v3"]
+    add(checks, "composition_v1_harness_failure_retained",
+        comp_v1["receipt"].get("exit_code") == 1
+        and "FAILED (errors=8)" in comp_v1["stderr"])
+    add(checks, "composition_v2_repair_pass_retained",
+        comp_v2["receipt"].get("exit_code") == 0 and "Ran 4 tests" in comp_v2["stderr"]
+        and "OK" in comp_v2["stderr"])
+    comp_rows = comp["rows"]
+    comp_by_name = {row.get("case", "").rsplit(".", 1)[-1]: row for row in comp_rows}
+    positive_names = {
+        "test_projection_rejects_altered_basis_authority_identity_and_batch_status",
+        "test_retry_keeps_shared_sample_for_the_other_key",
+        "test_two_keys_pair_through_actual_wrapper_and_batch_publisher",
+    }
+    invalid_names = {
+        "test_cancel_during_batch_sample_does_not_become_an_ordinary_pair",
+        "test_expiry_during_batch_sample_does_not_become_an_ordinary_pair",
+        "test_focus_change_during_batch_sample_does_not_become_an_ordinary_pair",
+        "test_unknown_post_sample_never_projects_a_complete_pair",
+    }
+    comp_ok = (
+        comp["receipt"].get("exit_code") == 0 and "Ran 7 tests" in comp["stderr"]
+        and "OK" in comp["stderr"] and len(comp_rows) == 7
+        and positive_names | invalid_names <= set(comp_by_name)
+        and all(all(projection.get("status") == "adapter_edge_brackets_paired"
+                    for projection in comp_by_name[name].get("projection", []))
+                for name in positive_names)
+        and all(all(projection.get("status") == "adapter_edge_receipt_incomplete"
+                    and projection.get("up_edge_interval_ns") is None
+                    for projection in comp_by_name[name].get("projection", []))
+                for name in invalid_names)
+    )
+    add(checks, "composition_v3_pairs_valid_batches_and_rejects_bad_windows",
+        comp_ok, cases=sorted(comp_by_name))
+
+    adjacent = retained["adjacent-v1"]
+    add(checks, "adjacent_owner_v12_v4_v13_regressions_pass",
+        adjacent["receipt"].get("exit_code") == 0 and "Ran 8 tests" in adjacent["stderr"]
+        and "OK" in adjacent["stderr"] and len(adjacent["receipt"].get("traces", {})) == 3)
+
+    result = {
+        "schema": "batch-perkey-measurement-independent-raw-audit-v1",
+        "status": "PASS_READBACK" if all(row["pass"] for row in checks) else "FAIL_READBACK",
+        "checks": checks,
+        "scope": "independent receipt/source-map/raw-JSON readback only; no candidate, test, model, game, GUI, real X11, or latency execution",
+        "interpretation_limit": "fake-X tests establish test-composition behavior only, not live keyboard state, application consumption, effect, or benefit",
+    }
+    out = Path(__file__).with_name("audit-result-v1.json")
+    out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    print(json.dumps({"status": result["status"], "checks": checks}, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

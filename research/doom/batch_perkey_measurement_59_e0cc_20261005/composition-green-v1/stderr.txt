@@ -1,0 +1,178 @@
+test_projection_rejects_altered_basis_authority_identity_and_batch_status (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_projection_rejects_altered_basis_authority_identity_and_batch_status) ... ERROR
+test_projection_rejects_altered_basis_authority_identity_and_batch_status (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_projection_rejects_altered_basis_authority_identity_and_batch_status) ... ERROR
+test_retry_keeps_shared_sample_for_the_other_key (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_retry_keeps_shared_sample_for_the_other_key) ... <private-job>/source/research/observation_tiles/tile_transport.py:14: UserWarning: The NumPy module was reloaded (imported a second time). This can in some cases result in small but subtle issues and is discouraged.
+  import numpy as np
+ERROR
+test_retry_keeps_shared_sample_for_the_other_key (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_retry_keeps_shared_sample_for_the_other_key) ... ERROR
+test_two_keys_pair_through_actual_wrapper_and_batch_publisher (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_two_keys_pair_through_actual_wrapper_and_batch_publisher) ... <private-job>/source/research/observation_tiles/tile_transport.py:14: UserWarning: The NumPy module was reloaded (imported a second time). This can in some cases result in small but subtle issues and is discouraged.
+  import numpy as np
+ERROR
+test_two_keys_pair_through_actual_wrapper_and_batch_publisher (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_two_keys_pair_through_actual_wrapper_and_batch_publisher) ... ERROR
+test_unknown_post_sample_never_projects_a_complete_pair (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_unknown_post_sample_never_projects_a_complete_pair) ... <private-job>/source/research/observation_tiles/tile_transport.py:14: UserWarning: The NumPy module was reloaded (imported a second time). This can in some cases result in small but subtle issues and is discouraged.
+  import numpy as np
+ERROR
+test_unknown_post_sample_never_projects_a_complete_pair (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_unknown_post_sample_never_projects_a_complete_pair) ... ERROR
+
+======================================================================
+ERROR: test_projection_rejects_altered_basis_authority_identity_and_batch_status (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_projection_rejects_altered_basis_authority_identity_and_batch_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 107, in test_projection_rejects_altered_basis_authority_identity_and_batch_status
+    self.run_batch()
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 62, in run_batch
+    self.backend.raw('down', key)
+  File "<private-job>/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 215, in raw
+    record = self.owner.call("down", self.lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v4.py", line 121, in call
+    return super().call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v3.py", line 211, in call
+    result = self._inner.call(operation, lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 63, in call
+    if not ok: raise result
+               ^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 601, in _run
+    code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 99, in <lambda>
+    xk.string_to_keysym = lambda key: ord(key)
+                                      ^^^^^^^^
+TypeError: ord() expected a character, but string of length 4 found
+
+======================================================================
+ERROR: test_projection_rejects_altered_basis_authority_identity_and_batch_status (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_projection_rejects_altered_basis_authority_identity_and_batch_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 56, in tearDown
+    self.fixture.tearDown()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 148, in tearDown
+    self.assertTrue(self.owner.stopped.wait(1), "owner thread did not stop")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'stopped'
+
+======================================================================
+ERROR: test_retry_keeps_shared_sample_for_the_other_key (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_retry_keeps_shared_sample_for_the_other_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 93, in test_retry_keeps_shared_sample_for_the_other_key
+    result = self.run_batch(drop_code=39)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 62, in run_batch
+    self.backend.raw('down', key)
+  File "<private-job>/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 215, in raw
+    record = self.owner.call("down", self.lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v4.py", line 121, in call
+    return super().call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v3.py", line 211, in call
+    result = self._inner.call(operation, lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 63, in call
+    if not ok: raise result
+               ^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 601, in _run
+    code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 99, in <lambda>
+    xk.string_to_keysym = lambda key: ord(key)
+                                      ^^^^^^^^
+TypeError: ord() expected a character, but string of length 4 found
+
+======================================================================
+ERROR: test_retry_keeps_shared_sample_for_the_other_key (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_retry_keeps_shared_sample_for_the_other_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 56, in tearDown
+    self.fixture.tearDown()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 148, in tearDown
+    self.assertTrue(self.owner.stopped.wait(1), "owner thread did not stop")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'stopped'
+
+======================================================================
+ERROR: test_two_keys_pair_through_actual_wrapper_and_batch_publisher (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_two_keys_pair_through_actual_wrapper_and_batch_publisher)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 83, in test_two_keys_pair_through_actual_wrapper_and_batch_publisher
+    result = self.run_batch()
+             ^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 62, in run_batch
+    self.backend.raw('down', key)
+  File "<private-job>/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 215, in raw
+    record = self.owner.call("down", self.lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v4.py", line 121, in call
+    return super().call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v3.py", line 211, in call
+    result = self._inner.call(operation, lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 63, in call
+    if not ok: raise result
+               ^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 601, in _run
+    code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 99, in <lambda>
+    xk.string_to_keysym = lambda key: ord(key)
+                                      ^^^^^^^^
+TypeError: ord() expected a character, but string of length 4 found
+
+======================================================================
+ERROR: test_two_keys_pair_through_actual_wrapper_and_batch_publisher (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_two_keys_pair_through_actual_wrapper_and_batch_publisher)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 56, in tearDown
+    self.fixture.tearDown()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 148, in tearDown
+    self.assertTrue(self.owner.stopped.wait(1), "owner thread did not stop")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'stopped'
+
+======================================================================
+ERROR: test_unknown_post_sample_never_projects_a_complete_pair (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_unknown_post_sample_never_projects_a_complete_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 101, in test_unknown_post_sample_never_projects_a_complete_pair
+    result = self.run_batch(fail_post=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 62, in run_batch
+    self.backend.raw('down', key)
+  File "<private-job>/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 215, in raw
+    record = self.owner.call("down", self.lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v4.py", line 121, in call
+    return super().call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_transition_owner_v3.py", line 211, in call
+    result = self._inner.call(operation, lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 63, in call
+    if not ok: raise result
+               ^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/input_owner_v12.py", line 601, in _run
+    code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 99, in <lambda>
+    xk.string_to_keysym = lambda key: ord(key)
+                                      ^^^^^^^^
+TypeError: ord() expected a character, but string of length 4 found
+
+======================================================================
+ERROR: test_unknown_post_sample_never_projects_a_complete_pair (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_unknown_post_sample_never_projects_a_complete_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 56, in tearDown
+    self.fixture.tearDown()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 148, in tearDown
+    self.assertTrue(self.owner.stopped.wait(1), "owner thread did not stop")
+                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'stopped'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.749s
+
+FAILED (errors=8)

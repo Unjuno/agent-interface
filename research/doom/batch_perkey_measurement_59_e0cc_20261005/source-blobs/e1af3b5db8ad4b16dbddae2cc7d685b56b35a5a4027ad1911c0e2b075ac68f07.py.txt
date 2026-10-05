@@ -1,0 +1,29 @@
+"""Run retained existing tests against the exact AST-extracted projection."""
+import ast
+import hashlib
+from pathlib import Path
+import sys
+import types
+import unittest
+
+HERE=Path(__file__).resolve().parents[1]/'doom'
+controller=types.ModuleType('map01_overlap_controller_v39')
+controller.__dict__.update(hashlib=hashlib,sys=sys,HERE=HERE)
+parsed=ast.parse((HERE/'map01_overlap_controller_v39.py').read_text())
+selected=[n for n in parsed.body if isinstance(n,ast.FunctionDef) and n.name in ('input_edge_receipts','session_command')]
+exec(compile(ast.Module(body=selected,type_ignores=[]),str(HERE/'map01_overlap_controller_v39.py'),'exec'),controller.__dict__)
+sys.modules['map01_overlap_controller_v39']=controller
+import test_map01_v39_typed_state_feedback as typed
+import test_map01_v39_legacy_owner_identity as legacy
+import test_map01_v15_perkey_backend_selection as selection
+
+
+def load_tests(loader, tests, pattern):
+    suite=unittest.TestSuite()
+    for name in loader.getTestCaseNames(typed.V39TypedStateFeedbackTests):
+        if name.startswith('test_input_edge_receipt_') and not any(s in name for s in (
+            'retained_absolute_pair','repeated_same_key','v11_owner_keyup')):
+            suite.addTest(typed.V39TypedStateFeedbackTests(name))
+    suite.addTests(loader.loadTestsFromModule(legacy))
+    suite.addTests(loader.loadTestsFromModule(selection))
+    return suite

@@ -1,0 +1,34 @@
+import hashlib,json,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent
+repo=root.parent/'perkey-owner-guard-repo-e0cc-20261005'
+blobs=root/'source-blobs';blobs.mkdir(exist_ok=True)
+def keep(data):
+    sha=hashlib.sha256(data).hexdigest();p=blobs/(sha+'.py.txt')
+    if not p.exists():p.write_bytes(data)
+    return sha
+for folder in ('source','before'):
+    for p in (root/folder).rglob('*.py'):keep(p.read_bytes())
+for name in json.loads((root/'base-source-manifest.json').read_text()):
+    keep(subprocess.check_output(['/run/current-system/sw/bin/git','show','HEAD:'+name],cwd=repo))
+# Reconstruct the immediately preceding composition test from the additive v3
+# extension and verify against its pre-existing execution manifest before use.
+name='research/live_control/test_batch_key_measurement_composition.py'
+s=(root/'source'/name).read_text()
+s=s.replace('def run_batch(self, drop_code=None, fail_post=False, invalidate=None):','def run_batch(self, drop_code=None, fail_post=False):')
+start=s.index('        if invalidate is not None:');end=s.index('        batch_start =',start)
+s=s[:start]+s[end:]
+s=s.replace("'events': self.events, 'projection': result, 'invalidate': invalidate,","'events': self.events, 'projection': result,")
+start=s.index('    def check_batch_invalidation(');end=s.index('    def test_projection_rejects_',start)
+s=s[:start]+s[end:]
+v2hash=json.loads((root/'composition-green-v2/sources.json').read_text())[name]
+assert hashlib.sha256(s.encode()).hexdigest()==v2hash
+keep(s.encode())
+missing={}
+for path in root.glob('*/sources.json'):
+    entries=json.loads(path.read_text())
+    for name,sha in entries.items():
+        if not (blobs/(sha+'.py.txt')).exists():missing.setdefault(str(path.parent.name),{})[name]=sha
+(root/'source-custody.json').write_text(json.dumps({'content_addressed_sources':len(list(blobs.iterdir())),'missing':missing,'reconstruction':'composition-green-v2 test recovered by reversing additive v3 changes; SHA matches its original run manifest'},indent=2)+'\n')
+print(json.dumps({'blobs':len(list(blobs.iterdir())),'missing':missing}))
+assert not missing

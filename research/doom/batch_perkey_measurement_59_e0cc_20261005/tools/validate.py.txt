@@ -1,0 +1,27 @@
+import hashlib,json,platform,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent
+repo=root.parent/'perkey-owner-guard-repo-e0cc-20261005'
+git='/run/current-system/sw/bin/git'
+changed=json.loads((root/'changed-source-manifest.json').read_text())
+checks={}
+for name,sha in changed.items():
+    data=(repo/name).read_bytes()
+    compile(data,name,'exec')
+    checks[name]=dict(compiles=True,working_sha256=hashlib.sha256(data).hexdigest(),
+                     materialized_matches=data==(root/'source'/name).read_bytes())
+    assert checks[name]['working_sha256']==sha and checks[name]['materialized_matches'],name
+fresh=subprocess.check_output([git,'rev-parse','origin/main'],cwd=repo,text=True).strip()
+base='2e1def5886740e347dc6f4ecd4a2f158056a38dc'
+canonical=['README.md','ROADMAP.md','docs/CURRENT_GOAL.md','docs/WORKER_QUICKSTART.md','docs/RESEARCH_METHOD.md','docs/ISSUE_FAILURE_CLASSIFICATION.md']
+sourcepaths=list(json.loads((root/'base-source-manifest.json').read_text()))
+delta=subprocess.check_output([git,'diff','--name-status',base,fresh,'--',*canonical,*sourcepaths],cwd=repo,text=True)
+(root/'main-delta.json').write_text(json.dumps({'previous_main':base,'current_main':fresh,'paths_checked':canonical+sourcepaths,'diff_name_status':delta,'merge_tree_check':False},indent=2)+'\n')
+whitespace=subprocess.run([git,'diff','--check','--',*changed],cwd=repo,capture_output=True,text=True)
+report={'checks':checks,'whitespace_exit_code':whitespace.returncode,'whitespace_stdout':whitespace.stdout,
+        'whitespace_stderr':whitespace.stderr,'python':sys.version,'platform':platform.platform(),
+        'machine':platform.machine(),'real_x11':False,'formal_allocation':False,
+        'main_source_delta':delta}
+(root/'validation.json').write_text(json.dumps(report,indent=2)+'\n')
+assert whitespace.returncode==0
+print(json.dumps({'compiled':len(checks),'main_delta':delta,'whitespace':whitespace.returncode}))

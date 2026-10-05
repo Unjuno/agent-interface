@@ -1,0 +1,36 @@
+test_v12_cached_owner_rejects_before_session (test_perkey_owner_source_guard.PerKeyOwnerSourceGuardTest.test_v12_cached_owner_rejects_before_session) ... ok
+test_v12_perkey_keeps_the_requested_owner (test_perkey_owner_source_guard.PerKeyOwnerSourceGuardTest.test_v12_perkey_keeps_the_requested_owner) ... ok
+test_v15_archived_cached_owner_rejects_before_session (test_perkey_owner_source_guard.PerKeyOwnerSourceGuardTest.test_v15_archived_cached_owner_rejects_before_session) ... FAIL
+test_v15_default_keeps_release_batch_owner (test_perkey_owner_source_guard.PerKeyOwnerSourceGuardTest.test_v15_default_keeps_release_batch_owner) ... ok
+test_v15_perkey_uses_current_batch_measurement_owner (test_perkey_owner_source_guard.PerKeyOwnerSourceGuardTest.test_v15_perkey_uses_current_batch_measurement_owner) ... FAIL
+
+======================================================================
+FAIL: test_v15_archived_cached_owner_rejects_before_session (test_perkey_owner_source_guard.PerKeyOwnerSourceGuardTest.test_v15_archived_cached_owner_rejects_before_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/doom/test_perkey_owner_source_guard.py", line 148, in test_v15_archived_cached_owner_rejects_before_session
+    self.assertEqual(observed["outcome"], "rejected")
+AssertionError: 'selected' != 'rejected'
+- selected
+? ^ ^
++ rejected
+? ^ ^
+
+
+======================================================================
+FAIL: test_v15_perkey_uses_current_batch_measurement_owner (test_perkey_owner_source_guard.PerKeyOwnerSourceGuardTest.test_v15_perkey_uses_current_batch_measurement_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/doom/test_perkey_owner_source_guard.py", line 141, in test_v15_perkey_uses_current_batch_measurement_owner
+    self.assertEqual(observed["outcome"], "selected")
+AssertionError: 'rejected' != 'selected'
+- rejected
+? ^ ^
++ selected
+? ^ ^
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.255s
+
+FAILED (failures=2)
