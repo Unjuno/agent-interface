@@ -116,8 +116,6 @@ additional emissions. This is scoped fixture evidence only: it does not close
 the full six-task live acceptance gate, establish broad GUI reliability, or
 claim an end-to-end efficiency benefit.
 
-Current direction (r139): a separate classifier-boundary A02 compared per-key sampling with shared before/after bitmap sampling on a frozen archived V12 classifier using a deterministic fake keymap. The sequential control confirmed two keys with four queries (two between UP injections); the batch model confirmed both with two queries and zero between injections. When the second injection failed, key 65 remained confirmed UP and key 74 remained `RELEASE_UNCONFIRMED`/down. Its independent audit passed. This is an algorithm-boundary model only: it does not run Xlib, V39 startup, or physical input, and the shared interval does not establish per-key edge order or latency. The exact delivery source attribution is recorded in `research/doom/map01_v39_perkey_batch_query_boundary_a02_20261005/`; the active V39 source-path audit remains the separate archived `r137` entry below. Next, use the exact V39 startup closure to qualify an instrumentation path that preserves release ordering, then measure bounded latency and independently useful feedback/recovery under matched exposure. No live allocation is implied; #59 remains open.
-
 > **Preserve rich-model intent; localize the high-frequency refinement loop.**
 
 The project is not trying to replace Astra/a rich frontier model with a weaker local agent. The target is to let the rich model decide semantics/strategy, then let Agent Interface continue, refine, verify, and invalidate that intent locally while the rich model is reasoning elsewhere. Direct rich-model computer operation remains a first-class route.
