@@ -850,5 +850,34 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
         self.assertEqual(feedback["signals"]["ammo"]["delta"], 0)
 
 
+    def test_adapter_owner_bracket_intervals_require_exact_integer_endpoints(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+
+        def set_down_endpoint(endpoint):
+            events = json.loads(json.dumps(template))
+            down = next(row for row in events
+                        if row.get("event") == "input_admission")
+            measurement = down["physical_key_measurement"]
+            measurement["adapter_edge"]["interval"] = [0, 1]
+            measurement["bracket"]["physical_down_interval"] = [0, endpoint]
+            measurement["pre_sample"].update(started_ns=0, finished_ns=0)
+            measurement["post_sample"].update(started_ns=0, finished_ns=1)
+            measurement["press_request_ns"] = 0
+            measurement["sync_return_ns"] = 0
+            down.update(admitted_ns=0, input_ack_ns=0)
+            return controller.input_edge_receipts(events)[0]
+
+        self.assertEqual(set_down_endpoint(1)["status"],
+                         "adapter_edge_brackets_paired")
+        for invalid in (True, 1.0, "1", None):
+            with self.subTest(endpoint=invalid):
+                receipt = set_down_endpoint(invalid)
+                self.assertEqual(receipt["status"],
+                                 "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+
+
 if __name__ == "__main__":
     unittest.main()
