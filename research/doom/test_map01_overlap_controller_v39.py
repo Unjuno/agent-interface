@@ -42,6 +42,24 @@ def extract_renewal_invalidation_branch():
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_accepted_first_renewal_keeps_monitor_until_final_plan_admission(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        self.assertIn(
+            "observation_monitor=invalidation_monitor)",
+            source[source.index("while not future.done():"):source.index("planner_result=future.result()")],
+        )
+        invalidation_path = source[
+            source.index("final_action_admission=final_admission_from_planner_result("):
+            source.index('"terminal_candidate":True')
+        ]
+        self.assertIn("if invalidation is not None:", invalidation_path)
+        self.assertIn('"model_action_discarded":True', invalidation_path)
+        self.assertIn('"plan_terminal":"not_admitted"', invalidation_path)
+        self.assertLess(
+            source.index('"plan_terminal":"not_admitted"'),
+            source.index("failure_cleanup.set_stage(\"action_admission\")"),
+        )
+
     def test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in(self):
         args = Namespace(seed=990605, load_fixture_manifest=Path("fixture.json"))
         default = controller.session_command(args, Path("runtime"))
