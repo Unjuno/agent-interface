@@ -1,0 +1,163 @@
+{
+  "baseline": {
+    "events": [
+      {
+        "accepted_ns": 134838085524100,
+        "event": "accepted",
+        "id": "base-sink-failure",
+        "intent_token": "264db3c40d9c48a98f1ae316c677631c",
+        "program_sha256": "7871d6a2a43fd6b6af79ac4293800bcb442c24d1020c6807e66ed9f3ef14f2a3",
+        "steps": 1,
+        "valid_until_ns": 134839085410300
+      },
+      {
+        "event": "step_started",
+        "id": "base-sink-failure",
+        "issued_ns": 134838086557300,
+        "operation": "synthetic_release_batch",
+        "step": 0
+      },
+      {
+        "decision_reason": null,
+        "error": null,
+        "event": "terminal",
+        "id": "base-sink-failure",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "completed",
+        "steps_completed": 0,
+        "terminal_ns": 134838086711200
+      }
+    ],
+    "terminal": {
+      "decision_reason": null,
+      "error": null,
+      "event": "terminal",
+      "id": "base-sink-failure",
+      "interruption": null,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "completed",
+      "steps_completed": 0,
+      "terminal_ns": 134838086711200
+    },
+    "thread_errors": [
+      {
+        "exception": "release sink acknowledgement interrupted",
+        "exception_type": "KeyboardInterrupt"
+      }
+    ]
+  },
+  "baseline_commit": "bf57eb60009867bfa36243a9b48e37bd576682c7",
+  "baseline_git_blob": "7ef003f5d1ae9c2aef4ac9eb4a4cb7a1ced1195c",
+  "baseline_source_sha256": "2ca292cb466630a3864da904046387ad1fe09f94236d24056634f4b382a32a86",
+  "candidate": {
+    "events": [
+      {
+        "accepted_ns": 134838086961500,
+        "event": "accepted",
+        "id": "base-sink-failure",
+        "intent_token": "e2af2570df3d43c8aec2e67a82252b10",
+        "program_sha256": "7871d6a2a43fd6b6af79ac4293800bcb442c24d1020c6807e66ed9f3ef14f2a3",
+        "steps": 1,
+        "valid_until_ns": 134839086886400
+      },
+      {
+        "event": "step_started",
+        "id": "base-sink-failure",
+        "issued_ns": 134838087115100,
+        "operation": "synthetic_release_batch",
+        "step": 0
+      },
+      {
+        "decision_reason": null,
+        "error": "KeyboardInterrupt('release sink acknowledgement interrupted')",
+        "event": "terminal",
+        "id": "base-sink-failure",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        },
+        "release_batch_publication": {
+          "confirmed_positions": [
+            0
+          ],
+          "error_type": "KeyboardInterrupt",
+          "event": "input_release_transition",
+          "identifier": "base-sink-failure",
+          "key": "b",
+          "not_attempted_positions": [],
+          "position": 1,
+          "size": 2,
+          "status": "delivery_unknown",
+          "step": 0
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 134838087182300
+      }
+    ],
+    "terminal": {
+      "decision_reason": null,
+      "error": "KeyboardInterrupt('release sink acknowledgement interrupted')",
+      "event": "terminal",
+      "id": "base-sink-failure",
+      "interruption": null,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": true
+      },
+      "release_batch_publication": {
+        "confirmed_positions": [
+          0
+        ],
+        "error_type": "KeyboardInterrupt",
+        "event": "input_release_transition",
+        "identifier": "base-sink-failure",
+        "key": "b",
+        "not_attempted_positions": [],
+        "position": 1,
+        "size": 2,
+        "status": "delivery_unknown",
+        "step": 0
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "failed",
+      "steps_completed": 0,
+      "terminal_ns": 134838087182300
+    },
+    "thread_errors": []
+  },
+  "candidate_source_sha256": "cb3196e033fd73281f0940fd76d1f89aae76f17b417639990b959c142e1fcc1b",
+  "command": "python experiment.py; python audit.py",
+  "custody_payload": {
+    "confirmed_positions": [
+      0
+    ],
+    "error_type": "KeyboardInterrupt",
+    "event": "input_release_transition",
+    "identifier": "base-sink-failure",
+    "key": "b",
+    "not_attempted_positions": [],
+    "position": 1,
+    "size": 2,
+    "status": "delivery_unknown",
+    "step": 0
+  },
+  "experiment_id": "release-batch-baseexception-59-a01",
+  "experiment_source_sha256": "b09e34e2e89e9963b91e4304aa8ee168a0bb04e148b8958374f8597215f2d363",
+  "freeze_sha256": "023a9125a9880b76e0adfaa9a383317570731fe6a680e90ad6e5a19300d8f6d6"
+}

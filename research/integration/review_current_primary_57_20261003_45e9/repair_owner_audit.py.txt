@@ -1,0 +1,11 @@
+"""Repair saved-data reader only; preserve v1 source/error and all original runtime bytes."""
+from pathlib import Path
+from datetime import datetime,timezone
+import json
+r=Path(__file__).resolve().parent;b=(r/'owner_audit.py').read_bytes()
+needle="names=[z['name'] for z in ev];first=names.index('actual_first_backlog_error_constructed');endpoint=names.index('owner_endpoint')"
+replacement="names=[z['name'] for z in ev];matches=[i for i,z in enumerate(ev) if z['name']=='Error' and z.get('message')=='primary busy response backlog'];assert len(matches)==1;first=matches[0];endpoint=names.index('owner_endpoint')"
+text=b.decode();assert text.count(needle)==1
+(r/'owner_audit_v2.py').write_text(text.replace(needle,replacement),encoding='utf-8',newline='\n')
+(r/'OWNER_AUDIT_V1_ERROR.json').write_text(json.dumps({'observed_utc':datetime.now(timezone.utc).isoformat(),'original_source':'owner_audit.py unchanged','actual_first_auditor_exit':1,'actual_error':'ValueError: actual_first_backlog_error_constructed is not in list','cause':'Own event(name,value) stores {name,...value}; first constructor observer value also contains name=Error, overwriting only the event label. Actual captured Error message/object-identity/UTC/seq and first product/raw outcomes remain. Correct data reader requires one exact name=Error/message=primary busy response backlog event.','repair_scope':'data-only oracle v2; no test/producer/source/harness replay or scientific relabel'},sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+print('first raw and auditor error preserved; reader v2 prepared')

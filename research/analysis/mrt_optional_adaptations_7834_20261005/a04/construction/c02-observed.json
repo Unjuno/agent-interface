@@ -1,0 +1,50 @@
+{
+  "probe": "A04-C02 pre-freeze construction probe; not a formal allocation",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "runtime": "functions.exec in-memory V8",
+  "candidate": {
+    "rows": 2600,
+    "eligible_weight": 2.9999999999999853,
+    "observation_rate": 0.800000000000001,
+    "proximal_effect_arm1_vs0": 2.583333333333349,
+    "proximal_effect_arm2_vs0": 0.16666666666666777,
+    "executed_fraction_by_arm": [
+      0.9081632653061221,
+      0.6388888888888892,
+      0.6428571428571429
+    ],
+    "distal_policy_outcome_by_type": {
+      "0": 8.44375,
+      "1": 9.443750000000001
+    }
+  },
+  "auditor": {
+    "base_audit": true,
+    "expected_rows": 2600,
+    "mutation_count": 17,
+    "rejected_mutations": 13,
+    "rejected": [
+      "wrong_allocation",
+      "drop_row",
+      "wrong_arm1_effect",
+      "wrong_arm2_effect",
+      "wrong_observation_rate",
+      "wrong_distal",
+      "proximal_as_task_success",
+      "zero_assignment_support_gate",
+      "zero_observation_support_gate",
+      "missing_window_gate",
+      "post_treatment_eligibility_gate",
+      "session_interference_gate",
+      "unbounded_carryover_gate"
+    ],
+    "falsely_accepted": [
+      "wrong_assignment_probability",
+      "wrong_propensity",
+      "wrong_censor_probability",
+      "censored_as_observed"
+    ]
+  },
+  "observed_failure": "The mutation validator closed over rowsMatch calculated from the original report instead of comparing each mutated x.rows. Four row-level mutations were therefore falsely accepted."
+}

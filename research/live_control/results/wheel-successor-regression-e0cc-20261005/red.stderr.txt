@@ -1,0 +1,148 @@
+test_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) ... 
+  test_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=1) ... FAIL
+  test_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=-1) ... FAIL
+test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) ... 
+  test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=1) ... FAIL
+  test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-1) ... FAIL
+  test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=3) ... FAIL
+  test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-3) ... FAIL
+test_exception_after_up_delivery_does_not_cause_duplicate_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_after_up_delivery_does_not_cause_duplicate_up) ... ok
+test_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) ... 
+  test_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=1) ... FAIL
+  test_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=-1) ... FAIL
+test_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) ... 
+  test_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=1) ... FAIL
+  test_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=-1) ... FAIL
+test_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) ... 
+  test_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=1) ... FAIL
+  test_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=-1) ... FAIL
+test_successful_notches_do_not_get_duplicate_terminal_up (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_successful_notches_do_not_get_duplicate_terminal_up) ... ok
+
+======================================================================
+FAIL: test_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 146, in test_close_retries_dropped_up_without_explicit_release
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+4
+
+======================================================================
+FAIL: test_close_retries_dropped_up_without_explicit_release (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_close_retries_dropped_up_without_explicit_release) (count=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 146, in test_close_retries_dropped_up_without_explicit_release
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+5
+
+======================================================================
+FAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 106, in test_dropped_final_up_is_retried_for_each_wheel_direction
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+4
+
+======================================================================
+FAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 106, in test_dropped_final_up_is_retried_for_each_wheel_direction
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+5
+
+======================================================================
+FAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 106, in test_dropped_final_up_is_retried_for_each_wheel_direction
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+4
+
+======================================================================
+FAIL: test_dropped_final_up_is_retried_for_each_wheel_direction (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_dropped_final_up_is_retried_for_each_wheel_direction) (count=-3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 106, in test_dropped_final_up_is_retried_for_each_wheel_direction
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+5
+
+======================================================================
+FAIL: test_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 127, in test_exception_before_up_delivery_remains_releasable
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+4
+
+======================================================================
+FAIL: test_exception_before_up_delivery_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_exception_before_up_delivery_remains_releasable) (count=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 127, in test_exception_before_up_delivery_remains_releasable
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+5
+
+======================================================================
+FAIL: test_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 156, in test_failed_cleanup_reports_unverified_and_retains_retry
+    with self.assertRaisesRegex(RuntimeError, "owner release not verified"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_failed_cleanup_reports_unverified_and_retains_retry (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_failed_cleanup_reports_unverified_and_retains_retry) (count=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 156, in test_failed_cleanup_reports_unverified_and_retains_retry
+    with self.assertRaisesRegex(RuntimeError, "owner release not verified"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 117, in test_press_delivered_before_exception_remains_releasable
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+4
+
+======================================================================
+FAIL: test_press_delivered_before_exception_remains_releasable (test_input_owner_v12_wheel_cleanup.WheelCleanupTests.test_press_delivered_before_exception_remains_releasable) (count=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 117, in test_press_delivered_before_exception_remains_releasable
+    self.assert_released(owner, lease, server)
+  File "<repo>/research/live_control/test_input_owner_v12_wheel_cleanup.py", line 86, in assert_released
+    self.assertEqual(server.buttons_down, set())
+AssertionError: Items in the first set but not the second:
+5
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.152s
+
+FAILED (failures=12)

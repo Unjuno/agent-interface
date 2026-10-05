@@ -1,0 +1,36 @@
+{
+  "command": [
+    "<python-runtime>/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "research/live_control",
+    "-p",
+    "test_input_owner_v12_wheel_cleanup.py",
+    "-v"
+  ],
+  "cwd": "<repo>",
+  "PYTHONPATH": "<repo>/research/live_control:<repo>/research/doom",
+  "started_unix_ns": 1791180701958489000,
+  "finished_unix_ns": 1791180702391897000,
+  "exit_code": 0,
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "source_sha256": {
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/input_owner_v12.py": "6e57248c5bb8cb009dcf8dfa007ebc9ea98a612ae32686d795677f14ed1b7cae",
+    "research/live_control/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "research/live_control/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/test_input_owner_v12_cleanup_after_explicit_up.py": "b9e22ec193d7074ad33478c49987debdb0bc4c930f9b0ec35843d48fbe897418",
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "389892bd3ffcacde3009eee4c971f0449403e9b1891988d611c77098f8b34318",
+    "research/live_control/test_input_owner_v12_wheel_cleanup.py": "2da2cdeff8e28a5e71713ff393511a6b8389de6e367a8efae80a933a860aada4"
+  },
+  "sources_unchanged": true,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "786b5787440619f757f15f510cc0a8f52b13d7f9ca38fce11ccf56e69e04268d",
+  "private_original_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "private_original_stderr_sha256": "786b5787440619f757f15f510cc0a8f52b13d7f9ca38fce11ccf56e69e04268d"
+}

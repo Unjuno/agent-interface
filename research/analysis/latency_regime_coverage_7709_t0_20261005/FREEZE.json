@@ -1,0 +1,23 @@
+{
+  "schema": "issue7709-latency-regime-coverage-t0-v1",
+  "issue": 7709,
+  "base_commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "classification": "synthetic CPU method qualification; no route experiment",
+  "frozen_at": "2026-10-05",
+  "candidate_sha256": "e0604de458303f0d8ae063a8c83382c67289732d02caba0cc0d2731206ddd31b",
+  "auditor_sha256": "20e1d4db4aa28b7dbce3cbf98312eb879dba5c40a9c564937c68f8f19e21a176",
+  "seed": 7709005,
+  "replicates": 240,
+  "sessions": 8,
+  "attempts": 40,
+  "block_width": 10,
+  "deadline_penalty_ns": 120.0,
+  "scenarios": ["stationary", "abrupt", "gradual"],
+  "data_model": "paired route latencies share within-session regime and common AR(1) workload; route-B minus route-A has a null mean, independent session treatment heterogeneity, and AR(1) residual; independent 5% censoring sets both observed route outcomes to the frozen deadline penalty",
+  "estimand": "all-window average paired route-B minus route-A deadline-penalized latency, with every attempt retained",
+  "conventional_interval": "two-sided normal 95% interval on all row-level paired differences, intentionally treating attempts as independent",
+  "segment_aware_interval": "stratify each session into the four fixed contiguous 10-attempt blocks; recombine all block means with equal weights into one all-window session estimate; two-sided Student-t 95% interval across eight independent session estimates (df=7, critical=2.364624251)",
+  "decision_gates": {"cluster_coverage_each_regime_ge_0_90": true, "cluster_false_promotion_each_regime_le_0_10": true, "nonstationary_coverage_gain_ge_0_10": true},
+  "mutation_controls": ["drop a required row", "duplicate a row", "merge adjacent fixed windows (missed boundary)", "insert an unregistered split (extra boundary)"],
+  "container": "Not required by Issue #7709 T0 (CPU-only simulation); no container started. Prior read-only OrbStack image inventory call failed on cached containerd blob. No image pull/build/restart attempted."
+}

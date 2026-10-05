@@ -1,0 +1,75 @@
+{
+  "C": "a decoded string can be valid JSON while its original transport bytes are invalid UTF8; raw input is the comparator, not reparsed normalized files",
+  "D": "preserve all rows; valid3 must retain decoded values; malformed2 should be refused before exchange/relay operation; any admitted malformed byte is a scoped counterexample; join exact persisted requests/IDs/process endpoints",
+  "H": "replacement decoding may collapse malformed OS stdin bytes into an admitted valid U+FFFD command, losing original-byte identity before dispatch",
+  "T": "one pass/five literal public --config children: ASCII/split valid UTF8/U+FFFD/FF/incomplete E3; only own inert clock-label echo fixture",
+  "U": "directed ordinary Windows construction, no natural failure rate/backend/SDK/input/model/task/release/clock/performance proof; chunks are writer operations not guaranteed OS read partitions",
+  "cells": [
+    {
+      "chunks_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22706c61696e227d5d7d0a"
+      ],
+      "config_sha256": "bfa0a9ea15d626684365badde37dbdf00685efbaf4d306a5d9242ea694617a38",
+      "input_bytes": 70,
+      "input_sha256": "80d81a5b74285ee17588b9471783fdfec16d01f979f1599cbdcd6275b6a71cac",
+      "name": "ascii",
+      "nonce": "d65c8302-f430-468d-b205-bec06e3ac572",
+      "strict_label": "plain",
+      "strict_utf8_valid": true
+    },
+    {
+      "chunks_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22e3",
+        "81",
+        "82227d5d7d0a"
+      ],
+      "config_sha256": "e76f1e3150cd9cf9c98a7fb03e7a88a3a7ccc039068a13e81dabadac570b7043",
+      "input_bytes": 68,
+      "input_sha256": "4995a00d351d4209290ed4d7255f4a300af2797a163fcc3f80f1da58ce2d6643",
+      "name": "unicode-split",
+      "nonce": "ac63ff4b-d068-49d2-aeb9-e1702601cd60",
+      "strict_label": "あ",
+      "strict_utf8_valid": true
+    },
+    {
+      "chunks_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22efbfbd227d5d7d0a"
+      ],
+      "config_sha256": "76120a3dc23cbe4ecf396ebe54c4ea2d117a0b4fb2f68a4dd9b49fe5076f274b",
+      "input_bytes": 68,
+      "input_sha256": "23d707d8eabddd766dc7a06ab09b271a6d0fb6ba3212d4b56952e1cbed7ea431",
+      "name": "replacement-valid",
+      "nonce": "0b6e1ca3-b0b8-4aaf-bacc-7bc8b18d9312",
+      "strict_label": "�",
+      "strict_utf8_valid": true
+    },
+    {
+      "chunks_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22ff227d5d7d0a"
+      ],
+      "config_sha256": "9deff5a017e683a430eed3044839a00d28722d25ee2b35abfbbab1c7236bab35",
+      "input_bytes": 66,
+      "input_sha256": "972656bb7424bcf8c0d0ec0caf0577b4849bc12a19f5168b15dd9598eb152d43",
+      "name": "invalid-ff",
+      "nonce": "94d1e60f-6bd4-4a45-9a36-21c359557e00",
+      "strict_label": null,
+      "strict_utf8_valid": false
+    },
+    {
+      "chunks_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22e3227d5d7d0a"
+      ],
+      "config_sha256": "4bfb47964443df45f53ca497d923509671fae3bcdd1146956cfe1326cb6027d2",
+      "input_bytes": 66,
+      "input_sha256": "757403d6019576708c34cb4925c2e065ecf772d2ff5559d0e3b75ddc573fb7e9",
+      "name": "incomplete-e3",
+      "nonce": "139e2181-60ab-49f7-84b1-a79ae12ed765",
+      "strict_label": null,
+      "strict_utf8_valid": false
+    }
+  ],
+  "formal_or_historical_producer_replays": 0,
+  "native_operations": 0,
+  "source_main": "dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1",
+  "stop": "all five cells once; no early success; CLI7s/fixture5s guards fail and preserve first output; later audit repairs do not repeat this pass"
+}

@@ -1,0 +1,17 @@
+{
+  "date_utc": "2026-10-05",
+  "host_os": "macOS",
+  "host_architecture": "arm64",
+  "python": "CPython 3.12.13",
+  "execution": "host-only standard library; no network calls from candidate/auditor",
+  "orbstack": {
+    "result": "NOT_RETRIED_KNOWN_CONTENT_STORE_FAILURE",
+    "prior_same-host_diagnostics": [
+      "docker images failed: containerd content blob operation not supported",
+      "docker run --rm --network none python:3.12-slim python --version failed: image content blob operation not supported"
+    ],
+    "container_mutations_or_retries_this_allocation": 0
+  },
+  "container_needed_by_frozen_protocol": false,
+  "host_only_limitation": "No container isolation, resource limit, or runtime claim."
+}

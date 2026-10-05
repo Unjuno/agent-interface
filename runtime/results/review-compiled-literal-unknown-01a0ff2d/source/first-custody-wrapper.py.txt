@@ -1,0 +1,66 @@
+import ast, hashlib, json, pathlib, re
+root = pathlib.Path(__file__).resolve().parent
+projection = root / 'projection'
+packet = projection / 'runtime/results/compiled-literal-unknown-01a0ff35'
+out = root.parents[1] / 'outputs/review-6939-01a0ff2d-v1'
+def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+manifest = json.loads((packet / 'MANIFEST.json').read_text())
+if len(manifest['files']) != 53: raise ValueError('manifest count')
+for row in manifest['files']:
+    p = (packet / row['path']).resolve()
+    if not p.is_relative_to(packet.resolve()): raise ValueError('manifest escape')
+    if len(p.read_bytes()) != row['bytes'] or sha(p) != row['sha256']: raise ValueError(row['path'])
+actual = {p.relative_to(packet).as_posix() for p in packet.rglob('*') if p.is_file()}
+if actual != {r['path'] for r in manifest['files']} | {'MANIFEST.json'}: raise ValueError('package set')
+baseline = packet / 'source/baseline-compiled_gui.py.txt'
+candidate = projection / 'runtime/core_v1/compiled_gui.py'
+dependency = projection / 'dependency6900/compiled_gui.py'
+dependency_copy = packet / 'source/dependency-compiled_gui.py.txt'
+if dependency.read_bytes() != dependency_copy.read_bytes(): raise ValueError('dependency source mismatch')
+if candidate.read_bytes() != (packet / 'source/candidate-compiled_gui.py.txt').read_bytes(): raise ValueError('candidate copy')
+if sha(candidate) != 'de9af115808aef5bbafc1576e0930e3394ea0d426317cd79fd78f0c7558b48cf': raise ValueError('candidate identity')
+if sha(baseline) != 'ccaff4ce59cfbe7af76bfe80655c968eed7855acdb7514df64730790766cf7f7': raise ValueError('baseline identity')
+old = b'            unknown = any(key not in observed or observed.get(key) == "unknown"\n                          for key in expected)\n'
+new = b'            # A declared matching string literal still needs the effect verifier.\n            # Retain legacy unavailable handling when "unknown" does not match.\n            unknown = any(key not in observed or\n                          (observed[key] == "unknown" and\n                           not _matches(observed[key], value))\n                          for key, value in expected.items())\n'
+if baseline.read_bytes().count(old) != 1 or baseline.read_bytes().replace(old,new) != candidate.read_bytes(): raise ValueError('production delta')
+if dependency.read_bytes().count(old) != 1: raise ValueError('dependency old delta')
+composed_bytes = dependency.read_bytes().replace(old,new)
+composed = root / 'composed-compiled_gui.py'
+if composed.exists() and composed.read_bytes() != composed_bytes: raise ValueError('prior composed source')
+composed.write_bytes(composed_bytes)
+if sha(composed) != '84b00d1f5ba4243301502e3fb2a65b0284fe543b6a0826a251e664b674ddd99c': raise ValueError('composed identity')
+freeze = json.loads((packet / 'SOURCE_FREEZE.json').read_text())
+source_checks=[]
+for row in freeze['files']:
+    path = projection / row['path']
+    if row['path'] == 'runtime/core_v1/compiled_gui.py': path = baseline
+    elif row['path'] == 'runtime/core_v1/COMPILED_GUI.md': continue
+    if len(path.read_bytes()) != row['bytes'] or sha(path) != row['sha256']: raise ValueError('freeze pin '+row['path'])
+    blob = hashlib.sha1(b'blob '+str(len(path.read_bytes())).encode()+b'\0'+path.read_bytes()).hexdigest()
+    if blob != row['git_blob']: raise ValueError('freeze git pin')
+    source_checks.append(row['path'])
+report = json.loads((packet / 'REPORT.json').read_text())
+publication = json.loads((packet / 'PUBLICATION.json').read_text())
+receipt_checks=[]
+for row in report['commands']:
+    label=row['label']
+    receipt=json.loads((packet / ('evidence/'+label+'.receipt.json')).read_text())
+    stderr=(packet / ('evidence/'+label+'.stderr.txt')).read_bytes()
+    stdout=(packet / ('evidence/'+label+'.stdout.txt')).read_bytes()
+    count=re.search(rb'Ran (\d+) tests?',stderr)
+    if count is None or int(count.group(1)) != row['methods']: raise ValueError('method count '+label)
+    for key in ['started_utc','ended_utc','exit_code','source_sha256','test_sha256']:
+        if receipt[key] != row[key]: raise ValueError('receipt/report '+label+':'+key)
+    if receipt['exit_code']==0 and re.search(rb'(?m)^OK\r?$',stderr) is None: raise ValueError('success footer')
+    if row['exit_code']==1 and b'FAILED (' not in stderr: raise ValueError('failure footer')
+    receipt_checks.append({'label':label,'methods':row['methods'],'exit':receipt['exit_code'],'public_stdout_sha256':hashlib.sha256(stdout).hexdigest(),'public_stderr_sha256':hashlib.sha256(stderr).hexdigest(),'original_stream_hashes_are_not_rewritten':True})
+native=ast.parse((projection/'runtime/integration_checks/native.py').read_text())
+suites=next(ast.literal_eval(n.value) for n in native.body if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id=='SUITES' for x in n.targets))
+for name,module in [('protocol','runtime.core_v1.test_compiled_literal_unknown_01a0ff35'),('harness','runtime.guarded_x11_v1.test_compiled_literal_unknown_01a0ff35')]:
+    if suites[name].count(module)!=1 or sum(x.count(module) for x in suites.values())!=1: raise ValueError('selection duplication')
+result={'manifest_targets':53,'package_files':54,'changed_files_byte_readback':59,'unchanged_core_source_test_pins':source_checks,'reconstructed_composed_sha256':sha(composed),'retained_author_receipts_checked':receipt_checks,'publication_mapping_keys':sorted(publication),'new_native_selection_exact_once':True,'limits':'Original private captures are not independently accessible/authenticated; public derivatives stay distinct. No author commands or whole suites invoked. Not a current-main or platform/backend effect certificate.'}
+out.mkdir(parents=True,exist_ok=True)
+result_path=out/'artifact-custody.json'
+if result_path.exists(): raise ValueError('custody result already exists')
+result_path.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({'manifest_targets':53,'files':54,'core_pins':len(source_checks),'author_receipts':len(receipt_checks),'composed_sha':sha(composed)}))

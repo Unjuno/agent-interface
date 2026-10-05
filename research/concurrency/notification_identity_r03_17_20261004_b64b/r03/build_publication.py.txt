@@ -1,0 +1,113 @@
+import ast
+import base64
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+p = Path(__file__).resolve().parent
+repo = p.parent / 'agent-interface'
+G = '/nix/store/a14yxcqvv9x2l9mllgpirzhvz93pgprg-git-2.54.0/bin/git'
+parent = 'fabba48c8130c14372e8b08219e1e904a3889711'
+base = 'f474970f82d68b6648aac64f99048ad0c2fd5732'
+branch = 'fix/17-notification-identity-b64b'
+prefix = 'research/concurrency/notification_identity_r03_17_20261004_b64b/'
+env = {**os.environ, 'GIT_NO_LAZY_FETCH': '1', 'GIT_INDEX_FILE': str(p / 'publication.index')}
+
+
+def git(*args, **kw):
+    return subprocess.check_output([G, '-C', str(repo), *args], env=env, **kw)
+
+
+def sha(b):
+    return hashlib.sha256(b).hexdigest()
+
+
+def lossless(name, b):
+    if b'\0' in b or any(line.rstrip(b'\r\n').endswith((b' ', b'\t')) for line in b.splitlines(keepends=True)):
+        return name + '.base64.json', json.dumps({'encoding': 'base64', 'original_path': name,
+                                                 'original_bytes': len(b), 'original_sha256': sha(b),
+                                                 'data': base64.b64encode(b).decode()}, sort_keys=True).encode() + b'\n'
+    try:
+        b.decode('utf8')
+    except UnicodeDecodeError:
+        return name + '.base64.json', json.dumps({'encoding': 'base64', 'original_path': name,
+                                                 'original_bytes': len(b), 'original_sha256': sha(b),
+                                                 'data': base64.b64encode(b).decode()}, sort_keys=True).encode() + b'\n'
+    return name, b
+
+
+assert git('rev-parse', 'refs/heads/' + branch).decode().strip() == parent
+assert not (p / 'publication.index').exists()
+images = {}
+for label, folder in [('fresh-private', p.parent / 'notification-fresh-before-wait-b64b'),
+                      ('boundary', p.parent / 'notification-boundary-b64b'), ('r03', p)]:
+    for f in sorted(folder.iterdir()):
+        if not f.is_file() or f.name in ('publication-body.txt', 'workspace-check.py.txt'):
+            continue
+        name = label + '/' + f.name + ('.txt' if f.suffix == '.py' else '')
+        name, b = lossless(name, f.read_bytes())
+        images[prefix + name] = b
+packet = p.parent / 'notification-boundary-b64b/peer/packet.json.gz'
+name, b = lossless('peer/packet.json.gz', packet.read_bytes())
+images[prefix + name] = b
+images[prefix + 'README.md'] = (p / 'README.md').read_bytes()
+images[prefix + 'SHA256SUMS'] = ''.join(sha(b) + '  ' + name.removeprefix(prefix) + '\n'
+                                     for name, b in sorted(images.items())).encode()
+images['research/live_control/codex_app_server_client_v2.py'] = (p / 'codex_app_server_client_v2.py').read_bytes()
+images['research/live_control/test_codex_app_server_notification_arrival.py'] = (p / 'test_codex_app_server_notification_arrival.py').read_bytes()
+package = p / 'package'
+package.mkdir()
+for name, b in images.items():
+    f = package / name
+    f.parent.mkdir(parents=True, exist_ok=True)
+    f.write_bytes(b)
+    if name.endswith('.py') or name.endswith('.py.txt'):
+        ast.parse(b)
+git('read-tree', parent)
+for name, b in images.items():
+    oid = git('hash-object', '-w', '--stdin', input=b).decode().strip()
+    git('update-index', '--add', '--cacheinfo', '100644', oid, name)
+tree = git('write-tree', '--missing-ok').decode().strip()
+head = git('commit-tree', tree, '-p', parent,
+           input=b'fix(client): rescan newly queued identities before EOF or wait [skip ci]\n').decode().strip()
+r = subprocess.run([G, '-C', str(repo), 'diff', '--check', base, head], env=env, capture_output=True)
+(p / 'diff-check.txt').write_bytes(r.stdout + r.stderr)
+assert r.returncode == 0
+paths = git('diff', '--name-only', base, head).decode().splitlines()
+pins = []
+for name in paths:
+    b = git('show', head + ':' + name)
+    mode, kind, oid = git('ls-tree', head, '--', name).decode().split('\t')[0].split()
+    pins.append({'path': name, 'mode': mode, 'blob': oid, 'bytes': len(b), 'sha256': sha(b)})
+old = json.loads((p.parent / 'notification-identity-r02-b64b/proposal.json').read_text())
+for image in old['proposal']['images']:
+    if image['path'].startswith('research/concurrency/'):
+        b = git('show', head + ':' + image['path'])
+        assert len(b) == image['bytes'] and sha(b) == image['sha256']
+diff = git('diff', '--no-ext-diff', '--no-textconv', '--binary', '--full-index', base, head)
+(p / 'diff.patch').write_bytes(diff)
+proposal = {'policy_version': 'FINAL-v5', 'repository': 'Unjuno/agent-interface',
+            'worker_id': '01a0ff52-b64b-71d2-b2d6-19a57b40283f', 'task_id': '17-NOTIFICATION-IDENTITY-R03',
+            'change_id': 'notification-identity-r03-examine-arrivals-before-wait',
+            'review_epoch': 'notification-identity-r03-arrival-before-votes',
+            'head_sha': head, 'source_tree_sha': tree, 'ordered_head_parents': [parent],
+            'review_base_sha': base, 'source_branch': branch,
+            'previous_content_digest': old['proposal_digest'],
+            'diff_sha256': sha(diff), 'diff_bytes': len(diff), 'images': pins,
+            'committee': old['proposal']['committee'], 'required_nonauthor_content_votes': 2,
+            'explicit_seat_acceptance_required': True,
+            'conditions': ['R02 constructor/reader/request/close and15 other methods unchanged; only wait rescan plus new2-case regression active; identity test unchanged.',
+                           'Queue removals through public wait only; no private mutation or consumed-object reinsertion; callback remains under Condition.',
+                           'Deadline precedes fresh rescan;17 ordinary relevant methods and4 deterministic boundary methods qualified separately; all owned inert threads retired.',
+                           'Stable positive-time queues at most2n deque yields; no allocation/CPU/wall-time/economy or arbitrary callback/churn/whole-call recovery claim.',
+                           'All44 original R01/R02 archive images preserved; peer packet saved-only, never producer replay; native catalogue unchanged/manual focused entry; whole suite/CI unverified.',
+                           'Fresh R03 same-descriptor votes; actual-current nonauthor fulltree/raworderedparents/dependency certificate and sole fresh owner/cancellation/rules/forward expected-old main sender remain separate.'],
+            'content_votes_observed': 0, 'main_sends': 0}
+canonical = json.dumps(proposal, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
+descriptor = {'proposal': proposal, 'proposal_digest': sha(canonical), 'canonical_bytes': len(canonical)}
+(p / 'proposal.json').write_text(json.dumps(descriptor, indent=2, ensure_ascii=False) + '\n')
+git('update-ref', 'refs/heads/' + branch, head, parent)
+print(json.dumps({'head': head, 'tree': tree, 'images': len(pins), 'new_images': len(images),
+                  'digest': sha(canonical), 'canonical_bytes': len(canonical), 'raw_parent': parent}))

@@ -1,0 +1,85 @@
+{
+  "status": "FAIL_PACKET_BYTE_GATE",
+  "predicate_preservation_scoped": true,
+  "native_complete_packet_reduction": 0.1596806387225549,
+  "totals": {
+    "native": {
+      "RAW_CHECKPOINT": {
+        "rows": 18,
+        "bytes": 9018,
+        "mismatched_predicates": 0,
+        "unknown_predicates": 0,
+        "false_positive_predicates": 0,
+        "predicate_projection_collision_pairs": 0
+      },
+      "RECEIPT_TRUST": {
+        "rows": 18,
+        "bytes": 7182,
+        "mismatched_predicates": 33,
+        "unknown_predicates": 6,
+        "false_positive_predicates": 27,
+        "predicate_projection_collision_pairs": 36
+      },
+      "KEY_SUBSET": {
+        "rows": 18,
+        "bytes": 7398,
+        "mismatched_predicates": 18,
+        "unknown_predicates": 18,
+        "false_positive_predicates": 0,
+        "predicate_projection_collision_pairs": 0
+      },
+      "CONSERVATIVE_PROFILE": {
+        "rows": 18,
+        "bytes": 7578,
+        "mismatched_predicates": 0,
+        "unknown_predicates": 0,
+        "false_positive_predicates": 0,
+        "predicate_projection_collision_pairs": 0
+      }
+    },
+    "synthetic": {
+      "RAW_CHECKPOINT": {
+        "rows": 32,
+        "bytes": 10480,
+        "mismatched_predicates": 0,
+        "unknown_predicates": 0,
+        "false_positive_predicates": 0,
+        "predicate_projection_collision_pairs": 0
+      },
+      "RECEIPT_TRUST": {
+        "rows": 32,
+        "bytes": 7184,
+        "mismatched_predicates": 64,
+        "unknown_predicates": 32,
+        "false_positive_predicates": 23,
+        "predicate_projection_collision_pairs": 198
+      },
+      "KEY_SUBSET": {
+        "rows": 32,
+        "bytes": 7600,
+        "mismatched_predicates": 32,
+        "unknown_predicates": 32,
+        "false_positive_predicates": 0,
+        "predicate_projection_collision_pairs": 2
+      },
+      "CONSERVATIVE_PROFILE": {
+        "rows": 32,
+        "bytes": 7904,
+        "mismatched_predicates": 0,
+        "unknown_predicates": 0,
+        "false_positive_predicates": 0,
+        "predicate_projection_collision_pairs": 0
+      }
+    }
+  },
+  "native_rows": 18,
+  "synthetic_states": 32,
+  "packets": 200,
+  "native_inputs": 0,
+  "original_native_regraded": false,
+  "token_latency_product_benefit_established": false,
+  "collision_scope": "semantic payload/keycode/bystander projection only, NOT full-provenance wire aliases",
+  "input_sha256": "7df8a97e24fa8b3998b392b29037121370caa80c7a58e73f59245edd698776d1",
+  "packets_sha256": "e80657714625a74062ba77c03ea6fa5f8b5df0b03dfad2bb73c30c83b530daa3",
+  "source_raw_sha256": "aafcc9a0b9db97619008dbb446304bf8d6ac703616e4a79329111fc674957643"
+}

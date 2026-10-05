@@ -1,0 +1,49 @@
+import hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parents[2];work=Path(__file__).resolve().parent;out=root/'outputs/x11-explicit-up-01a0ff2c';pub=out/'publication';prefix='runtime/results/x11-explicit-up-01a0ff2c';archive=pub/prefix;archive.mkdir(parents=True,exist_ok=False)
+sha=lambda b:hashlib.sha256(b).hexdigest();mapping=[]
+replacements=[(str(root).encode(),b'<worker-workspace>'),(b'<python312-install>',b'<python312-install>')]
+def add(path,b):
+    original=b
+    for old,new in replacements:b=b.replace(old,new)
+    # JSON-escaped path prefixes are separate exact textual encodings.
+    for old,new in replacements:b=b.replace(old.replace(b'\\',b'\\\\'),new)
+    target=archive/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(b)
+    mapping.append({'path':path,'original_bytes':len(original),'original_sha256':sha(original),'published_bytes':len(b),'published_sha256':sha(b),'derivative':b!=original})
+for name in ['PLAN.json','CLAIM.md','REPAIR.json','SOURCE_INPUTS.json','test-v1.py.txt','run-v1.py.txt','test-v2.py.txt','run-v2.py.txt']:
+    add(name,(out/name).read_bytes())
+for phase in ['baselineRED','baselineRED-corrected','firstGREEN','optimizedGREEN','activeRED','activeGREEN','activeGREEN-optimized']:
+    for name in ['START.json','RESULT.json','stdout.txt','stderr.txt']:add('runs/'+phase+'/'+name,(out/phase/name).read_bytes())
+for name in ['START.json','RESULT.json','stdout.txt']:add('audit/'+name,(out/'audit-first'/name).read_bytes())
+for path in work.glob('*.py'):add('tools/'+path.name+'.txt',path.read_bytes())
+inputs=json.loads((out/'SOURCE_INPUTS.json').read_text())
+for r in inputs['records']:add('original-source/'+r['path']+'.txt',r['content'].encode())
+add('candidate-backend.py.txt',(work/'candidate_backend.py.txt').read_bytes())
+add('candidate-test.py.txt',(work/'candidate-tree/runtime/backends/x11_v1/test_explicit_up_ledger.py').read_bytes())
+readme='''# X11 explicit-UP obligation retention — ordinary source construction
+
+Parent #57, actual worker01a0ff2c-34fb-73a0-b3aa-bdf13badf325 / FINAL-v5; prospective claim5970137979. Fixed basef82be9636624d5302b7f63b618c865cde5bb426b. No native/formal/GUI/model call, author producer replay or main application.
+
+Current X11 key_state(False)/pointer_button(False) retire ownership after accepted UP/sync, before state readback. Scripted stubborn key pair/chord/ASCII text/remapping-after-UP each falsely complete with key38 still down. Global pointer read detects left down but owned retry obligation is gone. Remove only those two eager retirement sites; existing release_all retires after both completed readbacks, and existing session quarantine/recovery is unchanged. Retained physical code38 survives a changed logical mapping39. Complete/verified read remains assumed; no physical/durable certificate.
+
+First ordinary8-method baseline has8 failures:7 source subcases plus one incorrect test expectation on unpaired-UP admission. Keep its full source/START/RESULT/streams. Corrected fixture preserves actual current strict-core INVALID_PROGRAM/zero-emission refusal and separately checks direct backend untracked UP. Same corrected definitions: baseline8/7failures, candidate8PASS normal and optimized. Portable adjacent-source loader changes only source discovery; same eight bodies, baseline7failures and candidate8PASS normal/optimized. Every endpoint and first error is preserved, not a formal allocation replay.
+
+Production backend/session class AST bodies and actual strict-core admit_program execute with inert Xlib constants/endpoints; no Xlib import/socket/display or constructor. Static keyboard-map/WM discovery and wait-remap callback are declared environmental substitutes. Real preflight/text-plan/execute/release readback/session dispatch/recover logic is retained. This does not validate actual XSync effect, MappingNotify delivery, bitmap freshness, actor identity, concurrent mutation, extended mouse buttons, arbitrary original-key remaps, desktop effect, backend import/package/hosted CI or efficiency.
+
+Separate saved-data oracle checks32 candidate literal rows, exact equality across all four corrected/portable/optimized candidate endpoints,7 complete first source endpoints and typed streams/source pins. Four baseline false completions and button custody loss remain. Six copied semantic negatives refuse (lost key/button, false completion, wrong physical identity, lost query-fault ledger, replay-enabled recovery). Same-worker independent implementation is not external nonauthor approval.
+
+Active regression command from a source checkout: python -B runtime/backends/x11_v1/test_explicit_up_ledger.py (and -O). It reads actual adjacent backend/session/contract sources, extracts class bodies, substitutes inert environmental endpoints and forbids the native constructor. It is a source regression, not a native package/backend import or zipapp qualification. All archive helpers have .py.txt extensions; no archive package/__init__/workflow registration. Original/private paths are projected only at exact declared own prefixes; original hashes are retained in PUBLICATION.json, private origins are unauthenticated by readers.
+
+Fresh nonauthor fixed-content votes and actual-current composition/platform/identity/ownership/sole conditional sender are separate requirements. No old Win326951/7060 or own7084 vote transfers.
+'''
+add('README.md',readme.encode())
+add('.gitattributes',b'* -text -whitespace\n')
+(archive/'PUBLICATION.json').write_text(json.dumps({'projection':'only own workspace/interpreter exact literal and JSON-escaped prefixes','private_originals_retained':True,'private_originals_authenticated':False,'files':mapping},indent=2)+'\n',encoding='utf8')
+targets=sorted(p for p in archive.rglob('*') if p.is_file() and p.name!='MANIFEST.json')
+manifest=[{'path':p.relative_to(archive).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in targets]
+(archive/'MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf8')
+for name in ['backend.py','test_explicit_up_ledger.py']:
+    dest=pub/'runtime/backends/x11_v1'/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes((work/'stage/runtime/backends/x11_v1'/name).read_bytes())
+images=[{'path':p.relative_to(pub).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in sorted(pub.rglob('*')) if p.is_file()]
+(out/'PUBLIC_IMAGES.json').write_text(json.dumps(images,indent=2)+'\n',encoding='utf8')
+print(json.dumps({'images':len(images),'active':2,'inert':len(images)-2,'manifest_targets':len(manifest),'publication_members':len(mapping),'projections':sum(x['derivative'] for x in mapping),'bytes':sum(x['bytes'] for x in images)}))

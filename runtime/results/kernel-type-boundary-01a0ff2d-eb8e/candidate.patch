@@ -1,0 +1,56 @@
+--- baseline/runtime/kernel/lifecycle.py
++++ candidate/runtime/kernel/lifecycle.py
+@@ -61,6 +61,8 @@
+     def bind(self, binding: TargetBinding) -> None:
+         if self.stage is not Stage.OBSERVED or self.observation is None:
+             raise ContractError("binding requires one current observation")
++        if not isinstance(binding, TargetBinding):
++            raise ContractError("binding must be TargetBinding")
+         if binding.observation_sequence != self.observation.sequence:
+             raise ContractError("binding is stale for current observation")
+         if binding.surface_id != self.observation.surface_id:
+@@ -71,6 +73,8 @@
+     def authorize(self, lease: AuthorityLease, *, now_ns: int) -> None:
+         if self.stage is not Stage.BOUND or self.binding is None:
+             raise ContractError("authority requires a current binding")
++        if not isinstance(lease, AuthorityLease):
++            raise ContractError("lease must be AuthorityLease")
+         if type(now_ns) is not int or now_ns < 0:
+             raise ContractError("now_ns must be nonnegative integer")
+         if lease.observation_sequence != self.binding.observation_sequence:
+@@ -89,6 +93,8 @@
+             raise ContractError("now_ns must be nonnegative integer")
+         if now_ns >= self.lease.valid_until_ns:
+             raise ContractError("authority expired before execution")
++        if not isinstance(request, ExecutionRequest):
++            raise ContractError("request must be ExecutionRequest")
+         if request.binding != self.binding or request.lease != self.lease:
+             raise ContractError("execution request changed bound target or authority")
+         self.request = request
+@@ -96,6 +102,8 @@
+     def record_execution(self, receipt: ExecutionReceipt) -> None:
+         if self.stage is not Stage.AUTHORIZED or self.request is None:
+             raise ContractError("execution receipt requires begun execution")
++        if not isinstance(receipt, ExecutionReceipt):
++            raise ContractError("receipt must be ExecutionReceipt")
+         request = self.request
+         if receipt.command_id != request.command_id:
+             raise ContractError("execution receipt command mismatch")
+@@ -117,6 +125,8 @@
+     def record_effect(self, receipt: EffectReceipt) -> None:
+         if self.stage is not Stage.EXECUTED or self.execution is None or self.request is None:
+             raise ContractError("effect receipt requires completed released execution")
++        if not isinstance(receipt, EffectReceipt):
++            raise ContractError("receipt must be EffectReceipt")
+         if receipt.command_id != self.execution.command_id:
+             raise ContractError("effect receipt command mismatch")
+         if receipt.invariant_manifest_id != self.execution.invariant_manifest_id:
+@@ -134,6 +144,8 @@
+         if self.stage in {Stage.VERIFIED, Stage.CONTRADICTED, Stage.UNAVAILABLE, Stage.STOPPED}:
+             raise ContractError("terminal lifecycle cannot be stopped again")
+         if self.stage is Stage.AUTHORIZED:
++            if release is not None and not isinstance(release, ReleaseReceipt):
++                raise ContractError("release must be ReleaseReceipt")
+             if release is None or not release.released:
+                 raise ContractError("stopping active authority requires verified empty release")
+         if self.stage is Stage.EXECUTED and self.execution is not None and not self.execution.release.released:

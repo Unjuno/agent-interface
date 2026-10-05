@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decision",
+    "observed_target",
+    "observed_decoy",
+    "prefix"
+  ],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "NO_REPAIR",
+        "INSERT_PREFIX",
+        "REFUSE"
+      ]
+    },
+    "observed_target": {
+      "type": "string"
+    },
+    "observed_decoy": {
+      "type": "string"
+    },
+    "prefix": {
+      "type": "string"
+    }
+  }
+}

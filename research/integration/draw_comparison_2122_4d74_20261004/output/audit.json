@@ -1,0 +1,320 @@
+{
+  "scores": [
+    {
+      "id": "stable_unlocked__model",
+      "saved": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "COMMIT",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "stable_unlocked__fresh_read_reference",
+      "saved": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "RECHECK",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "stable_locked__fresh_read_reference",
+      "saved": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "RECHECK",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "stable_locked__model",
+      "saved": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2000,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "COMMIT",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "conflict_locked__model",
+      "saved": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "RECHECK",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "conflict_locked__fresh_read_reference",
+      "saved": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "RECHECK",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "unknown_locked__fresh_read_reference",
+      "saved": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "RECHECK",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "unknown_locked__model",
+      "saved": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": true,
+      "action": "RECHECK",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    },
+    {
+      "id": "blind_stale_negative__negative",
+      "saved": {
+        "A": [
+          1200,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "expected": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "task_complete": false,
+      "action": "BLIND_STALE",
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED"
+    }
+  ],
+  "cost": {
+    "input_tokens": 55011,
+    "output_tokens": 337,
+    "cached_input_tokens": 26112,
+    "reasoning_output_tokens": 147
+  },
+  "model_host_elapsed_ns": 40876000000,
+  "errors": [],
+  "decision": "SUPPORT_FRESH_READ_RECOVERY_SCOPED",
+  "scope": "actual fixed-order headless Draw/model/API recovery; finite barriers only, no atomic current authority or model advantage"
+}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/src/audit.py", line 166, in <module>
+    main()
+    ~~~~^^
+  File "/src/audit.py", line 153, in main
+    result = validate(manifest, raw, truth)
+  File "/src/audit.py", line 51, in validate
+    reject(any(set(e) != episode_keys for e in episodes), "episode_field_set")
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/audit.py", line 13, in reject
+    raise ValueError(message)
+ValueError: episode_field_set

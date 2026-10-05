@@ -1,0 +1,1 @@
+G22: six exact Calc saves using standard keyboard navigation, including actual same-window relocation. Read calc-keyboard-sequence-4d74/REPORT.md, PLAN.json and audit-out/AUDIT.json. Literal raw/source custody; historical source closure, no model or causal efficiency claim. ROADMAP incomplete.

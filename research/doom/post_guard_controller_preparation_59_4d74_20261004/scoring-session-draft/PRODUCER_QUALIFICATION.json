@@ -1,0 +1,13 @@
+{
+  "disposition": "HOLD_PASSIVE_KILLCOUNT_FRESHNESS",
+  "source_tag": "1.3.0",
+  "evidence": [
+    "viz_game.cpp335 MAP_TIC written by VIZ_GameStateTic",
+    "viz_game.cpp349 death transition written by VIZ_GameStateTic",
+    "viz_game.cpp404 MAP_KILLCOUNT written by VIZ_GameStateUpdateVariables",
+    "viz_main.cpp245-247 calls VIZ_Update conditionally on vizUpdate",
+    "viz_main.cpp281 invokes VIZ_GameStateUpdate in VIZ_Update"
+  ],
+  "conclusion": "Nonadvancing getters alone do not qualify fresh kill counts or coherent tic/kill/death sampling. Never grade recovery from this draft.",
+  "next": "Trace asynchronous message/update controls; select explicit scoring-only refresh with disclosed timing effects or alternative independent effect evidence. Real binary/game behavior still untested."
+}

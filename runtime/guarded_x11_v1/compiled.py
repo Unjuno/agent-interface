@@ -6,7 +6,7 @@ No model, sensor, remint, retry, window handoff or task oracle is supplied here.
 import copy
 import time
 import uuid
-from runtime.core_v1.compiled_gui import run as run_graph, validate
+from runtime.core_v1.compiled_gui import ObservationAssociationChanged, run as run_graph, validate
 from .handles import ALIAS
 
 
@@ -58,6 +58,23 @@ class _Adapter:
                 and surface(self.bridge) == self.surface and not self.bridge.review_required)
 
     def observe(self, request):
+        try:
+            return self._observe(request)
+        except Exception as error:
+            if isinstance(error, ObservationAssociationChanged):
+                raise
+            # The graph converts observation failures into a typed partial
+            # result. Retain the originating detail before that boundary.
+            try:
+                self.retain('exception', {'stage':'observation',
+                    'error_type':type(error).__name__,'error':repr(error),
+                    'replay_allowed':False,
+                    'effect_status':'unknown; inspect retained bridge receipts before any new action'})
+            except Exception:
+                pass
+            raise
+
+    def _observe(self, request):
         # Every graph iteration captures through the ordinary retained bridge.
         native = self.bridge.observe()
         _, image = self.bridge.history[native['sequence']]

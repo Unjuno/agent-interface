@@ -1,0 +1,33 @@
+{
+  "schema": "agent-interface-astra-continuous-hud-a01-audit-v1",
+  "status": "PASS_SCOPED",
+  "checks": {
+    "source_hashes": 19,
+    "decoded_video_frames": 780,
+    "selected_frame_pixels_equal_video_decode": true,
+    "timeline_mapping_matches_renderer": true,
+    "selected_observation_inside_model_wait_and_cover": true,
+    "active_cover_was_no_input_coast": true,
+    "latest_observation_age_ms": 195.335121,
+    "stable_baseline_mask_diff_max": 29,
+    "selected_mask_diff": 471,
+    "selected_visual_change_exceeds_threshold": true
+  },
+  "manual_visual_review": {
+    "status": "PASS_VISUAL_INSPECTION",
+    "decision5_health_percent": 84,
+    "frame311_health_percent": 77,
+    "decision6_health_percent": 84,
+    "close_enemy_visible_at_frame311": true,
+    "checked_images": [
+      "../results/map01-astra-attempt-v1/frames/05.png",
+      "video-frame-311.png",
+      "../results/map01-astra-attempt-v1/frames/06.png"
+    ],
+    "limitation": "These labels were visually inspected during this analysis; they are not OCR output or an independent game-state channel."
+  },
+  "scope": "One posthoc visual sample in one retained run; no causal, controller-response, safety, survival, or task-completion claim.",
+  "result_sha256": "9b7ab8826bf56073ec9425f6ff0d80acd70990032688ea1505c125df4e3035b7",
+  "samples_csv_sha256": "0b585a3671a10ba2a3e4f634b32cddc7f3fb83aa85013eb75faff8a128cd7e97",
+  "selected_frame_sha256": "94c2a10ddfac9c11aa28d033c8648453b0aae7c89acbf349c6e3bf7b56366e75"
+}

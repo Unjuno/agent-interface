@@ -1,0 +1,17 @@
+"""Saved-checker parser construction only; no experiment import or native peer."""
+import importlib.util,pathlib,json,hashlib,ast,sys
+root=pathlib.Path(__file__).resolve().parent
+source=root/'check_saved.py';ast.parse(source.read_text());s=importlib.util.spec_from_file_location('data_checker',source);m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+controls=[]
+for name,raw in [('duplicate-key',b'{"x":1,"x":2}'),('NaN',b'{"x":NaN}'),('Infinity',b'{"x":Infinity}'),('negative-Infinity',b'{"x":-Infinity}'),('overflow-float',b'{"x":1e999}'),('malformed',b'{"x":'),('invalid-UTF8',b'{"x":"\xff"}')]:
+ try:m.parse(raw,name)
+ except m.Rejected as e:controls.append({'name':name,'refused':True,'reason':str(e)})
+ else:raise AssertionError('accepted '+name)
+assert m.parse(b'{"x":1,"truth":true,"s":"ok"}', 'positive')=={'x':1,'truth':True,'s':'ok'}
+assert not m.equal({'id':True},{'id':1}) and m.equal({'id':1},{'id':1})
+f=root/'parser-nonterminated.jsonl';f.write_bytes(b'{"x":1}')
+try:m.lines(f)
+except m.Rejected as e:controls.append({'name':'nonterminated-JSONL','refused':True,'reason':str(e)})
+else:raise AssertionError('accepted missing newline')
+report={'schema':'saved-parser-construction-v1','pass':True,'python':sys.version,'checker_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'positive_JSON':True,'typed_bool_int_distinct':True,'refused':controls,'native_peers':0,'experiment_source_imports':0}
+(root/'parser-controls.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,sort_keys=True))

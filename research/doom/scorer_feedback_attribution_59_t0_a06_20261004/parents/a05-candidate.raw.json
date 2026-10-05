@@ -1,0 +1,212 @@
+{
+  "cases": [
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 1,
+            "intent_token": null,
+            "kind": "KILL_COUNT_INCREASE",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 1,
+            "intent_token": null,
+            "kind": "KILL_COUNT_INCREASE",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "case": "01-KILL_COUNT_INCREASE",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 1,
+        "kind": "KILL_COUNT_INCREASE",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 2,
+            "intent_token": null,
+            "kind": "MAP_EXIT",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 2,
+            "intent_token": null,
+            "kind": "MAP_EXIT",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "case": "02-MAP_EXIT",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 2,
+        "kind": "MAP_EXIT",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 3,
+            "intent_token": null,
+            "kind": "FUTURE_SCORER_EVENT_V3",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": false,
+        "error": "positive useful event kind is outside v2 producer vocabulary"
+      },
+      "case": "03-FUTURE_SCORER_EVENT_V3",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 3,
+        "kind": "FUTURE_SCORER_EVENT_V3",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": [
+          {
+            "causal_attribution": "NOT_ESTABLISHED",
+            "detection_interval_ns": [
+              100,
+              200
+            ],
+            "event_sequence": 4,
+            "intent_token": null,
+            "kind": "KILL_COUNT_INCREASEE",
+            "possible_intent_tokens": [
+              "intent-a"
+            ],
+            "reason": "one_verified_envelope_spans_detection_interval",
+            "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE"
+          }
+        ]
+      },
+      "a05": {
+        "accepted": false,
+        "error": "positive useful event kind is outside v2 producer vocabulary"
+      },
+      "case": "04-KILL_COUNT_INCREASEE",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 4,
+        "kind": "KILL_COUNT_INCREASEE",
+        "observed_ns": 200,
+        "polarity": "positive",
+        "schema": "independent-progress-event-v2",
+        "useful": true
+      }
+    },
+    {
+      "a04": {
+        "accepted": true,
+        "rows": []
+      },
+      "a05": {
+        "accepted": true,
+        "rows": []
+      },
+      "case": "05-PLAYER_DEAD",
+      "event": {
+        "controller_visible": false,
+        "event_sequence": 5,
+        "kind": "PLAYER_DEAD",
+        "observed_ns": 200,
+        "polarity": "negative",
+        "schema": "independent-progress-event-v2",
+        "useful": false
+      }
+    }
+  ],
+  "formal_live_allocation": false,
+  "producer_negative_vocab": [
+    "DEATH_COUNT_INCREASE",
+    "PLAYER_DEAD",
+    "EPISODE_FINISHED_NO_EXIT"
+  ],
+  "producer_vocab": [
+    "KILL_COUNT_INCREASE",
+    "MAP_EXIT"
+  ],
+  "schema": "scorer-feedback-attribution-a05-raw-v1",
+  "scope": "synthetic schema-construction; no task/game/model/input"
+}

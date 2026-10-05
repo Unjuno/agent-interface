@@ -1,0 +1,21 @@
+{
+  "identity": {
+    "tid": 7,
+    "selector_fd": 7,
+    "events": [
+      5
+    ]
+  },
+  "observations": [
+    {
+      "nr": "22",
+      "fd": 7,
+      "wchan": "__arm64_sys_epoll_pwait",
+      "state": "S"
+    }
+  ],
+  "classification": "ordinary observation availability preflight; no cancellation comparison",
+  "original_stdout_sha256": "b5dae70520570ca6a904b96a9b02ec8efcbabc2629da2d877b52862b94ba5954",
+  "original_receipt_sha256": "83ac0f2a5d014a2bbc61075cd7927aee285024705036a2a37f2bad772cfa553f",
+  "derivative_note": "Address-free proc observation derivative; original private stdout/receipt retained."
+}
