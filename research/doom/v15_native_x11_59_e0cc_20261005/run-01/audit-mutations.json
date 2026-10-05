@@ -1,0 +1,103 @@
+{
+  "mode": "raw-only negative controls; candidate not replayed",
+  "pass": true,
+  "controls": [
+    {
+      "name": "mismatched_release_identity",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "batch.w.up.bracket.actuation_id.consistent",
+          "pass": false
+        },
+        {
+          "name": "batch.w.up.adapter.actuation_id.consistent",
+          "pass": false
+        },
+        {
+          "name": "batch.w.admission_up.actuation_id",
+          "pass": false
+        },
+        {
+          "name": "batch.w.owner_receipt_measurement",
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "reordered_native_events",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "batch.native_sequence",
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "unverified_cleanup",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "cancel.verified",
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "wrong_late_up_cause",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "cancel.type",
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "source_hash_mismatch",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "loaded_source.research/live_control/input_owner_v12.py",
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "late_up_adds_native_event",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "cancel.native_sequence",
+          "pass": false
+        },
+        {
+          "name": "cancel.no_new_client_event",
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "thread_still_alive",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "ordered_batch.owner_thread_alive",
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "missing_memory_cap",
+      "rejected": true,
+      "failed_checks": [
+        {
+          "name": "cgroup.memory.max",
+          "pass": false
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "923d7ce368cafe7a05b0799d7dbcac5eb39462628099d571c9d2cc4d8d8e3aa6"
+}

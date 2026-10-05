@@ -1,0 +1,193 @@
+"""Read-only independent reconstruction of the two native-X11 probe cases."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+
+def audit(raw, lock, lock_hash):
+    checks = []
+
+    def need(name, condition):
+        checks.append({'name': name, 'pass': condition is True})
+
+    def equal(name, value, expected):
+        need(name, type(value) is type(expected) and value == expected)
+
+    def edge(label, value, direction, basis):
+        equal(label + '.edge', value['edge'], direction)
+        equal(label + '.classification', value['classification'], 'CONFIRMED_PHYSICAL_' + direction.upper())
+        equal(label + '.identity_status', value['identity_status'], 'MINTED' if direction == 'down' else 'RETIRED')
+        equal(label + '.basis', value['interval_basis'], basis)
+        equal(label + '.schema', value['schema'], 'keymap-batch-edge-v1')
+        pre, post = value['pre_sample'], value['post_sample']
+        for tag, sample in [('pre', pre), ('post', post)]:
+            equal(label + '.' + tag + '.available', sample['available'], True)
+            equal(label + '.' + tag + '.error', sample['error'], None)
+        equal(label + '.pre.down', pre['down'], direction == 'up')
+        equal(label + '.post.down', post['down'], direction == 'down')
+        times = [pre['started_ns'], pre['finished_ns'], value['press_request_ns' if direction == 'down' else 'release_request_ns'], value['sync_return_ns'], post['started_ns'], post['finished_ns']]
+        need(label + '.ordered_clock', all(type(t) is int and t >= 0 for t in times) and times == sorted(times))
+        interval = [pre['finished_ns'], post['finished_ns']]
+        equal(label + '.bracket', value['bracket']['physical_' + direction + '_interval'], interval)
+        equal(label + '.adapter_interval', value['adapter_edge']['interval'], interval)
+        for part_name, part in [('measurement', value), ('bracket', value['bracket']), ('adapter', value['adapter_edge'])]:
+            for identity in ['owner_id', 'intent_token', 'key', 'actuation_id']:
+                need(label + '.' + part_name + '.' + identity + '.string', type(part[identity]) is str and bool(part[identity]))
+                equal(label + '.' + part_name + '.' + identity + '.consistent', part[identity], value[identity])
+            equal(label + '.' + part_name + '.authority', part['grants_input_authority'], False)
+            equal(label + '.' + part_name + '.app_consumption', part['application_consumption_observed'], False)
+        equal(label + '.adapter_edge', value['adapter_edge']['edge'], direction)
+
+    def pair(label, down, up, basis):
+        edge(label + '.down', down, 'down', 'key_snapshot')
+        edge(label + '.up', up, 'up', basis)
+        for identity in ['owner_id', 'intent_token', 'key', 'actuation_id']:
+            equal(label + '.admission_up.' + identity, up[identity], down[identity])
+        need(label + '.down_precedes_up', down['post_sample']['finished_ns'] <= up['pre_sample']['started_ns'])
+
+    def state(label, mapping, keys, down):
+        equal(label + '.keys', sorted(mapping), sorted(keys))
+        need(label + '.values', all(type(mapping[k]) is bool and mapping[k] is down for k in keys))
+
+    def native_events(label, case, down_order, up_order):
+        codes = case['keycodes']
+        need(label + '.codes_distinct', len(set(codes.values())) == len(codes) and all(type(v) is int and 0 < v < 256 for v in codes.values()))
+        events = case['window_events']
+        expected = [('KeyPress', codes[k]) for k in down_order] + [('KeyRelease', codes[k]) for k in up_order]
+        equal(label + '.native_sequence', [(e['type'], e['detail']) for e in events], expected)
+        for n, event in enumerate(events):
+            equal(f'{label}.event{n}.window', event['event_window'], raw['x_server']['window_id'])
+            equal(f'{label}.event{n}.not_send_event', event['send_event'], False)
+
+    try:
+        equal('schema', raw['schema'], 'v15-native-measured-key-release-probe-v1')
+        need('no_fatal', 'fatal' not in raw)
+        equal('source_lock', raw['source_lock_sha256'], lock_hash)
+        expected_sources = {x['path']: x['sha256'] for x in lock['files']}
+        loaded = raw['source_files_loaded']
+        for path in ['research/doom/doom_batch_key_measurement_backend_v1.py', 'research/doom/doom_owner_thread_release_batch_backend_v1.py', 'research/live_control/input_transition_owner_v4.py', 'research/live_control/input_transition_owner_v3.py', 'research/live_control/input_owner_v12.py', 'research/live_control/key_edge_measurement_v1.py']:
+            need('required_source.' + path, path in loaded)
+        for path, digest in loaded.items():
+            equal('loaded_source.' + path, digest, expected_sources.get(path))
+        equal('case_set', sorted(raw['cases']), ['cancel_cleanup_then_late_up', 'ordered_batch'])
+        equal('private_window_focus', raw['x_server']['focus_id'], raw['x_server']['window_id'])
+        equal('observer_closed', raw['observer_closed'], True)
+        need('xvfb_reaped', type(raw['xvfb_exit']) is int and raw['xvfb_exit'] in [0, -15, 143])
+        for field in ['window_close_error', 'observer_close_error', 'xvfb_stop_error', 'xvfb_kill_error']:
+            need('no_' + field, field not in raw)
+        for field in ['game', 'model', 'gui_capture', 'controller_loop', 'authority']:
+            equal('scope.' + field, raw['scope'][field], False)
+        controls = raw['runtime_controls']
+        for field, expected in [('cpu.max', '100000 100000'), ('memory.max', '1073741824'), ('memory.swap.max', '0'), ('pids.max', '64')]:
+            equal('cgroup.' + field, controls[field], expected)
+        need('nonroot_uid', type(controls['uid']) is int and controls['uid'] > 0)
+
+        batch = raw['cases']['ordered_batch']
+        keys = ['a', 's', 'w']
+        state('batch.initial', batch['before'], keys, False)
+        state('batch.down', batch['after_down'], keys, True)
+        state('batch.up', batch['after_batch'], keys, False)
+        native_events('batch', batch, keys, list(reversed(keys)))
+        admissions = batch['admissions']
+        releases = batch['backend_rows']
+        equal('batch.admission_order', [x['key'] for x in admissions], keys)
+        equal('batch.release_order', [x['key'] for x in releases], list(reversed(keys)))
+        ids = [x['physical_key_measurement']['actuation_id'] for x in admissions]
+        need('batch.unique_admissions', len(set(ids)) == 3)
+        by_key = {x['key']: x for x in admissions}
+        for n, up in enumerate(releases):
+            down = by_key[up['key']]
+            label = 'batch.' + up['key']
+            pair(label, down['physical_key_measurement'], up['physical_key_measurement'], 'shared_batch_snapshot')
+            equal(label + '.program', up['id'], down['id'])
+            equal(label + '.step', up['step'], down['step'])
+            equal(label + '.complete', up['release_batch_complete'], True)
+            equal(label + '.position', up['release_batch_position'], n)
+            equal(label + '.size', up['release_batch_size'], 3)
+            equal(label + '.owner_verified', up['owner_thread_keyup_verified'], True)
+            equal(label + '.owner_transition_verified', up['owner_transition_verified'], True)
+            equal(label + '.owner_receipt_measurement', up['owner_thread_keyup_receipt']['physical_key_measurement'], up['physical_key_measurement'])
+        explicit = [x for x in batch['owner_records'] if x.get('event') == 'owner_explicit_keyup']
+        equal('batch.owner_release_order', [x['key'] for x in explicit], list(reversed(keys)))
+        equal('batch.owner_receipts_exact', [x['owner_thread_keyup_receipt'] for x in releases], explicit)
+        needs = [x['physical_key_measurement'] for x in releases]
+        need('batch.shared_pre_sample', all(x['pre_sample']['started_ns'] == needs[0]['pre_sample']['started_ns'] and x['pre_sample']['finished_ns'] == needs[0]['pre_sample']['finished_ns'] for x in needs))
+        need('batch.shared_post_sample', all(x['post_sample']['started_ns'] == needs[0]['post_sample']['started_ns'] and x['post_sample']['finished_ns'] == needs[0]['post_sample']['finished_ns'] for x in needs))
+        need('batch.request_order', [x['release_request_ns'] for x in needs] == sorted(x['release_request_ns'] for x in needs))
+
+        cancel = raw['cases']['cancel_cleanup_then_late_up']
+        keys = ['a', 's']
+        state('cancel.initial', cancel['before'], keys, False)
+        state('cancel.down', cancel['after_down'], keys, True)
+        state('cancel.before_late', cancel['after_cleanup_before_late_up'], keys, False)
+        state('cancel.after_late', cancel['after_late_up'], keys, False)
+        native_events('cancel', cancel, keys, keys)
+        equal('cancel.admission_order', [x['key'] for x in cancel['admissions']], keys)
+        ids = [x['physical_key_measurement']['actuation_id'] for x in cancel['admissions']]
+        need('cancel.unique_admissions', len(set(ids)) == 2)
+        cleanup = cancel['cleanup_record']
+        equal('cancel.reason', cleanup['reason'], 'cancelled')
+        equal('cancel.verified', cleanup['verified'], True)
+        equal('cancel.empty_keys', cleanup['keys_down'], [])
+        equal('cancel.empty_buttons', cleanup['buttons_down'], [])
+        equal('cancel.exact_cleanup_keys', sorted(cleanup['key_release_attempts']), sorted(str(cancel['keycodes'][k]) for k in keys))
+        equal('cancel.type', cancel['late_up_exception']['type'], 'Cancelled')
+        equal('cancel.no_new_owner_record', cancel['owner_records_after_late_up'], cancel['owner_records_before_late_up'])
+        equal('cancel.no_new_client_event', len(cancel['window_events']), cancel['all_window_event_count_before_late_up'])
+        equal('cancel.before_late_client_count', cancel['all_window_event_count_before_late_up'], 4)
+        for down in cancel['admissions']:
+            key = down['key']
+            record = cleanup['key_release_attempts'][str(cancel['keycodes'][key])]
+            up = record['physical_key_measurement']
+            pair('cancel.' + key, down['physical_key_measurement'], up, 'per_key_cleanup_snapshot')
+            equal('cancel.' + key + '.no_batch', up['batch_id'], None)
+            need('cancel.' + key + '.up_before_verified', up['post_sample']['finished_ns'] <= cleanup['verified_ns'])
+            need('cancel.' + key + '.attempts_observed', len(record['attempts']) >= 1)
+            equal('cancel.' + key + '.server_final_up', record['attempts'][-1]['server_key_down_after'], False)
+        rows = cancel['backend_rows']
+        equal('cancel.late_rows', [x['key'] for x in rows], ['s', 'a'])
+        for row in rows:
+            for field in ['release_batch_complete', 'physical_verification_authoritative', 'ordinary_release_candidate', 'owner_transition_verified']:
+                equal('cancel.late.' + row['key'] + '.' + field, row[field], False)
+            equal('cancel.late.' + row['key'] + '.no_explicit_receipt', row['owner_thread_keyup_receipt'], None)
+        for name, case in raw['cases'].items():
+            equal(name + '.owner_close_succeeded', case['owner_close_succeeded'], True)
+            need(name + '.no_owner_close_error', 'owner_close_error' not in case)
+            equal(name + '.no_event_after_close', case['events_after_close'], [])
+            equal(name + '.owner_stopped', case['owner_stopped'], True)
+            equal(name + '.owner_thread_alive', case['owner_thread_alive'], False)
+            state(name + '.after_close', case['after_close'], case['keys'], False)
+            records = case['owner_records_after_close']
+            need(name + '.no_owner_failure', not any(x.get('event') in ['owner_failed', 'cleanup_failed'] for x in records))
+            closes = [x for x in records if x.get('event') == 'owner_release' and x.get('reason') == 'close']
+            equal(name + '.one_close', len(closes), 1)
+            equal(name + '.close_verified', closes[0]['verified'], True)
+            equal(name + '.close_keys_empty', closes[0]['keys_down'], [])
+            equal(name + '.close_buttons_empty', closes[0]['buttons_down'], [])
+    except (KeyError, TypeError, ValueError, IndexError) as exc:
+        checks.append({'name': 'malformed_or_missing_raw', 'pass': False, 'error': repr(exc)})
+    return {'pass': bool(checks) and all(x['pass'] for x in checks), 'checks': checks, 'passed': sum(x['pass'] for x in checks), 'total': len(checks)}
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('raw')
+    parser.add_argument('source_lock')
+    parser.add_argument('output', help='new audit output path')
+    args = parser.parse_args()
+    raw_path, lock_path = Path(args.raw), Path(args.source_lock)
+    raw = json.loads(raw_path.read_bytes())
+    lock = json.loads(lock_path.read_bytes())
+    lock_hash = hashlib.sha256(lock_path.read_bytes()).hexdigest()
+    result = audit(raw, lock, lock_hash)
+    result.update(raw_sha256=hashlib.sha256(raw_path.read_bytes()).hexdigest(), source_lock_sha256=lock_hash, mode='retained-native-raw-only; no candidate execution')
+    with Path(args.output).open('x') as stream:
+        json.dump(result, stream, indent=2)
+        stream.write('\n')
+    print(json.dumps({k: v for k, v in result.items() if k != 'checks'}))
+    raise SystemExit(0 if result['pass'] else 1)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,486 @@
+#!/usr/bin/env python3
+"""Private native-X11 probe for the measured V15 key release path.
+
+This is not a game, model, controller, or latency test. It constructs the real
+opt-in V15 backend and real owner chain, then drives only raw key operations on
+an owned Xvfb server and a private focused window. Invoke once with a new output
+directory. The directory and raw.json are create-exclusive.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import select
+import subprocess
+import sys
+import threading
+import time
+import traceback
+import uuid
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def json_safe(value):
+    if value is None or type(value) in (str, int, float, bool):
+        return value
+    if isinstance(value, bytes):
+        return value.hex()
+    if isinstance(value, dict):
+        return {str(k): json_safe(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple, set)):
+        return [json_safe(v) for v in value]
+    return repr(value)
+
+
+def wait_display_number(proc, timeout_s=5.0):
+    ready, _, _ = select.select([proc.stdout], [], [], timeout_s)
+    if not ready:
+        raise TimeoutError("Xvfb did not publish a display number")
+    data = proc.stdout.readline()
+    if not data or not data.strip().isdigit():
+        raise RuntimeError("Xvfb returned an invalid -displayfd value")
+    return data.decode("ascii").strip()
+
+
+def keymap(display, codes):
+    bitmap = display.query_keymap()
+    return {key: bool(bitmap[code // 8] & (1 << (code % 8)))
+            for key, code in codes.items()}
+
+
+def drain_window_events(display, window):
+    display.sync()
+    rows = []
+    while window.pending_events():
+        event = window.next_event()
+        if event.type in (2, 3):  # KeyPress, KeyRelease
+            rows.append({"type": "KeyPress" if event.type == 2 else "KeyRelease",
+                         "detail": int(event.detail),
+                         "time": int(event.time),
+                         "event_window": int(event.event),
+                         "send_event": bool(event.send_event)})
+    return rows
+
+
+def make_window(observer, X):
+    screen = observer.screen()
+    window = screen.root.create_window(
+        10, 10, 320, 200, 0, X.CopyFromParent, X.InputOutput,
+        X.CopyFromParent, event_mask=X.KeyPressMask | X.KeyReleaseMask)
+    window.set_input_focus(X.RevertToParent, X.CurrentTime)
+    window.map()
+    observer.sync()
+    window.set_input_focus(X.RevertToParent, X.CurrentTime)
+    observer.sync()
+    focus = observer.get_input_focus().focus
+    focus_id = int(focus.id if hasattr(focus, "id") else focus)
+    if focus_id != int(window.id):
+        raise RuntimeError(f"private window did not retain focus: {focus_id}")
+    return window
+
+
+class ProbeLease:
+    """Lease shape required by the production owner, with bounded validity."""
+    def __init__(self, focus_id, seconds=20):
+        self.deadline = time.perf_counter_ns() + seconds * 1_000_000_000
+        self.cancel = threading.Event()
+        self.intent_token = uuid.uuid4().hex
+        self.expected_focus = focus_id
+        self.focus_invalid = False
+        self.expected_surface = None
+        self.expected_geometry = None
+        self.interruption = None
+
+    def check(self):
+        if time.perf_counter_ns() >= self.deadline:
+            from lease import Expired
+            raise Expired()
+
+    def record_interruption(self, record):
+        self.interruption = dict(record)
+
+
+def make_backend(display_name, display, output_dir, emitted):
+    from doom_batch_key_measurement_backend_v1 import Backend
+    from input_owner_v12 import InputOwner as RawOwner
+
+    class Session:
+        name = display_name
+        d = display
+
+    # These readers are constructor dependencies only. This probe never calls
+    # snapshot(), game code, HUD recognition, or any capture/model path.
+    readers = {"health": lambda image, metadata: None,
+               "ammo": lambda image, metadata: None}
+    backend = Backend(Session(), output_dir / "backend-artifacts", emitted.append,
+                      readers)
+    inner = getattr(getattr(backend.owner, "_inner", None), "_inner", None)
+    if not isinstance(inner, RawOwner) or inner.measure_key_edges is not True:
+        backend.owner.close()
+        raise AssertionError("V15 selected owner is not measured current V12")
+    return backend
+
+
+def raw_owner(owner):
+    current = owner
+    for _ in range(4):
+        child = getattr(current, "_inner", None)
+        if child is None:
+            return current
+        current = child
+    return current
+
+
+def activate_step(backend, lease, identifier, step):
+    backend.lease = lease
+    backend._input_event_context = (identifier, step)
+    backend._release_batch.context = {
+        "rows": [], "identifier": identifier, "step": step,
+        "pending_ups": [],
+    }
+
+
+def owner_records(owner):
+    return [dict(row) for row in owner.records]
+
+
+def case_batch(display_name, observer, window, X, XK, output_dir):
+    emitted = []
+    backend = make_backend(display_name, observer, output_dir, emitted)
+    # Backend's owner uses its own X connection. Session.d is only the normal
+    # backend connection and is not used by raw key operations in this probe.
+    codes = {name: int(observer.keysym_to_keycode(XK.string_to_keysym(name)))
+             for name in ("a", "s", "w")}
+    if any(code <= 0 for code in codes.values()) or len(set(codes.values())) != 3:
+        backend.owner.close()
+        raise RuntimeError("Xvfb keymap lacks distinct a/s/w keycodes")
+    focus = int(observer.get_input_focus().focus.id)
+    lease = ProbeLease(focus)
+    activate_step(backend, lease, "native-batch", 0)
+    rows = {"case": "ordered_batch", "keys": ["a", "s", "w"],
+            "reverse_up_order": ["w", "s", "a"], "keycodes": codes,
+            "before": keymap(observer, codes), "window_events": [],
+            "admissions": [], "owner_records": [], "backend_rows": [],
+            "after_down": None, "after_batch": None}
+    try:
+        for key in ("a", "s", "w"):
+            backend.raw(key, True)
+        rows["after_down"] = keymap(observer, codes)
+        rows["window_events"].extend(drain_window_events(observer, window))
+        for key in ("w", "s", "a"):
+            backend.raw(key, False)
+        rows["after_batch"] = keymap(observer, codes)
+        rows["window_events"].extend(drain_window_events(observer, window))
+        rows["admissions"] = [dict(row) for row in emitted
+                              if row.get("event") == "input_admission"]
+        rows["backend_rows"] = [dict(row) for row in emitted
+                                 if row.get("event") == "input_release_transition"]
+        rows["owner_records"] = owner_records(backend.owner)
+        rows["assertions"] = {
+            "all_three_admitted": len(rows["admissions"]) == 3,
+            "admission_order_is_a_s_w": [r.get("key") for r in rows["admissions"]] == ["a", "s", "w"],
+            "release_order_is_w_s_a": [r.get("key") for r in rows["backend_rows"]] == ["w", "s", "a"],
+            "all_keys_down_after_down": all(rows["after_down"].values()),
+            "all_keys_up_after_batch": not any(rows["after_batch"].values()),
+            "one_complete_release_batch": (
+                len(rows["backend_rows"]) == 3 and
+                all(r.get("release_batch_complete") is True for r in rows["backend_rows"]) and
+                [r.get("release_batch_position") for r in rows["backend_rows"]] == [0, 1, 2]
+            ),
+            "native_key_release_event_order_is_w_s_a": [
+                next((key for key, code in codes.items() if code == event["detail"]), None)
+                for event in rows["window_events"] if event["type"] == "KeyRelease"
+            ] == ["w", "s", "a"],
+            "native_keypress_event_order_is_a_s_w": [
+                next((key for key, code in codes.items() if code == event["detail"]), None)
+                for event in rows["window_events"] if event["type"] == "KeyPress"
+            ] == ["a", "s", "w"],
+            "adapter_ids_pair": all(
+                isinstance(r.get("physical_key_measurement"), dict) and
+                r["physical_key_measurement"].get("classification") == "CONFIRMED_PHYSICAL_UP" and
+                r["physical_key_measurement"].get("adapter_edge", {}).get("actuation_id") ==
+                next((a.get("physical_key_measurement", {}).get("adapter_edge", {}).get("actuation_id")
+                      for a in rows["admissions"] if a.get("key") == r.get("key")), None)
+                for r in rows["backend_rows"]
+            ),
+        }
+        return rows
+    finally:
+        try:
+            backend.owner.close()
+        finally:
+            rows["owner_records_after_close"] = owner_records(backend.owner)
+            inner = raw_owner(backend.owner)
+            rows["owner_stopped"] = bool(getattr(inner, "stopped", threading.Event()).is_set())
+            rows["owner_thread_alive"] = bool(getattr(inner, "thread", None) and inner.thread.is_alive())
+
+
+def case_cancel_cleanup(display_name, observer, window, X, XK, output_dir):
+    emitted = []
+    backend = make_backend(display_name, observer, output_dir, emitted)
+    codes = {name: int(observer.keysym_to_keycode(XK.string_to_keysym(name)))
+             for name in ("a", "s")}
+    if any(code <= 0 for code in codes.values()):
+        backend.owner.close()
+        raise RuntimeError("Xvfb keymap lacks a/s")
+    focus = int(observer.get_input_focus().focus.id)
+    lease = ProbeLease(focus)
+    activate_step(backend, lease, "native-cancel-cleanup", 1)
+    rows = {"case": "cancel_cleanup_then_late_up", "keys": ["a", "s"],
+            "late_up_order": ["s", "a"], "keycodes": codes,
+            "before": keymap(observer, codes), "window_events": [],
+            "admissions": [], "owner_records_before_late_up": [],
+            "late_up_exception": None, "backend_rows": [],
+            "after_cleanup_before_late_up": None,
+            "after_late_up": None}
+    try:
+        for key in ("a", "s"):
+            backend.raw(key, True)
+        rows["admissions"] = [dict(row) for row in emitted
+                              if row.get("event") == "input_admission"]
+        rows["after_down"] = keymap(observer, codes)
+        rows["window_events"].extend(drain_window_events(observer, window))
+        lease.cancel.set()
+        limit = time.monotonic() + 4.0
+        cleanup = None
+        while time.monotonic() < limit:
+            found = [r for r in backend.owner.records
+                     if r.get("event") == "owner_release" and
+                     r.get("reason") == "cancelled"]
+            if found:
+                cleanup = dict(found[-1])
+                break
+            if raw_owner(backend.owner).stopped.is_set():
+                break
+            time.sleep(.005)
+        if cleanup is None:
+            raise TimeoutError("owner did not complete cancelled cleanup within 4s")
+        rows["cleanup_record"] = cleanup
+        rows["lease_interruption"] = json_safe(lease.interruption)
+        rows["after_cleanup_before_late_up"] = keymap(observer, codes)
+        rows["window_events"].extend(drain_window_events(observer, window))
+        rows["owner_records_before_late_up"] = owner_records(backend.owner)
+        rows["all_window_event_count_before_late_up"] = len(rows["window_events"])
+        rows["owner_record_count_before_late_up"] = len(rows["owner_records_before_late_up"])
+        rows["keys_up_event_count_before_late_up"] = sum(
+            e["type"] == "KeyRelease" for e in rows["window_events"])
+        try:
+            for key in ("s", "a"):
+                backend.raw(key, False)
+        except BaseException as exc:
+            rows["late_up_exception"] = {
+                "type": type(exc).__name__, "message": str(exc),
+                "owner_release_record": json_safe(getattr(exc, "owner_release_record", None)),
+            }
+            context = backend._release_batch.context
+            backend._materialize_unknown_pending_ups(context)
+            backend._finish_incomplete_release_batch(context, exc, "step_exception")
+        rows["after_late_up"] = keymap(observer, codes)
+        rows["window_events"].extend(drain_window_events(observer, window))
+        rows["backend_rows"] = [dict(row) for row in emitted
+                                 if row.get("event") == "input_release_transition"]
+        rows["owner_records_after_late_up"] = owner_records(backend.owner)
+        cleanup_pairs = cleanup_matches_admissions(rows["admissions"], cleanup, codes)
+        rows["cleanup_measurement_identity_pairs"] = cleanup_pairs
+        rows["assertions"] = {
+            "verified_cancelled_cleanup": cleanup.get("verified") is True and
+                                          cleanup.get("keys_down") == [],
+            "all_keys_up_before_late_up": not any(rows["after_cleanup_before_late_up"].values()),
+            "late_up_is_typed_cancelled": (
+                rows["late_up_exception"] is not None and
+                rows["late_up_exception"]["type"] == "Cancelled"),
+            "all_keys_up_after_late_up": not any(rows["after_late_up"].values()),
+            "no_new_keyrelease_after_late_up": (
+                sum(e["type"] == "KeyRelease" for e in rows["window_events"]) ==
+                rows["keys_up_event_count_before_late_up"]),
+            "no_new_window_input_event_after_late_up": (
+                len(rows["window_events"]) == rows["all_window_event_count_before_late_up"]),
+            "no_new_owner_record_after_late_up": (
+                len(rows["owner_records_after_late_up"]) == rows["owner_record_count_before_late_up"]),
+            "late_batch_incomplete_non_authoritative": (
+                len(rows["backend_rows"]) == 2 and all(
+                    r.get("release_batch_complete") is False and
+                    r.get("physical_verification_authoritative") is False and
+                    r.get("ordinary_release_candidate") is False
+                    for r in rows["backend_rows"])),
+            "cleanup_measurement_matches_admission": bool(cleanup_pairs) and all(
+                pair.get("same_identity") is True and
+                pair.get("cleanup_classification") == "CONFIRMED_PHYSICAL_UP" and
+                pair.get("cleanup_basis") == "per_key_cleanup_snapshot"
+                for pair in cleanup_pairs.values()),
+        }
+        return rows
+    finally:
+        try:
+            backend.owner.close()
+        finally:
+            inner = raw_owner(backend.owner)
+            rows["owner_stopped"] = bool(inner.stopped.is_set())
+            rows["owner_thread_alive"] = bool(inner.thread.is_alive())
+
+
+def cleanup_matches_admissions(admissions, cleanup, codes):
+    attempts_by_keycode = cleanup.get("key_release_attempts", {})
+    result = {}
+    for admission in admissions:
+        key = admission.get("key")
+        down = admission.get("physical_key_measurement")
+        code = codes.get(key)
+        release = attempts_by_keycode.get(str(code), {}) if code is not None else {}
+        up = release.get("physical_key_measurement")
+        down_id = down.get("adapter_edge", {}) if isinstance(down, dict) else {}
+        up_id = up.get("adapter_edge", {}) if isinstance(up, dict) else {}
+        result[key] = {
+            "down": json_safe(down), "cleanup_up": json_safe(up),
+            "same_identity": bool(isinstance(down_id, dict) and isinstance(up_id, dict)
+                                   and down_id.get("actuation_id")
+                                   and down_id.get("actuation_id") == up_id.get("actuation_id")
+                                   and down_id.get("owner_id") == up_id.get("owner_id")
+                                   and down_id.get("intent_token") == up_id.get("intent_token")
+                                   and down_id.get("key") == up_id.get("key")),
+            "cleanup_classification": up.get("classification") if isinstance(up, dict) else None,
+            "cleanup_basis": up.get("interval_basis") if isinstance(up, dict) else None,
+        }
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("output_dir", help="new, empty run directory; must not exist")
+    args = parser.parse_args()
+    out = Path(args.output_dir).expanduser().resolve()
+    out.mkdir(parents=True, exist_ok=False)
+    source_root = Path(__file__).resolve().parent / "source"
+    # Root's frozen VM source is mounted at this fixed private path. The local
+    # authoring copy can instead set V15_NATIVE_SOURCE to its exported source.
+    source_root = Path(os.environ.get("V15_NATIVE_SOURCE", str(source_root))).resolve()
+    if not source_root.is_dir():
+        raise RuntimeError(f"source export unavailable: {source_root}")
+    paths = [str(source_root / "research/live_control"),
+             str(source_root / "research/doom"),
+             str(source_root / "research/observation_gating"),
+             str(source_root / "research/observation_tiles"),
+             str(source_root / "research/real_apps_v1")]
+    sys.path[:0] = paths
+
+    raw_path = out / "raw.json"
+    if raw_path.exists():
+        raise FileExistsError(raw_path)
+    xvfb_err = (out / "xvfb.stderr").open("x", encoding="utf-8")
+    result = {
+        "schema": "v15-native-measured-key-release-probe-v1",
+        "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "python": sys.version,
+        "platform": platform.platform(),
+        "source_root": "frozen 81-file export",
+        "source_lock_sha256": next((sha256(p) for p in (
+            source_root / "source-lock.json", source_root.parent / "source-lock.json")
+            if p.is_file()), None),
+        "source_files_loaded": {}, "xvfb": {}, "cases": {},
+        "scope": {
+            "native_x11_xvfb": True, "game": False, "model": False,
+            "gui_capture": False, "controller_loop": False,
+            "backend_scope": "actual measured V15 Backend constructor and raw/release-batch methods; no execute/program or game snapshot",
+            "authority": False,
+        },
+    }
+    xvfb = observer = window = None
+    display_name = None
+    fatal = None
+    try:
+        xvfb = subprocess.Popen(
+            ["Xvfb", "-displayfd", "1", "-screen", "0", "800x600x24",
+             "+extension", "XTEST", "-nolisten", "tcp", "-ac", "-noreset"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=xvfb_err,
+            close_fds=True)
+        number = wait_display_number(xvfb)
+        display_name = ":" + number
+        result["xvfb"] = {"display": display_name, "pid": xvfb.pid,
+                          "args": ["Xvfb", "-displayfd", "1", "-screen", "0",
+                                   "800x600x24", "+extension", "XTEST", "-nolisten",
+                                   "tcp", "-ac", "-noreset"]}
+        from Xlib import X, XK, display
+        observer = display.Display(display_name)
+        window = make_window(observer, X)
+        focus = observer.get_input_focus().focus
+        result["x_server"] = {
+            "vendor": observer.get_setup().vendor.decode("latin-1", "replace"),
+            "release": int(observer.get_setup().release_number),
+            "window_id": int(window.id),
+            "focus_id": int(focus.id if hasattr(focus, "id") else focus),
+            "screen": {"width": int(observer.screen().width_in_pixels),
+                       "height": int(observer.screen().height_in_pixels)},
+        }
+        result["cases"]["ordered_batch"] = case_batch(
+            display_name, observer, window, X, XK, out)
+        result["cases"]["cancel_cleanup_then_late_up"] = case_cancel_cleanup(
+            display_name, observer, window, X, XK, out)
+    except BaseException as exc:
+        fatal = {"type": type(exc).__name__, "message": str(exc),
+                 "traceback": traceback.format_exc()}
+        result["fatal"] = fatal
+    finally:
+        if window is not None:
+            try:
+                window.destroy()
+                observer.sync()
+            except BaseException as exc:
+                result["window_close_error"] = repr(exc)
+        if observer is not None:
+            try:
+                observer.close()
+                result["observer_closed"] = True
+            except BaseException as exc:
+                result["observer_close_error"] = repr(exc)
+        if xvfb is not None:
+            try:
+                xvfb.terminate()
+                xvfb.wait(timeout=3)
+                result["xvfb_exit"] = xvfb.returncode
+            except BaseException as exc:
+                result["xvfb_stop_error"] = repr(exc)
+                try:
+                    xvfb.kill()
+                    xvfb.wait(timeout=2)
+                except BaseException as kill_exc:
+                    result["xvfb_kill_error"] = repr(kill_exc)
+        xvfb_err.close()
+        result["ended_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        result["source_files_loaded"] = loaded_source_hashes(source_root)
+        # Exclusive write: a crash/retry cannot replace a prior raw result.
+        with raw_path.open("x", encoding="utf-8") as stream:
+            json.dump(json_safe(result), stream, sort_keys=True, indent=2)
+            stream.write("\n")
+    if fatal:
+        return 1
+    checks = [check for case in result["cases"].values()
+              for check in case.get("assertions", {}).values()
+              if isinstance(check, bool)]
+    return 0 if checks and all(checks) else 2
+
+
+def loaded_source_hashes(source_root):
+    result = {}
+    for name, module in sorted(sys.modules.items()):
+        file = getattr(module, "__file__", None)
+        if not file:
+            continue
+        try:
+            path = Path(file).resolve()
+            rel = path.relative_to(source_root)
+        except (OSError, ValueError):
+            continue
+        if path.is_file():
+            result[str(rel)] = sha256(path)
+    return result
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

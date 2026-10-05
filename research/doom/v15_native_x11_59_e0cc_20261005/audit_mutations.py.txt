@@ -1,0 +1,25 @@
+"""Negative controls on copies of retained raw; never executes input."""
+import copy, hashlib, importlib.util, json
+from pathlib import Path
+base=Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('audit_native',base/'audit_native.py')
+module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+raw=json.loads((base/'run-01/raw.json').read_bytes()); lock=json.loads((base/'source-lock.json').read_bytes())
+lock_sha=hashlib.sha256((base/'source-lock.json').read_bytes()).hexdigest()
+controls=[]
+def probe(name,mutate):
+    changed=copy.deepcopy(raw); mutate(changed)
+    result=module.audit(changed,lock,lock_sha)
+    controls.append({'name':name,'rejected':not result['pass'],'failed_checks':[x for x in result['checks'] if not x['pass']]})
+probe('mismatched_release_identity',lambda r:r['cases']['ordered_batch']['backend_rows'][0]['physical_key_measurement'].__setitem__('actuation_id','foreign'))
+probe('reordered_native_events',lambda r:r['cases']['ordered_batch']['window_events'].reverse())
+probe('unverified_cleanup',lambda r:r['cases']['cancel_cleanup_then_late_up']['cleanup_record'].__setitem__('verified',False))
+probe('wrong_late_up_cause',lambda r:r['cases']['cancel_cleanup_then_late_up']['late_up_exception'].__setitem__('type','ValueError'))
+probe('source_hash_mismatch',lambda r:r['source_files_loaded'].__setitem__('research/live_control/input_owner_v12.py','0'*64))
+probe('late_up_adds_native_event',lambda r:r['cases']['cancel_cleanup_then_late_up']['window_events'].append(copy.deepcopy(r['cases']['cancel_cleanup_then_late_up']['window_events'][-1])))
+probe('thread_still_alive',lambda r:r['cases']['ordered_batch'].__setitem__('owner_thread_alive',True))
+probe('missing_memory_cap',lambda r:r['runtime_controls'].__setitem__('memory.max','max'))
+result={'mode':'raw-only negative controls; candidate not replayed','pass':all(c['rejected'] for c in controls),'controls':controls,'raw_sha256':hashlib.sha256((base/'run-01/raw.json').read_bytes()).hexdigest()}
+with (base/'run-01/audit-mutations.json').open('x') as f: json.dump(result,f,indent=2); f.write('\n')
+print(json.dumps({'pass':result['pass'],'rejected':sum(c['rejected'] for c in controls),'total':len(controls)}))
+assert result['pass']

@@ -1,0 +1,35 @@
+"""One ordinary construction run; exclusive receipts prevent accidental reuse."""
+import datetime, hashlib, io, json, subprocess, tarfile
+from pathlib import Path
+base = Path(__file__).resolve().parent
+now = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+def save(name, value):
+    with (base/name).open('x') as f: json.dump(value,f,indent=2); f.write('\n')
+lock=json.loads((base/'source-lock.json').read_bytes())
+for r in lock['files']:
+    assert sha(base/'source'/r['path']) == r['sha256'], r['path']
+for n in ['native_probe.py','audit_native.py']:
+    compile((base/n).read_text(),n,'exec')
+freeze={'at_utc':now(),'source_head':lock['head'],'classification':'ordinary native construction; not formal or game allocation','files':{n:sha(base/n) for n in ['source-lock.json','native_probe.py','audit_native.py','PROTOCOL.md','package-inventory-final.tsv','prepare_and_run.py']}}
+save('freeze.json',freeze)
+buffer=io.BytesIO()
+with tarfile.open(fileobj=buffer,mode='w') as tar:
+    for n in ['native_probe.py','audit_native.py','freeze.json','PROTOCOL.md','package-inventory-final.tsv']:
+        tar.add(base/n,arcname=n)
+orb=['/opt/homebrew/bin/orb','-m','v15-native-e0cc-20261005']
+p=subprocess.run(orb+['-u','study','-w','/home/study/native','tar','-x'],input=buffer.getvalue(),capture_output=True,timeout=30)
+save('harness-transfer.json',{'at_utc':now(),'exit_code':p.returncode,'stdout':p.stdout.decode(),'stderr':p.stderr.decode(),'tar_sha256':hashlib.sha256(buffer.getvalue()).hexdigest()})
+assert p.returncode==0
+verify="""import json,hashlib,pathlib; p=pathlib.Path('/home/study/native'); f=json.loads((p/'freeze.json').read_text()); l=json.loads((p/'source-lock.json').read_text()); records=[{'path':n,'pass':hashlib.sha256((p/n).read_bytes()).hexdigest()==h} for n,h in f['files'].items() if n!='prepare_and_run.py']+[{'path':'source/'+r['path'],'pass':hashlib.sha256((p/'source'/r['path']).read_bytes()).hexdigest()==r['sha256']} for r in l['files']]; print(json.dumps({'pass':all(r['pass'] for r in records),'checks':records})); assert all(r['pass'] for r in records)"""
+p=subprocess.run(orb+['-u','study','-w','/home/study/native','python3','-c',verify],capture_output=True,text=True,timeout=20)
+save('vm-freeze-verification.json',{'at_utc':now(),'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
+assert p.returncode==0
+props=['User=study','PrivateNetwork=yes','PrivateTmp=yes','CPUQuota=100%','MemoryMax=1G','MemorySwapMax=0','TasksMax=64','RuntimeMaxSec=60','ProtectSystem=strict','ReadWritePaths=/home/study/native/runs','NoNewPrivileges=yes','WorkingDirectory=/home/study/native','Environment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1','LimitFSIZE=250M']
+argv=orb+['-u','root','-w','/root','systemd-run','--quiet','--wait','--pipe','--collect','--unit=v15-native-measured-01-e0cc']
+for prop in props: argv+=['-p',prop]
+argv+=['/usr/bin/python3','/home/study/native/native_probe.py','/home/study/native/runs/v15-native-measured-01']
+save('run-01-request.json',{'at_utc':now(),'argv':argv,'freeze_sha256':sha(base/'freeze.json')})
+p=subprocess.run(argv,capture_output=True,text=True,timeout=85)
+save('run-01-result.json',{'ended_utc':now(),'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
+print(json.dumps({'run_exit':p.returncode,'stdout':p.stdout,'stderr':p.stderr}))
