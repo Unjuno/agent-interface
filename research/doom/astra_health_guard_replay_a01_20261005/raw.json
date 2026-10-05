@@ -1,0 +1,321 @@
+{
+  "schema": "astra-health-guard-replay-a01-v1",
+  "source_video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "input_sha256": "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "guard_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "source_readout_sample_count": 10,
+  "sweep": [
+    {
+      "maximum_health_loss": 3,
+      "hard_minimum": 97,
+      "first_invalidation": {
+        "game_time_s": 47.0,
+        "health": 96,
+        "phase": "MODEL THINKING + LOCAL COVER",
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "hard_minimum": 97
+      },
+      "evaluated_samples": [
+        {
+          "game_time_s": 46.8,
+          "health": 100,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "UNCHANGED",
+          "reason": "signal_unchanged",
+          "hard_minimum": 97
+        },
+        {
+          "game_time_s": 47.0,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "hard_minimum": 97
+        }
+      ]
+    },
+    {
+      "maximum_health_loss": 4,
+      "hard_minimum": 96,
+      "first_invalidation": {
+        "game_time_s": 54.8,
+        "health": 94,
+        "phase": "MODEL THINKING + LOCAL COVER",
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "hard_minimum": 96
+      },
+      "evaluated_samples": [
+        {
+          "game_time_s": 46.8,
+          "health": 100,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "UNCHANGED",
+          "reason": "signal_unchanged",
+          "hard_minimum": 96
+        },
+        {
+          "game_time_s": 47.0,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 96
+        },
+        {
+          "game_time_s": 53.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 96
+        },
+        {
+          "game_time_s": 53.8,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 96
+        },
+        {
+          "game_time_s": 54.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 96
+        },
+        {
+          "game_time_s": 54.8,
+          "health": 94,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "hard_minimum": 96
+        }
+      ]
+    },
+    {
+      "maximum_health_loss": 5,
+      "hard_minimum": 95,
+      "first_invalidation": {
+        "game_time_s": 54.8,
+        "health": 94,
+        "phase": "MODEL THINKING + LOCAL COVER",
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "hard_minimum": 95
+      },
+      "evaluated_samples": [
+        {
+          "game_time_s": 46.8,
+          "health": 100,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "UNCHANGED",
+          "reason": "signal_unchanged",
+          "hard_minimum": 95
+        },
+        {
+          "game_time_s": 47.0,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 95
+        },
+        {
+          "game_time_s": 53.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 95
+        },
+        {
+          "game_time_s": 53.8,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 95
+        },
+        {
+          "game_time_s": 54.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 95
+        },
+        {
+          "game_time_s": 54.8,
+          "health": 94,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "hard_minimum": 95
+        }
+      ]
+    },
+    {
+      "maximum_health_loss": 6,
+      "hard_minimum": 94,
+      "first_invalidation": {
+        "game_time_s": 56.4,
+        "health": 87,
+        "phase": "LOCAL PLAN / FEEDBACK",
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "hard_minimum": 94
+      },
+      "evaluated_samples": [
+        {
+          "game_time_s": 46.8,
+          "health": 100,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "UNCHANGED",
+          "reason": "signal_unchanged",
+          "hard_minimum": 94
+        },
+        {
+          "game_time_s": 47.0,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 94
+        },
+        {
+          "game_time_s": 53.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 94
+        },
+        {
+          "game_time_s": 53.8,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 94
+        },
+        {
+          "game_time_s": 54.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 94
+        },
+        {
+          "game_time_s": 54.8,
+          "health": 94,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 94
+        },
+        {
+          "game_time_s": 56.2,
+          "health": 94,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 94
+        },
+        {
+          "game_time_s": 56.4,
+          "health": 87,
+          "phase": "LOCAL PLAN / FEEDBACK",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "hard_minimum": 94
+        }
+      ]
+    },
+    {
+      "maximum_health_loss": 12,
+      "hard_minimum": 88,
+      "first_invalidation": {
+        "game_time_s": 56.4,
+        "health": 87,
+        "phase": "LOCAL PLAN / FEEDBACK",
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "hard_minimum": 88
+      },
+      "evaluated_samples": [
+        {
+          "game_time_s": 46.8,
+          "health": 100,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "UNCHANGED",
+          "reason": "signal_unchanged",
+          "hard_minimum": 88
+        },
+        {
+          "game_time_s": 47.0,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 88
+        },
+        {
+          "game_time_s": 53.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 88
+        },
+        {
+          "game_time_s": 53.8,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 88
+        },
+        {
+          "game_time_s": 54.6,
+          "health": 96,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 88
+        },
+        {
+          "game_time_s": 54.8,
+          "health": 94,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 88
+        },
+        {
+          "game_time_s": 56.2,
+          "health": 94,
+          "phase": "MODEL THINKING + LOCAL COVER",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "hard_minimum": 88
+        },
+        {
+          "game_time_s": 56.4,
+          "health": 87,
+          "phase": "LOCAL PLAN / FEEDBACK",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "hard_minimum": 88
+        }
+      ]
+    }
+  ],
+  "sampling_limit": "only manually transcribed selected full-frame samples; no interpolation"
+}
