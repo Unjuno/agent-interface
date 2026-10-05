@@ -1,0 +1,38 @@
+{
+  "command": "wslc.exe run --rm --name wslc-a02-audit-20261005c --pull never --network none --cpus 1 --memory 512m --tmpfs /tmp:rw,size=64m --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-10-05\\a02-audit-successor:/input:ro\" --workdir /input python:3.12-slim sh -lc 'mkdir -p /tmp/a02 && cp -a /input/research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a01_20261005 /tmp/a02/a01 && cp -a /input/research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261005/. /tmp/a02/ && cd /tmp/a02 && python audit_successor_v2.py && python test_mutation_gate_v1.py audit_successor_v1.py && python test_mutation_gate_v2.py audit_successor_v2.py && python baseline_gap_probe.py && python -B -m py_compile audit_successor_v1.py audit_successor_v2.py test_mutation_gate_v1.py test_mutation_gate_v2.py baseline_gap_probe.py'",
+  "container": {
+    "configured_cpus": "1",
+    "configured_memory": "512 MiB; WSLc warned swap/cgroup enforcement unavailable, so enforcement is not claimed",
+    "gpu": "not used; CPU-only offline audit, no GPU allocation",
+    "image": "python:3.12-slim",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "network": "none",
+    "output": "64 MiB tmpfs inside container; test subprocess output copied to host transcript",
+    "pids_limit": "not exposed by this WSLc run CLI; not claimed",
+    "python": "CPython 3.12.15",
+    "repo_digest": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "runtime": "WSLc 3.0.1.0",
+    "source_mount": "read-only bind mount"
+  },
+  "created_utc": "2026-10-05T04:28:37.828016+00:00",
+  "input_sha256": "7a1a85a1cc07971b2bf6aa5e1d62541305b9fe8b55482fe46506d90b90db8b4f",
+  "outcomes": {
+    "byte_compilation": "PASS for five Python files",
+    "candidate_runtime_executions": 0,
+    "container_exit_code": 0,
+    "differential_mutations": "3/3 predecessor false-accepts reproduced and successor rejections confirmed in normal and optimized modes",
+    "predecessor_declared_gate": "7/7 tests PASS; normal and optimized subprocesses",
+    "retry_count": 0,
+    "successor_gate": "10/10 tests PASS; normal and optimized subprocesses",
+    "unchanged_raw_audit": "PASS"
+  },
+  "retained_first_records": [
+    "Initial strict candidate failed its unchanged-raw positive control because it incorrectly required an outer edge field; source and STOP are retained in FIRST_ATTEMPT_STOP.txt and audit_successor_a02_initial_failed.py.",
+    "A subsequent construction pass used a checked-out main copy with one extra trailing LF. It is preserved as an input-identity STOP in SOURCE_MISMATCH_STOP.txt and is excluded from final claims.",
+    "The final pass used the exact frozen GitHub blob and matched both its Git blob SHA and SHA-256."
+  ],
+  "run_id": "MAP01-V39-A02-RECEIPT-METADATA-AUDIT-A02-20261005",
+  "schema": "map01_v39_a02_receipt_metadata_audit_successor_run_v1",
+  "source_main": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "started_utc_date": "2026-10-05"
+}

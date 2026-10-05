@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "offers": [
+    {"offer_id":"a-benefit","pair_id":"benefit-pair","case_id":"benefit","arm":"A","challenge_id":"cue-benefit","source_generation":1,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-benefit","pair_id":"benefit-pair","case_id":"benefit","arm":"B","challenge_id":"cue-benefit","source_generation":1,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-null","pair_id":"null-pair","case_id":"null","arm":"A","challenge_id":"cue-null","source_generation":2,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-null","pair_id":"null-pair","case_id":"null","arm":"B","challenge_id":"cue-null","source_generation":2,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-suppress","pair_id":"suppress-pair","case_id":"suppression","arm":"A","challenge_id":"cue-suppress","source_generation":3,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-suppress","pair_id":"suppress-pair","case_id":"suppression","arm":"B","challenge_id":"cue-suppress","source_generation":3,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-shift","pair_id":"shift-pair","case_id":"exposure-shift","arm":"A","challenge_id":"cue-shift","source_generation":4,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-shift","pair_id":"shift-pair","case_id":"exposure-shift","arm":"B","challenge_id":"cue-shift","source_generation":4,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-stale","pair_id":"stale-pair","case_id":"false-fresh-cue","arm":"A","challenge_id":"cue-stale","source_generation":5,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-stale","pair_id":"stale-pair","case_id":"false-fresh-cue","arm":"B","challenge_id":"cue-stale","source_generation":5,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-missing","pair_id":"missing-pair","case_id":"missing-occupancy","arm":"A","challenge_id":"cue-missing","source_generation":6,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-missing","pair_id":"missing-pair","case_id":"missing-occupancy","arm":"B","challenge_id":"cue-missing","source_generation":6,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-safety","pair_id":"safety-pair","case_id":"safety-violation","arm":"A","challenge_id":"cue-safety","source_generation":7,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-safety","pair_id":"safety-pair","case_id":"safety-violation","arm":"B","challenge_id":"cue-safety","source_generation":7,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-easy","pair_id":"selection-easy","case_id":"selection-trap","arm":"A","challenge_id":"cue-easy","source_generation":8,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-easy","pair_id":"selection-easy","case_id":"selection-trap","arm":"B","challenge_id":"cue-easy","source_generation":8,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"a-hard","pair_id":"selection-hard","case_id":"selection-trap","arm":"A","challenge_id":"cue-hard","source_generation":9,"offered_ns":0,"deadline_ns":10},
+    {"offer_id":"b-hard","pair_id":"selection-hard","case_id":"selection-trap","arm":"B","challenge_id":"cue-hard","source_generation":9,"offered_ns":0,"deadline_ns":10}
+  ],
+  "expected_cases": {
+    "benefit":"OBSERVED_ALL_OFFER_B_ADVANTAGE",
+    "null":"NO_DIFFERENCE_ALL_OFFER",
+    "suppression":"OBSERVED_ALL_OFFER_B_DISADVANTAGE",
+    "exposure-shift":"HOLD_MECHANISM_EVIDENCE",
+    "false-fresh-cue":"HOLD_MECHANISM_EVIDENCE",
+    "missing-occupancy":"HOLD_MECHANISM_EVIDENCE",
+    "safety-violation":"FAIL_SAFETY",
+    "selection-trap":"NO_DIFFERENCE_ALL_OFFER"
+  }
+}
