@@ -167,6 +167,7 @@ class Win32Backend:
         self._current_input_transitions: list[dict[str, Any]] | None = None
         self._current_program_id: str | None = None
         self._current_operation_index: int | None = None
+        self._current_admitted_ns: int | None = None
         self.last_input_transitions: list[dict[str, Any]] = []
         self.held_buttons: set[str] = set()
         self.pending_unicode_ups: set[int] = set()
@@ -352,6 +353,7 @@ class Win32Backend:
             "backend_instance_id": getattr(self, "_backend_instance_id", "unbound"),
             "program_id": getattr(self, "_current_program_id", None),
             "operation_index": getattr(self, "_current_operation_index", None),
+            "admitted_ns": getattr(self, "_current_admitted_ns", None),
             "hold_id": hold_id,
             "key": key,
             "operation": "down" if down else "up",
@@ -579,6 +581,7 @@ class Win32Backend:
                 "backend_instance_id": getattr(self, "_backend_instance_id", "unbound"),
                 "program_id": getattr(self, "_current_program_id", None),
                 "operation_index": getattr(self, "_current_operation_index", None),
+                "admitted_ns": getattr(self, "_current_admitted_ns", None),
                 "hold_id": hold_id,
                 "key": name,
                 "operation": "up",
@@ -632,7 +635,9 @@ class Win32Backend:
                 "verified": not keys and not buttons,
                 "monotonic_ns": time.monotonic_ns()}
 
-    def execute(self, program: dict[str, Any]) -> dict[str, Any]:
+    def execute(
+        self, program: dict[str, Any], *, admitted_ns: int | None = None
+    ) -> dict[str, Any]:
         self.preflight(program)
         current_target: str | None = None
         observations: list[dict[str, Any]] = []
@@ -640,6 +645,7 @@ class Win32Backend:
         self._current_input_transitions = []
         self.last_input_transitions = []
         self._current_program_id = program.get("program_id")
+        self._current_admitted_ns = admitted_ns
         started = time.monotonic_ns()
         try:
             for operation_index, op in enumerate(program["ops"]):
@@ -683,12 +689,14 @@ class Win32Backend:
             self._current_input_transitions = None
             self._current_program_id = None
             self._current_operation_index = None
+            self._current_admitted_ns = None
             raise
         ended_ns = time.monotonic_ns()
         self.last_input_transitions = list(self._current_input_transitions)
         self._current_input_transitions = None
         self._current_program_id = None
         self._current_operation_index = None
+        self._current_admitted_ns = None
         return {"started_ns": started, "ended_ns": ended_ns,
                 "emissions": self.emissions, "observations": observations,
                 "releases": releases,
