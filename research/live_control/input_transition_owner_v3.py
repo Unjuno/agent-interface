@@ -1,8 +1,9 @@
 """Fail-closed non-staggering explicit-release telemetry over InputOwner v10.
 
 Per explicit release this wrapper does no owner/X11 state sample and publishes
-nothing. It only snapshots cheap local lease state, brackets the unchanged v10
-call with monotonic caller timestamps, and returns a receipt to the backend.
+nothing. It snapshots cheap local lease state, brackets the unchanged v10 call
+with monotonic caller timestamps, and returns the exact stored input-admission
+receipt with the matching per-key release transition.
 """
 import threading
 import time
@@ -96,7 +97,7 @@ class InputOwner:
                 admission_key: marker
                 for admission_key, marker in self._admission_records.items()
                 if not any(
-                    isinstance(marker, tuple) and len(marker) == 4
+                    isinstance(marker, tuple) and len(marker) == 5
                     and type(marker[1]) is int and type(marker[2]) is int
                     and type(marker[3]) is int
                     and marker[1] <= index and marker[2] == deadline
@@ -117,6 +118,25 @@ class InputOwner:
             for admission_key, marker in list(self._admission_records.items()):
                 if marker[0] is lease:
                     del self._admission_records[admission_key]
+
+    def _admission_receipt_for_release(self, marker, lease, operation, key, release_started_ns):
+        receipt = (dict(marker[4]) if isinstance(marker, tuple) and len(marker) == 5
+                   and type(marker[4]) is dict else None)
+        expected_event = "input_admission" if operation == "down" else "pointer_admission"
+        identity_field = "key" if operation == "down" else "payload"
+        valid = (
+            receipt is not None
+            and receipt.get("event") == expected_event
+            and receipt.get("operation") == operation
+            and receipt.get(identity_field) == key
+            and receipt.get("owner_id") == self._inner.owner_id
+            and receipt.get("intent_token") == self._intent_token(lease)
+            and receipt.get("valid_until_ns") == getattr(lease, "deadline", None)
+            and type(receipt.get("admitted_ns")) is int
+            and type(receipt.get("input_ack_ns")) is int
+            and receipt["admitted_ns"] <= receipt["input_ack_ns"] < release_started_ns
+        )
+        return receipt, valid
 
     def _call_up_batch(self, lease, keys):
         if type(keys) is not list or not keys or len(set(keys)) != len(keys):
@@ -139,7 +159,7 @@ class InputOwner:
             history_complete = marker is not None and records_after is not None
             cleanup_intervened = False
             if history_complete:
-                admitted_lease, record_index, admitted_deadline, admitted_ns = marker
+                admitted_lease, record_index, admitted_deadline, admitted_ns, _ = marker
                 if (admitted_lease is not lease
                         or type(record_index) is not int or record_index < 0
                         or record_index > len(records_after)
@@ -171,6 +191,8 @@ class InputOwner:
                 lease_state["ordinary_release_candidate"] and history_complete
                 and not cleanup_intervened and receipt_valid
             )
+            admission_receipt, admission_receipt_valid = self._admission_receipt_for_release(
+                marker, lease, "down", key, started_ns)
             transitions.append({
                 "event": "input_release_transition",
                 "transition_schema": "input-release-transition-v3",
@@ -182,6 +204,8 @@ class InputOwner:
                 "release_call_returned_ns": returned_ns,
                 "release_call_bracket_ns": returned_ns - started_ns,
                 "owner_transition_verified": receipt_valid,
+                "admission_receipt": admission_receipt,
+                "admission_receipt_valid": admission_receipt_valid,
                 "owner_explicit_keyup_failure": (
                     dict(receipt) if not receipt_valid and type(receipt) is dict else None
                 ),
@@ -192,7 +216,8 @@ class InputOwner:
                 "ordinary_release_candidate": ordinary,
                 "measurement_contract": (
                     "one serialized owner-thread batch brackets ordered explicit UPs; "
-                    "per-key keymap samples occur after the original UP batch"
+                    "per-key keymap samples occur after the original UP batch; each "
+                    "transition carries its matching input-admission receipt when valid"
                 ),
             })
         return transitions
@@ -236,8 +261,19 @@ class InputOwner:
                     admitted_ns = result.get("admitted_ns")
                     if type(deadline) is int and type(admitted_ns) is int:
                         with self._admission_records_lock:
+                            admission_receipt = {
+                                "event": result.get("event"),
+                                "operation": operation,
+                                "key": result.get("key"),
+                                "owner_id": self._inner.owner_id,
+                                "intent_token": result.get("intent_token"),
+                                "valid_until_ns": result.get("valid_until_ns"),
+                                "admitted_ns": result.get("admitted_ns"),
+                                "input_ack_ns": result.get("input_ack_ns"),
+                            }
                             self._admission_records[admission_key] = (
-                                lease, len(records_before), deadline, admitted_ns)
+                                lease, len(records_before), deadline, admitted_ns,
+                                admission_receipt)
             if isinstance(result, dict) and result.get("event") == "owner_release":
                 result.setdefault("release_call_started_ns", started_ns)
                 result.setdefault("release_call_returned_ns", returned_ns)
@@ -278,7 +314,7 @@ class InputOwner:
         )
         owner_cleanup_intervened = False
         if owner_release_history_complete:
-            admitted_lease, record_index, admitted_deadline, admitted_ns = admission_marker
+            admitted_lease, record_index, admitted_deadline, admitted_ns, _ = admission_marker
             if (admitted_lease is not lease
                     or type(record_index) is not int or record_index < 0
                     or record_index > len(records_after)
@@ -307,6 +343,9 @@ class InputOwner:
             and not owner_cleanup_intervened
         )
 
+        admission_operation = "down" if operation == "up" else "button_down"
+        admission_receipt, admission_receipt_valid = self._admission_receipt_for_release(
+            admission_marker, lease, admission_operation, key, release_call_started_ns)
         return {
             "event": "input_release_transition",
             "transition_schema": "input-release-transition-v3",
@@ -319,6 +358,8 @@ class InputOwner:
             "release_call_returned_ns": release_call_returned_ns,
             "release_call_bracket_ns": release_call_returned_ns - release_call_started_ns,
             "owner_transition_verified": (False if explicit_keyup_failure is not None else None),
+            "admission_receipt": admission_receipt,
+            "admission_receipt_valid": admission_receipt_valid,
             "owner_explicit_keyup_failure": (
                 dict(explicit_keyup_failure) if explicit_keyup_failure is not None else None
             ),
@@ -332,6 +373,7 @@ class InputOwner:
             "measurement_contract": (
                 "caller brackets unchanged InputOwner v10 explicit release; the release "
                 "history since admission must contain no same-lease owner cleanup; no "
-                "owner/X11 state sample or telemetry publication occurs inside this call"
+                "owner/X11 state sample or telemetry publication occurs inside this call; "
+                "the returned transition includes its matching admission receipt"
             ),
         }

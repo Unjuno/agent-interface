@@ -71,6 +71,21 @@ class ReleaseInner(FakeInner):
         return None
 
 
+class BatchReleaseInner(FakeInner):
+    def call(self, operation, lease=None, key=None):
+        self.calls.append((operation, key))
+        if operation == 'down':
+            admitted_ns = 80 if key == 'a' else 85
+            return {'event': 'input_admission', 'key': key,
+                    'admitted_ns': admitted_ns, 'input_ack_ns': admitted_ns + 5,
+                    'valid_until_ns': lease.deadline}
+        if operation == 'up_batch':
+            return [{'event': 'owner_explicit_keyup', 'operation': 'up',
+                     'key': item, 'owner_id': self.owner_id,
+                     'server_keyup_verified': True} for item in key]
+        return None
+
+
 base = types.ModuleType('input_owner_v10')
 base.InputOwner = FakeInner
 sys.modules['input_owner_v10'] = base
@@ -137,6 +152,70 @@ class Tests(unittest.TestCase):
         self.assertEqual(row['intent_token'], 'intent-1')
         self.assertIs(row['grants_input_authority'], False)
         self.assertIs(row.get('owner_cleanup_intervened'), False)
+
+    def test_ordinary_up_carries_its_exact_input_admission_receipt(self):
+        owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
+        lease = Lease(deadline=1000)
+        owner._inner.result = {'event': 'input_admission', 'key': 'a',
+                               'admitted_ns': 80, 'input_ack_ns': 90,
+                               'valid_until_ns': 1000}
+        owner.call('down', lease, 'a')
+        owner._inner.result = None
+        with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+            row = owner.call('up', lease, 'a')
+        self.assertEqual(row['admission_receipt'], {
+            'event': 'input_admission', 'operation': 'down', 'key': 'a', 'admitted_ns': 80,
+            'input_ack_ns': 90, 'valid_until_ns': 1000,
+            'intent_token': 'intent-1', 'owner_id': 'owner-1',
+        })
+
+    def test_repeated_key_releases_keep_distinct_admission_receipts(self):
+        owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
+        lease = Lease(deadline=1000)
+        owner._inner.result = {'event': 'input_admission', 'key': 'a',
+                               'admitted_ns': 80, 'input_ack_ns': 90,
+                               'valid_until_ns': 1000}
+        owner.call('down', lease, 'a')
+        owner._inner.result = None
+        with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+            first = owner.call('up', lease, 'a')
+
+        owner._inner.result = {'event': 'input_admission', 'key': 'a',
+                               'admitted_ns': 180, 'input_ack_ns': 190,
+                               'valid_until_ns': 1000}
+        owner.call('down', lease, 'a')
+        owner._inner.result = None
+        with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[200, 240]):
+            second = owner.call('up', lease, 'a')
+
+        self.assertEqual(first['admission_receipt']['admitted_ns'], 80)
+        self.assertEqual(second['admission_receipt']['admitted_ns'], 180)
+
+    def test_admission_receipt_requires_exact_integer_ack_before_release(self):
+        for ack_ns in (100, True):
+            with self.subTest(ack_ns=ack_ns):
+                owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
+                lease = Lease(deadline=1000)
+                owner._inner.result = {'event': 'input_admission', 'key': 'a',
+                                       'admitted_ns': 80, 'input_ack_ns': ack_ns,
+                                       'valid_until_ns': 1000}
+                owner.call('down', lease, 'a')
+                owner._inner.result = None
+                with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+                    row = owner.call('up', lease, 'a')
+                self.assertFalse(row['admission_receipt_valid'])
+
+    def test_up_batch_carries_the_matching_admission_receipt_for_each_key(self):
+        owner = mod.InputOwner(':fake', _owner_cls=BatchReleaseInner)
+        lease = Lease(deadline=1000)
+        owner.call('down', lease, 'a')
+        owner.call('down', lease, 'b')
+        with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+            rows = owner.call('up_batch', lease, ['a', 'b'])
+        self.assertEqual([row['key'] for row in rows], ['a', 'b'])
+        self.assertEqual([row['admission_receipt']['key'] for row in rows], ['a', 'b'])
+        self.assertEqual([row['admission_receipt']['admitted_ns'] for row in rows], [80, 85])
+        self.assertTrue(all(row['admission_receipt_valid'] for row in rows))
 
     def test_cancel_cleanup_before_dequeued_up_invalidates_receipt(self):
         owner = mod.InputOwner(':fake', _owner_cls=CleanupBeforeUpInner)
@@ -241,4 +320,3 @@ class Tests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
-
