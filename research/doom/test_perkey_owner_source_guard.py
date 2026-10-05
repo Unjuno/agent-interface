@@ -15,6 +15,10 @@ import unittest
 from unittest.mock import patch
 
 
+def repo_relative_posix(path, root):
+    return Path(path).resolve().relative_to(root).as_posix()
+
+
 def probe(route, output):
     root = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(root))
@@ -55,7 +59,7 @@ def probe(route, output):
         observed.update({
             "session_boundary_reached": True,
             "backend_module": backend.__module__,
-            "owner_file": str(Path(inspect.getfile(owner)).resolve().relative_to(root)),
+            "owner_file": repo_relative_posix(inspect.getfile(owner), root),
         })
         raise BoundaryReached()
 
@@ -83,9 +87,9 @@ def probe(route, output):
     observed["forbidden_calls"] = forbidden
     observed["manifest_written"] = (output / "sources.json").exists()
     cached = sys.modules.get("input_owner_v12")
-    observed["cached_owner_file"] = str(Path(cached.__file__).resolve().relative_to(root))
+    observed["cached_owner_file"] = repo_relative_posix(cached.__file__, root)
     observed["cached_owner_sha256"] = hashlib.sha256(Path(cached.__file__).read_bytes()).hexdigest()
-    observed["expected_owner_file"] = str(base.PERKEY_OWNER.relative_to(root))
+    observed["expected_owner_file"] = repo_relative_posix(base.PERKEY_OWNER, root)
     observed["expected_owner_sha256"] = hashlib.sha256(base.PERKEY_OWNER.read_bytes()).hexdigest()
     if observed["manifest_written"]:
         manifest = json.loads((output / "sources.json").read_text())
