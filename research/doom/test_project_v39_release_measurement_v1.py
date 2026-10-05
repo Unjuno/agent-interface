@@ -121,6 +121,15 @@ class StrictProjectionTests(unittest.TestCase):
         self.assertFalse(result["measurement_ready"])
         self.assertEqual(result["rows"], [])
 
+    def test_rejects_boolean_release_step_aliasing_integer_one(self):
+        records = valid_pair()
+        records[0]["step"] = 1
+        records[1]["step"] = True
+        records[1]["release_batch_step"] = True
+        result = project(records)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["rows"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
