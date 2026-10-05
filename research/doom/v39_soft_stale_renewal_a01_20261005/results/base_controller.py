@@ -50,32 +50,6 @@ DISABLED_FEATURES = [
 DISABLED_MCPS = ["blender", "chrome-devtools", "node_repl", "playwright", "puppeteer"]
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
-STALE_SEQUENCE_REJECTION_REASON = "latest observation sequence required before input"
-
-
-def classify_cover_renewal_response(response):
-    """Treat only an expected stale-sequence rejection as no renewal admission."""
-    if type(response) is dict and response.get("event") == "accepted":
-        return {"status": "accepted"}
-    if (type(response) is dict and response.get("event") == "rejected" and
-            response.get("reason") == STALE_SEQUENCE_REJECTION_REASON):
-        return {"status": "stale_sequence_no_cover",
-                "reason": STALE_SEQUENCE_REJECTION_REASON}
-    raise RuntimeError(response)
-
-
-def wait_without_active_cover(wait, observation_monitor, planner, planner_handle):
-    """Keep observing while inference runs after a rejected, unadmitted renewal."""
-    try:
-        boundary = wait(lambda row: False, timeout=.1,
-                        observation_monitor=observation_monitor)
-    except TimeoutError:
-        return None
-    if boundary.get("event") not in ("policy_invalidation", "running_action_invalidation"):
-        raise RuntimeError(boundary)
-    invalidation = boundary.get("invalidation", boundary)
-    return {"invalidation": invalidation,
-            "planner_interrupt": planner.interrupt(planner_handle)}
 
 
 def reusable_cover(decisions):
@@ -847,7 +821,6 @@ def main():
             raise RuntimeError("v28 requires a loaded fixture receipt")
         latest = wait(lambda r:r["event"] == "observation")
         decisions=[];model_session_id=planner.thread_id
-        cover_renewal_rejections=[]
         source_refreshes=[]
         program_admissions=0
         for index in range(args.iterations):
@@ -995,14 +968,6 @@ def main():
                 current_terminal=None
                 renewal_admission_resolution=None
                 while not future.done():
-                    if current_cover is None:
-                        boundary = wait_without_active_cover(
-                            wait, invalidation_monitor, planner, planner_handle)
-                        if boundary is not None:
-                            invalidation=boundary["invalidation"]
-                            planner_interrupt=boundary["planner_interrupt"]
-                            break
-                        continue
                     try:
                         boundary=wait(lambda r:r["event"]=="terminal" and
                                       r.get("id")==current_cover,timeout=.1,
@@ -1019,8 +984,7 @@ def main():
                     cover_terminals.append(current_terminal)
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
-                    renewal_expected_sequence=latest["sequence"]
-                    next_accepted=submit_cover(next_cover, allow_rejection=True)
+                    next_accepted=submit_cover(next_cover)
                     if next_accepted["event"] == "policy_invalidation":
                         invalidation=next_accepted["invalidation"]
                         planner_interrupt=planner.interrupt(planner_handle)
@@ -1036,18 +1000,6 @@ def main():
                         # If rejected, the prior terminal remains current; the
                         # invalidated answer is already interrupted.
                         break
-                    renewal_outcome=classify_cover_renewal_response(next_accepted)
-                    if renewal_outcome["status"] == "stale_sequence_no_cover":
-                        cover_renewal_rejections.append({
-                            "iteration": index, "id": next_cover,
-                            "reason": renewal_outcome["reason"],
-                            "submitted_sequence": renewal_expected_sequence,
-                            "latest_sequence_after_rejection": latest["sequence"],
-                            "admitted": False,
-                            "previous_cover_terminal_retained": current_terminal,
-                        })
-                        current_cover=None
-                        continue
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
@@ -1512,7 +1464,6 @@ def main():
               x["final_action_admission"]["status"] for x in decisions)),
           "cover_programs":sum(len(x.get("cover_program_ids",[])) for x in decisions),
           "cover_renewals":sum(x.get("cover_renewals",0) for x in decisions),
-          "cover_renewal_rejections":cover_renewal_rejections,
           "cover_renewal_gaps_ms":[gap for x in decisions for gap in x.get("cover_renewal_gaps_ms",[])],
           "model_authored_cover_policies":sum(isinstance(x.get("action"),dict) and
               x["action"]["state"]=="active" and not x.get("model_action_discarded",False)

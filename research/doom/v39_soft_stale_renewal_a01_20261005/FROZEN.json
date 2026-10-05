@@ -1,0 +1,29 @@
+{
+  "artifact": "v39_soft_stale_renewal_a01_20261005",
+  "classification": "local_code_regression_not_live_candidate_run",
+  "source_parent_commit": "9234613a2396040eb5352318e50b06a2467d432e",
+  "source_file": "candidate_controller.py",
+  "source_sha256": "e3b0659710ee8fe6a06209acae7ca558d35a5bb1f595ec021af83bac909c7645",
+  "test_file": "candidate_test.py",
+  "test_sha256": "a5f974db5bec99ea5ae1f5ea85eaf2200d8c6684d2ad4a206f7db94e8fe901d0",
+  "base_source_file": "results/base_controller.py",
+  "base_source_sha256": "37572ab15aae08640b1998fe8739166221fe886eeabcfdc145dd2517e0e83365",
+  "python": "3.12.13",
+  "test_commands": [
+    "python -m unittest research.doom.test_v39_soft_stale_renewal_v1",
+    "python -O -m unittest research.doom.test_v39_soft_stale_renewal_v1",
+    "python -m py_compile research/doom/map01_overlap_controller_v39.py research/doom/test_v39_soft_stale_renewal_v1.py",
+    "git diff --check"
+  ],
+  "outcomes": {
+    "base_red": "4 failures because candidate helper functions are absent in parent source",
+    "candidate_normal": "PASS 4/4",
+    "candidate_optimized": "PASS 4/4",
+    "compile": "PASS",
+    "diff_check": "PASS",
+    "existing_v39_integration_import": "BLOCKED: ModuleNotFoundError: No module named PIL"
+  },
+  "live_lane_assigned": false,
+  "game_or_model_executed": false,
+  "formal_gate_run": false
+}
