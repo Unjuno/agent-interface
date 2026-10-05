@@ -6,7 +6,7 @@ The frozen A02 candidate and independent auditor produced `PASS_METHOD_SCOPED` o
 
 The recomputation comparison favored dependency-aware refresh on each fully supported update: for the transitive layout case it recomputed two current derived fields versus five for whole-record refresh; for the mode switch it recomputed one versus five. These are deterministic counts of current derived outputs, not runtime or product-cost measurements.
 
-All five auditor mutation controls were rejected: a corrupted derived anchor, a false current claim without source support, the wrong dynamic enabled branch, acceptance of an older epoch, and acceptance of the previous object generation. The independent-field mismatches are reported as expected negative-control counterexamples; A01 documents the auditor gate bug that A02 corrected.
+All five frozen auditor mutation controls were rejected: a corrupted derived anchor, a false current claim without source support, the wrong dynamic enabled branch, acceptance of an older epoch, and acceptance of the previous object generation. A separate post-formal check also rejected four mutations, including deleting the required `surface_origin → screen_position` support edge while falsely preserving stale position and anchor values. It reads the frozen outputs and calls the independent check function; it does not rerun either formal CLI. The independent-field mismatches are reported as expected negative-control counterexamples; A01 documents the auditor gate bug that A02 corrected.
 
 ## Reproduction and integrity
 
