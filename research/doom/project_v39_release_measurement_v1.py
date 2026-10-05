@@ -74,7 +74,8 @@ def _valid_pair(admission, release):
         start, sync, sample = (attempt.get("keyrelease_started_ns"),
                                attempt.get("sync_returned_ns"),
                                attempt.get("keymap_sampled_ns"))
-        if (attempt.get("attempt") != index or not all(_is_int(t) for t in (start, sync, sample))
+        if (not _is_int(attempt.get("attempt")) or attempt["attempt"] != index
+                or not all(_is_int(t) for t in (start, sync, sample))
                 or not start <= sync <= sample
                 or type(attempt.get("server_key_down_before")) is not bool
                 or type(attempt.get("server_key_down_after")) is not bool

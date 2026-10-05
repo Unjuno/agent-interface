@@ -71,6 +71,14 @@ class StrictProjectionTests(unittest.TestCase):
         records[1]["owner_thread_keyup_receipt"]["owner_sync_returned_ns"] = 139
         self.assertFalse(project(records)["measurement_ready"])
 
+    def test_rejects_boolean_retry_ordinal_even_when_equal_to_one(self):
+        records = valid_pair()
+        self.assertTrue(project(records)["measurement_ready"])
+        records[1]["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]["attempt"] = True
+        result = project(records)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["rows"], [])
+
     def test_rejects_missing_expiration_and_discontinuous_retry_state(self):
         records = valid_pair()
         del records[1]["valid_until_ns"]
