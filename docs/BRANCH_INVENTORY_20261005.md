@@ -160,3 +160,24 @@ This snapshot follows the merge of PR #8120 and is later than the 09:14 census a
 These four merges plus #8114 lack submitted non-author reviews in the GitHub review endpoint. This inventory records the process deviations; it does not reverse merges or weaken the evidence preserved by those PRs.
 
 This remains a reference census, not a unique-commit audit. No branch is classified safe to delete.
+
+## Follow-up API snapshot and evidence rescue — 2026-10-05 18:40 JST
+
+A later authenticated GitHub Search/branch read at approximately 18:40 JST returned 335 unique OPEN PR IDs and 387 unique branch refs (current `main` at `9febfe4926cde6629f9751d6444f6b802cf31328`). The PR search was partitioned by creation-time windows to avoid its 100-result cap. Individual REST detail fetches then hit GitHub's API rate limit: only 60 of 335 PR detail records were returned. The earlier complete 336/382 CSVs remain the most recent complete head/base/branch snapshot; the 335/387 totals are counts only and do not update row-level refs, bases, draft status, review state, or checks. Do not infer that the one-count decreases identify particular PRs/branches.
+
+During that read, the branch endpoint returned five pages totaling 387 unique names, while current open-PR search returned 335 unique PR IDs (#6934–#8148); there were no PRs created before 2026-10-03. The current ref count and PR count are not a deletion classification. Full current head/base mapping, closed-PR dependencies, unique commit/path attribution, and owner/allocation status remain unverified. No branch is classified safe to delete.
+
+### Experiment evidence disposition
+
+- PR [#8097](https://github.com/Unjuno/agent-interface/pull/8097) was present in `main` at `9febfe4926cde6629f9751d6444f6b802cf31328). It rescues the V39 Xvfb A03–A08 packages, including A03/A04 STOP records, A05 invocation STOP, A06 raw plus partial audit and STOP, and A08 `PASS_METHOD_SCOPED` raw/audit. The focused current-main tests for A05 recorded 10/10 passing; they do not replace the stopped Xvfb allocations. These packages were already preserved on main at that snapshot; no duplicate rescue was needed.
+- PR [#7980](https://github.com/Unjuno/agent-interface/pull/7980) preserved 56 X11 explicit-UP evidence files from the closed/superseded #7114 without importing its runtime fix/tests. This is evidence-only and left the source branch untouched.
+- PR [#8114](https://github.com/Unjuno/agent-interface/pull/8114) merged the inventory errata and the 336/382 paginated snapshot. Its exact CSVs remain timestamped snapshots, not live data.
+
+## Current reference census — 2026-10-05 10:56 UTC
+
+This is a later, non-atomic read; branch refs, PR search windows, and `main` were observed through separate requests. Main was `fd4f9e4533aa5baa5952e89cd830c98b26e7c537` when the ref was read.
+
+- Partitioned GitHub Search returned 332 unique open PR IDs; a separate query found none created before 2026-10-03.
+- `git ls-remote --heads` returned 395 branch refs with 395 distinct tip SHAs.
+- A join of open pull-request head SHAs to repository branch-tip SHAs matched 331 branch tips. The other 63 non-main branch refs do not match an open PR head tip at this read.
+- The unmatched refs are not deletion candidates by count alone. Closed/merged PR relationships, dependent branches, unique commits/evidence paths, and owner/allocation status remain to be audited. No branch is classified safe to delete.
