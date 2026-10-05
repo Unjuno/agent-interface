@@ -24,7 +24,7 @@ The App Server uses the `turn/start` `toolOutput` form established by the separa
   - `research/doom/map01_overlap_controller_v39.py`: `4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca`
   - `research/live_control/persistent_planner_adapter_v2.py`: `e00ca6b8f20ee1081dc57a0ccd754115fe81f9bf5fa36553ed7c98add873fc0e`
   - `research/live_control/codex_app_server_client_v2.py`: `d140fec92cb7e81a439d7cda95c67d63d902af08fc4997bfa5df7933aa14deb4`.
-- Changed runtime files are limited to the three sources above. Tests update those sources' existing adapter, app-server client, nested-wait, paired-signal, and production wait-dispatch suites. `run_tests.ps1` preserves exact output and exit codes under `results/`; `audit_results.py` independently checks the saved exit codes, test counts, compile result, and byte manifest.
+- Changed runtime files are limited to the three sources above. Tests update those sources' existing adapter, app-server client, nested-wait, paired-signal, and production wait-dispatch suites. `run_tests.ps1` stores the process output as UTF-8/LF text and preserves exact exit codes under `results/`; `audit_results.py` independently checks the saved exit codes, test counts, compile result, and byte manifest.
 - CPU-only Windows CPython 3.11.9. No external endpoint, credentials, GUI, game, image-generation service, or shared resource was used.
 
 ## Result
