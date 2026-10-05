@@ -1,0 +1,9 @@
+{
+  "schema": "v39-cover-admission-test-source-mismatch-v1",
+  "disposition": "STOP_TEST_HARNESS_SOURCE_MISMATCH",
+  "command": "python -B /input/pr_test.py -v with V39_WAIT_SOURCE=/input/main.py",
+  "exit_code": 1,
+  "observed": "7 tests passed; test_cover_admission_returns_invalidation_before_queued_acceptance errored at extract_cover_wait_helper with StopIteration because current-main source does not define wait_for_cover_acceptance",
+  "classification": "test configuration pointed the Draft-specific helper regression at current-main; not a candidate scientific FAIL. This outcome is preserved rather than relabelled.",
+  "followup": "The same Draft test file was then run against its pinned Draft controller source and passed 8/8; current-main's own wait suite passed 7/7 against current-main source."
+}

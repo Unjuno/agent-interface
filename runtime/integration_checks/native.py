@@ -21,6 +21,7 @@ SUITES = {
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_appserver_utf8_2d0b')
 SUITES['protocol'].append('test_app_server_reply_id_5156')
+SUITES['protocol'].append('test_appserver_write_admission_e0cc')
 SUITES['protocol'].append('test_app_server_utf8')
 SUITES['protocol'].append('test_appserver_process_tree_cleanup_20261004')
 
@@ -81,6 +82,7 @@ def main():
 SUITES['protocol'].extend(['test_usage_subset_route', 'test_caller_diagnostic_composition', 'test_caller_failure_id_composition'])
 
 SUITES['protocol'].append('test_failure_status_composition')
+SUITES['protocol'].append('runtime.cli_v1.test_receipt_empty_index_r7p4')
 
 if __name__ == '__main__':
     raise SystemExit(main())

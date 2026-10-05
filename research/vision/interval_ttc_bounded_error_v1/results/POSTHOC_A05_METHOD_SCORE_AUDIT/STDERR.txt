@@ -1,0 +1,15 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/src/research/vision/interval_ttc_bounded_error_v1/audit_only_a05.py", line 285, in <module>
+    raise SystemExit(main(sys.argv[1], sys.argv[2]))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/research/vision/interval_ttc_bounded_error_v1/audit_only_a05.py", line 248, in main
+    prior_freeze = json.loads((package / "FREEZE_A04.json").read_text(encoding="utf-8"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/src/research/vision/interval_ttc_bounded_error_v1/research/vision/interval_ttc_bounded_error_v1/FREEZE_A04.json'

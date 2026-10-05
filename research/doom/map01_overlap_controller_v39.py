@@ -382,7 +382,11 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     process.stdin.flush()
     terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
     release = terminal.get("release", {})
-    if (terminal.get("status") != "cancelled" or release.get("verified") is not True or
+    # The bounded cover can naturally finish or lease-expire between policy
+    # invalidation and delivery of the cancel request. Accept those terminal
+    # races only when they independently verify that no input remains held.
+    if (terminal.get("status") not in ("cancelled", "completed", "expired") or
+            release.get("verified") is not True or
             release.get("buttons_down") != [] or release.get("keys_down") != []):
         raise RuntimeError("invalidated cover did not verify empty release")
     return planner_interrupt, terminal

@@ -1,0 +1,37 @@
+{
+  "classification": "local WSL Xvfb source-bound smoke; not formal allocation",
+  "display": ":97",
+  "error": {
+    "message": "",
+    "type": "KeyboardInterrupt"
+  },
+  "limits": [
+    "No game, model, external provider, user desktop input, or container",
+    "X server request/state and test-client events only",
+    "Not hardware transition, application effect, useful feedback, recovery, or MAP01 evidence"
+  ],
+  "run_id": "MAP01-V39-PERKEY-CANCEL-XVFB-LOCAL-02",
+  "schema": "nonformal-real-xvfb-v13-cancel-release-v1",
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "input_owner_v13.py": "ac354ffb2a4cfb11c739c8fc636ea63455d7b24bf4d1da8b6833256e63b9f64c"
+  },
+  "status": "STOP",
+  "traceback": "Traceback (most recent call last):\n  File \"/mnt/c/Users/junny/Documents/Codex/2026-10-03/goa/work/v13_owner_composition/run_real_xvfb_cancel_release.py\", line 100, in main\n    err = server.stderr.read().decode(\"utf-8\", \"replace\") if server.stderr else \"\"\n          ^^^^^^^^^^^^^^^^^^^^\nKeyboardInterrupt\n",
+  "xvfb_command": [
+    "Xvfb",
+    ":97",
+    "-screen",
+    "0",
+    "800x600x24",
+    "-nolisten",
+    "tcp"
+  ],
+  "xvfb_exit_code": 0,
+  "xvfb_lock_removed": true,
+  "xvfb_pid": 8933,
+  "xvfb_socket_removed": true,
+  "xvfb_stderr": ""
+}
+

@@ -1,0 +1,46 @@
+{
+  "allocation": "PROTECTIVE-ADAPTATION-6367-T0-20261004-01",
+  "base_main_at_freeze": "ab63eeb452f5f305f08e9d358efe2296f4c26211",
+  "main_advance_history": [
+    "8a462fa02d01801b166a4ae00edaa41a6f29eb67",
+    "5ce152e1479bedac08f55db45d24b3dd1405cb16",
+    "ab63eeb452f5f305f08e9d358efe2296f4c26211"
+  ],
+  "branch": "research/6367-protective-local-adaptation-t0-20261004",
+  "branch_base_sha": "ab63eeb452f5f305f08e9d358efe2296f4c26211",
+  "intake_commit_sha": "ab63eeb452f5f305f08e9d358efe2296f4c26211",
+  "path": "research/analysis/protective_local_adaptation_6367_t0_20261004",
+  "fixture_sha256": "ee65068b79ee1a92d2e1a4e46c7f5a10dea11bb5657fdfd7d87b81d46341c45b",
+  "events_sha256": "465c48afe8cb386800ab0aaa51bea4fbc711b8939b7a43dcb41c3be6b89451ac",
+  "source_sha256": {
+    "candidate.py": "b7a972a525f0374d88e6e67b7994d39bf067f6da291a5183a46c0b0f71a31169",
+    "auditor.py": "b7fb04d2e01bf6ff8a250ca6135c1ecb3dbad15e26ee167732200b2245deede9",
+    "test_candidate.py": "6ea214b882efd0744607772c82b8ce8b4a6554263c055868dad62f222b1614fc",
+    "test_auditor.py": "c7c5b0124dd3bc252afef47bfe49c4e4266bc6e943bd0c9bb7c1e771162972d2",
+    "test_frozen_fixture.py": "15917030e8b2609b53455bb8614e898f25a2e9eb91e19809a9e22ee3b6789725"
+  },
+  "formal_invocation_caps": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "formal_counts_before_candidate": {
+    "candidate": 0,
+    "independent_auditor": 0
+  },
+  "formal_commands": [
+    "python3 candidate.py fixture.json events.json out/CANDIDATE.json",
+    "python3 auditor.py fixture.json events.json out/CANDIDATE.json out/AUDIT.json"
+  ],
+  "preflight_command": "python3 -m unittest -v test_frozen_fixture test_candidate test_auditor",
+  "preflight_tests": 11,
+  "runtime": {
+    "python": "3.14.5",
+    "os": "macOS Darwin 27.0.0",
+    "architecture": "arm64",
+    "container": "NOT_RUN",
+    "container_stop": "OrbStack image inventory/inspect fails with containerd content-blob operation not supported; no image pull/retry or container launch"
+  },
+  "scope": "finite synthetic no-model/no-GUI event-state method test only",
+  "registered_utc_date": "2026-10-04"
+}

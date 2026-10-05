@@ -1,0 +1,61 @@
+{
+  "schema": "machine-crash-7802-t0-run-v1",
+  "allocation": "MACHINE-CRASH-7802-T0-20261005-01",
+  "source_commit": "142ed4c653f8421610b2f230ec731963c5309b18",
+  "runtime": {
+    "os": "Microsoft Windows NT 10.0.26200.0",
+    "architecture": "AMD64",
+    "python": "Python 3.12.10",
+    "powershell": "7.6.6",
+    "mode": "standard-library deterministic CPU model; no container or filesystem durability experiment"
+  },
+  "candidate": {
+    "command": "python -B candidate.py fixture.json results/candidate-output.json",
+    "started_utc": "2026-10-05T11:07:21.6861579Z",
+    "completed_utc": "2026-10-05T11:07:21.8135420Z",
+    "exit_code": 0,
+    "invocations": 1,
+    "rows": 31,
+    "retry_count": 0,
+    "stdout_sha256": "DC2F7321CCB818C6487626CB4ABD040A19D644700AA61DF421F3C225CFE9FC33",
+    "stderr_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "output_sha256": "2DEB1F8695AEE3E2279A4008AA845D068180E70CF37E15D1ADCCB7F3E81F9EB5"
+  },
+  "auditor": {
+    "command": "python -B auditor.py fixture.json results/candidate-output.json results/audit.json",
+    "started_utc": "2026-10-05T11:07:30.8090011Z",
+    "completed_utc": "2026-10-05T11:07:31.0219141Z",
+    "exit_code": 0,
+    "invocations": 1,
+    "rows_checked": 31,
+    "expected_rows": 31,
+    "retry_count": 0,
+    "audit_pass": true,
+    "machine_only_state_count": 3,
+    "mutations_rejected": {
+      "classification_flip": true,
+      "duplicate_row": true,
+      "image_mutation": true,
+      "row_omission": true
+    },
+    "stdout_sha256": "A679354317BFBEF3C3175A7ED8D8000CB5E77E92D0F3218268A2EF026321A169",
+    "stderr_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "output_sha256": "CE3434B0391BEB9D6A1B36953280616521B4FBA6C71D091AFB97CE520ECA3B76"
+  },
+  "candidate_classification_counts": {
+    "EFFECT_AND_RECEIPT_CONFIRMED": 13,
+    "NO_EFFECT_CONFIRMED": 3,
+    "UNKNOWN_RECONCILE": 11,
+    "CORRUPT_OR_UNTRUSTED": 4
+  },
+  "operations_excluded": [
+    "WSL/WSLc",
+    "Docker",
+    "SQLite VFS",
+    "host filesystem crash or power loss",
+    "VM power-off",
+    "network",
+    "GUI/model/input",
+    "external effect"
+  ]
+}

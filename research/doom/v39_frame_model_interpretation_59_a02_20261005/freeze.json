@@ -1,0 +1,92 @@
+{
+  "freeze_version": 1,
+  "frozen_at_utc": "2026-10-05T05:09:21Z",
+  "issue": 59,
+  "allocation": "v39-frame-model-interpretation-59-a02-20261005",
+  "successor_of": {
+    "allocation": "v39-frame-model-interpretation-59-a01-20261005",
+    "result": "STOP_MODEL_UNSUPPORTED before model response",
+    "pr": "https://github.com/Unjuno/agent-interface/pull/7995"
+  },
+  "source_main_commit": "6a2826d391b77496b69752609a6f07b6971b4b6f",
+  "input": {
+    "source_repo_path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/200.png",
+    "source_png_path": "source.png",
+    "png_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+    "source_events_path": "source_events.jsonl",
+    "source_events_original_sha256": "00be5954201dcd78912934775cdf5e606c17a7240d01e5a782e8dd331d359818",
+    "source_events_public_sha256": "da01db9c42b7cd945120c6beb4466d4c5b7b843eb6cace0a20c214a3304ba1cd",
+    "sequence": 200,
+    "observation_id": "cover-5",
+    "program_step_index": 7,
+    "program_sha256": "4dadb62c53840d0dad2cc29451202f40a038de954c0d4c11f34ba7b737a15b6e",
+    "dimensions_px": [
+      1280,
+      800
+    ],
+    "decoded_rgb_sha256": "7731f923af45dce8dec01270372f18edce3633e626f3b02a0c43439eec745f1c",
+    "independent_visual_annotation": {
+      "visible_hostile": true,
+      "visible_hostile_count": 1
+    },
+    "typed_hud_reference": {
+      "health": 51,
+      "ammo": 38
+    }
+  },
+  "candidate": {
+    "client": "npm @openai/codex@0.160.0",
+    "cli_version": "codex-cli 0.160.0",
+    "npm_integrity": "sha512-kEtVGzjRAYAMOwJxN39bGcna7LT3IDQgq64NNJ/dDTfu4OzZaocJcyNb5/gGJ/IVF/Vj7oK7E2m3nmTan7lpjg==",
+    "registry": "https://registry.npmjs.org/",
+    "runtime": {
+      "os": "Darwin arm64",
+      "node": "v26.7.0",
+      "npm": "11.19.0"
+    },
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "invocations": 1,
+    "ephemeral_session": true,
+    "model_generated_shell_sandbox": "read-only",
+    "game_or_gui_actions": false,
+    "retry_policy": "no retry; preserve first outcome",
+    "prompt_path": "prompt.txt",
+    "prompt_sha256": "a8abe3f41f472aca178528af0b9c26a03cd38cc31c4c67ad41878891cc341754",
+    "output_schema_path": "output.schema.json",
+    "output_schema_sha256": "b1d6abbd374c89d4850550a4aa2f2bcfa29bd854444309a857e55af2d005aca3",
+    "command": "python3 run_once.py; runner verifies pinned CLI, writes one-use sentinel, then invokes one codex exec request",
+    "runner_sha256": "c812c37e732404f2412d68b21097b5ffa0b4351753b00d5f88f4e6125ae135e2",
+    "auditor_sha256": "423fe84858a0e1aeccc81baa122a27972de4ba581dc1b763d4c381158480a34d",
+    "execution_environment": "macOS host Codex CLI; remote model inference; no game/controller/GUI interaction",
+    "tool_call_policy": "Prompt forbids tool use; read-only sandbox; any non-message JSONL item makes audit STOP."
+  },
+  "decision": {
+    "pass": "CLI exits 0, final conforms to frozen JSON schema, visible_hostile=true, health=51, ammo=38",
+    "fail": "completed response is schema-valid but any scored field is wrong",
+    "stop": "CLI/model/service failure, malformed/schema-invalid response, missing final response, tool use, or incomplete raw evidence; no repeat",
+    "recommendation": "record CONTINUE/STOP_OR_SWITCH/UNCERTAIN, unscored and never executed"
+  },
+  "scope_limits": [
+    "one retained screenshot",
+    "one CLI invocation",
+    "no live game or controller",
+    "no action-effect, responsiveness, latency-benefit, or completion claim"
+  ],
+  "duplicate_review": {
+    "reviewed_at_utc": "2026-10-05T05:08:50Z",
+    "issue_59_state": "OPEN",
+    "issue_59_updated_at": "2026-10-05T05:07:59Z",
+    "pr_7995": "A01: same frame, CLI 0.146.1 rejected selected model before response; STOP.",
+    "pr_7996": "protocol-only turn/steer probe; no model inference; STOP_PENDING_WINDOW_INVALID.",
+    "pr_7987": "protocol-only loopback RPC/input-boundary coverage; no model inference.",
+    "pr_7999": "A03 palette-aware reader compatibility study; no selected-model inference.",
+    "distinction": "A02 changes only npm Codex CLI client version relative to A01; it is a fresh, independently frozen single candidate allocation."
+  },
+  "metadata_correction": {
+    "corrected_at_utc": "2026-10-05T05:11:30Z",
+    "original_file": "freeze.pre-run.original.json",
+    "original_sha256": "b5c1c1e30abe6017c78e7fe090872f977b5ffd5d2ce45d4a238b49c7a3d8b276",
+    "reason": "The initially written frozen_at_utc was accidentally set to a future time. File mtime 2026-10-05T05:09:21Z predates the recorded candidate start 2026-10-05T05:09:30.861739Z; only freeze metadata timestamps were corrected. Candidate assets and their recorded hashes are unchanged."
+  }
+}

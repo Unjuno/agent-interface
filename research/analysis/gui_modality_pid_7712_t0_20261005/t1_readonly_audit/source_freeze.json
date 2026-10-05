@@ -1,0 +1,47 @@
+{
+  "schema": "blackwell-observation-dominance-t1-orbstack-a03-v1",
+  "issue": 6678,
+  "allocation_id": "BLACKWELL-OBSERVATION-DOMINANCE-6678-T1-ORB-A03-20261003-01",
+  "source_main": "37b973cd28e20b52950f6e5b75668b76f5d4bd65",
+  "branch": "research/blackwell-observation-dominance-6678-t1-browser-20261003",
+  "package": "research/analysis/blackwell_observation_dominance_6678_t1_orbstack_a03_20261003",
+  "images": {
+    "browser_ref": "mcr.microsoft.com/playwright@sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd",
+    "browser_image_id": "sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd",
+    "browser_platform": "linux/arm64",
+    "python_image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "python_platform": "linux/arm64",
+    "playwright_js_version": "1.62.1",
+    "playwright_js_tree_sha256": "8ff3153fb520f5978e324f08ebc7801d3380c1548033ac8072c9cbf0c2bf7089",
+    "browser_version_expected": "151.0.7922.34"
+  },
+  "protocol": {
+    "states": ["s0", "s1", "s2"],
+    "prior": [[1, 3], [1, 3], [1, 3]],
+    "captures_per_state": 24,
+    "total_captures": 72,
+    "schedule": "schedule.json",
+    "channels": ["full_png", "left_roi_png", "right_roi_png", "accessibility_snapshot", "mutation_delta"],
+    "relations": "states.json:expected_relations",
+    "decision_problems": "states.json:decision_problems",
+    "pixel_oracle": "exact frozen RGB equality at one text-free interior coordinate per card",
+    "garbling_tolerance": "0/1",
+    "smoothing": "none",
+    "quiescence_ms": 500,
+    "formal_retries": 0
+  },
+  "runtime": {
+    "provider": "OrbStack Docker Engine",
+    "engine_version": "29.4.0",
+    "engine_platform": "linux/arm64",
+    "network": "none for all formal containers",
+    "read_only_rootfs": true,
+    "capabilities": "drop-all",
+    "no_new_privileges": true,
+    "browser_limits": {"cpus": 1, "memory_bytes": 1610612736, "pids": 128, "shm_bytes": 134217728},
+    "analysis_limits": {"cpus": 1, "memory_bytes": 536870912, "pids": 64},
+    "tmpfs": {"browser": "/tmp:rw,nosuid,size=256m", "analysis": "/tmp:rw,nosuid,size=128m"}
+  },
+  "limits": {"capture_max": 1, "candidate_max": 1, "auditor_max": 1, "retries": 0},
+  "scope": "Static authored fixture rendered by one Playwright Chromium version in an OrbStack Linux/arm64 container. No real app, Agent Interface runtime, model, effect, safety, latency, benefit or product inference."
+}

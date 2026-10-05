@@ -19,7 +19,7 @@ class ActualReleaseCompositionTests(unittest.TestCase):
              fail_incomplete_publication=False,
              incomplete_publication_rows=False,
              release_all_publication_failure=False, return_backend=False,
-             text=None, failure_key=None):
+             text=None, failure_key=None, mutate_release_row_before_raise=False):
         emitted = []
         attempts = []
         fail_emit = [emit_accept_then_raise or release_all_publication_failure]
@@ -34,6 +34,8 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 fail_emit[0] = False
                 if sink_accept_before_raise:
                     emitted.append(dict(row))
+                if mutate_release_row_before_raise:
+                    row["release_batch_position"] = 99
                 raise OSError("incomplete receipt sink failed")
             if (fail_emit[0] and row.get("event") == "input_release_transition"
                     and row.get("release_batch_position") == failure_position
@@ -41,6 +43,8 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 fail_emit[0] = False
                 if sink_accept_before_raise:
                     emitted.append(dict(row))
+                if mutate_release_row_before_raise:
+                    row["release_batch_position"] = 99
                 raise RuntimeError("sink failed after accepting release row")
             emitted.append(dict(row))
         low_level = types.ModuleType("input_owner_v12")
@@ -473,6 +477,46 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             "step": 0, "size": 1,
             "positions": [{"position": 0, "step": 0, "key": "a", "state": "unknown"}],
         })
+
+    def test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger(self):
+        for position in range(3):
+            for accepted in (False, True):
+                with self.subTest(position=position, accepted=accepted):
+                    error, _, _ = self._run(
+                        emit_accept_then_raise=True, capture_publication_error=True,
+                        sink_accept_before_raise=accepted, failure_position=position,
+                        mutate_release_row_before_raise=True)
+                    states = ["confirmed"] * position + ["unknown"] + [
+                        "confirmed_incomplete"] * (2 - position)
+                    self.assertEqual(
+                        error.release_batch_publication["positions"],
+                        [
+                            {"position": i, "step": 0, "key": "abc"[i], "state": state}
+                            for i, state in enumerate(states)
+                        ],
+                    )
+
+    def test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger(self):
+        for position in range(3):
+            for accepted in (False, True):
+                with self.subTest(position=position, accepted=accepted):
+                    error, _, _, release = self._run(
+                        step_exception=True, capture_step_exception=True,
+                        fail_incomplete_publication=True,
+                        incomplete_publication_rows=True,
+                        sink_accept_before_raise=accepted, failure_position=position,
+                        mutate_release_row_before_raise=True)
+                    self.assertEqual(str(error), "later step failed")
+                    self.assertNotIn("release_batch_delivery", release)
+                    states = ["confirmed_incomplete"] * position + ["unknown"] + [
+                        "not_attempted"] * (2 - position)
+                    self.assertEqual(
+                        error.release_batch_publication["positions"],
+                        [
+                            {"position": i, "step": 0, "key": "abc"[i], "state": state}
+                            for i, state in enumerate(states)
+                        ],
+                    )
 
 
 if __name__ == "__main__":

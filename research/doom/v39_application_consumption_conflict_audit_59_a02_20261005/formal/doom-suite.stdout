@@ -1,0 +1,1098 @@
+.........................EEEEEEEEEEE.............................EEEEE......................................E..EE..EEEEEEEEEEEEEE...........E....EC:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py:622: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 mode='r' encoding='cp932'>
+  with outcome.testPartExecutor(self):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..E..E.......E....Exception in thread Thread-2 (writer):
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+.    self.run()
+.  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 982, in run
+.E    self._target(*self._args, **self._kwargs)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_scorer_stdio_adapter_v1.py", line 12, in writer
+    def writer():time.sleep(.055);os.write(w,b'{"op":"finish"}\n');os.close(w)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument
+F....EF.........EEEEEE........EE...........E.F.EE.....EEE.............E
+======================================================================
+ERROR: test_doom_action_snapshot_v1 (unittest.loader._FailedTest.test_doom_action_snapshot_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_action_snapshot_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_action_snapshot_v1.py", line 9, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_doom_action_validity_contract_v1 (unittest.loader._FailedTest.test_doom_action_validity_contract_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_action_validity_contract_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_action_validity_contract_v1.py", line 11, in <module>
+    from doom_action_validity_contract_v1 import build_contract
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_action_validity_contract_v1.py", line 2, in <module>
+    from action_validity_admission_v1 import (
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_doom_cancel_telemetry_backend_v1 (unittest.loader._FailedTest.test_doom_cancel_telemetry_backend_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_cancel_telemetry_backend_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_cancel_telemetry_backend_v1.py", line 10, in <module>
+    import doom_cancel_telemetry_backend_v1 as candidate
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_cancel_telemetry_backend_v1.py", line 4, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+ModuleNotFoundError: No module named 'coast_backend_v1'
+
+
+======================================================================
+ERROR: test_bad_environment_and_observation_fail_closed (test_doom_hud_signal_v1.DoomHudSignalTests.test_bad_environment_and_observation_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v1.py", line 69, in test_bad_environment_and_observation_fail_closed
+    DoomStatusNumberReader(WAD, expected_wad_sha256="0" * 64)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_independent_retained_decision_frames_match_manual_review (test_doom_hud_signal_v1.DoomHudSignalTests.test_independent_retained_decision_frames_match_manual_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v1.py", line 43, in test_independent_retained_decision_frames_match_manual_review
+    reader = DoomStatusNumberReader(WAD)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_reader_follows_bound_window_geometry (test_doom_hud_signal_v1.DoomHudSignalTests.test_reader_follows_bound_window_geometry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v1.py", line 64, in test_reader_follows_bound_window_geometry
+    reading = DoomStatusNumberReader(WAD).read(observation)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_retained_exact_health_sequence (test_doom_hud_signal_v1.DoomHudSignalTests.test_retained_exact_health_sequence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v1.py", line 30, in test_retained_exact_health_sequence
+    values = {row["sequence"]: self.reader().read(row)["value"]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v1.py", line 30, in <dictcomp>
+    values = {row["sequence"]: self.reader().read(row)["value"]
+                               ^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v1.py", line 25, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_all_retained_v31_frames_have_exact_health_and_ammo (test_doom_hud_signal_v2.DoomHudSignalV2Tests.test_all_retained_v31_frames_have_exact_health_and_ammo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 31, in test_all_retained_v31_frames_have_exact_health_and_ammo
+    signals = [self.reader(signal_id).read(row) for row in observations]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 31, in <listcomp>
+    signals = [self.reader(signal_id).read(row) for row in observations]
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 24, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_ammo_matches_independent_manual_decision_review (test_doom_hud_signal_v2.DoomHudSignalV2Tests.test_ammo_matches_independent_manual_decision_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 40, in test_ammo_matches_independent_manual_decision_review
+    actual = {sequence: self.reader("ammo").read(observations[sequence])["value"]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 40, in <dictcomp>
+    actual = {sequence: self.reader("ammo").read(observations[sequence])["value"]
+                        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 24, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_signal_anchor_and_geometry_fail_closed (test_doom_hud_signal_v2.DoomHudSignalV2Tests.test_signal_anchor_and_geometry_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 51, in test_signal_anchor_and_geometry_fail_closed
+    self.assertEqual(self.reader("ammo").read(observation)["status"], "unknown")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v2.py", line 24, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_doom_hud_signal_v3 (unittest.loader._FailedTest.test_doom_hud_signal_v3)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_hud_signal_v3
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_hud_signal_v3.py", line 15, in <module>
+    from doom_typed_observation_v1 import (
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_observation_v1.py", line 8, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_doom_typed_release_backend_v2 (unittest.loader._FailedTest.test_doom_typed_release_backend_v2)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_typed_release_backend_v2
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_typed_release_backend_v2.py", line 5, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_release_backend_v1.py", line 3, in <module>
+    from input_owner_v10 import InputOwner
+ModuleNotFoundError: No module named 'input_owner_v10'
+
+
+======================================================================
+ERROR: test_doom_typed_release_backend_v3 (unittest.loader._FailedTest.test_doom_typed_release_backend_v3)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_typed_release_backend_v3
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_doom_typed_release_backend_v3.py", line 5, in <module>
+    import doom_typed_release_backend_v3 as candidate
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_release_backend_v3.py", line 4, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_release_backend_v1.py", line 3, in <module>
+    from input_owner_v10 import InputOwner
+ModuleNotFoundError: No module named 'input_owner_v10'
+
+
+======================================================================
+ERROR: test_event_driven_policy_monitor_v1 (unittest.loader._FailedTest.test_event_driven_policy_monitor_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_event_driven_policy_monitor_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_event_driven_policy_monitor_v1.py", line 12, in <module>
+    from event_driven_policy_monitor_v1 import EventDrivenPolicyMonitor, observation_binding
+ModuleNotFoundError: No module named 'event_driven_policy_monitor_v1'
+
+
+======================================================================
+ERROR: test_full_pipe_times_out_without_blocking (test_failure_finish_pipe_v1.Tests.test_full_pipe_times_out_without_blocking)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_failure_finish_pipe_v1.py", line 8, in test_full_pipe_times_out_without_blocking
+    os.set_blocking(write_fd,False)
+    ^^^^^^^^^^^^^^^
+AttributeError: module 'os' has no attribute 'set_blocking'
+
+======================================================================
+ERROR: test_readable_pipe_gets_exact_finish_and_mode_restored (test_failure_finish_pipe_v1.Tests.test_readable_pipe_gets_exact_finish_and_mode_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_failure_finish_pipe_v1.py", line 23, in test_readable_pipe_gets_exact_finish_and_mode_restored
+    send_failure_finish(stream,timeout=.05)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_controller_failure_cleanup_v1.py", line 12, in send_failure_finish
+    raise NotImplementedError('bounded failure finish requires POSIX pipe')
+NotImplementedError: bounded failure finish requires POSIX pipe
+
+======================================================================
+ERROR: test_real_pipe_eof_and_same_thread (test_main_thread_scorer_polling_v1.PollingTests.test_real_pipe_eof_and_same_thread)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_main_thread_scorer_polling_v1.py", line 173, in test_real_pipe_eof_and_same_thread
+    stats = loop.run(
+            ^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 125, in run
+    if not self.wait_readable(fd, timeout_s):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] �\�P�b�g�ȊO�̂��̂ɑ΂��đ�������s���悤�Ƃ��܂����B
+
+======================================================================
+ERROR: test_map01_action_admission_paths_v33 (unittest.loader._FailedTest.test_map01_action_admission_paths_v33)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_action_admission_paths_v33
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_action_admission_paths_v33.py", line 8, in <module>
+    from map01_action_admission_paths_v33 import run
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_action_admission_paths_v33.py", line 12, in <module>
+    import map01_overlap_controller_v33 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v33.py", line 22, in <module>
+    from doom_action_validity_contract_v1 import build_contract as build_action_contract
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_action_validity_contract_v1.py", line 2, in <module>
+    from action_validity_admission_v1 import (
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_deterministic_invalidation_v27 (unittest.loader._FailedTest.test_map01_deterministic_invalidation_v27)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_deterministic_invalidation_v27
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_deterministic_invalidation_v27.py", line 8, in <module>
+    import map01_overlap_controller_v27 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v27.py", line 20, in <module>
+    from policy_invalidation_guard_v1 import PolicyInvalidationGuard
+ModuleNotFoundError: No module named 'policy_invalidation_guard_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v28 (unittest.loader._FailedTest.test_map01_overlap_controller_v28)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v28
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v28.py", line 11, in <module>
+    import map01_overlap_controller_v28 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v28.py", line 20, in <module>
+    from policy_invalidation_guard_v1 import PolicyInvalidationGuard
+ModuleNotFoundError: No module named 'policy_invalidation_guard_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v29 (unittest.loader._FailedTest.test_map01_overlap_controller_v29)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v29
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v29.py", line 15, in <module>
+    import map01_overlap_controller_v29 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v29.py", line 21, in <module>
+    from observable_signal_guard_v1 import ObservableSignalGuard, ObservableSignalPolicyMonitor
+ModuleNotFoundError: No module named 'observable_signal_guard_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v30 (unittest.loader._FailedTest.test_map01_overlap_controller_v30)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v30
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v30.py", line 16, in <module>
+    import map01_overlap_controller_v30 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v30.py", line 21, in <module>
+    from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
+ModuleNotFoundError: No module named 'observable_signal_guard_v2'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v31 (unittest.loader._FailedTest.test_map01_overlap_controller_v31)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v31
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v31.py", line 17, in <module>
+    import map01_overlap_controller_v31 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v31.py", line 21, in <module>
+    from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
+ModuleNotFoundError: No module named 'observable_signal_guard_v2'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v32 (unittest.loader._FailedTest.test_map01_overlap_controller_v32)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v32
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v32.py", line 18, in <module>
+    import map01_overlap_controller_v32 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v32.py", line 22, in <module>
+    from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
+ModuleNotFoundError: No module named 'observable_signal_guard_v2'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v33 (unittest.loader._FailedTest.test_map01_overlap_controller_v33)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v33
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v33.py", line 14, in <module>
+    import map01_overlap_controller_v33 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v33.py", line 22, in <module>
+    from doom_action_validity_contract_v1 import build_contract as build_action_contract
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_action_validity_contract_v1.py", line 2, in <module>
+    from action_validity_admission_v1 import (
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v34 (unittest.loader._FailedTest.test_map01_overlap_controller_v34)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v34
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v34.py", line 14, in <module>
+    import map01_overlap_controller_v34 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v34.py", line 22, in <module>
+    from doom_action_validity_contract_v1 import build_contract as build_action_contract
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_action_validity_contract_v1.py", line 2, in <module>
+    from action_validity_admission_v1 import (
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v35 (unittest.loader._FailedTest.test_map01_overlap_controller_v35)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v35
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v35.py", line 14, in <module>
+    import map01_overlap_controller_v35 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v35.py", line 22, in <module>
+    from doom_action_validity_contract_v1 import build_contract as build_action_contract
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_action_validity_contract_v1.py", line 2, in <module>
+    from action_validity_admission_v1 import (
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v36 (unittest.loader._FailedTest.test_map01_overlap_controller_v36)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v36
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v36.py", line 14, in <module>
+    import map01_overlap_controller_v36 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v36.py", line 22, in <module>
+    from doom_typed_observation_v1 import (
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_observation_v1.py", line 8, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v37 (unittest.loader._FailedTest.test_map01_overlap_controller_v37)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v37
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v37.py", line 14, in <module>
+    import map01_overlap_controller_v37 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v37.py", line 22, in <module>
+    from doom_typed_observation_v1 import (
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_observation_v1.py", line 8, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v38 (unittest.loader._FailedTest.test_map01_overlap_controller_v38)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v38
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v38.py", line 8, in <module>
+    import map01_overlap_controller_v38 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v38.py", line 22, in <module>
+    from doom_typed_observation_v1 import (
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_observation_v1.py", line 8, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_overlap_controller_v39 (unittest.loader._FailedTest.test_map01_overlap_controller_v39)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_overlap_controller_v39
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_overlap_controller_v39.py", line 9, in <module>
+    import map01_overlap_controller_v39 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v39.py", line 24, in <module>
+    from doom_typed_observation_v1 import (
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_observation_v1.py", line 8, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_map01_persistent_planner_v26 (unittest.loader._FailedTest.test_map01_persistent_planner_v26)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_persistent_planner_v26
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_persistent_planner_v26.py", line 11, in <module>
+    import map01_overlap_controller_v26 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v26.py", line 20, in <module>
+    from policy_invalidation_guard_v1 import PolicyInvalidationGuard
+ModuleNotFoundError: No module named 'policy_invalidation_guard_v1'
+
+
+======================================================================
+ERROR: test_map01_policy_invalidation_v24 (unittest.loader._FailedTest.test_map01_policy_invalidation_v24)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_policy_invalidation_v24
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_policy_invalidation_v24.py", line 14, in <module>
+    from map01_overlap_controller_v24 import reusable_cover
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v24.py", line 19, in <module>
+    from policy_invalidation_guard_v1 import PolicyInvalidationGuard
+ModuleNotFoundError: No module named 'policy_invalidation_guard_v1'
+
+
+======================================================================
+ERROR: test_map01_running_action_paths_v35 (unittest.loader._FailedTest.test_map01_running_action_paths_v35)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_running_action_paths_v35
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_running_action_paths_v35.py", line 8, in <module>
+    from map01_running_action_paths_v35 import run
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_running_action_paths_v35.py", line 11, in <module>
+    import map01_overlap_controller_v35 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v35.py", line 22, in <module>
+    from doom_action_validity_contract_v1 import build_contract as build_action_contract
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_action_validity_contract_v1.py", line 2, in <module>
+    from action_validity_admission_v1 import (
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_pipe_wait_samples_and_wakes_on_command (test_map01_scorer_stdio_adapter_v1.Tests.test_pipe_wait_samples_and_wakes_on_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_scorer_stdio_adapter_v1.py", line 13, in test_pipe_wait_samples_and_wakes_on_command
+    t=threading.Thread(target=writer);t.start();start=time.perf_counter();line=next(adapter);elapsed=time.perf_counter()-start;t.join();stream.close()
+                                                                               ^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_scorer_stdio_adapter_v1.py", line 59, in __next__
+    if not self.loop.wait_readable(self.fd,timeout):continue
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] �\�P�b�g�ȊO�̂��̂ɑ΂��đ�������s���悤�Ƃ��܂����B
+
+======================================================================
+ERROR: test_finish_stops_before_later_buffered_command (test_map01_telemetry_session_v1.Tests.test_finish_stops_before_later_buffered_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_telemetry_session_v1.py", line 151, in test_finish_stops_before_later_buffered_command
+    stats,_=run_telemetry_control_loop(fd=fd,scorer=scorer,command_handler=handler,sample_hz=35)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_telemetry_session_v1.py", line 189, in run_telemetry_control_loop
+    stats = polling.run(
+            ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 125, in run
+    if not self.wait_readable(fd, timeout_s):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] �\�P�b�g�ȊO�̂��̂ɑ΂��đ�������s���悤�Ƃ��܂����B
+
+======================================================================
+ERROR: test_progress_state_is_scorer_only_and_same_thread (test_map01_telemetry_session_v1.Tests.test_progress_state_is_scorer_only_and_same_thread)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_telemetry_session_v1.py", line 91, in test_progress_state_is_scorer_only_and_same_thread
+    stats,summary=run_telemetry_control_loop(fd=fd,scorer=scorer,command_handler=handler,sample_hz=1000)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_telemetry_session_v1.py", line 189, in run_telemetry_control_loop
+    stats = polling.run(
+            ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 125, in run
+    if not self.wait_readable(fd, timeout_s):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] �\�P�b�g�ȊO�̂��̂ɑ΂��đ�������s���悤�Ƃ��܂����B
+
+======================================================================
+ERROR: test_map01_v39_typed_state_feedback (unittest.loader._FailedTest.test_map01_v39_typed_state_feedback)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_v39_typed_state_feedback
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_map01_v39_typed_state_feedback.py", line 15, in <module>
+    import map01_overlap_controller_v39 as controller
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_overlap_controller_v39.py", line 24, in <module>
+    from doom_typed_observation_v1 import (
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_typed_observation_v1.py", line 8, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+ERROR: test_policy_invalidation_guard_v1 (unittest.loader._FailedTest.test_policy_invalidation_guard_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_policy_invalidation_guard_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_policy_invalidation_guard_v1.py", line 9, in <module>
+    from policy_invalidation_guard_v1 import PolicyInvalidationGuard
+ModuleNotFoundError: No module named 'policy_invalidation_guard_v1'
+
+
+======================================================================
+ERROR: test_unchanged_mechanism_hashes (test_preregister_map01_measurement_integration_v3.Tests.test_unchanged_mechanism_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_preregister_map01_measurement_integration_v3.py", line 26, in test_unchanged_mechanism_hashes
+    for name, expected in p['unchanged_mechanism_sha256'].items():
+                          ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'unchanged_mechanism_sha256'
+
+======================================================================
+ERROR: test_accept_then_raise_does_not_duplicate_release_batch_rows (test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 234, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    _, releases = self._run(emit_accept_then_raise=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 134, in _run
+    owner_v4 = importlib.import_module("input_transition_owner_v4")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'input_transition_owner_v4'
+
+======================================================================
+ERROR: test_cancel_during_keyup_sync_fails_closed_through_batch_composition (test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cancel_during_keyup_sync_fails_closed_through_batch_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 209, in test_cancel_during_keyup_sync_fails_closed_through_batch_composition
+    _, releases = self._run(cancel_after_sync=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 134, in _run
+    owner_v4 = importlib.import_module("input_transition_owner_v4")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'input_transition_owner_v4'
+
+======================================================================
+ERROR: test_cleanup_exception_publishes_partial_receipt_before_propagating (test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cleanup_exception_publishes_partial_receipt_before_propagating)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 226, in test_cleanup_exception_publishes_partial_receipt_before_propagating
+    _, releases = self._run(cleanup_exception=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 134, in _run
+    owner_v4 = importlib.import_module("input_transition_owner_v4")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'input_transition_owner_v4'
+
+======================================================================
+ERROR: test_current_v4_wrapper_joins_each_key_admission_to_its_release (test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_joins_each_key_admission_to_its_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 175, in test_current_v4_wrapper_joins_each_key_admission_to_its_release
+    admissions, releases = self._run()
+                           ^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 134, in _run
+    owner_v4 = importlib.import_module("input_transition_owner_v4")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'input_transition_owner_v4'
+
+======================================================================
+ERROR: test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception (test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 217, in test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception
+    _, releases = self._run(step_exception=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 134, in _run
+    owner_v4 = importlib.import_module("input_transition_owner_v4")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'input_transition_owner_v4'
+
+======================================================================
+ERROR: test_wrong_key_receipt_fails_closed_through_batch_composition (test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_wrong_key_receipt_fails_closed_through_batch_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 203, in test_wrong_key_receipt_fails_closed_through_batch_composition
+    _, releases = self._run(wrong_key=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_release_backend_v3_actual_composition.py", line 134, in _run
+    owner_v4 = importlib.import_module("input_transition_owner_v4")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'input_transition_owner_v4'
+
+======================================================================
+ERROR: test_session_map01_v10 (unittest.loader._FailedTest.test_session_map01_v10)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v10
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v10.py", line 9, in <module>
+    import session_map01_v10 as session
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v10.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_session_map01_v11 (unittest.loader._FailedTest.test_session_map01_v11)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v11
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v11.py", line 9, in <module>
+    import session_map01_v11 as session
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v11.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives (test_session_map01_v13.Tests.test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v13.py", line 67, in main
+    try:base.main()
+        ^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v13.py", line 24, in base_main
+    for line in base.sys.stdin:
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\map01_scorer_stdio_adapter_v1.py", line 59, in __next__
+    if not self.loop.wait_readable(self.fd,timeout):continue
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] �\�P�b�g�ȊO�̂��̂ɑ΂��đ�������s���悤�Ƃ��܂����B
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v13.py", line 32, in test_composition_keeps_game_calls_on_main_thread_and_hashes_latest_primitives
+    try:candidate.main()
+        ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v13.py", line 70, in main
+    sink.finalize(polling.stats());_merge_sources(out)
+                                   ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v13.py", line 28, in _merge_sources
+    for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
+                                                                    ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v13.py", line 22, in _sha
+    def _sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\research\\live_control\\input_transition_owner_v3.py'
+
+======================================================================
+ERROR: test_v14_selects_v3_and_hashes_the_owner_receipt_chain (test_session_map01_v14.SessionSelectionTests.test_v14_selects_v3_and_hashes_the_owner_receipt_chain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v14.py", line 56, in test_v14_selects_v3_and_hashes_the_owner_receipt_chain
+    candidate.main()
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v14.py", line 126, in main
+    sink.finalize(polling.stats());_merge_sources(out)
+                                   ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v14.py", line 28, in _merge_sources
+    for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
+                                                                    ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v14.py", line 22, in _sha
+    def _sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\pr7662-audit-chronology\\research\\live_control\\input_transition_owner_v4.py'
+
+======================================================================
+ERROR: test_session_map01_v15 (unittest.loader._FailedTest.test_session_map01_v15)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v15
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v15.py", line 17, in <module>
+    from executor_v13 import Executor as ReleaseOrderedExecutor
+ModuleNotFoundError: No module named 'executor_v13'
+
+
+======================================================================
+ERROR: test_session_map01_v7 (unittest.loader._FailedTest.test_session_map01_v7)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v7
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v7.py", line 7, in <module>
+    import session_map01_v7 as session
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v7.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_session_map01_v8 (unittest.loader._FailedTest.test_session_map01_v8)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v8
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v8.py", line 9, in <module>
+    import session_map01_v8 as session
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v8.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_session_map01_v9 (unittest.loader._FailedTest.test_session_map01_v9)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v9
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v9.py", line 9, in <module>
+    import session_map01_v9 as session
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\session_map01_v9.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_v31_running_action_guard_replay_v1 (unittest.loader._FailedTest.test_v31_running_action_guard_replay_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_v31_running_action_guard_replay_v1
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_v31_running_action_guard_replay_v1.py", line 8, in <module>
+    from v31_running_action_guard_replay_v1 import run
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\v31_running_action_guard_replay_v1.py", line 14, in <module>
+    from doom_action_snapshot_v1 import build_action_snapshot
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\doom_action_snapshot_v1.py", line 2, in <module>
+    from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+ModuleNotFoundError: No module named 'action_validity_admission_v1'
+
+
+======================================================================
+FAIL: test_frozen_plan_and_source_hashes (test_preregister_map01_measurement_integration_v2.Tests.test_frozen_plan_and_source_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_preregister_map01_measurement_integration_v2.py", line 15, in test_frozen_plan_and_source_hashes
+    path=root/name;self.assertTrue(path.is_file(),name);self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),digest,name)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'be6a9c85790f4a484629e13cfd236fbee13202378954e5c7db12c0ea57809011' != 'b2bf315d202bdb99423527de2c775b2c81d4b425b5d16e9eb00887ca4fe47ded'
+- be6a9c85790f4a484629e13cfd236fbee13202378954e5c7db12c0ea57809011
++ b2bf315d202bdb99423527de2c775b2c81d4b425b5d16e9eb00887ca4fe47ded
+ : research/doom/audit_map01_measurement_integration_v1.py
+
+======================================================================
+FAIL: test_workflow_hash (test_preregister_map01_measurement_integration_v3.Tests.test_workflow_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_preregister_map01_measurement_integration_v3.py", line 32, in test_workflow_hash
+    self.assertEqual(sha(REPO/p['workflow_path']),p['workflow_sha256'])
+AssertionError: '316be5f70d81fb6a47e0b9acda8430305c58deb3b420b4526e48dc7863a029be' != 'e5d7fd5946bfa01d534e2be38b3977798e228dc06fced9866175616568c39beb'
+- 316be5f70d81fb6a47e0b9acda8430305c58deb3b420b4526e48dc7863a029be
++ e5d7fd5946bfa01d534e2be38b3977798e228dc06fced9866175616568c39beb
+
+
+======================================================================
+FAIL: test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes (test_session_map01_v13_release_telemetry.SessionReleaseTelemetryCompositionTests.test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\pr7662-audit-chronology\research\doom\test_session_map01_v13_release_telemetry.py", line 34, in test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes
+    self.assertEqual(candidate, expected)
+AssertionError: '"""M[120 chars]port json\nimport os\nimport shutil\nimport sy[20092 chars]()\n' != '"""M[120 chars]port importlib.util\nimport json\nimport os\ni[21317 chars]()\n'
+Diff is 22282 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 239 tests in 0.673s
+
+FAILED (failures=3, errors=55)
