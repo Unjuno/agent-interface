@@ -44,3 +44,12 @@ The original `executed-runner.py` and `raw-differential.json` remain byte-for-by
 One fresh reproducibility run is retained under `reruns/706ce2ae83d549379efe51c21c1d72bb/`: source `main` `3bf3d49bec2aa26a9aaba38806f9e88296459356`, candidate exit 0, raw auditor exit 0 with `PASS_RAW_RECONSTRUCTION`, and raw SHA-256 `4c3c3eeb7c35d99a5f484b4d2845ec9bd7698748a11ecfbeef3248052cb7528f`. The three imported runtime/adapter blobs match the PR's frozen source blobs. A collision check with that same run ID returned 2 and the raw SHA remained unchanged.
 
 This run reproduces only the synthetic branch behavior. It does not add GUI, model, application-effect, recovery, or efficiency evidence, and does not satisfy or consume #3311/#3489 live allocations.
+
+
+## Timeout and source-stability qualification (2026-10-05)
+
+Review found that a process timeout previously escaped before a terminal run record was written. `rerun_safely.py` now records bounded-process outcomes (`completed`, `timeout`, `launch_error`, or `not_run`), preserves partial stdout/stderr when a candidate or auditor times out, and writes `RUN.json` for those terminal outcomes. It hashes the three imported source files before and after execution and marks a changed source set as a failed qualification. Detached checkouts are identified explicitly.
+
+The new two-case regression suite passed 2/2: candidate timeout and auditor timeout each produced `RUN.json` and retained partial output. Output is preserved in `wrapper-test-output.txt`; the fixture suite is `test_rerun_safely_timeouts.py`.
+
+A fresh safe rerun against current `main` `7297e709e8a52d5e014c1ce443a3b6b9d9b207af` is retained under `reruns/1ecbb040f1274e9d92a5090fc43cf44b/`. Candidate and auditor both exited 0, the independent audit returned `PASS_RAW_RECONSTRUCTION`, source hashes matched before/after, and raw SHA-256 is `e48aa3960e6d8b0e75d8121a5181828404bcad5461b7816a1529390364400c50`. Frozen historical runner and raw hashes remain unchanged (`b67ad6d8…` and `db7dfcff…`). This remains synthetic branch evidence only; the #3311 integrated desktop comparison and #3489 endpoint preflight remain unperformed.

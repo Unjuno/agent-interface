@@ -42,6 +42,25 @@ def write_exclusive(path, content):
     with path.open("xb") as stream:
         stream.write(content)
 
+def run_bounded(command, *, cwd, env, timeout):
+    try:
+        result = subprocess.run(
+            command, cwd=cwd, env=env,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            check=False, timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as error:
+        stdout = error.stdout or b""
+        stderr = error.stderr or b""
+        if isinstance(stdout, str):
+            stdout = stdout.encode("utf-8", "replace")
+        if isinstance(stderr, str):
+            stderr = stderr.encode("utf-8", "replace")
+        return None, stdout, stderr, "timeout"
+    except OSError as error:
+        return None, b"", (str(error) + "\n").encode("utf-8", "replace"), "launch_error"
+    return result, result.stdout, result.stderr, "completed"
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-root", type=Path, required=True,
@@ -49,6 +68,8 @@ def main():
     parser.add_argument("--output-root", type=Path, required=True,
                         help="External writable directory for uniquely named reruns.")
     parser.add_argument("--run-id", help="Optional unique name; defaults to a random UUID.")
+    parser.add_argument("--timeout-seconds", type=float, default=120,
+                        help="Per-process timeout (default: 120 seconds).")
     args = parser.parse_args()
 
     source_root = args.source_root.resolve(strict=True)
@@ -65,6 +86,8 @@ def main():
     run_id = args.run_id or uuid.uuid4().hex
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}", run_id):
         parser.error("--run-id must be a short path-safe identifier")
+    if args.timeout_seconds <= 0:
+        parser.error("--timeout-seconds must be positive")
     output_root.mkdir(parents=True, exist_ok=True)
     run_dir = output_root / run_id
     try:
@@ -83,44 +106,54 @@ def main():
     env = os.environ.copy()
     prior_pythonpath = env.get("PYTHONPATH")
     env["PYTHONPATH"] = str(source_root) + (os.pathsep + prior_pythonpath if prior_pythonpath else "")
+    source_hashes_before = {relative: sha256(source_root / relative) for relative in SOURCE_PATHS}
     started = datetime.now(timezone.utc).isoformat()
-    candidate = subprocess.run(
+    candidate, candidate_stdout, candidate_stderr, candidate_status = run_bounded(
         [sys.executable, "-B", str(copied_runner)], cwd=run_dir, env=env,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False, timeout=120,
+        timeout=args.timeout_seconds,
     )
-    write_exclusive(run_dir / "candidate-stdout.bin", candidate.stdout)
-    write_exclusive(run_dir / "candidate-stderr.bin", candidate.stderr)
+    write_exclusive(run_dir / "candidate-stdout.bin", candidate_stdout)
+    write_exclusive(run_dir / "candidate-stderr.bin", candidate_stderr)
 
     audit = None
     audit_stdout = b""
     audit_stderr = b""
     audit_result = None
     raw = run_dir / "raw-differential.json"
-    if candidate.returncode == 0 and raw.is_file():
-        audit = subprocess.run(
+    if candidate and candidate.returncode == 0 and raw.is_file():
+        audit, audit_stdout, audit_stderr, audit_status = run_bounded(
             [sys.executable, "-B", str(copied_auditor)], cwd=run_dir, env=env,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False, timeout=120,
+            timeout=args.timeout_seconds,
         )
-        audit_stdout, audit_stderr = audit.stdout, audit.stderr
         write_exclusive(run_dir / "audit-stdout.bin", audit_stdout)
         write_exclusive(run_dir / "audit-stderr.bin", audit_stderr)
-        try:
-            audit_result = json.loads(audit_stdout.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError):
-            audit_result = None
+        if audit:
+            try:
+                audit_result = json.loads(audit_stdout.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                audit_result = None
+    else:
+        audit_status = "not_run"
 
     finished = datetime.now(timezone.utc).isoformat()
+    source_hashes_after = {relative: sha256(source_root / relative) for relative in SOURCE_PATHS}
     source_top = git_value(source_root, "rev-parse", "--show-toplevel")
+    source_branch = git_value(source_root, "branch", "--show-current")
     clean_state = None
     if source_top:
         clean_state = git_value(source_root, "status", "--porcelain", "--untracked-files=no") == ""
     raw_exists = raw.is_file()
+    experiment_id = None
+    if raw_exists:
+        try:
+            experiment_id = json.loads(raw.read_text(encoding="utf-8")).get("experiment_id")
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError, AttributeError):
+            pass
     metadata = {
-        "format": "fresh-synthetic-rerun-provenance-v2",
+        "format": "fresh-synthetic-rerun-provenance-v3",
         "run_id": run_id,
         "candidate_experiment_id": (
-            json.loads(raw.read_text(encoding="utf-8")).get("experiment_id")
-            if raw_exists else None
+            experiment_id
         ),
         "started_utc": started,
         "finished_utc": finished,
@@ -129,7 +162,8 @@ def main():
         "cwd": "fresh-run-directory",
         "source_root": "repository-root",
         "source_git_head": git_value(source_root, "rev-parse", "HEAD"),
-        "source_git_branch": git_value(source_root, "branch", "--show-current"),
+        "source_git_branch": source_branch or None,
+        "source_git_detached": bool(source_top and not source_branch),
         "tracked_worktree_clean": clean_state,
         "python_version": sys.version,
         "python_executable": Path(sys.executable).name,
@@ -140,13 +174,18 @@ def main():
         "copied_runner_sha256": sha256(copied_runner),
         "copied_auditor_sha256": sha256(copied_auditor),
         "source_sha256": {relative: sha256(source_root / relative) for relative in SOURCE_PATHS},
-        "candidate_exit_code": candidate.returncode,
+        "source_sha256_before": source_hashes_before,
+        "source_sha256_after": source_hashes_after,
+        "source_unchanged_during_run": source_hashes_before == source_hashes_after,
+        "candidate_status": candidate_status,
+        "auditor_status": audit_status,
+        "candidate_exit_code": candidate.returncode if candidate else None,
         "auditor_exit_code": audit.returncode if audit else None,
         "audit_result": audit_result,
         "raw_exists": raw_exists,
         "raw_sha256": sha256(raw) if raw_exists else None,
-        "candidate_stdout_sha256": hashlib.sha256(candidate.stdout).hexdigest(),
-        "candidate_stderr_sha256": hashlib.sha256(candidate.stderr).hexdigest(),
+        "candidate_stdout_sha256": hashlib.sha256(candidate_stdout).hexdigest(),
+        "candidate_stderr_sha256": hashlib.sha256(candidate_stderr).hexdigest(),
         "audit_stdout_sha256": hashlib.sha256(audit_stdout).hexdigest(),
         "audit_stderr_sha256": hashlib.sha256(audit_stderr).hexdigest(),
         "native_os_inputs": 0,
@@ -155,13 +194,17 @@ def main():
     write_exclusive(run_dir / "RUN.json",
                     (json.dumps(metadata, sort_keys=True, indent=2) + "\n").encode())
     print(json.dumps({"run_id": run_id,
-                      "candidate_exit_code": candidate.returncode,
+                      "candidate_status": candidate_status,
+                      "candidate_exit_code": candidate.returncode if candidate else None,
+                      "auditor_status": audit_status,
                       "auditor_exit_code": metadata["auditor_exit_code"],
                       "audit_result": audit_result,
                       "raw_sha256": metadata["raw_sha256"]},
                      sort_keys=True, indent=2))
-    if candidate.returncode != 0 or not raw_exists or not audit or audit.returncode != 0:
-        return candidate.returncode or (audit.returncode if audit else 1) or 1
+    if not candidate or candidate.returncode != 0 or not raw_exists or not audit or audit.returncode != 0:
+        return (candidate.returncode if candidate else 1) or (audit.returncode if audit else 1) or 1
+    if not metadata["source_unchanged_during_run"]:
+        return 1
     if not isinstance(audit_result, dict) or audit_result.get("audit") != "PASS_RAW_RECONSTRUCTION":
         return 1
     return 0
