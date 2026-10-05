@@ -1,0 +1,25 @@
+test_async_cleanup_noop_up_is_not_a_second_release_measurement (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_async_cleanup_noop_up_is_not_a_second_release_measurement) ... FAIL
+
+======================================================================
+FAIL: test_async_cleanup_noop_up_is_not_a_second_release_measurement (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_async_cleanup_noop_up_is_not_a_second_release_measurement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-2\work\agent-interface\outputs\pr7805-repro\research\doom\map01_v39_cancel_release_fix_a01_20261005\test_cancel_release.py", line 188, in test_async_cleanup_noop_up_is_not_a_second_release_measurement
+    self.assertEqual([row.get("event") for row in rows],
+AssertionError: Lists differ: ['input_admission', 'input_release_measurement', 'input_release_measurement'] != ['input_admission', 'input_release_noop', 'input_release_measurement']
+
+First differing element 1:
+'input_release_measurement'
+'input_release_noop'
+
+- ['input_admission', 'input_release_measurement', 'input_release_measurement']
+?                                    --------- ^
+
++ ['input_admission', 'input_release_noop', 'input_release_measurement']
+?                                     ^^^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.107s
+
+FAILED (failures=1)
