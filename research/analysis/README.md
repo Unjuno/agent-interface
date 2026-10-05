@@ -758,6 +758,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_timestamp_order_5156_t3_20261004/`](owner_keyup_timestamp_order_5156_t3_20261004/)
 - [`owner_keyup_timestamp_order_5156_t4_20261004/`](owner_keyup_timestamp_order_5156_t4_20261004/)
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
+- [`pairwise_interaction_7799_t0_a01_20261005/`](pairwise_interaction_7799_t0_a01_20261005/)
 - [`partial_order_audit_6505_orbstack_a01_20261003/`](partial_order_audit_6505_orbstack_a01_20261003/)
 - [`partial_order_audit_6505_orbstack_a02_20261003/`](partial_order_audit_6505_orbstack_a02_20261003/)
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
@@ -1058,8 +1059,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
 </details>
-<!-- END GENERATED ANALYSIS RESULT INDEX -->
 
+<!-- END GENERATED ANALYSIS RESULT INDEX -->
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
 
 - [`map01_owner_cross_head_59_t0_20261001/`](map01_owner_cross_head_59_t0_20261001/PRESERVATION_QUALIFICATION.md) — Preserved historical cross-head selector FAIL; synthetic rank placeholders, unchanged live-03 invalidation, no new runtime or allocation claim.
