@@ -1,0 +1,20 @@
+diff --git a/C:/s15/original.py b/C:/s15/research/doom/doom_typed_coast_backend_v1.py
+index d95d382ee9..fbcd856823 100644
+--- a/C:/s15/original.py
++++ b/C:/s15/research/doom/doom_typed_coast_backend_v1.py
+@@ -1,7 +1,6 @@
+ """DOOM backend that emits typed capture evidence before full artifact publication."""
+ import time
+ 
+-from PIL import ImageGrab
+ 
+ from coast_backend_v1 import Backend as Previous, suite
+ from doom_typed_observation_v1 import extract_typed_observation
+@@ -18,6 +17,7 @@ class Backend(Previous):
+     def snapshot(self, identifier, index):
+         before = self.binding()
+         started_ns = time.perf_counter_ns()
++        from PIL import ImageGrab
+         image = ImageGrab.grab(xdisplay=self.session.name).convert("RGB")
+         capture_ns = time.perf_counter_ns()
+         source = Frame(image.width, image.height, image.mode, image.tobytes())
