@@ -10,5 +10,6 @@ for path in sorted(root.rglob("*")):
         continue
     rel = path.relative_to(root).as_posix()
     rows.append(f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {rel}")
-(root / "SHA256SUMS").write_text("\n".join(rows) + "\n", encoding="utf-8")
+with (root / "SHA256SUMS").open("w", encoding="utf-8", newline="\r\n") as stream:
+    stream.write("\n".join(rows) + "\n")
 print(f"wrote {len(rows)} retained-file hashes")

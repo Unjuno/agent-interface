@@ -1,0 +1,86 @@
+{
+  "candidate_invocations": 0,
+  "classification": "SUPPLEMENTAL_READ_ONLY_AUDIT; does not replace or upgrade the frozen formal allocation",
+  "frozen_auditor_invocations": 0,
+  "mutation_controls": {
+    "backpressure_rejection_before_capacity": {
+      "error_count": 1,
+      "error_examples": [
+        "invalid_backpressure_admission"
+      ],
+      "rejected": true
+    },
+    "budget_mutation": {
+      "error_count": 1,
+      "error_examples": [
+        "budget_or_deadline_declaration_mismatch"
+      ],
+      "rejected": true
+    },
+    "control_priority_fifo_violation": {
+      "error_count": 860,
+      "error_examples": [
+        "dispatch_order",
+        "dispatch_order",
+        "dispatch_order",
+        "dispatch_order",
+        "dispatch_order"
+      ],
+      "rejected": true
+    },
+    "deadline_mutation": {
+      "error_count": 1,
+      "error_examples": [
+        "budget_or_deadline_declaration_mismatch"
+      ],
+      "rejected": true
+    },
+    "early_replenishment_or_double_charge": {
+      "error_count": 2,
+      "error_examples": [
+        "sched_seed_7722/shared_priority:cpu_overlap_or_event_order",
+        "sched_seed_7722/shared_priority:dispatch_order"
+      ],
+      "rejected": true
+    },
+    "false_completion": {
+      "error_count": 1,
+      "error_examples": [
+        "sched_seed_7722/shared_priority:job_result_false_or_missing"
+      ],
+      "rejected": true
+    },
+    "lost_obligation": {
+      "error_count": 11,
+      "error_examples": [
+        "sched_seed_7722/shared_priority:job_obligation_set_mismatch",
+        "sched_seed_7722/shared_priority:job_result_false_or_missing",
+        "sched_seed_7722/shared_priority:job_result_false_or_missing",
+        "sched_seed_7722/shared_priority:job_result_false_or_missing",
+        "sched_seed_7722/shared_priority:job_result_false_or_missing"
+      ],
+      "rejected": true
+    },
+    "uncharged_service": {
+      "error_count": 1,
+      "error_examples": [
+        "sched_seed_7722/shared_priority:budget_channel_mismatch"
+      ],
+      "rejected": true
+    }
+  },
+  "raw_reconstruction_errors": [],
+  "raw_run_count": 18,
+  "retries": 0,
+  "sha256": {
+    "cases": "7b189031a67e46854434c4fc0376847e555cea92fa3916f1eb475aa450f4ddc5",
+    "frozen_auditor": "fbc58e9f90c318250d880bdfe506a301fefdf45471192234d0f59864e7cdb052",
+    "frozen_candidate": "6a6757a3e613d96d3a515d5b1cd9fd33e27d8dd5b824e3c2eb05969979757616",
+    "raw": "ad495ccdbe3d3183ca4432c44b78414137b1cffd50ac79aa1849d771f036124f",
+    "supplemental_auditor": "8b4c85a9325e54ccfefb77e43f27b8ea4965ae28a78a7a8b48ece817b3b3fe29"
+  },
+  "status": "PASS_SUPPLEMENTAL_RAW_RECONSTRUCTION",
+  "unchanged_trace_control": {
+    "accepted": true
+  }
+}
