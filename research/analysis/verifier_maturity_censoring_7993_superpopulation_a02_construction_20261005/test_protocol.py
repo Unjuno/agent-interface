@@ -70,7 +70,18 @@ class ProtocolTests(unittest.TestCase):
         world_a["rows"][hidden_index]["y"] = 0
         world_b["rows"][hidden_index]["y"] = 1
         self.assertNotEqual(world_a, world_b)
-        self.assertEqual(candidate.evaluate(self.public), candidate.evaluate(self.public))
+        def public_view(world):
+            return {"contract": copy.deepcopy(self.public["contract"]),
+                    "cohorts": self.public["cohorts"],
+                    "n_per_cohort": self.public["n_per_cohort"],
+                    "rows": [{"cohort": row["cohort"], "row": row["row"],
+                              "x": row["x"], "pi": row["pi"],
+                              "observed": row["observed"],
+                              "label": row["y"] if row["observed"] else None}
+                             for row in world["rows"]]}
+        public_a, public_b = public_view(world_a), public_view(world_b)
+        self.assertEqual(public_a, public_b)
+        self.assertEqual(candidate.evaluate(public_a), candidate.evaluate(public_b))
         self.assertEqual(self.output["status"], "ASSUMPTION_CONDITIONAL")
 
     def test_hidden_label_leak_returns_unknown(self):
