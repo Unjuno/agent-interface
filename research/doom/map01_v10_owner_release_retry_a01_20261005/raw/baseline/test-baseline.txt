@@ -1,0 +1,34 @@
+test_cleanup_retries_a_key_still_down_after_explicit_up (__main__.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_key_still_down_after_explicit_up) ... ERROR
+test_cleanup_retries_a_wheel_release_omitted_by_server (__main__.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_wheel_release_omitted_by_server) ... FAIL
+test_persistent_key_release_failure_remains_unverified (__main__.InputOwnerV10ReleaseRetryTests.test_persistent_key_release_failure_remains_unverified) ... ok
+
+======================================================================
+ERROR: test_cleanup_retries_a_key_still_down_after_explicit_up (__main__.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_key_still_down_after_explicit_up)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-v10-release-retry/research/doom/map01_v10_owner_release_retry_a01_20261005/raw/baseline/test_input_owner_v10_release_retry.py", line 166, in test_cleanup_retries_a_key_still_down_after_explicit_up
+    receipt = self.owner.call("release", lease)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/agent-interface-v10-release-retry/research/doom/map01_v10_owner_release_retry_a01_20261005/raw/baseline/input_owner_v10.py", line 61, in call
+    if not ok: raise result
+               ^^^^^^^^^^^^
+  File "/private/tmp/agent-interface-v10-release-retry/research/doom/map01_v10_owner_release_retry_a01_20261005/raw/baseline/input_owner_v10.py", line 261, in _run
+    result = release(op)
+             ^^^^^^^^^^^
+  File "/private/tmp/agent-interface-v10-release-retry/research/doom/map01_v10_owner_release_retry_a01_20261005/raw/baseline/input_owner_v10.py", line 194, in release
+    raise RuntimeError('owner release not verified: ' + repr(down))
+RuntimeError: owner release not verified: [65]
+
+======================================================================
+FAIL: test_cleanup_retries_a_wheel_release_omitted_by_server (__main__.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_wheel_release_omitted_by_server)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-v10-release-retry/research/doom/map01_v10_owner_release_retry_a01_20261005/raw/baseline/test_input_owner_v10_release_retry.py", line 182, in test_cleanup_retries_a_wheel_release_omitted_by_server
+    self.assertEqual(self.display.buttons, set())
+AssertionError: Items in the first set but not the second:
+4
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.007s
+
+FAILED (failures=1, errors=1)
