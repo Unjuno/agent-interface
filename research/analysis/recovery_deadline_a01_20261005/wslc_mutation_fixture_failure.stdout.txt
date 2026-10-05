@@ -1,0 +1,5 @@
+Command: wslc.exe run --rm --pull never --cpus 1 --memory 512M --mount type=bind,source=<A01-path>,target=/work,readonly --workdir /work --entrypoint python agent-interface/native-suite-wslc-a08:20261004 -m unittest -v
+Exit: 1
+Warning: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Failure: test_mutation_hard_event_relabelled_soft_is_rejected attempted to replace the last evaluation row (shift4) with hard-lease, producing a duplicate ID before the intended oracle-label mutation check.
+This was a test-fixture construction failure; candidate behavior was not implicated. Original stdout retained here.

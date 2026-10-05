@@ -1,0 +1,5 @@
+Command: wslc.exe run --rm --pull never --cpus 1 --memory 512M --mount type=bind,source=<A01-path>,target=/work,readonly --workdir /work agent-interface/native-suite-wslc-a08:20261004 python -m unittest -v
+Exit: 1
+Warning: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+python: can't open file '/work/runtime/integration_checks/native.py': [Errno 2] No such file or directory
+Cause: image's default entrypoint referenced an absent repository-specific path. Candidate tests were not reached. Rerun used explicit `--entrypoint python`.
