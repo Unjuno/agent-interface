@@ -193,3 +193,14 @@ Remote branch `maintenance/inventory-followup-clean-20261005` was deleted after 
 - The branch tip remains reachable from closed PR #8145's head ref `a4fed4179db89c07ca2d89ab7f8ead7e5ca9d20c`; that PR ref was verified after deletion.
 
 The exact branch ref is absent after deletion. The subsequent branch-list read still returned 399 refs, so aggregate counts remain sensitive to concurrent repository updates and were not used as deletion evidence. The separately checked-out `maintenance/inventory-followup-20261005` branch and its local-only commit were retained.
+
+
+## Individually audited branch dispositions — 2026-10-05 11:22 UTC
+
+The following refs were reconciled individually. The GitHub page reads overlapped with active repository updates, so aggregate branch/PR counts are intentionally omitted as deletion evidence.
+
+- **Deleted merged branch** `research/7411-user-worthwhile-benefit-a01-20261004`, tip `be7df5c03103e3327842214e933ed1ac01fe5226`. PR #7592 is merged at `fd4f9e4533aa5baa5952e89cd830c98b26e7c537`, which remains an ancestor of current main `3c2254ddc4446bec9a8ab4871ed05defa0a900f9`. All 17 paths added by that PR were checked against current main and have identical Git blob IDs. No open PR used the branch as a head or base, and no worktree used it. After branch deletion, the original PR head remained fetchable. Preserve the formal disposition `HOLD_AUDIT_INCOMPLETE`; the post-hoc verifier does not replace the preregistered gate.
+- **Deleted merged branch** `research/8150-t0-current-main-sync-20261005`, tip `f428e97a062a0615f8bf6485108619b299b1d1f5`. PR #8167 is merged at `21fecd58b9de30073c97234124e73b78c67d4b0c`, an ancestor of current main. The merge commit records the nine PR paths; the original closed-PR head remained fetchable after branch deletion. No open PR used the branch as a head or base, and no worktree used it. The preserved result is `HOLD_REVIEW_DISAGREEMENT`, not a runtime eligibility PASS.
+- **Deleted superseded rescue branch** `rescue/journal-wire-6042-20261004`, tip `77df97fb23a7093172a2109e0768d86df7c6c1f6`. Closed-unmerged PR #7298 names Draft PR #7509 as its successor. All seven paths changed by #7298 were verified byte-for-byte by Git blob identity in #7509 (head `b32e8d5e1e6a411643369ed59e4fcfc605fe658c`). No open PR used the old branch as a head or base, and no worktree used it. The old PR head remained fetchable after deletion. #7509 remains open and unmerged, so the evidence is preserved for review rather than counted as integrated into main.
+
+These were per-ref dispositions, not a complete all-branch audit. Other non-head refs still require their own closed-PR, dependency, unique-commit/evidence, worktree, and owner review. A later audit found merged PR #7974's branch still checked out; it was retained.
