@@ -430,6 +430,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`confusion_adaptive_practice_8084_t0_a06_20261005/`](confusion_adaptive_practice_8084_t0_a06_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a07_20261005/`](confusion_adaptive_practice_8084_t0_a07_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a08_20261005/`](confusion_adaptive_practice_8084_t0_a08_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a09_20261005/`](confusion_adaptive_practice_8084_t0_a09_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
@@ -1094,3 +1095,4 @@ The checker compares the generated block against every child directory with a re
 - [Issue #8084 T0 A06 fixed-gate frontier successor](confusion_adaptive_practice_8084_t0_a06_20261005/STOP.md) — `STOP_AUDITOR_NOT_STARTED_LAUNCHER_UNAVAILABLE`; generator and candidate each ran once, but frozen one-shot auditor launch could not start because `py` was unavailable. No retry or scientific inference.
 - [Issue #8084 T0 A07 fresh-seed threshold successor](confusion_adaptive_practice_8084_t0_a07_20261005/STOP.md) — `STOP_FREEZE_COMMIT_FAILED_GENERATOR_RAN_UNFROZEN`; one generator ran after freeze commit failed, but no candidate/auditor or scientific inference; raw output retained and not reused.
 - [Issue #8084 T0 A08 fixed-gate frontier fresh-seed screen](confusion_adaptive_practice_8084_t0_a08_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; 80,000 fresh synthetic rows independently reconstructed, all five mutation controls rejected, and two frozen span/peak gates met the Wilson criteria for every authored profile at n=20 and n=100. No human/GUI inference.
+- [Issue #8084 T0 A09 overdispersion robustness screen](confusion_adaptive_practice_8084_t0_a09_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; independent audit passed 80,000 fresh Beta-binomial stress rows and all five mutations, but none of the unchanged gates met both sensitivity/specificity bounds across authored profiles. Synthetic only.
