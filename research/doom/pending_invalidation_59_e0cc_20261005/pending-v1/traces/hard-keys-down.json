@@ -1,0 +1,144 @@
+{
+  "timeline": [
+    "row:ready:",
+    "row:observation:10",
+    "command:submit:cover-0",
+    "row:accepted:cover-0",
+    "begin:turn-1",
+    "planner_wait_started",
+    "row:observation:11",
+    "observe_invalidation_while_pending",
+    "interrupt:turn-1",
+    "command:cancel:cover-0",
+    "row:observation:12",
+    "row:terminal:cover-0",
+    "planner_completed_after_interrupt"
+  ],
+  "pending": true,
+  "health_mode": "hard",
+  "bad_release": {
+    "verified": true,
+    "keys_down": [
+      "W"
+    ],
+    "buttons_down": []
+  },
+  "commands": [
+    {
+      "op": "submit",
+      "id": "cover-0",
+      "expected_sequence": 10,
+      "valid_until_ns": 11830405786500,
+      "steps": [
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        },
+        {
+          "op": "hold",
+          "keys": [
+            "a"
+          ],
+          "duration_ms": 350
+        },
+        {
+          "op": "coast",
+          "duration_ms": 900,
+          "sample_ms": 250
+        }
+      ]
+    },
+    {
+      "op": "cancel",
+      "id": "cover-0"
+    }
+  ],
+  "planner_calls": 1,
+  "barrier_events": [],
+  "sheets": [
+    [
+      "old.png"
+    ]
+  ],
+  "report": null
+}
