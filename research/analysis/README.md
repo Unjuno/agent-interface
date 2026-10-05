@@ -662,6 +662,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_reveal_support_closure_v1/`](observation_reveal_support_closure_v1/)
 - [`occupancy_gate_frontier_1592_v1/`](occupancy_gate_frontier_1592_v1/)
 - [`opacity_action_relevance_5360_t1_v1/`](opacity_action_relevance_5360_t1_v1/)
+- [`opportunity_bound_preference_7790_t0_a01_v1/`](opportunity_bound_preference_7790_t0_a01_v1/)
 - [`opportunity_conditioned_actuated_info_6045_t0_20261002/`](opportunity_conditioned_actuated_info_6045_t0_20261002/)
 - [`optimistic_concurrent_readwrite_commit_r0_v1/`](optimistic_concurrent_readwrite_commit_r0_v1/)
 - [`optimistic_readwrite_x11_retained_audit_a3_v1/`](optimistic_readwrite_x11_retained_audit_a3_v1/)
