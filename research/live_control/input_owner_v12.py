@@ -108,9 +108,17 @@ class InputOwner:
                     break
                 observed_down_before = server_down
                 started_ns = time.perf_counter_ns()
-                xtest.fake_input(d, X.KeyRelease, code)
-                d.sync()
-                sync_returned_ns = time.perf_counter_ns()
+                release_error = None
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_error = None
+                try:
+                    d.sync()
+                except Exception as exc:
+                    sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_returned_ns = time.perf_counter_ns() if sync_error is None else None
                 server_down, after_error, sampled_ns = sample_key_down(code)
                 attempts.append({
                     "attempt": attempt,
@@ -121,6 +129,8 @@ class InputOwner:
                     "server_key_down_after": server_down,
                     "keymap_before_error": before_error,
                     "keymap_after_error": after_error,
+                    "keyrelease_error": release_error,
+                    "sync_error": sync_error,
                 })
                 before_error = after_error
                 if server_down is False:
@@ -153,9 +163,17 @@ class InputOwner:
             attempt_rows = {}
             for key, code in codes:
                 started_ns = time.perf_counter_ns()
-                xtest.fake_input(d, X.KeyRelease, code)
-                d.sync()
-                sync_ns = time.perf_counter_ns()
+                release_error = None
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_error = None
+                try:
+                    d.sync()
+                except Exception as exc:
+                    sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_ns = time.perf_counter_ns() if sync_error is None else None
                 attempt_rows[code] = [{
                     'attempt': 1,
                     'keyrelease_started_ns': started_ns,
@@ -167,6 +185,8 @@ class InputOwner:
                     'server_key_down_after': None,
                     'keymap_before_error': before_error,
                     'keymap_after_error': None,
+                    'keyrelease_error': release_error,
+                    'sync_error': sync_error,
                 }]
 
             try:
@@ -188,9 +208,17 @@ class InputOwner:
                 attempts[0]['keymap_after_error'] = sample_error
                 while server_down is True and len(attempts) < 3:
                     started_ns = time.perf_counter_ns()
-                    xtest.fake_input(d, X.KeyRelease, code)
-                    d.sync()
-                    sync_ns = time.perf_counter_ns()
+                    release_error = None
+                    try:
+                        xtest.fake_input(d, X.KeyRelease, code)
+                    except Exception as exc:
+                        release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                    sync_error = None
+                    try:
+                        d.sync()
+                    except Exception as exc:
+                        sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                    sync_ns = time.perf_counter_ns() if sync_error is None else None
                     try:
                         bitmap = d.query_keymap()
                         sample_error = None
@@ -211,6 +239,8 @@ class InputOwner:
                         'server_key_down_after': server_down,
                         'keymap_before_error': None,
                         'keymap_after_error': sample_error,
+                        'keyrelease_error': release_error,
+                        'sync_error': sync_error,
                     })
                     if server_down is None:
                         break
@@ -231,7 +261,7 @@ class InputOwner:
                     server_key_down_after_keyup=server_down,
                     key_state_source='x11_query_keymap',
                     cancel_requested_after_sync=lease.cancel.is_set(),
-                    server_sync_completed=bool(attempts),
+                    server_sync_completed=any(row['sync_error'] is None for row in attempts),
                     physical_verification_authoritative=False,
                     release_batch_initial_up_count=len(codes),
                     release_batch_key_order=[item[0] for item in codes])
@@ -349,8 +379,16 @@ class InputOwner:
                     if before_mask & (X.Button1Mask << (button - 1))
                 }
             for button in sorted(retry_buttons):
-                xtest.fake_input(d, X.ButtonRelease, button)
-            d.sync()
+                try:
+                    xtest.fake_input(d, X.ButtonRelease, button)
+                except Exception as exc:
+                    key_state_errors.append({"source": "button_release", "button": button,
+                                             "type": type(exc).__name__, "message": str(exc)[:200]})
+            try:
+                d.sync()
+            except Exception as exc:
+                key_state_errors.append({"source": "button_release_sync", "type": type(exc).__name__,
+                                         "message": str(exc)[:200]})
             try:
                 mask = d.screen().root.query_pointer().mask
                 buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
@@ -558,7 +596,9 @@ class InputOwner:
                                     server_key_down_after_keyup=not server_keyup_verified,
                                     key_state_source='x11_query_keymap',
                                     cancel_requested_after_sync=cancel_requested_after_sync,
-                                    server_sync_completed=bool(key_release_attempts),
+                                    server_sync_completed=any(
+                                        row['sync_error'] is None for row in key_release_attempts
+                                    ),
                                     physical_verification_authoritative=False)
                                 self.records.append(receipt)
                                 if not server_keyup_verified:
