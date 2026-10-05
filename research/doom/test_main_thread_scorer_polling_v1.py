@@ -163,6 +163,42 @@ class PollingTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 MainThreadScorerPolling(sample_hz=value)
 
+    def test_real_pipe_delayed_command_is_serviced_during_sample_wait(self):
+        read_fd, write_fd = os.pipe()
+        seen = []
+        thread_ids = []
+
+        def send_late_command():
+            threading.Event().wait(0.015)
+            os.write(write_fd, b'LATE\n')
+            os.close(write_fd)
+
+        sender = threading.Thread(target=send_late_command)
+        sender.start()
+        loop = MainThreadScorerPolling(sample_hz=100)
+
+        def handle(line):
+            seen.append(line)
+            thread_ids.append(threading.get_ident())
+            return False
+
+        try:
+            stats = loop.run(
+                read_fd,
+                sample_fn=lambda: thread_ids.append(threading.get_ident()) or 1,
+                scorer_sink=lambda _row: None,
+                command_handler=handle,
+            )
+            sender.join(1)
+            self.assertFalse(sender.is_alive())
+            self.assertEqual(seen, ["LATE"])
+            self.assertEqual(stats.commands, 1)
+            self.assertGreaterEqual(stats.samples, 1)
+            self.assertTrue(stats.stopped_by_command)
+            self.assertEqual(set(thread_ids), {stats.owner_thread_id})
+        finally:
+            sender.join(1)
+            os.close(read_fd)
     def test_real_pipe_eof_and_same_thread(self):
         read_fd, write_fd = os.pipe()
         try:
