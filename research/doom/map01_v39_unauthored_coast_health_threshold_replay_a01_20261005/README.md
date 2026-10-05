@@ -65,12 +65,15 @@ RESULT_DIR="$out_dir" python3 research/doom/map01_v39_unauthored_coast_health_th
 Both programs use exclusive creation and refuse to replace retained output.
 The candidate and auditor use the selected 45 observations directly from the
 pinned event stream, rather than a hand-entered summary. Retained execution
-outputs are under `results/a01/`, `results/a02/`, and `results/a03/`. A02 is a
+outputs are under `results/a01/` through `results/a04/`. A02 is a
 deterministic reproduction after adding source-manifest checks, not a second
 live trial. A02's candidate bytes match A01 exactly; its auditor still resolved
 the default A01 candidate path. A03 is the authoritative path-bound replay:
 the auditor fix reads the candidate from its own `RESULT_DIR`, and the 16-check
-A03 audit passes.
+A03 audit passes. After the branch rebased onto main `307b9e2f`, A04 repeated
+the same frozen trace against a fresh output directory; the current V39
+controller source hash remained `f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8`.
+The A04 path-bound candidate/audit pair is the latest retained verification.
 
 | Health-loss trigger | First sampled health | Time from planner start | Time remaining to original terminal |
 |---:|---:|---:|---:|

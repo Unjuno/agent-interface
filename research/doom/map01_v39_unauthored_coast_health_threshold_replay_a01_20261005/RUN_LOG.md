@@ -22,6 +22,11 @@ X11, or OS input was executed here.
 - A separate auditor corruption control changed one byte in a temporary copy
   of the A04 report. The A03 auditor exited 1 with `AssertionError` before
   writing an audit result, as expected. Summary: `results/a03/audit_tamper_control.json`.
+- After `origin/main` advanced from `95316efef` to `307b9e2f`, the branch was
+  rebased and the controller file SHA remained unchanged. The frozen replay
+  was rerun to `results/a04/`; candidate and its path-bound independent audit
+  exit 0, and the audit again passes 16 checks over 45 observations. This is
+  deterministic revalidation of one retained trace, not an independent trial.
 - During initial wiring, two candidate invocations exited 1 before writing any
   result: the retained upstream package checksum list uses literal `\\n`
   separators, and the A04 action snapshot is adjacent to, not nested in, its
