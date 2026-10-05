@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/src/auditor.py", line 136, in <module>
+    main()
+    ~~~~^^
+  File "/src/auditor.py", line 125, in main
+    report = summarize(public, oracle, candidate)
+  File "/src/auditor.py", line 65, in summarize
+    raise ValueError(f"candidate/raw reconstruction mismatch at cohort {pub['cohort']}")
+ValueError: candidate/raw reconstruction mismatch at cohort 15
