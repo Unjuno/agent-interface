@@ -372,6 +372,49 @@ class CancellationReceiptTests(unittest.TestCase):
         finally:
             harness.close()
 
+    def test_earlier_confirmed_up_survives_later_key_sync_failure(self):
+        _bridge_test, hm, harness, lease, _bm, backend = load_candidate()
+        hm.owner_module.XK.string_to_keysym = lambda key: {"F8": 8, "F9": 9}[key]
+        harness.d.keysym_to_keycode = lambda sym: {8: 74, 9: 75}[sym]
+        backend._input_event_context = ("two-key-later-sync-failure", 10)
+        real_string_to_keysym = hm.owner_module.XK.string_to_keysym
+        real_keysym_to_keycode = harness.d.keysym_to_keycode
+        real_sync_failures = set(harness.d.sync_fail_on)
+        try:
+            backend.raw("F8", True)
+            backend.raw("F9", True)
+            # Two admission syncs have completed. F8 release is sync 3;
+            # fail F9 release sync 4 after F8's complete receipt exists.
+            harness.d.sync_fail_on.add(harness.d.sync_i + 2)
+            with self.assertRaisesRegex(RuntimeError, "sync failure"):
+                harness.owner.call("release", lease)
+            backend._drain_owner_records()
+            ups = [row for row in backend.events
+                   if row.get("event") == "input_release_measurement"]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0]["key"], "F8")
+            self.assertEqual(ups[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            partial = [row for row in harness.owner.records
+                       if row.get("event") == "owner_release"]
+            self.assertEqual(len(partial), 1)
+            self.assertFalse(partial[0]["verified"])
+            self.assertNotIn("keys_down", partial[0])
+            receipts = partial[0]["per_key_release_measurements"]
+            self.assertEqual(len(receipts), 1)
+            self.assertEqual(receipts[0]["key"], "F8")
+            self.assertEqual(receipts[0]["physical_key_measurement"]["classification"],
+                             "CONFIRMED_PHYSICAL_UP")
+            injections_after_cleanup = len(harness.d.injections)
+            with self.assertRaisesRegex(RuntimeError, "input owner failed closed"):
+                harness.owner.call("down", lease, "F8")
+            self.assertEqual(len(harness.d.injections), injections_after_cleanup)
+        finally:
+            harness.d.sync_fail_on.clear()
+            harness.d.sync_fail_on.update(real_sync_failures)
+            hm.owner_module.XK.string_to_keysym = real_string_to_keysym
+            harness.d.keysym_to_keycode = real_keysym_to_keycode
+            harness.close()
     def test_expired_program_exit_drains_owner_cleanup_without_cancel_event(self):
         bridge_test, _hm, harness, lease, _bm, backend = load_candidate()
         real_call = harness.owner.call

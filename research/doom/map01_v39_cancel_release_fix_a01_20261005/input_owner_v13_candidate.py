@@ -288,56 +288,69 @@ class InputOwner:
             nonlocal active,revision,fault
             revision += 1
             per_key_release_measurements=[]
-            for code in list(held):
-                key_lease=held[code]
-                identity=hold_identity.active.get(code)
-                pre=sample_key_state(code)
-                release_request_ns=time.perf_counter_ns()
-                xtest.fake_input(d, X.KeyRelease, code)
+            def release_edges():
+                for code in list(held):
+                    key_lease=held[code]
+                    identity=hold_identity.active.get(code)
+                    pre=sample_key_state(code)
+                    release_request_ns=time.perf_counter_ns()
+                    xtest.fake_input(d, X.KeyRelease, code)
+                    d.sync()
+                    sync_return_ns=time.perf_counter_ns()
+                    post=sample_key_state(code)
+                    if identity is not None:
+                        intent_token,key_name,actuation_id,event_context=identity
+                    else:
+                        intent_token=lease_intent_token(key_lease)
+                        key_name=None;actuation_id=None;event_context=None
+                    classification='PHYSICAL_SAMPLE_UNAVAILABLE'
+                    physical_interval=None
+                    if pre['available'] and post['available']:
+                        classification,_=_classify_release(True,pre['down'],True,True,post['down'])
+                        if classification=='CONFIRMED_PHYSICAL_UP':
+                            physical_interval=[pre['finished_ns'],post['finished_ns']]
+                    if classification == 'CONFIRMED_PHYSICAL_UP':
+                        # The owner-held map tracks this owner's current physical
+                        # hold. Retire it at the confirmed per-key edge, even when
+                        # the later aggregate device queries fail.
+                        held.pop(code, None)
+                    identity_status,retired_id=hold_identity.on_up(
+                        code,key_name,intent_token,classification=='CONFIRMED_PHYSICAL_UP') if key_name is not None else ('NO_ACTIVE_ID',None)
+                    if retired_id is not None:
+                        actuation_id=retired_id
+                    bracket=None
+                    if physical_interval is not None and actuation_id is not None and event_context is not None:
+                        bracket=dict(status=classification,physical_up_interval=physical_interval,
+                                     release_id=f'{self.owner_id}:r{revision}:cleanup-up:{code}',
+                                     owner_id=self.owner_id,intent_token=intent_token,key=key_name,
+                                     grants_input_authority=False,application_consumption_observed=False)
+                    measurement=dict(edge='up',classification=classification,bracket=bracket,
+                        actuation_id=actuation_id,identity_status=identity_status,
+                        pre_sample=pre,post_sample=post,release_attempted=True,
+                        release_request_ns=release_request_ns,sync_return_ns=sync_return_ns,
+                        adapter_edge=_edge_for_adapter('up',bracket,actuation_id),
+                        grants_input_authority=False,application_consumption_observed=False)
+                    if actuation_id is not None and event_context is not None:
+                        per_key_release_measurements.append(dict(
+                            event='input_release_measurement',key=key_name,
+                            id=event_context[0],step=event_context[1],owner_id=self.owner_id,
+                            intent_token=intent_token,reason=reason,
+                            physical_key_measurement=measurement,grants_input_authority=False))
+                for button in list(buttons):
+                    xtest.fake_input(d, X.ButtonRelease, button)
                 d.sync()
-                sync_return_ns=time.perf_counter_ns()
-                post=sample_key_state(code)
-                if identity is not None:
-                    intent_token,key_name,actuation_id,event_context=identity
-                else:
-                    intent_token=lease_intent_token(key_lease)
-                    key_name=None;actuation_id=None;event_context=None
-                classification='PHYSICAL_SAMPLE_UNAVAILABLE'
-                physical_interval=None
-                if pre['available'] and post['available']:
-                    classification,_=_classify_release(True,pre['down'],True,True,post['down'])
-                    if classification=='CONFIRMED_PHYSICAL_UP':
-                        physical_interval=[pre['finished_ns'],post['finished_ns']]
-                if classification == 'CONFIRMED_PHYSICAL_UP':
-                    # The owner-held map tracks this owner's current physical
-                    # hold. Retire it at the confirmed per-key edge, even when
-                    # the later aggregate device queries fail.
-                    held.pop(code, None)
-                identity_status,retired_id=hold_identity.on_up(
-                    code,key_name,intent_token,classification=='CONFIRMED_PHYSICAL_UP') if key_name is not None else ('NO_ACTIVE_ID',None)
-                if retired_id is not None:
-                    actuation_id=retired_id
-                bracket=None
-                if physical_interval is not None and actuation_id is not None and event_context is not None:
-                    bracket=dict(status=classification,physical_up_interval=physical_interval,
-                                 release_id=f'{self.owner_id}:r{revision}:cleanup-up:{code}',
-                                 owner_id=self.owner_id,intent_token=intent_token,key=key_name,
-                                 grants_input_authority=False,application_consumption_observed=False)
-                measurement=dict(edge='up',classification=classification,bracket=bracket,
-                    actuation_id=actuation_id,identity_status=identity_status,
-                    pre_sample=pre,post_sample=post,release_attempted=True,
-                    release_request_ns=release_request_ns,sync_return_ns=sync_return_ns,
-                    adapter_edge=_edge_for_adapter('up',bracket,actuation_id),
-                    grants_input_authority=False,application_consumption_observed=False)
-                if actuation_id is not None and event_context is not None:
-                    per_key_release_measurements.append(dict(
-                        event='input_release_measurement',key=key_name,
-                        id=event_context[0],step=event_context[1],owner_id=self.owner_id,
-                        intent_token=intent_token,reason=reason,
-                        physical_key_measurement=measurement,grants_input_authority=False))
-            for button in list(buttons):
-                xtest.fake_input(d, X.ButtonRelease, button)
-            d.sync()
+            try:
+                release_edges()
+            except BaseException as exc:
+                # Preserve completed per-key rows if a later edge or sync fails.
+                # This partial record is appended once and never mutated.
+                self.records.append(dict(
+                    event='owner_release', reason=reason, verified=False,
+                    valid_until_ns=active.deadline if active else None,
+                    per_key_release_measurements=list(per_key_release_measurements)))
+                fault=exc
+                active=None
+                raise
             # Persist per-key release evidence before aggregate reconciliation. The
             # physical key-up may be confirmed even if either global state query
             # fails; retain that row without marking the whole input state verified.

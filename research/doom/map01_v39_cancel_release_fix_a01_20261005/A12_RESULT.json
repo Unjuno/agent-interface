@@ -1,0 +1,51 @@
+{
+  "schema": "map01-v39-cancel-release-fix-a12-result-v1",
+  "disposition": "PASS_CANDIDATE_MECHANICS",
+  "scope": "Latest PR #7847 owner/bridge fake-display candidate on Windows CPython 3.11.9; no live MAP01 runtime or allocation.",
+  "behavior": {
+    "later_key_release_sync_failure_preserves_earlier_confirmed_up": true,
+    "partial_owner_release_is_unverified_and_faults_owner": true,
+    "followup_down_is_rejected_before_injection": true,
+    "latest_pr_a11_ambiguous_emitter_failure_stop_still_passes": true
+  },
+  "tests": {
+    "baseline_red": {
+      "count": 1,
+      "exit": 1
+    },
+    "candidate_green": {
+      "count": 1,
+      "exit": 0
+    },
+    "candidate_suite": {
+      "count": 16,
+      "exit": 0
+    },
+    "candidate_suite_optimized": {
+      "count": 16,
+      "exit": 0
+    },
+    "executor_v12_expiry_composition": {
+      "count": 3,
+      "exit": 0
+    },
+    "owner_compatibility": {
+      "count": 10,
+      "exit": 0
+    },
+    "existing_bridge": {
+      "count": 2,
+      "exit": 0
+    }
+  },
+  "unverified": [
+    "real X11",
+    "application consumption",
+    "live task effect",
+    "gameplay/MAP01 outcome",
+    "bounded recovery efficacy",
+    "safety",
+    "latency",
+    "matched live comparison"
+  ]
+}

@@ -41,3 +41,10 @@ The bundled CPython 3.12.14 suites pass 14 focused tests, 14 optimized-mode focu
 The expanded scoped verification passes 15 focused tests and the same 15 under optimized Python, plus 3 ExecutorV12 compositions, 10 owner compatibility tests, and 2 existing bridge tests. The source audit now checks 30 primary receipts and the 99-file checksum manifest. A11 remains a fake-display evidence-loss STOP policy only.
 
 A10 was independently rerun on Windows CPython 3.11.9; the original macOS arm64 red/green outputs and the Windows raw outputs are both retained under host-specific filenames.
+
+
+## A12 — current-head two-key release-prefix repair
+
+At exact PR head `84985b2b878f99551ab924fbc1351139915f5cc0`, the new regression fails against the unmodified owner candidate because no F8 release measurement survives F9’s later sync failure. With the repair, the partial release row retains exactly one confirmed F8 UP, remains explicitly unverified without aggregate fields, and a later DOWN is rejected before injection.
+
+Verification on Windows CPython 3.11.9: 16 focused candidate tests and 16 optimized-mode tests pass, plus 3 ExecutorV12 compositions, 10 owner compatibility tests, and 2 bridge tests. The current PR’s A11 emitter-fault STOP regression passes in the expanded candidate suite. Results remain fake-display only; no live allocation or runtime integration is claimed.

@@ -40,3 +40,6 @@ A10 RED/GREEN rebases the confirmed-owner-hold retirement repair from #7823 onto
 **C:** The earlier #7805 probe raised before appending its second row and already established the lost-later-row case. This A11 schedule tests the distinct append-then-raise ambiguity; it does not assume an idempotent sink. PR #7836 separately explores pending record indices and per-row deduplication, but does not resolve whether a sink accepted a row before throwing.
 
 **U:** Bundled CPython 3.12.14 on macOS arm64; fake display and in-memory emitter only. This is a candidate evidence-loss STOP policy, not durable-storage fault-injection, real X11, live input, production wiring, task effect, useful feedback, recovery, gameplay, latency, or live MAP01 evidence.
+
+
+A12 RED/GREEN covers the later-key release failure: with two held keys, the pinned latest-PR owner loses the first key’s already confirmed UP when the second release sync fails (`owner-ledger-a12-red.log`). The patched owner preserves exactly the completed F8 receipt in an unverified partial owner-release record and rejects a later DOWN without injection (`owner-ledger-a12-green.log`). The tested 16-case suite also retains the latest PR A11 append-then-raise emitter failure STOP case.

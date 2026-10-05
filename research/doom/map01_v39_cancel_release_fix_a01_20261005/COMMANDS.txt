@@ -54,3 +54,17 @@ A11 exact #7805 baseline RED (emitter append-then-raise):
 `V39_BRIDGE_CANDIDATE_PATH=/tmp/v39-bridge-e00c-baseline.py PYTHONPATH=research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12:research/live_control:research/doom python -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_partial_release_emit_failure_stops_without_replay_or_new_admission -v` (expected RED; output in `owner-emitter-fault-red.log`).
 
 A11 repaired candidate GREEN: run the same unittest command without `V39_BRIDGE_CANDIDATE_PATH` (output in `owner-emitter-fault-green.log`).
+
+
+## A12 verification (Windows CPython 3.11.9)
+
+From repository root:
+
+- `python -B -m unittest -v research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release` (16 tests).
+- `python -B -O -m unittest -v research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release` (16 tests).
+- `python -B -m unittest -v research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition` (3 tests).
+- `python -B research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py` (10 tests).
+- `PYTHONPATH=research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12;research/live_control;research/doom python -B -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v` (2 tests; adapt PATH separator for the shell).
+- `python -B research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py` (historical/A11 audit), then `python -B research/doom/map01_v39_cancel_release_fix_a01_20261005/audit_a12.py`.
+
+A12 RED sets `V13_OWNER_CANDIDATE_PATH` to the exact owner blob from PR head `84985b2b878f99551ab924fbc1351139915f5cc0`; GREEN uses the candidate file. Outputs are retained in `owner-ledger-a12-red.log` and `owner-ledger-a12-green.log`.

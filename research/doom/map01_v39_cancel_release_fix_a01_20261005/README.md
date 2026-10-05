@@ -117,3 +117,10 @@ The expanded scoped verification passes 15 focused tests and the same 15 under o
 
 
 The A10 receipt pair now also retains an independent Windows CPython 3.11.9 rerun from the merge partner. The original bundled CPython 3.12.14 macOS arm64 outputs are preserved as `owner-ledger-retirement-red-macos.log` and `owner-ledger-retirement-green-macos.log`; both runs use the same pinned baseline/candidate blobs and are separate host results.
+
+
+## A12 — preserve earlier two-key release evidence
+
+On latest PR head 84985b2b87, a deterministic fake-display test injects failure on F9 release sync after F8’s confirmed UP. The exact pinned owner baseline loses the F8 receipt; the candidate records the completed prefix in one explicitly unverified partial owner-release row, faults and clears the lease, and blocks a follow-up DOWN before injection. The PR’s A11 ambiguous emitter-failure STOP behavior also continues to pass.
+
+Windows CPython 3.11.9 suites pass: candidate 16/16, optimized 16/16, ExecutorV12 composition 3/3, owner compatibility 10/10, existing bridge 2/2. This is fake-display candidate evidence only. See `A12_PROTOCOL.md`, `A12_SOURCE_LOCK.json`, and `A12_RESULT.json`.
