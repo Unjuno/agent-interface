@@ -37,6 +37,7 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| V16 full-main lifecycle audit correction (#7568 successor) | [`v16_fullmain_independent_audit_59_20261004/README_V2.md`](v16_fullmain_independent_audit_59_20261004/README_V2.md) — preserves V1 unchanged; V2 downgrades the missing terminal trace to HOLD and adds nested key-up/sync and post-release empty-sample checks. Retained-record audit only; no live or physical-input claim |
 | v39 ammo-aware cover pair gate (#59) | [`v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md`](v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md) — ten-case paired-epoch construction PASS, audit 44/44; no current runtime integration or live behavior |
 | v39 ammo-aware renewable-cover successor (#59) | [`v39_ammo_cover_guard_59_a02_20261005/REPORT.md`](v39_ammo_cover_guard_59_a02_20261005/REPORT.md) — dual-signal construction `PASS` (24/24 audit checks); no controller integration or live evidence; paired epoch enforcement remains a prerequisite |
 | v39 ammo-aware renewable-cover boundary (#59) | [`v39_ammo_cover_guard_59_a01_20261005/REPORT.md`](v39_ammo_cover_guard_59_a01_20261005/REPORT.md) — synthetic current-source failure: zero ammo did not invalidate a notional fire-containing cover while the health guard remained valid; no live-game or input claim |
