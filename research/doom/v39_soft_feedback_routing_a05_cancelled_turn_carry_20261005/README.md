@@ -15,3 +15,5 @@
 ## Result
 
 The bounded source check passed: in the `invalidation is not None` branch, V39 appends the canceled decision including both soft-event fields and then continues. The next loop's `latest_soft_event_summary(decisions)` consumes that record before building the next planner prompt. An exact-helper stub run preserved the prior ammo event and `grants_input_authority=false`. Thus soft feedback is delayed until the canceled turn resolves, then remains available to the following turn. See `RESULT.json`, `audit_successor_A02.json`, preserved audit-v1 failure under `audit_v1/`, and `COMMANDS.txt`.
+
+Post-run check: main advanced to `53ec001a`, while the controller and observable guard Git blobs remain `cdf61eec` and `c0955f97`, respectively. `CURRENT_MAIN_RECHECK.json` records the exact source-byte applicability check; the original experiment remains frozen at `018934c`.

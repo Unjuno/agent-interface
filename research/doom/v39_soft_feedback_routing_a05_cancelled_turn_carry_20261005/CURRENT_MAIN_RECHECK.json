@@ -1,0 +1,10 @@
+{
+  "schema": "v39-soft-feedback-a05-current-main-source-recheck-v1",
+  "experiment_freeze_main": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "rechecked_main": "53ec001a334e4077caf665ff56372cd4b0ccb068",
+  "controller_git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "observable_signal_guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "finding": "The V39 controller and observable-signal guard source blobs match the experiment freeze and are unchanged at current origin/main. A05 remains an 018934c source-composition result; this recheck does not relabel or rerun it.",
+  "verified_command": "git diff --quiet origin/main -- research/doom/map01_overlap_controller_v39.py research/live_control/observable_signal_guard_v2.py"
+}
