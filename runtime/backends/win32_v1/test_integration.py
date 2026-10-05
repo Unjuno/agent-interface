@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ctypes
+from ctypes import wintypes
 import json
 import subprocess
 import sys
@@ -308,6 +309,43 @@ class PureWin32HelperTests(unittest.TestCase):
         ]})
         self.assertEqual(result["emissions"], 4)
         self.assertEqual([event[0] for event in events], ["key", "key", "text", "text"])
+
+
+@unittest.skipUnless(sys.platform == "win32", "requires native Windows")
+class Win32TargetIdentityIntegrationTests(unittest.TestCase):
+    def test_hidden_window_identity_uses_native_owner_apis(self):
+        backend = object.__new__(Win32Backend)
+        backend.user32 = ctypes.WinDLL("user32", use_last_error=True)
+        backend.gdi32 = ctypes.WinDLL("gdi32", use_last_error=True)
+        backend.kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        backend._configure_api()
+        backend.user32.CreateWindowExW.argtypes = [
+            wintypes.DWORD, wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.DWORD,
+            ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int,
+            wintypes.HWND, wintypes.HMENU, wintypes.HINSTANCE, wintypes.LPVOID,
+        ]
+        backend.user32.CreateWindowExW.restype = wintypes.HWND
+        backend.user32.DestroyWindow.argtypes = [wintypes.HWND]
+        backend.user32.DestroyWindow.restype = wintypes.BOOL
+        backend.kernel32.GetModuleHandleW.argtypes = [wintypes.LPCWSTR]
+        backend.kernel32.GetModuleHandleW.restype = wintypes.HINSTANCE
+        hwnd = backend.user32.CreateWindowExW(
+            0, "STATIC", "", 0x80000000, 0, 0, 1, 1, None, None,
+            backend.kernel32.GetModuleHandleW(None), None,
+        )
+        if not hwnd:
+            raise ctypes.WinError(ctypes.get_last_error())
+        try:
+            backend.targets = {"fixture": int(hwnd)}
+            first = backend.target_identity("fixture")
+            self.assertEqual(backend.target_identity("fixture"), first)
+            self.assertGreater(first["thread_id"], 0)
+            self.assertGreater(first["process_id"], 0)
+            self.assertGreater(first["process_creation_time_100ns"], 0)
+        finally:
+            if not backend.user32.DestroyWindow(hwnd):
+                raise ctypes.WinError(ctypes.get_last_error())
+        self.assertFalse(backend.user32.IsWindow(hwnd))
 
 
 class Win32SessionRecoveryTests(unittest.TestCase):
