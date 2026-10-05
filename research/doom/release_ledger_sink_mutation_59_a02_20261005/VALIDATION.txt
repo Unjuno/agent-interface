@@ -1,0 +1,21 @@
+Frozen checkout: 81a59aed13492ba1d52ea80e03d48c3d8de7b2c5
+Runtime: Python 3.14.5, local macOS runtime
+
+Focused mutation regression:
+  python3 -B -m unittest \
+    research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger \
+    research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger -v
+  Result: 2 methods PASS; 12 subcases PASS.
+
+Complete focused composition module:
+  python3 -B -m unittest research.doom.test_release_backend_v3_actual_composition -v
+  Result: 14 tests PASS, 0 failures/errors.
+
+Changed test file:
+  git diff --check -- research/doom/test_release_backend_v3_actual_composition.py
+  Result: PASS.
+
+The test-only current-main rerun is not a container run. Docker was not retried
+after the daemon reported an unsupported containerd blob operation while
+listing local images. Earlier Windows/WSLc outputs belong to frozen A01 PR
+#7669 and are not substituted for this A02 result.

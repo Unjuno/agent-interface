@@ -84,10 +84,12 @@ class Backend(Previous):
             context = {"rows": [], "identifier": identifier}
             self._last_release_batch_delivery = None
         context["step"] = index
+        context.setdefault("pending_ups", [])
         self._release_batch.context = context
         try:
             result = super().execute(step, cancel, identifier, index)
         except BaseException as exc:
+            self._materialize_unknown_pending_ups(context)
             disposition = (
                 "publication_exception"
                 if context.get("publication_error_type") is not None
@@ -95,6 +97,8 @@ class Backend(Previous):
             )
             self._finish_incomplete_release_batch(context, exc, disposition)
             raise
+
+        self._flush_pending_ups(context)
 
         if context["rows"]:
             self._release_batch.context = context
@@ -156,6 +160,8 @@ class Backend(Previous):
 
     def release_all(self):
         context = getattr(self._release_batch, "context", None)
+        if context is not None:
+            self._flush_pending_ups(context)
         try:
             result = super().release_all()
         except BaseException as exc:
@@ -201,7 +207,11 @@ class Backend(Previous):
         if input_context is None:
             raise RuntimeError("keyboard input outside program/step telemetry context")
 
+        context = getattr(self._release_batch, "context", None)
+
         if down:
+            if context is not None:
+                self._flush_pending_ups(context)
             record = self.owner.call("down", self.lease, key)
             self.held.add(key)
             if record is not None:
@@ -212,29 +222,73 @@ class Backend(Previous):
                 self.emit(row)
             return None
 
-        context = getattr(self._release_batch, "context", None)
         if context is None:
             self.owner.call("up", self.lease, key)
             self.held.discard(key)
             return None
 
-        was_backend_owned = key in self.held
+        context.setdefault("pending_ups", []).append({
+            "key": key,
+            "backend_owned_before_release": key in self.held,
+            "input_context": input_context,
+        })
+        self.held.discard(key)
+        if not self.held:
+            self._flush_pending_ups(context)
+        return None
+
+    def _flush_pending_ups(self, context):
+        pending = context.get("pending_ups", [])
+        if not pending:
+            return
         records = getattr(self.owner, "records", None)
         record_count = len(records) if isinstance(records, list) else None
-        row = self.owner.call("up", self.lease, key)
-        self.held.discard(key)
-        if not isinstance(row, dict) or row.get("event") != "input_release_transition":
-            raise AssertionError("v4 release wrapper did not return transition receipt")
-        row = dict(row)
-        row["backend_owned_before_release"] = was_backend_owned
-        row["release_batch_identifier"] = context["identifier"]
-        row["release_batch_step"] = context["step"]
-        row["id"], row["step"] = input_context
-        row["owner_cleanup_record_count_before_release"] = record_count
-        context["rows"].append(row)
+        transitions = self.owner.call(
+            "up_batch", self.lease, [item["key"] for item in pending]
+        )
+        if type(transitions) is not list or len(transitions) != len(pending):
+            raise AssertionError("v4 release batch did not return one transition per UP")
+        context["pending_ups"] = []
+        for item, transition in zip(pending, transitions):
+            if (not isinstance(transition, dict)
+                    or transition.get("event") != "input_release_transition"):
+                raise AssertionError("v4 release batch returned an invalid transition")
+            row = dict(transition)
+            row["backend_owned_before_release"] = item["backend_owned_before_release"]
+            row["release_batch_identifier"] = context["identifier"]
+            row["release_batch_step"] = context["step"]
+            row["id"], row["step"] = item["input_context"]
+            row["owner_cleanup_record_count_before_release"] = record_count
+            context["rows"].append(row)
         if not self.held:
             self._publish_release_batch(context)
-        return None
+
+    def _materialize_unknown_pending_ups(self, context):
+        """Retain rows after an ambiguous batch-call failure without replaying UPs."""
+        pending = context.get("pending_ups", [])
+        if not pending:
+            return
+        context["pending_ups"] = []
+        for item in pending:
+            identifier, step = item["input_context"]
+            context["rows"].append({
+                "event": "input_release_transition",
+                "operation": "up",
+                "key": item["key"],
+                "id": identifier,
+                "step": step,
+                "owner_id": self.owner.owner_id,
+                "intent_token": getattr(self.lease, "intent_token", None),
+                "owner_transition_verified": False,
+                "owner_thread_keyup_verified": False,
+                "owner_thread_keyup_receipt": None,
+                "backend_owned_before_release": item["backend_owned_before_release"],
+                "release_batch_identifier": context["identifier"],
+                "release_batch_step": context["step"],
+                "owner_cleanup_record_count_before_release": None,
+                "ordinary_release_candidate": False,
+                "release_batch_call_outcome": "unknown_no_retry",
+            })
 
     def _publish_release_batch(self, context, *, terminal_cleanup_verified=None):
         rows = context["rows"]

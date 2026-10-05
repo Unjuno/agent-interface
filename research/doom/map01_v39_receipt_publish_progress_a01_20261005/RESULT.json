@@ -1,0 +1,25 @@
+{
+  "schema": "map01_v39_receipt_publish_progress_a01_result_v1",
+  "status": "PASS_IDEMPOTENT_ROW_PROGRESS_SCOPED",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "retries": 0,
+  "idempotent_schedules_passed": [
+    "normal",
+    "before_append_row_2_then_retry",
+    "append_then_raise_row_2_then_retry"
+  ],
+  "receipt_rows": 3,
+  "already_acked_row_1_reappended": false,
+  "non_idempotent_append_then_raise": "UNKNOWN_DUPLICATE_AFTER_ACK_LOSS",
+  "duplicate_id_different_payload": "REJECTED",
+  "limits": [
+    "synthetic publisher/sink only",
+    "no actual executor event sink",
+    "no mutable owner record or held-ledger composition",
+    "no terminal ordering, X11, GUI, game, model, useful feedback, recovery, or live allocation"
+  ],
+  "resource_note": "WSLc warned swap-limit cgroup capability unavailable; configured memory has no swap limit. CPU enforcement not measured."
+}

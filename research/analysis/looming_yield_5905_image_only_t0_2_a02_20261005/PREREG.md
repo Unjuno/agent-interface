@@ -1,0 +1,17 @@
+# Allocation LOOMING-YIELD-5905-T0.2-IMAGE-ONLY-20261005
+
+## Prior evidence and distinct question
+A01 remains preserved at research/analysis/looming_yield_5905_t0_20261001_01/. Its allocation STOPped because main advanced after freeze and before candidate start. Do not reinterpret or rerun it. A01 also consumed fixture-provided camera/occlusion/track assumptions and had no matched comparator. This successor changes the discriminating condition to image-only inference plus an explicit indistinguishable-world pair.
+
+## H / T / D / C / U
+H: Across six rendered centered approaches and seven controls, a timestamped five-frame cue using only PGM pixels plus runtime timestamps/track IDs will abstain on visible camera-scale, lateral-motion, occlusion, track-identity and clock violations. At the preregistered one-of-seven false-YIELD allowance, the fixed-grid time-to-contact rule will cue more true approaches before simulated release latency than endpoint pixel-change or target-area-growth thresholds at the same five-frame budget. A pixel-identical nonapproach animation twin tests the observability limit.
+
+T: Freeze current main d9bb339b0ba9285cdef57fc347437d25e5943ef1. Create six analytic constant-speed approaches plus camera zoom, lateral passage, occlusion, track swap, nonmonotonic timestamps, a stationary nonlooming hazard, and an animation twin byte-identical to approach-1. Each sequence has five 128x128 PGM frames at 100-ms cadence. Candidate sees observations, timestamps and track IDs only; truth labels are mounted only to the auditor. Compare pixel thresholds [.005,.01,.02,.04,.08], area-growth [1.02,1.05,1.10,1.15,1.25], and TTC [1.5,2,2.5,2.8,3,4] with at most one false YIELD among seven controls. Selected TTC threshold 4 s; simulated release latency .20 s. Network disabled, one CPU, 512 MiB requested, cached Python 3.12-slim digest, no GPU.
+
+D: PASS_METHOD_SCOPED_WITH_IDENTIFIABILITY_LIMIT requires all six true approaches to request release with positive analytic release lead; the five visually/runtime-detectable invalid controls must be UNKNOWN with no request; the animation twin must be byte-identical to approach-1 and receive the same output, counted as the sole permitted false YIELD; TTC maximum true positives at <=1 false YIELD must strictly exceed both simple baselines; and a separate raw-only auditor must reconstruct all frame hashes, measurements, identity, timing and outcomes with zero errors. Any mismatch is FAIL; source/main drift or setup failure before candidate is STOP. Neither outcome is a live-control or safety result.
+
+C: Synthetic raster geometry and analytic contact oracle; no physical camera, game, application, model, runtime, input edge, damage or gameplay. One-of-seven false-YIELD is only this finite method comparison, not a product acceptance rate. The fixed fixture cannot cover arbitrary animation or camera motion.
+
+U: Tests whether simple image-only normalization abstains on a small declared set of confounds and quantifies an unidentifiable twin. It does not validate enemy detection, live MAP01, controller authority, useful feedback, recovery, human tempo or general time-to-contact reliability. Absence of a cue is never evidence that continuing is safe.
+
+Candidate and auditor run once in separate cached network-disabled WSLc containers only if exact-main and empty-container start gates pass. Candidate sees candidate_input/observations.json only; auditor sees hidden labels plus raw. No retries. Record commands, hashes, raw, auditor and any STOP in RUN.json.

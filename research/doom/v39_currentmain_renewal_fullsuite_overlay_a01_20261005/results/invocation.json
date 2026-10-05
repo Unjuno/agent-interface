@@ -1,0 +1,59 @@
+{
+  "started_at_utc": "2026-10-05T05:58:01.358641+00:00",
+  "candidate_commit": "fc14994f53655da57b9b6573d028ddde1a11b858",
+  "python": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "python_version": "Python 3.12.14",
+  "tests": [
+    "test_map01_overlap_controller_v39.py",
+    "test_overlap_controller_v39_wait.py",
+    "test_source_refresh_v1.py",
+    "test_v39_soft_stale_renewal_v1.py"
+  ],
+  "expected_tests_per_mode": 40,
+  "results": {
+    "normal": {
+      "argv": [
+        "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "test_map01_overlap_controller_v39.py",
+        "test_overlap_controller_v39_wait.py",
+        "test_source_refresh_v1.py",
+        "test_v39_soft_stale_renewal_v1.py"
+      ],
+      "exit_code": 0,
+      "elapsed_ns": 882383875
+    },
+    "optimized": {
+      "argv": [
+        "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-O",
+        "-m",
+        "unittest",
+        "test_map01_overlap_controller_v39.py",
+        "test_overlap_controller_v39_wait.py",
+        "test_source_refresh_v1.py",
+        "test_v39_soft_stale_renewal_v1.py"
+      ],
+      "exit_code": 0,
+      "elapsed_ns": 950490666
+    },
+    "compile": {
+      "argv": [
+        "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "py_compile",
+        "test_map01_overlap_controller_v39.py",
+        "test_overlap_controller_v39_wait.py",
+        "test_source_refresh_v1.py",
+        "test_v39_soft_stale_renewal_v1.py",
+        "map01_overlap_controller_v39.py"
+      ],
+      "exit_code": 0
+    }
+  },
+  "ended_at_utc": "2026-10-05T05:58:03.270907+00:00"
+}
