@@ -1,0 +1,56 @@
+{
+  "schema": "map01-v39-postbatch-perkey-sample-result-v1",
+  "run_id": "MAP01-V39-POSTBATCH-PERKEY-SAMPLE-A02-20261005",
+  "base_commit": "e7c916989da30741b00c234efd264067d0899851",
+  "status": "PASS_METHOD_SCOPED_POSTBATCH_SAMPLE_AND_FAIL_CLOSED_CONTROLS",
+  "candidate_invocations": 1,
+  "container_exit": 0,
+  "independent_audit": "PASS_METHOD_SCOPED_POSTBATCH_SAMPLE_AND_FAIL_CLOSED_CONTROLS",
+  "mutation_controls": "5/5 passed",
+  "observed": {
+    "normal": {
+      "admissions": 2,
+      "explicit_up_receipts": 2,
+      "query_keymap_between_up_injections": 0,
+      "postbatch_keymap_samples": 1,
+      "sampled_owned_keycodes_down": [],
+      "per_key_statuses": {
+        "a": "KEY_UP_AT_POSTBATCH_SAMPLE",
+        "space": "KEY_UP_AT_POSTBATCH_SAMPLE"
+      }
+    },
+    "release_stuck_control": {
+      "query_keymap_between_up_injections": 0,
+      "sampled_owned_keycodes_down": [65],
+      "per_key_statuses": {
+        "a": "KEY_UP_AT_POSTBATCH_SAMPLE",
+        "space": "PHYSICAL_STILL_DOWN_AT_POSTBATCH_SAMPLE"
+      },
+      "owner_transition_verified_before_terminal_cleanup": true,
+      "terminal_cleanup": "FAILED_CLOSED_OWNER_RELEASE_NOT_VERIFIED"
+    },
+    "sample_error_control": {
+      "query_failure": "injected keymap sample failure",
+      "per_key_confirmation_attached": false,
+      "release_batch_complete": false,
+      "terminal_cleanup": "completed"
+    }
+  },
+  "interpretation": "One owner-thread keymap query can be placed in the existing input_state call after all explicit-up RPCs and can associate sampled keycodes with their release records. It reveals a residual key in the injected fake-display control. The existing owner_transition_verified field is software-ledger verification and does not incorporate the new physical-state sample.",
+  "environment": {
+    "container_image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "container_architecture": "linux/arm64",
+    "network": "none",
+    "live_x_server": false,
+    "gui_or_game": false,
+    "model_calls": 0,
+    "os_input": false
+  },
+  "limitations": [
+    "The keymap is a simulated X server map, not real hardware state",
+    "The sample reports state at one shared post-batch instant, not each key's exact release transition time",
+    "The typed backend loop and X display are inert fakes",
+    "No application consumption, useful feedback, threat exposure, recovery, latency bound, task effect, or MAP01 outcome was measured",
+    "This result does not close Issue #59 or imply a live allocation"
+  ]
+}

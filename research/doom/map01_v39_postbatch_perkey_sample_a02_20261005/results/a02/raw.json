@@ -1,0 +1,836 @@
+{
+  "base_commit": "e7c916989da30741b00c234efd264067d0899851",
+  "environment": {
+    "container": true,
+    "fake_xlib": true,
+    "game": false,
+    "gui": false,
+    "live_x_server": false,
+    "model_calls": 0,
+    "os_input": false
+  },
+  "run_id": "MAP01-V39-POSTBATCH-PERKEY-SAMPLE-A02-20261005",
+  "scenarios": [
+    {
+      "backend_held_before_close": [],
+      "candidate_exception": null,
+      "events": [
+        {
+          "admitted_ns": 3076507820365,
+          "event": "input_admission",
+          "id": "two-key-postbatch-normal",
+          "input_ack_ns": 3076507823407,
+          "intent_token": "postbatch-a01-normal",
+          "key": "a",
+          "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+          "step": 7,
+          "valid_until_ns": 3136507495363
+        },
+        {
+          "admitted_ns": 3076507875657,
+          "event": "input_admission",
+          "id": "two-key-postbatch-normal",
+          "input_ack_ns": 3076507877949,
+          "intent_token": "postbatch-a01-normal",
+          "key": "space",
+          "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+          "step": 7,
+          "valid_until_ns": 3136507495363
+        },
+        {
+          "backend_owned_before_release": true,
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "id": "two-key-postbatch-normal",
+          "intent_token": "postbatch-a01-normal",
+          "intent_token_matches_after_batch": true,
+          "key": "a",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owned_keycodes_after_batch": [],
+          "owner_cleanup_intervened": false,
+          "owner_cleanup_record_count_before_release": 0,
+          "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+          "owner_identity_matches_after_batch": true,
+          "owner_release_history_complete": true,
+          "owner_sample_after_finished_ns": 3076508149784,
+          "owner_sample_after_started_ns": 3076508138575,
+          "owner_sample_ordered_after_batch": true,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "postbatch-a01-normal",
+            "key": "a",
+            "keycode": 38,
+            "operation": "up",
+            "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+            "owner_keyrelease_started_ns": 3076508029366,
+            "owner_sync_returned_ns": 3076508033200,
+            "physical_verification_authoritative": false,
+            "server_sync_completed": true,
+            "valid_until_ns": 3136507495363
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_thread_keyup_verified_after_batch": true,
+          "owner_transition_verified": true,
+          "physical_verification_authoritative": false,
+          "post_batch_key_state_sample": {
+            "application_consumption_observed": false,
+            "intent_token": "postbatch-a01-normal",
+            "key": "a",
+            "keycode": 38,
+            "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+            "physical_verification_authoritative": false,
+            "program_id": "two-key-postbatch-normal",
+            "sample_finished_ns": 3076508146492,
+            "sample_started_ns": 3076508141951,
+            "schema": "per-key-postbatch-keymap-v1",
+            "status": "KEY_UP_AT_POSTBATCH_SAMPLE",
+            "step": 7
+          },
+          "release_batch_complete": true,
+          "release_batch_delivery_position": 0,
+          "release_batch_identifier": "two-key-postbatch-normal",
+          "release_batch_position": 0,
+          "release_batch_schema": "input-release-batch-v3",
+          "release_batch_size": 2,
+          "release_batch_step": 7,
+          "release_call_bracket_ns": 146834,
+          "release_call_returned_ns": 3076508049908,
+          "release_call_started_ns": 3076507903074,
+          "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+          "step": 7,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 3136507495363
+        },
+        {
+          "backend_owned_before_release": true,
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "id": "two-key-postbatch-normal",
+          "intent_token": "postbatch-a01-normal",
+          "intent_token_matches_after_batch": true,
+          "key": "space",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owned_keycodes_after_batch": [],
+          "owner_cleanup_intervened": false,
+          "owner_cleanup_record_count_before_release": 1,
+          "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+          "owner_identity_matches_after_batch": true,
+          "owner_release_history_complete": true,
+          "owner_sample_after_finished_ns": 3076508149784,
+          "owner_sample_after_started_ns": 3076508138575,
+          "owner_sample_ordered_after_batch": true,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "postbatch-a01-normal",
+            "key": "space",
+            "keycode": 65,
+            "operation": "up",
+            "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+            "owner_keyrelease_started_ns": 3076508091784,
+            "owner_sync_returned_ns": 3076508093992,
+            "physical_verification_authoritative": false,
+            "server_sync_completed": true,
+            "valid_until_ns": 3136507495363
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_thread_keyup_verified_after_batch": true,
+          "owner_transition_verified": true,
+          "physical_verification_authoritative": false,
+          "post_batch_key_state_sample": {
+            "application_consumption_observed": false,
+            "intent_token": "postbatch-a01-normal",
+            "key": "space",
+            "keycode": 65,
+            "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+            "physical_verification_authoritative": false,
+            "program_id": "two-key-postbatch-normal",
+            "sample_finished_ns": 3076508146492,
+            "sample_started_ns": 3076508141951,
+            "schema": "per-key-postbatch-keymap-v1",
+            "status": "KEY_UP_AT_POSTBATCH_SAMPLE",
+            "step": 7
+          },
+          "release_batch_complete": true,
+          "release_batch_delivery_position": 1,
+          "release_batch_identifier": "two-key-postbatch-normal",
+          "release_batch_position": 1,
+          "release_batch_schema": "input-release-batch-v3",
+          "release_batch_size": 2,
+          "release_batch_step": 7,
+          "release_call_bracket_ns": 35042,
+          "release_call_returned_ns": 3076508105867,
+          "release_call_started_ns": 3076508070825,
+          "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+          "step": 7,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 3136507495363
+        }
+      ],
+      "operations": [
+        {
+          "event": "inherited_empty_owner_close",
+          "time_ns": 3076507502488
+        },
+        {
+          "display": "fake-display-v39",
+          "event": "display_open",
+          "mode": "normal",
+          "time_ns": 3076507721240
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076507817573
+        },
+        {
+          "display_event_type": 2,
+          "event": "key_down",
+          "keycode": 38,
+          "time_ns": 3076507821948
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076507822948
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076507830657
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076507874157
+        },
+        {
+          "display_event_type": 2,
+          "event": "key_down",
+          "keycode": 65,
+          "time_ns": 3076507876949
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076507877532
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076507883532
+        },
+        {
+          "display_event_type": 3,
+          "event": "key_up",
+          "keycode": 38,
+          "time_ns": 3076508031866
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508032866
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508039908
+        },
+        {
+          "display_event_type": 3,
+          "event": "key_up",
+          "keycode": 65,
+          "time_ns": 3076508093159
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508093742
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508100950
+        },
+        {
+          "event": "query_pointer",
+          "time_ns": 3076508140201
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508141284
+        },
+        {
+          "event": "query_keymap",
+          "keys": [],
+          "time_ns": 3076508143701
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508167576
+        },
+        {
+          "event": "postbatch_keymap_sample",
+          "intent_token": "postbatch-a01-normal",
+          "owner_id": "836ac9fc626f4115bfd34c4bf8911334",
+          "sample_finished_ns": 3076508146492,
+          "sample_started_ns": 3076508141951,
+          "sampled_owned_keycodes_down": [],
+          "time_ns": 3076508188117
+        }
+      ],
+      "owner_close_exception": null,
+      "physical_keycodes_before_close": [],
+      "sample_returned": true,
+      "scenario": "normal"
+    },
+    {
+      "backend_held_before_close": [],
+      "candidate_exception": null,
+      "events": [
+        {
+          "admitted_ns": 3076508425327,
+          "event": "input_admission",
+          "id": "two-key-postbatch-release_stuck",
+          "input_ack_ns": 3076508427577,
+          "intent_token": "postbatch-a01-release_stuck",
+          "key": "a",
+          "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+          "step": 7,
+          "valid_until_ns": 3136508288618
+        },
+        {
+          "admitted_ns": 3076508462536,
+          "event": "input_admission",
+          "id": "two-key-postbatch-release_stuck",
+          "input_ack_ns": 3076508463994,
+          "intent_token": "postbatch-a01-release_stuck",
+          "key": "space",
+          "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+          "step": 7,
+          "valid_until_ns": 3136508288618
+        },
+        {
+          "backend_owned_before_release": true,
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "id": "two-key-postbatch-release_stuck",
+          "intent_token": "postbatch-a01-release_stuck",
+          "intent_token_matches_after_batch": true,
+          "key": "a",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owned_keycodes_after_batch": [],
+          "owner_cleanup_intervened": false,
+          "owner_cleanup_record_count_before_release": 0,
+          "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+          "owner_identity_matches_after_batch": true,
+          "owner_release_history_complete": true,
+          "owner_sample_after_finished_ns": 3076508569620,
+          "owner_sample_after_started_ns": 3076508562120,
+          "owner_sample_ordered_after_batch": true,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "postbatch-a01-release_stuck",
+            "key": "a",
+            "keycode": 38,
+            "operation": "up",
+            "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+            "owner_keyrelease_started_ns": 3076508491203,
+            "owner_sync_returned_ns": 3076508492869,
+            "physical_verification_authoritative": false,
+            "server_sync_completed": true,
+            "valid_until_ns": 3136508288618
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_thread_keyup_verified_after_batch": true,
+          "owner_transition_verified": true,
+          "physical_verification_authoritative": false,
+          "post_batch_key_state_sample": {
+            "application_consumption_observed": false,
+            "intent_token": "postbatch-a01-release_stuck",
+            "key": "a",
+            "keycode": 38,
+            "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+            "physical_verification_authoritative": false,
+            "program_id": "two-key-postbatch-release_stuck",
+            "sample_finished_ns": 3076508568037,
+            "sample_started_ns": 3076508564495,
+            "schema": "per-key-postbatch-keymap-v1",
+            "status": "KEY_UP_AT_POSTBATCH_SAMPLE",
+            "step": 7
+          },
+          "release_batch_complete": true,
+          "release_batch_delivery_position": 0,
+          "release_batch_identifier": "two-key-postbatch-release_stuck",
+          "release_batch_position": 0,
+          "release_batch_schema": "input-release-batch-v3",
+          "release_batch_size": 2,
+          "release_batch_step": 7,
+          "release_call_bracket_ns": 26000,
+          "release_call_returned_ns": 3076508502828,
+          "release_call_started_ns": 3076508476828,
+          "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+          "step": 7,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 3136508288618
+        },
+        {
+          "backend_owned_before_release": true,
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "id": "two-key-postbatch-release_stuck",
+          "intent_token": "postbatch-a01-release_stuck",
+          "intent_token_matches_after_batch": true,
+          "key": "space",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owned_keycodes_after_batch": [],
+          "owner_cleanup_intervened": false,
+          "owner_cleanup_record_count_before_release": 1,
+          "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+          "owner_identity_matches_after_batch": true,
+          "owner_release_history_complete": true,
+          "owner_sample_after_finished_ns": 3076508569620,
+          "owner_sample_after_started_ns": 3076508562120,
+          "owner_sample_ordered_after_batch": true,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "postbatch-a01-release_stuck",
+            "key": "space",
+            "keycode": 65,
+            "operation": "up",
+            "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+            "owner_keyrelease_started_ns": 3076508526786,
+            "owner_sync_returned_ns": 3076508527995,
+            "physical_verification_authoritative": false,
+            "server_sync_completed": true,
+            "valid_until_ns": 3136508288618
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_thread_keyup_verified_after_batch": true,
+          "owner_transition_verified": true,
+          "physical_verification_authoritative": false,
+          "post_batch_key_state_sample": {
+            "application_consumption_observed": false,
+            "intent_token": "postbatch-a01-release_stuck",
+            "key": "space",
+            "keycode": 65,
+            "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+            "physical_verification_authoritative": false,
+            "program_id": "two-key-postbatch-release_stuck",
+            "sample_finished_ns": 3076508568037,
+            "sample_started_ns": 3076508564495,
+            "schema": "per-key-postbatch-keymap-v1",
+            "status": "PHYSICAL_STILL_DOWN_AT_POSTBATCH_SAMPLE",
+            "step": 7
+          },
+          "release_batch_complete": true,
+          "release_batch_delivery_position": 1,
+          "release_batch_identifier": "two-key-postbatch-release_stuck",
+          "release_batch_position": 1,
+          "release_batch_schema": "input-release-batch-v3",
+          "release_batch_size": 2,
+          "release_batch_step": 7,
+          "release_call_bracket_ns": 22167,
+          "release_call_returned_ns": 3076508536870,
+          "release_call_started_ns": 3076508514703,
+          "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+          "step": 7,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 3136508288618
+        }
+      ],
+      "operations": [
+        {
+          "event": "inherited_empty_owner_close",
+          "time_ns": 3076508291076
+        },
+        {
+          "display": "fake-display-v39",
+          "event": "display_open",
+          "mode": "release_stuck",
+          "time_ns": 3076508372452
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508423202
+        },
+        {
+          "display_event_type": 2,
+          "event": "key_down",
+          "keycode": 38,
+          "time_ns": 3076508426577
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508427202
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508432869
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508461619
+        },
+        {
+          "display_event_type": 2,
+          "event": "key_down",
+          "keycode": 65,
+          "time_ns": 3076508463328
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508463703
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508468536
+        },
+        {
+          "display_event_type": 3,
+          "event": "key_up",
+          "keycode": 38,
+          "time_ns": 3076508492244
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508492661
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508498953
+        },
+        {
+          "display_event_type": 3,
+          "event": "key_up",
+          "keycode": 65,
+          "time_ns": 3076508527411
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508527786
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508533078
+        },
+        {
+          "event": "query_pointer",
+          "time_ns": 3076508563078
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508563953
+        },
+        {
+          "event": "query_keymap",
+          "keys": [
+            65
+          ],
+          "time_ns": 3076508565745
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508578120
+        },
+        {
+          "event": "postbatch_keymap_sample",
+          "intent_token": "postbatch-a01-release_stuck",
+          "owner_id": "ba61eb374ca14f539ca62049525e96d9",
+          "sample_finished_ns": 3076508568037,
+          "sample_started_ns": 3076508564495,
+          "sampled_owned_keycodes_down": [
+            65
+          ],
+          "time_ns": 3076508586495
+        }
+      ],
+      "owner_close_exception": "RuntimeError: owner release not verified: [65]",
+      "physical_keycodes_before_close": [
+        65
+      ],
+      "sample_returned": true,
+      "scenario": "release_stuck"
+    },
+    {
+      "backend_held_before_close": [],
+      "candidate_exception": "RuntimeError: injected keymap sample failure",
+      "events": [
+        {
+          "admitted_ns": 3076508757746,
+          "event": "input_admission",
+          "id": "two-key-postbatch-sample_error",
+          "input_ack_ns": 3076508759829,
+          "intent_token": "postbatch-a01-sample_error",
+          "key": "a",
+          "owner_id": "035fa4739362413e82084dfc36826e9a",
+          "step": 7,
+          "valid_until_ns": 3136508664870
+        },
+        {
+          "admitted_ns": 3076508781163,
+          "event": "input_admission",
+          "id": "two-key-postbatch-sample_error",
+          "input_ack_ns": 3076508782538,
+          "intent_token": "postbatch-a01-sample_error",
+          "key": "space",
+          "owner_id": "035fa4739362413e82084dfc36826e9a",
+          "step": 7,
+          "valid_until_ns": 3136508664870
+        },
+        {
+          "backend_owned_before_release": true,
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "id": "two-key-postbatch-sample_error",
+          "intent_token": "postbatch-a01-sample_error",
+          "key": "a",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "measurement_contract_v3": "release telemetry is incomplete or publication failed; release_batch_disposition identifies the exception boundary",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owner_cleanup_intervened": false,
+          "owner_cleanup_record_count_before_release": 0,
+          "owner_id": "035fa4739362413e82084dfc36826e9a",
+          "owner_release_history_complete": true,
+          "owner_sample_after_batch_available": false,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "postbatch-a01-sample_error",
+            "key": "a",
+            "keycode": 38,
+            "operation": "up",
+            "owner_id": "035fa4739362413e82084dfc36826e9a",
+            "owner_keyrelease_started_ns": 3076508799871,
+            "owner_sync_returned_ns": 3076508801330,
+            "physical_verification_authoritative": false,
+            "server_sync_completed": true,
+            "valid_until_ns": 3136508664870
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_thread_keyup_verified_after_batch": false,
+          "owner_transition_verified": false,
+          "physical_verification_authoritative": false,
+          "release_batch_complete": false,
+          "release_batch_delivery_position": 0,
+          "release_batch_disposition": "step_exception",
+          "release_batch_error_type": "RuntimeError",
+          "release_batch_identifier": "two-key-postbatch-sample_error",
+          "release_batch_position": 0,
+          "release_batch_schema": "input-release-batch-v3",
+          "release_batch_size": 2,
+          "release_batch_step": 7,
+          "release_call_bracket_ns": 17042,
+          "release_call_returned_ns": 3076508810413,
+          "release_call_started_ns": 3076508793371,
+          "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+          "step": 7,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 3136508664870
+        },
+        {
+          "backend_owned_before_release": true,
+          "cancel_requested_after_sync": false,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "id": "two-key-postbatch-sample_error",
+          "intent_token": "postbatch-a01-sample_error",
+          "key": "space",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "measurement_contract_v3": "release telemetry is incomplete or publication failed; release_batch_disposition identifies the exception boundary",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owner_cleanup_intervened": false,
+          "owner_cleanup_record_count_before_release": 1,
+          "owner_id": "035fa4739362413e82084dfc36826e9a",
+          "owner_release_history_complete": true,
+          "owner_sample_after_batch_available": false,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_receipt": {
+            "cancel_requested_after_sync": false,
+            "event": "owner_explicit_keyup",
+            "intent_token": "postbatch-a01-sample_error",
+            "key": "space",
+            "keycode": 65,
+            "operation": "up",
+            "owner_id": "035fa4739362413e82084dfc36826e9a",
+            "owner_keyrelease_started_ns": 3076508823872,
+            "owner_sync_returned_ns": 3076508825163,
+            "physical_verification_authoritative": false,
+            "server_sync_completed": true,
+            "valid_until_ns": 3136508664870
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_verified": true,
+          "owner_thread_keyup_verified_after_batch": false,
+          "owner_transition_verified": false,
+          "physical_verification_authoritative": false,
+          "release_batch_complete": false,
+          "release_batch_delivery_position": 1,
+          "release_batch_disposition": "step_exception",
+          "release_batch_error_type": "RuntimeError",
+          "release_batch_identifier": "two-key-postbatch-sample_error",
+          "release_batch_position": 1,
+          "release_batch_schema": "input-release-batch-v3",
+          "release_batch_size": 2,
+          "release_batch_step": 7,
+          "release_call_bracket_ns": 12751,
+          "release_call_returned_ns": 3076508831122,
+          "release_call_started_ns": 3076508818371,
+          "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+          "step": 7,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 3136508664870
+        }
+      ],
+      "operations": [
+        {
+          "event": "inherited_empty_owner_close",
+          "time_ns": 3076508666704
+        },
+        {
+          "display": "fake-display-v39",
+          "event": "display_open",
+          "mode": "sample_error",
+          "time_ns": 3076508726579
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508756288
+        },
+        {
+          "display_event_type": 2,
+          "event": "key_down",
+          "keycode": 38,
+          "time_ns": 3076508758871
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508759496
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508764496
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508780288
+        },
+        {
+          "display_event_type": 2,
+          "event": "key_down",
+          "keycode": 65,
+          "time_ns": 3076508781871
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508782288
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508785538
+        },
+        {
+          "display_event_type": 3,
+          "event": "key_up",
+          "keycode": 38,
+          "time_ns": 3076508800746
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508801121
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508805455
+        },
+        {
+          "display_event_type": 3,
+          "event": "key_up",
+          "keycode": 65,
+          "time_ns": 3076508824622
+        },
+        {
+          "event": "display_sync",
+          "time_ns": 3076508824955
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508827663
+        },
+        {
+          "event": "query_pointer",
+          "time_ns": 3076508849038
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508849913
+        },
+        {
+          "event": "query_keymap",
+          "keys": [],
+          "time_ns": 3076508851038
+        },
+        {
+          "error": "injected_once",
+          "event": "query_keymap_error",
+          "time_ns": 3076508851705
+        },
+        {
+          "event": "get_input_focus",
+          "time_ns": 3076508854163
+        },
+        {
+          "error": "RuntimeError: injected keymap sample failure",
+          "event": "candidate_exception",
+          "time_ns": 3076508871497
+        }
+      ],
+      "owner_close_exception": null,
+      "physical_keycodes_before_close": [],
+      "sample_returned": false,
+      "scenario": "sample_error"
+    }
+  ],
+  "schema": "map01-v39-postbatch-perkey-keymap-candidate-v1",
+  "scope": "actual current release-batch backend and V3/V4 owner adapters with an experimental V12 input_state keymap sample; typed step loop and X display are inert fakes"
+}

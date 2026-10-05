@@ -1,0 +1,8 @@
+{
+  "run_id": "MAP01-V39-POSTBATCH-PERKEY-SAMPLE-A01-20261005",
+  "status": "STOP_BEFORE_SCENARIO",
+  "reason": "The container's dedicated /out bind mount existed before candidate startup, but the runner required OUT.mkdir(exist_ok=False). Freeze/source preflight completed; no scenario ran and no raw result was written.",
+  "candidate_scenarios_executed": 0,
+  "candidate_invocation_consumed": true,
+  "followup": "A02 uses a new run id and permits an existing empty output mount while still rejecting any occupied output directory."
+}

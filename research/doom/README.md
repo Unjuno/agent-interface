@@ -390,3 +390,4 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 # Issue #59 retained v39 ammo-timeline posthoc package
 
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
+| V39 post-batch per-key keymap sample prototype (#59) | [`map01_v39_postbatch_perkey_sample_a02_20261005/README.md`](map01_v39_postbatch_perkey_sample_a02_20261005/README.md) — pinned-container fake-display experiment associates two release rows with one shared post-batch keymap sample; residual-key and sample-error controls pass independent audit. No real hardware, application effect, live game, or Issue #59 closure. A01 setup STOP is retained. |
