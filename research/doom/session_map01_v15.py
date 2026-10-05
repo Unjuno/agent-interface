@@ -45,7 +45,12 @@ def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.p
         elif type(deaths) is not int or deaths<0:raise ValueError('invalid death count')
         kills=int(kills);deaths=int(deaths)
         if type(ticrate) is not int or ticrate<1:raise ValueError('invalid tic rate')
-        timeout_method=getattr(game,'is_episode_timeout_reached',None);timeout_reached=bool(timeout_method()) if callable(timeout_method) else tic_before>=timeout_seconds*ticrate
+        timeout_method=getattr(game,'is_episode_timeout_reached',None)
+        if callable(timeout_method):
+            timeout_reached=timeout_method()
+            if type(timeout_reached) is not bool:raise ValueError('invalid timeout flag')
+        else:
+            timeout_reached=tic_before>=timeout_seconds*ticrate
         tic_after=game.get_episode_time()
         if type(tic_after) is not int or tic_after<0:raise ValueError('invalid post-sample episode tic')
         if tic_before==tic_after:
