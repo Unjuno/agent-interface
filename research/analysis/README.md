@@ -934,6 +934,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
 - [`stagewise_perturbation_6053_t0_20261002/`](stagewise_perturbation_6053_t0_20261002/)
+- [`stochastic_trace_reducer_8152_t0_20261005/`](stochastic_trace_reducer_8152_t0_20261005/)
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
 - [`stop_evidence_4678_revalidation_v2/`](stop_evidence_4678_revalidation_v2/)
 - [`stpa_feedback_constraint_5327_t0_v1/`](stpa_feedback_constraint_5327_t0_v1/)

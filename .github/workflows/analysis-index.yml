@@ -45,6 +45,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis -p 'test_analysis_checkout.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test Issue #8152 stochastic trace reducer construction
+        run: python -B -m unittest discover -s research/analysis/stochastic_trace_reducer_8152_t0_20261005 -p 'test_*.py' -v
       - name: Test batched finite research T0 packages
         run: |
           python -B -m unittest discover -s research/analysis/object_bound_context_capsules_7160_t0_20261004 -p 'test_*.py' -v
