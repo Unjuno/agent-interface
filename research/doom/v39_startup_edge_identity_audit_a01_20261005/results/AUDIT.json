@@ -1,0 +1,86 @@
+{
+  "actuation_id_present": false,
+  "base_commit": "5a290af598e4ef365ac5dfe66dca2c3c9916a20a",
+  "disposition": "HOLD_LIVE_EFFECT_LINK",
+  "errors": [],
+  "identity_join_subcheck": "PASS_CONTEXTUAL_JOIN_ONLY",
+  "independent_effect_rows_present": false,
+  "independent_task_effect_interval_linked": false,
+  "instrumentation_gate": "HOLD_EFFECT_LINK",
+  "join_count": 2,
+  "joins": [
+    {
+      "admission_ack_to_release_call_start_ns": 142500,
+      "down_request_bracket_ns": [
+        176459808270800,
+        176459808275800
+      ],
+      "identity": {
+        "id": "cover-startup-a01",
+        "intent_token": "intent-v39-startup-a01",
+        "key": "F8",
+        "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+        "step": 2
+      },
+      "independent_task_effect_interval_observed": false,
+      "keycode": 74,
+      "owner_keyup_sync_bracket_ns": [
+        176459808435000,
+        176459808436800
+      ],
+      "physical_occupancy_interval_observed": false,
+      "release_request_bracket_ns": [
+        176459808418300,
+        176459808453200
+      ]
+    },
+    {
+      "admission_ack_to_release_call_start_ns": 29200,
+      "down_request_bracket_ns": [
+        176459808329900,
+        176459808334200
+      ],
+      "identity": {
+        "id": "cover-startup-a01",
+        "intent_token": "intent-v39-startup-a01",
+        "key": "SPACE",
+        "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+        "step": 2
+      },
+      "independent_task_effect_interval_observed": false,
+      "keycode": 65,
+      "owner_keyup_sync_bracket_ns": [
+        176459808381600,
+        176459808384300
+      ],
+      "physical_occupancy_interval_observed": false,
+      "release_request_bracket_ns": [
+        176459808363400,
+        176459808403600
+      ]
+    }
+  ],
+  "limits": [
+    "No actuation_id is recorded, so repeated same-key actuations within one intent/step could not be distinguished by this contextual join.",
+    "XTest/XSync request timing is not an authoritative physical key-occupancy interval.",
+    "The trace has no independently observed task-effect interval and cannot support useful-feedback or MAP01 claims.",
+    "No live X11, DoomGame, model, OS input, formal allocation, or candidate rerun occurred."
+  ],
+  "mutation_controls": {
+    "duplicate_release_rejected": true,
+    "mismatched_release_intent_rejected": true,
+    "reversed_receipt_chronology_rejected": true,
+    "wrong_keycode_rejected": true
+  },
+  "raw_inter_up_operations": [
+    {
+      "at_ns": 176459808384000,
+      "op": "sync"
+    }
+  ],
+  "raw_keymap_queries_between_ups": 0,
+  "schema": "v39-startup-edge-identity-audit-result-v1",
+  "scope": "posthoc identity/timestamp audit of one deterministic fake-X V39 startup trace; contextual (not actuation-ID) pairing of two distinct keys",
+  "source_trace_commit": "b347d6f1ede81f6980932f2d7cba6d4758bf49c9",
+  "source_trace_pr_head": "e02617b0d806dd05dd0cb24e44dbb4db2d393bd4"
+}
