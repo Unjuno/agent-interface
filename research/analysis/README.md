@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #7678 manipulation-sensitivity successor T0 A02](preference_manipulation_7678_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 7,774 candidate/oracle rows; exhaustive null under the declared set utility (0 safe-beneficial deviations in both partitions); A01 HOLD preserved.
+
 - [Issue #7831 deadline-spacing successor T0 A02](deadline_spacing_7831_t0_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: 128 trace/config rows and 512 policy rows matched an exhaustive integer-tick oracle; synthetic model only, A01 HOLD preserved.
 
 - [Issue #7865 history-conditioned compensation eligibility T0 A02](history_conditioned_compensation_7865_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 28 exact oracle rows; disjoint external update preserved; A01 FAIL_HARNESS retained; finite synthetic model only.
@@ -710,6 +712,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predictive_safety_filter_5317_t3_v1/`](predictive_safety_filter_5317_t3_v1/)
 - [`preference_explicit_choice_6274_t0_20261002/`](preference_explicit_choice_6274_t0_20261002/)
 - [`preference_input_methods_7705_t0_20261005/`](preference_input_methods_7705_t0_20261005/)
+- [`preference_manipulation_7678_t0_a02_20261005/`](preference_manipulation_7678_t0_a02_20261005/)
 - [`preference_uncertainty_5749_t0_v1/`](preference_uncertainty_5749_t0_v1/)
 - [`prefix_obligations_6749_t0_wslc_20261003/`](prefix_obligations_6749_t0_wslc_20261003/)
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)
