@@ -1,6 +1,6 @@
 # A10 run record
 
-- Base main: `f75ad203f41126c2382175aed398639796fe6d0d`; freeze commit `699ff9b0dd73dca247d1a33696a302819d4fc65d`.
+- Base main: `f75ad203f41126c2382175aed398639796fe6d0d`; freeze commit `d7dfa634f064c86580e00d08ff188ae5cececba6` (rebased without changing frozen tree).
 - CPython 3.12.10 exact interpreter path in FREEZE.json.
 - Construction: 5/5 normal and 5/5 under `-O`; sparse-aware freeze stage/commit successful; freeze blob present in HEAD and package clean before generator.
 - Generator: one invocation, exit 0, ~8.06 s; 160,000 rows.

@@ -26,7 +26,7 @@ The sensitivity bound reaches its ≥0.80 threshold by κ=160 in this finite sam
 
 ## Execution evidence
 
-- Freeze commit `699ff9b0dd73dca247d1a33696a302819d4fc65d`, base main `f75ad203f41126c2382175aed398639796fe6d0d`; frozen source hashes in `FREEZE.json`.
+- Freeze commit `d7dfa634f064c86580e00d08ff188ae5cececba6`, base main `f75ad203f41126c2382175aed398639796fe6d0d`; frozen source hashes in `FREEZE.json`.
 - CPython 3.12.10 exact path in freeze. Generator exit 0 (~8.06 s), candidate exit 0 (~1.64 s), auditor exit 0 (~66.63 s), each invoked once. Full stdout/stderr and handoff files retained.
 - Construction suite passed 5/5 normally and 5/5 under `-O` before freeze. Frozen source hashes verified after the run; `SHA256SUMS` covers the complete package.
 - Host-only standard-library processes; no WSLc, Docker, network, GPU, GUI, model, participant or external data. No container/isolation/resource-enforcement claim.
