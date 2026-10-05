@@ -1,0 +1,27 @@
+{
+  "schema": "v39-currentmain-bundled-import-validation-a01",
+  "frozen_at_utc": "2026-10-05T05:52:11Z",
+  "classification": "local_regression_rerun_not_formal_allocation",
+  "candidate_commit": "fc14994f53655da57b9b6573d028ddde1a11b858",
+  "current_main_at_freeze": "267dbf61e19efe94299b681dcda89925aae5b935",
+  "source_files": {
+    "research/doom/map01_overlap_controller_v39.py": "e3b0659710ee8fe6a06209acae7ca558d35a5bb1f595ec021af83bac909c7645",
+    "research/doom/test_map01_overlap_controller_v39.py": "110bed798f4af5c1760fa33722a87a1c346e45c901cc6302040e162eb0e75aa8",
+    "research/doom/test_overlap_controller_v39_wait.py": "b107076604da9954bd3496a0741d3f8cc48b02cc4847c106da6f0e6e4ca24eba",
+    "research/doom/test_v39_soft_stale_renewal_v1.py": "a5f974db5bec99ea5ae1f5ea85eaf2200d8c6684d2ad4a206f7db94e8fe901d0",
+    "research/doom/test_controller_failure_cleanup_v1.py": "4b7e33c777974cb1f95984e6c9f25a24ea9f062ee2cdd885f1bcb118f8612e65"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "bundle": "Codex primary runtime 26.909.12148",
+    "Pillow": "12.3.0",
+    "NumPy": "2.3.5",
+    "dependency_source": "preinstalled local workspace bundle; no install or network"
+  },
+  "commands": [
+    "python3 -B -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_overlap_controller_v39_wait research.doom.test_v39_soft_stale_renewal_v1 research.doom.test_controller_failure_cleanup_v1",
+    "python3 -B -O -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_overlap_controller_v39_wait research.doom.test_v39_soft_stale_renewal_v1 research.doom.test_controller_failure_cleanup_v1"
+  ],
+  "expected": "39 tests pass in each mode; otherwise preserve exact failure and stop",
+  "scope": "The extracted/controller tests include synthetic fixtures; no full game, model, GUI, live executor session or task outcome"
+}
