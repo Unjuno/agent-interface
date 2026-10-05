@@ -141,3 +141,17 @@ This additive snapshot was collected from GitHub REST pagination across the open
 - All 280 PRs targeting main recorded a base SHA different from the observed main tip. Refresh/rebase them and re-check their checks before considering merge.
 
 This is a pagination/count and branch-name stack map only. It does not inspect each PR's review requirements, CI, file overlap, closed PR history, or commit ancestry, and it does not identify any branch safe to delete. Preserve all 385 branches pending the all-branch unique-commit and dependency audit.
+
+
+## Post-census integration and review-process note — 2026-10-05 09:18 UTC
+
+This snapshot follows the merge of PR #8120 and is later than the 09:14 census above. Paginated REST reads across open PRs, remote branches, and the main ref overlapped and are not atomic.
+
+- Main remained 19a6b723e58ccfd2b8265e88659589ef9223fcc9.
+- 335 open PRs were listed: 303 drafts and 32 ready. 283 targeted main and 52 targeted another branch.
+- All 335 distinct open-PR head refs appeared in the 386-branch listing. The other 51 branch names are not open-PR heads and remain unclassified.
+- Of 52 non-main-base PRs, 46 base branch names map to open-PR heads: 28 base SHAs match the parent head and 18 do not; six base refs have no matching open-PR head.
+- Of 283 main-target PRs, eight recorded the current main SHA and 275 recorded an older SHA. Re-check each individual head/base relation and its CI before merge.
+- PR #8120 merged at 09:13:34Z as 846acff11e60093da551986583ac525452480b0c. Its seven head checks passed, including Analysis Index; GitHub's submitted-review endpoint returned no reviews. This was a merge without the required non-author review and is a process deviation, like #8114. Keep the A03 STOP, A04 HOLD, A05 result, raw data, and their scoped conclusions intact; do not use the deviation as a reason to rewrite or discard that evidence.
+
+This remains a reference census, not a unique-commit audit. No branch is classified safe to delete.
