@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-05",
+  "host_os": "macOS 27.0.1",
+  "host_architecture": "arm64",
+  "host_python": "CPython 3.14.5",
+  "orb_status": "Running",
+  "docker_server": "29.4.0 linux/aarch64; 10 CPUs; 16808173568 bytes reported memory",
+  "container_inventory": {
+    "result": "STOP_CONTAINERD_CONTENT_BLOB_UNREADABLE",
+    "diagnostic": "docker images failed: blob sha256:390273a02a77007c74c7699cb4d2853624102b6fbca0cf18e904a457a6110c9b: operation not supported"
+  },
+  "pinned_image_probe": {
+    "requested": "python:3.12-slim",
+    "result": "STOP_CONTAINERD_CONTENT_BLOB_UNREADABLE",
+    "diagnostic": "docker pull failed: blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported"
+  },
+  "other_container_runtimes": "podman, colima, and lima not installed",
+  "container_mutations": 0,
+  "fallback": "host-only standard-library finite enumerator; no container resource/isolation claim",
+  "git_base_main": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f"
+}

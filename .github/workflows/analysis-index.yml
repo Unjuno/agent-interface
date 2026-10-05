@@ -53,6 +53,8 @@ jobs:
           python -B -m unittest discover -s research/analysis/effect_safe_egraph_7462_t0_20261004 -p 'test_*.py' -v
       - name: Test Issue #7865 history-conditioned compensation T0 A02
         run: python -B -m unittest discover -s research/analysis/history_conditioned_compensation_7865_t0_a02_20261005 -p 'test_model_a02.py' -v
+      - name: Test Issue #7834 carryover-aware MRT T0 A01
+        run: python -B -m unittest discover -s research/analysis/optional_adaptation_mrt_7834_t0_a01_20261005 -p 'test_construction.py' -v
       - name: Test Issue #6617 revision-timed speech cutover T0
         run: python -B -m unittest discover -s research/analysis/revision_timed_speech_effect_cutover_6617_t0_20261004 -p 'test_*.py' -v
       - name: Test Issue #7487 delayed GUI effect attribution T0 contract
@@ -152,3 +154,15 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/deadline_spacing_7831_t0_a02_20261005 -p 'test_*.py' -v
       - name: Test Issue #7678 manipulation-sensitivity T0 A02 construction contract
         run: python -B -m unittest discover -s research/analysis/preference_manipulation_7678_t0_a02_20261005 -p 'test_*.py' -v
+      - name: Test Issue #7790 opportunity-bound preference evidence T0 A01
+        run: python -B -m unittest discover -s research/analysis/opportunity_bound_preference_7790_t0_a01_v1 -p 'test_*.py' -v
+      - name: Test Issue #8072 controlled-feedback T0 A02 mutation gates
+        run: python -B -m unittest discover -s research/analysis/controlled_feedback_8072_a02_20261005 -p 'test_*.py' -v
+      - name: Test Issue #8084 confusion-adaptive practice T0 A01 preserved construction
+        run: python -B -m unittest discover -s research/analysis/confusion_adaptive_practice_8084_t0_a01_20261005 -p 'test_*.py' -v
+      - name: Test Issue #8084 confusion-adaptive practice T0 A02 input-isolated method
+        run: python -B -m unittest discover -s research/analysis/confusion_adaptive_practice_8084_t0_a02_20261005 -p 'test_*.py' -v
+      - name: Test Issue #8049 IPCW bootstrap A03 construction contract
+        run: python -B -m unittest discover -s research/analysis/ipcw_repeated_uncertainty_7993_a02_20261005/successor_a03_seed8049021 -p 'test_*.py' -v
+      - name: Verify Issue #8112 A06 boundary-jitter retained result
+        run: python -B -m unittest discover -s research/analysis/looming_yield_5905_boundary_jitter_a06_20261005 -p 'test_*.py' -v

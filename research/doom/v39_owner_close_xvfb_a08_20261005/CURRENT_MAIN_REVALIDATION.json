@@ -1,0 +1,36 @@
+{
+  "a08_original_base": "ff13baf57d5f1c12819151e668b92cb6db4a7c1c",
+  "current_main": "380c3d2b0e550a1b1defd6f1f5a0e3be80632028",
+  "focused_regression": {
+    "command": "python -m unittest research.live_control.test_input_owner_v12_explicit_up_cancel research.live_control.test_input_owner_v12_cleanup_after_explicit_up research.live_control.test_input_owner_v12_terminal_presample_release research.live_control.test_input_transition_owner_v4 -v",
+    "output_file": "CURRENT_MAIN_TESTS.txt",
+    "output_sha256": "dfbfa06bf30922b96dc9c865a84d096943f511adec640f9ee3d04146404c0a17",
+    "result": "PASS",
+    "tests_failed": 0,
+    "tests_run": 10
+  },
+  "owner_source_checks": {
+    "research/live_control/input_owner_v10.py": {
+      "byte_identical": true,
+      "current_main_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+      "frozen_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    "research/live_control/input_owner_v12.py": {
+      "byte_identical": true,
+      "current_main_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "frozen_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df"
+    },
+    "research/live_control/input_transition_owner_v3.py": {
+      "byte_identical": true,
+      "current_main_sha256": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+      "frozen_sha256": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b"
+    },
+    "research/live_control/input_transition_owner_v4.py": {
+      "byte_identical": true,
+      "current_main_sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+      "frozen_sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+    }
+  },
+  "schema": "v39-owner-close-current-main-revalidation-a08-v1",
+  "scope": "read-only current-source applicability check after A08; no A08 candidate rerun"
+}
