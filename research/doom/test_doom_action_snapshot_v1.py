@@ -60,6 +60,14 @@ class DoomActionSnapshotTests(unittest.TestCase):
                 OBSERVATION, contract({"enemy_visible": {}}),
                 {"enemy_visible": Reader("enemy_visible")})
 
+    def test_health_and_ammo_outside_hud_domains_fail_closed(self):
+        for signal_id, value in [("health", 201), ("ammo", 1000)]:
+            with self.subTest(signal_id=signal_id, value=value):
+                with self.assertRaises(ValueError):
+                    build_action_snapshot(
+                        OBSERVATION, contract({signal_id: {}}),
+                        {signal_id: Reader(signal_id, value=value)})
+
 
 if __name__ == "__main__":
     unittest.main()

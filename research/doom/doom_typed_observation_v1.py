@@ -6,6 +6,7 @@ import time
 from PIL import Image
 
 from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+from doom_signal_value_domain_v1 import signal_value_in_domain
 
 
 SCHEMA = "doom-typed-observation-v1"
@@ -34,6 +35,8 @@ def _compact(result):
     if (type(result) is not dict or not required <= set(result) or
             result["status"] not in ("observed", "unknown") or
             (result["status"] == "unknown" and result["value"] is not None) or
+            (result["status"] == "observed" and
+             not signal_value_in_domain(result["signal_id"], result["value"])) or
             type(result["sequence"]) is not int or
             type(result["capture_ns"]) is not int or
             not _valid_pointer_binding(result["binding"])):

@@ -1,5 +1,6 @@
 """Bounded passive source refresh; never relaxes signal-reader validity."""
 import time
+from doom_signal_value_domain_v1 import signal_value_in_domain
 
 class SourceRefreshRefused(RuntimeError):
     def __init__(self, receipt):
@@ -20,10 +21,10 @@ def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
         raise SourceRefreshRefused(receipt)
     def valid(row):
         health, ammo = health_reader.read(row), ammo_reader.read(row)
-        for name, signal, minimum in [('health',health,1), ('ammo',ammo,0)]:
+        for name, signal in [('health',health), ('ammo',ammo)]:
             status = signal.get('status')
             if status == 'observed':
-                if type(signal.get('value')) is not int or signal['value'] < minimum:
+                if not signal_value_in_domain(name, signal.get('value')):
                     refuse('invalid_observed_' + name)
             elif status != 'unknown':
                 refuse('invalid_signal_status_' + name)

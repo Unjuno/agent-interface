@@ -49,6 +49,14 @@ class DoomActionValidityContractTests(unittest.TestCase):
             build_contract(command, authored(), signal("health", 85),
                            signal("ammo", 47, sequence=2))
 
+    def test_observed_signals_outside_hud_domains_fail_closed(self):
+        command = [{"action": "retreat_fire", "extent": "short"}]
+        for health, ammo in [(201, 47), (85, 1000)]:
+            with self.subTest(health=health, ammo=ammo):
+                with self.assertRaises(ValueError):
+                    build_contract(command, authored(), signal("health", health),
+                                   signal("ammo", ammo))
+
     def test_semantic_omission_and_spurious_dependency_fail_closed(self):
         with self.assertRaises(ValueError):
             build_contract([{"action": "fire", "extent": "pulse"}], authored(ammo=0),

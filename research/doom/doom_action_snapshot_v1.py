@@ -1,5 +1,6 @@
 """Build generic action-validity snapshots from one exact DOOM observation."""
 from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
+from doom_signal_value_domain_v1 import signal_value_in_domain
 
 
 SUPPORTED = {"health", "ammo"}
@@ -25,7 +26,9 @@ def build_action_snapshot(observation, contract, readers):
                 result.get("capture_ns") != capture_ns or
                 result.get("binding") != binding or
                 result.get("status") not in ("observed", "unknown") or
-                (result.get("status") == "unknown" and result.get("value") is not None)):
+                (result.get("status") == "unknown" and result.get("value") is not None) or
+                (result.get("status") == "observed" and
+                 not signal_value_in_domain(signal_id, result.get("value")))):
             raise ValueError("signal reader must bind the exact observation epoch")
         signals[signal_id] = {"status": result["status"], "value": result["value"]}
     return {"format": SNAPSHOT_FORMAT, "sequence": sequence,
