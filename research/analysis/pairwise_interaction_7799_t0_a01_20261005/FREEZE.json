@@ -1,0 +1,29 @@
+{
+  "study": "issue-7799-pairwise-eligibility-t0-a01",
+  "source_commit": "b5be19963454ce5edafc945b78b100012952dd15",
+  "source_paths": {
+    "research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md": "1ea1ae7ed9bb99f89ed1d9e83bbe73527cd8d9450087bdeb7083385b801e27fc",
+    "research/live_control/integrated_efficiency_protocol_v1.py": "7bf02cd7bc3b2919ba81325f6026d8ce1110b0e18803e370707feac1a1c77c5a"
+  },
+  "runtime": {
+    "name": "WSLc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512M",
+    "source_mount": "read-only",
+    "swap_limit": "unavailable; WSL reported kernel/cgroup capability warning"
+  },
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "audit_passed": 11,
+  "audit_total": 11,
+  "formal_command_candidate": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <results>:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B research/analysis/pairwise_interaction_7799_t0_a01_20261005/candidate.py /src /out/candidate.json",
+  "formal_command_auditor": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <results>:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B research/analysis/pairwise_interaction_7799_t0_a01_20261005/audit.py /out/candidate.json /out/audit.json",
+  "decision": "HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR",
+  "allocation_scope": "read-only source audit; no GUI, model, host, game, task input, or external effect"
+}

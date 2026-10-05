@@ -1,0 +1,23 @@
+test_authority_shape_cannot_bypass_action_validation (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_authority_shape_cannot_bypass_action_validation) ... FAIL
+test_binding_shape_cannot_bypass_digest_validation (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_binding_shape_cannot_bypass_digest_validation) ... ok
+test_effect_shape_cannot_bypass_evidence_validation (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_effect_shape_cannot_bypass_evidence_validation) ... ok
+test_execution_shape_cannot_bypass_interval_validation (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_execution_shape_cannot_bypass_interval_validation) ... ok
+test_observation_type_control (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_observation_type_control) ... ok
+test_request_shape_cannot_bypass_nonempty_action_validation (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_request_shape_cannot_bypass_nonempty_action_validation) ... ok
+test_stop_shape_cannot_assert_verified_release (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_stop_shape_cannot_assert_verified_release) ... ok
+
+======================================================================
+FAIL: test_authority_shape_cannot_bypass_action_validation (runtime.kernel.test_nominal_types.TypeBoundaryTests.test_authority_shape_cannot_bypass_action_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PRIVATE_WORKSPACE>\work\kernel-type-promotion-01a0ff2d\mutants\authorize\runtime\kernel\test_nominal_types.py", line 47, in test_authority_shape_cannot_bypass_action_validation
+    self.check_refusal(flow, lambda: flow.authorize(shaped(lease(), allowed_actions=frozenset()), now_ns=200))
+  File "<PRIVATE_WORKSPACE>\work\kernel-type-promotion-01a0ff2d\mutants\authorize\runtime\kernel\test_nominal_types.py", line 33, in check_refusal
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=1)

@@ -1,0 +1,17 @@
+{
+  "schema": "issue5260-a11-private-gui-drift-v1",
+  "allocation": "5260-a11-wslc-private-gui-drift01-20261004",
+  "seed": 52611026,
+  "ack_timeout_ms": 500,
+  "drift_timeout_ms": 500,
+  "ack_poll_ms": 1,
+  "ack_max_age_ms": 50,
+  "replicates_per_cell": 2,
+  "payload": "hxy",
+  "inter_key_gap_ms": 20,
+  "save_delay_after_last_key_ms": 250,
+  "busy_worker_duration_ms": 2200,
+  "private_display": ":97",
+  "screen": "1024x768x24",
+  "forbidden": ["network", "user_display", "automatic_replay", "model", "GPU", "external_effect"]
+}

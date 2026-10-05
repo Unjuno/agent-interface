@@ -1,0 +1,36 @@
+{
+  "experiment": "v39-paired-signal-boundary-a02",
+  "freeze_commit": "402c7d1b5147b2a905098f082233db60a47d68db",
+  "source_commit": "53ec001a334e4077caf665ff56372cd4b0ccb068",
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "container_image": "python:3.12-slim",
+  "network": "none",
+  "cpus": "1",
+  "memory": "512M",
+  "candidate_runs": 1,
+  "expected_cases": 9,
+  "expected_pass_count": 9,
+  "expected_outcome_contract": {
+    "requires_new_decision": true,
+    "grants_input_authority": false,
+    "may_only_preserve_or_reduce_existing_authority": true,
+    "task_success_verified": false
+  },
+  "independent_mutations": [
+    "top_level_grants_input_authority",
+    "top_level_requires_new_decision",
+    "nested_outcome_grants_input_authority",
+    "nested_outcome_requires_new_decision",
+    "nested_outcome_task_success_verified"
+  ],
+  "scope": {
+    "real_input": false,
+    "live_game": false,
+    "planner": false
+  },
+  "sha256": {
+    "candidate.py": "8cee02aeac31e82fff52362240c8c26189ceadb799dd49c830280c741a1f0a9e",
+    "controller_source.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "audit.py": "3fc540b2a154ab2c779334f0938fb9164e00b5da92964c3a297ca9479ae8ee1f"
+  }
+}

@@ -1,0 +1,22 @@
+test_wait_duration_survives_a_coarse_receipt_clock (runtime.cli_v1.test_post_dispatch_capture.PostDispatchCaptureTests.test_wait_duration_survives_a_coarse_receipt_clock) ... FAIL
+
+======================================================================
+FAIL: test_wait_duration_survives_a_coarse_receipt_clock (runtime.cli_v1.test_post_dispatch_capture.PostDispatchCaptureTests.test_wait_duration_survives_a_coarse_receipt_clock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_post_dispatch_capture.py", line 157, in test_wait_duration_survives_a_coarse_receipt_clock
+    await self.exercise(wait_ms=1)
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_post_dispatch_capture.py", line 119, in exercise
+    self.assertGreaterEqual(wait['ended_ns']-wait['started_ns'],wait_ms*1_000_000)
+AssertionError: 0 not greater than or equal to 1000000
+
+----------------------------------------------------------------------
+Ran 1 test in 0.048s
+
+FAILED (failures=1)

@@ -1,0 +1,22 @@
+{
+  "schema": "v39-v15-up-order-a01-stop-v1",
+  "status": "STOP_SETUP_BEFORE_CANDIDATE",
+  "candidate_started": false,
+  "candidate_process_exit": null,
+  "auditor_started": false,
+  "container": {
+    "image": "python@sha256:8fb099199b9f2d70342674bd9dbccd3ed03a258f26bbd1d556822c6dfc60c317",
+    "platform": "linux/arm64",
+    "network": "none",
+    "read_only_root": true,
+    "memory_mib": 512,
+    "cpus": 1
+  },
+  "failure": {
+    "stage": "outer python -c bootstrap parsing",
+    "observed": "File \"<string>\", line 1; SyntaxError: unexpected character after line continuation character",
+    "cause": "The JavaScript-to-shell quoting passed literal backslash-n sequences to the container Python -c program. Candidate subprocess was not launched.",
+    "rerun_same_protocol": false
+  },
+  "interpretation": "No candidate result, raw trace, or audit exists. This is not a candidate FAIL and not evidence about release ordering."
+}

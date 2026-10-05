@@ -1,0 +1,44 @@
+import ast,hashlib,json,subprocess
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1];WT=ROOT/'work/appserver-reply-id'
+P=WT/'research/live_control/appserver_reply_id_5156_20261003'
+BASE='fb556b3d8bf5bae54a1f23b89fe2c2b5a2685df7'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def git(*a):return subprocess.check_output(['git',*a],cwd=WT)
+relative='runtime/integration_checks/native.py';b=git('show',BASE+':'+relative)
+old=b"'test_native_brief_review_v1', 'test_native_guarded_form_v1'"
+new=b"'test_native_brief_review_v1', 'test_app_server_reply_id_5156', 'test_native_guarded_form_v1'"
+if b.count(old)!=1:raise ValueError('selected shared protocol suite')
+target=WT/relative;target.parent.mkdir(parents=True,exist_ok=True)
+target.write_bytes(b.replace(old,new));tree=ast.parse(target.read_bytes())
+suites=next(n.value for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='SUITES' for t in n.targets))
+value=ast.literal_eval(suites)
+if value['protocol'].count('test_app_server_reply_id_5156')!=1:raise ValueError('protocol entry')
+(P/'dependency-source/native.py.txt').write_bytes(b)
+(P/'dependency-source/native-candidate.py.txt').write_bytes(target.read_bytes())
+archive=ROOT/'work/rpc-dependency-originals';archive.mkdir(exist_ok=False)
+kept={'native-mcp-v1.yml.txt','research-preview-rc1.yml.txt','research-workspace-index.yml.txt'}
+for file in (P/'dependency-source').iterdir():
+    if file.name.endswith('.yml.txt') and file.name not in kept:
+        if not file.resolve().is_relative_to(P.resolve()):raise ValueError('owned source path')
+        file.rename(archive/file.name)
+callers=['benchmark_codex_app_server_startup_v1.py','integrated_efficiency_app_server_model_v1.py',
+    'probe_codex_app_server_interrupt_v1.py','probe_persistent_planner_continuity_v1.py',
+    'probe_persistent_planner_mid_generation_interrupt_v1.py']
+import_records=[]
+for name in callers:
+    image=git('show',BASE+':research/live_control/'+name)
+    module=ast.parse(image)
+    imports=[ast.unparse(n) for n in ast.walk(module) if isinstance(n,(ast.Import,ast.ImportFrom)) and 'codex_app_server_client_v2' in ast.unparse(n)]
+    import_records.append(dict(path='research/live_control/'+name,sha256=sha(image),client_imports=imports))
+    (P/'dependency-source'/ (name+'.txt')).write_bytes(image)
+report=dict(base=BASE,active_changes={'client':'two-line Boolean cache filter','regression':'two owned native-stdio public methods','shared_check':'one protocol suite registration'},
+    callers=import_records,existing_model_test='four FakeClient grounding methods inspected, not executed; no direct client request predicate test',
+    discovery='evidence source snapshots use .py.txt; no evidence test_*.py/package initializer; nested archive excluded by native CI sparse checkout; active new test explicitly in shared SUITES.protocol',
+    broad_read_qualification='first scoped live_control Python grep/workflow print exceeded tool max output, was awaited to terminal0; exact selected sources retained; truncated stream is not absence proof',
+    promoted_suite='protocol',protocol_module='test_app_server_reply_id_5156',
+    original_runner_sha256=sha(b),candidate_runner_sha256=sha(target.read_bytes()))
+with (P/'DEPENDENCIES.json').open('x',encoding='utf8',newline='\n') as f:json.dump(report,f,indent=2);f.write('\n')
+(P/'integrate-tests.py.txt').write_bytes(Path(__file__).read_bytes())
+(P/'capture-regression.py.txt').write_bytes((ROOT/'work/capture-rpc-regression.py').read_bytes())
+print(json.dumps({'suite_registered':True,'caller_images':len(import_records),'kept_workflows':len(kept),'no_model_methods_executed':True}))

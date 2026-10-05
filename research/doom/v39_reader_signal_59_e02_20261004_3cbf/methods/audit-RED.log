@@ -1,0 +1,22 @@
+test_decoder_fault_reaches_wait (test_candidate.Tests.test_decoder_fault_reaches_wait) ... ok
+test_healthy_ready_preserved (test_candidate.Tests.test_healthy_ready_preserved) ... ok
+test_monitor_priority_preserved_before_later_fault (test_candidate.Tests.test_monitor_priority_preserved_before_later_fault) ... ok
+test_normal_ready_precedes_later_reader_fault (test_candidate.Tests.test_normal_ready_precedes_later_reader_fault) ... ok
+test_parse_fault_reaches_wait_with_original_cause (test_candidate.Tests.test_parse_fault_reaches_wait_with_original_cause) ... ok
+test_shape_remains_separate_wait_fault (test_candidate.Tests.test_shape_remains_separate_wait_fault) ... ok
+test_positive_and_semantic_controls (test_audit.Tests.test_positive_and_semantic_controls) ... 
+  test_positive_and_semantic_controls (test_audit.Tests.test_positive_and_semantic_controls) (key='producer_pid') ... FAIL
+
+======================================================================
+FAIL: test_positive_and_semantic_controls (test_audit.Tests.test_positive_and_semantic_controls) (key='producer_pid')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_reader_signal_59_e02_20261004_3cbf/test_audit.py", line 40, in test_positive_and_semantic_controls
+    with self.subTest(key=key),self.assertRaises(ValueError): check(root)
+                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.058s
+
+FAILED (failures=1)

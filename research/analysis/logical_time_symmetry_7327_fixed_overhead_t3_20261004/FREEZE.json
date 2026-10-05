@@ -1,0 +1,40 @@
+{
+  "schema": "logical-time-fixed-overhead-freeze-v1",
+  "issue": 7327,
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-FIXED-OVERHEAD-T3-20261004-01",
+  "main_commit": "d908d8f9712139f1e88a605437442a97587cbe9c",
+  "path": "research/analysis/logical_time_symmetry_7327_fixed_overhead_t3_20261004",
+  "source_sha256": {
+    "spec.json": "9205b82719d127a6e271a690812fb4788d5384fb0de31270c9eff5174a9cf26c",
+    "candidate.py": "1010d02d72667784b96a16285dc29388095eeac7b238dd4ebf947b6fcf7935b6",
+    "audit.py": "6f6a41a0622602cf9d229de2f3cfcb990918c22ef761eaea27c23f9b6fe37b34",
+    "test_preflight.py": "2e43e4b884bcfd10260d65a2a0cfa245726e5640a3d523dc02a82ce254f2d900"
+  },
+  "execution": {
+    "runtime": "CPython 3.14.5; standard library only",
+    "container": false,
+    "container_inventory": "docker info succeeded; docker ps failed with containerd blob operation not supported; no image listing/pull/launch/retry",
+    "network": false,
+    "gui": false,
+    "game": false,
+    "model": false,
+    "gpu": false,
+    "physical_input": false
+  },
+  "formal_invocation_max": {
+    "candidate": 1,
+    "auditor": 1,
+    "retry": 0
+  },
+  "preflight": {
+    "command": "python3 -m unittest research/analysis/logical_time_symmetry_7327_fixed_overhead_t3_20261004/test_preflight.py",
+    "result": "PASS 4/4; separate from formal candidate/auditor"
+  },
+  "decision": {
+    "homogeneous_traces_equal_all_scenarios": true,
+    "zero_startup_fixed_control_equal": true,
+    "nonzero_hazard_homogeneous_reaction_equal": true,
+    "nonzero_hazard_fixed_startup_reaction_differs": true,
+    "mutation_controls": 4
+  }
+}

@@ -1,0 +1,30 @@
+"""Owned inert JSONL peer. No Codex, model, input, network or task action."""
+import json,sys,time,os
+from pathlib import Path
+root=Path(sys.argv[1]); events=open(root/'peer-events.jsonl','x',encoding='utf-8');seq=0
+
+def record(kind,**data):
+ global seq
+ seq+=1;events.write(json.dumps({'seq':seq,'ns':time.monotonic_ns(),'event':kind,**data},sort_keys=True)+'\n');events.flush()
+
+def gate(name):
+ end=time.monotonic()+4
+ while not (root/name).exists():
+  if time.monotonic()>=end:
+   record('gate_timeout',gate=name);raise SystemExit(3)
+  time.sleep(.001)
+
+def emit(message):
+ wire=json.dumps(message,separators=(',',':'))+'\n'
+ record('wire_write_before',wire=wire,message=message);sys.stdout.write(wire);sys.stdout.flush();record('wire_emitted',wire=wire,message=message)
+
+record('peer_start',pid=os.getpid())
+emit({'method':'fixture/notice','params':{'token':'condition-C01'}})
+wire=sys.stdin.readline();message=json.loads(wire)
+record('request_received',wire=wire,message=message)
+assert type(message['id']) is int and message['method']=='turn/interrupt'
+assert message['params']=={'threadId':'fixture-thread','turnId':'fixture-turn'}
+gate('emit-response')
+emit({'id':message['id'],'result':{'fixture':'interrupt-ack','token':'condition-C01'}})
+gate('finish-peer')
+record('peer_exit',exit_code=0);events.close()

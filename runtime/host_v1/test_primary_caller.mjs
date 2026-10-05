@@ -79,6 +79,40 @@ test('fresh observation rejects accidental per-call arguments before host dispat
   assert.equal(calls,0);
 });
 
+test('explicit observation budget covers helper and raw tool calls before dispatch',async()=>{
+  const calls=[];
+  const response={result:{content:[{type:'text',text:'{"status":"returned"}'}]}};
+  const closed={result:{content:[{type:'text',text:'{"status":"closed"}'}]}};
+  const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{
+    calls.push({tool,args});return tool==='interface_close'?closed:response;
+  }},'guarded-local',{},[],{maxExplicitObservations:1});
+  assert.equal(await caller.observe(),response);
+  await assert.rejects(caller.call('interface_guarded_observe',{}),/observation budget exhausted/);
+  assert.ok(caller.state().stopped);
+  await assert.rejects(caller.input('field',[0,0],'click',[]),/stopped/);
+  assert.equal(await caller.call('interface_close',{}),closed);
+  assert.deepEqual(calls,[
+    {tool:'interface_guarded_observe',args:{}},
+    {tool:'interface_close',args:{}}
+  ]);
+});
+
+test('zero observation budget refuses first direct capture before host dispatch',async()=>{
+  const calls=[];
+  const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{
+    calls.push({tool,args});return {result:{content:[{type:'text',text:'{}'}]}};
+  }},'direct-post',{},[],{observationArguments:{target:'editor'},maxExplicitObservations:0});
+  await assert.rejects(caller.observe(),/observation budget exhausted/);
+  assert.ok(caller.state().stopped);
+  assert.deepEqual(calls,[]);
+});
+
+for(const value of [-1,1.5,Number.MAX_SAFE_INTEGER+1,null])
+  test('invalid explicit observation budget '+String(value)+' is rejected at construction',()=>{
+    assert.throws(()=>createPrimaryCaller({sendPresented:async()=>{}},'guarded-local',{},[],
+      {maxExplicitObservations:value}),TypeError);
+  });
+
 test('direct observation preserves the explicit snapshotted observation configuration',async()=>{
   const calls=[];const args={target:'editor',frame:'screen_physical_px',region:[0,0,800,600]};
   const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{calls.push({tool,args});return {result:{content:[{type:'text',text:'{}'}]}};}},'direct-post',{},[],{observationArguments:args});

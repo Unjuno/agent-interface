@@ -1,0 +1,19 @@
+{
+  "allocation_type": "distinct setup-complete construction follow-up to A07 import-closure STOP",
+  "auditor": "SOURCE/audit.py",
+  "auditor_sha256": "8927c0011868e49e8261cf02f017234d743dcd128bd06a1ce3c1a3fc2e043b88",
+  "base_main": "ff13baf57d5f1c12819151e668b92cb6db4a7c1c",
+  "candidate": "SOURCE/candidate.py",
+  "candidate_sha256": "004308f92985c7af5ce7a45a4d17b45fc2f91325849e08bbbf2c22b66db095bd",
+  "delta_from_a07": "Adds exact current-main input_owner_v10 dependency required by transition_owner_v3; schema/display/identity A08/:130. No expected behavior or pass gate relaxed.",
+  "display": ":130",
+  "hypothesis": "After one key is admitted by exact current-main V4\u2192V3\u2192V12 owner on focused Xvfb, wrapper close delivers KeyRelease, records verified empty owner_release(reason=close), and stops thread.",
+  "one_shot_policy": "Results parent only, leaf absent. Candidate once; auditor once if raw exists. Never rerun/overwrite.",
+  "schema": "v39-owner-close-xvfb-freeze-a08-v1",
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+    "input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+  }
+}

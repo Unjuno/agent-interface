@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "git",
+    "-c",
+    "maintenance.auto=false",
+    "-c",
+    "gc.auto=0",
+    "-c",
+    "fetch.negotiationAlgorithm=noop",
+    "fetch",
+    "origin",
+    "--no-auto-maintenance",
+    "--no-tags",
+    "--no-write-fetch-head",
+    "--recurse-submodules=no",
+    "--filter=blob:none",
+    "--stdin",
+    "--depth=2"
+  ],
+  "oids": [
+    "89789e7592c4874c413943932926e9528750513a"
+  ],
+  "pid": 35732,
+  "ppid": 38368,
+  "started_utc": "2026-10-03T10:36:27.110161+00:00"
+}

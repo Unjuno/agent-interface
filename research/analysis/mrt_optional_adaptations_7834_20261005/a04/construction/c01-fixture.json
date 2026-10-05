@@ -1,0 +1,121 @@
+{
+  "allocation": "MRT-7834-A04-20261005",
+  "clusters": [
+    {
+      "session": 0,
+      "latent_type": 0
+    },
+    {
+      "session": 1,
+      "latent_type": 1
+    }
+  ],
+  "assignment": {
+    "arms": [
+      0,
+      1,
+      2
+    ],
+    "t1_probabilities": [
+      0.5,
+      0.25,
+      0.25
+    ],
+    "t2_eligible_if_t1_assigned_nonzero": true,
+    "t2_probabilities_if_previous_1": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "t2_probabilities_if_previous_2": [
+      0.2,
+      0.3,
+      0.5
+    ],
+    "probability_rule": "known conditional assignment distribution; row logs full vector and selected-arm probability"
+  },
+  "outcomes": {
+    "observation_probability": 0.8,
+    "observation_draws_independent_by_eligible_decision": true,
+    "proximal": "1+2*U+previous+carry(previous)+current_effect(A,U,previous)",
+    "carry": {
+      "previous_0": 0,
+      "previous_1": 0.5,
+      "previous_2": 1
+    },
+    "current_effect": {
+      "arm0": 0,
+      "arm1": "2+U+0.5*I(previous=2)",
+      "arm2": "-1+2*U+I(previous=1)"
+    },
+    "execution": "assigned != ((U+previous+1) mod 3)",
+    "distal_policy_outcome": "10+U-1.5*A1-0.75*A2 when stage2 eligible"
+  },
+  "controls": [
+    {
+      "id": "zero_arm_support",
+      "propensities": [
+        0.5,
+        0.5,
+        0
+      ],
+      "observation_probability": 0.8,
+      "missing_window": false,
+      "eligibility_stage": "pre",
+      "interference": false,
+      "carryover_beyond_identified_horizon": false
+    },
+    {
+      "id": "zero_observation_support",
+      "propensities": [
+        0.5,
+        0.25,
+        0.25
+      ],
+      "observation_probability": 0,
+      "missing_window": false,
+      "eligibility_stage": "pre",
+      "interference": false,
+      "carryover_beyond_identified_horizon": false
+    },
+    {
+      "id": "post_treatment_eligibility",
+      "propensities": [
+        0.5,
+        0.25,
+        0.25
+      ],
+      "observation_probability": 0.8,
+      "missing_window": false,
+      "eligibility_stage": "post",
+      "interference": false,
+      "carryover_beyond_identified_horizon": false
+    },
+    {
+      "id": "session_interference",
+      "propensities": [
+        0.5,
+        0.25,
+        0.25
+      ],
+      "observation_probability": 0.8,
+      "missing_window": false,
+      "eligibility_stage": "pre",
+      "interference": true,
+      "carryover_beyond_identified_horizon": false
+    },
+    {
+      "id": "unbounded_carryover",
+      "propensities": [
+        0.5,
+        0.25,
+        0.25
+      ],
+      "observation_probability": 0.8,
+      "missing_window": false,
+      "eligibility_stage": "pre",
+      "interference": false,
+      "carryover_beyond_identified_horizon": true
+    }
+  ]
+}

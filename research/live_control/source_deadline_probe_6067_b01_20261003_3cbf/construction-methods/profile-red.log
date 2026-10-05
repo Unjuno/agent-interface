@@ -1,0 +1,91 @@
+test_bool_is_not_a_timing_measurement (test_profile.Profile.test_bool_is_not_a_timing_measurement) ... FAIL
+test_decomposition_preserves_signed_clear_compensation (test_profile.Profile.test_decomposition_preserves_signed_clear_compensation) ... FAIL
+test_missing_denominator_is_invalid (test_profile.Profile.test_missing_denominator_is_invalid) ... FAIL
+test_observed_association_is_not_root_cause_or_pass (test_profile.Profile.test_observed_association_is_not_root_cause_or_pass) ... FAIL
+test_post_wait_counterexample_is_not_called_wait_dominant (test_profile.Profile.test_post_wait_counterexample_is_not_called_wait_dominant) ... FAIL
+test_strict_five_ms_boundary_is_not_relaxed (test_profile.Profile.test_strict_five_ms_boundary_is_not_relaxed) ... FAIL
+
+======================================================================
+FAIL: test_bool_is_not_a_timing_measurement (test_profile.Profile.test_bool_is_not_a_timing_measurement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_profile.py", line 24, in test_bool_is_not_a_timing_measurement
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_decomposition_preserves_signed_clear_compensation (test_profile.Profile.test_decomposition_preserves_signed_clear_compensation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_profile.py", line 9, in test_decomposition_preserves_signed_clear_compensation
+    self.assertEqual(decompose(event,trace), {'exposure_ns':14_100_000,'shortfall_ns':5_900_000,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'draw_wait_lateness_ns':5_700_000,'post_wait_to_paint_ns':200_000,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'draw_xsync_ns':100_000,'clear_lateness_ns':100_000})
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {} != {'exposure_ns': 14100000, 'shortfall_ns': [124 chars]0000}
+- {}
++ {'clear_lateness_ns': 100000,
++  'draw_wait_lateness_ns': 5700000,
++  'draw_xsync_ns': 100000,
++  'exposure_ns': 14100000,
++  'post_wait_to_paint_ns': 200000,
++  'shortfall_ns': 5900000}
+
+======================================================================
+FAIL: test_missing_denominator_is_invalid (test_profile.Profile.test_missing_denominator_is_invalid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_profile.py", line 27, in test_missing_denominator_is_invalid
+    with self.assertRaises(ValueError): classify([])
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_observed_association_is_not_root_cause_or_pass (test_profile.Profile.test_observed_association_is_not_root_cause_or_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_profile.py", line 21, in test_observed_association_is_not_root_cause_or_pass
+    self.assertEqual(classify([{'shortfall_ns':5_900_000,'draw_wait_lateness_ns':5_700_000}]),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'ASSOCIATION_ONLY_WAIT_LATE')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'HOLD_NOT_REPRODUCED' != 'ASSOCIATION_ONLY_WAIT_LATE'
+- HOLD_NOT_REPRODUCED
++ ASSOCIATION_ONLY_WAIT_LATE
+
+
+======================================================================
+FAIL: test_post_wait_counterexample_is_not_called_wait_dominant (test_profile.Profile.test_post_wait_counterexample_is_not_called_wait_dominant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_profile.py", line 13, in test_post_wait_counterexample_is_not_called_wait_dominant
+    self.assertEqual(classify([{'shortfall_ns':5_900_000,'draw_wait_lateness_ns':4_900_000}]),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'COUNTEREXAMPLE_WAIT_NECESSITY')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'HOLD_NOT_REPRODUCED' != 'COUNTEREXAMPLE_WAIT_NECESSITY'
+- HOLD_NOT_REPRODUCED
++ COUNTEREXAMPLE_WAIT_NECESSITY
+
+
+======================================================================
+FAIL: test_strict_five_ms_boundary_is_not_relaxed (test_profile.Profile.test_strict_five_ms_boundary_is_not_relaxed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_profile.py", line 16, in test_strict_five_ms_boundary_is_not_relaxed
+    self.assertEqual(classify([{'shortfall_ns':5_000_001,'draw_wait_lateness_ns':5_000_000}]),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'COUNTEREXAMPLE_WAIT_NECESSITY')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'HOLD_NOT_REPRODUCED' != 'COUNTEREXAMPLE_WAIT_NECESSITY'
+- HOLD_NOT_REPRODUCED
++ COUNTEREXAMPLE_WAIT_NECESSITY
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=6)

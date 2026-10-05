@@ -1,0 +1,673 @@
+{
+  "argv": [
+    "C:\\Program Files\\WSL\\wslc.exe",
+    "run",
+    "--name",
+    "calc3311-4d74-protocol04",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--cpus",
+    "1",
+    "--memory",
+    "512m",
+    "--user",
+    "65534:65534",
+    "--tmpfs",
+    "/tmp:rw,size=64m,mode=1777",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--env",
+    "PYTHONPATH=/src/sources",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\calc-realapp-integration-4d74:/src:ro",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\calc-realapp-integration-4d74\\runs\\protocol04:/out",
+    "--workdir",
+    "/src",
+    "sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55",
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=3s",
+    "60s",
+    "python3",
+    "-B",
+    "native_sequence.py",
+    "0"
+  ],
+  "native_pid": 21204,
+  "model_calls": 0,
+  "scope": "new model-free broker construction; host-authored coordinates from previously viewed original Calc images",
+  "tasks": [
+    {
+      "index": 0,
+      "score": {
+        "errors": [],
+        "effect": {
+          "pass_effect": true,
+          "populated": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "13",
+              "13",
+              null
+            ],
+            [
+              1,
+              1,
+              "17",
+              "17",
+              null
+            ],
+            [
+              1,
+              2,
+              "221",
+              "221",
+              "of:=[.A2]*[.B2]"
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "13",
+              "13",
+              null
+            ],
+            [
+              1,
+              1,
+              "17",
+              "17",
+              null
+            ],
+            [
+              1,
+              2,
+              "221",
+              "221",
+              "of:=[.A2]*[.B2]"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "index": 1,
+      "score": {
+        "errors": [],
+        "effect": {
+          "pass_effect": true,
+          "populated": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "19",
+              "19",
+              null
+            ],
+            [
+              1,
+              1,
+              "23",
+              "23",
+              null
+            ],
+            [
+              1,
+              2,
+              "437",
+              "437",
+              "of:=[.A2]*[.B2]"
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "19",
+              "19",
+              null
+            ],
+            [
+              1,
+              1,
+              "23",
+              "23",
+              null
+            ],
+            [
+              1,
+              2,
+              "437",
+              "437",
+              "of:=[.A2]*[.B2]"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "index": 2,
+      "score": {
+        "errors": [],
+        "effect": {
+          "pass_effect": true,
+          "populated": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "29",
+              "29",
+              null
+            ],
+            [
+              1,
+              1,
+              "37",
+              "37",
+              null
+            ],
+            [
+              1,
+              2,
+              "1073",
+              "1073",
+              "of:=[.A2]*[.B2]"
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "29",
+              "29",
+              null
+            ],
+            [
+              1,
+              1,
+              "37",
+              "37",
+              null
+            ],
+            [
+              1,
+              2,
+              "1073",
+              "1073",
+              "of:=[.A2]*[.B2]"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "index": 3,
+      "score": {
+        "errors": [],
+        "effect": {
+          "pass_effect": true,
+          "populated": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "47",
+              "47",
+              null
+            ],
+            [
+              1,
+              1,
+              "53",
+              "53",
+              null
+            ],
+            [
+              1,
+              2,
+              "2491",
+              "2491",
+              "of:=[.A2]*[.B2]"
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "47",
+              "47",
+              null
+            ],
+            [
+              1,
+              1,
+              "53",
+              "53",
+              null
+            ],
+            [
+              1,
+              2,
+              "2491",
+              "2491",
+              "of:=[.A2]*[.B2]"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "index": 4,
+      "score": {
+        "errors": [],
+        "effect": {
+          "pass_effect": true,
+          "populated": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "59",
+              "59",
+              null
+            ],
+            [
+              1,
+              1,
+              "61",
+              "61",
+              null
+            ],
+            [
+              1,
+              2,
+              "3599",
+              "3599",
+              "of:=[.A2]*[.B2]"
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "59",
+              "59",
+              null
+            ],
+            [
+              1,
+              1,
+              "61",
+              "61",
+              null
+            ],
+            [
+              1,
+              2,
+              "3599",
+              "3599",
+              "of:=[.A2]*[.B2]"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "index": 5,
+      "score": {
+        "errors": [],
+        "effect": {
+          "pass_effect": true,
+          "populated": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "67",
+              "67",
+              null
+            ],
+            [
+              1,
+              1,
+              "71",
+              "71",
+              null
+            ],
+            [
+              1,
+              2,
+              "4757",
+              "4757",
+              "of:=[.A2]*[.B2]"
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0,
+              "a",
+              null,
+              null
+            ],
+            [
+              0,
+              1,
+              "b",
+              null,
+              null
+            ],
+            [
+              0,
+              2,
+              "product",
+              null,
+              null
+            ],
+            [
+              1,
+              0,
+              "67",
+              "67",
+              null
+            ],
+            [
+              1,
+              1,
+              "71",
+              "71",
+              null
+            ],
+            [
+              1,
+              2,
+              "4757",
+              "4757",
+              "of:=[.A2]*[.B2]"
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "stale_refusal": {
+    "decision": "STALE_GEOMETRY",
+    "geometry": {
+      "height": 600,
+      "map_state": 2,
+      "width": 900,
+      "window_id": 6291969,
+      "x": 80,
+      "y": 55
+    },
+    "image": {
+      "artifact": {
+        "bytes": 52501,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/images/63f60f66afe442b8ba30739bef350015.png",
+        "sha256": "6ad1e85dc524cc0d0f63ecbab6a0477cadd2fbd8cc8c3703004c0ec08af9e9e1",
+        "source_raw_sha256": "499193146bafc96b560be06f38eb4a350ba6619d98e789d0d4da7d980bec46fa",
+        "timing_ns": {
+          "converted": 9609991483,
+          "encoded": 9629776119,
+          "hashed": 9635438378,
+          "started": 9608246739,
+          "written": 9633209023
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 9605826034,
+      "capture_started_ns": 9598308767,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "499193146bafc96b560be06f38eb4a350ba6619d98e789d0d4da7d980bec46fa",
+      "target": "owned",
+      "width": 1280
+    },
+    "input_dispatches": 0
+  },
+  "native_exit": 0
+}

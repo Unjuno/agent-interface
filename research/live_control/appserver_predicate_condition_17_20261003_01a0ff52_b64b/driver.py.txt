@@ -1,0 +1,135 @@
+"""One finite new native-pipe construction cell; first outcome preserved."""
+import importlib.util,json,os,sys,time,threading,traceback,hashlib,datetime,errno
+from pathlib import Path
+ARM,MODE,OUT=sys.argv[1:];root=Path(OUT);root.mkdir(exist_ok=False)
+source=Path('/src')/(ARM+'.py');spec=importlib.util.spec_from_file_location('owned_client',source)
+mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+start_ns=time.monotonic_ns();events=open(root/'events.jsonl','x',encoding='utf-8');event_lock=threading.Lock();seq=0
+result={'schema':'predicate-condition-native-cell-v1','arm':ARM,'mode':MODE,'case':ARM+'-'+MODE,'utc_start':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pid':os.getpid(),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'clock':{n:vars(time.get_clock_info(n)) for n in ('monotonic','perf_counter')},'errors':[]}
+client=None;request_thread=None;notice_thread=None;entered=threading.Event();release=threading.Event();outcomes={}
+
+def record(kind,**data):
+ global seq
+ with event_lock:
+  seq+=1;row={'seq':seq,'ns':time.monotonic_ns(),'event':kind,**data};events.write(json.dumps(row,sort_keys=True)+'\n');events.flush()
+ return row
+
+def frames(thread):
+ f=sys._current_frames().get(thread.ident) if thread is not None else None;rows=[]
+ while f is not None:
+  loc=f.f_locals;row={'function':f.f_code.co_name,'file':f.f_code.co_filename,'line':f.f_lineno,'self_is_client':loc.get('self') is client,'self_is_shared_condition':client is not None and loc.get('self') is client._condition}
+  for name in ('deadline','remaining','identifier','timeout','method'):
+   if name in loc and type(loc[name]) in (str,int,float,bool,type(None)):row[name]=loc[name]
+  rows.append(row);f=f.f_back
+ return rows
+
+def until(test,label,seconds=2):
+ end=time.monotonic()+seconds
+ while True:
+  value=test()
+  if value:return value
+  if time.monotonic()>=end:raise RuntimeError('setup/terminal timeout: '+label)
+  time.sleep(.001)
+
+def rows(name):
+ p=root/name
+ if not p.exists():return []
+ text=p.read_text()
+ return [json.loads(line) for line in text.splitlines(keepends=True) if line.endswith('\n') and line.strip()]
+
+def caller(name,fn):
+ begin=record(name+'_start')['ns']
+ try:
+  value=fn();end=record(name+'_return',value=value)['ns'];outcomes[name]={'kind':'return','value':value,'start_ns':begin,'end_ns':end}
+ except BaseException as exc:
+  end=record(name+'_exception',type=type(exc).__name__,message=str(exc))['ns'];outcomes[name]={'kind':'exception','type':type(exc).__name__,'message':str(exc),'start_ns':begin,'end_ns':end}
+
+def predicate(message):
+ entry=record('predicate_enter',message=message)['ns'];result['predicate_entry_ns']=entry;entered.set()
+ if MODE=='held':
+  if not release.wait(2):raise RuntimeError('owner predicate release missing')
+ record('predicate_return',message=message)
+ return message=={'method':'fixture/notice','params':{'token':'condition-C01'}}
+
+def pause_to(target):
+ while True:
+  remain=(target-time.monotonic_ns())/1e9
+  if remain<=0:return
+  time.sleep(min(remain,.005))
+
+try:
+ client=mod.CodexAppServerClient([sys.executable,'-B','/src/peer.py',str(root)],journal_path=str(root/'journal.jsonl'))
+ result['peer_pid']=client.process.pid
+ def queued():
+  with client._condition:return len(client._notifications)==1
+ until(queued,'initial notice queued')
+ request_thread=threading.Thread(target=caller,args=('request',lambda:client.request('turn/interrupt',{'threadId':'fixture-thread','turnId':'fixture-turn'},timeout=.05)),daemon=True)
+ request_thread.start()
+ def request_waiting():
+  fs=frames(request_thread);rf=next((f for f in fs if f['function']=='request' and 'deadline' in f),None)
+  return {'frames':fs,'request_frame':rf} if rf and any(f['function']=='wait' for f in fs) and len(client._condition._waiters)==1 else None
+ before=until(request_waiting,'request actual deadline and Condition.wait')
+ before['ns']=record('request_deadline_wait_observed')['ns'];before['condition_waiters']=len(client._condition._waiters)
+ before['deadline_ns']=round(before['request_frame']['deadline']*1e9)
+ result['request_before_predicate']=before
+ received=until(lambda:next((r for r in rows('peer-events.jsonl') if r['event']=='request_received'),None),'peer request receipt')
+ result['peer_request_receipt_before_predicate']=received
+ notice_thread=threading.Thread(target=caller,args=('notification',lambda:client.wait_notification(predicate,timeout=.05)),daemon=True);notice_thread.start()
+ until(entered.is_set,'predicate entered')
+ if result['predicate_entry_ns']>=before['deadline_ns']:raise RuntimeError('predicate entered after request deadline; invalid exposure')
+ record('response_gate_write_before');(root/'emit-response').write_text('owner gate\n');record('response_gate_write_after')
+ response_emitted=until(lambda:next((r for r in rows('peer-events.jsonl') if r['event']=='wire_emitted' and r['message'].get('id')==1),None),'peer response emitted')
+ response_received=until(lambda:next((r for r in rows('journal.jsonl') if r['direction']=='received' and r['message'].get('id')==1),None),'journal response recorded')
+ result['response_emitted']=response_emitted;result['response_received']=response_received
+ if response_emitted['ns']>=before['deadline_ns'] or response_received['observed_ns']>=before['deadline_ns']:
+  raise RuntimeError('healthy peer response not recorded before request deadline; invalid exposure')
+ # Neither shared Condition nor journal lock is acquired by the driver during pressure.
+ if MODE=='held':
+  pause_to(result['predicate_entry_ns']+250_000_000)
+  checkpoint={'ns':time.monotonic_ns(),'request_alive':request_thread.is_alive(),'notification_alive':notice_thread.is_alive(),'release_event_set':release.is_set(),'request_frames':frames(request_thread),'notification_frames':frames(notice_thread),'reader_frames':frames(client._reader),'responses_snapshot':dict(client._responses),'outcomes_snapshot':dict(outcomes),'journal_received':rows('journal.jsonl'),'peer_events':rows('peer-events.jsonl')}
+  result['checkpoint']=checkpoint;record('checkpoint',request_alive=checkpoint['request_alive'],notification_alive=checkpoint['notification_alive'])
+  pause_to(result['predicate_entry_ns']+400_000_000)
+  record('owner_release');release.set()
+ else:
+  # Healthy controls use the exact same peer and request/notice values.
+  request_thread.join(1);notice_thread.join(1)
+ request_thread.join(1);notice_thread.join(1)
+ if request_thread.is_alive() or notice_thread.is_alive():raise RuntimeError('caller did not retire after owner release')
+ record('callers_retired')
+ record('peer_finish_gate_write_before');(root/'finish-peer').write_text('owner finish\n');record('peer_finish_gate_write_after')
+ rc=client.process.wait(timeout=2);result['peer_returncode']=rc
+ if rc!=0:raise RuntimeError('peer exit '+str(rc))
+ client._reader.join(1)
+ if client._reader.is_alive():raise RuntimeError('reader did not retire before close')
+ result['close_start_ns']=record('client_close_start')['ns'];client.close(timeout=1);record('client_close_return')
+except BaseException as exc:
+ result['errors'].append({'type':type(exc).__name__,'message':str(exc),'traceback':traceback.format_exc()});record('driver_exception',type=type(exc).__name__,message=str(exc))
+finally:
+ # Bounded owned cleanup is separate from evidence of library close behaviour.
+ release.set()
+ if client is not None:
+  (root/'finish-peer').touch(exist_ok=True);(root/'emit-response').touch(exist_ok=True)
+  for t in (request_thread,notice_thread):
+   if t is not None:t.join(1)
+  if client.process.poll() is None:
+   try:client.process.wait(timeout=1)
+   except Exception:
+    record('fallback_peer_terminate');client.process.terminate()
+    try:client.process.wait(timeout=1)
+    except Exception:record('fallback_peer_kill');client.process.kill();client.process.wait(timeout=1)
+  client._reader.join(1)
+  if not client._reader.is_alive():client.close(timeout=1)
+  streams=[]
+  for name in ('stdin','stdout','stderr'):
+   stream=getattr(client.process,name);fd=stream.fileno() if not stream.closed else None;before_closed=stream.closed
+   if name=='stderr' and not stream.closed and client.process.poll() is not None:result['peer_stderr']=stream.read()
+   stream.close();code=None
+   if fd is not None:
+    try:os.fstat(fd)
+    except OSError as exc:code=exc.errno
+   streams.append({'name':name,'fd':fd,'closed_after_client_close':before_closed,'closed_after_driver_cleanup':stream.closed,'fstat_errno':code})
+  result['cleanup']={'peer_returncode':client.process.returncode,'reader_alive':client._reader.is_alive(),'request_alive':request_thread.is_alive() if request_thread else None,'notification_alive':notice_thread.is_alive() if notice_thread else None,'journal_closed':client._journal.closed,'client_closed_flag':client._closed,'pipes':streams,'ns':time.monotonic_ns()}
+ result['outcomes']=outcomes;result['end_ns']=time.monotonic_ns();record('driver_end',errors=len(result['errors']));events.close()
+ (root/'result.json').write_text(json.dumps(result,sort_keys=True,indent=2,allow_nan=False)+'\n')
+ print(json.dumps({'case':result['case'],'errors':result['errors'],'cleanup':result.get('cleanup')},sort_keys=True))
+raise SystemExit(0 if not result['errors'] else 2)

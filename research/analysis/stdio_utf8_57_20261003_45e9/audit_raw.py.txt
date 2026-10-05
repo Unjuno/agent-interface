@@ -1,0 +1,97 @@
+"""Independent saved-byte/process/file oracle; no producer/runtime imports or execution."""
+from pathlib import Path
+from datetime import datetime
+import copy,hashlib,json
+ROOT=Path(__file__).resolve().parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+def read(p):return json.loads(p.read_bytes())
+def integer(v):return type(v) is int
+def validate(v):
+ c,r,raw,stdout,exchange,fixture,relay=v['cell'],v['receipt'],v['raw'],v['stdout'],v['exchange'],v['fixture'],v['relay']
+ assert raw.hex()==''.join(c['chunks_hex']) and sha(raw)==c['input_sha256'] and len(raw)==c['input_bytes']
+ try:expected=json.loads(raw.decode('utf-8',errors='strict'));valid=True
+ except UnicodeDecodeError:expected=None;valid=False
+ assert valid is c['strict_utf8_valid']
+ if valid:assert expected['args'][1]['label']==c['strict_label']
+ assert integer(r['code']) and r['code']==0 and r['signal'] is None and r['timed_out'] is False
+ assert integer(r['send_count']) and r['send_count']==1 and not r['stream_errors'] and not r['parse_errors'] and r['writer_error'] is None
+ assert r['cli_absent'] is True and r['fixture_absent'] is True and r['cleanup'] is None
+ a,e=r['fixture_start'],r['fixture_exit']
+ assert all(integer(x) and x>0 for x in [r['pid'],a['pid'],a['ppid'],e['pid'],e['ppid']])
+ assert a['pid']==e['pid'] and a['ppid']==e['ppid']==r['pid'] and a['nonce']==e['nonce']==c['nonce']
+ assert integer(e['code']) and e['code']==0
+ assert type(r['host_exit']) is dict and set(r['host_exit'])=={'code','signal'} and integer(r['host_exit']['code']) and r['host_exit']=={'code':0,'signal':None}
+ assert datetime.fromisoformat(r['started_utc'])<=datetime.fromisoformat(a['utc'])<=datetime.fromisoformat(e['utc'])<=datetime.fromisoformat(r['ended_utc'])
+ assert r['stderr_bytes']==0 and r['stdout_bytes']==len(stdout)
+ rows=[json.loads(line) for line in stdout.decode('utf-8',errors='strict').splitlines()]
+ assert all(x['schema']=='agent-interface/primary-stdio-v1' for x in rows)
+ statuses=[x['status'] for x in rows];assert statuses==r['observed_statuses']
+ assert statuses[0]=='ready' and statuses[-1]=='terminal' and rows[0]['state']['next_id']==1
+ admitted=statuses[1]=='returned'
+ if admitted:
+  assert statuses==['ready','returned','terminal']
+  normalized=json.loads(raw.decode('utf-8',errors='replace'))
+  assert exchange==normalized
+  assert integer(rows[1]['result']['next_id']) and rows[1]['result']['next_id']==2 and rows[-1]['state']['next_id']==2
+  assert integer(e['requests']) and e['requests']==1 and e['request_bytes']==len(relay)
+  assert relay==json.dumps(fixture,ensure_ascii=False,separators=(',',':')).encode()+b'\n'
+  assert set(fixture)=={'id','tool','arguments'} and integer(fixture['id']) and fixture['id']==1 and fixture['tool']=='interface_clock'
+  assert fixture['arguments']==normalized['args'][1]
+  assert rows[1]['result']['caller_state']=={'stopped':None}
+ else:
+  assert statuses==['ready','refused','terminal'] and rows[1]['operation_invoked'] is False
+  assert rows[1]['next_id']==1 and rows[-1]['state']['next_id']==1 and e['requests']==0
+  assert exchange is None and fixture is None and relay==b''
+ if valid:assert admitted and exchange==expected
+ return {'case':c['name'],'strict_utf8_valid':valid,'admitted':admitted,'counterexample':admitted and not valid,
+  'input_sha256':sha(raw),'retained_exchange':exchange,'fixture_requests':e['requests'],'next_id':rows[-1]['state']['next_id']}
+def main():
+ plan=read(ROOT/'PLAN.json');freeze=read(ROOT/'FREEZE.json');assert sha((ROOT/'PLAN.json').read_bytes())==freeze['plan_sha256']
+ assert [x['name'] for x in plan['cells']]==['ascii','unicode-split','replacement-valid','invalid-ff','incomplete-e3']
+ for x in freeze['source']['files']:assert sha((ROOT/'source'/x['path']).read_bytes())==x['sha256']
+ for filename,key in [('collect.mjs','collector_sha256'),('fixture.mjs','fixture_sha256'),('capture.py','capture_sha256'),('audit_raw.py','auditor_sha256')]:
+  assert sha((ROOT/filename).read_bytes())==freeze[key]
+ receipt=read(ROOT/'first/COLLECTOR_RECEIPT.json')
+ assert integer(receipt['exit_code']) and receipt['exit_code']==0
+ for stem in ['stdout','stderr']:
+  b=(ROOT/f'first/collector.{stem}.txt').read_bytes();assert sha(b)==receipt[stem+'_sha256'] and len(b)==receipt[stem+'_bytes']
+ assert datetime.fromisoformat(freeze['frozen_utc'])<=datetime.fromisoformat(receipt['started_utc'])<datetime.fromisoformat(receipt['ended_utc'])
+ cases=[];values=[]
+ for c in plan['cells']:
+  d=ROOT/'first'/c['name'];r=read(d/'CLI_RECEIPT.json');raw=(d/'input.original.bin').read_bytes()
+  assert raw==bytes.fromhex((d/'input.hex.txt').read_text(encoding='ascii'))
+  assert sha((d/'config.json').read_bytes())==c['config_sha256']
+  stdout=(d/'cli.stdout.txt').read_bytes();assert stdout==bytes.fromhex((d/'cli.stdout.hex.txt').read_text(encoding='ascii'))
+  stderr=(d/'cli.stderr.txt').read_bytes();assert stderr==bytes.fromhex((d/'cli.stderr.hex.txt').read_text(encoding='ascii')) and not stderr
+  exchange=read(d/'exchange/request-1.json') if (d/'exchange/request-1.json').exists() else None
+  fixture=read(d/'fixture-request-1.json') if (d/'fixture-request-1.json').exists() else None
+  parts=sorted(d.glob('fixture-chunk-*.hex.txt'),key=lambda p:int(p.name.split('-')[2].split('.')[0]))
+  relay=b''.join(bytes.fromhex(p.read_text(encoding='ascii')) for p in parts)
+  assert read(d/'fixture-start.json')==r['fixture_start'] and read(d/'fixture-exit.json')==r['fixture_exit'] and read(d/'host/exit.json')==r['host_exit']
+  v={'cell':c,'receipt':r,'raw':raw,'stdout':stdout,'exchange':exchange,'fixture':fixture,'relay':relay}
+  values.append(v);cases.append(validate(v))
+ # Full-byte and semantic joins have distinct controls; copies never change source/raw.
+ seed=values[2];controls=[]
+ mutations=[('boolean-cli-code',lambda v:v['receipt'].__setitem__('code',False)),
+ ('boolean-child-pid',lambda v:v['receipt']['fixture_exit'].__setitem__('pid',True)),
+ ('changed-nonce',lambda v:v['receipt']['fixture_start'].__setitem__('nonce','wrong')),
+ ('changed-next-id',lambda v:v.__setitem__('stdout',v['stdout'].replace(b'"next_id":2',b'"next_id":3'))),
+ ('changed-echo',lambda v:v['fixture']['arguments'].__setitem__('label','wrong')),
+ ('changed-original-byte',lambda v:v.__setitem__('raw',v['raw'].replace(b'\xef\xbf\xbd',b'\xff'))),
+ ('false-validity',lambda v:v['cell'].__setitem__('strict_utf8_valid',False)),
+ ('false-host-exit',lambda v:v['receipt']['host_exit'].__setitem__('code',1))]
+ for name,change in mutations:
+  v=copy.deepcopy(seed);change(v)
+  try:validate(v)
+  except (AssertionError,UnicodeDecodeError,KeyError,TypeError,ValueError):controls.append({'name':name,'rejected':True})
+  else:raise AssertionError('ineffective control '+name)
+ originals={c['name']:values[i]['raw'] for i,c in enumerate(plan['cells'])}
+ identical=all(cases[i]['retained_exchange']==cases[2]['retained_exchange'] for i in (3,4))
+ distinct=len({sha(originals[n]) for n in ['replacement-valid','invalid-ff','incomplete-e3']})==3
+ report={'status':'PASS_RAW_JOINS_SCOPED','actual_cases':5,'malformed_admissions':sum(x['counterexample'] for x in cases),
+  'distinct_original_inputs':distinct,'same_retained_command_for_valid_replacement_and_two_malformed_inputs':identical,
+  'cases':cases,'copied_data_controls':controls,'historical_or_producer_reruns':0,
+  'limits':'saved records; controlled own echo fixture; source/raw equality and process receipts do not prove native backend/input/task/release/efficiency or natural failure frequency'}
+ (ROOT/'RAW_AUDIT.json').write_text(json.dumps(report,indent=2,sort_keys=True,ensure_ascii=False)+'\n',encoding='utf-8')
+ print(json.dumps({'status':report['status'],'malformed_admissions':report['malformed_admissions'],'byte_collisions':identical and distinct,'controls':len(controls)}))
+if __name__=='__main__':main()

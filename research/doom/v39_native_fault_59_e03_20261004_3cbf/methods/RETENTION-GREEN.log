@@ -1,0 +1,19 @@
+test_accepts_hand_checked_cancelled_empty_trace (test_audit.AuditControls.test_accepts_hand_checked_cancelled_empty_trace) ... ok
+test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) ... ok
+test_real_semantic_fixture_accepts (test_gate.ReleaseGateTests.test_real_semantic_fixture_accepts) ... ok
+test_rejects_failed_or_unknown_cleanup (test_gate.ReleaseGateTests.test_rejects_failed_or_unknown_cleanup) ... ok
+test_rejects_missing_or_wrong_release_custody (test_gate.ReleaseGateTests.test_rejects_missing_or_wrong_release_custody) ... ok
+test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) ... ok
+test_rejects_truthy_verification_and_held_release (test_gate.ReleaseGateTests.test_rejects_truthy_verification_and_held_release) ... ok
+test_both_exact_readers_deliver_real_ready_without_injection (test_receiver.ExactReceiverTests.test_both_exact_readers_deliver_real_ready_without_injection) ... ok
+test_exact_candidate_surfaces_parser_cause_from_injected_stream (test_receiver.ExactReceiverTests.test_exact_candidate_surfaces_parser_cause_from_injected_stream) ... ok
+test_healthy_requires_live_reader_and_no_injection (test_receiver.FaultGateTests.test_healthy_requires_live_reader_and_no_injection) ... ok
+test_original_requires_exact_unhandled_reader_error_only (test_receiver.FaultGateTests.test_original_requires_exact_unhandled_reader_error_only) ... ok
+test_rejects_not_held_notification_and_wrong_fault (test_receiver.FaultGateTests.test_rejects_not_held_notification_and_wrong_fault) ... ok
+test_accepts_exact_payload (test_retention.HashRetentionTests.test_accepts_exact_payload) ... ok
+test_rejects_changed_missing_and_escaped_payload (test_retention.HashRetentionTests.test_rejects_changed_missing_and_escaped_payload) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.141s
+
+OK

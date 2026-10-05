@@ -1,0 +1,7 @@
+PowerShell working directory: repository root at frozen main b347d6f1ede81f6980932f2d7cba6d4758bf49c9
+Python: Python 3.11 on Windows
+Corrected candidate invocation: one in-process import of candidate.py followed by candidate.run(); raw JSON retained at results/a03/RAW.json.
+Earlier preflight: syntax and missing-file failures occurred before any synthetic key edge.
+Wrong-harness attempts: two fake-display executions stopped at the first explicit key-up; see results/STOP.json. They used the nested A02 dependency owner, not runtime live_control owner-v12.
+Candidate retry policy: do not rerun the successful corrected candidate.
+Independent audit command: python research/doom/map01_v39_startup_release_order_a01_20261005/audit.py

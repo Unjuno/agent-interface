@@ -1,0 +1,206 @@
+{
+  "schema": "predicate-retry-copied-data-controls-v1",
+  "passed": true,
+  "retained_data_recheck": true,
+  "semantic_controls": [
+    {
+      "name": "missing-B-transition",
+      "rejected": true,
+      "error": "complete independent transition relation: outside",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12189,
+          "sha256": "8ece38dd7610fe033615af069fc990a0f61ffb4c4ff81d449dee6cbde80d3c3a"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+        }
+      }
+    },
+    {
+      "name": "duplicate-transition",
+      "rejected": true,
+      "error": "duplicate edges",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12422,
+          "sha256": "fc09d0570273ecb47d13f5c9b99a41f44910ef159d58d99d1d648f57a3801de9"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+        }
+      }
+    },
+    {
+      "name": "initial-handle-Boolean",
+      "rejected": true,
+      "error": "identity handle type/value",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12309,
+          "sha256": "712599127427143b6c031c6f11b0edc3276ab6a7af1578a15e902b4c6e8276de"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+        }
+      }
+    },
+    {
+      "name": "lasso-actor-mismatch",
+      "rejected": true,
+      "error": "lasso edge not in graph",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12305,
+          "sha256": "73e2df9a47f43af6ab851882c8b25c23d54ef93277df842281f296dd60b19a7b"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+        }
+      }
+    },
+    {
+      "name": "fairness-false",
+      "rejected": true,
+      "error": "producer fairness decision: outside",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12306,
+          "sha256": "5f8bebb852471a5f9c917d83e6a9ec1e966cbb89fe1056547814dc9e0934d172"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+        }
+      }
+    },
+    {
+      "name": "outer-decision-forged",
+      "rejected": true,
+      "error": "producer restricted decision",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12284,
+          "sha256": "f6844b05936d0e551d2250996cab37c268dbdd5f420a258c52329ef0a3e15f4a"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+        }
+      }
+    },
+    {
+      "name": "late-fresh-arrival",
+      "rejected": true,
+      "error": "independently reconstructed exact control trace: ('outside', 'fresh_match')",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12305,
+          "sha256": "22e1c128f4bff8b17aed8080b6161cbf73a4fac00fd5abc55e01764426a14597"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "63b197907d760734ac6f222a2b18d5472837c7044a9460273a0494e87a535341"
+        }
+      }
+    },
+    {
+      "name": "shared-clock-order",
+      "rejected": true,
+      "error": "actual source-derived monotonic return ledger: ('outside', 'fresh_match')",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12305,
+          "sha256": "22e1c128f4bff8b17aed8080b6161cbf73a4fac00fd5abc55e01764426a14597"
+        },
+        "construction.json": {
+          "bytes": 20823,
+          "sha256": "4637cb33b35d64bc292ce602d2b895d634b50465cddf52289a0077592284d7f6"
+        }
+      }
+    },
+    {
+      "name": "alternative-match-disappeared",
+      "rejected": true,
+      "error": "source-control complete queue result",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12305,
+          "sha256": "22e1c128f4bff8b17aed8080b6161cbf73a4fac00fd5abc55e01764426a14597"
+        },
+        "construction.json": {
+          "bytes": 20800,
+          "sha256": "fe24f78c09b03248d956a366dc5f113a9b914eb65999275cc6dcdf533187a2e9"
+        }
+      }
+    },
+    {
+      "name": "diagnostic-attempt-counter",
+      "rejected": true,
+      "error": "attempted/emitted A entry counter join",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12305,
+          "sha256": "22e1c128f4bff8b17aed8080b6161cbf73a4fac00fd5abc55e01764426a14597"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "be692b4984ff264618860d9f1e04b3bf0ccc8ef745ea78a71900743d9c75ffb6"
+        }
+      }
+    },
+    {
+      "name": "subject-pin-forged",
+      "rejected": true,
+      "error": "model full source pins",
+      "copied_inputs": {
+        "MODEL.json": {
+          "bytes": 12305,
+          "sha256": "4ed3c605a684770f4691e05b3ba60bb11e75edcc924db97c4c278b4e8d7eb814"
+        },
+        "construction.json": {
+          "bytes": 20824,
+          "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+        }
+      }
+    }
+  ],
+  "parser_controls": [
+    {
+      "name": "duplicate-key",
+      "rejected": true,
+      "error": "duplicate JSON key: x",
+      "bytes": 13,
+      "sha256": "d38245cfdb5d2239d67fe2a719312768b668a6928d8d97d04fbce83215e50b44"
+    },
+    {
+      "name": "nonfinite-NaN",
+      "rejected": true,
+      "error": "nonfinite JSON constant: NaN",
+      "bytes": 9,
+      "sha256": "c238cb6e9ac5407491b0988102620ab9445290d2ed7713c516a2b28bd2388968"
+    },
+    {
+      "name": "nonfinite-infinity",
+      "rejected": true,
+      "error": "nonfinite JSON float",
+      "bytes": 12,
+      "sha256": "4a89f646ba203555f194675dd6120e12cd3159f607afda25782a095b859dd20a"
+    },
+    {
+      "name": "invalid-json",
+      "rejected": true,
+      "error": "malformed saved JSON: Expecting value: line 1 column 6 (char 5)",
+      "bytes": 5,
+      "sha256": "aced72cfd547c2dd97712b69b63ce653b7f867ca39c8f5d41723047bebb6a901"
+    }
+  ],
+  "subject_calls": 0,
+  "model_producer_calls": 0,
+  "native_calls": 0,
+  "limitation": "bounded selected mutations; saved consistency only, not source authenticity or exhaustive adversarial resistance"
+}

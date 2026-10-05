@@ -1,0 +1,31 @@
+name: Issue 5260 A13 retained model-review STOP evidence
+on:
+  pull_request:
+    paths:
+      - 'research/integration/tk_model_review_5260_a13_wslc_20261004/**'
+      - '.github/workflows/tk-model-review-5260-a13-retained.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/integration/tk_model_review_5260_a13_wslc_20261004/**'
+      - '.github/workflows/tk-model-review-5260-a13-retained.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retained-stop-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/integration/tk_model_review_5260_a13_wslc_20261004
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source and STOP regression tests
+        working-directory: research/integration/tk_model_review_5260_a13_wslc_20261004
+        run: python -B -m unittest discover -v
+      - name: Read-only first STOP preservation verification
+        run: python -B research/integration/tk_model_review_5260_a13_wslc_20261004/verify_packet.py

@@ -1,0 +1,30 @@
+{
+  "schema": "map01_v39_cancel_release_current_main_replay_freeze_v1",
+  "purpose": "Revalidate the already-frozen A01 cancellation/release repair on the current integrated tree after main advanced.",
+  "base_main_commit": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "candidate_commit": "61502e45d40b67b6d588b4e8357e42fde05a9dbe",
+  "integration_tree_commit": "daf631a449aebb04ef43e4a831fe1bea1df65aeb",
+  "runtime": "CPython 3.12.14, macOS 27.0 arm64",
+  "scope": "Host-side deterministic fake-display regression and source-integrity replay only; no live input, X server, GUI, game, model, or allocation.",
+  "decision": {
+    "pass": "All six named suites exit 0 with the frozen case counts, and the raw-only auditor validates their retained outputs and source tree pins.",
+    "fail": "Any nonzero suite exit, count mismatch, missing output, source pin mismatch, or audit mismatch.",
+    "stop": "A required source/runtime is unavailable before any test executes; preserve the stop without retrying a formal allocation."
+  },
+  "source_blobs": {
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py": "9028c652d2134b3f748b99069069748e1aef2cdf",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py": "e7889a7a34fe76df5f230d4108a77055b105a680",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py": "26c0d957c4b7c61af45c1d6f1a290b4402555332",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/test_executor_v12_expiry_composition.py": "b239c040bfb8874ed890cc3614c5b45e836a8e65",
+    "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "research/live_control/executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de"
+  },
+  "suites": {
+    "candidate": {"count": 13, "optimized": false},
+    "candidate_optimized": {"count": 13, "optimized": true},
+    "executor_v12": {"count": 3, "optimized": false},
+    "owner_compatibility": {"count": 10, "optimized": false},
+    "v39_bridge": {"count": 2, "optimized": false},
+    "source_audit": {"count": 1, "optimized": false}
+  }
+}

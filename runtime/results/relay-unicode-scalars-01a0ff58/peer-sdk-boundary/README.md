@@ -1,0 +1,11 @@
+# 実SDKの受理後キャンセル境界 — #6869 / #6879
+
+新しい有限の通常診断を実行しました。過去の形式allocation、捕捉CLI、作者producerは再実行していません。固定V5 Relayを変更せず、実MCP1.30.0 ClientSession/標準入出力と専用FastMCP echoサーバーを使用。CPython3.13.14、Pydantic2.13.5、10秒全体停止、2秒SDK応答期限、入力2件を起動前に固定しました。これは作者CPython3.12の一致比較でもGUI/native入力でもありません。
+
+日本語・アクセント・emojiを含む最初の入力は、サーバーの実tool entryと返答が入力と完全一致。2番目のASCII/UTF8-valid JSONは値に単独U+D800をエスケープしており、有効なUnicode scalar文字列ではありません。relayはID2を受理してnext_id3へ進みました。SDK背景writerの実PydanticSerializationErrorがタスクグループをキャンセルし、Relay.requestからCancelledErrorが出ました。2番目のJSON応答はなく、外側ExceptionGroupを診断runnerが保存しています。unknown_requires_reconciliationを返す直接的なclient OSErrorモックとは異なる結果です。
+
+子は1回だけ起動、実終了code1。診断wrapperのexit0は「結果を捕捉した」という意味で、正常なSDK処理や科学的PASSではありません。サーバーの実tool entryは1件で、2番目の入力は届いたと扱いません。リプレイ、3番目の要求、プロセス再起動、失敗行除外、SDK/runtime修正は0。server_run_finallyは記録されておらず、SDKのプロセス終了記録でその欠落を埋めていません。物理解放・アプリ効果・一般的な故障率の証明はありません。
+
+独立した保存データreaderは4ソースpin、2入力のhash、parent/serverの実時系列、最初の実Unicode echo、ID消費、キャンセル原因、子PID/終了code、wrapper捕捉を確認しました。結果はCONFIRMED_POST_ADMISSION_SDK_CANCELLATION_BOUNDARY。これは入力UTF8ガードの反例とは断定せず、SDK異常をすべてJSON不確定応答へ変換するとの広い推論は保留します。V5の有効Unicode/有限数/重複キー修正への内容票とは範囲を区別し、作者ba92へこの原結果と適用範囲の判断を戻します。こちらはsource/repair/main senderを引き受けません。
+
+公開では閉じたcancel-scope identifierだけを置換し、CUSTODYに元/公開hashとサイズを記録しました。私的原本は変更していません。SDKソースはMCP licenseとともに保持。DEPENDENCIESは前の実target pip reportからの明示的な紹介文省略写像で、全依存物URL/artifact hashと元report identityを含みます。実行時のメモリ全体の認証ではありません。scriptsは全てinert txt。
