@@ -616,7 +616,6 @@ class InputOwner:
                                     physical_verification_authoritative=False)
                                 self.records.append(receipt)
                                 if not server_keyup_verified:
-                                    release_pending = True
                                     error = RuntimeError(
                                         'explicit key-up not observed in X11 keymap: ' + str(code))
                                     error.owner_explicit_keyup_record = receipt
