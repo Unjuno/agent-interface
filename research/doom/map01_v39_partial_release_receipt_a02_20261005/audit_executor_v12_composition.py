@@ -13,9 +13,17 @@ def check(condition, message):
 
 
 lock = json.loads((HERE / "EXECUTOR_V12_SOURCE_LOCK.json").read_text())
+snapshot_paths = lock.get("snapshot_paths", {})
 for relative, expected in lock["sha256"].items():
-    actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+    source = ROOT / relative
+    if not source.is_file() and relative in snapshot_paths:
+        source = ROOT / snapshot_paths[relative]
+    check(source.is_file(), f"source missing: {relative}")
+    actual = hashlib.sha256(source.read_bytes()).hexdigest()
     check(actual == expected, f"source hash mismatch: {relative}")
+for relative, expected in lock.get("snapshot_sha256", {}).items():
+    actual = hashlib.sha256((HERE / "frozen_live_control" / relative).read_bytes()).hexdigest()
+    check(actual == expected, f"frozen dependency hash mismatch: {relative}")
 
 raw = json.loads((HERE / "executor-v12-partial-release-raw.json").read_text())
 partial = raw["partial_owner_release"]

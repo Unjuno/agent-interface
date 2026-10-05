@@ -28,6 +28,13 @@ state transition is sampled in the harness; it is not an application effect.
 From the repository root at the stacked #7847 candidate revision:
 
 ```sh
+# The historical ExecutorV12 import closure is vendored under
+# `frozen_live_control/` and checked against the original source commit.
+# Redirect test output so a reproduction cannot replace the archived candidate raw.
+EXECUTOR_V12_RAW_OUTPUT="$(mktemp /tmp/executor-v12-repro.XXXXXX)" \
+  V13_OWNER_CANDIDATE_PATH=research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py \
+  python3 -m unittest research.doom.map01_v39_partial_release_receipt_a02_20261005.test_executor_v12_partial_release_composition -v
+
 # Expected RED (exit 1): use the exact parent candidate baseline.
 V13_OWNER_CANDIDATE_PATH=research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py \
   python3 -m unittest research.doom.map01_v39_partial_release_receipt_a02_20261005.test_partial_release_receipt -v
@@ -50,6 +57,17 @@ candidate's structured observed state. `AUDIT.json` records the raw-only audit.
 Issue #59 remains open. Threat exposure, independently useful live feedback,
 bounded recovery, a separately identified MAP01 attempt, and matched live
 comparison remain unverified.
+
+## Historical dependency closure
+
+The four `research/live_control/*.py` modules in the source lock are absent
+from the stacked PR checkout. Their exact bytes, plus the four transitive
+imports needed by `ExecutorV12`, are retained in `frozen_live_control/` from
+the locked `main_commit` and verified by `audit_executor_v12_composition.py`.
+The composition test imports this frozen directory, so reproduction does not
+depend on an unrelated checkout containing those historical paths. The test
+supports `EXECUTOR_V12_RAW_OUTPUT` to keep a reproduction separate from the
+archived `executor-v12-partial-release-raw.json`.
 
 ## A03 container revalidation disposition
 

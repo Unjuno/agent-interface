@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 FIX = ROOT / "research" / "doom" / "map01_v39_cancel_release_fix_a01_20261005"
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT / "research" / "live_control"))
+sys.path.insert(0, str(HERE / "frozen_live_control"))
 os.environ.setdefault("V13_OWNER_CANDIDATE_PATH", str(HERE / "input_owner_v13_candidate.py"))
 
 import executor_v12
@@ -132,7 +132,10 @@ class ExecutorV12PartialReleaseCompositionTests(unittest.TestCase):
                 backend.raw("b", True)
             self.assertEqual(len(harness.d.injections), injections_before)
             self.assertNotIn(76, harness.d.physical)
-            (HERE / "executor-v12-partial-release-raw.json").write_text(
+            raw_path = Path(os.environ.get(
+                "EXECUTOR_V12_RAW_OUTPUT", HERE / "executor-v12-partial-release-raw.json"))
+            raw_path.parent.mkdir(parents=True, exist_ok=True)
+            raw_path.write_text(
                 json.dumps({
                     "key_release_attempts": key_release_calls,
                     "partial_owner_release": partial[0],
