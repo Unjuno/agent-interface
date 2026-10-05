@@ -1,0 +1,33 @@
+from pathlib import Path
+import ast, hashlib, json
+p=Path(__file__).resolve().parent
+raw=(p/'current.py.txt').read_bytes()
+s=raw.decode('utf-8')
+old='''        self.process = process_factory(
+            command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, text=True, bufsize=1)'''
+assert s.count(old)==1
+call='''        try:
+            self.process = process_factory(
+                command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, text=True, bufsize=1)
+        except BaseException:
+            if self._journal is not None:
+                self._journal.close()
+            raise'''
+protected=call.replace('                self._journal.close()', '''                try:
+                    self._journal.close()
+                except BaseException as cleanup_error:
+                    primary_error.add_note(
+                        "journal cleanup failed: " + type(cleanup_error).__name__)''').replace('        except BaseException:', '        except BaseException as primary_error:')
+for name,block in [('naive',call),('protected',protected)]:
+    out=s.replace(old,block).encode('utf-8')
+    (p/(name+'.py.txt')).write_bytes(out)
+    def methods(data):
+        c=next(n for n in ast.parse(data).body if isinstance(n,ast.ClassDef) and n.name=='CodexAppServerClient')
+        return {n.name:ast.dump(n,include_attributes=False) for n in c.body if isinstance(n,ast.FunctionDef) and n.name!='__init__'}
+    assert methods(s)==methods(out.decode())
+files=['current.py.txt','naive.py.txt','protected.py.txt','collect.py','oracle.py','run.py']
+plan={'id':'59-CONSTRUCTOR-CLOSE-FAULT-01A0FF34-A02-20261003','kind':'ordinary injected cooperative cleanup-fault/native-file boundary','base':'e74cfc78b84d286ff3faabf2696129b988655c1b','claim':5969150279,'cells':18,'order':{'variants':['current','naive','protected'],'primary':['OSError','KeyboardInterrupt'],'close':['healthy','before','after']},'limits':{'children':0,'actual_server':0,'gui_input':0,'collector_cap_seconds':10,'stream_cap_bytes':65536},'decision':'original primary object survives protected; naive masks primary when close faults; native fd before/after separate; all driver-owned files closed; healthy controls first; stop on infrastructure error, retain partial raw, no collector replay','limits_text':'proxy owner retains handles for instrumentation; no new retained-traceback lifetime claim; cooperative faults only; no native process/thread acquisition, close deadline, hostile add_note, task/input/recovery efficacy or production adoption','files':{n:{'bytes':len((p/n).read_bytes()),'sha256':hashlib.sha256((p/n).read_bytes()).hexdigest()} for n in files},'ast_other_methods_equal':15}
+(p/'FREEZE.json').write_bytes(json.dumps(plan,ensure_ascii=True,sort_keys=True,indent=2).encode()+b'\n')
+print(json.dumps({'freeze_sha256':hashlib.sha256((p/'FREEZE.json').read_bytes()).hexdigest(),'source_sha256':hashlib.sha256(raw).hexdigest(),'cells':18}))
