@@ -694,6 +694,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertFalse(terminal["release"]["verified"])
             self.assertEqual(terminal["release"]["keys_unknown"], [38, 39])
             self.assertTrue(terminal["release"]["key_state_errors"])
+            with self.assertRaises(RuntimeError):
+                owner.call("down", lease, "W")
+            self.assertEqual(display_instance.down, set())
         finally:
             if owner is not None:
                 display_instance.fail_keymap_queries = 0

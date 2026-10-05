@@ -316,6 +316,9 @@ class ExplicitUpCleanupTests(unittest.TestCase):
                 row["source"] == "pointer_before" for row in receipt["key_state_errors"]))
             self.assertEqual(display_instance.down, set())
             self.assertEqual(display_instance.buttons_down, set())
+            with self.assertRaises(RuntimeError):
+                owner.call("down", lease, "A")
+            self.assertEqual(display_instance.down, set())
             display_instance.fail_keymap_queries = 0
             display_instance.fail_pointer_queries = 0
             owner.call("release", lease)

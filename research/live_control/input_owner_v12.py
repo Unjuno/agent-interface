@@ -138,6 +138,7 @@ class InputOwner:
             return attempts, server_down is False
 
         def release_keys_batch(lease, keys):
+            nonlocal fault
             if (type(keys) is not list or not keys or
                     any(not isinstance(key, str) or not key for key in keys) or
                     len(set(keys)) != len(keys)):
@@ -267,6 +268,8 @@ class InputOwner:
                     release_batch_key_order=[item[0] for item in codes])
                 self.records.append(receipt)
                 receipts.append(receipt)
+            if any(not receipt["server_keyup_verified"] for receipt in receipts):
+                fault = RuntimeError("input owner failed closed after unverified key-up")
             return receipts
 
         def focus_id():
@@ -352,7 +355,7 @@ class InputOwner:
                 raise Cancelled()
 
         def release(reason):
-            nonlocal active,revision
+            nonlocal active,revision,fault
             revision += 1
             key_release_attempts = {}
             key_state_errors = []
@@ -424,12 +427,14 @@ class InputOwner:
             if down or buttons_down or unknown_keys or key_state_errors:
                 error = RuntimeError('owner release not verified: ' + repr(down))
                 error.owner_release_record = record
+                fault = error
                 raise error
             buttons.clear()
             touched_buttons.clear()
             held.clear()
             touched.clear()
             active = None
+            fault = None
             return record
 
         try:
@@ -614,6 +619,9 @@ class InputOwner:
                         result.update(continuation=True,owner_id=self.owner_id,revision=revision)
                     reply.append((True, result))
                 except Exception as exc:
+                    explicit_up = getattr(exc, "owner_explicit_keyup_record", None)
+                    if isinstance(explicit_up, dict) and not explicit_up.get("server_keyup_verified"):
+                        fault = exc
                     reply.append((False, exc))
                 finally:
                     done.set()
