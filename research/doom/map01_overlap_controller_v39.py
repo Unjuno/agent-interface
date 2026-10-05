@@ -1038,8 +1038,23 @@ def input_edge_receipts(events):
                 if release else False)
             owner_verified = (release.get("owner_thread_keyup_verified") is True
                               if release else False)
+            owner_identity_layers = (admission, release, owner)
+            owner_id_presence = tuple(
+                type(row) is dict and "owner_id" in row
+                for row in owner_identity_layers)
+            owner_id_values = tuple(
+                row.get("owner_id") if type(row) is dict else None
+                for row in owner_identity_layers)
+            owner_identity_valid = (
+                not any(owner_id_presence) or
+                (all(owner_id_presence) and
+                 all(type(value) is str and bool(value)
+                     for value in owner_id_values) and
+                 len(set(owner_id_values)) == 1))
             owner_contract_valid = (
-                type(owner) is dict and owner.get("event") == "owner_explicit_keyup")
+                type(owner) is dict and
+                owner.get("event") == "owner_explicit_keyup" and
+                owner_identity_valid)
 
         if len(admissions) > 1 or len(releases) > 1:
             status = "ambiguous_input_edges"
