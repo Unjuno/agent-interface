@@ -1,0 +1,193 @@
+{
+  "allocation": "X11-XTEST-DEVICE-CROSS-CLIENT-A01-20261005",
+  "api_calls": [
+    {
+      "actor": "A",
+      "api": "XTestFakeKeyEvent",
+      "edge": "DOWN",
+      "return_code": 1,
+      "route": "core"
+    },
+    {
+      "actor": "B",
+      "api": "XTestFakeKeyEvent",
+      "edge": "DOWN",
+      "return_code": 1,
+      "route": "core"
+    },
+    {
+      "actor": "A",
+      "api": "XTestFakeKeyEvent",
+      "edge": "UP",
+      "return_code": 1,
+      "route": "core"
+    },
+    {
+      "actor": "B",
+      "api": "XTestFakeKeyEvent",
+      "edge": "UP",
+      "return_code": 1,
+      "route": "core"
+    },
+    {
+      "actor": "A",
+      "api": "XTestFakeDeviceKeyEvent",
+      "edge": "DOWN",
+      "return_code": 1,
+      "route": "device"
+    },
+    {
+      "actor": "B",
+      "api": "XTestFakeDeviceKeyEvent",
+      "edge": "DOWN",
+      "return_code": 1,
+      "route": "device"
+    },
+    {
+      "actor": "A",
+      "api": "XTestFakeDeviceKeyEvent",
+      "edge": "UP",
+      "return_code": 1,
+      "route": "device"
+    },
+    {
+      "actor": "B",
+      "api": "XTestFakeDeviceKeyEvent",
+      "edge": "UP",
+      "return_code": 1,
+      "route": "device"
+    }
+  ],
+  "candidate_exit": 0,
+  "cleanup": {
+    "displays_closed": 4
+  },
+  "client_connections": {
+    "A": true,
+    "A_and_B_distinct": true,
+    "B": true,
+    "observer": true,
+    "receiver": true
+  },
+  "completed_ns": 1791173269046945808,
+  "device_handles_open": {
+    "A": true,
+    "B": true,
+    "same_server_device_id": 5
+  },
+  "device_id": 5,
+  "device_name": "Virtual core XTEST keyboard",
+  "devices_found": [
+    [
+      5,
+      "Virtual core XTEST keyboard"
+    ]
+  ],
+  "display": ":87",
+  "final_core_events": [],
+  "finished_ns": 1791173269047361552,
+  "initial_keymap_down": false,
+  "key": "w",
+  "keycode": 25,
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "routes": [
+    {
+      "route": "core",
+      "steps": [
+        {
+          "actor": "A",
+          "core_events": [
+            {
+              "keycode": 25,
+              "serial": 12,
+              "time": 8100768,
+              "type": "KeyPress",
+              "window_id": 2097153
+            }
+          ],
+          "edge": "DOWN",
+          "keymap_down": true
+        },
+        {
+          "actor": "B",
+          "core_events": [],
+          "edge": "DOWN",
+          "keymap_down": true
+        },
+        {
+          "actor": "A",
+          "core_events": [
+            {
+              "keycode": 25,
+              "serial": 16,
+              "time": 8100768,
+              "type": "KeyRelease",
+              "window_id": 2097153
+            }
+          ],
+          "edge": "UP",
+          "keymap_down": false
+        },
+        {
+          "actor": "B",
+          "core_events": [],
+          "edge": "UP",
+          "keymap_down": false
+        }
+      ],
+      "x_errors": []
+    },
+    {
+      "route": "device",
+      "steps": [
+        {
+          "actor": "A",
+          "core_events": [
+            {
+              "keycode": 25,
+              "serial": 19,
+              "time": 8100769,
+              "type": "KeyPress",
+              "window_id": 2097153
+            }
+          ],
+          "edge": "DOWN",
+          "keymap_down": true
+        },
+        {
+          "actor": "B",
+          "core_events": [],
+          "edge": "DOWN",
+          "keymap_down": true
+        },
+        {
+          "actor": "A",
+          "core_events": [
+            {
+              "keycode": 25,
+              "serial": 21,
+              "time": 8100769,
+              "type": "KeyRelease",
+              "window_id": 2097153
+            }
+          ],
+          "edge": "UP",
+          "keymap_down": false
+        },
+        {
+          "actor": "B",
+          "core_events": [],
+          "edge": "UP",
+          "keymap_down": false
+        }
+      ],
+      "x_errors": []
+    }
+  ],
+  "schema": "x11-xtest-device-cross-client-raw-a01-v1",
+  "started_ns": 1791173269043445983,
+  "status": "CANDIDATE_COMPLETE",
+  "window_id": 2097153,
+  "x_errors": []
+}
