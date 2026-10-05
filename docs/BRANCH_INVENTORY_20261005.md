@@ -678,3 +678,14 @@ Removed `research/59-effect-identity-join-a01-20261005` at exact audited tip `b9
 - This resolves the earlier provenance hold for the evidence files. The scoped PASS / HOLD_MISSING_TASK_EFFECT boundary remains preserved; no experiment or auditor was rerun.
 
 This removes one source ref; #7903 remains closed unmerged and #7988 is the merged evidence-preservation record.
+
+
+## Active successor hold — 2026-10-05 14:26 UTC
+
+Reclassified `research/59-unauthored-health-trigger-replay-a01-20261005`, which the earlier remote-ref census listed as unclassified:
+
+- Merged PR #8197's initial A04 replay package is present on `main`; its original PR head was `a344436b5aec74d1a1b548bb773983e30c5cb525`.
+- The source branch subsequently advanced to `ee50f538534fe5d327c56f7d3da304dfbf2ebfd1` and now backs ready PR #8206. Its two source-only commits contain 18 A05–A07 audit-hardening paths absent from `main`; the original A04 raw/candidate boundary remains unchanged.
+- PR #8206 is open with this branch as its head; no deletion or closure is appropriate while its review remains active. It has no separate local worktree in the shared registry. The latest compare reports current `main` one commit ahead of this head; refresh its base and checks before considering integration.
+
+Keep this ref as an active evidence/review hold. No experiment or auditor was rerun.
