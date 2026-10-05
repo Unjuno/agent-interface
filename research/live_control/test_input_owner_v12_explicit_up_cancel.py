@@ -271,6 +271,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertEqual(receipt["server_keyup_attempt_count"], 2)
             self.assertEqual(display_instance.keyrelease_attempts, 2)
             self.assertEqual(display_instance.down, set())
+            cleanup_after_success = owner.call("release", lease)
+            self.assertTrue(cleanup_after_success["verified"])
+            self.assertEqual(display_instance.keyrelease_attempts, 2)
 
             owner.call("down", lease, "W")
             display_instance.drop_keyreleases = 1
@@ -290,6 +293,16 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertFalse(failed_receipt["server_keyup_verified"])
             self.assertEqual(failed_receipt["server_keyup_attempt_count"], 3)
             self.assertEqual(display_instance.down, {38})
+
+            # Terminal cleanup must retain the earlier failed receipt while
+            # independently retrying a key that remains observed down.
+            display_instance.drop_keyreleases = 0
+            cleanup_after_failure = owner.call("release", lease)
+            self.assertTrue(cleanup_after_failure["verified"])
+            self.assertEqual(cleanup_after_failure["keys_down"], [])
+            self.assertEqual(display_instance.down, set())
+            self.assertFalse(failed_receipt["server_keyup_verified"])
+            self.assertEqual(len(cleanup_after_failure["key_release_attempts"]["38"]["attempts"]), 1)
         finally:
             if owner is not None:
                 owner.close()
