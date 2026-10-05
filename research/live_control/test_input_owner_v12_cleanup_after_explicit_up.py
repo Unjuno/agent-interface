@@ -266,6 +266,34 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             owner.call("down", explicit_up_lease, "W")
             owner.call("release", explicit_up_lease)
 
+            sync_failure_lease = Lease()
+            sync_failure_lease.expected_surface = 52
+            sync_failure_lease.expected_geometry = [0, 0, 100, 100]
+            owner.call("down", sync_failure_lease, "W")
+            owner.call("down", sync_failure_lease, "A")
+            owner.call("button_down", sync_failure_lease, 1)
+            display_instance.fail_sync_attempts = 1
+            release_order_start = len(display_instance.key_release_order)
+            sync_failure_result = owner.call("release", sync_failure_lease)
+            self.assertTrue(sync_failure_result["verified"])
+            self.assertEqual(display_instance.down, set())
+            self.assertEqual(display_instance.buttons_down, set())
+            self.assertEqual(
+                display_instance.key_release_order[release_order_start:], [65, 66])
+            sync_failure_receipt = [
+                row for row in owner.records if row.get("event") == "owner_release"]
+            sync_failure_receipt = sync_failure_receipt[-1]
+            self.assertTrue(sync_failure_receipt["verified"])
+            self.assertEqual(
+                sync_failure_receipt["key_release_attempts"]["65"]["attempts"][0]
+                ["sync_error"]["type"], "RuntimeError")
+            self.assertIsNone(
+                sync_failure_receipt["key_release_attempts"]["65"]["attempts"][0]
+                ["sync_returned_ns"])
+            self.assertEqual(
+                sync_failure_receipt["key_release_attempts"]["66"]["attempts"][0]
+                ["sync_error"], None)
+
         finally:
             if owner is not None:
                 owner.close()
