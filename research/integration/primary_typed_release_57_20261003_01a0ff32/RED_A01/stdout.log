@@ -1,0 +1,451 @@
+✔ typed release guarded-raw neutral preserves evidence and enforces continuation (4.8731ms)
+✔ typed release guarded-raw two-neutral preserves evidence and enforces continuation (0.6501ms)
+✔ typed release guarded-raw empty-releases preserves evidence and enforces continuation (1.113ms)
+✖ typed release guarded-raw string-releases preserves evidence and enforces continuation (2.0184ms)
+✖ typed release guarded-raw object-releases preserves evidence and enforces continuation (0.8766ms)
+✖ typed release guarded-raw string-keys preserves evidence and enforces continuation (3.3073ms)
+✖ typed release guarded-raw string-buttons preserves evidence and enforces continuation (0.8809ms)
+✖ typed release guarded-raw object-keys preserves evidence and enforces continuation (0.5702ms)
+✖ typed release guarded-raw object-buttons preserves evidence and enforces continuation (0.5786ms)
+✔ typed release guarded-raw missing-keys preserves evidence and enforces continuation (0.5051ms)
+✔ typed release guarded-raw missing-buttons preserves evidence and enforces continuation (0.4142ms)
+✔ typed release guarded-raw null-keys preserves evidence and enforces continuation (0.3492ms)
+✔ typed release guarded-raw null-buttons preserves evidence and enforces continuation (0.4133ms)
+✔ typed release guarded-raw held-key preserves evidence and enforces continuation (0.4014ms)
+✔ typed release guarded-raw held-button preserves evidence and enforces continuation (0.3523ms)
+✔ typed release guarded-raw numeric-verified preserves evidence and enforces continuation (0.3361ms)
+✔ typed release guarded-raw false-verified preserves evidence and enforces continuation (0.4454ms)
+✖ typed release guarded-raw mixed-unknown preserves evidence and enforces continuation (0.4826ms)
+✔ typed release direct-raw neutral preserves evidence and enforces continuation (0.3794ms)
+✔ typed release direct-raw two-neutral preserves evidence and enforces continuation (0.3458ms)
+✔ typed release direct-raw empty-releases preserves evidence and enforces continuation (0.4347ms)
+✖ typed release direct-raw string-releases preserves evidence and enforces continuation (0.6925ms)
+✖ typed release direct-raw object-releases preserves evidence and enforces continuation (0.6498ms)
+✖ typed release direct-raw string-keys preserves evidence and enforces continuation (0.5022ms)
+✖ typed release direct-raw string-buttons preserves evidence and enforces continuation (0.4846ms)
+✖ typed release direct-raw object-keys preserves evidence and enforces continuation (0.5286ms)
+✖ typed release direct-raw object-buttons preserves evidence and enforces continuation (0.5735ms)
+✔ typed release direct-raw missing-keys preserves evidence and enforces continuation (0.3449ms)
+✔ typed release direct-raw missing-buttons preserves evidence and enforces continuation (0.8093ms)
+✔ typed release direct-raw null-keys preserves evidence and enforces continuation (0.3248ms)
+✔ typed release direct-raw null-buttons preserves evidence and enforces continuation (0.3049ms)
+✔ typed release direct-raw held-key preserves evidence and enforces continuation (0.3067ms)
+✔ typed release direct-raw held-button preserves evidence and enforces continuation (0.3119ms)
+✔ typed release direct-raw numeric-verified preserves evidence and enforces continuation (0.3938ms)
+✔ typed release direct-raw false-verified preserves evidence and enforces continuation (0.4017ms)
+✖ typed release direct-raw mixed-unknown preserves evidence and enforces continuation (0.5255ms)
+✔ typed release direct-summary neutral preserves evidence and enforces continuation (0.3505ms)
+✔ typed release direct-summary two-neutral preserves evidence and enforces continuation (0.2888ms)
+✔ typed release direct-summary empty-releases preserves evidence and enforces continuation (0.3456ms)
+✖ typed release direct-summary string-releases preserves evidence and enforces continuation (0.7541ms)
+✖ typed release direct-summary object-releases preserves evidence and enforces continuation (0.5561ms)
+✖ typed release direct-summary string-keys preserves evidence and enforces continuation (0.4378ms)
+✖ typed release direct-summary string-buttons preserves evidence and enforces continuation (0.4145ms)
+✖ typed release direct-summary object-keys preserves evidence and enforces continuation (0.3831ms)
+✖ typed release direct-summary object-buttons preserves evidence and enforces continuation (0.4098ms)
+✔ typed release direct-summary missing-keys preserves evidence and enforces continuation (0.3059ms)
+✔ typed release direct-summary missing-buttons preserves evidence and enforces continuation (0.2821ms)
+✔ typed release direct-summary null-keys preserves evidence and enforces continuation (0.3153ms)
+✔ typed release direct-summary null-buttons preserves evidence and enforces continuation (0.2984ms)
+✔ typed release direct-summary held-key preserves evidence and enforces continuation (0.2885ms)
+✔ typed release direct-summary held-button preserves evidence and enforces continuation (0.3165ms)
+✔ typed release direct-summary numeric-verified preserves evidence and enforces continuation (0.2936ms)
+✔ typed release direct-summary false-verified preserves evidence and enforces continuation (0.2949ms)
+✖ typed release direct-summary mixed-unknown preserves evidence and enforces continuation (0.38ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 33
+ℹ fail 21
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 49.6854
+
+✖ failing tests:
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release guarded-raw string-releases preserves evidence and enforces continuation (2.0184ms)
+  AssertionError [ERR_ASSERTION]: unknown release shape must retain the original response
+  + actual - expected
+  
+  + {
+  +   message: 'releases.some is not a function',
+  +   name: 'TypeError'
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:66:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Object],
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release guarded-raw object-releases preserves evidence and enforces continuation (0.8766ms)
+  AssertionError [ERR_ASSERTION]: unknown release shape must retain the original response
+  + actual - expected
+  
+  + {
+  +   message: 'releases.some is not a function',
+  +   name: 'TypeError'
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:66:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Object],
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release guarded-raw string-keys preserves evidence and enforces continuation (3.3073ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release guarded-raw string-buttons preserves evidence and enforces continuation (0.8809ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release guarded-raw object-keys preserves evidence and enforces continuation (0.5702ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release guarded-raw object-buttons preserves evidence and enforces continuation (0.5786ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release guarded-raw mixed-unknown preserves evidence and enforces continuation (0.4826ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-raw string-releases preserves evidence and enforces continuation (0.6925ms)
+  AssertionError [ERR_ASSERTION]: unknown release shape must retain the original response
+  + actual - expected
+  
+  + {
+  +   message: 'releases.some is not a function',
+  +   name: 'TypeError'
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:66:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Object],
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-raw object-releases preserves evidence and enforces continuation (0.6498ms)
+  AssertionError [ERR_ASSERTION]: unknown release shape must retain the original response
+  + actual - expected
+  
+  + {
+  +   message: 'releases.some is not a function',
+  +   name: 'TypeError'
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:66:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Object],
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-raw string-keys preserves evidence and enforces continuation (0.5022ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-raw string-buttons preserves evidence and enforces continuation (0.4846ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-raw object-keys preserves evidence and enforces continuation (0.5286ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-raw object-buttons preserves evidence and enforces continuation (0.5735ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-raw mixed-unknown preserves evidence and enforces continuation (0.5255ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-summary string-releases preserves evidence and enforces continuation (0.7541ms)
+  AssertionError [ERR_ASSERTION]: unknown release shape must retain the original response
+  + actual - expected
+  
+  + {
+  +   message: 'releases.some is not a function',
+  +   name: 'TypeError'
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:66:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Object],
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-summary object-releases preserves evidence and enforces continuation (0.5561ms)
+  AssertionError [ERR_ASSERTION]: unknown release shape must retain the original response
+  + actual - expected
+  
+  + {
+  +   message: 'releases.some is not a function',
+  +   name: 'TypeError'
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:66:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Object],
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-summary string-keys preserves evidence and enforces continuation (0.4378ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-summary string-buttons preserves evidence and enforces continuation (0.4145ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-summary object-keys preserves evidence and enforces continuation (0.3831ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-summary object-buttons preserves evidence and enforces continuation (0.4098ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime\host_v1\test_primary_typed_release.mjs:32:5
+✖ typed release direct-summary mixed-unknown preserves evidence and enforces continuation (0.38ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(firstStop)
+  
+      at TestContext.<anonymous> (file:///<OWN_WORKSPACE>/work/primary-request-snapshot-01a0ff32/runtime/host_v1/test_primary_typed_release.mjs:70:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

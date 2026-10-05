@@ -1,0 +1,10 @@
+from pathlib import Path
+import subprocess,os,json
+O=Path(__file__).resolve().parent;R=O.parent.parent/'work/primary-request-snapshot-01a0ff32'
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_TERMINAL_PROMPT='0')
+def git(*a,**kw):return subprocess.check_output(['git','-C',str(R),*a],env=env,**kw)
+for p in (O/'source').iterdir():git('hash-object','-w','--stdin',input=p.read_bytes())
+git('sparse-checkout','set','--no-cone','/runtime/host_v1/primary_caller.mjs')
+git('read-tree','-mu','HEAD')
+p=R/'runtime/host_v1/primary_caller.mjs';assert p.read_bytes()==(O/'source/primary_caller.mjs').read_bytes();p.write_bytes((O/'candidate/primary_caller.mjs').read_bytes())
+print(git('diff','--stat').decode())

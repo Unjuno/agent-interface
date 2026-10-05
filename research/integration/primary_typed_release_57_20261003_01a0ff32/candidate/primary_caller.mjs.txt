@@ -5,13 +5,6 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   const consumed = new Set();
   const observationArguments = route === 'guarded-local' ? {} :
     structuredClone(options.observationArguments);
-  const maxExplicitObservations = options.maxExplicitObservations;
-  if (maxExplicitObservations !== undefined &&
-      (!Number.isSafeInteger(maxExplicitObservations) || maxExplicitObservations < 0)) {
-    throw TypeError('maxExplicitObservations must be a nonnegative safe integer');
-  }
-  let explicitObservations = 0;
-  const observationTools = new Set(['interface_guarded_observe', 'interface_observe']);
   const reviewWindowId = options.reviewWindowId;
   const canonical = value => JSON.stringify(value, (_key, v) => v && typeof v === 'object' && !Array.isArray(v)
     ? Object.fromEntries(Object.keys(v).sort().map(k => [k,v[k]])) : v);
@@ -149,13 +142,6 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         }
         consumed.add(controlId);
       }
-      if (observationTools.has(tool) && maxExplicitObservations !== undefined) {
-        if (explicitObservations >= maxExplicitObservations) {
-          stop('explicit observation budget exhausted');
-          throw Error(stopped);
-        }
-        explicitObservations++;
-      }
       let reply;
       try { reply = await host.sendPresented(tool, args, sinks); }
       catch (error) { stop('transport or presentation failure'); throw error; }
@@ -170,7 +156,6 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
           meta.session?.recovery_required === false && (expected.kind === 'source'
             ? meta.input_dispatched === false && meta.error === expected.error
             : meta.result?.input_dispatched === false && !meta.result.execution &&
-              Array.isArray(meta.result.guard_checks) &&
               meta.result.guard_checks?.length === 1 && meta.result.guard_checks[0].stage === 'before_admission' &&
               meta.result.guard_checks[0].status === 'MISSING' && meta.result.guard_checks[0].reason === expected.reason &&
               meta.result.guard_checks[0].handle === expected.alias);

@@ -1,0 +1,2 @@
+from pathlib import Path
+O=Path(__file__).resolve().parent;s=(O/'audit-saved.py').read_bytes().decode();old="need(c['text_callbacks']==1 and type(c['text_callbacks']) is int,'one actual text presentation')";new="need(c['text_callbacks']==2 and type(c['text_callbacks']) is int,'explicit MCP status plus one actual JSON text presentation')";assert s.count(old)==1;(O/'audit-saved-v2.py').write_bytes(s.replace(old,new).encode())
