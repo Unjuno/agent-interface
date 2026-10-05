@@ -2,14 +2,27 @@
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 
 
 ROOT = Path(__file__).resolve().parents[3]
 RUN = ROOT / "research/doom/results/map01-v39-coast-liveness-live-01"
+FREEZE_COMMIT = "5ffa6e0716515841575f70b8f0dba32843bf3e98"
+RESULT_COMMIT = "ebb8c7837edf86cc9d02c60bec58828e45fb6c77"
+CURRENT_MAIN_SNAPSHOT = "b5be19963454ce5edafc945b78b100012952dd15"
 
 
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def sha256_bytes(value):
+    return hashlib.sha256(value).hexdigest()
+
+
+def git_blob(commit, path):
+    return subprocess.check_output(
+        ["git", "show", f"{commit}:{path}"], cwd=ROOT)
 
 
 def main():
@@ -43,6 +56,43 @@ def main():
                     if row.get("event") == "terminal"
                     and row.get("id") == "cover-5")
     sources = json.loads((RUN / "runtime/sources.json").read_text())
+
+    # The retained preregistration pins the production controller, while the
+    # runtime source manifest pins imported dependencies. Verify both against
+    # the earlier frozen Git tree; the two lists are complementary.
+    subprocess.check_call(
+        ["git", "merge-base", "--is-ancestor", FREEZE_COMMIT, RESULT_COMMIT],
+        cwd=ROOT)
+    prereg = json.loads(git_blob(
+        FREEZE_COMMIT,
+        "research/doom/map01_v39_coast_liveness_live_v1_prereg.json"))
+    expected_sources = prereg.get("source_sha256", {})
+    if (prereg.get("allocation_id") != "map01-v39-coast-liveness-live-01"
+            or prereg.get("status") != "FROZEN_BEFORE_FIRST_V38_MODEL_CALL"
+            or len(expected_sources) != 28):
+        raise SystemExit("retained V39 preregistration identity mismatch")
+    prereg_verified = []
+    for path, expected_hash in expected_sources.items():
+        if sha256_bytes(git_blob(FREEZE_COMMIT, path)) != expected_hash:
+            raise SystemExit(f"preregistered source mismatch: {path}")
+        prereg_verified.append(path)
+    runtime_verified = []
+    for path, expected_hash in sources.items():
+        repository_path = f"research/{path}"
+        if sha256_bytes(git_blob(FREEZE_COMMIT, repository_path)) != expected_hash:
+            raise SystemExit(f"runtime source differs from freeze tree: {path}")
+        runtime_verified.append(repository_path)
+    controller_path = "research/doom/map01_overlap_controller_v39.py"
+    frozen_controller_sha = expected_sources.get(controller_path)
+    current_controller_sha = sha256_bytes(
+        git_blob(CURRENT_MAIN_SNAPSHOT, controller_path))
+    if (frozen_controller_sha is None
+            or sha256_bytes(git_blob(FREEZE_COMMIT, controller_path))
+               != frozen_controller_sha):
+        raise SystemExit("frozen controller source identity missing or mismatched")
+    prereg_runtime_overlap = sorted(set(prereg_verified) & set(runtime_verified))
+    if len(prereg_runtime_overlap) != 9:
+        raise SystemExit("unexpected preregistration/runtime source overlap")
 
     if (source.get("status") != "observed" or source.get("value") != 61
             or source.get("sequence") != 166):
@@ -88,6 +138,21 @@ def main():
         "allocation_id": "map01-v39-coast-liveness-live-01",
         "retained_hashes": hashes,
         "retained_audit_formal_pass": True,
+        "source_provenance": {
+            "freeze_commit": FREEZE_COMMIT,
+            "result_commit": RESULT_COMMIT,
+            "freeze_is_ancestor_of_result": True,
+            "preregistration_status": prereg["status"],
+            "preregistered_sources_verified_against_freeze_tree": len(prereg_verified),
+            "runtime_sources_verified_against_freeze_tree": len(runtime_verified),
+            "combined_unique_sources_verified": len(set(prereg_verified)
+                                                     | set(runtime_verified)),
+            "prereg_runtime_overlap": len(prereg_runtime_overlap),
+            "controller_sha256_at_freeze": frozen_controller_sha,
+            "controller_sha256_at_current_main_snapshot": current_controller_sha,
+            "controller_differs_from_current_main": (
+                frozen_controller_sha != current_controller_sha),
+        },
         "decision": 5,
         "cover_source": {"sequence": source["sequence"], "health": source["value"]},
         "soft_boundary_observation": {"sequence": soft["sequence"],
@@ -113,7 +178,7 @@ def main():
         "source_closure": sorted(sources),
         "scope": {
             "kind": "read-only recheck of one retained live V39 episode",
-            "source_version_boundary": "manifest selects session_map01_v12 and input_owner_v10; not current V15/V12 startup closure",
+            "source_version_boundary": "preregistration pins the older V39 controller and V12/V10 path; this is not today's V15/V12 startup closure",
             "proves": ["authored health guard invalidated during pending model turn",
                        "dependent answer was ineligible/discarded",
                        "cover ended with verified empty release"],

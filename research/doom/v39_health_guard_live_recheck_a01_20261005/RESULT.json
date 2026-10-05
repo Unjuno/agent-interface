@@ -48,7 +48,7 @@
       "dependent answer was ineligible/discarded",
       "cover ended with verified empty release"
     ],
-    "source_version_boundary": "manifest selects session_map01_v12 and input_owner_v10; not current V15/V12 startup closure"
+    "source_version_boundary": "preregistration pins the older V39 controller and V12/V10 path; this is not today's V15/V12 startup closure"
   },
   "soft_boundary_observation": {
     "health": 51,
@@ -77,6 +77,19 @@
     "live_control/session_v8.py",
     "live_control/session_v9.py"
   ],
+  "source_provenance": {
+    "combined_unique_sources_verified": 39,
+    "controller_differs_from_current_main": true,
+    "controller_sha256_at_current_main_snapshot": "f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8",
+    "controller_sha256_at_freeze": "cbc44c171f9d83417380af4fb5c06ef7dbf9bb2862c2c40a997bd66f3a985e5e",
+    "freeze_commit": "5ffa6e0716515841575f70b8f0dba32843bf3e98",
+    "freeze_is_ancestor_of_result": true,
+    "prereg_runtime_overlap": 9,
+    "preregistered_sources_verified_against_freeze_tree": 28,
+    "preregistration_status": "FROZEN_BEFORE_FIRST_V38_MODEL_CALL",
+    "result_commit": "ebb8c7837edf86cc9d02c60bec58828e45fb6c77",
+    "runtime_sources_verified_against_freeze_tree": 20
+  },
   "timing_ms": {
     "guard_evaluation_to_empty_release": 9.727111,
     "guard_evaluation_to_planner_terminal": 37.050589,
