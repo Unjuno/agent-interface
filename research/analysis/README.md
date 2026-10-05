@@ -1,5 +1,6 @@
 # Analytical research
 
+- [Issue #7678 manipulation-sensitivity T0 A01](preference_manipulation_7678_t0_20261005/README.md) — `HOLD`: the first auditor exited 1 after the candidate; post-run audit/freeze edits make later diagnostic PASSes non-confirmatory, and the original auditor stdout/stderr were not retained.
 - [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
 - [Issue #8135 cross-episode counterparty T0 A02](persistent_counterparty_8135_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED`: persistent learner changed later variants conditional on public history while frequency-matched sham remained history-independent; 64 authorized effects, zero unauthorized effects, 5/5 mutations rejected. A01 auditor-schema failure preserved; no real-service adaptation claim.
 - [Issue #8135 T0 A01 auditor-schema failure](persistent_counterparty_8135_t0_a01_20261005/FORMAL_FAILURE.md) — candidate 1/1 exit 0, auditor 1/1 exit 1 (`episode_field_set`); no audit JSON, retries 0; not a scientific result and not rerun.
