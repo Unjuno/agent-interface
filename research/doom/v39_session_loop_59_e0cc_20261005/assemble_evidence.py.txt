@@ -1,0 +1,80 @@
+"""Copy inert construction evidence and exact imported source variants."""
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+
+job = Path(__file__).resolve().parent
+repo = job.parent / "perkey-owner-guard-repo-e0cc-20261005"
+out = repo / "research/doom/v39_session_loop_59_e0cc_20261005"
+out.mkdir(parents=True, exist_ok=True)
+
+def retain(path, relative):
+    if path.is_symlink():
+        raise AssertionError(f"unexpected link {path}")
+    if relative.suffix == ".py":
+        relative = relative.with_name(relative.name + ".txt")
+    if relative.suffix == ".log":
+        relative = relative.with_suffix(".log.txt")
+    target = out / relative
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(path, target)
+
+for path in job.iterdir():
+    if path.is_file():
+        retain(path, Path(path.name))
+    elif (path.name.startswith(("child-", "full-", "scoped-tests-", "initial-barrier-"))
+          or path.name in ("identity-composition", "publication-checks")):
+        for child in path.rglob("*"):
+            if child.is_file() and "__pycache__" not in child.parts:
+                retain(child, child.relative_to(job))
+
+index = json.loads((job / "source-index-manifest.json").read_text())
+variants = {}
+manifest_paths = sorted(job.glob("full-*/parent-loaded-sources.json"))
+manifest_paths += sorted(job.glob("*/external/loaded-sources.json"))
+for manifest in manifest_paths:
+    for relative, digest in json.loads(manifest.read_text()).items():
+        record = variants.setdefault(relative, {}).setdefault(digest, {"used_by": []})
+        record["used_by"].append(str(manifest.relative_to(job)))
+
+for relative, digests in variants.items():
+    for digest, metadata in digests.items():
+        raw = None
+        candidates = [job / "source" / relative,
+                      job / "identity-composition/base" / Path(relative).name,
+                      job / "identity-composition/candidate" / relative]
+        for candidate in candidates:
+            if candidate.is_file() and hashlib.sha256(candidate.read_bytes()).hexdigest() == digest:
+                raw = candidate.read_bytes()
+                break
+        if raw is None and relative in index:
+            blob = index[relative]["blob"]
+            candidate = subprocess.check_output(["/run/current-system/sw/bin/git", "-C", str(repo), "cat-file", "blob", blob])
+            if hashlib.sha256(candidate).hexdigest() == digest:
+                raw = candidate
+        if raw is None:
+            raise AssertionError(f"missing exact imported source {relative} {digest}")
+        target = Path("source-blobs") / (digest + ".py.txt")
+        (out / target).parent.mkdir(exist_ok=True)
+        (out / target).write_bytes(raw)
+        metadata.update(file=str(target), bytes=len(raw))
+
+closure = {"format": "actual-import-source-variants-v1", "paths": variants,
+           "scope": "exact Python source variants imported by real parent/child runs; harness seams and test sources retained separately"}
+(out / "source-closure.json").write_text(json.dumps(closure, indent=2) + "\n")
+for relative in ("research/doom/map01_motor_responder_v10.txt", "research/doom/map01_cover_policy_schema_v6.json"):
+    target = out / "nonpython-source" / Path(relative).name
+    target.parent.mkdir(exist_ok=True)
+    target.write_bytes((job / "source" / relative).read_bytes())
+
+files = {}
+for path in sorted(out.rglob("*")):
+    if path.is_file() and path.name != "publication-manifest.json":
+        if path.suffix in (".py", ".pyc"):
+            raise AssertionError(f"active Python file in evidence: {path}")
+        files[str(path.relative_to(out))] = {"sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "bytes": path.stat().st_size}
+(out / "publication-manifest.json").write_text(json.dumps({"format": "inert-evidence-manifest-v1", "files": files}, indent=2) + "\n")
+print(json.dumps({"out": str(out), "files": len(files), "bytes": sum(row["bytes"] for row in files.values()),
+                  "source_paths": len(variants), "source_variants": sum(map(len, variants.values()))}))

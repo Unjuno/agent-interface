@@ -1,0 +1,122 @@
+"""Independent raw audit for ordinary synthetic full-controller constructions."""
+from collections import Counter
+import hashlib
+import json
+from pathlib import Path
+import sys
+from PIL import Image
+
+job = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent
+checks = []
+def check(name, condition, detail=None):
+    checks.append({"check": name, "pass": bool(condition), "detail": detail})
+
+def rows(path):
+    return [json.loads(line) for line in path.read_text().splitlines()]
+
+for name in ("full-04", "full-05", "full-06", "full-07"):
+    run = job / name
+    prefix = name + ":"
+    receipt = json.loads((run / "receipt.json").read_text())
+    events = rows(run / "controller/runtime/events.jsonl")
+    delivered = rows(run / "controller/runtime/delivered.jsonl")
+    timeline = rows(run / "harness-timeline.jsonl")
+    state = json.loads((run / "external/fake-state.json").read_text())
+    commands = [json.loads(row["text"]) for row in timeline
+                if row["event"] == "controller_stdin_write"]
+    begins = [row for row in timeline if row["event"] == "fake_model_begin"]
+    accepted = {row["id"]: row for row in events if row["event"] == "accepted"}
+    terminals = {row["id"]: row for row in events if row["event"] == "terminal"}
+    observations = {row["sequence"]: row for row in events if row["event"] == "observation"}
+    typed = {row["sequence"]: row for row in events if row["event"] == "typed_observation"}
+    check(prefix + "published_records_preserved", events == delivered)
+    check(prefix + "real_child_ready_fixture_score", any(row["event"] == "ready" and row.get("fixture") for row in events)
+          and any(row["event"] == "post_control_score" for row in events))
+    check(prefix + "all_admissions_closed", set(accepted) == set(terminals))
+    check(prefix + "external_connections_closed", state["connections"] == state["closed_connections"] == 5)
+    check(prefix + "no_unexpected_external_launch", state["forbidden_calls"] == [])
+    check(prefix + "matching_typed_full_sequences", set(observations) == set(typed))
+    for seq, obs in observations.items():
+        image_path = run / "controller/runtime" / Path(obs["image"]).name
+        with Image.open(image_path) as image:
+            actual_rgb_sha = hashlib.sha256(image.convert("RGB").tobytes()).hexdigest()
+        check(prefix + f"rgb_{seq}", actual_rgb_sha == obs["frame_rgb_sha256"] == typed[seq]["frame_rgb_sha256"])
+        check(prefix + f"epoch_{seq}", all(obs[field] == typed[seq][field] for field in ("capture_ns", "pointer_binding")))
+    admissions = [row for row in events if row["event"] == "input_admission" and row["id"].startswith("plan-")]
+    releases = [row for row in events if row["event"] == "input_release_transition" and row["id"].startswith("plan-")]
+    check(prefix + "three_key_program_exercised", {row["key"] for row in admissions} == {"Up", "Shift_L", "space"})
+    check(prefix + "one_release_per_primary_admission", len(admissions) == len(releases) and len(admissions) in (3, 6))
+    for down in admissions:
+        identity = (down["id"], down["step"], down["key"], down["intent_token"], down["owner_id"])
+        matching = [up for up in releases if tuple(up[field] for field in ("id", "step", "key", "intent_token", "owner_id")) == identity]
+        check(prefix + "unique_primary_release:" + str(identity[:3]), len(matching) == 1)
+        if len(matching) != 1:
+            continue
+        up = matching[0]
+        dm, um = down["physical_key_measurement"], up["physical_key_measurement"]
+        check(prefix + "pair_identity:" + str(identity[:3]), all(dm[field] == um[field] for field in ("owner_id", "intent_token", "key", "actuation_id")))
+        check(prefix + "pair_evidence:" + str(identity[:3]),
+              dm["classification"] == "CONFIRMED_PHYSICAL_DOWN" and um["classification"] == "CONFIRMED_PHYSICAL_UP"
+              and dm["pre_sample"]["down"] is False and dm["post_sample"]["down"] is True
+              and um["pre_sample"]["down"] is True and um["post_sample"]["down"] is False
+              and dm["pre_sample"]["finished_ns"] <= dm["press_request_ns"] <= dm["sync_return_ns"] <= dm["post_sample"]["started_ns"]
+              and um["pre_sample"]["finished_ns"] <= um["release_request_ns"] <= um["sync_return_ns"] <= um["post_sample"]["started_ns"]
+              and up["release_batch_complete"] is True and up["owner_transition_verified"] is True
+              and up["owner_thread_keyup_verified_after_batch"] is True and up["ordinary_release_candidate"] is True
+              and um["grants_input_authority"] is False and um["application_consumption_observed"] is False)
+    primary_ids = {row["id"] for row in admissions}
+    for identifier in primary_ids:
+        batch = [row["physical_key_measurement"] for row in releases if row["id"] == identifier]
+        check(prefix + "one_shared_batch:" + identifier,
+              len(batch) == 3 and len({row["batch_id"] for row in batch}) == 1
+              and all(row["post_sample_basis"] == "shared_batch" for row in batch)
+              and len({json.dumps(row["pre_sample"], sort_keys=True) for row in batch}) == 1
+              and len({json.dumps(row["post_sample"], sort_keys=True) for row in batch}) == 1)
+    if name == "full-07":
+        failure = json.loads((run / "controller/controller-failure.json").read_text())
+        check(prefix + "expected_release_failure", receipt["child_exit_codes"] == [1]
+              and "invalidated cover did not verify empty release" in receipt["error"]
+              and terminals["cover-1"]["release"]["verified"] is False)
+        check(prefix + "no_replan_or_resubmit_after_failed_release", len(begins) == 2
+              and [row.get("id") for row in commands if row.get("op") == "submit"] == ["cover-0", "plan-0-primary-0-0", "cover-1"])
+        check(prefix + "cleanup_remains_explicitly_incomplete", failure["cleanup_complete"] is False
+              and failure["input_releases_verified_empty"] is False and failure["stdout_reader_retired"] is True
+              and state["fake_keys_down"] == [24] and not (run / "controller/report.json").exists())
+        continue
+    report = json.loads((run / "controller/report.json").read_text())
+    check(prefix + "success_exit_and_neutral", receipt["error"] is None and receipt["child_exit_codes"] == [0]
+          and state["fake_keys_down"] == [] and all(t["release"]["verified"] is True
+          and t["release"]["keys_down"] == [] and t["release"]["buttons_down"] == [] for t in terminals.values()))
+    expected_pairs = 6 if name == "full-04" else 3
+    check(prefix + "reported_pairs_match_raw_primary_only", report["input_edge_receipt_statuses"]["adapter_edge_brackets_paired"] == expected_pairs == len(admissions))
+    check(prefix + "cancelled_cover_not_promoted", report["input_edge_receipt_statuses"].get("adapter_edge_receipt_incomplete") == (2 if name == "full-04" else 1))
+    check(prefix + "no_current_action_authority_at_close", report["current_input_authority_true_at_decision_close"] == 0)
+    check(prefix + "typed_artifact_report_matches_raw", report["typed_artifact_reconciliation_failures"] == 0)
+    if name == "full-04":
+        check(prefix + "normal_control", report["policy_invalidations"] == 0 and len(begins) == 3)
+        continue
+    decision = report["decisions"][1]
+    invalidation = decision["policy_invalidation"]
+    inv_observation = observations[invalidation["sequence"]]
+    check(prefix + "invalidation_identity_retained", all(invalidation[field] == inv_observation[field] for field in ("capture_ns", "pointer_binding", "frame_rgb_sha256")))
+    check(prefix + "correct_hard_or_unknown_outcome", invalidation["outcome"]["status"] == ("HARD_INVALIDATED" if name == "full-05" else "UNKNOWN"))
+    interrupt = next(row for row in timeline if row["event"] == "fake_model_interrupt")
+    late = next(row for row in timeline if row["event"] == "fake_model_return" and row["turn"] == 2)
+    check(prefix + "interrupt_precedes_late_eligible_answer", interrupt["at_ns"] < late["at_ns"] and late["eligible"] is True)
+    check(prefix + "stale_answer_no_input", decision["model_action_discarded"] is True
+          and decision["final_action_admission"]["status"] == "REJECTED_POLICY_INVALIDATED"
+          and not any(row.get("id", "").startswith("plan-1") for row in commands + list(accepted.values())))
+    check(prefix + "next_model_after_neutral_and_frame", len(begins) == 3
+          and terminals["cover-1"]["emit_ns"] < begins[2]["at_ns"]
+          and inv_observation["emit_ns"] < begins[2]["at_ns"]
+          and "Current locally verified health: 60." in begins[2]["prompt"])
+    next_source = Path(report["decisions"][2]["source_image"])
+    with Image.open(run / "controller/runtime" / next_source.name) as frame:
+        check(prefix + "next_model_source_pixels_fresh", frame.getpixel((0, 0))[0] == 60)
+
+result = {"scope": "ordinary synthetic construction; raw event/file independent checks, no live task or performance claim",
+          "checks": checks, "passed": sum(row["pass"] for row in checks),
+          "failed": [row for row in checks if not row["pass"]]}
+(job / "raw-audit-v1.json").write_text(json.dumps(result, indent=2) + "\n")
+print(json.dumps({"passed": result["passed"], "failed": result["failed"]}))
+sys.exit(bool(result["failed"]))

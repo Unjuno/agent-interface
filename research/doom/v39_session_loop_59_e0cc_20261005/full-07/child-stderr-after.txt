@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/child_session.py", line 25, in <module>
+    module.main()
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_map01_v15.py", line 135, in main
+    try:base.main()
+        ^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_map01_v12.py", line 385, in main
+    backend.close()
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v5.py", line 28, in close
+    self.owner.close()
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/input_transition_owner_v3.py", line 29, in close
+    return self._inner.close()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/input_owner_v12.py", line 70, in close
+    self.call('close')
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/input_owner_v12.py", line 63, in call
+    if not ok: raise result
+               ^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/input_owner_v12.py", line 553, in _run
+    result = release(reason)
+             ^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/input_owner_v12.py", line 478, in release
+    raise error
+RuntimeError: owner release not verified: [24]

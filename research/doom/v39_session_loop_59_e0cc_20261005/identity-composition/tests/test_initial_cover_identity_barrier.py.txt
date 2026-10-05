@@ -1,0 +1,173 @@
+"""Executable extraction test for the real V39 initial-cover invalidation branch.
+
+Select source with V39_CONTROLLER_SOURCE. This runs no child process or I/O.
+"""
+import ast
+import importlib.util
+import json
+import os
+import sys
+import time
+import unittest
+from pathlib import Path
+from types import SimpleNamespace
+
+HERE = Path(__file__).resolve().parent
+JOB = HERE.parents[1]
+REPO = Path("/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/perkey-owner-guard-repo-e0cc-20261005")
+CONTROLLER_PATH = Path(os.environ["V39_CONTROLLER_SOURCE"]).resolve()
+sys.path[:0] = [str(CONTROLLER_PATH.parent), str(CONTROLLER_PATH.parent.parent / "live_control"),
+                str(JOB / "source/research/doom"), str(JOB / "source/research/live_control"),
+                str(REPO / "research/doom"), str(REPO / "research/live_control")]
+spec = importlib.util.spec_from_file_location("map01_overlap_controller_v39", CONTROLLER_PATH)
+controller = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = controller
+spec.loader.exec_module(controller)
+
+
+def make_initial_branch():
+    tree = ast.parse(CONTROLLER_PATH.read_bytes())
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "main")
+    branch = next(n for n in ast.walk(main) if isinstance(n, ast.If) and
+                  isinstance(n.test, ast.Compare) and
+                  isinstance(n.test.left, ast.Subscript) and
+                  isinstance(n.test.left.value, ast.Name) and
+                  n.test.left.value.id == "initial_cover_admission")
+    factory = ast.parse(
+        "def factory(initial_cover_admission, invalidation, latest, wait, process, cover,\n"
+        "            cover_ids, cover_terminals, decisions, cover_renewal_gaps_ms,\n"
+        "            cover_semantic, cover_policy_source_iteration, validity_admission,\n"
+        "            validity_monitor, effect_memory, prior_soft_event_summary, model_session_id):\n"
+        "    index = 0\n"
+        "    for _branch_once in range(1):\n        pass\n").body[0]
+    loop = next(n for n in factory.body if isinstance(n, ast.For))
+    loop.body = [branch]
+    factory.body.append(ast.parse("return latest, decisions, cover_ids, cover_terminals").body[0])
+    helpers = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in {
+        "resolve_invalidated_cover_submission", "cancel_invalidated_cover_before_plan",
+        "wait_for_invalidation_frame"}]
+    module = ast.fix_missing_locations(ast.Module(body=helpers + [factory], type_ignores=[]))
+    scope = {"str": str, "json": json, "time": time,
+             "_typed_json_equal": controller._typed_json_equal}
+    exec(compile(module, str(CONTROLLER_PATH), "exec"), scope)
+    return scope["factory"]
+
+
+class Queue:
+    def __init__(self, rows):
+        self.rows = list(rows)
+        self.returned = []
+
+    def __call__(self, predicate, timeout=None, **kwargs):
+        while self.rows:
+            row = self.rows.pop(0)
+            if predicate(row):
+                self.returned.append(row)
+                return row
+        raise TimeoutError("scripted observation queue exhausted")
+
+
+class Stdin:
+    def __init__(self):
+        self.writes = []
+
+    def write(self, value):
+        self.writes.append(value)
+
+    def flush(self):
+        pass
+
+
+class TestInitialCoverInvalidationBarrier(unittest.TestCase):
+    def setUp(self):
+        self.binding = {"focus": 41, "surface": 41, "geometry": [0, 0, 640, 480]}
+        self.frame_hash = "a" * 64
+        self.invalidation = {"sequence": 5, "capture_ns": 100,
+                             "pointer_binding": self.binding,
+                             "frame_rgb_sha256": self.frame_hash}
+        self.latest = {"event": "observation", "sequence": 4, "capture_ns": 90,
+                       "pointer_binding": self.binding, "frame_rgb_sha256": "b" * 64,
+                       "image": "original.png"}
+        self.base_rows = [
+            {"event": "accepted", "id": "cover-0"},
+            {"event": "cancel_requested", "id": "cover-0", "matched": True},
+            {"event": "input_released", "id": "cover-0", "program_terminal_pending": True,
+             "grants_input_authority": False,
+             "owner_release": {"verified": True, "keys_down": [], "buttons_down": []}},
+            {"event": "terminal", "id": "cover-0", "status": "cancelled",
+             "release": {"verified": True, "keys_down": [], "buttons_down": []}},
+        ]
+        self.wrong_binding = {"event": "observation", "sequence": 5, "capture_ns": 101,
+                              "pointer_binding": {**self.binding, "focus": 99},
+                              "frame_rgb_sha256": self.frame_hash, "image": "wrong-binding.png"}
+        self.stale = {"event": "observation", "sequence": 5, "capture_ns": 99,
+                      "pointer_binding": self.binding, "frame_rgb_sha256": self.frame_hash,
+                      "image": "stale.png"}
+        self.exact = {"event": "observation", "sequence": 5, "capture_ns": 100,
+                      "pointer_binding": self.binding, "frame_rgb_sha256": self.frame_hash,
+                      "image": "invalidation-frame.png"}
+
+    def execute(self, rows):
+        queue = Queue(rows)
+        stdin = Stdin()
+        monitor = SimpleNamespace(soft_event_count=0, latest_soft_event=None)
+        admission = {"event": "policy_invalidation", "invalidation": self.invalidation}
+        result = make_initial_branch()(
+            admission, self.invalidation, self.latest, queue,
+            SimpleNamespace(stdin=stdin), "cover-0", [], [], [], [], None, None,
+            {"status": "admitted"}, monitor, [], None, "synthetic-session")
+        return result, queue, stdin
+
+    def test_waits_for_exact_matching_frame_after_verified_release(self):
+        result, queue, stdin = self.execute(self.base_rows + [self.wrong_binding, self.stale, self.exact])
+        latest, decisions, cover_ids, terminals = result
+        self.assertEqual([r.get("sequence") for r in queue.returned if r["event"] == "observation"], [5])
+        self.assertEqual(latest["image"], "invalidation-frame.png")
+        self.assertEqual(len(decisions), 1)
+        decision = decisions[0]
+        self.assertEqual(decision["source_image"], "original.png")
+        self.assertEqual(decision["invalidation_frame_image"], "invalidation-frame.png")
+        self.assertEqual(decision["plan_terminal"], "not_started")
+        self.assertEqual(decision["final_action_admission"]["status"], "not_started")
+        self.assertTrue(decision["cover_terminal_before_plan"])
+        self.assertEqual(cover_ids, ["cover-0"])
+        self.assertEqual(terminals[0]["status"], "cancelled")
+        self.assertEqual(len(stdin.writes), 1)
+        self.assertIn('"cancel"', stdin.writes[0])
+
+    def test_missing_matching_frame_times_out_without_decision(self):
+        rows = self.base_rows + [self.wrong_binding, self.stale]
+        queue = Queue(rows)
+        stdin = Stdin()
+        monitor = SimpleNamespace(soft_event_count=0, latest_soft_event=None)
+        with self.assertRaises(TimeoutError):
+            make_initial_branch()(
+                {"event": "policy_invalidation", "invalidation": self.invalidation},
+                self.invalidation, self.latest, queue, SimpleNamespace(stdin=stdin),
+                "cover-0", [], [], [], [], None, None, {"status": "admitted"},
+                monitor, [], None, "synthetic-session")
+        self.assertEqual([r["event"] for r in queue.returned], ["accepted", "cancel_requested",
+                         "input_released", "terminal"])
+        self.assertEqual(len(stdin.writes), 1)
+
+    def test_unverified_release_raises_before_waiting_for_frame(self):
+        rows = list(self.base_rows)
+        rows[3] = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                   "release": {"verified": False, "keys_down": [24], "buttons_down": []}}
+        rows += [self.exact]
+        queue = Queue(rows)
+        stdin = Stdin()
+        monitor = SimpleNamespace(soft_event_count=0, latest_soft_event=None)
+        with self.assertRaisesRegex(RuntimeError, "did not verify empty release"):
+            make_initial_branch()(
+                {"event": "policy_invalidation", "invalidation": self.invalidation},
+                self.invalidation, self.latest, queue, SimpleNamespace(stdin=stdin),
+                "cover-0", [], [], [], [], None, None, {"status": "admitted"},
+                monitor, [], None, "synthetic-session")
+        self.assertEqual([r["event"] for r in queue.returned], ["accepted", "cancel_requested",
+                         "input_released", "terminal"])
+        self.assertEqual(len(stdin.writes), 1)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

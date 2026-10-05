@@ -1,0 +1,237 @@
+test_cancel_during_batch_sample_does_not_become_an_ordinary_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_cancel_during_batch_sample_does_not_become_an_ordinary_pair) ... ERROR
+test_delivered_up_with_send_error_suppresses_sibling_bracket (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_delivered_up_with_send_error_suppresses_sibling_bracket) ... ERROR
+test_expiry_during_batch_sample_does_not_become_an_ordinary_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_expiry_during_batch_sample_does_not_become_an_ordinary_pair) ... ERROR
+test_focus_change_during_batch_sample_does_not_become_an_ordinary_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_focus_change_during_batch_sample_does_not_become_an_ordinary_pair) ... ERROR
+test_projection_rejects_altered_basis_authority_identity_and_batch_status (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_projection_rejects_altered_basis_authority_identity_and_batch_status) ... ERROR
+test_retry_keeps_shared_sample_for_the_other_key (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_retry_keeps_shared_sample_for_the_other_key) ... ERROR
+test_two_keys_pair_through_actual_wrapper_and_batch_publisher (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_two_keys_pair_through_actual_wrapper_and_batch_publisher) ... ERROR
+test_unknown_post_sample_never_projects_a_complete_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_unknown_post_sample_never_projects_a_complete_pair) ... ERROR
+
+======================================================================
+ERROR: test_cancel_during_batch_sample_does_not_become_an_ordinary_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_cancel_during_batch_sample_does_not_become_an_ordinary_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+======================================================================
+ERROR: test_delivered_up_with_send_error_suppresses_sibling_bracket (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_delivered_up_with_send_error_suppresses_sibling_bracket)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+======================================================================
+ERROR: test_expiry_during_batch_sample_does_not_become_an_ordinary_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_expiry_during_batch_sample_does_not_become_an_ordinary_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+======================================================================
+ERROR: test_focus_change_during_batch_sample_does_not_become_an_ordinary_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_focus_change_during_batch_sample_does_not_become_an_ordinary_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+======================================================================
+ERROR: test_projection_rejects_altered_basis_authority_identity_and_batch_status (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_projection_rejects_altered_basis_authority_identity_and_batch_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+======================================================================
+ERROR: test_retry_keeps_shared_sample_for_the_other_key (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_retry_keeps_shared_sample_for_the_other_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+======================================================================
+ERROR: test_two_keys_pair_through_actual_wrapper_and_batch_publisher (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_two_keys_pair_through_actual_wrapper_and_batch_publisher)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+======================================================================
+ERROR: test_unknown_post_sample_never_projects_a_complete_pair (research.live_control.test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_unknown_post_sample_never_projects_a_complete_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/test_batch_key_measurement_composition.py", line 34, in setUp
+    from doom_batch_key_measurement_backend_v1 import Backend
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_batch_key_measurement_backend_v1.py", line 2, in <module>
+    from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 6, in <module>
+    from doom_typed_release_backend_v2 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v2.py", line 10, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_v7.py", line 4, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.111s
+
+FAILED (errors=8)
