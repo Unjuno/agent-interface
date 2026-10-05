@@ -5,7 +5,7 @@
   "base_main_sha": "0c70aff144af3515835c7c6069154fc94ad55ad4",
   "generator_base_main_sha": "95316efef54b092fc2f0264539223830cdb9ba21",
   "generator_source_commit": "cf597c6814289ed35897fa91ef864bdceaeb858a",
-  "source_commit": "096187299220808500c08c9926e5b911d880e58e",
+  "source_commit": "1e30e1e4e9ca7280a7337ed7a9c69afbf9a65072",
   "source_hash_file": "SOURCE_SHA256.txt",
   "input_hash_file": "INPUT_SHA256.txt",
   "generator_record": "GENERATOR_RECORD.json",
@@ -25,6 +25,8 @@
     "cleanup": "--rm"
   },
   "counts_before_candidate": {"generator": 1, "candidate": 0, "auditor": 0, "retries": 0},
+  "latest_main_observed_after_freeze": "2c1c90c80389dc6aab6a950c7058528272979f2d",
+  "launch_basis": "continue against pinned 0c70aff base; issue #8157 has no unchanged-main launch gate",
   "generator_command": "docker run --rm --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,noexec,nosuid -v $PWD/research/vision/interval_ttc_bounded_error_v1:/src:ro -v $PWD/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A02:/out:rw -w /src IMAGE python /src/generate.py /out",
   "candidate_command": "docker run --rm --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,noexec,nosuid -v $PWD/research/vision/interval_ttc_bounded_error_v1/candidate.py:/src/candidate.py:ro -v $PWD/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A02/public:/input:ro -v $PWD/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A02/candidate:/out:rw -w /src IMAGE python /src/candidate.py /input/public.jsonl /out/candidate.jsonl",
   "auditor_command": "docker run --rm --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,noexec,nosuid -v $PWD/research/vision/interval_ttc_bounded_error_v1:/src:ro -v $PWD/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A02/public:/public:ro -v $PWD/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A02/oracle:/truth:ro -v $PWD/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A02/candidate:/candidate:ro -v $PWD/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A02/audit:/out:rw -w /src IMAGE python /src/auditor.py /public/public.jsonl /truth/oracle.jsonl /candidate/candidate.jsonl /out/REPORT.json",
