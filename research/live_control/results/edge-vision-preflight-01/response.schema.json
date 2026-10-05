@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "field_point", "submit_point"],
+  "properties": {
+    "status": {"type": "string", "enum": ["identified", "uncertain"]},
+    "field_point": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+        {"type": "null"}
+      ]
+    },
+    "submit_point": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+        {"type": "null"}
+      ]
+    }
+  }
+}

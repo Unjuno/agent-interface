@@ -1,0 +1,33 @@
+{
+  "schema": "edge_vision_preflight_v1",
+  "study_id": "edge-vision-preflight-01",
+  "status": "frozen_before_model_call",
+  "purpose": "one-call visual grounding plumbing check; excluded from every efficiency allocation",
+  "attempt_limit": 1,
+  "retry_policy": "no retry after any call starts",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "image": {
+    "path": "form.png",
+    "sha256": "c92070f3e058ebeed14a8d3f13ba44a509812127d191b91dc82f07e5d4379e3d",
+    "width": 756,
+    "height": 488,
+    "construction": "synthetic static form screenshot drawn with Pillow; no browser, external request, or model call"
+  },
+  "expected_boxes_xywh": {
+    "field": [150, 100, 221, 31],
+    "submit": [400, 100, 71, 31]
+  },
+  "expected_center_pixels": {
+    "field": [260, 115],
+    "submit": [435, 115]
+  },
+  "prompt_path": "prompt.txt",
+  "schema_path": "response.schema.json",
+  "scoring": {
+    "pass": "status identified and each returned point lies inside its corresponding hidden box",
+    "partial": "exactly one returned point lies inside its box",
+    "fail": "neither point lies inside its box, malformed output, timeout, or incomplete call record"
+  },
+  "forbidden_inference": "this preflight provides no task execution, effect, input release, latency comparison, token-economy, or live-browser evidence"
+}
