@@ -58,3 +58,10 @@ After main advanced from `19a6b723e58ccfd2b8265e88659589ef9223fcc9`, the 56-path
 The frozen 56-path candidate closure was compared against the exact main tip above; the candidate probe was not rerun. The independent refresh audit passes 8/8: 55 paths are shared with candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`; `research/live_control/input_owner_v12.py` is the only changed shared path, while the V15 selector remains unchanged and the candidate-only selection helper remains absent. All 56 frozen files still match latest PR #8065 head `6591b5703862c73d375a6646374ad82a26505bcb`. The current owner hash remains distinct from the archived A01 owner hash.
 
 This is source-identity evidence only. It does not run the candidate on current main, test KeyRelease, or establish gameplay, application consumption, recovery, or task success. Reproduce with `python3 -B audit_latest_main_649b.py` after fetching the exact main commit. The prior refresh artifacts remain unchanged.
+
+## Latest-main static refresh (2026-10-05, `7e79b4d5fa02d4877f5c53c7f6f234f181e7a5cd`)
+
+The 56-path frozen candidate closure was compared against current main and latest PR #8065 head `6591b5703862c73d375a6646374ad82a26505bcb`. The independent static audit passes 8/8: 55 paths are shared with candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`; `research/live_control/input_owner_v12.py` is the only changed shared path, the V15 selector remains unchanged, and the candidate-only selection helper remains absent from main. The frozen 56 sources still match the latest candidate head.
+
+
+This refresh reruns source-identity checks only; it does not rerun the frozen candidate, live gameplay, or input behavior. Reproduce with `python -B audit_latest_main.py` after fetching the exact main and candidate commits. The eight checks are retained in `results/AUDIT_LATEST_MAIN.json`.

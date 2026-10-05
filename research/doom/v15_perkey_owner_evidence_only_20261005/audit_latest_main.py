@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parents[2]
 BASE = "11445a7ca200404ddc80bf7ebb1dbef86eb059de"
-MAIN = "b6907899f11b036f2af572e8d4794ebb4b7e5c83"
+MAIN = "7e79b4d5fa02d4877f5c53c7f6f234f181e7a5cd"
 LATEST_CANDIDATE = "6591b5703862c73d375a6646374ad82a26505bcb"
 FREEZE = json.loads((ROOT / "FREEZE.json").read_text())
 MANIFEST = json.loads((ROOT / "source-manifest.json").read_text())
