@@ -42,4 +42,4 @@ python audit_current_runtime.py
 python audit_manifest.py
 ```
 
-A02's original experiment base is `69dd261430cb1ed875f5a76411c4a2a54777c114`; the archived source blob is identical at delivery base `c1074c4dc385bae5b94ce93a5870e92c2e6ab07d`. The runtime path files are independently SHA-256 and Git-blob pinned to the delivery base.
+A02's original experiment base is `69dd261430cb1ed875f5a76411c4a2a54777c114`; the archived source blob is identical at delivery base `84d98a8eaf5763d45887478a40370d92f16e87ac`. The runtime path files are independently SHA-256 and Git-blob pinned to the delivery base.
