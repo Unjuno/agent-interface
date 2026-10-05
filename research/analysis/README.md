@@ -1030,6 +1030,8 @@ The checker compares the generated block against every child directory with a re
 
 ## Retained construction archives
 
+- [Issue #8032 T0 A02 ordinal-score power sensitivity](procedure_retention_8032_t0_a02_20261005/README.md) — separate no-participant WSLc successor simulation; candidate and raw-only auditor each ran once, audit reconstructed 54/54 cells. Authored ordinal PMFs yield assumption-dependent grid recruitment estimates (354–777 total across three arms); T1 remains HOLD and unauthorized. See [T0 A01 draft PR #8058](https://github.com/Unjuno/agent-interface/pull/8058).
+
 - [Issue #6808 / PR #6821 S03 pre-invocation STOP](looming_visual_assumption_gate_5905_s03_wslc_20261003/STOP.md) — 35 exact original files preserved; main advanced after freeze, construction/candidate/auditor/container/retry counts all zero; no scientific result or S03 rerun.
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
