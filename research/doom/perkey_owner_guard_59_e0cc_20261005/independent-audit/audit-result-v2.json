@@ -1,0 +1,73 @@
+{
+  "base_commit": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "checks": [
+    {
+      "exit_code": 2,
+      "failure_kind": "test file absent during source export",
+      "name": "red_v1_is_export_race_not_test_execution",
+      "pass": true
+    },
+    {
+      "green_v1_is_not_a_patched_run": true,
+      "name": "red_v2_and_green_v1_same_unpatched_two_failure_output",
+      "pass": true,
+      "stderr_difference": "elapsed test duration only",
+      "two_expected_mismatch_cases_fail_before_fix": true
+    },
+    {
+      "exit_code": 0,
+      "name": "green_v2_four_routes_and_retained_receipt",
+      "pass": true,
+      "route_errors": [],
+      "routes": {
+        "v12-cached-perkey": {
+          "forbidden_calls": [],
+          "outcome": "rejected",
+          "owner_file": null,
+          "owner_instantiated": false
+        },
+        "v12-perkey": {
+          "forbidden_calls": [],
+          "outcome": "selected",
+          "owner_file": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+          "owner_instantiated": false
+        },
+        "v15-default": {
+          "forbidden_calls": [],
+          "outcome": "selected",
+          "owner_file": "research/live_control/input_transition_owner_v4.py",
+          "owner_instantiated": false
+        },
+        "v15-perkey": {
+          "forbidden_calls": [],
+          "outcome": "rejected",
+          "owner_file": null,
+          "owner_instantiated": false
+        }
+      }
+    },
+    {
+      "baseline_session_sha256": "ef89fa60d5ae71b6d5b4633d0d92820f8ce2f032cd59f142542ec00d4fd1db0d",
+      "candidate_session_sha256": "dc214dd126b8b0e480c880d4886acd593c7d35fc74a5a080016b86d1c9cb5f94",
+      "executed_session_sha256": "dc214dd126b8b0e480c880d4886acd593c7d35fc74a5a080016b86d1c9cb5f94",
+      "name": "green_v2_executed_session_matches_candidate_worktree",
+      "pass": true
+    },
+    {
+      "name": "candidate_worktree_delta_is_guard_plus_new_regression_test",
+      "pass": true,
+      "production_delta_scope": "session_map01_v12.py import inspect + selected owner path guard only",
+      "status": [
+        " M research/doom/session_map01_v12.py",
+        "?? research/doom/test_perkey_owner_source_guard.py"
+      ]
+    }
+  ],
+  "limitations": [
+    "Startup-selection only; no owner construction, UP execution, X11, game, or model run.",
+    "The path guard rejects the incompatible combined route but does not implement an A01 measurement/batch adapter.",
+    "red-v1 was a source-export race; green-v1 repeated the unpatched red-v2 result."
+  ],
+  "pass": true,
+  "schema": "perkey-owner-source-guard-independent-audit-v1"
+}

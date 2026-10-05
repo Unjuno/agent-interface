@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "source_count": 57,
+  "production_base_count": 56,
+  "only_changed_source": [
+    "research/doom/session_map01_v12.py"
+  ],
+  "test_sha_unchanged": true,
+  "redundant_run_sources_equal": true,
+  "receipts": {
+    "red-v1": {
+      "exit_code": 2,
+      "log_hashes_match": true
+    },
+    "red-v2": {
+      "exit_code": 1,
+      "log_hashes_match": true
+    },
+    "green-v1": {
+      "exit_code": 1,
+      "log_hashes_match": true
+    },
+    "green-v2": {
+      "exit_code": 0,
+      "log_hashes_match": true
+    }
+  }
+}
