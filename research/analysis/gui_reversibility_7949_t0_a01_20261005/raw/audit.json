@@ -1,0 +1,840 @@
+{
+  "candidate_oracle_agree": true,
+  "candidate_raw_sha256": "710faaff22ed2731b9c388f2e1d0e59e6a5bd10f3640d6eaf045ab12d250a739",
+  "disposition": "PASS_METHOD_SCOPED",
+  "expected_classifications_match": true,
+  "mutation_controls": [
+    {
+      "id": "uniform_coverage_complete",
+      "label": "UNKNOWN",
+      "reason": "incomplete_coverage"
+    },
+    {
+      "id": "uniform_receipt_valid",
+      "label": "UNKNOWN",
+      "reason": "invalidated_receipt"
+    }
+  ],
+  "oracle": [
+    {
+      "enumeration": [
+        {
+          "final": "100",
+          "start": "100",
+          "visited": [
+            "100"
+          ],
+          "word": []
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "100",
+          "start": "100",
+          "visited": [
+            "100",
+            "100"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "100",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "100",
+          "start": "100",
+          "visited": [
+            "100",
+            "100",
+            "100"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "010",
+          "start": "010",
+          "visited": [
+            "010"
+          ],
+          "word": []
+        },
+        {
+          "final": "010",
+          "start": "010",
+          "visited": [
+            "010",
+            "010"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "010",
+          "start": "010",
+          "visited": [
+            "010",
+            "010",
+            "010"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "010",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        }
+      ],
+      "id": "uniform",
+      "joint_words": [
+        [
+          "restore_a",
+          "restore_b"
+        ],
+        [
+          "restore_b",
+          "restore_a"
+        ]
+      ],
+      "label": "UNIVERSALLY_UNIFORM",
+      "reason": "enumerated_joint_word"
+    },
+    {
+      "enumeration": [
+        {
+          "final": "100",
+          "start": "100",
+          "visited": [
+            "100"
+          ],
+          "word": []
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101",
+            "101"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101",
+            "101"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "010",
+          "start": "010",
+          "visited": [
+            "010"
+          ],
+          "word": []
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110",
+            "110"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110",
+            "110"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        }
+      ],
+      "id": "branching",
+      "label": "UNIVERSALLY_BRANCHING",
+      "plans": {
+        "r010": [
+          [
+            "restore_b"
+          ],
+          [
+            "restore_b",
+            "restore_a"
+          ],
+          [
+            "restore_b",
+            "restore_b"
+          ]
+        ],
+        "r100": [
+          [
+            "restore_a"
+          ],
+          [
+            "restore_a",
+            "restore_a"
+          ],
+          [
+            "restore_a",
+            "restore_b"
+          ]
+        ]
+      },
+      "reason": "enumerated_receipt_bucket_words"
+    },
+    {
+      "enumeration": [
+        {
+          "final": "100",
+          "start": "100",
+          "visited": [
+            "100"
+          ],
+          "word": []
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101",
+            "101"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101",
+            "101"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "010",
+          "start": "010",
+          "visited": [
+            "010"
+          ],
+          "word": []
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110",
+            "110"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110",
+            "110"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "001",
+          "start": "001",
+          "visited": [
+            "001"
+          ],
+          "word": []
+        },
+        {
+          "final": "001",
+          "start": "001",
+          "visited": [
+            "001",
+            "001"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "001",
+          "start": "001",
+          "visited": [
+            "001",
+            "001"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "001",
+          "start": "001",
+          "visited": [
+            "001",
+            "001",
+            "001"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "001",
+          "start": "001",
+          "visited": [
+            "001",
+            "001",
+            "001"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "001",
+          "start": "001",
+          "visited": [
+            "001",
+            "001",
+            "001"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "001",
+          "start": "001",
+          "visited": [
+            "001",
+            "001",
+            "001"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        }
+      ],
+      "id": "partial",
+      "label": "PARTIALLY_RECOVERABLE",
+      "reason": "enumerated_start_without_target_word"
+    },
+    {
+      "enumeration": [
+        {
+          "final": "100",
+          "start": "100",
+          "visited": [
+            "100"
+          ],
+          "word": []
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "100",
+          "visited": [
+            "100",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101",
+            "101"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "101",
+          "start": "100",
+          "visited": [
+            "100",
+            "101",
+            "101"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "010",
+          "start": "010",
+          "visited": [
+            "010"
+          ],
+          "word": []
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110"
+          ],
+          "word": [
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000"
+          ],
+          "word": [
+            "restore_b"
+          ]
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110",
+            "110"
+          ],
+          "word": [
+            "restore_a",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "110",
+          "start": "010",
+          "visited": [
+            "010",
+            "110",
+            "110"
+          ],
+          "word": [
+            "restore_a",
+            "restore_b"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_a"
+          ]
+        },
+        {
+          "final": "000",
+          "start": "010",
+          "visited": [
+            "010",
+            "000",
+            "000"
+          ],
+          "word": [
+            "restore_b",
+            "restore_b"
+          ]
+        }
+      ],
+      "id": "ambiguous",
+      "label": "UNKNOWN",
+      "reason": "receipt_bucket_has_no_joint_word"
+    },
+    {
+      "enumeration": [],
+      "id": "incomplete",
+      "label": "UNKNOWN",
+      "reason": "coverage_not_certified"
+    },
+    {
+      "enumeration": [],
+      "id": "external_write",
+      "label": "UNKNOWN",
+      "reason": "receipt_not_current"
+    }
+  ],
+  "oracle_case_count": 6,
+  "oracle_enumerated_transition_traces": 63,
+  "run_id": "gui-reversibility-7949-t0-a01-20261005",
+  "static_baseline_false_positive": "partial"
+}
