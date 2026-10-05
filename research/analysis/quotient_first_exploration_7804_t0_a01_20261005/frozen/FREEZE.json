@@ -1,0 +1,74 @@
+{
+  "allocation_id": "APPLICATION-QUOTIENT-FIRST-7804-T0-A01-20261005-01",
+  "base_branch": "main",
+  "base_commit": "aeed696ff756d68497faed39b92e3546cb144972",
+  "branch": "research/quotient-first-7804-t0-a01-20261005",
+  "construction_tests": "PASS 7/7; formal candidate/auditor invocations 0",
+  "created_utc": "2026-10-05T10:27:20Z",
+  "formal_invocation_budget": {
+    "auditor": 1,
+    "auditor_only_after_candidate_exit_0": true,
+    "candidate": 1,
+    "retries": 0
+  },
+  "issue": 7804,
+  "predecessor_freeze_source_sha256": {
+    "PLAN.md": "5af3b8c6744a6da65e97c4112aba3ca51dfb587bc93d548b0dd82bc6983c029c",
+    "audit.py": "8e16fa62f517db80af1c75c6571660129470dc18f189640b31d2eff240e81192",
+    "candidate.py": "0395cf0f835d404c6edd444a223d2d1afc29029596c683f647cb6f6a10e05672",
+    "test_audit.py": "b740e43175d28146303529880b1c7768989a1e9fbe849d479e9982ab0252b2",
+    "test_candidate.py": "8f946c503c51aef6bcde87431a6be7775e8154401a9f62270da5b702aaffe2a5"
+  },
+  "predecessor_manifest_raw_sha256_claims": {
+    "audit.raw.json": "C18B896A4B40850093FFD5647BC8F6CDE1348620B095A3903B28BF4E924AED29",
+    "candidate.raw.json": "56D9D38F65DC91F4092B947E399BB2669744D449AD5975DB64F354F2B30D15E2"
+  },
+  "predecessor_merge_commit": "45fd7e4db095a89d8185bda81aa8028c5f34d7b3",
+  "predecessor_raw_actual_sha256": {
+    "audit_raw": "861dd754714910a13b148d9282493f2dbcde148b01480b3eda5b6b533f72f6db",
+    "candidate_raw": "02fcd1577643916cb37f967c2aa5213c027a2240a20fe77d31083caf1668fceb"
+  },
+  "predecessor_raw_git_blob_oids": {
+    "audit_raw": "5b8d8a8ec909e2769c2d67dd78b26d8964c7cfa8",
+    "candidate_raw": "19613eef95a8b6889b00db4dacc0853f808efe74"
+  },
+  "predecessor_source_git_blob_oids": {
+    "PLAN.md": "1745558f3cba83f9dc2a0f125b0e09dca89dc04a",
+    "audit.py": "865371a1c7b1b6b5dfe81d6dce9a29b72c6c2338",
+    "candidate.py": "a46e9dc01613085c05d1cd4caaa59b5f917e2b09",
+    "test_audit.py": "2cb878cfcb9ccd1d8f4a7bebdda77b30f34cbfb9",
+    "test_candidate.py": "67d6524b83514c3b8b5bea21a8711ed391d100f8"
+  },
+  "runtime": {
+    "cpu_quota_enforcement_verified": false,
+    "cpus_requested": 1,
+    "docker_client": "29.5.2",
+    "docker_server": "29.4.0",
+    "host_warnings": [
+      "DOCKER_INSECURE_NO_IPTABLES_RAW is set",
+      "cgroup v2; CPU limit enforcement not verified",
+      "swap not assessed"
+    ],
+    "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+    "network": "none",
+    "output": "separate writable mount",
+    "platform": "linux/arm64",
+    "rootfs": "read-only",
+    "source": "role-specific individual read-only file mounts",
+    "swap_assessed": false,
+    "tmpfs": "16MiB,noexec,nosuid at /tmp"
+  },
+  "scope": "finite authored transition model only; no wall-clock, production, runtime, GUI, human, liveness, or safety claim",
+  "source_sha256": {
+    "PROTOCOL.md": "bee02447be5482844b783fc5906bd46b8f0d8f3149dd21b3d114de63204c6529",
+    "auditor.py": "3ce71043b2b0bab9cac8a06c023beeceb1f223ae177766d169365a6bdce3f6bc",
+    "candidate.py": "81e549eee85b7a04174dbc829fc0797f8badf90dfd1cc04b2d751ba4e3d36061",
+    "predecessor_audit.raw.json": "861dd754714910a13b148d9282493f2dbcde148b01480b3eda5b6b533f72f6db",
+    "predecessor_auditor.py": "8e16fa62f517db80af1c75c6571660129470dc18f189640b31d2eff240e81192",
+    "predecessor_candidate.raw.json": "02fcd1577643916cb37f967c2aa5213c027a2240a20fe77d31083caf1668fceb",
+    "predecessor_model.py": "0395cf0f835d404c6edd444a223d2d1afc29029596c683f647cb6f6a10e05672",
+    "preflight_probe.py": "1c5c7e39c92b2e0d2a0d2578ea8da726036cd4ea829310157c91994453d523dd",
+    "spec.json": "63a2838008e4738442aceb89a920ffc24ab48021f362802e8cd1769d6cd33be5",
+    "test_method.py": "434fbd7ecb2bf79c690e03e46ac7065b07d576e0e0ae8c8a72ceb00a5bf42e4d"
+  }
+}
