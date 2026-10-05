@@ -10,7 +10,7 @@ This read-only successor addresses the audit limitation identified in PR #7913. 
 - **C:** This auditor checks arithmetic and serialization implied by the frozen guard contract. It does not re-run or independently validate the production evaluator or the human transcription.
 - **U:** No candidate, model, game, GUI, X server, OS input, live threat exposure, release, recovery, or task effect.
 
-The first audit invocation failed because the script referenced the wrong freeze keys; its output remains at `AUDIT.json`. A second invocation failed for the same provenance comparison because it compared candidate source hashes against the successor freeze rather than the parent A01 freeze; `recheck-01/AUDIT.json` is retained. After correcting the provenance reference, `recheck-02/AUDIT.json` passed. The auditor was then source-hash-pinned and rerun; `recheck-03/AUDIT.json` is the final result. This sequence is construction debugging of a read-only auditor, not a candidate retry.
+The first audit invocation failed because the script referenced the wrong freeze keys; its output remains at `AUDIT.json`. A second invocation failed for the same provenance comparison because it compared candidate source hashes against the successor freeze rather than the parent A01 freeze; `recheck-01/AUDIT.json` is retained. After correcting the provenance reference, `recheck-02/AUDIT.json` passed. The auditor was then source-hash-pinned and rerun; `recheck-03/AUDIT.json` records that pass. After merging current main, the unchanged raw passed again at `recheck-04/AUDIT.json`, the latest result. This sequence is construction debugging and read-only rechecking, not a candidate retry.
 
 ## Reproduction
 

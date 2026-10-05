@@ -13,7 +13,9 @@ invalidation. It compares the complete reconstructed structure with the
 one-shot A01 raw. The candidate and production guard were not rerun. The
 first two A02 auditor construction failures are retained in `AUDIT.json` and
 `recheck-01/AUDIT.json`; the corrected full reconstruction passes in
-`recheck-03/AUDIT.json` (5 threshold rows, 30 evaluated rows). Three focused
+`recheck-04/AUDIT.json` on the branch merged with current main (5 threshold
+rows, 30 evaluated rows). `recheck-03/AUDIT.json` preserves the preceding pass.
+Three focused
 mutation tests reject changed fields and missing, reordered, or extra rows.
 
 This corrects only the evidence-integrity limitation raised for the threshold
