@@ -34,3 +34,10 @@ Main advanced to `22e25aa74cac30f629209555ba93ba3cd2a279f3` after the tested PR 
 After the original closure check at `22e25aa74cac30f629209555ba93ba3cd2a279f3`, main advanced to `1fa854d537bfd711b5dfd99f8c04ab6c35bad286`. The same 56-path frozen source closure was compared byte-for-byte against its candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`: all 55 shared paths remain identical; the one helper path remains candidate-only; no path is missing or changed. `CURRENT_MAIN_RECHECK.json` records this refresh. The original 22e25 audit output is preserved as `results/AUDIT.at-main-22e25.json`; the current audit is regenerated without rerunning the probe. The candidate startup results, source freeze and failed system-Python STOP remain unchanged.
 
 This refresh supports relevance of the frozen candidate-source finding to the latest main closure only. It does not mean the defective candidate was merged, does not establish execution on current main, and does not add any live-control or game-effect result.
+
+
+## Latest-main refresh (2026-10-05)
+
+Main advanced from `1fa854d537bfd711b5dfd99f8c04ab6c35bad286` to `f1d7dd1da44cad3e5fd22a65d7bec21d40289d1d`. The frozen 56-path candidate closure was byte-compared again against the candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`: all 55 shared files remain unchanged, the candidate-only selection helper remains absent from both base and main, and no path changed or went missing. `CURRENT_MAIN_RECHECK.json` records the latest comparison. The prior current-main audit is retained as `results/AUDIT.at-main-1fa.json`; the updated audit checks the same retained raw and snapshots. The startup probe was not rerun.
+
+Main also retains separate A03 fake-X evidence for a dropped explicit KeyRelease in the batch path, while its A04 production per-program cleanup attempt stopped before the cases. That work does not alter this result: this package tests owner selection on the unmerged #8065 candidate; it does not test key-release execution or current-main gameplay.
