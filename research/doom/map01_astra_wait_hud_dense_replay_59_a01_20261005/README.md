@@ -25,3 +25,5 @@ The last sampled frame labelled model-thinking/local-cover is at 56.2 seconds an
 At 44.6 seconds, the cover-4 frame reads 46 ammo; by 53.8 seconds it reads 37 while the model is still pending. The selected waiting frame at 56.2 also reads 37. These selected frames show a nine-round net decrease after the first sampled waiting frame; they do not identify when each shot occurred or why firing stopped. The retained report's broader 48→37 window includes activity before the first sampled pending frame.
 
 See `FREEZE.json`, `CONTAINER_EXECUTION.txt`, `RESULT.json`, `results/a01/candidate.raw.json`, `results/a01/independent_audit.json`, and `results/a01/samples/`. Recompute the candidate and audit only against the frozen input; do not rerun the underlying game allocation.
+
+The candidate and auditor refuse to overwrite an existing output and use exclusive file creation. To recompute, set `RESULT_DIR` to a fresh directory; the candidate writes `candidate.raw.json` there and the auditor writes `independent_audit.json` without replacing either retained A01 artifact.

@@ -17,6 +17,11 @@ PLAYBACK_FPS = 10.0
 MEAN_CHANGED_AT = 4.0
 
 
+def ensure_output_is_new(path: Path) -> None:
+    if path.exists():
+        raise FileExistsError(f"refusing to overwrite retained output: {path}")
+
+
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -26,6 +31,7 @@ def mean_abs(a: bytes, b: bytes) -> float:
 
 
 def main() -> None:
+    ensure_output_is_new(OUT)
     raw = INPUT.read_bytes()
     assert len(raw) == FRAME_COUNT * FRAME_BYTES, "unexpected frozen ROI frame count/shape"
     frames = [raw[i * FRAME_BYTES : (i + 1) * FRAME_BYTES] for i in range(FRAME_COUNT)]
@@ -62,7 +68,9 @@ def main() -> None:
         "rows": rows,
         "scope": "Posthoc pixel-state scan of the retained 2x video; values and phase labels are separately transcribed from selected full-frame stills.",
     }
-    OUT.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    with OUT.open("x", encoding="utf-8") as output:
+        output.write(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps({k: result[k] for k in ("status", "frame_count", "first_changed_frame", "last_baseline_frame", "input_sha256")}, sort_keys=True))
 
 

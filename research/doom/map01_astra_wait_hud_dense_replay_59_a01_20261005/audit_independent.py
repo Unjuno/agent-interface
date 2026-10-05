@@ -20,6 +20,11 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def ensure_output_is_new(path: Path) -> None:
+    if path.exists():
+        raise FileExistsError(f"refusing to overwrite retained output: {path}")
+
+
 def changed_pixel_count(frame: bytes, baseline: bytes) -> int:
     """Count RGB pixels with a large change in at least one channel."""
     threshold = FREEZE["window"]["independent_audit_per_pixel_max_channel_abs_delta"]
@@ -31,6 +36,7 @@ def changed_pixel_count(frame: bytes, baseline: bytes) -> int:
 
 
 def main() -> None:
+    ensure_output_is_new(OUT)
     for rel, expected in FREEZE["source_sha256"].items():
         assert sha((ROOT / rel).read_bytes()) == expected, "frozen source mismatch: " + rel
     video_meta = json.loads((ROOT / FREEZE["video"]["path"].replace("map01-astra-live-01-2x.mp4", "video.json")).read_text())
@@ -90,7 +96,9 @@ def main() -> None:
         "causal_damage_attribution": False,
         "live_runtime_claim": False,
     }
-    OUT.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n")
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    with OUT.open("x", encoding="utf-8") as output:
+        output.write(json.dumps(audit, indent=2, sort_keys=True) + "\n")
     print(json.dumps({k: audit[k] for k in ("status", "first_changed_game_seconds", "last_baseline_playback_seconds", "changed_pixels_at_transition", "causal_damage_attribution")}, sort_keys=True))
 
 
