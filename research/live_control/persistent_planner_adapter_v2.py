@@ -47,6 +47,7 @@ class PersistentPlannerAdapter:
         self._terminal_status = None
         self._cancellation_requested = False
         self._interrupt_response = None
+        self._external_observation_sequence = None
 
     @property
     def thread_id(self):
@@ -77,6 +78,7 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
+            self._external_observation_sequence = None
             return thread_id
 
     def begin_turn(self, prompt, *, output_schema, image_path=None):
@@ -104,8 +106,61 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
+            self._external_observation_sequence = None
             self._output_schema = output_schema
         return handle
+
+    def send_external_observation(self, handle, sequence, text, image_url):
+        """Attach one current untrusted observation to the active turn.
+
+        This is planner context only. It neither changes the structured action
+        contract nor grants input authority; ordinary fresh admission remains
+        mandatory. A single event bounds added work and prevents stale-frame
+        accumulation within one long model turn.
+        """
+        if type(sequence) is not int or sequence < 1:
+            raise PlannerProtocolError("observation sequence must be a positive integer")
+        if not isinstance(text, str) or not text:
+            raise PlannerProtocolError("observation text must be nonempty")
+        if not isinstance(image_url, str) or not image_url.startswith("data:image/png;base64,"):
+            raise PlannerProtocolError("observation image must be a PNG data URL")
+        with self._lock:
+            self._require_active(handle)
+            if self._terminal_status is not None or self._cancellation_requested:
+                raise PlannerProtocolError("cannot update a terminal or cancelled turn")
+            if self._external_observation_sequence is not None:
+                raise PlannerProtocolError("one external observation is already attached to this turn")
+            self._external_observation_sequence = sequence
+            thread_id = handle.thread_id
+
+        # App Server treats this toolOutput as untrusted tool-level context and
+        # joins it to the active turn. Retain the same turn identity explicitly.
+        # A timed-out request may have reached the server. Never retry it; the
+        # caller must invalidate this turn through the normal interrupt path.
+        response = self.client.start_turn(
+            thread_id, [], _timeout=0.5, toolOutput={
+                "name": "live_observation", "namespace": "agent-interface",
+                "output": [
+                    {"type": "input_text", "text": text},
+                    {"type": "input_image", "image_url": image_url, "detail": "auto"},
+                ],
+            })
+        observed_turn_id = response.get("turn", {}).get("id")
+        if observed_turn_id != handle.turn_id:
+            if isinstance(observed_turn_id, str) and observed_turn_id:
+                try:
+                    self.client.interrupt_turn(handle.thread_id, observed_turn_id)
+                except Exception:
+                    # The caller still fails closed; retain the protocol mismatch.
+                    pass
+            raise PlannerProtocolError("external observation did not join its active turn")
+        with self._lock:
+            self._require_active(handle)
+            if self._terminal_status is not None or self._cancellation_requested:
+                raise PlannerProtocolError("active turn ended while observation was being attached")
+            self._external_observation_sequence = sequence
+        return {"outcome": "attached", "sequence": sequence,
+                "thread_id": handle.thread_id, "turn_id": handle.turn_id}
 
     def interrupt(self, handle):
         with self._lock:

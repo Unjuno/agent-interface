@@ -74,6 +74,12 @@ def load_controller_dispatch(source_path):
                            kwonlyargs=[], kw_defaults=[], defaults=[]),
         body=[ast.Assign(targets=[ast.Name(id="latest", ctx=ast.Store())],
                          value=ast.Constant(value=None)),
+              ast.Assign(targets=[ast.Name(id="active_turn_handle", ctx=ast.Store())],
+                         value=ast.Constant(value=None)),
+              ast.Assign(targets=[ast.Name(id="active_decision_index", ctx=ast.Store())],
+                         value=ast.Constant(value=None)),
+              ast.Assign(targets=[ast.Name(id="active_observation_delivery", ctx=ast.Store())],
+                         value=ast.Constant(value=None)),
               wait_node,
               ast.Return(value=ast.Name(id="wait", ctx=ast.Load()))],
         decorator_list=[])

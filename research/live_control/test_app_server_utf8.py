@@ -2,6 +2,7 @@
 import io
 import json
 import unittest
+from unittest.mock import Mock
 
 from codex_app_server_client_v2 import CodexAppServerClient
 
@@ -47,6 +48,17 @@ class Utf8ReceiveRegression(unittest.TestCase):
         client = self.client([notification, {"id": 1, "result": expected}])
         self.assertEqual(client.request("fixture/utf8", timeout=1), expected)
         self.assertEqual(client.wait_notification(lambda row: row.get("method") == "fixture/notice", timeout=1), notification)
+
+    def test_turn_start_timeout_is_local_and_not_sent_as_protocol_parameter(self):
+        client = CodexAppServerClient.__new__(CodexAppServerClient)
+        client.request = Mock(return_value={"turn": {"id": "turn-1"}})
+        tool_output = {"name": "live_observation", "namespace": "agent-interface",
+                       "output": [{"type": "input_text", "text": "fresh"}]}
+        result = client.start_turn("thread-1", [], _timeout=0.5, toolOutput=tool_output)
+        self.assertEqual(result, {"turn": {"id": "turn-1"}})
+        client.request.assert_called_once_with(
+            "turn/start", {"threadId": "thread-1", "input": [], "toolOutput": tool_output},
+            timeout=0.5)
 
 
 if __name__ == "__main__":
