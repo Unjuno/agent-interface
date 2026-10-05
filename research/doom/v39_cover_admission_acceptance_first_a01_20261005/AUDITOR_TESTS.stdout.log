@@ -1,0 +1,17 @@
+test_frozen_raw_passes (test_audit_v2.AuditTests.test_frozen_raw_passes) ... ok
+test_rejects_fifo_reordering (test_audit_v2.AuditTests.test_rejects_fifo_reordering) ... ok
+test_rejects_late_latest_snapshot (test_audit_v2.AuditTests.test_rejects_late_latest_snapshot) ... ok
+test_rejects_missing_planner_before_invalidation (test_audit_v2.AuditTests.test_rejects_missing_planner_before_invalidation) ... ok
+test_rejects_monitor_seen_before_accept (test_audit_v2.AuditTests.test_rejects_monitor_seen_before_accept) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.063s
+
+OK
+{
+  "status": "PASS_RAW_SOURCE_AUDIT_SCOPED",
+  "checks": 12,
+  "errors": [],
+  "claim": "accept-first hard-health sequence starts planner before the next monitored wait observes invalidation",
+  "scope": "Deterministic synthetic ordering only. No cover, model, game, X server, OS input, allocation, latency, or task effect."
+}

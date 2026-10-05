@@ -1,0 +1,17 @@
+test_frozen_raw_passes (test_audit_v3.AuditTests.test_frozen_raw_passes) ... ok
+test_rejects_event_seen_before_accept (test_audit_v3.AuditTests.test_rejects_event_seen_before_accept) ... ok
+test_rejects_false_boundary_latest (test_audit_v3.AuditTests.test_rejects_false_boundary_latest) ... ok
+test_rejects_missing_planner_order (test_audit_v3.AuditTests.test_rejects_missing_planner_order) ... ok
+test_rejects_reversed_fifo (test_audit_v3.AuditTests.test_rejects_reversed_fifo) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.104s
+
+OK
+{
+  "status": "PASS_RAW_SOURCE_AUDIT_SCOPED",
+  "checks": 29,
+  "errors": [],
+  "claim": "both current main and PR #7589 start the planner before the next monitored wait consumes the accept-following hard observation",
+  "scope": "Deterministic synthetic ordering only. No cover, model, game, X server, OS input, allocation, latency, or task effect."
+}

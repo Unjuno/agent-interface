@@ -1,0 +1,14 @@
+Frozen Git objects:
+  main controller: c1074c4dc385bae5b94ce93a5870e92c2e6ab07d:research/doom/map01_overlap_controller_v39.py
+  main wait test: c1074c4dc385bae5b94ce93a5870e92c2e6ab07d:research/doom/test_overlap_controller_v39_wait.py
+  PR #7589 controller: 763ff69a531eb47a6a3f033f56171dffc80afa23:research/doom/map01_overlap_controller_v39.py
+  PR #7589 wait test: 763ff69a531eb47a6a3f033f56171dffc80afa23:research/doom/test_overlap_controller_v39_wait.py
+
+Executed commands from the package directory with CPython 3.11.9 on Windows:
+  $env:V39_WAIT_SOURCE=(Join-Path $PWD 'controller_main_c107.py'); python -B -m unittest wait_test_main_c107.py -v
+  $env:V39_WAIT_SOURCE=(Join-Path $PWD 'controller_pr7589.py'); python -B -m unittest wait_test_pr7589.py -v
+  python -B candidate_v4.py
+  python -B audit_v4.py
+  python -B -m unittest test_audit_v4.py -v
+
+Candidate/auditor v1 through v3 outputs remain preserved. CORRECTION.md documents the v1 snapshot-label defect and CORRECTION_v3.md documents the missing prior-observation fixture; v4 is the corrected comparative current-main/PR result.

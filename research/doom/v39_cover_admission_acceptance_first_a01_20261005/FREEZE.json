@@ -1,0 +1,33 @@
+{
+  "study_id": "v39-cover-admission-acceptance-first-a01-20261005",
+  "question": "Does current main or the #7589 proposal observe hard-health invalidation that arrives in the FIFO after matching accepted but before begin_model_turn?",
+  "main_base": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "pr_base": "63980603e4bb6e4b128ed07af3bf7023bc2d4734",
+  "pr": 7589,
+  "pr_head": "763ff69a531eb47a6a3f033f56171dffc80afa23",
+  "main_controller_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "main_wait_test_blob": "66fbecb5dd80b64c0ca9a229b91e0ab0efa85a44",
+  "pr_controller_blob": "dd1f7ab589f25108e2ea1c7518cdd4444791a6d0",
+  "pr_wait_test_blob": "857abe134e9ee2d19620c5df747db1dd1815f418",
+  "main_controller_sha256": "4548CA30B5A962946C7F81A58784A5B8E672A10635F4737C36B38F596B2C27CA",
+  "main_wait_test_sha256": "EFE87ADE28FEA5130FE53DC3BD8D5416B92A1FBD74F52BA7D9063A07D15BE618",
+  "pr_controller_sha256": "C056725908C683BEF8F4F95EA7CB46AEFEDBE48AE3DEB3CF801372D9BE4818A4",
+  "pr_wait_test_sha256": "E16FED84EC9CAA00409E4664B68891EE0361990C5EC542D30CCF3FB773A25506",
+  "runtime": "CPython 3.11 on Windows; in-memory FIFO only",
+  "inputs_v3": [
+    {"event": "accepted", "id": "cover-0", "accepted_ns": 100},
+    {"event": "observation", "sequence": 9, "health": 65, "hard_floor": 73}
+  ],
+  "inputs_v4": [
+    {"event": "observation", "sequence": 8, "health": 80, "hard_floor": 73},
+    {"event": "accepted", "id": "cover-0", "accepted_ns": 100},
+    {"event": "observation", "sequence": 9, "health": 65, "hard_floor": 73}
+  ],
+  "monitor_rule": "Sequence 9 yields hard_health_loss; any other row yields no invalidation.",
+  "decision": {
+    "pass": "the controller observes sequence 9 and prevents begin_model_turn from starting",
+    "fail": "either source returns accepted, then begin_model_turn occurs before the monitor observes sequence 9",
+    "hold": "frozen source identities or event order do not match"
+  },
+  "scope": "Deterministic synthetic ordering only. No cover, model, game, X server, OS input, allocation, latency, or task effect."
+}
