@@ -1,0 +1,1 @@
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512m --env V39_WAIT_SOURCE=/input/main.py --mount type=bind,source=<input>,target=/input,readonly --mount type=bind,source=<output>,target=/output --workdir /input sha256:414a398990af718f018ff9c23cea0e7489b7986ebc7364 python -B /input/main_test.py -v

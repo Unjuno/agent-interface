@@ -1,0 +1,301 @@
+{
+  "audit": {
+    "checks": {
+      "complete_verified_empty_batch": true,
+      "empty_final_synthetic_keys": true,
+      "exactly_two_release_batch_rows": true,
+      "input_state_after_both_up_calls": true,
+      "no_keymap_query_between_explicit_ups": true,
+      "no_real_io_claimed": true,
+      "owner_history_matches_rows": true,
+      "owner_receipts_synced_non_authoritative": true,
+      "receipt_identity_and_keycode_match": true,
+      "reverse_order_key_ups": true,
+      "sample_timestamp_after_release_returns": true,
+      "two_distinct_key_downs": true
+    },
+    "release_row_count": 2,
+    "schema": "v39-v15-up-order-a04-audit-v1",
+    "status": "PASS_SYNTHETIC_BACKEND_UP_ORDER",
+    "trace_count": 32
+  },
+  "audit_exit": 0,
+  "audit_stderr": "",
+  "auditor_started": true,
+  "candidate_exit": 0,
+  "candidate_started": true,
+  "candidate_stderr": "",
+  "raw": {
+    "claims": {
+      "application": false,
+      "real_input": false,
+      "real_x11": false
+    },
+    "final_fake_keys": [],
+    "owner_records": [
+      {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a01-token",
+        "key": "b",
+        "keycode": 31,
+        "operation": "up",
+        "owner_id": "ab331223c8304ea39c23cd960776f92d",
+        "owner_keyrelease_started_ns": 2311953244261,
+        "owner_sync_returned_ns": 2311953247553,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 2321952699633
+      },
+      {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a01-token",
+        "key": "a",
+        "keycode": 30,
+        "operation": "up",
+        "owner_id": "ab331223c8304ea39c23cd960776f92d",
+        "owner_keyrelease_started_ns": 2311953303887,
+        "owner_sync_returned_ns": 2311953305720,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 2321952699633
+      }
+    ],
+    "post_release_owned_keycodes": [],
+    "release_rows": [
+      {
+        "event": "input_release_transition",
+        "intent_token": "a01-token",
+        "key": "b",
+        "owned_keycodes_after_batch": [],
+        "owner_id": "ab331223c8304ea39c23cd960776f92d",
+        "owner_sample_after_finished_ns": 2311953393096,
+        "owner_sample_after_started_ns": 2311953388304,
+        "owner_sample_ordered_after_batch": true,
+        "owner_thread_keyup_receipt": {
+          "cancel_requested_after_sync": false,
+          "event": "owner_explicit_keyup",
+          "intent_token": "a01-token",
+          "key": "b",
+          "keycode": 31,
+          "operation": "up",
+          "owner_id": "ab331223c8304ea39c23cd960776f92d",
+          "owner_keyrelease_started_ns": 2311953244261,
+          "owner_sync_returned_ns": 2311953247553,
+          "physical_verification_authoritative": false,
+          "server_sync_completed": true,
+          "valid_until_ns": 2321952699633
+        },
+        "owner_thread_keyup_verified": true,
+        "owner_transition_verified": true,
+        "release_batch_complete": true,
+        "release_batch_position": 0,
+        "release_batch_size": 2,
+        "release_call_returned_ns": 2311953267595,
+        "release_call_started_ns": 2311953220345
+      },
+      {
+        "event": "input_release_transition",
+        "intent_token": "a01-token",
+        "key": "a",
+        "owned_keycodes_after_batch": [],
+        "owner_id": "ab331223c8304ea39c23cd960776f92d",
+        "owner_sample_after_finished_ns": 2311953393096,
+        "owner_sample_after_started_ns": 2311953388304,
+        "owner_sample_ordered_after_batch": true,
+        "owner_thread_keyup_receipt": {
+          "cancel_requested_after_sync": false,
+          "event": "owner_explicit_keyup",
+          "intent_token": "a01-token",
+          "key": "a",
+          "keycode": 30,
+          "operation": "up",
+          "owner_id": "ab331223c8304ea39c23cd960776f92d",
+          "owner_keyrelease_started_ns": 2311953303887,
+          "owner_sync_returned_ns": 2311953305720,
+          "physical_verification_authoritative": false,
+          "server_sync_completed": true,
+          "valid_until_ns": 2321952699633
+        },
+        "owner_thread_keyup_verified": true,
+        "owner_transition_verified": true,
+        "release_batch_complete": true,
+        "release_batch_position": 1,
+        "release_batch_size": 2,
+        "release_call_returned_ns": 2311953331470,
+        "release_call_started_ns": 2311953287387
+      }
+    ],
+    "schema": "v39-v15-up-order-a04-raw-v1",
+    "trace": [
+      {
+        "kind": "display_open",
+        "n": 0,
+        "name": "FAKE"
+      },
+      {
+        "key": "a",
+        "kind": "call_begin",
+        "n": 1,
+        "operation": "down"
+      },
+      {
+        "kind": "query_focus",
+        "n": 2
+      },
+      {
+        "keycode": 30,
+        "kind": "xtest_key_down",
+        "n": 3
+      },
+      {
+        "held": [
+          30
+        ],
+        "kind": "sync",
+        "n": 4
+      },
+      {
+        "kind": "query_focus",
+        "n": 5
+      },
+      {
+        "key": "a",
+        "kind": "call_return",
+        "n": 6,
+        "operation": "down"
+      },
+      {
+        "key": "b",
+        "kind": "call_begin",
+        "n": 7,
+        "operation": "down"
+      },
+      {
+        "kind": "query_focus",
+        "n": 8
+      },
+      {
+        "keycode": 31,
+        "kind": "xtest_key_down",
+        "n": 9
+      },
+      {
+        "held": [
+          30,
+          31
+        ],
+        "kind": "sync",
+        "n": 10
+      },
+      {
+        "kind": "query_focus",
+        "n": 11
+      },
+      {
+        "key": "b",
+        "kind": "call_return",
+        "n": 12,
+        "operation": "down"
+      },
+      {
+        "key": "b",
+        "kind": "call_begin",
+        "n": 13,
+        "operation": "up"
+      },
+      {
+        "keycode": 31,
+        "kind": "xtest_key_up",
+        "n": 14
+      },
+      {
+        "held": [
+          30
+        ],
+        "kind": "sync",
+        "n": 15
+      },
+      {
+        "kind": "query_focus",
+        "n": 16
+      },
+      {
+        "key": "b",
+        "kind": "call_return",
+        "n": 17,
+        "operation": "up"
+      },
+      {
+        "key": "a",
+        "kind": "call_begin",
+        "n": 18,
+        "operation": "up"
+      },
+      {
+        "keycode": 30,
+        "kind": "xtest_key_up",
+        "n": 19
+      },
+      {
+        "held": [],
+        "kind": "sync",
+        "n": 20
+      },
+      {
+        "kind": "query_focus",
+        "n": 21
+      },
+      {
+        "key": "a",
+        "kind": "call_return",
+        "n": 22,
+        "operation": "up"
+      },
+      {
+        "key": null,
+        "kind": "call_begin",
+        "n": 23,
+        "operation": "input_state"
+      },
+      {
+        "kind": "query_pointer",
+        "n": 24
+      },
+      {
+        "kind": "query_focus",
+        "n": 25
+      },
+      {
+        "kind": "query_focus",
+        "n": 26
+      },
+      {
+        "key": null,
+        "kind": "call_return",
+        "n": 27,
+        "operation": "input_state"
+      },
+      {
+        "held": [],
+        "kind": "sync",
+        "n": 28
+      },
+      {
+        "kind": "query_pointer",
+        "n": 29
+      },
+      {
+        "held": [],
+        "kind": "query_keymap",
+        "n": 30
+      },
+      {
+        "kind": "display_close",
+        "n": 31
+      }
+    ]
+  },
+  "status": "AUDIT_COMPLETED"
+}
