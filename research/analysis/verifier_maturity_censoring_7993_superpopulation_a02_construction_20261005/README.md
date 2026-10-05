@@ -2,7 +2,7 @@
 
 Status: **CONSTRUCTION_ONLY / HOST**. This is not a frozen allocation or formal result. It repairs the structural omissions identified in exploratory A01: candidate/oracle data separation, raw-only reconstruction, digest-bound oracle truth, and executable UNKNOWN / mutation controls.
 
-Base selected at branch creation: current main `5db548aa351c8ccd351831485d5e5940a4967ff3`. Additive namespace: `research/analysis/verifier_maturity_censoring_7993_superpopulation_a02_construction_20261005/`.
+Base selected at branch creation: current main `5db548aa351c8ccd351831485d5e5940a4967ff3`. Additive namespace intended for repository publication: `research/analysis/verifier_maturity_censoring_7993_superpopulation_a02_construction_20261005/`.
 
 ## H / T / D / C / U
 
