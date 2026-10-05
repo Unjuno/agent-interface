@@ -1,5 +1,7 @@
 # Issue #8088 — specification-diverse challenge, T0 A01
 
+> **Post-run correction:** This preliminary report's `NO_INCREMENTAL_VALUE_SCOPED` conclusion is superseded. Review found the C06 “All restores visibility” check compared stored records, not visible IDs after selecting All; candidate and auditor shared this gap. A01 is `HOLD_BASELINE_ORACLE_COVERAGE`, not a scientific finding. See [POST_RUN_QUALIFICATION.md](POST_RUN_QUALIFICATION.md). Original one-shot outputs and invocation counts are retained unchanged; no rerun was made.
+
 ## Result
 
 **NO_INCREMENTAL_VALUE_SCOPED.** The blinded challenge and third-party contract-only adjudication found zero explicit contract-anchored obligations omitted by the primary decomposition across eight synthetic task contracts. All differences were harmless partition/wording or unresolved ambiguity; none justified an omission mutant. No ambiguity was promoted to a requirement.
