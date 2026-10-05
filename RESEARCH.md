@@ -2328,3 +2328,15 @@ The frozen candidate and separate raw-only audit passed the declared authored fi
 # Issue #7986 T0 A01 — action-conditioned incorrect-belief exposure (2026-10-05)
 
 Eight authored event intervals passed the frozen method gate: exposure is zero for an old-but-correct belief (age 10), positive for stale and freshly misbound beliefs (6 and 5 ticks; the latter age 1), excluded outside live authority/opportunity, and distinct from one realized unsafe effect. Missing truth and ambiguous clock return `UNKNOWN`. Candidate receives no truth sidecar. This is a finite method result only—not harm reduction, safety, human, GUI, live, or runtime evidence. See [report and frozen artifacts](research/analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) and [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+# Issue #57 — primary caller release-shape E01 archive (2026-10-03)
+
+The original 48-cell unchanged-caller arm retains `FAIL_SHAPE_ADMISSION_SCOPED`:
+malformed release-array aliases permitted eight invalid continuations. A
+separately frozen private candidate's 48 cells had zero invalid continuations,
+preserved eight healthy rows and changed 16 alias rows; this is inert fake-host
+construction evidence only. Source and private-candidate packets, first result,
+raw rows, saved auditors, native receipts, and byte-join custody are archived
+without rerunning either producer. The package explicitly does not establish
+that a conforming backend emits these shapes, physical release, real task
+effects, or production suitability. No candidate runtime change is proposed
+here; #7071 remains the separate integration/review path. See the [E01 archive](research/integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md), [Issue #57 source/result records](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969803925), and [PR #7071](https://github.com/Unjuno/agent-interface/pull/7071).
