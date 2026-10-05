@@ -1,0 +1,17 @@
+{
+  "allocation": "interval-ttc-audit-only-a04-20261005",
+  "runtime": "WSLc 3.0.1.0",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "network": "none",
+  "cpus": 1,
+  "memory": "512M (swap/cgroup limit capability unavailable)",
+  "source_mount": "read-only",
+  "test_invocations": 2,
+  "tests_passed_per_run": 8,
+  "tests_total_per_run": 8,
+  "formal_a04_auditor_invocations_at_construction": 0,
+  "a02_and_a03_formal_roles_reinvoked": false,
+  "retries_of_a04_formal_allocation": 0,
+  "scope": "audit implementation construction only; not the formal raw audit or a TTC method result",
+  "note": "A04 construction was rerun after binding the A03 STOP/freeze hashes; both runs passed 8/8."
+}
