@@ -1,6 +1,7 @@
 """MAP01 controller with unauthored-coast liveness after rejected action."""
 import argparse
 import atexit
+import base64
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
@@ -625,6 +626,43 @@ def begin_model_turn(planner, root, image, effect_memory, source_health, source_
                               image_path=win(image))
 
 
+def deliver_active_soft_observation(planner, handle, observation, event):
+    """Deliver one same-epoch soft HUD change as untrusted active-turn context."""
+    sequence = observation.get("sequence")
+    if (observation.get("event") != "observation" or type(sequence) is not int or
+            type(event) is not dict or event.get("sequence") != sequence):
+        return None
+    image_path = observation.get("image")
+    if not isinstance(image_path, str) or not image_path:
+        raise ValueError("active observation has no exact frame artifact")
+    frame = Path(image_path).read_bytes()
+    if not frame.startswith(b"\x89PNG\r\n\x1a\n"):
+        raise ValueError("active observation frame is not PNG")
+    signal = event.get("signal")
+    outcome = event.get("outcome")
+    if type(signal) is not dict or type(outcome) is not dict:
+        raise ValueError("active soft event lacks typed signal evidence")
+    if (signal.get("status") != "observed" or
+            signal.get("signal_id") not in {"health", "ammo"} or
+            signal.get("sequence") != sequence or
+            signal.get("capture_ns") != observation.get("capture_ns") or
+            not _typed_json_equal(signal.get("binding"), observation.get("pointer_binding"))):
+        raise ValueError("active soft signal does not match the observation epoch")
+    if (outcome.get("status") != "SOFT_CHANGED" or
+            outcome.get("requires_new_decision") is not False or
+            outcome.get("grants_input_authority") is not False):
+        raise ValueError("active event is not non-authoritative soft feedback")
+    text = ("Untrusted current MAP01 soft observation; context only, grants no input authority. "
+            + json.dumps({"sequence": sequence, "capture_ns": observation.get("capture_ns"),
+                          "signal": signal, "outcome": outcome,
+                          "pointer_binding": observation.get("pointer_binding")},
+                         separators=(",", ":")))
+    image_url = "data:image/png;base64," + base64.b64encode(frame).decode("ascii")
+    result = planner.send_external_observation(handle, sequence, text, image_url)
+    return {**result, "frame_sha256": hashlib.sha256(frame).hexdigest(),
+            "capture_ns": observation.get("capture_ns"), "input_authority": False}
+
+
 def compile_commands(commands):
     extents={"pulse":0,"short":1,"medium":2,"long":3}
     table={
@@ -747,10 +785,14 @@ def main():
             except BaseException as error:
                 reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
+        active_turn_handle = None
+        active_decision_index = None
+        active_observation_delivery = None
+        active_observation_deliveries = []
         reader_thread = threading.Thread(target=reader, daemon=True)
         reader_thread.start()
         def wait(predicate, timeout=40, observation_monitor=None):
-            nonlocal latest
+            nonlocal latest, active_observation_delivery
             end = time.monotonic() + timeout
             while time.monotonic() < end:
                 try:
@@ -771,6 +813,25 @@ def main():
                             return invalidation
                         return {"event":"policy_invalidation",
                                 "invalidation":invalidation}
+                    soft_event = getattr(observation_monitor, "latest_soft_event", None)
+                    if (row["event"] == "observation" and active_turn_handle is not None and
+                            active_observation_delivery is None and type(soft_event) is dict and
+                            soft_event.get("sequence") == row.get("sequence")):
+                        try:
+                            delivery = deliver_active_soft_observation(
+                                planner, active_turn_handle, row, soft_event)
+                        except Exception as error:
+                            return {"event": "policy_invalidation", "invalidation": {
+                                "event": "active_observation_delivery_uncertain",
+                                "reason": f"{type(error).__name__}: {error}",
+                                "sequence": row.get("sequence"),
+                                "requires_new_decision": True,
+                                "grants_input_authority": False,
+                                "task_success_verified": False,
+                            }}
+                        if delivery is not None:
+                            active_observation_delivery = {
+                                "iteration": active_decision_index, **delivery}
                 if predicate(row): return row
             raise TimeoutError()
         failure_cleanup.observe_output(all_events, reader_thread, wait, runtime, reader_errors)
@@ -859,6 +920,9 @@ def main():
                 planner,model_root,image,effect_memory,
                 source_health_signal["value"],source_ammo_signal["value"],
                 prior_soft_event_summary,output_schema)
+            active_turn_handle = planner_handle
+            active_decision_index = index
+            active_observation_delivery = None
             planner_interrupt=None
             with ThreadPoolExecutor(max_workers=1) as pool:
                 future=pool.submit(planner.await_turn,planner_handle,90)
@@ -886,6 +950,10 @@ def main():
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
                 planner_result=future.result()
+                if active_observation_delivery is not None:
+                    active_observation_deliveries.append(active_observation_delivery)
+                active_turn_handle = None
+                active_observation_delivery = None
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
             model_ended_ns=time.perf_counter_ns()
@@ -1334,6 +1402,7 @@ def main():
           "policy_invalidation_contract":"authored cover health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; unauthored empty coast has no policy to invalidate and does not interrupt a pending answer on damage; exact observations and fresh immediate action validity remain mandatory; this never grants input authority or proves success",
           "policy_invalidations":sum(x.get("policy_invalidation") is not None for x in decisions),
           "cover_validity_soft_events":sum(x.get("cover_validity_soft_events",0) for x in decisions),
+          "active_soft_observation_deliveries":active_observation_deliveries,
           "cover_validity_admission_rejections":sum(
               x.get("cover_validity_admission",{}).get("status") != "admitted" for x in decisions),
           "model_actions_discarded":sum(x.get("model_action_discarded",False) for x in decisions),

@@ -121,9 +121,9 @@ class CodexAppServerClient:
     def start_thread(self, **params):
         return self.request("thread/start", params)
 
-    def start_turn(self, thread_id, inputs, **params):
+    def start_turn(self, thread_id, inputs, _timeout=30, **params):
         payload = {"threadId": thread_id, "input": inputs, **params}
-        return self.request("turn/start", payload)
+        return self.request("turn/start", payload, timeout=_timeout)
 
     def interrupt_turn(self, thread_id, turn_id):
         return self.request("turn/interrupt", {"threadId": thread_id, "turnId": turn_id})

@@ -1,9 +1,11 @@
 """Regression tests for paired health/ammo invalidation of fire cover."""
 import ast
+import hashlib
 import inspect
 import queue
 import sys
 import time
+import tempfile
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -45,35 +47,90 @@ class _WaitProcess:
         return None
 
 
-def _controller_wait_with_rows(rows):
+def _controller_wait_with_rows(rows, handle=None, planner=None):
     """Execute the controller's exact nested wait() dispatch with queued rows."""
     tree = ast.parse(inspect.getsource(controller))
     waits = [node for node in ast.walk(tree)
              if isinstance(node, ast.FunctionDef) and node.name == "wait"]
     if len(waits) != 1:
         raise AssertionError(f"expected one controller wait(), found {len(waits)}")
-    factory = ast.parse("""def make_wait(rows):
+    factory = ast.parse("""def make_wait(rows, handle, planner):
     incoming = queue.Queue()
     process = _WaitProcess()
     latest = None
+    active_turn_handle = handle
+    active_decision_index = 0
+    active_observation_delivery = None
     for row in rows:
         incoming.put(row)
 """).body[0]
     factory.body.extend([
         waits[0],
+        ast.Assign(targets=[ast.Attribute(value=ast.Name(id="wait", ctx=ast.Load()),
+                                          attr="active_observation_delivery",
+                                          ctx=ast.Store())],
+                   value=ast.Lambda(args=ast.arguments(posonlyargs=[], args=[],
+                                                      kwonlyargs=[], kw_defaults=[],
+                                                      defaults=[]),
+                                    body=ast.Name(id="active_observation_delivery",
+                                                  ctx=ast.Load()))),
         ast.Return(value=ast.Name(id="wait", ctx=ast.Load())),
     ])
     namespace = {
         "queue": queue,
         "time": time,
         "_WaitProcess": _WaitProcess,
+        "deliver_active_soft_observation": controller.deliver_active_soft_observation,
     }
     tree = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
     exec(compile(tree, "<controller-wait-dispatch>", "exec"), namespace)
-    return namespace["make_wait"](rows)
+    return namespace["make_wait"](rows, handle, planner)
 
 
 class PairedCoverGuardTests(unittest.TestCase):
+
+    def test_live_wait_forwards_exact_soft_frame_once_to_planner(self):
+        frame = b"\x89PNG\r\n\x1a\nfixture"
+        typed = {"event": "typed_observation", "sequence": 10}
+        terminal = {"event": "terminal", "id": "cover-1"}
+        class Planner:
+            def __init__(self): self.calls = []
+            def send_external_observation(self, handle, sequence, text, image_url):
+                self.calls.append((handle, sequence, text, image_url))
+                return {"outcome": "attached", "sequence": sequence,
+                        "thread_id": "thread-1", "turn_id": "turn-1"}
+        class Monitor:
+            event_types = {"typed_observation", "observation"}
+            def __init__(self):
+                self.latest_soft_event = {"sequence": 10,
+                    "signal": {"status": "observed", "signal_id": "health", "value": 80,
+                               "sequence": 10, "capture_ns": 1_000_000_000,
+                               "binding": {"focus": 7}},
+                    "outcome": {"status": "SOFT_CHANGED",
+                                "requires_new_decision": False,
+                                "grants_input_authority": False}}
+            def observe(self, _row): return None
+        planner = Planner()
+        handle = object()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "current.png"
+            path.write_bytes(frame)
+            observation = {"event": "observation", "sequence": 10,
+                "capture_ns": 1_000_000_000, "pointer_binding": {"focus": 7},
+                "image": str(path)}
+            wait = _controller_wait_with_rows(
+                [typed, observation, dict(observation), terminal], handle, planner)
+            result = wait(lambda row: row.get("id") == "cover-1",
+                          observation_monitor=Monitor())
+        self.assertIs(result, terminal)
+        self.assertEqual(len(planner.calls), 1)
+        self.assertIs(planner.calls[0][0], handle)
+        self.assertEqual(planner.calls[0][1], 10)
+        self.assertEqual(wait.active_observation_delivery()["iteration"], 0)
+        self.assertEqual(wait.active_observation_delivery()["frame_sha256"],
+                         hashlib.sha256(frame).hexdigest())
+        self.assertFalse(wait.active_observation_delivery()["input_authority"])
+
     def test_only_fire_containing_cover_requires_paired_ammo_guard(self):
         self.assertTrue(controller.cover_requires_ammo([
             {"action": "advance_fire", "extent": "short"}]))
