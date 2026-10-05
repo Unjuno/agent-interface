@@ -23,6 +23,10 @@ It exited 1 in 1.398 seconds before opening a session shell. Raw stderr (Japanes
 
 Post-check: that exact path did not exist, and a read-only process snapshot still showed zero `wslc.exe` clients. No candidate container, image lookup/pull, list/inspect, shared-session operation, Docker action, stop/prune/delete, or retry occurred. Candidate runs 0; auditor runs 0; container runs 0. Only CLI help and the one frozen session-entry attempt were issued.
 
+## Coordination-gate deviation
+
+After this attempt, the latest #7970 owner note was inspected. It explicitly forbids any further WSLc management/RPC until ownership/state and exclusive-lane gates in #6389/#6693/#7924/#7970 are cleared. This `system session enter` invocation was made before that controlling cross-Issue instruction had been read, and therefore crossed the coordination gate. The command's failure and clean post-checks do not excuse the process deviation or authorize continuation. It is disclosed in GitHub comments on #7970 and #7924 and in the associated PR. Issue owners' release/clearance is required before further WSLc operations.
+
 ## Classification and limits
 
 **Disposition:** `STOP_SESSION_STORAGE_NOT_FOUND`; the intended portability experiment is **not evaluated**. The CLI rejected the supplied storage path; this does not show that WSLc generally fails, that containers cannot run, or that Docker is required. The current evidence does not establish whether `session enter` requires pre-existing WSLc storage/session material, a particular path convention, or another prerequisite. Do not repeat the consumed allocation. Any corrected attempt must be separately frozen with a verified, isolated session-creation path; preserve this STOP unchanged.
