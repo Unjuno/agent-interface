@@ -754,6 +754,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
 - [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
+- [`pcaa_stage_propagation_6053_t1_20261004/`](pcaa_stage_propagation_6053_t1_20261004/)
 - [`pending_outcome_route_learning_6129_t0_20261002/`](pending_outcome_route_learning_6129_t0_20261002/)
 - [`persistence_gated_throttle_6650_control_replay_20261002_01/`](persistence_gated_throttle_6650_control_replay_20261002_01/)
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
