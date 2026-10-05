@@ -1,0 +1,79 @@
+{
+  "checks": {
+    "current_main_manifest_binding": true,
+    "empty_owner_release_state": true,
+    "event_delivery_streams_identical": true,
+    "independent_scorer_no_task_progress": true,
+    "per_key_release_identity_and_xsync": true,
+    "public_protocol_metadata_redacted": true,
+    "raw_inventory_and_sha256": true,
+    "six_decisions_and_prompt_image_hashes": true,
+    "source_expiry_interrupt_and_cancel": true,
+    "typed_observation_count": true
+  },
+  "cover4_invalidation": {
+    "ammo_soft_event_retained": true,
+    "ammo_source_current": [
+      43,
+      42
+    ],
+    "health_source_current": [
+      30,
+      30
+    ],
+    "model_turn_interrupted": true,
+    "physical_key_state_proven": false,
+    "reason": "health:source_expired",
+    "sequence": 216,
+    "source_age_ms": 1605.590973,
+    "time_monitor_to_cancel_terminal_ms": 41.135,
+    "time_monitor_to_verified_empty_ms": 7.655
+  },
+  "decisions": {
+    "admission_statuses": [
+      "REJECTED_ACTION_NOT_CURRENT",
+      "REJECTED_ACTION_NOT_CURRENT",
+      "REJECTED_ACTION_NOT_CURRENT",
+      "INPUT_ADMITTED",
+      "REJECTED_POLICY_INVALIDATED",
+      "REJECTED_ACTION_NOT_CURRENT"
+    ],
+    "count": 6,
+    "model_actions_discarded": 5,
+    "model_wall_seconds": 67.772028792,
+    "planner_interruption_requests": 1,
+    "total_model_tokens": 73458
+  },
+  "raw_bytes": 73104865,
+  "raw_file_count": 553,
+  "raw_zip_sha256": "b6e8529a51e89e6f1c51374fbd27f121bab594c92014ee2fe73aa2f94ef98163",
+  "schema": "issue59-v39-threat-exposure-a04-audit-v1",
+  "scope_limits": [
+    "Visual threat presence is recorded separately in VISUAL_AUDIT.md; the standard-library audit checks image hashes, not enemy semantics.",
+    "XSync completion does not prove physical key release or application consumption.",
+    "The source-expiry cancellation did not identify a semantic health change; health was unchanged at that boundary.",
+    "No kill, MAP01 exit, or independent scorer progress event occurred; no task-success claim is supported.",
+    "Public protocol-log copies redact installation identifiers and account quota metadata; the unmodified source remains locally preserved."
+  ],
+  "source_manifest_sha256": "8c44dde84da02101234200aa343ed0465cd649b023655d6f3ca55cbe91f02d19",
+  "status": "INTEGRITY_PASS_LIMITED_RESEARCH_RESULT",
+  "terminal": {
+    "episode_finished": false,
+    "kill_count": 0,
+    "map_exit": false,
+    "player_dead": false,
+    "scorer_positive_progress_events": 0
+  },
+  "typed_signal_range": {
+    "ammo": {
+      "max": 45,
+      "min": 42,
+      "samples": 262
+    },
+    "health": {
+      "max": 97,
+      "min": 4,
+      "samples": 262
+    }
+  }
+}
