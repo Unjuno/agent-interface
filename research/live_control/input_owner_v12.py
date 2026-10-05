@@ -175,37 +175,58 @@ class InputOwner:
         def release(reason):
             nonlocal active,revision
             revision += 1
+            release_errors = []
             state_errors = []
             for code in list(held):
-                xtest.fake_input(d, X.KeyRelease, code)
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_errors.append({"source": "key_release", "keycode": code,
+                                           "type": type(exc).__name__,
+                                           "message": str(exc)[:200]})
             for button in list(buttons):
-                xtest.fake_input(d, X.ButtonRelease, button)
-            d.sync()
+                try:
+                    xtest.fake_input(d, X.ButtonRelease, button)
+                except Exception as exc:
+                    release_errors.append({"source": "button_release", "button": button,
+                                           "type": type(exc).__name__,
+                                           "message": str(exc)[:200]})
+            try:
+                d.sync()
+            except Exception as exc:
+                release_errors.append({"source": "sync", "type": type(exc).__name__,
+                                       "message": str(exc)[:200]})
             try:
                 mask = d.screen().root.query_pointer().mask
-                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+                buttons_down = [b for b in touched_buttons
+                                if mask & (X.Button1Mask << (b-1))]
             except Exception as exc:
-                state_errors.append({"source": "pointer", "type": type(exc).__name__, "message": str(exc)[:200]})
+                state_errors.append({"source": "pointer", "type": type(exc).__name__,
+                                     "message": str(exc)[:200]})
                 buttons_down = sorted(set(buttons) | set(touched_buttons))
             try:
                 bitmap = d.query_keymap()
-                down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+                down = [code for code in touched
+                        if bitmap[code // 8] & (1 << (code % 8))]
                 unknown_keys = []
             except Exception as exc:
-                state_errors.append({"source": "keymap", "type": type(exc).__name__, "message": str(exc)[:200]})
+                state_errors.append({"source": "keymap", "type": type(exc).__name__,
+                                     "message": str(exc)[:200]})
                 down = []
                 unknown_keys = sorted(touched)
             if reason == 'release' and active is not None and active.cancel.is_set():
                 reason = 'cancelled'
             record = dict(event='owner_release', reason=reason,
-                          verified=not down and not buttons_down and not unknown_keys and not state_errors,
-                          buttons_down=buttons_down, keys_down=down, keys_unknown=unknown_keys,
-                          key_state_errors=state_errors, verified_ns=time.perf_counter_ns(),
+                          verified=(not down and not buttons_down and not unknown_keys and
+                                    not state_errors and not release_errors),
+                          buttons_down=buttons_down, keys_down=down,
+                          keys_unknown=unknown_keys, key_state_errors=state_errors,
+                          release_errors=release_errors, verified_ns=time.perf_counter_ns(),
                           valid_until_ns=active.deadline if active else None)
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
-            if down or buttons_down or unknown_keys or state_errors:
+            if (down or buttons_down or unknown_keys or state_errors or release_errors):
                 failure = RuntimeError('owner release not verified: ' + repr(down))
                 failure.owner_release_record = record
                 raise failure
