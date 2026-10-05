@@ -238,7 +238,7 @@ def mutation_controls(raw):
 
 def audit():
     freeze = load(PKG / "FREEZE.json")
-    freeze_errors, head, original = verify_freeze(freeze)
+    freeze_errors, _head, original = verify_freeze(freeze)
     raw = load(ROOT / freeze["raw_path"])
     reconstruction_errors, joins = reconstruct(raw)
     mutations = mutation_controls(raw)
@@ -255,7 +255,7 @@ def audit():
     instrumentation_pass = join_pass and effect_link
     return {
         "schema": "v39-startup-edge-identity-audit-result-v1",
-        "base_commit": head,
+        "frozen_source_base_commit": freeze["base_commit"],
         "source_trace_commit": original.get("base_commit"),
         "source_trace_pr_head": freeze["base_pr_head"],
         "identity_join_subcheck": "PASS_CONTEXTUAL_JOIN_ONLY" if join_pass else "FAIL",
