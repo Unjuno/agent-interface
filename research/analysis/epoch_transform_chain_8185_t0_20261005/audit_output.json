@@ -1,0 +1,140 @@
+{
+  "baseline_false_unknown": 5,
+  "candidate_false_unknown": 1,
+  "case_count": 18,
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "false_admissions": 0,
+  "false_unknown_reduction": 0.8,
+  "rows": [
+    {
+      "baseline": "ADMIT",
+      "candidate": "ADMIT",
+      "case_id": "stable_identity",
+      "class": "valid_affine",
+      "oracle": "ADMIT"
+    },
+    {
+      "baseline": "ADMIT",
+      "candidate": "ADMIT",
+      "case_id": "window_translation",
+      "class": "valid_affine",
+      "oracle": "ADMIT"
+    },
+    {
+      "baseline": "ADMIT",
+      "candidate": "ADMIT",
+      "case_id": "uniform_dpi_update",
+      "class": "valid_affine",
+      "oracle": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "ADMIT",
+      "case_id": "mixed_monitor_update",
+      "class": "valid_affine",
+      "oracle": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "ADMIT",
+      "case_id": "two_epoch_composition",
+      "class": "valid_affine",
+      "oracle": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "ADMIT",
+      "case_id": "composed_small_uncertainty",
+      "class": "valid_affine",
+      "oracle": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "ADMIT",
+      "case_id": "shared_uncertainty_control",
+      "class": "valid_affine",
+      "oracle": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "independent_error_crosses_edge",
+      "class": "valid_affine",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "stale_epoch",
+      "class": "stale_epoch",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "missing_edge",
+      "class": "missing_edge",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "reversed_edge",
+      "class": "reversed_edge",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "duplicate_edge",
+      "class": "duplicate_edge",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "unit_mismatch",
+      "class": "unit_mismatch",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "changed_input_dpi_context",
+      "class": "changed_input_dpi_context",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "ADMIT",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "target_identity_swap",
+      "class": "target_identity_swap",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "non_affine_reflow",
+      "class": "non_affine_reflow",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "uncertainty_crosses_target",
+      "class": "uncertainty_boundary",
+      "oracle": "UNKNOWN_REFUSE"
+    },
+    {
+      "baseline": "UNKNOWN_REFUSE",
+      "candidate": "UNKNOWN_REFUSE",
+      "case_id": "uncertainty_hits_forbidden",
+      "class": "forbidden_region",
+      "oracle": "UNKNOWN_REFUSE"
+    }
+  ],
+  "schema": "issue8185.audit.v1",
+  "valid": true,
+  "valid_affine_cases": 8
+}

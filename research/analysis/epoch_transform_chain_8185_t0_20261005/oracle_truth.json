@@ -1,0 +1,306 @@
+{
+  "allocation": "8185-TRANSFORM-GRAPH-T0-20261005-01",
+  "schema": "issue8185.oracle.truth.v1",
+  "truth": [
+    {
+      "case_id": "stable_identity",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": [
+        10,
+        10
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        9.9,
+        9.9,
+        10.1,
+        10.1
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "window_translation",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": [
+        20,
+        20
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        19,
+        19,
+        21,
+        21
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "uniform_dpi_update",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "device_px",
+      "expected_point": [
+        18,
+        18
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        17,
+        17,
+        19,
+        19
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "mixed_monitor_update",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "device_px",
+      "expected_point": [
+        25.5,
+        25.5
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        24.5,
+        24.5,
+        26.5,
+        26.5
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "two_epoch_composition",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "device_px",
+      "expected_point": [
+        25.5,
+        25.5
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        24.5,
+        24.5,
+        26.5,
+        26.5
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "composed_small_uncertainty",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "device_px",
+      "expected_point": [
+        18,
+        17
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        17.5,
+        16.5,
+        18.5,
+        17.5
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "shared_uncertainty_control",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": [
+        10,
+        10
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        9,
+        9,
+        11,
+        11
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "independent_error_crosses_edge",
+      "class": "valid_affine",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": [
+        10,
+        10
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        9.9,
+        9.9,
+        10.1,
+        10.1
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "stale_epoch",
+      "class": "stale_epoch",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "missing_edge",
+      "class": "missing_edge",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "reversed_edge",
+      "class": "reversed_edge",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "duplicate_edge",
+      "class": "duplicate_edge",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "unit_mismatch",
+      "class": "unit_mismatch",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "changed_input_dpi_context",
+      "class": "changed_input_dpi_context",
+      "expected_input_frame": "backend",
+      "expected_input_units": "logical_px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "target_identity_swap",
+      "class": "target_identity_swap",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "non_affine_reflow",
+      "class": "non_affine_reflow",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": null,
+      "expected_target_id": "button-save",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "uncertainty_crosses_target",
+      "class": "uncertainty_boundary",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": [
+        20,
+        20
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        19,
+        19,
+        21,
+        21
+      ],
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "uncertainty_hits_forbidden",
+      "class": "forbidden_region",
+      "expected_input_frame": "backend",
+      "expected_input_units": "px",
+      "expected_point": [
+        80,
+        80
+      ],
+      "expected_target_id": "button-save",
+      "target_box": [
+        79,
+        79,
+        83,
+        83
+      ],
+      "target_id": "button-save"
+    }
+  ]
+}

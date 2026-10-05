@@ -1,0 +1,170 @@
+{
+  "allocation": "8185-TRANSFORM-GRAPH-T0-20261005-01",
+  "decisions": [
+    {
+      "case_id": "stable_identity",
+      "decision": "ADMIT",
+      "mapped": [
+        10.0,
+        10.0
+      ],
+      "radius": [
+        0.0,
+        0.0
+      ],
+      "reason": "typed_current_chain_inside_target",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "window_translation",
+      "decision": "ADMIT",
+      "mapped": [
+        20.0,
+        20.0
+      ],
+      "radius": [
+        0.0,
+        0.0
+      ],
+      "reason": "typed_current_chain_inside_target",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "uniform_dpi_update",
+      "decision": "ADMIT",
+      "mapped": [
+        18.0,
+        18.0
+      ],
+      "radius": [
+        0.0,
+        0.0
+      ],
+      "reason": "typed_current_chain_inside_target",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "mixed_monitor_update",
+      "decision": "ADMIT",
+      "mapped": [
+        25.5,
+        25.5
+      ],
+      "radius": [
+        0.0,
+        0.0
+      ],
+      "reason": "typed_current_chain_inside_target",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "two_epoch_composition",
+      "decision": "ADMIT",
+      "mapped": [
+        25.5,
+        25.5
+      ],
+      "radius": [
+        0.0,
+        0.0
+      ],
+      "reason": "typed_current_chain_inside_target",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "composed_small_uncertainty",
+      "decision": "ADMIT",
+      "mapped": [
+        18.0,
+        17.0
+      ],
+      "radius": [
+        0.2,
+        0.2
+      ],
+      "reason": "typed_current_chain_inside_target",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "shared_uncertainty_control",
+      "decision": "ADMIT",
+      "mapped": [
+        10.0,
+        10.0
+      ],
+      "radius": [
+        0.0,
+        0.0
+      ],
+      "reason": "typed_current_chain_inside_target",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "independent_error_crosses_edge",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "uncertainty_not_wholly_inside_target"
+    },
+    {
+      "case_id": "stale_epoch",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "stale_or_mixed_epoch"
+    },
+    {
+      "case_id": "missing_edge",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "missing_edge"
+    },
+    {
+      "case_id": "reversed_edge",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "edge_order_or_frame_mismatch"
+    },
+    {
+      "case_id": "duplicate_edge",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "duplicate_edge"
+    },
+    {
+      "case_id": "unit_mismatch",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "unit_mismatch"
+    },
+    {
+      "case_id": "changed_input_dpi_context",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "chain_endpoint_mismatch"
+    },
+    {
+      "case_id": "target_identity_swap",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "target_identity_binding_mismatch"
+    },
+    {
+      "case_id": "non_affine_reflow",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "unsupported_non_affine"
+    },
+    {
+      "case_id": "uncertainty_crosses_target",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "uncertainty_not_wholly_inside_target"
+    },
+    {
+      "case_id": "uncertainty_hits_forbidden",
+      "decision": "UNKNOWN_REFUSE",
+      "mapped": null,
+      "reason": "uncertainty_not_wholly_inside_target"
+    }
+  ],
+  "schema": "issue8185.candidate.output.v1"
+}

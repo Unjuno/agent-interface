@@ -1,0 +1,1062 @@
+{
+  "allocation": "8185-TRANSFORM-GRAPH-T0-20261005-01",
+  "cases": [
+    {
+      "case_id": "stable_identity",
+      "edges": [
+        {
+          "edge_id": "identity",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        9.9,
+        9.9,
+        10.1,
+        10.1
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "window_translation",
+      "edges": [
+        {
+          "edge_id": "translate",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              10
+            ],
+            [
+              0,
+              1,
+              10
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        19,
+        19,
+        21,
+        21
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "uniform_dpi_update",
+      "edges": [
+        {
+          "edge_id": "dpi150",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1.5,
+              0,
+              3
+            ],
+            [
+              0,
+              1.5,
+              3
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "device_px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "device_px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        17,
+        17,
+        19,
+        19
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "mixed_monitor_update",
+      "edges": [
+        {
+          "edge_id": "crop",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              4
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "capture",
+          "target_units": "px"
+        },
+        {
+          "edge_id": "client",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              3
+            ],
+            [
+              0,
+              1,
+              5
+            ]
+          ],
+          "residual": 0,
+          "source": "capture",
+          "source_units": "px",
+          "target": "client",
+          "target_units": "px"
+        },
+        {
+          "edge_id": "monitor",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1.5,
+              0,
+              0
+            ],
+            [
+              0,
+              1.5,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "client",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "device_px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "device_px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        24.5,
+        24.5,
+        26.5,
+        26.5
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "two_epoch_composition",
+      "edges": [
+        {
+          "edge_id": "crop",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              4
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "capture",
+          "target_units": "px"
+        },
+        {
+          "edge_id": "window",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              3
+            ],
+            [
+              0,
+              1,
+              5
+            ]
+          ],
+          "residual": 0,
+          "source": "capture",
+          "source_units": "px",
+          "target": "client",
+          "target_units": "px"
+        },
+        {
+          "edge_id": "monitor",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1.5,
+              0,
+              0
+            ],
+            [
+              0,
+              1.5,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "client",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "device_px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "device_px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        24.5,
+        24.5,
+        26.5,
+        26.5
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "composed_small_uncertainty",
+      "edges": [
+        {
+          "edge_id": "a",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              4
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "residual": 0.1,
+          "source": "presented",
+          "source_units": "px",
+          "target": "capture",
+          "target_units": "px"
+        },
+        {
+          "edge_id": "b",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              4
+            ],
+            [
+              0,
+              1,
+              5
+            ]
+          ],
+          "residual": 0.1,
+          "source": "capture",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "device_px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "device_px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        17.5,
+        16.5,
+        18.5,
+        17.5
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "shared_uncertainty_control",
+      "edges": [
+        {
+          "correlated_error": [
+            0.8,
+            0.8
+          ],
+          "correlation_id": "common-shift",
+          "edge_id": "shared",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        9.9,
+        9.9,
+        10.1,
+        10.1
+      ],
+      "target_box_target_id": "button-save",
+      "target_correlated_uncertainty": {
+        "common-shift": [
+          0.8,
+          0.8
+        ]
+      },
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "independent_error_crosses_edge",
+      "edges": [
+        {
+          "edge_id": "uncertain",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 1.1,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        9.9,
+        9.9,
+        10.1,
+        10.1
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "stale_epoch",
+      "edges": [
+        {
+          "edge_id": "old",
+          "epoch": 0,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "missing_edge",
+      "edges": [],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "reversed_edge",
+      "edges": [
+        {
+          "edge_id": "reverse",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "backend",
+          "source_units": "px",
+          "target": "presented",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "duplicate_edge",
+      "edges": [
+        {
+          "edge_id": "dup",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "capture",
+          "target_units": "px"
+        },
+        {
+          "edge_id": "dup",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "capture",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "unit_mismatch",
+      "edges": [
+        {
+          "edge_id": "units",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "logical_px",
+          "target": "backend",
+          "target_units": "device_px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "changed_input_dpi_context",
+      "edges": [
+        {
+          "edge_id": "dpi-old",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "device_px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "logical_px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "target_identity_swap",
+      "edges": [
+        {
+          "edge_id": "translate",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              10
+            ],
+            [
+              0,
+              1,
+              10
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-delete"
+    },
+    {
+      "case_id": "non_affine_reflow",
+      "edges": [
+        {
+          "edge_id": "reflow",
+          "epoch": 1,
+          "kind": "non_affine",
+          "matrix": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "residual": 0,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        18.0,
+        18.0,
+        22.0,
+        22.0
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "uncertainty_crosses_target",
+      "edges": [
+        {
+          "edge_id": "border",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              10
+            ],
+            [
+              0,
+              1,
+              10
+            ]
+          ],
+          "residual": 1.1,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          80,
+          80,
+          90,
+          90
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        19,
+        19,
+        21,
+        21
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    },
+    {
+      "case_id": "uncertainty_hits_forbidden",
+      "edges": [
+        {
+          "edge_id": "forbidden",
+          "epoch": 1,
+          "kind": "affine",
+          "matrix": [
+            [
+              1,
+              0,
+              70
+            ],
+            [
+              0,
+              1,
+              70
+            ]
+          ],
+          "residual": 2,
+          "source": "presented",
+          "source_units": "px",
+          "target": "backend",
+          "target_units": "px"
+        }
+      ],
+      "forbidden_boxes": [
+        [
+          81,
+          81,
+          84,
+          84
+        ]
+      ],
+      "input_frame": "backend",
+      "input_units": "px",
+      "observation_epoch": 1,
+      "point": [
+        10.0,
+        10.0
+      ],
+      "source_frame": "presented",
+      "source_units": "px",
+      "target_box": [
+        79,
+        79,
+        83,
+        83
+      ],
+      "target_box_target_id": "button-save",
+      "target_id": "button-save"
+    }
+  ],
+  "schema": "issue8185.candidate.input.v1"
+}
