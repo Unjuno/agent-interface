@@ -1,5 +1,6 @@
 # Analytical research
 
+- [Issue #5865 T1 producer construction pilot](negative_search_producer_5865_t1_pilot_20261005/README.md) — 12 synthetic producer cases; candidate and separate oracle auditor each ran once. `PASS_AUDIT`, 0 false negatives; stable controls 5/5 useful coverage, virtualized no-match 0/2. The 80% stable-control threshold is frozen for a future held-out gate only; formal T1 remains blocked on recovering the unchanged T0 classifier. Synthetic browser fixture only.
 - [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
 - [Issue #8049 repeated-cohort IPCW uncertainty A03](ipcw_repeated_uncertainty_7993_a02_20261005/successor_a03_seed8049021/REPORT.md) — `PASS_METHOD_SCOPED`: 20,000 synthetic cohorts / 8,000,000 units independently reconstructed; HT mean 0.250325, design SD error 0.111%, bootstrap coverage 0.94935, 4/4 mutations rejected. A02 container-CLI STOP and A01 coverage failure are preserved; no production calibration or safety claim.
 - [Issue #8049 A02 pre-container STOP](ipcw_repeated_uncertainty_7993_a02_20261005/STOP.md) — Docker rejected invalid bare `rw` mount syntax before candidate/auditor execution; distinct fresh-seed A03 follows.
@@ -694,6 +695,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
 - [`needle_role_skill_lifecycle_5133_v2/`](needle_role_skill_lifecycle_5133_v2/)
+- [`negative_search_producer_5865_t1_pilot_20261005/`](negative_search_producer_5865_t1_pilot_20261005/)
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)

@@ -1,0 +1,45 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>#5865 T1 producer coverage fixture</title>
+<style>
+  body { font: 15px system-ui; margin: 24px; color: #1c2430; }
+  main { display: grid; grid-template-columns: 280px 360px; gap: 24px; }
+  section { border: 1px solid #aab4c0; border-radius: 8px; padding: 16px; }
+  button { margin: 8px 8px 0 0; padding: 8px 14px; }
+  #viewport { height: 184px; overflow: hidden; border: 1px solid #ccd3dc; }
+  .row { height: 30px; padding: 4px 10px; border-bottom: 1px solid #edf0f3; }
+  canvas { display: block; width: 320px; height: 184px; }
+</style>
+<h1>Negative-search producer fixture</h1>
+<main>
+  <section aria-labelledby="stable-title">
+    <h2 id="stable-title">Stable controls</h2>
+    <p>All controls are exposed in the DOM and accessibility tree.</p>
+    <button>Save</button><button>Cancel</button>
+    <button>Apply</button><button>Close</button>
+  </section>
+  <section aria-labelledby="virtual-title">
+    <h2 id="virtual-title">Virtualized canvas-like list</h2>
+    <p>Only the current viewport is rendered.</p>
+    <div id="viewport" role="img" aria-label="Rows 0 through 5 of a virtualized 30-row list">
+      <canvas id="list" width="640" height="368"></canvas>
+    </div>
+  </section>
+</main>
+<script>
+  const rows = Array.from({length: 30}, (_, i) => ({
+    id: `row-${String(i).padStart(2, "0")}`,
+    label: i === 17 ? "Delete" : `Row ${i}`
+  }));
+  const canvas = document.querySelector("#list");
+  const ctx = canvas.getContext("2d");
+  ctx.scale(2, 2);
+  ctx.font = "14px system-ui";
+  for (let i = 0; i < 6; i++) {
+    ctx.fillStyle = "#1c2430";
+    ctx.fillText(rows[i].label, 12, 24 + i * 30);
+    ctx.strokeStyle = "#edf0f3";
+    ctx.beginPath(); ctx.moveTo(0, 30 + i * 30); ctx.lineTo(320, 30 + i * 30); ctx.stroke();
+  }
+  // `rows` is fixture application state; only the visible six rows are rendered.
+</script>

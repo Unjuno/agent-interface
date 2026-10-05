@@ -1,0 +1,132 @@
+{
+  "allocation": "T1-CONSTRUCTION-PILOT-20261005",
+  "case_count": 12,
+  "results": [
+    {
+      "case_id": "stable-01",
+      "candidate": {
+        "status": "NO_MATCH_WITHIN_CERTIFIED_SCOPE",
+        "scope": {
+          "surface_id": "app-A",
+          "epoch": 11,
+          "predicate_version": "text-exact.v1",
+          "page_count": 1
+        },
+        "linearization_point": "single_versioned_inventory_epoch",
+        "item_count": 2
+      }
+    },
+    {
+      "case_id": "stable-02",
+      "candidate": {
+        "status": "NO_MATCH_WITHIN_CERTIFIED_SCOPE",
+        "scope": {
+          "surface_id": "app-A",
+          "epoch": 12,
+          "predicate_version": "text-exact.v1",
+          "page_count": 1
+        },
+        "linearization_point": "single_versioned_inventory_epoch",
+        "item_count": 2
+      }
+    },
+    {
+      "case_id": "stable-03",
+      "candidate": {
+        "status": "NO_MATCH_WITHIN_CERTIFIED_SCOPE",
+        "scope": {
+          "surface_id": "app-A",
+          "epoch": 13,
+          "predicate_version": "text-exact.v1",
+          "page_count": 1
+        },
+        "linearization_point": "single_versioned_inventory_epoch",
+        "item_count": 2
+      }
+    },
+    {
+      "case_id": "stable-04",
+      "candidate": {
+        "status": "NO_MATCH_WITHIN_CERTIFIED_SCOPE",
+        "scope": {
+          "surface_id": "app-A",
+          "epoch": 14,
+          "predicate_version": "text-exact.v1",
+          "page_count": 1
+        },
+        "linearization_point": "single_versioned_inventory_epoch",
+        "item_count": 2
+      }
+    },
+    {
+      "case_id": "stable-05",
+      "candidate": {
+        "status": "NO_MATCH_WITHIN_CERTIFIED_SCOPE",
+        "scope": {
+          "surface_id": "app-A",
+          "epoch": 15,
+          "predicate_version": "text-exact.v1",
+          "page_count": 1
+        },
+        "linearization_point": "single_versioned_inventory_epoch",
+        "item_count": 2
+      }
+    },
+    {
+      "case_id": "virtual-01",
+      "candidate": {
+        "status": "UNKNOWN_INCOMPLETE_COVERAGE",
+        "reason": "producer_did_not_assert_complete_coverage"
+      }
+    },
+    {
+      "case_id": "virtual-02",
+      "candidate": {
+        "status": "UNKNOWN_INCOMPLETE_COVERAGE",
+        "reason": "producer_did_not_assert_complete_coverage"
+      }
+    },
+    {
+      "case_id": "virtual-03",
+      "candidate": {
+        "status": "UNKNOWN_INCOMPLETE_COVERAGE",
+        "reason": "producer_did_not_assert_complete_coverage"
+      }
+    },
+    {
+      "case_id": "mutation-epoch-drift",
+      "candidate": {
+        "status": "UNKNOWN_INCOMPLETE_COVERAGE",
+        "reason": "producer_did_not_assert_complete_coverage"
+      }
+    },
+    {
+      "case_id": "mutation-silent-writer",
+      "candidate": {
+        "status": "UNKNOWN_INCOMPLETE_COVERAGE",
+        "reason": "producer_did_not_assert_complete_coverage"
+      }
+    },
+    {
+      "case_id": "mutation-surface-drift",
+      "candidate": {
+        "status": "UNKNOWN_INCOMPLETE_COVERAGE",
+        "reason": "producer_did_not_assert_complete_coverage"
+      }
+    },
+    {
+      "case_id": "stable-positive-control",
+      "candidate": {
+        "status": "MATCH_FOUND",
+        "match": {
+          "id": "delete",
+          "label": "Delete"
+        },
+        "scope": {
+          "surface_id": "app-A",
+          "epoch": 61
+        }
+      }
+    }
+  ]
+}
