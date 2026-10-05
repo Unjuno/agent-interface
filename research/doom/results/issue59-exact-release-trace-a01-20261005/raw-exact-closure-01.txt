@@ -16,16 +16,16 @@
     "post_trial_cleanup_events": [
       {
         "event": "xsync",
-        "t_ns": 175157658054100
+        "t_ns": 175488222956900
       },
       {
         "event": "query_keymap",
         "held": [],
-        "t_ns": 175157658056800
+        "t_ns": 175488222959600
       },
       {
         "event": "display_close",
-        "t_ns": 175157658066200
+        "t_ns": 175488222968200
       }
     ],
     "rows": [
@@ -48,11 +48,11 @@
         "owned_keycodes_after_batch": [],
         "owner_cleanup_intervened": false,
         "owner_cleanup_record_count_before_release": 0,
-        "owner_id": "7175a211965d4e33b3e459f8fa16b351",
+        "owner_id": "ff6b713693b443cd9cba30813d7bd58b",
         "owner_identity_matches_after_batch": true,
         "owner_release_history_complete": true,
-        "owner_sample_after_finished_ns": 175157657997500,
-        "owner_sample_after_started_ns": 175157657994700,
+        "owner_sample_after_finished_ns": 175488222900000,
+        "owner_sample_after_started_ns": 175488222897500,
         "owner_sample_ordered_after_batch": true,
         "owner_thread_keyup_history_complete": true,
         "owner_thread_keyup_receipt": {
@@ -62,12 +62,12 @@
           "key": "a",
           "keycode": 38,
           "operation": "up",
-          "owner_id": "7175a211965d4e33b3e459f8fa16b351",
-          "owner_keyrelease_started_ns": 175157657887000,
-          "owner_sync_returned_ns": 175157657889200,
+          "owner_id": "ff6b713693b443cd9cba30813d7bd58b",
+          "owner_keyrelease_started_ns": 175488222766200,
+          "owner_sync_returned_ns": 175488222768700,
           "physical_verification_authoritative": false,
           "server_sync_completed": true,
-          "valid_until_ns": 175187657747900
+          "valid_until_ns": 175518222617500
         },
         "owner_thread_keyup_receipt_count": 1,
         "owner_thread_keyup_verified": true,
@@ -81,13 +81,13 @@
         "release_batch_schema": "input-release-batch-v3",
         "release_batch_size": 2,
         "release_batch_step": 3,
-        "release_call_bracket_ns": 39200,
-        "release_call_returned_ns": 175157657907400,
-        "release_call_started_ns": 175157657868200,
+        "release_call_bracket_ns": 46900,
+        "release_call_returned_ns": 175488222794500,
+        "release_call_started_ns": 175488222747600,
         "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
         "step": 3,
         "transition_schema": "input-release-transition-v3",
-        "valid_until_ns": 175187657747900
+        "valid_until_ns": 175518222617500
       },
       {
         "backend_owned_before_release": true,
@@ -108,11 +108,11 @@
         "owned_keycodes_after_batch": [],
         "owner_cleanup_intervened": false,
         "owner_cleanup_record_count_before_release": 1,
-        "owner_id": "7175a211965d4e33b3e459f8fa16b351",
+        "owner_id": "ff6b713693b443cd9cba30813d7bd58b",
         "owner_identity_matches_after_batch": true,
         "owner_release_history_complete": true,
-        "owner_sample_after_finished_ns": 175157657997500,
-        "owner_sample_after_started_ns": 175157657994700,
+        "owner_sample_after_finished_ns": 175488222900000,
+        "owner_sample_after_started_ns": 175488222897500,
         "owner_sample_ordered_after_batch": true,
         "owner_thread_keyup_history_complete": true,
         "owner_thread_keyup_receipt": {
@@ -122,12 +122,12 @@
           "key": "space",
           "keycode": 65,
           "operation": "up",
-          "owner_id": "7175a211965d4e33b3e459f8fa16b351",
-          "owner_keyrelease_started_ns": 175157657942700,
-          "owner_sync_returned_ns": 175157657944400,
+          "owner_id": "ff6b713693b443cd9cba30813d7bd58b",
+          "owner_keyrelease_started_ns": 175488222842500,
+          "owner_sync_returned_ns": 175488222843900,
           "physical_verification_authoritative": false,
           "server_sync_completed": true,
-          "valid_until_ns": 175187657747900
+          "valid_until_ns": 175518222617500
         },
         "owner_thread_keyup_receipt_count": 1,
         "owner_thread_keyup_verified": true,
@@ -141,13 +141,13 @@
         "release_batch_schema": "input-release-batch-v3",
         "release_batch_size": 2,
         "release_batch_step": 3,
-        "release_call_bracket_ns": 38400,
-        "release_call_returned_ns": 175157657960600,
-        "release_call_started_ns": 175157657922200,
+        "release_call_bracket_ns": 44200,
+        "release_call_returned_ns": 175488222859100,
+        "release_call_started_ns": 175488222814900,
         "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
         "step": 3,
         "transition_schema": "input-release-transition-v3",
-        "valid_until_ns": 175187657747900
+        "valid_until_ns": 175518222617500
       }
     ],
     "trial_events": [
@@ -155,101 +155,101 @@
         "event": "owner_rpc_start",
         "key": "a",
         "op": "down",
-        "t_ns": 175157657760200
+        "t_ns": 175488222629900
       },
       {
         "detail": 38,
         "event": "xtest_fake_input",
         "input_event": "KeyPress",
-        "t_ns": 175157657791700
+        "t_ns": 175488222662900
       },
       {
         "event": "xsync",
-        "t_ns": 175157657792700
+        "t_ns": 175488222663700
       },
       {
         "event": "owner_rpc_return",
         "key": "a",
         "op": "down",
-        "t_ns": 175157657818200
+        "t_ns": 175488222688200
       },
       {
         "event": "owner_rpc_start",
         "key": "space",
         "op": "down",
-        "t_ns": 175157657821000
+        "t_ns": 175488222691100
       },
       {
         "detail": 65,
         "event": "xtest_fake_input",
         "input_event": "KeyPress",
-        "t_ns": 175157657843200
+        "t_ns": 175488222718600
       },
       {
         "event": "xsync",
-        "t_ns": 175157657844300
+        "t_ns": 175488222719700
       },
       {
         "event": "owner_rpc_return",
         "key": "space",
         "op": "down",
-        "t_ns": 175157657863700
+        "t_ns": 175488222742100
       },
       {
         "event": "owner_rpc_start",
         "key": "a",
         "op": "up",
-        "t_ns": 175157657867100
+        "t_ns": 175488222746200
       },
       {
         "detail": 38,
         "event": "xtest_fake_input",
         "input_event": "KeyRelease",
-        "t_ns": 175157657888500
+        "t_ns": 175488222767800
       },
       {
         "event": "xsync",
-        "t_ns": 175157657889000
+        "t_ns": 175488222768500
       },
       {
         "event": "owner_rpc_return",
         "key": "a",
         "op": "up",
-        "t_ns": 175157657918100
+        "t_ns": 175488222808800
       },
       {
         "event": "owner_rpc_start",
         "key": "space",
         "op": "up",
-        "t_ns": 175157657921400
+        "t_ns": 175488222813400
       },
       {
         "detail": 65,
         "event": "xtest_fake_input",
         "input_event": "KeyRelease",
-        "t_ns": 175157657943500
+        "t_ns": 175488222843300
       },
       {
         "event": "xsync",
-        "t_ns": 175157657944200
+        "t_ns": 175488222843700
       },
       {
         "event": "owner_rpc_return",
         "key": "space",
         "op": "up",
-        "t_ns": 175157657968000
+        "t_ns": 175488222867500
       },
       {
         "event": "owner_rpc_start",
         "key": null,
         "op": "input_state",
-        "t_ns": 175157657976600
+        "t_ns": 175488222878800
       },
       {
         "event": "owner_rpc_return",
         "key": null,
         "op": "input_state",
-        "t_ns": 175157658018700
+        "t_ns": 175488222920000
       }
     ]
   },
@@ -271,16 +271,16 @@
     "post_trial_cleanup_events": [
       {
         "event": "xsync",
-        "t_ns": 175157658596400
+        "t_ns": 175488223503800
       },
       {
         "event": "query_keymap",
         "held": [],
-        "t_ns": 175157658598800
+        "t_ns": 175488223506400
       },
       {
         "event": "display_close",
-        "t_ns": 175157658605600
+        "t_ns": 175488223514000
       }
     ],
     "rows": [
@@ -303,11 +303,11 @@
         "owned_keycodes_after_batch": [],
         "owner_cleanup_intervened": false,
         "owner_cleanup_record_count_before_release": 0,
-        "owner_id": "bb6a47d982fd4e0fb8276d868b70a1fd",
+        "owner_id": "70c8d9d8bc3b4fda946c7179473cf1cf",
         "owner_identity_matches_after_batch": true,
         "owner_release_history_complete": true,
-        "owner_sample_after_finished_ns": 175157658546600,
-        "owner_sample_after_started_ns": 175157658544900,
+        "owner_sample_after_finished_ns": 175488223455700,
+        "owner_sample_after_started_ns": 175488223453900,
         "owner_sample_ordered_after_batch": true,
         "owner_thread_keyup_history_complete": true,
         "owner_thread_keyup_receipt": {
@@ -317,12 +317,12 @@
           "key": "a",
           "keycode": 38,
           "operation": "up",
-          "owner_id": "bb6a47d982fd4e0fb8276d868b70a1fd",
-          "owner_keyrelease_started_ns": 175157658411600,
-          "owner_sync_returned_ns": 175157658414000,
+          "owner_id": "70c8d9d8bc3b4fda946c7179473cf1cf",
+          "owner_keyrelease_started_ns": 175488223323100,
+          "owner_sync_returned_ns": 175488223325400,
           "physical_verification_authoritative": false,
           "server_sync_completed": true,
-          "valid_until_ns": 175187658238300
+          "valid_until_ns": 175518223138100
         },
         "owner_thread_keyup_receipt_count": 1,
         "owner_thread_keyup_verified": true,
@@ -336,13 +336,13 @@
         "release_batch_schema": "input-release-batch-v3",
         "release_batch_size": 2,
         "release_batch_step": 3,
-        "release_call_bracket_ns": 36300,
-        "release_call_returned_ns": 175157658431300,
-        "release_call_started_ns": 175157658395000,
+        "release_call_bracket_ns": 35100,
+        "release_call_returned_ns": 175488223341600,
+        "release_call_started_ns": 175488223306500,
         "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
         "step": 3,
         "transition_schema": "input-release-transition-v3",
-        "valid_until_ns": 175187658238300
+        "valid_until_ns": 175518223138100
       },
       {
         "backend_owned_before_release": true,
@@ -363,11 +363,11 @@
         "owned_keycodes_after_batch": [],
         "owner_cleanup_intervened": false,
         "owner_cleanup_record_count_before_release": 1,
-        "owner_id": "bb6a47d982fd4e0fb8276d868b70a1fd",
+        "owner_id": "70c8d9d8bc3b4fda946c7179473cf1cf",
         "owner_identity_matches_after_batch": true,
         "owner_release_history_complete": true,
-        "owner_sample_after_finished_ns": 175157658546600,
-        "owner_sample_after_started_ns": 175157658544900,
+        "owner_sample_after_finished_ns": 175488223455700,
+        "owner_sample_after_started_ns": 175488223453900,
         "owner_sample_ordered_after_batch": true,
         "owner_thread_keyup_history_complete": true,
         "owner_thread_keyup_receipt": {
@@ -377,12 +377,12 @@
           "key": "space",
           "keycode": 65,
           "operation": "up",
-          "owner_id": "bb6a47d982fd4e0fb8276d868b70a1fd",
-          "owner_keyrelease_started_ns": 175157658496300,
-          "owner_sync_returned_ns": 175157658498500,
+          "owner_id": "70c8d9d8bc3b4fda946c7179473cf1cf",
+          "owner_keyrelease_started_ns": 175488223407000,
+          "owner_sync_returned_ns": 175488223409000,
           "physical_verification_authoritative": false,
           "server_sync_completed": true,
-          "valid_until_ns": 175187658238300
+          "valid_until_ns": 175518223138100
         },
         "owner_thread_keyup_receipt_count": 1,
         "owner_thread_keyup_verified": true,
@@ -396,13 +396,13 @@
         "release_batch_schema": "input-release-batch-v3",
         "release_batch_size": 2,
         "release_batch_step": 3,
-        "release_call_bracket_ns": 32000,
-        "release_call_returned_ns": 175157658513300,
-        "release_call_started_ns": 175157658481300,
+        "release_call_bracket_ns": 31300,
+        "release_call_returned_ns": 175488223423000,
+        "release_call_started_ns": 175488223391700,
         "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
         "step": 3,
         "transition_schema": "input-release-transition-v3",
-        "valid_until_ns": 175187658238300
+        "valid_until_ns": 175518223138100
       }
     ],
     "trial_events": [
@@ -410,113 +410,113 @@
         "event": "owner_rpc_start",
         "key": "a",
         "op": "down",
-        "t_ns": 175157658245500
+        "t_ns": 175488223145500
       },
       {
         "detail": 38,
         "event": "xtest_fake_input",
         "input_event": "KeyPress",
-        "t_ns": 175157658268800
+        "t_ns": 175488223167300
       },
       {
         "event": "xsync",
-        "t_ns": 175157658269400
+        "t_ns": 175488223167800
       },
       {
         "event": "owner_rpc_return",
         "key": "a",
         "op": "down",
-        "t_ns": 175157658297900
+        "t_ns": 175488223198800
       },
       {
         "event": "owner_rpc_start",
         "key": "space",
         "op": "down",
-        "t_ns": 175157658299900
+        "t_ns": 175488223201000
       },
       {
         "detail": 65,
         "event": "xtest_fake_input",
         "input_event": "KeyPress",
-        "t_ns": 175157658371700
+        "t_ns": 175488223281300
       },
       {
         "event": "xsync",
-        "t_ns": 175157658372100
+        "t_ns": 175488223281800
       },
       {
         "event": "owner_rpc_return",
         "key": "space",
         "op": "down",
-        "t_ns": 175157658387600
+        "t_ns": 175488223298700
       },
       {
         "event": "owner_rpc_start",
         "key": "a",
         "op": "up",
-        "t_ns": 175157658391500
+        "t_ns": 175488223302900
       },
       {
         "detail": 38,
         "event": "xtest_fake_input",
         "input_event": "KeyRelease",
-        "t_ns": 175157658412900
+        "t_ns": 175488223324500
       },
       {
         "event": "xsync",
-        "t_ns": 175157658413700
+        "t_ns": 175488223325200
       },
       {
         "event": "owner_rpc_return",
         "key": "a",
         "op": "up",
-        "t_ns": 175157658441700
+        "t_ns": 175488223352400
       },
       {
         "event": "owner_rpc_start",
         "key": null,
         "op": "input_state",
-        "t_ns": 175157658443800
+        "t_ns": 175488223355200
       },
       {
         "event": "owner_rpc_return",
         "key": null,
         "op": "input_state",
-        "t_ns": 175157658477100
+        "t_ns": 175488223387600
       },
       {
         "event": "owner_rpc_start",
         "key": "space",
         "op": "up",
-        "t_ns": 175157658480400
+        "t_ns": 175488223390800
       },
       {
         "detail": 65,
         "event": "xtest_fake_input",
         "input_event": "KeyRelease",
-        "t_ns": 175157658497600
+        "t_ns": 175488223408300
       },
       {
         "event": "xsync",
-        "t_ns": 175157658498300
+        "t_ns": 175488223408800
       },
       {
         "event": "owner_rpc_return",
         "key": "space",
         "op": "up",
-        "t_ns": 175157658521900
+        "t_ns": 175488223431100
       },
       {
         "event": "owner_rpc_start",
         "key": null,
         "op": "input_state",
-        "t_ns": 175157658532000
+        "t_ns": 175488223441300
       },
       {
         "event": "owner_rpc_return",
         "key": null,
         "op": "input_state",
-        "t_ns": 175157658562900
+        "t_ns": 175488223470400
       }
     ]
   },
