@@ -649,3 +649,15 @@ Removed `fix/59-feedback-step-bool-identity-20261005` at its audited tip `2bebf5
 - After deletion, the branch API returned NOT_FOUND. Closed PR #7699 still reports the original head SHA, and the original typed-feedback test blob remains readable at that SHA. No evidence or commit object was rewritten.
 
 This removes one redundant branch ref while retaining its source through descendant #7696 and closed PR history. #7696 remains unmerged and Draft; this deletion does not integrate or approve its changes.
+
+
+## Rescued evidence branch cleanup — 2026-10-05 14:18 UTC
+
+Removed `research/59-v39-startup-edge-identity-audit-a01-20261005` at audited tip `108d22491db4baf6aa7214ae3f94122f3a7bf849`.
+
+- Its closed, unmerged PR #7901 had been explicitly kept while the 12-file package was absent from `main`. That package was later copied unchanged to PR #7988 and #7988 has merged.
+- Rechecked all 12 paths from PR #7901: every Git blob SHA matches current `main`. Comparing `main` to the source tip showed exactly two source-only commits and those 12 package paths; no unrelated source changes.
+- No open PR uses the source branch as head or base, and the shared local worktree registry had no checkout on it. The closed PR still records its original head SHA; the original audit result is readable at that commit after deletion.
+- The branch endpoint now returns NOT_FOUND. The earlier provenance hold is resolved for the packaged evidence: all 12 files are on `main`, and PR/commit history remains available.
+
+This removes one source ref only; #7901 remains closed unmerged, #7988 remains the merged preservation record, and no experiment was rerun.
