@@ -1,0 +1,254 @@
+{
+  "base_analysis": {
+    "disposition": "PROVEN_DEAD_EVICTION",
+    "evicted_ids": [
+      "completed-note",
+      "obsolete-observation",
+      "release-history",
+      "stale-summary"
+    ],
+    "live_ids": [
+      "external-effect",
+      "obs-v1",
+      "obs-v2",
+      "recovery-state",
+      "task-intent"
+    ],
+    "reachable_nodes": [
+      "compare_history",
+      "current",
+      "done",
+      "effect",
+      "frontier",
+      "recovery",
+      "retry"
+    ],
+    "reason": "complete_graph_fixed_point",
+    "selected_ids": [
+      "external-effect",
+      "obs-v1",
+      "obs-v2",
+      "recovery-state",
+      "task-intent"
+    ]
+  },
+  "canonical_record_sha256": {
+    "completed-note": "627883d040d34bbdc92dbea0320857325e0963dc2b52580c751badb61e45565f",
+    "external-effect": "7746c85b3cae664d6062d2a7923f4cec0b4ccc4fe1a645d929455a36c00c32fa",
+    "obs-v1": "000ad4cd225c2b74196f0622d9abe60f12df3b22a784d64ca075bef5abd225c4",
+    "obs-v2": "06cd313ef6e6670d3fcae98ec79772074d3ca8fc1dcb15de58b671c8bd61d348",
+    "obsolete-observation": "116223c0902e4f5d1ee5e0e8752913c6fa3514cfc0f240ddd5209e0e47970cad",
+    "recovery-state": "f0b6eb98d21a9748210988e703bd2a04d316b19b8eec6f5dbcb1f6504d366a14",
+    "release-history": "147fe6c28adc14b1edfb72316a5db407812e122f9ada131a5007f1b2f30e7555",
+    "stale-summary": "e7d4028f656aac9d2bcc389f72b5d976bbd684ed534c9a87ec66b07ae30bf01d",
+    "task-intent": "8db9f322e02ca63343d439fa3cbd9b8e5d6287ec3f243f71026b76e1e4b1460f"
+  },
+  "mutations": [
+    {
+      "id": "omitted-recovery-edge",
+      "result": {
+        "disposition": "UNKNOWN_KEEP",
+        "evicted_ids": [],
+        "live_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ],
+        "reachable_nodes": [],
+        "reason": "graph_or_evidence_integrity_unproven",
+        "selected_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ]
+      }
+    },
+    {
+      "id": "terminal-obligation-without-receipt",
+      "result": {
+        "disposition": "UNKNOWN_KEEP",
+        "evicted_ids": [],
+        "live_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ],
+        "reachable_nodes": [],
+        "reason": "graph_or_evidence_integrity_unproven",
+        "selected_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ]
+      }
+    },
+    {
+      "id": "aliased-evidence-version",
+      "result": {
+        "disposition": "UNKNOWN_KEEP",
+        "evicted_ids": [],
+        "live_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history",
+          "obs-v1"
+        ],
+        "reachable_nodes": [],
+        "reason": "graph_or_evidence_integrity_unproven",
+        "selected_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history",
+          "obs-v1"
+        ]
+      }
+    },
+    {
+      "id": "current-consumer-changed-to-historical",
+      "result": {
+        "disposition": "UNKNOWN_KEEP",
+        "evicted_ids": [],
+        "live_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ],
+        "reachable_nodes": [],
+        "reason": "graph_or_evidence_integrity_unproven",
+        "selected_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ]
+      }
+    },
+    {
+      "id": "unmodeled-dynamic-consumer",
+      "result": {
+        "disposition": "UNKNOWN_KEEP",
+        "evicted_ids": [],
+        "live_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ],
+        "reachable_nodes": [],
+        "reason": "graph_or_evidence_integrity_unproven",
+        "selected_ids": [
+          "obs-v1",
+          "obs-v2",
+          "recovery-state",
+          "external-effect",
+          "task-intent",
+          "obsolete-observation",
+          "completed-note",
+          "stale-summary",
+          "release-history"
+        ]
+      }
+    }
+  ],
+  "policies": [
+    {
+      "policy": "FULL_CONTEXT",
+      "selected_ids": [
+        "completed-note",
+        "external-effect",
+        "obs-v1",
+        "obs-v2",
+        "obsolete-observation",
+        "recovery-state",
+        "release-history",
+        "stale-summary",
+        "task-intent"
+      ],
+      "visible_bytes": 9240
+    },
+    {
+      "policy": "RECENCY_BUDGET",
+      "selected_ids": [
+        "external-effect",
+        "obs-v2",
+        "release-history",
+        "task-intent"
+      ],
+      "visible_bytes": 469
+    },
+    {
+      "policy": "TASK_CONDITIONED_RETRIEVAL",
+      "selected_ids": [
+        "external-effect",
+        "obs-v2",
+        "task-intent"
+      ],
+      "visible_bytes": 347
+    },
+    {
+      "policy": "CONSERVATIVE_USE_LIVENESS",
+      "selected_ids": [
+        "external-effect",
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "task-intent"
+      ],
+      "visible_bytes": 561
+    }
+  ],
+  "schema": "issue7367-a01-raw-v1",
+  "workload_sha256": "c202597e8d4347d21f3900335e2c9341ed60e7251df396b628684b8df2877542"
+}
