@@ -689,3 +689,14 @@ Reclassified `research/59-unauthored-health-trigger-replay-a01-20261005`, which 
 - PR #8206 is open with this branch as its head; no deletion or closure is appropriate while its review remains active. It has no separate local worktree in the shared registry. The latest compare reports current `main` one commit ahead of this head; refresh its base and checks before considering integration.
 
 Keep this ref as an active evidence/review hold. No experiment or auditor was rerun.
+
+
+## Merged V15 evidence ref cleanup — 2026-10-05 14:33 UTC
+
+Resolved the earlier hold for `research/59-v15-owner-evidence-current-main-20261005`:
+
+- PR #8102 is merged and its original head is `8f5beb06d99eed093176c37a74f3620511f984fc`. All 103 changed-path Git blob SHAs at that head match current `main`.
+- No open PR uses the branch as head or base, and the shared local worktree registry has no checkout on it. The exact-tip remote ref was removed; the GitHub branch API now returns NOT_FOUND. Closed PR #8102 still records the original head and the retained files remain available on `main`.
+- The reproduction issue flagged in the technical review remains separately unresolved in the main copy: the README still fetches mutable `refs/pull/8065/head` before checking against its frozen SHA. Removing the redundant source ref does not fix that documentation defect; track it as a separate correction rather than retaining a duplicate branch.
+
+No experiment or audit was rerun.
