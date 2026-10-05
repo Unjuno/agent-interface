@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "check": "all_56_source_manifest_entries_match",
+      "count": 56,
+      "failures": [],
+      "pass": true
+    },
+    {
+      "check": "three_retained_route_receipts_and_results",
+      "count": 3,
+      "failures": [],
+      "pass": true
+    },
+    {
+      "check": "v15_perkey_owner_identity_differs_from_recorded_a01_source",
+      "observed_owner": "research/live_control/input_owner_v12.py",
+      "observed_owner_sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+      "pass": true,
+      "scope": "startup selection only; no owner construction or UP receipt execution",
+      "sources_manifest_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+    }
+  ],
+  "interpretation_limit": "The route mismatch is observed at the suite.Session boundary. The missing per-key UP telemetry consequence is derived from source return contracts; these retained probes did not instantiate InputOwner or execute UP.",
+  "pass": true,
+  "route_outcomes": {
+    "v12-perkey": {
+      "failures": [],
+      "forbidden_calls": [],
+      "owner_file": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "owner_instantiated": false,
+      "owner_matches_a01": true,
+      "owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "recorded_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+    },
+    "v15-default": {
+      "failures": [],
+      "forbidden_calls": [],
+      "owner_file": "research/live_control/input_transition_owner_v4.py",
+      "owner_instantiated": false,
+      "owner_matches_a01": false,
+      "owner_sha256": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+      "recorded_a01_owner_sha256": null
+    },
+    "v15-perkey": {
+      "failures": [],
+      "forbidden_calls": [],
+      "owner_file": "research/live_control/input_owner_v12.py",
+      "owner_instantiated": false,
+      "owner_matches_a01": false,
+      "owner_sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+      "recorded_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+    }
+  },
+  "schema": "v15-perkey-import-independent-audit-v1",
+  "source_manifest_entry_count": 56,
+  "source_probe_sha256": "e253d3b7bd6f86d133e563c8ec1652849d9daa6cfe267954b399b95d80d85114"
+}

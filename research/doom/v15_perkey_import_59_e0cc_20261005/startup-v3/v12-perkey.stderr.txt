@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/probe_startup.py", line 107, in <module>
+    main()
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/probe_startup.py", line 77, in main
+    import session_map01_v12 as base
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/doom/session_map01_v12.py", line 22, in <module>
+    from doom_typed_release_backend_v1 import Backend, suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/live_control/session_v7.py", line 2, in <module>
+    from session_v6 import Backend as Previous, suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/live_control/session_v6.py", line 4, in <module>
+    from session_v4 import Encoder,Decoder,Frame,ImageArtifactSink,suite
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/live_control/session_v4.py", line 20, in <module>
+    from tile_transport import Encoder,Decoder,Frame
+  File "<workspace>/work/v15-perkey-import-e0cc-20261005/source-pr8065/research/observation_tiles/tile_transport.py", line 17, in <module>
+    from exact_gate import Frame
+ModuleNotFoundError: No module named 'exact_gate'
