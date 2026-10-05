@@ -35,3 +35,12 @@ The experiment harness and source files were materialized from commit `33f354c27
 - v2 regression test: `277ce05d9583ae4172ce86663d150a705eb9bb22`
 
 To reproduce without overwriting retained evidence, copy `executed-runner.py` into a fresh temporary directory and run that copy with the full repository root on `PYTHONPATH`; the runner writes `raw-differential.json` beside itself. `audit_raw.py` independently checks the preserved raw branch/action/outcome and release events. `test-output-main-21e55.txt` preserves the latest focused suite output; `test-output-main-33f.txt` retains the earlier four-test run. A pre-run harness attempt that violated the runtime's declared-predicate contract and an initial audit-field-name assertion error are preserved in `construction-attempts.txt`; neither issued model, GUI or native input.
+
+
+## Safe rerun path qualification (2026-10-05)
+
+The original `executed-runner.py` and `raw-differential.json` remain byte-for-byte unchanged. New `rerun_safely.py` and `REPRODUCE.md` create a fresh UUID directory outside the checkout and this frozen package, copy the historical runner and auditor there, run each once, retain separate stdout/stderr, and write a `RUN.json` binding the unique run ID to current Git/runtime/source hashes and candidate/audit results. Existing run IDs are refused before candidate invocation.
+
+One fresh reproducibility run is retained under `reruns/706ce2ae83d549379efe51c21c1d72bb/`: source `main` `3bf3d49bec2aa26a9aaba38806f9e88296459356`, candidate exit 0, raw auditor exit 0 with `PASS_RAW_RECONSTRUCTION`, and raw SHA-256 `4c3c3eeb7c35d99a5f484b4d2845ec9bd7698748a11ecfbeef3248052cb7528f`. The three imported runtime/adapter blobs match the PR's frozen source blobs. A collision check with that same run ID returned 2 and the raw SHA remained unchanged.
+
+This run reproduces only the synthetic branch behavior. It does not add GUI, model, application-effect, recovery, or efficiency evidence, and does not satisfy or consume #3311/#3489 live allocations.
