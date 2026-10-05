@@ -3,6 +3,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from posthoc_classification import FAILURE_EXPLANATION, classify
+
 ROOT = Path(__file__).resolve().parent
 runner_bytes = (ROOT / "RUNNER_OUTPUT.json").read_bytes()
 lines = runner_bytes.decode("utf-8-sig").splitlines()
@@ -44,20 +46,20 @@ checks = {
     "no_real_io_claim": raw.get("claims") == {
         "real_x11": False, "real_input": False, "application": False},
 }
-status = ("RAW_BEHAVIOR_CONFIRMED_AUDITOR_SCHEMA_BUG" if all(checks.values())
-          and record.get("audit", {}).get("status") == "FAIL"
-          else "POSTHOC_CHECK_FAILURE")
+frozen_audit = record.get("audit", {})
+status = classify(checks, frozen_audit)
+signature_confirmed = status == "RAW_BEHAVIOR_CONFIRMED_AUDITOR_SCHEMA_BUG"
 result = {
     "schema": "v39-v15-retry-wrapper-a06-posthoc-audit-v1",
     "status": status,
     "source": "Captured RUNNER_OUTPUT.json only; candidate was not rerun.",
     "checks": checks,
-    "frozen_auditor_status": record.get("audit", {}).get("status"),
-    "frozen_auditor_failed_check": "per_key_receipts_match_rows",
-    "failure_explanation": (
-        "Frozen auditor compared receipt.keycode with release_row.keycode; release rows "
-        "expose key and nest keycode in owner_thread_keyup_receipt."
+    "frozen_auditor_status": frozen_audit.get("status"),
+    "frozen_auditor_checks": frozen_audit.get("checks"),
+    "frozen_auditor_failed_check": (
+        "per_key_receipts_match_rows" if signature_confirmed else None
     ),
+    "failure_explanation": FAILURE_EXPLANATION if signature_confirmed else None,
     "raw_output_sha256": hashlib.sha256(runner_bytes).hexdigest(),
 }
 (ROOT / "POSTHOC_AUDIT.json").write_text(
