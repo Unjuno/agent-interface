@@ -1,0 +1,326 @@
+{
+  "checks": [
+    {
+      "check": "two_blocks_four_arms",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "all_48_assigned_task_cells_retained",
+      "evidence": 48,
+      "pass": true
+    },
+    {
+      "check": "same_six_task_ids_per_arm_block",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "independent_exact_outcomes_and_noncompletions",
+      "evidence": {
+        "exact": 45,
+        "noncompletion": 3
+      },
+      "pass": true
+    },
+    {
+      "check": "exact_once_independent_evaluator",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "counterbalanced_route_assignment",
+      "evidence": {
+        "arm_definitions_in_plan": true,
+        "blocks": [
+          {
+            "order": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "seed": 991073
+          },
+          {
+            "order": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "seed": 991074
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "check": "all_attempt_denominator_present",
+      "evidence": {
+        "all_attempt_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 245248,
+          "input_tokens": 343542,
+          "output_tokens": 2040,
+          "reasoning_output_tokens": 1288
+        },
+        "provider_attempts": {
+          "A": 187626,
+          "B": 78874,
+          "C": 79082,
+          "D": 0
+        }
+      },
+      "pass": true
+    },
+    {
+      "check": "fixed_model_and_effort",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "single_app_and_cell_app_id_absent",
+      "evidence": {
+        "application_fields_in_independent_evaluator_rows": [],
+        "distinct_application_count": 1,
+        "identified_application_from_report": "Chromium"
+      },
+      "pass": true
+    }
+  ],
+  "cohort": {
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "assigned_cells": 48,
+    "blocks": 2,
+    "cell_level_app_id": false,
+    "distinct_apps": 1,
+    "identified_app": "Chromium",
+    "independent_exact": 45,
+    "preserved_noncompletions": 3,
+    "tasks_per_arm_block": 6
+  },
+  "evidence_sha256": {
+    "research/integration/compiled_comparison_57_4d74_20261004/README.md": "b7008c1b96a62ed7506ef114c90adbf9ace0eddff4a3ba418a94f5a014aa9892",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/PLAN_DRAFT.md": "f81ab7927da1167ecf505e3ffb3320c60e18876ae749a54a1fc6c7a8229d59f3",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/PROTOCOL.json": "ffd6889369bba61475b0f5c33b5488a4946d9ce2a450e6d65cc1b30f6ef02528",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/RETAINED_EVIDENCE_AUDIT.json": "d56cdd73ce81c70b50cbeba5910b7f36d5baf28d45d857487c78f630e748995c",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/A/independent-evaluation.json": "af1f5c141c0639b7d7d3107b434daf4e8520b3b01ad277689eccd1683a9c4434",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/B/independent-evaluation.json": "af1869d86081ba1c8246a2c2d29c4f3e3d841f825abf7af84ea1ff158e0590fe",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/C/independent-evaluation.json": "d488a893ee6c7581f0af9bba885e0666baa81d5f75b0aa33915f9c76bceb2087",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/D/independent-evaluation.json": "e259f9401800adc6ed1ae2add4478b575ba8e642f853e6f21d0943aad661e0ad",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/A/independent-evaluation.json": "8ebe9856e1e926859876b8acefb68a76454e70217c36507404dd3676a45dc6d1",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/B/independent-evaluation.json": "52e397de87eaff6a16a6b968b4421eda1fafd8a5e2cec0e5bc681835453b826f",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/C/independent-evaluation.json": "1adde9179ca084e3c9e8983de716d9d2700ce061061330c0686da922b2761764",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/D/independent-evaluation.json": "b67e9ffa24ad434ee29dbcd6bc5c269bb3afa43930b729d9432e04667a52279a",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/independent-readback/RAW_COST_RECONCILIATION.json": "302123a45a38ea651d2bac6eb66b0f1c2e6b5369dfa2a23896a3bda67b468245"
+  },
+  "hold_reason": "The retained comparison crosses four arms with six task IDs in two blocks, but it contains only one Chromium app fixture and no app/application ID in independent task-cell records. Route-by-app variance and population generalizability are therefore not identifiable.",
+  "scope": "read-only historical identifiability audit; no source/raw files modified; no model or GUI calls",
+  "source_main": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "status": "HOLD_NO_IDENTIFIABLE_CROSSED_COHORT",
+  "task_cell_summaries": [
+    {
+      "arm": "A",
+      "block": 1,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 1,
+        "task-6": 1
+      },
+      "independent_success": true,
+      "missing": [],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    },
+    {
+      "arm": "B",
+      "block": 1,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 1,
+        "task-6": 1
+      },
+      "independent_success": true,
+      "missing": [],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    },
+    {
+      "arm": "C",
+      "block": 1,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 0,
+        "task-6": 0
+      },
+      "independent_success": false,
+      "missing": [
+        "task-5",
+        "task-6"
+      ],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    },
+    {
+      "arm": "D",
+      "block": 1,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 1,
+        "task-6": 1
+      },
+      "independent_success": true,
+      "missing": [],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    },
+    {
+      "arm": "A",
+      "block": 2,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 1,
+        "task-6": 1
+      },
+      "independent_success": true,
+      "missing": [],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    },
+    {
+      "arm": "B",
+      "block": 2,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 1,
+        "task-6": 1
+      },
+      "independent_success": true,
+      "missing": [],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    },
+    {
+      "arm": "C",
+      "block": 2,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 1,
+        "task-6": 0
+      },
+      "independent_success": false,
+      "missing": [
+        "task-6"
+      ],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    },
+    {
+      "arm": "D",
+      "block": 2,
+      "duplicate_ids": {},
+      "exact_counts": {
+        "task-1": 1,
+        "task-2": 1,
+        "task-3": 1,
+        "task-4": 1,
+        "task-5": 1,
+        "task-6": 1
+      },
+      "independent_success": true,
+      "missing": [],
+      "task_ids": [
+        "task-1",
+        "task-2",
+        "task-3",
+        "task-4",
+        "task-5",
+        "task-6"
+      ],
+      "unexpected_ids": []
+    }
+  ]
+}
