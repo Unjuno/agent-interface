@@ -7,5 +7,6 @@
 - Candidate/container invocations: 0. Image calls/pulls: 0. Auditor invocations: 0.
 - Post-check: proposed storage path absent; zero live `wslc.exe` clients; no global/session/container inventory or shared/default-session command was issued.
 - CLI help only (non-state-changing) showed `enter <storage-path> --name <name>` and `--session` support. The failed outcome leaves the actual storage/session prerequisite unresolved. No retry.
+- **Coordination deviation:** after this invocation, reading the latest Issue #7970 comments revealed an explicit hold on all WSLc management/RPC calls until ownership and exclusive-lane gates across #6389/#6693/#7924/#7970 are cleared. The `session enter` attempt therefore crossed that gate even though it failed and post-checks saw no session path or live client. Disclosed on #7970 and #7924; no further WSLc operation without clearance.
 
 See `PROTOCOL.md` and `STOP.md` for the freeze, exact classification and limitations.
