@@ -1,0 +1,62 @@
+{
+  "allocation": "BP-7822-MAC-A02-20261006",
+  "max_horizon": 5,
+  "cases": [
+    {
+      "id": "safe_wait_cycle",
+      "start": "s",
+      "goal_states": ["g"],
+      "edges": [
+        {"id": "wait_s_w", "source": "s", "event": "WAIT", "target": "w", "kind": "C", "safe": true, "evidence_available": true},
+        {"id": "wait_w_w", "source": "w", "event": "WAIT", "target": "w", "kind": "C", "safe": true, "evidence_available": true},
+        {"id": "progress_s_g", "source": "s", "event": "VERIFIED_PROGRESS", "target": "g", "kind": "C", "safe": true, "evidence_available": true},
+        {"id": "progress_w_g", "source": "w", "event": "VERIFIED_PROGRESS", "target": "g", "kind": "C", "safe": true, "evidence_available": true},
+        {"id": "unsafe_commit", "source": "s", "event": "COMMIT_STALE", "target": "x", "kind": "C", "safe": false, "evidence_available": true}
+      ]
+    },
+    {
+      "id": "bounded_async",
+      "start": "a0",
+      "goal_states": ["g"],
+      "edges": [
+        {"id": "tick_0_1", "source": "a0", "event": "WAIT_TICK", "target": "a1", "kind": "U", "safe": true, "evidence_available": true},
+        {"id": "tick_1_ready", "source": "a1", "event": "WAIT_TICK", "target": "ready", "kind": "U", "safe": true, "evidence_available": true},
+        {"id": "verified_progress", "source": "ready", "event": "VERIFIED_PROGRESS", "target": "g", "kind": "C", "safe": true, "evidence_available": true}
+      ]
+    },
+    {
+      "id": "uncontrollable_cycle",
+      "start": "u",
+      "goal_states": ["g"],
+      "edges": [
+        {"id": "nature_loop", "source": "u", "event": "EXTERNAL_EVENT", "target": "u", "kind": "U", "safe": true, "evidence_available": true},
+        {"id": "progress_u_g", "source": "u", "event": "VERIFIED_PROGRESS", "target": "g", "kind": "C", "safe": true, "evidence_available": true}
+      ]
+    },
+    {
+      "id": "missing_marker_evidence",
+      "start": "q",
+      "goal_states": [],
+      "edges": [
+        {"id": "unverified_attempt", "source": "q", "event": "ATTEMPT", "target": "done", "kind": "C", "safe": true, "evidence_available": false}
+      ]
+    },
+    {
+      "id": "unsafe_control_alternative",
+      "start": "p",
+      "goal_states": ["g"],
+      "edges": [
+        {"id": "safe_finish", "source": "p", "event": "VERIFIED_PROGRESS", "target": "g", "kind": "C", "safe": true, "evidence_available": true},
+        {"id": "unsafe_finish", "source": "p", "event": "UNSAFE_EFFECT", "target": "g", "kind": "C", "safe": false, "evidence_available": true}
+      ]
+    },
+    {
+      "id": "contract_disagreement",
+      "start": "c",
+      "goal_states": ["claimed_goal"],
+      "edges": [
+        {"id": "claimed_progress", "source": "c", "event": "DECLARED_PROGRESS", "target": "claimed_goal", "kind": "C", "safe": true, "evidence_available": true}
+      ]
+    }
+  ]
+}

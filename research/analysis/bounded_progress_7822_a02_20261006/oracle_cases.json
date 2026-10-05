@@ -1,0 +1,12 @@
+{
+  "allocation": "BP-7822-MAC-A02-20261006",
+  "cases": {
+    "safe_wait_cycle": {"actual_goal_states": ["g"], "actual_safe_edges": ["wait_s_w", "wait_w_w", "progress_s_g", "progress_w_g"], "actual_evidence_edges": ["wait_s_w", "wait_w_w", "progress_s_g", "progress_w_g", "unsafe_commit"]},
+    "bounded_async": {"actual_goal_states": ["g"], "actual_safe_edges": ["tick_0_1", "tick_1_ready", "verified_progress"], "actual_evidence_edges": ["tick_0_1", "tick_1_ready", "verified_progress"]},
+    "uncontrollable_cycle": {"actual_goal_states": ["g"], "actual_safe_edges": ["nature_loop", "progress_u_g"], "actual_evidence_edges": ["nature_loop", "progress_u_g"]},
+    "missing_marker_evidence": {"actual_goal_states": [], "actual_safe_edges": ["unverified_attempt"], "actual_evidence_edges": []},
+    "unsafe_control_alternative": {"actual_goal_states": ["g"], "actual_safe_edges": ["safe_finish"], "actual_evidence_edges": ["safe_finish", "unsafe_finish"]},
+    "contract_disagreement": {"actual_goal_states": [], "actual_safe_edges": ["claimed_progress"], "actual_evidence_edges": ["claimed_progress"]}
+  },
+  "yield_contract": {"app_events": [], "application_effect": false, "lease_released": true}
+}

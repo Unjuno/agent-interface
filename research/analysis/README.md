@@ -390,6 +390,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
 - [`bounded_path_class_switching_6586_t0_20261002/`](bounded_path_class_switching_6586_t0_20261002/)
+- [`bounded_progress_7822_a02_20261006/`](bounded_progress_7822_a02_20261006/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`braess_route_verifier_5855_horizon_ledger_a02_20261004/`](braess_route_verifier_5855_horizon_ledger_a02_20261004/)
