@@ -1,0 +1,47 @@
+"""Add the first check's own raw diagnostic exception; retain second check as hex."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+root=Path(__file__).resolve().parent;ws=root.parent.parent;repo=root.parent/'agent-interface';out=ws/'outputs/stdio-utf8-repair-45e9'
+base='e5270c7bfe50911225afc6c3b5273021331b2bb1';prefix='research/integration/primary_utf8_57_20261003_45e9';ref='refs/heads/fix/primary-utf8-45e9-20261003'
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_INDEX_FILE=str(root/'publication.index'))
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,v):p.write_text(json.dumps(v,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+def git(*a,**kw):return subprocess.run(['git',*a],cwd=repo,env=env,capture_output=True,check=True,**kw).stdout
+prior=json.loads((out/'MANIFEST.json').read_bytes())
+for x in prior['files']:assert sha((out/x['path']).read_bytes())==x['sha256']
+diag=out/'publication-first-failure'
+(diag/'second-MANIFEST.json').write_bytes((out/'MANIFEST.json').read_bytes())
+(diag/'second-gitattributes.txt').write_bytes((out/'.gitattributes').read_bytes())
+(diag/'second-check.json').write_bytes((ws/'outputs/primary-utf8-diff-check-final.json').read_bytes())
+for stem in ['stdout','stderr']:
+ b=(ws/('outputs/primary-utf8-diff-check-final.'+stem+'.txt')).read_bytes()
+ (diag/('second-check.'+stem+'.hex.txt')).write_text(b.hex(),encoding='ascii')
+(diag/'finish_publication_v2.py.txt').write_bytes(Path(__file__).read_bytes())
+put(diag/'SECOND_QUALIFICATION.json',{'second_publisher':'finish_publication.py stopped1 at complete diff-check2; first raw check output reproduces RED TAP whitespace in its own added lines.',
+ 'final_scope':'Add only publication-first-failure/primary-utf8-diff-check.stdout.txt -whitespace to the original four historical byte exceptions. Preserve all original source/raw/check streams; second check exported as exact reversible hex to avoid recursive whitespace diagnostics.',
+ 'missing_output_read':'A subsequent metadata read before commit failedFileNotFoundError, retained tool message; no source/test/ref mutation. Metadata was never claimed present.',
+ 'runtime_producer_auditor_or_formal_replays':0})
+exceptions=['input-staging-first/.github/workflows/native-mcp-v1.yml.txt','input-staging-first/runtime/host_v1/README.md.txt','input-staging-first/runtime/host_v1/test_primary_stdio.mjs.txt','red-first/stdout.txt','publication-first-failure/primary-utf8-diff-check.stdout.txt']
+(out/'.gitattributes').write_text('* -text whitespace=cr-at-eol\n'+''.join(p+' -whitespace\n' for p in exceptions),encoding='utf-8',newline='\n')
+for x in prior['files']:
+ if x['path']!='.gitattributes':assert sha((out/x['path']).read_bytes())==x['sha256']
+files=sorted((p for p in out.rglob('*') if p.is_file() and p!=out/'MANIFEST.json'),key=lambda p:p.relative_to(out).as_posix())
+put(out/'MANIFEST.json',{'files':[{'path':p.relative_to(out).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in files]})
+files=sorted((p for p in out.rglob('*') if p.is_file()),key=lambda p:p.relative_to(out).as_posix())
+live=['.github/workflows/native-mcp-v1.yml','runtime/host_v1/README.md','runtime/host_v1/primary_stdio.mjs','runtime/host_v1/test_primary_stdio_utf8.mjs']
+primary=(repo/'.git/index').read_bytes();git('read-tree',base);entries=[];expected=[]
+for path,p in [(x,root/'source'/x) for x in live]+[(prefix+'/'+p.relative_to(out).as_posix(),p) for p in files]:
+ b=p.read_bytes();oid=git('hash-object','-w','--stdin',input=b).decode().strip();entries.append('100644 '+oid+'\t'+path+'\n')
+ expected.append({'path':path,'mode':'100644','blob_oid':oid,'bytes':len(b),'sha256':sha(b)})
+git('update-index','--index-info',input=''.join(entries).encode());tree=git('write-tree','--missing-ok').decode().strip()
+assert git('diff','--name-only','--no-renames',base,tree).decode().splitlines()==sorted(x['path'] for x in expected)
+cmd=['git','diff','--check',base,tree];start=datetime.now(timezone.utc).isoformat();r=subprocess.run(cmd,cwd=repo,env=dict(env,GIT_ATTR_SOURCE=tree),capture_output=True)
+for stem,b in [('stdout',r.stdout),('stderr',r.stderr)]:(ws/('outputs/primary-utf8-diff-check-v2.'+stem+'.txt')).write_bytes(b)
+put(ws/'outputs/primary-utf8-diff-check-v2.json',{'argv':cmd,'GIT_ATTR_SOURCE':tree,'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':r.returncode,'stdout_sha256':sha(r.stdout),'stderr_sha256':sha(r.stderr)})
+assert r.returncode==0,(r.returncode,r.stdout[:2000]);assert primary==(repo/'.git/index').read_bytes()
+commit=git('commit-tree',tree,'-p',base,input=b'fix(host): refuse malformed UTF-8 before primary line admission [skip ci]\n').decode().strip();git('update-ref',ref,commit,'0'*40)
+meta={'ref':ref,'base':base,'tested_base':'9c0692dabbfc7fc2fa5bd111b6de4baee578800d','head':commit,'tree':tree,'prefix':prefix,'files':expected,'delivery_files':live,
+ 'archive_files':len(files),'archive_bytes':sum(p.stat().st_size for p in files),'primary_index_unchanged':True,'main_write':False,'published_yet':False}
+put(ws/'outputs/primary-utf8-publication.json',meta)
+print(json.dumps({'head':commit,'tree':tree,'ref':ref,'changed_files':len(expected),'archive_files':len(files),'archive_bytes':meta['archive_bytes'],'main_write':False}))

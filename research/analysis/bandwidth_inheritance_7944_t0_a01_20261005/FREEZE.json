@@ -1,0 +1,29 @@
+{
+  "schema": "issue7944-bwi-t0-a01-freeze-v1",
+  "allocation_id": "7944-BWI-T0-A01-20261005-01",
+  "issue": 7979,
+  "parent_issue": 7944,
+  "base_main": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "freeze_utc": "2026-10-05T04:28:48Z",
+  "model": "deterministic integer-tick preemptive one-CPU finite schedule; simplified CBS-like exhausted-budget replenishment",
+  "policies": ["NONE", "PI_HOME_CHARGED", "BWI"],
+  "case_count": 9,
+  "policy_case_rows": 27,
+  "formal_invocation_budget": {
+    "candidate": 1,
+    "raw_only_auditor": 1,
+    "retries": 0
+  },
+  "container": "STOP_CONTAINERD_CONTENT_BLOB_UNREADABLE; host-only fallback declared in protocol and environment receipt",
+  "sha256": {
+    "PROTOCOL.md": "ab3eb5a60d5f1f74e47c23711e93b486ba852fd0bf40a790fe1bc3d17c3adf70",
+    "README.md": "e923ca3c91b15ffc00a07f295180926f95807179ae4f81c9e58bf1367b285c58",
+    "fixture.json": "33a4ac08a22da0f557b452f38f7951980d988b2726b1c0df1fecf5d652852261",
+    "candidate.py": "bb000a7a27ae04fd09c5317ac89fa7d8a53a20306911bad1d7b039b446900285",
+    "audit.py": "4e9d173956a9294155a3ef3ac76758e18664b39aee9b4a222bec176b8d7087eb",
+    "test_construction.py": "699cc542695cd74bca86d8c526a1e49be12422db44b4e31ec7d18b197d180e49",
+    "ENVIRONMENT.json": "bbe23393a56a363ab3ed25f3ba764c1eebd1d75dadc95dd20fcc94bb3d850d70",
+    "PRE-RUN.md": "dcf3116e628a1ff2c884ee3ab09094ed8e7e577fc87bbd723b8608c5176bc776",
+    "results/README.md": "05618e491f7f1ce67218e398e838d4dca9fdbea254cdbcdb7c92438e56b9db69"
+  }
+}

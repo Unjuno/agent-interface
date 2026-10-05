@@ -1,0 +1,111 @@
+{
+  "scenario": "pending_success",
+  "argv": [
+    "/opt/homebrew/bin/node",
+    "<owner-work>/pending_probe.mjs",
+    "pending_success",
+    "<owner-work>/candidate",
+    "<owner-work>/pending-green/pending_success"
+  ],
+  "started_utc": "2026-10-03T04:38:22.507651+00:00",
+  "exit_code": 0,
+  "timed_out": false,
+  "ended_utc": "2026-10-03T04:38:22.620279+00:00",
+  "stdout_sha256": "dff67ca8a550c040ec2221a6d9810601d00838bc0e863bc80287cdd087992390",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "fixture.started.json": {
+    "pid": 62727,
+    "ppid": 62726
+  },
+  "fixture.exit.json": {
+    "pid": 62727,
+    "code": 0,
+    "requests": 1,
+    "pending": false
+  },
+  "owner.summary.json": {
+    "scenario": "pending_success",
+    "rows": [
+      {
+        "schema": "agent-interface/primary-stdio-v1",
+        "status": "ready",
+        "state": {
+          "next_id": 1,
+          "busy": false,
+          "stopped": null,
+          "caller_state": {
+            "stopped": null
+          }
+        }
+      },
+      {
+        "schema": "agent-interface/primary-stdio-v1",
+        "status": "returned",
+        "result": {
+          "id": 1,
+          "method": "call",
+          "presented_text": [
+            {
+              "schema": "agent-interface/mcp-result-status-v1",
+              "isError": false
+            },
+            "{\"status\":\"clock\",\"fixture\":\"original once\"}"
+          ],
+          "images": [],
+          "attempt": 1,
+          "original_reply_path": "<owner-work>/pending-green/pending_success/exchange/original-reply-1.json",
+          "caller_state": {
+            "stopped": null
+          },
+          "next_id": 2
+        }
+      }
+    ],
+    "events": [
+      {
+        "kind": "output",
+        "status": "ready"
+      },
+      {
+        "kind": "actual_request_accepted",
+        "request": {
+          "id": 1,
+          "tool": "interface_clock",
+          "arguments": {}
+        }
+      },
+      {
+        "kind": "input_failure"
+      },
+      {
+        "kind": "pending_observed_before_release",
+        "settled": false
+      },
+      {
+        "kind": "reply_released"
+      },
+      {
+        "kind": "output",
+        "status": "returned"
+      },
+      {
+        "kind": "owner_rejected",
+        "original_identity": true,
+        "message": "original pending input failure"
+      }
+    ],
+    "exit": {
+      "code": 0,
+      "signal": null
+    },
+    "listeners": {
+      "input": 0,
+      "output": 0
+    }
+  },
+  "host/exit.json": {
+    "code": 0,
+    "signal": null
+  },
+  "fixture_pid_absent": true
+}

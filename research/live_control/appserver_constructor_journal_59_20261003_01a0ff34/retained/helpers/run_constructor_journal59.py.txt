@@ -1,0 +1,29 @@
+"""Capture exact first collector or saved-only auditor once."""
+import datetime as dt
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+root = Path(__file__).resolve().parent
+out = root / "appserver-constructor-journal-59-01a0ff34-a01"
+phase = sys.argv[1]
+if phase not in ("collector", "audit"):
+    raise ValueError("unsupported phase")
+script = root / ("collect_constructor_journal59.py" if phase == "collector" else "audit_constructor_journal59.py")
+receipt_path = out / (phase + ".receipt.json")
+with receipt_path.open("x", encoding="ascii") as file:
+    file.write("{}\n")
+command = [sys.executable, "-B", str(script)]
+started = dt.datetime.now(dt.timezone.utc).isoformat()
+with (out / (phase + ".stdout.bin")).open("xb") as stdout, (out / (phase + ".stderr.bin")).open("xb") as stderr:
+    child = subprocess.Popen(command, stdout=stdout, stderr=stderr)
+    code = child.wait(timeout=30)
+receipt = {"phase": phase, "command": command, "pid": child.pid, "started_utc": started, "ended_utc": dt.datetime.now(dt.timezone.utc).isoformat(), "exit_code": code}
+for stream in ("stdout", "stderr"):
+    data = (out / (phase + "." + stream + ".bin")).read_bytes()
+    receipt[stream] = {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+receipt_path.write_bytes((json.dumps(receipt, ensure_ascii=True, indent=2) + "\n").encode("ascii"))
+print(json.dumps(receipt, ensure_ascii=True))
+raise SystemExit(code)

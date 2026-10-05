@@ -1,0 +1,24 @@
+{
+  "schema": "issue8084-a10-hidden-scoring-v1",
+  "sample_sizes": [20, 100],
+  "replicates": 2000,
+  "span_grid": [0.25, 0.30, 0.35, 0.40, 0.45],
+  "peak_grid": [0.70, 0.75, 0.80, 0.85],
+  "arms": [
+    {"id": "a00", "concentration": 20},
+    {"id": "a01", "concentration": 40},
+    {"id": "a02", "concentration": 80},
+    {"id": "a03", "concentration": 160},
+    {"id": "a04", "concentration": null}
+  ],
+  "profiles": [
+    {"id": "p00", "class": "null", "rates": [0.66, 0.60, 0.56]},
+    {"id": "p01", "class": "null", "rates": [0.69, 0.64, 0.60]},
+    {"id": "p02", "class": "null", "rates": [0.62, 0.59, 0.55]},
+    {"id": "p03", "class": "null", "rates": [0.60, 0.60, 0.60]},
+    {"id": "p04", "class": "null", "rates": [0.50, 0.49, 0.48]},
+    {"id": "p05", "class": "positive", "rates": [0.96, 0.22, 0.18]},
+    {"id": "p06", "class": "positive", "rates": [0.91, 0.45, 0.25]},
+    {"id": "p07", "class": "positive", "rates": [0.87, 0.52, 0.32]}
+  ]
+}

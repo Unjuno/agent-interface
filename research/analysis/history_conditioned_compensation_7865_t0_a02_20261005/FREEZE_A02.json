@@ -1,0 +1,19 @@
+{
+  "allocation": "7865-t0-a02-20261005",
+  "base_main_sha": "6f34c5c0c5bc3116d8e7c25f29aa1b92cc4a01b1",
+  "container_image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "container_platform": "linux/arm64",
+  "decision": "PASS_METHOD_SCOPED only if all seven tests pass; otherwise FAIL/HOLD and no retry under A02",
+  "parent_allocation": "7865-t0-a01-20261005 (preserved FAIL_HARNESS)",
+  "pre_freeze_gate": "Host Python 3 unittest, 7/7 PASS in 0.001s before this freeze",
+  "source_sha256": {
+    "PROTOCOL.md": "98aa3551d80fb380e8168d6c3946cba209017ac17216abb06395de7cf2d1f990",
+    "PROTOCOL_A02.md": "7f650cbc2b139e8bf68c48b01e09282112564d17c8aff168f1751135a3387f58",
+    "model.py": "a2b53efc2f7acde544a3dc94752e30c5a544da60308465960561b8daa2e6abae",
+    "oracle.py": "3cbf7d16bc64d7b3fa67b79615af7ae076ec1354f5431ceb0fda8b63feb594d7",
+    "test_model_a02.py": "d6fb65dde8d386cc989a87e6e219854bdf214de70d695fb868b8d12011665c10"
+  },
+  "status": "FROZEN_BEFORE_FORMAL_CONTAINER_RUN",
+  "test_command": "python -B -m unittest -v test_model_a02",
+  "test_scope": "deterministic two-field finite artifact; no GUI, model, network, user data, or external effect"
+}

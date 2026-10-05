@@ -1,0 +1,12 @@
+--- R02
++++ private-candidate
+@@ -109,6 +109,9 @@
+                 remaining = deadline - time.monotonic()
+                 if remaining <= 0:
+                     raise TimeoutError("app-server notification timed out")
++                snapshot_ids = {id(row) for row in snapshot}
++                if any(id(row) not in snapshot_ids for row in self._notifications):
++                    continue
+                 if self._closed:
+                     raise AppServerError("app-server closed while waiting: stderr not drained")
+                 self._condition.wait(remaining)

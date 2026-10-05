@@ -1,0 +1,1346 @@
+{
+  "cases": {
+    "model_failure": {
+      "compiled": [],
+      "journal_events": [
+        {
+          "event": "stage_started",
+          "stage": "observe_source",
+          "started_ns": 89057826579400
+        },
+        {
+          "ended_ns": 89057826583500,
+          "event": "stage_completed",
+          "stage": "observe_source"
+        },
+        {
+          "attempt_id": "a02-model_failure-1",
+          "call_id": null,
+          "completed_ns": null,
+          "error": null,
+          "event": "model_attempt_started",
+          "stage": "coarse_model",
+          "started_ns": 89057826586500,
+          "status": "started",
+          "usage": null,
+          "visible_images_submitted": null,
+          "wait_ns": null
+        },
+        {
+          "attempt_id": "a02-model_failure-1",
+          "call_id": "a02-failed",
+          "completed_ns": 89057826602800,
+          "error": "ModelFailure('synthetic upstream failure')",
+          "event": "model_attempt_finished",
+          "stage": "coarse_model",
+          "started_ns": 89057826586500,
+          "status": "failed",
+          "usage": null,
+          "visible_images_submitted": 1,
+          "wait_ns": 12000000
+        },
+        {
+          "attempted_calls": 1,
+          "event": "adaptive_route_finished",
+          "outcome": "CALLER_FAILED",
+          "reason": "failed_upstream",
+          "repair_path": null
+        }
+      ],
+      "model_adapter_returns": [],
+      "outer_effect_calls": [],
+      "result": {
+        "accounting": {
+          "attempted_calls": 1,
+          "cached_input_semantics": "subset of input_tokens; never added to input total",
+          "completed_calls": 0,
+          "cost": null,
+          "duplicate_call_ids": [],
+          "model_wait_coverage": 1,
+          "model_wait_ns": 12000000,
+          "usage_coverage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_totals": {
+            "cache_write_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": null,
+            "output_tokens": null,
+            "reasoning_output_tokens": null
+          },
+          "visible_image_coverage": 1,
+          "visible_images_submitted": 1
+        },
+        "attempt_ledger": [
+          {
+            "attempt_id": "a02-model_failure-1",
+            "call_id": "a02-failed",
+            "completed_ns": 89057826602800,
+            "error": "ModelFailure('synthetic upstream failure')",
+            "stage": "coarse_model",
+            "started_ns": 89057826586500,
+            "status": "failed",
+            "usage": null,
+            "visible_images_submitted": 1,
+            "wait_ns": 12000000
+          }
+        ],
+        "cache_update": null,
+        "coarse_origin": "model_produced",
+        "comparison": {
+          "class": "full_cold",
+          "comparable_to_full_cold": true,
+          "omitted_stages": []
+        },
+        "delivery": null,
+        "effect_receipt": null,
+        "execution_progress": null,
+        "input_authority": "none",
+        "model_call_ledger": [],
+        "outcome": "CALLER_FAILED",
+        "phase_timings": [
+          {
+            "elapsed_ns": 4100,
+            "ended_ns": 89057826583500,
+            "stage": "observe_source",
+            "started_ns": 89057826579400
+          },
+          {
+            "elapsed_ns": 16300,
+            "ended_ns": 89057826602800,
+            "stage": "coarse_model",
+            "started_ns": 89057826586500
+          }
+        ],
+        "reason": "failed_upstream",
+        "repair_path": null,
+        "repair_trace": [],
+        "route": "cold",
+        "selected_target": null,
+        "stages": {
+          "acquire_anchor": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "acquire_expansion": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "anchor_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "coarse_model": {
+            "reason": "ModelFailure('synthetic upstream failure')",
+            "status": "failed"
+          },
+          "execute": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "expanded_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "final_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "local_repair": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "observe_source": {
+            "reason": null,
+            "status": "completed"
+          },
+          "post_model_observe": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "reuse_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "verify_effect": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          }
+        },
+        "task_effect": null
+      }
+    },
+    "no_match": {
+      "compiled": [],
+      "journal_events": [
+        {
+          "event": "stage_started",
+          "stage": "observe_source",
+          "started_ns": 89057826481100
+        },
+        {
+          "ended_ns": 89057826485700,
+          "event": "stage_completed",
+          "stage": "observe_source"
+        },
+        {
+          "attempt_id": "a02-no_match-1",
+          "call_id": null,
+          "completed_ns": null,
+          "error": null,
+          "event": "model_attempt_started",
+          "stage": "coarse_model",
+          "started_ns": 89057826488800,
+          "status": "started",
+          "usage": null,
+          "visible_images_submitted": null,
+          "wait_ns": null
+        },
+        {
+          "attempt_id": "a02-no_match-1",
+          "call_id": "a02-no-match",
+          "completed_ns": 89057826526800,
+          "error": null,
+          "event": "model_attempt_finished",
+          "stage": "coarse_model",
+          "started_ns": 89057826488800,
+          "status": "completed",
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 25,
+            "input_tokens": 100,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 3
+          },
+          "visible_images_submitted": 1,
+          "wait_ns": 10000000
+        },
+        {
+          "attempted_calls": 1,
+          "event": "adaptive_route_finished",
+          "outcome": "SAFE_STOP",
+          "reason": "no_match",
+          "repair_path": null
+        }
+      ],
+      "model_adapter_returns": [
+        {
+          "result": {
+            "call_id": "a02-no-match",
+            "cost": null,
+            "output": {
+              "status": "no_match",
+              "target": null
+            },
+            "requested_effort": "none",
+            "requested_model": "test-double-model",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          },
+          "stage": "coarse_model"
+        }
+      ],
+      "outer_effect_calls": [],
+      "result": {
+        "accounting": {
+          "attempted_calls": 1,
+          "cached_input_semantics": "subset of input_tokens; never added to input total",
+          "completed_calls": 1,
+          "cost": null,
+          "duplicate_call_ids": [],
+          "model_wait_coverage": 1,
+          "model_wait_ns": 10000000,
+          "usage_coverage": {
+            "cache_write_input_tokens": 1,
+            "cached_input_tokens": 1,
+            "input_tokens": 1,
+            "output_tokens": 1,
+            "reasoning_output_tokens": 1
+          },
+          "usage_totals": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 25,
+            "input_tokens": 100,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 3
+          },
+          "visible_image_coverage": 1,
+          "visible_images_submitted": 1
+        },
+        "attempt_ledger": [
+          {
+            "attempt_id": "a02-no_match-1",
+            "call_id": "a02-no-match",
+            "completed_ns": 89057826526800,
+            "error": null,
+            "stage": "coarse_model",
+            "started_ns": 89057826488800,
+            "status": "completed",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          }
+        ],
+        "cache_update": null,
+        "coarse_origin": "model_produced",
+        "comparison": {
+          "class": "full_cold",
+          "comparable_to_full_cold": true,
+          "omitted_stages": []
+        },
+        "delivery": null,
+        "effect_receipt": null,
+        "execution_progress": null,
+        "input_authority": "none",
+        "model_call_ledger": [
+          {
+            "attempt_id": "a02-no_match-1",
+            "call_id": "a02-no-match",
+            "cost": null,
+            "output": {
+              "status": "no_match",
+              "target": null
+            },
+            "requested_effort": "none",
+            "requested_model": "test-double-model",
+            "stage": "coarse_model",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          }
+        ],
+        "outcome": "SAFE_STOP",
+        "phase_timings": [
+          {
+            "elapsed_ns": 4600,
+            "ended_ns": 89057826485700,
+            "stage": "observe_source",
+            "started_ns": 89057826481100
+          },
+          {
+            "elapsed_ns": 38000,
+            "ended_ns": 89057826526800,
+            "stage": "coarse_model",
+            "started_ns": 89057826488800
+          }
+        ],
+        "reason": "no_match",
+        "repair_path": null,
+        "repair_trace": [],
+        "route": "cold",
+        "selected_target": null,
+        "stages": {
+          "acquire_anchor": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "acquire_expansion": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "anchor_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "coarse_model": {
+            "reason": null,
+            "status": "completed"
+          },
+          "execute": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "expanded_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "final_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "local_repair": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "observe_source": {
+            "reason": null,
+            "status": "completed"
+          },
+          "post_model_observe": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "reuse_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "verify_effect": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          }
+        },
+        "task_effect": null
+      }
+    },
+    "positive": {
+      "compiled": [
+        {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "outcome": "action",
+              "state": "editing"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "submit",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "submit",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "submit",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "stage": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 154600,
+          "ended_ns": 89057826288200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "composition-a02",
+          "latest_evidence_ref": "frame-3",
+          "method": "enter-then-submit",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 89057826136300,
+              "evidence_digest": "d1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "field_changed": false,
+                "stage": 0,
+                "submit_target": true
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 89057826191400,
+              "evidence_digest": "d2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 89057826253400,
+              "evidence_digest": "d3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "field_changed": true,
+                "stage": 2,
+                "submit_target": true
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private-test-double",
+          "started_ns": 89057826133600,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "editing",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "submit",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      ],
+      "journal_events": [
+        {
+          "event": "stage_started",
+          "stage": "observe_source",
+          "started_ns": 89057825702500
+        },
+        {
+          "ended_ns": 89057825717300,
+          "event": "stage_completed",
+          "stage": "observe_source"
+        },
+        {
+          "attempt_id": "a02-positive-1",
+          "call_id": null,
+          "completed_ns": null,
+          "error": null,
+          "event": "model_attempt_started",
+          "stage": "coarse_model",
+          "started_ns": 89057825722900,
+          "status": "started",
+          "usage": null,
+          "visible_images_submitted": null,
+          "wait_ns": null
+        },
+        {
+          "attempt_id": "a02-positive-1",
+          "call_id": "a02-coarse",
+          "completed_ns": 89057825778800,
+          "error": null,
+          "event": "model_attempt_finished",
+          "stage": "coarse_model",
+          "started_ns": 89057825722900,
+          "status": "completed",
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 25,
+            "input_tokens": 100,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 3
+          },
+          "visible_images_submitted": 1,
+          "wait_ns": 10000000
+        },
+        {
+          "event": "stage_started",
+          "stage": "acquire_anchor",
+          "started_ns": 89057825801800
+        },
+        {
+          "ended_ns": 89057825807900,
+          "event": "stage_completed",
+          "stage": "acquire_anchor"
+        },
+        {
+          "attempt_id": "a02-positive-2",
+          "call_id": null,
+          "completed_ns": null,
+          "error": null,
+          "event": "model_attempt_started",
+          "stage": "anchor_model",
+          "started_ns": 89057825811000,
+          "status": "started",
+          "usage": null,
+          "visible_images_submitted": null,
+          "wait_ns": null
+        },
+        {
+          "attempt_id": "a02-positive-2",
+          "call_id": "a02-anchor",
+          "completed_ns": 89057825922300,
+          "error": null,
+          "event": "model_attempt_finished",
+          "stage": "anchor_model",
+          "started_ns": 89057825811000,
+          "status": "completed",
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 25,
+            "input_tokens": 100,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 3
+          },
+          "visible_images_submitted": 1,
+          "wait_ns": 10000000
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 89057825973400
+        },
+        {
+          "ended_ns": 89057826017600,
+          "event": "stage_completed",
+          "stage": "final_revalidate"
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 89057826024400
+        },
+        {
+          "ended_ns": 89057826358000,
+          "event": "stage_completed",
+          "stage": "execute"
+        },
+        {
+          "event": "stage_started",
+          "stage": "verify_effect",
+          "started_ns": 89057826363800
+        },
+        {
+          "ended_ns": 89057826369000,
+          "event": "stage_completed",
+          "stage": "verify_effect"
+        },
+        {
+          "attempted_calls": 2,
+          "event": "adaptive_route_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "verified_effect",
+          "repair_path": null
+        }
+      ],
+      "model_adapter_returns": [
+        {
+          "result": {
+            "call_id": "a02-coarse",
+            "cost": null,
+            "output": {
+              "point": [
+                5,
+                6
+              ],
+              "status": "candidate"
+            },
+            "requested_effort": "none",
+            "requested_model": "test-double-model",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          },
+          "stage": "coarse_model"
+        },
+        {
+          "result": {
+            "call_id": "a02-anchor",
+            "cost": null,
+            "output": {
+              "status": "target_reference",
+              "target": {
+                "interface": {
+                  "actions": {
+                    "enter": {
+                      "expected_effect": {
+                        "field_changed": true
+                      },
+                      "operation": "enter",
+                      "target_symbol": "field"
+                    },
+                    "submit": {
+                      "expected_effect": {
+                        "stage": 2
+                      },
+                      "operation": "submit",
+                      "target_symbol": "field"
+                    }
+                  },
+                  "format": "compiled-gui-interface-v1",
+                  "interface_id": "composition-a02",
+                  "method": {
+                    "initial_state": "editing",
+                    "max_runtime_ms": 10000,
+                    "max_transitions": 2,
+                    "name": "enter-then-submit",
+                    "states": {
+                      "done": {
+                        "branches": [
+                          {
+                            "action": null,
+                            "next_state": null,
+                            "outcome": "complete",
+                            "reason": null,
+                            "when": {
+                              "stage": 2
+                            }
+                          }
+                        ]
+                      },
+                      "editing": {
+                        "branches": [
+                          {
+                            "action": "enter",
+                            "next_state": "filled",
+                            "outcome": "action",
+                            "reason": null,
+                            "when": {
+                              "stage": 0,
+                              "submit_target": true
+                            }
+                          }
+                        ]
+                      },
+                      "filled": {
+                        "branches": [
+                          {
+                            "action": "submit",
+                            "next_state": "done",
+                            "outcome": "action",
+                            "reason": null,
+                            "when": {
+                              "field_changed": true,
+                              "stage": 1,
+                              "submit_target": true
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "version": "1"
+                  },
+                  "predicates": [
+                    "stage",
+                    "field_changed",
+                    "submit_target"
+                  ],
+                  "session_scope": "private-test-double",
+                  "surface": "form",
+                  "symbols": {
+                    "field": {
+                      "dependencies": [
+                        "stage",
+                        "submit_target"
+                      ],
+                      "identity_predicate": "submit_target",
+                      "kind": "target_reference",
+                      "target_reference": "field-ref"
+                    }
+                  }
+                }
+              }
+            },
+            "requested_effort": "none",
+            "requested_model": "test-double-model",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          },
+          "stage": "anchor_model"
+        }
+      ],
+      "outer_effect_calls": [
+        {
+          "status": "completed"
+        }
+      ],
+      "result": {
+        "accounting": {
+          "attempted_calls": 2,
+          "cached_input_semantics": "subset of input_tokens; never added to input total",
+          "completed_calls": 2,
+          "cost": null,
+          "duplicate_call_ids": [],
+          "model_wait_coverage": 2,
+          "model_wait_ns": 20000000,
+          "usage_coverage": {
+            "cache_write_input_tokens": 2,
+            "cached_input_tokens": 2,
+            "input_tokens": 2,
+            "output_tokens": 2,
+            "reasoning_output_tokens": 2
+          },
+          "usage_totals": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 50,
+            "input_tokens": 200,
+            "output_tokens": 20,
+            "reasoning_output_tokens": 6
+          },
+          "visible_image_coverage": 2,
+          "visible_images_submitted": 2
+        },
+        "attempt_ledger": [
+          {
+            "attempt_id": "a02-positive-1",
+            "call_id": "a02-coarse",
+            "completed_ns": 89057825778800,
+            "error": null,
+            "stage": "coarse_model",
+            "started_ns": 89057825722900,
+            "status": "completed",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          },
+          {
+            "attempt_id": "a02-positive-2",
+            "call_id": "a02-anchor",
+            "completed_ns": 89057825922300,
+            "error": null,
+            "stage": "anchor_model",
+            "started_ns": 89057825811000,
+            "status": "completed",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          }
+        ],
+        "cache_update": {
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-a02",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "coarse_origin": "model_produced",
+        "comparison": {
+          "class": "full_cold",
+          "comparable_to_full_cold": true,
+          "omitted_stages": []
+        },
+        "delivery": "confirmed",
+        "effect_receipt": {
+          "status": "succeeded"
+        },
+        "execution_progress": {
+          "status": "completed"
+        },
+        "input_authority": "consumed_by_recorded_execute_stage",
+        "model_call_ledger": [
+          {
+            "attempt_id": "a02-positive-1",
+            "call_id": "a02-coarse",
+            "cost": null,
+            "output": {
+              "point": [
+                5,
+                6
+              ],
+              "status": "candidate"
+            },
+            "requested_effort": "none",
+            "requested_model": "test-double-model",
+            "stage": "coarse_model",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          },
+          {
+            "attempt_id": "a02-positive-2",
+            "call_id": "a02-anchor",
+            "cost": null,
+            "output": {
+              "status": "target_reference",
+              "target": {
+                "interface": {
+                  "actions": {
+                    "enter": {
+                      "expected_effect": {
+                        "field_changed": true
+                      },
+                      "operation": "enter",
+                      "target_symbol": "field"
+                    },
+                    "submit": {
+                      "expected_effect": {
+                        "stage": 2
+                      },
+                      "operation": "submit",
+                      "target_symbol": "field"
+                    }
+                  },
+                  "format": "compiled-gui-interface-v1",
+                  "interface_id": "composition-a02",
+                  "method": {
+                    "initial_state": "editing",
+                    "max_runtime_ms": 10000,
+                    "max_transitions": 2,
+                    "name": "enter-then-submit",
+                    "states": {
+                      "done": {
+                        "branches": [
+                          {
+                            "action": null,
+                            "next_state": null,
+                            "outcome": "complete",
+                            "reason": null,
+                            "when": {
+                              "stage": 2
+                            }
+                          }
+                        ]
+                      },
+                      "editing": {
+                        "branches": [
+                          {
+                            "action": "enter",
+                            "next_state": "filled",
+                            "outcome": "action",
+                            "reason": null,
+                            "when": {
+                              "stage": 0,
+                              "submit_target": true
+                            }
+                          }
+                        ]
+                      },
+                      "filled": {
+                        "branches": [
+                          {
+                            "action": "submit",
+                            "next_state": "done",
+                            "outcome": "action",
+                            "reason": null,
+                            "when": {
+                              "field_changed": true,
+                              "stage": 1,
+                              "submit_target": true
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "version": "1"
+                  },
+                  "predicates": [
+                    "stage",
+                    "field_changed",
+                    "submit_target"
+                  ],
+                  "session_scope": "private-test-double",
+                  "surface": "form",
+                  "symbols": {
+                    "field": {
+                      "dependencies": [
+                        "stage",
+                        "submit_target"
+                      ],
+                      "identity_predicate": "submit_target",
+                      "kind": "target_reference",
+                      "target_reference": "field-ref"
+                    }
+                  }
+                }
+              }
+            },
+            "requested_effort": "none",
+            "requested_model": "test-double-model",
+            "stage": "anchor_model",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 25,
+              "input_tokens": 100,
+              "output_tokens": 10,
+              "reasoning_output_tokens": 3
+            },
+            "visible_images_submitted": 1,
+            "wait_ns": 10000000
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "phase_timings": [
+          {
+            "elapsed_ns": 14800,
+            "ended_ns": 89057825717300,
+            "stage": "observe_source",
+            "started_ns": 89057825702500
+          },
+          {
+            "elapsed_ns": 55900,
+            "ended_ns": 89057825778800,
+            "stage": "coarse_model",
+            "started_ns": 89057825722900
+          },
+          {
+            "elapsed_ns": 6100,
+            "ended_ns": 89057825807900,
+            "stage": "acquire_anchor",
+            "started_ns": 89057825801800
+          },
+          {
+            "elapsed_ns": 111300,
+            "ended_ns": 89057825922300,
+            "stage": "anchor_model",
+            "started_ns": 89057825811000
+          },
+          {
+            "elapsed_ns": 44200,
+            "ended_ns": 89057826017600,
+            "stage": "final_revalidate",
+            "started_ns": 89057825973400
+          },
+          {
+            "elapsed_ns": 333600,
+            "ended_ns": 89057826358000,
+            "stage": "execute",
+            "started_ns": 89057826024400
+          },
+          {
+            "elapsed_ns": 5200,
+            "ended_ns": 89057826369000,
+            "stage": "verify_effect",
+            "started_ns": 89057826363800
+          }
+        ],
+        "reason": "verified_effect",
+        "repair_path": null,
+        "repair_trace": [],
+        "route": "cold",
+        "selected_target": {
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-a02",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "stages": {
+          "acquire_anchor": {
+            "reason": null,
+            "status": "completed"
+          },
+          "acquire_expansion": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "anchor_model": {
+            "reason": null,
+            "status": "completed"
+          },
+          "coarse_model": {
+            "reason": null,
+            "status": "completed"
+          },
+          "execute": {
+            "reason": null,
+            "status": "completed"
+          },
+          "expanded_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "final_revalidate": {
+            "reason": null,
+            "status": "completed"
+          },
+          "local_repair": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "observe_source": {
+            "reason": null,
+            "status": "completed"
+          },
+          "post_model_observe": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "reuse_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "verify_effect": {
+            "reason": null,
+            "status": "completed"
+          }
+        },
+        "task_effect": "succeeded"
+      }
+    }
+  },
+  "schema": "compiled-caller-composition-a02-v1",
+  "source_sha256": {
+    "caller": "e9be73955d849a8d627450752a4b6b97a410cdd08e9424746d954e23015a654d",
+    "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
+  }
+}

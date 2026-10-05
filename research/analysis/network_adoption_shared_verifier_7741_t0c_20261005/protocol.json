@@ -1,0 +1,17 @@
+{
+  "ticks":160,
+  "principals":24,
+  "topologies":["ring","star"],
+  "seeds":[11,29,47,83],
+  "imitation_probabilities":[0.08,0.2],
+  "innovation_probability":0.012,
+  "route_start_probability":{"baseline":0.12,"reduced_cost":0.22},
+  "interaction_cost":{"baseline":10,"reduced_cost":6},
+  "service_ticks":3,
+  "modes":["baseline_frozen_shared_1","reduced_frozen_shared_1","reduced_peer_shared_1","reduced_exogenous_shared_1","reduced_no_imitation_shared_1","reduced_frozen_shared_24","reduced_peer_shared_24","reduced_frozen_per_principal","reduced_peer_per_principal"],
+  "event_order":["due_job_completions_and_success_feedback","adoption_update","one_opportunity_per_principal","arrivals","FIFO_service_admission"],
+  "matched_randomness":"route start draws are SHA256-keyed by topology/seed/tick/principal, independent of mode and imitation; adoption draws use a separate keyed stream",
+  "deadline":"none; p95 is nearest-rank over completed end-to-end tick latencies; all queued/in-service unfinished tasks are counted separately",
+  "decision":"PASS_METHOD_SCOPED only if both topologies and both imitation values each have a shared_1 p95 reversal in >=3/4 paired seeds and no reversal in no-imitation, shared_24, or per-principal controls; NO_REVERSAL_IN_GRID if primary reversals are zero; otherwise METHOD_FAIL_OR_INCONCLUSIVE",
+  "scope":"synthetic mechanism/sensitivity only; no empirical adoption, workload elasticity, task mix, verifier capacity, runtime, safety, user, or product inference"
+}

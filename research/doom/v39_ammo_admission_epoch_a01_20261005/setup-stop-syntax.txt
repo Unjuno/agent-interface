@@ -1,0 +1,12 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/src/admission_epoch_tdd.py", line 14, in <module>
+    test_tree=ast.parse(Path('admission-regression-test.py').read_text(encoding='utf-8'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 403
+    return_value=contract), \\
+                             ^
+SyntaxError: unexpected character after line continuation character

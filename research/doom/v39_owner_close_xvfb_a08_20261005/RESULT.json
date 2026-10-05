@@ -1,0 +1,71 @@
+{
+  "audit_sha256": "c31efed7ff1f33a681b6d64fbe46d3eae8e853e1217afafe1fb20089e43884b2",
+  "base_main": "ff13baf57d5f1c12819151e668b92cb6db4a7c1c",
+  "candidate_sha256": "004308f92985c7af5ce7a45a4d17b45fc2f91325849e08bbbf2c22b66db095bd",
+  "cleanup": {
+    "owner_closed": true,
+    "owner_stopped": true,
+    "owner_thread_alive": false,
+    "terminal_release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 128038303480,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 128037903601,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 128038164415
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            128037903601,
+            128038303480
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 148035839113,
+      "verified": true,
+      "verified_ns": 128038970176
+    },
+    "xvfb_exit": 0
+  },
+  "client_events": [
+    {
+      "keycode": 38,
+      "observed_ns": 128037470047,
+      "type": 2,
+      "window": 2097152
+    },
+    {
+      "keycode": 38,
+      "observed_ns": 128039497971,
+      "type": 3,
+      "window": 2097152
+    }
+  ],
+  "decision": "PASS_METHOD_SCOPED",
+  "github_issue_pr_status": "not checked; gh authentication unavailable",
+  "observer_key_up": true,
+  "raw_sha256": "17eee08c9bde4fa8ac383919813b9e8e62871baf332a202b479fb8fcae11b69a",
+  "schema": "v39-owner-close-xvfb-result-record-a08-v1",
+  "scope": "one synthetic Xvfb owner close; verifies X server/client event and V12 terminal receipt only"
+}

@@ -2,6 +2,7 @@
 import {createInterface} from 'node:readline';
 import {readFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
+import {TextDecoder} from 'node:util';
 import {createInstrumentedRelayClient} from './relay_host.mjs';
 import {createPrimaryExchange} from './primary_exchange.mjs';
 
@@ -24,17 +25,58 @@ export function validatePrimaryConfig(config) {
 
 function emit(output,value) {
   return new Promise((resolve,reject)=>{
-    try {output.write(JSON.stringify(value)+'\n',error=>error?reject(error):resolve());}
-    catch(error){reject(error);}
+    let settled=false;
+    function finish(error) {
+      if(settled)return;
+      settled=true;output.removeListener('close',closed);
+      if(error)reject(error);else resolve();
+    }
+    function closed() {
+      const error=Error('primary output closed before write completion');
+      error.code='PRIMARY_OUTPUT_CLOSED';finish(error);
+    }
+    // A Writable may close without an error and without completing a queued
+    // write callback. Observe that boundary without replaying accepted work.
+    output.once('close',closed);
+    if(output.destroyed||output.closed||output.writableEnded){closed();return;}
+    try {output.write(JSON.stringify(value)+'\n',finish);}
+    catch(error){finish(error);}
   });
 }
 
-export async function servePrimaryLines({exchange,input,output}) {
-  const lines=createInterface({input,terminal:false});
-  let pending=null,failure=null;
+export async function servePrimaryLines(options) {
+  return serveOwnedPrimaryLines(options);
+}
+
+async function serveOwnedPrimaryLines({exchange,input,output},observeFailure=()=>{}) {
+  if(output.destroyed||output.closed||output.writableEnded) {
+    const error=Error('primary output unavailable before line admission');
+    error.code='PRIMARY_OUTPUT_CLOSED';observeFailure(error);input.pause();throw error;
+  }
+  const decoder=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true});
+  let lines,pending=null,failure=null;
   const rejectedWrites=new Set();
-  function failed(error) {failure??=error;input.pause();lines.close();}
+  function failed(error) {failure??=error;observeFailure(failure);input.pause();lines?.close();}
+  function outputClosed() {
+    const error=Error('primary output closed while line transport active');
+    error.code='PRIMARY_OUTPUT_CLOSED';failed(error);
+  }
+  function validateBytes(chunk) {
+    if(failure)return;
+    try {
+      if(typeof chunk==='string')decoder.decode();
+      else decoder.decode(chunk,{stream:true});
+    } catch(error){failed(error);}
+  }
+  function finishBytes() {
+    if(failure)return;
+    try {decoder.decode();}catch(error){failed(error);}
+  }
+  input.on('data',validateBytes);input.on('end',finishBytes);
+  lines=createInterface({input,terminal:false});
+  lines.on('error',failed);
   output.on('error',failed);
+  output.on('close',outputClosed);
   input.on('error',failed);
   async function perform(line) {
     let request;
@@ -58,7 +100,11 @@ export async function servePrimaryLines({exchange,input,output}) {
   return new Promise((resolve,reject)=>{
     lines.on('line',line=>{
       if(failure)return;
+      if(output.destroyed||output.closed||output.writableEnded){outputClosed();return;}
       if(pending){
+        // One unobserved busy write is enough. A synchronous line burst can
+        // continue even after input.pause(), so stop before retaining another.
+        if(rejectedWrites.size){failed(Error('primary busy response backlog'));return;}
         // Refuse this line now. It is never retained as a future action.
         const write=emit(output,{schema,status:'busy',operation_invoked:false,
           pending:true,next_id:exchange.state().next_id}).catch(failed);
@@ -71,7 +117,9 @@ export async function servePrimaryLines({exchange,input,output}) {
         // EOF or a broken output channel does not cancel a committed command.
         // Finish observing that same promise before owner transport cleanup.
         await pending;await Promise.all(rejectedWrites);
+        output.removeListener('close',outputClosed);
         output.removeListener('error',failed);input.removeListener('error',failed);
+        input.removeListener('data',validateBytes);input.removeListener('end',finishBytes);
         if(failure)reject(failure);else resolve();
       })().catch(reject);
     });
@@ -81,24 +129,45 @@ export async function servePrimaryLines({exchange,input,output}) {
 export async function runPrimaryStdio(config,{input=process.stdin,output=process.stdout}={}) {
   validatePrimaryConfig(config);
   if(output.isTTY)throw TypeError('primary stdout must be a pipe or file; terminal rendering is not a JSON-lines transport');
-  const host=await createInstrumentedRelayClient(config.host);
-  let exchange,failure=null;
-  try {
-    exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
-      expectations:config.expectations??[],options:config.primaryOptions??{}});
-    await emit(output,{schema,status:'ready',state:exchange.state()});
-    await servePrimaryLines({exchange,input,output});
-  } catch(error){failure=error;}
-  // Close only the original transport after EOF/failure. A failed output must
-  // not be written again in a finally block that hides its original exception.
-  let exit;
-  try {exit=await host.close();}
-  catch(error){
-    if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
-    throw error;
+  if(output.destroyed||output.closed||output.writableEnded) {
+    const error=Error('primary output unavailable before host startup');
+    error.code='PRIMARY_OUTPUT_CLOSED';input.pause();throw error;
   }
-  if(failure)throw failure;
-  await emit(output,{schema,status:'terminal',exit,state:exchange.state()});
+  let host,exchange,failure=null;
+  function failed(error) {failure??=error;input.pause();}
+  function outputClosed() {
+    const error=Error('primary output closed while owner active');
+    error.code='PRIMARY_OUTPUT_CLOSED';failed(error);
+  }
+  input.on('error',failed);output.on('error',failed);
+  output.on('close',outputClosed);
+  try {
+    try {
+      host=await createInstrumentedRelayClient(config.host);
+      if(failure)throw failure;
+      exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
+        expectations:config.expectations??[],options:config.primaryOptions??{}});
+      if(failure)throw failure;
+      await emit(output,{schema,status:'ready',state:exchange.state()});
+      if(failure)throw failure;
+      await serveOwnedPrimaryLines({exchange,input,output},failed);
+    } catch(error){failure??=error;}
+    // Observe the original host after any owned stream failure, including
+    // ready/terminal writes outside the inner line transport's lifetime.
+    let exit;
+    if(host)try {exit=await host.close();}
+    catch(error){
+      if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
+      throw error;
+    }
+    if(failure)throw failure;
+    try {await emit(output,{schema,status:'terminal',exit,state:exchange.state()});}
+    catch(error){failure??=error;}
+    if(failure)throw failure;
+  } finally {
+    output.removeListener('close',outputClosed);
+    output.removeListener('error',failed);input.removeListener('error',failed);
+  }
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {

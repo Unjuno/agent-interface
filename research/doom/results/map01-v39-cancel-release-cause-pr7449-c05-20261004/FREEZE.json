@@ -1,0 +1,19 @@
+{
+  "classification": "one-shot fake-Xlib construction reproduction on a frozen PR source; not a live allocation",
+  "command": "python -B research/doom/results/map01-v39-cancel-release-cause-c02-20261004/test_cancel_release_cause.py",
+  "decision": "PASS for the defect hypothesis iff forced cancellation fails only by release-vs-cancelled and ordinary release control passes",
+  "environment": {
+    "OWNER_UNDER_TEST": "PR-SOURCE-input_owner_v12.py"
+  },
+  "frozen_test_path": "research/doom/results/map01-v39-cancel-release-cause-c02-20261004/test_cancel_release_cause.py",
+  "frozen_test_sha256": "2d490167f67e9552385d483bc573463923adde9aa37c1d502174ed910b86593b",
+  "max_runs": 1,
+  "pr": 7449,
+  "pr_head": "a6da76741c91d8cfa0f035445c1fd6b8b864560e",
+  "retry": "none",
+  "run_id": "MAP01-V39-CANCEL-RELEASE-CAUSE-PR7449-C05-20261004",
+  "scope": "actual owner thread with fake Xlib and forced after-dequeue-before-dispatch cancellation; no game/GUI/model/physical input",
+  "source_git_blob": "49e77ac4c63b2c7f0f69af7ce68506ca717bec00",
+  "source_path": "research/live_control/input_owner_v12.py",
+  "source_sha256": "0d3240f17fb6a1950dd1f327984d4d210fed6faa1e40517664187801820d470e"
+}

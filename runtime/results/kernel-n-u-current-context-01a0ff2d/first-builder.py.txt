@@ -1,0 +1,86 @@
+from pathlib import Path
+import ast,base64,hashlib,json,shutil,sys
+from datetime import datetime,timezone
+
+root=Path.cwd();work=root/'work/kernel-nominal-uncertainty-context-v3';out=root/'outputs/kernel-nominal-uncertainty-context-v3';out.mkdir()
+pins=json.loads((root/'outputs/kernel-nominal-runtime-public/SOURCE.json').read_bytes())['candidate_python_and_workflow_sha256']
+nsource=root/'work/kernel-type-promotion-eb5d/candidate'
+remote=json.loads((work/'remote-sources.json').read_bytes());blobmap={}
+def digest(b):return hashlib.sha256(b).hexdigest()
+for r in remote:
+    blob=base64.b64decode(r['content'].replace('\n','').replace('\r',''),validate=True)
+    assert hashlib.sha1(b'blob '+str(len(blob)).encode()+b'\0'+blob).hexdigest()==r['sha']
+    blobmap[(r['ref'],r['path'])]=blob
+    dest=work/'remote-exact'/r['ref']/r['path'];dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(blob)
+ubase='a96283aceb2d4e72aabd592a9b94fd60397d5622';uhead='943abedcf3d6639b1b54fdfb8731954e13469b32'
+before=blobmap[(ubase,'runtime/kernel/lifecycle.py')];after=blobmap[(uhead,'runtime/kernel/lifecycle.py')]
+def methods(b):return {node.name:ast.dump(node,include_attributes=False) for node in ast.walk(ast.parse(b)) if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef))}
+assert {k for k in methods(before) if methods(before)[k]!=methods(after)[k]}=={'outcome'}
+old=b'            self.execution is not None\n            and self.execution.effect_occurrence.value in {"possible", "observed"}'
+new=b'            self.request is not None\n            and (self.execution is None\n                 or self.execution.effect_occurrence.value in {"possible", "observed"})'
+assert before.count(old)==1 and before.replace(old,new)==after
+assert blobmap[(ubase,'runtime/kernel/test_kernel.py')]==(nsource/'runtime/kernel/test_kernel.py').read_bytes()
+joint_test='''from dataclasses import fields
+from types import SimpleNamespace
+import unittest
+from runtime.kernel import ContractError, RequestLifecycle
+from runtime.kernel.test_kernel import observation, binding, lease, request, execution, released
+
+def shaped(value):
+    return SimpleNamespace(**{field.name:getattr(value,field.name) for field in fields(value)})
+
+class JointRefusalRecoveryTests(unittest.TestCase):
+    def test_refused_nominal_receipt_and_cleanup_preserve_possible_effect(self):
+        flow=RequestLifecycle()
+        flow.record_observation(observation());flow.bind(binding())
+        flow.authorize(lease(),now_ns=200);flow.begin_execution(request(),now_ns=300)
+        before=vars(flow).copy()
+        with self.assertRaises(ContractError):flow.record_execution(shaped(execution()))
+        self.assertEqual(vars(flow),before)
+        with self.assertRaises(ContractError):flow.stop('shaped cleanup',release=shaped(released(800)))
+        self.assertEqual(vars(flow),before)
+        with self.assertRaises(ContractError):flow.stop('stale cleanup',release=released(299))
+        self.assertEqual(vars(flow),before)
+        flow.stop('verified cleanup',release=released(800))
+        result=flow.outcome()
+        self.assertEqual(result.command_id,'cmd-1')
+        self.assertTrue(result.effect_occurred)
+        self.assertFalse(result.effect_verified)
+        self.assertTrue(result.release_verified)
+'''
+variants={}; original_maps={}
+for label in ['nominal_only','uncertainty_only','joint']:
+    dest=work/label;dest.mkdir();variants[label]=str(dest)
+    for path,sha in pins.items():
+        original=(nsource/path).read_bytes(); assert digest(original)==sha,(path,'pinned nominal context')
+        target=dest/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(original)
+    life=dest/'runtime/kernel/lifecycle.py';data=life.read_bytes()
+    if label!='nominal_only':
+        assert data.count(old)==1;data=data.replace(old,new)
+        (dest/'runtime/kernel/test_kernel.py').write_bytes(blobmap[(uhead,'runtime/kernel/test_kernel.py')])
+    if label=='uncertainty_only':
+        for argument,typ in [('binding','TargetBinding'),('lease','AuthorityLease'),('request','ExecutionRequest'),('receipt','ExecutionReceipt'),('receipt','EffectReceipt'),('release','ReleaseReceipt')]:
+            guard=('        if not isinstance('+argument+', '+typ+'):\n            raise ContractError("expected '+typ+'")\n').encode()
+            if typ=='ReleaseReceipt':guard=('            if not isinstance('+argument+', '+typ+'):\n                raise ContractError("expected '+typ+'")\n').encode()
+            assert data.count(guard)==1,(typ,'guard identity');data=data.replace(guard,b'')
+    life.write_bytes(data)
+    (dest/'runtime/kernel/test_nominal_cancel_effect.py').write_text(joint_test,encoding='utf8',newline='\n')
+    original_maps[label]={str(f.relative_to(dest)).replace('\\','/'):digest(f.read_bytes()) for f in dest.rglob('*') if f.is_file()}
+    assert set(methods(data))==set(methods((nsource/'runtime/kernel/lifecycle.py').read_bytes()))
+    if label=='joint':
+        assert {k for k in methods(data) if methods(data)[k]!=methods((nsource/'runtime/kernel/lifecycle.py').read_bytes())[k]}=={'outcome'}
+        assert methods(data)['outcome']==methods(after)['outcome']
+def count_tests(dest):
+    return sum(isinstance(n,ast.FunctionDef) and n.name.startswith('test_') for p in Path(dest).glob('runtime/kernel/test_*.py') for n in ast.walk(ast.parse(p.read_bytes())))
+assert count_tests(variants['nominal_only'])==51
+assert count_tests(variants['joint'])==56
+python=sys.executable
+cases=[('nominal_only',False,True),('uncertainty_only',False,True),('joint',False,False),('joint',True,False)]
+commands=[]
+for label,opt,target in cases:
+    argv=[python,'-B','-X','utf8']+(['-O'] if opt else [])+['-m','unittest']
+    argv+=['runtime.kernel.test_nominal_cancel_effect','-v'] if target else ['discover','-s','runtime/kernel','-p','test_*.py','-v']
+    commands.append({'label':label+('_optimized' if opt else ''),'cwd':variants[label],'argv':argv,'expected_exit':1 if target else 0,'expected_methods':1 if target else 56,'expected_failures':1 if target else 0,'expected_errors':0})
+freeze={'worker':'01a0ff2d-eb8e-70e0-82bb-ba3bf0c79b5c','kind':'ordinary engineering context composition, not new formal allocation','created_utc':datetime.now(timezone.utc).isoformat(),'nominal_head':'b84aa6a1260128bd70e2cbe1598a9c80b55f75ee','uncertainty_head':uhead,'uncertainty_review_base':ubase,'nominal_source_workflow_pins':pins,'source_sha256':original_maps,'commands':commands,'test_methods':{'nominal_only':51,'joint':56},'original_candidate_or_formal_replay':False,'main_written':False,'guard_removal_comparison_only':True,'new_regression_sha256':digest(joint_test.encode()),'decision':'PASS iff two target-only comparators each have exactly one assertion failure/no errors and joint56 normal+optimized pass with source unchanged; otherwise retain first result FAIL/HOLD and diagnose without changing threshold'}
+(out/'FREEZE.json').write_text(json.dumps(freeze,indent=2,sort_keys=True)+'\n',encoding='utf8',newline='\n')
+print(json.dumps({'source_frozen':True,'normal_methods':56,'comparators':'two target-only one-method checks','formal_replayed':False,'freeze_sha256':digest((out/'FREEZE.json').read_bytes())}))

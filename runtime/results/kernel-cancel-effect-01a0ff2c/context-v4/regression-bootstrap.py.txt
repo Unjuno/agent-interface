@@ -1,0 +1,8 @@
+import importlib,pathlib,runpy,sys
+root=pathlib.Path.cwd().resolve()
+for name in ('runtime.kernel','runtime.kernel.backend','runtime.kernel.contracts','runtime.kernel.lifecycle'):
+ m=importlib.import_module(name)
+ path=root/'runtime/kernel'/('__init__.py' if name=='runtime.kernel' else name.rsplit('.',1)[1]+'.py')
+ if pathlib.Path(m.__file__).resolve()!=path:raise RuntimeError('import source origin mismatch')
+sys.argv=['unittest','discover','-s','runtime/kernel','-p','test_*.py','-v']
+runpy.run_module('unittest',run_name='__main__')

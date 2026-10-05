@@ -1,0 +1,48 @@
+{
+  "schema": "v1",
+  "trace": {
+    "admission_up": [
+      74,
+      65
+    ],
+    "explicit_deliveries": "both dropped by fake display",
+    "cleanup_retry_up": [
+      65,
+      74
+    ],
+    "terminal_down": [],
+    "verified": true,
+    "scope": "candidate FakeDisplay test only"
+  },
+  "runs": [
+    {
+      "label": "current-main baseline normal",
+      "source": "current_main",
+      "exit_code": 1,
+      "disposition": "EXPECTED_RED",
+      "outcome": "RuntimeError owner release not verified: [65, 74]; repeated on close cleanup"
+    },
+    {
+      "label": "current-main baseline optimized",
+      "source": "current_main",
+      "exit_code": 1,
+      "disposition": "EXPECTED_RED",
+      "outcome": "RuntimeError owner release not verified: [65, 74]; repeated on close cleanup"
+    },
+    {
+      "label": "candidate normal",
+      "source": "candidate",
+      "exit_code": 0,
+      "disposition": "PASS",
+      "tests": "1/1"
+    },
+    {
+      "label": "candidate optimized",
+      "source": "candidate",
+      "exit_code": 0,
+      "disposition": "PASS",
+      "tests": "1/1"
+    }
+  ],
+  "raw_trace_line": "TRACE admission_up=[74,65] explicit_delivery=dropped retry_up=[65,74] terminal_down=[] verified=True"
+}

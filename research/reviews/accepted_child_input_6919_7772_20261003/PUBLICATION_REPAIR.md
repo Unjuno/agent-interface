@@ -1,0 +1,5 @@
+# Ordinary packaging failure, no experimental replay
+
+First publisher publish.py prepared an isolated index, then ordinary `git write-tree` attempted lazy retrieval of unrelated missing objects in this large partial clone. It had not created/pushed the review ref or any main ref. We checked the specific publisher -> Git shim -> write-tree -> fetch/helper process chain, saved its identities, and stopped only those owned Git helpers. The retained outer publisher capture exits1 with its original CalledProcessError. No experiment/peer/foreign worker was stopped and no original evidence was edited.
+
+publish_v2.py reuses the already staged isolated index, copies it to a new owned metadata path, batches the few additional evidence entries, and invokes `write-tree --missing-ok` with GIT_NO_LAZY_FETCH=1. This prevents unrelated source download, preserves source/raw bytes and makes a single additive review-branch push only. Current ordinary clone index/worktree remain untouched. The first source, logs, unused index/lock and failure remain private/published as appropriate; no cleanup or retry of the consumed experimental deck occurs.

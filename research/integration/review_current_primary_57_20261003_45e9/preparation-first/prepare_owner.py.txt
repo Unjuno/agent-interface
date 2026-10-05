@@ -1,0 +1,12 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,uuid,shutil
+r=Path(__file__).resolve().parent;f=json.loads((r/'FREEZE.json').read_bytes());node=f['node_binary'];cells=[]
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+for variant in ['peer','combined']:
+ for later in [False,True]:
+  out=r/'owner-first'/variant/('later-output' if later else 'control');out.mkdir(parents=True,exist_ok=False);nonce=str(uuid.uuid4())
+  config={'nonce':nonce,'host':{'command':node,'args':[str(r/'owner-fixture.mjs'),str(out),nonce],'evidenceDirectory':str(out/'host')},'route':'guarded-local','exchangeDirectory':str(out/'exchange')};put(out/'config.json',config)
+  cells.append({'variant':variant,'later_output':later,'output':str(out),'config_sha256':sha((out/'config.json').read_bytes()),'argv':[node,str(r/'owner-worker.mjs'),str(out/'config.json'),(r/variant/'runtime/host_v1/primary_stdio.mjs').as_uri(),'yes' if later else 'no']})
+put(r/'OWNER_FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'source':f['source'],'helpers':[{'path':n,'sha256':sha((r/n).read_bytes())} for n in ['owner-fixture.mjs','owner-worker.mjs','owner_collect.py','prepare_owner.py']],'cells':cells,'claim':'GitHub6979comment5967951776','T':'New laterOUTPUT vs no later error, not author laterINPUT or peer decoder case. Controlled global Error constructor observer retains exact original prototype/object while capturing first backlog object; same constructor for controls.','D':'Four custody passes, controls retain original first backlog; if only later output survives report diagnostic FAIL; no repair into PASS or adoption.','timeout_seconds_per_cell':20,'node_binary':node,'node_binary_sha256':f['node_binary_sha256'],'environment_delta':{'TMP':str(r/'tmp'),'TEMP':str(r/'tmp')},'no_native_formal_original_producer_auditor_replay':True});print('new output-channel four-cell source/fixtures/gates frozen')

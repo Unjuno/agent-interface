@@ -1,0 +1,1820 @@
+{
+  "task": {
+    "task_id": "task-4",
+    "token": "t991067-4",
+    "layout": "B",
+    "phase": "invalidation_repair",
+    "url": "http://127.0.0.1:38179/task/4"
+  },
+  "caller": {
+    "outcome": "TASK_SUCCEEDED",
+    "reason": "verified_effect",
+    "task_effect": "succeeded",
+    "delivery": "confirmed",
+    "execution_progress": {
+      "status": "completed"
+    },
+    "selected_target": {
+      "grounding": {
+        "field_point": [
+          700,
+          559
+        ],
+        "submit_point": [
+          689,
+          634
+        ]
+      },
+      "source": {
+        "event": "observation",
+        "id": "durable-d7fcec75fc2d4d028bdad0e2a8e8720c",
+        "step": 0,
+        "sequence": 62,
+        "capture_ns": 53033485535,
+        "context_ns": 53042201855,
+        "context": [
+          [
+            "windows",
+            "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+          ],
+          [
+            "active_window",
+            6291458
+          ]
+        ],
+        "image": "/out/block-1/A/client/runtime/059.png",
+        "image_reused": true,
+        "image_prepare_ns": 1826649,
+        "image_ready_ns": 53051568118,
+        "input_focus_before": 6291458,
+        "input_focus_after": 6291458,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291458,
+          "surface": 6291458,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291458,
+          "surface": 6291458,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291458,
+          "surface": 6291458,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 5.905883,
+        "wire_bytes": 325,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 53059222488
+      },
+      "aliases": null,
+      "model_call_id": "01a104c8-a77a-7823-86d9-f26d661cf913"
+    },
+    "cache_update": {
+      "grounding": {
+        "field_point": [
+          700,
+          559
+        ],
+        "submit_point": [
+          689,
+          634
+        ]
+      },
+      "source": {
+        "event": "observation",
+        "id": "durable-d7fcec75fc2d4d028bdad0e2a8e8720c",
+        "step": 0,
+        "sequence": 62,
+        "capture_ns": 53033485535,
+        "context_ns": 53042201855,
+        "context": [
+          [
+            "windows",
+            "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+          ],
+          [
+            "active_window",
+            6291458
+          ]
+        ],
+        "image": "/out/block-1/A/client/runtime/059.png",
+        "image_reused": true,
+        "image_prepare_ns": 1826649,
+        "image_ready_ns": 53051568118,
+        "input_focus_before": 6291458,
+        "input_focus_after": 6291458,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291458,
+          "surface": 6291458,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291458,
+          "surface": 6291458,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291458,
+          "surface": 6291458,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 5.905883,
+        "wire_bytes": 325,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 53059222488
+      },
+      "aliases": null,
+      "model_call_id": "01a104c8-a77a-7823-86d9-f26d661cf913"
+    },
+    "repair_path": null,
+    "route": "cold",
+    "repair_trace": [],
+    "coarse_origin": "caller_provided",
+    "comparison": {
+      "class": "injected_subpath",
+      "omitted_stages": [
+        "coarse_model"
+      ],
+      "comparable_to_full_cold": false
+    },
+    "stages": {
+      "observe_source": {
+        "status": "completed",
+        "reason": null
+      },
+      "coarse_model": {
+        "status": "skipped",
+        "reason": "coarse_caller_provided"
+      },
+      "acquire_anchor": {
+        "status": "completed",
+        "reason": null
+      },
+      "anchor_model": {
+        "status": "completed",
+        "reason": null
+      },
+      "reuse_revalidate": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "local_repair": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "acquire_expansion": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "expanded_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_observe": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_revalidate": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "final_revalidate": {
+        "status": "completed",
+        "reason": null
+      },
+      "execute": {
+        "status": "completed",
+        "reason": null
+      },
+      "verify_effect": {
+        "status": "completed",
+        "reason": null
+      }
+    },
+    "attempt_ledger": [
+      {
+        "attempt_id": "Atask-4",
+        "stage": "anchor_model",
+        "status": "completed",
+        "started_ns": 53143843337,
+        "completed_ns": 59753064975,
+        "call_id": "01a104c8-a77a-7823-86d9-f26d661cf913",
+        "usage": {
+          "input_tokens": 13509,
+          "cached_input_tokens": 11008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 87,
+          "reasoning_output_tokens": 60
+        },
+        "visible_images_submitted": 1,
+        "wait_ns": 6394777500,
+        "error": null
+      }
+    ],
+    "model_call_ledger": [
+      {
+        "attempt_id": "Atask-4",
+        "stage": "anchor_model",
+        "call_id": "01a104c8-a77a-7823-86d9-f26d661cf913",
+        "output": {
+          "status": "target_reference",
+          "target": {
+            "grounding": {
+              "field_point": [
+                700,
+                559
+              ],
+              "submit_point": [
+                689,
+                634
+              ]
+            },
+            "source": {
+              "event": "observation",
+              "id": "durable-d7fcec75fc2d4d028bdad0e2a8e8720c",
+              "step": 0,
+              "sequence": 62,
+              "capture_ns": 53033485535,
+              "context_ns": 53042201855,
+              "context": [
+                [
+                  "windows",
+                  "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+                ],
+                [
+                  "active_window",
+                  6291458
+                ]
+              ],
+              "image": "/out/block-1/A/client/runtime/059.png",
+              "image_reused": true,
+              "image_prepare_ns": 1826649,
+              "image_ready_ns": 53051568118,
+              "input_focus_before": 6291458,
+              "input_focus_after": 6291458,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291458,
+                "surface": 6291458,
+                "geometry": [
+                  10,
+                  10,
+                  1050,
+                  780
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291458,
+                "surface": 6291458,
+                "geometry": [
+                  10,
+                  10,
+                  1050,
+                  780
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291458,
+                "surface": 6291458,
+                "geometry": [
+                  10,
+                  10,
+                  1050,
+                  780
+                ]
+              },
+              "capture_ms": 5.905883,
+              "wire_bytes": 325,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 53059222488
+            },
+            "aliases": null,
+            "model_call_id": "01a104c8-a77a-7823-86d9-f26d661cf913"
+          }
+        },
+        "usage": {
+          "input_tokens": 13509,
+          "cached_input_tokens": 11008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 87,
+          "reasoning_output_tokens": 60
+        },
+        "requested_model": "gpt-5.6-luna",
+        "requested_effort": "low",
+        "cost": null,
+        "visible_images_submitted": 1,
+        "wait_ns": 6394777500
+      }
+    ],
+    "accounting": {
+      "attempted_calls": 1,
+      "completed_calls": 1,
+      "duplicate_call_ids": [],
+      "usage_totals": {
+        "input_tokens": 13509,
+        "cached_input_tokens": 11008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 87,
+        "reasoning_output_tokens": 60
+      },
+      "usage_coverage": {
+        "input_tokens": 1,
+        "cached_input_tokens": 1,
+        "cache_write_input_tokens": 1,
+        "output_tokens": 1,
+        "reasoning_output_tokens": 1
+      },
+      "visible_images_submitted": 1,
+      "visible_image_coverage": 1,
+      "model_wait_ns": 6394777500,
+      "model_wait_coverage": 1,
+      "cost": null,
+      "cached_input_semantics": "subset of input_tokens; never added to input total"
+    },
+    "phase_timings": [
+      {
+        "stage": "observe_source",
+        "started_ns": 53143810198,
+        "ended_ns": 53143825675,
+        "elapsed_ns": 15477
+      },
+      {
+        "stage": "acquire_anchor",
+        "started_ns": 53143834391,
+        "ended_ns": 53143839429,
+        "elapsed_ns": 5038
+      },
+      {
+        "stage": "anchor_model",
+        "started_ns": 53143843337,
+        "ended_ns": 59753064975,
+        "elapsed_ns": 6609221638
+      },
+      {
+        "stage": "final_revalidate",
+        "started_ns": 59753120555,
+        "ended_ns": 59753152772,
+        "elapsed_ns": 32217
+      },
+      {
+        "stage": "execute",
+        "started_ns": 59753159579,
+        "ended_ns": 60906002817,
+        "elapsed_ns": 1152843238
+      },
+      {
+        "stage": "verify_effect",
+        "started_ns": 60906042843,
+        "ended_ns": 61100519178,
+        "elapsed_ns": 194476335
+      }
+    ],
+    "input_authority": "consumed_by_recorded_execute_stage"
+  },
+  "graph": null,
+  "post_model_receipt": null,
+  "source": {
+    "event": "observation",
+    "id": "durable-d7fcec75fc2d4d028bdad0e2a8e8720c",
+    "step": 0,
+    "sequence": 62,
+    "capture_ns": 53033485535,
+    "context_ns": 53042201855,
+    "context": [
+      [
+        "windows",
+        "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+      ],
+      [
+        "active_window",
+        6291458
+      ]
+    ],
+    "image": "/out/block-1/A/client/runtime/059.png",
+    "image_reused": true,
+    "image_prepare_ns": 1826649,
+    "image_ready_ns": 53051568118,
+    "input_focus_before": 6291458,
+    "input_focus_after": 6291458,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291458,
+      "surface": 6291458,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291458,
+      "surface": 6291458,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291458,
+      "surface": 6291458,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "capture_ms": 5.905883,
+    "wire_bytes": 325,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emit_started_ns": 53059222488
+  },
+  "programs": [
+    {
+      "label": "navigate-task-4",
+      "started_ns": 51138165608,
+      "ended_ns": 52848262805,
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-216818e4ba81421593e4fd598d0def9a",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 4,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 52807512902,
+          "valid_until_ns": 61115828374
+        },
+        "terminal_ns": 52807606093,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 52807612431
+      },
+      "observations": [
+        {
+          "event": "observation",
+          "id": "durable-216818e4ba81421593e4fd598d0def9a",
+          "step": 0,
+          "sequence": 56,
+          "capture_ns": 51200270588,
+          "context_ns": 51245290067,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED SAVED - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/052.png",
+          "image_reused": true,
+          "image_prepare_ns": 1766917,
+          "image_ready_ns": 51252882684,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 4.601244,
+          "wire_bytes": 318,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 51259725261
+        },
+        {
+          "event": "observation",
+          "id": "durable-216818e4ba81421593e4fd598d0def9a",
+          "step": 1,
+          "sequence": 57,
+          "capture_ns": 52155095124,
+          "context_ns": 52163146229,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED SAVED - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/057.png",
+          "image_reused": false,
+          "image_prepare_ns": 61939342,
+          "image_ready_ns": 52251344744,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 6.179351,
+          "wire_bytes": 42496,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 52259119697
+        },
+        {
+          "event": "observation",
+          "id": "durable-216818e4ba81421593e4fd598d0def9a",
+          "step": 2,
+          "sequence": 58,
+          "capture_ns": 52295577044,
+          "context_ns": 52350307934,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED SAVED - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/058.png",
+          "image_reused": false,
+          "image_prepare_ns": 88406163,
+          "image_ready_ns": 52544200176,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 5.263549,
+          "wire_bytes": 25845,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 52551605199
+        },
+        {
+          "event": "observation",
+          "id": "durable-216818e4ba81421593e4fd598d0def9a",
+          "step": 3,
+          "sequence": 59,
+          "capture_ns": 52581495579,
+          "context_ns": 52588524973,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/059.png",
+          "image_reused": false,
+          "image_prepare_ns": 22612763,
+          "image_ready_ns": 52649188109,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 4.990388,
+          "wire_bytes": 37291,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 52656156999
+        },
+        {
+          "event": "observation",
+          "id": "durable-216818e4ba81421593e4fd598d0def9a",
+          "step": 3,
+          "sequence": 60,
+          "capture_ns": 52691273774,
+          "context_ns": 52701113506,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/059.png",
+          "image_reused": true,
+          "image_prepare_ns": 1826534,
+          "image_ready_ns": 52709352476,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 5.220868,
+          "wire_bytes": 325,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 52716207811
+        },
+        {
+          "event": "observation",
+          "id": "durable-216818e4ba81421593e4fd598d0def9a",
+          "step": 3,
+          "sequence": 61,
+          "capture_ns": 52750096234,
+          "context_ns": 52759176215,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/059.png",
+          "image_reused": true,
+          "image_prepare_ns": 2896972,
+          "image_ready_ns": 52771432403,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 3.276776,
+          "wire_bytes": 325,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 52780591547
+        }
+      ],
+      "pointer_admissions": [],
+      "target_checks": [],
+      "point_mints": []
+    },
+    {
+      "label": "source-task-4",
+      "started_ns": 52940706517,
+      "ended_ns": 53143746884,
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-d7fcec75fc2d4d028bdad0e2a8e8720c",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 53075944581,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 53076257635,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 53076263626
+      },
+      "observations": [
+        {
+          "event": "observation",
+          "id": "durable-d7fcec75fc2d4d028bdad0e2a8e8720c",
+          "step": 0,
+          "sequence": 62,
+          "capture_ns": 53033485535,
+          "context_ns": 53042201855,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/059.png",
+          "image_reused": true,
+          "image_prepare_ns": 1826649,
+          "image_ready_ns": 53051568118,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 5.905883,
+          "wire_bytes": 325,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 53059222488
+        }
+      ],
+      "pointer_admissions": [],
+      "target_checks": [],
+      "point_mints": []
+    },
+    {
+      "label": "plain-batch-task-4",
+      "started_ns": 59827665265,
+      "ended_ns": 60905956873,
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 6,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 60874108599,
+          "valid_until_ns": 69794862123
+        },
+        "terminal_ns": 60874248407,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 60874251621
+      },
+      "observations": [
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 0,
+          "sequence": 63,
+          "capture_ns": 60005559264,
+          "context_ns": 60010930883,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/059.png",
+          "image_reused": true,
+          "image_prepare_ns": 1669640,
+          "image_ready_ns": 60019478543,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 7.243615,
+          "wire_bytes": 325,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60026626954
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 1,
+          "sequence": 64,
+          "capture_ns": 60067036595,
+          "context_ns": 60072913260,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/059.png",
+          "image_reused": true,
+          "image_prepare_ns": 1565149,
+          "image_ready_ns": 60080645858,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 5.946534,
+          "wire_bytes": 325,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60086920855
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 2,
+          "sequence": 65,
+          "capture_ns": 60196981808,
+          "context_ns": 60201616619,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/065.png",
+          "image_reused": false,
+          "image_prepare_ns": 18483969,
+          "image_ready_ns": 60234733919,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 6.776495,
+          "wire_bytes": 2154,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60240947563
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 3,
+          "sequence": 66,
+          "capture_ns": 60265855612,
+          "context_ns": 60272538098,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/066.png",
+          "image_reused": false,
+          "image_prepare_ns": 17191428,
+          "image_ready_ns": 60303882132,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 3.867291,
+          "wire_bytes": 1150,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60310183774
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 3,
+          "sequence": 67,
+          "capture_ns": 60341378988,
+          "context_ns": 60346963158,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/066.png",
+          "image_reused": true,
+          "image_prepare_ns": 1955035,
+          "image_ready_ns": 60355116962,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 3.209475,
+          "wire_bytes": 325,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60361742290
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 3,
+          "sequence": 68,
+          "capture_ns": 60393966179,
+          "context_ns": 60401528961,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/066.png",
+          "image_reused": true,
+          "image_prepare_ns": 1732560,
+          "image_ready_ns": 60410614308,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 3.529342,
+          "wire_bytes": 325,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60417079029
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 4,
+          "sequence": 69,
+          "capture_ns": 60548065398,
+          "context_ns": 60554920455,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED task-4 READY - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/069.png",
+          "image_reused": false,
+          "image_prepare_ns": 19340468,
+          "image_ready_ns": 60667107290,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 4.783738,
+          "wire_bytes": 3953,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60673510382
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 5,
+          "sequence": 70,
+          "capture_ns": 60697470536,
+          "context_ns": 60702790339,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED SAVED - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/070.png",
+          "image_reused": false,
+          "image_prepare_ns": 26036829,
+          "image_ready_ns": 60749378152,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 3.490014,
+          "wire_bytes": 28426,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60755568249
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 5,
+          "sequence": 71,
+          "capture_ns": 60788384717,
+          "context_ns": 60793789792,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED SAVED - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/070.png",
+          "image_reused": true,
+          "image_prepare_ns": 1297151,
+          "image_ready_ns": 60800157228,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 4.276549,
+          "wire_bytes": 318,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60805940615
+        },
+        {
+          "event": "observation",
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 5,
+          "sequence": 72,
+          "capture_ns": 60837977489,
+          "context_ns": 60842805195,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED SAVED - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/070.png",
+          "image_reused": true,
+          "image_prepare_ns": 1423202,
+          "image_ready_ns": 60849484786,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 4.668091,
+          "wire_bytes": 318,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 60855110229
+        }
+      ],
+      "pointer_admissions": [
+        {
+          "event": "pointer_admission",
+          "operation": "move",
+          "payload": {
+            "x": 700,
+            "y": 559
+          },
+          "admitted_ns": 59901261884,
+          "input_ack_ns": 59901479161,
+          "valid_until_ns": 69794862123,
+          "surface": 6291458,
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 0,
+          "emit_started_ns": 59901573455
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "button_down",
+          "payload": 1,
+          "admitted_ns": 59909599661,
+          "input_ack_ns": 59909798573,
+          "valid_until_ns": 69794862123,
+          "surface": 6291458,
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 0,
+          "emit_started_ns": 59909915034
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "move",
+          "payload": {
+            "x": 689,
+            "y": 634
+          },
+          "admitted_ns": 60448471522,
+          "input_ack_ns": 60448670436,
+          "valid_until_ns": 69794862123,
+          "surface": 6291458,
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 4,
+          "emit_started_ns": 60448736793
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "button_down",
+          "payload": 1,
+          "admitted_ns": 60455549345,
+          "input_ack_ns": 60455798078,
+          "valid_until_ns": 69794862123,
+          "surface": 6291458,
+          "id": "durable-4918ac6bf5344eeba2ce05623e4b0ab6",
+          "step": 4,
+          "emit_started_ns": 60455939726
+        }
+      ],
+      "target_checks": [],
+      "point_mints": []
+    },
+    {
+      "label": "verify-saved-title",
+      "started_ns": 60972076203,
+      "ended_ns": 61100461939,
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-61c8cfa549bd48d1a4723f864510b584",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 61069043136,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 61069090012,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 61069093214
+      },
+      "observations": [
+        {
+          "event": "observation",
+          "id": "durable-61c8cfa549bd48d1a4723f864510b584",
+          "step": 0,
+          "sequence": 73,
+          "capture_ns": 61035043235,
+          "context_ns": 61040457029,
+          "context": [
+            [
+              "windows",
+              "0x00600002  0 a76bb4d1bb86 AI INTEGRATED SAVED - Chromium\n"
+            ],
+            [
+              "active_window",
+              6291458
+            ]
+          ],
+          "image": "/out/block-1/A/client/runtime/070.png",
+          "image_reused": true,
+          "image_prepare_ns": 1709346,
+          "image_ready_ns": 61048557636,
+          "input_focus_before": 6291458,
+          "input_focus_after": 6291458,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291458,
+            "surface": 6291458,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 5.402333,
+          "wire_bytes": 318,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 61055108563
+        }
+      ],
+      "pointer_admissions": [],
+      "target_checks": [],
+      "point_mints": []
+    }
+  ],
+  "durable_calls": 8,
+  "elapsed_ns": 10014525999,
+  "events": [
+    {
+      "event": "stage_started",
+      "stage": "observe_source",
+      "started_ns": 53143810198
+    },
+    {
+      "event": "stage_completed",
+      "stage": "observe_source",
+      "ended_ns": 53143825675
+    },
+    {
+      "event": "stage_started",
+      "stage": "acquire_anchor",
+      "started_ns": 53143834391
+    },
+    {
+      "event": "stage_completed",
+      "stage": "acquire_anchor",
+      "ended_ns": 53143839429
+    },
+    {
+      "event": "model_attempt_started",
+      "attempt_id": "Atask-4",
+      "stage": "anchor_model",
+      "status": "started",
+      "started_ns": 53143843337,
+      "completed_ns": null,
+      "call_id": null,
+      "usage": null,
+      "visible_images_submitted": null,
+      "wait_ns": null,
+      "error": null
+    },
+    {
+      "event": "model_attempt_finished",
+      "attempt_id": "Atask-4",
+      "stage": "anchor_model",
+      "status": "completed",
+      "started_ns": 53143843337,
+      "completed_ns": 59753064975,
+      "call_id": "01a104c8-a77a-7823-86d9-f26d661cf913",
+      "usage": {
+        "input_tokens": 13509,
+        "cached_input_tokens": 11008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 87,
+        "reasoning_output_tokens": 60
+      },
+      "visible_images_submitted": 1,
+      "wait_ns": 6394777500,
+      "error": null
+    },
+    {
+      "event": "stage_started",
+      "stage": "final_revalidate",
+      "started_ns": 59753120555
+    },
+    {
+      "event": "stage_completed",
+      "stage": "final_revalidate",
+      "ended_ns": 59753152772
+    },
+    {
+      "event": "stage_started",
+      "stage": "execute",
+      "started_ns": 59753159579
+    },
+    {
+      "event": "stage_completed",
+      "stage": "execute",
+      "ended_ns": 60906002817
+    },
+    {
+      "event": "stage_started",
+      "stage": "verify_effect",
+      "started_ns": 60906042843
+    },
+    {
+      "event": "stage_completed",
+      "stage": "verify_effect",
+      "ended_ns": 61100519178
+    },
+    {
+      "event": "adaptive_route_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "repair_path": null,
+      "attempted_calls": 1
+    }
+  ],
+  "provider_failed": false
+}

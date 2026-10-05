@@ -1,0 +1,9 @@
+{
+  "allocation":"SPEC-DIVERSITY-8088-T0-A03-20261005-01",
+  "predecessors":[
+    {"allocation":"SPEC-DIVERSITY-8088-T0-A01-20261005-01","status":"HOLD_BASELINE_ORACLE_COVERAGE","candidate_sha256":"f7cd4bbcb1f20b6e249882c764e55c1061d2972224e4262fb8893aac4a0dee5d","auditor_sha256":"6f4acb4647562d0dafc36295a85549641bfca7ccc23270788ca2ad4657024654"},
+    {"allocation":"SPEC-DIVERSITY-8088-T0-A02-20261005-01","status":"HOLD_C02_LIST_IDENTITY_COVERAGE","candidate_sha256":"7cae3331c9b7109e59a9ce0d2056b61260b1fa8eeeaf5b3ef92c6eccdf0aad3c","auditor_sha256":"40704890678d61b2b72039e085e4bd816f02abf70b2d203862c03f1bf443a4eb"}
+  ],
+  "reused_inputs_from_a02":{"contracts":"0cdb4f029dcc012c296f0359c37c83e422b7a2eb8ba93502c726b68d9d2304b7","spec_a":"991fd19f0d3e9f218180b441030f7b5ce72eff0774252a95c01e11408af8f043","spec_b":"9abe525b10137f18fdf3491edcb79cd760807839aa9728f90b5e2574f438bdf4","adjudication":"6b07b01ad0a1e052ee623bec5b8756f477e2ef37c4f3155bda92d466d11e48d9"},
+  "transfer_note":"A03 reuses the exact A02 package byte files; if an API round trip changes trailing bytes, record A03's actual SHA and the exact normalization instead of claiming identity."
+}

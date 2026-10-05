@@ -1,0 +1,24 @@
+{
+  "schema": "event_emit_fault_boundary_a04_result_v1",
+  "allocation": "EMIT-59-A04-20261005",
+  "disposition": "PASS_SCOPED_SOURCE_BOUND_EVENT_SINK_FAULT_CONTRACT",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "retries": 0,
+  "cases": {
+    "baseline": "1 event row in each sink",
+    "before_first_append": "0/0 before retry, 1/1 after retry",
+    "after_first_append": "1/0 before retry, 2/1 after retry (events duplicate)",
+    "after_second_append": "1/1 before retry, 2/2 after retry (both duplicate)"
+  },
+  "executor_policy": "attempt recorded before emit; release error retained as delivery_unknown; no automatic retry",
+  "limits": [
+    "literal source-bound injected exceptions only",
+    "no transaction/fsync/process-crash durability test",
+    "Executor policy source-reviewed, not runtime instantiated",
+    "no GUI/X11/input/game/model/application effect/useful feedback/recovery"
+  ],
+  "resource_warning": "WSLc reported swap-limit cgroup capability unavailable; 512 MiB memory was requested, swap enforcement unavailable; CPU enforcement not independently measured."
+}

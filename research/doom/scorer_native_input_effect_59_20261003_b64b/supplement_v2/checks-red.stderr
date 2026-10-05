@@ -1,0 +1,89 @@
+test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) ... 
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_bool_sample_index') ... FAIL
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_native_read_request') ... FAIL
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_wrong_native_read_request') ... FAIL
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_bool_sink_count') ... FAIL
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_prequeue_written') ... FAIL
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_read_limit') ... FAIL
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_clock_line') ... FAIL
+  test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_integer_wait_ready') ... FAIL
+test_original_checker_acceptance_is_preserved (__main__.ScalarChecks.test_original_checker_acceptance_is_preserved) ... ok
+test_original_sixteen_rows_remain_valid (__main__.ScalarChecks.test_original_sixteen_rows_remain_valid) ... ok
+test_original_ten_controls_still_reject (__main__.ScalarChecks.test_original_ten_controls_still_reject) ... ok
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_bool_sample_index')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_bool_sample_index', 'required': 'n00:V2_SAMPLE_INDEX_TYPE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4127, 'sha256': 'ed854699bcd80baa84791113c6eed4f67a09f2573223a7723a85576629dd19c7'}, 'rejected_for_required_reason': False}
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_native_read_request')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_float_native_read_request', 'required': 'n00:V2_READ_REQUEST_TYPE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4117, 'sha256': '8f4f5b21b0be9f3817cb535d69fe209c230f710be519ec608fc06be9820a4bcd'}, 'rejected_for_required_reason': False}
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_wrong_native_read_request')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_wrong_native_read_request', 'required': 'n00:V2_READ_REQUEST_VALUE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4111, 'sha256': 'ff5c88442512067684f463dbfc65d85727c61de7e05f555287629e4ffa8f6374'}, 'rejected_for_required_reason': False}
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_bool_sink_count')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_bool_sink_count', 'required': 'n00:V2_SINK_COUNT_TYPE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4118, 'sha256': 'fb2bea4f9b1b4c28af7540cdaa9e28edb7df47e209c0202c03d69dc0c0a75394'}, 'rejected_for_required_reason': False}
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_prequeue_written')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_float_prequeue_written', 'required': 'n00:V2_PREQUEUE_WRITTEN_TYPE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4117, 'sha256': '205804db74648e9371471e0eafdbf1b551a4048afaacdf088b6bb99339fdddc4'}, 'rejected_for_required_reason': False}
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_read_limit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_float_read_limit', 'required': 'n00:V2_READ_LIMIT_TYPE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4117, 'sha256': '04127cfc57c4b928a0bb8fd4a863c029f0a7e04f1f8f6ec126bb3f9f3483a507'}, 'rejected_for_required_reason': False}
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_float_clock_line')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_float_clock_line', 'required': 'n00:V2_CLOCK_LINE_TYPE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4117, 'sha256': '0052b063bc69774a04d9632e39f2548043d1b66800dccfc334328690632086b3'}, 'rejected_for_required_reason': False}
+
+======================================================================
+FAIL: test_each_rejoined_scalar_control_has_named_rejection (__main__.ScalarChecks.test_each_rejoined_scalar_control_has_named_rejection) (name='joined_integer_wait_ready')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/scalar_checks_v2.py", line 98, in test_each_rejoined_scalar_control_has_named_rejection
+    self.assertTrue(c['rejected_for_required_reason'], c)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'name': 'joined_integer_wait_ready', 'required': 'n00:V2_WAIT_READY_TYPE', 'v1_errors': [], 'v2_errors': [], 'rejoined_row_artifact': {'bytes': 4112, 'sha256': 'cbdba6791caa42d6ea5f983610c5c8b7dee4dc0d15eff1afc962b19dd4b7e618'}, 'rejected_for_required_reason': False}
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.830s
+
+FAILED (failures=8)

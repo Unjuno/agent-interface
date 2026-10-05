@@ -1,0 +1,48 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "candidate_rerun": false,
+  "classification": "POSTHOC_SAVED_INPUT_ANALYSIS",
+  "episodes": [
+    {
+      "case": "no-disturbance",
+      "cold": {
+        "final_abs_error": 0.333333333333,
+        "final_y": 0.666666666667,
+        "sum_abs_error_21_samples": 7.472222222222
+      },
+      "conditioned": {
+        "final_abs_error": 0.355555555555,
+        "final_y": 0.644444444445,
+        "sum_abs_error_21_samples": 7.437037037035
+      }
+    },
+    {
+      "case": "step-disturbance-at-switch",
+      "cold": {
+        "final_abs_error": 0.333333333334,
+        "final_y": 0.666666666666,
+        "sum_abs_error_21_samples": 7.288888888889
+      },
+      "conditioned": {
+        "final_abs_error": 0.355555555556,
+        "final_y": 0.644444444444,
+        "sum_abs_error_21_samples": 7.437037037042
+      }
+    },
+    {
+      "case": "saturation-at-switch",
+      "cold": {
+        "final_abs_error": 0.333333333333,
+        "final_y": 0.666666666667,
+        "sum_abs_error_21_samples": 7.205555555556
+      },
+      "conditioned": {
+        "final_abs_error": 0.222222222222,
+        "final_y": 0.777777777778,
+        "sum_abs_error_21_samples": 4.814814814814
+      }
+    }
+  ],
+  "interpretation": "The held offset was frozen in the preregistered toy model; this posthoc calculation quantifies the tracking tradeoff and does not change the first-output decision gate.",
+  "schema": "issue7424-bumpless-t0-posthoc-dynamics-v1"
+}

@@ -1,0 +1,38 @@
+{
+  "a01_freeze_sha256": "4307b231b9ffd86cde464eb4d94e0d5de1d85e34de041b2a066171f731605ba7",
+  "allocation_id": "7748-DUPLICATE-ID-A02-20261005-01",
+  "case_file_sha256": "64529ae2278204f13c3efd3ff8783e8395d3320e28a7e6b2f1df932c523312fb",
+  "formal_budget": {
+    "auditor_invocations": 1,
+    "candidate_invocations": 1,
+    "retries": 0
+  },
+  "formal_commands": [
+    "python3 -B research/analysis/processor_demand_witness_7748_duplicate_id_a02_20261005/candidate.py --output research/analysis/processor_demand_witness_7748_duplicate_id_a02_20261005/results/candidate.raw.json",
+    "python3 -B research/analysis/processor_demand_witness_7748_duplicate_id_a02_20261005/audit.py --raw research/analysis/processor_demand_witness_7748_duplicate_id_a02_20261005/results/candidate.raw.json --output research/analysis/processor_demand_witness_7748_duplicate_id_a02_20261005/results/AUDIT.json"
+  ],
+  "frozen_branch": "research/7748-duplicate-id-a01-20261005",
+  "frozen_main": "3c2254ddc4446bec9a8ab4871ed05defa0a900f9",
+  "issue": 7748,
+  "package": "research/analysis/processor_demand_witness_7748_duplicate_id_a02_20261005/",
+  "predecessor_allocation": {
+    "disposition": "STOP_AUDITOR_EXIT_MISMATCH",
+    "id": "7748-DUPLICATE-ID-A01-20261005-01",
+    "outputs_preserved": true,
+    "pooled": false
+  },
+  "runtime_policy": "Host-only CPython 3.14.5 fallback; previous read-only OrbStack inventory failed on content blob; no container/resource claims",
+  "scope": "duplicate and malformed job-identity input boundary; auditor CLI exit mapping repair only versus A01",
+  "source_file_sha256": {
+    "ENVIRONMENT.json": "6184d1395b12c16e47c0afc9dd9a765e4a964bfda181d1f4cdccbe1f4efc0abc",
+    "PROTOCOL.md": "4b7b54b19660f517b90e245866c3153290c02296c29a79bfe58748b73bebd885",
+    "README.md": "0cb3a258bfb4fc33cf75b7b0a2af7b00f8c6fcd42c9786c5c7d90081618eea61",
+    "audit.py": "b0e6b42c214fc7f9d7f0ad128e7f2573667be725c5dbd1b8e2ba1f2049ff7ecf",
+    "base_cases.json": "66b7660a61f2944ee76db3ca3f592cceefaa85874687ba0fa4bd09863d694163",
+    "candidate.py": "84c9961e8b40767fb80ed9885d12f405765238ca13122abfbbce2924c79bd49e",
+    "cases.json": "64529ae2278204f13c3efd3ff8783e8395d3320e28a7e6b2f1df932c523312fb",
+    "results/PRE_RUN.json": "33d207f65f9356491076ca709129c40917b746210758c4646f6588dfe0cdac9c",
+    "test_cli_exit_contract.py": "52bc24e0fb7563a2d2aea53a4af143933c88aa86b2fc2ee48f2a7bc45c280434",
+    "test_duplicate_gate.py": "cab69f6b2aeda10e146549a6e6a184196d7fc041307942aab2920fb74c633f09"
+  }
+}
