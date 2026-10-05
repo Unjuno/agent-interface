@@ -2,7 +2,7 @@
 
 The first automated candidate/auditor pass reported `PASS_METHOD_SCOPED` against `study-input.json`. Post-run review found that the frozen `PREREGISTRATION.md` required a 0.10 breadth advantage for both task and app interactions, while the machine input used 0.075. The observed app-interaction advantage was 0.0850, below the preregistered 0.10 gate. The controlling final disposition is therefore **FAIL_METHOD**. See `POSTRUN_ADJUDICATION.md`; candidate/auditor outputs and the original freeze remain unchanged.
 
-The frozen synthetic T0 supports the preregistered method claim that, under these declared crossed normal models, allocating a fixed 96 paired observations across more distinct tasks/apps can improve decision reliability when route contrasts vary across tasks or apps. It does not measure any real model, interface route, application, or task population.
+The synthetic runs showed higher simulated decision probabilities for broader task/app sampling under the planted interaction profiles, with no material breadth advantage in the main-only control. However, the app-interaction gain missed the controlling preregistered threshold, so this T0 does not pass its complete method gate. It does not measure any real model, interface route, application, or task population.
 
 | Profile | Repeats: 3×4×8 | More tasks: 3×16×2 | More apps: 8×6×2 |
 |---|---:|---:|---:|
