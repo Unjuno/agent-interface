@@ -1,0 +1,24 @@
+{
+  "schema":"8088-raw-obligation-coverage-v1",
+  "contracts_sha256":"0cdb4f029dcc012c296f0359c37c83e422b7a2eb8ba93502c726b68d9d2304b7",
+  "primary_spec_sha256":"991fd19f0d3e9f218180b441030f7b5ce72eff0774252a95c01e11408af8f043",
+  "obligations":[
+    {"case":"C01_add_work_persists_once","requirement":"exactly one Plan launch in Work after reload","raw_paths":["after.Work"],"predicate":"title_count_work_equals_1"},
+    {"case":"C01_add_work_persists_once","requirement":"pre-existing state unchanged","raw_paths":["before","after"],"predicate":"remove_new_id_then_deep_equal"},
+    {"case":"C02_add_archive_only","requirement":"Pack kit exactly once in Archive, zero in Work after reload","raw_paths":["after.Archive","after.Work"],"predicate":"destination_counts"},
+    {"case":"C02_add_archive_only","requirement":"pre-existing state unchanged","raw_paths":["before","after"],"predicate":"remove_new_id_then_deep_equal"},
+    {"case":"C03_complete_one_id","requirement":"task-2 complete after reload","raw_paths":["after.Work"],"predicate":"target_completed_true"},
+    {"case":"C03_complete_one_id","requirement":"task-2 other fields and every other item and Archive unchanged","raw_paths":["before","after"],"predicate":"protected_state_deep_equal"},
+    {"case":"C04_rename_preserves_fields","requirement":"task-1 renamed to Draft v2 after reload","raw_paths":["after.Work"],"predicate":"target_title"},
+    {"case":"C04_rename_preserves_fields","requirement":"task-1 id/completed/due date and all other items/lists unchanged","raw_paths":["before","after"],"predicate":"protected_state_deep_equal"},
+    {"case":"C05_clear_completed_only","requirement":"all completed Work items removed after reload","raw_paths":["after.Work"],"predicate":"no_completed_work"},
+    {"case":"C05_clear_completed_only","requirement":"active Work and Archive unchanged","raw_paths":["before","after"],"predicate":"active_and_archive_equal"},
+    {"case":"C06_filter_is_view_only","requirement":"Active view contains all and only active Work IDs","raw_paths":["views.Active","before.Work"],"predicate":"active_visible_exact"},
+    {"case":"C06_filter_is_view_only","requirement":"All view restores visibility of every Work ID","raw_paths":["views.All","before.Work"],"predicate":"all_visible_exact"},
+    {"case":"C06_filter_is_view_only","requirement":"records, counts, Archive unchanged","raw_paths":["before","after"],"predicate":"records_unchanged"},
+    {"case":"C07_duplicate_title_id_target","requirement":"only task-4 complete; task-2 and all other fields/items unchanged","raw_paths":["before","after"],"predicate":"only_target_change"},
+    {"case":"C08_missing_target_unknown","requirement":"UNKNOWN_TARGET, no state change, no guess or success","raw_paths":["status","before","after"],"predicate":"unknown_and_identity"}
+  ],
+  "required_view_raw_fields":["views.Active","views.All"],
+  "gate":"Every listed path must exist in every applicable raw row. C06 All visibility is observed independently of stored records."
+}
