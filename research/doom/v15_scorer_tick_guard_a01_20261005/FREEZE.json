@@ -1,0 +1,13 @@
+{
+  "schema": "v15-scorer-tick-guard-freeze-v1",
+  "base_main": "1fa752f3b8b474cfbf03bee2686ac739ef6e7bda",
+  "stacked_on_pr": 7843,
+  "stacked_base": "758d803ff2842a0e4f9ded8db119d84c02360a9f",
+  "baseline_source_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+  "candidate_sha256": {
+    "research/doom/session_map01_v15.py": "c0657cb868d1c4ea6135f0d67dd2ea2f4006e987dc945dc04b609ca2a8b4094e",
+    "research/doom/test_session_map01_v15_ticks.py": "c8ebee9e4238702a1e0aa1662ff9e1cc9a181f7833fff59a5d7018c2c615a70f"
+  },
+  "scope": "AST-isolated scorer tick contract tests; no game, model, GUI, display, or OS input",
+  "gate": "PASS iff exact nonnegative integer tick bounds are required before and after sampling, malformed bool/fraction/negative values reject, and integer control plus V15 lifecycle tests pass"
+}
