@@ -1,0 +1,50 @@
+{
+  "runs": [
+    {
+      "command": "python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release -v",
+      "env": {
+        "V13_OWNER_CANDIDATE_PATH": "research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py"
+      },
+      "exit": 0,
+      "name": "focused-candidate-normal",
+      "output": "focused-candidate-normal.txt"
+    },
+    {
+      "command": "python3 -O -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release -v",
+      "env": {
+        "V13_OWNER_CANDIDATE_PATH": "research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py"
+      },
+      "exit": 0,
+      "name": "focused-candidate-optimized",
+      "output": "focused-candidate-optimized.txt"
+    },
+    {
+      "command": "python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition -v",
+      "env": {
+        "V13_OWNER_CANDIDATE_PATH": "research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py"
+      },
+      "exit": 0,
+      "name": "executor-v12-expiry-composition",
+      "output": "executor-v12-expiry-composition.txt"
+    },
+    {
+      "command": "python3 research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py",
+      "env": {
+        "V13_OWNER_CANDIDATE_PATH": "research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py"
+      },
+      "exit": 0,
+      "name": "owner-compatibility",
+      "output": "owner-compatibility.txt"
+    },
+    {
+      "command": "python3 -m unittest research.doom.map01_v39_perkey_bridge_a01.test_bridge -v",
+      "env": {
+        "V13_OWNER_CANDIDATE_PATH": "research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py"
+      },
+      "exit": 0,
+      "name": "existing-v39-bridge",
+      "output": "existing-v39-bridge.txt"
+    }
+  ],
+  "runtime": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+}
