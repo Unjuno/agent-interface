@@ -1,0 +1,5 @@
+# Issue #5905 A05 five-frame regression estimator screen
+
+An unregistered, host-only exploratory screen tests a different estimator from the merged A04 last-interval secant pilot: ordinary least-squares radius slope over all five timestamped frames. On this finite fixture, independent raw reconstruction found 6/6 positive yields for regression, pixel-change, and area-growth at zero false yields. Regression improved on the A03-grid secant frontier (5/6) but added no value over either simple baseline.
+
+Disposition: `EXPLORATORY_NO_INCREMENTAL_VALUE`; 13 exploratory candidate calls; independent raw audit PASS on 13/13 sequences with zero errors; host unit suite 18/18. Formal allocation/candidate=0, formal auditor=0, retries=0. The isolated OrbStack guest built the pinned image but its nested OCI runtime denied cgroup/BPF and device-node setup. Historical A01–A04 outcomes remain unchanged. This is not a preregistered/container result and makes no live-control, task-effect, gameplay, or safety claim.

@@ -1,0 +1,191 @@
+from datetime import datetime, timezone
+import copy
+import hashlib
+import json
+import re
+from pathlib import Path
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[1]
+REPO = ROOT / 'work/agent-interface'
+EXPORT = ROOT / 'work/review6919/export'
+PKG = EXPORT / 'research/integration/primary_stream_lifecycle_57_20261003_01a0ff53'
+OUT = ROOT / 'outputs/review6919/v2'
+OUT.mkdir(exist_ok=False)
+HEAD = '83e92bbd2bec853b01c2559113436dc8bca6e0c0'
+SCENARIOS = ['ready_input', 'ready_output', 'terminal_output', 'normal_eof']
+READY_STATE = {'next_id': 1, 'busy': False, 'stopped': None, 'caller_state': {'stopped': None}}
+EXIT = {'code': 0, 'signal': None}
+REQUEST = {'id': 1, 'tool': 'interface_clock', 'arguments': {}}
+REPLY = {'id': 1, 'tool': 'interface_clock', 'next_id': 2, 'status': 'returned', 'result': {'isError': False, 'content': [{'type': 'text', 'text': '{"status":"clock","fixture":"original once"}'}]}}
+def sha(b): return hashlib.sha256(b).hexdigest()
+def load(path): return json.loads(path.read_bytes())
+def typed_eq(a,b):
+    if type(a) is not type(b): return False
+    if type(a) is dict: return set(a) == set(b) and all(typed_eq(a[k], b[k]) for k in a)
+    if type(a) is list: return len(a) == len(b) and all(typed_eq(x,y) for x,y in zip(a,b))
+    return a == b
+def event(kind, **kwargs): return dict(kind=kind, **kwargs)
+def expected_lifecycle(scenario):
+    fault = 'injected ' + scenario + ' channel failure'
+    reject = event('owner_rejected', message=fault, original_identity=True)
+    if scenario == 'ready_input': events = [event('write_enter', status='ready'), event('input_destroy', ready_write_unacknowledged=True), event('after_input_turn', settled=False), event('write_ack', status='ready'), reject]
+    elif scenario == 'ready_output': events = [event('write_enter', status='ready'), event('write_error_callback', status='ready'), reject]
+    else: events = [event('write_enter', status='ready'), event('write_ack', status='ready'), event('input_eof'), event('write_enter', status='terminal'), event('write_ack' if scenario == 'normal_eof' else 'write_error_callback', status='terminal'), event('owner_resolved') if scenario == 'normal_eof' else reject]
+    intents = [{'schema': 'agent-interface/primary-stdio-v1', 'status': 'ready', 'state': READY_STATE}]
+    if scenario in ('normal_eof','terminal_output'): intents.append({'schema': 'agent-interface/primary-stdio-v1', 'status':'terminal', 'exit': EXIT, 'state': READY_STATE})
+    return {'scenario': scenario, 'outcome': {'kind':'resolved'} if scenario == 'normal_eof' else {'kind':'rejected','message':fault,'original_identity':True}, 'exit': EXIT, 'initialListeners': {'input':0,'output':0}, 'listeners': {'input':0,'output':0}, 'writeIntents': intents, 'events': events}
+
+def semantic(raws):
+    errors = []
+    def eq(a,b,label):
+        if not typed_eq(a,b): errors.append(label)
+    for stage in ('red','green','pending-green'):
+        rows = raws[stage]['rows']
+        names = SCENARIOS if stage != 'pending-green' else ['pending_success','pending_persistence_failure']
+        eq([r.get('scenario') for r in rows], names, stage+':case_order')
+        for row in rows:
+            name = row['scenario']; label = stage + '/' + name
+            eq(row['exit_code'], 1 if stage == 'red' and name != 'normal_eof' else 0, label+':parent_exit')
+            eq(row['timed_out'], False, label+':timeout')
+            eq(row['fixture_pid_absent'], True, label+':captured_pid_absence')
+            start, end = row['started_utc'], row['ended_utc']
+            if not (type(start) is str and type(end) is str and datetime.fromisoformat(start) < datetime.fromisoformat(end)): errors.append(label+':UTC')
+            started, exited = row['fixture.started.json'], row['fixture.exit.json']
+            if set(started) != {'pid','ppid'} or any(type(v) is not int or v <= 0 for v in started.values()): errors.append(label+':PID_types')
+            fixture = {'pid':started['pid'], 'code':0, **({'requests':1,'pending':False} if stage == 'pending-green' else {'bytes':0})}
+            eq(exited, fixture, label+':fixture_exit')
+            expected_exit_present = not (stage == 'red' and name in ('ready_input','ready_output'))
+            eq('host/exit.json' in row, expected_exit_present, label+':host_exit_presence')
+            if expected_exit_present: eq(row['host/exit.json'], EXIT, label+':host_exit')
+            if stage != 'pending-green':
+                expected_summary_present = not (stage == 'red' and name != 'normal_eof')
+                eq('owner.summary.json' in row, expected_summary_present, label+':owner_summary_presence')
+                if expected_summary_present: eq(row['owner.summary.json'], expected_lifecycle(name), label+':complete_owner_summary')
+            else:
+                summary = row['owner.summary.json']
+                eq(summary['scenario'], name, label+':summary_scenario')
+                eq(summary['exit'], EXIT, label+':summary_exit')
+                eq(summary['listeners'], {'input':0,'output':0}, label+':listeners')
+                status = 'returned' if name == 'pending_success' else 'command_error'
+                events = [event('output',status='ready'), event('actual_request_accepted',request=REQUEST), event('input_failure'), event('pending_observed_before_release',settled=False), event('reply_released'), event('output',status=status), event('owner_rejected',original_identity=True,message='original pending input failure')]
+                eq(summary['events'], events, label+':complete_event_order')
+                eq(summary['rows'][0], {'schema':'agent-interface/primary-stdio-v1','status':'ready','state':READY_STATE}, label+':ready')
+                eq(len(summary['rows']),2,label+':two_output_rows')
+                output = summary['rows'][1]
+                eq(output['schema'],'agent-interface/primary-stdio-v1',label+':schema')
+                eq(output['status'],status,label+':status')
+                if name == 'pending_success':
+                    result = {'id':1,'method':'call','presented_text':[{'schema':'agent-interface/mcp-result-status-v1','isError':False}, REPLY['result']['content'][0]['text']], 'images':[], 'attempt':1, 'original_reply_path':'<owner-work>/pending-green/pending_success/exchange/original-reply-1.json','caller_state':{'stopped':None},'next_id':2}
+                    eq(output,{'schema':'agent-interface/primary-stdio-v1','status':'returned','result':result},label+':complete_returned_result')
+                else:
+                    eq(set(output),{'schema','status','error','command_id','command_method','replay_allowed','state'},label+':error_schema')
+                    eq(output['command_id'],1,label+':correlation')
+                    eq(output['command_method'],'call',label+':method')
+                    eq(output['replay_allowed'],False,label+':no_replay')
+                    eq(output['state']['next_id'],2,label+':consumed_id')
+                    eq(output['state']['busy'],False,label+':busy')
+                    eq(output['state']['caller_state'],{'stopped':None},label+':caller_state')
+                    if type(output['error']) is not str or not output['error'].startswith('Error: EEXIST: file already exists, open '): errors.append(label+':original_persistence_error')
+                    eq(output['state']['stopped'],output['error']+'; inspect retained original files; never replay input',label+':retained_stop')
+    return errors
+
+def main():
+    started_utc = datetime.now(timezone.utc).isoformat()
+    raws = {stage:load(PKG / stage / 'RAW.json') for stage in ('red','green','pending-green')}
+    errors = semantic(raws)
+    def require(value,label):
+        if not value: errors.append(label)
+    projections = load(PKG / 'PROJECTIONS.json')['files']
+    projection = {p['path']:p for p in projections}
+    require(len(projection) == len(projections), 'unique_projection_paths')
+    for p in projections:
+        require(sha((PKG / p['path']).read_bytes()) == p['projected_sha256'], 'projection:' + p['path'])
+        require(bool(re.fullmatch('[0-9a-f]{64}',p['original_sha256'])), 'original_hash_shape')
+    def original_hash(name): return projection[name]['original_sha256'] if name in projection else sha((PKG / name).read_bytes())
+    for stage,raw in raws.items():
+        freeze = load(PKG / stage / 'SOURCE_FREEZE.json')
+        for name,digest in freeze['source_sha256'].items(): require(sha((PKG / ('baseline' if stage=='red' else 'candidate') / name).read_bytes()) == digest,stage+':source:'+name)
+        for name,digest in freeze['helpers' if stage=='pending-green' else 'helper_sha256'].items(): require(original_hash(name) == digest,stage+':helper:'+name)
+        for row in raw['rows']:
+            name = row['scenario']; relative = stage + '/' + name + '/'; folder = PKG / relative
+            require(typed_eq(row,load(folder / 'receipt.json')),relative+':raw_receipt_join')
+            require(datetime.fromisoformat(freeze['created_utc']) < datetime.fromisoformat(row['started_utc']),relative+':freeze_before')
+            for stream in ('stdout','stderr'): require(row[stream+'_sha256'] == original_hash(relative+stream+'.txt'),relative+':original_'+stream+'_hash')
+            for key in ('fixture.started.json','fixture.exit.json','owner.summary.json','host/exit.json'):
+                require((key in row) == (folder/key).is_file(),relative+':presence:'+key)
+                if key in row: require(typed_eq(row[key],load(folder/key)),relative+':file_join:'+key)
+            stdout_events = [json.loads(line) for line in (folder/'stdout.txt').read_text().splitlines()]
+            if 'owner.summary.json' in row:
+                expected_stdout = row['owner.summary.json']['events'] + [event('probe_complete', **({} if stage=='pending-green' else {'scenario':name}))]
+                require(typed_eq(stdout_events,expected_stdout),relative+':stdout_event_join')
+            else:
+                prefix = {'ready_input':[event('write_enter',status='ready'),event('input_destroy',ready_write_unacknowledged=True)],'ready_output':[event('write_enter',status='ready'),event('write_error_callback',status='ready')],'terminal_output':[event('write_enter',status='ready'),event('write_ack',status='ready'),event('input_eof'),event('write_enter',status='terminal'),event('write_error_callback',status='terminal')]}[name]
+                require(typed_eq(stdout_events,prefix),relative+':failed_prefix')
+                require("Unhandled 'error' event" in (folder/'stderr.txt').read_text(),relative+':unhandled_first_error')
+            hostevents = [json.loads(line) for line in (folder/'host/host-events.jsonl').read_text().splitlines()]
+            expected_kinds = ['send_requested','reply_available','presentation_started','presentation_callbacks_completed','transport_closed'] if stage=='pending-green' else ([] if stage=='red' and name in ('ready_input','ready_output') else ['transport_closed'])
+            require([e['kind'] for e in hostevents] == expected_kinds,relative+':host_event_order')
+            for i,e in enumerate(hostevents): require(type(e['sequence']) is int and e['sequence']==i+1,relative+':host_sequence')
+            if hostevents: require(typed_eq({k:hostevents[-1][k] for k in ('code','signal')},EXIT),relative+':observed_host_exit')
+            if stage=='pending-green':
+                require(typed_eq(load(folder/'fixture.request.json'),REQUEST),relative+':fixture_request')
+                require(typed_eq(load(folder/'host/request-1.json'),REQUEST),relative+':host_request')
+                require(typed_eq(load(folder/'exchange/request-1.json'),{'id':1,'method':'call','args':['interface_clock',{}]}),relative+':exchange_request')
+                require(typed_eq(load(folder/'host/reply-1.json'),REPLY) and typed_eq(load(folder/'fixture.reply.jsonl'),REPLY),relative+':same_original_reply')
+                require(hostevents[1]['reply_sha256'] == sha((folder/'host/reply-1.json').read_bytes()),relative+':reply_event_hash')
+                for e in hostevents[1:4]: require(e['reply_sha256']==hostevents[1]['reply_sha256'],relative+':presentation_hash_join')
+                slot = (folder/'exchange/original-reply-1.json').read_bytes()
+                if name=='pending_success':
+                    require(typed_eq(json.loads(slot), dict(REPLY,attempt=1)),relative+':attempt_enrichment')
+                    require(typed_eq(load(folder/'exchange/presentation-1.json'),row['owner.summary.json']['rows'][1]['result']),relative+':committed_presentation')
+                else: require(slot == b'occupied original slot\n' and not (folder/'exchange/presentation-1.json').exists(),relative+':occupied_slot_unchanged')
+    # Source pins are independently tied to the actual historical Git path/blob.
+    pins = load(PKG/'SOURCE_PINS.json')
+    for name,pin in pins.items():
+        path = 'runtime/host_v1/' + name.split('/',1)[1]
+        p = subprocess.run(['git','rev-parse',pin['commit']+':'+path],cwd=REPO,capture_output=True,timeout=20)
+        require(p.returncode==0 and p.stdout.decode().strip()==pin['blob_oid'],'actual_pin_oid:'+name)
+        p = subprocess.run(['git','cat-file','blob',pin['blob_oid']],cwd=REPO,capture_output=True,timeout=20)
+        require(p.returncode==0 and p.stdout==(PKG/name).read_bytes() and sha(p.stdout)==pin['sha256'],'actual_pin_bytes:'+name)
+    require((PKG/'candidate/primary_stdio.mjs').read_bytes()==(EXPORT/'runtime/host_v1/primary_stdio.mjs').read_bytes(),'active_candidate_identity')
+    checks = [('unit-red',17,14,3,1),('unit-green-01',17,17,0,0),('checks/affected-host-45',45,45,0,0),('checks/neighbor-current-composition',20,15,5,1),('checks/neighbor-current-composition-layout',20,20,0,0)]
+    for name,total,passed,failed,exit_code in checks:
+        receipt = load(PKG/name/'receipt.json'); text=(PKG/name/'stdout.txt').read_text()
+        require(type(receipt['exit_code']) is int and receipt['exit_code']==exit_code,name+':first_exit')
+        for key,value in [('tests',total),('pass',passed),('fail',failed)]: require(bool(re.search(r'(?m)^(?:#|ℹ) '+key+' '+str(value)+r'$',text)),name+':retained_'+key)
+        require(datetime.fromisoformat(receipt['started_utc']) < datetime.fromisoformat(receipt['ended_utc']),name+':timestamps')
+        for stream in ('stdout','stderr'):
+            if stream+'_sha256' in receipt: require(receipt[stream+'_sha256']==original_hash(name+'/'+stream+'.txt'),name+':stream_'+stream)
+    # Strong semantic controls intentionally avoid custody/hash mismatch as an oracle.
+    mutations = [
+        ('parent_bool_exit',lambda x:x['green']['rows'][0].update(exit_code=False)),
+        ('fixture_bool_exit',lambda x:x['green']['rows'][0]['fixture.exit.json'].update(code=False)),
+        ('fixture_bool_pid',lambda x:x['green']['rows'][0]['fixture.started.json'].update(pid=True)),
+        ('listener_bool_alias',lambda x:x['green']['rows'][0]['owner.summary.json']['listeners'].update(input=False)),
+        ('false_original_fault',lambda x:x['green']['rows'][1]['owner.summary.json']['outcome'].update(original_identity=False)),
+        ('host_float_exit',lambda x:x['green']['rows'][0]['host/exit.json'].update(code=0.0)),
+        ('pending_request_bool_id',lambda x:x['pending-green']['rows'][0]['owner.summary.json']['events'][1]['request'].update(id=True)),
+        ('pending_early_settle',lambda x:x['pending-green']['rows'][0]['owner.summary.json']['events'][3].update(settled=True)),
+        ('allow_replay',lambda x:x['pending-green']['rows'][1]['owner.summary.json']['rows'][1].update(replay_allowed=True)),
+        ('unconsumed_command',lambda x:x['pending-green']['rows'][1]['owner.summary.json']['rows'][1]['state'].update(next_id=1)),
+        ('fixture_replay',lambda x:x['pending-green']['rows'][0]['fixture.exit.json'].update(requests=2)),
+        ('fixture_still_pending',lambda x:x['pending-green']['rows'][0]['fixture.exit.json'].update(pending=True)),
+        ('false_legacy_survival',lambda x:x['red']['rows'][0].update(exit_code=0)),
+        ('presentation_attempt_bool',lambda x:x['pending-green']['rows'][0]['owner.summary.json']['rows'][1]['result'].update(attempt=True)),
+        ('case_omission',lambda x:x['green']['rows'].pop()),
+        ('release_before_acceptance',lambda x:x['pending-green']['rows'][0]['owner.summary.json']['events'].reverse()),
+    ]
+    controls=[]; control_dir=OUT/'controls';control_dir.mkdir(exist_ok=False)
+    for name,mutate in mutations:
+        altered=copy.deepcopy(raws); mutate(altered); found=semantic(altered)
+        encoded=json.dumps(altered,indent=2,sort_keys=True).encode()+b'\n'
+        (control_dir/(name+'.json')).write_bytes(encoded)
+        controls.append({'name':name,'effective':not typed_eq(raws,altered),'rejected_by_semantics_alone':bool(found),'errors':found,'witness_sha256':sha(encoded)})
+    require(all(c['effective'] and c['rejected_by_semantics_alone'] for c in controls),'all_effective_semantic_controls')
+    record={'started_utc':started_utc,'finished_utc':datetime.now(timezone.utc).isoformat(),'errors':errors,'source':sha(Path(__file__).read_bytes()),'rows':10,'parent_exits':{k:[r['exit_code'] for r in v['rows']] for k,v in raws.items()},'raw_public_sha256':{k:sha((PKG/k/'RAW.json').read_bytes()) for k in raws},'projection_files':len(projections),'actual_git_source_pins':len(pins),'controls':controls,'runtime_producer_author_auditor_formal_calls':0,'regression_results':'Retained17 RED/GREEN,45 affected and15/20→20/20 composition outcomes joined; no fresh Node test or source-producing deck.', 'limits':'Public retained-byte/type/trace/source custody only; private originals/first-error object identity/PID absence are producer-attributed observations, not independently authenticated private/live effects. No CLI/OS fault/MCP/backend/input/release/task/deadline/performance proof or current application certificate.'}
+    (OUT/'CONTENT_REVIEW.json').write_text(json.dumps(record,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+    (OUT/'reviewer.py.txt').write_bytes(Path(__file__).read_bytes())
+    print(json.dumps({'rows':10,'errors':errors,'semantic_controls':sum(c['effective'] and c['rejected_by_semantics_alone'] for c in controls),'original_runtime_calls':0},sort_keys=True))
+    raise SystemExit(1 if errors else 0)
+if __name__=='__main__':main()

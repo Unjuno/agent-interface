@@ -1,0 +1,10 @@
+{
+  "type": "post-run package-integrity check",
+  "date": "2026-10-05",
+  "command": "python -B audit.py > /tmp/audit-check.stdout.json; cmp raw/AUDIT.stdout.json /tmp/audit-check.stdout.json",
+  "candidate_rerun": false,
+  "auditor_replay": true,
+  "result": "The audit replay stdout exactly matched the originally retained raw/AUDIT.stdout.json. The replay is retained separately at raw/POSTCHECK_AUDIT_REPLAY.stdout.json; the original raw/AUDIT.json and raw/AUDIT.stdout.json were not overwritten.",
+  "purpose": "Reconfirm the updated SHA256SUMS and unchanged raw-only audit behavior after the post-run report correction.",
+  "scope": "Integrity/reproducibility check only; not counted as the frozen A01 audit, and no candidate or source snapshot changed."
+}

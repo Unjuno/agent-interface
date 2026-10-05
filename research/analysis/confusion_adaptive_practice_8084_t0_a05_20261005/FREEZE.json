@@ -1,0 +1,30 @@
+{
+  "allocation": "CONFUSION-ADAPTIVE-PRACTICE-8084-A05-20261005-01",
+  "frozen_at_local": "2026-10-05",
+  "base_main": "10be950b8fb6e2799b837b541577fb5f32db858d",
+  "branch": "research/8084-diagnostic-reliability-a03-20261005",
+  "predecessor": "A04 HOLD_METHOD_GATE; duplicate-row mutation survived; no output reused",
+  "hypothesis_and_decision_gates": "PROTOCOL.md",
+  "image": "agent-interface/native-suite-wslc-a08:20261004",
+  "image_id": "sha256:1b4a8bd7c0fe372cc0cafa74af433b8ae1f73f1bee0f11a028f126b08b2c128a",
+  "execution": {"network": "none", "cpus_requested": 1, "memory_requested": "512M", "candidate_runs": 1, "auditor_runs": 1},
+  "sha256": {
+    "PROTOCOL.md": "E9A09A86B664CD3763BD2E79ACA45C2260012BDEAB5029593D575322F7027141",
+    "SCORING.json": "3559DE5C01CF40C726358427ACF0542B983CE3D5ADD8275EEE15F74D0FB49A3A",
+    "generate.py": "004A528A949D4BAB6D0410510FE44EDC5B2B7F83EDDD49A1209CE62DEE66F913",
+    "candidate/candidate.py": "42E0B46220D2DD7A88473898402467DC3BDE554AC7194912E9C4BE958C8052E7",
+    "candidate/observed_counts.json": "E3A060A0808768DD5873EAE0F22B4816C6F312A54B06822F5E49065306B963AB",
+    "auditor/auditor.py": "64CE776AD6571AF7997173B28DD7CCD975F5DA53CF1F97DDB803A2390AD128D0",
+    "auditor/observed_counts.json": "E3A060A0808768DD5873EAE0F22B4816C6F312A54B06822F5E49065306B963AB",
+    "auditor/SCORING.json": "3559DE5C01CF40C726358427ACF0542B983CE3D5ADD8275EEE15F74D0FB49A3A",
+    "test_method.py": "B66DCE36E88840C9CA203252357B769914BD738A3DA228F2792F5BE875CB6ACA"
+  },
+  "isolation": {
+    "candidate_visible": ["candidate/candidate.py", "candidate/observed_counts.json"],
+    "auditor_visible": ["auditor/auditor.py", "auditor/observed_counts.json", "auditor/SCORING.json", "auditor/candidate.raw.json"],
+    "latent_truth_excluded_from_candidate": true,
+    "candidate_directory_preverified": true,
+    "auditor_directory_preverified": true,
+    "raw_row_cardinality_checked_before_mapping": true
+  }
+}

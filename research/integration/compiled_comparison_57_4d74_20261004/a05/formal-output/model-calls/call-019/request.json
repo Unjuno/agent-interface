@@ -1,0 +1,37 @@
+{
+  "call_id": "call-019",
+  "arm": "B",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "field_point": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1279
+        },
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "submit_point": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1279
+        },
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "required": [
+      "field_point",
+      "submit_point"
+    ],
+    "additionalProperties": false
+  },
+  "prompt": "Locate the visible editable Value field and Save button in this current screenshot. Give source-image pixel points, field point in the empty right half away from caret. Authorized token is t991074-4. Do not use tools. Return only the schema object.",
+  "image_relative": "block-2/B/client/runtime/077.png",
+  "image_sha256": "ad17e652cd1fcac6a1c9c6eba70501c1da10bb2e4a023aae48d11344a8d1e896"
+}

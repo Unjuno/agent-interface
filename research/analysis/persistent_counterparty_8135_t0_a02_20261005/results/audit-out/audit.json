@@ -1,0 +1,88 @@
+{
+  "block_count": 40,
+  "by_arm": {
+    "frequency_sham": {
+      "addon": 8,
+      "episodes": [
+        8,
+        8
+      ],
+      "positive": 8
+    },
+    "fresh_reset": {
+      "addon": 0,
+      "episodes": [
+        8,
+        8
+      ],
+      "positive": 16
+    },
+    "persistent_learner": {
+      "addon": 8,
+      "episodes": [
+        8,
+        8
+      ],
+      "positive": 8
+    },
+    "persistent_null": {
+      "addon": 0,
+      "episodes": [
+        8,
+        8
+      ],
+      "positive": 16
+    },
+    "stationary": {
+      "addon": 0,
+      "episodes": [
+        8,
+        8
+      ],
+      "positive": 16
+    }
+  },
+  "case_count": 80,
+  "effect_audit": {
+    "abstentions": 10,
+    "authorized_positive": 64,
+    "blocked_unauthorized": 6,
+    "unauthorized_effect": 0,
+    "unauthorized_proposal": 6
+  },
+  "frequency_sham_later_profile_by_previous_public_event": {
+    "H_CHECKED": {
+      "addon": 2,
+      "positive": 2
+    },
+    "H_FAST": {
+      "addon": 2,
+      "positive": 2
+    }
+  },
+  "method_disposition": "METHOD_PASS_SCOPED",
+  "mutation_controls": {
+    "future_leak": "REJECTED",
+    "omitted_episode": "REJECTED",
+    "private_truth_leak": "REJECTED",
+    "route_order_imbalance": "REJECTED",
+    "sham_history_dependence": "REJECTED"
+  },
+  "mutation_denominator": 5,
+  "mutation_rejections": 5,
+  "persistent_later_profile_by_previous_public_event": {
+    "H_CHECKED": {
+      "addon": 0,
+      "positive": 4
+    },
+    "H_FAST": {
+      "addon": 4,
+      "positive": 0
+    }
+  },
+  "reset_integrity": "PASS",
+  "route_counts": {
+    "effect_boundary": 40,
+    "plain": 40
+  }
+}

@@ -1,0 +1,63 @@
+[
+  {
+    "Architecture": "amd64",
+    "Author": "",
+    "Comment": "buildkit.dockerfile.v0",
+    "Config": {
+      "Cmd": [
+        "python3"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.15",
+        "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PIP_DISABLE_PIP_VERSION_CHECK=1",
+        "SAL_USE_VCLPLUGIN=gen"
+      ],
+      "ExposedPorts": null,
+      "Labels": {
+        "org.unjuno.study": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01"
+      },
+      "StopSignal": "",
+      "User": "root",
+      "Volumes": null,
+      "WorkingDir": ""
+    },
+    "Created": "2026-10-04T02:08:04.295132542Z",
+    "Id": "sha256:4ebbb04fd31e2833ac6c66ddbb9a03351904f34716e55d45d220d28553004601",
+    "Metadata": {
+      "LastTagTime": "2026-10-04T02:08:04.462986685Z"
+    },
+    "Os": "linux",
+    "Parent": "",
+    "RepoDigests": [],
+    "RepoTags": [
+      "chromium-client-ocr-57-4d74:20261004"
+    ],
+    "RootFS": {
+      "Layers": [
+        "sha256:a6dc765193a52cbaede3c93a9ff48b9540948dd0774bbe7031fcb5847606f9ac",
+        "sha256:ec5ef3f1cbefdce6c6ac6574e6609310d57e2baab89df410bf30228f5f567273",
+        "sha256:5b57eb74119f41ab33783352993c069e1f4ac4136e711d205e136808aad526b6",
+        "sha256:d88e62f9bbff6447c00667778988589b711cebf26b8046fdf54eebc0a543c204",
+        "sha256:7ede8619c98c4c2d457748ec3e76961d8a8533ce26d9651bdaa6efc3663351a5",
+        "sha256:e50cfde20fd71d04b1cd866fc5b1be4988ea1a7d4cfe57f4b8a3e9d90c7cce01",
+        "sha256:2073d97ad9106c360be5ddf9114e70b08e3f8395c784f91075c5af37e4a3e5a6",
+        "sha256:c475cf41c664ab9bd4225f7f99ac84383b7cfcd31ec77bc07700f6c64482bed2",
+        "sha256:c4cb10b79208d3bb8350cca43caf8a93c929fb4a26ea87a928d2262dee947556",
+        "sha256:6f2e874d702fa63fafec6eb5a073b02ff8bd7d7e68dc8f55fe04db89bf9dedd6",
+        "sha256:4cca6473d5f4c6e94bf4c494feaea2162f623b8b8cfac26bd90b0cb62be0c064",
+        "sha256:edfe8cbfe126c8e74c191f67f4b15c1610dc311eb02cf811f12fed71e4324ff7",
+        "sha256:096a2ba55e0b237fbaeb956868fd473d7c75e2edc0cc9c6499733b5fb445c0c9",
+        "sha256:0e52f788a80455193848a5422d597bd6b098f0c0616657fb4b4a5795bb254120",
+        "sha256:06df05a5eba035a0e712d894758fad41678830e447c5957ff037ae23af8bc74a"
+      ],
+      "Type": "layers"
+    },
+    "Size": 1522878379
+  }
+]

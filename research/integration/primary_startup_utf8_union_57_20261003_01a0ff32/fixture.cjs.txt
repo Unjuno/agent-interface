@@ -1,0 +1,23 @@
+const fs=require('node:fs'),path=require('node:path'),readline=require('node:readline');
+const root=process.argv[1];let bytes=0,requests=[],responses=0,pending=null,guard=false;
+const put=(name,value)=>fs.writeFileSync(path.join(root,name),JSON.stringify(value)+'\n',{flag:'wx'});
+put('fixture-start.json',{pid:process.pid,ppid:process.ppid,utc:new Date().toISOString()});
+process.stderr.write('FIXTURE_START '+process.pid+'\n');
+process.stdin.on('data',chunk=>{bytes+=chunk.length;});
+process.on('exit',code=>put('fixture-exit.json',{pid:process.pid,code,bytes,requests:requests.length,responses,guard}));
+const deadline=setTimeout(()=>{guard=true;put('fixture-guard.json',{pid:process.pid});process.exit(91);},5000);
+const reader=readline.createInterface({input:process.stdin,terminal:false});
+reader.on('line',line=>{
+ const request=JSON.parse(line);requests.push(request);
+ if(requests.length!==1)throw Error('own fixture refuses a duplicate or second request');
+ put('fixture-request.json',request);put('fixture-entered.json',{pid:process.pid,id:request.id,utc:new Date().toISOString()});
+ process.stderr.write('FIXTURE_ENTERED '+request.id+'\n');pending=request;
+});
+const poll=setInterval(()=>{
+ if(pending&&fs.existsSync(path.join(root,'release.signal'))){
+  const request=pending;pending=null;responses++;
+  const reply={id:request.id,tool:request.tool,status:'returned',next_id:request.id+1,result:{content:[{type:'text',text:JSON.stringify({label:request.arguments.label,fixture:true})}]}};
+  put('fixture-response.json',reply);process.stdout.write(JSON.stringify(reply)+'\n');
+ }
+},5);
+reader.on('close',()=>{clearInterval(poll);clearTimeout(deadline);process.stderr.write('FIXTURE_END\n');});

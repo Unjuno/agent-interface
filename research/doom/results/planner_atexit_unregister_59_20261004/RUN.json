@@ -1,0 +1,27 @@
+{
+  "schema": "planner-atexit-timeout-cleanup-run-v1",
+  "baseline": {
+    "disposition": "EXPECTED_FAIL_CALLBACK_REMAINS_REGISTERED",
+    "test": "test_controller_failure_cleanup_v1.Tests.test_timed_out_planner_close_unregisters_atexit_callback",
+    "source_commit": "6c8a71d7a8897ccba4fe99f8322dba9414bb6bde",
+    "exit_code": 1,
+    "stdoutfile": "BASELINE_REGRESSION_OUTPUT.txt"
+  },
+  "candidate": {
+    "wslc_exit": 0,
+    "windows_summary": "Ran 33 tests; OK (skipped=2 POSIX-only tests)",
+    "containers_after": "none",
+    "windows_command": "py -3.11 -m unittest test_controller_failure_cleanup_v1 test_controller_failure_cleanup_finish_send_wait_v1 test_controller_failure_cleanup_portability_v1 test_controller_failure_cleanup_stage_v1 test_overlap_controller_v39_wait test_source_refresh_v1 -v",
+    "wslc_warning": "kernel does not support swap limit capabilities or cgroup is not mounted; configured limits are not proven enforced",
+    "windows_exit": 0,
+    "wslc_command": "wslc run --rm --pull never --name ai59-planner-atexit-unregister-20261004 --network none --user 65534:65534 --cpus 1 --memory 512m --workdir /source/research/doom --env HOME=/tmp --env PYTHONDONTWRITEBYTECODE=1 --env PYTHONPYCACHEPREFIX=/tmp/pycache --mount type=bind,source=<worktree>,target=/source,readonly --mount type=bind,source=<evidence-folder>,target=/out sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378 python3 -m unittest test_controller_failure_cleanup_v1 test_controller_failure_cleanup_finish_send_wait_v1 test_controller_failure_cleanup_portability_v1 test_controller_failure_cleanup_stage_v1 test_overlap_controller_v39_wait test_source_refresh_v1 -v",
+    "source_hashes_from": "FREEZE.json",
+    "wslc_summary": "Ran 33 tests; OK (no skips)",
+    "wslc_stdoutfile": "WSLC_TEST_OUTPUT.txt",
+    "windows_stdoutfile": "WINDOWS_TEST_OUTPUT.txt",
+    "audit_exit": 0
+  },
+  "compile_exit": 0,
+  "diff_check_exit": 0,
+  "scope": "construction-only; no game/model/GUI/OS input/live allocation"
+}

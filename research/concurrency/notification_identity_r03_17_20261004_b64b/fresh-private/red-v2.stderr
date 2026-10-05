@@ -1,0 +1,16 @@
+test_reader_appended_match_is_rechecked_before_eof (test_fresh.Fresh.test_reader_appended_match_is_rechecked_before_eof) ... ERROR
+
+======================================================================
+ERROR: test_reader_appended_match_is_rechecked_before_eof (test_fresh.Fresh.test_reader_appended_match_is_rechecked_before_eof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-fresh-before-wait-b64b/test_fresh.py", line 21, in test_reader_appended_match_is_rechecked_before_eof
+    result=client.wait_notification(predicate,timeout=1)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-fresh-before-wait-b64b/codex_app_server_client_v2.py", line 113, in wait_notification
+    raise AppServerError("app-server closed while waiting: stderr not drained")
+codex_app_server_client_v2.AppServerError: app-server closed while waiting: stderr not drained
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)

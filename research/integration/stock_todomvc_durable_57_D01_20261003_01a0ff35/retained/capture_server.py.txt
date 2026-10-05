@@ -1,0 +1,9 @@
+import pathlib,subprocess,sys,os,json,datetime
+R=pathlib.Path(__file__).resolve().parent;assert not (R/'NATIVE_START.json').exists();utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+s={'started_utc':utc(),'supervisor_pid':os.getpid(),'argv':[sys.executable,'-X','utf8','-B',str(R/'server.py')],'outer_cap_s':150}
+p=subprocess.Popen(s['argv'],stdout=subprocess.PIPE,stderr=subprocess.PIPE);s['child_pid']=p.pid;(R/'NATIVE_START.json').write_text(json.dumps(s,indent=2),encoding='utf-8')
+try:o,e=p.communicate(timeout=150)
+except subprocess.TimeoutExpired:p.kill();o,e=p.communicate(timeout=5);s['timeout']=True
+assert len(o)<=65536 and len(e)<=65536
+(R/'native-stdout.bin').write_bytes(o);(R/'native-stderr.bin').write_bytes(e)
+s.update(ended_utc=utc(),exit_code=p.returncode,stdout_bytes=len(o),stderr_bytes=len(e),pipes_closed=[p.stdout.closed,p.stderr.closed]);(R/'NATIVE_RESULT.json').write_text(json.dumps(s,indent=2),encoding='utf-8');print(json.dumps(s));print(o.decode('utf-8'));print(e.decode('utf-8'));raise SystemExit(p.returncode)

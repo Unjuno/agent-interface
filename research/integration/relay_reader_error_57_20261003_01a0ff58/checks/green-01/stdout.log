@@ -1,0 +1,64 @@
+✔ one pending call survives interrupted waiting; no resend, exact content presentation (137.3433ms)
+✔ refused IDs can remain unchanged while attempt records never overwrite (138.9243ms)
+✔ process loss makes delivery uncertain and blocks new sends (40.6941ms)
+✔ mismatched response retained but never presented as the pending result (131.2176ms)
+✔ existing evidence directory is refused before spawn (0.9394ms)
+✔ nonfinite or omitted values are refused before recording or sending (44.6235ms)
+✔ review attribution comes from explicit retained reply and cannot overwrite history (8.4789ms)
+✔ public and management captures have explicit identity without invented sequence (5.1718ms)
+✔ review refuses ambiguous, missing-image, uncertain and incomplete evidence (4.9809ms)
+✔ presentation preserves explicit MCP error status before unchanged content (0.3743ms)
+✔ presentation retains explicit error status for empty content and does not invent an absent flag (0.1164ms)
+✔ copied public host modules run outside the checkout using only Node built-ins (164.7758ms)
+✔ reply reader failure before a request blocks delivery without consuming an ID (90.0354ms)
+✔ reply reader failure rejects the same outstanding promise and forbids replay (90.3295ms)
+✔ reply reader failure preserves an already settled result and blocks future delivery (91.3643ms)
+✔ reply reader retains fragmented multilingual responses and normal EOF (90.004ms)
+✔ ordered same-clock events separate transport, presentation and caller review before next send (180.2802ms)
+✔ public capture review joins the same host timeline without a fabricated source sequence (111.2156ms)
+✔ failed instrumentation before send emits no request and transport remains closable (41.9357ms)
+✔ presentation failure is retained as a started-only boundary and blocks later action (106.5931ms)
+✔ invalid JSON does not consume an attempt and foreign review cannot gain an event (98.2201ms)
+✔ timeline loss after submission retains reply and blocks replay while allowing transport cleanup (310.5436ms)
+<USER_HOME>\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe: Error while finding module specification for 'runtime.integration_checks.host_timing' (ModuleNotFoundError: No module named 'runtime')
+✖ opt-in image reuse requires explicit presented review and retains original base (527.1147ms)
+✔ unpresented review cannot acknowledge an image base (154.0209ms)
+✔ reference presentation failure blocks actions and cannot be treated as delivered (164.9525ms)
+✔ a changed PNG is forwarded and invalidates the previous acknowledged base (232.5874ms)
+✔ reviewed image reference preserves current MCP error status (168.0873ms)
+✔ returned local attempt selects retained reply even when relay IDs are reused (117.68ms)
+✔ sendPresented delivers typed MCP refusal before resolving and never retries (110.8596ms)
+✔ sendPresented owns the whole send/display interval and wait returns the original promise (158.5308ms)
+✔ sendPresented checks delivery callbacks before dispatching input (40.3647ms)
+✔ sendPresented presentation failure preserves the reply and blocks subsequent input (118.1611ms)
+✔ sendPresented snapshots callbacks before its request can wait (97.4165ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 32
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2798.7758
+
+✖ failing tests:
+
+test at test_relay_host.mjs:85:1
+✖ opt-in image reuse requires explicit presented review and retains original base (527.1147ms)
+  Error: Command failed: python3 -m runtime.integration_checks.host_timing <USER_HOME>\AppData\Local\Temp\relay-host-timeline-LEjCZb\transport
+  <USER_HOME>\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe: Error while finding module specification for 'runtime.integration_checks.host_timing' (ModuleNotFoundError: No module named 'runtime')
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/test_relay_host.mjs:110:27)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "<USER_HOME>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe: Error while finding module specification for 'runtime.integration_checks.host_timing' (ModuleNotFoundError: No module named 'runtime')\r\n" ],
+    pid: 3536,
+    stdout: '',
+    stderr: "<USER_HOME>\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe: Error while finding module specification for 'runtime.integration_checks.host_timing' (ModuleNotFoundError: No module named 'runtime')\r\n"
+  }

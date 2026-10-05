@@ -1,0 +1,31 @@
+{
+  "allocation": "SERIAL-CUE-7387-T0-WSLC-A01-20261004",
+  "base_main": "2ed11c5552956499454e8a99acf5a2f374106d34",
+  "branch": "research/serial-cue-7387-t0-wslc-a01",
+  "path": "research/analysis/serial_cue_interference_7387_t0_20261004/",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "runtime": "Microsoft WSLc 3.0.1.0; linux/amd64 image; Python 3.12.14",
+  "network": "none",
+  "requested_cpus": 1,
+  "requested_memory": "512M (request only; effective cap not established)",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "formal_retries": 0,
+  "expected": {
+    "matched_trials": 144,
+    "presentations": 288,
+    "isolated_controls": 16,
+    "unique_ppm_images": 1280,
+    "construction_mutations_rejected": 4,
+    "method_gate": "all rows/images reconstruct exactly; paired image bytes equal; source indexes and arm mapping exact; no answer metadata leak; isolated cue pixel oracle passes"
+  },
+  "hypothesis_gate": "not tested at T0; no model invocation",
+  "source_sha256": {
+    "README.md": "7490F7E737031C07552A90E265AD9DC3F00926C9B15BA95D5E14E6BF62C26599",
+    "design.json": "13533AC7FA8CA9BF71CDA097A9DED71484FD08B944B2843BA4D90DB0827C79EC",
+    "candidate.py": "041C191845C4C6C11132FC1561D743B738F8DB79229565CD5F8BD4C46EDD4368",
+    "auditor.py": "BD9550E1DF9C84DD131BB101DE9E6B9E0E5EE38F87DCD59DEA24C67AEC45EABD",
+    "test_contract.py": "FE01D96BE38828BFBC744ACBECB173D10B9DEA9BB4BB777E99CB7D0C8EA32EE6"
+  },
+  "caveat": "WSLc has reported missing cgroup/swap-limit support; no memory enforcement, speedup, empirical model effect, GUI effect, or product claim."
+}

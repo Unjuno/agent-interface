@@ -1,0 +1,321 @@
+{
+  "arm_totals": {
+    "A": {
+      "elapsed_ms": 113616.552,
+      "successes": 12,
+      "tokens": 163124
+    },
+    "B": {
+      "elapsed_ms": 96743.119,
+      "successes": 12,
+      "tokens": 54379
+    },
+    "C": {
+      "elapsed_ms": 125489.11,
+      "successes": 9,
+      "tokens": 54592
+    },
+    "D": {
+      "elapsed_ms": 29763.967,
+      "successes": 12,
+      "tokens": 0
+    }
+  },
+  "limits": [
+    "Descriptive two-block archive analysis; not a population estimate.",
+    "Task elapsed excludes separately measured schema-preflight waits.",
+    "Human setup cost is unavailable; D is a known-form deterministic route.",
+    "No historical arms were pooled and no producer was replayed."
+  ],
+  "matching_key": "block + task_id, cross-checked token/layout/phase identical in all four arms",
+  "paired_contrasts": {
+    "A_minus_B": {
+      "both_succeeded_pairs": 12,
+      "equal_elapsed": 0,
+      "equal_tokens": 0,
+      "left_faster": 4,
+      "left_slower": 8,
+      "left_used_fewer_tokens": 2,
+      "pairs": 12
+    },
+    "B_minus_C": {
+      "both_succeeded_pairs": 9,
+      "equal_elapsed": 0,
+      "equal_tokens": 8,
+      "left_faster": 10,
+      "left_slower": 2,
+      "left_used_fewer_tokens": 4,
+      "pairs": 12
+    },
+    "B_minus_D": {
+      "both_succeeded_pairs": 12,
+      "equal_elapsed": 0,
+      "equal_tokens": 8,
+      "left_faster": 0,
+      "left_slower": 12,
+      "left_used_fewer_tokens": 0,
+      "pairs": 12
+    }
+  },
+  "pairs": [
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": -3145.533,
+      "A_minus_B_tokens": 1,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": 2527.255,
+      "B_minus_C_tokens": -56,
+      "B_minus_D_elapsed_ms": 11132.558,
+      "B_minus_D_tokens": 13596,
+      "block": 1,
+      "phase": "cold",
+      "task": 1
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 5470.279,
+      "A_minus_B_tokens": 13596,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -968.319,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 1086.357,
+      "B_minus_D_tokens": 0,
+      "block": 1,
+      "phase": "warm",
+      "task": 2
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 5332.066,
+      "A_minus_B_tokens": 13595,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -2006.231,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 1231.915,
+      "B_minus_D_tokens": 0,
+      "block": 1,
+      "phase": "warm",
+      "task": 3
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": -3309.322,
+      "A_minus_B_tokens": -7,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -9681.337,
+      "B_minus_C_tokens": -51,
+      "B_minus_D_elapsed_ms": 10788.196,
+      "B_minus_D_tokens": 13594,
+      "block": 1,
+      "phase": "invalidation_repair",
+      "task": 4
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 2400.431,
+      "A_minus_B_tokens": 13592,
+      "B_C_both_succeeded": false,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -2332.974,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 4159.522,
+      "B_minus_D_tokens": 0,
+      "block": 1,
+      "phase": "post_repair_warm",
+      "task": 5
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 1956.964,
+      "A_minus_B_tokens": 13595,
+      "B_C_both_succeeded": false,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -1996.748,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 5671.727,
+      "B_minus_D_tokens": 0,
+      "block": 1,
+      "phase": "post_repair_warm",
+      "task": 6
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": -454.694,
+      "A_minus_B_tokens": -1,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -3363.418,
+      "B_minus_C_tokens": -53,
+      "B_minus_D_elapsed_ms": 6988.255,
+      "B_minus_D_tokens": 13596,
+      "block": 2,
+      "phase": "cold",
+      "task": 1
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 6565.694,
+      "A_minus_B_tokens": 13593,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -2151.106,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 803.452,
+      "B_minus_D_tokens": 0,
+      "block": 2,
+      "phase": "warm",
+      "task": 2
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 4956.985,
+      "A_minus_B_tokens": 13594,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -2650.154,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 1418.487,
+      "B_minus_D_tokens": 0,
+      "block": 2,
+      "phase": "warm",
+      "task": 3
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": -6976.294,
+      "A_minus_B_tokens": 5,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -5058.366,
+      "B_minus_C_tokens": -53,
+      "B_minus_D_elapsed_ms": 12957.815,
+      "B_minus_D_tokens": 13593,
+      "block": 2,
+      "phase": "invalidation_repair",
+      "task": 4
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 2132.287,
+      "A_minus_B_tokens": 13588,
+      "B_C_both_succeeded": true,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": -1977.621,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 4335.67,
+      "B_minus_D_tokens": 0,
+      "block": 2,
+      "phase": "post_repair_warm",
+      "task": 5
+    },
+    {
+      "A_B_both_succeeded": true,
+      "A_minus_B_elapsed_ms": 1944.57,
+      "A_minus_B_tokens": 13594,
+      "B_C_both_succeeded": false,
+      "B_D_both_succeeded": true,
+      "B_minus_C_elapsed_ms": 913.028,
+      "B_minus_C_tokens": 0,
+      "B_minus_D_elapsed_ms": 6405.198,
+      "B_minus_D_tokens": 0,
+      "block": 2,
+      "phase": "post_repair_warm",
+      "task": 6
+    }
+  ],
+  "phase_totals": {
+    "cold": {
+      "A": {
+        "elapsed_ms": 19976.664,
+        "successes": 2,
+        "tokens": 27192
+      },
+      "B": {
+        "elapsed_ms": 23576.891,
+        "successes": 2,
+        "tokens": 27192
+      },
+      "C": {
+        "elapsed_ms": 24413.054,
+        "successes": 2,
+        "tokens": 27301
+      },
+      "D": {
+        "elapsed_ms": 5456.078,
+        "successes": 2,
+        "tokens": 0
+      }
+    },
+    "invalidation_repair": {
+      "A": {
+        "elapsed_ms": 18276.982,
+        "successes": 2,
+        "tokens": 27185
+      },
+      "B": {
+        "elapsed_ms": 28562.597,
+        "successes": 2,
+        "tokens": 27187
+      },
+      "C": {
+        "elapsed_ms": 43302.3,
+        "successes": 2,
+        "tokens": 27291
+      },
+      "D": {
+        "elapsed_ms": 4816.587,
+        "successes": 2,
+        "tokens": 0
+      }
+    },
+    "post_repair_warm": {
+      "A": {
+        "elapsed_ms": 39186.169,
+        "successes": 4,
+        "tokens": 54369
+      },
+      "B": {
+        "elapsed_ms": 30751.918,
+        "successes": 4,
+        "tokens": 0
+      },
+      "C": {
+        "elapsed_ms": 36146.233,
+        "successes": 1,
+        "tokens": 0
+      },
+      "D": {
+        "elapsed_ms": 10179.8,
+        "successes": 4,
+        "tokens": 0
+      }
+    },
+    "warm": {
+      "A": {
+        "elapsed_ms": 36176.737,
+        "successes": 4,
+        "tokens": 54378
+      },
+      "B": {
+        "elapsed_ms": 13851.713,
+        "successes": 4,
+        "tokens": 0
+      },
+      "C": {
+        "elapsed_ms": 21627.523,
+        "successes": 4,
+        "tokens": 0
+      },
+      "D": {
+        "elapsed_ms": 9311.502,
+        "successes": 4,
+        "tokens": 0
+      }
+    }
+  },
+  "ref": "58bcbb4c45501880db8782158ddd3add3b765984"
+}

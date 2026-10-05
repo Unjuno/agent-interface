@@ -1,0 +1,42 @@
+{
+  "schema": "issue5665-t1-raw-transport-v1",
+  "raw": {
+    "format": "UTF-8 JSONL",
+    "rows": 204,
+    "bytes": 4304789,
+    "sha256": "f497948e2d45e793b612b43265ef5b12d81479695a7b27cf7ba733e3d12573f2"
+  },
+  "transport": {
+    "encoding": "base64(gzip(raw))",
+    "chunk_directory": "raw-jsonl-gzip-b64/",
+    "chunk_name_pattern": "part-NN.b64",
+    "ordered_parts": [
+      "part-00.b64",
+      "part-01.b64",
+      "part-02.b64",
+      "part-03.b64",
+      "part-04.b64",
+      "part-05.b64",
+      "part-06.b64",
+      "part-07.b64",
+      "part-08.b64",
+      "part-09.b64",
+      "part-10.b64",
+      "part-11.b64",
+      "part-12.b64",
+      "part-13.b64",
+      "part-14.b64",
+      "part-15.b64",
+      "part-16.b64",
+      "part-17.b64"
+    ],
+    "chunk_size_characters": 30000,
+    "last_chunk_characters": 28980,
+    "characters": 538980,
+    "base64_sha256": "e18cb1b8ddca44515e6b885ad95f0e2b87658d15f069ed30f9d22a997f673259",
+    "gzip_bytes": 404235,
+    "gzip_sha256": "1c11d929ee3c5c6b2e08f6e0dc7a25d84df51f0880306b625fb509019681d431",
+    "roundtrip_sha256_verified": true
+  },
+  "reconstruction": "Concatenate parts in listed order with no separators, Base64-decode, then gzip-decompress. Verify raw bytes and SHA-256 above."
+}

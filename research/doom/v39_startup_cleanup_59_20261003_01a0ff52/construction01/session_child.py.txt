@@ -1,0 +1,28 @@
+"""Inert owned protocol child; never imports game/input/model modules."""
+import json
+import os
+from pathlib import Path
+import sys
+import time
+
+mode, target = sys.argv[1:]
+trace = Path(target)
+def event(name, **extra):
+    with trace.open('a') as f:
+        f.write(json.dumps({'event':name,'pid':os.getpid(),'ns':time.perf_counter_ns(),**extra})+'\n')
+def emit(row):
+    print(json.dumps(row),flush=True)
+event('started')
+try:
+    emit({'event':'ready','fixture':{} if mode == 'normal' else None})
+    emit({'event':'observation','sequence':1})
+    for line in sys.stdin:
+        command = json.loads(line)
+        event('command',command=command)
+        if command.get('op') == 'finish':
+            emit({'event':'post_control_score','outcome':'inert_fixture'})
+            break
+    else:
+        event('stdin_eof')
+finally:
+    event('closed')

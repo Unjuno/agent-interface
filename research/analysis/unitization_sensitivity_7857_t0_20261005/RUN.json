@@ -1,0 +1,42 @@
+{
+  "allocation": "UNITIZATION-7857-T0-A01-20261005",
+  "freeze_issue_comment": 5986815700,
+  "outcome_issue_comment": 5986833627,
+  "sha_correction_comment": 5986836452,
+  "t1_hold_comment": 5986852932,
+  "freeze_base_main": "3bf3d49bec2aa26a9aaba38806f9e88296459356",
+  "runtime": {
+    "wslc": "3.0.1.0",
+    "platform": "linux/amd64",
+    "node": "v22.23.3",
+    "image": "node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "source_input_mounts": "read-only",
+    "candidate_output_mount": "separate writable",
+    "auditor_output_mount": "separate writable"
+  },
+  "candidate": {
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "source_blob": "b6bdf89f9c1a3cf87fd10fe146183c2827d524f2",
+    "source_sha256": "873a4a74afffed62c398d58c5d514fb5b68d21d2819716d5e722ee7bd11d4e4f",
+    "output_blob": "18372767d50febb441b97aceb56d5f1f1e1e49ff",
+    "output_sha256": "a1fb7094e36f9cacb0b202787ca94601ace11bda9fb1e7f72329a68b0fb88f44"
+  },
+  "auditor": {
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "source_blob": "aa0c42767f7fa0a603ededcc6540847def7b9a51",
+    "source_sha256": "0b253b2f4281d2683cf8ce9baf1bf4e6ffe11def3d9ab7d6d96101f2dd892d24",
+    "output_blob": "30da962e9fa5d3d6e4cf370e54cc120d855d5c07",
+    "output_sha256": "73aed0b08aad28aa14edcbf4004e3351f612d4a1ee623dc18000b7a29da7c93a"
+  },
+  "candidate_command": "wslc.exe run --rm --pull never --network none --cpus 1 --volume \"C:\\\\Users\\\\junny\\\\Documents\\\\Codex\\\\2026-09-19\\\\new-chat\\\\_tmp\\\\unitization-7857-t0-20261005\\\\src:/src:ro\" --volume \"C:\\\\Users\\\\junny\\\\Documents\\\\Codex\\\\2026-09-19\\\\new-chat\\\\_tmp\\\\unitization-7857-t0-20261005\\\\candidate-out:/out\" --workdir /src node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 sh -lc \"node candidate.js > /out/candidate.json\"",
+  "auditor_command": "wslc.exe run --rm --pull never --network none --cpus 1 --volume \"C:\\\\Users\\\\junny\\\\Documents\\\\Codex\\\\2026-09-19\\\\new-chat\\\\_tmp\\\\unitization-7857-t0-20261005\\\\src:/src:ro\" --volume \"C:\\\\Users\\\\junny\\\\Documents\\\\Codex\\\\2026-09-19\\\\new-chat\\\\_tmp\\\\unitization-7857-t0-20261005\\\\candidate-out:/input:ro\" --volume \"C:\\\\Users\\\\junny\\\\Documents\\\\Codex\\\\2026-09-19\\\\new-chat\\\\_tmp\\\\unitization-7857-t0-20261005\\\\audit-out:/out\" --workdir /src node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 sh -lc \"node auditor.js > /out/audit.json\"",
+  "postrun_container_inventory": 0,
+  "gpu": "not applicable to this tiny CPU-only enumerator"
+}

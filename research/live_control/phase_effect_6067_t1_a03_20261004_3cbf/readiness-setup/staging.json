@@ -1,0 +1,167 @@
+{
+  "receipts": [
+    {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "test",
+        "!",
+        "-e",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source"
+      ],
+      "exit_code": 0,
+      "finished_ns": 54508902629166,
+      "started_ns": 54508831394333,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "test",
+        "!",
+        "-e",
+        "/home/taka/outputs/phase-effect-6067-a03-readiness-3cbf-raw"
+      ],
+      "exit_code": 0,
+      "finished_ns": 54508927283875,
+      "started_ns": 54508902642833,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "test",
+        "!",
+        "-e",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-wrapper"
+      ],
+      "exit_code": 0,
+      "finished_ns": 54508954556333,
+      "started_ns": 54508927294041,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "test",
+        "!",
+        "-e",
+        "/home/taka/outputs/phase-effect-6067-a03-readiness-3cbf-audit"
+      ],
+      "exit_code": 0,
+      "finished_ns": 54508978580708,
+      "started_ns": 54508954565083,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "cp",
+        "-a",
+        "/mnt/mac/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source"
+      ],
+      "exit_code": 0,
+      "finished_ns": 54509013465291,
+      "started_ns": 54508978589125,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "chmod",
+        "-R",
+        "a-w",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source"
+      ],
+      "exit_code": 0,
+      "finished_ns": 54509037837958,
+      "started_ns": 54509013477875,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "sha256sum",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/README.md",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/STATUS_SNAPSHOT.md",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/audit_commands.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/audit_runner.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/cell_validation.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/common.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/audit-command-red.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/audit-exit-typed-red.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/audit-state-red.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-receipt.json",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v2-receipt.json",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v2.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v3-receipt.json",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v3.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/freeze-bytes-red.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/independent-source-review.md",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/tree-custody-red.log",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/controls.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/decision.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/evidence.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/fixture.json",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/fixture.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/mount_adapter.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/observer.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/policy.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/producer.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/protocol.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/qualification.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/reference.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/runner.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/saved_audit.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_audit_commands.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_audit_state.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_cell_validation.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_custody_mode.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_decision.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_freeze_bytes.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_protocol.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_qualification.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_saved_controls.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_tree_custody.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/timing.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/tree_custody.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/x11.py",
+        "/home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/readiness-FREEZE.json"
+      ],
+      "exit_code": 0,
+      "finished_ns": 54509063759541,
+      "started_ns": 54509037845166,
+      "stderr": "",
+      "stdout": "7da8f6c8c4c67c6cda836fcf6f320bf0c043a4c7fd45a67f22b778a5f2d7c251  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/README.md\ncd746aca4c967b6f8c4d5165f5061eaf3211be24c3fa9d7922edb4eadef25b3b  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/STATUS_SNAPSHOT.md\n18fb485d7069a0ec8227c82d62d50692fb2efb476a8d0cd471bbb1fc983e5414  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/audit_commands.py\ne82cf6b0de920639bd438c841530d8e4ffaa6742f55e79a36bac5ede4562bc3c  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/audit_runner.py\n2538bb1257a844a376e5ed3ef8f33700cc6aa90dd0bac0297c627cea291dd439  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/cell_validation.py\nd0274dc14a409ae409363ca82b83a4cffd186f37b7c859ba1cb6e22d875d9b37  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/common.py\nd6d1a58d59854a5d0830aa9177dd65c72739587a5a3ccd0f3d1891cc6f231ec3  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/audit-command-red.log\nff72523151ded2c96ef2239a025c39e99ed069ffab31e688c59e1a8bc6cef062  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/audit-exit-typed-red.log\nf241618d10baa394c44e56554e986c0d16892927af25f82ade9c5e9b5eacb2c0  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/audit-state-red.log\ne36304e9108f97e3c0bc0b7961d83e7f741b9fd7b30b6d031793d8f8f94dd895  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-receipt.json\nabd5938c5cf9a3d91a6df665e607f7ae6844643483a7c59ccf4fcd255dd42da9  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v2-receipt.json\n5281bb33f450092373b9498e5d380758a9c630e05531c43bbf86416b16a27013  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v2.log\na67c5f848f1b955ed5f3573e9caec37bbf323356e27db73d37837e3ae84dbee6  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v3-receipt.json\n12d4a2a6d13df3bc43e3651f1fc63bd8f29e2e1d770b793a9e8a2f5b3149a20d  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods-v3.log\n03866db86e7cf38509c12738b4ff7edd0089b6ee250076b01964a95ab946e6e5  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/container-methods.log\nd5c5f7ed42f0e042fb40122574754d035ab483edc6a7c9fb9b92a51f2fa0ca16  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/freeze-bytes-red.log\n87b371433718132b32740c0aa52f188da40c904b5e4fe14e7ba6eb96650e17b1  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/independent-source-review.md\n2a27dfba46f8b6ca999be85ccf81450fb6d252e808bd3a663979d17e51dab708  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/construction-methods/tree-custody-red.log\n32f8e83721ebdb4283a028f7d035adf5ba8982f8ccea90c074bd976ba1ff212b  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/controls.py\n660f8fac876a89c7d3597fd03807c6a4a7e7b799287d48ba08cc8d6e4135b20e  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/decision.py\n415a9419fd78c5b1cbeb41f4698695617c51bece0392603645665beb5325051d  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/evidence.py\nc3021535936186dc99e3a43516412f41d543da12ae9fa50e130ac6f4cf6d4e46  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/fixture.json\ne7de4828742708e2e4a5931693b4e64ee4a4b059f62f98d2ceba4cc6124c3e60  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/fixture.py\n9adc0a589fcbf958889f99c43dd618d7ea2f562a579b63b08252be83e5bb0447  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/mount_adapter.py\n8be84058c071ae18324feaf2890fcff6d494e6a7b9bcd0ed9760e92734c359c6  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/observer.py\nf31df31976e59ebfee0dd2ff505ca057583912daa0d56f5d8fc69a1c6c64a6a2  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/policy.py\n10eea8b03001e119079e655a0d96a37f4be6f20b7cd3edba1edaf67fd05d758e  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/producer.py\n91484fe029a76747ce12b8187e6be94aed03df58c504591568717b48b3b749d8  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/protocol.py\nac885966a2ac747f6bf992748a845a3f73f16221a5ee6b0016c51d232fe24534  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/qualification.py\n30e63aad6f234b65a22a2be5d153fc68cae1178a023e5ec68f116873efcce37a  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/reference.py\n904ec17ec63219eddf18fb38b1dbbfe52bb1603ba6c4d5880bccfa23b3b35897  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/runner.py\nc2e81d5941ba05a0c75ff5b9a90dfd93082a8be0b3e26889e694fa1649cd824d  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/saved_audit.py\n3adc86b3e43eddfd3d79b4ac4b5d2fed4c4e25ecade1f5021d0d6aa6f297c6c8  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_audit_commands.py\n3c354cbae64f15dd3c01437a109da8c670a9ba93127aec9b8d484133681ebbcc  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_audit_state.py\nbd8cd5a4d2dcdaf652220250766a9d916845cc99bb4f704cc548628d83b1ff3a  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_cell_validation.py\na1f268c6bc05c60797af1d4931dce92d4650360813ce3a151663c3d6ccda1298  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_custody_mode.py\n834de876f9068835dc62dc819e0a4f43ef4a10f23fa76ededebde8ca7881de59  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_decision.py\n9ac04cba093117be662ecae6057392bf7f790ac3bd6b8c9805609adbeaffc236  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_freeze_bytes.py\na5b9eabc5bc3f7a68eb827b85b83cd22f294646fd2bc0b048c9d94487fbe985c  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_protocol.py\n57176594b9247b730963b7e9b0703bc2cd52e92e02261d7a0d022713421c9562  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_qualification.py\n0fab491a06ebac8bd5a476194fbe51eaa4818f959b2eece4bfe7ac9c648f8862  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_saved_controls.py\n39a466b07e82689cb4f40aab697d51e391823ac621082a94a38e7a64d86f2137  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/test_tree_custody.py\n1f8ec675a3f582dd66c9bed1d4a31c76aee1b7986c7417fe6102cb7387e07030  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/timing.py\n352ad5fa7dd627bf8221e69d6f181dca8104dc7bcf7eb3a469d7fd101ad2a026  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/tree_custody.py\n51570deaf7e11828df3d58c6ddc65381fb3041818e3b733978c62090125030d5  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/x11.py\ne3e2df2ee2a3c606613e2a43d4f658a47e491f2bfaa0380c48cbaadd29c32137  /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source/readiness-FREEZE.json\n"
+    }
+  ],
+  "scope": "setup only; no native acquisition"
+}

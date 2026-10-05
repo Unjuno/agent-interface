@@ -1,0 +1,153 @@
+{
+  "schema": "a05_saved_crop_ocr_construction_probe_v1",
+  "source_revision": "58bcbb4c45501880db8782158ddd3add3b765984",
+  "crop_manifest_sha256": "d92a334c9bd99b0ca603ba1cd3edfc07ec70b0e81b62c6623c6ab1116d759b4a",
+  "tesseract_version": "tesseract 5.5.2",
+  "language": "eng",
+  "invocation": [
+    "tesseract",
+    "stdin",
+    "stdout",
+    "--psm",
+    "7",
+    "-c",
+    "tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz0123456789-"
+  ],
+  "rows": [
+    {
+      "block": 1,
+      "task": 5,
+      "crop": "frozen",
+      "crop_sha256": "6dcc7c750b833cc02570589fd1e5337d98791e46fc8b8b5f96766daf776d132b",
+      "expected_token": "t991073-5",
+      "ocr_exit": 0,
+      "recognized": "t991073-5",
+      "exact_match": true,
+      "stderr": ""
+    },
+    {
+      "block": 1,
+      "task": 5,
+      "crop": "candidate",
+      "crop_sha256": "ed0dd718fb689599bdabae99950cbf4b3bf3550254c77b62b7f78cc10e3b6aba",
+      "expected_token": "t991073-5",
+      "ocr_exit": 0,
+      "recognized": "t991073-5",
+      "exact_match": true,
+      "stderr": ""
+    },
+    {
+      "block": 1,
+      "task": 6,
+      "crop": "frozen",
+      "crop_sha256": "6e7791dedaabba49fa28205b23dfdee960977031b2bd7fa0de862900dc43aac9",
+      "expected_token": "t991073-6",
+      "ocr_exit": 0,
+      "recognized": "t991073-6",
+      "exact_match": true,
+      "stderr": ""
+    },
+    {
+      "block": 1,
+      "task": 6,
+      "crop": "candidate",
+      "crop_sha256": "741c2fe6742c1a2bc004b404f7501d5ff23d78266300d18fd0c3cca4bf92803f",
+      "expected_token": "t991073-6",
+      "ocr_exit": 0,
+      "recognized": "t991073-6",
+      "exact_match": true,
+      "stderr": ""
+    },
+    {
+      "block": 2,
+      "task": 6,
+      "crop": "frozen",
+      "crop_sha256": "77283471243761362828f36e7bcb05d10aee3a3fbbdbf9a8cb41fea76d20b15c",
+      "expected_token": "t991074-6",
+      "ocr_exit": 0,
+      "recognized": "t991074-6",
+      "exact_match": true,
+      "stderr": ""
+    },
+    {
+      "block": 2,
+      "task": 6,
+      "crop": "candidate",
+      "crop_sha256": "785dbf2d6c3869a1adbe33783b7a1cc2711d2fe3110b09f0cecae207535eabe1",
+      "expected_token": "t991074-6",
+      "ocr_exit": 0,
+      "recognized": "t991074-6",
+      "exact_match": true,
+      "stderr": ""
+    }
+  ],
+  "candidate_exact_positives": 3,
+  "candidate_positive_count": 3,
+  "frozen_crop_exact_rejections": 0,
+  "frozen_crop_count": 3,
+  "one_character_near_miss_rejections": 3,
+  "one_character_near_miss_count": 3,
+  "near_miss_pairs": [
+    {
+      "source_block": 1,
+      "source_task": 5,
+      "recognized": "t991073-5",
+      "near_miss_expected": "t991073-6",
+      "rejected": true
+    },
+    {
+      "source_block": 1,
+      "source_task": 6,
+      "recognized": "t991073-6",
+      "near_miss_expected": "t991073-5",
+      "rejected": true
+    },
+    {
+      "source_block": 2,
+      "source_task": 6,
+      "recognized": "t991074-6",
+      "near_miss_expected": "t991073-6",
+      "rejected": true
+    }
+  ],
+  "scope": "offline OCR of the exact retained 4x crop previews only; no raw source was edited and no GUI, model, runtime, or formal allocation was executed",
+  "interpretation": "Under Tesseract 5.5.2 on the retained 4x previews, both candidate padded crops and frozen clipped crops exactly recognize all three tokens (3/3 each). Therefore this test does not show that padding repairs the recorded failure. The three archived OCR-input PNGs also exactly recognize their tokens under this local Tesseract, while the historical diagnostics record stdout without the leading t. This is an environment/backend or historical execution discrepancy requiring attribution; do not alter the formal 9/12 result or call the crop hypothesis validated. One-character cross-task substitutions were rejected by strict equality (3/3), a narrow negative control only.",
+  "decision": "HOLD for crop repair claim; retain as post-hoc environment-specific diagnostic. No prospective or live qualification.",
+  "protocol": {
+    "H": "On exact retained A05 images, determine whether the padded crop enables correct token OCR and the frozen crop rejects it under the currently installed Tesseract 5.5.2.",
+    "T": "Apply pinned Tesseract 5.5.2, eng, PSM 7, and lowercase/digit/hyphen whitelist to exact retained 4x frozen and candidate crop previews, plus archived OCR-input PNGs. Require exact token equality; test one-character cross-task substitutions.",
+    "D": "Crop hypothesis supported only if candidate positives pass and frozen crops reject; otherwise HOLD/FAIL for this local construction check. Preserve archived formal outputs.",
+    "C": "Backend/version mismatch, preview/render pipeline discrepancy, OCR crop image may not be the identical runtime input, and small fixture count. OCR false accepts beyond these substitutions are unmeasured.",
+    "U": "One machine and Tesseract 5.5.2; retained A05 fixture images only; no GUI, model, online observer, task-effect or live allocation."
+  },
+  "archived_ocr_input_rerun": [
+    {
+      "block": 1,
+      "task": 5,
+      "path": "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/C/client/ocr-124.png",
+      "sha256": "cfa028089883adf5c705df8fa36f1da19b249d0d459993dcdbe7edb370af59eb",
+      "historical_stdout": "991073-5",
+      "local_tesseract_stdout": "t991073-5",
+      "exact_match": true
+    },
+    {
+      "block": 1,
+      "task": 6,
+      "path": "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/C/client/ocr-143.png",
+      "sha256": "749a67248052644317ad0f98c7fdf6962e862e9dbbc8f972719d4b988fd27c4a",
+      "historical_stdout": "991073-6",
+      "local_tesseract_stdout": "t991073-6",
+      "exact_match": true
+    },
+    {
+      "block": 2,
+      "task": 6,
+      "path": "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/C/client/ocr-150.png",
+      "sha256": "356b8d3a900e8e6bfbba1b1ce455291801e29d46939efc3d2afe40125f15fbb7",
+      "historical_stdout": "991074-6",
+      "local_tesseract_stdout": "t991074-6",
+      "exact_match": true
+    }
+  ],
+  "historical_comparison": "independent-readback/C_FAILURE_DIAGNOSTICS.json records historical stdout omitting the leading t for all three tasks. A local rerun of the archived ocr-*.png input artifacts yields the leading t in all three. The formal result remains unchanged; provenance of original OCR executable/config/runtime is needed to explain the discrepancy."
+}

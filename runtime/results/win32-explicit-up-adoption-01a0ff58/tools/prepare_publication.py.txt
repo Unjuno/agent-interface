@@ -1,0 +1,77 @@
+"""Prepare immutable ordinary-adoption evidence; no branch/ref send."""
+import datetime, hashlib, json, pathlib, platform, sys
+root = pathlib.Path(__file__).resolve().parent
+workspace = root.parent.parent
+out = workspace / 'outputs/win32-explicit-up-adoption-01'
+public = root / 'public'
+archive = 'runtime/results/win32-explicit-up-adoption-01a0ff58'
+out.mkdir(exist_ok=False)
+public.mkdir(exist_ok=False)
+mapping = []
+def sha(b):
+    return hashlib.sha256(b).hexdigest()
+def preserve(p, name):
+    raw = p.read_bytes()
+    for folder in [out, public]:
+        dest = folder / name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        b = raw
+        if folder == public:
+            for private, replacement in [(str(workspace), '<worker-workspace>'), (str(pathlib.Path(sys.executable).parent), '<python311-install>')]:
+                for variant in [private, private.replace('\\', '\\\\'), private.replace('\\', '/')]:
+                    b = b.replace(variant.encode(), replacement.encode())
+        dest.write_bytes(b)
+    published = (public / name).read_bytes()
+    mapping.append({'path': name, 'original_bytes': len(raw), 'original_sha256': sha(raw), 'published_bytes': len(published), 'published_sha256': sha(published), 'derivative': raw != published})
+for name in ['PLAN.json', 'SOURCE_DELTA.json']:
+    preserve(root / name, name)
+for label in ['baselineRED', 'firstGREEN', 'optimizedGREEN']:
+    for p in sorted((root / 'runs' / label).iterdir()):
+        preserve(p, 'runs/' + label + '/' + p.name)
+for name in ['test_explicit_up_ledger.py', 'prepare.py', 'adopt.py', 'run_checks.py', 'prepare_publication.py']:
+    preserve(root / name, 'tools/' + name + '.txt')
+for p in sorted((root / 'baseline').rglob('*.py')):
+    preserve(p, 'baseline-source/' + p.relative_to(root / 'baseline').as_posix() + '.txt')
+preserve(root / 'candidate/runtime/backends/win32_v1/backend.py', 'candidate-backend.py.txt')
+runs = []
+for label, expected in [('baselineRED', 1), ('firstGREEN', 0), ('optimizedGREEN', 0)]:
+    p = root / 'runs' / label
+    s, r = (json.loads((p / n).read_bytes()) for n in ['START.json', 'RESULT.json'])
+    if r['exit_code'] != expected or not r['source_unchanged'] or not r['output_size_gate']:
+        raise ValueError('required ordinary endpoint failed')
+    rows = [json.loads(x) for x in (p / 'stdout.txt').read_text(encoding='utf-8').splitlines() if x]
+    methods = {x['test'] for x in rows}
+    new = [x for x in rows if 'test_explicit_up_ledger.' in x['test']]
+    if len(rows) != 23 or len(new) != 12 or len({x['case'] for x in new}) != 12:
+        raise ValueError('all23 raw/12new literal rows required')
+    for name, pin in r['streams'].items():
+        raw = (p / name).read_bytes()
+        if len(raw) != pin['bytes'] or sha(raw) != pin['sha256']:
+            raise ValueError('stream pin')
+    runs.append({'label': label, 'pid': r['pid'], 'exit_code': r['exit_code'], 'started_utc': r['started_utc'], 'ended_utc': r['ended_utc'], 'raw_rows': len(rows), 'new_explicit_up_rows': len(new), 'original_result_sha256': sha((p / 'RESULT.json').read_bytes())})
+result = {'decision': 'ACTIVE_SOURCE_ADOPTION_SCOPED_PASS_PENDING_NEW_CONTENT_REVIEW', 'kind': 'ordinary inert-API regression, not formal/native allocation', 'baseline_head': '0bd1f8492b561b74f84a4c2d6fabff99cb2756b5', 'runs': runs, 'baseline': '16 unittest methods, five failures, zero errors/skips; retained first raw', 'candidate': '16 pass normally and optimized, zero skips; identical new/inherited test definitions', 'source_origin': '45e9 private two-function feasibility adopted by actual production source owner; candidate backend exact20615B/SHA916fac81...', 'source_delta': 'Only delete eager retirement from key_state/pointer_button. release_all AST equals v1, and all other methods/import dependencies unchanged.', 'measurement': 'Clock123456 is intentionally inert in the new tests; suite timings are ordinary test diagnostics, not causal latency/physical release measures.', 'python': sys.version, 'os': platform.platform(), 'native_API_GUI_input_focus_model_formal_calls': 0, 'v1_votes_carried': 0, 'main_sends': 0, 'limits': ['Quiescent already-owned ledger and successful OS observation assumed.', 'GetAsyncKeyState zero may mean desktop/UIPI call failure; verified:true is not a physical/durable release certificate.', 'Same-key actors, interleaving, text/uncertain-DOWN/session quarantine/full native recovery/task effect remain open.', 'Retaining explicit-UP obligations adds terminal UP/query work in these programs; no speed/token/resource advantage claimed.', 'Historical #627 native allocations and old source evidence remain immutable and unrerun.', 'Private peer proof is attributed; public exact source/recorded endpoint joins authenticated separately, private originals unauthenticated.', 'New source/head/conditions require new proposal and two fresh accepted nonauthor votes before actual-current composition/sole conditional application.']}
+readme = '''# Win32 explicit-UP ownership adoption
+
+The narrow v1 release_all correction did not cover an earlier explicit-UP path: key_state(False) and pointer_button(False) discarded tracking immediately after sending UP. A later terminal release_all then queried no state and the actual session could report completed while an inert owned input remained down. Key chords reach the same path. The new ordinary baseline reproduces five failures among16 methods while retaining all first raw.
+
+Adopt 45e9's minimal conservative retention: remove only those two eager retirements. The v1 complete key/button state reads remain the retirement point. Normal and optimized source checks each pass16 methods: seven new directed regressions plus seven inherited release checks and two inherited pure helpers, no skips. Constructors and WinDLL are forbidden, SendInput/GetAsyncKeyState endpoints are inert, sleep is mocked. This does not invoke the peer's original six-case producer or historical native/formal allocations.
+
+The new tests cover key pair/button pair/chord healthy and stubborn states, untracked-UP controls, send exceptions, query failure after explicit UP, and a later caller neutral check. Each completed run retains23 literal rows, including12 from the new methods. The test definitions match through baseline/normal/optimized endpoints. The candidate20615B backend equals the peer's public private-feasibility source, SHA256916fac81b586acd1c7ee1c47b4d905ce902a50c5b25a952a9650f6b3b74f840a. No other method or dependency changes.
+
+This improves reported-down/exception custody of already-owned inputs under a quiescent ledger. GetAsyncKeyState zero can also indicate desktop/access/UIPI call failure: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getasynckeystate . Therefore successful physical/lasting neutrality, same-key actor identity, interleaving, text/uncertain-DOWN, native recovery/task effect and efficiency remain unproved. Terminal extra UP/query work is an added cost, not an efficiency claim. The new tests use an inert constant clock; no performance conclusion follows from it.
+
+Source-adoption claim5968932600 stops v1 application before changed content publication. Old v1 votes/proof remain history and are zero votes for v2. This evidence is additive; old source snapshots/native freeze/results stay unchanged. Code snapshots are .py.txt and inert; only the production backend and new active regression change. PUBLICATION.json joins exact private originals to own-prefix-projected public bytes. New fixed-content review and actual-current composition/required rules/sole conditional application remain gates, no main send or shared resource held.
+'''
+for folder in [out, public]:
+    (folder / 'RESULT.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    (folder / 'PUBLICATION.json').write_text(json.dumps({'originals_retained': True, 'projection': 'only exact own workspace/interpreter prefixes', 'files': mapping}, indent=2) + '\n', encoding='utf-8')
+    (folder / 'README.md').write_text(readme, encoding='utf-8')
+    entries = [sha(p.read_bytes()) + '  ' + p.relative_to(folder).as_posix() for p in sorted(folder.rglob('*')) if p.is_file()]
+    (folder / 'SHA256SUMS').write_text('\n'.join(entries) + '\n', encoding='utf-8')
+changes = [{'path': archive + '/' + p.relative_to(public).as_posix(), 'local': str(p), 'mode': '100644', 'bytes': p.stat().st_size, 'sha256': sha(p.read_bytes())} for p in sorted(public.rglob('*')) if p.is_file()]
+for name in ['backend.py', 'test_explicit_up_ledger.py']:
+    p = root / 'candidate/runtime/backends/win32_v1' / name
+    changes.append({'path': 'runtime/backends/win32_v1/' + name, 'local': str(p), 'mode': '100644', 'bytes': p.stat().st_size, 'sha256': sha(p.read_bytes())})
+(root / 'CHANGES_PRIVATE.json').write_text(json.dumps(changes, indent=2) + '\n', encoding='utf-8')
+(out / 'PUBLICATION_ACTION.json').write_text(json.dumps({'execution_id': 'win32-release-ledger-6951-v2-publish-01a0ff58', 'target': 'refs/heads/fix/win32-release-ledger-01a0ff58-20261003', 'expected_old': '0bd1f8492b561b74f84a4c2d6fabff99cb2756b5', 'state': 'PREPARED_NEVER_SENT', 'main_send': False, 'message_requires_skip_ci': True}, indent=2) + '\n', encoding='utf-8')
+print(json.dumps({'paths': len(changes), 'archive_files': len(changes)-2, 'bytes': sum(x['bytes'] for x in changes), 'joins': len(mapping), 'native_calls': 0}))

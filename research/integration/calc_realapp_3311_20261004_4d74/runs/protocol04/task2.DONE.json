@@ -1,0 +1,370 @@
+{
+  "a": 29,
+  "b": 37,
+  "end_ns": 8873369093,
+  "image": {
+    "end_ns": 8908430012,
+    "image": {
+      "artifact": {
+        "bytes": 58694,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/images/eaff7923a7d449208fa0de81eefa0b2f.png",
+        "sha256": "0dafb69af4f724c5cf24015550141f6713ecbe2bbd7a5f318edfd2477bb20eec",
+        "source_raw_sha256": "382fcd0507176f70c83326921ee4edaa4a02151f19b3980a8644a219708d49bc",
+        "timing_ns": {
+          "converted": 8882531014,
+          "encoded": 8902405556,
+          "hashed": 8908271151,
+          "started": 8881006224,
+          "written": 8906160255
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 8878911764,
+      "capture_started_ns": 8873372930,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "382fcd0507176f70c83326921ee4edaa4a02151f19b3980a8644a219708d49bc",
+      "target": "owned",
+      "width": 1280
+    },
+    "physical": {
+      "buttons": 0,
+      "end_ns": 8908730722,
+      "keys": [],
+      "start_ns": 8908430754
+    },
+    "start_ns": 8873369878
+  },
+  "label": "task2",
+  "physical": {
+    "buttons": 0,
+    "end_ns": 8914827280,
+    "keys": [],
+    "start_ns": 8914606567
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 18360210756,
+      "lease_id": "owned-real-calc-construction"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "owned"
+      },
+      {
+        "frame": "screen_physical_px",
+        "op": "pointer_move",
+        "x": 80,
+        "y": 168
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "2"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "9"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "keys": [
+          "TAB"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "text",
+        "text": "3"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "7"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "keys": [
+          "TAB"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "text",
+        "text": "="
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "A"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "2"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "*"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "B"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "2"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "keys": [
+          "ENTER"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "s"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 300
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "task2",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "receipt": {
+    "admission": "accepted",
+    "execution": {
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "emissions": 117,
+      "ended_ns": 8873353187,
+      "observations": [],
+      "program_emissions": 39,
+      "releases": [
+        {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 8873351244,
+          "verified": true
+        }
+      ],
+      "started_ns": 8361703787,
+      "waits": [
+        {
+          "completed": true,
+          "ended_ns": 8382517475,
+          "kind": "fixed_delay",
+          "operation_index": 5,
+          "requested_ms": 20,
+          "started_ns": 8362426951,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8403133906,
+          "kind": "fixed_delay",
+          "operation_index": 7,
+          "requested_ms": 20,
+          "started_ns": 8382984157,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8424097544,
+          "kind": "fixed_delay",
+          "operation_index": 10,
+          "requested_ms": 20,
+          "started_ns": 8403980622,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8444768311,
+          "kind": "fixed_delay",
+          "operation_index": 12,
+          "requested_ms": 20,
+          "started_ns": 8424669841,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8466016336,
+          "kind": "fixed_delay",
+          "operation_index": 15,
+          "requested_ms": 20,
+          "started_ns": 8445805681,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8486844878,
+          "kind": "fixed_delay",
+          "operation_index": 17,
+          "requested_ms": 20,
+          "started_ns": 8466584636,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8507656003,
+          "kind": "fixed_delay",
+          "operation_index": 19,
+          "requested_ms": 20,
+          "started_ns": 8487431520,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8529121850,
+          "kind": "fixed_delay",
+          "operation_index": 21,
+          "requested_ms": 20,
+          "started_ns": 8508779458,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8550496683,
+          "kind": "fixed_delay",
+          "operation_index": 23,
+          "requested_ms": 20,
+          "started_ns": 8530391230,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8571222078,
+          "kind": "fixed_delay",
+          "operation_index": 25,
+          "requested_ms": 20,
+          "started_ns": 8551128471,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 8872805203,
+          "kind": "fixed_delay",
+          "operation_index": 28,
+          "requested_ms": 300,
+          "started_ns": 8572644065,
+          "update_observed": null
+        }
+      ]
+    },
+    "recovery_required": false,
+    "required_capabilities": [
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "status": "completed"
+  },
+  "saved_sha256": "6a93519d248e7b3eb66f1e76d2ba20088d2e696708aa43ca4686085c1418af4f",
+  "start_ns": 8360212443
+}

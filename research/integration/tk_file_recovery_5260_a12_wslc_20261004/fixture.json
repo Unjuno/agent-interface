@@ -1,0 +1,19 @@
+{
+  "schema": "issue5260-a12-private-gui-file-recovery-v1",
+  "allocation": "5260-a12-wslc-private-gui-file-recovery01-20261004",
+  "seed": 52612026,
+  "tasks": [
+    {"id":"compact","payload":"hmt","geometry":"520x250+80+70"},
+    {"id":"offset","payload":"hns","geometry":"580x270+140+100"}
+  ],
+  "ack_timeout_ms": 500,
+  "drift_timeout_ms": 500,
+  "ack_poll_ms": 1,
+  "ack_max_age_ms": 50,
+  "inter_key_gap_ms": 20,
+  "save_delay_after_last_key_ms": 250,
+  "busy_worker_duration_ms": 2200,
+  "private_display": ":97",
+  "screen": "1024x768x24",
+  "forbidden": ["network","user_display","automatic_replay","model","GPU","external_effect"]
+}

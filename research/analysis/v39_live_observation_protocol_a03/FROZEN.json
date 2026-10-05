@@ -1,0 +1,20 @@
+{
+  "artifact": "v39_live_observation_protocol_a03",
+  "base_commit": "86748499a89141396902a00d1f5793390ccf6d9d",
+  "cli_version": "codex-cli 0.160.0",
+  "candidate_runs_max": 1,
+  "candidate_retries": 0,
+  "pending_window_seconds": 2.0,
+  "protocol_timeout_seconds": 20.0,
+  "candidate": "probe.py --frame fixtures/v39-seq200.png --pending-window-s 2.0",
+  "decision_labels": [
+    "SECOND_REQUEST_WHILE_INITIAL_PENDING",
+    "SECOND_REQUEST_AFTER_INITIAL_COMPLETION",
+    "SECOND_REQUEST_NOT_OBSERVED",
+    "ORDER_UNVERIFIABLE"
+  ],
+  "candidate_sha256": "f3b988aaa8bae78eaf16f8a3ce5a9c4982ce427d9e8b3d40344d0455876e0f10",
+  "test_sha256": "b0d96dedc513882705660929cbee5bbacf4d076b989b78311e0ebee558a49713",
+  "fixture_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+  "isolation": "temporary CODEX_HOME; loopback-only HTTP mock; API-key environment removed; no model/game/gui/input service"
+}

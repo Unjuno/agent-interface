@@ -1,0 +1,95 @@
+{
+  "failed_release_receipt": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "key_state_errors": [
+      {
+        "message": "synthetic keymap sample failure",
+        "source": "keymap",
+        "type": "RuntimeError"
+      }
+    ],
+    "keys_down": [],
+    "keys_unknown": [
+      38
+    ],
+    "reason": "release",
+    "valid_until_ns": 4611686018427387904,
+    "verified": false,
+    "verified_ns": 188188597758100
+  },
+  "key_events": [
+    [
+      2,
+      38
+    ],
+    [
+      3,
+      38
+    ],
+    [
+      3,
+      38
+    ]
+  ],
+  "keycode": 38,
+  "keymap_query_attempts": 2,
+  "raised_error": {
+    "has_owner_release_record": true,
+    "message": "owner release not verified: []",
+    "type": "RuntimeError"
+  },
+  "recovery_release_receipt": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "key_state_errors": [],
+    "keys_down": [],
+    "keys_unknown": [],
+    "reason": "release",
+    "release_call_returned_ns": 188188597919700,
+    "release_call_started_ns": 188188597864900,
+    "valid_until_ns": 4611686018427387904,
+    "verified": true,
+    "verified_ns": 188188597902100
+  },
+  "schema": "v39-terminal-release-sample-error-raw-v1",
+  "server_keys_after_failed_sample": [],
+  "server_keys_after_recovery": [],
+  "test": "test_terminal_cleanup_sample_failure_retains_unverified_receipt_and_retries",
+  "trace": [
+    [
+      "key_event",
+      2,
+      38
+    ],
+    [
+      "sync"
+    ],
+    [
+      "key_event",
+      3,
+      38
+    ],
+    [
+      "sync"
+    ],
+    [
+      "query_keymap",
+      "raise",
+      []
+    ],
+    [
+      "key_event",
+      3,
+      38
+    ],
+    [
+      "sync"
+    ],
+    [
+      "query_keymap",
+      "return",
+      []
+    ]
+  ]
+}

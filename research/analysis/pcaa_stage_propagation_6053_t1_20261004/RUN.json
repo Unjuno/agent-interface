@@ -1,0 +1,36 @@
+{
+  "schema": "issue-6053-pcaa-stage-propagation-t1-run-v1",
+  "main_sha": "9590ee9e0c74f7438306e8efb48b2af813f7a86b",
+  "environment": {
+    "host": "macOS local checkout",
+    "python": "3.14.5",
+    "container": false,
+    "network_in_a_test": false,
+    "gui": false,
+    "model": false,
+    "input": false
+  },
+  "audit": {
+    "command": "python3 -B research/analysis/pcaa_stage_propagation_6053_t1_20261004/audit.py",
+    "successful_source_audit_invocations": 1,
+    "exit_code": 0,
+    "status": "HOLD_NO_ELIGIBLE_CHAIN",
+    "output": "RESULT.json"
+  },
+  "construction_verification": {
+    "command": "python3 -B -m unittest -v test_engine.py",
+    "working_directory": "research/procedural_control_arena_v1",
+    "tests": 14,
+    "successful_suite_runs_during_construction": 3,
+    "final_captured_exit_code": 0,
+    "final_captured_stdout": "out/arena_mechanics_tests.stdout.txt",
+    "scope": "Existing arena mechanics regression only; not evidence for perturbation propagation or controller efficacy."
+  },
+  "development_errors": [
+    "One audit-script construction attempt raised AttributeError in AST dictionary-key extraction; corrected before the sole successful frozen-source audit. It was not a source experiment result.",
+    "One unittest loader invocation from repository root failed to import the top-level engine module before test discovery; the documented package-directory command then passed.",
+    "One captured unittest wrapper used an incorrect tee destination; test cases passed, but stdout was retained by the final corrected capture."
+  ],
+  "formal_or_live_invocations": 0,
+  "retries_of_formal_or_live_allocations": 0
+}

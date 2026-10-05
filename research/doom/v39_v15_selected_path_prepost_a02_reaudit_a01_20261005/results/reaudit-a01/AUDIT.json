@@ -1,0 +1,435 @@
+{
+  "candidate_invocations_this_reanalysis": 0,
+  "candidate_stdout_sha256": "0336cfa2eeebbe48ad816168d5466938a936fcf0782211b21847df6c20038596",
+  "cases": [
+    {
+      "admission_order": [
+        "F8",
+        "space"
+      ],
+      "case": "normal",
+      "close_error": null,
+      "final_server_keys": [],
+      "keymap_query_trace_n": [
+        12,
+        27,
+        34
+      ],
+      "post_keycodes_down": [],
+      "pre_keycodes_down": [
+        65,
+        74
+      ],
+      "up_attempt_trace_n": [
+        15,
+        19
+      ]
+    },
+    {
+      "admission_order": [
+        "F8",
+        "space"
+      ],
+      "case": "lost_space_keyrelease",
+      "close_error": {
+        "message": "owner release not verified: [65]",
+        "type": "RuntimeError"
+      },
+      "final_server_keys": [
+        65
+      ],
+      "keymap_query_trace_n": [
+        12,
+        27,
+        34
+      ],
+      "post_keycodes_down": [
+        65
+      ],
+      "pre_keycodes_down": [
+        65,
+        74
+      ],
+      "up_attempt_trace_n": [
+        15,
+        19
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "candidate_exit_zero",
+      "observed": "0",
+      "pass": true
+    },
+    {
+      "name": "candidate_stderr_empty",
+      "observed": null,
+      "pass": true
+    },
+    {
+      "name": "raw_schema",
+      "observed": "v39-v15-selected-path-prepost-a02-raw-v1",
+      "pass": true
+    },
+    {
+      "name": "selected_v15",
+      "observed": "session_map01_v15.py",
+      "pass": true
+    },
+    {
+      "name": "backend_v1",
+      "observed": "doom_owner_thread_release_batch_backend_v1.Backend",
+      "pass": true
+    },
+    {
+      "name": "executor_v13",
+      "observed": "executor_v13.Executor",
+      "pass": true
+    },
+    {
+      "name": "exact_case_order",
+      "observed": [
+        "normal",
+        "lost_space_keyrelease"
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_two_ordered_up_attempts",
+      "observed": [
+        65,
+        74
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_no_query_between_up_attempts",
+      "observed": [
+        12,
+        27,
+        34
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_pre_sample_before_first_up",
+      "observed": [
+        [
+          65,
+          74
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_post_sample_after_final_up",
+      "observed": [
+        []
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_post_sample_before_release_telemetry",
+      "observed": [
+        30,
+        31
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_admissions_observed",
+      "observed": [
+        "F8",
+        "space"
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_server_up_delivery_pattern",
+      "observed": [
+        [
+          65,
+          "xtest_key_up_delivered"
+        ],
+        [
+          74,
+          "xtest_key_up_delivered"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_owner_receipt_order",
+      "observed": [
+        65,
+        74
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_space_owner_release_receipt",
+      "observed": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a07-token",
+        "key": "space",
+        "keycode": 65,
+        "operation": "up",
+        "owner_id": "1f9e4670dcd244c5a9e9bdb1ad8617a8",
+        "owner_keyrelease_started_ns": 177269831215000,
+        "owner_sync_returned_ns": 177269831219400,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 177279787500700
+      },
+      "pass": true
+    },
+    {
+      "name": "normal_F8_owner_release_receipt",
+      "observed": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a07-token",
+        "key": "F8",
+        "keycode": 74,
+        "operation": "up",
+        "owner_id": "1f9e4670dcd244c5a9e9bdb1ad8617a8",
+        "owner_keyrelease_started_ns": 177269831287400,
+        "owner_sync_returned_ns": 177269831289700,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 177279787500700
+      },
+      "pass": true
+    },
+    {
+      "name": "normal_release_projection_keys",
+      "observed": [
+        "space",
+        "F8"
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_release_projection_sample",
+      "observed": [
+        {
+          "key": "space",
+          "post": [],
+          "pre": [
+            65,
+            74
+          ]
+        },
+        {
+          "key": "F8",
+          "post": [],
+          "pre": [
+            65,
+            74
+          ]
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "normal_terminal_no_server_keys",
+      "observed": {
+        "close_error": null,
+        "final": []
+      },
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_two_ordered_up_attempts",
+      "observed": [
+        65,
+        74
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_no_query_between_up_attempts",
+      "observed": [
+        12,
+        27,
+        34
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_pre_sample_before_first_up",
+      "observed": [
+        [
+          65,
+          74
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_post_sample_after_final_up",
+      "observed": [
+        [
+          65
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_post_sample_before_release_telemetry",
+      "observed": [
+        30,
+        31
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_admissions_observed",
+      "observed": [
+        "F8",
+        "space"
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_server_up_delivery_pattern",
+      "observed": [
+        [
+          65,
+          "xtest_key_up_suppressed"
+        ],
+        [
+          74,
+          "xtest_key_up_delivered"
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_owner_receipt_order",
+      "observed": [
+        65,
+        74
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_space_owner_release_receipt",
+      "observed": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a07-token",
+        "key": "space",
+        "keycode": 65,
+        "operation": "up",
+        "owner_id": "332d6290350f4ffe945054d7967ecde1",
+        "owner_keyrelease_started_ns": 177269831888300,
+        "owner_sync_returned_ns": 177269831892000,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 177279787500700
+      },
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_F8_owner_release_receipt",
+      "observed": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "a07-token",
+        "key": "F8",
+        "keycode": 74,
+        "operation": "up",
+        "owner_id": "332d6290350f4ffe945054d7967ecde1",
+        "owner_keyrelease_started_ns": 177269831956100,
+        "owner_sync_returned_ns": 177269831959700,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 177279787500700
+      },
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_release_projection_keys",
+      "observed": [
+        "space",
+        "F8"
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_space_keyrelease_release_projection_sample",
+      "observed": [
+        {
+          "key": "space",
+          "post": [
+            65
+          ],
+          "pre": [
+            65,
+            74
+          ]
+        },
+        {
+          "key": "F8",
+          "post": [
+            65
+          ],
+          "pre": [
+            65,
+            74
+          ]
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "lost_release_detected_at_terminal",
+      "observed": {
+        "close_error": {
+          "message": "owner release not verified: [65]",
+          "type": "RuntimeError"
+        },
+        "final": [
+          65
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "claims_remain_synthetic_only",
+      "observed": {
+        "application": false,
+        "full_controller_loop": false,
+        "physical_keyboard": false,
+        "real_input": false,
+        "real_x11": false
+      },
+      "pass": true
+    },
+    {
+      "name": "route_grants_no_authority",
+      "observed": null,
+      "pass": false
+    }
+  ],
+  "checks_passed": 34,
+  "checks_total": 35,
+  "failed_checks": [
+    {
+      "name": "route_grants_no_authority",
+      "observed": null,
+      "pass": false
+    }
+  ],
+  "new_auditor_invocations": 1,
+  "original_audit_sha256": "9e44c3a1cfb34715ebcb551cf59fac35961afbf6363d9c31fbf648c541614ce2",
+  "retries": 0,
+  "schema": "v39-v15-selected-path-prepost-a02-reaudit-a01-v1",
+  "scope": "Secondary raw-only audit of the preserved synthetic fake-X candidate. Trace keymap is fake server state. Owner XSync receipts do not establish physical key state or application consumption. No game, model, GUI, OS input, threat response, useful-feedback, recovery-efficacy, or MAP01 claim.",
+  "source_base": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "source_pr_head": "6bbdc0a70",
+  "status": "FAIL"
+}

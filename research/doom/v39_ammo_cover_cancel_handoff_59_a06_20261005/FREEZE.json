@@ -1,0 +1,15 @@
+{
+  "format": "issue59-v39-ammo-cancel-handoff-a06-freeze-v1",
+  "base_commit": "40f118fef7757744f09c0683870517e94ff5109f",
+  "current_main": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "source_sha256": {
+    "research/doom/test_map01_overlap_controller_v39.py": "924b62b7c078422f5525435f75bcda82a77db37eca103384dec58ef48a83a882",
+    "research/doom/test_overlap_controller_v39_wait.py": "efe87ade28fea5130fe53dc3bd8d5416b92a1fbd74f52ba7d9063a07d15be618",
+    "research/doom/test_map01_overlap_controller_v39_dual_signal.py": "d62d3b6dfc41e4b890fb7c1a49e06b56da60202eedc42dae827c149f7aeb2226",
+    "research/doom/map01_overlap_controller_v39.py": "70c5ff1d3f7ff4745a495600e6e067ba81dcc4475a6520b4a3e186baf6b327cc"
+  },
+  "runtime": "CPython 3.11.9 on Windows host; no isolation claim",
+  "formal_live_allocation_invocations": 0,
+  "decision_gate": "Five focused paired-cover, V39 controller, V39 wait, source-refresh, and immediate action-validity suites pass; changed tests compile; diff check clean.",
+  "scope": "synthetic rows and stubs only; no process, game, model, GUI, OS input, physical release, or task effect"
+}

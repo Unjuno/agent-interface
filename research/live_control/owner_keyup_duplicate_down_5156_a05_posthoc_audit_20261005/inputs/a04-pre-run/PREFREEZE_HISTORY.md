@@ -1,0 +1,5 @@
+# Pre-freeze A04 construction history
+
+This is development evidence, not a formal candidate allocation. All seven owner/wrapper/backend/fake-Xlib dependencies were verified byte-identical to the A03 package; the three frozen baseline copies also match the current `origin/main` blobs. The two focused construction tests passed. A first auditor run exposed mismatched assumptions about the wrapper’s release-context fields; the audit was corrected to validate the actual batch ID/step, explicit owner join, and batch position. The first corrected fixture audit still included its own changing log hash; the pre-freeze validator was adjusted to exclude its self-referential output. The final local fixture audit reconstructed the expected duplicate-admission ambiguity with zero base errors and rejected all 6/6 corruptions. Earlier pre-freeze STOP attempts are preserved in `prefreeze-audit-attempts.log`; none consumed the formal allocation.
+
+The formal candidate and auditor remain exactly one invocation each, in separate pinned WSLc containers, with no retry. No live X11 or game process was started.

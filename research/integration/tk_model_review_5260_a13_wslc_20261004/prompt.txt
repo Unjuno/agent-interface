@@ -1,0 +1,5 @@
+Inspect only the attached current private GUI screenshot. It visibly states the requested text and labels TARGET and DECOY fields. Return their current literal text, using an empty string for an empty field.
+Choose NO_REPAIR only if TARGET already equals requested text and DECOY is empty.
+Choose INSERT_PREFIX only if TARGET is exactly requested text with its one first character missing, TARGET is nonempty, and DECOY is empty. Return only the missing first character as prefix.
+Choose REFUSE for every other case or uncertainty. Prefix must be empty for NO_REPAIR and REFUSE.
+Do not infer text from file names. Do not use tools, run commands, edit files, or act. Your answer grants no input authority and is not task completion.
