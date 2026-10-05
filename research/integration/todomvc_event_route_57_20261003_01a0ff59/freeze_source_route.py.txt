@@ -1,0 +1,35 @@
+import datetime,hashlib,json,pathlib
+root=pathlib.Path(__file__).resolve().parent
+packet=json.loads((root/'decoded-packet.json').read_text(encoding='utf-8'))
+new=lambda t:{'target':'new','type':t}
+cases=[
+ ('input_blur','c04-route A <&>',[new('input'),new('blur')],0),
+ ('tab_no_change','c04-route A <&>',[{'target':'new','type':t,'keyCode':9} for t in ('keydown','keypress','keyup')]+[new('blur')],0),
+ ('sibling_change','c04-route A <&>',[{'target':'sibling','type':'change'}],0),
+ ('whitespace_change',' \t\n ',[new('change')],0),
+ ('change_only','c04-route A <&>',[new('change')],1),
+ ('input_change_blur','c04-route A <&>',[new('input'),new('change'),new('blur')],1),
+ ('unicode_change','  c04-route 作業 <&>  ',[new('input'),new('change'),new('blur')],1),
+ ('repeated_change','c04-route A <&>',[new('change'),new('change')],1)]
+sources=[]
+for name in ('helpers.js','store.js','model.js','view.js','controller.js'):
+    x=next(x for x in packet['members'] if x['path']=='unit/stock/examples/javascript-es5/dist/'+name)
+    sources.append({k:x[k] for k in ('path','bytes','sha256')})
+plan={'id':'todomvc-source-event-route-57-0820-A01','kind':'ordinary finite source-level integration diagnostic',
+ 'worker':'01a0ff59-0820-7c81-8ef1-f7c3e48ab67d','parent':57,'claim':5968885096,
+ 'upstream_commit':'ff43b02e59dfa604386bb382034b2cd07c2bcd8a','sources':sources,
+ 'cells':[{'name':n,'value':v,'events':e,'expected_count':c} for n,v,e,c in cases],
+ 'H':'Explicit valid newTodo change delivery reaches original synchronous create/store/clear route; value/focus/nonchange events alone do not.',
+ 'T':'One eight-row ordinary child, fresh contexts/unchanged five sources; four zero/four single create, original clearNewTodo only plus recording visual sink.',
+ 'D':'SOURCE_EVENT_ROUTE_CONFIRMED only all literal rows/typed joins/source pins hold; first unexpected stops with partial raw, no scientific replay.',
+ 'C':'Actual SDK event delivery/errors/render interception are unobserved; no causal SDK fault can be identified from source oracle.',
+ 'U':'Inert explicit event delivery is not browser dirty-value/fill/press or native DOM/task/durability/efficiency proof.',
+ 'limits':{'child_seconds':15,'stream_bytes_each':65536,'source_replays':0,'formal_allocations':0,'model_calls':0,'browser_calls':0,'main_sends':0},
+ 'frozen_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+with (root/'PLAN.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(plan,f,ensure_ascii=False,indent=2);f.write('\n')
+names=['PLAN.json','source-route.js','audit_source_route.py','decoded-packet.json','ACTUAL_PUBLIC_PARTS.json','ACTUAL_UPSTREAM_API.json','CLAIM_READBACK.json','run_source_once.py']
+pins={n:{'bytes':len((root/n).read_bytes()),'sha256':hashlib.sha256((root/n).read_bytes()).hexdigest()} for n in names}
+node=pathlib.Path('C:/Program Files/nodejs/node.exe')
+freeze={'frozen_utc':plan['frozen_utc'],'files':pins,'node':str(node),'node_sha256':hashlib.sha256(node.read_bytes()).hexdigest(),'source_start_count':0}
+with (root/'FREEZE.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(freeze,f,indent=2);f.write('\n')
+print(json.dumps({'pins':len(pins),'cells':len(cases),'frozen_utc':plan['frozen_utc']}))

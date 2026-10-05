@@ -7,6 +7,10 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+## Retained source-route reconstruction
+
+- [Issue #57 TodoMVC source-event route](todomvc_event_route_57_20261003_01a0ff59/README.md) — the frozen eight-row source-level reconstruction records that input/blur and Tab without a `change` event created no item, while explicit `change` reached the original model/storage route. The first saved-data auditor failure and corrected V2 audit remain preserved. This does not establish actual SDK/browser event delivery or explain the earlier browser stop. [Rescue custody qualification](../../runtime/results/todomvc_route_rescue_b714/README.md); no historical allocation was replayed.
+
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
 Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.

@@ -1,0 +1,25 @@
+import datetime,hashlib,json,os,pathlib,subprocess,sys
+root=pathlib.Path(__file__).resolve().parent
+pins=json.loads((root/'AUDITOR_V2_PREPARED.json').read_text(encoding='utf-8'))['files']
+def check():
+    for n,digest in pins.items():
+        if hashlib.sha256((root/n).read_bytes()).hexdigest()!=digest:raise ValueError(('changed',n))
+check()
+stamp=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+folder=root/'audit-v2-first';folder.mkdir()
+argv=[sys.executable,str(root/'audit_source_route_v2.py')]
+start=stamp(); p=subprocess.Popen(argv,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+timed_out=False
+try:stdout,stderr=p.communicate(timeout=15)
+except subprocess.TimeoutExpired:timed_out=True;p.kill();stdout,stderr=p.communicate()
+end=stamp()
+for label,data in [('stdout',stdout),('stderr',stderr)]:
+    if len(data)>65536:raise ValueError('stream cap exceeded')
+    (folder/(label+'.log')).write_bytes(data)
+record={'argv':argv,'supervisor_pid':os.getpid(),'pid':p.pid,'start_utc':start,'end_utc':end,'exit':p.returncode,
+ 'timed_out':timed_out,'reaped':p.poll() is not None,'pipes_drained':True,
+ 'streams':{k:{'bytes':len(v),'sha256':hashlib.sha256(v).hexdigest()} for k,v in [('stdout',stdout),('stderr',stderr)]}}
+(folder/'receipt.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
+check()
+print(json.dumps(record | {'stdout_text':stdout.decode('utf-8','replace')}))
+sys.exit(p.returncode if not timed_out else 2)
