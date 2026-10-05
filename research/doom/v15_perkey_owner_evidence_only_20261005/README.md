@@ -65,3 +65,9 @@ The 56-path frozen candidate closure was compared against current main and lates
 
 
 This refresh reruns source-identity checks only; it does not rerun the frozen candidate, live gameplay, or input behavior. Reproduce with `python -B audit_latest_main.py` after fetching the exact main and candidate commits. The eight checks are retained in `results/AUDIT_LATEST_MAIN.json`.
+
+## Latest-main static refresh (2026-10-05, `1fbef34f244588bff3d79b7cbea423dcb510ef8f`)
+
+The independent 8-check frozen-closure audit was rerun against the newest fetched main tip and PR #8065 head `6591b5703862c73d375a6646374ad82a26505bcb`. It again passes 8/8: 55 paths are shared with candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`; `research/live_control/input_owner_v12.py` is the only changed shared path; selector and candidate-only helper disposition are unchanged. The frozen candidate source closure still matches the latest candidate head.
+
+This static refresh does not rerun the frozen candidate or any live/game/input behavior. The exact comparison is in `CURRENT_MAIN_RECHECK_LATEST.json` and `results/AUDIT_LATEST_MAIN.json`.
