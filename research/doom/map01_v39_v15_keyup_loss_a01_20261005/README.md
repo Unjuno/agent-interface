@@ -1,0 +1,13 @@
+# V39/V15 dropped explicit KeyRelease composition probe — A01
+
+## H/T/D/C/U
+
+- **H:** In the frozen current-main V39/V15 release composition, a lost XTest `KeyRelease` may still produce a release-batch row with `owner_transition_verified=true`, because the owner receipt proves `XSync` completion and the post-batch state is owner bookkeeping. The `physical_verification_authoritative=false` marker should keep this distinct from a physical release claim; terminal cleanup should detect the still-down server key.
+- **T:** Freeze current main `018934cdf45fcabffcc4efe25b5c7b3d59bd459f`; run the actual V15 release-batch backend, current transition wrappers V4→V3, and current `input_owner_v12.py` with a fake X server. Use paired normal-delivery and one injected lost-KeyRelease case. One candidate run, then one independent audit over raw output and frozen source hashes. No live X, GUI, Doom, model, or game allocation.
+- **D:** PASS only if normal delivery yields an empty fake-server key set and a verified release batch, and the injected-loss case never marks the release batch verified while the fake server still reports the key down; terminal cleanup must either recover the key or fail closed with a retained diagnostic. Any lost key paired with `owner_transition_verified=true` is a bounded failure of the batch receipt's ability to establish physical release.
+- **C:** This is a synthetic composition probe of the selected V15 backend and current owner/transition chain. The base controller action loop is a small test double that supplies the same `actions` list into the production backend's `execute`/`raw` seams. It does not prove real X server delivery, application consumption, useful feedback, recovery, latency, threat response, or MAP01 progress.
+- **U:** Whether a newly patched current-main cleanup path can retry a dropped explicit key-up, and whether any such change alters game behavior, remain untested. The private live-game allocation remains unassigned.
+
+## Reproduction
+
+Use the cached Python 3.12 image by digest, `--pull never`, `--network none`, 0.25 CPU, 512 MiB, a read-only source mount, and a separate output mount. A01 and A02 construction STOPs remain preserved; only A03 completed the paired candidate. See `RESULT.md` for the disposition and `RUN_COMMANDS.md` for exact commands and resource warnings. `results/candidate-a03/candidate.json` is the immutable raw; `results/audit-a03/audit.json` is the independent posthoc check. A03's raw-and-source audit passed 16/16, while the scientific gate failed because the dropped-release case retained a down key alongside an owner-transition-verified batch row.
