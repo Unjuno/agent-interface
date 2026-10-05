@@ -13,5 +13,5 @@
   "stdout": null,
   "stderr": null,
   "construction_finding": "4-neighbour raster boundary yields circularity 0.56-0.65 for authored perfect analytic disks (gate requires >=0.70), so all 13 sequences incl. six true approaches become UNKNOWN. No candidate/auditor execution. Also shared-gate design leaves no positive false-YIELD tradeoff for clean controls; comparator fairness requires prospective redesign.",
-  "postregistration_method_audit": "The proposed auditor.py imports candidate.analyze, so it is not an independently implemented raw-only auditor. This separate construction flaw also prevents any formal auditor invocation; candidate/auditor counts remain 0/0."
+  "postregistration_method_audit": "The proposed auditor.py imports candidate.analyze, so it is not an independently implemented raw-only auditor. This separate construction flaw also prevents any formal auditor invocation; candidate/auditor counts remain 0/0. The raw-only audit implementation imports and calls candidate.analyze, so the two roles do not independently reconstruct candidate measurements."
 }
