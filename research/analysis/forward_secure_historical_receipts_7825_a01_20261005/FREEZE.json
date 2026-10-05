@@ -1,0 +1,128 @@
+{
+  "additive_path": "research/analysis/forward_secure_historical_receipts_7825_a01_20261005/",
+  "allocation_id": "UNJUNO-7825-FSS-A01-20261005",
+  "branch": "research/7825-forward-secure-receipts-a01-20261005",
+  "counterhypotheses": "Simple key rotation with an independently pinned public-key registry and retired prior keys may yield the same historical-forgery behavior; external witness assumptions may be unavailable or a signed false claim may remain undetected.",
+  "decision_gates": {
+    "comparison_interpretation": "Even if the finite method gate passes, record NO_DISTINCT_HISTORICAL_FORGERY_ADVANTAGE_OVER_ROTATING_KEYS_ON_THIS_FIXTURE. No scheme-level FSS security conclusion is made.",
+    "fail": "Any candidate/auditor disagreement, invalid positive history, accepted registered historical forgery, mutation confusion, missingness-as-zero, or claim that signature validity proves effect truth.",
+    "method_pass": "All frozen positive and negative behaviors match the independent audit, including equal tested historical-forgery rejection for rotating and evolving keys; only checkpointed validation rejects current-head rewrite/fork and latest-prefix rollback; the false claim remains authenticated but scorer-false."
+  },
+  "fixture": {
+    "current_compromise_key_is_deliberately_public_test_input": true,
+    "old_private_leaves_and_witness_private_keys_included": false,
+    "periods": 4,
+    "schema": "UNJUNO-7825-FSS-A01-FIXTURE-v1",
+    "slots_per_period": 2
+  },
+  "formal_invocations_at_freeze": {
+    "candidate": 0,
+    "independent_auditor": 0,
+    "retries": 0
+  },
+  "formal_runner_invocations": [
+    {
+      "container_command": [
+        "wslc.exe",
+        "run",
+        "--rm",
+        "--pull",
+        "never",
+        "--network",
+        "none",
+        "--cpus",
+        "1",
+        "--memory",
+        "512M",
+        "--volume",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7825fss_a01_20261005_4e08\\package:/src:ro",
+        "--workdir",
+        "/src",
+        "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+        "python",
+        "-B",
+        "candidate.py",
+        "/src/fixture.json"
+      ],
+      "host_command": [
+        "python",
+        "runner.py",
+        "candidate",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7825fss_a01_20261005_4e08\\package",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7825fss_a01_20261005_4e08\\package\\formal"
+      ],
+      "ordinal": 1,
+      "role": "candidate"
+    },
+    {
+      "container_command": [
+        "wslc.exe",
+        "run",
+        "--rm",
+        "--pull",
+        "never",
+        "--network",
+        "none",
+        "--cpus",
+        "1",
+        "--memory",
+        "512M",
+        "--volume",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7825fss_a01_20261005_4e08\\package:/src:ro",
+        "--volume",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7825fss_a01_20261005_4e08\\package\\formal:/out:ro",
+        "--workdir",
+        "/src",
+        "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+        "python",
+        "-B",
+        "audit.py",
+        "/src/fixture.json",
+        "/out/candidate.raw.json"
+      ],
+      "host_command": [
+        "python",
+        "runner.py",
+        "audit",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7825fss_a01_20261005_4e08\\package",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7825fss_a01_20261005_4e08\\package\\formal"
+      ],
+      "ordinal": 2,
+      "role": "independent_auditor"
+    }
+  ],
+  "freeze_status": "FROZEN_BEFORE_FORMAL_EXECUTION",
+  "frozen_at_utc": "2026-10-05T00:45:04.726699+00:00",
+  "hypothesis": "Under the fixture's hash-based one-time-key assumptions, the disclosed period-4 compromise leaf cannot authenticate a period-1 record; the separately registered rotating-key baseline may provide the same tested historical-forgery rejection. Without an external current-head witness, a valid current key can produce a conflicting suffix or a verifier can accept a shorter valid prefix; the checkpointed variant should reject those alternatives. Authentic signatures do not establish the truth of signed claims.",
+  "input_sha256": {
+    "README.md": "5600fe9c90f7a3cc42f1966641014d161c683573e1eab4df766286ba0c4f18d5",
+    "SOURCE_PLAN.md": "7312aff45786099adffb13465ddd2bd47c45b75384f5647b235d6a2db0c04832",
+    "audit.py": "30766d51f25ed414d5f36722f3e73e85eb8b5f6cd34e6f9448ce764335045643",
+    "candidate.py": "04394d5b77ef39b6c875a327ca913871590ce525a4489301315a11e75b7fcfd5",
+    "construction_tests.py": "f4710a386c4292cd4f7a86cea887bfda1a204cb91e4e5b886959352b4776929a",
+    "fixture.json": "f829fa7c5e3d8d91b9b9f4bfef057163237404663c58b95b52154a09a78f75b7",
+    "runner.py": "ecd70896c8cb2a0527cfe8acedc54b34c4b4aab010ccdeebe0cbb0f35566d9e8",
+    "setup.py": "7fccecabbb3db0566824393ca1151d15ed270e610b1b4daa2c695a5eccbc6284"
+  },
+  "issue": 7825,
+  "main_base_sha": "3f24e85bff32a93fbc1ca244f7f249b843710743",
+  "repository": "Unjuno/agent-interface",
+  "runtime": {
+    "active_containers_at_preflight": 0,
+    "architecture": "linux/amd64",
+    "container_image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "cpus_requested": 1,
+    "host_os": "Windows 11",
+    "host_python": "3.11.9 (runner only)",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "kernel": "6.18.40.1-1",
+    "memory_enforcement": "UNVERIFIED; WSLc stderr warns swap-limit capabilities are unsupported or cgroup is not mounted.",
+    "memory_requested": "512M",
+    "network": "none",
+    "python": "3.12.14",
+    "wsl": "3.0.1.0",
+    "wslc_session_manager": "3.0.1"
+  },
+  "test": "Freeze four synthetic periods, two one-time slots per period, public-key/root/checkpoint bytes, and input records. Compare independently registered period keys; a Merkle/Lamport frontier whose consumed leaves are discarded; and that frontier plus an independent one-time checkpoint witness. Candidate and raw-only auditor each run once, no retries. Mutation cases: current-leaf historical forgery, body alteration, interior deletion, current suffix rewrite, fork, valid-prefix rollback, wrong-period signature, invalid signature, missing/stale checkpoint, state rollback/skip, and correctly signed false-effect claim.",
+  "uncertainty": "Finite four-period SHA-256/Lamport construction only. It is not a standardized production FSS implementation or a cryptographic proof. Process-level pruning is not evidence of physical secure erasure. No monotonic-time, witness-honesty, task-effect truth, runtime, GUI, model, input, safety or deployment conclusion."
+}
