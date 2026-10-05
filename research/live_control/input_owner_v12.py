@@ -90,6 +90,185 @@ class InputOwner:
         fault = None
         self.ready.set()
 
+        def key_is_down(code):
+            bitmap = d.query_keymap()
+            return bool(bitmap[code // 8] & (1 << (code % 8)))
+
+        def sample_key_down(code):
+            try:
+                return key_is_down(code), None, time.perf_counter_ns()
+            except Exception as exc:
+                return None, {"type": type(exc).__name__, "message": str(exc)[:200]}, time.perf_counter_ns()
+
+        def release_key(code, *, max_attempts=3, force_first=False):
+            attempts = []
+            server_down, before_error, _ = sample_key_down(code)
+            for attempt in range(1, max_attempts + 1):
+                if server_down is False and not (force_first and attempt == 1):
+                    break
+                observed_down_before = server_down
+                started_ns = time.perf_counter_ns()
+                release_error = None
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_error = None
+                try:
+                    d.sync()
+                except Exception as exc:
+                    sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_returned_ns = time.perf_counter_ns() if sync_error is None else None
+                server_down, after_error, sampled_ns = sample_key_down(code)
+                attempts.append({
+                    "attempt": attempt,
+                    "keyrelease_started_ns": started_ns,
+                    "sync_returned_ns": sync_returned_ns,
+                    "keymap_sampled_ns": sampled_ns,
+                    "server_key_down_before": observed_down_before,
+                    "server_key_down_after": server_down,
+                    "keymap_before_error": before_error,
+                    "keymap_after_error": after_error,
+                    "keyrelease_error": release_error,
+                    "sync_error": sync_error,
+                })
+                before_error = after_error
+                if server_down is False:
+                    break
+            return attempts, server_down is False
+
+        def release_keys_batch(lease, keys):
+            if (type(keys) is not list or not keys or
+                    any(not isinstance(key, str) or not key for key in keys) or
+                    len(set(keys)) != len(keys)):
+                raise ValueError('unique non-empty key list required for up_batch')
+            if active is not lease or lease is None:
+                raise ValueError('up_batch requires the active input lease')
+            codes = []
+            for key in keys:
+                code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                if not code or held.get(code) is not lease:
+                    raise ValueError('up_batch key is unavailable or not owned')
+                codes.append((key, code))
+
+            # The pre-sample occurs before the ordered UP sequence. Send every
+            # original explicit UP before sampling again; this preserves the
+            # release-batch no-query-between-UPs contract.
+            try:
+                before_bitmap = d.query_keymap()
+                before_error = None
+            except Exception as exc:
+                before_bitmap = None
+                before_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+            attempt_rows = {}
+            for key, code in codes:
+                started_ns = time.perf_counter_ns()
+                release_error = None
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_error = None
+                try:
+                    d.sync()
+                except Exception as exc:
+                    sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_ns = time.perf_counter_ns() if sync_error is None else None
+                attempt_rows[code] = [{
+                    'attempt': 1,
+                    'keyrelease_started_ns': started_ns,
+                    'sync_returned_ns': sync_ns,
+                    'keymap_sampled_ns': None,
+                    'server_key_down_before': (
+                        bool(before_bitmap[code // 8] & (1 << (code % 8)))
+                        if before_bitmap is not None else None),
+                    'server_key_down_after': None,
+                    'keymap_before_error': before_error,
+                    'keymap_after_error': None,
+                    'keyrelease_error': release_error,
+                    'sync_error': sync_error,
+                }]
+
+            try:
+                bitmap = d.query_keymap()
+                sample_error = None
+                sampled_ns = time.perf_counter_ns()
+            except Exception as exc:
+                bitmap = None
+                sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sampled_ns = time.perf_counter_ns()
+            receipts = []
+            for key, code in codes:
+                attempts = attempt_rows[code]
+                server_down = (
+                    bool(bitmap[code // 8] & (1 << (code % 8)))
+                    if bitmap is not None else None)
+                attempts[0]['keymap_sampled_ns'] = sampled_ns
+                attempts[0]['server_key_down_after'] = server_down
+                attempts[0]['keymap_after_error'] = sample_error
+                while server_down is True and len(attempts) < 3:
+                    started_ns = time.perf_counter_ns()
+                    release_error = None
+                    try:
+                        xtest.fake_input(d, X.KeyRelease, code)
+                    except Exception as exc:
+                        release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                    sync_error = None
+                    try:
+                        d.sync()
+                    except Exception as exc:
+                        sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                    sync_ns = time.perf_counter_ns() if sync_error is None else None
+                    try:
+                        bitmap = d.query_keymap()
+                        sample_error = None
+                        sampled_ns = time.perf_counter_ns()
+                    except Exception as exc:
+                        bitmap = None
+                        sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                        sampled_ns = time.perf_counter_ns()
+                    server_down = (
+                        bool(bitmap[code // 8] & (1 << (code % 8)))
+                        if bitmap is not None else None)
+                    attempts.append({
+                        'attempt': len(attempts) + 1,
+                        'keyrelease_started_ns': started_ns,
+                        'sync_returned_ns': sync_ns,
+                        'keymap_sampled_ns': sampled_ns,
+                        'server_key_down_before': True,
+                        'server_key_down_after': server_down,
+                        'keymap_before_error': None,
+                        'keymap_after_error': sample_error,
+                        'keyrelease_error': release_error,
+                        'sync_error': sync_error,
+                    })
+                    if server_down is None:
+                        break
+                verified = server_down is False
+                if verified:
+                    held.pop(code, None)
+                receipt = dict(
+                    event='owner_explicit_keyup', operation='up',
+                    owner_id=self.owner_id, key=key, keycode=code,
+                    intent_token=getattr(lease, 'intent_token', None),
+                    valid_until_ns=getattr(lease, 'deadline', None),
+                    owner_keyrelease_started_ns=attempts[0]['keyrelease_started_ns'],
+                    owner_sync_returned_ns=attempts[-1]['sync_returned_ns'],
+                    owner_keymap_sampled_ns=attempts[-1]['keymap_sampled_ns'],
+                    server_keyup_verified=verified,
+                    server_keyup_attempt_count=len(attempts),
+                    server_keyup_attempts=attempts,
+                    server_key_down_after_keyup=server_down,
+                    key_state_source='x11_query_keymap',
+                    cancel_requested_after_sync=lease.cancel.is_set(),
+                    server_sync_completed=any(row['sync_error'] is None for row in attempts),
+                    physical_verification_authoritative=False,
+                    release_batch_initial_up_count=len(codes),
+                    release_batch_key_order=[item[0] for item in codes])
+                self.records.append(receipt)
+                receipts.append(receipt)
+            return receipts
+
         def focus_id():
             value=d.get_input_focus().focus
             return value.id if hasattr(value,'id') else value
@@ -175,45 +354,77 @@ class InputOwner:
         def release(reason):
             nonlocal active,revision
             revision += 1
-            # Explicit XSync completion does not prove that the server applied
-            # each release. Retry inputs still observed down, including touched
-            # inputs removed from their held maps after explicit up requests.
-            # Keep the held maps as a fallback if a pre-cleanup sample fails.
-            try:
-                before_bitmap = d.query_keymap()
-            except Exception:
-                retry_keys = set(held) | set(touched)
-            else:
-                retry_keys = {
-                    code for code in touched
-                    if before_bitmap[code // 8] & (1 << (code % 8))}
+            key_release_attempts = {}
+            key_state_errors = []
+            # Include every key this owner touched, not only keys still present
+            # in bookkeeping. A lost explicit up must remain recoverable here.
+            release_codes = list(held)
+            release_codes.extend(sorted(set(touched) - set(held)))
+            for code in release_codes:
+                attempts, verified = release_key(code)
+                key_release_attempts[str(code)] = {
+                    "attempts": attempts, "verified": verified,
+                }
+            # An explicit ButtonRelease may be acknowledged by XSync while
+            # the server still reports the button down. Retry every touched
+            # button that remains down, including one removed from `buttons`.
             try:
                 before_mask = d.screen().root.query_pointer().mask
-            except Exception:
+            except Exception as exc:
+                key_state_errors.append({"source": "pointer_before", "type": type(exc).__name__, "message": str(exc)[:200]})
                 retry_buttons = set(buttons) | set(touched_buttons)
             else:
                 retry_buttons = {
                     button for button in touched_buttons
-                    if before_mask & (X.Button1Mask << (button - 1))}
-            for code in list(retry_keys):
-                xtest.fake_input(d, X.KeyRelease, code)
-            for button in list(retry_buttons):
-                xtest.fake_input(d, X.ButtonRelease, button)
-            d.sync()
-            mask = d.screen().root.query_pointer().mask
-            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-            bitmap = d.query_keymap()
-            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+                    if before_mask & (X.Button1Mask << (button - 1))
+                }
+            for button in sorted(retry_buttons):
+                try:
+                    xtest.fake_input(d, X.ButtonRelease, button)
+                except Exception as exc:
+                    key_state_errors.append({"source": "button_release", "button": button,
+                                             "type": type(exc).__name__, "message": str(exc)[:200]})
+            try:
+                d.sync()
+            except Exception as exc:
+                key_state_errors.append({"source": "button_release_sync", "type": type(exc).__name__,
+                                         "message": str(exc)[:200]})
+            try:
+                mask = d.screen().root.query_pointer().mask
+                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+            except Exception as exc:
+                key_state_errors.append({"source": "pointer_after", "type": type(exc).__name__, "message": str(exc)[:200]})
+                buttons_down = sorted(set(buttons) | set(touched_buttons))
+            down = []
+            unknown_keys = []
+            for code in sorted(touched):
+                sampled, sample_error, _ = sample_key_down(code)
+                if sampled is True:
+                    down.append(code)
+                elif sampled is None:
+                    unknown_keys.append(code)
+                    key_state_errors.append({"source": "keymap_after", "keycode": code, **sample_error})
             if reason == 'release' and active is not None and active.cancel.is_set():
                 reason = 'cancelled'
-            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
-                          keys_down=down, verified_ns=time.perf_counter_ns(),
-                          valid_until_ns=active.deadline if active else None)
+            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down and not unknown_keys and not key_state_errors, buttons_down=buttons_down,
+                          keys_down=down, keys_unknown=unknown_keys, key_state_errors=key_state_errors, verified_ns=time.perf_counter_ns(),
+                          valid_until_ns=active.deadline if active else None,
+                          key_release_attempts=key_release_attempts,
+                          key_release_intervals_ns=[
+                              {"keycode": int(code), "interval_ns": [
+                                  attempts[0]["keyrelease_started_ns"],
+                                  attempts[-1]["keymap_sampled_ns"]]}
+                              for code, value in key_release_attempts.items()
+                              if (attempts := value["attempts"])
+                          ],
+                          key_state_source='x11_query_keymap')
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
-            if down or buttons_down:
-                raise RuntimeError('owner release not verified: ' + repr(down))
+            if down or buttons_down or unknown_keys or key_state_errors:
+                error = RuntimeError('owner release not verified: ' + repr(down))
+                error.owner_release_record = record
+                raise error
             buttons.clear()
             touched_buttons.clear()
             held.clear()
@@ -266,7 +477,7 @@ class InputOwner:
                         if not all(point.mask & (X.Button1Mask << (b-1)) for b in buttons):
                             raise DecisionRequired('held button no longer physically down')
                         op='move';key={'x':key['x'],'y':key['y']}
-                    if op in ('move','button_down','button_up','wheel','down','up'):revision += 1
+                    if op in ('move','button_down','button_up','wheel','down','up','up_batch'):revision += 1
                     if op == 'input_state':
                         started=time.perf_counter_ns();point=d.screen().root.query_pointer();focus=focus_id();finished=time.perf_counter_ns()
                         result=dict(owner_id=self.owner_id,revision=revision,sample_started_ns=started,sample_finished_ns=finished,
@@ -332,6 +543,8 @@ class InputOwner:
                             result = dict(event='pointer_admission', operation=op, payload=key,
                                           admitted_ns=admitted,input_ack_ns=time.perf_counter_ns(),
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
+                    elif op == 'up_batch':
+                        result = release_keys_batch(lease, key)
                     elif op in ('down', 'up'):
                         code = d.keysym_to_keycode(XK.string_to_keysym(key))
                         if not code:
@@ -361,26 +574,41 @@ class InputOwner:
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
-                                owner_keyrelease_started_ns = time.perf_counter_ns()
-                                xtest.fake_input(d, X.KeyRelease, code)
-                                d.sync()
-                                owner_sync_returned_ns = time.perf_counter_ns()
+                                key_release_attempts, server_keyup_verified = release_key(
+                                    code, force_first=True)
+                                owner_keyrelease_started_ns = key_release_attempts[0]["keyrelease_started_ns"]
+                                owner_sync_returned_ns = key_release_attempts[-1]["sync_returned_ns"]
+                                owner_keymap_sampled_ns = key_release_attempts[-1]["keymap_sampled_ns"]
                                 cancel = getattr(lease, 'cancel', None)
                                 cancel_requested_after_sync = (
                                     cancel.is_set() if callable(getattr(cancel, 'is_set', None))
                                     else None
                                 )
-                                del held[code]
-                                self.records.append(dict(
+                                receipt = dict(
                                     event='owner_explicit_keyup', operation='up',
                                     owner_id=self.owner_id, key=key, keycode=code,
                                     intent_token=getattr(lease, 'intent_token', None),
                                     valid_until_ns=getattr(lease, 'deadline', None),
                                     owner_keyrelease_started_ns=owner_keyrelease_started_ns,
                                     owner_sync_returned_ns=owner_sync_returned_ns,
+                                    owner_keymap_sampled_ns=owner_keymap_sampled_ns,
+                                    server_keyup_verified=server_keyup_verified,
+                                    server_keyup_attempt_count=len(key_release_attempts),
+                                    server_keyup_attempts=key_release_attempts,
+                                    server_key_down_after_keyup=not server_keyup_verified,
+                                    key_state_source='x11_query_keymap',
                                     cancel_requested_after_sync=cancel_requested_after_sync,
-                                    server_sync_completed=True,
-                                    physical_verification_authoritative=False))
+                                    server_sync_completed=any(
+                                        row['sync_error'] is None for row in key_release_attempts
+                                    ),
+                                    physical_verification_authoritative=False)
+                                self.records.append(receipt)
+                                if not server_keyup_verified:
+                                    error = RuntimeError(
+                                        'explicit key-up not observed in X11 keymap: ' + str(code))
+                                    error.owner_explicit_keyup_record = receipt
+                                    raise error
+                                del held[code]
                             result = None
                     else:
                         raise ValueError('unknown input operation')

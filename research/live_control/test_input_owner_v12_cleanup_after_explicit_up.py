@@ -14,16 +14,19 @@ class FakeDisplay:
         self.down = set()
         self.buttons_down = set()
         self.release_attempts = 0
+        self.key_release_order = []
         self.button_release_attempts = 0
         self.drop_next_key_release = True
         self.drop_next_button_release = True
+        self.fail_key_release_attempts = 0
+        self.fail_sync_attempts = 0
         self.root = FakeRoot(self)
 
     def get_input_focus(self):
         return types.SimpleNamespace(focus=41)
 
-    def keysym_to_keycode(self, _keysym):
-        return 65
+    def keysym_to_keycode(self, keysym):
+        return {ord("W"): 65, ord("A"): 66}.get(keysym, 0)
 
     def screen(self):
         return types.SimpleNamespace(root=self.root)
@@ -42,7 +45,9 @@ class FakeDisplay:
         return bytes(bitmap)
 
     def sync(self):
-        pass
+        if self.fail_sync_attempts:
+            self.fail_sync_attempts -= 1
+            raise RuntimeError("synthetic XSync failure")
 
     def close(self):
         pass
@@ -99,7 +104,7 @@ class Lease:
 
 
 class ExplicitUpCleanupTests(unittest.TestCase):
-    def test_owner_retries_key_and_button_up_after_sync_left_down(self):
+    def test_owner_retries_dropped_button_up_during_cleanup(self):
         names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
                  "Xlib.ext", "Xlib.ext.xtest", "executor_v3")
         saved = {name: sys.modules.get(name) for name in names}
@@ -109,7 +114,7 @@ class ExplicitUpCleanupTests(unittest.TestCase):
                                        ButtonRelease=5, Button1Mask=256,
                                        AnyPropertyType=0, IsViewable=2)
         xk = types.ModuleType("Xlib.XK")
-        xk.string_to_keysym = lambda _key: 1
+        xk.string_to_keysym = lambda key: ord(key)
         display = types.ModuleType("Xlib.display")
         display.Display = lambda _name: display_instance
         error = types.ModuleType("Xlib.error")
@@ -123,6 +128,10 @@ class ExplicitUpCleanupTests(unittest.TestCase):
                 display_instance.down.add(code)
             elif event == xlib.X.KeyRelease:
                 display_instance.release_attempts += 1
+                display_instance.key_release_order.append(code)
+                if display_instance.fail_key_release_attempts:
+                    display_instance.fail_key_release_attempts -= 1
+                    raise RuntimeError("synthetic XTest key release failure")
                 if display_instance.drop_next_key_release:
                     display_instance.drop_next_key_release = False
                 else:
@@ -154,17 +163,6 @@ class ExplicitUpCleanupTests(unittest.TestCase):
 
             owner = InputOwner(":fake")
             lease = Lease()
-            owner.call("down", lease, "A")
-            owner.call("up", lease, "A")
-            self.assertEqual(display_instance.down, {65})
-
-            result = owner.call("release", lease)
-
-            self.assertTrue(result["verified"])
-            self.assertEqual(result["keys_down"], [])
-            self.assertEqual(display_instance.down, set())
-            self.assertEqual(display_instance.release_attempts, 2)
-
             pointer_lease = Lease()
             pointer_lease.expected_surface = 52
             pointer_lease.expected_geometry = [0, 0, 100, 100]
@@ -179,13 +177,6 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(display_instance.buttons_down, set())
             self.assertEqual(display_instance.button_release_attempts, 2)
 
-            successful_lease = Lease()
-            owner.call("down", successful_lease, "A")
-            owner.call("up", successful_lease, "A")
-            self.assertEqual(display_instance.down, set())
-            owner.call("release", successful_lease)
-            self.assertEqual(display_instance.release_attempts, 3)
-
             successful_pointer_lease = Lease()
             successful_pointer_lease.expected_surface = 52
             successful_pointer_lease.expected_geometry = [0, 0, 100, 100]
@@ -194,6 +185,40 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(display_instance.buttons_down, set())
             owner.call("release", successful_pointer_lease)
             self.assertEqual(display_instance.button_release_attempts, 3)
+
+            batch_lease = Lease()
+            owner.call("down", batch_lease, "W")
+            owner.call("down", batch_lease, "A")
+            order_start = len(display_instance.key_release_order)
+            display_instance.fail_key_release_attempts = 1
+            display_instance.fail_sync_attempts = 1
+            batch_rows = owner.call("up_batch", batch_lease, ["W", "A"])
+            self.assertTrue(all(row["server_keyup_verified"] for row in batch_rows))
+            self.assertEqual(batch_rows[0]["server_keyup_attempt_count"], 2)
+            self.assertEqual(batch_rows[1]["server_keyup_attempt_count"], 2)
+            self.assertIsNotNone(batch_rows[0]["server_keyup_attempts"][0]["keyrelease_error"])
+            self.assertIsNotNone(batch_rows[0]["server_keyup_attempts"][0]["sync_error"])
+            self.assertEqual(display_instance.key_release_order[order_start:order_start + 2], [65, 66])
+            owner.call("release", batch_lease)
+
+            failing_lease = Lease()
+            failing_lease.expected_surface = 52
+            failing_lease.expected_geometry = [0, 0, 100, 100]
+            owner.call("down", failing_lease, "W")
+            owner.call("button_down", failing_lease, 1)
+            display_instance.fail_key_release_attempts = 3
+            release_count = len([row for row in owner.records
+                                 if row.get("event") == "owner_release"])
+            with self.assertRaises(RuntimeError):
+                owner.call("release", failing_lease)
+            display_instance.fail_key_release_attempts = 0
+            release_records = [row for row in owner.records
+                               if row.get("event") == "owner_release"]
+            self.assertGreater(len(release_records), release_count)
+            self.assertFalse(release_records[-1]["verified"])
+            self.assertEqual(display_instance.buttons_down, set())
+            self.assertGreater(display_instance.button_release_attempts, 3)
+
         finally:
             if owner is not None:
                 owner.close()
