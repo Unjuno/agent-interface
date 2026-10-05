@@ -1,0 +1,16 @@
+{
+  "schema": "v39-v15-selected-path-composition-a01-result-v1",
+  "allocation": "A01",
+  "prereg_comment": 5986926684,
+  "base_commit": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "candidate_observation": "Selected V15; loaded release-batch backend v1 and Executor v13. Synthetic two-key sequence recorded explicit KeyRelease/XSync for SPACE keycode 65 and F8 keycode 74, with no query_keymap between the two UP events. Post-batch query_keymap occurred at trace n23; result n24 sampled no down keycodes; release telemetry emitted at n26 and n27. Terminal cleanup later queried keymap at n30 and closed with no held keys.",
+  "candidate_scope_result": "SOURCE_COMPOSITION_OBSERVED",
+  "independent_audit_status": "FAIL",
+  "audit_failure": "The sole raw auditor assertion sample_after_up_and_owner_state failed because it used max(owner_state_after), which included terminal-cleanup owner query n29 after the post-batch sample. Candidate trace shows the pre-sample owner state at n18-n21, post-batch sample at n23-n24, then telemetry at n26-n27. The auditor was not rerun or edited after execution.",
+  "authority_limits": ["No real X11", "No physical keyboard state", "No application effect", "No full V39 controller/game loop", "No threat response, latency, feedback usefulness, bounded recovery, or gameplay result", "XSync proves server synchronization only"],
+  "decision": "Retain as source-composition observation with a failed independent audit; do not promote to a passing qualification until a separately preregistered successor tests corrected audit logic."
+}
