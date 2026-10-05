@@ -1,0 +1,69 @@
+{
+  "disposition": "PASS_METHOD_SCOPED",
+  "edge_controls": [
+    {
+      "control": "forged_edge",
+      "freshness": "UNKNOWN_STALE",
+      "inherited_ticks": 0,
+      "rejected": true
+    },
+    {
+      "control": "stale_edge",
+      "freshness": "UNKNOWN_STALE",
+      "inherited_ticks": 0,
+      "rejected": true
+    },
+    {
+      "control": "incomplete_edge",
+      "freshness": "UNKNOWN_STALE",
+      "inherited_ticks": 0,
+      "rejected": true
+    },
+    {
+      "control": "remote_nonpreemptible",
+      "freshness": "UNKNOWN_STALE",
+      "inherited_ticks": 0,
+      "rejected": true
+    },
+    {
+      "control": "expired_edge",
+      "freshness": "UNKNOWN_STALE",
+      "inherited_ticks": 0,
+      "rejected": true
+    }
+  ],
+  "errors": [],
+  "formal_auditor_invocations": 1,
+  "hypothesis_disposition": "H_PASS_SCOPED",
+  "limitations": [
+    "same-author separate implementation, not independent human review",
+    "integer-tick authored finite schedules only",
+    "simplified CBS-like replenishment, not full CBS or host scheduling",
+    "no application resource, GUI, user, model, latency, or physical-release claim"
+  ],
+  "mutation_controls": [
+    {
+      "mutation": "budget_refund",
+      "rejected": true
+    },
+    {
+      "mutation": "duplicate_cpu_service",
+      "rejected": true
+    },
+    {
+      "mutation": "wrong_server_charge",
+      "rejected": true
+    },
+    {
+      "mutation": "stale_freshness_admission",
+      "rejected": true
+    },
+    {
+      "mutation": "omitted_policy_case",
+      "rejected": true
+    }
+  ],
+  "run_arms_reconstructed": 27,
+  "run_rows_reconstructed": 63,
+  "schema": "issue7944-bwi-t0-a01-audit-v1"
+}
