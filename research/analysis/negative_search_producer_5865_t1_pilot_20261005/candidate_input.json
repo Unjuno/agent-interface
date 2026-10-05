@@ -1,0 +1,179 @@
+{
+  "allocation": "T1-CONSTRUCTION-PILOT-20261005",
+  "query": "Delete",
+  "cases": [
+    {
+      "case_id": "stable-01",
+      "producer_complete": true,
+      "epoch": 11,
+      "items": [
+        {
+          "id": "save",
+          "label": "Save"
+        },
+        {
+          "id": "cancel",
+          "label": "Cancel"
+        }
+      ]
+    },
+    {
+      "case_id": "stable-02",
+      "producer_complete": true,
+      "epoch": 12,
+      "items": [
+        {
+          "id": "apply",
+          "label": "Apply"
+        },
+        {
+          "id": "close",
+          "label": "Close"
+        }
+      ]
+    },
+    {
+      "case_id": "stable-03",
+      "producer_complete": true,
+      "epoch": 13,
+      "items": [
+        {
+          "id": "yes",
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "case_id": "stable-04",
+      "producer_complete": true,
+      "epoch": 14,
+      "items": [
+        {
+          "id": "open",
+          "label": "Open"
+        },
+        {
+          "id": "back",
+          "label": "Back"
+        }
+      ]
+    },
+    {
+      "case_id": "stable-05",
+      "producer_complete": true,
+      "epoch": 15,
+      "items": [
+        {
+          "id": "next",
+          "label": "Next"
+        },
+        {
+          "id": "done",
+          "label": "Done"
+        }
+      ]
+    },
+    {
+      "case_id": "virtual-01",
+      "producer_complete": false,
+      "epoch": 21,
+      "items": [
+        {
+          "id": "row-00",
+          "label": "Row 0"
+        },
+        {
+          "id": "row-01",
+          "label": "Row 1"
+        }
+      ]
+    },
+    {
+      "case_id": "virtual-02",
+      "producer_complete": false,
+      "epoch": 22,
+      "items": [
+        {
+          "id": "row-00",
+          "label": "Row 0"
+        },
+        {
+          "id": "row-01",
+          "label": "Row 1"
+        }
+      ]
+    },
+    {
+      "case_id": "virtual-03",
+      "producer_complete": false,
+      "epoch": 23,
+      "items": [
+        {
+          "id": "row-00",
+          "label": "Row 0"
+        }
+      ]
+    },
+    {
+      "case_id": "mutation-epoch-drift",
+      "producer_complete": false,
+      "epoch": 31,
+      "page_epochs": [
+        31,
+        32
+      ],
+      "items": [
+        {
+          "id": "row-a",
+          "label": "Row A"
+        },
+        {
+          "id": "row-b",
+          "label": "Row B"
+        }
+      ]
+    },
+    {
+      "case_id": "mutation-silent-writer",
+      "producer_complete": false,
+      "epoch": 41,
+      "writer_coverage": false,
+      "items": [
+        {
+          "id": "button-a",
+          "label": "Save"
+        }
+      ]
+    },
+    {
+      "case_id": "mutation-surface-drift",
+      "producer_complete": false,
+      "epoch": 51,
+      "surface_ids": [
+        "panel-A",
+        "panel-B"
+      ],
+      "items": [
+        {
+          "id": "button-a",
+          "label": "Save"
+        }
+      ]
+    },
+    {
+      "case_id": "stable-positive-control",
+      "producer_complete": true,
+      "epoch": 61,
+      "items": [
+        {
+          "id": "delete",
+          "label": "Delete"
+        }
+      ]
+    }
+  ]
+}

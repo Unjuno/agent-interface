@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-10-05",
+  "tool": "Codex CUA in-app browser",
+  "url": "http://127.0.0.1:8765/fixture.html",
+  "observation_scope": "synthetic browser fixture only",
+  "accessibility_tree": [
+    "button Save",
+    "button Cancel",
+    "button Apply",
+    "button Close",
+    "img Rows 0 through 5 of a virtualized 30-row list"
+  ],
+  "playwright_dom_snapshot": [
+    "region Stable controls: buttons Save, Cancel, Apply, Close",
+    "region Virtualized canvas-like list: img Rows 0 through 5 of a virtualized 30-row list"
+  ],
+  "cua_screenshot_observation": "Visible canvas rows are Row 0 through Row 5; target label Delete is not visible. Screenshot was captured through CUA but is not exported as a separate file.",
+  "limits": [
+    "This is a locally authored browser fixture, not a native application or product GUI.",
+    "The app-side oracle is a separate offline file; the browser accessibility tree does not enumerate hidden rows.",
+    "No user action, input authority, or task-effect claim was tested."
+  ]
+}
