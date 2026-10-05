@@ -1,0 +1,8 @@
+Construction only (before freeze):
+python3 -B -m unittest -v test_construction.py
+
+Formal (after GitHub freeze commit, exactly once each; no retry):
+mkdir -p formal_a04
+ test -d formal_a04
+python3 -B candidate.py > formal_a04/candidate.json 2> formal_a04/candidate.stderr.txt
+python3 -B auditor.py > formal_a04/audit.json 2> formal_a04/auditor.stderr.txt
