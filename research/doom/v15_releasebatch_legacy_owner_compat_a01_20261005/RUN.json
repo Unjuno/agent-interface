@@ -1,0 +1,18 @@
+{
+  "schema": "v15_releasebatch_legacy_owner_compat_a01_run_v1",
+  "candidate_main_sha": "7754ef4e268fcb5166ece66ad821ef1af57cabd6",
+  "frozen_source_count": 5,
+  "command": "python research/doom/v15_releasebatch_legacy_owner_compat_a01_20261005/run_compat.py research/doom/v15_releasebatch_legacy_owner_compat_a01_20261005/run-01",
+  "interpreter": "/run/current-system/sw/bin/python",
+  "python_version": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "probe_sha256": "fabc422ed8968526de9a88486a8b28af1288054cf1e7f2bbf79dc0a7c40d8180",
+  "exit_code": 0,
+  "observed_status": "FAIL_COMPATIBILITY",
+  "constraints": [
+    "inert Xlib Display double",
+    "XTest.fake_input raises if called",
+    "no package installation",
+    "worker thread explicitly closed and joined"
+  ]
+}
