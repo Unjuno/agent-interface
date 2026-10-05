@@ -16,6 +16,10 @@ Screening calls include the shared 64-per-instance baseline. C used 2,728 fewer 
 
 The single-run comparator shortened 11 traces but met the held-out bound in only five; in several instances it removed warmup and substantially reduced recurrence. Its held-out outcomes included 117 competing-fingerprint failures across three instances. These were reconstructed as `COMPETING_WIDGET_CRASH` (exit code 17), never credited as the target. This demonstrates why exit-code equality and a lucky one-shot replay are inadequate preservation tests in this model.
 
+## Coordination / lineage note
+
+After the formal run, Issue #8152 history revealed an earlier A01 preregistration comment naming allocation `UNJUNO-8152-STAT-TRACE-A01-20261005`, branch `research/statistical-trace-reducer-8152-t0-a01-20261005`, and frozen commit `89283d3d0e46ae916f8c452b4942a70c0170ac53` based on `84be79757c8bc18eea1ecaf5edb8f392e3e6e425`. This run was already complete by discovery. At the time of the check, the named branch was absent from `git ls-remote` and GitHub branch search, the frozen commit could not be fetched through GitHub MCP (422/no commit), and the allocation package was not present in the reachable main tree. This package is a separate experiment on base `60aff39f60defd06f9b4cabd0941e54d17c570df`; it neither continues nor replaces A01, and no results are pooled. A01's final status remains unverified; maintainer reconciliation is requested before merging this PR.
+
 ## Gate and scope
 
 All B/C accepted traces retained mandatory reset, lease and release, respected the frozen event grammar, and passed held-out exact-target non-inferiority with Bonferroni-adjusted one-sided exact Clopper–Pearson bounds. Raw replay reconstruction, candidate thresholds/look sequences, seed separation and query counts all passed the independent auditor. No model, GUI, live repository failure, user data, or external effect was involved.
