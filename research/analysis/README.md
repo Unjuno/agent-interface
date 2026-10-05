@@ -389,6 +389,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`caller_custody_union_20261004/`](caller_custody_union_20261004/)
 - [`caller_two_tier_stage_dominance_v1/`](caller_two_tier_stage_dominance_v1/)
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
+- [`carbon_window_7794_comparator_a04_20261005/`](carbon_window_7794_comparator_a04_20261005/)
 - [`causal_attribution_5323_t0_v1/`](causal_attribution_5323_t0_v1/)
 - [`causal_critical_path_elasticity_5851_t0_v1/`](causal_critical_path_elasticity_5851_t0_v1/)
 - [`causal_cut_5348_t1/`](causal_cut_5348_t1/)
