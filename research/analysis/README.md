@@ -1045,6 +1045,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
+- [Issue #7794 comparator semantics diagnostic A04](carbon_window_7794_comparator_a04_20261005/REPORT.md) — `PASS_DIAGNOSTIC_SCOPED`: independent audit reconstructed all 10 rows; nine A02 fixtures agreed and the fixed two-job discriminator separated global lexicographic from serial ASAP. Native macOS fallback; no emissions/operational claim.
+
+
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
 
 - [`map01_owner_cross_head_59_t0_20261001/`](map01_owner_cross_head_59_t0_20261001/PRESERVATION_QUALIFICATION.md) — Preserved historical cross-head selector FAIL; synthetic rank placeholders, unchanged live-03 invalidation, no new runtime or allocation claim.
