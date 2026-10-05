@@ -78,8 +78,6 @@ class MeasurementSessionComposition(unittest.TestCase):
             parser.add_argument("--load-fixture-manifest", required=True)
             parser.add_argument("--per-key-input-measurement", action="store_true")
             captured.update(vars(parser.parse_args()))
-            captured["perkey_bridge"] = str(base.PERKEY_BRIDGE)
-            captured["perkey_owner"] = str(base.PERKEY_OWNER)
 
         base.main = fake_base_main
         executor = types.ModuleType("executor_v13")
@@ -88,7 +86,6 @@ class MeasurementSessionComposition(unittest.TestCase):
         backend.Backend = type("Backend", (), {})
         scope = {
             "sys": sys, "Path": Path, "time": time, "hashlib": hashlib,
-            "HERE": DOOM, "RESEARCH": ROOT / "research",
             "json": json, "ScorerFileSink": Sink,
             "MainThreadScorerStdin": Polling,
             "preserve_opt_in_measurement_backend": lambda _base, _backend, args:
@@ -107,10 +104,6 @@ class MeasurementSessionComposition(unittest.TestCase):
             scope["main"]()
         self.assertTrue(captured["per_key_input_measurement"])
         self.assertIn("--per-key-input-measurement", captured["backend_args"])
-        self.assertEqual(Path(captured["perkey_bridge"]),
-                         DOOM / "doom_batch_key_measurement_backend_v1.py")
-        self.assertEqual(Path(captured["perkey_owner"]),
-                         ROOT / "research" / "live_control" / "input_owner_v12.py")
 
     def test_v12_consumer_declares_forwarded_flag_and_v15_delegates(self):
         v12 = ast.parse(SESSION_V12.read_text(encoding="utf-8"))

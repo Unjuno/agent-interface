@@ -1,0 +1,11 @@
+# Reproduce the regression check
+
+The sources are in the same repository. Preserve the raw records; use a fresh disposable directory. The original execution used bundled CPython 3.12.14 on macOS arm64 with Pillow/NumPy and synthetic external seams. No services, native X server, model, GPU or VM are required for these regressions.
+
+1. Fetch exact source head `59e307adde701dc3e061ee3ff124c5982c20fcc9` and main `95316efef54b092fc2f0264539223830cdb9ba21`. A local `git merge-tree --write-tree <head> <main>` must return `6b7f94c8270021457b321b40fe3c757f39b50dec` cleanly. This creates an object and does not update a branch.
+2. Read each of the 87 paths in `candidate-final-freeze.json.source_files` from that source tree into a new directory. Replace only the two test files with the `.after.txt` bytes in this archive. Verify every resulting SHA256 against the freeze. The exact final tree can be reconstructed by applying the context-free `tests.patch` with `git apply --unidiff-zero` to the virtual tree in a private index/checkout; it is `1b70144f44470d6e07b51111b793683781aca33b`.
+3. Set PYTHONPATH in this order: `<source>/research/live_control`, `research/doom`, `research/observation_gating`, `research/observation_tiles`, `research/real_apps_v1`, and `<source>` itself (expand every relative item against the source directory). Set PYTHONDONTWRITEBYTECODE=1, OPENBLAS_NUM_THREADS=1 and OMP_NUM_THREADS=1.
+4. For each of the 17 `rows[].test` paths in `final-execution.json`, run `python3 -B <absolute test path> -v` with cwd equal to that test's parent directory. Bound each process to 45 seconds and retain each runner's exit code and stdout/stderr in a new output directory. Each module must exit 0; the total is 153 methods. This is a scoped suite, not broad repository discovery.
+5. The two repaired modules can also be checked with `python3 -O -B <test path> -v`. Keep new outputs outside this archive. Do not overwrite the recorded initial failures or final results.
+
+The fixture JSONL files are read as test inputs only; no historical experiment is restarted. Hashes establish identity, not correctness or operating permission. `manifest.json` covers every archive file except itself.
