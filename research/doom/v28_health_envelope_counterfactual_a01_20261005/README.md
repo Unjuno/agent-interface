@@ -10,7 +10,10 @@ The candidate reads the retained report, event stream, manual frame review,
 current V39 guard helpers and current typed guard. It writes only to a fresh
 output path. The independent auditor does not import the candidate; it rebuilds
 the five frame/event joins and recalculates all 105 health/ammo outcomes and
-summary counts from the frozen source inputs.
+summary counts from the frozen source inputs. Three post-run black-box mutation
+controls reject a changed source-span value, a changed guard floor in raw
+output, and an omitted sweep row. They use temporary copies and leave the
+frozen A01 output untouched; see [`AUDIT_CONTROLS.md`](AUDIT_CONTROLS.md).
 
 ## Result
 
@@ -37,6 +40,7 @@ run the auditor with that raw file and a different new audit path:
 ```powershell
 python research/doom/v28_health_envelope_counterfactual_a01_20261005/candidate.py research/doom/v28_health_envelope_counterfactual_a01_20261005/outputs/next/candidate-raw.json
 python research/doom/v28_health_envelope_counterfactual_a01_20261005/audit.py research/doom/v28_health_envelope_counterfactual_a01_20261005/outputs/next/candidate-raw.json research/doom/v28_health_envelope_counterfactual_a01_20261005/outputs/next/audit.json
+python -B -m unittest research.doom.v28_health_envelope_counterfactual_a01_20261005.test_audit -v
 ```
 
 The checked-in `outputs/a01` directory contains the one frozen run. Raw source
