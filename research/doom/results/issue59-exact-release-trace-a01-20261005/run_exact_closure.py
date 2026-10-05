@@ -1,6 +1,6 @@
-import importlib.util, json, sys, threading, time, types
+import importlib.util, json, os, sys, threading, time, types
 from pathlib import Path
-ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\issue59-v15-scorer-20261005')
+ROOT=Path(os.environ.get('ISSUE59_SOURCE_ROOT', Path(__file__).resolve().parents[4]))
 DOOM=ROOT/'research'/'doom'; LIVE=ROOT/'research'/'live_control'
 sys.path[:0]=[str(DOOM),str(LIVE)]
 EVENTS=[]; HELD=set()
@@ -100,6 +100,8 @@ baseline=run(False); negative=run(True)
 report={'schema':'issue59-exact-closure-a01-v1','source_head':'8a9e76d56be60fdaf96fa87ccbc9c7defd29e20d','scope':'actual V15 batch wrapper and actual v4->v3->v12 owner adapter/input-owner source; fake Xlib Display + fake outer executor; no live X11, game, or input','baseline':baseline,'negative_control':negative,'decision':'baseline must pass; negative control must fail; query_keymap observed during owner.close cleanup is outside the explicit two-key release interval'}
 print(json.dumps(report,sort_keys=True,indent=2))
 if not baseline['all'] or negative['all']: raise SystemExit(1)
+
+
 
 
 
