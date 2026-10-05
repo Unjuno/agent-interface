@@ -1,0 +1,24 @@
+container_attempt:
+  docker context: orbstack
+  image: python:3.12-slim
+  command: docker run --rm --network none; repo read-only; separate output mount
+  result: STOP_CONTAINER_NOT_STARTED (blob read operation not supported)
+
+candidate_fallback:
+  python3 -B -m py_compile research/doom/map01_v39_cancel_executor_v12_composition_a01_20261005/run_candidate.py
+  python3 -B research/doom/map01_v39_cancel_executor_v12_composition_a01_20261005/run_candidate.py
+  python3 -B research/doom/map01_v39_cancel_executor_v12_composition_a01_20261005/audit.py
+
+focused_local_ci:
+  (cd research/doom && python3 -B -m unittest -v map01_v39_perkey_bridge_a01.test_bridge)
+  (cd research && python3 -B -m unittest -v test_check_workspace_index && python3 -B check_workspace_index.py --git-tree)
+  python3 -B .github/check_public_navigation.py
+  git diff --check
+
+results:
+  focused_bridge_tests: PASS 2/2
+  workspace_index_tests: PASS 1/1
+  workspace_index: PASS 159 directories
+  public_navigation: PASS 26 documents, 1804 repository-relative links
+  candidate: PASS_EXECUTOR_V12_COMPOSITION_SCOPED
+  candidate_run_count: 1 completed (formal_04), 3 STOP before candidate code (formal_01..03)

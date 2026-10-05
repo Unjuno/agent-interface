@@ -8,11 +8,6 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "live_control"))
-for _name in ("map01_scorer_stdio_adapter_v1", "independent_progress_clock_v2"):
-    sys.modules.setdefault(_name, types.ModuleType(_name))
-sys.modules["map01_scorer_stdio_adapter_v1"].MainThreadScorerStdin = type("Polling", (), {})
-sys.modules["map01_scorer_stdio_adapter_v1"].ScorerFileSink = type("Sink", (), {})
-sys.modules["independent_progress_clock_v2"].ProgressSample = type("ProgressSample", (), {})
 import session_map01_v15 as candidate
 from executor_v13 import Executor as ReleaseOrderedExecutor
 

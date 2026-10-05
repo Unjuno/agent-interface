@@ -1,0 +1,73 @@
+{
+  "allocation": "MRT-7834-A01-20261005",
+  "clusters": [
+    {
+      "session": 0,
+      "latent_type": 0
+    },
+    {
+      "session": 1,
+      "latent_type": 1
+    }
+  ],
+  "policy_paths": [
+    {
+      "a1": 0,
+      "a2": null,
+      "p": 0.5
+    },
+    {
+      "a1": 1,
+      "a2": 0,
+      "p": 0.25
+    },
+    {
+      "a1": 1,
+      "a2": 1,
+      "p": 0.25
+    }
+  ],
+  "model": "two sessions; t1 always eligible; t2 eligible iff pre-randomization history a1=1; current A randomized p=.5; execution iff assigned A equals latent type; proximal Y=2U+previous_A+I(executed)*(2+2U); distal score D=10-2A (larger is better).",
+  "controls": [
+    {
+      "id": "zero_propensity",
+      "propensities": [
+        0,
+        1
+      ],
+      "missing_window": false,
+      "eligibility_stage": "pre",
+      "interference": false
+    },
+    {
+      "id": "missing_window",
+      "propensities": [
+        0.5,
+        0.5
+      ],
+      "missing_window": true,
+      "eligibility_stage": "pre",
+      "interference": false
+    },
+    {
+      "id": "post_treatment_eligibility",
+      "propensities": [
+        0.5,
+        0.5
+      ],
+      "missing_window": false,
+      "eligibility_stage": "post",
+      "interference": false
+    },
+    {
+      "id": "session_interference",
+      "propensities": [
+        0.5,
+        0.5
+      ],
+      "missing_window": false,
+      "eligibility_stage": "pre",
+      "interference": true
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 """Regression for the v38 rejected-action -> unauthored coast interrupt loop."""
 import sys
 import unittest
+from argparse import Namespace
 from pathlib import Path
 
 
@@ -10,6 +11,29 @@ import map01_overlap_controller_v39 as controller
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in(self):
+        args = Namespace(seed=990605, load_fixture_manifest=Path("fixture.json"))
+        default = controller.session_command(args, Path("runtime"))
+        self.assertEqual(Path(default[1]).name, "session_map01_v12.py")
+        self.assertIn("--out", default)
+        self.assertIn("--load-fixture-manifest", default)
+
+        args.measurement_session = True
+        measured = controller.session_command(args, Path("runtime"))
+        self.assertEqual(Path(measured[1]).name, "session_map01_v15.py")
+        self.assertEqual(measured[2:], default[2:])
+
+        args.measurement_session = False
+        args.post_release_scorer_tail = True
+        scorer_tail = controller.session_command(args, Path("runtime"))
+        self.assertEqual(Path(scorer_tail[1]).name, "session_map01_v18.py")
+
+        args.post_release_scorer_tail = False
+        args.post_release_perkey_scorer_tail = True
+        perkey_tail = controller.session_command(args, Path("runtime"))
+        self.assertEqual(Path(perkey_tail[1]).name, "session_map01_v19.py")
+        self.assertEqual(perkey_tail[2:], default[2:])
+
     def test_rejected_action_followup_keeps_model_turn_alive_on_damage(self):
         previous = {"iteration": 1, "model_action_discarded": True,
                     "action": {"state": "active", "next_cover": [

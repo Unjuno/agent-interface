@@ -153,6 +153,33 @@ class Tests(unittest.TestCase):
             row = owner.call('up', Lease(), 'a')
         self.assertFalse(row['ordinary_release_candidate'])
 
+    def test_reused_lease_id_cannot_match_another_lease_admission(self):
+        owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
+        old_lease = Lease()
+        new_lease = Lease()
+        self.assertIsNot(old_lease, new_lease)
+        owner._inner.result = {'event': 'input_admission', 'key': 'a', 'admitted_ns': 80}
+        with mock.patch.object(mod, 'id', return_value=41, create=True):
+            owner.call('down', old_lease, 'a')
+            owner._inner.result = None
+            with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+                row = owner.call('up', new_lease, 'a')
+        self.assertFalse(row['owner_release_history_complete'])
+        self.assertFalse(row['ordinary_release_candidate'])
+
+    def test_owner_release_discards_strong_admission_reference(self):
+        owner = mod.InputOwner(':fake', _owner_cls=FakeInner)
+        lease = Lease()
+        owner._inner.result = {'event': 'input_admission', 'key': 'a', 'admitted_ns': 80}
+        owner.call('down', lease, 'a')
+        owner._inner.result = {'event': 'owner_release'}
+        owner.call('release', lease)
+        self.assertEqual(owner._admission_records, {})
+        owner._inner.result = None
+        with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+            row = owner.call('up', lease, 'a')
+        self.assertFalse(row['ordinary_release_candidate'])
+
     def test_prior_lease_cleanup_does_not_invalidate_new_admission(self):
         owner = mod.InputOwner(':fake', _owner_cls=PriorLeaseCleanupInner)
         lease = Lease(deadline=1000)
@@ -214,5 +241,4 @@ class Tests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
-
 
