@@ -1,0 +1,8 @@
+docker context inspect orbstack --format '{{json .Endpoints.docker.Host}}'
+"unix:///Users/taka/.orbstack/run/docker.sock"
+
+docker --context orbstack info --format '{{json .ServerVersion}}'
+"29.4.0"
+
+docker --context orbstack image ls --no-trunc
+Error response from daemon: rpc error: code = Unknown desc = blob sha256:82177ab70cdeaf9c0298399ef3e274963de595372dfc46186dc1b74703f132ff expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/82177ab70cdeaf9c0298399ef3e274963de595372dfc46186dc1b74703f132ff: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/82177ab70cdeaf9c0298399ef3e274963de595372dfc46186dc1b74703f132ff: operation not supported

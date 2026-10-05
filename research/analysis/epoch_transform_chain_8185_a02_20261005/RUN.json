@@ -1,0 +1,16 @@
+{
+  "allocation": "8185-TRANSFORM-GRAPH-A02-20261005-01",
+  "auditor_invocations": 0,
+  "base_commit": "2c1c90c80389dc6aab6a950c7058528272979f2d",
+  "candidate_invocations": 0,
+  "construction_suite_invocations": 0,
+  "image_inventory_command": "docker --context orbstack image ls --no-trunc",
+  "image_inventory_exit_code": 1,
+  "image_inventory_error": "containerd blob sha256:82177ab70cdeaf9c0298399ef3e274963de595372dfc46186dc1b74703f132ff: operation not supported",
+  "retries": 0,
+  "runtime": "OrbStack Docker 29.4.0",
+  "schema": "issue8185.a02.stop.v1",
+  "status": "STOP_PRE_CANDIDATE",
+  "trigger": "read-only image inventory failed while opening a containerd content-store blob",
+  "scientific_result": null
+}
