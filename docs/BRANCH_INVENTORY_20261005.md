@@ -700,3 +700,14 @@ Resolved the earlier hold for `research/59-v15-owner-evidence-current-main-20261
 - The reproduction issue flagged in the technical review remains separately unresolved in the main copy: the README still fetches mutable `refs/pull/8065/head` before checking against its frozen SHA. Removing the redundant source ref does not fix that documentation defect; track it as a separate correction rather than retaining a duplicate branch.
 
 No experiment or audit was rerun.
+
+
+## V15 merged-source ref cleanup and reproduction correction — 2026-10-05 14:39 UTC
+
+The earlier #8102 hold is resolved for branch custody, with a separate correction now proposed for the remaining documentation defect.
+
+- Removed `research/59-v15-owner-evidence-current-main-20261005` at exact audited tip `8f5beb06d99eed093176c37a74f3620511f984fc`. All 103 paths from merged PR #8102 matched current-main Git blob SHAs. The branch had no open PR head/base dependency and no matching worktree. GitHub now returns NOT_FOUND; closed merged PR #8102 still records the head and its contents remain on `main`.
+- The old reproduction command in the main package README still compares mutable PR `FETCH_HEAD` to the frozen candidate SHA. The separate docs-only correction is PR #8220, Draft, adding a correction note and DOOM-index link without changing checksum-covered evidence files. It is based on current main `b5be19963454ce5edafc945b78b100012952dd15` and awaits independent review; its proposed fetch/ancestry commands were not executed.
+- The earlier 20-commit branch-only history remains reachable via the closed PR head; the ref was redundant after exact path-level content verification.
+
+No candidate, auditor, test, or experiment was rerun.
