@@ -1,0 +1,37 @@
+{
+  "commands": {
+    "active-containers": {
+      "argv": [
+        "C:\\Program Files\\WSL\\wslc.exe",
+        "container",
+        "list"
+      ],
+      "exit_code": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 89
+    },
+    "approved-image-inspect": {
+      "argv": [
+        "C:\\Program Files\\WSL\\wslc.exe",
+        "image",
+        "inspect",
+        "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f"
+      ],
+      "exit_code": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 1500
+    },
+    "wslc-info": {
+      "argv": [
+        "C:\\Program Files\\WSL\\wslc.exe",
+        "info"
+      ],
+      "exit_code": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 471
+    }
+  },
+  "host_python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "host_wslc_path": "C:\\Program Files\\WSL\\wslc.exe",
+  "observed_utc": "2026-10-05T00:43:58.127510+00:00"
+}
