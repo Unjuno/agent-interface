@@ -290,6 +290,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertFalse(failed_receipt["server_keyup_verified"])
             self.assertEqual(failed_receipt["server_keyup_attempt_count"], 3)
             self.assertEqual(display_instance.down, {38})
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("down", lease, "A")
+            self.assertEqual(display_instance.down, {38})
         finally:
             if owner is not None:
                 owner.close()
@@ -762,6 +765,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertFalse(terminal["release"]["verified"])
             self.assertEqual(terminal["release"]["keys_unknown"], [38, 39])
             self.assertTrue(terminal["release"]["key_state_errors"])
+            with self.assertRaises(RuntimeError):
+                owner.call("down", lease, "W")
+            self.assertEqual(display_instance.down, set())
         finally:
             if owner is not None:
                 display_instance.fail_keymap_queries = 0
