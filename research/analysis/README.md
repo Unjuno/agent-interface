@@ -20,6 +20,8 @@
 
 - [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
 
+- [Issue #7162 attempted run — WITHDRAWN as duplicate/protocol mismatch](event_memory_7162_t0_20261005/WITHDRAWAL.md) — retained as noncanonical failure evidence; the canonical T0 remains authoritative and forbids UNKNOWN_EFFECT recall.
+
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
 - [Issue #7387 A02 method result](serial_cue_interference_7387_t0_20261004_a02/REPORT.md) — WSLc candidate and raw-only auditor each ran once; 144 trials, 288 presentations, 16 isolated controls and 1,280 image files (five distinct pixel payloads) independently reconstructed; `PASS_METHOD_SCOPED`; model hypothesis remains untested.
 - [Issue #7470 A02](inference_disturbance_coupling_7470_t0_a02_20261004/README.md) — harness diagnostic over 24 arbitrary pairings; does not meet the later circular-shift design clarification. A01 prelaunch STOP preserved.
@@ -468,6 +470,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`escrow_optional_budget_6156_t0_20261002/`](escrow_optional_budget_6156_t0_20261002/)
 - [`evaluation_cue_reactivity_6413_t0_wslc_20261003/`](evaluation_cue_reactivity_6413_t0_wslc_20261003/)
 - [`event_memory_7161_t0_20261005/`](event_memory_7161_t0_20261005/)
+- [`event_memory_7162_t0_20261005/`](event_memory_7162_t0_20261005/)
 - [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
 - [`evidence_compute_calibration_identifiability_r3_v1/`](evidence_compute_calibration_identifiability_r3_v1/)
 - [`evidence_compute_decision_lattice_r2_v1/`](evidence_compute_decision_lattice_r2_v1/)
