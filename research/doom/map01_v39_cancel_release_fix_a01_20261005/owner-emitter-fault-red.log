@@ -1,0 +1,15 @@
+test_partial_release_emit_failure_stops_without_replay_or_new_admission (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_partial_release_emit_failure_stops_without_replay_or_new_admission) ... FAIL
+
+======================================================================
+FAIL: test_partial_release_emit_failure_stops_without_replay_or_new_admission (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_partial_release_emit_failure_stops_without_replay_or_new_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/pr7805-admission-race-probe/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py", line 359, in test_partial_release_emit_failure_stops_without_replay_or_new_admission
+    with self.assertRaisesRegex(RuntimeError, "terminal state unverified"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)

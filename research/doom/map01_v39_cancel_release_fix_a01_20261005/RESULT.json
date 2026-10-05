@@ -20,19 +20,21 @@
     "unavailable_samples_emit_unconfirmed_row_without_adapter_edge": true,
     "verified_owner_cleanup_reconciles_bridge_held_set": true,
     "confirmed_per_key_up_retires_owner_hold_before_aggregate_queries": true,
-    "aggregate_reconciliation_error_faults_owner_and_rejects_followup_down": true
+    "aggregate_reconciliation_error_faults_owner_and_rejects_followup_down": true,
+    "release_emitter_append_then_raise_causes_terminal_evidence_loss_stop": true,
+    "no_owner_release_replay_or_new_admission_after_emit_fault": true
   },
   "disposition": "PASS_CANDIDATE_MECHANICS",
   "schema": "map01-v39-cancel-release-fix-result-v2",
   "scope": "Local fake-display owner/bridge plus current PR #7805 candidate compatibility and ExecutorV12 composition tests. Candidate not wired into live MAP01 runtime.",
-  "source_commit": "892cc5bfa836af8b6512f17aaa427f84e14b55cc",
+  "source_commit": "3f24e85bff32a93fbc1ca244f7f249b843710743",
   "tests": {
     "candidate_cancel_release": {
-      "count": 14,
+      "count": 15,
       "exit": 0
     },
     "candidate_cancel_release_optimized": {
-      "count": 14,
+      "count": 15,
       "exit": 0
     },
     "executor_v12_expiry_composition": {

@@ -27,3 +27,16 @@ The reviewer-requested focus-invalidation lifecycle case is retained in `focus-d
 
 
 A10 RED/GREEN rebases the confirmed-owner-hold retirement repair from #7823 onto #7805 head `61502e45d40b67b6d588b4e8357e42fde05a9dbe`. The baseline confirms F8 up and retains the partial unverified owner-release record, but after the aggregate keymap fault it accepts/injects a second key request under the same lease. The repair removes the owner-held entry at the confirmed per-key up, stores the aggregate exception as an owner fault, clears the active lease, and rejects the second request before injection. Logs: `owner-ledger-retirement-red.log` and `owner-ledger-retirement-green.log`.
+
+
+## A11 — ambiguous receipt-sink failure is terminal evidence loss
+
+**H:** On exact #7805 head `e00c7f5e5c949095d40ade458355e55ea5990b9d`, the bridge advances its owner-record cursor before iterating per-key rows. If the sink appends a row and then raises, it is unknown whether that row persisted; silently advancing can lose later rows, while retry can duplicate the accepted row.
+
+**T:** Admit F8 and F9 on the fake display, let the owner release both, then make the emitter append each release row and raise after appending F9. The RED loads the unmodified bridge blob `9028c652d2134b3f748b99069069748e1aef2cdf`. The candidate stores a sticky publication fault before propagating the exception.
+
+**D:** PASS requires the first drain to propagate the sink error, later drains to fail closed without re-emitting either row, the bridge to retain F9 conservatively, and any new down to be rejected before injection. The baseline silently accepts the second drain after its cursor has skipped the record; candidate GREEN passes.
+
+**C:** The earlier #7805 probe raised before appending its second row and already established the lost-later-row case. This A11 schedule tests the distinct append-then-raise ambiguity; it does not assume an idempotent sink. PR #7836 separately explores pending record indices and per-row deduplication, but does not resolve whether a sink accepted a row before throwing.
+
+**U:** Bundled CPython 3.12.14 on macOS arm64; fake display and in-memory emitter only. This is a candidate evidence-loss STOP policy, not durable-storage fault-injection, real X11, live input, production wiring, task effect, useful feedback, recovery, gameplay, latency, or live MAP01 evidence.

@@ -34,12 +34,12 @@ Current A08 replay commands (bundled CPython 3.12.14, from repository root):
 - ExecutorV12 exact-main composition: `python -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition -v` (3 tests; run in an overlay containing main sources pinned by SOURCE_LOCK.json).
 - Owner compatibility: `python research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py` (10 tests).
 - Existing V39 bridge: `PYTHONPATH=research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12:research/live_control:research/doom python -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v` (2 tests).
-- Read-only audit: `python research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py` (`AUDIT_PASS_SOURCE_LOCK_AND_29_PRIMARY_TESTS_PLUS_14_OPTIMIZED_REPEAT_AND_95_PACKAGE_FILES`).
+- Read-only audit: `python research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py` (`AUDIT_PASS_SOURCE_LOCK_AND_30_PRIMARY_TESTS_PLUS_15_OPTIMIZED_REPEAT_AND_99_PACKAGE_FILES`).
 
 A08 regression pairs: `post-drain-red-current` / `post-drain-green-current` and `noop-row-red-current` / `noop-row-green-current`. All remain fake-display tests; no X server, game, GUI, or OS input was used.
 
 
-Focus-invalidation post-drain pair: `focus-drain-red-current.log` / `focus-drain-green-current.log`. Current suite totals: 14 focused, 14 optimized repeat, 3 ExecutorV12 composition, 10 owner compatibility, and 2 existing bridge tests. The audit result suffix records the 90-file manifest.
+Focus-invalidation post-drain pair: `focus-drain-red-current.log` / `focus-drain-green-current.log`. Current suite totals: 15 focused, 15 optimized repeat, 3 ExecutorV12 composition, 10 owner compatibility, and 2 existing bridge tests. The audit result suffix records the 99-file manifest.
 
 A10 baseline RED at pinned #7805 head 61502e45d40b67b6d588b4e8357e42fde05a9dbe:
 git show 61502e45d40b67b6d588b4e8357e42fde05a9dbe:research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py > /tmp/v13-owner-61502-baseline.py
@@ -47,3 +47,10 @@ V13_OWNER_CANDIDATE_PATH=/tmp/v13-owner-61502-baseline.py python3 -m unittest re
 
 A10 repaired candidate GREEN:
 python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error -v
+
+
+A11 exact #7805 baseline RED (emitter append-then-raise):
+`git show e00c7f5e5c949095d40ade458355e55ea5990b9d:research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py > /tmp/v39-bridge-e00c-baseline.py`
+`V39_BRIDGE_CANDIDATE_PATH=/tmp/v39-bridge-e00c-baseline.py PYTHONPATH=research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12:research/live_control:research/doom python -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_partial_release_emit_failure_stops_without_replay_or_new_admission -v` (expected RED; output in `owner-emitter-fault-red.log`).
+
+A11 repaired candidate GREEN: run the same unittest command without `V39_BRIDGE_CANDIDATE_PATH` (output in `owner-emitter-fault-green.log`).

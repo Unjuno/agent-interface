@@ -10,6 +10,7 @@ class Backend(Previous):
         self.owner = InputOwner(session.name)
         self._input_event_context = None
         self._owner_record_cursor = len(self.owner.records)
+        self._owner_record_publish_fault = None
 
     def execute(self, step, cancel, identifier, index):
         try:
@@ -28,6 +29,11 @@ class Backend(Previous):
                 self._drain_owner_records()
 
     def _drain_owner_records(self):
+        publish_fault = getattr(self, "_owner_record_publish_fault", None)
+        if publish_fault is not None:
+            raise RuntimeError(
+                "owner release receipt publication failed; terminal state unverified"
+            ) from publish_fault
         records = self.owner.records
         while self._owner_record_cursor < len(records):
             record = records[self._owner_record_cursor]
@@ -35,7 +41,14 @@ class Backend(Previous):
             if record.get("event") != "owner_release":
                 continue
             for row in record.get("per_key_release_measurements", []):
-                self.emit(dict(row))
+                try:
+                    self.emit(dict(row))
+                except BaseException as exc:
+                    # The sink may have accepted a row before raising. Retrying
+                    # could duplicate it; advancing silently could lose later
+                    # rows. Preserve a sticky evidence-loss STOP instead.
+                    self._owner_record_publish_fault = exc
+                    raise
                 measurement = row.get("physical_key_measurement", {})
                 if measurement.get("classification") == "CONFIRMED_PHYSICAL_UP":
                     self.held.discard(row.get("key"))
@@ -44,6 +57,11 @@ class Backend(Previous):
                 self.held.clear()
 
     def raw(self, key, down):
+        publish_fault = getattr(self, "_owner_record_publish_fault", None)
+        if down and publish_fault is not None:
+            raise RuntimeError(
+                "owner release receipt publication failed; input admission blocked"
+            ) from publish_fault
         context = self._input_event_context
         if context is None:
             raise RuntimeError("keyboard input outside program/step telemetry context")

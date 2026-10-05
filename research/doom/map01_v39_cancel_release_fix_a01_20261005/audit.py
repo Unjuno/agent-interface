@@ -19,9 +19,13 @@ baseline=lock['candidate_baseline']
 baseline_blob=subprocess.check_output(['git','show',f"{baseline['commit']}:{baseline['path']}"],cwd=ROOT)
 assert subprocess.check_output(['git','rev-parse',f"{baseline['commit']}:{baseline['path']}"],cwd=ROOT,text=True).strip() == baseline['git_blob']
 assert hashlib.sha256(baseline_blob).hexdigest() == baseline['sha256']
+bridge_baseline=lock['bridge_baseline']
+bridge_blob=subprocess.check_output(['git','show',f"{bridge_baseline['commit']}:{bridge_baseline['path']}"],cwd=ROOT)
+assert subprocess.check_output(['git','rev-parse',f"{bridge_baseline['commit']}:{bridge_baseline['path']}"],cwd=ROOT,text=True).strip() == bridge_baseline['git_blob']
+assert hashlib.sha256(bridge_blob).hexdigest() == bridge_baseline['sha256']
 for path,expected in lock['candidate_sha256'].items():
     assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest() == expected, path
-suites=[('candidate-suite',14),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
+suites=[('candidate-suite',15),('owner-compat-suite',10),('existing-bridge-suite',2),('executor-v12-expiry-suite',3)]
 for name,count in suites:
     log=(HERE/f'{name}.log').read_text()
     code=int((HERE/f'{name}.exit').read_text())
@@ -48,6 +52,15 @@ assert int((HERE/'owner-ledger-retirement-red.exit').read_text()) != 0 and 'Asse
 assert 'test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error' in owner_red
 assert int((HERE/'owner-ledger-retirement-green.exit').read_text()) == 0 and '\nOK\n' in owner_green
 assert 'test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error' in owner_green
+emitter_red=(HERE/'owner-emitter-fault-red.log').read_text()
+emitter_green=(HERE/'owner-emitter-fault-green.log').read_text()
+assert int((HERE/'owner-emitter-fault-red.exit').read_text()) != 0
+assert 'AssertionError: RuntimeError not raised' in emitter_red
+assert 'test_partial_release_emit_failure_stops_without_replay_or_new_admission' in emitter_red
+assert int((HERE/'owner-emitter-fault-green.exit').read_text()) == 0 and '\nOK\n' in emitter_green
+assert 'test_partial_release_emit_failure_stops_without_replay_or_new_admission' in emitter_green
+assert result['behavior']['release_emitter_append_then_raise_causes_terminal_evidence_loss_stop'] is True
+assert result['behavior']['no_owner_release_replay_or_new_admission_after_emit_fault'] is True
 integration_red=(HERE/'executor-v12-query-fault-red.log').read_text()
 integration_red_code=int((HERE/'executor-v12-query-fault-red.exit').read_text())
 integration_green=(HERE/'executor-v12-query-fault-green.log').read_text()
@@ -73,8 +86,8 @@ assert 'test_async_cleanup_noop_up_is_not_a_second_release_measurement' in (HERE
 assert 'test_executor_focus_invalidation_after_execute_drain_publishes_receipt' in (HERE/'candidate-suite.log').read_text()
 optimized=(HERE/'candidate-suite-opt.log').read_text()
 assert int((HERE/'candidate-suite-opt.exit').read_text()) == 0
-assert re.search(r'Ran 14 tests?', optimized) and '\nOK\n' in optimized
-assert result['tests']['candidate_cancel_release_optimized']['count'] == 14
+assert re.search(r'Ran 15 tests?', optimized) and '\nOK\n' in optimized
+assert result['tests']['candidate_cancel_release_optimized']['count'] == 15
 assert result['tests']['candidate_cancel_release_optimized']['exit'] == 0
 for red_name,green_name,red_message in (
     ('post-drain-red-current','post-drain-green-current','AssertionError: 0 != 1'),
@@ -97,6 +110,7 @@ assert {'candidate-suite-opt.log','focus-drain-red-current.log',
         'focus-drain-green-current.log','post-drain-red-current.log',
         'post-drain-green-current.log','noop-row-red-current.log',
         'noop-row-green-current.log','owner-ledger-retirement-red.log',
-        'owner-ledger-retirement-green.log'} <= manifest_names
+        'owner-ledger-retirement-green.log','owner-emitter-fault-red.log',
+        'owner-emitter-fault-green.log'} <= manifest_names
 assert result['scope'].startswith('Local fake-display')
-print(f'AUDIT_PASS_SOURCE_LOCK_AND_29_PRIMARY_TESTS_PLUS_14_OPTIMIZED_REPEAT_AND_{len(manifest_names)}_PACKAGE_FILES')
+print(f'AUDIT_PASS_SOURCE_LOCK_AND_30_PRIMARY_TESTS_PLUS_15_OPTIMIZED_REPEAT_AND_{len(manifest_names)}_PACKAGE_FILES')

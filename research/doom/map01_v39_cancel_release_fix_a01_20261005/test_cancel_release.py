@@ -12,7 +12,8 @@ FIX_PATH = DOOM / "map01_v39_cancel_release_fix_a01_20261005"
 BRIDGE_TEST_PATH = DOOM / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
 OWNER_V13_PATH = Path(os.environ.get(
     "V13_OWNER_CANDIDATE_PATH", FIX_PATH / "input_owner_v13_candidate.py"))
-BRIDGE_V2_PATH = FIX_PATH / "bridge_v2_candidate.py"
+BRIDGE_V2_PATH = Path(os.environ.get(
+    "V39_BRIDGE_CANDIDATE_PATH", FIX_PATH / "bridge_v2_candidate.py"))
 
 
 def load_candidate(config=None):
@@ -319,6 +320,55 @@ class CancellationReceiptTests(unittest.TestCase):
                 harness.owner.call("down", lease, "b")
             self.assertEqual(len(harness.d.injections), injections_after_cleanup)
             self.assertNotIn(98, harness.d.physical)
+        finally:
+            harness.close()
+
+    def test_partial_release_emit_failure_stops_without_replay_or_new_admission(self):
+        bridge_test, hm, harness, lease, _bm, backend = load_candidate()
+        hm.owner_module.XK.string_to_keysym = lambda key: {"F8": 8, "F9": 9, "b": 10}[key]
+        harness.d.keysym_to_keycode = lambda sym: {8: 74, 9: 75, 10: 56}[sym]
+        try:
+            backend._input_event_context = ("emit-fault", 10)
+            backend.raw("F8", True)
+            backend._input_event_context = ("emit-fault", 11)
+            backend.raw("F9", True)
+            backend._input_event_context = None
+            record = backend.owner.call("release", lease)
+            self.assertEqual(len(record["per_key_release_measurements"]), 2)
+            self.assertEqual(backend.held, {"F8", "F9"})
+
+            attempts = []
+            persisted = list(backend.events)
+
+            def append_then_raise(row):
+                persisted.append(dict(row))
+                attempts.append(row.get("key"))
+                if row.get("key") == "F9":
+                    raise OSError("receipt sink failed after append")
+
+            backend.emit = append_then_raise
+            with self.assertRaisesRegex(OSError, "failed after append"):
+                backend._drain_owner_records()
+
+            published_up = [row for row in persisted
+                            if row.get("event") == "input_release_measurement"]
+            self.assertEqual([row.get("key") for row in published_up], ["F8", "F9"])
+            self.assertEqual(attempts, ["F8", "F9"])
+            self.assertEqual(backend.held, {"F9"})
+
+            with self.assertRaisesRegex(RuntimeError, "terminal state unverified"):
+                backend._drain_owner_records()
+            self.assertEqual(attempts, ["F8", "F9"])
+            self.assertEqual(len([row for row in persisted
+                                  if row.get("event") == "input_release_measurement"]), 2)
+
+            backend._input_event_context = ("after-emitter-fault", 1)
+            injections_after_fault = len(harness.d.injections)
+            with self.assertRaisesRegex(RuntimeError, "input admission blocked"):
+                backend.raw("b", True)
+            self.assertEqual(len(harness.d.injections), injections_after_fault)
+            self.assertNotIn(56, harness.d.physical)
+            self.assertEqual(backend.held, {"F9"})
         finally:
             harness.close()
 
