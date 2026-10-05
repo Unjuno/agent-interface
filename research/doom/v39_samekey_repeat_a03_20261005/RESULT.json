@@ -1,0 +1,48 @@
+{
+  "schema": "v39-repeated-same-key-result-v1",
+  "run_id": "V39-REPEAT-SAME-KEY-A03-20261005",
+  "decision": "PASS_REPEAT_JOIN_WITH_OVERLAP_HOLD",
+  "base_commit": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "scope": "Current-main V39 opt-in V15 release-batch V1 + transition owner V4/V3 + live_control owner V12 with fake interpreter and fake Xlib.",
+  "sequential": {
+    "sequence": [
+      "F8 DOWN",
+      "F8 UP",
+      "F8 DOWN",
+      "F8 UP"
+    ],
+    "admissions": 2,
+    "release_rows": 2,
+    "owner_receipts": 2,
+    "unique_ordered_interval_pairs": 2,
+    "release_batch_sizes": [
+      1,
+      1
+    ],
+    "release_batch_delivery_positions": [
+      0,
+      1
+    ],
+    "inter_up_query_keymap_calls": 0,
+    "fake_display_final_keys": [],
+    "backend_held_final": [],
+    "physical_verification_authoritative": false
+  },
+  "overlapping_duplicate_down": {
+    "sequence": [
+      "F8 DOWN",
+      "F8 DOWN",
+      "F8 UP"
+    ],
+    "admissions": 2,
+    "key_up_injections": 1,
+    "release_rows": 1,
+    "owner_receipts": 1,
+    "disposition": "HOLD_NON_BIJECTIVE",
+    "fake_display_final_keys": [],
+    "backend_held_final": [],
+    "physical_verification_authoritative": false
+  },
+  "key_interpretation": "Sequential same-key episodes can be reconstructed one-to-one from ordered admission acknowledgements and distinct key-up receipt times in this fake seam. Two overlapping admissions of the same Boolean key state cannot be bijectively assigned to one release; the correct outcome is HOLD.",
+  "limits": "No physical-key occupancy, live X server, OS input, application effect, useful feedback, latency bound, threat response, recovery efficacy, MAP01 result, or human-tempo benefit is established. This source-composition result does not satisfy the live Issue #59 gate or allocate a shared resource."
+}
