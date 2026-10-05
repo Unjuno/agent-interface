@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\research\analysis\preference_manipulation_7678_a02_four_routes_20261005\audit.py", line 298, in <module>
+    audit()
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\research\analysis\preference_manipulation_7678_a02_four_routes_20261005\audit.py", line 164, in audit
+    oracle = load_oracle(fixture)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\research\analysis\preference_manipulation_7678_a02_four_routes_20261005\audit.py", line 22, in load_oracle
+    exec(compile(raw, fixture["auditor_path"], "exec"), module.__dict__)
+  File "research/analysis/preference_explicit_choice_6274_t0_20261002/audit.py", line 7, in <module>
+    HERE = Path(__file__).resolve().parent
+                ^^^^^^^^
+NameError: name '__file__' is not defined. Did you mean: '__name__'?

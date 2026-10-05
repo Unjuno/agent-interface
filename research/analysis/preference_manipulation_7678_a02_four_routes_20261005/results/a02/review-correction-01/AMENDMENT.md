@@ -1,0 +1,7 @@
+# Amendment — interpretation of read-only audit v3
+
+The v3 diagnostic returned `FAIL_AUDIT` for two control mismatches only. It emitted no matrix coverage, row identity, sincere-report, or independent-certificate mismatch. Its independent reconstruction therefore supports the deviation-matrix counts in the narrow sense described here, while the candidate's grant/protected control outputs remain incorrect. The v3 summary's `candidate_rows_exactly_reconstructed` boolean is false because it is derived from the aggregate error list, which also includes the two control failures; do not interpret that field as an individual row mismatch.
+
+Static source inspection identifies the cause in the frozen candidate: its cache key is only the serialized preference map. The test matrix holds grants, protected constraints and decision rights fixed, so its 6,624 deviation rows remain comparable. The negative-control evaluations vary grants or protected violations without varying preferences, which makes the cache key insufficient for those controls. This is a candidate defect, not a correction to the result or the auditor.
+
+Audit v2 and v3 outputs, failures, and scripts are preserved. No candidate code, frozen input, or A02 allocation was modified after execution; no formal invocation was retried. The formal disposition stays `HOLD_AUDITOR_STARTUP_ERROR`, with a separately observed candidate-control failure.
