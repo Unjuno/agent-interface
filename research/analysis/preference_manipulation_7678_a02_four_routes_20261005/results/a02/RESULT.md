@@ -1,0 +1,9 @@
+# Issue #7678 successor A02 — retained result
+
+**Formal disposition: `HOLD_AUDITOR_STARTUP_ERROR`.** The frozen candidate ran once and wrote 6,624 rows. The single frozen formal-auditor invocation exited 1 before reconstructing the matrix because its dynamic module loader omitted `__file__`. The exact exception is retained in `INITIAL_AUDIT_FAILURE.json`. No formal candidate or auditor retry occurred.
+
+The separate post-run read-only auditor v3 reconstructed all 6,624 candidate certificate rows from the independent rank-vector oracle without any matrix-row mismatch. It found 6,383 non-sincere reports with a certificate different from the corresponding sincere report. Under the preregistered best-available-route tier utility, it found zero safe-beneficial report cells under either exact-peer (full-information) or `{a,b}`-projection partial-information cells.
+
+The diagnostic also exposed a candidate control failure: the candidate's evaluation cache is keyed only by preferences, so control cases with identical preferences but changed grants or protected constraints reuse the baseline certificate. Consequently the candidate output incorrectly leaves revoked route `d` and protected route `c` eligible in its control rows. The independent auditor detects both failures. This means the frozen D gate is not met; the A02 formal outcome remains HOLD even though its deviation matrix was independently reconstructable.
+
+The retained result is a finite synthetic diagnostic for six hand-selected true orders, four alternatives, 92 report types, the frozen #6274 certificate, and the stated utility. It establishes neither behavior of real stakeholders nor general strategyproofness, fairness, consent, or a reason to withhold information. A01 and A02 HOLD records remain separate and unchanged.

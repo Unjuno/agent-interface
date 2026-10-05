@@ -1,0 +1,40 @@
+{
+  "allocation": "PREFERENCE-MANIPULATION-7678-A02-FOUR-ROUTES-20261005-01",
+  "base_main": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "candidate_blob": "faf28cbc47ec6eff403a5a77fd05c126b7d0d161a172fa22a94f5ff109a59935",
+  "execution": {
+    "auditor_runs": 0,
+    "candidate_runs": 0,
+    "gpu": "not used",
+    "gui": "not used",
+    "host_os": "Windows-10-10.0.26300-SP0",
+    "model": "not used",
+    "network": "not used",
+    "python": "3.11.9",
+    "retry_count": 0,
+    "wslc": "not used; existing #6693 clients remain unresolved"
+  },
+  "expected": {
+    "admissible_reports": 92,
+    "deviation_rows": 6624,
+    "principals": 2,
+    "true_orders_per_principal": 6,
+    "truthful_profiles": 36
+  },
+  "independent_oracle_blob": "48609a1f8ed9a62eab5f885aa11ea2a54d84ce0739ede24776088b903e9a1dd1",
+  "planned_commands": [
+    "python -B research/analysis/preference_manipulation_7678_a02_four_routes_20261005/candidate.py",
+    "python -B research/analysis/preference_manipulation_7678_a02_four_routes_20261005/audit.py"
+  ],
+  "schema": "preference-manipulation-7678-a02-freeze-v1",
+  "sha256": {
+    "COMMANDS.txt": "1261d366d6072e4fb35f38478c1409613712390e05f192f235e0522f038c7d9a",
+    "PREREGISTRATION.md": "c616f5bcdbd2ddd5e2bd74a7cbd7e013f5375f9be0e5f538f50941b4be1d6b57",
+    "audit.py": "e12ecad118526acee280854b82a4f84853683889d3aa704ff9c0a6c28ff47e7d",
+    "candidate.py": "797746fb6687a407462596d7b3a6d68d4ab8a8dfc4552e2068c1158717472675",
+    "fixture.json": "af752ff5c689ca3f9405cb8945d0a7800906dd70d5da45b90048ebb896bbe332",
+    "test_construction.py": "3f2c5cc6f2e3195876b80c89b64b8deb0a2f48588aa96e77b2be97cc6a6d0706"
+  },
+  "source_commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "status": "FROZEN_NOT_RUN"
+}

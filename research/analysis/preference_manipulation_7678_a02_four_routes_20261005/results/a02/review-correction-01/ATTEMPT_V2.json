@@ -1,0 +1,11 @@
+{
+  "audit_version": "v2",
+  "status": "STOP_AUDITOR_KEY_SHAPE_ERROR",
+  "exit_code": 1,
+  "scope": "post-run read-only diagnostic only",
+  "candidate_invoked": false,
+  "formal_auditor_invoked": false,
+  "candidate_output_changed": false,
+  "failure": "Independent per-row certificate reconstruction completed; the later utility summary expected a tuple-index matrix key while the reconstructed map retained a world-ID key, causing KeyError ((0,0),0,'R001').",
+  "retry_of_formal_allocation": false
+}
