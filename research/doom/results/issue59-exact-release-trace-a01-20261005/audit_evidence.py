@@ -7,6 +7,7 @@ raw=(p/'raw-run-01.txt').read_text(encoding='utf-8-sig')
 negative=(p/'raw-negative-control-01.txt').read_text(encoding='utf-8-sig')
 manifest={}
 for line in (p/'ARTIFACT_SHA256SUMS').read_text(encoding='ascii').splitlines():
+    if not line.strip(): continue
     digest,name=line.split('  ',1); manifest[name]=digest
 manifest_valid=all(hashlib.sha256((p/name).read_bytes()).hexdigest()==digest for name,digest in manifest.items())
 checks={
@@ -22,5 +23,6 @@ checks={
 }
 assert all(checks.values()), checks
 print(json.dumps({'audit':'PASS','checks':checks,'verified_artifact_sha256':manifest},sort_keys=True,indent=2))
+
 
 
