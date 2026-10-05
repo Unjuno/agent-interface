@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "fixture_without_git": true,
+  "copied_files": 23,
+  "candidate_invocations": 0,
+  "v1_auditor_invocations": 0,
+  "all_fixture_bytes_restored": true,
+  "cases": [
+    {
+      "case": "retained_positive_without_git",
+      "exit_code": 0,
+      "stdout": "{\"candidate_rerun\": false, \"checks\": 46, \"current_main_continuity_checked\": false, \"main_commit\": \"c1074c4dc385bae5b94ce93a5870e92c2e6ab07d\", \"raw_sha256\": \"921908e09927dfcfa527e871b1d3f487fd215c4c8175fb646567902f51d144a8\", \"result\": \"PASS_RETAINED_C1074_SOURCE_AND_RAW\", \"schema\": \"v39-executor-v12-retained-c1074-audit-v2\", \"scope\": \"historical c1074 fake-display composition; frozen source/raw consistency only\", \"unverified\": [\"real X11\", \"application effect\", \"live control\", \"recovery efficacy\"]}\n",
+      "stderr": ""
+    },
+    {
+      "case": "altered_historical_source",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "source matches the historical freeze: research/doom/map01_v39_partial_release_receipt_a02_20261005/test_executor_v12_partial_release_composition.py\n"
+    },
+    {
+      "case": "missing_terminal_retry_with_updated_raw_hash",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "F9 is retried exactly once by terminal cleanup\n"
+    }
+  ]
+}
