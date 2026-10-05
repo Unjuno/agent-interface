@@ -42,12 +42,13 @@
     }
   },
   "candidate": {
-    "focused_tests_normal": "6/6 passed",
-    "focused_tests_optimized": "6/6 passed",
+    "focused_tests_normal": "10/10 passed",
+    "focused_tests_optimized": "10/10 passed",
     "v15_lifecycle_selection": "8/8 passed with inert executor_v13 import stub against current candidate",
     "py_compile": "passed",
     "diff_check": "passed",
-    "integral_float_counter_control": "3.0 kills / 2.0 deaths accepted as exact scorer counts"
+    "integral_float_counter_control": "3.0 kills / 2.0 deaths accepted as exact scorer counts",
+    "timeout_contract": "exact bool required when method exists; absent-method tic fallback preserved; malformed values and non-callable attribute rejected"
   },
   "environment": "Windows CPython 3.11.9",
   "live_game": false,
@@ -57,8 +58,8 @@
   "api_contract": "Official ViZDoom API documents get_game_variable -> float; integral finite nonnegative floats are accepted",
   "limitation": "Full V39 controller suite unavailable in sparse checkout: doom_hud_signal_v1.py was not materialized. No ViZDoom process, V39/V15 live composition, or task-effect attribution was run.",
   "raw_test_log_sha256": {
-    "tests-normal.log": "a22e137413c5483cd6a399c1869fa0668b1dcaffacc743b937878cf49729b9ee",
-    "tests-optimized.log": "7593ef2c7b16ab9cde1987ce3da8e507ae618a6ba0ac7034de9d1e2e9504947a",
+    "tests-normal.log": "499959e4b6ba2b8f87086f71972d2f98c41bedc1b99db01f065e44b46671d062",
+    "tests-optimized.log": "41a1007ddc5c4bb708ab70e4182317a1991ce8114214f87d598c3dd6b5b5fa90",
     "tests-lifecycle-selection.log": "bcf0ddab34835a67104849829f1d788ce3b9c96456e9f915b8b12e1c2fd178c3"
   }
 }

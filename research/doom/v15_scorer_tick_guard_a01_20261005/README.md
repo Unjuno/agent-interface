@@ -38,7 +38,7 @@ cases:
 The candidate requires exact nonnegative `int` values for episode tics, finite
 nonnegative integral-valued kill/death numbers (including ViZDoom's documented
 float), a positive exact `int` tic rate, and exact `bool` terminal flags. The
-six focused tests pass in normal and optimized Python. The V15 lifecycle/
+ten focused tests pass in normal and optimized Python. The V15 lifecycle/
 selection suite passes 8/8 with an inert `executor_v13` import stub against
 this candidate. This does not qualify full runtime startup or the end-to-end
 V39 controller path.
@@ -73,3 +73,8 @@ reject. No ViZDoom process was started to make this correction.
 
 The fix is on a branch based on PR #7843's head. It does not authorize or spend
 a live allocation.
+
+
+## Optional timeout method contract
+
+When `is_episode_timeout_reached` exists, V15 now requires the attribute to be callable and its return value to have exact type `bool`. Malformed integers, floats, strings, and `None` reject before the scorer can report success. The tic-derived timeout fallback applies only when the method attribute is absent. The expanded isolated suite checks malformed values, both valid Boolean outcomes, a non-callable attribute, and the absent-method fallback.

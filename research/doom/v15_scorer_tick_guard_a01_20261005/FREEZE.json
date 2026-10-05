@@ -5,10 +5,10 @@
   "stacked_base": "758d803ff2842a0e4f9ded8db119d84c02360a9f",
   "baseline_source_blob": "f71ca01426a703e4160c9403395fed03416c772e",
   "candidate_sha256": {
-    "research/doom/session_map01_v15.py": "6c013da625ca7ee91a5b065438140c4cef62ba8b2add3fa9ee14b52902b75d79",
-    "research/doom/test_session_map01_v15_ticks.py": "83301f1c0460d18cab4611287903a49d80ea222eb71bb5bb87671b5761978d21"
+    "research/doom/session_map01_v15.py": "d63493ab92e552998445db06ce5bc0f121b4d4cd7f4022a9f62d2adf66c4afe6",
+    "research/doom/test_session_map01_v15_ticks.py": "87c97ade0deddd3227c68db775bb8a38a5d5dc9447eaea3db0f1e3b10277854a"
   },
   "scope": "AST-isolated scorer input contract tests; no game, model, GUI, display, or OS input",
   "counter_api_contract": "ViZDoom get_game_variable returns Python float; accept finite nonnegative integer-valued float or exact nonnegative int; reject bool, fractional, nonfinite, and negative values before conversion",
-  "gate": "PASS iff exact nonnegative integer episode tics, finite nonnegative integral kill/death values, positive integer tic rate and exact bool terminal flags are required; malformed values reject; documented integral-float counter controls pass"
+  "gate": "PASS iff exact nonnegative integer episode tics, finite nonnegative integral kill/death values, positive integer tic rate, exact Boolean terminal flags, and an exact Boolean timeout-method result when present are required; malformed values reject; documented integral-float counter controls pass"
 }

@@ -31,13 +31,15 @@ def load_sample_function():
 
 
 class FakeGame:
-    def __init__(self, before, after, kills=0.0, deaths=0.0, ticrate=35):
+    def __init__(self, before, after, kills=0.0, deaths=0.0, ticrate=35, timeout=False, finished=False):
         self.tics = iter((before, after))
         self.last_tic = after
         self.scorer_reads = 0
         self.kills = kills
         self.deaths = deaths
         self.ticrate = ticrate
+        self.timeout = timeout
+        self.finished = finished
 
     def get_episode_time(self):
         try:
@@ -48,7 +50,7 @@ class FakeGame:
 
     def is_episode_finished(self):
         self.scorer_reads += 1
-        return False
+        return self.finished
 
     def is_player_dead(self):
         self.scorer_reads += 1
@@ -64,7 +66,14 @@ class FakeGame:
 
     def is_episode_timeout_reached(self):
         self.scorer_reads += 1
-        return False
+        return self.timeout
+
+
+class NoTimeoutMethodGame(FakeGame):
+    def __getattribute__(self, name):
+        if name == "is_episode_timeout_reached":
+            raise AttributeError(name)
+        return super().__getattribute__(name)
 
 
 class ExactScorerTickTests(unittest.TestCase):
@@ -107,6 +116,31 @@ class ExactScorerTickTests(unittest.TestCase):
         game = FakeGame(10, 10, kills=3.0, deaths=2.0)
         sample = self.sample(game, self.variables, 600, clock_ns=lambda: 1)
         self.assertEqual((sample.kills, sample.deaths), (3, 2))
+
+    def test_timeout_result_requires_exact_bool(self):
+        for invalid in (0, 1, 0.0, 1.0, "yes", None):
+            with self.subTest(invalid=invalid):
+                game = FakeGame(10, 10, timeout=invalid, finished=True)
+                with self.assertRaises(ValueError):
+                    self.sample(game, self.variables, 600, clock_ns=lambda: 1)
+
+    def test_valid_timeout_booleans_control_success(self):
+        not_timed_out = FakeGame(10, 10, timeout=False, finished=True)
+        timed_out = FakeGame(10, 10, timeout=True, finished=True)
+        self.assertTrue(self.sample(not_timed_out, self.variables, 600, clock_ns=lambda: 1).success)
+        self.assertFalse(self.sample(timed_out, self.variables, 600, clock_ns=lambda: 1).success)
+
+    def test_absent_timeout_method_uses_tic_fallback(self):
+        before_timeout = NoTimeoutMethodGame(10, 10, finished=True)
+        at_timeout = NoTimeoutMethodGame(600 * 35, 600 * 35, finished=True)
+        self.assertTrue(self.sample(before_timeout, self.variables, 600, clock_ns=lambda: 1).success)
+        self.assertFalse(self.sample(at_timeout, self.variables, 600, clock_ns=lambda: 1).success)
+
+    def test_present_non_callable_timeout_attribute_is_rejected(self):
+        game = FakeGame(10, 10, finished=True)
+        game.is_episode_timeout_reached = None
+        with self.assertRaises(ValueError):
+            self.sample(game, self.variables, 600, clock_ns=lambda: 1)
 
     def test_invalid_ticrate_is_rejected(self):
         for value in (35.5, True, 0, -1):
