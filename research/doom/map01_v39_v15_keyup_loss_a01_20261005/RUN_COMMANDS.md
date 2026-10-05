@@ -32,8 +32,9 @@ Before running, `wslc.exe container ps --format json` returned no active-contain
 
 Candidate (one frozen attempt; constructor STOP, no cases started):
 
-`wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume 'C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\work\v39-v15-keyup-loss-a01:/src:ro' --volume 'C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\work\v39-v15-keyup-loss-a01\research\doom\map01_v39_v15_keyup_loss_a01_20261005\results\candidate-a04:/out' --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/research/doom/map01_v39_v15_keyup_loss_a01_20261005/candidate_a04.py`
+`wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume 'C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\work\v39-v15-keyup-loss-a01:/src:ro' --volume 'C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\work\v39-v15-keyup-loss-a01\research\doom\map01_v39_v15_keyup_loss_a01_20261005\results\candidate-a04:/out' --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/research/doom/map01_v39_v15_keyup_loss_a01_20261005/candidate_a04_frozen_stop.py`
 
 Exit 1 before paired cases: `AttributeError: 'NoneType' object has no attribute 'close'` during the production V2 constructor. Raw STOP is preserved at `results/candidate-a04/STOP.json`. The frozen stop rule prohibits repair and rerun. No A04 audit ran because candidate raw was not produced. WSLc emitted the existing swap-limit warning; see `FREEZE_A04.json` for source hashes and audit command.
 
-The run used the exact frozen source candidate_a04_frozen_stop.py (preserved and hashed in FREEZE_A04.json). The corrected candidate_a05_unrun.py was not executed.
+The run used exact frozen source `candidate_a04_frozen_stop.py`, preserved and hashed in `FREEZE_A04.json`. The corrected `candidate_a05_unrun.py` was not executed.
+
