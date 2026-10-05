@@ -381,3 +381,11 @@ Paginated GitHub REST reads observed main `307b9e2f0420f130e9d933c037cac78501d2e
 | `test/7974-single-query-failure-boundary` | `95666c514f142b58cebafc1920b86bcd87a0d8be` | unclassified |
 
 Do not delete any other ref based on this census alone.
+
+## Correction: #7974 follow-up branch disposition — 2026-10-05 12:35 UTC
+
+The earlier note that the #7974 branch was checked out is superseded by a fresh worktree inspection at 12:33 UTC: no local worktree used `fix/59-v15-per-key-keyup-retry-a01-20261005`. Its remote tip was `23aa99031d7e0178de5f69f6df8e89fb63b1d9a6`; its two commits beyond main were the synchronization merge and `a89cbae943838013414e7f70040639e41e0ed816`.
+
+At the same capture, main was `307b9e2f0420f130e9d933c037cac78501d2e547`. Both #7974's merge commit `ec63985e6312e79a2b82e88c4f83369b2d969e0e` and #8067's merge commit `64dcc4c677202eb9b1c9b41ff808e56486c8321f` were ancestors of main. The candidate branch's `git merge-tree --write-tree` result was exactly main's tree `c4912c68edac9133c0bbabd466bdd69ede7b4b42`; the change in `a89cbae` has the same stable patch-id as #8067's merged test change, and that test content is present on main. The candidate branch was not the head or base of any of the 336 open PRs queried, and no worktree used it. Thus its unique commit identity is not in main ancestry, but its complete source diff is represented by #8067 on main.
+
+The remote branch ref was deleted after these checks. To retain the exact former branch history, annotated tag `archive/branch-fix-59-v15-per-key-keyup-retry-a01-20261005` points to the former tip. PR head refs #7974 (`02370aa7ed5bb4a1d0bd483858e6491294bcf139`) and #8067 (`ce1e2e732c5df127037490c2b8dba60675404b68`) remain available. The three closed child-PR branches (#8048, #8012, #7958) were verified present before deletion and were left untouched. No claim is made that those child branches or PRs are integrated.
