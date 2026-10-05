@@ -1,6 +1,9 @@
 from pathlib import Path
 import hashlib, json
 p=Path(__file__).resolve().parent
+def canonical_sha(path):
+    text=path.read_text(encoding='utf-8-sig').replace('\r\n','\n').replace('\r','\n').rstrip('\n')+'\n'
+    return hashlib.sha256(text.encode('utf-8')).hexdigest()
 result=json.loads((p/'RESULT.json').read_text(encoding='utf-8-sig'))
 exact=json.loads((p/'raw-exact-closure-01.txt').read_text(encoding='utf-8-sig'))
 raw=(p/'raw-run-01.txt').read_text(encoding='utf-8-sig')
@@ -9,7 +12,7 @@ manifest={}
 for line in (p/'ARTIFACT_SHA256SUMS').read_text(encoding='ascii').splitlines():
     if not line.strip(): continue
     digest,name=line.split('  ',1); manifest[name]=digest
-manifest_valid=all(hashlib.sha256((p/name).read_bytes()).hexdigest()==digest for name,digest in manifest.items())
+manifest_valid=all(canonical_sha(p/name)==digest for name,digest in manifest.items())
 checks={
   'result_schema': result['schema']=='issue59-release-order-result-v1',
   'wrapper_control_pass': '"all": true' in raw and '"no_input_state_between_keyups": true' in raw,
@@ -23,6 +26,4 @@ checks={
 }
 assert all(checks.values()), checks
 print(json.dumps({'audit':'PASS','checks':checks,'verified_artifact_sha256':manifest},sort_keys=True,indent=2))
-
-
 
