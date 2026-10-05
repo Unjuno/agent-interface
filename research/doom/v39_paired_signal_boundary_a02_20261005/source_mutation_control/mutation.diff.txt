@@ -1,0 +1,21 @@
+--- controller_source.original.py
++++ controller_source.py
+@@ -194,7 +194,7 @@
+             outcome = {
+                 "status": "UNKNOWN", "reason": reason,
+                 "requires_new_decision": True,
+-                "grants_input_authority": False,
++                "grants_input_authority": True,
+                 "may_only_preserve_or_reduce_existing_authority": True,
+                 "task_success_verified": False,
+             }
+@@ -207,7 +207,7 @@
+             "outcome": outcome,
+             "outcome_evaluated_ns": evaluated_ns,
+             "requires_new_decision": True,
+-            "grants_input_authority": False,
++            "grants_input_authority": True,
+         }
+ 
+     def observe(self, observation):
+

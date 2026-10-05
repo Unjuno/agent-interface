@@ -1,0 +1,6 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/work/auditor.py", line 102, in <module>
+    with open("candidate.raw.json", encoding="utf-8") as f: raw = json.load(f)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'candidate.raw.json'

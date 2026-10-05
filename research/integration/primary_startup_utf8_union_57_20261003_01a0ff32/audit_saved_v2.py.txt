@@ -1,0 +1,133 @@
+"""Independent saved-data classification. Imports no producer/runtime/test/helper."""
+import pathlib,json,hashlib,datetime,copy,re,os
+OUT=pathlib.Path(__file__).resolve().parent;ROOT=OUT.parents[1]
+F=json.loads((OUT/'FREEZE.json').read_text(encoding='utf8'));CMD=json.loads((OUT/'COMMANDS.json').read_text(encoding='utf8'))
+def sha(b):return hashlib.sha256(b).hexdigest()
+def check(value,msg):
+ if not value:raise ValueError(msg)
+def read(path):return json.loads(path.read_bytes().decode('utf8'))
+def serial_error(err):
+ if err is None:return []
+ return [err]+serial_error(err.get('cause'))+sum((serial_error(x) for x in (err.get('errors') or [])),[])
+for name,row in F['pins'].items():
+ b=(ROOT/name).read_bytes();check(len(b)==row['bytes'] and sha(b)==row['sha256'],'pin '+name)
+check(len(CMD)==5 and [x['label'] for x in CMD]==['affected']+['case-'+x for x in F['T']['cases']],'frozen command roster')
+for r in CMD:
+ check(r['exit']==0 and r['timeout'] is False,'original command terminal')
+ check(r['freeze_sha256']==sha((OUT/'FREEZE.json').read_bytes()),'freeze join')
+ check(F['frozen_utc']<r['started_utc']<r['ended_utc'],'actual times ordered')
+ for stream in ['stdout','stderr']:
+  b=(OUT/r['label']/(stream+'.raw')).read_bytes()
+  check(len(b)==r[stream+'_bytes'] and sha(b)==r[stream+'_sha256'],'full stream '+r['label'])
+text=(OUT/'affected/stdout.raw').read_text(encoding='utf8')
+for field,count in [('tests',51),('pass',51),('fail',0),('cancelled',0),('skipped',0),('todo',0)]:
+ check(re.search(r'(?:^|\n)\u2139 '+field+r' '+str(count)+r'(?:\r?\n|$)',text),'actual 51 method '+field)
+bundles={}
+for case in F['T']['cases']:
+ directory=OUT/'cases'/case
+ result=read(directory/'RESULT.json')
+ check(result==json.loads((OUT/('case-'+case)/'stdout.raw').read_text(encoding='utf8')),'RESULT/full captured stdout '+case)
+ events=[json.loads(x) for x in (directory/'events.jsonl').read_text(encoding='utf8').splitlines()]
+ rows=[json.loads(x) for x in (directory/'primary-output.raw').read_text(encoding='utf8').splitlines()]
+ check(events==result['events'] and rows==result['rows'],'redundant raw event/output '+case)
+ def absent(pid):
+  if os.name=='nt':
+   import subprocess
+   p=subprocess.run(['powershell','-NoProfile','-Command',f'Get-Process -Id {pid} -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Id'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+   return not p.stdout.strip()
+  try:os.kill(pid,0);return False
+  except ProcessLookupError:return True
+ collector_start=read(directory/'collector-start.json');collector_end=read(directory/'collector-end.json')
+ cmd=CMD[F['T']['cases'].index(case)+1]
+ check(result['collector_pid']==collector_start['pid']==collector_end['pid']==cmd['pid'],'actual collector identity')
+ check(cmd['started_utc']<=collector_start['utc']<=collector_end['utc']<=cmd['ended_utc'],'collector UTC envelope')
+ check(absent(cmd['pid']) and absent(result['fixture_start']['pid']),'later actual own PID absence')
+ bundles[case]={'result':result,'fixture_start':read(directory/'fixture-start.json'),'fixture_exit':read(directory/'fixture-exit.json'),'fixture_request':read(directory/'fixture-request.json'),'fixture_response':read(directory/'fixture-response.json'),'input_command':read(directory/'input-command.json'),'input_raw':(directory/'input-command.raw').read_bytes().hex(),'bad_raw':(directory/'second-input.raw').read_bytes().hex(),'exchange_request':read(directory/'exchange/request-1.json'),'exchange_original_reply':read(directory/'exchange/original-reply-1.json'),'exchange_presentation':read(directory/'exchange/presentation-1.json'),'host_request':read(directory/'host/request-1.json'),'host_reply':read(directory/'host/reply-1.json'),'host_exit':read(directory/'host/exit.json'),'host_stderr':(directory/'host/stderr.log').read_text(encoding='utf8'),'host_events':[json.loads(x) for x in (directory/'host/host-events.jsonl').read_text(encoding='utf8').splitlines()],'collector_end':collector_end}
+def classify(b):
+ check(set(b)==set(F['T']['cases']),'exact four frozen cases')
+ classifications=[]
+ for case in F['T']['cases']:
+  x=b[case];r=x['result'];e=r['events']
+  check(r['which']==case,'case binding')
+  check([v['sequence'] for v in e]==list(range(1,len(e)+1)),'event sequence')
+  check(r['fixture_start']==x['fixture_start'] and r['fixture_exit']==x['fixture_exit'] and r['host_exit']==x['host_exit'],'original endpoint joins')
+  check(x['fixture_start']['pid']==x['fixture_exit']['pid'] and x['fixture_start']['ppid']==r['collector_pid'],'actual fixture ancestry')
+  check(x['fixture_exit']['code']==0 and x['fixture_exit']['requests']==1 and x['fixture_exit']['responses']==1 and x['fixture_exit']['guard'] is False,'one original fixture request/response')
+  check(r['host_exit']=={'code':0,'signal':None} and r['fixture_absent'] is True and r['guard'] is False,'actual original child closure')
+  check(r['requestFiles']==['request-1.json'],'no second primary request')
+  check(x['input_command']==json.loads(bytes.fromhex(x['input_raw']).decode('utf8'))==x['exchange_request'],'exact raw-input/accepted request')
+  command=x['input_command'];check(command['id']==1 and command['method']=='call' and command['args'][0]=='interface_clock','frozen inert tool')
+  expected_label='あ' if case=='healthy_split' else 'accepted'
+  check(command['args'][1]=={'label':expected_label},'exact fixed case label')
+  request=x['fixture_request'];check(request==x['host_request']=={'id':1,'tool':'interface_clock','arguments':{'label':expected_label}},'one actual outgoing request bytes')
+  reply=x['fixture_response'];check(reply==x['host_reply']==x['exchange_original_reply'] and reply['id']==1 and reply['next_id']==2 and reply['tool']=='interface_clock' and reply['status']=='returned','one original reply')
+  check(json.loads(reply['result']['content'][0]['text'])=={'label':expected_label,'fixture':True},'literal fixture reply')
+  check(r['settledBeforeRelease'] is False,'same pending request observed before release')
+  before=[z for z in e if z['kind']=='before_release'];release=[z for z in e if z['kind']=='release_original']
+  check(len(before)==len(release)==1 and before[0]['settled'] is False and before[0]['sequence']<release[0]['sequence'],'same-promise release chronology')
+  returned=[z for z in r['rows'] if z['status']=='returned']
+  check(len(returned)==1 and returned[0]['result']==x['exchange_presentation'] and returned[0]['result']['id']==1 and returned[0]['result']['next_id']==2,'one retained primary result')
+  check(next(z['sequence'] for z in e if z['kind']=='output' and z['status']=='returned')>release[0]['sequence'],'returned after controlled original release')
+  statuses=[z['status'] for z in r['rows']]
+  check(statuses==(['ready','returned','terminal'] if case=='healthy_split' else ['ready','returned']),'whole-owner row classification')
+  check(r['listeners']=={'input_errors':1,'output_errors':0,'input_data':0,'input_end':0} and r['foreign_input_listener_retained'] is True,'owned-listener retirement/foreign preserved')
+  check('FIXTURE_START '+str(x['fixture_start']['pid'])+'\nFIXTURE_ENTERED 1\nFIXTURE_END\n'==x['host_stderr'],'complete original fixture stderr markers')
+  sends=[z for z in x['host_events'] if z['kind']=='send_requested']
+  check(len(sends)==1 and sends[0]['tool']=='interface_clock','one actual host send')
+  decoder=[z for z in e if z['kind']=='decoder_error'];stream=[z for z in e if z['kind']=='input_error_observed']
+  rejected=[z for z in e if z['kind']=='owner_rejected'];resolved=[z for z in e if z['kind']=='owner_resolved']
+  if case=='healthy_split':
+   check(not decoder and not stream and r['decoderError'] is None and r['rejection'] is None and len(resolved)==1 and not rejected,'healthy control')
+   check(bytes.fromhex(x['bad_raw'])==b'','healthy no corrupt bytes')
+   diagnosis='PASS'
+  else:
+   check(len(rejected)==1 and not resolved and r['rejection']['name']==rejected[0]['name'] and r['rejection']['message']==rejected[0]['message'],'actual rejection identity')
+   bad=bytes.fromhex(x['bad_raw'])
+   try:bad.decode('utf8');raise ValueError('changed invalid byte witness')
+   except UnicodeDecodeError:pass
+   check(bad.count(b'\xff')==1 and b'\"id\":2' in bad,'exact unaccepted malformed ID2')
+   if case=='stream_then_malformed':
+    check(len(stream)==1 and not decoder and r['sameStreamFault'] is True and r['sameDecoder'] is False and r['decoderError'] is None,'stream-first controls')
+    diagnosis='PASS'
+   else:
+    check(len(decoder)==1 and r['decoderEvents']==1 and r['decoderError']['name']=='TypeError' and r['decoderError']['code']=='ERR_ENCODING_INVALID_ENCODED_DATA','actual original decoder fault')
+    check(decoder[0]['sequence']<next(z['sequence'] for z in e if z['kind']=='malformed_write_returned'),'decoder fault synchronous before write return')
+    if case=='malformed_pending':check(not stream and r['sameDecoder'] is True and r['sameStreamFault'] is False,'single decoder error control')
+    else:check(len(stream)==1 and decoder[0]['sequence']<stream[0]['sequence'] and r['sameStreamFault'] is True and r['sameDecoder'] is False,'actual double-fault chronology')
+    flattened=serial_error(r['rejection'])
+    kept=any(v['name']==r['decoderError']['name'] and v['code']==r['decoderError']['code'] and v['message']==r['decoderError']['message'] for v in flattened)
+    diagnosis='PASS' if kept else 'FAIL_FIRST_DECODER_ERROR_MASKED'
+  classifications.append({'case':case,'custody':'PASS','diagnosis':diagnosis,'statuses':statuses,'collector_pid':r['collector_pid'],'fixture_pid':x['fixture_start']['pid']})
+ return classifications
+actual=classify(bundles)
+check([x['diagnosis'] for x in actual]==['PASS','PASS','FAIL_FIRST_DECODER_ERROR_MASKED','PASS'],'retained first diagnosis pattern')
+controls=[]
+def control(name,change):
+ c=copy.deepcopy(bundles);change(c)
+ try:classify(c)
+ except (ValueError,KeyError,IndexError,TypeError) as error:controls.append({'name':name,'rejected':True,'reason':str(error)});return
+ raise ValueError('effective copied control accepted: '+name)
+control('omit_adverse_case',lambda c:c.pop('malformed_then_stream'))
+control('change_primary_id',lambda c:c['malformed_pending']['input_command'].__setitem__('id',2))
+def mutate_counts(c):
+ c['malformed_pending']['fixture_exit']['requests']=2;c['malformed_pending']['result']['fixture_exit']['requests']=2
+control('consistent_duplicate_request_count',mutate_counts)
+def mutate_release(c):
+ c['malformed_pending']['result']['settledBeforeRelease']=True
+ for e in c['malformed_pending']['result']['events']:
+  if e['kind']=='before_release':e['settled']=True
+control('coherent_abandoned_original_promise',mutate_release)
+def mutate_exit(c):
+ c['healthy_split']['host_exit']['code']=1;c['healthy_split']['result']['host_exit']['code']=1
+control('consistent_failed_host_exit',mutate_exit)
+control('delete_foreign_observer',lambda c:c['healthy_split']['result'].__setitem__('foreign_input_listener_retained',False))
+def mutate_order(c):
+ e=c['malformed_then_stream']['result']['events'];a=next(i for i,x in enumerate(e) if x['kind']=='decoder_error');z=next(i for i,x in enumerate(e) if x['kind']=='input_error_observed');e[a],e[z]=e[z],e[a]
+ for i,row in enumerate(e,1):row['sequence']=i
+control('renumbered_reversed_fault_order',mutate_order)
+def mutate_reply(c):
+ c['healthy_split']['fixture_response']['next_id']=3;c['healthy_split']['host_reply']['next_id']=3;c['healthy_split']['exchange_original_reply']['next_id']=3
+control('consistent_reply_consumption_mismatch',mutate_reply)
+result={'audit_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'audit_type':'separate saved-data stdlib oracle, same actual worker, no producer/runtime import or replay','freeze_sha256':sha((OUT/'FREEZE.json').read_bytes()),'actual_commands':5,'command_exits':[x['exit'] for x in CMD],'affected_methods':51,'affected_pass':51,'cases':actual,'custody_cases':4,'custody_pass':4,'diagnosis_pass':3,'diagnosis_fail':1,'whole_union':'FAIL_FIRST_DECODER_ERROR_MASKED','controls':controls,'later_original_collector_and_fixture_pids_absent':True,'limits':'controlled PassThrough fault and prototype observer; no CLI, physical/backend/task/release/efficiency/current-base certificate'}
+(OUT/'AUDIT-v2.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf8')
+print(json.dumps(result))

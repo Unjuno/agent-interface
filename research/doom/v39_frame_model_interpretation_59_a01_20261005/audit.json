@@ -1,0 +1,36 @@
+{
+  "audit": "v1-independent-deterministic",
+  "source_png_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+  "source_matches_freeze": true,
+  "frozen_assets_match": true,
+  "cli_exit_code": 1,
+  "invocation_status": "finished",
+  "invocation_matches_freeze": true,
+  "stdin_sha256": "a8abe3f41f472aca178528af0b9c26a03cd38cc31c4c67ad41878891cc341754",
+  "jsonl_event_parse_errors": 0,
+  "jsonl_file_present": true,
+  "non_message_items": [
+    {
+      "line": 2,
+      "item_type": "error"
+    },
+    {
+      "line": 3,
+      "item_type": "error"
+    },
+    {
+      "line": 5,
+      "item_type": "error"
+    }
+  ],
+  "response_parse_error": "FileNotFoundError: [Errno 2] No such file or directory: '<PACKAGE>/raw/final.txt'",
+  "schema_valid": false,
+  "field_matches": {
+    "visible_hostile": false,
+    "health": false,
+    "ammo": false
+  },
+  "unscored_cover_recommendation": null,
+  "gate": "STOP",
+  "scope": "one saved frame and one model call; no controller or game action"
+}

@@ -1,0 +1,160 @@
+{
+  "D": "Same composed56 all pass, zero fail/cancel/skip/todo; original first54pass/2fail retained as harness failure. Product/test definitions unchanged.",
+  "argv": [
+    "C:\\Program Files\\nodejs\\node.EXE",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "runtime/host_v1/test_primary_stdio.mjs",
+    "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+    "runtime/host_v1/test_primary_stdio_failure_order.mjs",
+    "runtime/host_v1/test_primary_stdio_utf8.mjs",
+    "runtime/host_v1/test_relay_client.mjs"
+  ],
+  "cwd": "<OWN_WORKSPACE>\\work\\review6979-v2-45e9\\combined",
+  "environment_delta": {
+    "PRIMARY_FAILURE_EVIDENCE": "<OWN_WORKSPACE>\\work\\review6979-v2-45e9\\repaired-failure-cases",
+    "PRIMARY_STDIO_STARTUP_EVIDENCE": "<OWN_WORKSPACE>\\work\\review6979-v2-45e9\\repaired-startup-cases",
+    "TEMP": "<OWN_WORKSPACE>\\work\\review6979-v2-45e9\\tmp",
+    "TMP": "<OWN_WORKSPACE>\\work\\review6979-v2-45e9\\tmp"
+  },
+  "frozen_utc": "2026-10-03T10:32:38.513693+00:00",
+  "helper_sha256": "e6797a497d81d254efad1c6e86fc248d6c1f4c8c18914e4345dbc2b36d8beeb0",
+  "node_binary": "C:\\Program Files\\nodejs\\node.EXE",
+  "node_binary_sha256": "3428a3d055501883385d78b19128550d3e8be39a89e7edba683a9b06830257c7",
+  "repair": {
+    "actual_failure": "child probe mkdir ENOENT on uncreated parent, both child exit3 before product/fixture startup",
+    "classification": "own ordinary harness environment preparation",
+    "decoder_cells_replayed": false,
+    "failed_methods": [
+      "startup exchange creation healthy control publishes ready and terminal",
+      "startup exchange creation failure never publishes ready"
+    ],
+    "first_exit": 1,
+    "first_fail": 2,
+    "first_pass": 54,
+    "first_receipt_sha256": "de88acc927ba04e88d7a1464319e72f178632d2d78a700bc1b6ef5dc9f55564e",
+    "first_stdout_sha256": "b9c92c4a686d94e31f581e76a72c914ad2dda010fbf0563edf2107ebb2714c45",
+    "first_tests": 56,
+    "formal_allocation_replayed": false,
+    "repair": "initialize dedicated fresh parent directories before same affected regression argv",
+    "source_or_test_or_D_changed": false
+  },
+  "source": [
+    {
+      "bytes": 13596,
+      "path": "runtime/host_v1/primary_caller.mjs",
+      "sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e",
+      "variant": "peer"
+    },
+    {
+      "bytes": 4236,
+      "path": "runtime/host_v1/primary_exchange.mjs",
+      "sha256": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420",
+      "variant": "peer"
+    },
+    {
+      "bytes": 6454,
+      "path": "runtime/host_v1/primary_stdio.mjs",
+      "sha256": "2871de1eac37f4220efaa8f48560453f753c37bb5dbd474b326808c2974921f5",
+      "variant": "peer"
+    },
+    {
+      "bytes": 12829,
+      "path": "runtime/host_v1/relay_client.mjs",
+      "sha256": "0a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b",
+      "variant": "peer"
+    },
+    {
+      "bytes": 11930,
+      "path": "runtime/host_v1/relay_host.mjs",
+      "sha256": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984",
+      "variant": "peer"
+    },
+    {
+      "bytes": 17586,
+      "path": "runtime/host_v1/test_primary_stdio.mjs",
+      "sha256": "354a47cc1c932fae6aee6633c94307d77ae04359f748034d8a33421598376295",
+      "variant": "peer"
+    },
+    {
+      "bytes": 3403,
+      "path": "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+      "sha256": "89cf485c7e130c377190c58afca3741fd750a5a76b9d5cc3ab958ae5d6353bef",
+      "variant": "peer"
+    },
+    {
+      "bytes": 5144,
+      "path": "runtime/host_v1/test_primary_stdio_failure_order.mjs",
+      "sha256": "753217d1db82b073545ea92ad6927b634e9553ece509834d55b69dad0cfe83dd",
+      "variant": "peer"
+    },
+    {
+      "bytes": 14767,
+      "path": "runtime/host_v1/test_relay_client.mjs",
+      "sha256": "d134b5cd53b84ee3bf3d1db3663caaa81045bca5e33b45aeef33eb1eb2c01c28",
+      "variant": "peer"
+    },
+    {
+      "bytes": 13596,
+      "path": "runtime/host_v1/primary_caller.mjs",
+      "sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e",
+      "variant": "combined"
+    },
+    {
+      "bytes": 4236,
+      "path": "runtime/host_v1/primary_exchange.mjs",
+      "sha256": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420",
+      "variant": "combined"
+    },
+    {
+      "bytes": 7194,
+      "path": "runtime/host_v1/primary_stdio.mjs",
+      "sha256": "15f302fe72c7de15bc678256525eba63a81189678f9bede89ee52e7fbbee9edd",
+      "variant": "combined"
+    },
+    {
+      "bytes": 12829,
+      "path": "runtime/host_v1/relay_client.mjs",
+      "sha256": "0a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b",
+      "variant": "combined"
+    },
+    {
+      "bytes": 11930,
+      "path": "runtime/host_v1/relay_host.mjs",
+      "sha256": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984",
+      "variant": "combined"
+    },
+    {
+      "bytes": 17586,
+      "path": "runtime/host_v1/test_primary_stdio.mjs",
+      "sha256": "354a47cc1c932fae6aee6633c94307d77ae04359f748034d8a33421598376295",
+      "variant": "combined"
+    },
+    {
+      "bytes": 3403,
+      "path": "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+      "sha256": "89cf485c7e130c377190c58afca3741fd750a5a76b9d5cc3ab958ae5d6353bef",
+      "variant": "combined"
+    },
+    {
+      "bytes": 5144,
+      "path": "runtime/host_v1/test_primary_stdio_failure_order.mjs",
+      "sha256": "753217d1db82b073545ea92ad6927b634e9553ece509834d55b69dad0cfe83dd",
+      "variant": "combined"
+    },
+    {
+      "bytes": 5452,
+      "path": "runtime/host_v1/test_primary_stdio_utf8.mjs",
+      "sha256": "923a9022076219d1f809f996db809dce01710e22d8276751eb91bff0193b1515",
+      "variant": "combined"
+    },
+    {
+      "bytes": 14767,
+      "path": "runtime/host_v1/test_relay_client.mjs",
+      "sha256": "d134b5cd53b84ee3bf3d1db3663caaa81045bca5e33b45aeef33eb1eb2c01c28",
+      "variant": "combined"
+    }
+  ],
+  "timeout_seconds": 25
+}

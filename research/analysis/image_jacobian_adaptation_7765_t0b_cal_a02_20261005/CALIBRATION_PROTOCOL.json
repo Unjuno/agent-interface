@@ -1,0 +1,12 @@
+{
+  "allocation": "UNJUNO-7765-IMAGE-JACOBIAN-T0B-CAL-A02-20261005-01",
+  "predecessor": "T0b calibration A01 STOP_CALIBRATION_AUDIT_FAILED; new seed allocation, no A01 outcomes reused",
+  "training_seeds": [3000, 3019],
+  "conditions": ["gain_drift", "cross_coupling"],
+  "fixed_gain_grid": [0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "selection": "Among gains with all 40 training goals reached and zero action-bound violations, choose minimum total corrections; ties choose smaller gain.",
+  "future_heldout_seeds": [4000, 4029],
+  "online_gain": 0.75,
+  "no_retry": true,
+  "runtime": "Local CPython; OrbStack content-store defect continues. Synthetic result makes no host timing/resource claim."
+}

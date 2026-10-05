@@ -1,0 +1,82 @@
+{
+  "reason": "Git normalized mixed checkout line endings; canonical staged bytes were separately executed",
+  "source_pins": [
+    {
+      "path": "runtime/kernel/__init__.py",
+      "bytes": 858,
+      "sha256": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+      "staged_git_blob": "a8b5bdde62e451b75a9cbf4bf13511aa909cfc6c"
+    },
+    {
+      "path": "runtime/kernel/backend.py",
+      "bytes": 1998,
+      "sha256": "b0991a015cd5e5cbba7a22963922310c99b9c793f56c6eaeb12eb5e384223668",
+      "staged_git_blob": "01b75af9141d285b8510c7715b7cc7eed96a6d2c"
+    },
+    {
+      "path": "runtime/kernel/contracts.py",
+      "bytes": 9997,
+      "sha256": "cd37284c15d01f2fde446d53ba161b4bc6224dfb0137324101f3d2eef8884ef8",
+      "staged_git_blob": "3d24fb5b28ae7812c71c6c1fedd3439d1473f0b8"
+    },
+    {
+      "path": "runtime/kernel/lifecycle.py",
+      "bytes": 7591,
+      "sha256": "da128aabf2ae1d30cd65fb2df70a4870078d04181e419aa30f0bbad8cd9f21f0",
+      "staged_git_blob": "6817cad0e7272bdaf4c57e1e246db67235eb4d38"
+    },
+    {
+      "path": "runtime/kernel/test_kernel.py",
+      "bytes": 11142,
+      "sha256": "cf030e4c7466e6077b32e4a6b13623d342355f95202b3fb242030531d3de1b16",
+      "staged_git_blob": "bc4c606189d7adfa9403b3781754f4aa75201ee4"
+    },
+    {
+      "path": "runtime/kernel/README.md",
+      "bytes": 1625,
+      "sha256": "18c664b562922ee53d46d7f86f4f0071981d5d5463591e0be5ddabc43a8d24ad",
+      "staged_git_blob": "3c6e72c227a3b93d827bfc39f7cf16aceae7a318"
+    }
+  ],
+  "runs": [
+    {
+      "argv": [
+        "python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel"
+      ],
+      "cwd": "canonical-candidate",
+      "started_utc": "2026-10-03T01:52:36.339429+00:00",
+      "ended_utc": "2026-10-03T01:52:36.559991+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "50d34efefcde9a760376fa7d15c3d3fdcac07079edd274fb9fbd22f3725df2b2",
+      "stdout": "canonical-normal.stdout.log",
+      "stderr": "canonical-normal.stderr.log",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    },
+    {
+      "argv": [
+        "python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel"
+      ],
+      "cwd": "canonical-candidate",
+      "started_utc": "2026-10-03T01:52:36.688537+00:00",
+      "ended_utc": "2026-10-03T01:52:36.915586+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "50d34efefcde9a760376fa7d15c3d3fdcac07079edd274fb9fbd22f3725df2b2",
+      "stdout": "canonical-optimized.stdout.log",
+      "stderr": "canonical-optimized.stderr.log",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+test_authority_shape_cannot_bypass_action_validation (test_type_boundary.TypeBoundaryTests.test_authority_shape_cannot_bypass_action_validation) ... FAIL
+test_binding_shape_cannot_bypass_digest_validation (test_type_boundary.TypeBoundaryTests.test_binding_shape_cannot_bypass_digest_validation) ... FAIL
+test_effect_shape_cannot_bypass_evidence_validation (test_type_boundary.TypeBoundaryTests.test_effect_shape_cannot_bypass_evidence_validation) ... FAIL
+test_execution_shape_cannot_bypass_interval_validation (test_type_boundary.TypeBoundaryTests.test_execution_shape_cannot_bypass_interval_validation) ... FAIL
+test_observation_type_control (test_type_boundary.TypeBoundaryTests.test_observation_type_control) ... ok
+test_request_shape_cannot_bypass_nonempty_action_validation (test_type_boundary.TypeBoundaryTests.test_request_shape_cannot_bypass_nonempty_action_validation) ... FAIL
+test_stop_shape_cannot_assert_verified_release (test_type_boundary.TypeBoundaryTests.test_stop_shape_cannot_assert_verified_release) ... FAIL
+
+======================================================================
+FAIL: test_authority_shape_cannot_bypass_action_validation (test_type_boundary.TypeBoundaryTests.test_authority_shape_cannot_bypass_action_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_type_boundary.py", line 47, in test_authority_shape_cannot_bypass_action_validation
+    self.check_refusal(flow, lambda: flow.authorize(shaped(lease(), allowed_actions=frozenset()), now_ns=200))
+  File "test_type_boundary.py", line 33, in check_refusal
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_binding_shape_cannot_bypass_digest_validation (test_type_boundary.TypeBoundaryTests.test_binding_shape_cannot_bypass_digest_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_type_boundary.py", line 43, in test_binding_shape_cannot_bypass_digest_validation
+    self.check_refusal(flow, lambda: flow.bind(shaped(binding(), binding_digest='bad')))
+  File "test_type_boundary.py", line 33, in check_refusal
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_effect_shape_cannot_bypass_evidence_validation (test_type_boundary.TypeBoundaryTests.test_effect_shape_cannot_bypass_evidence_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_type_boundary.py", line 60, in test_effect_shape_cannot_bypass_evidence_validation
+    self.check_refusal(flow, lambda: flow.record_effect(shaped(effect, evidence_digest='bad')))
+  File "test_type_boundary.py", line 33, in check_refusal
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_execution_shape_cannot_bypass_interval_validation (test_type_boundary.TypeBoundaryTests.test_execution_shape_cannot_bypass_interval_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_type_boundary.py", line 55, in test_execution_shape_cannot_bypass_interval_validation
+    self.check_refusal(flow, lambda: flow.record_execution(shaped(execution(), ended_ns=0)))
+  File "test_type_boundary.py", line 33, in check_refusal
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_request_shape_cannot_bypass_nonempty_action_validation (test_type_boundary.TypeBoundaryTests.test_request_shape_cannot_bypass_nonempty_action_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_type_boundary.py", line 51, in test_request_shape_cannot_bypass_nonempty_action_validation
+    self.check_refusal(flow, lambda: flow.begin_execution(shaped(request(), actions=()), now_ns=300))
+  File "test_type_boundary.py", line 33, in check_refusal
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_stop_shape_cannot_assert_verified_release (test_type_boundary.TypeBoundaryTests.test_stop_shape_cannot_assert_verified_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_type_boundary.py", line 64, in test_stop_shape_cannot_assert_verified_release
+    self.check_refusal(flow, lambda: flow.stop('cancelled', release=SimpleNamespace(released=True)))
+  File "test_type_boundary.py", line 33, in check_refusal
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+FAILED (failures=6)

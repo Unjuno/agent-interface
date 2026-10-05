@@ -1,0 +1,66 @@
+{
+  "schema": "scorer-feedback-attribution-a06-result-v1",
+  "issue": 7642,
+  "status": "PASS_METHOD_SCOPED",
+  "hypothesis": "An exact, type-aware auditor can validate all five retained A05 cases and reject duplicate, missing, mislabeled, or semantically altered rows.",
+  "decision": "PASS",
+  "candidate_run": {
+    "container_id": "b4990a449c0ae7e50511ba35aac51f73de19c6d949e33993e04859af6146cd66",
+    "name": "ai59-vocab-a06-candidate-20261004",
+    "exit_code": 0,
+    "status": "exited",
+    "image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "python": "3.12.15",
+    "network": "none",
+    "cpus_nano": 1000000000,
+    "memory_bytes": 134217728,
+    "uid": "65534",
+    "source_read_only": true,
+    "output_read_write": true
+  },
+  "tests": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "one_unchanged_raw_acceptance": 1,
+    "tamper_cases_rejected": 9
+  },
+  "candidate_output": {
+    "path": "out/candidate/candidate.raw.json",
+    "sha256": "5c2a901894611e8faaa8505fa91dba055422694fb314e0691163efbc36ea311d",
+    "status": "PASS_STRICT_RAW_AUDIT",
+    "input_sha256": "9506457a371565b489b5e1b9f7313c05d3f13a28bd5448b4b2944211ee4f313e"
+  },
+  "independent_audit": {
+    "container_id": "30b627c286288ea00835531a4a834055cf62173017353c895a33968b941e7bb6",
+    "name": "ai59-vocab-a06-auditor-20261004",
+    "exit_code": 0,
+    "status": "exited",
+    "image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "network": "none",
+    "cpus_nano": 1000000000,
+    "memory_bytes": 134217728,
+    "uid": "65534",
+    "source_read_only": true,
+    "input_read_only": true,
+    "output_read_write": true,
+    "output_path": "out/audit/audit.raw.json",
+    "output_sha256": "5938099bbb418ca93d2a984f6c21ecdc184dba289bb792c90d9c74ae82bdce2c",
+    "raw_status": "PASS_RAW_AUDIT_V2",
+    "cases_reconstructed": 5
+  },
+  "a05": {
+    "commit": "690c460648917ca22ae14c92561c38e65677b30d",
+    "original_candidate_raw_sha256": "9506457a371565b489b5e1b9f7313c05d3f13a28bd5448b4b2944211ee4f313e",
+    "candidate_not_rerun": true,
+    "old_auditor_source_or_result_modified": false,
+    "review_finding": "confirmed; original auditor can accept five duplicated valid rows as a false five-case pass"
+  },
+  "scope": "Retrospective validation of immutable synthetic scorer-schema output and tamper-resistance only.",
+  "limitations": [
+    "WSLc warned that swap-limit cgroups are unavailable; configured memory is recorded but kernel enforcement is not claimed.",
+    "No live scorer, task, game, model, GUI, OS input, GPU or #59 live allocation.",
+    "No claim of event truth, runtime provenance, usefulness in play, causal attribution, recovery, survival or gameplay efficacy."
+  ],
+  "retries": 0
+}

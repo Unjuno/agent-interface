@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/experiment/runner.py", line 294, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/experiment/runner.py", line 280, in main
+    row = run_cell(Path(__file__).resolve().parent, args.source, args.out, case)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/experiment/runner.py", line 250, in run_cell
+    observer.close()
+  File "/usr/local/lib/python3.12/site-packages/Xlib/display.py", line 161, in close
+    self.display.close()
+  File "/usr/local/lib/python3.12/site-packages/Xlib/protocol/display.py", line 258, in close
+    self.flush()
+  File "/usr/local/lib/python3.12/site-packages/Xlib/protocol/display.py", line 255, in flush
+    self.send_and_recv(flush = True)
+  File "/usr/local/lib/python3.12/site-packages/Xlib/protocol/display.py", line 609, in send_and_recv
+    raise self.socket_error
+Xlib.error.ConnectionClosedError: Display connection closed by server

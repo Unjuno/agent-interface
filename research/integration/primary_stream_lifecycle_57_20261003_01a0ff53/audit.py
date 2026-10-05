@@ -1,0 +1,105 @@
+"""Read saved construction evidence only; never import or start a producer."""
+from pathlib import Path
+import datetime, hashlib, json, sys
+
+class Rejected(ValueError):
+    pass
+
+def require(ok, reason):
+    if not ok:
+        raise Rejected(reason)
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def load(path):
+    return json.loads(path.read_bytes())
+
+def typed_int(value):
+    return type(value) is int
+
+def audit(root):
+    root = Path(root)
+    projection = load(root/'PROJECTIONS.json') if (root/'PROJECTIONS.json').exists() else {'files': []}
+    mappings = {row['path']: row for row in projection['files']}
+    def original_hash(path):
+        actual = sha(path.read_bytes())
+        entry = mappings.get(path.relative_to(root).as_posix())
+        if entry:
+            require(actual == entry['projected_sha256'], 'projection custody')
+            return entry['original_sha256']
+        return actual
+    parents = []
+    for label, source, expected_codes in [('red','baseline',[1,1,1,0]), ('green','candidate',[0,0,0,0]), ('pending-green','candidate',[0,0])]:
+        freeze = load(root/label/'SOURCE_FREEZE.json')
+        rows = load(root/label/'RAW.json')['rows']
+        require([r['scenario'] for r in rows] == freeze['scenarios'], 'scenario census')
+        require(len(rows) == len(expected_codes), 'parent census')
+        for name, digest in freeze['source_sha256'].items():
+            require(original_hash(root/source/name) == digest, 'prospective source custody')
+        for name, digest in freeze.get('helper_sha256', freeze.get('helpers', {})).items():
+            require(original_hash(root/name) == digest, 'prospective helper custody')
+        before = datetime.datetime.fromisoformat(freeze['created_utc'])
+        for row, code in zip(rows, expected_codes):
+            scenario = row['scenario']; d = root/label/scenario
+            require(load(d/'receipt.json') == row, 'receipt join')
+            require(typed_int(row['exit_code']) and row['exit_code'] == code and row['timed_out'] is False, 'actual numeric parent exit')
+            start = datetime.datetime.fromisoformat(row['started_utc']); end = datetime.datetime.fromisoformat(row['ended_utc'])
+            require(before <= start <= end, 'prospective chronology')
+            for channel in ['stdout','stderr']:
+                require(original_hash(d/(channel+'.txt')) == row[channel+'_sha256'], 'original channel custody')
+            fixture = load(d/'fixture.exit.json'); started = load(d/'fixture.started.json')
+            require(row['fixture.exit.json'] == fixture and row['fixture.started.json'] == started, 'fixture receipt join')
+            require(typed_int(fixture['pid']) and fixture['pid'] > 0 and fixture['pid'] == started['pid'], 'fixture identity')
+            require(typed_int(fixture['code']) and fixture['code'] == 0 and row['fixture_pid_absent'] is True, 'actual fixture exit')
+            if label != 'pending-green':
+                require(typed_int(fixture['bytes']) and fixture['bytes'] == 0, 'zero operation control')
+            if code == 1:
+                require('Unhandled' in (d/'stderr.txt').read_text() and 'owner.summary.json' not in row and not (d/'owner.summary.json').exists(), 'retained original unhandled failure')
+            else:
+                summary = load(d/'owner.summary.json')
+                require(row['owner.summary.json'] == summary and summary['scenario'] == scenario, 'owner receipt join')
+                require(load(d/'host/exit.json') == row['host/exit.json'] == summary['exit'] == {'code': 0, 'signal': None}, 'original host exit')
+                require(summary['listeners'] == {'input':0,'output':0}, 'listener restoration')
+                if label != 'pending-green':
+                    outcome = summary['outcome']
+                    require(summary['initialListeners'] == {'input':0,'output':0}, 'listener baseline')
+                    expected = ['ready','terminal'] if scenario in ['normal_eof','terminal_output'] else ['ready']
+                    require([r['status'] for r in summary['writeIntents']] == expected, 'write intent census')
+                    if scenario == 'normal_eof':
+                        require(outcome == {'kind':'resolved'}, 'normal EOF control')
+                    else:
+                        require(outcome == {'kind':'rejected','message':f'injected {scenario} channel failure','original_identity':True}, 'original error preservation')
+                        if scenario == 'ready_input':
+                            barrier = [e for e in summary['events'] if e['kind'] == 'after_input_turn']
+                            require(barrier == [{'kind':'after_input_turn','settled':False}], 'ready write observation barrier')
+                else:
+                    require(typed_int(fixture['requests']) and fixture['requests'] == 1 and fixture['pending'] is False, 'single accepted request')
+                    events = summary['events']; kinds = [e['kind'] for e in events]
+                    require(kinds == ['output','actual_request_accepted','input_failure','pending_observed_before_release','reply_released','output','owner_rejected'], 'pending observation order')
+                    require(events[3]['settled'] is False and events[-1]['original_identity'] is True and events[-1]['message'] == 'original pending input failure', 'same pending promise and original error')
+                    request = load(d/'fixture.request.json')
+                    require(request == load(d/'host/request-1.json') == {'id':1,'tool':'interface_clock','arguments':{}}, 'actual request identity')
+                    replies = [json.loads(line) for line in (d/'fixture.reply.jsonl').read_text().splitlines()]
+                    require(len(replies) == 1 and replies[0] == load(d/'host/reply-1.json'), 'original reply preservation')
+                    reply = replies[0]
+                    require(type(reply['id']) is int and reply['id'] == 1 and type(reply['next_id']) is int and reply['next_id'] == 2 and reply['status'] == 'returned' and reply['result']['isError'] is False, 'actual reply identity')
+                    fe = [json.loads(line) for line in (d/'fixture.events.jsonl').read_text().splitlines()]
+                    require([e['kind'] for e in fe] == ['request_received','reply_written','stdin_end'] and fe[0]['request'] == request and fe[-1]['requests'] == 1 and fe[-1]['pending'] is False, 'native fixture journal')
+                    rows_out = summary['rows']; require(len(rows_out) == 2 and rows_out[0]['status'] == 'ready', 'output census')
+                    final = rows_out[1]
+                    if scenario == 'pending_success':
+                        result = final['result']
+                        require(final['status'] == 'returned' and type(result['id']) is int and result['id'] == 1 and type(result['attempt']) is int and result['attempt'] == 1 and type(result['next_id']) is int and result['next_id'] == 2 and result['method'] == 'call', 'same consumed success')
+                        require(result['presented_text'] == [{'schema':'agent-interface/mcp-result-status-v1','isError':False}, '{"status":"clock","fixture":"original once"}'] and load(d/'exchange/original-reply-1.json') == {**reply, 'attempt':1}, 'same result presentation')
+                    else:
+                        require(final['status'] == 'command_error' and type(final['command_id']) is int and final['command_id'] == 1 and final['command_method'] == 'call' and final['replay_allowed'] is False and type(final['state']['next_id']) is int and final['state']['next_id'] == 2 and 'EEXIST' in final['error'], 'consumed uncertainty no replay')
+                        require((d/'exchange/original-reply-1.json').read_bytes() == b'occupied original slot\n', 'occupied slot preserved')
+            parents.append({'label':label,'scenario':scenario,'actual_parent_exit':code,'actual_fixture_exit':fixture['code']})
+    return {'status':'PASS_SCOPED_SAVED_OWNER_RECORDS','parents':parents,'baseline_unhandled_failures':3,'candidate_actual_owner_checks':6,'limits':'saved configured runPrimaryStdio API and private fixture relay, not executed --config CLI/OS fault/public MCP/backend/task/effect/performance; producer never imported or rerun'}
+
+if __name__ == '__main__':
+    try:
+        print(json.dumps(audit(Path(sys.argv[1]) if len(sys.argv)>1 else Path(__file__).resolve().parent), indent=2))
+    except (Rejected, KeyError, ValueError, OSError) as error:
+        print(json.dumps({'status':'REJECTED','reason':str(error)})); sys.exit(1)

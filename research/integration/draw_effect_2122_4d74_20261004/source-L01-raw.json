@@ -1,0 +1,1521 @@
+{
+  "rows": [
+    {
+      "case": "stable_unlocked",
+      "arm": "model",
+      "id": "stable_unlocked__model",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1200,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        }
+      ],
+      "response": {
+        "transport_ok": true,
+        "answer": {
+          "action": "COMMIT",
+          "reason": "The latest observed state agrees with the initial state, so the initial relative move plan can be used without supplying coordinates."
+        }
+      },
+      "action": "COMMIT",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "8685af1508955c6078b3d9cd9a036d5b37bf65d2de87045f53cfb681903488ba",
+      "elapsed_ns": 5502365206
+    },
+    {
+      "case": "stable_unlocked",
+      "arm": "fresh_read_reference",
+      "id": "stable_unlocked__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1200,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": false,
+          "titles": []
+        }
+      ],
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "e8179806f28406ea678645601fd86e8f6f04205aa12fcd171ac8fd0996af11f9",
+      "elapsed_ns": 94667455
+    },
+    {
+      "case": "stable_locked",
+      "arm": "model",
+      "id": "stable_locked__model",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1200,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "response": {
+        "transport_ok": true,
+        "answer": {
+          "action": "COMMIT",
+          "reason": "Current state matches the initial read, so apply the planned relative move of A by +200 horizontally while preserving B and external changes."
+        }
+      },
+      "action": "COMMIT",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "1c695487f772b975bf4b47e5a1c4c8f054759e4b4f3543f40a9b29c327c45942",
+      "elapsed_ns": 12093893600
+    },
+    {
+      "case": "stable_locked",
+      "arm": "fresh_read_reference",
+      "id": "stable_locked__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1200,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "b83683a1eb8fdfe455886e1c53accb691e7c15af51c94036af9cd332df56ddda",
+      "elapsed_ns": 74186715
+    },
+    {
+      "case": "conflict_locked",
+      "arm": "model",
+      "id": "conflict_locked__model",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "writer_exit": 0,
+      "writer": {
+        "pid": 48,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "response": {
+        "transport_ok": true,
+        "answer": {
+          "action": "RECHECK",
+          "reason": "Current state differs from the initial read, so reread the latest state before computing A\u2019s relative +200 move and preserving B."
+        }
+      },
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "f028a00c49969bbc80f03842c03f88fb0e8b948a10450653886b89d9054e54fe",
+      "elapsed_ns": 10649743227
+    },
+    {
+      "case": "conflict_locked",
+      "arm": "fresh_read_reference",
+      "id": "conflict_locked__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "writer_exit": 0,
+      "writer": {
+        "pid": 56,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "6e3eadac2a16e1c30ae4689360ffc38c879f21396ede605bc56faca359353838",
+      "elapsed_ns": 156303594
+    },
+    {
+      "case": "unknown_locked",
+      "arm": "model",
+      "id": "unknown_locked__model",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "writer_exit": 0,
+      "writer": {
+        "pid": 62,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "response": {
+        "transport_ok": true,
+        "answer": {
+          "action": "RECHECK",
+          "reason": "Current state is unavailable, so reread the latest position of A before applying the relative +200 horizontal move while preserving B and external changes."
+        }
+      },
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "8b081b1e72af3368f3461f1832be7c904896631252984f0658e4df7946abace0",
+      "elapsed_ns": 8676866758
+    },
+    {
+      "case": "unknown_locked",
+      "arm": "fresh_read_reference",
+      "id": "unknown_locked__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "writer_exit": 0,
+      "writer": {
+        "pid": 70,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "7e513e7e1da1d9e34e3cd8ebd8ff35b55cd12e05417e2a10ede3a6e519314cb0",
+      "elapsed_ns": 174966849
+    },
+    {
+      "case": "blind_stale_negative",
+      "arm": "negative",
+      "id": "blind_stale_negative__negative",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1200,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "writer_exit": 0,
+      "writer": {
+        "pid": 76,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "action": "BLIND_STALE",
+      "current_guard_matches": false,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "saved_sha256": "b506efca82524d4b031b10ec140671b3a33f4213dda5b102365b6ba84bb3ecb7",
+      "elapsed_ns": 158166201
+    }
+  ],
+  "errors": [],
+  "parent_exit": 0,
+  "controller_pid": 1,
+  "version": "LibreOffice 25.2.3.2 520(Build:2)",
+  "cgroup": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  }
+}

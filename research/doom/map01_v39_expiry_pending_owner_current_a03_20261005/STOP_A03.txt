@@ -1,0 +1,18 @@
+Allocation/run ID: MAP01-V39-EXPIRY-PENDING-CURRENT-OWNER-A03-FORMAL-01-20261005
+Outcome: STOP_CONSTRUCTION_RUNNER_ROOT_LAYOUT
+Candidate executions: 0
+Container invocations: 1
+
+Exact command:
+mkdir -p research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/results/formal_01 && test ! -e research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/results/formal_01/candidate.json && docker run --rm --platform linux/arm64 --network none --cpus=1 --memory=1g --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --volume /private/tmp/agent-interface-59-executor-v12-a01/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005:/work:ro --volume /private/tmp/agent-interface-59-executor-v12-a01/research/doom/map01_v39_expiry_pending_owner_current_a03_20261005/results/formal_01:/work/results/formal_01:rw --workdir /work python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python3 -B run_candidate.py
+
+Exact container stderr/stdout:
+Traceback (most recent call last):
+  File "/work/run_candidate.py", line 10, in <module>
+    ROOT = HERE.parents[2]
+           ~~~~~~~~~~~~^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 282, in __getitem__
+    raise IndexError(idx)
+IndexError: 2
+
+Container exit code: 1. The immutable image launched successfully. The package was mounted at `/work`, so its repository-root-relative runner assumption was invalid. No experiment candidate or key event ran, and no candidate output exists. The exact one-shot ID is STOPped and will not be retried; A04 uses a new run ID and repository-root mount.

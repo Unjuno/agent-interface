@@ -1,0 +1,7 @@
+# Capture-time clock qualification prerequisite
+
+A distinct no-GUI probe ran once in the same pinned Linux Python image as G04. Actual get_clock_info returned clock_gettime(CLOCK_MONOTONIC) for both monotonic and perf_counter, monotonic=true and adjustable=false. All 128 monotonic reads lay between their preceding and following perf_counter reads. A separate host PowerShell reader independently recomputed zero bracket violations and retained raw/source/plan SHA256 values in CLOCK_AUDIT.json. Probe client exited 0; WSLc ps was empty after completion.
+
+This establishes an environment-specific prerequisite for transferring original native capture timestamps into the compiled graph. It does not qualify actual capture freshness, cross-process/host clocks, hard real-time deadlines, or semantic effect detection. G04's original post-return timestamp is not corrected retroactively. Next caller version must pass original native capture_started_ns and retain all capture/return times.
+
+GitHub result-comment creation was attempted once this continuation and again returned secondary-rate-limit 403. No comment or PR publication is claimed. Local progress remains possible, so the full research goal stays ACTIVE rather than blocked. The next priority is implementing and verifying the capture-time adapter and meaningful positive semantic predicates before a frozen same-model integrated comparison; publishing the pending construction packets follows when GitHub content creation becomes available.

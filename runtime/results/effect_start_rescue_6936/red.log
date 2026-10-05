@@ -1,0 +1,119 @@
+test_during_execution_and_late_delivery_remain_representable (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_during_execution_and_late_delivery_remain_representable) ... ok
+test_equal_recorded_start_keeps_each_terminal_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_equal_recorded_start_keeps_each_terminal_status) ... ok
+test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) ... 
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='verified', ns=0) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='verified', ns=400) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='verified', ns=599) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='contradicted', ns=0) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='contradicted', ns=400) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='contradicted', ns=599) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='unavailable', ns=0) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='unavailable', ns=400) ... FAIL
+  test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='unavailable', ns=599) ... FAIL
+test_recorded_start_not_only_accepted_begin_is_the_floor (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_recorded_start_not_only_accepted_begin_is_the_floor) ... FAIL
+test_rejection_preserves_execution_and_allows_valid_effect (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_rejection_preserves_execution_and_allows_valid_effect) ... FAIL
+test_wrong_command_or_manifest_remains_refused (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_wrong_command_or_manifest_remains_refused) ... ok
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='verified', ns=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='verified', ns=400)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='verified', ns=599)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='contradicted', ns=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='contradicted', ns=400)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='contradicted', ns=599)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='unavailable', ns=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='unavailable', ns=400)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_pre_start_observation_refused_for_every_status (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_pre_start_observation_refused_for_every_status) (status='unavailable', ns=599)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 43, in test_pre_start_observation_refused_for_every_status
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_recorded_start_not_only_accepted_begin_is_the_floor (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_recorded_start_not_only_accepted_begin_is_the_floor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 67, in test_recorded_start_not_only_accepted_begin_is_the_floor
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_rejection_preserves_execution_and_allows_valid_effect (runtime.kernel.test_effect_start_epoch.EffectStartEpochTests.test_rejection_preserves_execution_and_allows_valid_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/kernel/test_effect_start_epoch.py", line 50, in test_rejection_preserves_execution_and_allows_valid_effect
+    with self.assertRaises(ContractError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=11)

@@ -1,0 +1,370 @@
+{
+  "a": 59,
+  "b": 61,
+  "end_ns": 10803088273,
+  "image": {
+    "end_ns": 10833270009,
+    "image": {
+      "artifact": {
+        "bytes": 52794,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/images/a352bcf482684b7f8ef612c018131a8c.png",
+        "sha256": "307522922ea683d9660cbdee376fcc22a5cfe3d53504d65c099e77e9952b4715",
+        "source_raw_sha256": "10ba75b6aad317e22de9b76a850987c1315ef815bcc9e0edd344767b5dd6e308",
+        "timing_ns": {
+          "converted": 10810760556,
+          "encoded": 10828592214,
+          "hashed": 10833244720,
+          "started": 10809173165,
+          "written": 10831041189
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 10807126665,
+      "capture_started_ns": 10803092084,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "10ba75b6aad317e22de9b76a850987c1315ef815bcc9e0edd344767b5dd6e308",
+      "target": "owned",
+      "width": 1280
+    },
+    "physical": {
+      "buttons": 0,
+      "end_ns": 10833595629,
+      "keys": [],
+      "start_ns": 10833270630
+    },
+    "start_ns": 10803088979
+  },
+  "label": "task4",
+  "physical": {
+    "buttons": 0,
+    "end_ns": 10839181029,
+    "keys": [],
+    "start_ns": 10838859813
+  },
+  "program": {
+    "authority": {
+      "expires_at_ns": 20290405533,
+      "lease_id": "owned-real-calc-construction"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "owned"
+      },
+      {
+        "frame": "screen_physical_px",
+        "op": "pointer_move",
+        "x": 160,
+        "y": 204
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "5"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "9"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "keys": [
+          "TAB"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "text",
+        "text": "6"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "1"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "keys": [
+          "TAB"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "text",
+        "text": "="
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "A"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "2"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "*"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "B"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "op": "text",
+        "text": "2"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 20
+      },
+      {
+        "keys": [
+          "ENTER"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "s"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 300
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "task4",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "receipt": {
+    "admission": "accepted",
+    "execution": {
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "emissions": 195,
+      "ended_ns": 10803070652,
+      "observations": [],
+      "program_emissions": 39,
+      "releases": [
+        {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 10803068531,
+          "verified": true
+        }
+      ],
+      "started_ns": 10291614051,
+      "waits": [
+        {
+          "completed": true,
+          "ended_ns": 10312878087,
+          "kind": "fixed_delay",
+          "operation_index": 5,
+          "requested_ms": 20,
+          "started_ns": 10292796306,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10333550258,
+          "kind": "fixed_delay",
+          "operation_index": 7,
+          "requested_ms": 20,
+          "started_ns": 10313394405,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10354540108,
+          "kind": "fixed_delay",
+          "operation_index": 10,
+          "requested_ms": 20,
+          "started_ns": 10334364090,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10375158234,
+          "kind": "fixed_delay",
+          "operation_index": 12,
+          "requested_ms": 20,
+          "started_ns": 10355028079,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10396021952,
+          "kind": "fixed_delay",
+          "operation_index": 15,
+          "requested_ms": 20,
+          "started_ns": 10375915869,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10416978544,
+          "kind": "fixed_delay",
+          "operation_index": 17,
+          "requested_ms": 20,
+          "started_ns": 10396880417,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10437568884,
+          "kind": "fixed_delay",
+          "operation_index": 19,
+          "requested_ms": 20,
+          "started_ns": 10417478446,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10458523832,
+          "kind": "fixed_delay",
+          "operation_index": 21,
+          "requested_ms": 20,
+          "started_ns": 10438353146,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10479832851,
+          "kind": "fixed_delay",
+          "operation_index": 23,
+          "requested_ms": 20,
+          "started_ns": 10459583404,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10500789384,
+          "kind": "fixed_delay",
+          "operation_index": 25,
+          "requested_ms": 20,
+          "started_ns": 10480686564,
+          "update_observed": null
+        },
+        {
+          "completed": true,
+          "ended_ns": 10802670036,
+          "kind": "fixed_delay",
+          "operation_index": 28,
+          "requested_ms": 300,
+          "started_ns": 10502406289,
+          "update_observed": null
+        }
+      ]
+    },
+    "recovery_required": false,
+    "required_capabilities": [
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "status": "completed"
+  },
+  "saved_sha256": "e1d35399ef881d55c40d26d7f1a9097c96c22a5e0978d05bc31d071a2f7ca780",
+  "start_ns": 10290407092
+}

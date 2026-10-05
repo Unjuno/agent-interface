@@ -1,0 +1,19 @@
+{
+  "reason": "full-index write-tree unexpectedly triggered partial-clone lazy fetch of95134 objects; stop own helper and use missing-ok metadata tree construction",
+  "actions": [
+    {
+      "pid": 83073,
+      "command": "82987 /run/current-system/sw/bin/git -C /Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/agent-interface write-tree",
+      "signal": "SIGTERM",
+      "ownership": "child of own archive write-tree pipeline observed in prior ps"
+    },
+    {
+      "pid": 83074,
+      "command": "1 /nix/store/a14yxcqvv9x2l9mllgpirzhvz93pgprg-git-2.54.0/libexec/git-core/git -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --recurse-submodules=no --filter=blob:none --stdin",
+      "signal": "SIGTERM",
+      "ownership": "child of own archive write-tree pipeline observed in prior ps"
+    }
+  ],
+  "native_cells": 0,
+  "utc_unix": 1791021541.9240801
+}

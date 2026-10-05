@@ -1,0 +1,64 @@
+"""Separate exact-type endpoint/ownership oracle on preserved caller records."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+
+ROOT=Path(__file__).resolve().parent
+def row(run,name):return json.loads((ROOT/run/name/'result.json').read_text())
+def validate(record,kind):
+    errors=[];pre=record['at_main_return'];post=record['after_external_cleanup']
+    if any(type(v) is not int for v in pre['client_close_count']+post['client_close_count']):errors.append('close count type')
+    if any(type(v) is not bool for v in pre['reader_alive']+post['reader_alive']):errors.append('reader type')
+    if len(pre['session_poll'])!=1 or len(pre['client_close_count'])!=1:errors.append('one acquired child/client')
+    events=record['child_events'];pids={e['pid'] for e in events}
+    if len(pids)!=1 or any(type(e['pid']) is not int or type(e['ns']) is not int for e in events):errors.append('native child identity/type')
+    names=[e['event'] for e in events]
+    if not names or names[0]!='started' or names[-1]!='closed':errors.append('child lifetime')
+    if [e['ns'] for e in events]!=sorted(e['ns'] for e in events):errors.append('child ordered trace')
+    if post['session_poll']!=[0] or post['client_close_count']!=[1] or post['reader_alive']!=[False]:errors.append('external cleanup endpoint')
+    if kind=='normal':
+        if record['main_outcome']!='returned' or pre['session_poll']!=[0] or pre['client_close_count']!=[1] or pre['commands']!=[{'op':'finish'}]:errors.append('normal success')
+        if any(e['ns']>pre['observed_ns'] for e in events):errors.append('normal closed after main-return')
+    else:
+        if record.get('exception_type')!='RuntimeError' or record.get('exception_message')!='v28 requires a loaded fixture receipt' or record['main_outcome']!='raised':errors.append('exact fixture fault')
+        if pre['commands']!=[]:errors.append('fault sent action')
+        eof=[e for e in events if e['event']=='stdin_eof']
+        if len(eof)!=1:errors.append('cooperative EOF cleanup')
+        if kind=='missing_fixture':
+            if pre['session_poll']!=[None] or pre['client_close_count']!=[0] or pre['reader_alive']!=[True]:errors.append('fault ownership witness')
+            if 'external_cleanup_done' in pre['calls']:errors.append('probe cleaned before witness')
+            if eof and eof[0]['ns']<=pre['observed_ns']:errors.append('child EOF before fault witness')
+        elif kind=='outer_cleanup':
+            if pre['session_poll']!=[0] or pre['client_close_count']!=[1] or pre['reader_alive']!=[False] or 'external_cleanup_done' not in pre['calls']:errors.append('reference cleanup')
+            if any(e['ns']>pre['observed_ns'] for e in events):errors.append('reference closed after wrapper-return')
+    return errors
+
+rows={'normal':row('construction02','normal'),
+      'missing_fixture':row('construction01','missing_fixture'),
+      'outer_cleanup':row('construction01','outer_cleanup')}
+errors={k:validate(v,k) for k,v in rows.items()}
+first=row('construction01','normal')
+if first.get('exception_type')!='KeyError' or first.get('exception_message')!="'capture_to_artifact_ready_ms'":
+    errors['first_control']=['first fixture error not retained']
+pinset=json.loads((ROOT/'SOURCE.json').read_text())
+for k,v in rows.items():
+    if v['source']!=pinset:errors[k].append('source identity')
+controls=[]
+for name,kind,mutate in [
+    ('false_child_exit','missing_fixture',lambda r:r['at_main_return'].__setitem__('session_poll',[0])),
+    ('bool_close_alias','missing_fixture',lambda r:r['at_main_return'].__setitem__('client_close_count',[False])),
+    ('wrong_fixture_fault','missing_fixture',lambda r:r.__setitem__('exception_type','KeyError')),
+    ('early_cleanup','missing_fixture',lambda r:r['at_main_return']['calls'].append('external_cleanup_done')),
+    ('normal_finish_missing','normal',lambda r:r['at_main_return'].__setitem__('commands',[])),
+    ('reference_unclosed','outer_cleanup',lambda r:r['at_main_return'].__setitem__('client_close_count',[0]))]:
+    copied=copy.deepcopy(rows[kind]);mutate(copied);diag=validate(copied,kind)
+    controls.append({'name':name,'kind':kind,'diagnostics':diag,'rejected':bool(diag)})
+if any(not c['rejected'] for c in controls):errors['controls']=['undetected corruption']
+result={'schema':'ordinary-v39-startup-ownership-reader-v1','errors':errors,
+        'verified':not any(errors.values()),'copied_record_controls':controls,
+        'decision':'CONFIRMED_STARTUP_OWNERSHIP_GAP_SCOPED' if not any(errors.values()) else 'FAIL_DIAGNOSTIC_CONSTRUCTION',
+        'first_control_error_preserved':True,'repaired_only_normal_control':True,
+        'raw_sha256':{k:hashlib.sha256(json.dumps(v,sort_keys=True,separators=(',',':')).encode()).hexdigest() for k,v in rows.items()}}
+(ROOT/'independent-result.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+print(json.dumps(result));raise SystemExit(int(not result['verified']))

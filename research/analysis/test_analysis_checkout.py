@@ -8,6 +8,23 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class SparseCheckoutDependencies(unittest.TestCase):
+    def test_issue_6611_artifact_survival_scorer_contract(self):
+        package = 'research/analysis/version_crossing_artifact_survival_6611_t0_20261004'
+        result = subprocess.run(
+            ['python', '-B', '-m', 'unittest', 'discover', '-s', package,
+             '-p', 'test_*.py', '-v'], cwd=ROOT, text=True,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn('Ran 2 tests', result.stdout)
+
+    def test_issue_7418_finite_contract(self):
+        package = ROOT / 'research/analysis/exception_preserving_skill_7418_t0_20261004'
+        result = subprocess.run(
+            ['python', '-B', '-m', 'unittest', 'discover', '-s', str(package),
+             '-p', 'test_*.py', '-v'], cwd=ROOT, text=True,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        self.assertEqual(result.returncode, 0, result.stdout)
+
     def test_ci_selects_archival_tests_and_their_original_data(self):
         # Use the index: CI restores a historical workflow into the worktree
         # for unrelated provenance tests, without changing the staged CI config.
@@ -24,6 +41,7 @@ class SparseCheckoutDependencies(unittest.TestCase):
                 paths.append(line.strip())
         required = {
             'research/analysis/check_index.py',
+            'research/analysis/stochastic_trace_reducer_8152_t0_20261005/test_construction.py',
             'research/integration/core_admission_composition_57_20261003_01a0ff59/test_archival.py',
             'research/integration/pr6863_review_rescue_20261003/test_archival.py',
             'research/integration/pr6863_review_20261003_01a0ff58/verify.py',

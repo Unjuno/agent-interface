@@ -1,0 +1,6 @@
+{"id":1,"result":{"fake":true}}
+{"id":2,"result":{"thread":{"id":"fake-thread"}}}
+{"id":3,"result":{"turn":{"id":"fake-turn-1"}}}
+{"method":"turn/started","params":{"threadId":"fake-thread","turn":{"id":"fake-turn-1"}}}
+{"id":4,"result":{}}
+{"method":"turn/completed","params":{"threadId":"fake-thread","turn":{"id":"fake-turn-1","status":"interrupted","items":[{"type":"agentMessage","text":"{\"action\":\"fresh\"}"}]}}}

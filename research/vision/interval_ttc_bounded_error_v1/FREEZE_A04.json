@@ -1,0 +1,51 @@
+{
+  "issue": 8157,
+  "allocation": "interval-ttc-audit-only-a04-20261005",
+  "source_main_sha": "b5be19963454ce5edafc945b78b100012952dd15",
+  "a02_pr": 8194,
+  "a02_head_sha": "6314772b3e1f2e304ac9348ccfd5217106d7390b",
+  "a02_source_commit": "1e30e1e4e9ca7280a7337ed7a9c69afbf9a65072",
+  "a03_stop_commit": "1b35587cdab8d7419eccc43a4dae76d98ef94288",
+  "a03_freeze_sha256": "611112605468b01c67ccf9fbd2317f9914d4250f30b7c1e50baffbe76299f4a6",
+  "a03_stop_sha256": "e87e15847cd6e5c4d904847cda7d0a01f0f7447f4a247555f6a36f2813784ca7",
+  "a03_run_record_sha256": "cbc05aeb62fe72344bbe9453fcf0153004a6f2374aba811492647bfed8534cad",
+  "protocol": "PROTOCOL_A04_AUDIT_ONLY.md",
+  "protocol_sha256": "bef45b5150229beb06d44cab0f19aaf1df4f0266c9c5c62640d6fdfb74ee2196",
+  "audit_program": "audit_only_a04.py",
+  "audit_program_sha256": "9539fc78e7a9b975d04fe57520a6b713d22c33def36cd0b4fce2c66154ddcf4a",
+  "test_program": "test_audit_only_a04.py",
+  "test_program_sha256": "c8c8120fdc6172dff599b400b18b9920ed81a3bed4536d9ef49c038e8df638ee",
+  "a02_artifact_sha256": {
+    "public": "c04d597eb90483b51e055704dbfd72429d83fb9f804d78b0470fee97192315d9",
+    "oracle": "298fbe931ae91ebbf31abb89f17ad0e652cb9418cb5d2b108c7f9d2a14d3410c",
+    "candidate": "c35b44be558110784b94a92d9b0d2df83db75c519218fd6ea88a65055cd54557",
+    "first_audit": "47f192cd92f257388f37792b8a1297d311306e58adf41d79232c36534d1c0a1a"
+  },
+  "runtime": {
+    "name": "WSLc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512M",
+    "source_mount": "read-only",
+    "output_mount": "read-write",
+    "swap_limit": "unavailable; WSL reports kernel/cgroup capability warning"
+  },
+  "invocations": {
+    "a02_candidate_historical": 1,
+    "a02_auditor_historical": 1,
+    "a02_generator_historical": 1,
+    "a03_candidate_historical": 0,
+    "a03_auditor_historical": 1,
+    "a03_generator_historical": 0,
+    "a03_retries": 0,
+    "a04_candidate": 0,
+    "a04_generator": 0,
+    "a04_auditor": 1,
+    "a04_retries": 0
+  },
+  "formal_command": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <repo>/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A04_AUDIT_ONLY:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/vision/interval_ttc_bounded_error_v1/audit_only_a04.py /src/research/vision/interval_ttc_bounded_error_v1 /out/AUDIT_REPORT.json",
+  "decision_scope": "raw reconciliation only; A02 FAIL_METHOD and A03 STOP are preserved"
+}

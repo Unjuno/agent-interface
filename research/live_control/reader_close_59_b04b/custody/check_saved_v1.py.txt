@@ -1,0 +1,127 @@
+"""Saved bytes and effective copied corruptions only; never import producers."""
+import ast, base64, copy, datetime, hashlib, json, pathlib, sys
+R = pathlib.Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent
+def sha(b): return hashlib.sha256(b).hexdigest()
+def load(p): return json.loads((R / p).read_bytes())
+def need(ok, text):
+    if not ok: raise ValueError(text)
+def num(x): return type(x) is int
+def rows(b): return [json.loads(line) for line in b.splitlines()]
+def audit_native(row, condition):
+    held = condition == 'held'
+    need(row['status'] == 'OBSERVED' and row['condition'] == condition, 'native identity/status')
+    for name in ['driver_pid', 'parent_pid']:
+        need(num(row[name]) and row[name] > 0, 'PID ' + name)
+    for name in ['parent_exit_before_helper', 'parent_exit_at_checkpoint', 'cleanup_parent_exit']:
+        need(num(row[name]) and row[name] == 0, 'parent exit ' + name)
+    for name in ['reader_alive_before_helper', 'reader_alive_at_checkpoint']:
+        need(row[name] is held, 'reader ' + name)
+    need(row['client_closed_at_checkpoint'] is (not held), 'client close checkpoint')
+    need(row['journal_closed_at_checkpoint'] is (not held), 'journal close checkpoint')
+    receipt = row['helper_receipt']
+    need(receipt['client_closed'] is (not held), 'helper completed')
+    need(receipt['input_release_verified'] is False and receipt['session_exit_code'] is None, 'helper scope')
+    need(receipt['errors'] == (["planner close: TimeoutError('app-server reader close timed out')"] if held else []), 'helper error')
+    checkpoint = row['calls_at_checkpoint']; final = row['calls_after_real_exitfuncs']
+    need(len(checkpoint) == 1 and len(final) == (2 if held else 1), 'real callback retention')
+    need(final[0] == checkpoint[0] and type(checkpoint[0]['timeout']) is int and checkpoint[0]['timeout'] == 1, 'helper timeout/call')
+    if held:
+        need(checkpoint[0].get('error_type') == 'TimeoutError' and checkpoint[0].get('error_message') == 'app-server reader close timed out', 'close timeout')
+        need(num(row['writer_pid']) and row['writer_pid'] > 0, 'writer PID')
+        for name in ['writer_exit_before_helper', 'writer_exit_at_checkpoint']:
+            need(num(row[name]) and row[name] == 259, 'live writer ' + name)
+        for name in ['writer_exit_after_release', 'cleanup_writer_exit']:
+            need(num(row[name]) and row[name] == 0, 'terminal writer ' + name)
+        need(row['writer_handle_closed'] is True, 'handle retired')
+        need(final[1].get('return_value', 'MISSING') is None and final[1]['timeout'] == 5, 'real callback returns')
+    else: need(checkpoint[0].get('return_value', 'MISSING') is None, 'healthy close returns')
+    for call in final:
+        need(num(call['start_ns']) and num(call['end_ns']) and call['start_ns'] <= call['end_ns'], 'call clock')
+    need(row['helper_start_ns'] <= final[0]['start_ns'] <= final[0]['end_ns'] <= row['helper_end_ns'] <= row['release_ns'] <= row['atexit_run_start_ns'] <= row['atexit_run_end_ns'], 'causal order')
+    if held: need(row['atexit_run_start_ns'] <= final[1]['start_ns'] <= final[1]['end_ns'] <= row['atexit_run_end_ns'], 'callback causal order')
+    need(row['reader_alive_after_release'] is False and row['cleanup_reader_alive'] is False and row['client_closed_after_release'] is True, 'reader retired')
+    need(row['reader_exceptions'] == [], 'reader error')
+    need(row['real_atexit_registered'] is True and row['final_journal_closed'] is True and row['cleanup_journal_closed'] is True, 'journal/callback retired')
+    need(type(row['cleanup_pipe_closed']) is list and len(row['cleanup_pipe_closed']) == 3 and all(x is True for x in row['cleanup_pipe_closed']), 'pipe retired')
+    seed = base64.b64decode(row['journal_seed_base64'], validate=True)
+    checkpoint_bytes = base64.b64decode(row['journal_checkpoint_base64'], validate=True)
+    after = base64.b64decode(row['journal_after_release_base64'], validate=True)
+    need(seed == checkpoint_bytes and len(rows(seed)) == 1 and rows(seed)[0]['direction'] == 'fixture' and rows(seed)[0]['message'] == {'method': 'retained-seed'}, 'seed retained')
+    expected = {'method': 'late-owned-frame', 'params': {'value': 'retained'}}
+    need(row['notifications_after_release'] == ([expected] if held else []), 'late cache')
+    need(after.startswith(seed) and len(rows(after)) == (2 if held else 1), 'journal chain')
+    if held: need(rows(after)[1]['direction'] == 'received' and rows(after)[1]['message'] == expected, 'late journal')
+    return True
+
+freeze = load('FREEZE.composition.v1.json')
+for name, pin in freeze['sources'].items():
+    b = (R / name).read_bytes(); need(len(b) == pin['bytes'] and sha(b) == pin['sha256'], 'source pin ' + name)
+base = (R / 'base-client.py.txt').read_bytes(); fixed = (R / 'candidate-client.py.txt').read_bytes()
+needle = b'        self._reader.join(timeout=timeout)\n'
+addition = b'        if self._reader.is_alive():\n            raise TimeoutError("app-server reader close timed out")\n'
+need(base.count(needle) == 1 and base.replace(needle, needle + addition) == fixed, 'literal reader guard only')
+applicability = load('APPLICABILITY.v1.json')
+helper = next(n for n in ast.parse((R / 'startup-controller.py.txt').read_bytes()).body if isinstance(n, ast.FunctionDef) and n.name == '_close_failed_startup')
+need(sha(ast.dump(helper, include_attributes=False).encode()) == applicability['helper_ast_sha256'], 'helper AST')
+unit_summary = {}
+for stage, exit_code, fails, source_sha in [('red', 1, 3, sha(base)), ('green-normal', 0, 0, sha(fixed)), ('green-optimized', 0, 0, sha(fixed))]:
+    root = pathlib.Path('evidence') / stage; receipt = load(str(root / 'receipt.json'))
+    need(receipt['exit_code'] == exit_code and num(receipt['pid']) and receipt['pid'] > 0, 'unit real exit/PID ' + stage)
+    need(receipt['source_pins']['codex_app_server_client_v2.py']['sha256'] == source_sha, 'unit candidate ' + stage)
+    for stream in ['stdout', 'stderr']:
+        b = (R / root / (stream + '.log')).read_bytes()
+        need(len(b) == receipt[stream + '_bytes'] and sha(b) == receipt[stream + '_sha256'], 'unit stream ' + stage)
+    cases = [json.loads(p.read_bytes()) for p in sorted((R / root / 'cases').glob('*.json'))]
+    need(len(cases) == 8 and len({r['method'] for r in cases}) == 8, 'eight actual unit rows')
+    for c in cases:
+        need(c['kind'] == 'controlled-owned-unit-objects', 'unit scope')
+        if c['method'].startswith('test_live_reader') and not fails:
+            need(c['outcome'].get('error_type') == 'TimeoutError' and c['outcome'].get('error_message') == 'app-server reader close timed out' and c['journal_lock_entries'] == 0 and c['journal_close_calls'] in (None, 0), 'reader guard before journal')
+    stderr = (R / root / 'stderr.log').read_text()
+    need('Ran 8 tests' in stderr and ('failures=3' in stderr if fails else '\nOK\n' in stderr), 'actual test results ' + stage)
+    unit_summary[stage] = {'methods': 8, 'failed': fails, 'exit_code': exit_code, 'pid': receipt['pid']}
+receipt = load('COMPOSITION_RECEIPT.v1.json')
+need(receipt['exit_code'] == 0 and receipt['owned_driver_guard_kill'] is False, 'native terminal collector')
+for stream in ['stdout', 'stderr']:
+    b = (R / ('composition.' + stream + '.v1.log')).read_bytes()
+    need(len(b) == receipt[stream + '_bytes'] and sha(b) == receipt[stream + '_sha256'], 'native stream')
+native = {}
+for condition in ['closed', 'held']:
+    row = load('composition-v1/' + condition + '/raw.json')
+    need(row['driver_pid'] == receipt['pid'] and row['source_sha256'] == sha(fixed), 'executed native source')
+    audit_native(row, condition)
+    d = R / 'composition-v1' / condition
+    need(json.loads((d / 'parent.json').read_bytes())['pid'] == row['parent_pid'], 'parent sidecar')
+    need((d / 'journal.jsonl').read_bytes() == base64.b64decode(row['journal_after_release_base64'], validate=True), 'actual journal bytes')
+    if condition == 'held':
+        writer = json.loads((d / 'writer-final.json').read_bytes())
+        need(writer['pid'] == row['writer_pid'] and writer['exit_code'] == 0 and writer['safety_timeout'] is False, 'actual writer sidecar')
+        need(writer['released_ns'] >= row['release_ns'], 'release causal link')
+    native[condition] = row
+need(load('composition-v1/END.json')['completed_cells'] == 2, 'two completed cells')
+mutations = [
+    ('helper_false_success', 'helper_receipt', 'client_closed', True),
+    ('helper_scope_forged', 'helper_receipt', 'input_release_verified', True),
+    ('helper_error_removed', 'helper_receipt', 'errors', []),
+    ('reader_checkpoint_false', None, 'reader_alive_at_checkpoint', False),
+    ('journal_early_close', None, 'journal_closed_at_checkpoint', True),
+    ('callback_removed', None, 'calls_after_real_exitfuncs', native['held']['calls_at_checkpoint']),
+    ('notification_missing', None, 'notifications_after_release', []),
+    ('journal_late_missing', None, 'journal_after_release_base64', native['held']['journal_seed_base64']),
+    ('reader_error_hidden', None, 'reader_exceptions', [{'type': 'ValueError'}]),
+    ('pipe_bool_integer', None, 'cleanup_pipe_closed', [1, True, True]),
+    ('PID_bool', None, 'parent_pid', True),
+    ('exit_bool', None, 'parent_exit_at_checkpoint', False),
+    ('writer_not_retired', None, 'cleanup_writer_exit', 259),
+    ('handle_unretired', None, 'writer_handle_closed', False),
+    ('journal_unretired', None, 'cleanup_journal_closed', False)]
+controls = []
+for name, sub, key, value in mutations:
+    row = copy.deepcopy(native['held']); target = row[sub] if sub else row
+    need(target[key] != value or type(target[key]) is not type(value), 'effective copy mutation ' + name)
+    target[key] = copy.deepcopy(value)
+    try: audit_native(row, 'held')
+    except (ValueError, KeyError, TypeError): controls.append({'name': name, 'rejected': True})
+    else: raise ValueError('corrupt copy accepted ' + name)
+result = {'created_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'saved_only': True, 'producer_imports': 0, 'unit_results': unit_summary, 'native_cells': 2, 'effective_copy_rejections': controls, 'scope': 'saved construction evidence and content checks; no nonauthor vote, formal replay, hard wallclock or whole-client bound'}
+print(json.dumps(result, indent=2))

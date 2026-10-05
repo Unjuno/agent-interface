@@ -1,0 +1,710 @@
+{
+  "raw": {
+    "schema": "owned-memory-capture-622-D02",
+    "pid": 32052,
+    "candidate_sha256": "b83356ac6b8dc5cf2c4ad7e720aa114dcb965186a28f423f72b5f5a0d68f9642",
+    "events": [
+      {
+        "phase": "begin",
+        "call": "fixture.GetDC_format_only"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.GetDC_format_only",
+        "return": 18446744072551996346
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.CreateCompatibleDC"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.CreateCompatibleDC",
+        "return": 18446744072266782423
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.CreateCompatibleBitmap"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.CreateCompatibleBitmap",
+        "return": 18446744072803917546
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.GetObjectW"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.GetObjectW",
+        "return": 32
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.SelectObject",
+        "return": 8716303
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.CreateSolidBrush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.CreateSolidBrush",
+        "return": 18446744072838192136
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.FillRect"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.FillRect",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.CreateSolidBrush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.CreateSolidBrush",
+        "return": 1393568155
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.FillRect"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.FillRect",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.CreateSolidBrush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.CreateSolidBrush",
+        "return": 34612166
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.FillRect"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.FillRect",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.CreateSolidBrush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.CreateSolidBrush",
+        "return": 18446744072318097636
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.FillRect"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.FillRect",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.GdiFlush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.GdiFlush",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.restore_for_baseline"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.restore_for_baseline",
+        "return": 18446744072803917546
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.GetDIBits"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.GetDIBits",
+        "return": 16
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.reselect_source"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.reselect_source",
+        "return": 8716303
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.GetDC_owned_source"
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleDC",
+        "return": 18446744073105647408
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleBitmap"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleBitmap",
+        "return": 18446744073693104783
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 8716303
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.BitBlt"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.BitBlt",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 18446744073693104783
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetCurrentObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetCurrentObject",
+        "return": 8716303
+      },
+      {
+        "phase": "guard",
+        "call": "candidate.bitmap_deselected",
+        "selected": 8716303,
+        "bitmap": 18446744073693104783,
+        "ok": true
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetDIBits"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetDIBits",
+        "return": 16
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteObject",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteDC",
+        "return": 1
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.ReleaseDC_owned_source"
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.GetDC_owned_source"
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleDC",
+        "return": 18446744073122424624
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleBitmap"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleBitmap",
+        "return": 330383
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 8716303
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.BitBlt"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.BitBlt",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 330383
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetCurrentObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetCurrentObject",
+        "return": 8716303
+      },
+      {
+        "phase": "guard",
+        "call": "candidate.bitmap_deselected",
+        "selected": 8716303,
+        "bitmap": 330383,
+        "ok": true
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetDIBits"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetDIBits",
+        "return": 4
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteObject",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteDC",
+        "return": 1
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.ReleaseDC_owned_source"
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.GetDC_owned_source"
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleDC",
+        "return": 18446744073139201840
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleBitmap"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleBitmap",
+        "return": 17107599
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 8716303
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.BitBlt"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.BitBlt",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 17107599
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetCurrentObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetCurrentObject",
+        "return": 8716303
+      },
+      {
+        "phase": "guard",
+        "call": "candidate.bitmap_deselected",
+        "selected": 8716303,
+        "bitmap": 17107599,
+        "ok": true
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetDIBits"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetDIBits",
+        "return": 4
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteObject",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteDC",
+        "return": 1
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.ReleaseDC_owned_source"
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.GetDC_owned_source"
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleDC",
+        "return": 18446744073155979056
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.CreateCompatibleBitmap"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.CreateCompatibleBitmap",
+        "return": 33884815
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 8716303
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.BitBlt"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.BitBlt",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.SelectObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.SelectObject",
+        "return": 33884815
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetCurrentObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetCurrentObject",
+        "return": 8716303
+      },
+      {
+        "phase": "guard",
+        "call": "candidate.bitmap_deselected",
+        "selected": 8716303,
+        "bitmap": 33884815,
+        "ok": true
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.GetDIBits"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.GetDIBits",
+        "return": 4
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteObject"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteObject",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "candidate.DeleteDC"
+      },
+      {
+        "phase": "end",
+        "call": "candidate.DeleteDC",
+        "return": 1
+      },
+      {
+        "phase": "adapter",
+        "call": "candidate.ReleaseDC_owned_source"
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.restore_final"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.restore_final",
+        "return": 18446744072803917546
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.DeleteObject_bitmap"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.DeleteObject_bitmap",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.DeleteDC"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.DeleteDC",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.DeleteObject_brush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.DeleteObject_brush",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.DeleteObject_brush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.DeleteObject_brush",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.DeleteObject_brush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.DeleteObject_brush",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.DeleteObject_brush"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.DeleteObject_brush",
+        "return": 1
+      },
+      {
+        "phase": "begin",
+        "call": "fixture.ReleaseDC"
+      },
+      {
+        "phase": "end",
+        "call": "fixture.ReleaseDC",
+        "return": 1
+      }
+    ],
+    "cases": [
+      {
+        "name": "full",
+        "x": 0,
+        "y": 0,
+        "width": 16,
+        "height": 16,
+        "base64": "AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8A/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8A/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8A/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AA==",
+        "sha256": "95bcaa0f2ca933b7a0ebc1067b293f8240defc8a6c7a2c4c4ed59259a005c60b",
+        "event_start": 34,
+        "event_end": 55
+      },
+      {
+        "name": "top_left",
+        "x": 2,
+        "y": 2,
+        "width": 4,
+        "height": 4,
+        "base64": "AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AA==",
+        "sha256": "b28468e55171e21bd2e83a7cfa93c981b1ca76ee2561f0a81eff230825b57492",
+        "event_start": 55,
+        "event_end": 76
+      },
+      {
+        "name": "bottom_right",
+        "x": 12,
+        "y": 12,
+        "width": 4,
+        "height": 4,
+        "base64": "AP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AA==",
+        "sha256": "c5f6c719a9fe0f90aac78a2739932397b7f140e01dec6d072b56176217380d33",
+        "event_start": 76,
+        "event_end": 97
+      },
+      {
+        "name": "cross_boundary",
+        "x": 6,
+        "y": 6,
+        "width": 4,
+        "height": 4,
+        "base64": "AAD/AAAA/wAA/wAAAP8AAAAA/wAAAP8AAP8AAAD/AAD/AAAA/wAAAAD//wAA//8A/wAAAP8AAAAA//8AAP//AA==",
+        "sha256": "06b97befd1e0f50c98984c8c257cf862d8e760419e8dd71cbfd01a8476833acb",
+        "event_start": 97,
+        "event_end": 118
+      }
+    ],
+    "input_calls": 0,
+    "screen_pixel_reads": 0,
+    "window_handles": 0,
+    "PrintWindow_calls": 0,
+    "adapter": "GetDC/ReleaseDC route only to owned source memory DC; other capture APIs are real GDI.",
+    "source_descriptor": {
+      "width": 16,
+      "height": 16,
+      "planes": 1,
+      "bits_pixel": 32,
+      "bmBits_is_null": true
+    },
+    "baseline": {
+      "rows": 16,
+      "base64": "AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8A/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8A/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8A/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AA==",
+      "sha256": "95bcaa0f2ca933b7a0ebc1067b293f8240defc8a6c7a2c4c4ed59259a005c60b"
+    },
+    "terminal": "FOUR_OWNED_MEMORY_CAPTURES_COMPLETE",
+    "cleanup": {
+      "restore_source": true,
+      "delete_source_bitmap": true,
+      "delete_source_dc": false,
+      "delete_brushes": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "release_format_dc": true
+    }
+  },
+  "receipt": {
+    "start": "2026-10-03T16:29:17.404507+00:00",
+    "argv": [
+      "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\native_capture_d02.py",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\win32-capture-deselection-622-D02"
+    ],
+    "attempts": 1,
+    "timeout_seconds": 12,
+    "pid": 32052,
+    "end": "2026-10-03T16:29:17.480807+00:00",
+    "exit_code": 0,
+    "timed_out": false,
+    "stdout_sha256": "674fc47a2a349b38c903099bf41133a26a7471619bc8445f7646373788441d7c",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
