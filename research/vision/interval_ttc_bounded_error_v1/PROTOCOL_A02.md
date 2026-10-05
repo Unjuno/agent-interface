@@ -22,7 +22,7 @@ The independent auditor reconstructs all oracle traces and candidate values. It 
 
 ## Execution freeze
 
-- Main: `0c70aff144af3515835c7c6069154fc94ad55ad4` (must still equal fetched `origin/main` immediately before candidate start).
+- Main: `0c70aff144af3515835c7c6069154fc94ad55ad4`, the fetched `origin/main` at freeze. Candidate and auditor run against this pinned snapshot. Later commits to `origin/main` do not alter the frozen allocation or require a rebase. This follows #8157's instruction to pin current main before formal execution; #8112's separate strict unchanged-main launch gate is not part of this issue.
 - Runtime: OrbStack Linux VM on this macOS host; Docker-compatible CLI selects context `orbstack`. No WSLc is available on this host. This is not reported as WSLc or Podman.
 - Image: `docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3` (`linux/arm64`, Python 3.12.15).
 - Container restrictions: network disabled, read-only root and study input, one CPU, memory limit 512 MiB, separate writable `/out` bind mount, `--rm`, no GUI/model/GPU/input.
