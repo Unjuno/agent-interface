@@ -28,4 +28,4 @@ python -m compileall -q research/live_control/input_owner_v10.py research/live_c
 git diff --check
 ```
 
-Command output is retained under `raw/`. `SOURCE_LOCK.json` binds the current-main base and changed source/test. `audit.py` independently checks the lock and required fail-closed/retry assertions without invoking X11 or changing evidence.
+Command output is retained under `raw/`. `SOURCE_LOCK.json` binds the current-main base plus candidate commit `07ba8837d6cd3eb9e36e98b1f9b8db4d4616fddb` and its changed source/test. `audit.py` verifies those immutable Git objects and the required fail-closed/retry assertions without invoking X11 or changing evidence; later candidate revisions have separate evidence.

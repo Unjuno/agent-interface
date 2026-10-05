@@ -181,6 +181,59 @@ class InputOwnerV10ReleaseRetryTests(unittest.TestCase):
         self.assertEqual(receipt["buttons_down"], [])
         self.assertEqual(self.display.buttons, set())
 
+    def test_wheel_retry_survives_a_transient_keymap_query_error(self):
+        lease = Lease()
+        self.owner.call("down", lease, "A")
+        self.owner.call("up", lease, "A")
+        self.display.drop_button_release = True
+        self.owner.call("wheel", lease, 1)
+        query_keymap = self.display.query_keymap
+        calls = 0
+
+        def query_keymap_once_fails():
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                raise OSError("transient keymap query failure")
+            return query_keymap()
+
+        self.display.query_keymap = query_keymap_once_fails
+        receipt = None
+        error = None
+        try:
+            receipt = self.owner.call("release", lease)
+        except Exception as exc:
+            error = exc
+
+        self.assertIsNone(error, f"release aborted before pointer retry: {error}")
+        self.assertTrue(receipt["verified"])
+        self.assertEqual(receipt["buttons_down"], [])
+        self.assertEqual(self.display.buttons, set())
+
+    def test_persistent_keymap_error_still_retries_button_and_records_unknown_keys(self):
+        lease = Lease()
+        self.owner.call("down", lease, "A")
+        self.display.suppress_key_releases = True
+        self.display.drop_button_release = True
+        self.owner.call("wheel", lease, 1)
+        query_keymap = self.display.query_keymap
+        self.display.query_keymap = lambda: (_ for _ in ()).throw(
+            OSError("keymap unavailable"))
+        error = None
+        try:
+            self.owner.call("release", lease)
+        except Exception as exc:
+            error = exc
+        finally:
+            self.display.query_keymap = query_keymap
+
+        self.assertIsInstance(error, RuntimeError)
+        self.assertEqual(self.display.buttons, set())
+        receipt = [row for row in self.owner.records if row.get("event") == "owner_release"][-1]
+        self.assertFalse(receipt["verified"])
+        self.assertFalse(receipt["keys_state_known"])
+        self.assertEqual(receipt["keys_unknown"], [65])
+
     def test_persistent_key_release_failure_remains_unverified(self):
         lease = Lease()
         self.owner.call("down", lease, "A")

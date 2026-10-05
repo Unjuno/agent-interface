@@ -19,11 +19,17 @@ baseline_source = (ROOT / "raw/baseline/input_owner_v10.py").read_bytes()
 checks.append(hashlib.sha256(baseline_source).hexdigest() == lock["base_source_sha256"])
 
 for item in (lock["changed_source"], lock["regression_test"]):
-    content = (REPO / item["path"]).read_bytes()
+    content = subprocess.run(
+        ["git", "show", f"{lock['candidate_commit']}:{item['path']}"],
+        cwd=REPO, check=True, capture_output=True,
+    ).stdout
     actual = hashlib.sha256(content).hexdigest()
     checks.append(actual == item["sha256"])
 
-test_source = (REPO / lock["regression_test"]["path"]).read_text()
+test_source = subprocess.run(
+    ["git", "show", f"{lock['candidate_commit']}:{lock['regression_test']['path']}"],
+    cwd=REPO, check=True, capture_output=True,
+).stdout.decode("utf-8")
 checks.append(hashlib.sha256(
     (ROOT / "raw/baseline/test_input_owner_v10_release_retry.py").read_bytes()
 ).hexdigest() == lock["regression_test"]["sha256"])
@@ -34,7 +40,10 @@ checks.extend(token in test_source for token in (
     'self.assertFalse(receipt["verified"])',
 ))
 
-source = (REPO / lock["changed_source"]["path"]).read_text()
+source = subprocess.run(
+    ["git", "show", f"{lock['candidate_commit']}:{lock['changed_source']['path']}"],
+    cwd=REPO, check=True, capture_output=True,
+).stdout.decode("utf-8")
 checks.extend(token in source for token in (
     "for code in down:",
     "for button in buttons_down:",

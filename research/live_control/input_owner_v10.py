@@ -180,30 +180,69 @@ class InputOwner:
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
-            mask = d.screen().root.query_pointer().mask
-            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-            bitmap = d.query_keymap()
-            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+
+            def sample_touched_state():
+                sample_errors = []
+                pointer_known = not touched_buttons
+                keymap_known = not touched
+                buttons_down = []
+                down = []
+                if touched_buttons:
+                    try:
+                        mask = d.screen().root.query_pointer().mask
+                        buttons_down = [b for b in touched_buttons
+                                        if mask & (X.Button1Mask << (b-1))]
+                        pointer_known = True
+                    except Exception as exc:
+                        sample_errors.append(
+                            f"pointer_state:{type(exc).__name__}: {exc}")
+                if touched:
+                    try:
+                        bitmap = d.query_keymap()
+                        down = [code for code in touched
+                                if bitmap[code // 8] & (1 << (code % 8))]
+                        keymap_known = True
+                    except Exception as exc:
+                        sample_errors.append(
+                            f"key_state:{type(exc).__name__}: {exc}")
+                return buttons_down, down, pointer_known, keymap_known, sample_errors
+
+            buttons_down, down, pointer_known, keymap_known, sample_errors = sample_touched_state()
             # XSync completes delivery; it does not guarantee that the server
-            # applied each release. Retry only touched inputs still sampled down.
-            for code in down:
+            # applied each release. Retry sampled-down inputs; when a state
+            # query fails, make one bounded best-effort retry for that class.
+            retry_keys = down if keymap_known else list(touched)
+            retry_buttons = buttons_down if pointer_known else list(touched_buttons)
+            for code in retry_keys:
                 xtest.fake_input(d, X.KeyRelease, code)
-            for button in buttons_down:
+            for button in retry_buttons:
                 xtest.fake_input(d, X.ButtonRelease, button)
-            if down or buttons_down:
-                d.sync()
-                mask = d.screen().root.query_pointer().mask
-                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-                bitmap = d.query_keymap()
-                down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
-            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
+            retry_sync_ok = True
+            if retry_keys or retry_buttons:
+                try:
+                    d.sync()
+                except Exception as exc:
+                    retry_sync_ok = False
+                    sample_errors.append(f"retry_sync:{type(exc).__name__}: {exc}")
+            buttons_down, down, pointer_known, keymap_known, final_errors = sample_touched_state()
+            sample_errors.extend(final_errors)
+            verified = (retry_sync_ok and pointer_known and keymap_known and
+                        not down and not buttons_down)
+            record = dict(event='owner_release', reason=reason, verified=verified, buttons_down=buttons_down,
                           keys_down=down, verified_ns=time.perf_counter_ns(),
-                          valid_until_ns=active.deadline if active else None)
+                          valid_until_ns=active.deadline if active else None,
+                          buttons_state_known=pointer_known, keys_state_known=keymap_known,
+                          buttons_unknown=[] if pointer_known else sorted(touched_buttons),
+                          keys_unknown=[] if keymap_known else sorted(touched),
+                          state_sample_errors=sample_errors)
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
-            if down or buttons_down:
-                raise RuntimeError('owner release not verified: ' + repr(down))
+            if not verified:
+                raise RuntimeError('owner release not verified: keys=' + repr(down) +
+                                   ' buttons=' + repr(buttons_down) +
+                                   ' keys_unknown=' + repr(record['keys_unknown']) +
+                                   ' buttons_unknown=' + repr(record['buttons_unknown']))
             buttons.clear()
             touched_buttons.clear()
             held.clear()
