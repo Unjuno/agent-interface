@@ -1,0 +1,16 @@
+{
+  "id": "astra-visible-effect-probe-a01-20261005",
+  "question": "Does a fixed cheap warm-pixel motion cue fire on the retained first enemy projectile before the first sampled HUD health loss, without firing on the immediately preceding clear-view samples?",
+  "H": "A cue consisting of at least 40 newly appearing high-chroma orange/red gameplay pixels per 5-fps frame will fire before the retained first health change at game 47.0 s (video 23.5 s), while remaining below threshold in the preceding clear-view samples.",
+  "T": "One deterministic decode of source video seconds 21.5-23.5 at 5 fps, 320x280; compare adjacent frames. ROI excludes overlay/HUD (y=30..229) and weapon lower-center box (x=130..189,y=145..229). Warm pixel means R>=170, 45<=G<=190, B<=95, R>=G*1.25. Trigger when current warm pixel is absent at same coordinate in previous frame and count>=40.",
+  "D": "PASS only if trigger occurs in [22.0,23.5) and no trigger occurs in [21.5,22.0); otherwise FAIL/HOLD as described in report. This is a cue feasibility result, not enemy classification or controller admission.",
+  "C": "Player muzzle flash, HUD-like scene elements, compression artifacts, and camera motion can create the same color transition; stationary enemies and non-orange attacks can be missed.",
+  "U": "One edited 2x video, small selected interval, manually inspected contact sheet, no live game/model/GUI/input, no independent task-effect or physical-release evidence.",
+  "source_video_path": "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4",
+  "source_video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "sample_fps": 5,
+  "source_video_seconds": [21.5, 23.5],
+  "threshold_new_warm_pixels": 40,
+  "frame_size": [320, 280],
+  "runtime": "host Python 3.14 / NumPy 2.5.2; OrbStack Docker image inventory failed with containerd blob read error, no retry or image pull"
+}
