@@ -269,6 +269,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
+<details>
+<summary><strong>Expand all retained result/failure directories</strong></summary>
+
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
@@ -445,6 +448,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
+- [`effect_indexed_deoptimization_8040_t0_a01_20261005/`](effect_indexed_deoptimization_8040_t0_a01_20261005/)
 - [`effect_interference_5366_t2_v1/`](effect_interference_5366_t2_v1/)
 - [`effect_interference_5366_t3_v1/`](effect_interference_5366_t3_v1/)
 - [`effect_overlap_6278_filter_control_t0_v3/`](effect_overlap_6278_filter_control_t0_v3/)
@@ -981,6 +985,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
+
+</details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
