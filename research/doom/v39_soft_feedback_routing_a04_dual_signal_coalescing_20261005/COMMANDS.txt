@@ -2,4 +2,6 @@ Candidate execution: Windows PowerShell here-string piped to `python -`; the inl
 
 Independent audit execution: separate Windows PowerShell here-string piped to `python -`; loaded exact AST nodes `{latest_soft_event_summary, begin_model_turn}` and executed the helper on the monitor's retained latest event with soft_event_count=2. Captured stdout is preserved in RESULT.json and the scoped checks in AUDIT.json.
 
+Current-value prompt check: separate Windows PowerShell here-string piped to `python -`; AST-extracted the exact `latest_soft_event_summary` and `begin_model_turn`, supplied the retained ammo event summary plus locally verified health=96/ammo=37, and captured the stub planner's actual prompt into PROMPT_CHECK.json. It verifies current values in the prompt and absence of the health delta only from the soft-event summary.
+
 No model, game, session, GUI, OS input, container, or live allocation command was run.

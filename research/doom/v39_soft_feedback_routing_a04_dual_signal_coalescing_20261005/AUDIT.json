@@ -1,6 +1,6 @@
 {
   "schema": "v39-soft-event-routing-a04-audit-v1",
-  "auditor_method": "Separate AST extraction and execution of the exact current-main latest_soft_event_summary helper using a reconstructed monitor record with two soft events and only the monitor's retained last-event object.",
+  "auditor_method": "Separate AST extraction and execution of the exact current-main latest_soft_event_summary helper using a reconstructed monitor record with two soft events and only the monitor's retained last-event object; a separate begin_model_turn stub-planner check confirms current health is sent as a direct prompt field even though the health delta is absent from the summary.",
   "checks": {
     "source_sha256_matches_result": true,
     "source_git_blobs_match_origin_main": true,
@@ -9,6 +9,8 @@
     "summary_reports_soft_event_count_2": true,
     "summary_serializes_only_ammo_46_to_37": true,
     "health_100_to_96_is_absent_from_summary": true,
+    "actual_prompt_builder_includes_current_health_96": true,
+    "actual_prompt_builder_includes_current_ammo_37": true,
     "no_authority_granted_by_summary": true
   },
   "disposition": "PASS_SCOPED_COALESCING_BOUNDARY",

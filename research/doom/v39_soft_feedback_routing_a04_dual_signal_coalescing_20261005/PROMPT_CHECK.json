@@ -1,0 +1,18 @@
+{
+  "schema": "v39-soft-event-routing-a04-current-value-prompt-check-v1",
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "case": {
+    "soft_event_count": 2,
+    "summary_signal": "ammo",
+    "summary_ammo": [46, 37],
+    "current_health_argument": 96,
+    "current_ammo_argument": 37
+  },
+  "actual_prompt": "Select the next bounded MAP01 action from the new temporal sheet.\nCurrent locally verified health: 96.\nCurrent locally verified ammo: 37.\nNewest typed soft event from the preceding control interval: {\"signal_id\":\"ammo\",\"source_value\":46,\"current_value\":37,\"hard_minimum\":1,\"soft_event_count\":2,\"sequence\":2,\"observed_during_iteration\":1,\"cover_policy_source_iteration\":0,\"effect\":\"prior_cover_preserved\",\"grants_input_authority\":false}\nPrevious no-visible-effect actions: []\n",
+  "checks": {
+    "current_health_96_in_prompt": true,
+    "current_ammo_37_in_prompt": true,
+    "health_delta_100_to_96_in_typed_soft_event_summary": false
+  },
+  "scope": "actual V39 prompt-builder helper with stub planner; no model, game, GUI, OS input, container, or live allocation"
+}
