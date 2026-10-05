@@ -1,0 +1,11 @@
+{
+  "model": {"processor_count": 1, "speed": 1, "preemptive": true, "integer_time": true},
+  "cases": [
+    {"id":"feasible_poor_policy_miss","source_id":"fixture-01","jobs":[{"id":"c0","class":"control","release":0,"execution":1,"deadline":1,"preemptible":true},{"id":"b0","class":"best_effort","release":0,"execution":1,"deadline":2,"preemptible":true}]},
+    {"id":"control_feasible_joint_infeasible","source_id":"fixture-02","jobs":[{"id":"c0","class":"control","release":0,"execution":2,"deadline":3,"preemptible":true},{"id":"b0","class":"best_effort","release":0,"execution":2,"deadline":2,"preemptible":true}]},
+    {"id":"control_only_infeasible","source_id":"fixture-03","jobs":[{"id":"c0","class":"control","release":0,"execution":2,"deadline":1,"preemptible":true},{"id":"b0","class":"best_effort","release":1,"execution":1,"deadline":4,"preemptible":true}]},
+    {"id":"exact_boundary_feasible","source_id":"fixture-04","jobs":[{"id":"c0","class":"control","release":0,"execution":1,"deadline":1,"preemptible":true},{"id":"b0","class":"best_effort","release":0,"execution":1,"deadline":2,"preemptible":true}]},
+    {"id":"nonpreemptive_unknown","source_id":"fixture-05","jobs":[{"id":"c0","class":"control","release":0,"execution":1,"deadline":2,"preemptible":false}]},
+    {"id":"unknown_execution_hold","source_id":"fixture-06","jobs":[{"id":"c0","class":"control","release":0,"deadline":2,"preemptible":true}]}
+  ]
+}
