@@ -1,0 +1,163 @@
+{
+  "changed_runtime_source_paths": [
+    "research/doom/doom_typed_observation_v1.py",
+    "research/doom/map01_overlap_controller_v39.py",
+    "research/live_control/input_owner_v12.py"
+  ],
+  "classification": "posthoc single-run mechanism observation; not preregistered",
+  "cover_actions": [
+    "strafe_right",
+    "strafe_left",
+    "retreat_fire"
+  ],
+  "cover_cancellation": {
+    "buttons_down": [],
+    "cancel_command_received_ns": 55550192034170,
+    "keys_down": [],
+    "planner_terminal_observed_ns": 55550226108534,
+    "program_id": "cover-5",
+    "release_verified": true,
+    "release_verified_ns": 55550198785056,
+    "terminal_ns": 55550212968537
+  },
+  "cover_terminal_before_plan": true,
+  "current_main_paired_fire_cover_guard_present": true,
+  "decision_iteration": 5,
+  "episode_score": {
+    "death_count": 0,
+    "kill_count": 1,
+    "map_exit": false,
+    "player_dead": false
+  },
+  "hard_minimum": 51,
+  "historical_monitor_mode": "authored_policy_guard",
+  "invalidation": {
+    "monitor_received_ns": 55550166722786,
+    "outcome_evaluated_ns": 55550189057945,
+    "reason": "below_hard_minimum",
+    "signal_extracted_ns": 55550189025866,
+    "status": "HARD_INVALIDATED"
+  },
+  "live_allocations_added": 0,
+  "model_wait_ms": 8915.94921,
+  "model_wait_ns": 8915949210,
+  "planner_terminal": {
+    "answer_eligible": false,
+    "cancellation_requested": true,
+    "status": "interrupted",
+    "terminal_observed_ns": 55550226108534
+  },
+  "previous_typed_observation": {
+    "ammo": 37,
+    "capture_ns": 55549693431438,
+    "health": 51,
+    "sequence": 217
+  },
+  "schema": "issue59-v39-visible-threat-invalidation-posthoc-result-v2",
+  "source_base_commit": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+  "source_hashes_verified": true,
+  "source_health": 61,
+  "source_runtime_code_matches_current_main": {
+    "research/doom/doom_typed_observation_v1.py": {
+      "current_main_blob": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+      "run_blob": "86d5f5b3cd6ea099f775e6213cc608f92b37d1fd",
+      "same_source": false
+    },
+    "research/doom/map01_overlap_controller_v39.py": {
+      "current_main_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+      "run_blob": "008661a3d8fb0d4bda29b0c5d787ef12551275c9",
+      "same_source": false
+    },
+    "research/doom/session_map01_v15.py": {
+      "current_main_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "run_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "same_source": true
+    },
+    "research/live_control/input_owner_v12.py": {
+      "current_main_blob": "222039e7c1a18b0a25e2ba86cddf859da1b43c8f",
+      "run_blob": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+      "same_source": false
+    }
+  },
+  "task_effect_or_survival_claim": false,
+  "timing_ms": {
+    "capture_after_model_start": 8722.694139,
+    "capture_to_monitor_received": 133.689927,
+    "evaluation_before_planner_terminal": 37.050589,
+    "last_at_or_above_floor_to_below_floor_capture_interval": 339.601421,
+    "monitor_received_to_evaluation": 22.335159,
+    "planner_terminal_before_model_wait_end": 0.179396,
+    "typed_ready_to_monitor_received": 121.878973
+  },
+  "trigger_frame_visibility_verified": true,
+  "trigger_observation": {
+    "ammo": 37,
+    "artifact_published": false,
+    "capture_ns": 55550033032859,
+    "frame_rgb_sha256": "fd7f813b9b2c15d1c33c8e0d4514747697c62df515c8a1905b7492f5c16cc60b",
+    "health": 48,
+    "sequence": 218,
+    "typed_ready_ns": 55550044843813
+  },
+  "visual_frame_bindings": [
+    {
+      "ammo": 40,
+      "capture_after_model_start_ms": null,
+      "capture_ns": 55540748339900,
+      "full_observation_exact": true,
+      "health": 61,
+      "image_git_blob": "b3f0bff438d16ebc5b80e6d83c5f4b4fcc022ed8",
+      "image_sha256": "8c5e9c02dbc988693ec2126e92d9a2867d0f77ca9223e69356bcc6132b4b99d3",
+      "in_model_wait": false,
+      "sequence": 166,
+      "typed_full_rgb_hash_match": true
+    },
+    {
+      "ammo": 38,
+      "capture_after_model_start_ms": 5536.88152,
+      "capture_ns": 55546847220240,
+      "full_observation_exact": true,
+      "health": 51,
+      "image_git_blob": "161066e6a469781adad9a07657cbd9198fa7aede",
+      "image_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+      "in_model_wait": true,
+      "sequence": 200,
+      "typed_full_rgb_hash_match": true
+    },
+    {
+      "ammo": 37,
+      "capture_after_model_start_ms": 8383.092718,
+      "capture_ns": 55549693431438,
+      "full_observation_exact": true,
+      "health": 51,
+      "image_git_blob": "86f90a5e7649af5100d27e944756bb1ab68f6cbe",
+      "image_sha256": "69fea02f4ed5830f85eacc5f67e98b2c5171d822c7db0dd76ca6682dfd633091",
+      "in_model_wait": true,
+      "sequence": 217,
+      "typed_full_rgb_hash_match": true
+    },
+    {
+      "ammo": 37,
+      "capture_after_model_start_ms": 8722.694139,
+      "capture_ns": 55550033032859,
+      "full_observation_exact": true,
+      "health": 48,
+      "image_git_blob": "c5a91fc0455a304873ef7c86981ab0de20401c08",
+      "image_sha256": "c711f3c36ff56778378a0f82275474615aac9879c2f61ce0d8d4ae8270e5a448",
+      "in_model_wait": true,
+      "sequence": 218,
+      "typed_full_rgb_hash_match": true
+    }
+  ],
+  "visual_review": {
+    "independent_visual_review": false,
+    "method": "single-analyst visual inspection of pinned full observation PNGs",
+    "threat_appears_in_view_during_wait": true,
+    "visible_hostile_by_sequence": {
+      "166": false,
+      "200": true,
+      "217": true,
+      "218": true
+    }
+  }
+}
