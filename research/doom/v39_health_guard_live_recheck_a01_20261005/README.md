@@ -33,3 +33,18 @@ The audit verifies these retained SHA-256 values against `retention-manifest.jso
 - `audit-v2.json`: `bb03c350009169283f36c8f0c0a919bb18d46e828ac68b99f40a567d2f141bfc`
 
 The audit also verifies the preregistration and runtime source hashes against the frozen Git tree at `5ffa6e0716515841575f70b8f0dba32843bf3e98`; its ancestor relation to the result commit is checked locally with Git. `RESULT.json` is the retained output from the command. The original result package remains unchanged.
+
+## A02 source timestamp binding correction
+
+The original `audit.py` result is retained as A01. `audit_a02.py` adds a unique raw typed-observation join for decision 5 source sequence 166 and requires the report's sequence, capture time, health signal, status, and value to match that raw event. Its frozen read-only rerun is recorded in `results/a02/audit.json`; the source event is `plan-4-primary-0-1` at capture time `55540748339900` ns.
+
+`results/a02/AUDIT_FREEZE.json` records the auditor, control harness, and retained input hashes before either A02 command ran. The copied-report timestamp control in `results/a02/report_timestamp_control.json` changes only the copied report's source capture time by one second and updates the copied retention manifest's report hash. A01 accepts the copy and reports a changed timing; A02 rejects it because the timestamp does not match the unique raw observation. The retained source artifacts remain unchanged.
+
+Reproduce the A02 audit and timestamp control from the repository root:
+
+```sh
+python research/doom/v39_health_guard_live_recheck_a01_20261005/audit_a02.py
+python research/doom/v39_health_guard_live_recheck_a01_20261005/test_report_timestamp_control.py
+```
+
+These are read-only audit operations. They do not start a game, model call, or input allocation.

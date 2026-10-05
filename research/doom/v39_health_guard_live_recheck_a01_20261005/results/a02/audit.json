@@ -1,0 +1,100 @@
+{
+  "allocation_id": "map01-v39-coast-liveness-live-01",
+  "cover_source": {
+    "capture_ns": 55540748339900,
+    "health": 61,
+    "raw_event_id": "plan-4-primary-0-1",
+    "sequence": 166
+  },
+  "decision": 5,
+  "hard_guard_observation": {
+    "frame": "runtime/218.png",
+    "frame_sha256": "c711f3c36ff56778378a0f82275474615aac9879c2f61ce0d8d4ae8270e5a448",
+    "hard_minimum": 51,
+    "health": 48,
+    "outcome": "HARD_INVALIDATED",
+    "sequence": 218
+  },
+  "planner": {
+    "answer_eligible": false,
+    "dependent_action_discarded": true,
+    "model_ns": 8915949210,
+    "terminal_status": "interrupted"
+  },
+  "release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "verified": true
+  },
+  "retained_audit_formal_pass": true,
+  "retained_hashes": {
+    "audit-v2.json": "bb03c350009169283f36c8f0c0a919bb18d46e828ac68b99f40a567d2f141bfc",
+    "report.json": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+    "runtime/218.png": "c711f3c36ff56778378a0f82275474615aac9879c2f61ce0d8d4ae8270e5a448",
+    "runtime/events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "runtime/sources.json": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8"
+  },
+  "schema": "v39-health-guard-live-recheck-a01",
+  "scope": {
+    "does_not_prove": [
+      "current-main V15/V12 composition",
+      "per-key release identity",
+      "independently useful feedback",
+      "bounded recovery efficacy",
+      "MAP01 exit or survival benefit"
+    ],
+    "kind": "read-only recheck of one retained live V39 episode",
+    "new_game_or_model_allocation": false,
+    "proves": [
+      "authored health guard invalidated during pending model turn",
+      "dependent answer was ineligible/discarded",
+      "cover ended with verified empty release"
+    ],
+    "source_version_boundary": "preregistration pins the older V39 controller and V12/V10 path; this is not today's V15/V12 startup closure"
+  },
+  "soft_boundary_observation": {
+    "health": 51,
+    "outcome": "SOFT_CHANGED",
+    "sequence": 200
+  },
+  "source_closure": [
+    "doom/doom_hud_signal_v1.py",
+    "doom/doom_hud_signal_v2.py",
+    "doom/doom_hud_signal_v3.py",
+    "doom/doom_typed_coast_backend_v1.py",
+    "doom/doom_typed_observation_v1.py",
+    "doom/doom_typed_release_backend_v1.py",
+    "doom/session_map01_v12.py",
+    "live_control/coast_backend_v1.py",
+    "live_control/executor_v11.py",
+    "live_control/executor_v12.py",
+    "live_control/executor_v5.py",
+    "live_control/input_owner_v10.py",
+    "live_control/input_owner_v5.py",
+    "live_control/lease.py",
+    "live_control/lease_cause_v1.py",
+    "live_control/lease_cause_v2.py",
+    "live_control/lease_release_v1.py",
+    "live_control/session_v10.py",
+    "live_control/session_v8.py",
+    "live_control/session_v9.py"
+  ],
+  "source_provenance": {
+    "combined_unique_sources_verified": 39,
+    "controller_differs_from_current_main": true,
+    "controller_sha256_at_current_main_snapshot": "f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8",
+    "controller_sha256_at_freeze": "cbc44c171f9d83417380af4fb5c06ef7dbf9bb2862c2c40a997bd66f3a985e5e",
+    "freeze_commit": "5ffa6e0716515841575f70b8f0dba32843bf3e98",
+    "freeze_is_ancestor_of_result": true,
+    "prereg_runtime_overlap": 9,
+    "preregistered_sources_verified_against_freeze_tree": 28,
+    "preregistration_status": "FROZEN_BEFORE_FIRST_V38_MODEL_CALL",
+    "result_commit": "ebb8c7837edf86cc9d02c60bec58828e45fb6c77",
+    "runtime_sources_verified_against_freeze_tree": 20
+  },
+  "timing_ms": {
+    "guard_evaluation_to_empty_release": 9.727111,
+    "guard_evaluation_to_planner_terminal": 37.050589,
+    "source_capture_to_guard_evaluation": 9440.718045
+  }
+}
