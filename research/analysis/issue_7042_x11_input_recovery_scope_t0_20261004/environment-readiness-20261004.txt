@@ -1,0 +1,21 @@
+# Issue #7042 local container-readiness observation
+
+Recorded at: 2026-10-04T01:37:33Z
+Purpose: determine whether the proposed T1 CPU-only method-construction experiment can start in the current macOS/OrbStack environment. This is setup evidence, not a scientific result or an allocation.
+
+Environment observed: macOS host; Docker context `orbstack`; `docker info` reports Server 29.4.0, Operating System OrbStack, architecture aarch64. Host-reported physical memory is 68,719,476,736 bytes. No claim about effective free memory or an exclusive CPU lease is made.
+
+Read-only runtime observations from this turn:
+- `docker ps --format '{{.ID}} {{.Names}} {{.Status}}'` exited 0 and returned no running containers.
+- `docker ps -a --format '{{.ID}} {{.Names}} {{.Status}}'` exited 0 and returned retained historical container records.
+- `docker image ls --format '{{.Repository}}:{{.Tag}} {{.ID}} {{.Size}}'` exited 1: daemon could not open content blob `sha256:a853f94d226358a79c740cfc7bce0c289748f3fe3488d921d038ccd752c61b60` under `/var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/`; error was `operation not supported`.
+- `docker image inspect python:3.12-slim --format '{{.Id}} {{.Os}}/{{.Architecture}}'` exited 1: the pinned image record references blob `sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`; opening that path also failed with `operation not supported`.
+- `orbctl list` showed ten OrbStack VMs in `running` state, with task-specific names including `agent-interface-6576-tailid-parity-a03-20261002`, `agent-interface-6604-t0-isolated-20261002`, `effect-terminal-feedback-6301-t0-orbstack-20261002`, `obs-audit-t1-5681-20261001`, `research-59-per-key-telemetry-01a0ff52-20261004`, `research-6183-t0-20261003`, `research-6492-oracle-blind-a01-20261003`, `research-6526-observer-a01-20261003`, `research-6680-a01-20261003`, and `research-path-width-6581-t0b-20261002`. Their ownership/CPU use was not queried or assumed.
+
+Disposition: `STOP_T1_CONTAINER_IMAGE_UNREADABLE_AND_SHARED_VM_ACTIVITY`. No image pull, container invocation, VM creation, daemon restart, or repair was attempted. T1 candidate invocations: 0. T1 auditor invocations: 0. This does not establish product failure or fleet-wide unavailability.
+
+Restart gate: recheck only after a meaningful external-state change. Require a usable pinned image through the approved OrbStack Docker context and a fresh resource/owner check that establishes an authorized isolated CPU lane. Then prospectively freeze the T1 source, fixture, seeds, candidate/auditor commands, output path, decision rules, and no-retry boundary before the first candidate invocation. Preserve this STOP as a setup outcome; do not relabel it or count it as a candidate run.
+
+## Independent image-store corroboration read later in this turn
+
+Current main commit `d908d8f9712139f1e88a605437442a97587cbe9c` adds `research/integration/issue3311_orbstack_image_store_preflight_20261004/REPORT.md` (the report's own frozen source context is `85903cae9541a3faf4303cff10ba58cc5a1cc436`). It records the same daemon-side `operation not supported` on image inspection with OrbStack's bundled Docker 29.4.0 client matching the server, so client-version mismatch is not a sufficient explanation. It explicitly closes that diagnostic and says not to repeat image inspection or alter the store while other OrbStack machines are active without an owner-confirmed maintenance window. This is corroborating evidence from #3311/#3489, not a #7042 allocation or experiment; it reinforces the existing STOP and does not authorize image pulls, store repair, restart, or a new probe.

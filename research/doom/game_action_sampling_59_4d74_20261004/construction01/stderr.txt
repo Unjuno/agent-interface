@@ -1,0 +1,11 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/study/probe_game_action_01.py", line 22, in <module>
+    wait('ready');observation=wait('observation')
+    ^^^^^^^^^^^^^
+  File "/study/probe_game_action_01.py", line 15, in wait
+    row=q.get(timeout=max(.001,until-time.monotonic()))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/queue.py", line 179, in get
+    raise Empty
+_queue.Empty

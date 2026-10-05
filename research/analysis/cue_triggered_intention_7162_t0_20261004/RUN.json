@@ -1,0 +1,25 @@
+{
+  "schema":"unjuno.issue7162.t0.run.v1",
+  "issue":7162,
+  "freeze_commit":"2a54a7ade6a5950a419231621570e22be92695f1",
+  "base_commit":"f62a18f546bdbbfdd431be0078c44f42db13d572",
+  "preregistration_comment_id":5977636630,
+  "candidate_command":"python3 candidate.py --out formal_01/raw.json",
+  "candidate_exit_code":0,
+  "candidate_invocations":1,
+  "auditor_command":"python3 auditor.py --raw formal_01/raw.json --out formal_01/audit.json",
+  "auditor_exit_code":0,
+  "auditor_invocations":1,
+  "retries":0,
+  "runtime":"host-only Python standard library; no model, GUI, network, or container",
+  "result":{
+    "status":"PASS_METHOD_SCOPED",
+    "rows_reconstructed":54,
+    "terminal_or_unknown_revived":0,
+    "eligible_exact_cues_recalled":1,
+    "input_authority_granted":false,
+    "mutations_rejected":4,
+    "typed_vs_packet_decisions":"identical in this fixture; no incremental-value claim",
+    "audit_errors":[]
+  }
+}
