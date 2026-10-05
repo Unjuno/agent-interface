@@ -7,7 +7,7 @@
   "runtime": "OrbStack Docker 29.4.0",
   "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
   "platform": "linux/arm64",
-  "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=<package>/frozen,dst=/src,readonly --mount type=bind,src=<package>/results/preflight,dst=/out --workdir /src python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c python -I /src/preflight_probe.py",
+  "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src='/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/frozen',dst=/src,readonly --mount type=bind,src='/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/preflight',dst=/out --workdir /src python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c python -I /src/preflight_probe.py > '/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/preflight/stdout.txt' 2> '/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/preflight/stderr.txt'",
   "observed": {
     "source_read": true,
     "source_write_rejected": true,
