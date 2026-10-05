@@ -1,5 +1,9 @@
 # Analytical research
 
+- [Issue #7865 history-conditioned compensation eligibility T0 A02](history_conditioned_compensation_7865_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 28 exact oracle rows; disjoint external update preserved; A01 FAIL_HARNESS retained; finite synthetic model only.
+
+- [Issue #7778 demand-guarded slack reclamation T0](slack_reclamation_7778_t0_20261005/REPORT.md) — zero-overhead T0: 9 traces / 27 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED; separate [T0b dispatch sensitivity](slack_reclamation_7778_dispatch_sensitivity_t0_20261005/REPORT.md): 18 traces / 108 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED. Priority-only completed more optional work than guarded slack over the full overhead-0 matrix, so no scheduler promotion follows.
+
 - [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
 
 - [Issue #7387 synthetic serial-cue method gate — A01 STOP](serial_cue_interference_7387_t0_20261004/RUN.md) — WSLc candidate exited before producing rows because the runner pre-created `/out`, contrary to the frozen candidate's directory contract; auditor 0/1, no hypothesis result, no retry.
@@ -338,6 +342,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`bounded_path_class_switching_6586_t0_20261002/`](bounded_path_class_switching_6586_t0_20261002/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
+- [`braess_route_verifier_5855_horizon_ledger_a02_20261004/`](braess_route_verifier_5855_horizon_ledger_a02_20261004/)
 - [`breakdown_t7/`](breakdown_t7/)
 - [`cache_epoch_completeness_2928_v1/`](cache_epoch_completeness_2928_v1/)
 - [`cache_epoch_monitor_execution_2928_v1/`](cache_epoch_monitor_execution_2928_v1/)
@@ -509,6 +514,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`hazard_discretionary_capture_6086_t0_v1/`](hazard_discretionary_capture_6086_t0_v1/)
 - [`hedged_evidence_start_4277_v1/`](hedged_evidence_start_4277_v1/)
 - [`hidden_cause_sensitivity_5440_t2/`](hidden_cause_sensitivity_5440_t2/)
+- [`history_conditioned_compensation_7865_t0_a02_20261005/`](history_conditioned_compensation_7865_t0_a02_20261005/)
 - [`history_conditioned_reliance_6616_t0_a03_orbstack_20261003/`](history_conditioned_reliance_6616_t0_a03_orbstack_20261003/)
 - [`human_autonomy_envelope_6383_t0_20261002/`](human_autonomy_envelope_6383_t0_20261002/)
 - [`human_return_oracle_blindness_6492_t0_a01_20261003/`](human_return_oracle_blindness_6492_t0_a01_20261003/)
@@ -703,6 +709,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_specialist_switch_4284_v1/`](predicate_specialist_switch_4284_v1/)
 - [`predictive_safety_filter_5317_t3_v1/`](predictive_safety_filter_5317_t3_v1/)
 - [`preference_explicit_choice_6274_t0_20261002/`](preference_explicit_choice_6274_t0_20261002/)
+- [`preference_input_methods_7705_t0_20261005/`](preference_input_methods_7705_t0_20261005/)
 - [`preference_uncertainty_5749_t0_v1/`](preference_uncertainty_5749_t0_v1/)
 - [`prefix_obligations_6749_t0_wslc_20261003/`](prefix_obligations_6749_t0_wslc_20261003/)
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)
@@ -834,6 +841,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`skill_applicability_6262_wslc_t0b_v1/`](skill_applicability_6262_wslc_t0b_v1/)
 - [`skill_registry_topk_starvation_751_t0_20261002/`](skill_registry_topk_starvation_751_t0_20261002/)
 - [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
+- [`slack_reclamation_7778_dispatch_sensitivity_t0_20261005/`](slack_reclamation_7778_dispatch_sensitivity_t0_20261005/)
+- [`slack_reclamation_7778_t0_20261005/`](slack_reclamation_7778_t0_20261005/)
 - [`soft_revisit_bias_5756_t0_orbstack_a03_20261003/`](soft_revisit_bias_5756_t0_orbstack_a03_20261003/)
 - [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`soft_revisit_bias_6442_supplemental_audit_v1/`](soft_revisit_bias_6442_supplemental_audit_v1/)
@@ -908,6 +917,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
 - [`unseen_failure_mode_yield_5665_t1_v1/`](unseen_failure_mode_yield_5665_t1_v1/)
 - [`user_relative_benefit_6593_t0_v1/`](user_relative_benefit_6593_t0_v1/)
+- [`vector_constraint_approachability_7808_a01_20261005/`](vector_constraint_approachability_7808_a01_20261005/)
 - [`verification_ir_alias_boundary_5504_a01_20261003/`](verification_ir_alias_boundary_5504_a01_20261003/)
 - [`verifier_cascade_capacity_5375_t0a2_20261002/`](verifier_cascade_capacity_5375_t0a2_20261002/)
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)

@@ -30,6 +30,10 @@ This is a provenance/navigation diagram, not a guarantee that every historical a
 - A later repaired successor does not rewrite or delete the earlier retained failure.
 - Do not infer current project status from the newest-looking directory name; use [`../../../docs/CURRENT_GOAL.md`](../../../docs/CURRENT_GOAL.md) and [`../../../docs/LOCAL_RESEARCH_HANDOFF.md`](../../../docs/LOCAL_RESEARCH_HANDOFF.md).
 
+## Notable retained composition failure
+
+- [Admission-baseline accepted-event sink failure A02](admission-baseline-sink-composition-a02-20261004/README.md) — the one-shot fake-sink experiment reproduced a STOP with an unstarted worker, retained active slot/backend lease, and `close()` join exception. Its setup STOP, first auditor failure, raw, and corrected saved-data audit are preserved; no live task or recovery claim follows, and the consumed candidate must not be rerun.
+
 ## Fresh runs
 
 Do not overwrite committed retained result directories. Fresh local experiments should write to a new allocation path or ignored local artifact location according to the experiment's own instructions, then retain only the intended evidence through the normal research workflow.

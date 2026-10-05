@@ -1,0 +1,34 @@
+{
+  "unit": "stock-todomvc-durable-57-D01-01a0ff35-20261003",
+  "claim": 5969256905,
+  "policy": "FINAL-v5",
+  "source": "tastejs/todomvc@25a9e31eb32db752d959df18e4d214295a2875e8",
+  "source_status": "unchanged historical official localStorage version; current MemoryStorage outcomes not transferred",
+  "task": {
+    "title": "D01 owned reload witness",
+    "states": [
+      "initial empty",
+      "one exact active todo",
+      "same active todo after reload",
+      "same completed todo",
+      "same completed todo after second reload"
+    ]
+  },
+  "H": "Existing persistent Store and guarded stock UI operations may preserve one compound effect across two same-tab reloads.",
+  "T": "One fresh own-origin first sequence, create via standard character input+Tab, planned reload, fresh unique row checkbox completion, planned second reload; no private localStorage/model state access or injection.",
+  "D": "PASS_SCOPED_RELOAD_EFFECT iff five strict states/unique nonempty stable public row ID/title/checkbox/class/count match and source/native lifecycle close; otherwise preserve first STOP, no resend/repetition. Storage exception is STOP, not substitute-memory repair.",
+  "C": "Different historical source/backend, not equally matched reference performance. DOM rendering may be consistent with other hidden implementations; no authenticated storage claim.",
+  "U": "Same-tab reload only; no browser/process/OS restart/crash durability, physical input/key release, storage-failure recovery, true model/total-resource comparison or whole-goal success.",
+  "resources": {
+    "server_seconds": 120,
+    "outer_seconds": 150,
+    "GET": 64,
+    "stream_bytes": 65536,
+    "all_output_bytes": 2097152,
+    "scorer_seconds": 20
+  },
+  "new_workers": 0,
+  "formal_replays": 0,
+  "main_sends": 0,
+  "prelive_correction": "Static official View newTodo handler is change-only. Initial drafted Enter replaced by Tab before any server/tab/action. Both draft/first freeze retained, no UI attempt/replay."
+}

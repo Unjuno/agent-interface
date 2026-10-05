@@ -1,0 +1,32 @@
+{
+  "schema": "vca7808-fixture-v1",
+  "metrics": ["model_boundaries", "elapsed_cost"],
+  "case_order": ["feasible_tradeoff", "infeasible_target", "delayed_missing_feedback", "single_extreme_episode"],
+  "route_order": ["conservative", "fast", "balanced"],
+  "contexts": {
+    "x": {
+      "conservative": {"forecast": [0.2, 0.2], "actual": [0.2, 0.2], "useful_forecast": false, "verified_useful": false},
+      "fast": {"forecast": [2.0, 0.2], "actual": [2.0, 0.2], "useful_forecast": true, "verified_useful": true},
+      "balanced": {"forecast": [1.0, 1.0], "actual": [1.0, 1.0], "useful_forecast": false, "verified_useful": false},
+      "forbidden": {"forecast": [0.0, 0.0], "actual": [0.0, 0.0], "useful_forecast": true, "verified_useful": true}
+    },
+    "y": {
+      "conservative": {"forecast": [0.2, 0.2], "actual": [0.2, 0.2], "useful_forecast": false, "verified_useful": false},
+      "fast": {"forecast": [0.2, 2.0], "actual": [0.2, 2.0], "useful_forecast": true, "verified_useful": true},
+      "balanced": {"forecast": [1.0, 1.0], "actual": [1.0, 1.0], "useful_forecast": false, "verified_useful": false},
+      "forbidden": {"forecast": [0.0, 0.0], "actual": [0.0, 0.0], "useful_forecast": true, "verified_useful": true}
+    },
+    "z": {
+      "conservative": {"forecast": [0.2, 0.2], "actual": [0.2, 0.2], "useful_forecast": false, "verified_useful": false},
+      "fast": {"forecast": [1.5, 1.5], "actual": [1.5, 1.5], "useful_forecast": true, "verified_useful": true},
+      "balanced": {"forecast": [1.0, 1.0], "actual": [1.0, 1.0], "useful_forecast": false, "verified_useful": false},
+      "forbidden": {"forecast": [0.0, 0.0], "actual": [0.0, 0.0], "useful_forecast": true, "verified_useful": true}
+    }
+  },
+  "cases": [
+    {"id": "feasible_tradeoff", "target": [1.1, 1.1], "contexts": ["x","y","x","y","x","y","x","y","x","y","x","y"], "gates": {"x": {"conservative":true,"fast":true,"balanced":true,"forbidden":false}, "y": {"conservative":true,"fast":true,"balanced":true,"forbidden":false}}, "delay_by_row": {}, "missing_rows": [], "overrides": {}},
+    {"id": "infeasible_target", "target": [0.1, 0.1], "contexts": ["z","z","z","z","z","z","z","z"], "gates": {"z": {"conservative":true,"fast":true,"balanced":true,"forbidden":false}}, "delay_by_row": {}, "missing_rows": [], "overrides": {}},
+    {"id": "delayed_missing_feedback", "target": [1.1, 1.1], "contexts": ["x","y","x","y","x","y","x","y","x","y","x","y"], "gates": {"x": {"conservative":true,"fast":true,"balanced":true,"forbidden":false}, "y": {"conservative":true,"fast":true,"balanced":true,"forbidden":false}}, "delay_by_row": {"2":3,"5":2}, "missing_rows": [7], "overrides": {}},
+    {"id": "single_extreme_episode", "target": [1.1, 1.1], "contexts": ["x","y","x","y","x","y","x","y","x","y","x","y"], "gates": {"x": {"conservative":true,"fast":true,"balanced":true,"forbidden":false}, "y": {"conservative":true,"fast":true,"balanced":true,"forbidden":false}}, "delay_by_row": {}, "missing_rows": [], "overrides": {"5": {"fast": {"actual": [10.0, 0.2]}}}}
+  ]
+}
