@@ -1,6 +1,6 @@
 # A09 run record
 
-- Base main: `cc2eb4a205bb8f8001b1baed05f482208c0b0935`; freeze commit: `6f8f3d476c2e229686e5cde22f2249697a761ce6`.
+- Base main: `cc2eb4a205bb8f8001b1baed05f482208c0b0935`; freeze commit: `de1c8cdeb383d19e43c08ca59a2cbb33c292559a` (rebased without changing frozen tree).
 - Exact interpreter: `C:\Users\junny\AppData\Local\Programs\Python\Python312\python.exe`, CPython 3.12.10.
 - Construction: 5/5 normal and 5/5 under `-O`; two pre-freeze assertion wording mismatches retained. Sparse-aware freeze stage/commit succeeded, frozen blob exists in HEAD, package was clean before generator.
 - Generator: one invocation, exit 0, ~3.75 s, 80,000 rows.

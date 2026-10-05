@@ -28,7 +28,7 @@ The A08-qualified gates (0.40,0.80) and (0.45,0.70) both lose the joint criterio
 
 ## Execution evidence
 
-- Freeze commit `6f8f3d476c2e229686e5cde22f2249697a761ce6`, base main `cc2eb4a205bb8f8001b1baed05f482208c0b0935`; frozen source hashes in `FREEZE.json`.
+- Freeze commit `de1c8cdeb383d19e43c08ca59a2cbb33c292559a`, base main `cc2eb4a205bb8f8001b1baed05f482208c0b0935`; frozen source hashes in `FREEZE.json`.
 - CPython 3.12.10 exact path in the freeze. Generator exit 0 (~3.75 s), candidate exit 0 (~1.33 s), auditor exit 0 (~37.64 s); each formal process invoked once. Full stdout/stderr and handoff files are retained.
 - Construction tests 5/5 normal and 5/5 under `-O` before freeze. Two earlier static-assertion wording mismatches were corrected pre-freeze and retained in `results/construction-initial-failure.txt`; no formal calls occurred until tests passed and freeze commit was verified.
 - Host-only process separation; no WSLc, Docker, network, GPU, GUI, model, participant, or external data. This is not a container/isolation or resource-enforcement claim.
