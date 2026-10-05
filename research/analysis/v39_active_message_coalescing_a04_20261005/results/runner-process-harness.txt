@@ -1,0 +1,3 @@
+Python 3.11.9
+
+The first shell-side assertion mistakenly read a stale $LASTEXITCODE; the captured Process.ExitCode recorded in runner-process-harness.exit is 0. This assertion mistake did not invoke the candidate.

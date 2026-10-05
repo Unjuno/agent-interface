@@ -1,0 +1,9 @@
+A04 runtime eligibility decision (2026-10-05)
+
+Target boundary: one native Windows Codex CLI/App Server 0.160.0 process, fresh Windows CODEX_HOME, and its loopback-only Responses mock. No provider, game, GUI, input, or GPU is part of the candidate.
+
+WSLc 3.0.1.0 and cached python:3.12-slim image `414a398990af` were available (see `wslc-image.txt`). The single recorded compatibility preflight used `wslc run --rm --pull never --cpus 0.5 --network none` with the exact installed Windows `codex.exe` mounted read-only at `/opt/codex.exe`; it exited 255 with `exec /opt/codex.exe: exec format error`. See `wslc-preflight.command.txt`, `.stdout.txt`, `.stderr.txt`, and `.exit`. This verifies the installed subject executable cannot be run directly in that Linux container. Running only the mock in WSLc while the subject remains on Windows would split the target process/loopback boundary, so the frozen formal candidate runs natively on Windows with its application network target restricted to 127.0.0.1.
+
+The compatibility preflight's contemporaneous container inventory was noted as empty; that listing was not retained as a raw artifact. A separate read-only inventory before candidate freeze is retained in `wslc-container-inventory.txt`; it showed no running containers. No container operation is part of the formal candidate.
+
+This is an environment-specific execution choice for a protocol serialization experiment. It does not change the repository's WSLc requirement for eligible Linux-container CPU work and does not establish live-control or model behavior.

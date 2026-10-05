@@ -1,0 +1,127 @@
+{
+  "artifact": "v39_active_message_coalescing_a04_20261005",
+  "status_before_candidate": "FROZEN_NOT_RUN",
+  "base_commit": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "related_single_observation_prs": {
+    "7951": "one turn/externalMessage serialization observation",
+    "7969": "one pending toolOutput request-order observation",
+    "7987": "one legacy turn/steer observation on codex-cli 0.146.1"
+  },
+  "upstream_probe_template_pr": 7969,
+  "upstream_probe_template_head": "98c43a0b7fcd1474be9bd8f420538d8b66fee116",
+  "host": {
+    "os": "Windows 11 Home x64",
+    "version": "10.0.26300",
+    "build": "26300",
+    "architecture": "64-bit"
+  },
+  "python": {
+    "path": "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "version": "Python 3.11.9",
+    "sha256": "5f7b89a612c9b8af1d6456cdfcd1dbe5ca630849e79aebced9bee9a6694952ec"
+  },
+  "codex_executable": "C:\\Users\\junny\\AppData\\Local\\OpenAI\\Codex\\bin\\8aaf1547b825b104\\codex.exe",
+  "codex_sha256": "37762753b554982eef1c109303d1be652b6397f1479e844794353a85650199c6",
+  "cli_version": "codex-cli 0.160.0",
+  "wslc": {
+    "version": "3.0.1.0",
+    "image": "python:3.12-slim",
+    "image_id": "414a398990af",
+    "cached_before_preflight": true,
+    "compatibility_probe_exit": 255,
+    "compatibility_probe_stderr": "exec /opt/codex.exe: exec format error",
+    "candidate_runtime": "native Windows process; loopback-only mock",
+    "reason": "The installed Windows subject executable cannot run in the Linux container; moving only the mock would split the frozen process/transport boundary."
+  },
+  "model_provider": "mock",
+  "mock_endpoint": "127.0.0.1 ephemeral port; Responses wire API",
+  "candidate_runs_max": 1,
+  "candidate_retries": 0,
+  "pending_window_seconds": 2.0,
+  "protocol_timeout_seconds": 20.0,
+  "candidate_command": "python -B probe.py --frame-201 fixtures/synthetic-seq201.png --frame-202 fixtures/synthetic-seq202.png",
+  "observation_sequences": [
+    201,
+    202
+  ],
+  "observation_texts": [
+    "A04 observation seq=201; synthetic frame alpha.",
+    "A04 observation seq=202; synthetic frame beta."
+  ],
+  "fixture_sha256": {
+    "fixtures/synthetic-seq201.png": "b6ae54e7c1b64efe1de3170c9ec6cb70bbb4b4ca11de074ccaf7d21289382c70",
+    "fixtures/synthetic-seq202.png": "bb093ed0d73af55e49b3d971605a64ddd774ea335022305ef2454b58f3dd5220"
+  },
+  "source_sha256": {
+    ".gitattributes": "c089985639038cc07dc37c07a8d0d543df7ddf9b1873a948000494a6e230530d",
+    "probe.py": "2567a044879496b974d26b3d9c10596a2addf6fa7f4eb938ddc708678ab17cad",
+    "test_probe.py": "3a2339144dcd63889d9a4fe2ab311be0572523d056f30aceeb6dd148468d371f",
+    "test_audit_result.py": "99dd9a2753829016df530d9f3c9563ad76ab4ec06b57000334198900bdc12788",
+    "make_frames.py": "6fc6ad4f89e1465ddaea6b4c74daa95998eab360a2205e56078632b3622ca745",
+    "README.md": "b806228aaa6d0c1e7e62d75f42ab414fcca5a72c191090b6a762a7d732cfac4b",
+    "audit_result.py": "8e28ecd3e3c5fc1255199fa9934ee3cff4e91abf901db652a84a9304a5b80628",
+    "run_candidate.ps1": "caf1bee721473095fa91d09f4099a25dc914ece8a91876200f45a0a9b7f8d10d",
+    "write_manifest.py": "0f01cd09021818589f9da98f96345ffd1e0b2282d219fa282442428994484f4c"
+  },
+  "candidate_sha256": "2567a044879496b974d26b3d9c10596a2addf6fa7f4eb938ddc708678ab17cad",
+  "test_sha256": "3a2339144dcd63889d9a4fe2ab311be0572523d056f30aceeb6dd148468d371f",
+  "fixture_generator_sha256": "6fc6ad4f89e1465ddaea6b4c74daa95998eab360a2205e56078632b3622ca745",
+  "readme_sha256": "b806228aaa6d0c1e7e62d75f42ab414fcca5a72c191090b6a762a7d732cfac4b",
+  "auditor_sha256": "8e28ecd3e3c5fc1255199fa9934ee3cff4e91abf901db652a84a9304a5b80628",
+  "runner_sha256": "caf1bee721473095fa91d09f4099a25dc914ece8a91876200f45a0a9b7f8d10d",
+  "manifest_generator_sha256": "0f01cd09021818589f9da98f96345ffd1e0b2282d219fa282442428994484f4c",
+  "environment_preflight_sha256": {
+    "environment/wslc-preflight.command.txt": "566407ae2f57aab3fc7b66b3438327812a7a834e81c539d47c1c71beaa45376e",
+    "environment/wslc-preflight.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment/wslc-preflight.stderr.txt": "e6b75ad25032620c854d8dc483bee6232409e185110291981b4cffb0b90b2090",
+    "environment/wslc-preflight.exit": "ce8bafb38615aeb5d44ebbabe78ec14ac35a5de87bdc5ad5ea82a72656024ce4",
+    "environment/wslc-container-inventory.txt": "41c2049d2b3c043110772181e76d772dcf06c92b922aeaef85add573b3fa7a43",
+    "environment/wslc-image.txt": "9a29032b45aa4f3e32df4b9391d69af78c5ccedc19ab46fd6d6afed2b58e92b5"
+  },
+  "runtime_selection_sha256": "a30ab161126372f9eb68dd6ec37b594febf53553d732740975c9bc77aec56740",
+  "construction_evidence_sha256": {
+    "results/construction-tests.txt": "a16820761120add300cbb733510e2a88ef76de98de98300bf5601ebbf183ca6e",
+    "results/construction-tests.exit": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "results/construction-pycompile.txt": "bce5c391ef8c6939f217f17f15f8504de053572365e9daaad51beac9cdbcaa0d",
+    "results/construction-pycompile.txt.exit": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "results/runner-parse.txt": "e468dd707c804caabd1c6e0c43cc4b15578574683586a153637252f085472075",
+    "results/runner-parse.exit": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "results/construction-invocation-note.txt": "682ce43fa955cca579127d7124a4259b66fc2d00b93b3942b7c9867bdc99f156",
+    "results/runner-process-harness.txt": "0fd0b928c5ada0fcc516482e2eec0540e239333ac0b221601d3b8a2b08da0413",
+    "results/runner-process-harness.exit": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+  },
+  "decision_labels": [
+    "BOTH_IN_ONE_FOLLOWUP_ORDERED",
+    "BOTH_ACROSS_FOLLOWUPS_ORDERED",
+    "LATEST_ONLY",
+    "FIRST_ONLY",
+    "BOTH_REVERSED",
+    "BOTH_UNORDERED",
+    "NEITHER_OBSERVED",
+    "RPC_REJECTED",
+    "PARTIAL_OR_UNVERIFIABLE",
+    "UNVERIFIABLE"
+  ],
+  "isolation": "temporary CODEX_HOME; loopback-only HTTP mock; API-key/base-url/organization/project and proxy variables removed from child; read-only sandbox; no model/game/gui/input service",
+  "timeouts_seconds": {
+    "initial_request_wait": 12.0,
+    "rpc_reply_wait": 12.0,
+    "pending_window": 2.0,
+    "protocol_completion": 20.0,
+    "mock_gate": 20.0,
+    "cleanup_wait": 3.0
+  },
+  "stop_conditions": [
+    "Any candidate process invocation consumes the sole run, regardless of exit status or output completeness.",
+    "Preserve PASS, FAIL, HOLD, STOP, or infrastructure failure and never retry this candidate.",
+    "Stop before invocation if any frozen path, executable, base ancestry, clean tracked checkout, or identity check fails."
+  ],
+  "restart_rule": "No retry or restart under A04. A new allocation requires an independently justified successor question and a new prospective freeze.",
+  "output_paths": [
+    "results/candidate.started.json",
+    "results/candidate.command.json",
+    "results/candidate.stdout.json",
+    "results/candidate.stderr.txt",
+    "results/candidate.exit"
+  ]
+}
