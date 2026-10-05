@@ -1,0 +1,35 @@
+{
+  "schema": "v39-repeated-same-key-identity-freeze-v1",
+  "run_id": "V39-REPEAT-SAME-KEY-A01-20261005",
+  "publication_base_commit": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "experiment_base_commit": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "environment": {
+    "os": "Windows",
+    "python": "3.11.9",
+    "docker": false,
+    "fake_x_display": true,
+    "os_input": false,
+    "gui": false,
+    "model_calls": 0,
+    "vizdoom": false
+  },
+  "H": "On the current-main V39 opt-in V15 release path, repeated episodes of one key can be joined one-to-one to release receipts without inter-UP keymap queries; overlapping duplicate downs must not let one release be attributed to two admissions.",
+  "T": "Run the exact V39 selector, V15 V1 release-batch backend, V4/V3 transition owners and live_control V12 owner over the current-main fake-X harness. Case 1: F8 DOWN/UP/DOWN/UP sequentially. Case 2: F8 DOWN/DOWN/UP overlapping as a coalescing control. Persist partial raw traces after each fake operation.",
+  "D": "PASS_REPEAT_JOIN only if the sequential case has two unique F8 admissions, two distinct explicit KeyRelease receipts and two release rows, with monotonic timestamp interval pairing, one receipt per row, no query_keymap between explicit ups, and empty final fake/backend state. The overlapping control must be labeled HOLD_NON_BIJECTIVE if two admissions do not have two distinct explicit key-up receipts; it must never pair one release to both admissions. Any missing identity, unexpected ordering or final held state fails closed.",
+  "C": "Fake interpreter and fake Xlib only. The X server's Boolean key-state/coalescing behavior, clock scheduling, app event delivery and cleanup differ from real operation. Timestamp order is descriptive harness order only.",
+  "U": "No physical occupancy, X server, OS input, application effect, useful feedback, live latency, threat response, recovery efficacy, MAP01 result or human-tempo result is established. No live allocation is implied.",
+  "candidate_blob": "79564b060370a5d2345b8961366260c71b8bbfa7",
+  "selected_sources": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "f249ef036a9ec56740961af4aee375a28d9e133f",
+    "research/doom/doom_typed_release_backend_v1.py": "080fa353bc14afc8bc620e80abc38e6cf64d1259",
+    "research/doom/doom_typed_release_backend_v2.py": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "research/doom/map01_overlap_controller_v39.py": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+    "research/doom/session_map01_v15.py": "f71ca01426a703e4160c9403395fed03416c772e",
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_owner_v12.py": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+    "research/live_control/input_transition_owner_v3.py": "7d990a654804ba3ed7d406baee40c31b6cb27375",
+    "research/live_control/input_transition_owner_v4.py": "02c23c34e9382650a46e80d75fe49d5409153b75",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "f2bbae7e7ca436d28c42b18154a0bcfc19e809a0",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "9c5aa19c76199eff9a3defc2e87912a226d92353"
+  }
+}
