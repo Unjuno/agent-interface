@@ -1,0 +1,111 @@
+{
+  "schema": "UNJUNO-7865-HCC-FREEZE-v1",
+  "allocation_id": "UNJUNO-7865-HCC-A01-20261005",
+  "issue": 7865,
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/7865-history-conditioned-compensation-a01-20261005",
+  "base_main_sha": "6f34c5c0c5bc3116d8e7c25f29aa1b92cc4a01b1",
+  "additive_path": "research/analysis/history_conditioned_compensation_7865_a01_20261005/",
+  "frozen_at_utc": "2026-10-05T01:17:41.3791709Z",
+  "formal_invocations_at_freeze": {
+    "candidate": 0,
+    "retries": 0,
+    "independent_auditor": 0
+  },
+  "input_sha256": {
+    "fixture.json": "cb90b3d444fa985bafac315b2ef0ce7bd68f39dbf60081e9a2bfa1a23b2fee35",
+    "candidate.py": "83808982045dcfea07d0981c66e2f9b7ba1b956dc87c48fab829ac5474d2524d",
+    "audit.py": "9760af8aaea2b13639b171dac662d0337fb6882cac5b0a859513f91cf8a1897d",
+    "runner.py": "10902c0c9c9071884b849dcdfca31703c0cd8b900e37fede892675fb71beddad"
+  },
+  "runtime": {
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "memory_enforcement": "UNVERIFIED: WSLc kernel warning says swap-limit capabilities unsupported or cgroup not mounted.",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "wslc_session_manager": "3.0.1",
+    "kernel": "6.18.40.1-1",
+    "architecture": "linux/amd64",
+    "memory_requested": "512M",
+    "python": "3.12.14",
+    "host": "Windows 11",
+    "network": "none",
+    "wsl": "3.0.1.0",
+    "active_containers_before_freeze": 0,
+    "cpus_requested": 1
+  },
+  "invocations": [
+    {
+      "ordinal": 1,
+      "host_command": [
+        "python",
+        "runner.py",
+        "candidate",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package\\formal"
+      ],
+      "role": "candidate",
+      "container_command": [
+        "wslc.exe",
+        "run",
+        "--rm",
+        "--pull",
+        "never",
+        "--network",
+        "none",
+        "--cpus",
+        "1",
+        "--memory",
+        "512M",
+        "--volume",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package:/src:ro",
+        "--volume",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package\\formal:/out:ro",
+        "--workdir",
+        "/src",
+        "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+        "python",
+        "-B",
+        "candidate.py",
+        "/src/fixture.json"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "host_command": [
+        "python",
+        "runner.py",
+        "audit",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package\\formal"
+      ],
+      "role": "independent_auditor",
+      "container_command": [
+        "wslc.exe",
+        "run",
+        "--rm",
+        "--pull",
+        "never",
+        "--network",
+        "none",
+        "--cpus",
+        "1",
+        "--memory",
+        "512M",
+        "--volume",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package:/src:ro",
+        "--volume",
+        "C:\\Users\\junny\\AppData\\Local\\Temp\\ai7865hcc_a01_20261005_4e08\\package\\formal:/out:ro",
+        "--workdir",
+        "/src",
+        "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+        "python",
+        "-B",
+        "audit.py",
+        "/src/fixture.json",
+        "/out/candidate.raw.json"
+      ]
+    }
+  ],
+  "hypothesis": "On this finite artifact fixture, field-scoped compare-and-compensate will preserve a disjoint external field update and restore the agent-owned field, while blind snapshot inverse loses that update and a validated whole-object generation guard refuses compensation; same-field, ABA, replaced-identity, incomplete/uncertain history, false footprint, and version-integrity mutations must be refused or UNKNOWN.",
+  "scope": "Synthetic method result only; no live GUI, app version semantics, complete history, field independence, effect truth, task success, or deployment claim."
+}
