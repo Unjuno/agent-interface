@@ -1,0 +1,11 @@
+{
+  "schema": "win32-native-focus-drift-source-inventory-v1",
+  "purpose": "Supplemental provenance for exact parent modules materialized by prepare_baseline.py",
+  "parent_commit": "ef190e1037ff2f9df0cb2e941578a79a9fe0019b",
+  "parent_source_blobs": {
+    "runtime/backends/win32_v1/backend.py": "95d975f3d085ecc22999aca2e8871de8dc6da1d2",
+    "runtime/backends/win32_v1/session.py": "b5a184aeff13b8c63bfd0549db2d8667d43e256f",
+    "runtime/core_v1/contract.py": "231ab75625e7d88bbf440b90d7e15cb64cd13f44"
+  },
+  "qualification": "This inventory was added after the baseline/candidate executions to make the already-declared parent commit's materialized source closure easier to audit. It did not change candidate source, test input, H/T/D/C/U, command, or decision gate."
+}

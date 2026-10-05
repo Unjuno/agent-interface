@@ -1,0 +1,11 @@
+{
+  "schema": "win32-native-focus-drift-stop-v1",
+  "allocation": "win32-native-focus-drift-a02-20261005-01",
+  "status": "STOP_BASELINE_SOURCE_PREPARATION",
+  "candidate_started": false,
+  "baseline_started": false,
+  "reason": "The parent source tree uses namespace packages and has no runtime/__init__.py; the frozen baseline preparer incorrectly required that path.",
+  "first_observed": "2026-10-05T01:42Z",
+  "no_retry": true,
+  "next": "Preserve A02 STOP; if continuing, use a new allocation with a corrected source materializer that includes only files present at the frozen parent."
+}

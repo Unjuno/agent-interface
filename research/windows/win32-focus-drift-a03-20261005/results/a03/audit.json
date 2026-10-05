@@ -1,0 +1,41 @@
+{
+  "allocation": {
+    "baseline_command": "python -m unittest runtime.backends.win32_v1.test_focus_drift.NativeForegroundFenceTests -v",
+    "baseline_raw": "results/a03/baseline.raw.json",
+    "baseline_runs": 1,
+    "candidate_command": "python -m unittest runtime.backends.win32_v1.test_focus_drift.NativeForegroundFenceTests -v",
+    "candidate_raw": "results/a03/candidate.raw.json",
+    "candidate_runs": 1,
+    "predecessor_stop": "../win32-focus-drift-a02-20261005/results/a02/STOP.json",
+    "retries": 0
+  },
+  "application_effect_observed": false,
+  "baseline_sendinput_calls": [
+    "called"
+  ],
+  "candidate_sendinput_calls": [],
+  "errors": [],
+  "os_input_emitted": false,
+  "raw_sha256": {
+    "baseline": "9c84067fa03f3892837a096bb821c9fe76887a884c1e3a976d0d7542c2ed1ffa",
+    "candidate": "8f465fd36b8733e53bc784ccc22c80e38007a4ba62d6fcb208a58b3bdd059c6d"
+  },
+  "residual": "No proof of SendInput delivery, physical state, natural focus churn, task effect, or atomicity between foreground sampling and insertion.",
+  "schema": "win32-native-focus-drift-result-v1",
+  "sha256": {
+    "FREEZE.json": "71281f162bb33c95bd853669d8a3bbac9ee22af4d7d27bfe54a50c5ef43a5f31",
+    "POSTRUN_CANDIDATE_GIT_BLOBS.json": "b74e04afaee5a60c90000a31bbc6d32726b9a52475cbfc9ac8e2eb261746a9a8",
+    "POSTRUN_SOURCE_INVENTORY.json": "73485f55d7618e88688be85426a9e92ccb134eaba4c525bf2e5f938bc266c4d1",
+    "README.md": "0e91f28e84e4812b9ae7fd309d406c7f219cd066190f676f5ddc6c093008a55f",
+    "RESULT.md": "354a8111cb662953dea6119bfbc97bbc056e95e752c5b19678afc23afdd23d01",
+    "audit.py": "5ece97961b874301a8ad72b5b1a6dcdd6f65c782b163a3a709d2dc4875f441b9",
+    "prepare_baseline.py": "74e27ae140ac1b44ca0073fbe369246b8d69bac0f4b0e7fe9068c0a665cf172f",
+    "results/a03/baseline.exit.txt": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "results/a03/baseline.raw.json": "9c84067fa03f3892837a096bb821c9fe76887a884c1e3a976d0d7542c2ed1ffa",
+    "results/a03/baseline.stdout.txt": "d7fe848b2d4d777b89ab217e04dc1630996f22408a5e1bcab4854433e0aa328d",
+    "results/a03/candidate.exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "results/a03/candidate.raw.json": "8f465fd36b8733e53bc784ccc22c80e38007a4ba62d6fcb208a58b3bdd059c6d",
+    "results/a03/candidate.stdout.txt": "43bb61cbabc85bb2d0b85da2d049689b03d5765f7edf9eae1f4fa8154d884d4d"
+  },
+  "status": "PASS_NATIVE_FOREGROUND_REFUSAL"
+}

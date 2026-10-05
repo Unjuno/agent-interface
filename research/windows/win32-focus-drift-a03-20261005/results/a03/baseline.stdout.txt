@@ -1,0 +1,14 @@
+test_native_focus_change_after_focus_refuses_before_sendinput (runtime.backends.win32_v1.test_focus_drift.NativeForegroundFenceTests.test_native_focus_change_after_focus_refuses_before_sendinput) ... FAIL
+
+======================================================================
+FAIL: test_native_focus_change_after_focus_refuses_before_sendinput (runtime.backends.win32_v1.test_focus_drift.NativeForegroundFenceTests.test_native_focus_change_after_focus_refuses_before_sendinput)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-4\work\pr7849-focus-guard\research\windows\win32-focus-drift-a03-20261005\results\a03\baseline-source\runtime\backends\win32_v1\test_focus_drift.py", line 293, in test_native_focus_change_after_focus_refuses_before_sendinput
+    self.assertIn("foreground focus changed", reply["detail"])
+AssertionError: 'foreground focus changed' not found in 'SendInput failed error=0'
+
+----------------------------------------------------------------------
+Ran 1 test in 1.080s
+
+FAILED (failures=1)

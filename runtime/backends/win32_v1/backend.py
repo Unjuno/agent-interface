@@ -10,6 +10,7 @@ import hashlib
 import sys
 import time
 import uuid
+from contextvars import ContextVar
 from ctypes import wintypes
 from typing import Any
 
@@ -18,6 +19,9 @@ from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate
 
 class Win32BackendError(RuntimeError):
     pass
+
+
+_cleanup_context = ContextVar("win32_backend_cleanup_context", default=False)
 
 
 SW_RESTORE = 9
@@ -269,7 +273,21 @@ class Win32Backend:
             return g["x"] + x, g["y"] + y
         raise Win32BackendError(f"unsupported frame {frame}")
 
+    def _require_foreground(self, target: str) -> None:
+        hwnd = self._target(target)
+        try:
+            foreground = int(self.user32.GetForegroundWindow() or 0)
+        except Exception as error:
+            raise Win32BackendError("foreground focus could not be verified") from error
+        if foreground != hwnd:
+            raise Win32BackendError(
+                f"foreground focus changed: expected {hwnd}, got {foreground}"
+            )
+
     def _send(self, item: INPUT) -> None:
+        target = getattr(self, "_current_target", None)
+        if target is not None and not _cleanup_context.get():
+            self._require_foreground(target)
         array = (INPUT * 1)(item)
         sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
         if sent != 1:
@@ -430,6 +448,7 @@ class Win32Backend:
 
     def pointer_move(self, target: str, frame: str, x: int, y: int) -> None:
         rx, ry = self._root_point(target, frame, x, y)
+        self._require_foreground(target)
         if not self.user32.SetCursorPos(rx, ry):
             raise Win32BackendError("SetCursorPos failed")
         self.emissions += 1
@@ -557,6 +576,13 @@ class Win32Backend:
                 raise Win32BackendError(f"unsupported button {op['button']}")
 
     def release_all(self) -> dict[str, Any]:
+        token = _cleanup_context.set(True)
+        try:
+            return self._release_all()
+        finally:
+            _cleanup_context.reset(token)
+
+    def _release_all(self) -> dict[str, Any]:
         # Compensate unmatched Unicode delivery once; failure retains the unit.
         # This acknowledges UP insertion, not physical or application state.
         unicode_error = None
@@ -651,6 +677,7 @@ class Win32Backend:
         self.last_execution_release = None
         self._current_program_id = program.get("program_id")
         self._current_admitted_ns = admitted_ns
+        self._current_target: str | None = None
         started = time.monotonic_ns()
         try:
             for operation_index, op in enumerate(program["ops"]):
@@ -659,6 +686,7 @@ class Win32Backend:
                 if kind == "focus":
                     current_target = op["target"]
                     self.focus(current_target)
+                    self._current_target = current_target
                 elif kind == "key_chord":
                     self.key_chord(op["keys"])
                 elif kind == "key_state":
@@ -709,6 +737,7 @@ class Win32Backend:
                 self._current_program_id = None
                 self._current_operation_index = None
                 self._current_admitted_ns = None
+                self._current_target = None
             raise
         ended_ns = time.monotonic_ns()
         self.last_input_transitions = list(self._current_input_transitions)
@@ -716,6 +745,7 @@ class Win32Backend:
         self._current_program_id = None
         self._current_operation_index = None
         self._current_admitted_ns = None
+        self._current_target = None
         return {"started_ns": started, "ended_ns": ended_ns,
                 "emissions": self.emissions, "observations": observations,
                 "releases": releases,

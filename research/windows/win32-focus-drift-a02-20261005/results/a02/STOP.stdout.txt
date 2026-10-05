@@ -1,0 +1,11 @@
+Transcribed diagnostic excerpt from the tool output; the full byte-identical terminal stream was not saved at the time.
+False
+fatal: path 'runtime/__init__.py' does not exist in 'ef190e1037ff2f9df0cb2e941578a79a9fe0019b'
+Traceback (most recent call last):
+  File "research/windows/win32-focus-drift-a02-20261005/prepare_baseline.py", line 52, in <module>
+    raise SystemExit(main())
+  File "research/windows/win32-focus-drift-a02-20261005/prepare_baseline.py", line 30, in main
+    result = subprocess.run(
+  File ".../subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', 'ef190e1037ff2f9df0cb2e941578a79a9fe0019b:runtime/__init__.py']' returned non-zero exit status 128.
