@@ -1,0 +1,24 @@
+{
+  "schema": "application-qualified-draft-7409-freeze-v1",
+  "allocation": "APPLICATION-QUALIFIED-DRAFT-7409-T0-A01-20261005-01",
+  "frozen_at_utc": "2026-10-05T09:27:07Z",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/7409",
+  "base_main": "19a6b723e58ccfd2b8265e88659589ef9223fcc9",
+  "branch": "research/application-qualified-draft-7409-t0-a01-20261005",
+  "method": "deterministic six-case document-app fixture; no human, model, GUI, or external effect",
+  "host": "macOS arm64; OrbStack Docker 29.4.0",
+  "runtime_image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "runtime_platform": "linux/arm64",
+  "runtime_image_config_id": "sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "candidate_input_allowlist": ["cases.json"],
+  "auditor_inputs": ["cases.json", "candidate.raw.json"],
+  "formal_invocation_budget": {"candidate": 1, "auditor_after_candidate_exit_0": 1, "retries": 0},
+  "source_sha256": {
+    "PROTOCOL.md": "9f381e5feebf4f87d6d8f4ad71f8dd8e585fbd18836dca61459d2d63926d8290",
+    "auditor.py": "723f20940c8db00b8d37a4112b1bed896291afbce8d0dd5bd93896ef0b8e7637",
+    "candidate.py": "6667f1142de78d706bbf7b0243d39103e1e312c484d27d03c11a8063691b9511",
+    "cases.json": "1ca607a638a2999de24fd85d8f73c6ea6da20ceffd799b8f312c5bac78578cd8",
+    "preflight_probe.py": "bc6bf3ee31199fcb4254220f0fdb3b1b29bfd8447c9615a9ec5c62c588f2e372"
+  },
+  "decision_gate": "METHOD_PASS_SCOPED only if all six rows reconstruct, disjoint edits preserve both writers, same-field/dependency conflicts hold, changed revisions are checked, shared-backend/external-effect cases refuse draft mutation, no agent draft effect reaches live before explicit promotion, and all six frozen mutations are rejected"
+}
