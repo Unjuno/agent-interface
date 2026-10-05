@@ -862,7 +862,7 @@ def main():
                            if row["result"]=="no_visible_effect"]
             prior_soft_event_summary=latest_soft_event_summary(decisions)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
-            def submit_cover(identifier, allow_rejection=False):
+            def submit_cover(identifier):
                 nonlocal clock_ns
                 clock_ns=time.perf_counter_ns()
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
@@ -873,20 +873,14 @@ def main():
                               observation_monitor=validity_monitor)
                 if accepted["event"] == "policy_invalidation":
                     return accepted
-                if accepted["event"] == "rejected" and allow_rejection:
-                    return accepted
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 cover_ids.append(identifier);return accepted
             failure_cleanup.set_stage("cover_program_admission")
-            initial_cover_admission = submit_cover(cover, allow_rejection=True)
-            if initial_cover_admission["event"] in ("policy_invalidation", "rejected"):
-                invalidation = initial_cover_admission.get("invalidation")
-                if initial_cover_admission["event"] == "rejected":
-                    admission_resolution = {"status": "rejected",
-                                            "response": initial_cover_admission}
-                else:
-                    admission_resolution = resolve_invalidated_cover_submission(
-                        wait, cover)
+            initial_cover_admission = submit_cover(cover)
+            if initial_cover_admission["event"] == "policy_invalidation":
+                invalidation = initial_cover_admission["invalidation"]
+                admission_resolution = resolve_invalidated_cover_submission(
+                    wait, cover)
                 cancellation = None
                 if admission_resolution["status"] == "accepted":
                     cover_ids.append(cover)
@@ -930,9 +924,7 @@ def main():
                     "cover_admission_cancellation": cancellation,
                     "cover_program_admitted": admission_resolution["status"] == "accepted",
                     "model_action_discarded": False,
-                    "discard_reason": (
-                        "planner_not_started_cover_invalidated" if invalidation else
-                        "planner_not_started_cover_rejected"),
+                    "discard_reason": "planner_not_started_cover_invalidated",
                     "cover_terminal_before_plan": cancellation is not None,
                     "plan_terminal": "not_started"})
                 continue

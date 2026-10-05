@@ -1,0 +1,21 @@
+test_soft_observation_stale_submit_is_recorded_without_aborting_controller (research.doom.test_overlap_controller_v39_wait.WaitTests.test_soft_observation_stale_submit_is_recorded_without_aborting_controller) ... ERROR
+
+======================================================================
+ERROR: test_soft_observation_stale_submit_is_recorded_without_aborting_controller (research.doom.test_overlap_controller_v39_wait.WaitTests.test_soft_observation_stale_submit_is_recorded_without_aborting_controller)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\work\v39-reject-cancel-recovery-a01\research\doom\test_overlap_controller_v39_wait.py", line 363, in test_soft_observation_stale_submit_is_recorded_without_aborting_controller
+    planner_started, decisions, cover_ids, cover_terminals = extract_initial_cover_gate()(
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "research\doom\v39_soft_observation_submit_rejection_a01_20261005\baseline_controller.py", line 879, in factory
+    initial_cover_admission = submit_cover(cover)
+                              ^^^^^^^^^^^^^^^^^^^
+  File "research\doom\v39_soft_observation_submit_rejection_a01_20261005\baseline_controller.py", line 876, in submit_cover
+    if accepted["event"]!="accepted":raise RuntimeError(accepted)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: {'event': 'rejected', 'reason': 'latest observation sequence required before input'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.023s
+
+FAILED (errors=1)
