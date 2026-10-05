@@ -15,6 +15,8 @@ class FakeDisplay:
         self.buttons_down = set()
         self.release_attempts = 0
         self.button_release_attempts = 0
+        self.drop_next_key_release = True
+        self.drop_next_button_release = True
         self.root = FakeRoot(self)
 
     def get_input_focus(self):
@@ -121,13 +123,17 @@ class ExplicitUpCleanupTests(unittest.TestCase):
                 display_instance.down.add(code)
             elif event == xlib.X.KeyRelease:
                 display_instance.release_attempts += 1
-                if display_instance.release_attempts > 1:
+                if display_instance.drop_next_key_release:
+                    display_instance.drop_next_key_release = False
+                else:
                     display_instance.down.discard(code)
             elif event == xlib.X.ButtonPress:
                 display_instance.buttons_down.add(code)
             elif event == xlib.X.ButtonRelease:
                 display_instance.button_release_attempts += 1
-                if display_instance.button_release_attempts > 1:
+                if display_instance.drop_next_button_release:
+                    display_instance.drop_next_button_release = False
+                else:
                     display_instance.buttons_down.discard(code)
 
         xtest.fake_input = fake_input
@@ -172,6 +178,22 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(pointer_result["buttons_down"], [])
             self.assertEqual(display_instance.buttons_down, set())
             self.assertEqual(display_instance.button_release_attempts, 2)
+
+            successful_lease = Lease()
+            owner.call("down", successful_lease, "A")
+            owner.call("up", successful_lease, "A")
+            self.assertEqual(display_instance.down, set())
+            owner.call("release", successful_lease)
+            self.assertEqual(display_instance.release_attempts, 3)
+
+            successful_pointer_lease = Lease()
+            successful_pointer_lease.expected_surface = 52
+            successful_pointer_lease.expected_geometry = [0, 0, 100, 100]
+            owner.call("button_down", successful_pointer_lease, 1)
+            owner.call("button_up", successful_pointer_lease, 1)
+            self.assertEqual(display_instance.buttons_down, set())
+            owner.call("release", successful_pointer_lease)
+            self.assertEqual(display_instance.button_release_attempts, 3)
         finally:
             if owner is not None:
                 owner.close()

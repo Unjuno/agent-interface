@@ -176,12 +176,28 @@ class InputOwner:
             nonlocal active,revision
             revision += 1
             # Explicit XSync completion does not prove that the server applied
-            # each release. Retry every key and button touched by this owner
-            # before final state checks, including inputs removed from their
-            # held maps after explicit up requests.
-            for code in list(touched):
+            # each release. Retry inputs still observed down, including touched
+            # inputs removed from their held maps after explicit up requests.
+            # Keep the held maps as a fallback if a pre-cleanup sample fails.
+            try:
+                before_bitmap = d.query_keymap()
+            except Exception:
+                retry_keys = set(held) | set(touched)
+            else:
+                retry_keys = {
+                    code for code in touched
+                    if before_bitmap[code // 8] & (1 << (code % 8))}
+            try:
+                before_mask = d.screen().root.query_pointer().mask
+            except Exception:
+                retry_buttons = set(buttons) | set(touched_buttons)
+            else:
+                retry_buttons = {
+                    button for button in touched_buttons
+                    if before_mask & (X.Button1Mask << (button - 1))}
+            for code in list(retry_keys):
                 xtest.fake_input(d, X.KeyRelease, code)
-            for button in list(touched_buttons):
+            for button in list(retry_buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
             mask = d.screen().root.query_pointer().mask
