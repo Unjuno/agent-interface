@@ -9,9 +9,9 @@ ROOT = Path(__file__).resolve().parent
 EXPECTED = {
     "planner-adapter": 12,
     "app-server-client": 4,
-    "v39-paired-signal": 20,
+    "v39-paired-signal": 21,
     "v39-controller": 5,
-    "v39-wait": 9,
+    "v39-wait": 10,
     "v39-pair-dispatch": 1,
 }
 
@@ -19,6 +19,14 @@ EXPECTED = {
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise SystemExit(f"FAIL: {message}")
+
+
+def read_console_log(path: Path) -> str:
+    """Decode native PowerShell redirection (UTF-16LE) or UTF-8 test logs."""
+    raw = path.read_bytes()
+    if raw.startswith((b"\xff\xfe", b"\xfe\xff")):
+        return raw.decode("utf-16")
+    return raw.decode("utf-8-sig")
 
 
 def verify_hashes() -> None:
@@ -41,11 +49,12 @@ def audit() -> dict:
         exit_path = ROOT / "results" / f"{name}.txt.exit"
         require(exit_path.read_text(encoding="ascii").strip() == "0",
                 f"{name}: nonzero process exit")
-        match = re.search(r"Ran (\d+) tests? in ", log.read_text(encoding="utf-8"))
+        content = read_console_log(log)
+        match = re.search(r"Ran (\d+) tests? in ", content)
         require(match is not None, f"{name}: unittest count missing")
         count = int(match.group(1))
         require(count == expected_count, f"{name}: expected {expected_count}, saw {count}")
-        require("OK" in log.read_text(encoding="utf-8").splitlines()[-1],
+        require("OK" in content.splitlines()[-1],
                 f"{name}: unittest did not report OK")
         counts[name] = count
         total += count

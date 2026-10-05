@@ -1,4 +1,6 @@
-$ErrorActionPreference = 'Stop'
+# unittest writes progress to stderr; PowerShell's Stop preference can turn
+# successful native stderr output into a terminating error before exit checks.
+$ErrorActionPreference = 'Continue'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path
 $results = Join-Path $PSScriptRoot 'results'
 New-Item -ItemType Directory -Path $results -Force | Out-Null

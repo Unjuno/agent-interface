@@ -10,6 +10,8 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 from pathlib import Path
+from io import BytesIO
+from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
@@ -90,7 +92,9 @@ def _controller_wait_with_rows(rows, handle=None, planner=None):
 class PairedCoverGuardTests(unittest.TestCase):
 
     def test_live_wait_forwards_exact_soft_frame_once_to_planner(self):
-        frame = b"\x89PNG\r\n\x1a\nfixture"
+        buffer = BytesIO()
+        Image.new("RGB", (2, 2), (10, 20, 30)).save(buffer, format="PNG")
+        frame = buffer.getvalue()
         typed = {"event": "typed_observation", "sequence": 10}
         terminal = {"event": "terminal", "id": "cover-1"}
         class Planner:
@@ -117,6 +121,8 @@ class PairedCoverGuardTests(unittest.TestCase):
             path.write_bytes(frame)
             observation = {"event": "observation", "sequence": 10,
                 "capture_ns": 1_000_000_000, "pointer_binding": {"focus": 7},
+                "exact": True,
+                "frame_rgb_sha256": controller.frame_rgb_sha256(Image.open(BytesIO(frame))),
                 "image": str(path)}
             wait = _controller_wait_with_rows(
                 [typed, observation, dict(observation), terminal], handle, planner)
@@ -129,7 +135,64 @@ class PairedCoverGuardTests(unittest.TestCase):
         self.assertEqual(wait.active_observation_delivery()["iteration"], 0)
         self.assertEqual(wait.active_observation_delivery()["frame_sha256"],
                          hashlib.sha256(frame).hexdigest())
+        self.assertEqual(wait.active_observation_delivery()["frame_rgb_sha256"],
+                         observation["frame_rgb_sha256"])
         self.assertFalse(wait.active_observation_delivery()["input_authority"])
+
+    def test_same_sequence_frame_replacement_after_monitor_acceptance_is_refused(self):
+        frames = []
+        for color in ((10, 20, 30), (90, 80, 70)):
+            buffer = BytesIO()
+            Image.new("RGB", (2, 2), color).save(buffer, format="PNG")
+            frames.append(buffer.getvalue())
+        typed = {"event": "typed_observation", "sequence": 10}
+        terminal = {"event": "terminal", "id": "cover-1"}
+
+        class Planner:
+            def __init__(self): self.calls = []
+            def send_external_observation(self, *args): self.calls.append(args)
+
+        class Monitor:
+            event_types = {"typed_observation", "observation"}
+            def __init__(self, path):
+                self.path = path
+                self.accepted = False
+                self.latest_soft_event = {
+                    "sequence": 10,
+                    "signal": {"status": "observed", "signal_id": "health",
+                               "sequence": 10, "capture_ns": 1_000_000_000,
+                               "binding": {"focus": 7}},
+                    "outcome": {"status": "SOFT_CHANGED",
+                                "requires_new_decision": False,
+                                "grants_input_authority": False}}
+            def observe(self, row):
+                if row.get("event") == "observation":
+                    self.accepted = True
+                    self.path.write_bytes(frames[1])
+                return None
+
+        planner = Planner()
+        handle = object()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "current.png"
+            path.write_bytes(frames[0])
+            observation = {"event": "observation", "sequence": 10,
+                "capture_ns": 1_000_000_000, "pointer_binding": {"focus": 7},
+                "exact": True,
+                "frame_rgb_sha256": controller.frame_rgb_sha256(
+                    Image.open(BytesIO(frames[0]))),
+                "image": str(path)}
+            monitor = Monitor(path)
+            wait = _controller_wait_with_rows(
+                [typed, observation, dict(observation), terminal], handle, planner)
+            result = wait(lambda row: row.get("id") == "cover-1",
+                          observation_monitor=monitor)
+        self.assertTrue(monitor.accepted)
+        self.assertEqual(result.get("event"), "policy_invalidation")
+        self.assertEqual(result["invalidation"].get("event"),
+                         "active_observation_delivery_uncertain")
+        self.assertIn("typed RGB digest", result["invalidation"].get("reason", ""))
+        self.assertEqual(planner.calls, [])
 
     def test_only_fire_containing_cover_requires_paired_ammo_guard(self):
         self.assertTrue(controller.cover_requires_ammo([

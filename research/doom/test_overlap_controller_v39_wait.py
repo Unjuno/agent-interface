@@ -2,6 +2,7 @@
 import ast
 import base64
 import hashlib
+from io import BytesIO
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,7 @@ import queue
 import tempfile
 import types
 import unittest
+from PIL import Image
 
 SOURCE = Path(os.environ.get("V39_WAIT_SOURCE", Path(__file__).with_name("map01_overlap_controller_v39.py")))
 EMPTY = object()
@@ -78,12 +80,21 @@ class WaitTests(unittest.TestCase):
         if {node.name for node in helpers} != {"_typed_json_equal", "deliver_active_soft_observation"}:
             self.fail("pinned current V39 observation helpers are missing")
         module = ast.fix_missing_locations(ast.Module(body=helpers, type_ignores=[]))
-        scope = {"Path": Path, "base64": base64, "hashlib": hashlib, "json": json}
+        def frame_rgb_sha256(frame):
+            rgb = frame.convert("RGB")
+            return hashlib.sha256(rgb.tobytes()).hexdigest()
+        scope = {"Path": Path, "base64": base64, "hashlib": hashlib,
+                 "json": json, "Image": Image, "BytesIO": BytesIO,
+                 "frame_rgb_sha256": frame_rgb_sha256}
         exec(compile(module, str(SOURCE), "exec"), scope)
-        frame = b"\x89PNG\r\n\x1a\nfixture"
+        buffer = BytesIO()
+        Image.new("RGB", (2, 2), (10, 20, 30)).save(buffer, format="PNG")
+        frame = buffer.getvalue()
         observation = {"event": "observation", "sequence": 10,
                        "capture_ns": 1_000_000_000,
-                       "pointer_binding": {"focus": 7}, "image": None}
+                       "pointer_binding": {"focus": 7}, "exact": True,
+                       "frame_rgb_sha256": frame_rgb_sha256(Image.open(BytesIO(frame))),
+                       "image": None}
         event = {"sequence": 10, "signal": {"status": "observed",
                  "signal_id": "health", "value": 80, "sequence": 10,
                  "capture_ns": 1_000_000_000, "binding": {"focus": 7}},
@@ -112,10 +123,52 @@ class WaitTests(unittest.TestCase):
         self.assertEqual(planner.calls[0][3],
                          "data:image/png;base64," + base64.b64encode(frame).decode("ascii"))
         self.assertEqual(receipt["frame_sha256"], hashlib.sha256(frame).hexdigest())
+        self.assertEqual(receipt["frame_rgb_sha256"], observation["frame_rgb_sha256"])
         self.assertFalse(receipt["input_authority"])
         self.assertIsNone(scope["deliver_active_soft_observation"](
             planner, handle, observation, {**event, "sequence": 11}))
         self.assertEqual(len(planner.calls), 1)
+
+    def test_same_sequence_png_replacement_after_monitor_match_is_refused(self):
+        tree = ast.parse(SOURCE.read_bytes())
+        helpers = [node for node in tree.body
+                   if isinstance(node, ast.FunctionDef) and
+                   node.name in {"_typed_json_equal", "deliver_active_soft_observation"}]
+        module = ast.fix_missing_locations(ast.Module(body=helpers, type_ignores=[]))
+        def frame_rgb_sha256(frame):
+            return hashlib.sha256(frame.convert("RGB").tobytes()).hexdigest()
+        scope = {"Path": Path, "base64": base64, "hashlib": hashlib,
+                 "json": json, "Image": Image, "BytesIO": BytesIO,
+                 "frame_rgb_sha256": frame_rgb_sha256}
+        exec(compile(module, str(SOURCE), "exec"), scope)
+        images = []
+        for color in ((10, 20, 30), (90, 80, 70)):
+            buffer = BytesIO()
+            Image.new("RGB", (2, 2), color).save(buffer, format="PNG")
+            images.append(buffer.getvalue())
+        observation = {"event": "observation", "sequence": 10,
+                       "capture_ns": 1_000_000_000,
+                       "pointer_binding": {"focus": 7}, "exact": True,
+                       "frame_rgb_sha256": frame_rgb_sha256(Image.open(BytesIO(images[0])))}
+        event = {"sequence": 10,
+                 "signal": {"status": "observed", "signal_id": "health",
+                            "sequence": 10, "capture_ns": 1_000_000_000,
+                            "binding": {"focus": 7}},
+                 "outcome": {"status": "SOFT_CHANGED",
+                             "requires_new_decision": False,
+                             "grants_input_authority": False}}
+        class Planner:
+            def __init__(self): self.calls = []
+            def send_external_observation(self, *args): self.calls.append(args)
+        planner = Planner()
+        handle = object()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "current.png"
+            path.write_bytes(images[1])  # Same observation sequence; replaced after the monitor match.
+            observation["image"] = str(path)
+            with self.assertRaisesRegex(ValueError, "typed RGB digest"):
+                scope["deliver_active_soft_observation"](planner, handle, observation, event)
+        self.assertEqual(planner.calls, [])
 
     def test_exited_session_does_not_enter_unbounded_stderr_read(self):
         process = Process(0)

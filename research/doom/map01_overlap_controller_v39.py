@@ -5,6 +5,7 @@ import base64
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
+from io import BytesIO
 import json
 import queue
 import subprocess
@@ -24,7 +25,7 @@ from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
-    reconcile_artifact)
+    frame_rgb_sha256, reconcile_artifact)
 from doom_action_validity_contract_v1 import (
     bindings_equal_exact, build_contract as build_action_contract)
 from observable_signal_guard_v2 import ObservableSignalGuard, ObservableSignalPolicyMonitor
@@ -632,12 +633,25 @@ def deliver_active_soft_observation(planner, handle, observation, event):
     if (observation.get("event") != "observation" or type(sequence) is not int or
             type(event) is not dict or event.get("sequence") != sequence):
         return None
+    if observation.get("exact") is not True:
+        raise ValueError("active observation is not an exact frame artifact")
+    expected_rgb_hash = observation.get("frame_rgb_sha256")
+    if (not isinstance(expected_rgb_hash, str) or len(expected_rgb_hash) != 64 or
+            any(character not in "0123456789abcdef" for character in expected_rgb_hash)):
+        raise ValueError("active observation lacks an exact RGB frame digest")
     image_path = observation.get("image")
     if not isinstance(image_path, str) or not image_path:
         raise ValueError("active observation has no exact frame artifact")
     frame = Path(image_path).read_bytes()
     if not frame.startswith(b"\x89PNG\r\n\x1a\n"):
         raise ValueError("active observation frame is not PNG")
+    try:
+        with Image.open(BytesIO(frame)) as opened:
+            actual_rgb_hash = frame_rgb_sha256(opened)
+    except (OSError, ValueError) as error:
+        raise ValueError("active observation PNG is not a decodable exact frame") from error
+    if actual_rgb_hash != expected_rgb_hash:
+        raise ValueError("active observation PNG does not match its typed RGB digest")
     signal = event.get("signal")
     outcome = event.get("outcome")
     if type(signal) is not dict or type(outcome) is not dict:
@@ -660,6 +674,7 @@ def deliver_active_soft_observation(planner, handle, observation, event):
     image_url = "data:image/png;base64," + base64.b64encode(frame).decode("ascii")
     result = planner.send_external_observation(handle, sequence, text, image_url)
     return {**result, "frame_sha256": hashlib.sha256(frame).hexdigest(),
+            "frame_rgb_sha256": actual_rgb_hash,
             "capture_ns": observation.get("capture_ns"), "input_authority": False}
 
 

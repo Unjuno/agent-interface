@@ -11,7 +11,7 @@ The App Server uses the `turn/start` `toolOutput` form established by the separa
 ## H/T/D/C/U
 
 - **H:** On the current-main V39 dispatch path, a matching soft event is sent once to the same active planner turn with its exact full-observation PNG, while hard invalidation, cancellation, and ordinary action admission retain their existing authority boundaries.
-- **T:** Exercise the production nested `wait()` dispatcher with typed/full paired rows and a duplicate frame row; exercise the planner adapter with a fake App Server; separately verify hard invalidation dispatch, interruption refusal, the local RPC timeout parameter, and existing V39 controller regressions.
+- **T:** Exercise the production nested `wait()` dispatcher with typed/full paired rows and a duplicate frame row; exercise the planner adapter with a fake App Server; separately verify hard invalidation dispatch, interruption refusal, the local RPC timeout parameter, exact-artifact RGB digest revalidation at send time (including same-sequence file replacement), and existing V39 controller regressions.
 - **D:** PASS if the matching row is forwarded at most once, the adapter's returned thread and turn IDs equal the active handle, malformed/stale/cancelled/duplicate updates do not attach, and hard invalidation remains higher priority. Any model, action, or live-game effect is outside this decision.
 - **C:** Acknowledgment may only mean the App Server queued untrusted context. A real model may ignore it, misunderstand the frame, finish before reconsidering, or spend more input tokens and latency. A 500 ms RPC timeout may leave delivery ambiguous; the controller then invalidates the dependent answer and uses its existing interrupt/release route without retry.
 - **U:** No real inference, App Server process, game, GUI, OS input, physical release measurement, useful feedback, replacement-plan recovery, latency/usage comparison, or task effect was run. No live allocation is implied; Issue #59 records the private lane as unassigned.
@@ -19,7 +19,7 @@ The App Server uses the `turn/start` `toolOutput` form established by the separa
 ## Freeze and changed files
 
 - Base: `origin/main` `402c7d1b5147b2a905098f082233db60a47d68db` (2026-10-05).
-- Current-main verification rerun after syncing the branch: `62da4c836a2419d0b1261708b5a59ee3d82db618`. Its changes add an independent V16 lifecycle audit package and do not modify the three runtime files under test. The saved suite outputs and exit codes correspond to this post-sync run.
+- Current-main verification rerun after syncing the branch: `6860b585305e539ec93896f5adcbf658cbbd8592` (which includes `62da4c836a2419d0b1261708b5a59ee3d82db618`). The intervening commits add unrelated analysis packages and do not modify the three runtime files under test. The saved suite outputs and exit codes correspond to the post-sync rerun. `run_tests.ps1` now allows unittest's normal stderr output and relies on explicit process exit codes.
 - Frozen source SHA-256 at base:
   - `research/doom/map01_overlap_controller_v39.py`: `4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca`
   - `research/live_control/persistent_planner_adapter_v2.py`: `e00ca6b8f20ee1081dc57a0ccd754115fe81f9bf5fa36553ed7c98add873fc0e`
@@ -29,4 +29,4 @@ The App Server uses the `turn/start` `toolOutput` form established by the separa
 
 ## Result
 
-All 51 focused tests pass: planner adapter 12, app-server client 4, V39 paired-signal controller 20, V39 controller 5, nested wait 9, and production paired wait dispatcher 1. The result is a source-composition construction pass only. It does not establish that the model changes its plan, that the new request improves control, or that this should become the default without a separately authorized live evaluation and matched cost/benefit measurement.
+All 53 focused tests pass: planner adapter 12, app-server client 4, V39 paired-signal controller 21, V39 controller 5, nested wait 10, and production paired wait dispatcher 1. The send path now requires `exact is True` and validates decoded RGB pixels from the exact bytes later encoded for transfer against the observation's `frame_rgb_sha256`; the production nested wait test replaces a same-sequence PNG only after the monitor accepts it and verifies delivery is refused. The delivery receipt records both the PNG-byte digest and validated RGB digest. The result is a source-composition construction pass only. It does not establish that the model changes its plan, that the new request improves control, or that this should become the default without a separately authorized live evaluation and matched cost/benefit measurement.
