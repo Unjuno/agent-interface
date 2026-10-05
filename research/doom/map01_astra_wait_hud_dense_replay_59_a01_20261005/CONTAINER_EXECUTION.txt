@@ -1,0 +1,37 @@
+A01 posthoc dense HUD replay execution record
+
+Run ID: MAP01-ASTRA-WAIT-HUD-REPLAY-A01-20261005
+Frozen base: 88d875cc0916accb1a5fa36057253686f0586f1e
+Candidate invocation count: 1
+Independent audit invocation count: 1
+
+Input preparation on macOS (FFmpeg 8.1.2):
+
+ffmpeg -y -ss 22.3 -i research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4 -frames:v 60 -vf crop=72:48:128:486,format=rgb24 -f rawvideo research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/input/health_roi.rgb
+
+The command extracts encoded video frames 22.3 through 28.2 playback seconds, inclusive, at 10 fps. The 2x-labelled recording maps this to game clock 44.6 through 56.4 seconds. Input SHA-256 is recorded in FREEZE.json and results/a01/candidate.raw.json.
+
+Selected full-frame stills were independently extracted from the same frozen MP4 with `ffmpeg -ss <playback-seconds> -i <video> -frames:v 1 <sample.png>`. Their hashes are in VISUAL_READOUT.json. HUD numbers and overlay text are manual transcriptions; no OCR output is used.
+
+Container: python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f (linux/arm64)
+Requested isolation/resource flags: --network none --cpus=1 --memory=1g --pids-limit=64. These are requested Docker limits; actual cgroup enforcement was not separately measured.
+Source mount: /private/tmp/agent-interface-scorer-join-20261005:/src:ro
+Dedicated output mount: /private/tmp/agent-interface-scorer-join-20261005/research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/results/a01:/out
+
+Candidate command:
+
+docker run --rm --network none --cpus=1 --memory=1g --pids-limit=64 -e RESULT_DIR=/out -v /private/tmp/agent-interface-scorer-join-20261005:/src:ro -v /private/tmp/agent-interface-scorer-join-20261005/research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/results/a01:/out -w /src python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python3 -B research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/run_candidate.py
+
+Exit code: 0
+Candidate stdout:
+{"first_changed_frame":{"frame_index":12,"game_seconds":47.0,"health_roi_sha256":"dd0d89919a4245532bac20a40ad05a599502d5bec5340e428b33f6a4c4a5ee1e","mean_absolute_rgb_delta_from_wait_start":8.313175,"pixel_state":"CHANGED_FROM_WAIT_START","playback_seconds":23.5},"frame_count":60,"input_sha256":"ba7eeedffcf37554cb95a7f433fb8deeacc79904fca9e9d9e316cf43477bc93d","last_baseline_frame":{"frame_index":11,"game_seconds":46.8,"health_roi_sha256":"f571a9a4e3028da253146685245cdd6d265655306b6cc3dd2c5fd62a5c57e2c4","mean_absolute_rgb_delta_from_wait_start":0.59838,"pixel_state":"BASELINE_MATCH","playback_seconds":23.4},"status":"PASS_DESCRIPTIVE_VIDEO_FRAME_BOUNDARY_RECONSTRUCTION"}
+
+Audit command:
+
+docker run --rm --network none --cpus=1 --memory=1g --pids-limit=64 -e RESULT_DIR=/out -v /private/tmp/agent-interface-scorer-join-20261005:/src:ro -v /private/tmp/agent-interface-scorer-join-20261005/research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/results/a01:/out -w /src python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python3 -B research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/audit_independent.py
+
+Exit code: 0
+Audit stdout:
+{"causal_damage_attribution":false,"changed_pixels_at_transition":482,"first_changed_game_seconds":47.0,"last_baseline_playback_seconds":23.400000000000002,"status":"PASS_DESCRIPTIVE_VIDEO_FRAME_BOUNDARY_RECONSTRUCTION"}
+
+Neither command ran the game or made a model, GUI, or OS-input call. The original failed attempt was not rerun.
