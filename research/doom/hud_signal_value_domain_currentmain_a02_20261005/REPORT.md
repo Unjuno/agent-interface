@@ -22,8 +22,10 @@ predecessor branch.
   snapshot/typed-observation regression run then failed on the same 4 subcases.
   Added one immutable shared domain predicate and applied it at those four
   boundaries, without importing the predecessor's broader V39 controller
-  rewrite. The final focused suite passed 30/30; byte-compilation and
-  `git diff --check` passed.
+  rewrite. Then merged the unrelated main advance to
+  `7754ef4e268fcb5166ece66ad821ef1af57cabd6` and reran the focused suite:
+  30/30 passed; byte-compilation and committed-diff `git diff --check`
+  passed.
 - **C:** These are deterministic CPU-only synthetic signal values. The limits
   follow the MAP01-specific proposal: health-policy schema 1–200 and the
   three-slot ammo display 0–999. Existing HASH/WAD readers, controller
@@ -63,6 +65,9 @@ PYTHONPATH=research/doom:research/live_control \
 git diff --check
   PASS
 ```
+
+The post-fast-forward rerun used current main `7754ef4e268fcb5166ece66ad821ef1af57cabd6`;
+the rescue branch merge commit is `ebc4d0289814c58e04dbe0bcb79f9331bf74bb61`.
 
 The predecessor PR #7596 remains unchanged and open. Its content, reviews, and
 checks do not transfer to this successor. No remote branch was deleted.
