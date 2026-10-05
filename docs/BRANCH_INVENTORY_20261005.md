@@ -115,3 +115,269 @@ A further Search API and branch-page read reported 328 open PRs (297 draft, 31 n
 ## Revert-aware follow-up — 2026-10-05 08:32:24Z
 
 At this read, GitHub reported 328 open PRs (297 draft, 31 non-draft), 376 branches, and main at 0db00a564daff64e47fd6931954ace0f71ab8f2b (08:31:48Z / 17:31:48 JST). Main first-parent history shows #7887 was merged at 17:30:37 JST and reverted by PR #8113 at 17:31:48 JST. Preserve both events; the transient merge must not be treated as an enduring integration or as grounds to delete its branch/evidence.
+
+
+## Follow-up review and current state — 2026-10-05 17:54 JST
+
+This note supplements the frozen 08:16:25Z CSVs and the 08:32:24Z state above; it does not replace either snapshot.
+
+- PR [#8114](https://github.com/Unjuno/agent-interface/pull/8114) merged at 08:44:43Z as `9febfe4926cde6629f9751d6444f6b802cf31328`. Its body explicitly required independent verification and asked that it remain open until that review was complete. GitHub's submitted-review endpoint returns no reviews, and its only issue comment is an automated code-review usage-limit notice. This audit independently rechecked the previously parsed snapshot totals (336 PR rows, 382 branch rows), uniqueness and exact branch-tip joins for all 336 open-PR heads, and stack arithmetic (56 non-main-base; 45 mapped to open parent heads; 27 child base SHAs equal the mapped parent head; 18 mapped but mismatched; 11 unmapped). The requested timestamp/SHA correction is consistent with commit chronology. Main history confirms #7887's merge at 17:30:37 JST and the #8113 revert at 17:31:48 JST. The content is useful as an additive historical record, but merge occurred before its stated independent-review gate was satisfied; record that as a process deviation. Do not treat the frozen CSV or stale PR counts as live branch disposition.
+- Current main advanced past `0db00a564daff64e47fd6931954ace0f71ab8f2b`; API first-page history at 17:51 JST includes #8116 and #8117 after the #8114 merge. Re-fetch all PR and branch pages plus checks/reviews at one capture time before assigning close, merge, or deletion candidates. No live full census was completed in this pass.
+- PRs [#7195](https://github.com/Unjuno/agent-interface/pull/7195) and [#7201](https://github.com/Unjuno/agent-interface/pull/7201) are both still draft and overlap on `research/live_control/test_native_exchange_v1.py`. #7201 changes the request-path comparison using `resolve()`; #7195 uses `resolve(strict=True)` there and changes four additional test expressions. #7201's recorded Linux run covers only its own one-line candidate and must not be counted as validation of #7195's strict candidate or four other expressions. Preserve both proposals and their recorded evidence; do not merge/close/retarget either until the owner reconciles the overlapping implementation on a fresh current-main base, completes the required exact-candidate Linux validation and independent content approvals, and records one forward application plan. A local sparse-fetch attempt for #7195 exhausted disk during this audit; its temporary linked worktree was safely removed without touching other worktrees. No test run is claimed.
+- PR [#8115](https://github.com/Unjuno/agent-interface/pull/8115) is an open draft current-main rescue with one commit and 18 files. Review found 17 experiment-package Git blobs identical to the old #7453 source, plus one index link. Its description preserves the experiment's narrow fake-Xlib scope and says neither candidate nor auditor was rerun. No submitted independent review is present; keep it a candidate for review, not as accepted or integrated evidence.
+- The failed sparse fetch left two Git temporary pack files totaling about 503 MiB in the local clone's object-pack directory. No Git process remained and the new worktree was removed; cleanup was not attempted because safe removal was not available through the approved command path. Avoid further fetches in this checkout until the pack state is handled safely.
+
+No remote branches were deleted or pull requests merged, closed, or retargeted during this follow-up. The complete all-branch dependency/unique-commit audit remains outstanding; branch deletion safety is still unclassified.
+
+
+## Paginated reference census — 2026-10-05 09:14 UTC
+
+This additive snapshot was collected from GitHub REST pagination across the open pull-request and branch collections, plus the main ref. The endpoint reads overlapped and are not an atomic transaction; live state may change while pages are read.
+
+- Main was 19a6b723e58ccfd2b8265e88659589ef9223fcc9.
+- 332 open PRs were returned over four pages: 301 drafts and 31 ready. Of these, 280 target main and 52 target another branch.
+- All 332 distinct open-PR head branch names were present in the 385-branch listing. The other 53 branch names are not heads of an open PR; their closed-PR, dependency, and unique-commit status was not audited here.
+- Among the 52 non-main-base PRs, 46 base branch names map to another open PR head. For those 46, 28 base SHAs equal that parent PR's current head SHA and 18 differ; six base branches have no matching open-PR head.
+- All 280 PRs targeting main recorded a base SHA different from the observed main tip. Treat these as potentially stale review epochs; compare each head with current main and re-check its CI before considering merge.
+
+This is a pagination/count and branch-name stack map only. It does not inspect each PR's review requirements, CI, file overlap, closed PR history, or commit ancestry, and it does not identify any branch safe to delete. Preserve all 385 branches pending the all-branch unique-commit and dependency audit.
+
+
+## Post-census integration and review-process note — 2026-10-05 09:18 UTC
+
+This snapshot follows the merge of PR #8120 and is later than the 09:14 census above. Paginated REST reads across open PRs, remote branches, and the main ref overlapped and are not atomic.
+
+- Main remained 19a6b723e58ccfd2b8265e88659589ef9223fcc9.
+- 335 open PRs were listed: 303 drafts and 32 ready. 283 targeted main and 52 targeted another branch.
+- All 335 distinct open-PR head refs appeared in the 386-branch listing. The other 51 branch names are not open-PR heads and remain unclassified.
+- Of 52 non-main-base PRs, 46 base branch names map to open-PR heads: 28 base SHAs match the parent head and 18 do not; six base refs have no matching open-PR head.
+- Of 283 main-target PRs, eight payloads recorded the current main SHA and 275 recorded a different SHA. This is a stale-epoch indicator, not a per-PR behind calculation; compare each head with current main and re-check CI before merge.
+- PR #8123 merged at 09:00:43Z as f44c5f5724ed2ba1d44cab9a8b3f88f5179c014c; its submitted-review endpoint is empty and its only issue comment is the code-review usage-limit notice. It preserved the WSLc setup STOP; this is an additional non-author-review process deviation.
+- PR #8120 merged at 09:13:34Z as 846acff11e60093da551986583ac525452480b0c. All seven head checks passed, including Analysis Index, but the submitted-review endpoint is empty. Preserve A03 STOP, A04 HOLD, A05 result, raw data, and the scoped conclusions; record the missing non-author review separately from the scientific result.
+- PR #8128 merged at 09:14:05Z as 902cbbfd8535b03af09e8f4a1bb4a4d7e73de659. The retained report explicitly says it was not independently audited and claims no method PASS or human study; the submitted-review endpoint is empty. This is another process deviation, not a change to the report's HOLD disposition.
+- PR #8133 merged at 09:14:09Z as 19a6b723e58ccfd2b8265e88659589ef9223fcc9. Its submitted-review endpoint is empty. The PR body records 17/17 analysis-index tests passing and a separate mixed-suite attempt stopping because the image lacked Git; retain those limits. This is a process deviation even though the documentation change and its reported checks are scoped.
+
+These four merges plus #8114 lack submitted non-author reviews in the GitHub review endpoint. This inventory records the process deviations; it does not reverse merges or weaken the evidence preserved by those PRs.
+
+This remains a reference census, not a unique-commit audit. No branch is classified safe to delete.
+
+## Follow-up API snapshot and evidence rescue — 2026-10-05 18:40 JST
+
+A later authenticated GitHub Search/branch read at approximately 18:40 JST returned 335 unique OPEN PR IDs and 387 unique branch refs (current `main` at `9febfe4926cde6629f9751d6444f6b802cf31328`). The PR search was partitioned by creation-time windows to avoid its 100-result cap. Individual REST detail fetches then hit GitHub's API rate limit: only 60 of 335 PR detail records were returned. The earlier complete 336/382 CSVs remain the most recent complete head/base/branch snapshot; the 335/387 totals are counts only and do not update row-level refs, bases, draft status, review state, or checks. Do not infer that the one-count decreases identify particular PRs/branches.
+
+During that read, the branch endpoint returned five pages totaling 387 unique names, while current open-PR search returned 335 unique PR IDs (#6934–#8148); there were no PRs created before 2026-10-03. The current ref count and PR count are not a deletion classification. Full current head/base mapping, closed-PR dependencies, unique commit/path attribution, and owner/allocation status remain unverified. No branch is classified safe to delete.
+
+### Experiment evidence disposition
+
+- PR [#8097](https://github.com/Unjuno/agent-interface/pull/8097) was present in `main` at `9febfe4926cde6629f9751d6444f6b802cf31328). It rescues the V39 Xvfb A03–A08 packages, including A03/A04 STOP records, A05 invocation STOP, A06 raw plus partial audit and STOP, and A08 `PASS_METHOD_SCOPED` raw/audit. The focused current-main tests for A05 recorded 10/10 passing; they do not replace the stopped Xvfb allocations. These packages were already preserved on main at that snapshot; no duplicate rescue was needed.
+- PR [#7980](https://github.com/Unjuno/agent-interface/pull/7980) preserved 56 X11 explicit-UP evidence files from the closed/superseded #7114 without importing its runtime fix/tests. This is evidence-only and left the source branch untouched.
+- PR [#8114](https://github.com/Unjuno/agent-interface/pull/8114) merged the inventory errata and the 336/382 paginated snapshot. Its exact CSVs remain timestamped snapshots, not live data.
+
+## Current reference census — 2026-10-05 10:56 UTC
+
+This is a later, non-atomic read; branch refs, PR search windows, and `main` were observed through separate requests. Main was `fd4f9e4533aa5baa5952e89cd830c98b26e7c537` when the ref was read.
+
+- Partitioned GitHub Search returned 332 unique open PR IDs; a separate query found none created before 2026-10-03.
+- `git ls-remote --heads` returned 395 branch refs with 395 distinct tip SHAs.
+- A join of open pull-request head SHAs to repository branch-tip SHAs matched 331 branch tips. The other 63 non-main branch refs do not match an open PR head tip at this read.
+- The unmatched refs are not deletion candidates by count alone. Closed/merged PR relationships, dependent branches, unique commits/evidence paths, and owner/allocation status remain to be audited. No branch is classified safe to delete.
+
+
+## Audited branch cleanup — 2026-10-05 11:12 UTC
+
+Remote branch `maintenance/inventory-followup-clean-20261005` was deleted after an individual audit:
+
+- Its sole PR, #8145, was closed unmerged and superseded by #8163. No PR used the branch as a base.
+- The four commits unique to that branch relative to current main changed only this inventory document. The full document content is present in this successor PR, with later census updates.
+- After refreshing remote-tracking refs, no other repository branch contained the branch tip. No local worktree used this branch.
+- The branch tip remains reachable from closed PR #8145's head ref `a4fed4179db89c07ca2d89ab7f8ead7e5ca9d20c`; that PR ref was verified after deletion.
+
+The exact branch ref is absent after deletion. The subsequent branch-list read still returned 399 refs, so aggregate counts remain sensitive to concurrent repository updates and were not used as deletion evidence. The separately checked-out `maintenance/inventory-followup-20261005` branch and its local-only commit were retained.
+
+
+## Individually audited branch dispositions — 2026-10-05 11:22 UTC
+
+The following refs were reconciled individually. The GitHub page reads overlapped with active repository updates, so aggregate branch/PR counts are intentionally omitted as deletion evidence.
+
+- **Deleted merged branch** `research/7411-user-worthwhile-benefit-a01-20261004`, tip `be7df5c03103e3327842214e933ed1ac01fe5226`. PR #7592 is merged at `fd4f9e4533aa5baa5952e89cd830c98b26e7c537`, which remains an ancestor of current main `3c2254ddc4446bec9a8ab4871ed05defa0a900f9`. All 17 paths added by that PR were checked against current main and have identical Git blob IDs. No open PR used the branch as a head or base, and no worktree used it. After branch deletion, the original PR head remained fetchable. Preserve the formal disposition `HOLD_AUDIT_INCOMPLETE`; the post-hoc verifier does not replace the preregistered gate.
+- **Deleted merged branch** `research/8150-t0-current-main-sync-20261005`, tip `f428e97a062a0615f8bf6485108619b299b1d1f5`. PR #8167 is merged at `21fecd58b9de30073c97234124e73b78c67d4b0c`, an ancestor of current main. The merge commit records the nine PR paths; the original closed-PR head remained fetchable after branch deletion. No open PR used the branch as a head or base, and no worktree used it. The preserved result is `HOLD_REVIEW_DISAGREEMENT`, not a runtime eligibility PASS.
+- **Deleted superseded rescue branch** `rescue/journal-wire-6042-20261004`, tip `77df97fb23a7093172a2109e0768d86df7c6c1f6`. Closed-unmerged PR #7298 names Draft PR #7509 as its successor. All seven paths changed by #7298 were verified byte-for-byte by Git blob identity in #7509 (head `b32e8d5e1e6a411643369ed59e4fcfc605fe658c`). No open PR used the old branch as a head or base, and no worktree used it. The old PR head remained fetchable after deletion. #7509 remains open and unmerged, so the evidence is preserved for review rather than counted as integrated into main.
+
+These were per-ref dispositions, not a complete all-branch audit. Other non-head refs still require their own closed-PR, dependency, unique-commit/evidence, worktree, and owner review. A later audit found merged PR #7974's branch still checked out; it was retained.
+
+## Paginated branch/head census — 2026-10-05 11:39 UTC
+
+This is a non-atomic, read-only API snapshot. The `main` ref was `1fbef34f244588bff3d79b7cbea423dcb510ef8f` when queried.
+
+- Paginated branch reads returned 397 refs across page sizes 100, 100, 100, and 97.
+- Paginated open-PR reads returned 326 PRs across page sizes 100, 100, 100, and 26. Their 326 head ref names were unique.
+- 71 branch refs had no matching open-PR head name. This is a head-only join; it does not check open PR base refs or prove that a branch is unused.
+- The 500 most recently updated closed PR records included a same-name head for 65 of those refs: 3 had at least one merged PR and 62 were associated only with closed-unmerged PRs. Four current branch tips did not match any same-name closed-PR head in that retrieved set. The six refs without a match include `main` and five other refs; because the closed-PR query was limited to its latest 500 records, lack of a match is not proof that a branch has no PR history.
+- No ref was deleted based on this count. The previous note that #7974's branch is checked out remains a concrete reason to retain it; the other 70 refs still need individual dependency, unique-commit/evidence, worktree, and owner checks before any disposition.
+- The available GitHub connector exposes branch reads and ref updates, but no branch-delete operation. Do not emulate deletion by moving a ref.
+
+Counts can change while requests are paginated. These numbers are a navigation aid, not a deletion criterion or an atomic before/after comparison.
+
+## Individual provenance check — #8092 A01 branch — 2026-10-05 11:46 UTC
+
+Branch `research/8068-imperfect-repair-t0-a01-20261005` currently points to `c3cdedfe68ef4adb240d5ab5313b8285c9140d9f`. Closed unmerged PR [#8092](https://github.com/Unjuno/agent-interface/pull/8092) and its correction comment classify A01 as a redundant, noncanonical allocation: PR #8076 had already completed the finite imperfect-repair method question and a targeted T1 HOLD. The correction explicitly says the A01 raw, WSLc candidate STOP, and audit remain unmodified for transparent provenance, and says not to merge #8092 or treat it as a successor result.
+
+A current comparison to `main` shows 10 A01 packet files plus the analytical index entry absent from main. The package records its separate 12-cell host method check and one WSLc candidate output-path STOP; its independent WSLc audit was over the existing host raw and does not establish a WSLc candidate pass. The canonical later #8068 T0/T1 package on main answers a different seven-cycle fixture and retains `HOLD_NO_IDENTIFIABLE_REPAIR_HISTORY`.
+
+Disposition: retain this ref and closed PR head as the transparent provenance copy; do not promote it as new Issue-level evidence or delete it while its raw/STOP/audit are only present there. This is a per-ref custody finding, not a branch deletion authorization or a general classification of unmatched refs.
+
+
+## Individually audited branch cleanup — #7308 — 2026-10-05 11:43 UTC
+
+- Deleted remote branch `fix/grounding-failure-accounting-6178-20261004`, tip `8b00b4ba0774efdc5d29d9ccecd88d1d70c0fcf5`. Closed-unmerged PR #7308 was explicitly superseded by #7521.
+- The two paths changed by #7308 were audited against its stacked base: the added regression file is byte-identical in #7521, and the ineligible-result accounting block in `research/live_control/integrated_efficiency_app_server_model_v1.py` is byte-identical in the successor. #7521 also registers the test in `runtime/integration_checks/native.py`.
+- No open PR used the old branch as a head or base; no local worktree used it. After deleting the branch, the old #7308 head remained fetchable from the closed-PR ref.
+- Successor #7521 remains open Draft on main `1fbef34f244588bff3d79b7cbea423dcb510ef8f`. The focused fake-client tests and earlier failing full macOS run are historical; no tests were rerun during refresh. Required fresh checks and nonauthor review remain pending.
+
+This is one individually audited disposition after the 11:39 census, not a classification of the remaining non-head refs.
+
+
+## Individually audited merged-branch cleanup — 2026-10-05 12:05 UTC
+
+Two remaining merged PR branches were deleted after per-ref checks:
+
+- `rescue/59-per-key-interval-clean-20261005`, PR #8149, head `3c60aef79d98d8e6753059ee6290afd6f29ce067`, merged as `7e79b4d5fa02d4877f5c53c7f6f234f181e7a5cd). The merge commit is an ancestor of main `95316efef54b092fc2f0264539223830cdb9ba21`; all 15 PR changed-file blobs match main exactly.
+- `research/7367-frozen-audit-binding-a02-20261005`, PR #8184, head/PR commit `c9aad08642bd1472517ab03ea3675237acecd1c1`, merged as current main `95316efef54b092fc2f0264539223830cdb9ba21). All 13 PR changed-file blobs match main exactly.
+
+At the final pre-deletion read neither branch was an open PR head or base, and the local worktree list contained neither branch. After deletion, branch search returned no branch for either name; `refs/pull/8149/head` and `refs/pull/8184/head` remained fetchable at their recorded tips. This is an individual cleanup record; the remaining branch audit is incomplete.
+
+
+## Concurrent integration note — 2026-10-05 12:06–12:08 UTC
+
+Main advanced from `95316efef54b092fc2f0264539223830cdb9ba21` to `4ce8558216f3e997c23359d3ec1c0646cc03ade1` through PR #8188 while this inventory was being refreshed. This was a concurrent merge, not an action by this cleanup pass. Immediately before the merge, the fetched PR body explicitly required independent nonauthor review before integration; the review-submission endpoint returned no reviews, and the combined-status endpoint returned no status entries for head `00f8708f5bd8f8325b92c724be0a3288da3a2a63`. The post-merge PR body no longer includes that gate. The merged evidence package remains on main; this note records the review-gate discrepancy and does not alter or relabel its evidence.
+
+The current inventory branch head at the time of this check was `65560586b1551500bdb30c6d391e5d6ad3f4ee1b`, based on main `95316efef54b092fc2f0264539223830cdb9ba21` with its prior inventory head retained as a parent. Current main has since advanced by the #8188 merge; refresh again before any later merge or branch action. The full all-ref ownership/dependency audit remains incomplete.
+
+
+## Concurrent integration note — 2026-10-05 12:10 UTC
+
+Main advanced to `0c70aff144af3515835c7c6069154fc94ad55ad4` through PR #8182 while this inventory update was in progress. The merge was concurrent, not performed by this cleanup pass. After merge, the review-submission endpoint returned no reviews and the combined-status endpoint returned no status entries for head `ce544d77bdef13692ee0be6ef6fb2e0ef1eaeb11`. The fetched PR body scoped the result to a finite synthetic job-identity input boundary and did not state an independent-approval requirement. Its evidence remains on main; no broader scheduler or runtime claim is inferred.
+
+
+## Individually audited duplicate rescue branch — #8170 — 2026-10-05 12:13 UTC
+
+Deleted remote branch `rescue/59-app-consumption-a01-evidence-main-20261005-r1`, tip `b109775c3849c9a0149d12d8d13665c0e12c65b4`, after auditing its closed-unmerged PR #8170:
+
+- #8170's description identifies open Draft #8173 as the successor and says the source package contains 26 evidence-only files, with no runtime or test-source changes.
+- All 26 #8170 changed-file blob IDs were compared with #8173's 127-file proposal; every blob is identical. #8173 remains open Draft pending independent review and is not integrated into main.
+- The old branch was not referenced as an open PR head/base and had no local worktree. After deleting the branch, closed-PR ref `refs/pull/8170/head` remained fetchable at the audited tip.
+- The raw outputs, source snapshots, and manifest are therefore preserved in the successor proposal while original PR history remains retrievable.
+
+This is a duplicate-branch disposition only; it does not classify remaining refs or satisfy #8173's review gate.
+
+
+## Individually audited merged research-branch cleanup — #8182 — 2026-10-05 12:16 UTC
+
+Deleted remote branch `research/7748-duplicate-id-a01-20261005` at exact tip `ce544d77bdef13692ee0be6ef6fb2e0ef1eaeb11` after rechecking all 332 open PRs and all 401 branch refs immediately before deletion:
+
+- PR #8182 is merged as `0c70aff144af3515835c7c6069154fc94ad55ad4`; main is now `2c1c90c80389dc6aab6a950c7058528272979f2d`. Comparing the old branch tip to main showed main 5 commits ahead and no branch-only commits.
+- None of the 332 open PRs used the branch as a head or base. The exact branch tip still matched #8182's head SHA; branch protection was false. The local worktree list contained no worktree on that branch.
+- All 47 changed paths were checked by Git blob ID. Forty-six blobs match exactly. `research/analysis/README.md` has later additive changes on main; both #8182 A01/A02 result rows and both package index entries are present there with the same text as the old branch.
+- Deleted with an exact expected-tip lease. The branch ref now returns 404; `refs/pull/8182/head` remains fetchable at the same commit, preserving review/history access.
+
+This is one individually verified merged-branch cleanup; it does not classify the other non-open-PR refs. No tests or experiments were run.
+
+
+## Individually audited merged-branch cleanup — #8188 — 2026-10-05 12:19 UTC
+
+Deleted remote branch `research/v39-renewal-stale-sequence-preservation-20261005` at exact tip `00f8708f5bd8f8325b92c724be0a3288da3a2a63` after verifying:
+
+- PR #8188 is merged as `4ce8558216f3e997c23359d3ec1c0646cc03ade1`; current main `2c1c90c80389dc6aab6a950c7058528272979f2d` is four commits ahead with no branch-only commits.
+- All 51 PR changed-path blob IDs match current main exactly. No open PR references the branch as head or base, and the local worktree list contains no worktree on it.
+- The pre-merge review gate discrepancy for #8188 is recorded above. The content is preserved on main; deleting the merged source branch does not imply that the gate was satisfied.
+- Deletion used an exact expected-tip lease. The branch ref now returns 404; `refs/pull/8188/head` remains fetchable at the audited tip.
+
+This is a branch-ref cleanup only; it does not revise #8188's evidence or gate history. No test or experiment was run.
+
+
+## Hold — merged PR #8102 source-branch history — 2026-10-05 12:20 UTC
+
+Keep `research/59-v15-owner-evidence-current-main-20261005` at `8f5beb06d99eed093176c37a74f3620511f984fc` for now. PR #8102 is merged as `2c1c90c80389dc6aab6a950c7058528272979f2d`, but compare from the branch to current main is diverged: 20 branch-only commits and 5 main-only commits after merge base `95316efef54b092fc2f0264539223830cdb9ba21`. The PR changes 103 paths. No open PR currently uses the branch as a head or base, and the local worktree list has no checkout on it, but its unique intermediate history has not been reconciled against a preserved successor. The closed-PR head ref remains the recovery source.
+
+The only submitted review is state `COMMENTED` by login `Unjuno`; it is not an approval. Its technical body flags the mutable fetch followed by an exact-SHA guard as a reproduction defect and explicitly does not claim nonauthor quorum or application authorization. Keep this history held until the finding and unique commit lineage are accounted for. No new candidate was rerun.
+
+
+## Concurrent integration note — PR #8191 — 2026-10-05 12:25 UTC
+
+Main advanced to `307b9e2f0420f130e9d933c037cac78501d2e547` through merged PR #8191 while the inventory was being refreshed. This was concurrent, not a merge by this cleanup pass. The fetched post-merge PR body says its preliminary `NO_INCREMENTAL_VALUE_SCOPED` conclusion is withdrawn because the “All restores visibility” clause lacked visible-ID observations; candidate/auditor each ran once and retries were zero. The review-submission and combined-status endpoints returned no entries. The PR body does not specify independent-review or approval as an integration gate. Preserve the qualified outcome; do not infer an A02 PASS or wider claim. Issue #8088 remains active in the sense that a successor needs explicit Active/All observations and the preserved-records-but-still-filtered control.
+
+
+## Current remote-ref snapshot — 2026-10-05 12:25 UTC
+
+Paginated GitHub REST reads observed main `307b9e2f0420f130e9d933c037cac78501d2e547`, **403 branch refs**, and **336 open PRs** (310 Draft, 26 Ready). Every open PR head ref exists and matches its branch-tip SHA (**336/336**). The branch partition is main (1) + open-PR heads (336) + refs not used as open-PR heads (66). The reads are non-atomic; counts and names are not deletion grounds. The previously audited merged refs #8182 and #8188 are absent. These 66 refs still need per-ref review of PR history, commit ancestry, content custody, dependencies, and owner/worktree use:
+
+| Ref | Tip SHA | Current disposition |
+| --- | --- | --- |
+| `codex/fix-7997-evidence-wording` | `819f2c302109d961b8f9578f12e1d81d26b12786` | unclassified |
+| `fix/compiled-observation-exception-propagation-20261005` | `68a5f26670f359bd5085dd47ccfcb43ce2c74151` | unclassified |
+| `fix/retain-unverified-x11-key-holds-20261005` | `416846ef59b08c862cca84c128d1853e16a6143a` | unclassified |
+| `fix/scorer-endpoint-read-type-7685-a01` | `fc8d12f13519811491015f4e2ecdd847246c55d4` | unclassified |
+| `fix/x11-explicit-up-01a0ff2c` | `64b143a78f23d3e9acb229300eb195fcaf66851e` | unclassified |
+| `fix/x11-wheel-ledger-01a0ff2c` | `ed7bb24e45fac16114e1247e00c8ed86cebda5c8` | unclassified |
+| `fix/59-a05-audit-integrity-20261005` | `0dcd3abb9ce99b6a3f596277f124e304ed62a5fc` | unclassified |
+| `fix/59-feedback-step-bool-identity-20261005` | `2bebf57d9eb617bb20ef4fbbfa6ad13f1a4ba5f0` | unclassified |
+| `fix/59-projector-attempt-ordinal-type-e0cc-20261005` | `6be323b3f3ccb7c94f2bd684864e246eab8e6914` | unclassified |
+| `fix/59-scorer-readback-type-20261005` | `614348df05ae603526a6a74a8feec17f039e7927` | unclassified |
+| `fix/59-v15-per-key-keyup-retry-a01-20261005` | `23aa99031d7e0178de5f69f6df8e89fb63b1d9a6` | unclassified |
+| `fix/59-v39-admission-id-projection-a01-20261005` | `191ba71fbfc339cd57e80bcf69dfcc856e6a2feb` | unclassified |
+| `fix/59-v39-app-consumption-contradiction-20261005` | `efb712b1aa6f01d67ed119b266ef479645cfb96a` | unclassified |
+| `fix/59-v39-app-consumption-sample-depth-a01-20261005` | `826329b2ff0adf0bd963c26c5b4ced2ec3fc69cb` | unclassified |
+| `fix/59-v39-bracket-interval-bool-20261005` | `a427bdf9c2e76f8cc905946aa8b08f0ed26597cc` | unclassified |
+| `fix/59-v39-cover-admission-invalidation-edd067-20261004` | `763ff69a531eb47a6a3f033f56171dffc80afa23` | unclassified |
+| `fix/59-v39-hashsafe-adapter-id-20261005` | `40c056e322b39bbb11cb0d02aec7d8edf66367aa` | unclassified |
+| `fix/59-v39-raw-bracket-consistency-a01-20261004` | `971234f7a186960cbd519c655beccbab42854a67` | unclassified |
+| `fix/59-v39-typed-state-feedback-20261004` | `8bfe24520490e2bf2c6ef0288edf3e1f3c03a65a` | unclassified |
+| `fix/59-wheel-release-ledger-20261005` | `e14c8267854e24e5978767cd53065622abdee3f6` | unclassified |
+| `fix/59-windows-anonymous-pipe-readiness-20261005` | `67905decc40a468b9dfe45ecfbcc8a6b83999689` | unclassified |
+| `fix/7849-preflight-cleanup-result-20261005` | `979e9a57db800e8f5c63ce0810c3228346e2be3b` | unclassified |
+| `fix/7974-release-lockout-a01-20261005` | `5d18a471c9463a660d97e24eed9c2f863ff55bd6` | unclassified |
+| `maintenance/inventory-followup-20261005` | `3b1c12ca6ebc01101aad443c71601efbc17c85c0` | unclassified |
+| `rescue/constructor-close-fdfd-20261004` | `203cd69ad14aea0a05d5600ee9ace177578b51d5` | unclassified |
+| `rescue/todomvc-route-b714-20261004` | `004174810fdb8cb93b95f052ebf1a764f0e64478` | unclassified |
+| `rescue/59-per-key-interval-a01-a02-20261005` | `ec44484c35075994d72b25a2ae021a91041da75d` | unclassified |
+| `research/scorer-endpoint-readback-type-20261005` | `39bf575ccf0c4795a0a81d06baf08e1a36a2d114` | unclassified |
+| `research/spec-diversity-8088-t0-a02-20261005` | `2c1c90c80389dc6aab6a950c7058528272979f2d` | hold: Issue #8088 audit correction; #8191 successor note |
+| `research/strict-attempt-ordinal-v39-20261005` | `4d79f5b97d0c467d7af62046cdfcf1af69754252` | unclassified |
+| `research/v15-perkey-owner-evidence-only-20261005` | `0758b536b7b02265c8375ef70bc6703dcee77bc9` | unclassified |
+| `research/v39-attempt-ordinal-exact-int-20261005` | `c405b129e83c613e815160f841070ed68267be1d` | unclassified |
+| `research/v39-dual-signal-epoch-a03-20261005` | `1665dff09fca6d367e41d469492935604c65f0fd` | unclassified |
+| `research/v39-partial-record-drain-race-20261005` | `d76e9945bce4b6ef0b8df79fbabf1b8ee5516815` | unclassified |
+| `research/59-audit-readonly-v2-20261005` | `f191772c48fc9dfd8f33760e2b6a243b890b4a38` | unclassified |
+| `research/59-cancel-release-cause-postsample-c03-20261004` | `e101c63ac4938ed4017e3021338ebd1c333d8c29` | unclassified |
+| `research/59-effect-identity-join-a01-20261005` | `b9dbe5f6f4086b402e3ce23c347d38fe155d5b7f` | unclassified |
+| `research/59-exact-release-trace-a01-20261005` | `583732554c2ca687fd005e79f5497bb660872bc1` | unclassified |
+| `research/59-expected-key-provenance-a01-20261005` | `9ec46a5782257f6e47b6bd4cc28c5bdb1babd58f` | unclassified |
+| `research/59-owner-expiry-drain-barrier-a01-20261005` | `70c76483c46108bdd70bf2fb90679d948a5f156f` | unclassified |
+| `research/59-owner-hold-retirement-a01-20261005` | `2f98bebc6352a3dd42da37487f7c340c0cf12f50` | unclassified |
+| `research/59-per-key-release-receipts-20261005` | `30cdf5f575a64142077c305e110ed5d276c1458c` | unclassified |
+| `research/59-release-query-failure-probe-a01-20261005` | `4c429ef3a58f14dd26b1c0e98632bb739de173a6` | unclassified |
+| `research/59-renewal-soft-stale-admission-a01-20261005` | `66ba74f69d1373399811f62ad950743caad770ed` | unclassified |
+| `research/59-v12-source-closure-20261005` | `9984f00db3b8d4b94c55d64b58f9c4014a760906` | unclassified |
+| `research/59-v15-owner-evidence-current-main-20261005` | `8f5beb06d99eed093176c37a74f3620511f984fc` | hold: 20 branch-only commits; unresolved reproduction finding |
+| `research/59-v39-audit-chronology-20261005` | `c68aec1407f7dbcf1b3011cade5cbd7063b4bcf1` | unclassified |
+| `research/59-v39-cover-admission-main-port-a01` | `a49d08f4def42ca5d8c2e7962b639ba4f277bfcb` | unclassified |
+| `research/59-v39-current-admission-fix-a01-20261005` | `1403c822609395f9ab21e0cdbb36b7b4c8ee044d` | unclassified |
+| `research/59-v39-fire-cover-ammo-audit-a01-20261005` | `52a51142b10aeb54db3f7b782385d3b941b7429e` | unclassified |
+| `research/59-v39-frame-only-threat-a01-20261005` | `8e03ae802e98f70491506082b74e99baa4bbc98c` | unclassified |
+| `research/59-v39-keymap-batch-a06-20261005` | `0a43cd9528c1de28af389945c8ce31b3e33e8bf5` | unclassified |
+| `research/59-v39-perkey-cleanup-a09-20261005` | `db8585bfc8c9806a0c3dadf7cc95a1d160c81858` | unclassified |
+| `research/59-v39-renewal-invalidation-a01-20261005` | `fc3d88686ef17d3d9b721592eb64d862890cff8b` | unclassified |
+| `research/59-v39-renewal-reject-race-a01-20261005` | `9234613a2396040eb5352318e50b06a2467d432e` | unclassified |
+| `research/59-v39-startup-edge-identity-audit-a01-20261005` | `108d22491db4baf6aa7214ae3f94122f3a7bf849` | unclassified |
+| `research/59-v39-v15-cleanup-a05-current-main-20261005` | `4ede220fc567e74d4d7432b6eda3ade7652d8550` | hold: source history pending #8161 integration/review |
+| `research/59-v39-v15-cleanup-a07-current-main-20261005` | `fdfcbb03d8bec4bbb532a3f46325fd5ef62205ef` | unclassified |
+| `research/59-xvfb-audit-v3-a02-20261005` | `1ec6556ba8568de289625b5f167e7b8c21e1f72c` | hold: run/result custody unresolved |
+| `research/7993-superpopulation-ipcw-a02-construction-20261005` | `0a26e2e5802ee26fbb8198184b95856c336c7bda` | unclassified |
+| `research/8068-imperfect-repair-t0-a01-20261005` | `c3cdedfe68ef4adb240d5ab5313b8285c9140d9f` | unclassified |
+| `research/8150-threat-profiled-runtime-eligibility-t0-20261005` | `e9ad794f0b4b98c5fcb8532777c40c16a9070306` | unclassified |
+| `test/59-feedback-before-step-bool-20261005` | `6bde1d9bd634d94f59a20c898ec1c67d737dbcf9` | unclassified |
+| `test/59-v39-adapter-edge-cardinality-a01-20261005` | `af2ba4249a9f282f6b7c3fa3e0cca68c077aaa63` | unclassified |
+| `test/59-v39-observation-step-alias-20261005` | `bb2b3f4d81b18ec85b13e079e46debd6c3b1b05f` | unclassified |
+| `test/7974-single-query-failure-boundary` | `95666c514f142b58cebafc1920b86bcd87a0d8be` | unclassified |
+
+Do not delete any other ref based on this census alone.
