@@ -406,8 +406,12 @@ class Win32Backend:
                 # without querying or claiming any unrelated physical state.
                 self._send_key(vk, False)
                 return
-            self._emit_key_transition(key, vk, False, hold_id)
-            getattr(self, "_active_key_holds", {}).pop(key, None)
+            transition = self._emit_key_transition(key, vk, False, hold_id)
+            if transition["os_key_state_classification"] in {
+                "OS_KEY_STATE_UP_CONFIRMED",
+                "OS_KEY_STATE_ALREADY_UP",
+            }:
+                getattr(self, "_active_key_holds", {}).pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:

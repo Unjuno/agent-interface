@@ -150,6 +150,23 @@ class ExplicitUpLedgerTests(unittest.TestCase):
                          'OS_KEY_STATE_UP_UNCONFIRMED')
         self.assertTrue(ordinary[1]['state_after']['down'])
 
+    def test_down_after_unconfirmed_up_keeps_same_owned_hold(self):
+        obj = self.backend(stubborn=True)
+        reply = self.dispatch(obj, 'retry_same_key_after_unconfirmed_up', [
+            {'op': 'key_state', 'key': 'Q', 'down': True},
+            {'op': 'key_state', 'key': 'Q', 'down': False},
+            {'op': 'key_state', 'key': 'Q', 'down': True},
+        ])
+        self.assertEqual(reply['status'], 'release_unverified')
+        transitions = reply['execution']['input_transitions']
+        ordinary = [row for row in transitions if not row['cleanup']]
+        self.assertEqual([row['os_key_state_classification'] for row in ordinary],
+                         ['OS_KEY_STATE_DOWN_CONFIRMED',
+                          'OS_KEY_STATE_UP_UNCONFIRMED',
+                          'OS_KEY_STATE_ALREADY_DOWN'])
+        self.assertEqual(len({row['hold_id'] for row in ordinary}), 1)
+        self.assertEqual(transitions[-1]['hold_id'], ordinary[0]['hold_id'])
+
     def test_key_state_query_failure_is_recorded_without_blocking_send(self):
         obj = self.backend(query_error=True)
         obj.key_state('Q', True)
