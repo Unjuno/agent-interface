@@ -1,0 +1,60 @@
+{
+  "schema": "v15-cleanup-lazy-pil-a03-run-v1",
+  "disposition": "STOP_INCOMPLETE_GUI_SUITE_CLOSURE",
+  "tree": "78b8636f08bef691944da8bb536437586f0d116a",
+  "main": "b5be19963454ce5edafc945b78b100012952dd15",
+  "pr": 8094,
+  "pr_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "python": "3.12.14",
+  "pillow": "12.3.0",
+  "numpy": "2.3.5",
+  "python_files_materialized": 1999,
+  "source_bytes_materialized": 11205888,
+  "patch_base_sha256": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+  "patch_overlay_sha256": "8570b509576994746edbac46848d3b6f7e1827d9b918d06b433588222c817329",
+  "normal": {
+    "exit_code": 1,
+    "tests": 47,
+    "errors": 8,
+    "terminal_summary": [
+      "Ran 47 tests in 0.749s",
+      "FAILED (errors=8)"
+    ],
+    "stdout": {
+      "bytes": 51032,
+      "sha256": "fe0c2064ecb8d7f6dbef056047b67182176ac6a1d17d3e4b70bf0a87ee453100",
+      "path": "runs/normal.stdout.txt.b64"
+    },
+    "stderr": {
+      "bytes": 28962,
+      "sha256": "133c0a0f6ec246a6323de2996add9e502c79823df766fada31d2059012c9b7ad",
+      "path": "runs/normal.stderr.txt.b64"
+    }
+  },
+  "optimized": {
+    "exit_code": 1,
+    "tests": 47,
+    "errors": 8,
+    "terminal_summary": [
+      "Ran 47 tests in 1.025s",
+      "FAILED (errors=8)"
+    ],
+    "stdout": {
+      "bytes": 51032,
+      "sha256": "581faec6e051916afd93590a8166ff7e70d05efa8cd58e73647c13772d6b123d",
+      "path": "runs/optimized.stdout.txt.b64"
+    },
+    "stderr": {
+      "bytes": 28962,
+      "sha256": "aeb850c00fe6abcfbd10cbb59b853ed65f441a547ad21bcd9f524a85860ccab8",
+      "path": "runs/optimized.stderr.txt.b64"
+    }
+  },
+  "cause": "8 setup errors: ModuleNotFoundError: No module named 'research.observation_gating.gui_suite'; the flat compatibility shim imports it",
+  "candidate": "STOP neither PASS nor FAIL",
+  "retry": false,
+  "live_game": false,
+  "model_calls": 0,
+  "native_x11": false,
+  "input_calls": 0
+}
