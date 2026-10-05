@@ -1,14 +1,17 @@
 # V39 paired-signal boundary construction A01
 
+## Scope correction after review
+
+A01 records reason classification and duplicate-projection behavior only. For mismatch cases, its candidate stores the reason string and discards the returned `outcome`; therefore A01 does **not** audit the fail-closed authority/decision flags. The original one-run candidate, raw output, and source snapshot remain unchanged. Additive A02 preserves full outcomes and independently checks the fail-closed fields and mutation controls: [PR #7966](https://github.com/Unjuno/agent-interface/pull/7966).
+
 ## H/T/D/C/U
-- **H:** Current-main V39 paired health/ammo monitoring preserves a coherent usable pair, but fails closed when signal sequence/capture/binding diverges, either signal crosses its hard floor, or typed and full observations disagree for one epoch.
-- **T:** Extract and execute the exact current-main helper/class definitions from `map01_overlap_controller_v39.py`; supply stub guard/reader interfaces only; evaluate nine frozen cases.
-- **D:** Synthetic unit boundary matrix, no game, planner, or input device.
-- **C:** Expected outcome fixed in `FROZEN.json` and candidate assertions before the container execution.
-- **U:** A passing construction check says nothing about source-to-image capture integration, live event ordering, cancellation latency, physical key release, feedback usefulness, recovery, survival, progress, or MAP01 exit.
+
+- **H:** Current-main V39 paired health/ammo monitoring accepts coherent evidence and returns the expected invalidation reasons when sequence/capture/binding diverges, a hard signal floor is crossed, or duplicate projections disagree.
+- **T:** Extract and execute the exact current-main helper/class definitions from `map01_overlap_controller_v39.py`; provide stub guard/reader interfaces; evaluate nine cases.
+- **D:** PASS only when the candidate's valid/fault case reasons match the frozen expectations. A01 does not establish outcome authority flags.
+- **C:** Exact helper/class code is used, but readers and guards are stubbed; this does not exercise source-to-frame integration, live event ordering, or invalidation timing.
+- **U:** A passing classification check says nothing about real threat detection, cancellation latency, physical key release, useful feedback, recovery, survival, progress, or MAP01 exit.
 
 ## Run
-Run exactly once in WSLc container `python:3.12-slim`, network disabled, 1 CPU and 512 MiB. Raw output is `raw.json`. Source is pinned to `402c7d1b5147b2a905098f082233db60a47d68db`; the only commit after checked source snapshot `53ec001a334e4077caf665ff56372cd4b0ccb068` adds an unrelated `research/analysis/decision_value_calibration_7934_t0_a02_20261005/` package, confirmed by GitHub compare metadata.
 
-## Audit
-`audit.py` is an independent stdlib readback of the raw case set and expected outcomes. It does not invoke candidate code. No candidate retries are permitted; harness correction happened before the frozen run.
+One WSLc candidate run, network disabled, configured 1 CPU and 512 MiB. The host reported unavailable swap-limit/cgroup support; configured memory was limited without swap. The freeze, raw result, source, and hashes remain in this package.
