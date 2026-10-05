@@ -12,6 +12,7 @@ def valid_pair():
     receipt = {
         "event": "owner_explicit_keyup", "operation": "up", "key": "space",
         "owner_id": "owner-1", "intent_token": "token-1",
+        "valid_until_ns": 900,
         "owner_keyrelease_started_ns": 150,
         "owner_sync_returned_ns": 160, "owner_keymap_sampled_ns": 165,
         "server_sync_completed": True, "server_keyup_verified": True,
@@ -29,6 +30,7 @@ def valid_pair():
         "intent_token": "token-1", "release_batch_identifier": "plan-a",
         "release_batch_step": 2, "release_batch_size": 1,
         "release_batch_position": 0, "release_batch_complete": True,
+        "valid_until_ns": 900,
         "backend_owned_before_release": True, "ordinary_release_candidate": True,
         "release_call_started_ns": 140, "release_call_returned_ns": 170,
         "owner_thread_keyup_receipt": receipt,
@@ -67,6 +69,25 @@ class StrictProjectionTests(unittest.TestCase):
         self.assertFalse(project(records)["measurement_ready"])
         records = valid_pair()
         records[1]["owner_thread_keyup_receipt"]["owner_sync_returned_ns"] = 139
+        self.assertFalse(project(records)["measurement_ready"])
+
+    def test_rejects_missing_expiration_and_discontinuous_retry_state(self):
+        records = valid_pair()
+        del records[1]["valid_until_ns"]
+        del records[1]["owner_thread_keyup_receipt"]["valid_until_ns"]
+        self.assertFalse(project(records)["measurement_ready"])
+        records = valid_pair()
+        receipt = records[1]["owner_thread_keyup_receipt"]
+        retry = {"attempt": 2, "keyrelease_started_ns": 166,
+                 "sync_returned_ns": 168, "keymap_sampled_ns": 169,
+                 "server_key_down_before": True, "server_key_down_after": False}
+        receipt["server_keyup_attempts"].append(retry)
+        receipt["server_keyup_attempt_count"] = 2
+        receipt["owner_keyrelease_started_ns"] = 150
+        receipt["owner_sync_returned_ns"] = 168
+        receipt["owner_keymap_sampled_ns"] = 169
+        records[1]["release_call_returned_ns"] = 175
+        records[1]["owner_sample_after_started_ns"] = 180
         self.assertFalse(project(records)["measurement_ready"])
 
     def test_rejects_noncontiguous_multi_key_batch_positions(self):
