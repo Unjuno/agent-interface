@@ -2328,3 +2328,17 @@ The frozen candidate and separate raw-only audit passed the declared authored fi
 # Issue #7986 T0 A01 — action-conditioned incorrect-belief exposure (2026-10-05)
 
 Eight authored event intervals passed the frozen method gate: exposure is zero for an old-but-correct belief (age 10), positive for stale and freshly misbound beliefs (6 and 5 ticks; the latter age 1), excluded outside live authority/opportunity, and distinct from one realized unsafe effect. Missing truth and ambiguous clock return `UNKNOWN`. Candidate receives no truth sidecar. This is a finite method result only—not harm reduction, safety, human, GUI, live, or runtime evidence. See [report and frozen artifacts](research/analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) and [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+# Issue #6501 — owned Windows pending-I/O observation C01 (2026-10-03)
+
+One native Windows 11/CPython 3.12.14 method allocation retained 27 events
+showing three paired `GetThreadIOPendingFlag` observations for a named pipe-read
+thread versus an `Event.wait` control, followed by one normal byte transfer,
+cooperative joins, and verified handle/FD closure. A separately versioned
+raw-only auditor reconstructed the retained events and rejected ten effective
+corruptions; the first auditor's Windows-path lookup failure remains preserved.
+Disposition is `PASS_OWNED_THREAD_PENDING_METHOD_ONLY`. This is an observation
+prerequisite only: it ran zero cancellation comparisons and proves no blocked
+read cancellation, task effect, authority, recovery, portability, or performance.
+Later #6501 T02/T03/P02 allocations are distinct and remain separate. Do not
+replay the archived probe. See the [C01 report and receipts](research/concurrency/windows_pending_method_6501_01a0ff58_c01/README.md)
+and [Issue #6501](https://github.com/Unjuno/agent-interface/issues/6501).
