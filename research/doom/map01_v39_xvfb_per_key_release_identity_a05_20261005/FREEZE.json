@@ -1,0 +1,28 @@
+{
+  "auditor": "SOURCE/audit.py",
+  "auditor_sha256": "624a58b682308b06770e2ac19c0dc61decdd3ceb4fd82002f0e7f915f7a3c9a5",
+  "base_main": "ff13baf57d5f1c12819151e668b92cb6db4a7c1c",
+  "candidate": "SOURCE/candidate.py",
+  "candidate_sha256": "7ffdeaa8f5bbd9c0d6ed34d4659b778c5a7952db5ddb50f176969ab0900f4f3e",
+  "display": ":127",
+  "one_shot_policy": "Invoke candidate once. Auditor once only when RAW.json exists. Any incomplete candidate trace is STOP. Never rerun or overwrite.",
+  "schema": "map01-v39-xvfb-per-key-release-freeze-a05-v1",
+  "scope": "isolated Xvfb only; exact production owner/backend source from base_main with only immediate parent shims; no game/model/physical input",
+  "source_sha256": {
+    "doom_owner_thread_release_batch_backend_v1.py": "c6595afa6314fbee73669ae1258fdf4ec8658ebb4c41be5f7365ba327f533581",
+    "doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+    "doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "input_owner_v12.py": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+    "input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "map01_overlap_controller_v15.py": "a37547f0413e84d31184027f323ecc3b03b35d44955d3b5fd1cc676570036c3f",
+    "session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+  },
+  "v15_startup_closure_sha256": {
+    "map01_overlap_controller_v15.py": "a37547f0413e84d31184027f323ecc3b03b35d44955d3b5fd1cc676570036c3f",
+    "session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+  }
+}
