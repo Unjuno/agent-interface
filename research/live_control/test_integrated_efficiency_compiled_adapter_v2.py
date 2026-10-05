@@ -28,7 +28,7 @@ class CompiledFormAdapterV2Tests(unittest.TestCase):
         self.assertEqual(interface["method"]["version"], "2")
 
     def test_pixel_change_with_wrong_value_safe_yields_without_submit(self):
-        receipt, actions = self._execute([
+        receipt, actions, _admissions = self._execute([
             {"field_pixels_changed": False, "field_value_matches_task": False,
              "field_target_present": True,
              "submit_target_present": True, "submission_pixels_changed": False},
@@ -41,7 +41,7 @@ class CompiledFormAdapterV2Tests(unittest.TestCase):
         self.assertEqual(actions, ["enter_exact_token"])
 
     def test_exact_task_value_allows_submit_then_independent_completion(self):
-        receipt, actions = self._execute([
+        receipt, actions, _admissions = self._execute([
             {"field_pixels_changed": False, "field_value_matches_task": False,
              "field_target_present": True,
              "submit_target_present": True, "submission_pixels_changed": False},
@@ -55,13 +55,30 @@ class CompiledFormAdapterV2Tests(unittest.TestCase):
         self.assertEqual(receipt["outcome"], "TASK_SUCCEEDED")
         self.assertEqual(actions, ["enter_exact_token", "activate_submit"])
 
-    def _execute(self, predicate_rows):
+    def test_disappeared_submit_target_is_refused_before_input(self):
+        receipt, actions, admissions = self._execute([
+            {"field_pixels_changed": False, "field_value_matches_task": False,
+             "field_target_present": True,
+             "submit_target_present": True, "submission_pixels_changed": False},
+            {"field_pixels_changed": True, "field_value_matches_task": True,
+             "field_target_present": True,
+             "submit_target_present": True, "submission_pixels_changed": False},
+        ], refuse_operation="activate_submit")
+        self.assertEqual(receipt["outcome"], "SAFE_YIELD")
+        self.assertEqual(receipt["reason"], "missing_symbol")
+        self.assertEqual(actions, ["enter_exact_token"])
+        self.assertEqual([row["operation"] for row in admissions],
+                         ["enter_exact_token", "activate_submit"])
+        self.assertEqual(receipt["transitions"][0]["release_verified"], True)
+
+    def _execute(self, predicate_rows, refuse_operation=None):
         interface = adapter.compile_form_method(
             interface_id="test-interface-v2", session_scope="test-session-v2",
             surface="form", field_handle="task_field", submit_handle="task_submit",
             method_contract=METHOD)
         observations = iter(predicate_rows)
         actions = []
+        admissions = []
 
         def observe(_payload):
             predicates = next(observations)
@@ -79,19 +96,27 @@ class CompiledFormAdapterV2Tests(unittest.TestCase):
                     "effect_ref": f"effect-{len(actions)}",
                     "release": {"verified": True, "keys_down": [], "buttons_down": []}}
 
+        def admit(payload):
+            admissions.append({"operation": payload["operation"],
+                               "sequence": payload["observation"]["sequence"]})
+            if payload["operation"] == refuse_operation:
+                return {"eligible": False, "status": "missing",
+                        "authorization": None,
+                        "expected_sequence": payload["observation"]["sequence"],
+                        "valid_until_ns": time.perf_counter_ns() + 1_000_000_000}
+            return {"eligible": True, "status": "revalidated", "authorization": "one-use",
+                    "expected_sequence": payload["observation"]["sequence"],
+                    "valid_until_ns": time.perf_counter_ns() + 1_000_000_000}
+
         receipt = run_compiled(interface, {
             "observe": observe,
-            "admit": lambda payload: {
-                "eligible": True, "status": "revalidated", "authorization": "one-use",
-                "expected_sequence": payload["observation"]["sequence"],
-                "valid_until_ns": time.perf_counter_ns() + 1_000_000_000,
-            },
+            "admit": admit,
             "execute": execute,
             "verify_effect": lambda payload: {
                 "status": "succeeded", "evidence_ref": payload["observation"]["evidence_ref"]},
             "cancelled": lambda: False,
         })
-        return receipt, actions
+        return receipt, actions, admissions
 
     def test_v1_pixel_change_method_is_not_accepted_as_v2(self):
         incompatible = dict(METHOD, continue_when="field_pixels_changed_and_submit_revalidated")
