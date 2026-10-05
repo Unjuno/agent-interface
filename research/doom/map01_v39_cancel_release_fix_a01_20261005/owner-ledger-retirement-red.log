@@ -1,0 +1,14 @@
+test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error) ... FAIL
+
+======================================================================
+FAIL: test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\review-pr7847-local\research\doom\map01_v39_cancel_release_fix_a01_20261005\test_cancel_release.py", line 318, in test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error
+    with self.assertRaisesRegex(RuntimeError, "input owner failed closed"):
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.036s
+
+FAILED (failures=1)

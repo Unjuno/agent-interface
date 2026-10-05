@@ -15,7 +15,7 @@ Through ExecutorV12 expiry, both aggregate-query fault regressions retain one co
 The A08 lifecycle regressions now pass on top of the current PR's pointer-query, keymap-query, and ExecutorV12 composition coverage: 12 focused tests, an optimized 12-test repeat, 3 ExecutorV12 compositions, 10 owner compatibility tests, and 2 existing bridge tests. The source lock remains pinned to `bfd182727aebd9636c6a84fb437848c1dfe66be8`. Results remain local fake-display mechanics only.
 
 
-A fake-display focus-invalidation schedule also confirms the terminal barrier drains the independently recorded `focus_changed` release after the execute-exit drain, before the needs-decision terminal. The prior bridge yields zero such receipts; the candidate emits one confirmed contextual up and verifies empty state. Verification now covers 13 candidate tests, 13 optimized, 3 ExecutorV12, 10 owner compatibility, 2 bridge, 29 primary receipts, and 95 manifest files.
+A fake-display focus-invalidation schedule also confirms the terminal barrier drains the independently recorded `focus_changed` release after the execute-exit drain, before the needs-decision terminal. The prior bridge yields zero such receipts; the candidate emits one confirmed contextual up and verifies empty state. Verification now covers 13 candidate tests, 13 optimized, 3 ExecutorV12, 10 owner compatibility, 2 bridge, 29 primary receipts, and 95 manifest entries.
 
 
 ## A10 — current-head owner-ledger retirement
@@ -23,3 +23,5 @@ A fake-display focus-invalidation schedule also confirms the terminal barrier dr
 The exact PR #7805 head `61502e45d40b67b6d588b4e8357e42fde05a9dbe` reproduced the #7823 finding: after a confirmed F8 up followed by aggregate keymap failure, the partial release receipt was preserved but a later `b` request under the same lease was still injected. With the owner-ledger patch rebased, the confirmed edge retires the internal held entry, aggregate failure faults and clears the active lease, and the later request is rejected before injection.
 
 The bundled CPython 3.12.14 suites pass 14 focused tests, 14 optimized-mode focused tests, 3 ExecutorV12 compositions, 10 owner compatibility tests, and 2 bridge tests. The current-main source audit and package checksum verification are recorded separately. This remains fake-display candidate evidence only.
+
+During independent PR review, a clean-checkout audit defect was found: the committed tree lacked the RED/GREEN A10 logs required by `audit.py`. Those outputs are now retained and reproduced with the exact pinned baseline source and candidate source on Windows CPython 3.11.9. Baseline RED confirms the second DOWN was admitted; candidate GREEN rejects it. The original CPython 3.12.14 suite evidence is unchanged.

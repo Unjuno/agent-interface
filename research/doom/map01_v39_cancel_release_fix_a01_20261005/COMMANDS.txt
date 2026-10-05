@@ -47,3 +47,7 @@ V13_OWNER_CANDIDATE_PATH=/tmp/v13-owner-61502-baseline.py python3 -m unittest re
 
 A10 repaired candidate GREEN:
 python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error -v
+Review clean-checkout repair rerun (Windows CPython 3.11.9):
+- Exact baseline RED: `V13_OWNER_CANDIDATE_PATH=<exact blob from 61502e45d40b67b6d588b4e8357e42fde05a9dbe> python -B -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_confirmed_up_retires_owner_hold_and_fails_closed_after_aggregate_error -v`
+- Candidate GREEN: same command with `V13_OWNER_CANDIDATE_PATH` unset.
+- Read-only audit: `python -B research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py`.
