@@ -879,5 +879,23 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipt["down_edge_interval_ns"])
 
 
+    def test_feedback_rejects_boolean_alias_in_pointer_binding(self):
+        before, after = observation(1, 100), observation(2, 200)
+        malformed = typed_observation(2, 200, 100, 50)
+        malformed_binding = {
+            "focus": 11, "surface": 11, "geometry": [False, 0, 640, 480]}
+        malformed["pointer_binding"] = malformed_binding
+        malformed["signals"]["health"]["binding"] = {
+            "focus": 11, "surface": 11, "geometry": [False, 0, 640, 480]}
+        malformed["signals"]["ammo"]["binding"] = {
+            "focus": 11, "surface": 11, "geometry": [False, 0, 640, 480]}
+
+        result = controller.action_state_feedback(
+            before, after, [typed_observation(1, 100, 100, 50), malformed])
+
+        self.assertEqual(result["status"], "unavailable")
+        self.assertEqual(result["reason"], "typed_frame_identity_mismatch")
+
+
 if __name__ == "__main__":
     unittest.main()
