@@ -1,0 +1,14 @@
+test_non_neutral_successful_aggregate_must_fail_closed (__main__.T.test_non_neutral_successful_aggregate_must_fail_closed) ... FAIL
+
+======================================================================
+FAIL: test_non_neutral_successful_aggregate_must_fail_closed (__main__.T.test_non_neutral_successful_aggregate_must_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\AppData\Local\Temp\owner-nonneutral-release-a01\package\test_non_neutral_release.py", line 48, in test_non_neutral_successful_aggregate_must_fail_closed
+    with self.assertRaisesRegex(RuntimeError,'input owner failed closed'):self.o.call('down',self.l,'b')
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
