@@ -1,0 +1,86 @@
+{
+  "allocation": "UNJUNO-7827-TV-A05-20261005-01",
+  "audit_status": "PASS_METHOD_SCOPED",
+  "auditor": "independent_finite_trace_replay_v3",
+  "baseline_missed_mutations": [
+    "drop_freshness_guard",
+    "remove_cancel_release"
+  ],
+  "errors": [],
+  "fixture_sha256": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+  "model_sha256": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+  "rows": [
+    {
+      "contexts": 208,
+      "id": "guarded_save",
+      "status": "VALID"
+    },
+    {
+      "contexts": 340,
+      "id": "wait_observe",
+      "status": "VALID"
+    },
+    {
+      "contexts": 700,
+      "id": "bounded_repeat",
+      "status": "VALID"
+    },
+    {
+      "contexts": 40,
+      "id": "explicit_abort",
+      "status": "VALID"
+    },
+    {
+      "contexts": 108,
+      "id": "declared_stutter",
+      "status": "VALID"
+    },
+    {
+      "contexts": 1,
+      "counterexample_replayed": true,
+      "id": "drop_freshness_guard",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "contexts": 53,
+      "counterexample_replayed": true,
+      "id": "change_effect_target",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "contexts": 1,
+      "counterexample_replayed": true,
+      "id": "reorder_noncommuting_events",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "contexts": 2,
+      "counterexample_replayed": true,
+      "id": "remove_cancel_release",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "contexts": 1,
+      "counterexample_replayed": true,
+      "id": "hide_forbidden_write_in_internal",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "contexts": 53,
+      "counterexample_replayed": true,
+      "id": "yield_becomes_continue",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "contexts": 53,
+      "counterexample_replayed": true,
+      "id": "alter_effect_postcondition",
+      "status": "COUNTEREXAMPLE"
+    }
+  ],
+  "unknown": {
+    "certificate": null,
+    "reason": "repeat_bound",
+    "status": "UNKNOWN"
+  }
+}
