@@ -418,6 +418,49 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                 self.assertIsNone(receipt["down_edge_interval_ns"])
                 self.assertIsNone(receipt["up_edge_interval_ns"])
 
+    def test_adapter_edge_pairs_reject_bool_alias_in_nested_bracket_intervals(self):
+        retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
+                    "construction-a01" / "candidate-events.jsonl")
+        template = [json.loads(line) for line in retained.read_text().splitlines()]
+
+        def set_interval(row, edge_name, start, finish):
+            measurement = row["physical_key_measurement"]
+            measurement["adapter_edge"]["interval"] = [start, finish]
+            interval_name = ("physical_down_interval" if edge_name == "down"
+                             else "physical_up_interval")
+            measurement["bracket"][interval_name] = [start, finish]
+            measurement["pre_sample"].update(started_ns=start, finished_ns=start)
+            measurement["post_sample"].update(started_ns=start, finished_ns=finish)
+            request_name = "press_request_ns" if edge_name == "down" else "release_request_ns"
+            measurement[request_name] = start
+            measurement["sync_return_ns"] = start
+            if edge_name == "down":
+                row["admitted_ns"] = start
+                row["input_ack_ns"] = start
+
+        for edge_name, event_name, interval_name, endpoint, value in (
+                ("down", "input_admission", "physical_down_interval", 0, False),
+                ("down", "input_admission", "physical_down_interval", 1, True),
+                ("up", "input_release_measurement", "physical_up_interval", 0, True)):
+            events = json.loads(json.dumps(template))
+            down = next(row for row in events if row.get("event") == "input_admission")
+            up = next(row for row in events if row.get("event") == "input_release_measurement")
+            if edge_name == "down":
+                set_interval(down, "down", 0, 1)
+                set_interval(up, "up", 2, 3)
+            else:
+                set_interval(down, "down", 0, 0)
+                set_interval(up, "up", 1, 2)
+            row = next(row for row in events if row.get("event") == event_name)
+            row["physical_key_measurement"]["bracket"][interval_name][endpoint] = value
+
+            receipt = controller.input_edge_receipts(events)[0]
+
+            with self.subTest(edge=edge_name, endpoint=endpoint, value=value):
+                self.assertEqual(receipt["status"], "adapter_edge_receipt_incomplete")
+                self.assertIsNone(receipt["down_edge_interval_ns"])
+                self.assertIsNone(receipt["up_edge_interval_ns"])
+
     def test_adapter_edge_pairs_require_strictly_separated_down_and_up_intervals(self):
         retained = (HERE / "map01_v39_perkey_bridge_a01" / "results" /
                     "construction-a01" / "candidate-events.jsonl")
