@@ -22,7 +22,7 @@ The independent auditor reconstructs all oracle traces and candidate values. It 
 
 ## Execution freeze
 
-- Main: `1fbef34f244588bff3d79b7cbea423dcb510ef8f` (must still equal fetched `origin/main` immediately before candidate start).
+- Main: `95316efef54b092fc2f0264539223830cdb9ba21` (must still equal fetched `origin/main` immediately before candidate start).
 - Runtime: OrbStack Linux VM on this macOS host; Docker-compatible CLI selects context `orbstack`. No WSLc is available on this host. This is not reported as WSLc or Podman.
 - Image: `docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3` (`linux/arm64`, Python 3.12.15).
 - Container restrictions: network disabled, read-only root and study input, one CPU, memory limit 512 MiB, separate writable `/out` bind mount, `--rm`, no GUI/model/GPU/input.
