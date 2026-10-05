@@ -1,0 +1,44 @@
+{
+  "schema": "v39-v15-selected-path-composition-a02-audit-freeze-v1",
+  "issue": 7921,
+  "allocation": "V39-V15-COMPOSITION-A02-AUDIT-20261005-01",
+  "branch": "research/59-v39-v15-compose-a02-audit-20261005",
+  "intake_main": "190100f7c9acb2bfc5618d1621761a0329b368eb",
+  "parent_a01_commit": "eddd393a504c33f246889279aee80785560ac4c6",
+  "inputs": {
+    "candidate_stdout": {
+      "path": "inputs/a01_candidate.stdout",
+      "git_blob": "99b8d18ceb9a264ce4c01cbc1aaaf866fb3af4a2",
+      "sha256": "d4b65dd6b8a32e64b0f001293e6ad606c0ed95c8d454392adf6028791736203d"
+    },
+    "pre_run": {
+      "path": "inputs/a01_PRE-RUN.json",
+      "git_blob": "99fc2413d3ebcb4480ed97386c7b4f00713a6fd6",
+      "sha256": "b3155f73c70373cf0d341f19ef6d6ccdbe709e6033f322ddaa51330ec448268f"
+    },
+    "audit_v1": {
+      "path": "inputs/a01_AUDIT.json",
+      "git_blob": "c6066ef6430c46355bc08f4c2c86130b935e0da7",
+      "sha256": "78452bbb59c65112622bea194c02eb98c83601148c24b3a68fcc47a3ffcdfb51"
+    }
+  },
+  "auditor": {
+    "path": "audit_v2.py",
+    "git_blob": "5a09da9351b58dcc0b255c1bfb8fd91aaa418149",
+    "sha256": "6413a188856dfed755cc19886bd12c83e076c79b873d8df697422712577a6954"
+  },
+  "invocations": {
+    "candidate": 0,
+    "auditor": 1,
+    "retries": 0
+  },
+  "runtime": {
+    "os": "macOS",
+    "python": "3.14.5",
+    "docker_engine": "29.4.0",
+    "docker_image_inventory": "STOP_CONTENT_STORE_OPERATION_NOT_SUPPORTED",
+    "docker_blob": "sha256:0e35cdb51a82e59d359ec09b85ce835d9217a1eab65b68ce1871c9b0a85014c9",
+    "fallback": "single host standard-library audit"
+  },
+  "status": "FROZEN_NOT_RUN"
+}
