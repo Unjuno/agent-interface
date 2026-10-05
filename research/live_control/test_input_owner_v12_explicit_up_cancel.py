@@ -290,6 +290,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertFalse(failed_receipt["server_keyup_verified"])
             self.assertEqual(failed_receipt["server_keyup_attempt_count"], 3)
             self.assertEqual(display_instance.down, {38})
+            with self.assertRaisesRegex(RuntimeError, "release pending"):
+                owner.call("down", lease, "A")
+            self.assertEqual(display_instance.down, {38})
         finally:
             if owner is not None:
                 owner.close()
