@@ -66,6 +66,14 @@ class ContractTests(unittest.TestCase):
                 (Action("a", ActionKind.KEY, "Return"),),
             )
 
+    def test_request_rejects_duplicate_action_ids(self):
+        with self.assertRaisesRegex(ContractError, "action IDs must be unique"):
+            ExecutionRequest(
+                "cmd", M, binding(), lease(),
+                (Action("same", ActionKind.POINTER, "click"),
+                 Action("same", ActionKind.TEXT, "type")),
+            )
+
     def test_verified_release_requires_empty_input(self):
         with self.assertRaises(ContractError):
             ReleaseReceipt(10, True, ("A",), ())
@@ -90,6 +98,15 @@ class ContractTests(unittest.TestCase):
                 500, 700, 1, EffectOccurrence.OBSERVED, released(),
                 (InputTransitionReceipt("a1", "space", InputTransition.DOWN, 499, 512),
                  InputTransitionReceipt("a1", "space", InputTransition.UP, 650, 653)),
+            )
+
+    def test_transition_request_times_must_be_chronological(self):
+        with self.assertRaisesRegex(ContractError, "transition requests must be chronological"):
+            ExecutionReceipt(
+                "cmd-1", "backend-1", M, "lease-1", 7, "surface-a",
+                500, 700, 1, EffectOccurrence.OBSERVED, released(),
+                (InputTransitionReceipt("a1", "space", InputTransition.DOWN, 610, 612),
+                 InputTransitionReceipt("a1", "space", InputTransition.UP, 609, 653)),
             )
 
     def test_release_observation_cannot_precede_final_input_ack(self):

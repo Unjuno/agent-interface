@@ -180,6 +180,9 @@ class ExecutionRequest:
             raise ContractError("actions must be a nonempty tuple")
         if any(not isinstance(action, Action) for action in self.actions):
             raise ContractError("actions must contain Action values")
+        action_ids = [action.action_id for action in self.actions]
+        if len(set(action_ids)) != len(action_ids):
+            raise ContractError("action IDs must be unique within an execution request")
         if self.binding.observation_sequence != self.lease.observation_sequence:
             raise ContractError("binding and lease observation sequence differ")
         if self.binding.surface_id != self.lease.surface_id:
@@ -285,10 +288,13 @@ class ExecutionReceipt:
         ):
             raise ContractError("input_transitions must be tuple[InputTransitionReceipt, ...]")
         previous_ns = self.started_ns
+        previous_request_ns = self.started_ns
         held: set[tuple[str, str]] = set()
         for event in self.input_transitions:
             if event.requested_ns < self.started_ns:
                 raise ContractError("input transition request precedes execution start")
+            if event.requested_ns < previous_request_ns:
+                raise ContractError("input transition requests must be chronological")
             if event.acknowledged_ns < previous_ns:
                 raise ContractError("input transition acknowledgements must be chronological")
             if event.acknowledged_ns > self.ended_ns:
@@ -302,6 +308,7 @@ class ExecutionReceipt:
                 if identity not in held:
                     raise ContractError("up transition has no preceding down transition")
                 held.remove(identity)
+            previous_request_ns = event.requested_ns
             previous_ns = event.acknowledged_ns
         if held:
             raise ContractError("execution input transitions end with held controls")
