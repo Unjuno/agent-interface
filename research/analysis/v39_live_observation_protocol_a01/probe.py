@@ -28,10 +28,19 @@ IMAGE_SHA256 = "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c
 MOCK_TEXT = "mock final"
 
 
+def _turn_id(reply: dict[str, Any]) -> str | None:
+    result = reply.get("result") if type(reply) is dict else None
+    turn = result.get("turn") if type(result) is dict else None
+    value = turn.get("id") if type(turn) is dict else None
+    return value if type(value) is str and value else None
+
+
 def inspect_requests(
     requests: list[dict[str, Any]], image: bytes, observation: str,
-    initial_turn_id: str, external_turn_id: str,
+    initial_reply: dict[str, Any], external_reply: dict[str, Any],
 ) -> dict[str, Any]:
+    initial_turn_id = _turn_id(initial_reply)
+    external_turn_id = _turn_id(external_reply)
     all_input = json.dumps(requests, separators=(",", ":"))
     image_data = "data:image/png;base64," + base64.b64encode(image).decode("ascii")
     function_outputs = [
@@ -43,7 +52,10 @@ def inspect_requests(
     output_json = json.dumps(function_outputs, separators=(",", ":"))
     return {
         "mock_request_count": len(requests),
-        "same_turn_id": initial_turn_id == external_turn_id,
+        "initial_turn_id": initial_turn_id,
+        "external_turn_id": external_turn_id,
+        "same_turn_id": (initial_turn_id is not None and
+                         initial_turn_id == external_turn_id),
         "observation_text": observation,
         "text_delivered": observation in output_json,
         "image_delivered": image_data in output_json,
@@ -235,7 +247,8 @@ supports_websockets = false
             if message.get("method") == "turn/completed" and message.get("params", {}).get("turn", {}).get("id") == turn_id:
                 completed = message
                 break
-        result = inspect_requests(state.requests, image, EVENT_TEXT, turn_id, turn_id)
+        result = inspect_requests(state.requests, image, EVENT_TEXT,
+                                  initial_reply, external_reply)
         result.update({
             "cli_version": subprocess.check_output(["codex", "--version"], text=True).strip(),
             "loopback_only": True,
@@ -290,3 +303,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
