@@ -1,0 +1,146 @@
+[
+  {
+    "event": "owner_release",
+    "reason": "release",
+    "verified": true,
+    "buttons_down": [],
+    "keys_down": [],
+    "keys_unknown": [],
+    "key_state_errors": [],
+    "verified_ns": 601420958166,
+    "valid_until_ns": null,
+    "key_release_attempts": {},
+    "key_release_intervals_ns": [],
+    "key_state_source": "x11_query_keymap"
+  },
+  {
+    "event": "owner_explicit_keyup",
+    "operation": "up",
+    "owner_id": "96d3e0ce892a4c3ea7720762e9d48461",
+    "key": "space",
+    "keycode": 99,
+    "intent_token": "3c69f247aeb3498a9b038f67f5666ca5",
+    "valid_until_ns": 626422207708,
+    "owner_keyrelease_started_ns": 601527846708,
+    "owner_sync_returned_ns": 601527999666,
+    "owner_keymap_sampled_ns": 601528006458,
+    "server_keyup_verified": true,
+    "server_keyup_attempt_count": 1,
+    "server_keyup_attempts": [
+      {
+        "attempt": 1,
+        "keyrelease_started_ns": 601527846708,
+        "sync_returned_ns": 601527999666,
+        "keymap_sampled_ns": 601528006458,
+        "server_key_down_before": true,
+        "server_key_down_after": false,
+        "keymap_before_error": null,
+        "keymap_after_error": null,
+        "keyrelease_error": null,
+        "sync_error": null
+      }
+    ],
+    "server_key_down_after_keyup": false,
+    "key_state_source": "x11_query_keymap",
+    "cancel_requested_after_sync": false,
+    "server_sync_completed": true,
+    "physical_verification_authoritative": false,
+    "release_batch_initial_up_count": 1,
+    "release_batch_key_order": [
+      "space"
+    ],
+    "physical_key_measurement": {
+      "owner_id": "96d3e0ce892a4c3ea7720762e9d48461",
+      "intent_token": "3c69f247aeb3498a9b038f67f5666ca5",
+      "key": "space",
+      "grants_input_authority": false,
+      "application_consumption_observed": false,
+      "schema": "keymap-batch-edge-v1",
+      "interval_basis": "shared_batch_snapshot",
+      "scope": "conservative X-server keymap observation bracket; no physical dwell or application receipt",
+      "edge": "up",
+      "classification": "CONFIRMED_PHYSICAL_UP",
+      "bracket": {
+        "owner_id": "96d3e0ce892a4c3ea7720762e9d48461",
+        "intent_token": "3c69f247aeb3498a9b038f67f5666ca5",
+        "key": "space",
+        "grants_input_authority": false,
+        "application_consumption_observed": false,
+        "status": "CONFIRMED_PHYSICAL_UP",
+        "actuation_id": "96d3e0ce892a4c3ea7720762e9d48461:1",
+        "physical_up_interval": [
+          601527844833,
+          601528006458
+        ]
+      },
+      "actuation_id": "96d3e0ce892a4c3ea7720762e9d48461:1",
+      "identity_status": "RETIRED",
+      "pre_sample": {
+        "available": true,
+        "down": true,
+        "started_ns": 601527840000,
+        "finished_ns": 601527844833,
+        "error": null
+      },
+      "post_sample": {
+        "available": true,
+        "down": false,
+        "started_ns": 601528003666,
+        "finished_ns": 601528006458,
+        "error": null
+      },
+      "release_request_ns": 601527846708,
+      "sync_return_ns": 601527999666,
+      "release_attempted": true,
+      "adapter_edge": {
+        "owner_id": "96d3e0ce892a4c3ea7720762e9d48461",
+        "intent_token": "3c69f247aeb3498a9b038f67f5666ca5",
+        "key": "space",
+        "grants_input_authority": false,
+        "application_consumption_observed": false,
+        "edge": "up",
+        "status": "CONFIRMED_PHYSICAL_UP",
+        "actuation_id": "96d3e0ce892a4c3ea7720762e9d48461:1",
+        "interval": [
+          601527844833,
+          601528006458
+        ]
+      },
+      "batch_id": "96d3e0ce892a4c3ea7720762e9d48461:batch:3",
+      "post_sample_basis": "shared_batch"
+    }
+  },
+  {
+    "event": "owner_release",
+    "reason": "release",
+    "verified": true,
+    "buttons_down": [],
+    "keys_down": [],
+    "keys_unknown": [],
+    "key_state_errors": [],
+    "verified_ns": 601530237541,
+    "valid_until_ns": 626422207708,
+    "key_release_attempts": {
+      "99": {
+        "attempts": [],
+        "verified": true
+      }
+    },
+    "key_release_intervals_ns": [],
+    "key_state_source": "x11_query_keymap"
+  },
+  {
+    "event": "owner_release",
+    "reason": "close",
+    "verified": true,
+    "buttons_down": [],
+    "keys_down": [],
+    "keys_unknown": [],
+    "key_state_errors": [],
+    "verified_ns": 601540922000,
+    "valid_until_ns": null,
+    "key_release_attempts": {},
+    "key_release_intervals_ns": [],
+    "key_state_source": "x11_query_keymap"
+  }
+]
