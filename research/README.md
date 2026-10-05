@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+
 - Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — finite-model PASS_METHOD_SCOPED/H_PASS_SCOPED; OrbStack unavailable, host-only; no full-CBS or runtime claim. [Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
 
 - Issue #6367 T0: [matched protective-adaptation method fixture](analysis/protective_local_adaptation_6367_t0_20261004/REPORT.md) — synthetic `METHOD_PASS_SCOPED` only; host-only after OrbStack inspection failed; not live #59 evidence. [Post-review top-level audit](analysis/protective_local_adaptation_6367_reaudit_v1/README.md) rejects the frozen V1 auditor's top-level safety-disposition blind spot.
