@@ -126,7 +126,17 @@ class InputOwner:
             )
             self._prune_completed_admissions(records_before)
             started_ns = time.perf_counter_ns() if operation in ("release", "close") else None
-            result = self._inner.call(operation, lease, key)
+            try:
+                result = self._inner.call(operation, lease, key)
+            except RuntimeError as error:
+                failed_release = getattr(error, "owner_release_record", None)
+                if (operation != "release" or type(failed_release) is not dict or
+                        failed_release.get("event") != "owner_release" or
+                        failed_release.get("verified") is not False):
+                    raise
+                # Surface the bounded failed receipt to the executor so its
+                # terminal can retain the stuck-key state and all attempts.
+                result = failed_release
             returned_ns = time.perf_counter_ns() if started_ns is not None else None
             result = self._decorate(result, lease)
             if operation == "release":
@@ -226,4 +236,3 @@ class InputOwner:
                 "owner/X11 state sample or telemetry publication occurs inside this call"
             ),
         }
-

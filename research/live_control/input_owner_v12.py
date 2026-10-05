@@ -90,6 +90,35 @@ class InputOwner:
         fault = None
         self.ready.set()
 
+        def key_is_down(code):
+            bitmap = d.query_keymap()
+            return bool(bitmap[code // 8] & (1 << (code % 8)))
+
+        def release_key(code, *, max_attempts=3, force_first=False):
+            attempts = []
+            server_down = key_is_down(code)
+            for attempt in range(1, max_attempts + 1):
+                if not server_down and not (force_first and attempt == 1):
+                    break
+                observed_down_before = server_down
+                started_ns = time.perf_counter_ns()
+                xtest.fake_input(d, X.KeyRelease, code)
+                d.sync()
+                sync_returned_ns = time.perf_counter_ns()
+                server_down = key_is_down(code)
+                sampled_ns = time.perf_counter_ns()
+                attempts.append({
+                    "attempt": attempt,
+                    "keyrelease_started_ns": started_ns,
+                    "sync_returned_ns": sync_returned_ns,
+                    "keymap_sampled_ns": sampled_ns,
+                    "server_key_down_before": observed_down_before,
+                    "server_key_down_after": server_down,
+                })
+                if not server_down:
+                    break
+            return attempts, not server_down
+
         def focus_id():
             value=d.get_input_focus().focus
             return value.id if hasattr(value,'id') else value
@@ -175,25 +204,43 @@ class InputOwner:
         def release(reason):
             nonlocal active,revision
             revision += 1
-            for code in list(held):
-                xtest.fake_input(d, X.KeyRelease, code)
+            key_release_attempts = {}
+            # Include every key this owner touched, not only keys still present
+            # in bookkeeping. A lost explicit up must remain recoverable here.
+            release_codes = list(held)
+            release_codes.extend(sorted(set(touched) - set(held)))
+            for code in release_codes:
+                attempts, verified = release_key(code)
+                key_release_attempts[str(code)] = {
+                    "attempts": attempts, "verified": verified,
+                }
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
             mask = d.screen().root.query_pointer().mask
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-            bitmap = d.query_keymap()
-            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+            down = [code for code in touched if key_is_down(code)]
             if reason == 'release' and active is not None and active.cancel.is_set():
                 reason = 'cancelled'
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
                           keys_down=down, verified_ns=time.perf_counter_ns(),
-                          valid_until_ns=active.deadline if active else None)
+                          valid_until_ns=active.deadline if active else None,
+                          key_release_attempts=key_release_attempts,
+                          key_release_intervals_ns=[
+                              {"keycode": int(code), "interval_ns": [
+                                  attempts[0]["keyrelease_started_ns"],
+                                  attempts[-1]["keymap_sampled_ns"]]}
+                              for code, value in key_release_attempts.items()
+                              if (attempts := value["attempts"])
+                          ],
+                          key_state_source='x11_query_keymap')
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
             if down or buttons_down:
-                raise RuntimeError('owner release not verified: ' + repr(down))
+                error = RuntimeError('owner release not verified: ' + repr(down))
+                error.owner_release_record = record
+                raise error
             buttons.clear()
             touched_buttons.clear()
             held.clear()
@@ -339,16 +386,16 @@ class InputOwner:
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
-                                owner_keyrelease_started_ns = time.perf_counter_ns()
-                                xtest.fake_input(d, X.KeyRelease, code)
-                                d.sync()
-                                owner_sync_returned_ns = time.perf_counter_ns()
+                                key_release_attempts, server_keyup_verified = release_key(
+                                    code, force_first=True)
+                                owner_keyrelease_started_ns = key_release_attempts[0]["keyrelease_started_ns"]
+                                owner_sync_returned_ns = key_release_attempts[-1]["sync_returned_ns"]
+                                owner_keymap_sampled_ns = key_release_attempts[-1]["keymap_sampled_ns"]
                                 cancel = getattr(lease, 'cancel', None)
                                 cancel_requested_after_sync = (
                                     cancel.is_set() if callable(getattr(cancel, 'is_set', None))
                                     else None
                                 )
-                                del held[code]
                                 self.records.append(dict(
                                     event='owner_explicit_keyup', operation='up',
                                     owner_id=self.owner_id, key=key, keycode=code,
@@ -356,9 +403,19 @@ class InputOwner:
                                     valid_until_ns=getattr(lease, 'deadline', None),
                                     owner_keyrelease_started_ns=owner_keyrelease_started_ns,
                                     owner_sync_returned_ns=owner_sync_returned_ns,
+                                    owner_keymap_sampled_ns=owner_keymap_sampled_ns,
+                                    server_keyup_verified=server_keyup_verified,
+                                    server_keyup_attempt_count=len(key_release_attempts),
+                                    server_keyup_attempts=key_release_attempts,
+                                    server_key_down_after_keyup=not server_keyup_verified,
+                                    key_state_source='x11_query_keymap',
                                     cancel_requested_after_sync=cancel_requested_after_sync,
-                                    server_sync_completed=True,
+                                    server_sync_completed=bool(key_release_attempts),
                                     physical_verification_authoritative=False))
+                                if not server_keyup_verified:
+                                    raise RuntimeError(
+                                        'explicit key-up not observed in X11 keymap: ' + str(code))
+                                del held[code]
                             result = None
                     else:
                         raise ValueError('unknown input operation')
