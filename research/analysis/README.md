@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
+
 - [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
 - [Issue #8135 cross-episode counterparty T0 A02](persistent_counterparty_8135_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED`: persistent learner changed later variants conditional on public history while frequency-matched sham remained history-independent; 64 authorized effects, zero unauthorized effects, 5/5 mutations rejected. A01 auditor-schema failure preserved; no real-service adaptation claim.
 - [Issue #8135 T0 A01 auditor-schema failure](persistent_counterparty_8135_t0_a01_20261005/FORMAL_FAILURE.md) — candidate 1/1 exit 0, auditor 1/1 exit 1 (`episode_field_set`); no audit JSON, retries 0; not a scientific result and not rerun.
@@ -642,6 +644,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_yield_5905_image_only_t0_9_a09_20261005/`](looming_yield_5905_image_only_t0_9_a09_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
+- [`machine_crash_recovery_7802_t0_20261005/`](machine_crash_recovery_7802_t0_20261005/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
 - [`map01_delay_gain_t1_trace_eligibility_6195_20261001_01/`](map01_delay_gain_t1_trace_eligibility_6195_20261001_01/)
 - [`map01_global_owner_invariance_59_t0_20261001/`](map01_global_owner_invariance_59_t0_20261001/)
@@ -934,6 +937,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
 - [`stagewise_perturbation_6053_t0_20261002/`](stagewise_perturbation_6053_t0_20261002/)
+- [`stochastic_trace_reducer_8152_t0_20261005/`](stochastic_trace_reducer_8152_t0_20261005/)
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
 - [`stop_evidence_4678_revalidation_v2/`](stop_evidence_4678_revalidation_v2/)
 - [`stpa_feedback_constraint_5327_t0_v1/`](stpa_feedback_constraint_5327_t0_v1/)
@@ -961,6 +965,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
+- [`threat_profiled_runtime_eligibility_8150_t0_20261005/`](threat_profiled_runtime_eligibility_8150_t0_20261005/)
 - [`threshold_persistent_topology_6183_t0_20261003/`](threshold_persistent_topology_6183_t0_20261003/)
 - [`timing_receipt_6532_t0_20261002/`](timing_receipt_6532_t0_20261002/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
@@ -991,6 +996,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
 - [`unseen_failure_mode_yield_5665_t1_v1/`](unseen_failure_mode_yield_5665_t1_v1/)
 - [`user_relative_benefit_6593_t0_v1/`](user_relative_benefit_6593_t0_v1/)
+- [`user_worthwhile_benefit_7411_t0_a01_20261004/`](user_worthwhile_benefit_7411_t0_a01_20261004/)
 - [`vector_constraint_approachability_7808_a01_20261005/`](vector_constraint_approachability_7808_a01_20261005/)
 - [`verification_ir_alias_boundary_5504_a01_20261003/`](verification_ir_alias_boundary_5504_a01_20261003/)
 - [`verifier_cascade_capacity_5375_t0a2_20261002/`](verifier_cascade_capacity_5375_t0a2_20261002/)
