@@ -6,7 +6,11 @@
   "candidate_pr": 7527,
   "candidate_head": "1c12f87d9316f2faa3b2e4b5da55f23ceb2296d4",
   "candidate": "research/doom/unauthored_coast_liveness_v1.py",
-  "candidate_rule": {"minimum_health_drop": 5, "low_samples": 2, "window_samples": 3},
+  "candidate_rule": {
+    "minimum_health_drop": 5,
+    "low_samples": 2,
+    "window_samples": 3
+  },
   "source_record_pr": 7990,
   "source_record_head": "3c6862937f30a22aad6380699f23da92d5d2c6f9",
   "input_archive": "map01-v39-threat-currentmain-a04/raw-a04.zip",
@@ -16,6 +20,10 @@
   "censor_rule": "Stop each interval at its first 2-of-3 trigger. No threshold/window search, counterfactual recovery estimate, or live consumer simulation.",
   "hypothesis": "The fixed candidate triggers before retained planner terminal in each selected unauthored coast interval.",
   "decision_rule": "PASS_SCOPED only if five interval boundaries and typed health rows are present, candidate and independent oracle match exactly, every trigger precedes planner terminal, and decision 4 remains excluded; otherwise STOP/FAIL without retry.",
-  "resource_scope": "Local CPU-only JSON/ZIP read. No game, model, GUI, input, container, or GPU. No consumed allocation replay."
+  "resource_scope": "Local CPU-only JSON/ZIP read. No game, model, GUI, input, container, or GPU. No consumed allocation replay.",
+  "preregistration_comment": "https://github.com/Unjuno/agent-interface/issues/59#issuecomment-5988485217",
+  "exact_window_rule_frozen_before_comparison": false,
+  "oracle_implementation_frozen_before_comparison": false,
+  "actual_disposition": "FAIL_PROTOCOL_POSTHOC_WINDOW_FREEZE",
+  "current_main_after_comparison": "ff677c7fc04ba72923ee375527ae39489728a0bd"
 }
-
