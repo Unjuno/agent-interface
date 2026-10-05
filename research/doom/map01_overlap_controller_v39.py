@@ -861,6 +861,8 @@ def input_edge_receipts(events):
                 bracket.get("key") == edge.get("key") and
                 bracket.get("owner_id") == edge.get("owner_id") and
                 bracket.get("intent_token") == edge.get("intent_token") and
+                valid_interval(edge.get("interval")) and
+                valid_interval(bracket.get(interval_name)) and
                 bracket.get(interval_name) == edge.get("interval") and
                 bracket.get("status") == status and
                 bracket.get("grants_input_authority") is False and
@@ -900,8 +902,9 @@ def input_edge_receipts(events):
                 return False
             bracket = data.get("bracket")
             interval_name = "physical_down_interval" if edge_name == "down" else "physical_up_interval"
-            return (type(bracket) is dict and
-                    bracket.get(interval_name) == [pre["finished_ns"], post["finished_ns"]])
+            bracket_interval = bracket.get(interval_name) if type(bracket) is dict else None
+            return (type(bracket) is dict and valid_interval(bracket_interval) and
+                    bracket_interval == [pre["finished_ns"], post["finished_ns"]])
 
         down_data = down.get("physical_key_measurement") if down else None
         up_data = up.get("physical_key_measurement") if up else None
