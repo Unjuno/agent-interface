@@ -1,0 +1,3 @@
+Intended frozen command: `python3 audit_v2.py inputs/a01_candidate.stdout inputs/a01_PRE-RUN.json inputs/a01_AUDIT.json`
+
+Actual single-process entrypoint: `python3 -c <runner> <audit_v2.py source> <A01 candidate stdout> <A02 root PRE-RUN.json> <A01 AUDIT.json>`. The third input argument was misbound; exact blob IDs and observed hashes are in RUN_RECORD.md.

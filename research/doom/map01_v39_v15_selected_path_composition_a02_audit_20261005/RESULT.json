@@ -1,0 +1,27 @@
+{
+  "schema": "v39-v15-selected-path-composition-a02-audit-result-v1",
+  "allocation": "V39-V15-COMPOSITION-A02-AUDIT-20261005-01",
+  "status": "STOP_PROTOCOL_INPUT_MISMATCH",
+  "auditor_reported_status": "FAIL",
+  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "raw_sha256": "d4b65dd6b8a32e64b0f001293e6ad606c0ed95c8d454392adf6028791736203d",
+  "audit_v1_sha256": "78452bbb59c65112622bea194c02eb98c83601148c24b3a68fcc47a3ffcdfb51",
+  "expected_pre_run_sha256": "b3155f73c70373cf0d341f19ef6d6ccdbe709e6033f322ddaa51330ec448268f",
+  "actual_pre_run_sha256": "b40c07f2387cabe9f695ba5a95a45f63840ce6ec832d6cc2adb6ab1e3422f4da",
+  "expected_argument": "inputs/a01_PRE-RUN.json (Git blob 99fc2413d3ebcb4480ed97386c7b4f00713a6fd6)",
+  "actual_argument": "A02 PRE-RUN.json (Git blob 55f8ecfb60bf7dab724fdab7e492fe484e80a574)",
+  "trace_reconstruction": {
+    "baseline_checks_passed": 27,
+    "baseline_checks_total": 27,
+    "mutation_controls_rejected": 6,
+    "mutation_controls_total": 6
+  },
+  "errors": [
+    "pre_run_sha256_mismatch",
+    "pre_run_provenance_mismatch",
+    "pre_run_source_binding_incomplete"
+  ],
+  "scope": "The raw trace chronology checks and in-memory mutation controls ran, but the wrong PRE-RUN input was supplied to the one-shot auditor. Provenance gate failed, so this is not an independent audit PASS and does not qualify the parent A01 source-composition observation. No candidate or runtime was invoked."
+}
