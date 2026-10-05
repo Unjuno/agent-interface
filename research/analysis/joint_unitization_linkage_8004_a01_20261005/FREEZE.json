@@ -1,0 +1,45 @@
+{
+  "record_type": "post-run exploratory freeze and provenance record",
+  "issue": "Unjuno/agent-interface#8004",
+  "observed_main_before_construction": "3b60eeedf0dbfe8bfab52175c832600e84f2d6b5",
+  "created_at_utc": "2026-10-05T05:32:04Z",
+  "pre_registration_status": "NOT_PREREGISTERED; exploratory authored existence fixture",
+  "runtime": {
+    "os": "macOS 27.0.1",
+    "python": "Python 3.14.5",
+    "dependencies": "Python standard library only"
+  },
+  "commands": [
+    "python3 -m unittest -v test_method",
+    "python3 -O -m unittest -v test_method",
+    "python3 candidate.py --fixture fixture.json --output run_candidate.json",
+    "python3 audit.py --fixture fixture.json --candidate run_candidate.json --output run_audit.json",
+    "python3 -m py_compile candidate.py audit.py test_method.py"
+  ],
+  "input_sha256": {
+    "fixture.json": "512e857afc382552bb5e9d73ef0952679e5d42d460f53ca52d604cd71c8437e0"
+  },
+  "source_sha256": {
+    "candidate.py": "0307ecad3d4a761ba455fc03b78472873b8ceab9736469b0cecc3de2ef40987b",
+    "audit.py": "f5b0b66514d69fe575068f30c01c08340784c6e4950b3dc066f29d113f01a392",
+    "test_method.py": "24efba063717be72b8e70907ae01e369abb23a9f0f77814f5386d42083765e5e"
+  },
+  "output_sha256": {
+    "run_candidate.json": "ad6ab8afb63420ae4987f2551d7a5c63254068b23369d06df3418ae38725f61d",
+    "run_audit.json": "e942e3ae4e390f41914961f671dd8eea086eb6576eded5da890ee9453dc00b3a"
+  },
+  "result": {
+    "candidate_disposition": "UNIDENTIFIED",
+    "assignments": 4,
+    "independent_audit": "PASS 4/4, zero errors",
+    "normal_tests": "PASS 3/3",
+    "optimized_tests": "PASS 3/3",
+    "scope": "PASS_CONSTRUCTION_ONLY; full Issue #8004 T0 HOLD"
+  },
+  "container": {
+    "status": "STOP_IMAGE_INSPECTION",
+    "command": "docker image ls --no-trunc",
+    "error": "containerd content blob open returned operation not supported",
+    "action_taken": "none beyond read-only inspection"
+  }
+}
