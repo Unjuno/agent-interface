@@ -1,0 +1,40 @@
+{
+  "allocation": "UNJUNO-8185-TRANSFORM-T0-A01-20261005-01",
+  "auditor_command": "docker run --rm --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,noexec,nosuid -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/src/auditor.py:/input/auditor.py:ro\" -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/results/FORMAL_A01/public:/input/public:ro\" -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/results/FORMAL_A01/oracle:/input/oracle:ro\" -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/results/FORMAL_A01/candidate:/input/candidate:ro\" -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/results/FORMAL_A01/audit:/output:rw\" docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 python /input/auditor.py /input/public/cases.jsonl /input/oracle/worlds.json /input/candidate/candidate.jsonl /output/audit.json",
+  "base_commit": "2c1c90c80389dc6aab6a950c7058528272979f2d",
+  "branch": "research/8185-epoch-transform-t0-a01-20261005",
+  "candidate_command": "docker run --rm --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,noexec,nosuid -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/src/candidate.py:/input/candidate.py:ro\" -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/results/FORMAL_A01/public:/input/public:ro\" -v \"$PWD/research/analysis/epoch_bound_transform_8185_t0_20261005/results/FORMAL_A01/candidate:/output:rw\" docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 python /input/candidate.py /input/public/cases.jsonl /output/candidate.jsonl",
+  "container_context": "orbstack",
+  "container_image": "docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3",
+  "container_platform": "linux/arm64",
+  "created_utc": "2026-10-05T12:39:10.482965+00:00",
+  "formal_invocations": {
+    "auditor": 1,
+    "candidate": 1,
+    "retry_allowed": false
+  },
+  "issue": 8185,
+  "python": "3.12.15",
+  "resource_policy": {
+    "cpus": 1,
+    "memory": "512m",
+    "network": "none",
+    "rootfs": "read-only",
+    "tmpfs": "/tmp:rw,noexec,nosuid"
+  },
+  "scope": "Finite deterministic synthetic axis-aligned affine method semantics only; no GUI, native API, OS input, latency, user data, or product claim.",
+  "sha256": {
+    "PROTOCOL_A01.md": "41dd9351796de556e326cc19e0cad373b847e421be7535c22a59d4a060334d7d",
+    "README.md": "705131871ad0e74bdc70759f930d7c4090925dc57579afb817a3b1ebddc3beac",
+    "results/FORMAL_A01/oracle/worlds.json": "4dd954466c718b3c5a02ac49ae7546ca66d572ac3bfd3eb0b38323d1150d7c98",
+    "results/FORMAL_A01/public/cases.jsonl": "967bae27edd97c795820de6706b65b5c12f46eff850efddd65cafb640cfdabd6",
+    "src/__pycache__/auditor.cpython-314.pyc": "7311a27aa6b930523cd920605b1359191432e72a1bdd576e59ec4f8714914375",
+    "src/__pycache__/candidate.cpython-314.pyc": "3f1242837d0ec017eb99a211956e52d760ba92bb24210d128d8082af76a9f79b",
+    "src/__pycache__/make_fixture.cpython-314.pyc": "652eb8e6014c9301f25fbcc0708d86f5dc041b879eb05e4f406f7943074c5f0c",
+    "src/__pycache__/test_construction.cpython-314.pyc": "aa44f99974caac7ad47fa49bd7cbfeeb1b4a13cd74de99862ba1f7fb5ced12b0",
+    "src/auditor.py": "3771f2d52fcd7db50fb077f20079de21f17c24b5cad33ba6b897f31a0c20d590",
+    "src/candidate.py": "203efef38f45dc08e3a73e4a6ed63b9577372108e13aa7796a8ab331efeff35e",
+    "src/make_fixture.py": "54d3c4da06f0c574aa3d406633b755e18af9d0db0a5158d6225cff99ceecce6a",
+    "src/test_construction.py": "04d9a6a7145fc4e629a159083d7dde1a72863c7377500fb1be54f480e8aa09d4"
+  }
+}

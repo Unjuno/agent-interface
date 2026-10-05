@@ -1,0 +1,80 @@
+{
+  "cases": [
+    {
+      "baseline": "ADMIT",
+      "case_id": "DIRECT_STABLE",
+      "exact_safe": true,
+      "graph": "ADMIT"
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "DIRECT_TRANSLATION_UPDATED",
+      "exact_safe": true,
+      "graph": "ADMIT"
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "DIRECT_UNIFORM_SCALE_UPDATED",
+      "exact_safe": true,
+      "graph": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "COMPOSE_MIXED_DPI",
+      "exact_safe": true,
+      "graph": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "COMPOSE_EPOCH_UPDATE",
+      "exact_safe": true,
+      "graph": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "COMPOSE_GENERAL_CHAIN",
+      "exact_safe": true,
+      "graph": "ADMIT"
+    },
+    {
+      "baseline": "ADMIT",
+      "case_id": "SHARED_UNCERTAINTY_CONTROL",
+      "exact_safe": true,
+      "graph": "ADMIT"
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "INDEPENDENT_ERROR_CONTROL",
+      "exact_safe": false,
+      "graph": "UNKNOWN"
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "INVALID_FORBIDDEN_OVERLAP",
+      "exact_safe": false,
+      "graph": "UNKNOWN"
+    },
+    {
+      "baseline": "UNKNOWN",
+      "case_id": "INVALID_TARGET_BOUNDARY",
+      "exact_safe": false,
+      "graph": "UNKNOWN"
+    }
+  ],
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "summary": {
+    "baseline_false_unknown": 3,
+    "baseline_false_unknown_reduction": 1.0,
+    "composed_baseline_false_unknown": 3,
+    "composed_false_unknown_reduction": 1.0,
+    "composed_graph_admitted": 3,
+    "composed_graph_false_unknown": 0,
+    "composed_safe_cases": 3,
+    "false_admissions": 0,
+    "graph_false_unknown": 0,
+    "invalid_controls": 9,
+    "invalid_fail_closed": 9,
+    "valid_exact_safe": 7
+  }
+}
