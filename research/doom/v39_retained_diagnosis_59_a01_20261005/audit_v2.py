@@ -15,6 +15,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 FREEZE_PATH = HERE / "FREEZE.json"
 DEFAULT_RESULT_PATH = HERE / "RESULT.json"
+DEFAULT_V2_RESULT_PATH = HERE / "RESULT_V2.json"
 REPORT_PATH = "research/doom/results/map01-v39-coast-liveness-live-01/report.json"
 EVENTS_PATH = "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl"
 
@@ -181,8 +182,107 @@ def first_difference(actual, expected, path="$result"):
     return None
 
 
-def audit(result_path=DEFAULT_RESULT_PATH):
+def _release_projection(event):
+    if event is None:
+        return None
+    owner = event.get("owner_release") or event.get("release") or {}
+    return {
+        "event": owner.get("event"),
+        "verified": owner.get("verified"),
+        "verified_ns": owner.get("verified_ns"),
+        "reason": owner.get("reason"),
+        "keys_down": owner.get("keys_down"),
+        "buttons_down": owner.get("buttons_down"),
+        "grants_input_authority": event.get("grants_input_authority"),
+    }
+
+
+def _running_action_lifecycle(plan_id, events_by_id):
+    if plan_id is None:
+        return None
+    rows = events_by_id.get(plan_id, [])
+    accepted = next((row for row in rows if row.get("event") == "accepted"), None)
+    cancelled = next((row for row in rows if row.get("event") == "cancel_requested"), None)
+    released_rows = [row for row in rows if row.get("event") == "input_released"]
+    if len(released_rows) > 1:
+        raise ValueError(f"multiple input-release rows for {plan_id}")
+    released = released_rows[0] if released_rows else None
+    terminal = next((row for row in reversed(rows) if row.get("event") == "terminal"), None)
+    return {
+        "accepted": ({
+            "accepted_ns": accepted.get("accepted_ns"),
+            "steps": accepted.get("steps"),
+            "program_sha256": accepted.get("program_sha256"),
+        } if accepted else None),
+        "cancel_requested": ({
+            "requested_ns": cancelled.get("requested_ns"),
+            "matched": cancelled.get("matched"),
+        } if cancelled else None),
+        "input_released": ({
+            "published_ns": released.get("published_ns"),
+            "owner_release": _release_projection(released),
+            "program_terminal_pending": released.get("program_terminal_pending"),
+        } if released else None),
+        "terminal": ({
+            "status": terminal.get("status"),
+            "terminal_ns": terminal.get("terminal_ns"),
+            "steps_completed": terminal.get("steps_completed"),
+            "semantic_completion": terminal.get("semantic_completion"),
+            "release": _release_projection(terminal.get("release")),
+        } if terminal else None),
+    }
+
+
+def derive_expected_v2_result():
     expected = derive_expected_result()
+    freeze = json.loads(FREEZE_PATH.read_text(encoding="utf-8"))
+    raw = load_pinned_inputs(freeze)
+    report = json.loads(raw[REPORT_PATH])
+    events = [json.loads(line) for line in raw[EVENTS_PATH].splitlines()]
+    events_by_id = {}
+    for event in events:
+        if isinstance(event.get("id"), str):
+            events_by_id.setdefault(event["id"], []).append(event)
+
+    if len(expected["decisions"]) != len(report["decisions"]):
+        raise ValueError("decision-count mismatch between derived report and raw result")
+    for summarized, raw_decision in zip(expected["decisions"], report["decisions"]):
+        partial = raw_decision.get("partial_execution")
+        guard = raw_decision.get("running_action_guard") or {}
+        plan_id = partial.get("id") if isinstance(partial, dict) else None
+        historical = guard.get("historical_first_admission") or {}
+        if plan_id is not None and historical.get("id") not in (None, plan_id):
+            raise ValueError(f"running-action identity mismatch in decision {raw_decision['iteration']}")
+
+        summarized["policy_invalidation"] = raw_decision.get("policy_invalidation")
+        summarized["running_action_invalidation"] = raw_decision.get("running_action_invalidation")
+        summarized["running_action"] = ({
+            "id": plan_id,
+            "partial_execution": partial,
+            "current_input_authority": guard.get("current_input_authority"),
+            "physical_release_verified": guard.get("physical_release_verified"),
+            "lifecycle": _running_action_lifecycle(plan_id, events_by_id),
+        } if plan_id is not None else None)
+
+    expected["schema"] = "issue59-v39-retained-diagnosis-result-v2"
+    expected["diagnostic"] = (
+        "Decision 3 separates a running action-validity revocation from policy-monitor invalidation: "
+        "the admitted plan was canceled after the revocation, owner release was verified empty, and "
+        "the terminal reports zero completed steps. The retained trace still cannot verify whether "
+        "model-authored threat descriptions are correct or attribute useful progress to a particular "
+        "action; the single aggregate score cannot be assigned to a decision."
+    )
+    return expected
+
+
+def audit(result_path=DEFAULT_V2_RESULT_PATH):
+    legacy_expected = derive_expected_result()
+    legacy_actual = json.loads(DEFAULT_RESULT_PATH.read_text(encoding="utf-8"))
+    legacy_difference = first_difference(legacy_actual, legacy_expected, "$legacy_result")
+    if legacy_difference:
+        raise ValueError(f"LEGACY_RESULT_MISMATCH: {legacy_difference}")
+
+    expected = derive_expected_v2_result()
     actual = json.loads(Path(result_path).read_text(encoding="utf-8"))
     difference = first_difference(actual, expected)
     if difference:
@@ -191,10 +291,10 @@ def audit(result_path=DEFAULT_RESULT_PATH):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--result-path", type=Path, default=DEFAULT_RESULT_PATH)
+    parser.add_argument("--result-path", type=Path, default=DEFAULT_V2_RESULT_PATH)
     args = parser.parse_args()
     audit(args.result_path)
-    print("AUDIT_V2_PASS: every result field matches frozen source-derived reconstruction")
+    print("AUDIT_V2_PASS: legacy result preserved; every v2 field matches frozen source-derived reconstruction")
 
 
 if __name__ == "__main__":

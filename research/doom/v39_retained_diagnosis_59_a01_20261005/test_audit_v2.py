@@ -10,13 +10,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 AUDITOR = HERE / "audit_v2.py"
-RESULT = HERE / "RESULT.json"
+RESULT = HERE / "RESULT_V2.json"
 
 
-def run_auditor(result_path=None):
+def run_auditor(result_path=RESULT):
     command = [sys.executable, "-B", str(AUDITOR)]
-    if result_path is not None:
-        command.extend(["--result-path", str(result_path)])
+    command.extend(["--result-path", str(result_path)])
     return subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
 
 
@@ -40,6 +39,14 @@ class FullResultAuditTests(unittest.TestCase):
                 "model_wait_ms", 0.0),
             "boolean timestamp alias": lambda result: result["decisions"][0].__setitem__(
                 "cover_accept_ns", True),
+            "invalidation conflation": lambda result: result["decisions"][3].__setitem__(
+                "policy_invalidation", result["decisions"][3]["running_action_invalidation"]),
+            "missing canceled plan": lambda result: result["decisions"][3].__setitem__(
+                "running_action", None),
+            "wrong canceled step count": lambda result: result["decisions"][3]["running_action"]
+                ["lifecycle"]["terminal"].__setitem__("steps_completed", 1),
+            "unverified empty release": lambda result: result["decisions"][3]["running_action"]
+                ["lifecycle"]["input_released"]["owner_release"].__setitem__("verified", False),
         }
         original = json.loads(RESULT.read_text(encoding="utf-8"))
         for label, mutate in mutations.items():
