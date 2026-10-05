@@ -23,3 +23,9 @@ The retained event stream has 39 `input_admission`, 28 `keys_held`, and one aggr
 ## Outcome and boundary
 
 **PASS — emitter selection gap localized.** The actual retained V39 run is not evidence against the per-key emitter implementation; its manifest points to the older path. The integration gap is selecting the v15 composition in a future authorized runner and verifying that the resulting retained `sources.json` names it and that `events.jsonl`/owner sidecar contain identity-bound per-key release rows. This does not establish that the selected composition works end-to-end, nor provide live threat-control, recovery, or MAP01 progress evidence. No live allocation was used or inferred.
+
+## Follow-up construction feasibility check
+
+- The existing `research/doom/test_session_map01_v15.py` runner-selection/lifecycle suite passes 8/8 on local CPython 3.14. Its selection case mocks `session_map01_v12.main`; it proves v15 assigns the V3 release backend and V13 executor and writes pinned module hashes, but it does not execute a key transition or recorder round trip.
+- A stronger fake-owner composition check was not run. OrbStack context is `orbstack`, but `docker info`/image inventory failed while reading the containerd content-store blob `sha256:05e01176ffcc2258ca88f7d8aafb6bd9e3915cd7ad19af196924008ff16f84b6` (`operation not supported`). Host CPython also lacks the repository's PIL/Xlib/ViZDoom dependencies. No dependency install, image pull, daemon repair, or host-side substitute was attempted.
+- Disposition: **STOP_CONSTRUCTION_ENVIRONMENT** for that stronger isolated test. This does not invalidate the static finding above. The next eligible step is to rerun a frozen source-composition construction in a healthy approved CPU container, asserting the selected v15 backend's per-key rows arrive through the same recorder callback and survive its JSONL round trip. It still would not qualify live input/game behavior.
