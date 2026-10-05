@@ -12,12 +12,16 @@ See `PLAN.md`, `FREEZE.json`, `source-manifest.json`, `source-snapshots/`, `resu
 
 ## Reproduction
 
-Use CPython 3.12 with Pillow available. The retained run used the Codex desktop bundled Python 3.12.14 / Pillow 12.3.0 recorded in `RUN.json`.
+The auditor compares retained bytes with the pinned PR #8065 commit using `git show`. In a clean clone that commit may not be present yet. Fetch and verify the frozen PR head before running the auditor:
 
 ```sh
+git fetch origin refs/pull/8065/head
+test "$(git rev-parse FETCH_HEAD)" = "4158d9b063e7cbf56828f1b0667ec2714af0ff2b"
 python3 -B audit.py
 python3 -B replay_startup.py /tmp/v39-owner-recheck-new-output
 ```
+
+Use CPython 3.12 with Pillow available. The retained run used the Codex desktop bundled Python 3.12.14 / Pillow 12.3.0 recorded in `RUN.json`.
 
 The replay refuses an existing output directory. It materializes the 56 retained exact snapshots, launches three fresh processes, and stops before owner/session construction. Two snapshots are base64-encoded solely to preserve exact source bytes while keeping `git diff --check` clean; the replay decodes and verifies each frozen SHA-256 before use.
 
