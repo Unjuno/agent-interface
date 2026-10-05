@@ -9,7 +9,7 @@ In a copied `controller_source.py`, only the two `grants_input_authority: False`
 ## Result
 
 - Candidate ran with CPython 3.11.9 and reported 2/9 cases passing, then exited 1. The two explicit hard-floor outcomes passed; cases using the default invalidation output failed closed-outcome expectations.
-- Independent audit rejected the resulting raw and exited 1. It reported top-level authority grants for six cases and outcome authority grants for five cases (the hard-floor cases supply their own outcome), for 11 rejected field observations.
+- Independent audit rejected the resulting raw and exited 1. It reported top-level authority grants for six cases and outcome authority grants for five cases (the hard-floor cases supply their own outcome), for 12 rejected field observations.
 - Mutant source SHA-256: `296483811c3b95beb408cd572c86ac3fbde9dae59f11a6b4508e69b3ffd21d26`.
 - Raw retains the mutant source hash and candidate outcomes. `CONTROL.log` captures both exit codes and the exact replacement count.
 
