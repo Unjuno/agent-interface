@@ -1,0 +1,27 @@
+{
+  "run_id": "MAP01-V39-CANCEL-RELEASE-CAUSE-CURRENT-MAIN-20261005",
+  "repository": "Unjuno/agent-interface",
+  "source_commit": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "runtime": "host Python 3.12.13",
+  "network": "not used",
+  "retries": 0,
+  "scope": "deterministic fake-Xlib construction regressions only; no allocation, game, GUI, model, X server, or physical input",
+  "tests": [
+    {
+      "command": "python -B research/live_control/test_executor_owner_cancel_cause_postsample_v1.py",
+      "source_sha256": "6195b0469dccbf48fa3ab204e54b401dacd27ffd9dcf7f1657d45e64ff641f3d",
+      "result": "PASS 1/1",
+      "exit_code": 0,
+      "stdout": "POSTSAMPLE.stdout.txt",
+      "stdout_sha256": "fa92a765618850e31c07d162bf932377e1172e3a5a45a6a656bab183b587cb75"
+    },
+    {
+      "command": "python -B research/live_control/test_executor_owner_cancel_cause_v1.py",
+      "source_sha256": "e196095fcb84b21e10c48fecf155b2c4ba699d09b3299f168f069bb4d7574cea",
+      "result": "PASS 1/1",
+      "exit_code": 0,
+      "stdout": "CANCEL-PUBLICATION.stdout.txt",
+      "stdout_sha256": "043ec199ef857c93db7be3d5d5d0842458dc8b30a5f8f2812d23d2c9b821d40a"
+    }
+  ]
+}

@@ -18,7 +18,7 @@
 
 ## Current-main regression spot checks
 
-On current `main` commit `21e55a7179adc0c41a1bfd31cc4f2c0fbb14c2ab`, the preserved cancellation-publication regression and post-sample interleaving regression each pass once (1/1, host Python 3.12). These deterministic fake-Xlib checks validate only the exercised construction paths; they do not replace CI or constitute a live experiment.
+On current `main` commit `69dd261430cb1ed875f5a76411c4a2a54777c114`, the preserved cancellation-publication regression and post-sample interleaving regression each pass once (1/1, host Python 3.12.13). Exact stdout, exit codes, test hashes, and invocation metadata are retained under [`current-main-spot-checks-69dd261/`](current-main-spot-checks-69dd261/). These deterministic fake-Xlib checks validate only the exercised construction paths; they do not replace CI or constitute a live experiment.
 
 `research/check_workspace_index.py --git-tree` passes (159 top-level directories reachable). `git diff --check` reports only four extra blank-at-EOF warnings in frozen predecessor Python scripts/tests; those bytes are intentionally preserved because their hashes are part of the recorded evidence. No production source change is included.
 
