@@ -6,7 +6,7 @@
 
 **D:** PASS requires RED to show zero drainable release measurements; GREEN must preserve exactly the F8 `CONFIRMED_PHYSICAL_UP` in a single `verified=false` partial owner-release record without aggregate fields, fault the owner, and reject follow-up DOWN before injection.
 
-**C:** Deterministic fake-display fault path; no frequency estimate or real X11 claim. This A12 owner-loop repair is separate from the current PR A11 bridge emitter ambiguity stop. Both regressions run together in the 16-test suite.
+**C:** Deterministic fake-display fault path; no frequency estimate or real X11 claim. PR #7864 tests a failure before the second `fake_input(KeyRelease)` takes effect; A12 tests failure at the subsequent `sync()` after that release request, so the schedules cover both sides of the physical request. Partial records also label the exception class with `release_error_type`. The A12 owner-loop repair is separate from the current PR A11 bridge emitter ambiguity stop. Both regressions run together in the 16-test suite.
 
 **U:** Windows 10 build 26300, CPython 3.11.9; fake display only. No real X11, OS input, application effect, live allocation, gameplay, safety, recovery efficacy, or latency evidence.
 

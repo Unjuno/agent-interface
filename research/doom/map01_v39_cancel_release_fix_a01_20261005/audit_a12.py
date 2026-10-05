@@ -29,6 +29,7 @@ for name,count in [('candidate-suite-a12',16),('candidate-suite-a12-opt',16),('e
 for k,v in [('baseline_red',1),('candidate_green',0),('candidate_suite',0),('candidate_suite_optimized',0),('executor_v12_expiry_composition',0),('owner_compatibility',0),('existing_bridge',0)]:
     assert result['tests'][k]['exit']==v,k
 assert result['behavior']['later_key_release_sync_failure_preserves_earlier_confirmed_up'] is True
+assert 'release_error_type' in green or 'release_error_type' in (HERE/'test_cancel_release.py').read_text()
 names=set()
 for line in (HERE/'SHA256SUMS').read_text().splitlines():
     digest,name=line.split('  ',1)

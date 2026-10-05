@@ -399,6 +399,7 @@ class CancellationReceiptTests(unittest.TestCase):
                        if row.get("event") == "owner_release"]
             self.assertEqual(len(partial), 1)
             self.assertFalse(partial[0]["verified"])
+            self.assertEqual(partial[0]["release_error_type"], "RuntimeError")
             self.assertNotIn("keys_down", partial[0])
             receipts = partial[0]["per_key_release_measurements"]
             self.assertEqual(len(receipts), 1)

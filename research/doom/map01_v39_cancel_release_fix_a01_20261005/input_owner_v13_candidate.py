@@ -347,7 +347,8 @@ class InputOwner:
                 self.records.append(dict(
                     event='owner_release', reason=reason, verified=False,
                     valid_until_ns=active.deadline if active else None,
-                    per_key_release_measurements=list(per_key_release_measurements)))
+                    per_key_release_measurements=list(per_key_release_measurements),
+                    release_error_type=type(exc).__name__))
                 fault=exc
                 active=None
                 raise
