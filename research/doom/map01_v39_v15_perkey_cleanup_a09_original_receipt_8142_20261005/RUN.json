@@ -1,0 +1,72 @@
+{
+  "auditor_command": "<bundled-python> <package>/audit.py <package>/results/candidate.json",
+  "auditor_exit_code": 0,
+  "auditor_invocations": 1,
+  "auditor_sha256": "9112a88541b0999847fea806b4ecf0aebd1a46d186c2df4e0d055f6f2ae30428",
+  "auditor_stderr": "",
+  "auditor_stdout": "PASS_CONSTRUCTION_SCOPED; two cases; zero failures",
+  "candidate_command": "A09_ROOT=/Users/taka/Documents/Codex/2026-10-03/new-chat-4/work/unjuno-v39-projection-strictness-b01 A09_OUT=/Users/taka/Documents/Codex/2026-10-03/new-chat-4/work/unjuno-v39-projection-strictness-b01/research/doom/map01_v39_v15_perkey_cleanup_a09_20261005/results /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 research/doom/map01_v39_v15_perkey_cleanup_a09_20261005/candidate.py",
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "candidate_raw": "results/candidate.json",
+  "candidate_raw_sha256": "59ae3c72df6a42b856e054c3314bcc49b29bc69102c6ae49595dc17027cc556a",
+  "candidate_sha256": "6aa318aa5fdb9516c28ba180bafc43405d9e0af544cc7dc89ff70af8f8c9fff1",
+  "candidate_stderr": "",
+  "candidate_stdout": "{\"raw\": \"<package>/results/candidate.json\", \"cases\": 2, \"loss_server_down\": [], \"loss_terminal_status\": \"completed\"}",
+  "case_summary": [
+    {
+      "arm": "control",
+      "dropped_keyrelease_count": 0,
+      "final_server_keycodes_down": [],
+      "first_attempt_after": false,
+      "keyup_attempt_count": 1,
+      "steps_completed": 1,
+      "terminal_release_verified": true,
+      "terminal_status": "completed"
+    },
+    {
+      "arm": "drop",
+      "dropped_keyrelease_count": 1,
+      "final_server_keycodes_down": [],
+      "first_attempt_after": true,
+      "keyup_attempt_count": 2,
+      "steps_completed": 1,
+      "terminal_release_verified": true,
+      "terminal_status": "completed"
+    }
+  ],
+  "container_execution": false,
+  "container_preflight": "STOP_ORBSTACK_IMAGE_READ_UNSUPPORTED; see A08 container_probe.txt",
+  "existing_regression_command": "python -m unittest -v test_input_transition_owner_v4 test_input_owner_v12_explicit_up_cancel test_input_owner_v12_cleanup_after_explicit_up",
+  "existing_regression_exit_code": 0,
+  "existing_regression_logs": [
+    "results/existing_tests.stdout.log",
+    "results/existing_tests.stderr.log"
+  ],
+  "existing_regression_tests": 9,
+  "existing_regression_working_directory": "research/live_control",
+  "host_pillow": "12.3.0",
+  "host_python": "3.12.14",
+  "outcome": "PASS_CONSTRUCTION_SCOPED",
+  "run_id": "a09-current-main-712a71b-20261005-one-shot",
+  "schema": "v39-v15-perkey-cleanup-a09-run-v1",
+  "scope": {
+    "application_effect": false,
+    "doom": false,
+    "formal_live_allocation": false,
+    "gui": false,
+    "model": false,
+    "physical_keyboard": false,
+    "real_x11": false
+  },
+  "source_files_verified": 21,
+  "source_files_verified_after_run": 21,
+  "source_manifest_sha256": "bf7b2d911854cb6fdaabedabdb853bb2fc3bffd5049b3f4c8e5b3c1355a4222a",
+  "source_manifest_verification_failures": [],
+  "subsequent_main_source_closure_diff": {
+    "changed_paths": [],
+    "checked_paths": 21,
+    "meaning": "all frozen production source files remained identical after main advanced"
+  },
+  "subsequent_main_tip": "38fe303fec59cde15f708483cae00bf617f3bdd0"
+}
