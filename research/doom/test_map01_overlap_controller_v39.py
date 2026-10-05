@@ -162,19 +162,22 @@ class Map01V39CoastTests(unittest.TestCase):
             def flush(self): pass
 
         class Planner:
-            def __init__(self): self.interrupted = []
+            def __init__(self, trace): self.interrupted = []; self.trace = trace
             def interrupt(self, handle):
                 self.interrupted.append(handle)
+                self.trace.append("planner_interrupt")
                 return {"status": "interrupted"}
 
         process = types.SimpleNamespace(stdin=Stdin())
-        planner = Planner()
+        trace = []
+        planner = Planner(trace)
         handle = object()
         accepted = {"event": "accepted", "id": "cover-renew-1"}
         responses = [accepted, terminal]
 
         def wait(predicate):
             row = responses.pop(0)
+            trace.append("wait_" + row["event"])
             self.assertTrue(predicate(row))
             return row
 
@@ -195,6 +198,7 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(result[5], ["cover-0", "cover-renew-1"])
         self.assertEqual(result[6], {"status": "accepted", "response": accepted})
         self.assertEqual(planner.interrupted, [handle])
+        self.assertEqual(trace, ["planner_interrupt", "wait_accepted", "wait_terminal"])
         self.assertEqual(json.loads(process.stdin.writes[0]),
                          {"op": "cancel", "id": "cover-renew-1"})
 
@@ -210,13 +214,15 @@ class Map01V39CoastTests(unittest.TestCase):
             def flush(self): pass
 
         class Planner:
-            def __init__(self): self.interrupted = []
+            def __init__(self, trace): self.interrupted = []; self.trace = trace
             def interrupt(self, handle):
                 self.interrupted.append(handle)
+                self.trace.append("planner_interrupt")
                 return {"status": "interrupted"}
 
         process = types.SimpleNamespace(stdin=Stdin())
-        planner = Planner()
+        trace = []
+        planner = Planner(trace)
         handle = object()
         rejected = {"event": "rejected",
                     "reason": "latest observation sequence required before input"}
@@ -224,6 +230,7 @@ class Map01V39CoastTests(unittest.TestCase):
 
         def wait(predicate):
             waits.append(rejected)
+            trace.append("wait_rejected")
             self.assertTrue(predicate(rejected))
             return rejected
 
@@ -242,6 +249,7 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(result[6], {"status": "rejected", "response": rejected})
         self.assertEqual(planner.interrupted, [handle])
         self.assertEqual(waits, [rejected])
+        self.assertEqual(trace, ["planner_interrupt", "wait_rejected"])
         self.assertEqual(process.stdin.writes, [])
 
 

@@ -376,8 +376,10 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
     return monitor, receipt
 
 
-def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
-    planner_interrupt = planner.interrupt(planner_handle)
+def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id,
+                             planner_interrupt=None):
+    if planner_interrupt is None:
+        planner_interrupt = planner.interrupt(planner_handle)
     process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
     process.stdin.flush()
     terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
@@ -985,19 +987,18 @@ def main():
                     next_accepted=submit_cover(next_cover)
                     if next_accepted["event"] == "policy_invalidation":
                         invalidation=next_accepted["invalidation"]
+                        planner_interrupt=planner.interrupt(planner_handle)
                         renewal_admission_resolution=resolve_invalidated_cover_submission(
                             wait,next_cover)
                         if renewal_admission_resolution["status"] == "accepted":
                             cover_ids.append(next_cover)
                             current_cover=next_cover
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
-                                planner,planner_handle,process,wait,current_cover)
+                                planner,planner_handle,process,wait,current_cover,
+                                planner_interrupt=planner_interrupt)
                             cover_terminals.append(current_terminal)
-                        else:
-                            # The prior terminal is already observed and released. A
-                            # rejected renewal has no program to cancel, but policy
-                            # invalidation still makes the pending answer ineligible.
-                            planner_interrupt=planner.interrupt(planner_handle)
+                        # If rejected, the prior terminal remains current; the
+                        # invalidated answer is already interrupted.
                         break
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)

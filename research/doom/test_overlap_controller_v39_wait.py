@@ -98,6 +98,34 @@ def extract_top_level_function(name):
     return scope[name]
 
 
+def extract_renewal_invalidation_branch():
+    tree = ast.parse(SOURCE.read_bytes())
+    main = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                and node.name == "main")
+    branch = next(node for node in ast.walk(main)
+                  if isinstance(node, ast.If) and
+                  any(isinstance(child, ast.Name) and child.id == "next_accepted"
+                      for child in ast.walk(node.test)) and
+                  "policy_invalidation" in ast.dump(node.test))
+    resolver = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                    and node.name == "resolve_invalidated_cover_submission")
+    cancel = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                  and node.name == "cancel_invalidated_cover")
+    factory = ast.parse(
+        "def factory(next_accepted, next_cover, planner, planner_handle, process, wait, "
+        "cover_terminals, cover_ids, current_cover, current_terminal):\n"
+        "    invalidation = None\n    planner_interrupt = None\n"
+        "    renewal_admission_resolution = None\n").body[0]
+    factory.body = [ast.While(test=ast.Constant(value=True), body=[branch], orelse=[])]
+    factory.body += ast.parse(
+        "return (invalidation, current_cover, planner_interrupt, current_terminal, "
+        "cover_terminals, cover_ids, renewal_admission_resolution)\n").body
+    module = ast.fix_missing_locations(ast.Module(body=[resolver, cancel, factory], type_ignores=[]))
+    scope = {"json": json}
+    exec(compile(module, str(SOURCE), "exec"), scope)
+    return scope["factory"]
+
+
 def extract_initial_cover_gate():
     tree = ast.parse(SOURCE.read_bytes())
     main = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
@@ -339,6 +367,75 @@ class WaitTests(unittest.TestCase):
         self.assertEqual(cover_terminals, [])
         writes = [json.loads(line) for line in process.stdin.getvalue().splitlines()]
         self.assertEqual([row["op"] for row in writes], ["submit"])
+
+    def test_renewal_invalidation_interrupts_before_accepted_ack_and_reuses_receipt(self):
+        trace = []
+        accepted = {"event": "accepted", "id": "cover-renew-1", "accepted_ns": 100}
+        terminal = {"event": "terminal", "id": "cover-renew-1", "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+
+        class Planner:
+            def interrupt(self, handle):
+                trace.append("interrupt")
+                return {"status": "interrupted", "sequence": 1}
+
+        class Stdin:
+            def write(self, value): trace.append("write_cancel")
+            def flush(self): pass
+
+        def wait(predicate):
+            row = accepted if "wait_ack" not in trace else terminal
+            trace.append("wait_ack" if row is accepted else "wait_terminal")
+            self.assertTrue(predicate(row))
+            return row
+
+        result = extract_renewal_invalidation_branch()(
+            {"event": "policy_invalidation", "invalidation": {"reason": "health"}},
+            "cover-renew-1", Planner(), object(), types.SimpleNamespace(stdin=Stdin()), wait,
+            [{"event": "terminal", "id": "cover-0", "status": "expired",
+              "release": {"verified": True, "keys_down": [], "buttons_down": []}}],
+            ["cover-0"], "cover-0", None)
+
+        self.assertEqual(trace[0], "interrupt")
+        self.assertEqual(trace.count("interrupt"), 1)
+        self.assertLess(trace.index("interrupt"), trace.index("wait_ack"))
+        self.assertEqual(result[2], {"status": "interrupted", "sequence": 1})
+        self.assertEqual(result[3], terminal)
+        self.assertEqual(result[5], ["cover-0", "cover-renew-1"])
+        self.assertEqual(result[6], {"status": "accepted", "response": accepted})
+
+    def test_renewal_invalidation_interrupts_before_rejected_ack_without_cancel(self):
+        trace = []
+        rejected = {"event": "rejected", "reason": "stale_sequence"}
+
+        class Planner:
+            def interrupt(self, handle):
+                trace.append("interrupt")
+                return {"status": "interrupted", "sequence": 2}
+
+        class Stdin:
+            def write(self, value): trace.append("unexpected_write")
+            def flush(self): pass
+
+        def wait(predicate):
+            trace.append("wait_ack")
+            self.assertTrue(predicate(rejected))
+            return rejected
+
+        prior = {"event": "terminal", "id": "cover-0", "status": "expired",
+                 "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+        terminals, ids = [prior], ["cover-0"]
+        result = extract_renewal_invalidation_branch()(
+            {"event": "policy_invalidation", "invalidation": {"reason": "health"}},
+            "cover-renew-1", Planner(), object(), types.SimpleNamespace(stdin=Stdin()), wait,
+            terminals, ids, "cover-0", prior)
+
+        self.assertEqual(trace, ["interrupt", "wait_ack"])
+        self.assertEqual(result[2], {"status": "interrupted", "sequence": 2})
+        self.assertIs(result[3], prior)
+        self.assertEqual(terminals, [prior])
+        self.assertEqual(ids, ["cover-0"])
+        self.assertEqual(result[6], {"status": "rejected", "response": rejected})
 
     def test_soft_observation_stale_submit_is_recorded_without_aborting_controller(self):
         observation = {"event": "observation", "sequence": 8, "health": 99,
