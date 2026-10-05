@@ -820,6 +820,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
 - [`provenance_memory_authority_7167_t0_20261004/`](provenance_memory_authority_7167_t0_20261004/)
 - [`quality_diversity_5908_t1_20261002/`](quality_diversity_5908_t1_20261002/)
+- [`query_private_locator_8000_t0_eligibility_a01_20261005/`](query_private_locator_8000_t0_eligibility_a01_20261005/)
 - [`query_version_writer_atomicity_v1/`](query_version_writer_atomicity_v1/)
 - [`quiescent_epoch_binding_5361_t1/`](quiescent_epoch_binding_5361_t1/)
 - [`quiescent_reclamation_5361_t0_20261001/`](quiescent_reclamation_5361_t0_20261001/)
@@ -1056,6 +1057,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
 </details>
+
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.

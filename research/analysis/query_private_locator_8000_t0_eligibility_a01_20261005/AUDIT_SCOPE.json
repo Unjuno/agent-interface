@@ -1,0 +1,43 @@
+{
+  "base_commit": "b5be19963454ce5edafc945b78b100012952dd15",
+  "bytes_scanned": 632058593,
+  "disposition": "HOLD_NO_ELIGIBLE_LOOKUP",
+  "eligibility_rule": "source-bound artifact held by one worker + a distinct worker's genuine claim-dependent retrieval opportunity + observable discovery/reacquisition outcome or cost",
+  "files_scanned": 14169,
+  "files_size_skipped": 0,
+  "match_count": 0,
+  "matches": [],
+  "note": "Matches are leads, not qualifying traces. Each possible record must be manually checked against the three-part eligibility rule; prior proposals/contracts do not establish an executed retrieval opportunity.",
+  "scope": {
+    "excluded_parts": [
+      ".git",
+      "__pycache__",
+      "decoded_material",
+      "images",
+      "node_modules",
+      "source_bundle"
+    ],
+    "extensions": [
+      ".csv",
+      ".json",
+      ".jsonl",
+      ".md",
+      ".py",
+      ".txt",
+      ".yaml",
+      ".yml"
+    ],
+    "max_file_bytes": 67108864,
+    "max_total_bytes": 1073741824,
+    "patterns": [
+      "cross[- ]worker.{0,80}(retriev|lookup|holder|artifact)",
+      "(retriev|lookup|holder|artifact).{0,80}cross[- ]worker",
+      "claim[- ]dependent.{0,80}(retriev|lookup)",
+      "evidence[- ]location|artifact[- ]locator|query[- ]private",
+      "broadcast.{0,80}reacquisition|reacquisition.{0,80}broadcast",
+      "who currently holds.{0,80}(evidence|artifact)"
+    ],
+    "repository_subtree": "research/"
+  },
+  "skipped_files": []
+}
