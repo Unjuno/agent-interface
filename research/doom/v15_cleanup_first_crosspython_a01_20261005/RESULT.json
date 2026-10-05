@@ -1,0 +1,19 @@
+{
+  "schema": "v15-cleanup-crosspython-result-v1",
+  "disposition": "STOP_CONTAINER_IMAGE_MISSING_PIL",
+  "source_tree": "2ce07e058ed6b868ea97799e9a7b65deff21da71",
+  "current_main": "2c1c90c80389dc6aab6a950c7058528272979f2d",
+  "pr_number": 8094,
+  "pr_head": "a3132379705d10f2bbfd122de8dad7c0298c6e7b",
+  "source_file_count": 1996,
+  "source_bytes": 11194822,
+  "modes": {
+    "normal": {"exit_code": 1, "tests_discovered": 47, "errors": 8, "dependency_errors": "ModuleNotFoundError: No module named 'PIL'"},
+    "optimized": {"exit_code": 1, "tests_discovered": 47, "errors": 8, "dependency_errors": "ModuleNotFoundError: No module named 'PIL'"}
+  },
+  "candidate_disposition": "not graded; required test imports were unavailable in the pinned image",
+  "live_game": false,
+  "model_calls": 0,
+  "native_x11": false,
+  "memory_enforcement_claim": false
+}
