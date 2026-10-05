@@ -414,3 +414,8 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
 - [Retained V39 ammo-timeline audit mutation evidence](v39_fire_cover_ammo_timeline_audit_a01_20261005/README.md) — rescued from closed PR #7737 as audit-integrity evidence: A02 rejects all six saved-result corruptions. It does not duplicate the separate repair in #7726 or upgrade the underlying observation.
 | Astra decision-4 dense HUD replay (#59) | [`map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md`](map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md) — 60 encoded frames and independent pixel-delta audit bound the first health-HUD change to game 46.8–47.0 s during model wait; the final 94→87 change straddles the observed return boundary. Posthoc single-run evidence only; no causal or live-control claim. |
+
+
+## V39/V15 A08 sparse-checkout STOP custody
+
+[map01_v39_v15_perkey_cleanup_a08_sparse_checkout_stop_20261005/](map01_v39_v15_perkey_cleanup_a08_sparse_checkout_stop_20261005/) preserves the separate #8142 A08 attempt byte-for-byte after relocation: sparse checkout omitted a frozen import, so the one candidate invocation stopped before treatment and produced no raw candidate result. This STOP is distinct from the canonical #8126 A08 construction PASS. #8142's A09 result and audit are already represented on main; no duplicate is added here.
