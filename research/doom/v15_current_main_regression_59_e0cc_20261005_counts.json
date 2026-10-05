@@ -1,0 +1,21 @@
+{
+  "schema": "test-execution-count-clarification-v1",
+  "source": "v15_current_main_regression_59_e0cc_20261005/final-execution.json",
+  "source_sha256": "24291639d605c6ce9bc9b54cde6a4370cb86f20dcbb2deeaf5028d4b58713204",
+  "modules": 17,
+  "successful_test_executions": 153,
+  "distinct_test_methods": 144,
+  "counting_rule": "Normalize __main__ to each executed test filename stem; count qualified module/class/method identities. The cleanup module imports nine KeyMeasurementTests that also run in their own module.",
+  "duplicates": {
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_batch_pre_or_post_sample_failure_suppresses_every_bracket": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_cleanup_then_same_key_cannot_reuse_retired_identity": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_duplicate_down_cannot_create_or_complete_a_second_pair": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_first_and_last_key_retry_keep_per_key_up_brackets": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_measurement_disabled_keeps_legacy_query_count": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_rehold_same_key_mints_a_distinct_identity": 2,
+    "test_input_owner_v12_key_measurement.KeyMeasurementTests.test_two_key_down_and_batch_up_preserve_a01_pairs": 2
+  },
+  "clarification": "The retained report and unittest output count 153 executions. They cover 144 distinct methods, not 153 distinct methods. This additive clarification changes no test outcome, raw, source, freeze, or prior archive manifest."
+}
