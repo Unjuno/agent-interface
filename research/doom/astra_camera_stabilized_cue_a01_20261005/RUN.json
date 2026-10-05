@@ -1,0 +1,27 @@
+{
+  "format": "astra_camera_stabilized_cue_a01_run_v1",
+  "frozen_main_sha": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "main_ref_rechecked_before_candidate": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "candidate": {
+    "command": "python3 -B research/doom/astra_camera_stabilized_cue_a01_20261005/candidate.py research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4 research/doom/astra_camera_stabilized_cue_a01_20261005",
+    "invocations": 1,
+    "exit_code": 0,
+    "tool_elapsed_seconds": 3.8,
+    "output_files_written_utc": {
+      "frames.rgb": "2026-10-05 02:44:03 UTC",
+      "raw.json": "2026-10-05 02:44:07 UTC"
+    },
+    "retry": 0
+  },
+  "auditor": {
+    "command": "python3 -B research/doom/astra_camera_stabilized_cue_a01_20261005/audit.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "tool_elapsed_seconds": 4.0,
+    "output_written_utc": "2026-10-05 02:44:20 UTC",
+    "status": "PASS_RAW_RECONSTRUCTION",
+    "errors": []
+  },
+  "formal_live_allocation": "not requested, assigned, or used",
+  "limitations": "The exact process start instant was not separately timestamped; output modification times and tool call exit/elapsed evidence are retained."
+}

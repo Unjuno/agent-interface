@@ -1,0 +1,19 @@
+{
+  "candidate_or_runtime_executions": 0,
+  "declared_mutations": 9,
+  "disposition": "PASS_DECLARED_RAW_AUDIT_MUTATION_GATE",
+  "input": "one immutable synthetic fake-display A02 raw record",
+  "input_sha256": "7a1a85a1cc07971b2bf6aa5e1d62541305b9fe8b55482fe46506d90b90db8b4f",
+  "limitations": [
+    "single saved synthetic record and bounded mutation family; not an exhaustive audit proof",
+    "no live X11, OS input, GUI, application consumption/effect, gameplay, useful feedback, recovery, or #59 completion",
+    "no GPU use or allocation",
+    "configured memory enforcement was not verified because WSLc reported missing swap/cgroup capability"
+  ],
+  "normal_and_optimized_modes": true,
+  "positive_unchanged_raw_accepted": true,
+  "predecessor_additional_false_accepts": 3,
+  "retries": 0,
+  "schema": "map01_v39_a02_receipt_metadata_audit_successor_result_v1",
+  "successor_additional_mutations_rejected": 3
+}

@@ -1,0 +1,19 @@
+{
+  "cpus_requested": 1,
+  "docker_warnings": [
+    "DOCKER_INSECURE_NO_IPTABLES_RAW is set",
+    "cgroup v2; CPU quota not enforcement-verified",
+    "swap not assessed"
+  ],
+  "exit_code": 0,
+  "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "network": "none",
+  "output_mount": "writable distinct mount",
+  "output_write_readback": true,
+  "platform": "linux/arm64",
+  "rootfs_read_only": true,
+  "source_mount_read_only": true,
+  "source_read": true,
+  "source_write_rejected": true,
+  "tmpfs": "16 MiB,noexec,nosuid"
+}

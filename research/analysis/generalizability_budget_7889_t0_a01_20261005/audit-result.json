@@ -1,0 +1,250 @@
+{
+  "checks": [
+    {
+      "check": "ledger_row_count",
+      "evidence": {
+        "actual": 48000,
+        "expected": 48000
+      },
+      "pass": true
+    },
+    {
+      "check": "all_finite_rows",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "unique_complete_replication_keys",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_main_only_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_main_only_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_main_only_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_task_interaction_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_task_interaction_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_task_interaction_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_app_interaction_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_app_interaction_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_app_interaction_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_combined_interactions_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_combined_interactions_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "summary_matches_raw_combined_interactions_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "component_gate",
+      "evidence": 0.005276915339251231,
+      "pass": true
+    },
+    {
+      "check": "decision_frequency_gate",
+      "evidence": 0.012703022849251067,
+      "pass": true
+    },
+    {
+      "check": "main_only_gate",
+      "evidence": -0.0004999999999999449,
+      "pass": true
+    },
+    {
+      "check": "interaction_gate",
+      "evidence": {
+        "app_interaction": 0.08499999999999996,
+        "combined_interactions": 0.12549999999999994,
+        "task_interaction": 0.14549999999999996
+      },
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_rows_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_binomial_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_decisions_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_hard_exact_repeat_cells",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_rows_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_binomial_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_decisions_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_hard_exact_within_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_rows_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_binomial_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_ledger_decisions_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_hard_exact_app_breadth",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "rare_hard_repeat_lowest",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "missing_cell_holds",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "unknown_outcome_holds",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "complete_cell_control_passes",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "mutation_detected_repeats_as_independent_tasks",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "mutation_detected_omit_task_interaction",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "mutation_detected_pool_away_app_effect",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "mutation_detected_drop_unknown_outcomes",
+      "evidence": null,
+      "pass": true
+    },
+    {
+      "check": "mutation_detected_omit_rare_hard_stratum",
+      "evidence": null,
+      "pass": true
+    }
+  ],
+  "gate_metrics": {
+    "component_mean_abs_error_max": 0.005276915339251231,
+    "decision_frequency_abs_error_max": 0.012703022849251067,
+    "interaction_breadth_advantages": {
+      "app_interaction": 0.08499999999999996,
+      "combined_interactions": 0.12549999999999994,
+      "task_interaction": 0.14549999999999996
+    },
+    "main_only_breadth_advantage": -0.0004999999999999449
+  },
+  "rare_hard_exact": {
+    "app_breadth": {
+      "distinct_tasks": 48,
+      "empirical": 0.91725,
+      "exact": 0.916582330490064,
+      "reported": 0.916582330490064
+    },
+    "repeat_cells": {
+      "distinct_tasks": 12,
+      "empirical": 0.88175,
+      "exact": 0.8863848717161292,
+      "reported": 0.8863848717161292
+    },
+    "within_app_breadth": {
+      "distinct_tasks": 48,
+      "empirical": 0.9185,
+      "exact": 0.916582330490064,
+      "reported": 0.916582330490064
+    }
+  },
+  "sha256": {
+    "auditor_source": "6860938a815c74b1a962060f4548b9bf61366b715fb53fe921659ef028716d9e",
+    "candidate_result": "188226431aa38d4133a7bc18996950211b6fd70f546dd377f846872df76d3687",
+    "candidate_source": "033b96479113d7f988bf169c7dd39967ed828e1ef1be8082fbd01959ed0511ce",
+    "rare_ledger": "f0accffd7f257726cf8f40eed31cff397bce51123354af9888113b6dab84b6c1",
+    "raw_ledger": "a02171fb2a677193022cdc863343646c3da020aa4c3adcacef9962fe35d30c7f",
+    "study_input": "a46d2a8d8ab749fdc91b19bb4beab33bb5b77ef163ff50d6f69d70e34997d98f"
+  },
+  "status": "PASS_METHOD_SCOPED"
+}

@@ -1,0 +1,87 @@
+{
+  "allocation": "RUNTIME-ELIGIBILITY-8150-T0-20261005-01",
+  "frozen_main": "aeed696ff756d68497faed39b92e3546cb144972",
+  "cases": [
+    {
+      "id": "K1",
+      "workload": "Trusted standard-library single-container CPU replay",
+      "requirements": [
+        "pinned Linux image",
+        "read-only input"
+      ],
+      "explicitly_not_required": [
+        "hostile-code containment",
+        "host credentials isolation",
+        "Compose/Engine API",
+        "hard memory ceiling"
+      ],
+      "assurance": "historical scoped capability evidence; no present launch authority"
+    },
+    {
+      "id": "K2",
+      "workload": "Execute arbitrary untrusted code/artifacts",
+      "requirements": [
+        "containment from Windows user files/credentials",
+        "containment from peer workloads"
+      ],
+      "attacker": "malicious code may exploit available integration surfaces"
+    },
+    {
+      "id": "K3",
+      "workload": "Trusted CPU job sharing resources with a protected co-resident workload",
+      "requirements": [
+        "effective hard memory ceiling <=128 MiB"
+      ],
+      "assurance": "effective enforcement must be observed, not merely requested"
+    },
+    {
+      "id": "K4",
+      "workload": "Trusted integration fixture",
+      "requirements": [
+        "Docker Compose or Docker Engine API"
+      ],
+      "assurance": "required runtime feature must be available on attached host"
+    },
+    {
+      "id": "K5",
+      "workload": "Trusted code with strict no-egress requirement",
+      "requirements": [
+        "outbound network denial independently demonstrated"
+      ],
+      "assurance": "configuration alone insufficient; T0 cannot run network probes"
+    },
+    {
+      "id": "K6",
+      "workload": "Trusted finite CPU replay",
+      "requirements": [
+        "source bind readable",
+        "source bind rejects writes",
+        "separate writable output"
+      ],
+      "assurance": "retained scoped observation is acceptable for method classification only"
+    },
+    {
+      "id": "K7",
+      "workload": "Isolation-requiring task with unknown runtime identity/configuration/owner",
+      "requirements": [
+        "all declared isolation controls evidenced",
+        "runtime owner/current readiness known"
+      ],
+      "assurance": "unknown is not satisfied"
+    }
+  ],
+  "mutations": [
+    {
+      "id": "M1",
+      "mutation": "Remove the retained EROFS write-rejection observation from K6."
+    },
+    {
+      "id": "M2",
+      "mutation": "Relabel WSLc's accepted memory request as an effective cap while retaining the 384 MiB counterexample."
+    },
+    {
+      "id": "M3",
+      "mutation": "Omit the Windows/WSL trust-boundary assumption from K2."
+    }
+  ]
+}

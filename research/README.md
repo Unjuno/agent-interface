@@ -6,6 +6,13 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+
+- Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — finite-model PASS_METHOD_SCOPED/H_PASS_SCOPED; OrbStack unavailable, host-only; no full-CBS or runtime claim. [Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
+
+- Issue #6367 T0: [matched protective-adaptation method fixture](analysis/protective_local_adaptation_6367_t0_20261004/REPORT.md) — synthetic `METHOD_PASS_SCOPED` only; host-only after OrbStack inspection failed; not live #59 evidence. [Post-review top-level audit](analysis/protective_local_adaptation_6367_reaudit_v1/README.md) rejects the frozen V1 auditor's top-level safety-disposition blind spot.
+
+- Issue #7834 T0 A01: [carryover-aware optional-adaptation estimator](analysis/optional_adaptation_mrt_7834_t0_a01_20261005/REPORT.md) — exact two-cluster finite enumeration passed its scoped oracle/audit gate; host-only because OrbStack's content store was unavailable; no live-interface or user-effect claim.
 - Issue #17: [notification identity R03 arrival-before-wait evidence](concurrency/notification_identity_r03_17_20261004_b64b/RESCUE_20261004.md) — preserves R01/R02/R03 evidence and failures as inert archive; active client patch is excluded, and all FINAL-v5 vote/applicability/application gates remain open.
 - Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
 
@@ -119,6 +126,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 ## Analytical studies
 
+- [`analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md`](analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md) — Issue #6053 T1 read-only PCAA eligibility audit: `HOLD_NO_ELIGIBLE_CHAIN`; Arena v1 has stage diagnostics but no matched upstream perturbation/re-grounding contrast or hardened held-out source isolation.
 - [`analysis/action_bound_residual_6619_t0_v1/REPORT.md`](analysis/action_bound_residual_6619_t0_v1/REPORT.md) — Issue #6619 WSLc T0 retained as audit-control STOP; no scientific PASS or live-control claim.
 - [Cyclic grounding #4431 / Draft PR #4443 published-byte archive](analysis/cyclic_justification_grounding_delivery_t6g2_v1/ARCHIVAL_QUALIFICATION.md) — nine exact published files (25,174 bytes); reported `PASS_LOCAL_CYCLIC_GROUNDING_CONTRACT` remains separate from `HOLD_REMOTE_RAW_DELIVERY`; full raw/audit/control/process bundle absent, no independent reproduction or runtime promotion.
 
@@ -152,7 +160,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 ### Live control and integration
 
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
-- [#59/#7504 per-key cancellation release bounds](live_control/cancel_batch_key_release_xvfb_7504/PORT_VALIDATION.md) — current-main V13 port and isolated fake-Xlib regression; original three STOPs and one nonformal Xvfb smoke remain preserved, with no physical/application claim.
+- [#59/#7504 per-key cancellation release bounds](live_control/cancel_batch_key_release_xvfb_7504/PORT_VALIDATION.md) — current-main V13 port and isolated fake-Xlib regression; original three STOPs and one nonformal Xvfb smoke remain preserved. [2026-10-05 current-main rerun](live_control/cancel_batch_key_release_xvfb_7504/CURRENT_MAIN_VERIFICATION.md) passes focused tests on merged source; no physical/application claim.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
 - [Tk first-character #5260 construction record](integration/tk_firstchar_5260_a01_20261002/PREREG.md) — construction-only Docker/Xvfb runner/auditor checks; proposed 96-trial allocation remains HOLD_NOT_AUTHORIZED.
