@@ -1,0 +1,18 @@
+{
+  "schema": "map01-v39-scorer-only-session-optin-freeze-v1",
+  "base_commit": "54af15a28d7d6d10d05221014ddf7a75d73b3e49",
+  "candidate_sources": {
+    "research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "research/doom/test_map01_overlap_controller_v39.py": "0739c7a081ea7c1c308e163108e7a2131da5ac4505c264e26912c4aab054c79f"
+  },
+  "selected_dependencies": {
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "research/doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9",
+    "research/live_control/input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3"
+  },
+  "run_scope": "source-only command-selection and pre-existing V15 construction regressions; no MAP01 allocation",
+  "decision_gate": "PASS_SOURCE_SELECTION_ONLY iff default resolves to session_map01_v12.py, explicit flag resolves to session_map01_v15.py with identical arguments, scorer sink tests retain controller_visible=false, and V15 lifecycle/source-composition tests pass"
+}
