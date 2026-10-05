@@ -12,3 +12,8 @@ This note records the rescue delivery against current main. The historical A01/A
 ## Latest synchronization — 2026-10-05
 
 Rescue branch refreshed against current main `fd4f9e4533aa5baa5952e89cd830c98b26e7c537`. The 13 evidence package blobs are unchanged; only the index and reconciliation note are refreshed.
+
+
+## Latest synchronization — 2026-10-05
+
+Rescue branch refreshed against current main `21fecd58b9de30073c97234124e73b78c67d4b0c`. The 13 source-pinned evidence package blobs remain unchanged; only the index and reconciliation note are refreshed.
