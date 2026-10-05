@@ -1,0 +1,20 @@
+{
+  "audit_status": "PASS_AUDIT_SCOPED",
+  "base_error_count": 0,
+  "decision": "RETAINED_FAIL",
+  "errors": [],
+  "missed_controls": [],
+  "mutation_count": 6,
+  "mutation_rejections": 6,
+  "rejected_controls": [
+    "missing first admission",
+    "duplicate admission IDs",
+    "false exact-match status",
+    "wrong release ID",
+    "authority overclaim",
+    "missing second KeyPress"
+  ],
+  "result_sha256": "9cae06c1b23149893b8b055f3e9080b1e8c2208426ffd9448615b36316a4ea9e",
+  "schema": "owner-keyup-duplicate-down-audit-v1",
+  "scientific_outcome": "FAIL_DUPLICATE_DOWN_RELEASE_IDENTITY_AMBIGUOUS"
+}

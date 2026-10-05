@@ -1,6 +1,25 @@
 # Analytical research
 
+- [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
+
+
+- [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
+
+- [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
+- [Issue #8135 cross-episode counterparty T0 A02](persistent_counterparty_8135_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED`: persistent learner changed later variants conditional on public history while frequency-matched sham remained history-independent; 64 authorized effects, zero unauthorized effects, 5/5 mutations rejected. A01 auditor-schema failure preserved; no real-service adaptation claim.
+- [Issue #8135 T0 A01 auditor-schema failure](persistent_counterparty_8135_t0_a01_20261005/FORMAL_FAILURE.md) — candidate 1/1 exit 0, auditor 1/1 exit 1 (`episode_field_set`); no audit JSON, retries 0; not a scientific result and not rerun.
+- [Issue #8049 repeated-cohort IPCW uncertainty A03](ipcw_repeated_uncertainty_7993_a02_20261005/successor_a03_seed8049021/REPORT.md) — `PASS_METHOD_SCOPED`: 20,000 synthetic cohorts / 8,000,000 units independently reconstructed; HT mean 0.250325, design SD error 0.111%, bootstrap coverage 0.94935, 4/4 mutations rejected. A02 container-CLI STOP and A01 coverage failure are preserved; no production calibration or safety claim.
+- [Issue #8049 A02 pre-container STOP](ipcw_repeated_uncertainty_7993_a02_20261005/STOP.md) — Docker rejected invalid bare `rw` mount syntax before candidate/auditor execution; distinct fresh-seed A03 follows.
+- [Issue #7924 WSLc private-session portability smoke](wslc_private_session_portability_20261005/STOP.md) — `STOP_SESSION_STORAGE_NOT_FOUND`: one named `system session enter` invocation rejected the proposed fresh storage path before any container invocation; no retry, default-session operation, Docker use, or scientific/runtime inference.
+
+- [Issue #8080 blocked vs interleaved practice T0 A01](blocked_interleaved_practice_8080_t0_a01_20261005/REPORT.md) — `METHOD_PASS_SCOPED` for equal synthetic exposure, reversible effects, held-out exclusion, and scorer controls; no human-learning or transfer claim.
+- [Issue #8084 T0 A03 diagnostic-reliability screen](confusion_adaptive_practice_8084_t0_a03_20261005/README.md) — `STOP_AUDIT_INPUT_HANDOFF_PATH_ERROR`: fixture 6,000 rows; candidate exit 0, single auditor exit 1 because a host relative-path copy missed the auditor input mount; accepted audit 0/6,000; no scientific inference. Exact candidate output and failed logs retained, not rerun.
+- [Issue #8084 confusion-adaptive practice T0 A02](confusion_adaptive_practice_8084_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED` on six synthetic matrices / 12 schedules; equal exposure, pre-outcome heterogeneity gate, exact neutral fallback, held-out isolation, and independent scorer controls. A01 pre-formal mount-isolation STOP preserved; no human-learning claim.
+- [Issue #8084 T0 A01 pre-formal STOP](confusion_adaptive_practice_8084_t0_a01_20261005/STOP.md) — no candidate/auditor calls; package-wide candidate mount would expose auditor-only held-out/scorer fixture. A02 is separately frozen.
+
 - [Issue #8072 controlled-feedback T0 A02](controlled_feedback_8072_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED` on 100 paired synthetic seeds; controlled median optimism 0.117 vs 0.438 and mean fresh utility 0.818 vs 0.500. Separate raw-only audit reconstructed all rows and rejected four mutations. A01 audit defect preserved; no real evaluation, human, GUI, privacy, or product claim.
+- [Issue #8057 internal vs environmental memory T0](memory_locus_8057_t0_20261005/README.md) — `PASS_METHOD_SCOPED`: independent process audit reconstructs all 96 four-arm task rows; 13/13 tests normal and `-O`; stale/missing/collateral mutations rejected. Authored costs show only a finite crossover illustration; no GUI, model, token, or real-user claim.
+- [Issue #8068 imperfect-repair T0/T1](imperfect_repair_8068_t0_20261005/README.md) — T0 `METHOD_PASS_SCOPED` (WSLc 7/7 normal and `-O`); T1 `HOLD_NO_IDENTIFIABLE_REPAIR_HISTORY`. The authored seven-cycle fixture rejects frozen split, exposure, fault-label, censoring, recurrence and effect-receipt mutations; targeted retained-trace audit found no eligible observed repeated-recovery cohort.
 
 - [Issue #5905 A05 all-frame regression-TTC screen](looming_yield_5905_image_only_t0_2_a05_20261005/REPORT.md) — unregistered host-only exploratory result; independent raw audit 13/13, 18/18 local tests. OLS TTC improved over secant (6/6 vs 5/6) but not pixel/area baselines (both 6/6): `EXPLORATORY_NO_INCREMENTAL_VALUE`. OrbStack nested-OCI preflight STOP; no formal/container or live-control claim.
 
@@ -12,6 +31,8 @@
 
 - Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — PASS_METHOD_SCOPED/H_PASS_SCOPED for the authored finite one-CPU model; OrbStack image-content access was unavailable, so host-only stdlib execution was used; no full-CBS, runtime, or scheduler claim.
 
+- [Issue #7748 duplicate-job-ID boundary A02](processor_demand_witness_7748_duplicate_id_a02_20261005/REPORT.md) — `PASS_DUPLICATE_ID_BOUNDARY_SCOPED`; three synthetic traces, candidate/auditor each once with zero errors. A01 auditor exit-mismatch STOP preserved separately; no scheduler/runtime claim.
+- [Issue #7748 duplicate-job-ID boundary A01](processor_demand_witness_7748_duplicate_id_a01_20261005/REPORT.md) — `STOP_AUDITOR_EXIT_MISMATCH`; auditor wrote scoped PASS JSON but exited 1, retries 0. Separate A02 corrects CLI exit mapping; A01 is not rerun.
 - [Issue #8061 successor to #7748 — unknown job-class boundary](processor_demand_witness_7748_class_enum_a01_20261005/REPORT.md) — `PASS_CLASS_BOUNDARY_SCOPED` on seven rows; unknown/malformed labels HOLD before control-only demand. OrbStack OCI preflight STOP; host-only stdlib run, no scheduler/runtime claim.
 
 - [Issue #7678 manipulation-sensitivity successor T0 A02](preference_manipulation_7678_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 7,774 candidate/oracle rows; exhaustive null under the declared set utility (0 safe-beneficial deviations in both partitions); A01 HOLD preserved.
@@ -277,6 +298,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
+<details>
+<summary><strong>Expand all retained result/failure directories</strong></summary>
+
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
@@ -307,6 +331,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`anytime_t5/`](anytime_t5/)
 - [`aoii_observation_freshness_43_t0_v1/`](aoii_observation_freshness_43_t0_v1/)
+- [`application_qualified_draft_7409_t0_a01_20261005/`](application_qualified_draft_7409_t0_a01_20261005/)
+- [`application_qualified_draft_7409_t0_a02_20261005/`](application_qualified_draft_7409_t0_a02_20261005/)
 - [`approval_sequence_assay_6405_t0_20261002/`](approval_sequence_assay_6405_t0_20261002/)
 - [`approval_sequence_discrimination_6405_t0_v1/`](approval_sequence_discrimination_6405_t0_v1/)
 - [`arena_v1_cv_grounding_rescue_4695_v1/`](arena_v1_cv_grounding_rescue_4695_v1/)
@@ -354,6 +380,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`blackwell_observation_dominance_6678_t1_browser_20261003/`](blackwell_observation_dominance_6678_t1_browser_20261003/)
 - [`blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/)
 - [`blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/)
+- [`blocked_interleaved_practice_8080_t0_a01_20261005/`](blocked_interleaved_practice_8080_t0_a01_20261005/)
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
@@ -407,6 +434,14 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
 - [`conformal_verifier_risk_contract_5315_v1/`](conformal_verifier_risk_contract_5315_v1/)
+- [`confusion_adaptive_practice_8084_t0_a01_20261005/`](confusion_adaptive_practice_8084_t0_a01_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a02_20261005/`](confusion_adaptive_practice_8084_t0_a02_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a03_20261005/`](confusion_adaptive_practice_8084_t0_a03_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a06_20261005/`](confusion_adaptive_practice_8084_t0_a06_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a07_20261005/`](confusion_adaptive_practice_8084_t0_a07_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a08_20261005/`](confusion_adaptive_practice_8084_t0_a08_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a09_20261005/`](confusion_adaptive_practice_8084_t0_a09_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a10_20261005/`](confusion_adaptive_practice_8084_t0_a10_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
@@ -565,6 +600,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`interval_robustness_6074_t0_20261002/`](interval_robustness_6074_t0_20261002/)
 - [`invariant_confluence_prefix_5547_v1/`](invariant_confluence_prefix_5547_v1/)
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
+- [`ipcw_repeated_uncertainty_7993_a02_20261005/`](ipcw_repeated_uncertainty_7993_a02_20261005/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
 - [`issue5730_gate_cleanup_fail_20261001/`](issue5730_gate_cleanup_fail_20261001/)
@@ -572,6 +608,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue59_launch_gate_correction_t1_20261001/`](issue59_launch_gate_correction_t1_20261001/)
 - [`issue59_wsl_cuda_model_route_smoke_20261003/`](issue59_wsl_cuda_model_route_smoke_20261003/)
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
+- [`issue7367_audit_binding_a02_20261005/`](issue7367_audit_binding_a02_20261005/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
@@ -601,12 +638,19 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
 - [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
+- [`looming_yield_5905_boundary_jitter_a02_20261005/`](looming_yield_5905_boundary_jitter_a02_20261005/)
+- [`looming_yield_5905_boundary_jitter_a03_20261005/`](looming_yield_5905_boundary_jitter_a03_20261005/)
+- [`looming_yield_5905_boundary_jitter_a04_20261005/`](looming_yield_5905_boundary_jitter_a04_20261005/)
+- [`looming_yield_5905_boundary_jitter_a05_20261005/`](looming_yield_5905_boundary_jitter_a05_20261005/)
+- [`looming_yield_5905_boundary_jitter_a06_20261005/`](looming_yield_5905_boundary_jitter_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_2_a05_20261005/`](looming_yield_5905_image_only_t0_2_a05_20261005/)
 - [`looming_yield_5905_image_only_t0_6_a06_20261005/`](looming_yield_5905_image_only_t0_6_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_7_a07_20261005/`](looming_yield_5905_image_only_t0_7_a07_20261005/)
 - [`looming_yield_5905_image_only_t0_8_a08_20261005/`](looming_yield_5905_image_only_t0_8_a08_20261005/)
+- [`looming_yield_5905_image_only_t0_9_a09_20261005/`](looming_yield_5905_image_only_t0_9_a09_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
+- [`machine_crash_recovery_7802_t0_20261005/`](machine_crash_recovery_7802_t0_20261005/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
 - [`map01_delay_gain_t1_trace_eligibility_6195_20261001_01/`](map01_delay_gain_t1_trace_eligibility_6195_20261001_01/)
 - [`map01_global_owner_invariance_59_t0_20261001/`](map01_global_owner_invariance_59_t0_20261001/)
@@ -664,6 +708,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
 - [`needle_role_skill_lifecycle_5133_v2/`](needle_role_skill_lifecycle_5133_v2/)
+- [`negative_evidence_delivery_5865_t0a_20261005/`](negative_evidence_delivery_5865_t0a_20261005/)
+- [`negative_evidence_delivery_5865_t0a_a02_20261005/`](negative_evidence_delivery_5865_t0a_a02_20261005/)
+- [`negative_evidence_delivery_5865_t0a_a03_20261005/`](negative_evidence_delivery_5865_t0a_a03_20261005/)
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)
@@ -713,9 +760,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
 - [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
+- [`pcaa_stage_propagation_6053_t1_20261004/`](pcaa_stage_propagation_6053_t1_20261004/)
 - [`pending_outcome_route_learning_6129_t0_20261002/`](pending_outcome_route_learning_6129_t0_20261002/)
 - [`persistence_gated_throttle_6650_control_replay_20261002_01/`](persistence_gated_throttle_6650_control_replay_20261002_01/)
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
+- [`persistent_counterparty_8135_t0_a01_20261005/`](persistent_counterparty_8135_t0_a01_20261005/)
+- [`persistent_counterparty_8135_t0_a02_20261005/`](persistent_counterparty_8135_t0_a02_20261005/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
 - [`phase_overlap_resource_footprint_a2_v1/`](phase_overlap_resource_footprint_a2_v1/)
@@ -762,6 +812,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`probabilistic_automaton_dwell_censor_r2_v1/`](probabilistic_automaton_dwell_censor_r2_v1/)
 - [`probabilistic_automaton_retained_calibration_r3_v1/`](probabilistic_automaton_retained_calibration_r3_v1/)
 - [`processor_demand_witness_7748_class_enum_a01_20261005/`](processor_demand_witness_7748_class_enum_a01_20261005/)
+- [`processor_demand_witness_7748_duplicate_id_a01_20261005/`](processor_demand_witness_7748_duplicate_id_a01_20261005/)
+- [`processor_demand_witness_7748_duplicate_id_a02_20261005/`](processor_demand_witness_7748_duplicate_id_a02_20261005/)
 - [`processor_demand_witness_7748_t0_20261005/`](processor_demand_witness_7748_t0_20261005/)
 - [`protective_local_adaptation_6367_reaudit_v1/`](protective_local_adaptation_6367_reaudit_v1/)
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
@@ -894,6 +946,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
 - [`stagewise_perturbation_6053_t0_20261002/`](stagewise_perturbation_6053_t0_20261002/)
+- [`stochastic_trace_reducer_8152_t0_20261005/`](stochastic_trace_reducer_8152_t0_20261005/)
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
 - [`stop_evidence_4678_revalidation_v2/`](stop_evidence_4678_revalidation_v2/)
 - [`stpa_feedback_constraint_5327_t0_v1/`](stpa_feedback_constraint_5327_t0_v1/)
@@ -921,6 +974,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
+- [`threat_profiled_runtime_eligibility_8150_t0_20261005/`](threat_profiled_runtime_eligibility_8150_t0_20261005/)
 - [`threshold_persistent_topology_6183_t0_20261003/`](threshold_persistent_topology_6183_t0_20261003/)
 - [`timing_receipt_6532_t0_20261002/`](timing_receipt_6532_t0_20261002/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
@@ -951,6 +1005,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
 - [`unseen_failure_mode_yield_5665_t1_v1/`](unseen_failure_mode_yield_5665_t1_v1/)
 - [`user_relative_benefit_6593_t0_v1/`](user_relative_benefit_6593_t0_v1/)
+- [`user_worthwhile_benefit_7411_t0_a01_20261004/`](user_worthwhile_benefit_7411_t0_a01_20261004/)
 - [`vector_constraint_approachability_7808_a01_20261005/`](vector_constraint_approachability_7808_a01_20261005/)
 - [`verification_ir_alias_boundary_5504_a01_20261003/`](verification_ir_alias_boundary_5504_a01_20261003/)
 - [`verifier_cascade_capacity_5375_t0a2_20261002/`](verifier_cascade_capacity_5375_t0a2_20261002/)
@@ -973,6 +1028,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
 - [`wslc_control_plane_6669_t1_20261003/`](wslc_control_plane_6669_t1_20261003/)
 - [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
+- [`wslc_private_session_portability_20261005/`](wslc_private_session_portability_20261005/)
 - [`wslc_receipt_audit_v2_3352_01a10197/`](wslc_receipt_audit_v2_3352_01a10197/)
 - [`wslc_receipt_schema_5309_t8_20261003/`](wslc_receipt_schema_5309_t8_20261003/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
@@ -997,6 +1053,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
+</details>
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
@@ -1035,6 +1092,9 @@ The checker compares the generated block against every child directory with a re
 
 ## Retained construction archives
 
+- [Issue #8022 T0 protocol audit A01](recording_salience_8022_protocol_audit_a01_20261005/RESULT.md) — document-only `HOLD_NO_AUDITABLE_PROTOCOL`; the Issue lacked inspectable consent, capture-parity, task/scoring, and analysis artifacts. No participant study or human outcome was run or inferred, and no study authorization follows.
+
+
 - [Issue #6808 / PR #6821 S03 pre-invocation STOP](looming_visual_assumption_gate_5905_s03_wslc_20261003/STOP.md) — 35 exact original files preserved; main advanced after freeze, construction/candidate/auditor/container/retry counts all zero; no scientific result or S03 rerun.
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
@@ -1053,3 +1113,10 @@ The checker compares the generated block against every child directory with a re
 - [Original primary-stdio UTF-8 identity counterexample](stdio_utf8_57_20261003_45e9/README.md) — five historical Windows echo cases; published hex distinguishes three inputs that share saved JSON, separate from later decoder repairs.
 
 - [Issue #6655 / PR #6694 preregistration custody](incidental_state_legacy_6655_prereg_archive_226b426/README.md) — Eight exact published preregistration blobs; host outputs, process receipts and claimed report/results remain unrecovered. Consumed 1/1/0 host allocation and source-hash mismatches retained; no scientific promotion or rerun.
+- [Issue #8084 T0 A04 diagnostic-reliability fresh allocation](confusion_adaptive_practice_8084_t0_a04_20261005/README.md) — `HOLD_METHOD_GATE`: candidate/auditor each ran once, 6,000 base rows independently reconstructed with no errors, but the duplicate-row auditor mutation survived. Provisional counts show low-dispersion false activation 169/500 at n=20; not accepted/calibrated. Fresh A05 corrects cardinality checking with disjoint seeds.
+- [Issue #8084 T0 A05 diagnostic-reliability independent revalidation](confusion_adaptive_practice_8084_t0_a05_20261005/README.md) — `METHOD_PASS_SCOPED`; separate diagnostic screen `DOES_NOT_SUPPORT_CURRENT_GATE_AS_RELIABLE_AT_N_GE_20`: low-dispersion false activation 376/1,000 at n=20 vs ≤0.05 criterion (47/1,000 at n=100). Independent reconstruction of 12,000 rows; all five mutations rejected. Synthetic only, no human/GUI inference.
+- [Issue #8084 T0 A06 fixed-gate frontier successor](confusion_adaptive_practice_8084_t0_a06_20261005/STOP.md) — `STOP_AUDITOR_NOT_STARTED_LAUNCHER_UNAVAILABLE`; generator and candidate each ran once, but frozen one-shot auditor launch could not start because `py` was unavailable. No retry or scientific inference.
+- [Issue #8084 T0 A07 fresh-seed threshold successor](confusion_adaptive_practice_8084_t0_a07_20261005/STOP.md) — `STOP_FREEZE_COMMIT_FAILED_GENERATOR_RAN_UNFROZEN`; one generator ran after freeze commit failed, but no candidate/auditor or scientific inference; raw output retained and not reused.
+- [Issue #8084 T0 A08 fixed-gate frontier fresh-seed screen](confusion_adaptive_practice_8084_t0_a08_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; 80,000 fresh synthetic rows independently reconstructed, all five mutation controls rejected, and two frozen span/peak gates met the Wilson criteria for every authored profile at n=20 and n=100. No human/GUI inference.
+- [Issue #8084 T0 A09 overdispersion robustness screen](confusion_adaptive_practice_8084_t0_a09_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; independent audit passed 80,000 fresh Beta-binomial stress rows and all five mutations, but none of the unchanged gates met both sensitivity/specificity bounds across authored profiles. Synthetic only.
+- [Issue #8084 T0 A10 finite overdispersion frontier](confusion_adaptive_practice_8084_t0_a10_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; independent audit of 160,000 rows and five mutations; no gate qualifies at finite κ=20/40/80/160, while fixed-rate reference arm qualifies span .40/peak .80. Synthetic-only frontier, no human/GUI claim.
