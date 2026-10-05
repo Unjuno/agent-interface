@@ -1,0 +1,7 @@
+Construction (completed before freeze):
+  python -B -m unittest discover -s research/analysis/preference_manipulation_7678_t0_20261005 -p test_construction.py -v
+
+Frozen formal procedure (single invocation, sequential, no retry):
+  powershell -NoProfile -ExecutionPolicy Bypass -File research/analysis/preference_manipulation_7678_t0_20261005/run_formal.ps1
+
+Candidate and independent audit stdout/stderr and exit codes are recorded in results/formal-01/RUN.json. Formal outputs are immutable evidence; do not rerun the allocation or overwrite outputs.
