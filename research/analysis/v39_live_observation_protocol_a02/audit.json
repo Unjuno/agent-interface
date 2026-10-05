@@ -1,0 +1,21 @@
+{
+  "artifact": "v39_live_observation_protocol_a02",
+  "audit_scope": "static review of preregistration, assertions, retained first-run outputs, and unit-test result",
+  "source_base_commit": "402c7d1b5147b2a905098f082233db60a47d68db",
+  "cli_version": "codex-cli 0.160.0",
+  "candidate_runs": 2,
+  "candidate_retries": 0,
+  "outcomes": {
+    "auto": "PASS: external turn ID equals active turn ID; exact text and retained frame delivered in second mock request; turn completed; no server errors",
+    "low": "EXPECTED_NEGATIVE_CONTROL: same-turn and text checks pass; image omitted from second mock request; probe exits 1"
+  },
+  "unit_tests": {"passed": 5, "failed": 0},
+  "review_findings": [],
+  "limitations": [
+    "loopback Responses mock; no model inference",
+    "no V39 runtime or actuator integration",
+    "does not establish safe stop, per-key release, useful feedback, recovery, ammo/progress, terminal outcome, or fresh live threat exposure",
+    "A01 same-turn claim remains unverified; A02 is the corrected successor"
+  ],
+  "disposition": "bounded protocol evidence only; #59 remains open and private live lane remains unassigned"
+}
