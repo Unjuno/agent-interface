@@ -1,0 +1,5 @@
+Frozen current-main package: candidate is invoked exactly once, and the independent auditor exactly once after candidate exit 0. Both refuse overwrite of retained outputs. No retries or tuning.
+
+From repository root:
+python3 research/analysis/action_bound_relevance_6619_a01_20261005/candidate.py research/analysis/action_bound_relevance_6619_a01_20261005/inputs/public_cases.json research/analysis/action_bound_relevance_6619_a01_20261005/results/candidate.raw.json
+python3 research/analysis/action_bound_relevance_6619_a01_20261005/audit.py research/analysis/action_bound_relevance_6619_a01_20261005/inputs/public_cases.json research/analysis/action_bound_relevance_6619_a01_20261005/inputs/scorer_oracle.json research/analysis/action_bound_relevance_6619_a01_20261005/results/candidate.raw.json
