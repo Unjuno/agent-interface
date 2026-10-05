@@ -24,4 +24,3 @@ Disposition: `PASS_SCOPED_WSLc_REPLAY` for the source-bound projector contract.
 ## Limits
 
 This verifies synthetic measurement projection only. It does not establish physical key state, application consumption, real X11/game behavior, model-latency response, useful feedback, bounded recovery, or MAP01 success. PR #8139 remains draft and needs its own current-main integration, content review, and merge gates; this replay does not grant any live allocation or make a quorum decision.
-
