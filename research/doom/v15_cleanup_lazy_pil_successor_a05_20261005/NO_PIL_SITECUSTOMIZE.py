@@ -8,3 +8,4 @@ class _RejectPIL(importlib.abc.MetaPathFinder):
         return None
 
 sys.meta_path.insert(0, _RejectPIL())
+print("A05_NO_PIL_BLOCKER_ACTIVE", file=sys.stderr)
