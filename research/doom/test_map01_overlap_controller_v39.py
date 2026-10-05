@@ -101,6 +101,38 @@ class Map01V39CoastTests(unittest.TestCase):
                     controller.cancel_invalidated_cover(
                         Planner(), object(), Process(), lambda predicate: terminal, "cover-0")
 
+    def test_renewal_invalidation_cancels_cover_before_acceptance_timestamp_read(self):
+        import ast
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        main = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                    and node.name == "main")
+        statements = list(ast.walk(main))
+        renewal_assignment = next(node for node in statements
+                                  if isinstance(node, ast.Assign)
+                                  and any(isinstance(target, ast.Name)
+                                          and target.id == "next_accepted"
+                                          for target in node.targets))
+        guard = next(node for node in statements
+                     if isinstance(node, ast.If)
+                     and isinstance(node.test, ast.Compare)
+                     and isinstance(node.test.left, ast.Subscript)
+                     and isinstance(node.test.left.value, ast.Name)
+                     and node.test.left.value.id == "next_accepted"
+                     and isinstance(node.test.left.slice, ast.Constant)
+                     and node.test.left.slice.value == "event")
+        accepted_ns = next(node for node in statements
+                           if isinstance(node, ast.Subscript)
+                           and isinstance(node.value, ast.Name)
+                           and node.value.id == "next_accepted"
+                           and isinstance(node.slice, ast.Constant)
+                           and node.slice.value == "accepted_ns")
+        self.assertLess(renewal_assignment.lineno, guard.lineno)
+        self.assertLess(guard.lineno, accepted_ns.lineno)
+        guard_names = {node.id for node in ast.walk(guard) if isinstance(node, ast.Name)}
+        self.assertIn("cancel_invalidated_cover", guard_names)
+        self.assertIn("cover_terminals", guard_names)
+
 
 if __name__ == "__main__":
     unittest.main()
