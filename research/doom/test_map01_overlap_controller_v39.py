@@ -130,6 +130,51 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(interruption, {"status": "interrupted"})
         self.assertIn('"op": "cancel"', process.stdin.writes[0])
 
+    def test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral(self):
+        class Stdin:
+            def write(self, value): pass
+            def flush(self): pass
+        class Process:
+            stdin = Stdin()
+        class Planner:
+            def interrupt(self, handle): return {"status": "interrupted"}
+
+        def wait_for_matching_terminal(terminal):
+            unrelated = dict(terminal, id="other-cover")
+            rows = (unrelated, terminal)
+
+            def wait(predicate):
+                return next((row for row in rows if predicate(row)), None)
+
+            return wait
+
+        for status in ("completed", "expired"):
+            neutral_terminal = {
+                "event": "terminal", "id": "cover-0", "status": status,
+                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+            result = controller.cancel_invalidated_cover(
+                Planner(), object(), Process(), wait_for_matching_terminal(neutral_terminal),
+                "cover-0")
+            self.assertIs(result[1], neutral_terminal)
+
+            held_terminal = {
+                "event": "terminal", "id": "cover-0", "status": status,
+                "release": {"verified": True, "keys_down": ["space"], "buttons_down": []}}
+            with self.assertRaisesRegex(RuntimeError, "verify empty release"):
+                controller.cancel_invalidated_cover(
+                    Planner(), object(), Process(), wait_for_matching_terminal(held_terminal),
+                    "cover-0")
+
+        for status in ("failed", "needs_decision"):
+            terminal = {
+                "event": "terminal", "id": "cover-0", "status": status,
+                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+            with self.subTest(status=status):
+                with self.assertRaisesRegex(RuntimeError, "verify empty release"):
+                    controller.cancel_invalidated_cover(
+                        Planner(), object(), Process(), wait_for_matching_terminal(terminal),
+                        "cover-0")
+
     def test_running_invalidation_rejects_nonempty_or_unverified_release(self):
         class Stdin:
             def write(self, value): pass

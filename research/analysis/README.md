@@ -1,5 +1,19 @@
 # Analytical research
 
+- [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
+- [Issue #8049 repeated-cohort IPCW uncertainty A03](ipcw_repeated_uncertainty_7993_a02_20261005/successor_a03_seed8049021/REPORT.md) — `PASS_METHOD_SCOPED`: 20,000 synthetic cohorts / 8,000,000 units independently reconstructed; HT mean 0.250325, design SD error 0.111%, bootstrap coverage 0.94935, 4/4 mutations rejected. A02 container-CLI STOP and A01 coverage failure are preserved; no production calibration or safety claim.
+- [Issue #8049 A02 pre-container STOP](ipcw_repeated_uncertainty_7993_a02_20261005/STOP.md) — Docker rejected invalid bare `rw` mount syntax before candidate/auditor execution; distinct fresh-seed A03 follows.
+- [Issue #7924 WSLc private-session portability smoke](wslc_private_session_portability_20261005/STOP.md) — `STOP_SESSION_STORAGE_NOT_FOUND`: one named `system session enter` invocation rejected the proposed fresh storage path before any container invocation; no retry, default-session operation, Docker use, or scientific/runtime inference.
+
+- [Issue #8080 blocked vs interleaved practice T0 A01](blocked_interleaved_practice_8080_t0_a01_20261005/REPORT.md) — `METHOD_PASS_SCOPED` for equal synthetic exposure, reversible effects, held-out exclusion, and scorer controls; no human-learning or transfer claim.
+- [Issue #8084 T0 A03 diagnostic-reliability screen](confusion_adaptive_practice_8084_t0_a03_20261005/README.md) — `STOP_AUDIT_INPUT_HANDOFF_PATH_ERROR`: fixture 6,000 rows; candidate exit 0, single auditor exit 1 because a host relative-path copy missed the auditor input mount; accepted audit 0/6,000; no scientific inference. Exact candidate output and failed logs retained, not rerun.
+- [Issue #8084 confusion-adaptive practice T0 A02](confusion_adaptive_practice_8084_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED` on six synthetic matrices / 12 schedules; equal exposure, pre-outcome heterogeneity gate, exact neutral fallback, held-out isolation, and independent scorer controls. A01 pre-formal mount-isolation STOP preserved; no human-learning claim.
+- [Issue #8084 T0 A01 pre-formal STOP](confusion_adaptive_practice_8084_t0_a01_20261005/STOP.md) — no candidate/auditor calls; package-wide candidate mount would expose auditor-only held-out/scorer fixture. A02 is separately frozen.
+
+- [Issue #8072 controlled-feedback T0 A02](controlled_feedback_8072_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED` on 100 paired synthetic seeds; controlled median optimism 0.117 vs 0.438 and mean fresh utility 0.818 vs 0.500. Separate raw-only audit reconstructed all rows and rejected four mutations. A01 audit defect preserved; no real evaluation, human, GUI, privacy, or product claim.
+- [Issue #8057 internal vs environmental memory T0](memory_locus_8057_t0_20261005/README.md) — `PASS_METHOD_SCOPED`: independent process audit reconstructs all 96 four-arm task rows; 13/13 tests normal and `-O`; stale/missing/collateral mutations rejected. Authored costs show only a finite crossover illustration; no GUI, model, token, or real-user claim.
+- [Issue #8068 imperfect-repair T0/T1](imperfect_repair_8068_t0_20261005/README.md) — T0 `METHOD_PASS_SCOPED` (WSLc 7/7 normal and `-O`); T1 `HOLD_NO_IDENTIFIABLE_REPAIR_HISTORY`. The authored seven-cycle fixture rejects frozen split, exposure, fault-label, censoring, recurrence and effect-receipt mutations; targeted retained-trace audit found no eligible observed repeated-recovery cohort.
+
 - [Issue #5905 A05 all-frame regression-TTC screen](looming_yield_5905_image_only_t0_2_a05_20261005/REPORT.md) — unregistered host-only exploratory result; independent raw audit 13/13, 18/18 local tests. OLS TTC improved over secant (6/6 vs 5/6) but not pixel/area baselines (both 6/6): `EXPLORATORY_NO_INCREMENTAL_VALUE`. OrbStack nested-OCI preflight STOP; no formal/container or live-control claim.
 
 - [Issue #5905 A04 exploratory cue screen](looming_yield_5905_image_only_t0_2_a04_20261005/README.md) — unregistered host-side pilot: simple pixel/area frontiers reached 6/6 while secant-TTC reached 2/6 at zero false YIELD on six distinguishable controls; no formal result or independent audit.
@@ -275,6 +289,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
+<details>
+<summary><strong>Expand all retained result/failure directories</strong></summary>
+
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
@@ -352,6 +369,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`blackwell_observation_dominance_6678_t1_browser_20261003/`](blackwell_observation_dominance_6678_t1_browser_20261003/)
 - [`blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/)
 - [`blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/)
+- [`blocked_interleaved_practice_8080_t0_a01_20261005/`](blocked_interleaved_practice_8080_t0_a01_20261005/)
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
@@ -405,6 +423,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
 - [`conformal_verifier_risk_contract_5315_v1/`](conformal_verifier_risk_contract_5315_v1/)
+- [`confusion_adaptive_practice_8084_t0_a01_20261005/`](confusion_adaptive_practice_8084_t0_a01_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a02_20261005/`](confusion_adaptive_practice_8084_t0_a02_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a03_20261005/`](confusion_adaptive_practice_8084_t0_a03_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
@@ -414,6 +435,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
+- [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1_v1/`](counterexample_guard_coverage_gate_6645_t1_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/`](counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/)
@@ -562,6 +584,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`interval_robustness_6074_t0_20261002/`](interval_robustness_6074_t0_20261002/)
 - [`invariant_confluence_prefix_5547_v1/`](invariant_confluence_prefix_5547_v1/)
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
+- [`ipcw_repeated_uncertainty_7993_a02_20261005/`](ipcw_repeated_uncertainty_7993_a02_20261005/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
 - [`issue5730_gate_cleanup_fail_20261001/`](issue5730_gate_cleanup_fail_20261001/)
@@ -598,9 +621,16 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
 - [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
+- [`looming_yield_5905_boundary_jitter_a02_20261005/`](looming_yield_5905_boundary_jitter_a02_20261005/)
+- [`looming_yield_5905_boundary_jitter_a03_20261005/`](looming_yield_5905_boundary_jitter_a03_20261005/)
+- [`looming_yield_5905_boundary_jitter_a04_20261005/`](looming_yield_5905_boundary_jitter_a04_20261005/)
+- [`looming_yield_5905_boundary_jitter_a05_20261005/`](looming_yield_5905_boundary_jitter_a05_20261005/)
+- [`looming_yield_5905_boundary_jitter_a06_20261005/`](looming_yield_5905_boundary_jitter_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_2_a05_20261005/`](looming_yield_5905_image_only_t0_2_a05_20261005/)
 - [`looming_yield_5905_image_only_t0_6_a06_20261005/`](looming_yield_5905_image_only_t0_6_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_7_a07_20261005/`](looming_yield_5905_image_only_t0_7_a07_20261005/)
+- [`looming_yield_5905_image_only_t0_8_a08_20261005/`](looming_yield_5905_image_only_t0_8_a08_20261005/)
+- [`looming_yield_5905_image_only_t0_9_a09_20261005/`](looming_yield_5905_image_only_t0_9_a09_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
@@ -969,6 +999,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
 - [`wslc_control_plane_6669_t1_20261003/`](wslc_control_plane_6669_t1_20261003/)
 - [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
+- [`wslc_private_session_portability_20261005/`](wslc_private_session_portability_20261005/)
 - [`wslc_receipt_audit_v2_3352_01a10197/`](wslc_receipt_audit_v2_3352_01a10197/)
 - [`wslc_receipt_schema_5309_t8_20261003/`](wslc_receipt_schema_5309_t8_20261003/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
@@ -992,6 +1023,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
+
+</details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
@@ -1031,6 +1064,9 @@ The checker compares the generated block against every child directory with a re
 
 ## Retained construction archives
 
+- [Issue #8022 T0 protocol audit A01](recording_salience_8022_protocol_audit_a01_20261005/RESULT.md) — document-only `HOLD_NO_AUDITABLE_PROTOCOL`; the Issue lacked inspectable consent, capture-parity, task/scoring, and analysis artifacts. No participant study or human outcome was run or inferred, and no study authorization follows.
+
+
 - [Issue #6808 / PR #6821 S03 pre-invocation STOP](looming_visual_assumption_gate_5905_s03_wslc_20261003/STOP.md) — 35 exact original files preserved; main advanced after freeze, construction/candidate/auditor/container/retry counts all zero; no scientific result or S03 rerun.
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
@@ -1049,3 +1085,5 @@ The checker compares the generated block against every child directory with a re
 - [Original primary-stdio UTF-8 identity counterexample](stdio_utf8_57_20261003_45e9/README.md) — five historical Windows echo cases; published hex distinguishes three inputs that share saved JSON, separate from later decoder repairs.
 
 - [Issue #6655 / PR #6694 preregistration custody](incidental_state_legacy_6655_prereg_archive_226b426/README.md) — Eight exact published preregistration blobs; host outputs, process receipts and claimed report/results remain unrecovered. Consumed 1/1/0 host allocation and source-hash mismatches retained; no scientific promotion or rerun.
+- [Issue #8084 T0 A04 diagnostic-reliability fresh allocation](confusion_adaptive_practice_8084_t0_a04_20261005/README.md) — `HOLD_METHOD_GATE`: candidate/auditor each ran once, 6,000 base rows independently reconstructed with no errors, but the duplicate-row auditor mutation survived. Provisional counts show low-dispersion false activation 169/500 at n=20; not accepted/calibrated. Fresh A05 corrects cardinality checking with disjoint seeds.
+- [Issue #8084 T0 A05 diagnostic-reliability independent revalidation](confusion_adaptive_practice_8084_t0_a05_20261005/README.md) — `METHOD_PASS_SCOPED`; separate diagnostic screen `DOES_NOT_SUPPORT_CURRENT_GATE_AS_RELIABLE_AT_N_GE_20`: low-dispersion false activation 376/1,000 at n=20 vs ≤0.05 criterion (47/1,000 at n=100). Independent reconstruction of 12,000 rows; all five mutations rejected. Synthetic only, no human/GUI inference.

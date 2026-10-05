@@ -593,6 +593,8 @@ class InputOwner:
                                 button = 4 if key > 0 else 5
                                 for _ in range(abs(key)):
                                     pointer_guard(lease,x,y)
+                                    # Track before emission: delivery may precede an exception.
+                                    touched_buttons.add(button)
                                     xtest.fake_input(d,X.ButtonPress,button)
                                     xtest.fake_input(d,X.ButtonRelease,button)
                             d.sync()
