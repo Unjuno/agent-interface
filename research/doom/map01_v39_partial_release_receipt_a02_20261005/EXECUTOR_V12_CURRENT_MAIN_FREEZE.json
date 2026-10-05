@@ -1,0 +1,35 @@
+{
+  "audit_file": "EXECUTOR_V12_MAIN_C1074_AUDIT.json",
+  "command": "V13_OWNER_CANDIDATE_PATH=research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py python3 research/doom/map01_v39_partial_release_receipt_a02_20261005/run_executor_v12_revalidation.py",
+  "exit_file": "EXECUTOR_V12_MAIN_C1074_EXIT.txt",
+  "main_commit": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "main_sources": [
+    "research/live_control/executor_v12.py",
+    "research/live_control/executor_v5.py",
+    "research/live_control/executor_v11.py",
+    "research/live_control/lease.py",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py"
+  ],
+  "output_file": "EXECUTOR_V12_MAIN_C1074_OUTPUT.txt",
+  "parent_pr_head": "de9a37d5d0eca2b258982b02f2fb2a401bba293c",
+  "raw_file": "executor-v12-main-c1074-revalidation-raw.json",
+  "result_file": "EXECUTOR_V12_MAIN_C1074_RESULT.json",
+  "runtime": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "schema": "v39-executor-v12-current-main-freeze-v1",
+  "scope": "one fake-display revalidation of the same ExecutorV12 expiry schedule against unchanged current-main dependencies; raw redirected to a unique additive path",
+  "sha256": {
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py": "85272a0c720e4050f50565182530951de1159cef9aa1254d757c5b8ddcd736d1",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py": "45dffa9f70d7099b4a6574b25befc4096085c8dbe6b265d6ae020a6805b9d1d2",
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py": "670df4e1a3b6a753f2c13924ed96b248c75310d64624d44a44b57ae0bed465ca",
+    "research/doom/map01_v39_partial_release_receipt_a02_20261005/audit_executor_v12_current_main.py": "e0928634bcf18df3d8394b67234b5fe54f75933431f0d88f8c7f1d0779639bcd",
+    "research/doom/map01_v39_partial_release_receipt_a02_20261005/input_owner_v13_candidate.py": "809d739efc0c006b2ec91780b6456ae686cb9bc1759185d9503ef54464c8096d",
+    "research/doom/map01_v39_partial_release_receipt_a02_20261005/run_executor_v12_revalidation.py": "60e48cf6f4dd53bf2c6e19d52d396771a73ee3a1dd45832fa2d021e104475fb7",
+    "research/doom/map01_v39_partial_release_receipt_a02_20261005/test_executor_v12_partial_release_composition.py": "3affd0aa2842d0b6ee47c2e0cb9bfe5a9239e69055347948a8a559612c2cd1f2",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "test": "research/doom/map01_v39_partial_release_receipt_a02_20261005/test_executor_v12_partial_release_composition.py"
+}
