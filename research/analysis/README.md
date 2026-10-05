@@ -77,7 +77,9 @@
 - [`adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md`](adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md) — #6358 Mac-host T0 A02: shared/high-adoption recipient-specific routing resolved 4/4 versus 2/4 for generic, witness, public-stagger, and wording-placebo arms; independent audit passed 56/56 synthetic ledgers. No human, GUI, production, or causal claim; both earlier pre-candidate STOPs remain preserved.
 
 - [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
-- [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
+- [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/)
+- [`backpressure_5372_telemetry_cap_20261003_api/`](backpressure_5372_telemetry_cap_20261003_api/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
+- [#5372 telemetry-cap comparison](backpressure_5372_telemetry_cap_20261003_api/REPORT.md) — `SUBSUMED_BY_AUTHORITATIVE_CAP_SCOPED`; preserve the simpler atomic cap for the finite single-owner homogeneous-job model, with raw/audit and HOLD limits retained.
 
 - [`wslc_control_plane_6669_t1_20261003/REPORT.md`](wslc_control_plane_6669_t1_20261003/REPORT.md) — Issue #6669 isolated WSLc 3.0.1.0 control-plane T1: bounded 640 MiB synthetic pressure with cgroup, PSI and control-operation evidence; SIGTERM-aware candidate stopped cleanly and raw auditor/mutation checks passed. Container memory-cap enforcement remains unproven.
 
