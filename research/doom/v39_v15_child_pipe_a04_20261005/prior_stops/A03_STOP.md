@@ -1,0 +1,5 @@
+# A03 construction STOP
+
+Both child arms reached the runner's post-launch assertions. The baseline gate passed its expected nonzero Windows pipe-readiness failure; the candidate gate passed child exit 0, delayed send, and exactly one returned command. The runner then stopped because its fake receiver compared the adapter's raw line to a LF-only string instead of parsing JSON. Windows text-mode `Popen.stdin` can translate `\n` to CRLF, and the adapter splits at LF while retaining the preceding CR; the actual V12 consumer uses `json.loads`, which accepts that trailing whitespace. The likely defect is in the assertion, but the runner did not persist child stdout/stderr or the in-memory command-row identity fields before stopping. The candidate scorer summary does persist scheduler `commands=1` and `samples=4`. Thus this partial result does not independently prove command/thread join fields and cannot pass its frozen gate. No gameplay or OS input ran.
+
+A04 corrects the fake receiver to parse the actual JSON command, preserves stdout/stderr and result rows before assertions, and uses a new output path. A03 frozen source and summary remain as recorded.

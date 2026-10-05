@@ -1,0 +1,54 @@
+{
+  "attempt_label": "A04",
+  "baseline_sha": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "candidate_sha": "4aaffba7fc970f64a4575de792c046cf880b509f",
+  "decision_gate": "Scoped pass iff both exact selectors choose V15, baseline exits on Windows select pipe error before accepting a command, candidate receives exactly one delayed command with >=2 periodic samples all on one owner thread, and independent raw audit passes.",
+  "environment_pre_run": {
+    "platform": "win32",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "files": {
+    "audit.py": "4503c422d80357ae8cb533dae0fdda95570a2f1764ce702dcc56267c34cc8470",
+    "baseline/research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "baseline/research/doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "baseline/research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "baseline/research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "baseline/research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "bootstrap.py": "ff2147bb8f2d2f97e7fd3d985a27fb59e1db1a45eb77322516be0866060e868f",
+    "candidate/research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "candidate/research/doom/main_thread_scorer_polling_v1.py": "d73aab330f6b572d4a8b006dbefe28a4038f23862b1cd6b70f615b701c3dab36",
+    "candidate/research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "candidate/research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "candidate/research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "runner.py": "6f5aa45b09f26ecd35416956bfd39880047fb2c68b7ce8061264b948f564a9b7"
+  },
+  "git_blobs": {
+    "base": {
+      "research/doom/main_thread_scorer_polling_v1.py": "6da85092ff022d60f4af5e5eae8b5a564e71880a"
+    },
+    "candidate": {
+      "research/doom/main_thread_scorer_polling_v1.py": "9ff5069ba41a53ed7afb3bbef9851128b06b5f4a"
+    },
+    "main_source_snapshot": {
+      "research/doom/independent_progress_clock_v2.py": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "research/doom/map01_overlap_controller_v39.py": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+      "research/doom/map01_scorer_stdio_adapter_v1.py": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+      "research/doom/session_map01_v15.py": "f71ca01426a703e4160c9403395fed03416c772e"
+    }
+  },
+  "hypothesis": "The exact current-main V39 opt-in session selector launches V15 as a child over stdin=PIPE; with the PR #7860 poller, the actual V15 wrapper receives a delayed command while sampling remains on its owning session thread.",
+  "immutable_git_commits": {
+    "base": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+    "candidate": "4aaffba7fc970f64a4575de792c046cf880b509f",
+    "main_source_snapshot": "17b9d8b20d01f097a2054694398168dc2bc12000"
+  },
+  "limitations": [
+    "The full V39 controller/planner is not launched; the exact session_command function alone selects the child.",
+    "The child executes exact V15 main/adapter but session_map01_v12, executor_v13, release backend, and DoomGame are inert stubs.",
+    "No game, model, GUI, X server, OS input, useful task effect, recovery, task success, latency benefit, or MAP01 outcome is tested."
+  ],
+  "main_sha": "17b9d8b20d01f097a2054694398168dc2bc12000",
+  "schema": "v39-v15-real-child-pipe-construction-freeze-v1",
+  "supersedes": "A03_STOP.md in sibling a03 path",
+  "treatment": "Compare the exact V39 session_command function, exact V15 main and adapter, with only the poller source swapped between frozen main-base and #7860 candidate. A bootstrap injects inert session/game/backend/executor dependencies. Each arm launches one child process via stdin=PIPE, waits 100ms after ready, then sends one finish command."
+}

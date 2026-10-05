@@ -1,0 +1,54 @@
+{
+  "candidate_sha": "4aaffba7fc970f64a4575de792c046cf880b509f",
+  "decision": "PASS_AUDIT_SCOPED",
+  "main_sha": "17b9d8b20d01f097a2054694398168dc2bc12000",
+  "reconstruction": {
+    "baseline_failure": "WinError 10093",
+    "candidate_command": {
+      "op": "finish"
+    },
+    "command_thread_id": 42812,
+    "scheduler_samples": 4,
+    "stdout_line_counts": {
+      "baseline": 1,
+      "candidate": 2
+    }
+  },
+  "schema": "v39-v15-real-child-pipe-audit-v2",
+  "sha256": {
+    "AUDIT_V1_FAILURE.md": "657b6c8bab272b422b4c5ed7f86278d347d8c0ffac61a71e2101fb87fe17a9b5",
+    "FREEZE.json": "1e154263256f3371e2371cb3c3ef8917c1ee7ae333f6427775f6426b3d172aca",
+    "README.md": "95053b351826743bf827338ad5e23eef6eb9b8a3af33adac95c51f62bb9390dc",
+    "RESULT.json": "e512df3007b0b175a7094fceeac5d37dfa31f90aad531c372c7dd29b47306645",
+    "__pycache__/audit_v2.cpython-311.pyc": "f3d5d50afc646e0988f8e1e7b6bd3dd81195a7b49d4efeda02c55b66aaa96d63",
+    "audit.py": "4503c422d80357ae8cb533dae0fdda95570a2f1764ce702dcc56267c34cc8470",
+    "audit_v2.py": "f04e0e2f395d6d78c302e99c9807b107e670235bb9239571471ff242a4701903",
+    "baseline/research/doom/__pycache__/independent_progress_clock_v2.cpython-311.pyc": "45e1f99341d881e31d2c2dbd993d44df0c8a29f579437bb10685f827500c90d9",
+    "baseline/research/doom/__pycache__/main_thread_scorer_polling_v1.cpython-311.pyc": "1ac9e40be400544b765d576545ecbcf0b6f53567fcaa8f239cd41ce44c37c46f",
+    "baseline/research/doom/__pycache__/map01_scorer_stdio_adapter_v1.cpython-311.pyc": "a328e92fa5ae21c375fb9478ae2564157dce6dcf5b78e964dfe2bd1927c0836b",
+    "baseline/research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "baseline/research/doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "baseline/research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "baseline/research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "baseline/research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "bootstrap.py": "ff2147bb8f2d2f97e7fd3d985a27fb59e1db1a45eb77322516be0866060e868f",
+    "candidate/research/doom/__pycache__/independent_progress_clock_v2.cpython-311.pyc": "1c2a68904790b9c7507b6012c5d4573497b0b1f7a6b3cdf54b07540a0e8e625f",
+    "candidate/research/doom/__pycache__/main_thread_scorer_polling_v1.cpython-311.pyc": "d965ea5e31519a525ed116cae572d6f7b224fe7b0195cc70be7f7415659bf74f",
+    "candidate/research/doom/__pycache__/map01_scorer_stdio_adapter_v1.cpython-311.pyc": "283f597ed021985978ef134229c3e3750eeef21b7ec93d0eba9cc180f565dd53",
+    "candidate/research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "candidate/research/doom/main_thread_scorer_polling_v1.py": "d73aab330f6b572d4a8b006dbefe28a4038f23862b1cd6b70f615b701c3dab36",
+    "candidate/research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "candidate/research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "candidate/research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "results/baseline/child-stderr.txt": "4e9daf9e8d698c9cfa99302e23db43c3d42ddd634623f6dae401c9e014d38bf5",
+    "results/baseline/child-stdout.jsonl": "1216c2404388ec1d2a28b8b1bf6a3b79ea7b38438e3cca5ea93700ffdf89ef5d",
+    "results/baseline/scorer/scorer-samples.jsonl": "325a7c974cc5c1a5e298ff1c5da7d2ba28a68c50bb948947e4ea7becce9ce62c",
+    "results/baseline/scorer/scorer-summary.json": "64d9cb4a3cdd2f1481c7e8f1144e3028642fbc0358260bd28bc49a586e822dda",
+    "results/candidate/child-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/candidate/child-stdout.jsonl": "7e840cd8fdc40bd78854ecfb08cb8f2434ea9e2d10b9d07a6ddf32d1e78676cf",
+    "results/candidate/scorer/scorer-samples.jsonl": "6d33de9f6c4af28444bf009404d082c111bab94426736370d2c9d7817c7d3472",
+    "results/candidate/scorer/scorer-summary.json": "b4b3ef031abf1cddef255845b800ba7bd3f4e9c8293a04b7364f2e49b38a957a",
+    "runner.py": "6f5aa45b09f26ecd35416956bfd39880047fb2c68b7ce8061264b948f564a9b7",
+    "test_audit_v2.py": "eba5e90ac2739b0afa08af2457f6d6979d7578e3ed2231f55a11d69de675384c"
+  }
+}

@@ -1,0 +1,3 @@
+# A04 first auditor result — FAIL_AUDIT
+
+The frozen `audit.py` ran once and failed at its line-equality assertion because it expected `row["line"] == "{\"op\":\"finish\"}"`. The preserved raw candidate stdout records `line` as `"{\"op\":\"finish\"}\r"`; `parsed_command` is exactly `{ "op": "finish" }`. The Windows text-mode writer emitted CRLF, and the V15 adapter splits at LF while retaining CR. JSON whitespace makes this command valid to the actual parser. The failed auditor's exact source remains frozen and unchanged. This is an audit-oracle mismatch, not candidate command corruption. A versioned raw-only successor audit will validate the semantic parse and independently reconcile output streams and scheduler/thread receipts; no session process will be rerun.
