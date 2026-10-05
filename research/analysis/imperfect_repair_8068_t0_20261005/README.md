@@ -31,3 +31,7 @@ wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --volume "$
 ```
 
 The image's default entrypoint is repository-specific; `--entrypoint python` is required for this isolated fixture.
+
+## Follow-up T1
+
+The read-only retained-trace eligibility audit is recorded in [T1-ELIGIBILITY.md](T1-ELIGIBILITY.md): `HOLD_NO_IDENTIFIABLE_REPAIR_HISTORY`. The nearest real-environment analogue (#557 V2) records repeated navigation corrections but not a typed reset/rejuvenation history with per-recovery effect-cure truth and age/load covariates. The more lifecycle-rich #6133 and #5776 records are authored synthetic fixtures, not empirical traces. No prior outcome was edited or rerun.
