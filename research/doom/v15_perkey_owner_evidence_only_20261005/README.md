@@ -12,14 +12,18 @@ See `PLAN.md`, `FREEZE.json`, `source-manifest.json`, `source-snapshots/`, `resu
 
 ## Reproduction
 
-The auditor compares retained bytes with the pinned PR #8065 commit using `git show`. In a clean clone that commit may not be present yet. Fetch and verify the frozen PR head before running the auditor:
+The auditor compares retained bytes with the immutable commit recorded in `FREEZE.json`. The PR head is a moving ref: it has advanced beyond the frozen commit, so requiring the fetched PR tip to equal the historical SHA is incorrect. Fetch the PR head, then verify that the frozen commit exists locally and is an ancestor of that fetched tip:
 
 ```sh
+FROZEN_HEAD="$(python3 -c 'import json; print(json.load(open("FREEZE.json"))["candidate_head"])')"
 git fetch origin refs/pull/8065/head
-test "$(git rev-parse FETCH_HEAD)" = "4158d9b063e7cbf56828f1b0667ec2714af0ff2b"
+git cat-file -e "${FROZEN_HEAD}^{commit}"
+git merge-base --is-ancestor "$FROZEN_HEAD" FETCH_HEAD
 python3 -B audit.py
 python3 -B replay_startup.py /tmp/v39-owner-recheck-new-output
 ```
+
+If the ancestry check fails (for example, after a force-push), stop and obtain the exact frozen commit object through an independently verified source; do not substitute the current PR tip or rewrite the freeze.
 
 Use CPython 3.12 with Pillow available. The retained run used the Codex desktop bundled Python 3.12.14 / Pillow 12.3.0 recorded in `RUN.json`.
 
