@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8068 imperfect-repair T0 A01](imperfect_repair_8068_t0_a01_20261005/README.md) — host finite method check passed 12 cells and three mutation controls; WSLc candidate STOPPED before output on read-only path (no retry); independent WSLc audit of retained host raw passed. No interface repair law or runtime claim.
+
 - [Issue #5905 A05 all-frame regression-TTC screen](looming_yield_5905_image_only_t0_2_a05_20261005/REPORT.md) — unregistered host-only exploratory result; independent raw audit 13/13, 18/18 local tests. OLS TTC improved over secant (6/6 vs 5/6) but not pixel/area baselines (both 6/6): `EXPLORATORY_NO_INCREMENTAL_VALUE`. OrbStack nested-OCI preflight STOP; no formal/container or live-control claim.
 
 - [Issue #5905 A04 exploratory cue screen](looming_yield_5905_image_only_t0_2_a04_20261005/README.md) — unregistered host-side pilot: simple pixel/area frontiers reached 6/6 while secant-TTC reached 2/6 at zero false YIELD on six distinguishable controls; no formal result or independent audit.
