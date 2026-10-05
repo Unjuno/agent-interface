@@ -466,3 +466,13 @@ Since the prior census, the #7974 branch was removed after the recorded content/
 | `test/7974-single-query-failure-boundary` | `95666c514f142b58cebafc1920b86bcd87a0d8be` | unclassified |
 
 This is another read-only census. Do not infer that all 65 refs are disposable; per-ref content, ancestry, PR dependencies, custody, and worktree ownership still require audit.
+
+
+## Worktree ownership corrections — 2026-10-05 12:45 UTC
+
+A fresh local `git worktree list --porcelain` after the 12:44 remote-ref census found two clean local checkouts that affect disposition:
+
+- `research/59-v39-v15-cleanup-a07-current-main-20261005` remains checked out at `fdfcbb03d8bec4bbb532a3f46325fd5ef62205ef`. Closed PR #8130's author comment identifies the same A07 pre-treatment focus-admission STOP as the canonical #8126 package and calls #8130 corroborating evidence, but the existing worktree is an active ownership claim. Keep the remote branch until that checkout is retired or its owner reconciles it; do not delete based on the duplicate-science note alone.
+- `fix/59-v15-per-key-keyup-retry-a01-20261005` has no remote branch ref after the earlier audited removal, but a clean local worktree is currently on local commit `6edb4ce5107a6f99fce7dc94613e160fe0777ba4`. The earlier removal was based on the 12:33 no-worktree observation; this later checkout does not restore the remote ref automatically. Preserve the local checkout and its history, and do not prune it. The archival tag and closed PR refs cited above remain the remote recovery points.
+
+The current 12:44 table remains a remote-ref snapshot. Worktree ownership is local state and must be checked again before any later branch deletion.
