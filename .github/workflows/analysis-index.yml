@@ -156,3 +156,9 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/preference_manipulation_7678_t0_a02_20261005 -p 'test_*.py' -v
       - name: Test Issue #7790 opportunity-bound preference evidence T0 A01
         run: python -B -m unittest discover -s research/analysis/opportunity_bound_preference_7790_t0_a01_v1 -p 'test_*.py' -v
+      - name: Test Issue #8072 controlled-feedback T0 A02 mutation gates
+        run: python -B -m unittest discover -s research/analysis/controlled_feedback_8072_a02_20261005 -p 'test_*.py' -v
+      - name: Test Issue #8084 confusion-adaptive practice T0 A01 preserved construction
+        run: python -B -m unittest discover -s research/analysis/confusion_adaptive_practice_8084_t0_a01_20261005 -p 'test_*.py' -v
+      - name: Test Issue #8084 confusion-adaptive practice T0 A02 input-isolated method
+        run: python -B -m unittest discover -s research/analysis/confusion_adaptive_practice_8084_t0_a02_20261005 -p 'test_*.py' -v
