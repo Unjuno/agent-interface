@@ -1,0 +1,36 @@
+{
+  "schema": "cancel-key-release-intervals-freeze-v1",
+  "question": "Does the selected current-main cancellation cleanup owner record one conservative per-key release-request to shared-XSync-completion interval and preserve it in the no-authority input_released publication?",
+  "H": "For every key held by the owner when cancellation cleanup begins, owner_release.key_release_intervals_ns contains exactly one matching keycode with integer [request_start_ns, common_sync_complete_ns], ordered start<=end<=verified_ns; ExecutorV13 nests that exact record in input_released without granting authority.",
+  "T": "Run the fake-Xlib owner-thread regression against source before and after the repair, then the adjacent cancellation receipt, V13 watcher, and release-batch suites.",
+  "D": {
+    "FAIL": "baseline source lacks per-key interval field or identity/bounds/published-record assertions fail",
+    "PASS": "candidate focused and adjacent tests exit 0, each expected interval identity and ordering passes, and release event preserves the record while granting no authority",
+    "HOLD": "runtime/test harness/import failure"
+  },
+  "C": "The shared XSync return is a bound for each request, not a physical key-up timestamp; key-state verification and application effect remain separate.",
+  "U": "Fake Xlib and owner-thread construction only; no X server, OS input, GUI/game/model, useful task effect, or live allocation. OrbStack Docker was unavailable because image listing failed on an unsupported content-store operation; tests ran on the macOS host.",
+  "baseline_git_head": "d04a774fbf50c52e53e5f18852d86b5de398d4cc",
+  "candidate_git_head_before_repair": "d04a774fbf50c52e53e5f18852d86b5de398d4cc",
+  "candidate_source_path": "research/live_control/input_owner_v12.py",
+  "candidate_test_path": "research/live_control/test_input_owner_v12_batch_release_intervals.py",
+  "candidate_source_sha256": "40c9d7520e1d94b020e140674458fa0419f8605368a07eb15c146b8a5fc8a912",
+  "candidate_test_sha256": "c471de8219b62b91d50d58ae62191caf529821f5b0ce6d11654882ba2450887f",
+  "baseline_test_path": "baseline/test_input_owner_v12_batch_release_intervals.py",
+  "baseline_source_sha256": "64c0180d3764e85c5d628bf8de1d63d10c145677e04d52ecff1edd887a1c2208",
+  "commands": [
+    "PYTHONPATH=research/live_control:research/doom python3 -m unittest -v research.live_control.test_input_owner_v12_batch_release_intervals research.live_control.test_input_owner_v12_explicit_up_cancel research.live_control.test_input_transition_owner_v4 research.live_control.test_executor_v13 research.doom.test_release_backend_v3_actual_composition > research/doom/cancel_key_release_intervals_59_4d74_20261004/candidate.stdout.txt 2> research/doom/cancel_key_release_intervals_59_4d74_20261004/candidate.stderr.txt",
+    "Initial baseline staging command omitted lease.py and stopped at ModuleNotFoundError; retained at baseline/out-01.*",
+    "PYTHONPATH=research/doom/cancel_key_release_intervals_59_4d74_20261004/baseline python3 research/doom/cancel_key_release_intervals_59_4d74_20261004/baseline/test_input_owner_v12_batch_release_intervals.py > baseline/out-02.stdout.txt 2> baseline/out-02.stderr.txt; exit retained at baseline/out-02.exit.txt"
+  ],
+  "baseline_test_sha256": "bc05fb80ea6ee5d60a7783215a6e0362e68b7247c50c9d7f6f417d5e13149bb1",
+  "baseline_dependencies": {
+    "executor_v3.py": "copied from pinned baseline Git head",
+    "lease.py": "added after first staging STOP; no production source changed"
+  },
+  "host": {
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "container": "not used; OrbStack daemon image listing failed before image inventory"
+  }
+}

@@ -1,0 +1,15 @@
+test_cancelled_release_records_each_key_to_shared_sync_bound (__main__.BatchReleaseIntervalTests.test_cancelled_release_records_each_key_to_shared_sync_bound) ... ERROR
+
+======================================================================
+ERROR: test_cancelled_release_records_each_key_to_shared_sync_bound (__main__.BatchReleaseIntervalTests.test_cancelled_release_records_each_key_to_shared_sync_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-3/work/keyup-cancel-fix/research/doom/cancel_key_release_intervals_59_4d74_20261004/baseline/test_input_owner_v12_batch_release_intervals.py", line 108, in test_cancelled_release_records_each_key_to_shared_sync_bound
+    intervals = record["key_release_intervals_ns"]
+                ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'key_release_intervals_ns'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.011s
+
+FAILED (errors=1)

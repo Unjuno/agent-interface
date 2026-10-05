@@ -1,0 +1,7 @@
+*.json text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.txt text eol=lf
+# Preserve the exact mixed line endings of the pinned source snapshots.
+partial_release_failure/baseline/input_owner_v12.py -text
+partial_release_failure/candidate/input_owner_v12.py -text

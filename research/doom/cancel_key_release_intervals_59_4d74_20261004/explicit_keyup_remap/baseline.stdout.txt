@@ -1,0 +1,16 @@
+test_key_up_releases_original_code_after_symbol_remap (research.live_control.test_input_owner_v12_explicit_keyup_keymap.ExplicitKeyupKeymapTests.test_key_up_releases_original_code_after_symbol_remap) ... FAIL
+
+======================================================================
+FAIL: test_key_up_releases_original_code_after_symbol_remap (research.live_control.test_input_owner_v12_explicit_keyup_keymap.ExplicitKeyupKeymapTests.test_key_up_releases_original_code_after_symbol_remap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/keyup-baseline-fe40551/research/live_control/test_input_owner_v12_explicit_keyup_keymap.py", line 102, in test_key_up_releases_original_code_after_symbol_remap
+    self.assertEqual(display_instance.down, set())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+87
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)

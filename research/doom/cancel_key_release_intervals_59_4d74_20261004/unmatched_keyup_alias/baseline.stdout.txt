@@ -1,0 +1,16 @@
+test_unadmitted_alias_does_not_release_held_key_for_same_lease (research.live_control.test_input_owner_v12_unmatched_keyup_alias.UnmatchedKeyUpAliasTests.test_unadmitted_alias_does_not_release_held_key_for_same_lease) ... FAIL
+
+======================================================================
+FAIL: test_unadmitted_alias_does_not_release_held_key_for_same_lease (research.live_control.test_input_owner_v12_unmatched_keyup_alias.UnmatchedKeyUpAliasTests.test_unadmitted_alias_does_not_release_held_key_for_same_lease)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-3/work/keyup-cancel-fix/research/live_control/test_input_owner_v12_unmatched_keyup_alias.py", line 113, in test_unadmitted_alias_does_not_release_held_key_for_same_lease
+    self.assertEqual(display_instance.down, {87})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+87
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)

@@ -1,0 +1,104 @@
+{
+  "after_close_owner_release_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_intervals_ns": [],
+      "keys_down": [
+        65,
+        87
+      ],
+      "reason": "cancelled",
+      "release_error": "RuntimeError('injected accepted-then-raised XTest release')",
+      "valid_until_ns": 4611686018427387904,
+      "verified": false
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            113328945843166,
+            113328945844916
+          ],
+          "keycode": 87
+        },
+        {
+          "interval_ns": [
+            113328945844000,
+            113328945844916
+          ],
+          "keycode": 65
+        }
+      ],
+      "keys_down": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 113328945850250
+    }
+  ],
+  "before_close": {
+    "cancel_requested": true,
+    "interruptions": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "key_release_intervals_ns": [],
+        "keys_down": [
+          65,
+          87
+        ],
+        "reason": "cancelled",
+        "release_error": "RuntimeError('injected accepted-then-raised XTest release')",
+        "valid_until_ns": 4611686018427387904,
+        "verified": false
+      }
+    ],
+    "owned_keycodes": [
+      65,
+      87
+    ],
+    "owner_release_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "key_release_intervals_ns": [],
+        "keys_down": [
+          65,
+          87
+        ],
+        "reason": "cancelled",
+        "release_error": "RuntimeError('injected accepted-then-raised XTest release')",
+        "valid_until_ns": 4611686018427387904,
+        "verified": false
+      }
+    ],
+    "physical_keymap_down": []
+  },
+  "failure_phase": "request",
+  "injected_request_accepted_then_raised": true,
+  "loaded_source": "/Users/taka/Documents/Codex/2026-10-03/new-chat-3/work/keyup-cancel-fix/research/live_control/input_owner_v12.py",
+  "v13_unverified_publication": {
+    "event": "input_release_unverified",
+    "grants_input_authority": false,
+    "id": "run-1",
+    "intent_token": "intent-1",
+    "owner_release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_intervals_ns": [],
+      "keys_down": [
+        65,
+        87
+      ],
+      "reason": "cancelled",
+      "release_error": "RuntimeError('injected accepted-then-raised XTest release')",
+      "valid_until_ns": 4611686018427387904,
+      "verified": false
+    },
+    "program_terminal_pending": true,
+    "published_ns": 113328945872875
+  }
+}

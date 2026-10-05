@@ -81,7 +81,6 @@ class InputOwner:
             self.ready.set()
             return
         held = {}
-        held_keys = {}
         touched = set()
         buttons = {}
         touched_buttons = set()
@@ -228,7 +227,6 @@ class InputOwner:
             buttons.clear()
             touched_buttons.clear()
             held.clear()
-            held_keys.clear()
             touched.clear()
             active = None
             return record
@@ -343,10 +341,10 @@ class InputOwner:
                                           admitted_ns=admitted,input_ack_ns=time.perf_counter_ns(),
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
                     elif op in ('down', 'up'):
+                        code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                        if not code:
+                            raise ValueError('key unavailable on input owner')
                         if op == 'down':
-                            code = d.keysym_to_keycode(XK.string_to_keysym(key))
-                            if not code:
-                                raise ValueError('key unavailable on input owner')
                             if fault is not None:
                                 raise RuntimeError('input owner failed closed') from fault
                             if active is not None and active is not lease:
@@ -364,20 +362,13 @@ class InputOwner:
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
-                            held_keys[(id(lease), key)] = code
-                            result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
+                            result = dict(event='input_admission', key=key, admitted_ns=admitted,
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
                         else:
-                            # A keymap change must not redirect an up to a
-                            # different physical key than the one admitted.
-                            # An up without a matching admission is not allowed
-                            # to release a different key that happens to map to
-                            # the same current keycode.
-                            code = held_keys.get((id(lease), key))
                             # Cleanup from an old intent must never release a newer hold.
-                            if code is not None and code in held and held[code] is not lease:
+                            if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
-                            if code is not None and code in held:
+                            if code in held:
                                 owner_keyrelease_started_ns = time.perf_counter_ns()
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
@@ -388,7 +379,6 @@ class InputOwner:
                                     else None
                                 )
                                 del held[code]
-                                held_keys.pop((id(lease), key), None)
                                 self.records.append(dict(
                                     event='owner_explicit_keyup', operation='up',
                                     owner_id=self.owner_id, key=key, keycode=code,

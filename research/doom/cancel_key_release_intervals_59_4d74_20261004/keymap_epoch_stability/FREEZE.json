@@ -1,0 +1,50 @@
+{
+  "schema": "cancel-key-release-keymap-epoch-freeze-v1",
+  "issue": 59,
+  "question": "Does a synthetic keysym-to-keycode map change between admission and cancellation break the admission-keycode to release-interval join?",
+  "H": "When the owner records the resolved keycode at each admission, changing the synthetic map after admission or between admissions must not change the release code already stored in the held-key state. Every observed admission keycode must remain paired with the same cancellation interval and verified-empty release.",
+  "T": "Load pinned current-PR input_owner_v12 source by commit and Git blob, apply only the frozen in-memory admission-keycode receipt mutation, then run two fake-Xlib arms: remap W after both admissions and remap W/A before the second admission. Cancel after the remap and compare admission keycodes, release interval keycodes, and verification.",
+  "D": {
+    "PASS": "Both arms verify release; first arm has admissions/releases [87,65] despite W remapping to 77 after admission; second arm has admissions/releases [87,77] after the inter-admission remap.",
+    "FAIL": "Either arm changes a held key's release code after a mapping mutation or fails to verify empty state.",
+    "HOLD": "Pinned source, fake owner, or cancellation receipt cannot be reproduced."
+  },
+  "C": "A keymap epoch is required to interpret which symbol an admitted keycode represented, but the owner retains the resolved keycode for release. Duplicate symbols mapped to one code remain grouped as one physical key; this probe focuses on changes between distinct admissions.",
+  "U": "Fake Xlib only. It does not establish real X server mapping-change delivery, keyboard layout semantics, physical key behavior, GUI/game effects, model behavior, or live recovery.",
+  "source_commit": "1721f7cb2a47f53641bc7c93effe2a2b817013cd",
+  "source_path": "research/live_control/input_owner_v12.py",
+  "source_blob": "50887b03fa2931315caf8396ac99a47628396129",
+  "source_raw_sha256": "e48b12c22c23af3fb32465ef85aa71c3e69605a721f54cc127299ff1ec7366b0",
+  "candidate_mutation": "add keycode=code to input_admission receipt in memory",
+  "candidate_source_sha256": "d4104ffcf391e9becff572caf6b569b5e8e29e5537da6ff30416433de9962fb0",
+  "probe_sha256": "e5f8250db1c173c5b23aa04552485a43e602bb20771bf29a612b06774d5788f8",
+  "result_sha256": "2610e039fcd121c0d8b6164d43775b7f0414d2cd2e8d8ba4fef5c9d8b6109999",
+  "audit_sha256": "02d94a8201a221c67e1fae0eaaa4f842b8b30533b0c7b8c0aad28cf02fcdfc83",
+  "audit_result_sha256": "14c89d1a6ed522f2db18b04154cb8f612bff255dbc5a0947b31661e583d57965",
+  "arms": [
+    {
+      "name": "mapping changes after both admissions",
+      "expected_admissions": [
+        87,
+        65
+      ],
+      "expected_releases": [
+        87,
+        65
+      ]
+    },
+    {
+      "name": "mapping changes before second admission",
+      "expected_admissions": [
+        87,
+        77
+      ],
+      "expected_releases": [
+        87,
+        77
+      ]
+    }
+  ],
+  "runtime": "python3",
+  "container": "not used; fake Xlib source-composition experiment"
+}

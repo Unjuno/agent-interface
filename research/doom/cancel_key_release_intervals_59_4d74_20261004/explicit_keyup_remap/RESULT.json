@@ -1,0 +1,31 @@
+{
+  "schema": "explicit-keyup-keymap-remap-result-v1",
+  "baseline": {
+    "exit": 1,
+    "expected": "FAIL",
+    "physical_key_still_down": [
+      87
+    ]
+  },
+  "candidate": {
+    "exit": 0,
+    "expected": "PASS",
+    "physical_key_still_down": [],
+    "admission_keycode": 87,
+    "explicit_keyup_keycode": 87,
+    "xsync_bounds_ordered": true
+  },
+  "ordered_candidate_suite": {
+    "exit": 0,
+    "tests": 20,
+    "pass": true
+  },
+  "runner_invoked_by_file_path": {
+    "exit": 1,
+    "disposition": "STOP",
+    "reason": "ModuleNotFoundError: No module named research; corrected by invoking as a module from repository root"
+  },
+  "candidate_source_sha256": "82f5bb461b571df859bd1683058443b3106626079ade472ed8647e4eba5f3594",
+  "baseline_commit": "fe40551fa010957bec7d91eb6eb0a9681975ad3f",
+  "scope": "Fake Xlib/source-composition only. This does not establish real X server remap delivery, physical transition time, GUI/game effect, model behavior, bounded recovery, or live threat response."
+}

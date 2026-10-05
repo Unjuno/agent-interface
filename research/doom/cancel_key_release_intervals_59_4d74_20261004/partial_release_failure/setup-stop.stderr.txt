@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "characterize_sync_failure.py", line 97, in main
+    state = owner.call("input_state")
+  File "input_owner_v12.py", line 265, in _run
+    pointer=[point.root_x,point.root_y],focus=focus,
+AttributeError: 'types.SimpleNamespace' object has no attribute 'root_x'

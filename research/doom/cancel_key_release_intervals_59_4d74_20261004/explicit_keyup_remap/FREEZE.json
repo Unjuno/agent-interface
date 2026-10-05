@@ -1,0 +1,27 @@
+{
+  "schema": "explicit-keyup-keymap-remap-freeze-v1",
+  "issue": 59,
+  "H": "After a logical key is admitted under one keysym-to-keycode mapping, changing that mapping before explicit key-up must not leave the originally admitted physical key down. The admission and explicit-up receipts must identify the same physical keycode.",
+  "T": "One fake-Xlib case: admit W as keycode 87, remap W to 77, request up for W, then inspect physical fake key state and owner receipts.",
+  "D": {
+    "baseline": "FAIL only if code 87 remains down and no explicit-up receipt identifies it.",
+    "candidate": "PASS only if physical state is empty and admission.keycode equals owner_explicit_keyup.keycode equals 87, with request-start <= XSync-return."
+  },
+  "C": "A changed mapping may change the symbol interpretation, but an up paired with a currently held logical key must release the physical code admitted for that hold; typed keymap-epoch checks remain necessary for semantic interpretation.",
+  "U": "Fake Xlib/source-composition only. This does not establish real X server remap delivery, physical transition time, GUI/game effect, model behavior, bounded recovery, or live threat response.",
+  "baseline_commit": "fe40551fa010957bec7d91eb6eb0a9681975ad3f",
+  "source_path": "research/live_control/input_owner_v12.py",
+  "baseline_source_blob": "50887b03fa2931315caf8396ac99a47628396129",
+  "baseline_source_sha256": "e48b12c22c23af3fb32465ef85aa71c3e69605a721f54cc127299ff1ec7366b0",
+  "candidate_source_sha256": "82f5bb461b571df859bd1683058443b3106626079ade472ed8647e4eba5f3594",
+  "test_path": "research/live_control/test_input_owner_v12_explicit_keyup_keymap.py",
+  "test_sha256": "191e3ca926f8fadba1aac5ff032d7101134096146c19bf0d8fcf0fb0b905bda6",
+  "command": "python3 -B -m unittest research.live_control.test_input_owner_v12_explicit_keyup_keymap -v",
+  "runtime": "python3 fake Xlib on macOS host; no game or X server",
+  "audit_script_sha256": "394dedc0446778a9007b817ba95bf0edd5d5763047301010ce97a458a6d223a9",
+  "result_sha256": "79f0bba4b424d6f8c2b64ffaa90c59302b0c54e9c76ba49b645c99b31530d03c",
+  "audit_result_sha256": "a59e6ca74b4aac55b03da539ddb2af9978f5f386810c1593e3f0d33346262a31",
+  "ordered_runner_path": "run_ordered_suite.py",
+  "ordered_runner_sha256": "473405305858ea9efa8afad7afc7c7a6c6b1d0faeb6110ec673f0dd5e5134e78",
+  "ordered_suite_command": "python3 -B -m research.doom.cancel_key_release_intervals_59_4d74_20261004.explicit_keyup_remap.run_ordered_suite"
+}

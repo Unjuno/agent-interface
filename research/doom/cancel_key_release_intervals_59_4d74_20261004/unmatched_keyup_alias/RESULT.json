@@ -1,0 +1,32 @@
+{
+  "schema": "unmatched-keyup-alias-result-v1",
+  "issue": 59,
+  "disposition": "PASS_FAKE_XLIB_OWNERSHIP_CONSTRUCTION_SCOPED",
+  "baseline": {
+    "exit_code": 1,
+    "failure": "unmatched up(A) resolved to held W keycode 87 and cleared fake physical state"
+  },
+  "candidate": {
+    "exit_code": 0,
+    "checks": [
+      "up(A) with no A admission left admitted W/keycode 87 down",
+      "no owner_explicit_keyup receipt was emitted for A",
+      "up(W) released code 87 and receipt identified W/keycode 87"
+    ]
+  },
+  "ordered_adjacent_suite": {
+    "exit_code": 0,
+    "tests": 22,
+    "includes": [
+      "unmatched alias regression before and after owner/release suites",
+      "admission-time keymap remap release",
+      "release request intervals",
+      "cancellation and explicit-up classification",
+      "V13 release publication and terminal barriers"
+    ]
+  },
+  "baseline_source_sha256": "82f5bb461b571df859bd1683058443b3106626079ade472ed8647e4eba5f3594",
+  "candidate_source_sha256": "5910b22cda46fe22418dcfe10234b99f99e23c236e323d8ee51020544be4a7d5",
+  "test_sha256": "e5ca599bcd69ffbca9755463974d966c072f6756c4eb6df7e409ece39846f22d",
+  "limitations": "Fake Xlib only; no live X server, physical input timing, application effect, useful task feedback, recovery, or live threat response."
+}
