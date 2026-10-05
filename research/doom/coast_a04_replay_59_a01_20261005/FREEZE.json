@@ -1,0 +1,21 @@
+{
+  "schema": "coast-a04-replay-freeze-v1",
+  "issue": 59,
+  "allocation": "CPU-only retained-data component replay; no new live allocation",
+  "source_main_sha": "d9bb339b0ba9285cdef57fc347437d25e5943ef1",
+  "candidate_pr": 7527,
+  "candidate_head": "1c12f87d9316f2faa3b2e4b5da55f23ceb2296d4",
+  "candidate": "research/doom/unauthored_coast_liveness_v1.py",
+  "candidate_rule": {"minimum_health_drop": 5, "low_samples": 2, "window_samples": 3},
+  "source_record_pr": 7990,
+  "source_record_head": "3c6862937f30a22aad6380699f23da92d5d2c6f9",
+  "input_archive": "map01-v39-threat-currentmain-a04/raw-a04.zip",
+  "input_sha256": "b6e8529a51e89e6f1c51374fbd27f121bab594c92014ee2fe73aa2f94ef98163",
+  "source_archive_freeze_main_sha": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "window_rule": "For decisions 0,1,2,3,5: [planner_terminal_observed_ns - model_ns, planner_terminal_observed_ns]. Within each cover-i and cover-i-renew-1 stream, eligible samples have emit_ns in the closed interval. Baseline is latest valid typed health emitted at/before start. Decision 4 is excluded as authored.",
+  "censor_rule": "Stop each interval at its first 2-of-3 trigger. No threshold/window search, counterfactual recovery estimate, or live consumer simulation.",
+  "hypothesis": "The fixed candidate triggers before retained planner terminal in each selected unauthored coast interval.",
+  "decision_rule": "PASS_SCOPED only if five interval boundaries and typed health rows are present, candidate and independent oracle match exactly, every trigger precedes planner terminal, and decision 4 remains excluded; otherwise STOP/FAIL without retry.",
+  "resource_scope": "Local CPU-only JSON/ZIP read. No game, model, GUI, input, container, or GPU. No consumed allocation replay."
+}
+
