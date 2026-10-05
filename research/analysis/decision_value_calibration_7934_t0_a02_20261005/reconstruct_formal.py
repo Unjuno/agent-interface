@@ -8,6 +8,13 @@ import sys
 
 root = pathlib.Path(__file__).resolve().parent / "formal"
 manifest = json.loads((root / "FORMAL_MANIFEST.json").read_text(encoding="utf-8"))
+
+
+def canonical_text_bytes(path):
+    """Undo Git's Windows CRLF checkout conversion before checking text hashes."""
+    return path.read_bytes().replace(b"\r\n", b"\n")
+
+
 raw_parts = []
 for part in manifest["raw"]["parts"]:
     packed = (root / part["path"]).read_bytes()
@@ -31,11 +38,11 @@ candidate = gzip.decompress(candidate_gz)
 if (len(candidate) != candidate_entry["uncompressed_bytes"] or
         hashlib.sha256(candidate).hexdigest() != candidate_entry["uncompressed_sha256"]):
     raise SystemExit("candidate_result_digest")
-terminal = (root / "terminal.json").read_bytes()
+terminal = canonical_text_bytes(root / "terminal.json")
 if hashlib.sha256(terminal).hexdigest() != manifest["terminal_sha256"]:
     raise SystemExit("terminal_digest")
 for name, entry in manifest["streams"].items():
-    data = (root / name).read_bytes()
+    data = canonical_text_bytes(root / name)
     if len(data) != entry["bytes"] or hashlib.sha256(data).hexdigest() != entry["sha256"]:
         raise SystemExit("stream_digest:" + name)
 if len(sys.argv) > 1:
