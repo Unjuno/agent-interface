@@ -175,7 +175,11 @@ class InputOwner:
         def release(reason):
             nonlocal active,revision
             revision += 1
-            for code in list(held):
+            # Explicit XSync completion does not prove that the server applied
+            # each key-up. Retry every key touched by this owner before the
+            # final keymap check, including keys removed from `held` after an
+            # explicit key-up request.
+            for code in list(touched):
                 xtest.fake_input(d, X.KeyRelease, code)
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
