@@ -1,0 +1,53 @@
+{
+  "schema": "v39-v15-release-identity-a07-freeze-v1",
+  "allocation": "V39-V15-RELEASE-IDENTITY-A07-20261005-01",
+  "frozen_at_utc": "2026-10-05T10:47:54Z",
+  "base_sha": "aeed696ff756d68497faed39b92e3546cb144972",
+  "scope": "audit-only identity pairing over immutable A02 synthetic fake-X raw",
+  "input": {
+    "path": "inputs/a02_candidate_raw.json",
+    "git_blob": "7878e4e6aba0fe7d085f6a1e41192ef120d8b20d",
+    "sha256": "0336cfa2eeebbe48ad816168d5466938a936fcf0782211b21847df6c20038596"
+  },
+  "prior_audit_input": {
+    "path": "inputs/a06_audit_v5.py",
+    "git_blob": "c9d27887c3425663ec57ed6099bfc07fcd5c18f4",
+    "sha256": "13a09f56278cc2d9ea91c022918d1c900756a0ab2749742c37b7fdf62b13f051"
+  },
+  "frozen_files": {
+    "PROTOCOL.md": "04151d67206738f1bfb22b0d215eebddf7d03731298ba232a82590a1a5dd08e1",
+    "audit.py": "dd257c94959cd48e540040d760fa49d3182f778978fc995134578a992d75d041",
+    "reference_audit.py": "017c9afaa4017a9c6bfedb49886ad7aec1d7e354f0e498088e5c14a32f079f51",
+    "tests/test_identity_binding.py": "a1201d53d3ea1cd1820f77161e124821df843473899a24884cd3f8a69731d633",
+    "construction/RED_EVIDENCE.md": "01ce7fa3e5b3a70c23e026ed16d44929dbca08490457231d2deae88e75763c77"
+  },
+  "identity_fields": ["id", "intent_token", "owner_id", "step", "key"],
+  "frozen_expected": {
+    "case_count": 2,
+    "admissions_per_case": 2,
+    "release_transitions_per_case": 2,
+    "baseline_pairs": 4,
+    "identity_mutations": 14,
+    "duplicate_release_controls": 1,
+    "baseline_disposition": "accept",
+    "all_mutation_dispositions": "reject"
+  },
+  "planned_invocations": {
+    "candidate_or_runtime": 0,
+    "a07_auditor": 1,
+    "independent_reference_auditor": 1,
+    "retries": 0
+  },
+  "environment": {
+    "os": "Windows host",
+    "python": "CPython 3.11.9",
+    "container": "none; WSLc skipped because shared-client ownership remains unresolved",
+    "network": "not used",
+    "gpu_model_gui_input_game": "not used"
+  },
+  "commands": [
+    "python -B research/doom/v39_v15_release_identity_a07_20261005/audit.py --input research/doom/v39_v15_release_identity_a07_20261005/inputs/a02_candidate_raw.json --output research/doom/v39_v15_release_identity_a07_20261005/formal/AUDIT.json",
+    "python -B research/doom/v39_v15_release_identity_a07_20261005/reference_audit.py --input research/doom/v39_v15_release_identity_a07_20261005/inputs/a02_candidate_raw.json --candidate-output research/doom/v39_v15_release_identity_a07_20261005/formal/AUDIT.json --candidate-source research/doom/v39_v15_release_identity_a07_20261005/audit.py --output research/doom/v39_v15_release_identity_a07_20261005/formal/INDEPENDENT_AUDIT.json"
+  ],
+  "stop_rule": "Any input hash mismatch, nonzero exit, missing case, baseline/reference disagreement, accepted mutation, or source edit preserves first STOP/FAIL; no retries or post-run edits."
+}
