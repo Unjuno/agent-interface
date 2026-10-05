@@ -1,0 +1,77 @@
+test_monitor_coalesces_soft_values_and_surfaces_hard (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_monitor_coalesces_soft_values_and_surfaces_hard) ... ok
+test_monitor_does_not_invent_missing_identity_from_signal (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_monitor_does_not_invent_missing_identity_from_signal) ... ok
+test_monitor_retains_observation_identity_for_hard_and_unknown (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_monitor_retains_observation_identity_for_hard_and_unknown) ... 
+  test_monitor_retains_observation_identity_for_hard_and_unknown (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_monitor_retains_observation_identity_for_hard_and_unknown) (status='HARD_INVALIDATED') ... ERROR
+  test_monitor_retains_observation_identity_for_hard_and_unknown (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_monitor_retains_observation_identity_for_hard_and_unknown) (status='UNKNOWN') ... ERROR
+test_soft_hard_and_unchanged_authority (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_soft_hard_and_unchanged_authority) ... ok
+test_strict_spec_and_source_binding (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_strict_spec_and_source_binding) ... ok
+test_unknown_conditions_fail_closed (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_unknown_conditions_fail_closed) ... ok
+test_authored_cover_still_uses_original_guard (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_authored_cover_still_uses_original_guard) ... ok
+test_invalidation_frame_rejects_incomplete_identity (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_invalidation_frame_rejects_incomplete_identity) ... ok
+test_invalidation_frame_requires_matching_epoch_capture_and_binding (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_invalidation_frame_requires_matching_epoch_capture_and_binding) ... ok
+test_policy_invalidation_handoff_waits_for_fresh_frame_before_next_plan (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_policy_invalidation_handoff_waits_for_fresh_frame_before_next_plan) ... ok
+test_real_health_monitor_hard_invalidation_reaches_next_plan (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_real_health_monitor_hard_invalidation_reaches_next_plan) ... ERROR
+test_real_health_monitor_unknown_invalidation_reaches_next_plan (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_real_health_monitor_unknown_invalidation_reaches_next_plan) ... ERROR
+test_rejected_action_followup_keeps_model_turn_alive_on_damage (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_rejected_action_followup_keeps_model_turn_alive_on_damage) ... ok
+test_running_invalidation_interrupts_planner_and_requires_verified_empty_release (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_running_invalidation_interrupts_planner_and_requires_verified_empty_release) ... ok
+test_running_invalidation_rejects_nonempty_or_unverified_release (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_running_invalidation_rejects_nonempty_or_unverified_release) ... ok
+test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in) ... ok
+
+======================================================================
+ERROR: test_monitor_retains_observation_identity_for_hard_and_unknown (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_monitor_retains_observation_identity_for_hard_and_unknown) (status='HARD_INVALIDATED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_observable_signal_guard_v2.py", line 45, in test_monitor_retains_observation_identity_for_hard_and_unknown
+    self.assertEqual(event[field], before[field])
+                     ~~~~~^^^^^^^
+KeyError: 'capture_ns'
+
+======================================================================
+ERROR: test_monitor_retains_observation_identity_for_hard_and_unknown (research.live_control.test_observable_signal_guard_v2.ObservableSignalGuardV2Tests.test_monitor_retains_observation_identity_for_hard_and_unknown) (status='UNKNOWN')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/live_control/test_observable_signal_guard_v2.py", line 45, in test_monitor_retains_observation_identity_for_hard_and_unknown
+    self.assertEqual(event[field], before[field])
+                     ~~~~~^^^^^^^
+KeyError: 'capture_ns'
+
+======================================================================
+ERROR: test_real_health_monitor_hard_invalidation_reaches_next_plan (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_real_health_monitor_hard_invalidation_reaches_next_plan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/doom/test_map01_overlap_controller_v39.py", line 160, in test_real_health_monitor_hard_invalidation_reaches_next_plan
+    self._exercise_invalidation_handoff(health_mode="hard")
+  File "<repo>/research/doom/test_map01_overlap_controller_v39.py", line 341, in _exercise_invalidation_handoff
+    controller.main()
+  File "<repo>/research/doom/map01_overlap_controller_v39.py", line 947, in main
+    latest = wait_for_invalidation_frame(latest, invalidation, wait)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/research/doom/test_map01_overlap_controller_v39.py", line 300, in checked_frame_barrier
+    result = frame_barrier(latest, invalidation, wait, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/research/doom/map01_overlap_controller_v39.py", line 404, in wait_for_invalidation_frame
+    raise RuntimeError("policy invalidation lacks a valid observation identity")
+RuntimeError: policy invalidation lacks a valid observation identity
+
+======================================================================
+ERROR: test_real_health_monitor_unknown_invalidation_reaches_next_plan (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_real_health_monitor_unknown_invalidation_reaches_next_plan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/research/doom/test_map01_overlap_controller_v39.py", line 163, in test_real_health_monitor_unknown_invalidation_reaches_next_plan
+    self._exercise_invalidation_handoff(health_mode="unknown")
+  File "<repo>/research/doom/test_map01_overlap_controller_v39.py", line 341, in _exercise_invalidation_handoff
+    controller.main()
+  File "<repo>/research/doom/map01_overlap_controller_v39.py", line 947, in main
+    latest = wait_for_invalidation_frame(latest, invalidation, wait)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/research/doom/test_map01_overlap_controller_v39.py", line 300, in checked_frame_barrier
+    result = frame_barrier(latest, invalidation, wait, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/research/doom/map01_overlap_controller_v39.py", line 404, in wait_for_invalidation_frame
+    raise RuntimeError("policy invalidation lacks a valid observation identity")
+RuntimeError: policy invalidation lacks a valid observation identity
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.024s
+
+FAILED (errors=4)

@@ -1,4 +1,5 @@
 """One-way typed signal validity envelope with monitor-stage clocks."""
+from copy import deepcopy
 import json
 import time
 
@@ -128,6 +129,13 @@ class ObservableSignalPolicyMonitor:
                  "outcome_evaluated_ns": outcome_evaluated_ns,
                  "signal_extraction_ms": (signal_extracted_ns - monitor_received_ns) / 1e6,
                  "outcome_evaluation_ms": (outcome_evaluated_ns - signal_extracted_ns) / 1e6}
+        # Keep the originating observation identity even when extraction failed.
+        # A later full-frame barrier must not substitute a newer row or rely on
+        # identity that may be absent from an UNKNOWN signal.
+        event["capture_ns"] = observation.get("capture_ns")
+        event["pointer_binding"] = deepcopy(observation.get("pointer_binding"))
+        if "frame_rgb_sha256" in observation:
+            event["frame_rgb_sha256"] = observation["frame_rgb_sha256"]
         if outcome["status"] == "SOFT_CHANGED":
             if outcome["current_value"] != self.last_signal_value:
                 self.soft_event_count += 1

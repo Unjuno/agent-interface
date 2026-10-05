@@ -154,11 +154,25 @@ class Map01V39CoastTests(unittest.TestCase):
                         Planner(), object(), Process(), lambda predicate: terminal, "cover-0")
 
     def test_policy_invalidation_handoff_waits_for_fresh_frame_before_next_plan(self):
+        self._exercise_invalidation_handoff()
+
+    def test_real_health_monitor_hard_invalidation_reaches_next_plan(self):
+        self._exercise_invalidation_handoff(health_mode="hard")
+
+    def test_real_health_monitor_unknown_invalidation_reaches_next_plan(self):
+        self._exercise_invalidation_handoff(health_mode="unknown")
+
+    def _exercise_invalidation_handoff(self, health_mode=None):
         """A terminal can overtake its frame; never replan from pre-invalidation pixels."""
         class Reader:
             def __init__(self, *args, signal_id): self.signal_id = signal_id
             def read(self, observation):
-                return {"status": "observed", "value": 90 if self.signal_id == "health" else 20,
+                if health_mode == "unknown" and observation["sequence"] == 11:
+                    raise ValueError("unreadable health fixture")
+                health = 60 if observation["sequence"] == 11 else 90
+                return {"status": "observed", "value": health if self.signal_id == "health" else 20,
+                        "signal_id": self.signal_id,
+                        "binding": observation["pointer_binding"],
                         "sequence": observation["sequence"], "capture_ns": observation["capture_ns"]}
 
         class Stdin:
@@ -214,6 +228,12 @@ class Map01V39CoastTests(unittest.TestCase):
              "buttons_down": []}},
             {"event": "post_control_score", "score": 1},
         ]
+        if health_mode is not None:
+            # The real health-only monitor consumes full observations. A later
+            # frame overtakes terminal completion; identity must still name 11.
+            observations[3] = dict(observations[3], event="observation",
+                                   image="invalidation.png", step=0)
+            observations[4:8] = [observations[6], observations[4], observations[7]]
         # Controller wait() normally consumes the reader thread's queue. Feed
         # the same order deterministically without a process or GUI.
         import queue
@@ -265,6 +285,26 @@ class Map01V39CoastTests(unittest.TestCase):
                     "pointer_binding": {"focus": 7, "surface": 7},
                     "event": "hard_change"},
                 soft_event_count=0, latest_soft_event=None)
+            monitor_factory = controller.build_cover_monitor
+
+            def build_real_monitor(*args, **kwargs):
+                monitor, receipt = monitor_factory(*args, **kwargs)
+                self.assertIsInstance(monitor, controller.ObservableSignalPolicyMonitor)
+                return monitor, receipt
+
+            frame_barrier = controller.wait_for_invalidation_frame
+            barrier_events = []
+
+            def checked_frame_barrier(latest, invalidation, wait, timeout=5):
+                barrier_events.append(invalidation)
+                result = frame_barrier(latest, invalidation, wait, timeout)
+                self.assertEqual(invalidation["sequence"], 11)
+                self.assertEqual(invalidation["capture_ns"], 110)
+                if health_mode is not None:
+                    self.assertEqual(invalidation["outcome"]["status"],
+                                     "HARD_INVALIDATED" if health_mode == "hard" else "UNKNOWN")
+                return result
+
             replacements = [
                 patch.object(sys, "argv", argv),
                 patch.object(controller.subprocess, "Popen", fake_popen),
@@ -277,9 +317,11 @@ class Map01V39CoastTests(unittest.TestCase):
                 patch.object(controller, "temporal_sheet", save_sheet),
                 patch.object(controller, "refresh_source", side_effect=lambda latest, *a: (
                     latest, {"status": "already_observed"})),
-                patch.object(controller, "build_cover_monitor", return_value=(
-                    invalidation_monitor, {"authored": {"signal_id": "health"},
-                                           "status": "admitted"})),
+                patch.object(controller, "build_cover_monitor", side_effect=(
+                    build_real_monitor if health_mode is not None else
+                    lambda *a, **k: (invalidation_monitor, {
+                        "authored": {"signal_id": "health"}, "status": "admitted"}))),
+                patch.object(controller, "wait_for_invalidation_frame", checked_frame_barrier),
                 patch.object(controller, "admitted_cover_commands", return_value=[]),
                 patch.object(controller, "select_cover_monitor", side_effect=lambda monitor, admission, *a: (monitor, admission)),
                 patch.object(controller, "compile_cover", return_value=[]),
@@ -299,6 +341,7 @@ class Map01V39CoastTests(unittest.TestCase):
                 controller.main()
 
         self.assertEqual(planner.calls, 2)
+        self.assertEqual(len(barrier_events), 1)
         self.assertEqual(sheets[1][-1], "fresh.png")
 
 
