@@ -17,13 +17,21 @@ def _binding(observation):
     if type(observation) is not dict:
         raise ValueError("observation object required")
     binding = observation.get("pointer_binding")
-    if type(binding) is not dict or set(binding) != {"focus", "surface", "geometry"}:
+    if (type(binding) is not dict or
+            set(binding) not in ({"focus", "surface", "geometry"},
+                                 {"focus", "surface", "geometry", "identity"})):
         raise ValueError("exact pointer binding required")
     if any(not _integer(binding[key]) or binding[key] in (0, 1)
            for key in ("focus", "surface")):
         raise ValueError("focus and surface identifiers required")
     geometry = binding["geometry"]
     translation("window_content", geometry, geometry)
+    if "identity" in binding:
+        identity = binding["identity"]
+        if (type(identity) is not dict or
+                set(identity) != {"thread_id", "process_id", "process_creation_time_100ns"} or
+                any(not _integer(value) or value <= 0 for value in identity.values())):
+            raise ValueError("valid owner process identity required")
     sequence = observation.get("sequence")
     capture_ns = observation.get("capture_ns")
     if not _integer(sequence) or sequence < 1:
@@ -142,6 +150,8 @@ class TargetHandleStore:
         if (binding["focus"] != source_binding["focus"] or
                 binding["surface"] != source_binding["surface"]):
             return outcome("SCOPE_MISMATCH", reason="focus_or_surface_changed")
+        if binding.get("identity") != source_binding.get("identity"):
+            return outcome("SCOPE_MISMATCH", reason="owner_process_changed")
         if (type(offset) is not list or len(offset) != 2 or
                 any(not _integer(value) for value in offset)):
             return outcome("MISSING", reason="invalid_point_relation")

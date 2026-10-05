@@ -6,7 +6,7 @@ from runtime.guarded_win32_v1.bridge import MoveBridge
 
 class Cases(unittest.TestCase):
  def fixture(self):
-  b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8})
+  b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8});b.target_identity=Mock(return_value={'thread_id':7,'process_id':11,'process_creation_time_100ns':100})
   raw=bytes(v for y in range(8) for x in range(8) for v in (x*20,y*20,255,0));b._capture_hdc=Mock(return_value=raw);events=[]
   b.pointer_move=lambda t,f,x,y:events.append(['move',t,x,y])
   def release():events.append(['release']);return {'verified':True,'keys_down':[],'buttons_down':[]}

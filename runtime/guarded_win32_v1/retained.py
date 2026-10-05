@@ -18,7 +18,7 @@ class RetainedWin32Observation:
         self._initial = self._binding()
 
     def _binding(self):
-        return {'surface': self.backend._target(self.target), 'geometry': copy.deepcopy(self.backend.geometry(self.target))}
+        return {'surface': self.backend._target(self.target), 'identity': copy.deepcopy(self.backend.target_identity(self.target)), 'geometry': copy.deepcopy(self.backend.geometry(self.target))}
 
     def observe(self, region):
         if self.review_required:

@@ -18,6 +18,7 @@ from runtime.backends.win32_v1.backend import (
     virtual_key,
 )
 from runtime.backends.win32_v1.session import Win32RuntimeSession
+from runtime.backends.win32_v1 import backend as backend_module
 
 
 def make_program(pid: str, *, seq=7, revision=3, expires=None, text="office", target="fixture", frame="window_client"):
@@ -103,6 +104,47 @@ class CaptureContractDLL:
 
 
 class PureWin32HelperTests(unittest.TestCase):
+    def test_target_identity_uses_process_creation_time_and_closes_handle(self):
+        backend = object.__new__(Win32Backend)
+        backend.targets = {"fixture": 42}
+        backend.user32 = type("User", (), {})()
+        backend.user32.IsWindow = lambda hwnd: True
+        owner_calls = []
+        def owner(hwnd, pid_ptr):
+            ctypes.cast(pid_ptr, ctypes.POINTER(ctypes.c_uint32))[0] = 11
+            owner_calls.append(hwnd)
+            return 7
+        backend.user32.GetWindowThreadProcessId = owner
+        backend.kernel32 = type("Kernel", (), {})()
+        backend.kernel32.OpenProcess = lambda access, inherit, pid: 99
+        def times(handle, created, exited, kernel, user):
+            ctypes.cast(created, ctypes.POINTER(backend_module.FILETIME))[0] = backend_module.FILETIME(123, 4)
+            return 1
+        backend.kernel32.GetProcessTimes = times
+        closed = []
+        backend.kernel32.CloseHandle = lambda handle: closed.append(handle) or 1
+        self.assertEqual(backend.target_identity("fixture"), {
+            "thread_id": 7, "process_id": 11,
+            "process_creation_time_100ns": (4 << 32) | 123,
+        })
+        self.assertEqual(owner_calls, [42, 42])
+        self.assertEqual(closed, [99])
+
+    def test_target_identity_fails_closed_and_closes_after_process_query_error(self):
+        backend = object.__new__(Win32Backend)
+        backend.targets = {"fixture": 42}
+        backend.user32 = type("User", (), {})()
+        backend.user32.IsWindow = lambda hwnd: True
+        backend.user32.GetWindowThreadProcessId = lambda hwnd, ptr: (ctypes.cast(ptr, ctypes.POINTER(ctypes.c_uint32)).__setitem__(0, 11) or 7)
+        backend.kernel32 = type("Kernel", (), {})()
+        backend.kernel32.OpenProcess = lambda access, inherit, pid: 99
+        backend.kernel32.GetProcessTimes = lambda *args: 0
+        closed = []
+        backend.kernel32.CloseHandle = lambda handle: closed.append(handle) or 1
+        with self.assertRaisesRegex(Win32BackendError, "GetProcessTimes failed"):
+            backend.target_identity("fixture")
+        self.assertEqual(closed, [99])
+
     def test_utf16_units(self):
         self.assertEqual(utf16_units("office"), tuple(ord(ch) for ch in "office"))
         self.assertEqual(utf16_units("😀"), (0xD83D, 0xDE00))

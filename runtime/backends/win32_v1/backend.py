@@ -114,6 +114,11 @@ class RECT(ctypes.Structure):
                 ("right", wintypes.LONG), ("bottom", wintypes.LONG)]
 
 
+class FILETIME(ctypes.Structure):
+    _fields_ = [("dwLowDateTime", wintypes.DWORD),
+                ("dwHighDateTime", wintypes.DWORD)]
+
+
 class BITMAPINFOHEADER(ctypes.Structure):
     _fields_ = [("biSize", wintypes.DWORD), ("biWidth", wintypes.LONG),
                 ("biHeight", wintypes.LONG), ("biPlanes", wintypes.WORD),
@@ -176,6 +181,8 @@ class Win32Backend:
     def _configure_api(self) -> None:
         self.user32.IsWindow.argtypes = [wintypes.HWND]
         self.user32.IsWindow.restype = wintypes.BOOL
+        self.user32.GetWindowThreadProcessId.argtypes = [wintypes.HWND, ctypes.POINTER(wintypes.DWORD)]
+        self.user32.GetWindowThreadProcessId.restype = wintypes.DWORD
         self.user32.GetClientRect.argtypes = [wintypes.HWND, ctypes.POINTER(RECT)]
         self.user32.GetClientRect.restype = wintypes.BOOL
         self.user32.ClientToScreen.argtypes = [wintypes.HWND, ctypes.POINTER(POINT)]
@@ -216,6 +223,12 @@ class Win32Backend:
                                       ctypes.c_int, ctypes.c_int, wintypes.HDC,
                                       ctypes.c_int, ctypes.c_int, wintypes.DWORD]
         self.gdi32.BitBlt.restype = wintypes.BOOL
+        self.kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+        self.kernel32.OpenProcess.restype = wintypes.HANDLE
+        self.kernel32.GetProcessTimes.argtypes = [wintypes.HANDLE, ctypes.POINTER(FILETIME), ctypes.POINTER(FILETIME), ctypes.POINTER(FILETIME), ctypes.POINTER(FILETIME)]
+        self.kernel32.GetProcessTimes.restype = wintypes.BOOL
+        self.kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+        self.kernel32.CloseHandle.restype = wintypes.BOOL
 
     def manifest(self) -> dict[str, Any]:
         row = capability_manifest(
@@ -236,6 +249,42 @@ class Win32Backend:
         if hwnd is None or not self.user32.IsWindow(hwnd):
             raise Win32BackendError(f"unknown or stale target {name}")
         return hwnd
+
+    def target_identity(self, target: str) -> dict[str, int]:
+        """Return a fail-closed HWND owner/process-incarnation identity.
+
+        This distinguishes HWND reuse across threads, processes, and process
+        incarnations. It cannot distinguish HWND reuse by the same thread in
+        the same process, nor eliminate the final check-to-input race.
+        """
+        hwnd = self._target(target)
+
+        def owner():
+            pid = wintypes.DWORD()
+            tid = int(self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid)) or 0)
+            if not tid or not pid.value:
+                raise Win32BackendError("GetWindowThreadProcessId failed")
+            return tid, int(pid.value)
+
+        before = owner()
+        process = self.kernel32.OpenProcess(0x1000, False, before[1])
+        if not process:
+            raise Win32BackendError("OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION) failed")
+        try:
+            created, exited, kernel, user = FILETIME(), FILETIME(), FILETIME(), FILETIME()
+            if not self.kernel32.GetProcessTimes(process, ctypes.byref(created), ctypes.byref(exited), ctypes.byref(kernel), ctypes.byref(user)):
+                raise Win32BackendError("GetProcessTimes failed")
+            after = owner()
+            if after != before:
+                raise Win32BackendError("HWND owner changed during identity query")
+            creation = (int(created.dwHighDateTime) << 32) | int(created.dwLowDateTime)
+            if not creation:
+                raise Win32BackendError("invalid process creation time")
+            return {"thread_id": before[0], "process_id": before[1],
+                    "process_creation_time_100ns": creation}
+        finally:
+            if not self.kernel32.CloseHandle(process):
+                raise Win32BackendError("CloseHandle failed")
 
     def geometry(self, target: str) -> dict[str, int]:
         hwnd = self._target(target)

@@ -6,10 +6,28 @@ from runtime.guarded_win32_v1.bridge import MoveBridge
 import unittest
 
 class MoveCases(unittest.TestCase):
+ def _backend(self):
+  b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8});b.identity={'thread_id':7,'process_id':11,'process_creation_time_100ns':100};b.target_identity=lambda target:dict(b.identity)
+  raw=bytes(v for y in range(8) for x in range(8) for v in (x*20,y*20,255,0));b._capture_hdc=Mock(return_value=raw)
+  return b
+
+ def test_process_replacement_invalidates_before_prepare(self):
+  b=self._backend();o=FreshWin32Reference(b,'fixture','images/process-before');o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4]);b.identity['process_id']=12
+  bridge=MoveBridge(o,lambda intent:{'lease_id':'inert','expires_at_ns':time.monotonic_ns()+1000000000},lambda:False)
+  with self.assertRaisesRegex(ValueError,'association changed'):
+   bridge.prepare('button',[1,1])
+
+ def test_process_replacement_refuses_before_input(self):
+  b=self._backend();o=FreshWin32Reference(b,'fixture','images/process-after');o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4]);events=[]
+  b.pointer_move=lambda t,f,x,y:events.append(['move',t,x,y]);b.release_all=lambda:{'verified':True,'keys_down':[],'buttons_down':[]}
+  bridge=MoveBridge(o,lambda intent:{'lease_id':'inert','expires_at_ns':time.monotonic_ns()+1000000000},lambda:False);permit=bridge.prepare('button',[1,1]);b.identity['process_creation_time_100ns']=101
+  result=bridge.execute(permit['authorization'])
+  self.assertEqual(result['status'],'refused');self.assertEqual(events,[])
+
  def test_move_paths(self):
   rows=[]
   for mode in ['valid','pixels','focus','cancel','recovery','authority_missing']:
-   b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8})
+   b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8});b.target_identity=Mock(return_value={'thread_id':7,'process_id':11,'process_creation_time_100ns':100})
    raw=bytes(v for y in range(8) for x in range(8) for v in (x*20,y*20,255,0));b._capture_hdc=Mock(return_value=raw);events=[];cancel=[False]
    b.pointer_move=lambda t,f,x,y:events.append(['move',t,x,y])
    def release():events.append(['release']);return {'verified':True,'keys_down':[],'buttons_down':[]}
