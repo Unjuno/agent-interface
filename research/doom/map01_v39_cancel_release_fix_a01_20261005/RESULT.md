@@ -39,3 +39,5 @@ The bundled CPython 3.12.14 suites pass 14 focused tests, 14 optimized-mode focu
 
 
 The expanded scoped verification passes 15 focused tests and the same 15 under optimized Python, plus 3 ExecutorV12 compositions, 10 owner compatibility tests, and 2 existing bridge tests. The source audit now checks 30 primary receipts and the 99-file checksum manifest. A11 remains a fake-display evidence-loss STOP policy only.
+
+A10 was independently rerun on Windows CPython 3.11.9; the original macOS arm64 red/green outputs and the Windows raw outputs are both retained under host-specific filenames.

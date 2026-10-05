@@ -113,4 +113,7 @@ The expanded bundled CPython 3.12.14 verification has 14 focused candidate tests
 **U:** Bundled CPython 3.12.14 on macOS arm64; fake display and in-memory emitter only. This is a candidate evidence-loss STOP policy, not durable-storage fault-injection, real X11, live input, production wiring, task effect, useful feedback, recovery, gameplay, latency, or live MAP01 evidence.
 
 
-The expanded scoped verification passes 15 focused tests and the same 15 under optimized Python, plus 3 ExecutorV12 compositions, 10 owner compatibility tests, and 2 existing bridge tests. The source audit now checks 30 primary receipts and the 99-file checksum manifest. A11 remains a fake-display evidence-loss STOP policy only.
+The expanded scoped verification passes 15 focused tests and the same 15 under optimized Python, plus 3 ExecutorV12 compositions, 10 owner compatibility tests, and 2 existing bridge tests. The source audit now checks 30 primary receipts and the 101-file checksum manifest. A11 remains a fake-display evidence-loss STOP policy only.
+
+
+The A10 receipt pair now also retains an independent Windows CPython 3.11.9 rerun from the merge partner. The original bundled CPython 3.12.14 macOS arm64 outputs are preserved as `owner-ledger-retirement-red-macos.log` and `owner-ledger-retirement-green-macos.log`; both runs use the same pinned baseline/candidate blobs and are separate host results.
