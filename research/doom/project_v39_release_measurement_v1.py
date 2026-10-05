@@ -136,4 +136,3 @@ def project(records):
         if len(sizes) != 1 or len(indexes) != len(positions) or sorted(indexes) != list(range(len(positions))) or next(iter(sizes)) != len(positions):
             return {"measurement_ready": False, "rows": []}
     return {"measurement_ready": True, "rows": projected}
-
