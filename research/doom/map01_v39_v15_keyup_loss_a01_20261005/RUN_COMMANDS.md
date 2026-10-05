@@ -37,4 +37,3 @@ Candidate (one frozen attempt; constructor STOP, no cases started):
 Exit 1 before paired cases: `AttributeError: 'NoneType' object has no attribute 'close'` during the production V2 constructor. Raw STOP is preserved at `results/candidate-a04/STOP.json`. The frozen stop rule prohibits repair and rerun. No A04 audit ran because candidate raw was not produced. WSLc emitted the existing swap-limit warning; see `FREEZE_A04.json` for source hashes and audit command.
 
 The run used exact frozen source `candidate_a04_frozen_stop.py`, preserved and hashed in `FREEZE_A04.json`. The corrected `candidate_a05_unrun.py` was not executed.
-
