@@ -1,0 +1,45 @@
+{
+  "source_commit": "40c6a278d06ec4411b72dd5d7d8899d85bebfcf4",
+  "source_blob": "84cf5c5a812ae02f2bd454f35aab30becfd704e1",
+  "source_sha256": "a6ec913551d5d9f40ab06bd2dd76b8e1730ff0f1b66a911fecd5927118aee813",
+  "function": "input_edge_receipts",
+  "fixture_sha256": "7e31a32bf08edf06731fc2b8f1fbfc26795fc6a2cc3749da992dfce4cd47a04d",
+  "classifications": {
+    "ordered": {
+      "status": "adapter_edge_brackets_paired",
+      "down_interval_ns": [
+        100,
+        110
+      ],
+      "up_interval_ns": [
+        200,
+        210
+      ]
+    },
+    "touching": {
+      "status": "adapter_edge_receipt_incomplete",
+      "down_interval_ns": null,
+      "up_interval_ns": null
+    },
+    "overlapping": {
+      "status": "adapter_edge_receipt_incomplete",
+      "down_interval_ns": null,
+      "up_interval_ns": null
+    },
+    "reversed": {
+      "status": "adapter_edge_receipt_incomplete",
+      "down_interval_ns": null,
+      "up_interval_ns": null
+    }
+  },
+  "exhaustive_closed_interval_pairs_endpoints_0_to_3": {
+    "pairs": 100,
+    "strictly_ordered": 15,
+    "not_strictly_ordered": 85,
+    "ordered_paired": 15,
+    "invalid_incomplete": 85,
+    "first_invalid_status": null
+  },
+  "strict_chronology_fix_verified": true,
+  "scope": "Independent AST-extracted synthetic projection audit only; no retained run or runtime behavior claim."
+}

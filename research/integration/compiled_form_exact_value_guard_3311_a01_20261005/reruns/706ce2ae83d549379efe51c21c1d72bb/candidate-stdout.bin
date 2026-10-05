@@ -1,0 +1,27 @@
+{
+  "decision": "PASS_DIFFERENTIAL_GUARD",
+  "experiment_id": "compiled-form-guard-differential-3311-20261005-01",
+  "results": [
+    {
+      "actions": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "observations_used": 3,
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "transitions": 2,
+      "version": "v1"
+    },
+    {
+      "actions": [
+        "enter_exact_token"
+      ],
+      "observations_used": 2,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "transitions": 1,
+      "version": "v2"
+    }
+  ]
+}

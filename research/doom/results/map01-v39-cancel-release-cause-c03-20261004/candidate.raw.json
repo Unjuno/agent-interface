@@ -1,0 +1,104 @@
+{
+  "cases": [
+    {
+      "cancel_armed_after_dequeue_ns": null,
+      "cancel_sample_false_ns": null,
+      "cancel_state_after_release": true,
+      "cancel_visible_ns": 98660791348041,
+      "canceller_thread_finished": true,
+      "dequeued_ns": 98660791346916,
+      "key_events": [
+        {
+          "at_ns": 98660791303541,
+          "event": 2,
+          "keycode": 38
+        },
+        {
+          "at_ns": 98660791351958,
+          "event": 3,
+          "keycode": 38
+        }
+      ],
+      "owner_receipt": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": 98665791255333,
+        "verified": true,
+        "verified_ns": 98660791359958
+      },
+      "release_reply_verified": true,
+      "source": "main_v10_dequeue_cancel"
+    },
+    {
+      "cancel_armed_after_dequeue_ns": 98660794524916,
+      "cancel_sample_false_ns": 98660794600125,
+      "cancel_state_after_release": true,
+      "cancel_visible_ns": 98660794613416,
+      "canceller_thread_finished": true,
+      "dequeued_ns": 98660794523166,
+      "key_events": [
+        {
+          "at_ns": 98660794484541,
+          "event": 2,
+          "keycode": 38
+        },
+        {
+          "at_ns": 98660794629916,
+          "event": 3,
+          "keycode": 38
+        }
+      ],
+      "owner_receipt": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": 98665794449500,
+        "verified": true,
+        "verified_ns": 98660794639500
+      },
+      "release_reply_verified": true,
+      "source": "pr7440_v12_post_sample_cancel"
+    },
+    {
+      "cancel_armed_after_dequeue_ns": null,
+      "cancel_sample_false_ns": null,
+      "cancel_state_after_release": false,
+      "cancel_visible_ns": null,
+      "canceller_thread_finished": true,
+      "dequeued_ns": 98660797642916,
+      "key_events": [
+        {
+          "at_ns": 98660797600166,
+          "event": 2,
+          "keycode": 38
+        },
+        {
+          "at_ns": 98660797646250,
+          "event": 3,
+          "keycode": 38
+        }
+      ],
+      "owner_receipt": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": 98665797565125,
+        "verified": true,
+        "verified_ns": 98660797653750
+      },
+      "release_reply_verified": true,
+      "source": "pr7440_v12_ordinary_control"
+    }
+  ],
+  "platform": "darwin",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "schema": "map01-v39-cancel-release-cause-c03-raw-v1",
+  "source_sha256": {
+    "main_v10": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "pr7440_v12": "662f28840bd9a84a51611a2da23681c5fec53d2b6ab00b78675a9380855c8077"
+  }
+}

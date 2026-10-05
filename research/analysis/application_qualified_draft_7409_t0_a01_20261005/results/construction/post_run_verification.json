@@ -1,0 +1,38 @@
+{
+  "purpose": "verify retained package contents without rerunning the formal candidate or auditor",
+  "attempts": [
+    {
+      "command": "python3 -m unittest -v test_result.py",
+      "working_directory": "research/analysis (incorrect; package root was not selected)",
+      "exit_code": 1,
+      "outcome": "ModuleNotFoundError: No module named 'test_result'",
+      "formal_candidate_or_auditor_invoked": false
+    },
+    {
+      "command": "cd research/analysis/application_qualified_draft_7409_t0_a01_20261005 && python3 -m unittest -v test_result.py",
+      "working_directory": "package root",
+      "exit_code": 0,
+      "outcome": "4 tests passed",
+      "formal_candidate_or_auditor_invoked": false
+    },
+    {
+      "command": "python3 -m unittest discover -s research/analysis/application_qualified_draft_7409_t0_a01_20261005 -p test_result.py -v",
+      "working_directory": "research (incorrect; the command was run one directory below the repository root)",
+      "exit_code": 1,
+      "outcome": "ImportError: Start directory is not importable",
+      "formal_candidate_or_auditor_invoked": false
+    },
+    {
+      "command": "python3 -m unittest discover -s research/analysis/application_qualified_draft_7409_t0_a01_20261005 -p test_result.py -v",
+      "working_directory": "repository root",
+      "exit_code": 0,
+      "outcome": "4 tests passed",
+      "formal_candidate_or_auditor_invoked": false
+    }
+  ],
+  "note": "Two local test commands initially used the wrong working directory; both path errors are preserved here. Corrected package-root and repository-root checks each passed 4/4. No failure changed frozen source or formal outputs, and no candidate/auditor was rerun.",
+  "post_run_container_snapshot": {
+    "command": "docker ps --no-trunc --format 'table {{.ID}}\\t{{.Image}}\\t{{.Names}}\\t{{.Status}}'",
+    "observed": "no running containers after the --rm candidate and auditor invocations"
+  }
+}

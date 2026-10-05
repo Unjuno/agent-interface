@@ -1,0 +1,30 @@
+{
+  "allocation": "CONFUSION-ADAPTIVE-PRACTICE-8084-A10-20261005-01",
+  "frozen_at_local": "2026-10-05",
+  "base_main": "f75ad203f41126c2382175aed398639796fe6d0d",
+  "branch": "research/8084-overdispersion-frontier-a10-20261005",
+  "protocol": "PROTOCOL.md",
+  "host": "Windows x64; CPython 3.12.10",
+  "interpreter": "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "execution": {
+    "network": "none by source design",
+    "container": "none; host-process boundary, weaker isolation disclosed",
+    "candidate_runs": 1,
+    "auditor_launches": 1,
+    "fixture_generator_runs": 1,
+    "replicates_per_profile_sample_size_arm": 2000,
+    "concentrations": [20, 40, 80, 160, null],
+    "seed_base": 88100000,
+    "distinct_prior_seed_bases": [8406000, 8507000, 8608000, 8709000]
+  },
+  "sha256_lf_normalized": {
+    "PROTOCOL.md": "CB25FA438FD69A3374F66D4EC7512FB98FAF500D1C2B92B172D8DD618B491EC5",
+    "SCORING.json": "DCA17C223EF842EAF135D2CCAB489012CAE301B1CF9BB474299B93580D715057",
+    "generate.py": "ADF5A317C63ABD3CAE79889909B0F54B43239E58CC17140434A31C7D8828765B",
+    "candidate/candidate.py": "9876DE5213F1435EA416D27A9D374C8A35195A7895520F8D4A97381CB589EBCF",
+    "auditor/auditor.py": "13A692D7CB71860AAD4B78D02B74EF705027E6B0BDF58A06A134BF075BD87B8D",
+    "test_method.py": "A04F3FE57AA4E80594CD2CFDA92D258C75DC7275878E114D20525D74E54BAA13"
+  },
+  "construction_tests": "5/5 normal and 5/5 under -O passed before freeze",
+  "prior_allocation_disposition": "A06/A07 STOP, A08 qualified fixed-rate screen, and A09 concentration-40 NO_GATE remain unchanged; no previous observations reused"
+}

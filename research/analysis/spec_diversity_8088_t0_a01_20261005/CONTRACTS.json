@@ -1,0 +1,52 @@
+{
+  "schema": "spec-diversity-8088-t0-a01-v1",
+  "application": "synthetic task-list app with two named lists, stable item IDs, completion state, filter state, and explicit reload semantics",
+  "items": [
+    {"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},
+    {"id":"task-2","title":"Review","completed":false,"due_date":null},
+    {"id":"task-3","title":"Send","completed":true,"due_date":null}
+  ],
+  "contracts": [
+    {
+      "id":"C01_add_work_persists_once",
+      "request":"In the Work list, add one task titled “Plan launch”. After reloading the list, “Plan launch” must appear exactly once in Work. Do not change any pre-existing item or list.",
+      "initial":{"Work":[{"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},{"id":"task-2","title":"Review","completed":false,"due_date":null},{"id":"task-3","title":"Send","completed":true,"due_date":null}],"Archive":[]}
+    },
+    {
+      "id":"C02_add_archive_only",
+      "request":"Add one task titled “Pack kit” to Archive, not Work. After reloading both lists, it must appear exactly once in Archive and zero times in Work. Do not change any pre-existing item or list.",
+      "initial":{"Work":[{"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},{"id":"task-2","title":"Review","completed":false,"due_date":null}],"Archive":[{"id":"archive-1","title":"Index files","completed":false,"due_date":null}]}
+    },
+    {
+      "id":"C03_complete_one_id",
+      "request":"Mark the item with ID task-2 complete. After reloading Work, task-2 is complete and every other field of task-2, every other item, and Archive are unchanged.",
+      "initial":{"Work":[{"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},{"id":"task-2","title":"Review","completed":false,"due_date":null},{"id":"task-3","title":"Send","completed":true,"due_date":null}],"Archive":[]}
+    },
+    {
+      "id":"C04_rename_preserves_fields",
+      "request":"Rename only item ID task-1 from “Draft” to “Draft v2”. After reloading Work, preserve its ID, completion state, and due date; all other items and lists remain unchanged.",
+      "initial":{"Work":[{"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},{"id":"task-2","title":"Review","completed":false,"due_date":null}],"Archive":[]}
+    },
+    {
+      "id":"C05_clear_completed_only",
+      "request":"Clear completed items in Work. After reloading, remove every completed item from Work, preserve every active item unchanged, and leave Archive unchanged.",
+      "initial":{"Work":[{"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},{"id":"task-2","title":"Review","completed":false,"due_date":null},{"id":"task-3","title":"Send","completed":true,"due_date":null}],"Archive":[{"id":"archive-1","title":"Index files","completed":false,"due_date":null}]}
+    },
+    {
+      "id":"C06_filter_is_view_only",
+      "request":"Select the Active filter for Work. Show all and only active Work items. This is a view-only action: do not change task records, counts, or Archive. Selecting All afterward restores visibility of all Work items.",
+      "initial":{"Work":[{"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},{"id":"task-2","title":"Review","completed":false,"due_date":null},{"id":"task-3","title":"Send","completed":true,"due_date":null}],"Archive":[]}
+    },
+    {
+      "id":"C07_duplicate_title_id_target",
+      "request":"Work contains two items titled “Review”, with IDs task-2 and task-4. Mark only ID task-4 complete. Preserve task-2 and all other fields and items unchanged.",
+      "initial":{"Work":[{"id":"task-2","title":"Review","completed":false,"due_date":null},{"id":"task-4","title":"Review","completed":false,"due_date":"2026-10-10"}],"Archive":[]}
+    },
+    {
+      "id":"C08_missing_target_unknown",
+      "request":"Mark item ID task-9 complete. ID task-9 is not present in either list. Make no changes and return UNKNOWN_TARGET; do not guess another item or report success.",
+      "initial":{"Work":[{"id":"task-1","title":"Draft","completed":false,"due_date":"2026-10-08"},{"id":"task-2","title":"Review","completed":false,"due_date":null}],"Archive":[]}
+    }
+  ]
+}
+
