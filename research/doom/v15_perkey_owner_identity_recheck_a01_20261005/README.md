@@ -20,3 +20,7 @@ python3 -B replay_startup.py /tmp/v39-owner-recheck-new-output
 ```
 
 The replay refuses an existing output directory. It materializes the 56 retained exact snapshots, launches three fresh processes, and stops before owner/session construction. Two snapshots are base64-encoded solely to preserve exact source bytes while keeping `git diff --check` clean; the replay decodes and verifies each frozen SHA-256 before use.
+
+## Current-main relevance check
+
+Main advanced to `22e25aa74cac30f629209555ba93ba3cd2a279f3` after the tested PR head was frozen. `CURRENT_MAIN_RECHECK.json` records a byte comparison of the source closure against candidate base `11445a7ca200404ddc80bf7ebb1dbef86eb059de`: all 55 shared source paths are unchanged; the only path absent from both base and current main is the candidate's new selection helper. The independent auditor checks this comparison. The original failed v0 comparison and audit are retained as previews; v1 classifies the helper as candidate-only and passes 22/22 checks.

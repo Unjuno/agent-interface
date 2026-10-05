@@ -42,6 +42,36 @@ def main() -> None:
     checks["all_source_snapshot_hashes"] = not source_failures
     checks["all_source_bytes_match_candidate_commit"] = not git_failures
     checks["no_manifest_fallbacks"] = json.loads((ROOT / "manifest-fallbacks.json").read_text()).get("fallback_to_previous_snapshot") == []
+    current_recheck = json.loads((ROOT / "CURRENT_MAIN_RECHECK.json").read_text())
+    current_base = current_recheck["main_base_for_candidate"]
+    current_main = current_recheck["current_main_commit"]
+    changed_current_closure = []
+    shared_current_paths = []
+    missing_current_paths = []
+    for rel in files:
+        try:
+            base_bytes = subprocess.check_output(["git", "show", f"{current_base}:{rel}"], cwd=ROOT, stderr=subprocess.DEVNULL)
+        except subprocess.CalledProcessError:
+            try:
+                subprocess.check_output(["git", "show", f"{freeze['candidate_head']}:{rel}"], cwd=ROOT, stderr=subprocess.DEVNULL)
+                missing_current_paths.append(rel)
+            except subprocess.CalledProcessError:
+                changed_current_closure.append(rel)
+            continue
+        try:
+            main_bytes = subprocess.check_output(["git", "show", f"{current_main}:{rel}"], cwd=ROOT, stderr=subprocess.DEVNULL)
+        except subprocess.CalledProcessError:
+            missing_current_paths.append(rel)
+            continue
+        shared_current_paths.append(rel)
+        if base_bytes != main_bytes:
+            changed_current_closure.append(rel)
+    checks["current_main_shared_closure_unchanged"] = (
+        current_recheck.get("result") == "PASS_SHARED_CLOSURE_UNCHANGED" and
+        len(shared_current_paths) == 55 and not changed_current_closure)
+    checks["only_candidate_helper_missing_from_current_main"] = (
+        missing_current_paths == ["research/doom/v39_measurement_backend_selection_v1.py"] and
+        current_recheck.get("candidate_only_paths") == missing_current_paths)
 
     status = json.loads((RESULTS / "run-status.json").read_text())
     expected_routes = {"v12-perkey", "v15-default", "v15-perkey"}
