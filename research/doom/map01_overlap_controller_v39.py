@@ -202,6 +202,9 @@ class DoomCoverSignalPairMonitor:
             "event": "paired_signal_invalidation",
             "reason": reason,
             "sequence": observation.get("sequence"),
+            "capture_ns": observation.get("capture_ns"),
+            "pointer_binding": observation.get("pointer_binding"),
+            "frame_rgb_sha256": observation.get("frame_rgb_sha256"),
             "signals": signals,
             "outcomes": outcomes,
             "outcome": outcome,
@@ -386,6 +389,36 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
             release.get("buttons_down") != [] or release.get("keys_down") != []):
         raise RuntimeError("invalidated cover did not verify empty release")
     return planner_interrupt, terminal
+
+
+def wait_for_invalidation_frame(latest, invalidation, wait, timeout=5):
+    """Require the RGB observation paired with invalidation before replanning."""
+    sequence = invalidation.get("sequence") if type(invalidation) is dict else None
+    capture_ns = invalidation.get("capture_ns") if type(invalidation) is dict else None
+    binding = invalidation.get("pointer_binding") if type(invalidation) is dict else None
+    frame_hash = invalidation.get("frame_rgb_sha256") if type(invalidation) is dict else None
+    if (type(sequence) is not int or sequence < 1 or
+            type(capture_ns) is not int or capture_ns < 1 or type(binding) is not dict or
+            (frame_hash is not None and
+             (type(frame_hash) is not str or len(frame_hash) != 64))):
+        raise RuntimeError("policy invalidation lacks a valid observation identity")
+
+    def qualifies(row):
+        return (type(row) is dict and row.get("event") == "observation" and
+                type(row.get("sequence")) is int and row["sequence"] >= sequence and
+                type(row.get("capture_ns")) is int and row["capture_ns"] >= capture_ns and
+                _typed_json_equal(row.get("pointer_binding"), binding) and
+                (frame_hash is None or row.get("frame_rgb_sha256") == frame_hash))
+
+    current = latest
+    if qualifies(current):
+        return current
+    end = time.monotonic() + timeout
+    while time.monotonic() < end:
+        row = wait(qualifies,
+                   timeout=max(.001, end - time.monotonic()))
+        return row
+    raise TimeoutError("fresh full observation did not follow policy invalidation")
 
 
 def admitted_cover_commands(commands, validity_admission):
@@ -911,6 +944,7 @@ def main():
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())
             if invalidation is not None:
+                latest = wait_for_invalidation_frame(latest, invalidation, wait)
                 decisions.append({"iteration":index,"source_image":str(source_image),"model_image":str(image),
                   "model_image_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),"action":action,
                   "effect_memory":effect_memory,"usage":usage,"model_ns":model_ns,
