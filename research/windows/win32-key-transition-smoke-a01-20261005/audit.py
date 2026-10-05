@@ -1,8 +1,13 @@
 """Read-only audit for the retained Win32 host smoke result."""
 import json
+import hashlib
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+for line in (HERE / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
+    expected, name = line.split("  ", 1)
+    actual = hashlib.sha256((HERE / name).read_bytes()).hexdigest()
+    assert actual == expected, f"checksum mismatch: {name}"
 result = json.loads((HERE / "result.json").read_text(encoding="utf-8"))
 rows = result.get("transitions", [])
 assert result["schema"] == "win32-key-transition-host-smoke-a01-v1"
