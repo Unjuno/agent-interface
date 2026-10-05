@@ -1,6 +1,6 @@
 import importlib.util, json, os, sys, types
 from pathlib import Path
-ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\issue59-v15-scorer-20261005')
+ROOT=Path(os.environ.get('ISSUE59_SOURCE_ROOT', Path(__file__).resolve().parents[4]))
 DOOM=ROOT/'research'/'doom'
 EVENTS=[]
 class FakeOwner:
@@ -45,6 +45,8 @@ summary['checks']['no_input_state_between_keyups']=len(up_positions)==2 and len(
 summary['checks']['all']=all(summary['checks'].values())
 print(json.dumps(summary,sort_keys=True,indent=2))
 if not summary['checks']['all']: raise SystemExit(1)
+
+
 
 
 
