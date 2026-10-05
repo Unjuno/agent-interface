@@ -1,6 +1,6 @@
 # Wheel cleanup on the #7974 successor
 
-This connects existing wheel repair #7958 to #7974 at `a8053e32ef416717af5bc0e3a84fa267e5c18404`, replacing its former #7910 dependency. Original head `6a67276c1f336b58f3957b4cbe9d88a43ef44d3c` and its evidence remain in merge history. No force update, closure or deletion is needed. Parent: #59.
+This connects existing wheel repair #7958 to #7974 at final tested head `382e0c91c3c89e3380eea692ccda3df1bbc45a78`, replacing its former #7910 dependency. Initial composition and RED used `a8053e32ef416717af5bc0e3a84fa267e5c18404`; the later parent changed only its cleanup test, with identical runtime code. Original head `6a67276c1f336b58f3957b4cbe9d88a43ef44d3c` and its evidence remain in merge history. No force update, closure or deletion is needed. Parent: #59.
 
 The two overlapping files were resolved to the exact #7974 V12 owner and cleanup test, then the existing two-line wheel hunk was reapplied: record button 4/5 after the per-notch pointer guard and before XTest emission. All 41 successor source/dependency files match except those two owner lines. The wheel regression is unchanged.
 
@@ -12,6 +12,8 @@ H: The successor still omits wheel inputs from cleanup tracking, permitting fals
 - `green`: same 7 methods/18 subcases PASS after the two-line hunk. The source/test inventory changes only in `input_owner_v12.py`.
 - `combined`: 14 V12 owner methods PASS, including the same 7 wheel methods. Covers key cancellation, dropped/retried keys, ordered batch, persistent loss, query failures and transport/button cleanup. Do not add 7 and 14 as independent coverage.
 - `legacy-adapted`: one additional historical key/button cleanup test PASS. #7974 retries a dropped key UP before `up` returns, so the old intermediate assertion expecting `{65}` is changed to the stricter empty-state assertion. All final verification and no-duplicate key/button release counts remain unchanged. The original text is retained; it was inspected, not rerun unchanged against the new contract. Original #7910/#7958 results remain pinned to their old source.
+
+After the initial checks, parent #7974 added query-failure fixture counters (default zero) and a terminal-sampling test. The conflict-free update is retained; `combined-final` passes all 15 methods. Earlier logs are unchanged. The additional legacy case remains applicable because its own fixture/test and runtime source are unchanged; it was not rerun. A later intake found existing regression carrier #8012 and that #7910 had been closed unmerged by its owner with its branch preserved. The adapted legacy case here is a compatibility cross-check, not a novel independent result or a replacement for #8012.
 
 Normal Python 3.12.14, macOS 27.0.1 arm64, existing dependencies; no installation or live/formal allocation. Private original logs and receipts remain intact. Published copies replace only repository, runtime and private-evidence absolute path prefixes; receipts retain original and published log hashes. Log durations are not latency measurements.
 

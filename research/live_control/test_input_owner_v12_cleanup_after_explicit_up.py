@@ -20,6 +20,8 @@ class FakeDisplay:
         self.drop_next_button_release = True
         self.fail_key_release_attempts = 0
         self.fail_sync_attempts = 0
+        self.fail_keymap_queries = 0
+        self.fail_pointer_queries = 0
         self.root = FakeRoot(self)
 
     def get_input_focus(self):
@@ -39,6 +41,9 @@ class FakeDisplay:
         return 1
 
     def query_keymap(self):
+        if self.fail_keymap_queries:
+            self.fail_keymap_queries -= 1
+            raise RuntimeError("synthetic keymap sample failure")
         bitmap = bytearray(32)
         for code in self.down:
             bitmap[code // 8] |= 1 << (code % 8)
@@ -76,6 +81,9 @@ class FakeRoot:
         self.display = display
 
     def query_pointer(self):
+        if self.display.fail_pointer_queries:
+            self.display.fail_pointer_queries -= 1
+            raise RuntimeError("synthetic pointer sample failure")
         mask = sum(256 << (button - 1) for button in self.display.buttons_down)
         return types.SimpleNamespace(mask=mask, root_x=0, root_y=0)
 
@@ -201,6 +209,17 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(display_instance.key_release_order[order_start:order_start + 2], [65, 66])
             owner.call("release", batch_lease)
 
+            transient_sample_lease = Lease()
+            owner.call("down", transient_sample_lease, "W")
+            display_instance.fail_keymap_queries = 1
+            transient_result = owner.call("release", transient_sample_lease)
+            self.assertTrue(transient_result["verified"])
+            attempts = transient_result["key_release_attempts"]["65"]["attempts"]
+            self.assertEqual(
+                attempts[0]["keymap_before_error"]["message"],
+                "synthetic keymap sample failure")
+            self.assertEqual(display_instance.down, set())
+
             failing_lease = Lease()
             failing_lease.expected_surface = 52
             failing_lease.expected_geometry = [0, 0, 100, 100]
@@ -219,6 +238,79 @@ class ExplicitUpCleanupTests(unittest.TestCase):
             self.assertEqual(display_instance.buttons_down, set())
             self.assertGreater(display_instance.button_release_attempts, 3)
 
+        finally:
+            if owner is not None:
+                owner.close()
+            sys.modules.pop("input_owner_v12", None)
+            for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
+
+    def test_terminal_release_retains_receipt_when_state_samples_fail(self):
+        names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
+                 "Xlib.ext", "Xlib.ext.xtest", "executor_v3")
+        saved = {name: sys.modules.get(name) for name in names}
+        display_instance = FakeDisplay()
+        xlib = types.ModuleType("Xlib")
+        xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonPress=4,
+            ButtonRelease=5, Button1Mask=256, AnyPropertyType=0, IsViewable=2)
+        xk = types.ModuleType("Xlib.XK")
+        xk.string_to_keysym = lambda key: ord(key)
+        display = types.ModuleType("Xlib.display")
+        display.Display = lambda _name: display_instance
+        error = types.ModuleType("Xlib.error")
+        error.BadWindow = type("BadWindow", (Exception,), {})
+        error.BadDrawable = type("BadDrawable", (Exception,), {})
+        ext = types.ModuleType("Xlib.ext")
+        xtest = types.ModuleType("Xlib.ext.xtest")
+
+        def fake_input(_display, event, code):
+            if event == xlib.X.KeyPress:
+                display_instance.down.add(code)
+            elif event == xlib.X.KeyRelease:
+                display_instance.down.discard(code)
+            elif event == xlib.X.ButtonPress:
+                display_instance.buttons_down.add(code)
+            elif event == xlib.X.ButtonRelease:
+                display_instance.buttons_down.discard(code)
+
+        xtest.fake_input = fake_input
+        ext.xtest = xtest
+        xlib.XK, xlib.display, xlib.error, xlib.ext = xk, display, error, ext
+        sys.modules.update({"Xlib": xlib, "Xlib.X": types.ModuleType("Xlib.X"),
+            "Xlib.XK": xk, "Xlib.display": display, "Xlib.error": error,
+            "Xlib.ext": ext, "Xlib.ext.xtest": xtest})
+        exceptions = types.ModuleType("executor_v3")
+        exceptions.Cancelled = type("Cancelled", (Exception,), {})
+        exceptions.DecisionRequired = type("DecisionRequired", (Exception,), {})
+        sys.modules["executor_v3"] = exceptions
+        sys.modules.pop("input_owner_v12", None)
+        owner = None
+        try:
+            from input_owner_v12 import InputOwner
+
+            owner = InputOwner(":fake")
+            lease = Lease()
+            lease.expected_surface = 52
+            lease.expected_geometry = [0, 0, 100, 100]
+            owner.call("down", lease, "W")
+            owner.call("button_down", lease, 1)
+            display_instance.fail_keymap_queries = 8
+            display_instance.fail_pointer_queries = 1
+            with self.assertRaises(RuntimeError) as caught:
+                owner.call("release", lease)
+
+            receipt = caught.exception.owner_release_record
+            self.assertFalse(receipt["verified"])
+            self.assertEqual(receipt["keys_unknown"], [65])
+            self.assertTrue(any(
+                row["source"] == "keymap_after" for row in receipt["key_state_errors"]))
+            self.assertTrue(any(
+                row["source"] == "pointer_before" for row in receipt["key_state_errors"]))
+            self.assertEqual(display_instance.down, set())
+            self.assertEqual(display_instance.buttons_down, set())
         finally:
             if owner is not None:
                 owner.close()
