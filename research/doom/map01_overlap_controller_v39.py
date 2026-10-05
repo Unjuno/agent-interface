@@ -787,6 +787,16 @@ def input_edge_receipts(events):
                 continue
             actuation_id = (adapter_edge.get("actuation_id")
                             if type(adapter_edge) is dict else None)
+            if (actuation_id is not None and
+                    (type(actuation_id) is not str or not actuation_id)):
+                invalid.append({
+                    "status": "identity_unavailable",
+                    "event": event_name,
+                    "step": step,
+                    "key": key,
+                    "scope": "adapter edge bracket unpaired; actuation identity is invalid",
+                })
+                continue
             bucket = adapter_grouped.setdefault(
                 (identifier, step, key, token, actuation_id),
                 {"down": [], "up": []})

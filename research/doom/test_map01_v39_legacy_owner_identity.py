@@ -83,6 +83,20 @@ class V39LegacyOwnerIdentityTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "paired")
         self.assertEqual(receipt["admitted_to_owner_keyup_start_ms"], 0.00003)
 
+    def test_unhashable_adapter_actuation_ids_fail_closed(self):
+        for actuation_id in ([], {}, {"nested": []}):
+            with self.subTest(actuation_id_type=type(actuation_id).__name__):
+                event = {
+                    "event": "input_admission", "id": "program-1", "step": 0,
+                    "key": "F8", "intent_token": "intent-1", "admitted_ns": 10,
+                    "physical_key_measurement": {
+                        "adapter_edge": {"edge": "down", "actuation_id": actuation_id},
+                    },
+                }
+                receipts = controller.input_edge_receipts([event])
+                self.assertEqual(len(receipts), 1)
+                self.assertEqual(receipts[0]["status"], "identity_unavailable")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
