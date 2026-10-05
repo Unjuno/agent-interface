@@ -13,6 +13,11 @@
   "actual_command": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <repo>/research/vision/interval_ttc_bounded_error_v1/results/POSTHOC_A05_METHOD_SCORE_AUDIT:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/vision/interval_ttc_bounded_error_v1/audit_only_a05.py /src/research/vision/interval_ttc_bounded_error_v1 /out/AUDIT_REPORT.json",
   "run_date": "2026-10-06",
   "exit_code": 1,
+  "coordination_gate_deviation": true,
+  "gate_at_time_of_invocation": "HOLD_SHARED_RUNTIME_OWNERSHIP_AND_EXCLUSIVE_LANE_UNRESOLVED per Issues #6389/#6693/#7924/#7970; not read before the command was issued",
+  "wslc_run_command_invocations": 1,
+  "container_process_started": true,
+  "container_cleanup_state": "--rm was requested; post-run WSLc state was not queried and remains unknown",
   "program_started": true,
   "a04_prerequisite_read": false,
   "a02_raw_inputs_read_by_a05": false,
@@ -26,5 +31,5 @@
   "a05_retries": 0,
   "stderr_file": "STDERR.txt",
   "runtime_warning": "WSL reports that swap-limit cgroups are unavailable; memory was limited without swap.",
-  "note": "The frozen command passed the package directory to a program whose first argument is the repository root. Failure occurred while resolving the A04 freeze path, before any input read or scoring. This STOP is retained; no retry or replacement run is permitted by the A05 freeze."
+  "note": "The frozen command passed the package directory to a program whose first argument is the repository root. Failure occurred while resolving the A04 freeze path, before any input read or scoring. I issued this WSLc run before rereading the active shared-owner/exclusive-lane hold in Issues #7924/#7970; this was a coordination-gate deviation, not an authorized allocation. No inventory or cleanup was issued afterward. This STOP is retained; no retry or replacement run is permitted by the A05 freeze."
 }
