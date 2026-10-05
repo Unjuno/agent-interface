@@ -6,6 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #7834 T0 A01: [carryover-aware optional-adaptation estimator](analysis/optional_adaptation_mrt_7834_t0_a01_20261005/REPORT.md) — exact two-cluster finite enumeration passed its scoped oracle/audit gate; host-only because OrbStack's content store was unavailable; no live-interface or user-effect claim.
 - Issue #17: [notification identity R03 arrival-before-wait evidence](concurrency/notification_identity_r03_17_20261004_b64b/RESCUE_20261004.md) — preserves R01/R02/R03 evidence and failures as inert archive; active client patch is excluded, and all FINAL-v5 vote/applicability/application gates remain open.
 - Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
 
