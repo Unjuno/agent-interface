@@ -10,7 +10,17 @@ The backend is intentionally narrow:
 - client/screen GDI capture;
 - foreground focus verification;
 - monotonic wait/feedback;
-- terminal tracked key/button release verification.
+- terminal tracked key/button release verification;
+- per-key DOWN/UP transition records that pair `SendInput` acknowledgement times
+  with `GetAsyncKeyState` samples before and after each owned key transition.
+
+The returned `execution.input_transitions` records use a stable per-hold identity,
+preserve explicit UP and cleanup UP attempts separately, and include a conservative
+`os_state_change_window_ns` when before/after OS samples differ. `SendInput`
+acknowledgement and `GetAsyncKeyState` do not prove
+physical keyboard hardware state or delivery to the target application. An unavailable
+per-transition sample is retained as unavailable and does not block the key send;
+the existing final neutral-state check remains fail-closed for terminal completion.
 
 Core admission runs before native preflight. Native target/key/text/frame constraints are preflighted before the first physical emission. Stale observation, stale binding, lease expiry, native preflight failures, and unsupported coordinate frames must produce zero task input.
 
