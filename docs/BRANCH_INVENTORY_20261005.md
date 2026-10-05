@@ -720,3 +720,8 @@ Keep the open Draft PR #7774 and its source branch. The PR has later, distinct r
 ## PR #8067 source-ref recheck — 2026-10-05
 
 PR #8067 is merged as `64dcc4c677202eb9b1c9b41ff808e56486c8321f`; its recorded head is `ce1e2e732c5df127037490c2b8dba60675404b68`. A live compare against current main `b5be19963454ce5edafc945b78b100012952dd15` reports the PR head as an ancestor (0 commits ahead, 303 behind, no changed files). The source branch `fix/59-v15-persistent-release-latch-a01-20261005` is absent from GitHub branch search and `git ls-remote`; no local worktree uses it, and live open-PR head/base searches return none. The closed PR still records its original head. This confirms current ref absence and content ancestry, but does not establish when or by whom the ref was removed. No deletion is attributed to this audit.
+
+
+## PR #8194 supersession — 2026-10-05
+
+Closed superseded Draft PR #8194 after confirming its 24 changed-path Git blob SHAs are identical at the open current-main successor PR #8219 head. #8219 preserves the frozen A02 `FAIL_METHOD` outcome unchanged and adds distinct A03 STOP / A04 audit-only evidence. No open PR uses the old branch as head or base; no local worktree uses it. The old source branch remains on the remote, and closed PR #8194 retains its head SHA and full discussion for provenance. The successor has no submitted reviews yet and remains the sole open review surface for this evidence; this close does not mean integration into main. No candidate or auditor was rerun.
