@@ -495,11 +495,16 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             # Supply only the base key-step engine; exercise the real V15
             # release-batch adapter, V4/V3/V12 owner chain and V13 cleanup.
             class FakeBaseBackend:
-                def execute(self, _step, _lease, _identifier, _index):
-                    self.raw("W", True)
-                    self.raw("A", True)
-                    self.raw("A", False)
-                    self.raw("W", False)
+                def execute(self, _step, _lease, _identifier, index):
+                    if index == 0:
+                        self.raw("W", True)
+                        self.raw("A", True)
+                        self.raw("A", False)
+                        self.raw("W", False)
+                    else:
+                        # A later program step must not press again while the
+                        # earlier batch's release remains unverified.
+                        self.raw("W", True)
 
                 def release_all(self):
                     return self.owner.call("release", self.lease)
@@ -529,7 +534,8 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             executor.release_watch_stops["persistent-loss"] = threading.Event()
             display_instance.trace.clear()
             executor._run_with_watcher_cleanup(
-                "persistent-loss", [{"op": "fake-key-up"}], lease)
+                "persistent-loss", [{"op": "fake-key-up"},
+                                    {"op": "retry-key-down"}], lease)
 
             terminal = next(row for row in events if row.get("event") == "terminal")
             batch_rows = [row for row in events
@@ -568,6 +574,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertEqual(cleanup["keys_down"], [38, 39])
             self.assertEqual(display_instance.keyrelease_attempts, 12)
             self.assertEqual(display_instance.down, {38, 39})
+            keypresses = [event[2] for event in display_instance.trace
+                          if event[:2] == ("key_event", xlib.X.KeyPress)]
+            self.assertEqual(keypresses, [38, 39])
         finally:
             if owner is not None:
                 owner.close()
