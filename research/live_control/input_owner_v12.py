@@ -108,9 +108,20 @@ class InputOwner:
                     break
                 observed_down_before = server_down
                 started_ns = time.perf_counter_ns()
-                xtest.fake_input(d, X.KeyRelease, code)
-                d.sync()
-                sync_returned_ns = time.perf_counter_ns()
+                release_error = None
+                sync_returned_ns = None
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_error = {"source": "keyrelease_send", "type": type(exc).__name__,
+                                     "message": str(exc)[:200]}
+                else:
+                    try:
+                        d.sync()
+                        sync_returned_ns = time.perf_counter_ns()
+                    except Exception as exc:
+                        release_error = {"source": "keyrelease_sync", "type": type(exc).__name__,
+                                         "message": str(exc)[:200]}
                 server_down, after_error, sampled_ns = sample_key_down(code)
                 attempts.append({
                     "attempt": attempt,
@@ -121,11 +132,14 @@ class InputOwner:
                     "server_key_down_after": server_down,
                     "keymap_before_error": before_error,
                     "keymap_after_error": after_error,
+                    "keyrelease_error": release_error,
+                    "server_sync_completed": sync_returned_ns is not None,
                 })
                 before_error = after_error
-                if server_down is False:
+                if server_down is False and release_error is None:
                     break
-            return attempts, server_down is False
+            return attempts, server_down is False and all(
+                item["keyrelease_error"] is None for item in attempts)
 
         def release_keys_batch(lease, keys):
             if (type(keys) is not list or not keys or
@@ -331,7 +345,17 @@ class InputOwner:
             release_codes = list(held)
             release_codes.extend(sorted(set(touched) - set(held)))
             for code in release_codes:
-                attempts, verified = release_key(code)
+                try:
+                    attempts, verified = release_key(code)
+                except Exception as exc:
+                    attempts, verified = [], False
+                    key_state_errors.append({"source": "keyrelease_attempt", "keycode": code,
+                                             "type": type(exc).__name__, "message": str(exc)[:200]})
+                for attempt in attempts:
+                    release_error = attempt.get("keyrelease_error")
+                    if release_error is not None:
+                        key_state_errors.append({**release_error, "keycode": code,
+                                                 "attempt": attempt["attempt"]})
                 key_release_attempts[str(code)] = {
                     "attempts": attempts, "verified": verified,
                 }
@@ -349,8 +373,16 @@ class InputOwner:
                     if before_mask & (X.Button1Mask << (button - 1))
                 }
             for button in sorted(retry_buttons):
-                xtest.fake_input(d, X.ButtonRelease, button)
-            d.sync()
+                try:
+                    xtest.fake_input(d, X.ButtonRelease, button)
+                except Exception as exc:
+                    key_state_errors.append({"source": "buttonrelease_send", "button": button,
+                                             "type": type(exc).__name__, "message": str(exc)[:200]})
+            try:
+                d.sync()
+            except Exception as exc:
+                key_state_errors.append({"source": "pointer_sync", "type": type(exc).__name__,
+                                         "message": str(exc)[:200]})
             try:
                 mask = d.screen().root.query_pointer().mask
                 buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
@@ -555,10 +587,12 @@ class InputOwner:
                                     server_keyup_verified=server_keyup_verified,
                                     server_keyup_attempt_count=len(key_release_attempts),
                                     server_keyup_attempts=key_release_attempts,
-                                    server_key_down_after_keyup=not server_keyup_verified,
+                                    server_key_down_after_keyup=key_release_attempts[-1]["server_key_down_after"],
                                     key_state_source='x11_query_keymap',
                                     cancel_requested_after_sync=cancel_requested_after_sync,
-                                    server_sync_completed=bool(key_release_attempts),
+                                    server_sync_completed=all(
+                                        item.get("server_sync_completed", True)
+                                        for item in key_release_attempts),
                                     physical_verification_authoritative=False)
                                 self.records.append(receipt)
                                 if not server_keyup_verified:

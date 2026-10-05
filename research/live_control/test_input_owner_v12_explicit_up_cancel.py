@@ -20,6 +20,7 @@ class FakeDisplay:
         self.trace = []
         self.on_sync = None
         self.fail_keymap_queries = 0
+        self.fail_keyrelease_syncs = 0
         self.root = types.SimpleNamespace(
             query_pointer=lambda: types.SimpleNamespace(mask=0, root_x=0, root_y=0))
 
@@ -43,6 +44,9 @@ class FakeDisplay:
         return bytes(bitmap)
 
     def sync(self):
+        if self.fail_keyrelease_syncs:
+            self.fail_keyrelease_syncs -= 1
+            raise RuntimeError("synthetic key-release sync failure")
         if self.on_sync is not None:
             callback, self.on_sync = self.on_sync, None
             callback()
@@ -382,6 +386,55 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
                     sys.modules.pop(name, None)
                 else:
                     sys.modules[name] = module
+
+    def test_terminal_release_sync_failure_still_attempts_other_keys_and_button(self):
+        names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error", "Xlib.ext", "Xlib.ext.xtest")
+        saved = {name: sys.modules.get(name) for name in names}
+        display_instance = FakeDisplay()
+        display_instance.intern_atom = lambda _name: 1
+        class FakeWindow:
+            id = 52
+            def get_geometry(self): return types.SimpleNamespace(width=100, height=100)
+            def get_attributes(self): return types.SimpleNamespace(map_state=2)
+            def query_tree(self): return types.SimpleNamespace(parent=types.SimpleNamespace(id=1))
+        root = types.SimpleNamespace(id=1, query_pointer=lambda: types.SimpleNamespace(mask=0, root_x=0, root_y=0),
+            get_full_property=lambda *_args: types.SimpleNamespace(value=[52]),
+            translate_coords=lambda *_args: types.SimpleNamespace(x=0, y=0, child=FakeWindow()))
+        display_instance.screen = lambda: types.SimpleNamespace(root=root)
+        display_instance.create_resource_object = lambda *_args: FakeWindow()
+        xlib = types.ModuleType("Xlib")
+        xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonPress=4, ButtonRelease=5, Button1Mask=256, AnyPropertyType=0, IsViewable=2)
+        xk = types.ModuleType("Xlib.XK"); xk.string_to_keysym = lambda key: ord(key)
+        display = types.ModuleType("Xlib.display"); display.Display = lambda _name: display_instance
+        error = types.ModuleType("Xlib.error"); error.BadWindow = type("BadWindow", (Exception,), {}); error.BadDrawable = type("BadDrawable", (Exception,), {})
+        ext = types.ModuleType("Xlib.ext"); xtest = types.ModuleType("Xlib.ext.xtest")
+        def fake_input(_display, event, code):
+            if event == xlib.X.KeyPress: display_instance.down.add(code)
+            elif event == xlib.X.KeyRelease: display_instance.keyrelease_attempts += 1; display_instance.down.discard(code)
+            elif event == xlib.X.ButtonPress: root.query_pointer = lambda: types.SimpleNamespace(mask=256, root_x=0, root_y=0)
+            elif event == xlib.X.ButtonRelease: root.query_pointer = lambda: types.SimpleNamespace(mask=0, root_x=0, root_y=0)
+        xtest.fake_input = fake_input; ext.xtest = xtest
+        xlib.XK, xlib.display, xlib.error, xlib.ext = xk, display, error, ext
+        sys.modules.update({"Xlib": xlib, "Xlib.X": types.ModuleType("Xlib.X"), "Xlib.XK": xk, "Xlib.display": display, "Xlib.error": error, "Xlib.ext": ext, "Xlib.ext.xtest": xtest})
+        owner = None
+        try:
+            sys.modules.pop("input_owner_v12", None)
+            from input_owner_v12 import InputOwner
+            owner = InputOwner(":fake"); lease = Lease(); lease.expected_surface = 52; lease.expected_geometry = [0,0,100,100]
+            owner.call("down", lease, "W"); owner.call("down", lease, "A"); owner.call("button_down", lease, 1)
+            display_instance.fail_keyrelease_syncs = 1
+            with self.assertRaisesRegex(RuntimeError, "owner release not verified") as raised: owner.call("release", lease)
+            record = raised.exception.owner_release_record
+            self.assertFalse(record["verified"])
+            self.assertTrue(any(row["source"] == "keyrelease_sync" for row in record["key_state_errors"]))
+            self.assertEqual(display_instance.keyrelease_attempts, 2); self.assertEqual(display_instance.down, set())
+            self.assertEqual(record["buttons_down"], [])
+        finally:
+            if owner is not None: owner.close()
+            sys.modules.pop("input_owner_v12", None)
+            for name, module in saved.items():
+                if module is None: sys.modules.pop(name, None)
+                else: sys.modules[name] = module
 
     def test_v15_successful_two_key_batch_retries_after_ordered_original_ups(self):
         from executor_v13 import Executor
