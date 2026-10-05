@@ -13,3 +13,13 @@ security boundary against code that could read the whole checkout.
 
 See [PROTOCOL.md](PROTOCOL.md) and [REPORT.md](REPORT.md) for H/T/D/C/U,
 reproduction, result scope, hashes, and the container-runtime disposition.
+
+The frozen synthetic run returned `METHOD_PASS_SCOPED`; see
+`results/a01/run_metadata.json` for the command record and `FREEZE.json` for
+the pre-run inputs and decision gate.
+
+Reproduce from this directory with `python3 candidate.py --output
+results/a01/raw.json`, then `python3 auditor.py --raw results/a01/raw.json
+--output results/a01/audit.json`, and finally `python3 selftest.py --raw
+results/a01/raw.json`. `SHA256SUMS` covers the frozen source and retained
+evidence files.
