@@ -1,0 +1,17 @@
+{
+  "schema": "issue59-batch-boundary-a02-freeze-v1",
+  "run_id": "ISSUE59-BATCH-BOUNDARY-A02-eba7204ca1ee40dd8435835f0e454b04",
+  "base_main": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "source_path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+  "source_github_blob_sha": "82aae20cec847e3766df2eb6ff5269506a74a2e4",
+  "source_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+  "H": "One shared pre-batch and post-batch keymap query can retain per-key release classifications for a two-key batch while eliminating keymap queries between release injections.",
+  "T": "Run one normal sequential control, one normal two-key shared-boundary batch, and one shared-boundary batch whose second release injection fails. Use the exact current-main _classify_release function and deterministic 8-bit keymap representation.",
+  "D": "PASS boundary if both normal modes confirm both keys and end neutral; the shared-boundary batch uses 2 total keymap queries and 0 between release calls; second-injection failure preserves first confirmed up and marks second unconfirmed, with no authority grants.",
+  "C": "Same-connection ordered XTest events and successful sync make accepted releases visible in the shared final bitmap; each key has its own prior bit, injection status, and result. Does not simulate server races, external owners, thread queue/lease/focus/cancel, event publication, or startup selection.",
+  "U": "Deterministic fake-device model only; no real Xlib/X server, V39 startup, OS input, GUI, useful effect, threat response, bounded recovery, or latency.",
+  "decision": "One A02 execution; retain raw result and independent audit.",
+  "candidate_status": "CONSUMED_ARCHIVAL_ONLY",
+  "archived_candidate_path": "results/a02/archived_candidate_probe.py",
+  "rerun_guard": "Package-root probe.py now fails closed; the byte-identical candidate is retained for inspection only."
+}
