@@ -1,0 +1,25 @@
+{
+  "protocol": "issue-7709-t0-v1",
+  "base_seed": 770920261005,
+  "replicates": 500,
+  "windows_per_session": 24,
+  "session_counts": [8, 16],
+  "censor_probability": 0.1,
+  "censor_cap_ms": 2500,
+  "nominal_alpha": 0.05,
+  "coverage_min": 0.9,
+  "coverage_max": 0.99,
+  "null_false_promotion_max": 0.1,
+  "required_coverage_advantage": 0.05,
+  "required_nonstationary_cells": 2,
+  "segment_split_threshold_ms": 90.0,
+  "segment_min_windows": 4,
+  "segment_max_count": 4,
+  "boundary_invariance_tolerance": 1e-9,
+  "scenarios": [
+    {"name": "stationary_null", "warmup_ms": 0.0, "warmup_windows": 0, "step_ms": 0.0, "step_at": 24, "drift_ms": 0.0, "beta_ms": 0.0, "rho_common": 0.65, "rho_difference": 0.8},
+    {"name": "abrupt_shift_null", "warmup_ms": 0.0, "warmup_windows": 0, "step_ms": 260.0, "step_at": 12, "drift_ms": 0.0, "beta_ms": 0.0, "rho_common": 0.65, "rho_difference": 0.8},
+    {"name": "warmup_null", "warmup_ms": 300.0, "warmup_windows": 5, "step_ms": 0.0, "step_at": 24, "drift_ms": 0.0, "beta_ms": 0.0, "rho_common": 0.65, "rho_difference": 0.8},
+    {"name": "gradual_drift_benefit", "warmup_ms": 0.0, "warmup_windows": 0, "step_ms": 0.0, "step_at": 24, "drift_ms": 180.0, "beta_ms": -35.0, "rho_common": 0.65, "rho_difference": 0.8}
+  ]
+}

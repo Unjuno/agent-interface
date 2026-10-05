@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-05",
+  "base_main": "62da4c836a2419d0b1261708b5a59ee3d82db618",
+  "host_os": "macOS 27.0.1",
+  "host_architecture": "arm64",
+  "host_python": "CPython 3.14.5",
+  "container_runtime": {
+    "engine": "OrbStack Docker 29.4.0 linux/aarch64; 10 CPUs reported",
+    "api_reachable": true,
+    "inventory": "STOP_CONTAINERD_CONTENT_BLOB_UNREADABLE",
+    "inventory_diagnostic": "docker images failed: blob sha256:d4be3c65847d7276752000268bf97c5ea9cb6ce85f93b1ffc9aced409c189dcc: operation not supported",
+    "pinned_run": "STOP_CONTAINERD_CONTENT_BLOB_UNREADABLE",
+    "pinned_run_diagnostic": "docker run --rm --network none python:3.12-slim python --version failed: blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported",
+    "mutations_attempted": 0
+  },
+  "alternate_runtimes": {
+    "podman": false,
+    "colima": false,
+    "lima": false,
+    "wslc.exe": false
+  },
+  "execution": "host-only deterministic standard-library simulation; no isolation or resource-enforcement claim"
+}

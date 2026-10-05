@@ -1,0 +1,166 @@
+{
+  "hypothesis_id": "EXPLICIT-UP-POSTCHECK-CANCEL-A04-20261004",
+  "frozen_merge_tree": "71b723028a2db51a7f14a6db653d7f3789fa988b",
+  "host_runtime": "macOS 27.0.1 / Python 3.14.5",
+  "candidate_started_ns": 100986741625458,
+  "candidate_exit": 0,
+  "down_result": {
+    "event": "input_admission",
+    "key": "w",
+    "admitted_ns": 100986741647125,
+    "input_ack_ns": 100986741649333,
+    "valid_until_ns": 100996741526750,
+    "intent_token": "explicit-up-postcheck-a01"
+  },
+  "up_transition": {
+    "event": "input_release_transition",
+    "transition_schema": "input-release-transition-v3",
+    "operation": "up",
+    "key": "w",
+    "owner_id": "b3460d0503ae439c8b893c2763411d62",
+    "intent_token": "explicit-up-postcheck-a01",
+    "valid_until_ns": 100996741526750,
+    "release_call_started_ns": 100986741671875,
+    "release_call_returned_ns": 100986741719958,
+    "release_call_bracket_ns": 48083,
+    "owner_transition_verified": null,
+    "grants_input_authority": false,
+    "lease_time_valid_at_request": true,
+    "cancel_requested_at_request": false,
+    "focus_invalid_at_request": false,
+    "ordinary_release_candidate": true,
+    "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; no owner/X11 state sample or telemetry publication occurs inside this per-input call",
+    "owner_thread_keyup_receipt": {
+      "event": "owner_explicit_keyup",
+      "operation": "up",
+      "owner_id": "b3460d0503ae439c8b893c2763411d62",
+      "key": "w",
+      "keycode": 30,
+      "intent_token": "explicit-up-postcheck-a01",
+      "valid_until_ns": 100996741526750,
+      "owner_keyrelease_started_ns": 100986741694958,
+      "owner_sync_returned_ns": 100986741697875,
+      "server_sync_completed": true,
+      "physical_verification_authoritative": false
+    },
+    "owner_thread_keyup_receipt_count": 1,
+    "owner_thread_keyup_history_complete": true,
+    "owner_thread_keyup_verified": true,
+    "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use"
+  },
+  "owner_thread_id": 6148206592,
+  "cancel_set_ns": 100986741691041,
+  "cancel_samples": [
+    {
+      "thread_id": 6148206592,
+      "value": false,
+      "sample_ns": 100986741646666
+    },
+    {
+      "thread_id": 6148206592,
+      "value": false,
+      "sample_ns": 100986741656000
+    },
+    {
+      "thread_id": 8383774592,
+      "value": false,
+      "sample_ns": 100986741672875
+    },
+    {
+      "thread_id": 6148206592,
+      "value": true,
+      "sample_ns": 100986741696250
+    },
+    {
+      "thread_id": 6148206592,
+      "value": true,
+      "sample_ns": 100986741704833
+    }
+  ],
+  "queue_dequeue_ns": 100986741690500,
+  "fake_keyrelease": [
+    {
+      "event": "KeyRelease",
+      "keycode": 30,
+      "cancel_set_at_side_effect": true,
+      "side_effect_ns": 100986741696541
+    }
+  ],
+  "owner_state_after_up": {
+    "owner_id": "b3460d0503ae439c8b893c2763411d62",
+    "revision": 3,
+    "sample_started_ns": 100986741753250,
+    "sample_finished_ns": 100986741756666,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "physical_pointer_mask": 0,
+    "pointer": [
+      0,
+      0
+    ],
+    "focus": 42,
+    "active_lease_deadline_ns": null,
+    "active_lease_time_valid": false,
+    "cancel_requested": false
+  },
+  "keycode_30_down_after_up": false,
+  "owner_records_before_close": [
+    {
+      "event": "owner_explicit_keyup",
+      "operation": "up",
+      "owner_id": "b3460d0503ae439c8b893c2763411d62",
+      "key": "w",
+      "keycode": 30,
+      "intent_token": "explicit-up-postcheck-a01",
+      "valid_until_ns": 100996741526750,
+      "owner_keyrelease_started_ns": 100986741694958,
+      "owner_sync_returned_ns": 100986741697875,
+      "server_sync_completed": true,
+      "physical_verification_authoritative": false
+    },
+    {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 100986741710875,
+      "valid_until_ns": 100996741526750
+    }
+  ],
+  "owner_records_after_close": [
+    {
+      "event": "owner_explicit_keyup",
+      "operation": "up",
+      "owner_id": "b3460d0503ae439c8b893c2763411d62",
+      "key": "w",
+      "keycode": 30,
+      "intent_token": "explicit-up-postcheck-a01",
+      "valid_until_ns": 100996741526750,
+      "owner_keyrelease_started_ns": 100986741694958,
+      "owner_sync_returned_ns": 100986741697875,
+      "server_sync_completed": true,
+      "physical_verification_authoritative": false
+    },
+    {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 100986741710875,
+      "valid_until_ns": 100996741526750
+    },
+    {
+      "event": "owner_release",
+      "reason": "close",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 100986741795083,
+      "valid_until_ns": null
+    }
+  ],
+  "owner_thread_stopped": true,
+  "candidate_finished_ns": 100986741820916
+}

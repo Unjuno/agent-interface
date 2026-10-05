@@ -1,0 +1,91 @@
+{
+  "mode": "normal",
+  "initial_expected_sequence": 7,
+  "new_observation_sequence": 8,
+  "submitted_renewal_id": "cover-0-renew-1",
+  "submission_response": {
+    "event": "rejected",
+    "id": "cover-0-renew-1",
+    "reason": "latest observation sequence required before input"
+  },
+  "raised_exception": {
+    "type": "RuntimeError",
+    "text": "{'event': 'rejected', 'id': 'cover-0-renew-1', 'reason': 'latest observation sequence required before input'}"
+  },
+  "monitor_observed_rows_during_submit": 0,
+  "planner_interrupt_count": 0,
+  "timeline": [
+    "planner_await_started",
+    "prior_cover_terminal_consumed",
+    "new_observation_consumed",
+    "stale_sequence_rejection_consumed",
+    "planner_await_returned",
+    "planner_closed"
+  ],
+  "failure_cleanup": {
+    "format": "controller-failure-cleanup-v1",
+    "primary_error_type": "RuntimeError",
+    "failed_stage": "planner_turn",
+    "stages": [
+      {
+        "stage": "child_poll_before",
+        "status": "returned",
+        "result": 0
+      },
+      {
+        "stage": "child_poll_after",
+        "status": "returned",
+        "result": 0
+      },
+      {
+        "stage": "planner_close_worker_start",
+        "status": "returned",
+        "result": null
+      },
+      {
+        "stage": "planner_close",
+        "status": "returned",
+        "result": null
+      },
+      {
+        "stage": "atexit_unregister",
+        "status": "returned",
+        "result": null
+      },
+      {
+        "stage": "stdout_reader_join",
+        "status": "returned",
+        "result": null
+      },
+      {
+        "stage": "stdout_reader_alive",
+        "status": "returned",
+        "result": false
+      },
+      {
+        "stage": "score_file_presence",
+        "status": "returned",
+        "result": false
+      },
+      {
+        "stage": "owner_events_presence",
+        "status": "returned",
+        "result": false
+      }
+    ],
+    "input_release_verified": false,
+    "input_releases_verified_empty": true,
+    "scope": "owned child process only; no physical release or scorer certificate",
+    "child_exit_code": 0,
+    "stdout_reader_retired": true,
+    "stdout_reader_errors": [],
+    "input_terminals_complete": true,
+    "input_release_verified_empty": true,
+    "scorer_terminal_observed": false,
+    "score_file_present": false,
+    "owner_events_present": false,
+    "owner_events_closed": false,
+    "cleanup_complete": false
+  },
+  "live_game_or_native_input": false
+}

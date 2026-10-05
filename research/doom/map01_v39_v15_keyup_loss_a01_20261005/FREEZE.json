@@ -1,0 +1,35 @@
+{
+  "schema": "v39-v15-keyup-loss-a01-freeze-v1",
+  "run_id": "MAP01-V39-V15-KEYUP-LOSS-A01-20261005",
+  "base_commit": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "hypothesis": "A dropped XTest KeyRelease can pass V39/V15 release-batch owner bookkeeping while the fake X server still reports the key down; terminal cleanup should detect and diagnose it.",
+  "candidate_sha256": "687d2e4c96b75da6c74cb9a622acf6bcd2822fc9e5e992381f1aa0e583142037",
+  "auditor_sha256": "faeb149f9a5e74306a40724584c21843e1c5074dd4379da1e79c701a01083d7b",
+  "container_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "source_sha256": {
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/live_control/input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+    "research/live_control/input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "research/live_control/input_owner_v12.py": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "design": {
+    "cases": ["normal XTest KeyRelease delivery", "suppress exactly one XTest KeyRelease"],
+    "selected_sources": ["V15 release-batch backend", "V2 telemetry base", "V4 -> V3 -> current V12 input owner"],
+    "test_double": "Only the base controller action loop is stubbed to feed one F8 down/up action list into the production execute/raw seam; X11 display, XTest, Doom, model, GUI, and physical input are not used.",
+    "stop_rule": "One candidate execution. Preserve setup failure, FAIL, or PASS raw; do not rerun. One independent source/raw audit follows only if candidate raw exists."
+  },
+  "decision_gate": {
+    "pass": "Normal case is clean and verified; lost-release case is not marked owner_transition_verified while the fake server reports the key down, and terminal cleanup recovers or fails closed with diagnostic evidence.",
+    "failure": "The fake server retains the key after a suppressed KeyRelease while the release-batch row has owner_transition_verified=true.",
+    "scope": "Synthetic current-source composition only; not physical release, application consumption, threat response, recovery efficacy, latency, task effect, or MAP01 completion."
+  },
+  "commands": {
+    "candidate": "wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01:/src:ro --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01\\research\\doom\\map01_v39_v15_keyup_loss_a01_20261005\\results\\candidate-a01:/out --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/research/doom/map01_v39_v15_keyup_loss_a01_20261005/candidate.py",
+    "auditor": "wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01:/src:ro --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01\\research\\doom\\map01_v39_v15_keyup_loss_a01_20261005\\results\\candidate-a01:/results:ro --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01\\research\\doom\\map01_v39_v15_keyup_loss_a01_20261005\\results\\audit-a01:/out --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/research/doom/map01_v39_v15_keyup_loss_a01_20261005/audit.py /results/candidate.json"
+  }
+}
