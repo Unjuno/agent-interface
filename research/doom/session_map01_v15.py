@@ -28,17 +28,30 @@ def _merge_sources(out):
     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
-def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.perf_counter_ns,attempts=3):
-    """Read scorer state only when all fields are bracketed by one episode tic."""
-    if type(attempts) is not int or attempts<1:raise ValueError('attempts must be positive integer')
+def _coherent_progress_sample(game, game_variable, timeout_seconds, clock_ns=time.perf_counter_ns, attempts=3):
+    """Read scorer state only when exact nonnegative integer tics bracket all fields."""
+    if type(attempts) is not int or attempts < 1:
+        raise ValueError("attempts must be positive integer")
     for _ in range(attempts):
-        tic_before=int(game.get_episode_time());finished=bool(game.is_episode_finished());dead=bool(game.is_player_dead())
-        kills=int(game.get_game_variable(game_variable.KILLCOUNT));deaths=int(game.get_game_variable(game_variable.DEATHCOUNT));ticrate=int(game.get_ticrate())
-        timeout_method=getattr(game,'is_episode_timeout_reached',None);timeout_reached=bool(timeout_method()) if callable(timeout_method) else tic_before>=timeout_seconds*ticrate
-        tic_after=int(game.get_episode_time())
-        if tic_before==tic_after:
-            return ProgressSample(clock_ns(),kills,deaths,finished,dead,bool(finished and not dead and not timeout_reached))
-    raise RuntimeError('independent scorer could not obtain one-tic coherent sample')
+        tic_before = game.get_episode_time()
+        if type(tic_before) is not int or tic_before < 0:
+            raise ValueError("invalid pre-sample episode tic")
+        finished = bool(game.is_episode_finished())
+        dead = bool(game.is_player_dead())
+        kills = int(game.get_game_variable(game_variable.KILLCOUNT))
+        deaths = int(game.get_game_variable(game_variable.DEATHCOUNT))
+        ticrate = int(game.get_ticrate())
+        timeout_method = getattr(game, "is_episode_timeout_reached", None)
+        timeout_reached = (bool(timeout_method()) if callable(timeout_method)
+                           else tic_before >= timeout_seconds * ticrate)
+        tic_after = game.get_episode_time()
+        if type(tic_after) is not int or tic_after < 0:
+            raise ValueError("invalid post-sample episode tic")
+        if tic_before == tic_after:
+            return ProgressSample(
+                clock_ns(), kills, deaths, finished, dead,
+                bool(finished and not dead and not timeout_reached))
+    raise RuntimeError("independent scorer could not obtain one-tic coherent sample")
 
 class _GameProxy:
     def __init__(self, inner, final_sample):
