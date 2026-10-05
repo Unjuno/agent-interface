@@ -1,0 +1,30 @@
+{
+  "schema": "v39-soft-event-routing-a04-dual-signal-result-v1",
+  "main_base": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "guard_source_copy_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "controller_git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+  "input": {
+    "sequence": 2,
+    "health": {"source": 100, "current": 96, "hard_minimum": 35},
+    "ammo": {"source": 46, "current": 37, "hard_minimum": 1},
+    "binding": "unchanged synthetic typed pair",
+    "capture_ns": 2000000000
+  },
+  "monitor": {
+    "returned_invalidation": null,
+    "soft_event_count": 2,
+    "guard_iteration_order": ["health", "ammo"],
+    "retained_latest_signal": "ammo",
+    "retained_latest_value": 37
+  },
+  "next_turn_summary": {
+    "signal_id": "ammo",
+    "source_value": 46,
+    "current_value": 37,
+    "soft_event_count": 2,
+    "health_change_preserved": false
+  },
+  "scope": "offline synthetic typed-signal construction only; no game, model, GUI, OS input, container, or live allocation"
+}

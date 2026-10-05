@@ -1,0 +1,5 @@
+Candidate execution: Windows PowerShell here-string piped to `python -`; the inline Python loaded the exact frozen AST nodes `{_typed_json_equal, _signal_pair_matches, _signal_pair_content_matches, guard_spec, ammo_guard_spec, DoomCoverSignalPairMonitor}` from `research/doom/map01_overlap_controller_v39.py`, loaded the retained production `ObservableSignalGuard` source copy from A01, constructed unchanged binding and sequence-2 typed values health=96/ammo=37, then called `monitor.observe(observation)` once. Captured stdout is preserved in RESULT.json.
+
+Independent audit execution: separate Windows PowerShell here-string piped to `python -`; loaded exact AST nodes `{latest_soft_event_summary, begin_model_turn}` and executed the helper on the monitor's retained latest event with soft_event_count=2. Captured stdout is preserved in RESULT.json and the scoped checks in AUDIT.json.
+
+No model, game, session, GUI, OS input, container, or live allocation command was run.
