@@ -1,0 +1,65 @@
+{
+  "candidate_oracle_leakage": false,
+  "decision": "FAIL_OR_HOLD_AUDIT",
+  "errors": [
+    "self_match1_required: prediction_only missed required or critical cue",
+    "external_match1_required: prediction_only missed required or critical cue",
+    "self_match_hard_critical: prediction_only missed required or critical cue"
+  ],
+  "metrics": {
+    "complete_relevance": {
+      "late_required": 0,
+      "optional_changed_forwarded": 1,
+      "optional_matched_suppressed": 2,
+      "required_or_critical_misses": 0
+    },
+    "full_frame": {
+      "late_required": 0,
+      "optional_changed_forwarded": 5,
+      "optional_matched_suppressed": 0,
+      "required_or_critical_misses": 0
+    },
+    "prediction_only": {
+      "late_required": 0,
+      "optional_changed_forwarded": 3,
+      "optional_matched_suppressed": 2,
+      "required_or_critical_misses": 3
+    }
+  },
+  "mutation_controls": [
+    {
+      "name": "drop-required-cue",
+      "rejected": true
+    },
+    {
+      "name": "forge-self-causation",
+      "rejected": true
+    },
+    {
+      "name": "late-required-delivery",
+      "rejected": true
+    },
+    {
+      "name": "stale-receipt-still-suppresses",
+      "rejected": true
+    }
+  ],
+  "row_count": 10,
+  "schema": "action-bound-relevance-independent-audit-v2",
+  "scope": "synthetic deterministic raster method only; no live UI/game/model/input, no suppression safety or task-effect claim",
+  "unknown_fallback": true,
+  "yoked_controls": [
+    {
+      "outputs_equal": true,
+      "pair": "required",
+      "public_equal": true,
+      "scorer_origin_distinct": true
+    },
+    {
+      "outputs_equal": true,
+      "pair": "irrelevant",
+      "public_equal": true,
+      "scorer_origin_distinct": true
+    }
+  ]
+}

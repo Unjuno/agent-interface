@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #6619 action-bound relevance synthetic successor A01](action_bound_relevance_6619_a01_20261005/README.md) — `PASS_METHOD_SCOPED`: 10 deterministic raster cases; prediction-only missed three required cues, exact #1726 COMPLETE_ONLY preserved required/critical cues, and 4/4 mutation controls rejected. Candidate and V3 auditor each ran once; V1/V2 failures preserved. Synthetic-only, no live GUI/game/effect/safety claim.
+
 - [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
 
 

@@ -1,0 +1,51 @@
+{
+  "allocation_id": "ACTION-BOUND-RELEVANCE-6619-T0-A01-20261005",
+  "base_main_commit": "190100f7c9acb2bfc5618d1621761a0329b368eb",
+  "branch": "research/action-bound-relevance-6619-a01-20261005",
+  "candidate_invocations_before_freeze": 0,
+  "decision_gate": "PASS_METHOD_SCOPED iff full-frame forwards all changed pixels; prediction-only loses at least one required/critical event; exact COMPLETE_ONLY has zero required/critical misses and zero late required deliveries while suppressing at least one optional matched cue; invalid receipt/UNKNOWN coverage fail open; yoked public inputs and candidate outputs are equal despite distinct scorer-only origins, with origin UNATTRIBUTED; candidate result leaks no oracle labels; all four mutations reject; all package and reference pins match. Otherwise retain the first FAIL/HOLD.",
+  "hypothesis": "Prediction-only suppression loses correctly predicted but task-required evidence; the existing #1726 COMPLETE_ONLY gate preserves all required/critical evidence while suppressing optional changed cues, and yoked visual histories cannot justify a SELF origin label.",
+  "issue": 6619,
+  "issue_comment_id": 5969547913,
+  "issue_comment_sha256": "de94bc5302c3827d7a689eab3b4e9ce0325b1468301c311b59f8502a64e0defc",
+  "issue_comment_url": "https://github.com/Unjuno/agent-interface/issues/6619#issuecomment-5969547913",
+  "limits": "Method-only deterministic synthetic raster. No real image, GUI, game, model, container, OS input, application effect, safety, latency, task benefit, or Issue #59 live gate.",
+  "protocol": "One candidate invocation over a fixed 10-row synthetic 1x4 raster cohort: full SELF/EXTERNAL x MATCH/MISMATCH x REQUIRED/IRRELEVANT cross, plus hard-critical and unknown receipt/coverage controls. Compare full-frame, prediction-only, and the exact pinned #1726 COMPLETE_ONLY implementation. One separate raw-only auditor and four corruption controls. Candidate cannot read scorer oracle.",
+  "reference_baseline": {
+    "blob": "87896f8ea17df3d5418cb9bb606ef53be30cf3f5",
+    "function": "complete_only(declared, critical, changed, coverage, current=True)",
+    "issue": 1726,
+    "path": "research/analysis/observation_relevance_completeness_v1/candidate.py",
+    "sha256": "ae71c335d2a54a4e04af780c0e960bcf581322241c96120a15264420abbbbac5"
+  },
+  "repository_context_sha256": {
+    "README.md": "4b7480dc39b69c7154b37b6c276d5a6dae73472573a40bcd1d26d690bd2217d5",
+    "ROADMAP.md": "a93763fbdeb34cbc2973e6c6e96a04fa04e6a5354e300ddb5a53da12bfff0bf3",
+    "docs/CURRENT_GOAL.md": "acf47aec6fae0d59f258839fbd6ef36045e6110fc794ac3a974c034a0e4b900d",
+    "docs/ISSUE_FAILURE_CLASSIFICATION.md": "aebb08b5b3a7b31090c087ccc08e9a29a1126aed0b6ea8ccceda302a95f7edbf",
+    "docs/RESEARCH_METHOD.md": "b25609fd587944ad02810d224bca1585d4198998908edbe48db204c6c225cc2f"
+  },
+  "runtime": {
+    "container": "NOT AUTHORIZED BY ISSUE #6619; host standard library only",
+    "game": false,
+    "gui": false,
+    "live_input": false,
+    "model": false,
+    "network": false,
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "schema": "action-bound-relevance-6619-a01-freeze-v1",
+  "source_sha256": {
+    "COMMANDS.txt": "4adcb8310f6f7d40b80cc391f23de6723766f33e47d6fe28bce5c2ffb2fa6dcd",
+    "PREREGISTRATION.md": "d8165209018f65b64e663292dba86f7ba07e2221588d0f4fe76b6939275d6db6",
+    "README.md": "79669e3542d7b863943a500956dc134db37c67cf314b86efa5b7d62ed16f3d56",
+    "SOURCE_ISSUE_ADDENDUM.md": "de94bc5302c3827d7a689eab3b4e9ce0325b1468301c311b59f8502a64e0defc",
+    "audit.py": "03b210ff8757efc6fe2cc9ff2c58b1d29499970219c2c733b3c5a7dd62f5f2c6",
+    "candidate.py": "1f0f96d176308848e2e6b6091fdf0e0ec2eb1be0fc46fdac1c99982f15212519",
+    "inputs/public_cases.json": "578eccbc25bdf2d23a75dcfef1b995a4aa66ad83ffe6562acd1e1f219f6ed97f",
+    "inputs/scorer_oracle.json": "16fccbce7070edc8aea3c40b97515e2dac15e81f0fa1e2cc3ffec009d49ee642",
+    "sources/observation_relevance_completeness_1726_candidate.py": "ae71c335d2a54a4e04af780c0e960bcf581322241c96120a15264420abbbbac5"
+  },
+  "status": "FROZEN_NOT_YET_RUN"
+}
