@@ -1,0 +1,630 @@
+{
+  "input_sha256": "afa9d6f50183125a1188f0c018fe41f1e2c7b142ceaddba76f6d278718af4be2",
+  "pass_method_scoped": true,
+  "protocol": "carbon-window-t0-a02-v1",
+  "results": [
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 105,
+      "case_id": "varying_carbon",
+      "clairvoyant_cost_by_scenario": {
+        "forecast_reversal": "17",
+        "forecast_shift_2": "10",
+        "nominal": "10"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 105,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "44",
+          "output_hashes": {
+            "a": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "b": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "c": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "risk_score": "153/4",
+          "scenario_costs": {
+            "forecast_reversal": "21",
+            "forecast_shift_2": "21",
+            "nominal": "44"
+          },
+          "starts": {
+            "a": 0,
+            "b": 2,
+            "c": 3
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "10",
+          "output_hashes": {
+            "a": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "b": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "c": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "risk_score": "159/4",
+          "scenario_costs": {
+            "forecast_reversal": "53",
+            "forecast_shift_2": "33",
+            "nominal": "10"
+          },
+          "starts": {
+            "a": 4,
+            "b": 6,
+            "c": 7
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "10",
+          "output_hashes": {
+            "a": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "b": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "c": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "risk_score": "155/4",
+          "scenario_costs": {
+            "forecast_reversal": "51",
+            "forecast_shift_2": "35",
+            "nominal": "10"
+          },
+          "starts": {
+            "a": 4,
+            "b": 7,
+            "c": 6
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "26",
+          "output_hashes": {
+            "a": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "b": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "c": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "risk_score": "57/2",
+          "scenario_costs": {
+            "forecast_reversal": "33",
+            "forecast_shift_2": "11",
+            "nominal": "26"
+          },
+          "starts": {
+            "a": 3,
+            "b": 5,
+            "c": 2
+          }
+        }
+      }
+    },
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 1,
+      "case_id": "no_flex",
+      "clairvoyant_cost_by_scenario": {
+        "nominal": "7"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 1,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "7",
+          "output_hashes": {
+            "a": "1111111111111111111111111111111111111111111111111111111111111111",
+            "b": "2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          "risk_score": "7",
+          "scenario_costs": {
+            "nominal": "7"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "7",
+          "output_hashes": {
+            "a": "1111111111111111111111111111111111111111111111111111111111111111",
+            "b": "2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          "risk_score": "7",
+          "scenario_costs": {
+            "nominal": "7"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "7",
+          "output_hashes": {
+            "a": "1111111111111111111111111111111111111111111111111111111111111111",
+            "b": "2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          "risk_score": "7",
+          "scenario_costs": {
+            "nominal": "7"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "7",
+          "output_hashes": {
+            "a": "1111111111111111111111111111111111111111111111111111111111111111",
+            "b": "2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          "risk_score": "7",
+          "scenario_costs": {
+            "nominal": "7"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        }
+      }
+    },
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 12,
+      "case_id": "flat_carbon",
+      "clairvoyant_cost_by_scenario": {
+        "nominal": "9"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 12,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "a": "3333333333333333333333333333333333333333333333333333333333333333",
+            "b": "4444444444444444444444444444444444444444444444444444444444444444"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "a": "3333333333333333333333333333333333333333333333333333333333333333",
+            "b": "4444444444444444444444444444444444444444444444444444444444444444"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "a": "3333333333333333333333333333333333333333333333333333333333333333",
+            "b": "4444444444444444444444444444444444444444444444444444444444444444"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "a": 3,
+            "b": 2
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "a": "3333333333333333333333333333333333333333333333333333333333333333",
+            "b": "4444444444444444444444444444444444444444444444444444444444444444"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        }
+      }
+    },
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 12,
+      "case_id": "inverted_carbon",
+      "clairvoyant_cost_by_scenario": {
+        "nominal": "4"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 12,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "4",
+          "output_hashes": {
+            "a": "5555555555555555555555555555555555555555555555555555555555555555",
+            "b": "6666666666666666666666666666666666666666666666666666666666666666"
+          },
+          "risk_score": "4",
+          "scenario_costs": {
+            "nominal": "4"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "4",
+          "output_hashes": {
+            "a": "5555555555555555555555555555555555555555555555555555555555555555",
+            "b": "6666666666666666666666666666666666666666666666666666666666666666"
+          },
+          "risk_score": "4",
+          "scenario_costs": {
+            "nominal": "4"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "20",
+          "output_hashes": {
+            "a": "5555555555555555555555555555555555555555555555555555555555555555",
+            "b": "6666666666666666666666666666666666666666666666666666666666666666"
+          },
+          "risk_score": "20",
+          "scenario_costs": {
+            "nominal": "20"
+          },
+          "starts": {
+            "a": 3,
+            "b": 2
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "4",
+          "output_hashes": {
+            "a": "5555555555555555555555555555555555555555555555555555555555555555",
+            "b": "6666666666666666666666666666666666666666666666666666666666666666"
+          },
+          "risk_score": "4",
+          "scenario_costs": {
+            "nominal": "4"
+          },
+          "starts": {
+            "a": 0,
+            "b": 1
+          }
+        }
+      }
+    },
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 20,
+      "case_id": "long_job",
+      "clairvoyant_cost_by_scenario": {
+        "nominal": "16"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 20,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "40",
+          "output_hashes": {
+            "long": "7777777777777777777777777777777777777777777777777777777777777777",
+            "short": "8888888888888888888888888888888888888888888888888888888888888888"
+          },
+          "risk_score": "40",
+          "scenario_costs": {
+            "nominal": "40"
+          },
+          "starts": {
+            "long": 0,
+            "short": 3
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "16",
+          "output_hashes": {
+            "long": "7777777777777777777777777777777777777777777777777777777777777777",
+            "short": "8888888888888888888888888888888888888888888888888888888888888888"
+          },
+          "risk_score": "16",
+          "scenario_costs": {
+            "nominal": "16"
+          },
+          "starts": {
+            "long": 4,
+            "short": 3
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "19",
+          "output_hashes": {
+            "long": "7777777777777777777777777777777777777777777777777777777777777777",
+            "short": "8888888888888888888888888888888888888888888888888888888888888888"
+          },
+          "risk_score": "19",
+          "scenario_costs": {
+            "nominal": "19"
+          },
+          "starts": {
+            "long": 3,
+            "short": 6
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "16",
+          "output_hashes": {
+            "long": "7777777777777777777777777777777777777777777777777777777777777777",
+            "short": "8888888888888888888888888888888888888888888888888888888888888888"
+          },
+          "risk_score": "16",
+          "scenario_costs": {
+            "nominal": "16"
+          },
+          "starts": {
+            "long": 4,
+            "short": 3
+          }
+        }
+      }
+    },
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 10,
+      "case_id": "precedence",
+      "clairvoyant_cost_by_scenario": {
+        "nominal": "9"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 10,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "24",
+          "output_hashes": {
+            "consume": "abababababababababababababababababababababababababababababababab",
+            "prepare": "9999999999999999999999999999999999999999999999999999999999999999"
+          },
+          "risk_score": "24",
+          "scenario_costs": {
+            "nominal": "24"
+          },
+          "starts": {
+            "consume": 1,
+            "prepare": 0
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "consume": "abababababababababababababababababababababababababababababababab",
+            "prepare": "9999999999999999999999999999999999999999999999999999999999999999"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "consume": 4,
+            "prepare": 3
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "consume": "abababababababababababababababababababababababababababababababab",
+            "prepare": "9999999999999999999999999999999999999999999999999999999999999999"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "consume": 4,
+            "prepare": 3
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "consume": "abababababababababababababababababababababababababababababababab",
+            "prepare": "9999999999999999999999999999999999999999999999999999999999999999"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "consume": 4,
+            "prepare": 3
+          }
+        }
+      }
+    },
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 5,
+      "case_id": "cancellation",
+      "clairvoyant_cost_by_scenario": {
+        "nominal": "1"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 5,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "5",
+          "output_hashes": {
+            "live": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          },
+          "risk_score": "5",
+          "scenario_costs": {
+            "nominal": "5"
+          },
+          "starts": {
+            "live": 0
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "1",
+          "output_hashes": {
+            "live": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          },
+          "risk_score": "1",
+          "scenario_costs": {
+            "nominal": "1"
+          },
+          "starts": {
+            "live": 4
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "1",
+          "output_hashes": {
+            "live": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          },
+          "risk_score": "1",
+          "scenario_costs": {
+            "nominal": "1"
+          },
+          "starts": {
+            "live": 4
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "1",
+          "output_hashes": {
+            "live": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          },
+          "risk_score": "1",
+          "scenario_costs": {
+            "nominal": "1"
+          },
+          "starts": {
+            "live": 4
+          }
+        }
+      }
+    },
+    {
+      "case_id": "infeasible_window",
+      "disposition": "FAIL_CONSTRAINT",
+      "feasible_schedule_count": 0,
+      "methods": {
+        "asap": null,
+        "carbon": null,
+        "latest_feasible": null,
+        "risk_aware": null
+      }
+    },
+    {
+      "carbon_policy_schedule_count_after_mandatory_freeze": 3,
+      "case_id": "mandatory_guard",
+      "clairvoyant_cost_by_scenario": {
+        "nominal": "9"
+      },
+      "disposition": "FEASIBLE",
+      "feasible_schedule_count": 12,
+      "methods": {
+        "asap": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "17",
+          "output_hashes": {
+            "mandatory": "f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0",
+            "optional": "0101010101010101010101010101010101010101010101010101010101010101"
+          },
+          "risk_score": "17",
+          "scenario_costs": {
+            "nominal": "17"
+          },
+          "starts": {
+            "mandatory": 0,
+            "optional": 1
+          }
+        },
+        "carbon": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "mandatory": "f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0",
+            "optional": "0101010101010101010101010101010101010101010101010101010101010101"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "mandatory": 0,
+            "optional": 3
+          }
+        },
+        "latest_feasible": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "mandatory": "f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0",
+            "optional": "0101010101010101010101010101010101010101010101010101010101010101"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "mandatory": 0,
+            "optional": 3
+          }
+        },
+        "risk_aware": {
+          "delayed_mandatory_jobs": [],
+          "forecast_cost": "9",
+          "output_hashes": {
+            "mandatory": "f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0",
+            "optional": "0101010101010101010101010101010101010101010101010101010101010101"
+          },
+          "risk_score": "9",
+          "scenario_costs": {
+            "nominal": "9"
+          },
+          "starts": {
+            "mandatory": 0,
+            "optional": 3
+          }
+        }
+      }
+    }
+  ],
+  "risk_rule": "score = mean scenario cost + 0.5 * (worst scenario cost - mean scenario cost)",
+  "scope": "finite synthetic scheduling logic only; no realistic trace, metered energy, or emissions claim"
+}
