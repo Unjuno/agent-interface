@@ -1,0 +1,37 @@
+All commands ran from the repository root. Input trace: posthoc A04; no game,
+model, GUI, X11, or OS-input allocation was started.
+
+Successful retained A01 result:
+
+1. `python3 research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/candidate.py`
+   Exit 0; `PASS_A04_TRACE_REPLAY`; wrote `results/a01/candidate.json`.
+2. `python3 research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/audit.py`
+   Exit 0; `PASS_A04_TRACE_REPLAY_AUDIT`; 12 checks; wrote `results/a01/audit.json`.
+
+Deterministic reproduction after strengthening the auditor's provenance checks:
+
+3. `RESULT_DIR=research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/results/a02 python3 research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/candidate.py`
+   Exit 0; output matches the same five threshold-cross samples.
+4. `RESULT_DIR=research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/results/a02 python3 research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/audit.py`
+   Exit 0; `PASS_A04_TRACE_REPLAY_AUDIT`; 16 checks. The A02 auditor used its
+   default A01 candidate path; A02 candidate bytes matched A01 exactly. Keep
+   A02's audit non-authoritative for path binding.
+
+Path-bound authoritative A03 pair:
+
+5. `RESULT_DIR=research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/results/a03 python3 research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/candidate.py`
+   Exit 0; output under `results/a03/candidate.json`.
+6. `RESULT_DIR=research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/results/a03 python3 research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/audit.py`
+   Exit 0; `PASS_A04_TRACE_REPLAY_AUDIT`; 16 checks; 45 pending observations.
+
+7. An isolated temporary copy of the input bundle had one byte appended to
+   `report.json`; the independent audit exited 1 with `AssertionError` before
+   writing output. Retained control summary:
+   `results/a03/audit_tamper_control.json`.
+
+The first two candidate invocations during parser setup exited 1 before writing
+any output. The exact failures and fixes are recorded in `RUN_LOG.md`.
+
+`python3 --version` returned `Python 3.14.5`. Syntax was checked in-memory for
+both scripts; `git diff --check` was run on the staged package. `SHA256SUMS.txt`
+is checked from this directory with `sha256sum -c SHA256SUMS.txt`.
