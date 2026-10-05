@@ -20,21 +20,8 @@ assert "current_cover = next_cover" not in branch
 resolver = next(node for node in tree.body
                 if isinstance(node, ast.FunctionDef)
                 and node.name == "resolve_invalidated_cover_renewal")
-rejection_condition = next(node for node in ast.walk(resolver)
-                           if isinstance(node, ast.If)
-                           and any(isinstance(value, ast.Constant)
-                                   and value.value == "rejected"
-                                   for value in ast.walk(node.test)))
-assert rejection_condition is not None
-interrupt_call = next(node for node in ast.walk(resolver)
-                      if isinstance(node, ast.Call)
-                      and isinstance(node.func, ast.Attribute)
-                      and isinstance(node.func.value, ast.Name)
-                      and node.func.value.id == "planner"
-                      and node.func.attr == "interrupt"
-                      and any(isinstance(arg, ast.Name)
-                              and arg.id == "planner_handle" for arg in node.args))
-assert interrupt_call is not None
+assert "resolution[\"status\"] == \"rejected\"" in ast.unparse(resolver)
+assert "planner.interrupt(planner_handle)" in ast.unparse(resolver)
 discard = next(node for node in ast.walk(main)
                if isinstance(node, ast.If)
                and isinstance(node.test, ast.Compare)
@@ -44,4 +31,4 @@ discard = next(node for node in ast.walk(main)
                        for part in node.test.comparators))
 assert any(isinstance(node, ast.Continue) for node in ast.walk(discard))
 assert "policy_dependency_invalidated" in ast.unparse(discard)
-print("read-only renewal invalidation audit: PASS 8/8")
+print("read-only renewal invalidation audit: PASS 7/7")

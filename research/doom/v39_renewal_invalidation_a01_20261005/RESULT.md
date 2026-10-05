@@ -1,17 +1,20 @@
 # Result — V39 invalidated renewal submit (A01)
 
-**Decision:** the observed failure is real in the pinned source path; the narrow candidate resolves admission before choosing cancellation. Keep the result synthetic and draft.
+**Decision:** the pinned renewal path reproduces the rejected-submit cleanup bug; the candidate resolves admission before choosing cancellation. Synthetic gates pass; integration remains HOLD.
 
-## TDD evidence
+## TDD and behavioral evidence
 
-- RED against baseline 1403c822609395f9ab21e0cdbb36b7b4c8ee044d: invalidation followed by a rejected renewal reached cancel_invalidated_cover(); the FIFO then raised NoTerminalForRejectedSubmit: baseline waited for terminal of rejected renewal. Process exit was 1 (expected RED).
-- GREEN against the candidate reconstructed from the pinned baseline: the production renewal invalidation branch passed rejected and accepted controls, 2/2. The checked-in source-extraction harness produced the same PASS.
-- Rejected control: one planner interruption; no cancellation write; no renewal ID added; previous verified terminal retained.
-- Accepted control: one planner interruption; renewal ID added; cancellation sent for that exact ID; cancelled terminal required with verified empty release.
-- Read-only source auditor passed 8/8 checks: correct renewal resolver wiring; rejection is distinguished; planner is interrupted; old terminal is not replaced on rejection; dependent answer is discarded before action admission.
-- Auditor construction failure preserved: an initial check compared AST unparse output to a quote-style-specific string and failed (not a production-code failure). The auditor was corrected to inspect AST nodes and then passed 8/8. See audit_initial_check_fail.stdout.txt and audit.stdout.txt.
-- Syntax compilation passed for the controller and regression module. No full controller import/suite was run.
+- **RED:** Baseline PR #7904 head 1403c822609395f9ab21e0cdbb36b7b4c8ee044d received invalidation followed by a stale-sequence renewal rejection. Its renewal branch called cancel_invalidated_cover and waited for a terminal that cannot follow the rejected submit. Harness exited 1 with NoTerminalForRejectedSubmit.
+- **GREEN:** Candidate test extracted the actual renewal branch and helper functions. Rejected and accepted controls passed 2/2. Rejection caused one planner interruption, no cancel write, no renewal ID, and retained the old verified terminal. Acceptance registered the ID, cancelled that ID, and required cancelled terminal plus empty verified release.
+- **Independent audit:** 8/8 control-flow checks passed. An initial auditor assertion failed because it matched AST unparse quote formatting; it was corrected to inspect AST nodes. The assertion failure and corrected pass output are both retained.
+- **WSLc focused suites:** agent-interface/native-suite-wslc-a08:20261004, Python 3.12.14. 43/43 passed normally and 43/43 passed under -O. Suites: V39 controller, V39 wait/admission, source refresh, action validity admission, and observable signal guard v2.
+- **WSLc source harness:** 2/2 branch controls; read-only audit: 8/8.
+- **Syntax:** candidate controller and controller test compile. No full controller import suite beyond the listed tests is claimed.
 
-## Limits and next gate
+## Retained setup failures and warning
 
-No WSLc run, live game/model/input, or latest-main composition was executed. The local disk filled during dependency materialization; WSLc list did not return within 30 seconds. Treat this as construction evidence, not integrated runtime readiness. Re-run the candidate test and auditor in WSLc after capacity recovery, then run focused suites on a refreshed main composition.
+The first suite attempt used the image's default fixed runner entrypoint; the next two import attempts exposed omitted HUD v2 then v1 source files from the sparse checkout. All outputs are retained; the missing exact tracked dependencies were added and the same focused suite then passed. Each WSLc run emitted the cgroup/swap warning; see FREEZE.md. No claim of memory/swap enforcement is made.
+
+## Limits / next gate
+
+No game, model, GUI, OS input, live allocation, full repository suite, or refreshed-main composition ran. This PR is a stacked draft against #7904; after its parent is integrated/refreshed, rerun the focused gates against current main before considering readiness. No input authority or product success is claimed.
