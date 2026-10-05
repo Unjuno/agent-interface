@@ -119,6 +119,89 @@ class InputOwner:
                     break
             return attempts, not server_down
 
+        def release_keys_batch(lease, keys):
+            if (type(keys) is not list or not keys or
+                    any(not isinstance(key, str) or not key for key in keys) or
+                    len(set(keys)) != len(keys)):
+                raise ValueError('unique non-empty key list required for up_batch')
+            if active is not lease or lease is None:
+                raise ValueError('up_batch requires the active input lease')
+            codes = []
+            for key in keys:
+                code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                if not code or held.get(code) is not lease:
+                    raise ValueError('up_batch key is unavailable or not owned')
+                codes.append((key, code))
+
+            # The pre-sample occurs before the ordered UP sequence. Send every
+            # original explicit UP before sampling again; this preserves the
+            # release-batch no-query-between-UPs contract.
+            before_bitmap = d.query_keymap()
+            attempt_rows = {}
+            for key, code in codes:
+                started_ns = time.perf_counter_ns()
+                xtest.fake_input(d, X.KeyRelease, code)
+                d.sync()
+                sync_ns = time.perf_counter_ns()
+                attempt_rows[code] = [{
+                    'attempt': 1,
+                    'keyrelease_started_ns': started_ns,
+                    'sync_returned_ns': sync_ns,
+                    'keymap_sampled_ns': None,
+                    'server_key_down_before': bool(
+                        before_bitmap[code // 8] & (1 << (code % 8))),
+                    'server_key_down_after': None,
+                }]
+
+            bitmap = d.query_keymap()
+            sampled_ns = time.perf_counter_ns()
+            receipts = []
+            for key, code in codes:
+                attempts = attempt_rows[code]
+                server_down = bool(bitmap[code // 8] & (1 << (code % 8)))
+                attempts[0]['keymap_sampled_ns'] = sampled_ns
+                attempts[0]['server_key_down_after'] = server_down
+                while server_down and len(attempts) < 3:
+                    started_ns = time.perf_counter_ns()
+                    xtest.fake_input(d, X.KeyRelease, code)
+                    d.sync()
+                    sync_ns = time.perf_counter_ns()
+                    bitmap = d.query_keymap()
+                    sampled_ns = time.perf_counter_ns()
+                    server_down = bool(bitmap[code // 8] & (1 << (code % 8)))
+                    attempts.append({
+                        'attempt': len(attempts) + 1,
+                        'keyrelease_started_ns': started_ns,
+                        'sync_returned_ns': sync_ns,
+                        'keymap_sampled_ns': sampled_ns,
+                        'server_key_down_before': True,
+                        'server_key_down_after': server_down,
+                    })
+                verified = not server_down
+                if verified:
+                    held.pop(code, None)
+                receipt = dict(
+                    event='owner_explicit_keyup', operation='up',
+                    owner_id=self.owner_id, key=key, keycode=code,
+                    intent_token=getattr(lease, 'intent_token', None),
+                    valid_until_ns=getattr(lease, 'deadline', None),
+                    owner_keyrelease_started_ns=attempts[0]['keyrelease_started_ns'],
+                    owner_sync_returned_ns=attempts[-1]['sync_returned_ns'],
+                    owner_keymap_sampled_ns=attempts[-1]['keymap_sampled_ns'],
+                    server_keyup_verified=verified,
+                    server_keyup_attempt_count=len(attempts),
+                    server_keyup_attempts=attempts,
+                    server_key_down_after_keyup=not verified,
+                    key_state_source='x11_query_keymap',
+                    cancel_requested_after_sync=lease.cancel.is_set(),
+                    server_sync_completed=bool(attempts),
+                    physical_verification_authoritative=False,
+                    release_batch_initial_up_count=len(codes),
+                    release_batch_key_order=[item[0] for item in codes])
+                self.records.append(receipt)
+                receipts.append(receipt)
+            return receipts
+
         def focus_id():
             value=d.get_input_focus().focus
             return value.id if hasattr(value,'id') else value
@@ -305,7 +388,7 @@ class InputOwner:
                         if not all(point.mask & (X.Button1Mask << (b-1)) for b in buttons):
                             raise DecisionRequired('held button no longer physically down')
                         op='move';key={'x':key['x'],'y':key['y']}
-                    if op in ('move','button_down','button_up','wheel','down','up'):revision += 1
+                    if op in ('move','button_down','button_up','wheel','down','up','up_batch'):revision += 1
                     if op == 'input_state':
                         started=time.perf_counter_ns();point=d.screen().root.query_pointer();focus=focus_id();finished=time.perf_counter_ns()
                         result=dict(owner_id=self.owner_id,revision=revision,sample_started_ns=started,sample_finished_ns=finished,
@@ -369,6 +452,8 @@ class InputOwner:
                             result = dict(event='pointer_admission', operation=op, payload=key,
                                           admitted_ns=admitted,input_ack_ns=time.perf_counter_ns(),
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
+                    elif op == 'up_batch':
+                        result = release_keys_batch(lease, key)
                     elif op in ('down', 'up'):
                         code = d.keysym_to_keycode(XK.string_to_keysym(key))
                         if not code:

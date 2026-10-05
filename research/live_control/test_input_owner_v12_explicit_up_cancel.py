@@ -17,6 +17,7 @@ class FakeDisplay:
         self.down = set()
         self.drop_keyreleases = 0
         self.keyrelease_attempts = 0
+        self.trace = []
         self.on_sync = None
         self.root = types.SimpleNamespace(
             query_pointer=lambda: types.SimpleNamespace(mask=0, root_x=0, root_y=0))
@@ -24,13 +25,14 @@ class FakeDisplay:
     def get_input_focus(self):
         return types.SimpleNamespace(focus=41)
 
-    def keysym_to_keycode(self, _keysym):
-        return 38
+    def keysym_to_keycode(self, keysym):
+        return {ord("W"): 38, ord("A"): 39}.get(keysym, 0)
 
     def screen(self):
         return types.SimpleNamespace(root=self.root)
 
     def query_keymap(self):
+        self.trace.append(("query_keymap", tuple(sorted(self.down))))
         bitmap = bytearray(32)
         for code in self.down:
             bitmap[code // 8] |= 1 << (code % 8)
@@ -64,7 +66,7 @@ class Lease:
 
 
 class ExplicitKeyUpCancellationTests(unittest.TestCase):
-    def test_cancel_during_keyup_sync_is_not_marked_ordinary(self):
+    def test_ordered_up_batch_has_no_keymap_query_between_original_ups(self):
         names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
                  "Xlib.ext", "Xlib.ext.xtest")
         saved = {name: sys.modules.get(name) for name in names}
@@ -73,7 +75,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
         xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
                                        Button1Mask=256, AnyPropertyType=0)
         xk = types.ModuleType("Xlib.XK")
-        xk.string_to_keysym = lambda _key: 1
+        xk.string_to_keysym = lambda key: ord(key)
         display = types.ModuleType("Xlib.display")
         display.Display = lambda _name: display_instance
         error = types.ModuleType("Xlib.error")
@@ -83,6 +85,87 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
         xtest = types.ModuleType("Xlib.ext.xtest")
 
         def fake_input(_display, event, code):
+            display_instance.trace.append(("key_event", event, code))
+            if event == xlib.X.KeyPress:
+                display_instance.down.add(code)
+            elif event == xlib.X.KeyRelease:
+                display_instance.keyrelease_attempts += 1
+                if display_instance.drop_keyreleases:
+                    display_instance.drop_keyreleases -= 1
+                else:
+                    display_instance.down.discard(code)
+
+        xtest.fake_input = fake_input
+        ext.xtest = xtest
+        xlib.XK, xlib.display, xlib.error, xlib.ext = xk, display, error, ext
+        sys.modules.update({"Xlib": xlib, "Xlib.X": types.ModuleType("Xlib.X"),
+                            "Xlib.XK": xk, "Xlib.display": display,
+                            "Xlib.error": error, "Xlib.ext": ext,
+                            "Xlib.ext.xtest": xtest})
+        owner = None
+        try:
+            for name in ("input_owner_v12", "input_transition_owner_v3",
+                         "input_transition_owner_v4"):
+                sys.modules.pop(name, None)
+            from input_transition_owner_v4 import InputOwner
+
+            owner = InputOwner(":fake")
+            lease = Lease()
+            owner.call("down", lease, "W")
+            owner.call("down", lease, "A")
+            display_instance.trace.clear()
+            display_instance.drop_keyreleases = 1
+            rows = owner.call("up_batch", lease, ["A", "W"])
+            query_positions = [
+                index for index, event in enumerate(display_instance.trace)
+                if event[0] == "query_keymap"
+            ]
+            self.assertGreaterEqual(len(query_positions), 3)
+            original_ups = [
+                index for index, event in enumerate(display_instance.trace)
+                if query_positions[0] < index < query_positions[1]
+                and event[:2] == ("key_event", xlib.X.KeyRelease)
+            ]
+            self.assertEqual(len(original_ups), 2)
+            self.assertEqual(
+                [display_instance.trace[index][2] for index in original_ups], [39, 38])
+            self.assertEqual(rows[0]["owner_thread_keyup_receipt"]["server_keyup_attempt_count"], 2)
+            self.assertEqual(rows[1]["owner_thread_keyup_receipt"]["server_keyup_attempt_count"], 1)
+            self.assertEqual(len(rows), 2)
+            self.assertTrue(all(row["owner_thread_keyup_verified"] for row in rows))
+            self.assertEqual(display_instance.down, set())
+        finally:
+            if owner is not None:
+                owner.close()
+            for name in ("input_transition_owner_v4", "input_transition_owner_v3",
+                         "input_owner_v12"):
+                sys.modules.pop(name, None)
+            for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
+
+    def test_cancel_during_keyup_sync_is_not_marked_ordinary(self):
+        names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
+                 "Xlib.ext", "Xlib.ext.xtest")
+        saved = {name: sys.modules.get(name) for name in names}
+        display_instance = FakeDisplay()
+        xlib = types.ModuleType("Xlib")
+        xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
+                                       Button1Mask=256, AnyPropertyType=0)
+        xk = types.ModuleType("Xlib.XK")
+        xk.string_to_keysym = lambda key: ord(key)
+        display = types.ModuleType("Xlib.display")
+        display.Display = lambda _name: display_instance
+        error = types.ModuleType("Xlib.error")
+        error.BadWindow = type("BadWindow", (Exception,), {})
+        error.BadDrawable = type("BadDrawable", (Exception,), {})
+        ext = types.ModuleType("Xlib.ext")
+        xtest = types.ModuleType("Xlib.ext.xtest")
+
+        def fake_input(_display, event, code):
+            display_instance.trace.append(("key_event", event, code))
             if event == xlib.X.KeyPress:
                 display_instance.down.add(code)
             elif event == xlib.X.KeyRelease:
@@ -138,7 +221,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
         xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
                                        Button1Mask=256, AnyPropertyType=0)
         xk = types.ModuleType("Xlib.XK")
-        xk.string_to_keysym = lambda _key: 1
+        xk.string_to_keysym = lambda key: ord(key)
         display = types.ModuleType("Xlib.display")
         display.Display = lambda _name: display_instance
         error = types.ModuleType("Xlib.error")
@@ -148,6 +231,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
         xtest = types.ModuleType("Xlib.ext.xtest")
 
         def fake_input(_display, event, code):
+            display_instance.trace.append(("key_event", event, code))
             if event == xlib.X.KeyPress:
                 display_instance.down.add(code)
             elif event == xlib.X.KeyRelease:
@@ -214,6 +298,142 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
                 else:
                     sys.modules[name] = module
 
+    def test_v15_successful_two_key_batch_retries_after_ordered_original_ups(self):
+        from executor_v13 import Executor
+        from lease_release_v1 import Lease as InputLease
+        names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
+                 "Xlib.ext", "Xlib.ext.xtest")
+        saved = {name: sys.modules.get(name) for name in names}
+        display_instance = FakeDisplay()
+        xlib = types.ModuleType("Xlib")
+        xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
+                                       Button1Mask=256, AnyPropertyType=0)
+        xk = types.ModuleType("Xlib.XK")
+        xk.string_to_keysym = lambda key: ord(key)
+        display = types.ModuleType("Xlib.display")
+        display.Display = lambda _name: display_instance
+        error = types.ModuleType("Xlib.error")
+        error.BadWindow = type("BadWindow", (Exception,), {})
+        error.BadDrawable = type("BadDrawable", (Exception,), {})
+        ext = types.ModuleType("Xlib.ext")
+        xtest = types.ModuleType("Xlib.ext.xtest")
+
+        def fake_input(_display, event, code):
+            display_instance.trace.append(("key_event", event, code))
+            if event == xlib.X.KeyPress:
+                display_instance.down.add(code)
+            elif event == xlib.X.KeyRelease:
+                display_instance.keyrelease_attempts += 1
+                if display_instance.drop_keyreleases:
+                    display_instance.drop_keyreleases -= 1
+                else:
+                    display_instance.down.discard(code)
+
+        xtest.fake_input = fake_input
+        ext.xtest = xtest
+        xlib.XK, xlib.display, xlib.error, xlib.ext = xk, display, error, ext
+        sys.modules.update({"Xlib": xlib, "Xlib.X": types.ModuleType("Xlib.X"),
+                            "Xlib.XK": xk, "Xlib.display": display,
+                            "Xlib.error": error, "Xlib.ext": ext,
+                            "Xlib.ext.xtest": xtest})
+        doom = LIVE.parent / "doom"
+        sys.path.insert(0, str(doom))
+        composed_names = ("doom_typed_release_backend_v1",
+                          "doom_typed_release_backend_v2",
+                          "doom_owner_thread_release_batch_backend_v1")
+        saved_composed = {name: sys.modules.get(name) for name in composed_names}
+        owner = None
+        try:
+            for name in ("input_owner_v12", "input_transition_owner_v3",
+                         "input_transition_owner_v4", *composed_names):
+                sys.modules.pop(name, None)
+            from input_transition_owner_v4 import InputOwner
+
+            class FakeBaseBackend:
+                def execute(self, _step, _lease, _identifier, _index):
+                    self.raw("W", True)
+                    self.raw("A", True)
+                    self.raw("A", False)
+                    self.raw("W", False)
+
+                def release_all(self):
+                    return self.owner.call("release", self.lease)
+
+            release_v1 = types.ModuleType("doom_typed_release_backend_v1")
+            release_v1.Backend = FakeBaseBackend
+            release_v1.suite = lambda: None
+            sys.modules["doom_typed_release_backend_v1"] = release_v1
+            from doom_owner_thread_release_batch_backend_v1 import Backend as V15Backend
+
+            owner = InputOwner(":fake")
+            lease = InputLease(__import__("time").perf_counter_ns() + 10_000_000_000)
+            lease.expected_focus = 41
+            lease.focus_invalid = False
+            display_instance.drop_keyreleases = 1
+            backend = object.__new__(V15Backend)
+            backend.owner = owner
+            backend.held = set()
+            backend.lease = lease
+            events = []
+            backend.emit = events.append
+            backend._input_event_context = None
+            backend._release_batch = threading.local()
+            backend._last_release_batch_delivery = None
+            executor = Executor(backend, events.append)
+            executor.active = ("a04-compatible-success", lease, threading.current_thread())
+            executor.release_watch_stops["a04-compatible-success"] = threading.Event()
+            display_instance.trace.clear()
+            executor._run_with_watcher_cleanup(
+                "a04-compatible-success", [{"op": "fake-two-key-release"}], lease)
+
+            terminal = next(row for row in events if row.get("event") == "terminal")
+            batch_rows = [row for row in events
+                          if row.get("release_batch_schema") == "input-release-batch-v3"]
+            receipts = [row for row in owner.records
+                        if row.get("event") == "owner_explicit_keyup"]
+            query_positions = [
+                index for index, event in enumerate(display_instance.trace)
+                if event[0] == "query_keymap"
+            ]
+            initial_ups = [
+                index for index, event in enumerate(display_instance.trace)
+                if len(query_positions) >= 2 and query_positions[0] < index < query_positions[1]
+                and event[:2] == ("key_event", xlib.X.KeyRelease)
+            ]
+            self.assertEqual(terminal["status"], "completed")
+            self.assertTrue(terminal["release"]["verified"])
+            self.assertEqual(terminal["release"]["keys_down"], [])
+            self.assertEqual(len(batch_rows), 2)
+            self.assertTrue(all(row["release_batch_complete"] for row in batch_rows))
+            self.assertTrue(all(row["owner_transition_verified"] for row in batch_rows))
+            self.assertTrue(all(row["owner_thread_keyup_verified"] for row in batch_rows))
+            self.assertEqual([row["key"] for row in receipts], ["A", "W"])
+            self.assertEqual([row["server_keyup_attempt_count"] for row in receipts], [2, 1])
+            self.assertTrue(all(row["server_keyup_verified"] for row in receipts))
+            self.assertEqual(len(initial_ups), 2)
+            self.assertEqual(
+                [display_instance.trace[index][2] for index in initial_ups], [39, 38])
+            self.assertEqual(display_instance.keyrelease_attempts, 3)
+            self.assertEqual(display_instance.down, set())
+        finally:
+            if owner is not None:
+                owner.close()
+            for name in ("input_transition_owner_v4", "input_transition_owner_v3",
+                         "input_owner_v12", *composed_names):
+                sys.modules.pop(name, None)
+            for name, module in saved_composed.items():
+                if module is not None:
+                    sys.modules[name] = module
+            try:
+                sys.path.remove(str(doom))
+            except ValueError:
+                pass
+            for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
+
     def test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts(self):
         from executor_v13 import Executor
         from lease_release_v1 import Lease as InputLease
@@ -225,7 +445,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
         xlib.X = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
                                        Button1Mask=256, AnyPropertyType=0)
         xk = types.ModuleType("Xlib.XK")
-        xk.string_to_keysym = lambda _key: 1
+        xk.string_to_keysym = lambda key: ord(key)
         display = types.ModuleType("Xlib.display")
         display.Display = lambda _name: display_instance
         error = types.ModuleType("Xlib.error")
@@ -235,6 +455,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
         xtest = types.ModuleType("Xlib.ext.xtest")
 
         def fake_input(_display, event, code):
+            display_instance.trace.append(("key_event", event, code))
             if event == xlib.X.KeyPress:
                 display_instance.down.add(code)
             elif event == xlib.X.KeyRelease:
@@ -269,6 +490,8 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             class FakeBaseBackend:
                 def execute(self, _step, _lease, _identifier, _index):
                     self.raw("W", True)
+                    self.raw("A", True)
+                    self.raw("A", False)
                     self.raw("W", False)
 
                 def release_all(self):
@@ -284,7 +507,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             lease = InputLease(__import__("time").perf_counter_ns() + 10_000_000_000)
             lease.expected_focus = 41
             lease.focus_invalid = False
-            display_instance.drop_keyreleases = 6
+            display_instance.drop_keyreleases = 12
             backend = object.__new__(V15Backend)
             backend.owner = owner
             backend.held = set()
@@ -297,33 +520,47 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             executor = Executor(backend, events.append)
             executor.active = ("persistent-loss", lease, threading.current_thread())
             executor.release_watch_stops["persistent-loss"] = threading.Event()
+            display_instance.trace.clear()
             executor._run_with_watcher_cleanup(
                 "persistent-loss", [{"op": "fake-key-up"}], lease)
 
             terminal = next(row for row in events if row.get("event") == "terminal")
-            batch_row = next(row for row in events
-                             if row.get("release_batch_schema") == "input-release-batch-v3")
-            explicit = next(row for row in owner.records
-                            if row.get("event") == "owner_explicit_keyup")
+            batch_rows = [row for row in events
+                          if row.get("release_batch_schema") == "input-release-batch-v3"]
+            explicit = [row for row in owner.records
+                        if row.get("event") == "owner_explicit_keyup"]
             cleanup = next(row for row in owner.records
                            if row.get("event") == "owner_release")
+            initial_ups = [
+                index for index, event in enumerate(display_instance.trace)
+                if event[:2] == ("key_event", xlib.X.KeyRelease)
+            ][:2]
             self.assertEqual(terminal["status"], "failed")
             self.assertFalse(terminal["release"]["verified"])
-            self.assertEqual(terminal["release"]["keys_down"], [38])
+            self.assertEqual(terminal["release"]["keys_down"], [38, 39])
             self.assertEqual(len(terminal["release"]["key_release_attempts"]["38"]["attempts"]), 3)
-            self.assertTrue(batch_row["release_batch_complete"])
-            self.assertFalse(batch_row["owner_transition_verified"])
-            self.assertFalse(batch_row["owner_thread_keyup_verified"])
-            self.assertEqual(batch_row["owner_thread_keyup_receipt"], explicit)
-            self.assertEqual(batch_row["owned_keycodes_after_batch"], [38])
-            self.assertEqual(explicit["server_keyup_attempt_count"], 3)
-            self.assertFalse(explicit["server_keyup_verified"])
+            self.assertEqual(len(terminal["release"]["key_release_attempts"]["39"]["attempts"]), 3)
+            self.assertEqual(len(batch_rows), 2)
+            self.assertTrue(all(row["release_batch_complete"] for row in batch_rows))
+            self.assertTrue(all(row["owner_transition_verified"] is False for row in batch_rows))
+            self.assertTrue(all(row["owner_thread_keyup_verified"] is False for row in batch_rows))
+            self.assertEqual([row["key"] for row in explicit], ["A", "W"])
+            self.assertTrue(all(row["server_keyup_attempt_count"] == 3 for row in explicit))
+            self.assertTrue(all(row["server_keyup_verified"] is False for row in explicit))
+            self.assertTrue(all(row["owner_thread_keyup_receipt"] in explicit for row in batch_rows))
+            self.assertTrue(all(row["owned_keycodes_after_batch"] == [38, 39]
+                                for row in batch_rows))
+            self.assertEqual(len(initial_ups), 2)
+            self.assertFalse(any(
+                event[0] == "query_keymap"
+                for event in display_instance.trace[initial_ups[0] + 1:initial_ups[1]]))
             self.assertEqual(cleanup["key_release_attempts"]["38"]["attempts"][0]["attempt"], 1)
             self.assertEqual(len(cleanup["key_release_attempts"]["38"]["attempts"]), 3)
+            self.assertEqual(len(cleanup["key_release_attempts"]["39"]["attempts"]), 3)
             self.assertFalse(cleanup["verified"])
-            self.assertEqual(cleanup["keys_down"], [38])
-            self.assertEqual(display_instance.keyrelease_attempts, 6)
-            self.assertEqual(display_instance.down, {38})
+            self.assertEqual(cleanup["keys_down"], [38, 39])
+            self.assertEqual(display_instance.keyrelease_attempts, 12)
+            self.assertEqual(display_instance.down, {38, 39})
         finally:
             if owner is not None:
                 owner.close()
