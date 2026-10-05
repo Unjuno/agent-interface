@@ -1,0 +1,105 @@
+{
+  "labels": [
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "self_match1_required",
+      "origin": "SELF",
+      "prediction_relation": "MATCHES_FROZEN_ENVELOPE",
+      "required_pixels": [
+        1
+      ],
+      "task_relevance": "REQUIRED"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "self_match1_irrelevant",
+      "origin": "SELF",
+      "prediction_relation": "MATCHES_FROZEN_ENVELOPE",
+      "required_pixels": [],
+      "task_relevance": "IRRELEVANT"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "self_match0_required",
+      "origin": "SELF",
+      "prediction_relation": "MISMATCH",
+      "required_pixels": [
+        2
+      ],
+      "task_relevance": "REQUIRED"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "self_match0_irrelevant",
+      "origin": "SELF",
+      "prediction_relation": "MISMATCH",
+      "required_pixels": [],
+      "task_relevance": "IRRELEVANT"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "external_match1_required",
+      "origin": "EXTERNAL",
+      "prediction_relation": "MATCHES_FROZEN_ENVELOPE",
+      "required_pixels": [
+        1
+      ],
+      "task_relevance": "REQUIRED"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "external_match1_irrelevant",
+      "origin": "EXTERNAL",
+      "prediction_relation": "MATCHES_FROZEN_ENVELOPE",
+      "required_pixels": [],
+      "task_relevance": "IRRELEVANT"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "external_match0_required",
+      "origin": "EXTERNAL",
+      "prediction_relation": "MISMATCH",
+      "required_pixels": [
+        2
+      ],
+      "task_relevance": "REQUIRED"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "external_match0_irrelevant",
+      "origin": "EXTERNAL",
+      "prediction_relation": "MISMATCH",
+      "required_pixels": [],
+      "task_relevance": "IRRELEVANT"
+    },
+    {
+      "critical_pixels": [
+        1
+      ],
+      "hard_critical": true,
+      "id": "self_match_hard_critical",
+      "origin": "UNATTRIBUTED",
+      "prediction_relation": "MATCHES_FROZEN_ENVELOPE",
+      "required_pixels": [],
+      "task_relevance": "HARD_CRITICAL"
+    },
+    {
+      "critical_pixels": [],
+      "hard_critical": false,
+      "id": "unknown_receipt_and_coverage",
+      "origin": "UNATTRIBUTED",
+      "prediction_relation": "UNDEFINED",
+      "required_pixels": [],
+      "task_relevance": "UNKNOWN"
+    }
+  ],
+  "schema": "action-bound-relevance-scorer-oracle-v1"
+}
