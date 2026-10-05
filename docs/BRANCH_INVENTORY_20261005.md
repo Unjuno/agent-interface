@@ -181,3 +181,15 @@ This is a later, non-atomic read; branch refs, PR search windows, and `main` wer
 - `git ls-remote --heads` returned 395 branch refs with 395 distinct tip SHAs.
 - A join of open pull-request head SHAs to repository branch-tip SHAs matched 331 branch tips. The other 63 non-main branch refs do not match an open PR head tip at this read.
 - The unmatched refs are not deletion candidates by count alone. Closed/merged PR relationships, dependent branches, unique commits/evidence paths, and owner/allocation status remain to be audited. No branch is classified safe to delete.
+
+
+## Audited branch cleanup — 2026-10-05 11:12 UTC
+
+Remote branch `maintenance/inventory-followup-clean-20261005` was deleted after an individual audit:
+
+- Its sole PR, #8145, was closed unmerged and superseded by #8163. No PR used the branch as a base.
+- The four commits unique to that branch relative to current main changed only this inventory document. The full document content is present in this successor PR, with later census updates.
+- After refreshing remote-tracking refs, no other repository branch contained the branch tip. No local worktree used this branch.
+- The branch tip remains reachable from closed PR #8145's head ref `a4fed4179db89c07ca2d89ab7f8ead7e5ca9d20c`; that PR ref was verified after deletion.
+
+The exact branch ref is absent after deletion. The subsequent branch-list read still returned 399 refs, so aggregate counts remain sensitive to concurrent repository updates and were not used as deletion evidence. The separately checked-out `maintenance/inventory-followup-20261005` branch and its local-only commit were retained.
