@@ -1,0 +1,159 @@
+{
+  "base_commit": "60aff39f60defd06f9b4cabd0941e54d17c570df",
+  "files": {
+    "PROTOCOL.md": "f5a6da532111bf7a4888f86a2e1ae1d5f5c5f6b934076554ea236515a5fe353e",
+    "audit.py": "296794a5a918a980c61ac2287d6b94a2078468aaa6dd1345d89b2c7d713753aa",
+    "candidate.py": "e9adc2774c86d3320bfe8e15137b22b282a28dfabcfbc356eedd35d6558eddef",
+    "prepare.py": "a5c6dfd6712170ba152c01c0f98aa4b792ad72e56c687f36686caaf6c5ae8cda",
+    "report.py": "73850d27a4e9c1f216c31306cf92a070cc61da26f349ac0008436ee332ba26e8",
+    "run_formal.py": "3736d64195ea3c1c4ccc1aa1c4812a75863102c65a137c77ab095c4121d6b9ca",
+    "sealed_truth.json": "d67f404eb50d2ea54936e4dcb08b699c5cde0357a97cdda068b0f115a12f4a18",
+    "simulator.py": "5ac5dbeaa64ae45ba388cb6dfaea726dcc8f9a587f98749b708e3579773afdf9",
+    "spec.py": "0a27c93fe86b29ba782004a5a149af50ba9e10d3e929fb3035ccc1ceef9dd83c",
+    "test_construction.py": "f9499d5f9809d85370c69ed5b9a3636ad985a0832134ef0f2fd1c35b1a73b06e"
+  },
+  "image": "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+  "schema": "unjuno.issue8152.freeze.v1",
+  "spec": {
+    "base_trace": [
+      "reset",
+      "lease",
+      "observation",
+      "commit",
+      "timing_guard",
+      "warmup",
+      "telemetry",
+      "poll_a",
+      "poll_b",
+      "repaint",
+      "context_note",
+      "competing_fault",
+      "release"
+    ],
+    "baseline_repetitions": 64,
+    "cold_target_rates_by_stratum": [
+      0.57,
+      0.49,
+      0.41,
+      0.33
+    ],
+    "competing_failure_rate": 0.08,
+    "competing_fingerprint": "COMPETING_WIDGET_CRASH",
+    "confirmation_repetitions_per_stratum": 512,
+    "confirmation_seed_start": 10000000,
+    "dependencies": {
+      "commit": [
+        "observation"
+      ],
+      "competing_fault": [
+        "lease"
+      ],
+      "context_note": [
+        "reset"
+      ],
+      "lease": [
+        "reset"
+      ],
+      "observation": [
+        "lease"
+      ],
+      "poll_a": [
+        "reset"
+      ],
+      "poll_b": [
+        "reset"
+      ],
+      "release": [
+        "lease"
+      ],
+      "repaint": [
+        "reset"
+      ],
+      "telemetry": [
+        "reset"
+      ],
+      "timing_guard": [
+        "commit"
+      ],
+      "warmup": [
+        "reset"
+      ]
+    },
+    "familywise_alpha": 0.05,
+    "fixed_repetitions_per_candidate": 64,
+    "instances": 12,
+    "mandatory_events": [
+      "reset",
+      "lease",
+      "release"
+    ],
+    "noninferiority_margin": 0.2,
+    "removal_groups": [
+      [
+        "telemetry",
+        [
+          "telemetry"
+        ]
+      ],
+      [
+        "poll_pair",
+        [
+          "poll_a",
+          "poll_b"
+        ]
+      ],
+      [
+        "repaint",
+        [
+          "repaint"
+        ]
+      ],
+      [
+        "context_note",
+        [
+          "context_note"
+        ]
+      ],
+      [
+        "competing_fault",
+        [
+          "competing_fault"
+        ]
+      ],
+      [
+        "warmup",
+        [
+          "warmup"
+        ]
+      ],
+      [
+        "commit_bundle",
+        [
+          "commit",
+          "timing_guard"
+        ]
+      ],
+      [
+        "observation_bundle",
+        [
+          "observation",
+          "commit",
+          "timing_guard"
+        ]
+      ]
+    ],
+    "same_exit_code": 17,
+    "schema": "unjuno.issue8152.stochastic-trace-t0.v1",
+    "search_seed_start": 100000,
+    "sequential_increment": 8,
+    "sequential_maximum": 64,
+    "sequential_minimum": 8,
+    "target_fingerprint": "TARGET_STALE_GUARD",
+    "warm_target_rates_by_stratum": [
+      0.94,
+      0.86,
+      0.78,
+      0.7
+    ]
+  }
+}

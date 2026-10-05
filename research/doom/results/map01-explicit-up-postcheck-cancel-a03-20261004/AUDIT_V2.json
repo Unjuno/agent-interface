@@ -1,0 +1,13 @@
+{
+  "audit_version": "v2 raw-only, written after frozen audit.py result retained",
+  "hypothesis_gate": "REPRODUCED",
+  "overall_candidate_run": "STOP_AFTER_TARGET_OBSERVATION",
+  "errors": [],
+  "negative_controls_rejected": {
+    "cancel_after_side_effect": true,
+    "ordinary_not_credited": true,
+    "receipt_unverified": true,
+    "cleanup_not_verified": true
+  },
+  "interpretation": "The wrapper labels the up ordinary from caller request-time cancellation=false while the queued owner KeyRelease occurs after cancellation is set. The later fake cleanup verifies empty keymap. Candidate then stops in fake input_state because FakeRoot omits root_x; no application or physical effect claim."
+}
