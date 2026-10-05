@@ -111,11 +111,26 @@ class ReleaseLedgerTests(unittest.TestCase):
         self.assertEqual(len(obj.user32.sends), 4)
 
     def test_query_exception_preserves_precheck_ledger(self):
-        obj = self.make_backend({"Q": 81}, {"left"}, down=(81, 1), query_failure=1)
+        # The best-effort per-key pre-sample is query 1; fail the strict
+        # post-UP neutral-state read on query 2.
+        obj = self.make_backend({"Q": 81}, {"left"}, down=(81, 1), query_failure=2)
         with self.assertRaisesRegex(RuntimeError, "query unavailable"):
             self.row(obj, obj.release_all)
         self.assertEqual(obj.held_keys, {"Q": 81})
         self.assertEqual(obj.held_buttons, {"left"})
+
+    def test_per_key_pre_sample_failure_does_not_block_safety_up(self):
+        obj = self.make_backend({"Q": 81}, down=(81,), query_failure=1)
+        obj._retained_key_holds = {"Q": "hold-q"}
+        receipt = self.row(obj, obj.release_all)
+        self.assertTrue(receipt["verified"])
+        self.assertEqual(obj.user32.down, set())
+        transition = obj.last_input_transitions[-1]
+        self.assertEqual(transition["operation"], "up")
+        self.assertEqual(transition["os_key_state_classification"],
+                         "OS_KEY_STATE_UNAVAILABLE")
+        self.assertFalse(transition["state_before"]["available"])
+        self.assertFalse(transition["state_after"]["down"])
 
     def test_send_exception_preserves_precheck_ledger(self):
         obj = self.make_backend({"Q": 81, "R": 82}, {"left"},

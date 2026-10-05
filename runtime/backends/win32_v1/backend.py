@@ -9,6 +9,7 @@ import ctypes
 import hashlib
 import sys
 import time
+import uuid
 from ctypes import wintypes
 from typing import Any
 
@@ -159,6 +160,14 @@ class Win32Backend:
             if not self.user32.IsWindow(hwnd):
                 raise Win32BackendError(f"invalid HWND for target {name}")
         self.held_keys: dict[str, int] = {}
+        self._active_key_holds: dict[str, str] = {}
+        self._retained_key_holds: dict[str, str] = {}
+        self._hold_sequence = 0
+        self._backend_instance_id = uuid.uuid4().hex
+        self._current_input_transitions: list[dict[str, Any]] | None = None
+        self._current_program_id: str | None = None
+        self._current_operation_index: int | None = None
+        self.last_input_transitions: list[dict[str, Any]] = []
         self.held_buttons: set[str] = set()
         self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
@@ -271,6 +280,102 @@ class Win32Backend:
         item.ki = KEYBDINPUT(vk, 0, 0 if down else KEYEVENTF_KEYUP, 0, 0)
         self._send(item)
 
+    def _sample_key_state(self, vk: int, *, strict: bool = False) -> dict[str, Any]:
+        started_ns = time.monotonic_ns()
+        if strict:
+            value = self.user32.GetAsyncKeyState(vk)
+        else:
+            try:
+                value = self.user32.GetAsyncKeyState(vk)
+            except Exception as error:
+                finished_ns = time.monotonic_ns()
+                return {
+                    "available": False,
+                    "started_ns": started_ns,
+                    "finished_ns": finished_ns,
+                    "error_type": type(error).__name__,
+                }
+        finished_ns = time.monotonic_ns()
+        return {
+            "available": True,
+            "down": bool(value & 0x8000),
+            "started_ns": started_ns,
+            "finished_ns": finished_ns,
+        }
+
+    def _new_key_hold_id(self) -> str:
+        self._hold_sequence = getattr(self, "_hold_sequence", 0) + 1
+        instance_id = getattr(self, "_backend_instance_id", "unbound")
+        return f"{instance_id}:key-hold:{self._hold_sequence}"
+
+    @staticmethod
+    def _classify_key_transition(
+        down: bool, before: dict[str, Any], after: dict[str, Any], hold_id: str | None
+    ) -> str:
+        if hold_id is None:
+            return "NO_OWNED_HOLD"
+        if before.get("available") is not True or after.get("available") is not True:
+            return "OS_KEY_STATE_UNAVAILABLE"
+        if down:
+            if before["down"] is False and after["down"] is True:
+                return "OS_KEY_STATE_DOWN_CONFIRMED"
+            if before["down"] is True:
+                return "OS_KEY_STATE_ALREADY_DOWN"
+            return "OS_KEY_STATE_DOWN_UNCONFIRMED"
+        if before["down"] is True and after["down"] is False:
+            return "OS_KEY_STATE_UP_CONFIRMED"
+        if before["down"] is False:
+            return "OS_KEY_STATE_ALREADY_UP"
+        return "OS_KEY_STATE_UP_UNCONFIRMED"
+
+    @staticmethod
+    def _os_state_change_window(
+        before: dict[str, Any], after: dict[str, Any]
+    ) -> list[int] | None:
+        if (before.get("available") is True and after.get("available") is True
+                and before["down"] != after["down"]):
+            return [before["started_ns"], after["finished_ns"]]
+        return None
+
+    def _emit_key_transition(
+        self, key: str, vk: int, down: bool, hold_id: str | None, *,
+        cleanup: bool = False,
+    ) -> dict[str, Any]:
+        before = self._sample_key_state(vk)
+        requested_ns = time.monotonic_ns()
+        self._send_key(vk, down)
+        acknowledged_ns = time.monotonic_ns()
+        after = self._sample_key_state(vk)
+        transition = {
+            "event": "input_transition_receipt",
+            "schema": "win32-key-transition-v1",
+            "backend_instance_id": getattr(self, "_backend_instance_id", "unbound"),
+            "program_id": getattr(self, "_current_program_id", None),
+            "operation_index": getattr(self, "_current_operation_index", None),
+            "hold_id": hold_id,
+            "key": key,
+            "operation": "down" if down else "up",
+            "cleanup": cleanup,
+            "requested_ns": requested_ns,
+            "sendinput_acknowledged_ns": acknowledged_ns,
+            "state_before": before,
+            "state_after": after,
+            "os_state_change_window_ns": self._os_state_change_window(before, after),
+            "os_key_state_classification": self._classify_key_transition(
+                down, before, after, hold_id
+            ),
+            "physical_keyboard_state_proven": False,
+            "application_delivery_proven": False,
+        }
+        rows = getattr(self, "_current_input_transitions", None)
+        if rows is None:
+            if not hasattr(self, "last_input_transitions"):
+                self.last_input_transitions = []
+            self.last_input_transitions.append(transition)
+        else:
+            rows.append(transition)
+        return transition
+
     def _send_unicode_unit(self, unit: int, down: bool) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
         flags = KEYEVENTF_UNICODE | (0 if down else KEYEVENTF_KEYUP)
@@ -279,9 +384,28 @@ class Win32Backend:
 
     def key_state(self, key: str, down: bool) -> None:
         vk = virtual_key(key)
-        self._send_key(vk, down)
+        if not isinstance(getattr(self, "_active_key_holds", None), dict):
+            self._active_key_holds = {}
+        if not isinstance(getattr(self, "_retained_key_holds", None), dict):
+            self._retained_key_holds = {}
         if down:
+            hold_id = getattr(self, "_active_key_holds", {}).get(key)
+            if hold_id is None:
+                hold_id = self._new_key_hold_id()
+            self._emit_key_transition(key, vk, True, hold_id)
+            self._active_key_holds[key] = hold_id
+            self._retained_key_holds[key] = hold_id
             self.held_keys[key] = vk
+        else:
+            hold_id = (getattr(self, "_active_key_holds", {}).get(key)
+                       or getattr(self, "_retained_key_holds", {}).get(key))
+            if hold_id is None:
+                # Preserve the existing rule: an UP for an unowned key is sent
+                # without querying or claiming any unrelated physical state.
+                self._send_key(vk, False)
+                return
+            self._emit_key_transition(key, vk, False, hold_id)
+            getattr(self, "_active_key_holds", {}).pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:
@@ -439,16 +563,59 @@ class Win32Backend:
                 self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
-        for vk in list(self.held_keys.values()):
+        pending_key_transitions: list[tuple[str, int, str | None, dict[str, Any]]] = []
+        for name, vk in list(self.held_keys.items()):
+            hold_id = (getattr(self, "_active_key_holds", {}).get(name)
+                       or getattr(self, "_retained_key_holds", {}).get(name))
+            # Measurement failure must not prevent the safety UP from being sent.
+            before = self._sample_key_state(vk)
+            requested_ns = time.monotonic_ns()
             self._send_key(vk, False)
+            acknowledged_ns = time.monotonic_ns()
+            rows = getattr(self, "_current_input_transitions", None)
+            transition = {
+                "event": "input_transition_receipt",
+                "schema": "win32-key-transition-v1",
+                "backend_instance_id": getattr(self, "_backend_instance_id", "unbound"),
+                "program_id": getattr(self, "_current_program_id", None),
+                "operation_index": getattr(self, "_current_operation_index", None),
+                "hold_id": hold_id,
+                "key": name,
+                "operation": "up",
+                "cleanup": True,
+                "requested_ns": requested_ns,
+                "sendinput_acknowledged_ns": acknowledged_ns,
+                "state_before": before,
+                "state_after": None,
+                "os_state_change_window_ns": None,
+                "os_key_state_classification": "OS_KEY_STATE_POST_SAMPLE_PENDING",
+                "physical_keyboard_state_proven": False,
+                "application_delivery_proven": False,
+            }
+            if rows is None:
+                if not hasattr(self, "last_input_transitions"):
+                    self.last_input_transitions = []
+                rows = self.last_input_transitions
+            rows.append(transition)
+            pending_key_transitions.append((name, vk, hold_id, transition))
         for button in list(self.held_buttons):
             _, up_flag, _ = BUTTON_FLAGS[button]
             item = INPUT(type=INPUT_MOUSE)
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
         time.sleep(0.01)
-        keys = sorted(name for name, vk in tracked_keys.items()
-                      if self.user32.GetAsyncKeyState(vk) & 0x8000)
+        key_samples = {name: self._sample_key_state(vk, strict=True)
+                       for name, vk in tracked_keys.items()}
+        keys = sorted(name for name, sample in key_samples.items() if sample["down"])
+        for name, _vk, hold_id, row in pending_key_transitions:
+            sample = key_samples[name]
+            row["state_after"] = sample
+            row["os_state_change_window_ns"] = self._os_state_change_window(
+                row["state_before"], sample
+            )
+            row["os_key_state_classification"] = self._classify_key_transition(
+                False, row["state_before"], sample, hold_id
+            )
         buttons = sorted(button for button in tracked_buttons
                          if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
         if unicode_error is not None:
@@ -458,6 +625,8 @@ class Win32Backend:
         for name in tracked_keys:
             if name not in keys:
                 self.held_keys.pop(name, None)
+                getattr(self, "_retained_key_holds", {}).pop(name, None)
+                getattr(self, "_active_key_holds", {}).pop(name, None)
         self.held_buttons.difference_update(tracked_buttons - set(buttons))
         return {"keys_down": keys, "buttons_down": buttons,
                 "verified": not keys and not buttons,
@@ -468,9 +637,13 @@ class Win32Backend:
         current_target: str | None = None
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
+        self._current_input_transitions = []
+        self.last_input_transitions = []
+        self._current_program_id = program.get("program_id")
         started = time.monotonic_ns()
         try:
-            for op in program["ops"]:
+            for operation_index, op in enumerate(program["ops"]):
+                self._current_operation_index = operation_index
                 kind = op["op"]
                 if kind == "focus":
                     current_target = op["target"]
@@ -506,7 +679,17 @@ class Win32Backend:
                     raise Win32BackendError(f"unsupported op {kind}")
         except Exception:
             releases.append(self.release_all())
+            self.last_input_transitions = list(self._current_input_transitions)
+            self._current_input_transitions = None
+            self._current_program_id = None
+            self._current_operation_index = None
             raise
-        return {"started_ns": started, "ended_ns": time.monotonic_ns(),
+        ended_ns = time.monotonic_ns()
+        self.last_input_transitions = list(self._current_input_transitions)
+        self._current_input_transitions = None
+        self._current_program_id = None
+        self._current_operation_index = None
+        return {"started_ns": started, "ended_ns": ended_ns,
                 "emissions": self.emissions, "observations": observations,
-                "releases": releases}
+                "releases": releases,
+                "input_transitions": self.last_input_transitions}

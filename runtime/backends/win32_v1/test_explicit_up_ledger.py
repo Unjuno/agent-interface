@@ -108,8 +108,53 @@ class ExplicitUpLedgerTests(unittest.TestCase):
                     self.assertEqual(release['buttons_down'], [button] if button else [])
 
     def test_key_pair_terminal_rejects_reported_down_input(self):
-        self.family('key_pair', [{'op': 'key_state', 'key': 'Q', 'down': True},
-                                 {'op': 'key_state', 'key': 'Q', 'down': False}], 81, key='Q')
+        ops = [{'op': 'key_state', 'key': 'Q', 'down': True},
+               {'op': 'key_state', 'key': 'Q', 'down': False}]
+        self.family('key_pair', ops, 81, key='Q')
+        obj = self.backend()
+        reply = self.dispatch(obj, 'key_pair_measurement', ops)
+        transitions = reply['execution']['input_transitions']
+        ordinary = [row for row in transitions if not row['cleanup']]
+        self.assertEqual([(row['operation'], row['key']) for row in ordinary],
+                         [('down', 'Q'), ('up', 'Q')])
+        self.assertEqual([row['program_id'] for row in ordinary],
+                         ['key_pair_measurement', 'key_pair_measurement'])
+        self.assertEqual([row['operation_index'] for row in ordinary], [0, 1])
+        self.assertEqual(ordinary[0]['hold_id'], ordinary[1]['hold_id'])
+        self.assertEqual(ordinary[0]['os_key_state_classification'],
+                         'OS_KEY_STATE_DOWN_CONFIRMED')
+        self.assertEqual(ordinary[1]['os_key_state_classification'],
+                         'OS_KEY_STATE_UP_CONFIRMED')
+        self.assertEqual(ordinary[0]['os_state_change_window_ns'], [123456, 123456])
+        self.assertEqual(ordinary[1]['os_state_change_window_ns'], [123456, 123456])
+        self.assertLessEqual(ordinary[0]['requested_ns'],
+                             ordinary[0]['sendinput_acknowledged_ns'])
+        self.assertLessEqual(ordinary[1]['requested_ns'],
+                             ordinary[1]['sendinput_acknowledged_ns'])
+        self.assertFalse(ordinary[1]['physical_keyboard_state_proven'])
+        self.assertFalse(ordinary[1]['application_delivery_proven'])
+
+    def test_stubborn_key_preserves_unconfirmed_per_key_up_receipt(self):
+        obj = self.backend(stubborn=True)
+        reply = self.dispatch(obj, 'stubborn_key', [
+            {'op': 'key_state', 'key': 'Q', 'down': True},
+            {'op': 'key_state', 'key': 'Q', 'down': False},
+        ])
+        self.assertEqual(reply['status'], 'release_unverified')
+        ordinary = [row for row in reply['execution']['input_transitions']
+                    if not row['cleanup']]
+        self.assertEqual(len(ordinary), 2)
+        self.assertEqual(ordinary[1]['hold_id'], ordinary[0]['hold_id'])
+        self.assertEqual(ordinary[1]['os_key_state_classification'],
+                         'OS_KEY_STATE_UP_UNCONFIRMED')
+        self.assertTrue(ordinary[1]['state_after']['down'])
+
+    def test_key_state_query_failure_is_recorded_without_blocking_send(self):
+        obj = self.backend(query_error=True)
+        obj.key_state('Q', True)
+        self.assertEqual(obj.user32.down, {81})
+        self.assertEqual(obj.last_input_transitions[0]['os_key_state_classification'],
+                         'OS_KEY_STATE_UNAVAILABLE')
 
     def test_button_pair_terminal_rejects_reported_down_input(self):
         self.family('button_pair', [{'op': 'pointer_button', 'button': 'left', 'down': True},

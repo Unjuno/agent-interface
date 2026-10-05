@@ -53,6 +53,9 @@ class Win32RuntimeSession:
                 "error": "BACKEND_EXECUTION",
                 "detail": str(error),
                 "backend_emissions": self.backend.emissions,
+                "input_transitions": list(
+                    getattr(self.backend, "last_input_transitions", ())
+                ),
             }
         releases = result.get("releases", [])
         verified = bool(releases) and all(row.get("verified") for row in releases)
