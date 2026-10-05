@@ -9,11 +9,12 @@ from input_transition_owner_v4 import InputOwner
 
 class Backend(Previous):
     """Opt-in release composition; controller and default backend are unchanged."""
+    InputOwner = InputOwner
 
     def __init__(self, session, out, emit, signal_readers):
         super().__init__(session, out, emit, signal_readers)
         self.owner.close()
-        self.owner = InputOwner(session.name)
+        self.owner = self.InputOwner(session.name)
         self._release_batch = threading.local()
         self._last_release_batch_delivery = None
 
@@ -353,3 +354,4 @@ class Backend(Previous):
                 context["publication_error_type"] = type(exc).__name__
                 raise
             self._set_delivery_state(context, row, "confirmed")
+
