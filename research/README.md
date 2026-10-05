@@ -152,6 +152,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 ### Live control and integration
 
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
+- [#59/#7504 per-key cancellation release bounds](live_control/cancel_batch_key_release_xvfb_7504/PORT_VALIDATION.md) — current-main V13 port and isolated fake-Xlib regression; original three STOPs and one nonformal Xvfb smoke remain preserved, with no physical/application claim.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
 - [Tk first-character #5260 construction record](integration/tk_firstchar_5260_a01_20261002/PREREG.md) — construction-only Docker/Xvfb runner/auditor checks; proposed 96-trial allocation remains HOLD_NOT_AUTHORIZED.
