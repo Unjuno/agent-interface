@@ -55,6 +55,11 @@ python -B research/doom/v15_scorer_tick_guard_a01_20261005/audit.py
 git diff --check
 ```
 
+The exact normal and optimized unittest outputs are retained as
+`tests-normal.log` and `tests-optimized.log`; `RESULT.json` records their
+SHA-256 digests, and `audit.py` verifies both logs alongside the candidate
+source/test hashes.
+
 ## Contract correction
 
 The first follow-up revision overconstrained kill/death values to exact Python
