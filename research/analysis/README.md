@@ -424,6 +424,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conformal_verifier_risk_contract_5315_v1/`](conformal_verifier_risk_contract_5315_v1/)
 - [`confusion_adaptive_practice_8084_t0_a01_20261005/`](confusion_adaptive_practice_8084_t0_a01_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a02_20261005/`](confusion_adaptive_practice_8084_t0_a02_20261005/)
+- [`confusion_adaptive_practice_8084_t0_a03_20261005/`](confusion_adaptive_practice_8084_t0_a03_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
