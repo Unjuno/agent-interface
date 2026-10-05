@@ -1,0 +1,26 @@
+{
+  "run_id": "EXPLICIT-UP-POSTCHECK-CANCEL-A01-20261004",
+  "source_merge_tree": "71b723028a2db51a7f14a6db653d7f3789fa988b",
+  "source_pr7449_head": "a6da76741c91d8cfa0f035445c1fd6b8b864560e",
+  "source_pr7441_head": "5bd1cf7e38e1716e92ab76253d50b48a2385b7f4",
+  "main_base": "0db425b379f9438bf6b13c95dce1b763750b06d5",
+  "runtime": "macOS 27.0.1 / Python 3.14.5 host; deterministic fake Xlib",
+  "candidate_invocations": 1,
+  "retry": false,
+  "candidate_command": "python3 candidate.py",
+  "audit_command": "python3 audit.py",
+  "files": {
+    "candidate.py": "908b84560a7aaef9c89c2611b8a7c1b4d220da90324142804aafe4a2d1151adb",
+    "audit.py": "8a0147da6474d9e6ec1dfb953e8357e16c7b0b09cfe995095a242e40f4df1576",
+    "PLAN.md": "21541aa1a88433400f9c6ceac682ac5c4aafacb8c0877b1d569a52cc5ef27aba",
+    "ENVIRONMENT.json": "049f65bcd3f2083a83449763faa31c6adbe923219f7c4d7ad1d40fb5506e16b7",
+    "README.md": "4581bc2e63f8999c921f564c5a02e4caf38e1dcacee219fdeecd545d4b9216c3",
+    "RUN_COMMANDS.md": "8dad328965003b0b22774111ce03f458ba49a8af2fa4bf2b40d9aca70c0529cb",
+    "source_snapshot/research/live_control/input_owner_v12.py": "0d3240f17fb6a1950dd1f327984d4d210fed6faa1e40517664187801820d470e",
+    "source_snapshot/research/live_control/input_transition_owner_v4.py": "af8f43321cc165cda6df1bdcff56cda356fd75fca0bc64aebd43aa17d89726e4",
+    "source_snapshot/research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "source_snapshot/research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "source_snapshot/research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+  },
+  "decision_rule": "See PLAN.md; classify REPRODUCED only when cancellation precedes fake KeyRelease after owner false poll while v4 marks a verified ordinary candidate."
+}
