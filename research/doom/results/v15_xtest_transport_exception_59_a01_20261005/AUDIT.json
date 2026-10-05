@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "name": "source:research/live_control/executor_v3.py",
+      "pass": true
+    },
+    {
+      "name": "source:research/live_control/input_owner_v12.py",
+      "pass": true
+    },
+    {
+      "name": "source:research/live_control/lease.py",
+      "pass": true
+    },
+    {
+      "name": "two fault cases",
+      "pass": true
+    },
+    {
+      "name": "send: raised injected OSError",
+      "pass": true
+    },
+    {
+      "name": "send: only first ordered UP attempted",
+      "pass": true
+    },
+    {
+      "name": "send: no explicit receipt before cleanup",
+      "pass": true
+    },
+    {
+      "name": "send: separate cleanup succeeded",
+      "pass": true
+    },
+    {
+      "name": "send: owner thread not marked failed",
+      "pass": true
+    },
+    {
+      "name": "sync: raised injected OSError",
+      "pass": true
+    },
+    {
+      "name": "sync: only first ordered UP attempted",
+      "pass": true
+    },
+    {
+      "name": "sync: no explicit receipt before cleanup",
+      "pass": true
+    },
+    {
+      "name": "sync: separate cleanup succeeded",
+      "pass": true
+    },
+    {
+      "name": "sync: owner thread not marked failed",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "schema": "v15-xtest-transport-audit-v1"
+}
