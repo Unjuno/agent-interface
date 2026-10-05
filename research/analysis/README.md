@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #5905 A05 all-frame regression-TTC screen](looming_yield_5905_image_only_t0_2_a05_20261005/REPORT.md) — unregistered host-only exploratory result; independent raw audit 13/13, 18/18 local tests. OLS TTC improved over secant (6/6 vs 5/6) but not pixel/area baselines (both 6/6): `EXPLORATORY_NO_INCREMENTAL_VALUE`. OrbStack nested-OCI preflight STOP; no formal/container or live-control claim.
+
 - [Issue #5905 A04 exploratory cue screen](looming_yield_5905_image_only_t0_2_a04_20261005/README.md) — unregistered host-side pilot: simple pixel/area frontiers reached 6/6 while secant-TTC reached 2/6 at zero false YIELD on six distinguishable controls; no formal result or independent audit.
 - [Issue #5905 image-only cue A02](looming_yield_5905_image_only_t0_2_a02_20261005/README.md) — `STOP_MAIN_ADVANCED_AFTER_FREEZE`; candidate/auditor 0/0, with an additional preregistration comparator-gate/identifiability flaw preserved.
 - [Issue #5905 image-only cue A03](looming_yield_5905_image_only_t0_2_a03_20261005/README.md) — `STOP_CONSTRUCTION_GATE_REJECTS_ALL_RASTER_CIRCLES`; raster circularity gate rejects every authored disk, and the proposed auditor reuses candidate code; formal candidate/auditor 0/0.
@@ -591,6 +593,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
 - [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
+- [`looming_yield_5905_image_only_t0_2_a05_20261005/`](looming_yield_5905_image_only_t0_2_a05_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
