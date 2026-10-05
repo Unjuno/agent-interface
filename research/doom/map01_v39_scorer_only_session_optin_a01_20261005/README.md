@@ -4,7 +4,7 @@
 
 **H:** The current V39 runner can opt into the existing V15 measurement session, retaining V12 as its default, so a later authorized current-main exposure can record per-key release telemetry and scorer-only kill/death/terminal events without publishing scorer state into controller events.
 
-**T:** Against base main `54af15a28d7d6d10d05221014ddf7a75d73b3e49`, add an explicit `--measurement-session` selector and verify that it changes only the child session path and records the selected mode. Re-run the existing V39 selection, V15 lifecycle/source-composition, and scorer-file/event contract tests. Freeze exact source hashes in `FREEZE.json`.
+**T:** Against base main `abfd01b729886f9a152bbf7246708aebf6ab328f`, add an explicit `--measurement-session` selector and verify that it changes only the child session path and records the selected mode. Re-run the existing V39 selection, V15 lifecycle/source-composition, and scorer-file/event contract tests. Freeze exact source hashes in `FREEZE.json`.
 
 **D:** PASS_SOURCE_SELECTION_ONLY iff the flag-off path remains `session_map01_v12.py`, flag-on selects `session_map01_v15.py` with identical remaining CLI arguments, V15/source tests pass, and scorer-only output stays controller-invisible.
 
@@ -23,3 +23,6 @@
 `python -B -m py_compile research/doom/map01_overlap_controller_v39.py research/doom/test_map01_overlap_controller_v39.py` and `git diff --check` passed.
 
 The targeted checks satisfy the source-selection gate. The anonymous-pipe test did not pass on this Windows host (`select.select` raised `WinError 10038`); it is recorded as unverified rather than counted as a regression pass.
+## Later #59 custody result
+
+The current base also records an exact PR #7829 fake-Xlib reproduction across cancel/expiry and a non-cancelled `DecisionRequired` barrier: a mutable partial `owner_release` record is consumed before it becomes verified-empty, so its already-emitted per-key receipt remains `PHYSICAL_SAMPLE_UNAVAILABLE`. That source pair is not identical to this V39/V15 composition; the failure is not attributed to this wrapper. The V15 path has not been validated against that schedule, so per-key release custody and live behavior remain unproven. See `research/doom/map01_v39_expiry_barrier_record_custody_a02_20261005/`.
