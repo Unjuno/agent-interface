@@ -388,6 +388,35 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     return planner_interrupt, terminal
 
 
+def cancel_invalidated_cover_before_plan(process, wait, cover_id):
+    """Cancel an invalidated initial cover and require release before retrying."""
+    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+    process.stdin.flush()
+    requested = wait(lambda row: row.get("event") == "cancel_requested" and
+                     row.get("id") == cover_id)
+    released = wait(lambda row: row.get("event") in
+                    ("input_released", "input_release_unverified") and
+                    row.get("id") == cover_id)
+    terminal = wait(lambda row: row.get("event") == "terminal" and
+                    row.get("id") == cover_id)
+    owner_release = released.get("owner_release", {})
+    terminal_release = terminal.get("release", {})
+    if (requested.get("matched") is not True or
+            released.get("event") != "input_released" or
+            released.get("program_terminal_pending") is not True or
+            released.get("grants_input_authority") is not False or
+            owner_release.get("verified") is not True or
+            owner_release.get("keys_down") != [] or
+            owner_release.get("buttons_down") != [] or
+            terminal.get("status") != "cancelled" or
+            terminal_release.get("verified") is not True or
+            terminal_release.get("keys_down") != [] or
+            terminal_release.get("buttons_down") != []):
+        raise RuntimeError("invalidated initial cover did not verify empty release")
+    return {"cancel_requested": requested, "input_released": released,
+            "terminal": terminal}
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -819,6 +848,10 @@ def main():
                 cover_policy_source_iteration)
             failure_cleanup.set_stage("cover_program_compile")
             cover_steps=compile_cover(cover_semantic)
+            prior_receipts=[] if not decisions else decisions[-1].get("effect_receipts",[])
+            effect_memory=[row["action"] for row in prior_receipts
+                           if row["result"]=="no_visible_effect"]
+            prior_soft_event_summary=latest_soft_event_summary(decisions)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             def submit_cover(identifier):
                 nonlocal clock_ns
@@ -827,11 +860,58 @@ def main():
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
                 process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"))
+                              (r.get("id")==identifier or r["event"]=="rejected"),
+                              observation_monitor=validity_monitor)
+                if accepted["event"] == "policy_invalidation":
+                    return accepted
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 cover_ids.append(identifier);return accepted
             failure_cleanup.set_stage("cover_program_admission")
-            submit_cover(cover)
+            initial_cover_admission = submit_cover(cover)
+            if initial_cover_admission["event"] == "policy_invalidation":
+                invalidation = initial_cover_admission["invalidation"]
+                cancellation = cancel_invalidated_cover_before_plan(
+                    process, wait, cover)
+                cover_terminals.append(cancellation["terminal"])
+                decisions.append({
+                    "iteration": index,
+                    "source_image": str(latest["image"]),
+                    "model_image": None,
+                    "model_image_sha256": None,
+                    "action": {"state": "not_started"},
+                    "effect_memory": effect_memory,
+                    "usage": None,
+                    "model_ns": 0,
+                    "prior_soft_event_summary": prior_soft_event_summary,
+                    "model_session_id": model_session_id,
+                    "planner_turn_id": None,
+                    "planner_turn_status": "not_started",
+                    "planner_answer_eligible": False,
+                    "planner_terminal_observed_ns": None,
+                    "final_action_admission": {
+                        "status": "not_started",
+                        "reason": "cover_invalidated_before_planner"},
+                    "initial_cover_submission_id": cover,
+                    "initial_cover_admission_result": initial_cover_admission,
+                    "planner_cancellation_requested": False,
+                    "planner_interrupt": None,
+                    "controller_model_started_ns": None,
+                    "controller_model_ended_ns": None,
+                    "cover_program_ids": cover_ids,
+                    "cover_renewals": 0,
+                    "cover_renewal_gaps_ms": cover_renewal_gaps_ms,
+                    "cover_policy": cover_semantic,
+                    "cover_policy_source_iteration": cover_policy_source_iteration,
+                    "cover_validity_admission": validity_admission,
+                    "cover_validity_soft_events": validity_monitor.soft_event_count,
+                    "cover_validity_latest_soft_event": validity_monitor.latest_soft_event,
+                    "policy_invalidation": invalidation,
+                    "cover_admission_cancellation": cancellation,
+                    "model_action_discarded": False,
+                    "discard_reason": "planner_not_started_cover_invalidated",
+                    "cover_terminal_before_plan": True,
+                    "plan_terminal": "not_started"})
+                continue
             failure_cleanup.set_stage("decision_artifact_prepare")
             model_root=args.out/f"decision-{index}"
             model_root.mkdir()
@@ -846,10 +926,6 @@ def main():
             source_image=Path(action_source_observation["image"])
             invalidation_monitor=validity_monitor
             invalidation=None
-            prior_receipts=[] if not decisions else decisions[-1].get("effect_receipts",[])
-            effect_memory=[row["action"] for row in prior_receipts
-                           if row["result"]=="no_visible_effect"]
-            prior_soft_event_summary=latest_soft_event_summary(decisions)
             image=model_root/"temporal-sheet.png"
             prior=[Path(row["source_image"]) for row in decisions]
             temporal_sheet(prior+[source_image],image)
@@ -1276,7 +1352,9 @@ def main():
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
           "model_session_span":args.session_span,
-          "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
+          "model_session_ids":list(dict.fromkeys(
+              row["model_session_id"] for row in decisions
+              if row.get("planner_turn_id") is not None)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
@@ -1327,10 +1405,12 @@ def main():
           "runtime_fixture":runtime_fixture,
           "fixture_contract":"hash/IWAD/engine/map/skill checked before load; measured control begins after load; fixture grants no action authority",
           "planner_contract":"one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
-          "planner_turns":len(decisions),
+          "planner_turns":sum(row.get("planner_turn_id") is not None for row in decisions),
           "planner_interruption_requests":sum(x.get("planner_interrupt") is not None for x in decisions),
           "planner_interrupted_completions":sum(x.get("planner_turn_status")=="interrupted" for x in decisions),
-          "planner_ineligible_answers":sum(not x.get("planner_answer_eligible",False) for x in decisions),
+          "planner_ineligible_answers":sum(
+              x.get("planner_turn_id") is not None and
+              not x.get("planner_answer_eligible",False) for x in decisions),
           "policy_invalidation_contract":"authored cover health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; unauthored empty coast has no policy to invalidate and does not interrupt a pending answer on damage; exact observations and fresh immediate action validity remain mandatory; this never grants input authority or proves success",
           "policy_invalidations":sum(x.get("policy_invalidation") is not None for x in decisions),
           "cover_validity_soft_events":sum(x.get("cover_validity_soft_events",0) for x in decisions),
