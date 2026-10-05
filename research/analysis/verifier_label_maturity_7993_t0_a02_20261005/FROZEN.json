@@ -1,0 +1,38 @@
+{
+  "allocation": "UNJUNO-7993-VERIFIER-LABEL-MATURITY-T0-A02-MACOS-HOST-20261005",
+  "base_commit": "5db548aa351c8ccd351831485d5e5940a4967ff3",
+  "branch": "research/7993-verifier-label-maturity-t0-a02-20261005",
+  "environment": {
+    "container": "none; host substitution",
+    "execution": "native host; one sequential low-priority process",
+    "host": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "network_enforcement": "none; no isolation claimed",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "files": {
+    "CONSTRUCTION_RECORD.md": "3bfd130907ccc0a77c5d5607ed80b75da6a9a13bb3f8a793d7254811944e2582",
+    "README.md": "a87528fbd34bca932cb1093a8409fd901ee6a46ffae5dd59b249afb00239ad8c",
+    "audit.py": "f49959be5b7d593f0be29461d0e4eae44b57e33ed1d75607f7d2d15b3c58563a",
+    "auditor_truth.json": "8e17acd33325d76c88d9755b26e4567824a76f34de548693713d87cd4c411570",
+    "build_fixture.py": "871a1f62c1719210d76983a0e1f029a5d85e2dbfa34ea87b05fe54152831d01c",
+    "candidate.py": "88aa0dcede0e83c92423b99f193d62b3f6a08f5322a982321b0c81a8e2209941",
+    "construction.normal.log": "5b80f3fee3c4dea813c759b787fe36fd07b6be8a5fd5c8070b9eb57a2da35e69",
+    "construction.optimized.log": "c26f53aa014b2138a9d994ba599bed8edf6ea091f70a1264ad9440fceb6f2a07",
+    "construction.pycompile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight.json": "c04767287e3ec06e26d3d0f851f01656a271e73a70867cbf3444a460ea680511",
+    "prepare_freeze.py": "7859a04f7f6b29f2e9b209ed20458168ce2c23509481c8cd59c0e8d7da2ee6b4",
+    "protocol.md": "d5098345493b212029f4206ba0f6d99ce30aa8c25d88a23d58991f00100bc8e7",
+    "public_input.json": "b8c1437e5ac36aeb0c68a2aee79310ede3f9ebc7670ead797f0b2f84e85321fd",
+    "run_formal.py": "21b54ae964b328e26bdf44784b9082e84f8863091d412380e7eebec7c1088f6b",
+    "test_construction.py": "4d35e91e656255c48a5c1ce304ed408fd1d2c80e39c9a91700128227075dff87"
+  },
+  "formal_invocations_before_freeze": {
+    "auditor": 0,
+    "candidate": 0,
+    "driver": 0
+  },
+  "issue": 7993,
+  "package_path": "research/analysis/verifier_label_maturity_7993_t0_a02_20261005",
+  "subgate": "T0-A02 exact superpopulation IPCW expectation"
+}
