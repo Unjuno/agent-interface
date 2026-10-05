@@ -163,6 +163,27 @@ class V39TypedStateFeedbackTests(unittest.TestCase):
                          ["adapter_edge_brackets_paired"] * 2)
         self.assertEqual(len({row["actuation_id_sha256"] for row in receipts}), 2)
 
+    def test_adapter_edge_unhashable_actuation_identity_fails_closed(self):
+        for malformed_id in ([], {"owner": "wrong-type"}):
+            with self.subTest(malformed_id=malformed_id):
+                event = {
+                    "event": "input_admission",
+                    "id": "program",
+                    "step": 0,
+                    "key": "SPACE",
+                    "intent_token": "intent",
+                    "physical_key_measurement": {
+                        "adapter_edge": {"edge": "down",
+                                          "actuation_id": malformed_id},
+                    },
+                }
+
+                receipts = controller.input_edge_receipts([event])
+
+                self.assertEqual(len(receipts), 1)
+                self.assertEqual(receipts[0]["status"], "identity_unavailable")
+                self.assertEqual(receipts[0]["event"], "input_admission")
+
     def test_input_edge_receipt_accepts_v11_owner_keyup_context_contract(self):
         retained = (HERE / "absolute_pair_59_4d74_20261004" / "05-pulse" /
                     "runtime" / "events.jsonl")
