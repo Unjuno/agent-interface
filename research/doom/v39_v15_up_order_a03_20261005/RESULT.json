@@ -1,0 +1,127 @@
+{
+  "schema": "v39-v15-up-order-a03-result-v1",
+  "status": "STOP_AUDITOR_SCHEMA_MISMATCH",
+  "candidate_started": true,
+  "candidate_exit": 0,
+  "auditor_started": true,
+  "auditor_exit": 0,
+  "auditor_status": "FAIL",
+  "container": {
+    "image": "python@sha256:8fb099199b9f2d70342674bd9dbccd3ed03a258f26bbd1d556822c6dfc60c317",
+    "platform": "linux/arm64",
+    "network": "none",
+    "read_only_root": true,
+    "cpus": 1,
+    "memory_mib": 512,
+    "tmpfs_mib": 32
+  },
+  "raw_capture": {
+    "emitted_by_runner": true,
+    "complete_stdout_retained_in_github": false,
+    "reason": "desktop tool output was truncated at 8212 characters before the end of the 8212+-character raw JSON output; do not claim an immutable complete raw artifact",
+    "preserved_observations": "This result records only observations visible in the captured output; no candidate or auditor rerun was performed."
+  },
+  "observed": {
+    "trace_count": 32,
+    "event_order": [
+      "display_open",
+      "call_begin down a",
+      "query_focus",
+      "xtest_key_down 30",
+      "sync held [30]",
+      "query_focus",
+      "call_return down a",
+      "call_begin down b",
+      "query_focus",
+      "xtest_key_down 31",
+      "sync held [30,31]",
+      "query_focus",
+      "call_return down b",
+      "call_begin up b",
+      "xtest_key_up 31",
+      "sync held [30]",
+      "query_focus",
+      "call_return up b",
+      "call_begin up a",
+      "xtest_key_up 30",
+      "sync held []",
+      "query_focus",
+      "call_return up a",
+      "call_begin input_state",
+      "query_pointer",
+      "query_focus",
+      "query_focus",
+      "call_return input_state",
+      "sync held []",
+      "query_pointer",
+      "query_keymap held []",
+      "display_close"
+    ],
+    "down_keycodes": [
+      30,
+      31
+    ],
+    "up_keycodes": [
+      31,
+      30
+    ],
+    "keymap_query_between_explicit_ups": false,
+    "backend_input_state_after_up_calls": true,
+    "owner_receipts": [
+      {
+        "key": "b",
+        "keycode": 31,
+        "owner_id": "52651025b01a48d385d5624bffe3cfd1",
+        "intent_token": "a01-token",
+        "server_sync_completed": true,
+        "physical_verification_authoritative": false,
+        "release_call_started_ns": 2004617535730,
+        "owner_keyrelease_started_ns": 2004617553563,
+        "owner_sync_returned_ns": 2004617556438,
+        "release_call_returned_ns": 2004617576647
+      },
+      {
+        "key": "a",
+        "keycode": 30,
+        "owner_id": "52651025b01a48d385d5624bffe3cfd1",
+        "intent_token": "a01-token",
+        "server_sync_completed": true,
+        "physical_verification_authoritative": false,
+        "release_call_started_ns": 2004617591772,
+        "owner_keyrelease_started_ns": 2004617607105,
+        "owner_sync_returned_ns": 2004617608689,
+        "release_call_returned_ns": 2004617618730
+      }
+    ],
+    "backend_sample_ns": {
+      "started": 2004617652772,
+      "finished": 2004617655772
+    },
+    "release_rows_observed": 4,
+    "rows_by_event": {
+      "input_admission": 2,
+      "input_release_transition": 2
+    },
+    "both_release_rows_reported": {
+      "release_batch_complete": true,
+      "owner_transition_verified": true,
+      "owner_thread_keyup_verified": true,
+      "owned_keycodes_after_batch": []
+    },
+    "candidate_post_release_owned_keycodes": null,
+    "final_fake_keys": [],
+    "auditor_checks": {
+      "two_distinct_key_downs": true,
+      "reverse_order_key_ups": true,
+      "no_keymap_query_between_explicit_ups": true,
+      "input_state_after_both_up_calls": true,
+      "two_per_key_owner_receipts": false,
+      "batch_post_sample_empty": false,
+      "final_synthetic_keys_empty": false,
+      "no_real_io_claimed": true,
+      "no_release_error_in_scenario": false
+    },
+    "auditor_release_row_count": 4
+  },
+  "interpretation": "Trace and two actual release rows appear consistent with the preregistered ordering hypothesis, but the frozen auditor treated all sink emissions (including two input_admission events) as release rows, expected exactly two, and read post-release state from the first admission row (null). Thus the formal independent audit gate did not pass. Because A03's one-shot candidate and auditor both ran, do not rerun or repair this A03 result in place. A successor may fix row filtering/compact raw serialization."
+}

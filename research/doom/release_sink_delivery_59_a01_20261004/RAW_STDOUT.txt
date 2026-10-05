@@ -1,0 +1,7 @@
+source_ref=d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6 source_path=research/doom/doom_owner_thread_release_batch_backend_v1.py blob=93be5c2d05d946d43a7f063008e591dd66de2779
+accept_before_raise=False fail_position=0 observed=[(1, False, 'delivered'), (2, False, 'delivered')]
+accept_before_raise=False fail_position=1 observed=[(0, True, 'delivered'), (2, False, 'delivered')]
+accept_before_raise=False fail_position=2 observed=[(0, True, 'delivered'), (1, True, 'delivered')]
+accept_before_raise=True fail_position=0 observed=[(0, True, 'accepted_then_raise'), (1, False, 'delivered'), (2, False, 'delivered')]
+accept_before_raise=True fail_position=1 observed=[(0, True, 'delivered'), (1, True, 'accepted_then_raise'), (2, False, 'delivered')]
+accept_before_raise=True fail_position=2 observed=[(0, True, 'delivered'), (1, True, 'delivered'), (2, True, 'accepted_then_raise')]
