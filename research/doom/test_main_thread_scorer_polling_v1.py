@@ -183,5 +183,55 @@ class PollingTests(unittest.TestCase):
             os.close(write_fd)
 
 
+    @unittest.skipUnless(os.name == "nt", "requires Windows CRT pipe handles")
+    def test_windows_pipe_delayed_command_stays_on_owner_thread(self):
+        import time
+        read_fd, write_fd = os.pipe()
+        seen = []
+        thread_ids = []
+        def writer():
+            time.sleep(0.02)
+            os.write(write_fd, b"PING\nSTOP\n")
+            os.close(write_fd)
+        writer_thread = threading.Thread(target=writer)
+        writer_thread.start()
+        try:
+            loop = MainThreadScorerPolling(sample_hz=1000)
+            stats = loop.run(
+                read_fd,
+                sample_fn=lambda: thread_ids.append(threading.get_ident()) or 1,
+                scorer_sink=lambda _row: None,
+                command_handler=lambda line: seen.append(line) or thread_ids.append(threading.get_ident()) or (line != "STOP"),
+            )
+            writer_thread.join(timeout=2)
+            self.assertFalse(writer_thread.is_alive())
+            self.assertEqual(seen, ["PING", "STOP"])
+            self.assertTrue(thread_ids)
+            self.assertEqual(set(thread_ids), {stats.owner_thread_id})
+            self.assertGreater(stats.samples, 1)
+        finally:
+            os.close(read_fd)
+            if writer_thread.is_alive():
+                os.close(write_fd)
+                writer_thread.join(timeout=2)
+
+    @unittest.skipUnless(os.name == "nt", "requires Windows CRT pipe handles")
+    def test_windows_pipe_eof_is_readable_after_writer_closes(self):
+        read_fd, write_fd = os.pipe()
+        os.close(write_fd)
+        try:
+            loop = MainThreadScorerPolling(sample_hz=1000)
+            stats = loop.run(
+                read_fd,
+                sample_fn=lambda: 1,
+                scorer_sink=lambda _row: None,
+                command_handler=lambda _line: True,
+            )
+            self.assertTrue(stats.eof)
+            self.assertEqual(stats.commands, 0)
+        finally:
+            os.close(read_fd)
+
+
 if __name__ == "__main__":
     unittest.main()
