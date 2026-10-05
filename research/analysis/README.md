@@ -1,5 +1,8 @@
 # Analytical research
 
+- [Issue #8049 repeated-cohort IPCW uncertainty A03](ipcw_repeated_uncertainty_7993_a02_20261005/successor_a03_seed8049021/REPORT.md) — `PASS_METHOD_SCOPED`: 20,000 synthetic cohorts / 8,000,000 units independently reconstructed; HT mean 0.250325, design SD error 0.111%, bootstrap coverage 0.94935, 4/4 mutations rejected. A02 container-CLI STOP and A01 coverage failure are preserved; no production calibration or safety claim.
+- [Issue #8049 A02 pre-container STOP](ipcw_repeated_uncertainty_7993_a02_20261005/STOP.md) — Docker rejected invalid bare `rw` mount syntax before candidate/auditor execution; distinct fresh-seed A03 follows.
+
 - [Issue #8080 blocked vs interleaved practice T0 A01](blocked_interleaved_practice_8080_t0_a01_20261005/REPORT.md) — `METHOD_PASS_SCOPED` for equal synthetic exposure, reversible effects, held-out exclusion, and scorer controls; no human-learning or transfer claim.
 - [Issue #8084 confusion-adaptive practice T0 A02](confusion_adaptive_practice_8084_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED` on six synthetic matrices / 12 schedules; equal exposure, pre-outcome heterogeneity gate, exact neutral fallback, held-out isolation, and independent scorer controls. A01 pre-formal mount-isolation STOP preserved; no human-learning claim.
 - [Issue #8084 T0 A01 pre-formal STOP](confusion_adaptive_practice_8084_t0_a01_20261005/STOP.md) — no candidate/auditor calls; package-wide candidate mount would expose auditor-only held-out/scorer fixture. A02 is separately frozen.
@@ -577,6 +580,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`interval_robustness_6074_t0_20261002/`](interval_robustness_6074_t0_20261002/)
 - [`invariant_confluence_prefix_5547_v1/`](invariant_confluence_prefix_5547_v1/)
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
+- [`ipcw_repeated_uncertainty_7993_a02_20261005/`](ipcw_repeated_uncertainty_7993_a02_20261005/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
 - [`issue5730_gate_cleanup_fail_20261001/`](issue5730_gate_cleanup_fail_20261001/)
@@ -617,6 +621,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_yield_5905_image_only_t0_6_a06_20261005/`](looming_yield_5905_image_only_t0_6_a06_20261005/)
 - [`looming_yield_5905_image_only_t0_7_a07_20261005/`](looming_yield_5905_image_only_t0_7_a07_20261005/)
 - [`looming_yield_5905_image_only_t0_8_a08_20261005/`](looming_yield_5905_image_only_t0_8_a08_20261005/)
+- [`looming_yield_5905_image_only_t0_9_a09_20261005/`](looming_yield_5905_image_only_t0_9_a09_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
