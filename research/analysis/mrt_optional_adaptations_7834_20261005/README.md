@@ -24,3 +24,8 @@ A01/A02 were frozen before WSLc inventory became available and used host V8; the
 A04 expands the finite construction to three arms and an observation/censoring mechanism. The quoted five-control minimum was a freeze-text count error: the hash-frozen fixture contains six distinct controls, and all six were tested and returned NONIDENTIFIABLE. The original freeze and post-run qualification are both preserved; this is a qualified pass, not a rewritten preregistration. See freeze #5986448843, construction/qualification #5986498125 and outcome #5986505971.
 
 A04 remains synthetic, method-scoped evidence. It does not establish empirical treatment effects or product benefit, and does not address GPU performance.
+
+| A05 | FAIL_METHOD; frozen estimator and auditor halved stratum effects by dividing weighted sums by two assignment rows; reported M0=+1, M1=-0.5 instead of +2/-1; auditor shared the same denominator defect; mutation gate 6/7. Preserved, not rerun. | 1 / 1, zero retries | WSLc 3.0.1.0, pinned Node 22 |
+| A06 | PASS_METHOD_SCOPED_A06; 4 rows; M0=+2, M1=-1; equal-stratum pooled +0.5; heterogeneity +3; three NONIDENTIFIABLE controls; independent oracle agrees; mutations 7/7. Fresh allocation after A05 failure. | 1 / 1, zero retries | WSLc 3.0.1.0, pinned Node 22 |
+
+A05/A06 test moderator-specific treatment effect heterogeneity under known assignment propensities using a two-stratum finite construction. The A05 failure remains unchanged; A06 is a fresh source-frozen successor, not a relabeled result. Both are method-only synthetic evidence and do not establish moderator discovery, sampling accuracy, real-user effects, product benefit, or a GPU use case. See A05 freeze/outcome #5986630463/#5986643544 and A06 freeze #5986671820.
