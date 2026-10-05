@@ -3,7 +3,7 @@
 Status: `SCOPED_TARGET_PASS / NATIVE_FULL_MACOS_BASELINE_FAIL / CONTAINER_STOP / REVIEW_HOLD`.
 
 The detailed first validation below used base `1fa854d`. Before publication,
-the successor was synchronized to live main `9febfe4926cde6629f9751d6444f6b802cf31328`;
+the successor was synchronized to live main `cd3a410a930e5f1e29a22cee36d9a149fbc106c7`;
 post-sync evidence is recorded at the end of this report.
 
 This is a current-main integration check of the already executed #7094 repair,
@@ -123,3 +123,17 @@ After that sync, the same six-module target command passed `24/24` normally and
 was not rerun on this refreshed tree; the detailed macOS baseline comparison
 above is specifically against the earlier `1fa854d` checkpoint. The hosted
 Ubuntu Native MCP check remains pending on the successor.
+
+## Latest-main refresh — 2026-10-05 (publication checkpoint)
+
+Before publication, live main advanced again to
+`cd3a410a930e5f1e29a22cee36d9a149fbc106c7`. The diff from the previous main
+`9febfe4926cde6629f9751d6444f6b802cf31328` contains 62 paths, all outside the
+six paths changed by this successor. The exact latest main commit was merged
+into this rescue branch (see merge commit in Git history). On the merged tree,
+the six targeted modules passed `24/24` on CPython 3.12.13 both normally and
+under `python -O`. The full native runner was not rerun on this newest
+checkpoint, and hosted Ubuntu CI/review are still required. A preliminary
+`pytest` invocation was unavailable because pytest is not installed in the
+workflow-matched environment; the repository's documented `unittest` command
+was used successfully instead.
