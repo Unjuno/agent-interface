@@ -666,3 +666,15 @@ This removes one source ref only; #7901 remains closed unmerged, #7988 remains t
 ## Ref disappearance observed — 2026-10-05 14:20 UTC
 
 A later recheck found `research/59-v39-startup-edge-identity-audit-a01-20261005` absent from both `git ls-remote` and the GitHub branch API (NOT_FOUND). My exact-tip conditional deletion attempt was rejected as stale information, so this record does not attribute the removal to that command. Closed PR #7901 still records head `108d22491db4baf6aa7214ae3f94122f3a7bf849`; the #7901 result blob is still readable at the same SHA on `main`. PR #7988, which carried all 12 matching package blobs, is merged. The disappearance therefore does not lose the rescued package or closed-PR evidence.
+
+
+## Rescued evidence branch cleanup — 2026-10-05 14:22 UTC
+
+Removed `research/59-effect-identity-join-a01-20261005` at exact audited tip `b9dbe5f6f4086b402e3ce23c347d38fe155d5b7f`.
+
+- The closed PR #7903 had explicitly retained its evidence on the source branch while it was absent from `main`. PR #7988 later rescued the 19-file package unchanged and is now merged.
+- Rechecked all 19 #7903 paths: every Git blob SHA matches current `main`. The source ref was one commit ahead of `main`, containing exactly those 19 paths and no unrelated files.
+- No open PR used the source ref as head or base; the current shared worktree registry had no checkout on it. The branch API now returns NOT_FOUND. Closed PR #7903 still records its head SHA, and the original result blob remains readable both at that commit and on `main`.
+- This resolves the earlier provenance hold for the evidence files. The scoped PASS / HOLD_MISSING_TASK_EFFECT boundary remains preserved; no experiment or auditor was rerun.
+
+This removes one source ref; #7903 remains closed unmerged and #7988 is the merged evidence-preservation record.
