@@ -70,6 +70,16 @@ class HostBrokerContractTest(unittest.TestCase):
                          Path("C:/repo/runtime/a.png"))
         self.assertIsNone(host_path(None, Path("C:/repo")))
 
+    def test_broker_receipt_records_the_host_paths_it_resolved(self):
+        _, receipt, _, _, _ = self._run_broker({
+            "instructions_b64": base64.b64encode(b"fixed test instructions").decode("ascii"),
+            "image": "/repo/input.png",
+        })
+        paths = receipt["resolved_paths"]
+        self.assertTrue(paths["schema"].endswith("repo/schema.json"))
+        self.assertTrue(paths["working"].endswith("repo"))
+        self.assertTrue(paths["image"].endswith("repo/input.png"))
+
     def test_maps_container_workspace_paths(self):
         from runtime.host_model_ipc_broker_v1 import host_path
         self.assertEqual(Path(host_path("/workspace/runtime/a.png", Path("C:/repo"))),

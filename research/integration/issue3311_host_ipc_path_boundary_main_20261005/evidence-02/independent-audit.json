@@ -1,0 +1,47 @@
+{
+  "auditor_sha256": "5952138d84aba5a48acf641d08af02458ad7f5dfe3220db0bdd4b33f1b10be62",
+  "broker_exit": 0,
+  "decision": "PASS_BOUNDARY_ONLY",
+  "error_count": 0,
+  "errors": [],
+  "no_authority": true,
+  "path_map_checks": {
+    "instructions": true,
+    "prompt": true,
+    "runner": true,
+    "schema": true,
+    "workspace": true
+  },
+  "request_id": "87f277fdd5fc4514bc2a479355dfdf19",
+  "runner_exit": 0,
+  "schema": "issue3311-inert-host-ipc-boundary-audit-v1",
+  "schema_valid": true,
+  "scope": "inert local process IPC; no Docker, real model, GUI, or task effect",
+  "source_hashes": {
+    "research/integration/issue3311_host_ipc_path_boundary_main_20261005/run_experiment.py": {
+      "actual": "a1a8ac33ec973a290c9fe468dca8270d238d6ef205288113d4340eb1a1af86b6",
+      "expected": "a1a8ac33ec973a290c9fe468dca8270d238d6ef205288113d4340eb1a1af86b6",
+      "match": true
+    },
+    "research/live_control/container_host_model_ipc_runner_v1.py": {
+      "actual": "47f482ab4561cedac2ca5479aa16afd0379560d095e44df3fe8ad1de26a3301d",
+      "expected": "47f482ab4561cedac2ca5479aa16afd0379560d095e44df3fe8ad1de26a3301d",
+      "match": true
+    },
+    "research/live_control/docker_model_call_backend_v1.py": {
+      "actual": "7ea344c6c05acc602ea137f982ccb88d19984cf86981cdfeec61638417d8edbb",
+      "expected": "7ea344c6c05acc602ea137f982ccb88d19984cf86981cdfeec61638417d8edbb",
+      "match": true
+    },
+    "runtime/docker_schema_preflight_v1.py": {
+      "actual": "b817ca5f2a407d89bd3b6c8b385248152e82955307dcb69f782b034da272fff4",
+      "expected": "b817ca5f2a407d89bd3b6c8b385248152e82955307dcb69f782b034da272fff4",
+      "match": true
+    },
+    "runtime/host_model_ipc_broker_v1.py": {
+      "actual": "76a62cf98719f580a272caa0575422dc3f07feb9d3eab6ca899ef995808ad95f",
+      "expected": "76a62cf98719f580a272caa0575422dc3f07feb9d3eab6ca899ef995808ad95f",
+      "match": true
+    }
+  }
+}

@@ -16,6 +16,7 @@ from schema_preflight_gate_v1 import require_compatible
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "results" / "integrated-efficiency-live-01"
+LEGACY_OUT = OUT
 
 
 def sha(path):
@@ -33,9 +34,10 @@ def records(path):
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
 
-def preflight_call(arm, contract):
-    root = OUT / "preflight" / arm
-    workspace = OUT / "workspaces" / arm
+def preflight_call(arm, contract, output_root=None):
+    output_root = Path(OUT if output_root is None else output_root)
+    root = output_root / "preflight" / arm
+    workspace = output_root / "workspaces" / arm
     workspace.mkdir(parents=True, exist_ok=False)
     schema = CONTRACTS[contract][0]
     gate = require_compatible(
@@ -218,19 +220,20 @@ def run_task(client, arm, task, index, cached, workspace, model_root,
     return row, resolved if adaptive["outcome"] == "TASK_SUCCEEDED" else cached, detail
 
 
-def run_arm(arm, seed, workspace, model_call=call_model):
+def run_arm(arm, seed, workspace, model_call=call_model, output_root=None):
     """Run an arm with the default or explicitly injected model backend."""
+    output_root = Path(OUT if output_root is None else output_root)
     rows, details, cached = [], [], None
-    with RuntimeClient(OUT / "arms" / arm, seed) as client:
+    with RuntimeClient(output_root / "arms" / arm, seed) as client:
         for index, task in enumerate(client.ready["goal"]["tasks"]):
             row, cached, detail = run_task(
                 client, arm, task, index, cached, workspace,
-                OUT / "model-calls" / arm, model_call=model_call)
+                output_root / "model-calls" / arm, model_call=model_call)
             rows.append(row); details.append(detail)
             # Preserve each completed task before entering the next route. A
             # later fail-closed reuse validation must not erase the prior
             # task's adaptive outcome or evidence.
-            dump(OUT / "arms" / arm / "task-details.partial.json", details)
+            dump(output_root / "arms" / arm / "task-details.partial.json", details)
         independent = client.finish("finish-integrated-live-01-" + arm)
         final_history = records(client.runtime / "submission-history.jsonl")
         for row, detail in zip(rows, details):
@@ -242,37 +245,77 @@ def run_arm(arm, seed, workspace, model_call=call_model):
             row["source_to_completion_ns"] = (None if len(matching) != 1 else
                 matching[0]["received_ns"] - detail["source"]["capture_ns"])
             detail["submission_records"] = matching
-    dump(OUT / "arms" / arm / "task-details.json", details)
+    dump(output_root / "arms" / arm / "task-details.json", details)
     return rows, independent
 
 
-def main():
-    plan = json.loads((OUT / "preregistration.json").read_text(encoding="utf-8"))
+def main(model_call=call_model, schema_preflight=None, output_root=None):
+    """Run a preregistered allocation with injectable transport boundaries.
+
+    The default path preserves the historical backend. Successor allocations
+    can supply a container-backed model call and matching fresh schema
+    preflight without changing the protocol evaluator or task schedule.
+    """
+    if output_root is None:
+        raise RuntimeError("STOP_EXPLICIT_SUCCESSOR_OUTPUT_ROOT_REQUIRED")
+    output_root = Path(output_root).resolve()
+    if output_root == LEGACY_OUT.resolve():
+        raise RuntimeError("STOP_HISTORICAL_OUTPUT_ROOT_PROTECTED")
+    preregistration = output_root / "preregistration.json"
+    if not output_root.is_dir() or not preregistration.is_file():
+        raise FileNotFoundError("fresh output root with preregistration.json required")
+    unexpected = sorted(path.name for path in output_root.iterdir()
+                        if path.name != "preregistration.json")
+    if unexpected:
+        raise RuntimeError("STOP_SUCCESSOR_OUTPUT_ROOT_NOT_FRESH:" + ",".join(unexpected))
+    plan = json.loads(preregistration.read_text(encoding="utf-8"))
+    expected_schedule = [
+        {"task_id": "task-1", "layout": "A", "phase": "cold"},
+        {"task_id": "task-2", "layout": "A", "phase": "warm"},
+        {"task_id": "task-3", "layout": "A", "phase": "warm"},
+        {"task_id": "task-4", "layout": "B", "phase": "invalidation_repair"},
+        {"task_id": "task-5", "layout": "B", "phase": "post_repair_warm"},
+        {"task_id": "task-6", "layout": "B", "phase": "post_repair_warm"},
+    ]
+    if (plan.get("schema") != "integrated_efficiency_preregistration_v1"
+            or plan.get("status") != "frozen_before_preflight_model_calls_and_gui_sessions"
+            or not isinstance(plan.get("study"), str) or not plan["study"].strip()
+            or plan["study"] == "integrated-efficiency-live-01"
+            or type(plan.get("seed")) is not int
+            or plan.get("arm_order") != list(ARMS)
+            or plan.get("task_schedule") != expected_schedule
+            or type(plan.get("sources")) is not dict or not plan["sources"]):
+        raise RuntimeError("STOP_SUCCESSOR_PREREGISTRATION_NOT_FROZEN_OR_COMPATIBLE")
     for name, digest in plan["sources"].items():
         if sha(HERE / name) != digest:
             raise RuntimeError("source changed after preregistration: " + name)
     preflights = {}
+    preflight_runner = (schema_preflight if schema_preflight is not None else
+                        lambda arm, contract: preflight_call(arm, contract, output_root))
     for arm in ARMS:
-        preflights[arm] = preflight_call(arm, "plain" if arm == "plain" else "compiled")
+        preflights[arm] = preflight_runner(
+            arm, "plain" if arm == "plain" else "compiled")
     arms, independent = {}, {}
     for arm in ARMS:
         arms[arm], independent[arm] = run_arm(
-            arm, plan["seed"], OUT / "workspaces" / arm)
+            arm, plan["seed"], output_root / "workspaces" / arm,
+            model_call=model_call, output_root=output_root)
     trace = {"schema": "integrated_efficiency_trace_v1", "arms": arms,
              "preflight_calls": preflights,
              "integration_discoveries": json.loads(
                  (HERE / "integrated_efficiency_discoveries_v1.json").read_text(encoding="utf-8"))}
-    dump(OUT / "trace.json", trace)
+    dump(output_root / "trace.json", trace)
     evaluation = evaluate(trace)
     report = {"schema": "integrated_efficiency_live_report_v1",
               "evaluation": evaluation, "independent_evaluations": independent,
               "preflight_calls": preflights, "scope": plan["scope"]}
-    dump(OUT / "report.json", report)
+    dump(output_root / "report.json", report)
     print(json.dumps({"disposition": evaluation["disposition"],
                       "break_even": evaluation["observed_break_even_task"],
                       "correct": {arm: evaluation["arms"][arm]["correct"] for arm in ARMS},
                       "tokens": {arm: evaluation["arms"][arm]["cumulative_input_tokens"][-1]
                                  for arm in ARMS}}, indent=2))
+    return report
 
 
 if __name__ == "__main__":

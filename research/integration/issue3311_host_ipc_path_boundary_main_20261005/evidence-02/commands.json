@@ -1,0 +1,26 @@
+{
+  "broker": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/private/tmp/unjuno3311-boundary-tASO2T/runtime/host_model_ipc_broker_v1.py",
+    "--ipc",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/ipc",
+    "--repo",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/broker-repo",
+    "--once"
+  ],
+  "fake_cli": "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/fake-codex",
+  "runner": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/live_control/container_host_model_ipc_runner_v1.py",
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "unused-node",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/out/prompt.txt",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/workspace",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/out/runner",
+    "handle",
+    "-",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/instructions.txt",
+    "/private/tmp/unjuno3311-boundary-tASO2T/research/integration/issue3311_host_ipc_path_boundary_main_20261005/evidence-02/schema.json"
+  ],
+  "timeout_seconds": 10
+}
