@@ -194,9 +194,11 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
 
             owner.call("down", lease, "W")
             display_instance.drop_keyreleases = 3
-            with self.assertRaisesRegex(RuntimeError, "explicit key-up not observed"):
-                owner.call("up", lease, "W")
+            failed_transition = owner.call("up", lease, "W")
             failed_receipt = owner.records[-1]
+            self.assertFalse(failed_transition["owner_thread_keyup_verified"])
+            self.assertEqual(failed_transition["owner_thread_keyup_receipt_count"], 1)
+            self.assertEqual(failed_transition["owner_thread_keyup_receipt"], failed_receipt)
             self.assertFalse(failed_receipt["server_keyup_verified"])
             self.assertEqual(failed_receipt["server_keyup_attempt_count"], 3)
             self.assertEqual(display_instance.down, {38})
@@ -212,7 +214,7 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
                 else:
                     sys.modules[name] = module
 
-    def test_persistent_keyup_loss_fails_v13_terminal_and_keeps_cleanup_receipts(self):
+    def test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts(self):
         from executor_v13 import Executor
         from lease_release_v1 import Lease as InputLease
         names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
@@ -249,30 +251,48 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
                             "Xlib.XK": xk, "Xlib.display": display,
                             "Xlib.error": error, "Xlib.ext": ext,
                             "Xlib.ext.xtest": xtest})
+        doom = LIVE.parent / "doom"
+        sys.path.insert(0, str(doom))
+        composed_names = ("doom_typed_release_backend_v1",
+                          "doom_typed_release_backend_v2",
+                          "doom_owner_thread_release_batch_backend_v1")
+        saved_composed = {name: sys.modules.get(name) for name in composed_names}
         owner = None
         try:
             for name in ("input_owner_v12", "input_transition_owner_v3",
-                         "input_transition_owner_v4"):
+                         "input_transition_owner_v4", *composed_names):
                 sys.modules.pop(name, None)
             from input_transition_owner_v4 import InputOwner
+
+            # Supply only the base key-step engine; exercise the real V15
+            # release-batch adapter, V4/V3/V12 owner chain and V13 cleanup.
+            class FakeBaseBackend:
+                def execute(self, _step, _lease, _identifier, _index):
+                    self.raw("W", True)
+                    self.raw("W", False)
+
+                def release_all(self):
+                    return self.owner.call("release", self.lease)
+
+            release_v1 = types.ModuleType("doom_typed_release_backend_v1")
+            release_v1.Backend = FakeBaseBackend
+            release_v1.suite = lambda: None
+            sys.modules["doom_typed_release_backend_v1"] = release_v1
+            from doom_owner_thread_release_batch_backend_v1 import Backend as V15Backend
 
             owner = InputOwner(":fake")
             lease = InputLease(__import__("time").perf_counter_ns() + 10_000_000_000)
             lease.expected_focus = 41
             lease.focus_invalid = False
             display_instance.drop_keyreleases = 6
-
-            class Backend:
-                sequence = 1
-
-                def execute(self, _step, active_lease, _identifier, _index):
-                    owner.call("down", active_lease, "W")
-                    owner.call("up", active_lease, "W")
-
-                def release_all(self):
-                    return owner.call("release", lease)
-
-            backend = Backend()
+            backend = object.__new__(V15Backend)
+            backend.owner = owner
+            backend.held = set()
+            backend.lease = lease
+            backend.emit = lambda event: events.append(event)
+            backend._input_event_context = None
+            backend._release_batch = threading.local()
+            backend._last_release_batch_delivery = None
             events = []
             executor = Executor(backend, events.append)
             executor.active = ("persistent-loss", lease, threading.current_thread())
@@ -281,6 +301,8 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
                 "persistent-loss", [{"op": "fake-key-up"}], lease)
 
             terminal = next(row for row in events if row.get("event") == "terminal")
+            batch_row = next(row for row in events
+                             if row.get("release_batch_schema") == "input-release-batch-v3")
             explicit = next(row for row in owner.records
                             if row.get("event") == "owner_explicit_keyup")
             cleanup = next(row for row in owner.records
@@ -289,6 +311,11 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             self.assertFalse(terminal["release"]["verified"])
             self.assertEqual(terminal["release"]["keys_down"], [38])
             self.assertEqual(len(terminal["release"]["key_release_attempts"]["38"]["attempts"]), 3)
+            self.assertTrue(batch_row["release_batch_complete"])
+            self.assertFalse(batch_row["owner_transition_verified"])
+            self.assertFalse(batch_row["owner_thread_keyup_verified"])
+            self.assertEqual(batch_row["owner_thread_keyup_receipt"], explicit)
+            self.assertEqual(batch_row["owned_keycodes_after_batch"], [38])
             self.assertEqual(explicit["server_keyup_attempt_count"], 3)
             self.assertFalse(explicit["server_keyup_verified"])
             self.assertEqual(cleanup["key_release_attempts"]["38"]["attempts"][0]["attempt"], 1)
@@ -301,8 +328,15 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             if owner is not None:
                 owner.close()
             for name in ("input_transition_owner_v4", "input_transition_owner_v3",
-                         "input_owner_v12"):
+                         "input_owner_v12", *composed_names):
                 sys.modules.pop(name, None)
+            for name, module in saved_composed.items():
+                if module is not None:
+                    sys.modules[name] = module
+            try:
+                sys.path.remove(str(doom))
+            except ValueError:
+                pass
             for name, module in saved.items():
                 if module is None:
                     sys.modules.pop(name, None)
