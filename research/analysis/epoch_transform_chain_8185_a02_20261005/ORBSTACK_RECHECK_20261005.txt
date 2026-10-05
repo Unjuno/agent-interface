@@ -1,4 +1,9 @@
-Time: 2026-10-05 12:45:15 UTC
+Command: docker --context orbstack image ls --no-trunc
+Exit: 1
+Observation 1 time: 2026-10-05 12:45:15 UTC
+Error response from daemon: rpc error: code = Unknown desc = blob sha256:9c412ba8f50d0199ed2322a947b72c5a7416e0840c1bc8290335ecd31e25b07d expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/9c412ba8f50d0199ed2322a947b72c5a7416e0840c1bc8290335ecd31e25b07d: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/9c412ba8f50d0199ed2322a947b72c5a7416e0840c1bc8290335ecd31e25b07d: operation not supported
+
+Observation 2 time: 2026-10-05 12:48:52 UTC
 Command: docker --context orbstack image ls --no-trunc
 Exit: 1
 Error response from daemon: rpc error: code = Unknown desc = blob sha256:9c412ba8f50d0199ed2322a947b72c5a7416e0840c1bc8290335ecd31e25b07d expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/9c412ba8f50d0199ed2322a947b72c5a7416e0840c1bc8290335ecd31e25b07d: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/9c412ba8f50d0199ed2322a947b72c5a7416e0840c1bc8290335ecd31e25b07d: operation not supported
