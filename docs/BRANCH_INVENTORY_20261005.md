@@ -627,3 +627,14 @@ The ten original package files (including raw, WSLc STOP, auditor, and original 
 - PR [#8213](https://github.com/Unjuno/agent-interface/pull/8213) is open Draft at `0dc222499722e706a4838ab5d2677c02cb8930d2`, based on main `b5be19963454ce5edafc945b78b100012952dd15`. It preserves the feedback-onset custody audit package from the #7602 source line; five open children still target that parent branch. The trace remains on main and key event/report hashes match its manifest.
 - PR [#8215](https://github.com/Unjuno/agent-interface/pull/8215) is open Draft at `79d608fbb84fafa5a4bea9d0a20f4fb3a67ade8d`, based on the same main tip. It preserves the distinct 26-file application-consumption A01 package from #7662; open draft #7677 still targets the original source branch. All 25 saved manifest entries and all 26 package blobs were checked.
 - At this refresh both heads are mergeable, one commit ahead and zero behind. Submitted-review lists and combined status endpoints return zero records for both. Keep the rescue refs; neither package is integrated into main, and no saved auditor or experiment was rerun.
+
+
+## Custody clarification — 2026-10-05 14:12 UTC
+
+The earlier 12:59 UTC table marked `research/8150-threat-profiled-runtime-eligibility-t0-20261005` unclassified. A fresh audit at this time found:
+
+- Source ref tip is still `e9ad794f0b4b98c5fcb8532777c40c16a9070306`. PR #8167 is merged; its current-main publication branch carried the six source-branch paths. Each of those six final file blobs matches `main` exactly.
+- Comparing `main` to the source ref reports six source-only commits and exactly those six changed paths. No open PR uses the source ref as head or base, and the shared local checkout registry has no worktree on that branch.
+- Keep the source ref for now: the six-commit preregistration/freeze history itself is not represented by the merged publication branch's final blobs. The evidence files are rescued to `main`; intermediate source history remains a provenance hold pending a separate history-preservation decision. Do not classify this as disposable merely because its final files match.
+
+This is a per-ref custody decision, not a complete audit of the remaining unclassified refs. No experiment was rerun.
