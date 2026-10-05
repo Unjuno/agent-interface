@@ -606,3 +606,12 @@ Fresh paginated, non-atomic reads after the branch-custody operation observed ma
 Post-cleanup paginated non-atomic reads observed main `b5be19963454ce5edafc945b78b100012952dd15`, **406 branch refs**, and **346 open PRs** (316 Draft, 30 Ready). All open PR heads matched existing branch refs and exact SHAs (346/346); **59 refs** were not open-PR heads. The two orphan worktree holds and three orphan base-dependency branches (eight open dependents total) remain as recorded in the preceding census. No other orphan name or tip changed in this recheck.
 
 **Deleted** `fix/scorer-endpoint-read-type-7685-a01` at exact tip `fc8d12f13519811491015f4e2ecdd847246c55d4`. Closed PR #7691's single source-file blob matched current main exactly; its only other changed path was a test file. Current main already includes the same float (`11.0`) and Boolean (`True`) readback cases with assertions that withhold values from both the row and receipt. The duplicate branch held no result artifacts beyond those source/test paths. Its parent PR #7685 is merged. Fresh open head/base queries and the local worktree registry had no use of the source branch. After deletion, branch search returned no branch while `refs/pull/7691/head` remains fetchable at the original tip. This removal preserves the corrected behavior and regression coverage on main, with the closed PR ref retaining the superseded source history.
+
+## Follow-up: superseded #7974 child refs reclaimed (2026-10-05)
+
+At current `main` `b5be19963454ce5edafc945b78b100012952dd15`, deleted these two unprotected remote refs by exact-tip lease after a fresh audit:
+
+- `test/7974-single-query-failure-boundary` at `95666c514f142b58cebafc1920b86bcd87a0d8be` (closed unmerged PR #8012).
+- `fix/59-wheel-release-ledger-20261005` at `e14c8267854e24e5978767cd53065622abdee3f6` (closed unmerged PR #7958).
+
+Neither ref was the head or base of an open PR, and no local worktree used either branch. PR #7974 is merged; its current implementation supersedes the older source deltas. The 36-file `cleanup-carrier-review-e0cc-20261005` and 23-file `wheel-successor-regression-e0cc-20261005` directories are present on main with blob SHAs identical to #7958's head. The #8012 carrier test is preserved byte-for-byte as `carrier-test-original.py.txt`; #7958's strengthened test is preserved byte-for-byte as `strengthened-test.py.txt`. Both closed PR head refs remain fetchable at their former tips after remote branch deletion. No PR state or source evidence was changed; the historical census rows above remain unchanged.
