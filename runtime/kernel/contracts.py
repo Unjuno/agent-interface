@@ -287,6 +287,8 @@ class ExecutionReceipt:
         previous_ns = self.started_ns
         held: set[tuple[str, str]] = set()
         for event in self.input_transitions:
+            if event.requested_ns < self.started_ns:
+                raise ContractError("input transition request precedes execution start")
             if event.acknowledged_ns < previous_ns:
                 raise ContractError("input transition acknowledgements must be chronological")
             if event.acknowledged_ns > self.ended_ns:
@@ -303,6 +305,10 @@ class ExecutionReceipt:
             previous_ns = event.acknowledged_ns
         if held:
             raise ContractError("execution input transitions end with held controls")
+        if self.input_transitions and (
+            self.release.observed_ns < self.input_transitions[-1].acknowledged_ns
+        ):
+            raise ContractError("release observation precedes final input acknowledgement")
 
 
 @dataclass(frozen=True, slots=True)

@@ -83,6 +83,24 @@ class ContractTests(unittest.TestCase):
             [("space", "down", 512), ("space", "up", 653)],
         )
 
+    def test_transition_request_cannot_precede_execution_start(self):
+        with self.assertRaisesRegex(ContractError, "request precedes execution start"):
+            ExecutionReceipt(
+                "cmd-1", "backend-1", M, "lease-1", 7, "surface-a",
+                500, 700, 1, EffectOccurrence.OBSERVED, released(),
+                (InputTransitionReceipt("a1", "space", InputTransition.DOWN, 499, 512),
+                 InputTransitionReceipt("a1", "space", InputTransition.UP, 650, 653)),
+            )
+
+    def test_release_observation_cannot_precede_final_input_ack(self):
+        with self.assertRaisesRegex(ContractError, "release observation precedes final input"):
+            ExecutionReceipt(
+                "cmd-1", "backend-1", M, "lease-1", 7, "surface-a",
+                500, 700, 1, EffectOccurrence.OBSERVED, released(650),
+                (InputTransitionReceipt("a1", "space", InputTransition.DOWN, 510, 512),
+                 InputTransitionReceipt("a1", "space", InputTransition.UP, 651, 653)),
+            )
+
     def test_input_transition_rejects_ack_before_request(self):
         with self.assertRaises(ContractError):
             InputTransitionReceipt("a1", "space", InputTransition.UP, 20, 19)
