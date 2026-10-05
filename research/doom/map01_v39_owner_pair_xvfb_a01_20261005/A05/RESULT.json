@@ -1,0 +1,44 @@
+{
+  "A_up_batch_receipt_verified": true,
+  "B_local_owned_keycodes_after_A_up": [
+    25
+  ],
+  "B_up_batch_receipt_verified": true,
+  "audit_stdout_sha256": "fbe8137a9384fd61faf922f765d442390f001318127b11624c75a2844e109f5a",
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_pr": 7974,
+  "candidate_pr_head_sha": "b5fbfed1c896f587dd5dfeb30c2735d63f670264",
+  "cleanup_errors": [],
+  "control_server_keymap": [
+    false,
+    true,
+    false
+  ],
+  "experiment_id": "map01-v39-owner-pair-xvfb-a05-20261005",
+  "final_server_keymap_down": false,
+  "freeze_sha256": "63288ade101470e925fbdceddcca8c2bf6dcc77091efae2270e6ea47a88b82c1",
+  "keycode": 25,
+  "limits": [
+    "One-key batches do not test ordering across a multi-key V15 release batch.",
+    "Does not establish physical keyboard state, production display arbitration, GUI/game delivery, useful feedback, bounded recovery, or MAP01 progress.",
+    "A04 stopped before candidate start due remote source movement; no A04 candidate/auditor was run."
+  ],
+  "operation": "one-key up_batch for each owner",
+  "outputs_sha256": "d6fe236468048a6a84c31e422cc4b901db04dada7fb5e32a527ea6c595254bca",
+  "pair_server_keymap": [
+    false,
+    true,
+    true,
+    false,
+    false
+  ],
+  "raw_sha256": "8ae6eba113ae56d4bc7fd636340d5177ab0f2329e6955c3d65468774d4eb5c11",
+  "result": "CONFIRMED_SHARED_DISPLAY_CROSS_OWNER_RELEASE",
+  "schema": "v39-owner-pair-xvfb-result-a05-v1",
+  "scope": "One private Xvfb server and two distinct current V4/V3/V12 InputOwner instances with separate leases; one-key up_batch calls; X-server keymap and process-local owner state only.",
+  "source_main_sha": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "xvfb_exit": 0
+}

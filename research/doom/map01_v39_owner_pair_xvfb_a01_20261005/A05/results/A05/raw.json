@@ -1,0 +1,434 @@
+{
+  "A_down": {
+    "admitted_ns": 6877100920076,
+    "event": "input_admission",
+    "input_ack_ns": 6877100967577,
+    "intent_token": "owner-pair-a05-A",
+    "key": "W",
+    "valid_until_ns": 6887100794076
+  },
+  "A_up_receipt": [
+    {
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "intent_token": "owner-pair-a05-A",
+      "key": "W",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owner_cleanup_intervened": false,
+      "owner_explicit_keyup_failure": null,
+      "owner_id": "0bb8e4fe571d444f947f5996de4491e1",
+      "owner_release_history_complete": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "owner-pair-a05-A",
+        "key": "W",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 25,
+        "operation": "up",
+        "owner_id": "0bb8e4fe571d444f947f5996de4491e1",
+        "owner_keymap_sampled_ns": 6877101944958,
+        "owner_keyrelease_started_ns": 6877101865208,
+        "owner_sync_returned_ns": 6877101915958,
+        "physical_verification_authoritative": false,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": [
+          "W"
+        ],
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 6877101944958,
+            "keyrelease_started_ns": 6877101865208,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_returned_ns": 6877101915958
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 6887100794076
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_transition_verified": true,
+      "release_call_bracket_ns": 265543,
+      "release_call_returned_ns": 6877101972125,
+      "release_call_started_ns": 6877101706582,
+      "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 6887100794076
+    }
+  ],
+  "B_down": {
+    "admitted_ns": 6877101236912,
+    "event": "input_admission",
+    "input_ack_ns": 6877101294037,
+    "intent_token": "owner-pair-a05-B",
+    "key": "W",
+    "valid_until_ns": 6887100797284
+  },
+  "B_state_after_A_up": {
+    "active_lease_deadline_ns": 6887100797284,
+    "active_lease_time_valid": true,
+    "cancel_requested": false,
+    "focus": 1,
+    "owned_buttons": [],
+    "owned_keycodes": [
+      25
+    ],
+    "owner_id": "35ce3bce963148ae895f2f024bce2fe6",
+    "physical_pointer_mask": 0,
+    "pointer": [
+      320,
+      240
+    ],
+    "revision": 1,
+    "sample_finished_ns": 6877102245668,
+    "sample_started_ns": 6877102133793
+  },
+  "B_state_after_B_up": {
+    "active_lease_deadline_ns": 6887100797284,
+    "active_lease_time_valid": true,
+    "cancel_requested": false,
+    "focus": 1,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "owner_id": "35ce3bce963148ae895f2f024bce2fe6",
+    "physical_pointer_mask": 0,
+    "pointer": [
+      320,
+      240
+    ],
+    "revision": 2,
+    "sample_finished_ns": 6877102948590,
+    "sample_started_ns": 6877102885714
+  },
+  "B_up_receipt": [
+    {
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "intent_token": "owner-pair-a05-B",
+      "key": "W",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owner_cleanup_intervened": false,
+      "owner_explicit_keyup_failure": null,
+      "owner_id": "35ce3bce963148ae895f2f024bce2fe6",
+      "owner_release_history_complete": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "owner-pair-a05-B",
+        "key": "W",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 25,
+        "operation": "up",
+        "owner_id": "35ce3bce963148ae895f2f024bce2fe6",
+        "owner_keymap_sampled_ns": 6877102485170,
+        "owner_keyrelease_started_ns": 6877102408628,
+        "owner_sync_returned_ns": 6877102451461,
+        "physical_verification_authoritative": false,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": [
+          "W"
+        ],
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 6877102485170,
+            "keyrelease_started_ns": 6877102408628,
+            "server_key_down_after": false,
+            "server_key_down_before": false,
+            "sync_returned_ns": 6877102451461
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 6887100797284
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_transition_verified": true,
+      "release_call_bracket_ns": 208085,
+      "release_call_returned_ns": 6877102510962,
+      "release_call_started_ns": 6877102302877,
+      "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 6887100797284
+    }
+  ],
+  "base_main": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "cleanup_errors": [],
+  "control_samples": [
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877095461166,
+      "key_down": false,
+      "keycode": 25,
+      "stage": "control_before",
+      "started_ns": 6877095381291
+    },
+    {
+      "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877095817627,
+      "key_down": true,
+      "keycode": 25,
+      "stage": "control_after_down",
+      "started_ns": 6877095743960
+    },
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877096032128,
+      "key_down": false,
+      "keycode": 25,
+      "stage": "control_after_up",
+      "started_ns": 6877095979461
+    }
+  ],
+  "control_state_after_up": {
+    "active_lease_deadline_ns": 6887095376374,
+    "active_lease_time_valid": true,
+    "cancel_requested": false,
+    "focus": 1,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "owner_id": "57f67f44b88b4f2596edaf62a8263fa2",
+    "physical_pointer_mask": 0,
+    "pointer": [
+      320,
+      240
+    ],
+    "revision": 2,
+    "sample_finished_ns": 6877096107837,
+    "sample_started_ns": 6877096045003
+  },
+  "control_up_receipt": [
+    {
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "intent_token": "owner-pair-a05-single",
+      "key": "W",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owner_cleanup_intervened": false,
+      "owner_explicit_keyup_failure": null,
+      "owner_id": "57f67f44b88b4f2596edaf62a8263fa2",
+      "owner_release_history_complete": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "owner-pair-a05-single",
+        "key": "W",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 25,
+        "operation": "up",
+        "owner_id": "57f67f44b88b4f2596edaf62a8263fa2",
+        "owner_keymap_sampled_ns": 6877095943794,
+        "owner_keyrelease_started_ns": 6877095882252,
+        "owner_sync_returned_ns": 6877095917961,
+        "physical_verification_authoritative": false,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": [
+          "W"
+        ],
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 6877095943794,
+            "keyrelease_started_ns": 6877095882252,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_returned_ns": 6877095917961
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 6887095376374
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_transition_verified": true,
+      "release_call_bracket_ns": 137751,
+      "release_call_returned_ns": 6877095961419,
+      "release_call_started_ns": 6877095823668,
+      "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 6887095376374
+    }
+  ],
+  "display": ":95",
+  "final_sample": {
+    "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "finished_ns": 6877103867346,
+    "key_down": false,
+    "keycode": 25,
+    "stage": "final",
+    "started_ns": 6877103797053
+  },
+  "focus_id": 1,
+  "intent_tokens": {
+    "A": "owner-pair-a05-A",
+    "B": "owner-pair-a05-B"
+  },
+  "key": "W",
+  "keycode": 25,
+  "owner_ids": {
+    "A": "0bb8e4fe571d444f947f5996de4491e1",
+    "B": "35ce3bce963148ae895f2f024bce2fe6"
+  },
+  "owner_records": {
+    "A": [
+      {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "owner-pair-a05-A",
+        "key": "W",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 25,
+        "operation": "up",
+        "owner_id": "0bb8e4fe571d444f947f5996de4491e1",
+        "owner_keymap_sampled_ns": 6877101944958,
+        "owner_keyrelease_started_ns": 6877101865208,
+        "owner_sync_returned_ns": 6877101915958,
+        "physical_verification_authoritative": false,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": [
+          "W"
+        ],
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 6877101944958,
+            "keyrelease_started_ns": 6877101865208,
+            "server_key_down_after": false,
+            "server_key_down_before": true,
+            "sync_returned_ns": 6877101915958
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 6887100794076
+      }
+    ],
+    "B": [
+      {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "owner-pair-a05-B",
+        "key": "W",
+        "key_state_source": "x11_query_keymap",
+        "keycode": 25,
+        "operation": "up",
+        "owner_id": "35ce3bce963148ae895f2f024bce2fe6",
+        "owner_keymap_sampled_ns": 6877102485170,
+        "owner_keyrelease_started_ns": 6877102408628,
+        "owner_sync_returned_ns": 6877102451461,
+        "physical_verification_authoritative": false,
+        "release_batch_initial_up_count": 1,
+        "release_batch_key_order": [
+          "W"
+        ],
+        "server_key_down_after_keyup": false,
+        "server_keyup_attempt_count": 1,
+        "server_keyup_attempts": [
+          {
+            "attempt": 1,
+            "keymap_after_error": null,
+            "keymap_before_error": null,
+            "keymap_sampled_ns": 6877102485170,
+            "keyrelease_started_ns": 6877102408628,
+            "server_key_down_after": false,
+            "server_key_down_before": false,
+            "sync_returned_ns": 6877102451461
+          }
+        ],
+        "server_keyup_verified": true,
+        "server_sync_completed": true,
+        "valid_until_ns": 6887100797284
+      }
+    ]
+  },
+  "pair_samples": [
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877100838743,
+      "key_down": false,
+      "keycode": 25,
+      "stage": "pair_before",
+      "started_ns": 6877100799576
+    },
+    {
+      "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877101087161,
+      "key_down": true,
+      "keycode": 25,
+      "stage": "after_A_down",
+      "started_ns": 6877101029036
+    },
+    {
+      "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877101646706,
+      "key_down": true,
+      "keycode": 25,
+      "stage": "after_B_down",
+      "started_ns": 6877101437872
+    },
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877102097834,
+      "key_down": false,
+      "keycode": 25,
+      "stage": "after_A_up",
+      "started_ns": 6877101994167
+    },
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "finished_ns": 6877102566962,
+      "key_down": false,
+      "keycode": 25,
+      "stage": "after_B_up",
+      "started_ns": 6877102527670
+    }
+  ],
+  "run_id": "0135335aaa8a432295404e1a8ec232e9",
+  "schema": "v39-owner-pair-xvfb-a05-raw-v1",
+  "scope": "one-key up_batch Xvfb server keymap and local input-owner bookkeeping only",
+  "single_owner_id": "57f67f44b88b4f2596edaf62a8263fa2",
+  "source_pr_head": "b5fbfed1c896f587dd5dfeb30c2735d63f670264"
+}

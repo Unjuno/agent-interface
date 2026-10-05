@@ -1,0 +1,21 @@
+{
+  "auditor_invocations": 0,
+  "auditor_invoked": false,
+  "auditor_start_count": 0,
+  "candidate_invocations": 0,
+  "candidate_invoked": false,
+  "candidate_start_count": 0,
+  "disposition": "STOP_SOURCE_CHANGED_BEFORE_CANDIDATE",
+  "experiment_id": "map01-v39-owner-pair-xvfb-a04-20261005",
+  "final_gate_commands": [
+    "git ls-remote origin refs/heads/main refs/pull/7974/head",
+    "gh pr view 7974 --json headRefOid,state,isDraft,updatedAt"
+  ],
+  "final_gate_observed_main_sha": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "final_gate_observed_pr_7974_head_sha": "b5fbfed1c896f587dd5dfeb30c2735d63f670264",
+  "freeze_sha256": "1f76e1febfc0bb85c8674f8e475421795f415cc44d28f136bc0db1656816ea8c",
+  "frozen_main_sha": "ff677c7fc04ba72923ee375527ae39489728a0bd",
+  "frozen_pr_7974_head_sha": "2a79899f41bf71ab41df8dd5dcf1cd9e70f9eca8",
+  "schema": "v39-owner-pair-xvfb-setup-a04-v1",
+  "xvfb_start_count": 0
+}

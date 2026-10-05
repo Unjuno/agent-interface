@@ -1,0 +1,10 @@
+A04 PRE-RUN GATE
+
+Freeze SHA-256 is recorded in FREEZE.sha256.
+Main must be ff677c7fc04ba72923ee375527ae39489728a0bd.
+PR #7974 head must be 2a79899f41bf71ab41df8dd5dcf1cd9e70f9eca8.
+VM package versions must be xvfb=2:21.1.12-1ubuntu1.8 and python3-xlib=0.33-2.
+Display :96 socket must be absent; results/A04 must not already exist.
+Candidate may run once. Auditor may run once only after candidate exit 0. No retries.
+
+A01, A02, and A03 records remain intact. A04 tests one-key up_batch calls on two owners; it does not test multi-key ordering or the full V15 backend.

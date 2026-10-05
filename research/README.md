@@ -6,7 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
-- Issue #59 shared-display owner-pair A03: [Xvfb result and retained A01/A02 stops](doom/map01_v39_owner_pair_xvfb_a01_20261005/README.md) — candidate and raw-only auditor passed on frozen PR #7974 head `c896362a`; A's verified single-key up cleared the X-server keymap while B's local owner state still held W. This supports an exclusive-display/cooperative-arbiter precondition; it does not cover the later `up_batch` path or any live/game behavior.
+- Issue #59 shared-display owner-pair experiments: [A01/A02/A04 stops and A03/A05 results](doom/map01_v39_owner_pair_xvfb_a01_20261005/README.md) — A03 single-key `up` and A05 one-key `up_batch` both showed A's verified release clear the server-global keymap while B still held W locally. This supports an exclusive-display/cooperative-arbiter precondition; multi-key V15 ordering and all live/game behavior remain untested.
 
 - Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
 
