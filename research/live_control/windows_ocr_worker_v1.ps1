@@ -70,8 +70,10 @@ while ($null -ne ($line = [Console]::In.ReadLine())) {
         $decoder = Await-Operation ($bitmapDecoderType::CreateAsync($stream)) $bitmapDecoderType
         $bitmap = Await-Operation ($decoder.GetSoftwareBitmapAsync()) $softwareBitmapType
         $recognized = Await-Operation ($engine.RecognizeAsync($bitmap)) $ocrResultType
+        $text = [string]$recognized.Text
+        if ($text.Length -gt 32768) { throw 'OCR text exceeds 32768 characters' }
         Write-Response @{ status = 'ok'; language = $language.LanguageTag;
-                          text = [string]$recognized.Text }
+                          text = $text }
     } catch {
         Write-Response @{ status = 'error'; error = $_.Exception.Message }
     } finally {

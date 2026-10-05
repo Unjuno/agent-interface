@@ -1,12 +1,14 @@
 """Persistent, local Windows OCR adapter for exact visible-token checks."""
 
 import json
+import math
 import os
 from pathlib import Path
 import queue
 import re
 import shutil
 import subprocess
+import tempfile
 import threading
 import time
 
@@ -100,27 +102,76 @@ class WindowsOcrObserver:
             raise RuntimeError("Windows OCR failed: " + str(response.get("error")))
         return response
 
-    def recognize(self, image_path):
+    def recognize(self, image_path, *, region=None, scale=1):
         path = Path(image_path).resolve(strict=True)
         if path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".bmp"}:
             raise ValueError("OCR image must be PNG, JPEG, or BMP")
         if path.stat().st_size > 10 * 1024 * 1024:
             raise ValueError("OCR image exceeds 10 MiB")
-        request = json.dumps({"operation": "recognize", "path": str(path)},
-                             ensure_ascii=False)
-        if len(request) > 8192:
-            raise ValueError("OCR request exceeds 8192 characters")
-        with self._lock:
-            if self._process.poll() is not None:
-                raise RuntimeError("Windows OCR worker exited")
-            started_ns = time.perf_counter_ns()
-            try:
-                self._process.stdin.write(request + "\n")
-                self._process.stdin.flush()
-            except (BrokenPipeError, OSError) as error:
-                raise RuntimeError("Windows OCR worker input failed") from error
-            response = self._next_response()
-            elapsed_ns = time.perf_counter_ns() - started_ns
+        if (type(scale) not in (int, float) or not math.isfinite(scale) or
+                not 1 <= scale <= 8):
+            raise ValueError("scale must be between 1 and 8")
+        if region is not None and (
+                type(region) not in (tuple, list) or len(region) != 4 or
+                any(type(value) is not int for value in region)):
+            raise ValueError("region must be integer x, y, width, height")
+
+        started_ns = time.perf_counter_ns()
+        processed_path = None
+        try:
+            if region is not None or scale != 1:
+                try:
+                    from PIL import Image
+                except ImportError as error:
+                    raise RuntimeError("Pillow is required for crop/upscale OCR") from error
+                with Image.open(path) as opened:
+                    source = opened.convert("RGB")
+                try:
+                    if region is not None:
+                        x, y, width, height = region
+                        if (x < 0 or y < 0 or width <= 0 or height <= 0 or
+                                x + width > source.width or y + height > source.height):
+                            raise ValueError("OCR region must fit inside the image")
+                        cropped = source.crop((x, y, x + width, y + height))
+                        source.close()
+                        source = cropped
+                    out_width = round(source.width * scale)
+                    out_height = round(source.height * scale)
+                    if (out_width < 1 or out_height < 1 or out_width > 4096 or
+                            out_height > 4096 or out_width * out_height > 16_000_000):
+                        raise ValueError("processed OCR image exceeds size limits")
+                    if scale != 1:
+                        resized = source.resize((out_width, out_height),
+                                                Image.Resampling.LANCZOS)
+                        source.close()
+                        source = resized
+                    handle = tempfile.NamedTemporaryFile(
+                        prefix="interface-ocr-", suffix=".png", delete=False)
+                    processed_path = Path(handle.name)
+                    handle.close()
+                    source.save(processed_path, format="PNG")
+                finally:
+                    source.close()
+
+            request_path = path if processed_path is None else processed_path
+            request = json.dumps({"operation": "recognize",
+                                  "path": str(request_path)},
+                                 ensure_ascii=False)
+            if len(request) > 8192:
+                raise ValueError("OCR request exceeds 8192 characters")
+            with self._lock:
+                if self._process.poll() is not None:
+                    raise RuntimeError("Windows OCR worker exited")
+                try:
+                    self._process.stdin.write(request + "\n")
+                    self._process.stdin.flush()
+                except (BrokenPipeError, OSError) as error:
+                    raise RuntimeError("Windows OCR worker input failed") from error
+                response = self._next_response()
+        finally:
+            if processed_path is not None:
+                processed_path.unlink(missing_ok=True)
+        elapsed_ns = time.perf_counter_ns() - started_ns
         if (response.get("status") != "ok" or
                 response.get("language") != self.language or
                 type(response.get("text")) is not str):
