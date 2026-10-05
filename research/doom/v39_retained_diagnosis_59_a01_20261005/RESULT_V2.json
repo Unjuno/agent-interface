@@ -1,0 +1,569 @@
+{
+  "aggregate_score": {
+    "deaths": 0,
+    "episode_finished": false,
+    "kills": 1,
+    "map_exit": false,
+    "player_dead": false,
+    "rows": 1
+  },
+  "classification": "PASS_DESCRIPTIVE_DIAGNOSIS_ONLY",
+  "decisions": [
+    {
+      "ammo_first_last": [
+        48,
+        48
+      ],
+      "contingency_branch": null,
+      "cover_accept_ns": 55501929457683,
+      "cover_id": "cover-0",
+      "cover_policy_actions": [],
+      "cover_policy_source_iteration": null,
+      "cover_terminal_ns": 55510671213200,
+      "cover_terminal_status": "cancelled",
+      "effect_receipts": [
+        {
+          "action": "advance_fire",
+          "after_sequence": 32,
+          "result": "visible_change",
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "strafe_left",
+          "after_sequence": 36,
+          "result": "visible_change",
+          "scope": "viewport pixels only"
+        }
+      ],
+      "health_first_last": [
+        97,
+        97
+      ],
+      "iteration": 0,
+      "model_assessment_at_return": "Active in MAP01; the view is stable with a distant threat or target centered ahead. Advance while firing briefly, then use lateral movement for cover.",
+      "model_wait_ms": 8451.983,
+      "next_cover_authored": [
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "planner_answer_eligible": true,
+      "planner_status": "completed",
+      "policy_invalidation": null,
+      "returned_action_admission": "INPUT_ADMITTED",
+      "returned_action_discarded": false,
+      "running_action": null,
+      "running_action_invalidation": null,
+      "soft_event_count": 0,
+      "typed_observation_count": 27
+    },
+    {
+      "ammo_first_last": [
+        46,
+        44
+      ],
+      "contingency_branch": null,
+      "cover_accept_ns": 55511874504414,
+      "cover_id": "cover-1",
+      "cover_policy_actions": [
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 0,
+      "cover_terminal_ns": 55517939654608,
+      "cover_terminal_status": "cancelled",
+      "effect_receipts": [],
+      "health_first_last": [
+        91,
+        85
+      ],
+      "iteration": 1,
+      "model_assessment_at_return": "Active; the newest frame shows a close enemy on the right with clear line of sight. Fire while retreating and shift laterally to reduce exposure.",
+      "model_wait_ms": 5720.461,
+      "next_cover_authored": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "planner_answer_eligible": true,
+      "planner_status": "completed",
+      "policy_invalidation": null,
+      "returned_action_admission": "REJECTED_ACTION_NOT_CURRENT",
+      "returned_action_discarded": true,
+      "running_action": null,
+      "running_action_invalidation": null,
+      "soft_event_count": 2,
+      "typed_observation_count": 34
+    },
+    {
+      "ammo_first_last": [
+        44,
+        44
+      ],
+      "contingency_branch": null,
+      "cover_accept_ns": 55518005486435,
+      "cover_id": "cover-2",
+      "cover_policy_actions": [],
+      "cover_policy_source_iteration": null,
+      "cover_terminal_ns": 55524658457397,
+      "cover_terminal_status": "cancelled",
+      "effect_receipts": [],
+      "health_first_last": [
+        85,
+        73
+      ],
+      "iteration": 2,
+      "model_assessment_at_return": "Active; a close enemy is directly ahead and has just caused damage. Retreat while firing, with a lateral dodge to break contact.",
+      "model_wait_ms": 6306.874,
+      "next_cover_authored": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "planner_answer_eligible": true,
+      "planner_status": "completed",
+      "policy_invalidation": null,
+      "returned_action_admission": "REJECTED_ACTION_NOT_CURRENT",
+      "returned_action_discarded": true,
+      "running_action": null,
+      "running_action_invalidation": null,
+      "soft_event_count": 0,
+      "typed_observation_count": 21
+    },
+    {
+      "ammo_first_last": [
+        44,
+        44
+      ],
+      "contingency_branch": null,
+      "cover_accept_ns": 55524729404428,
+      "cover_id": "cover-3",
+      "cover_policy_actions": [],
+      "cover_policy_source_iteration": null,
+      "cover_terminal_ns": 55531844624624,
+      "cover_terminal_status": "cancelled",
+      "effect_receipts": [],
+      "health_first_last": [
+        73,
+        68
+      ],
+      "iteration": 3,
+      "model_assessment_at_return": "Active; the close enemy remains directly in front and health has fallen to 73. Maintain pressure while creating distance and dodging laterally.",
+      "model_wait_ms": 6724.992,
+      "next_cover_authored": [
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "planner_answer_eligible": true,
+      "planner_status": "completed",
+      "policy_invalidation": null,
+      "returned_action_admission": "INPUT_ADMITTED",
+      "returned_action_discarded": false,
+      "running_action": {
+        "current_input_authority": false,
+        "id": "plan-3-primary-0-1",
+        "lifecycle": {
+          "accepted": {
+            "accepted_ns": 55531896125154,
+            "program_sha256": "499b7572ff8aca341418c18f0bc1a182e53379c821309874f88a65d21fe34599",
+            "steps": 2
+          },
+          "cancel_requested": {
+            "matched": true,
+            "requested_ns": 55532146908901
+          },
+          "input_released": {
+            "owner_release": {
+              "buttons_down": [],
+              "event": "owner_release",
+              "grants_input_authority": false,
+              "keys_down": [],
+              "reason": "cancelled",
+              "verified": true,
+              "verified_ns": 55532149408597
+            },
+            "program_terminal_pending": true,
+            "published_ns": 55532162310865
+          },
+          "terminal": {
+            "release": {
+              "buttons_down": null,
+              "event": null,
+              "grants_input_authority": null,
+              "keys_down": null,
+              "reason": null,
+              "verified": null,
+              "verified_ns": null
+            },
+            "semantic_completion": "program status only; task scoring is separate",
+            "status": "cancelled",
+            "steps_completed": 0,
+            "terminal_ns": 55532202369534
+          }
+        },
+        "partial_execution": {
+          "accepted_ns": 55531896125154,
+          "command": {
+            "action": "retreat_fire",
+            "extent": "medium"
+          },
+          "command_index": 0,
+          "id": "plan-3-primary-0-1",
+          "observation_capture_ms": 6.969944,
+          "observation_samples": 2,
+          "receipt": null,
+          "role": "primary",
+          "status": "cancelled_action_not_current",
+          "terminal_ns": 55532202369534
+        },
+        "physical_release_verified": true
+      },
+      "running_action_invalidation": {
+        "grants_input_authority": false,
+        "kind": "action_validity",
+        "requires_new_decision": true,
+        "result": {
+          "action_may_proceed_to_executor_admission": false,
+          "checks": [
+            {
+              "expected": 40,
+              "observed": 65,
+              "operator": "minimum",
+              "passed": true,
+              "signal_id": "health"
+            },
+            {
+              "expected": 6,
+              "observed": 65,
+              "operator": "max_decrease_from_source",
+              "passed": false,
+              "signal_id": "health"
+            }
+          ],
+          "contract": {
+            "action_fingerprint": "271fc631daaa6830dfcbb235834df2f4ad1c7cdc53e60c891917177b7b79e0d1",
+            "format": "action-validity-contract-v1",
+            "max_current_age_ms": 600,
+            "predicates": [
+              {
+                "operator": "minimum",
+                "signal_id": "health",
+                "value": 40
+              },
+              {
+                "operator": "max_decrease_from_source",
+                "signal_id": "health",
+                "value": 6
+              },
+              {
+                "operator": "minimum",
+                "signal_id": "ammo",
+                "value": 1
+              }
+            ],
+            "source": {
+              "binding": {
+                "focus": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ],
+                "surface": 6291472
+              },
+              "capture_ns": 55524540673195,
+              "sequence": 91,
+              "signals": {
+                "ammo": {
+                  "status": "observed",
+                  "value": 44
+                },
+                "health": {
+                  "status": "observed",
+                  "value": 73
+                }
+              }
+            }
+          },
+          "controller_decided_ns": 55532130242518,
+          "format": "action-validity-admission-v1",
+          "grants_input_authority": false,
+          "reason": "health_max_decrease_from_source_failed",
+          "requires_new_decision": true,
+          "snapshot": {
+            "binding": {
+              "focus": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ],
+              "surface": 6291472
+            },
+            "capture_ns": 55532110564498,
+            "format": "action-admission-snapshot-v1",
+            "sequence": 115,
+            "signals": {
+              "ammo": {
+                "status": "observed",
+                "value": 43
+              },
+              "health": {
+                "status": "observed",
+                "value": 65
+              }
+            }
+          },
+          "status": "REJECTED_PREDICATE"
+        }
+      },
+      "soft_event_count": 0,
+      "typed_observation_count": 22
+    },
+    {
+      "ammo_first_last": [
+        43,
+        41
+      ],
+      "contingency_branch": null,
+      "cover_accept_ns": 55532243389770,
+      "cover_id": "cover-4",
+      "cover_policy_actions": [
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 3,
+      "cover_terminal_ns": 55539859091157,
+      "cover_terminal_status": "cancelled",
+      "effect_receipts": [
+        {
+          "action": "fire",
+          "after_sequence": 162,
+          "result": "visible_change",
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "strafe_right",
+          "after_sequence": 166,
+          "result": "visible_change",
+          "scope": "viewport pixels only"
+        }
+      ],
+      "health_first_last": [
+        65,
+        61
+      ],
+      "iteration": 4,
+      "model_assessment_at_return": "Active; the close target is no longer centered, and a second enemy is visible on the left firing toward the player. Strafe right while firing to engage and avoid the incoming line.",
+      "model_wait_ms": 7197.658,
+      "next_cover_authored": [
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "planner_answer_eligible": true,
+      "planner_status": "completed",
+      "policy_invalidation": null,
+      "returned_action_admission": "INPUT_ADMITTED",
+      "returned_action_discarded": false,
+      "running_action": null,
+      "running_action_invalidation": null,
+      "soft_event_count": 2,
+      "typed_observation_count": 44
+    },
+    {
+      "ammo_first_last": [
+        40,
+        37
+      ],
+      "contingency_branch": null,
+      "cover_accept_ns": 55540935942355,
+      "cover_id": "cover-5",
+      "cover_policy_actions": [
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 4,
+      "cover_terminal_ns": 55550212968537,
+      "cover_terminal_status": "cancelled",
+      "effect_receipts": [],
+      "health_first_last": [
+        55,
+        48
+      ],
+      "iteration": 5,
+      "model_assessment_at_return": null,
+      "model_wait_ms": 8915.949,
+      "next_cover_authored": null,
+      "planner_answer_eligible": false,
+      "planner_status": "interrupted",
+      "policy_invalidation": {
+        "monitor_received_ns": 55550166722786,
+        "outcome": {
+          "current_value": 48,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-5",
+          "hard_minimum": 51,
+          "keep_existing_policy": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "below_hard_minimum",
+          "requires_new_decision": true,
+          "semantic_change_identified": true,
+          "signal_id": "health",
+          "source_age_ms": 9284.692959,
+          "source_value": 61,
+          "status": "HARD_INVALIDATED",
+          "task_success_verified": false
+        },
+        "outcome_evaluated_ns": 55550189057945,
+        "outcome_evaluation_ms": 0.032079,
+        "sequence": 218,
+        "signal": {
+          "binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "capture_ns": 55550033032859,
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "format": "observable-signal-v1",
+          "sequence": 218,
+          "signal_id": "health",
+          "slots": [
+            {
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "digit": null,
+              "second_score": 0.055762081784386616,
+              "slot": 0
+            },
+            {
+              "best_digit": 4,
+              "best_score": 0.9335038363171355,
+              "digit": 4,
+              "second_score": 0.2759493670886076,
+              "slot": 1
+            },
+            {
+              "best_digit": 8,
+              "best_score": 0.9378109452736318,
+              "digit": 8,
+              "second_score": 0.35443037974683544,
+              "slot": 2
+            }
+          ],
+          "status": "observed",
+          "value": 48,
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "signal_extracted_ns": 55550189025866,
+        "signal_extraction_ms": 22.30308
+      },
+      "returned_action_admission": "REJECTED_POLICY_INVALIDATED",
+      "returned_action_discarded": true,
+      "running_action": null,
+      "running_action_invalidation": null,
+      "soft_event_count": 3,
+      "typed_observation_count": 52
+    }
+  ],
+  "diagnostic": "Decision 3 separates a running action-validity revocation from policy-monitor invalidation: the admitted plan was canceled after the revocation, owner release was verified empty, and the terminal reports zero completed steps. The retained trace still cannot verify whether model-authored threat descriptions are correct or attribute useful progress to a particular action; the single aggregate score cannot be assigned to a decision.",
+  "event_rows": 634,
+  "limitations": {
+    "causal_kill_or_survival_attribution": false,
+    "contingency_effect_established": false,
+    "independent_per_decision_task_effect": false,
+    "live_run_or_replay_performed": false,
+    "matched_fixed_safe_counterfactual": false,
+    "physical_key_occupancy": false,
+    "threat_descriptions_are_model_authored": true,
+    "useful_feedback_oracle": false
+  },
+  "schema": "issue59-v39-retained-diagnosis-result-v2",
+  "source_commit": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+  "typed_observations": 218
+}
