@@ -185,7 +185,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         journal(row)
         if row["event"] in {"branch_selected", "admission_refused",
                             "action_terminal", "effect_checked",
-                            "cancellation_check_failed", "runtime_finished"}:
+                            "cancellation_check_failed", "effect_verification_failed",
+                            "runtime_finished"}:
             critical_events.append(row)
 
     def finish(outcome, reason):
@@ -284,12 +285,18 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                       "status": status, "evidence_ref": observation["evidence_ref"],
                       "verifier": "compiled_predicate_condition"})
                 return finish("SAFE_YIELD", "effect_" + status)
-            effect = adapters["verify_effect"]({
-                "expected_effect": copy.deepcopy(expected),
-                "action": pending_effect["action"],
-                "effect_ref": pending_effect["effect_ref"],
-                "observation": copy.deepcopy(observation),
-            })
+            try:
+                effect = adapters["verify_effect"]({
+                    "expected_effect": copy.deepcopy(expected),
+                    "action": pending_effect["action"],
+                    "effect_ref": pending_effect["effect_ref"],
+                    "observation": copy.deepcopy(observation),
+                })
+            except Exception as error:
+                emit({"event": "effect_verification_failed",
+                      "action": pending_effect["action"],
+                      "error_type": type(error).__name__})
+                return finish("RUNTIME_FAILED", "effect_unavailable")
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
