@@ -615,3 +615,9 @@ At current `main` `b5be19963454ce5edafc945b78b100012952dd15`, deleted these two 
 - `fix/59-wheel-release-ledger-20261005` at `e14c8267854e24e5978767cd53065622abdee3f6` (closed unmerged PR #7958).
 
 Neither ref was the head or base of an open PR, and no local worktree used either branch. PR #7974 is merged; its current implementation supersedes the older source deltas. The 36-file `cleanup-carrier-review-e0cc-20261005` and 23-file `wheel-successor-regression-e0cc-20261005` directories are present on main with blob SHAs identical to #7958's head. The #8012 carrier test is preserved byte-for-byte as `carrier-test-original.py.txt`; #7958's strengthened test is preserved byte-for-byte as `strengthened-test.py.txt`. Both closed PR head refs remain fetchable at their former tips after remote branch deletion. No PR state or source evidence was changed; the historical census rows above remain unchanged.
+
+## Follow-up: duplicate #8068 A01 source-ref cleanup (2026-10-05)
+
+Deleted `research/8068-imperfect-repair-t0-a01-20261005` at exact tip `c3cdedfe68ef4adb240d5ab5313b8285c9140d9f` by lease after confirming closed-unmerged PR #8092's correction classifies its separate 12-cell/WSLc-STOP package as a redundant, noncanonical allocation. No open PR used the branch as head or base, and no local worktree used it.
+
+The ten original package files (including raw, WSLc STOP, auditor, and original SHA256SUMS) have blob-identical copies in reviewable Draft PR #8187 at head `45d39341771504492c2baf56f368413fe383e32a`, alongside an archival qualification. The package remains explicitly noncanonical and must not be treated as a successor scientific result. After deletion, PR #8092 still reports the exact former head and its pull-head ref remains fetchable; PR #8187 remains open. This records rescue to a reviewable PR, not integration to main; no allocation was rerun.
