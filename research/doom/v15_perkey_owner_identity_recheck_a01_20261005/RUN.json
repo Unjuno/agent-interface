@@ -1,0 +1,56 @@
+{
+  "classification": "follow-up construction/source-selection recheck; not preregistered, not formal allocation",
+  "completed_attempt": {
+    "command": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -B replay_startup.py /tmp/v39-pr8065-head-4158-owner-probe/run-bundled",
+    "disposition": "FAIL_V15_PERKEY_SELECTED_OWNER_IDENTITY",
+    "routes": [
+      {
+        "exit_code": 0,
+        "route": "v12-perkey"
+      },
+      {
+        "exit_code": 0,
+        "route": "v15-default"
+      },
+      {
+        "exit_code": 0,
+        "route": "v15-perkey"
+      }
+    ],
+    "runtime": "CPython 3.12.14 bundled, Pillow 12.3.0"
+  },
+  "fallback_source_paths": [],
+  "first_attempt": {
+    "classification": "STOP before boundary: Pillow unavailable",
+    "exit_code": 1,
+    "runtime": "system python3",
+    "stderr_sha256": "46651e828aeab4bf83766294847b9e0b823aa0ca8b0933071642677b791ea119",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "package_replay": {
+    "command": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -B research/doom/v15_perkey_owner_identity_recheck_a01_20261005/replay_startup.py /tmp/v39-owner-recheck-replay-02",
+    "result": "PASS_REPLAY_REPRODUCED_SAME_OWNER_SELECTION"
+  },
+  "package_replay_followup": {
+    "output": "/tmp/v39-owner-recheck-replay-03",
+    "result": "PASS_REPLAY_REPRODUCED_SAME_OWNER_SELECTION"
+  },
+  "probe_sha256": "e253d3b7bd6f86d133e563c8ec1652849d9daa6cfe267954b399b95d80d85114",
+  "replay_sha256": "92dfec1d438b9dc062b8d2244a17903e52802b1c11255efd63f55f75ebe682d6",
+  "safety_boundary": {
+    "forbidden_calls": [],
+    "game": false,
+    "gui": false,
+    "model": false,
+    "native_input": false,
+    "owner_instantiated": false,
+    "session_started": false,
+    "x_server": false
+  },
+  "schema": "v15-perkey-owner-identity-recheck-run-v1",
+  "source_bytes": 400919,
+  "source_count": 56,
+  "target_base_main": "11445a7ca200404ddc80bf7ebb1dbef86eb059de",
+  "target_commit": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "target_pr": 8065
+}

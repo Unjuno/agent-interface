@@ -1,0 +1,32 @@
+{
+  "candidate_commit_mismatches": [],
+  "checks": {
+    "all_source_bytes_match_candidate_commit": true,
+    "all_source_snapshot_hashes": true,
+    "all_three_routes_exit_zero": true,
+    "initial_missing_pillow_stop_preserved": true,
+    "no_manifest_fallbacks": true,
+    "source_commit_matches_freeze": true,
+    "source_count_56": true,
+    "v12-perkey_stderr_empty": true,
+    "v12-perkey_stdout_matches_result": true,
+    "v12-perkey_stopped_before_session_and_owner": true,
+    "v12_perkey_selects_archived_owner": true,
+    "v15-default_stderr_empty": true,
+    "v15-default_stdout_matches_result": true,
+    "v15-default_stopped_before_session_and_owner": true,
+    "v15-perkey_stderr_empty": true,
+    "v15-perkey_stdout_matches_result": true,
+    "v15-perkey_stopped_before_session_and_owner": true,
+    "v15_default_selects_current_transition_wrapper": true,
+    "v15_perkey_manifest_actual_identity_mismatch": true,
+    "v15_perkey_selects_current_raw_owner": true
+  },
+  "classification": "local source-selection construction only",
+  "disposition": "PASS_REPRODUCED_SOURCE_SELECTION_DEFECT",
+  "live_or_physical_release_claim": false,
+  "passed": 20,
+  "schema": "v15-perkey-owner-identity-recheck-audit-v1",
+  "source_failures": [],
+  "total": 20
+}
