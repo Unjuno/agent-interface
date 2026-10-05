@@ -4,6 +4,6 @@ The predeclared normal and optimized commands each ran exactly once on the froze
 
 The host also emitted: “Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.” The 512 MiB container setting is recorded as requested, not proven enforcement. Both disposable containers exited; active-container count after the run was zero.
 
-The four captured output streams are preserved byte-for-byte as base64 files with original SHA-256 and byte lengths in EXECUTION.json. The independent auditor checks the extracted 1,996-file source view and classifies the retained logs without importing candidate code. The earlier source-extractor deadlock remains in PREPARE_STOP_01.json.
+The four captured output streams are preserved byte-for-byte as base64 files with original SHA-256 and byte lengths in EXECUTION.json. The independent auditor passed 8/8 checks on the extracted 1,996-file source view and classifies the retained logs without importing candidate code. The earlier source-extractor deadlock remains in PREPARE_STOP_01.json.
 
 No retry, package installation, container-image mutation, live game, model call, native X11, or input execution followed. Keep this STOP unchanged. A future test using a different qualified image would be a separately frozen successor; this result does not close the live threat-exposure gate.

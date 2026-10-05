@@ -1,0 +1,48 @@
+{
+  "schema": "v15-cleanup-crosspython-audit-run-v1",
+  "exit_code": 0,
+  "runtime": "WSLc 3.0.1 / python 3.12.15 linux/amd64",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "argv": [
+    "wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--cpus",
+    "1",
+    "--memory",
+    "512M",
+    "--volume",
+    "<package>:/pkg:ro",
+    "--volume",
+    "<source>:/src:ro",
+    "--volume",
+    "<audit-output>:/out:rw",
+    "--workdir",
+    "/pkg",
+    "--entrypoint",
+    "python3",
+    "<image>",
+    "-B",
+    "audit_result.py",
+    "--source-dir",
+    "/src",
+    "--output",
+    "/out/AUDIT.json"
+  ],
+  "stdout": {
+    "bytes": 180,
+    "sha256": "d2e8e9c0ae47b9aaf5dc943c45584d76e9b91fe5469d09b04b5f60e1b9a9c9e5",
+    "path": "audit.stdout.txt.b64"
+  },
+  "stderr": {
+    "bytes": 118,
+    "sha256": "2562006e62622bcf41c809d627cdc2c6250516b8cf1c9ccd28072c331fcc4096",
+    "path": "audit.stderr.txt.b64"
+  },
+  "active_containers_after": 0,
+  "host_warning": "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."
+}

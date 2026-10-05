@@ -12,6 +12,6 @@ This package records one normal and one optimized execution of the predeclared s
 
 ## Raw data and audit
 
-The four *.stdout.txt.b64 and *.stderr.txt.b64 files are base64 encodings of byte-for-byte captured WSLc streams. EXECUTION.json records each original byte count and SHA-256. The independent audit decodes/checks the streams and verifies all 1,996 extracted Python source files against SOURCE_MANIFEST.json without importing or executing candidate code.
+The four *.stdout.txt.b64 and *.stderr.txt.b64 files are base64 encodings of byte-for-byte captured WSLc streams. EXECUTION.json records each original byte count and SHA-256. The independent audit passed 8/8 checks, decoding/checking the streams and verifying all 1,996 extracted Python source files against SOURCE_MANIFEST.json without importing or executing candidate code.
 
 The first pre-run extractor failure is retained in PREPARE_STOP_01.json. Do not rerun the two STOPped candidate commands. Any future dependency-qualified test must be a newly frozen successor and retain this STOP unchanged.
