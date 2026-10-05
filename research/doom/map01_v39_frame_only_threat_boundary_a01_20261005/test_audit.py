@@ -1,14 +1,16 @@
-"""Mutation checks for the retained frame-only boundary audit."""
+"""Mutation checks for the retained frame-only boundary evidence."""
 import copy, json, sys, unittest
 from pathlib import Path
-
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE))
-from audit import validate
-sys.path.insert(0,str(HERE))
+from audit_v2 import validate
 RAW=json.loads((HERE/"results"/"a01"/"candidate.json").read_text(encoding="utf-8"))
 
 class AuditTests(unittest.TestCase):
+    def test_original_audit_remains_preserved(self):
+        original=json.loads((HERE/"results"/"a01"/"audit.json").read_text(encoding="utf-8"))
+        self.assertEqual(original["disposition"],"CONFIRMED_BOUNDARY")
+        self.assertTrue(all(original["checks"].values()))
     def test_retained_candidate_confirms_the_narrow_boundary(self):
         self.assertEqual(validate(RAW)["disposition"],"CONFIRMED_BOUNDARY")
     def test_invalidation_mutation_is_rejected(self):
