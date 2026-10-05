@@ -143,6 +143,7 @@ def main(public_path, oracle_path, candidate_path, report_path):
     profile_stats = defaultdict(lambda: {"rows":0,"point_false_yield":0,"interval_false_yield":0,
                                          "point_hazard_yield":0,"interval_hazard_yield":0,
                                          "eligible_point_yield":0,"eligible_interval_yield":0,
+                                         "eligible_prefixes":0,"eligible_numeric_intervals":0,
                                          "in_model_containment_misses":0,"fail_closed_yields":0})
     lead_failures = []
     for sid, truth in tru.items():
@@ -157,6 +158,9 @@ def main(public_path, oracle_path, candidate_path, report_path):
                 true_ttc = truth["truth"][i]["true_ttc_s"]
                 if true_ttc is not None and not (iv[0] - 1e-9 <= true_ttc <= iv[1] + 1e-9):
                     stats["in_model_containment_misses"] += 1
+            if truth["eligible_in_model"] and truth["truth"][i]["observed"]:
+                stats["eligible_prefixes"] += 1
+                stats["eligible_numeric_intervals"] += iv is not None
             if i == len(p["estimates"])-1 and truth["profile"] in (
                     "identity_swap", "passby", "stationary", "acceleration", "occlusion", "understated_bound") \
                     and iv and iv[1] <= thresholds["interval"]:
@@ -191,9 +195,9 @@ def main(public_path, oracle_path, candidate_path, report_path):
     noisy = ["iid", "correlated"]
     irregular = ["irregular_dropout"]
     strict_improvement = all(
-        sum(by_profile.get(profile, {}).get("interval_false_yield",0) for profile in group)
-        < sum(by_profile.get(profile, {}).get("point_false_yield",0) for profile in group)
-        for group in (noisy, irregular))
+        by_profile.get(profile, {}).get("interval_false_yield",0)
+        < by_profile.get(profile, {}).get("point_false_yield",0)
+        for profile in noisy + irregular)
     checks = {
         "rows_200": len(public) == 200 and len(oracle) == 200 and len(candidate) == 200,
         "calibration_controls_50": sum(x["split"] == "calibration" and not x["hazard"] for x in oracle) == 50,
@@ -202,6 +206,10 @@ def main(public_path, oracle_path, candidate_path, report_path):
         "all_in_model_contained": all(x["in_model_containment_misses"] == 0 for x in by_profile.values()),
         "lead_criterion": not lead_failures,
         "eligible_hazard_yield": any(v["eligible_point_yield"] for v in by_profile.values()) and any(v["eligible_interval_yield"] for v in by_profile.values()),
+        "in_model_interval_coverage": all(
+            by_profile.get(p,{}).get("eligible_prefixes",0)>0 and
+            by_profile[p]["eligible_numeric_intervals"] / by_profile[p]["eligible_prefixes"] >= 0.5
+            for p in ("approach","iid","correlated","irregular_dropout")),
         "invalid_terminal_fail_closed": all(by_profile.get(p,{}).get("fail_closed_yields",0)==0 for p in
                                               ("passby","stationary","acceleration","occlusion","identity_swap","understated_bound")),
         "mutation_audit": all(mutation_checks.values()),
@@ -210,9 +218,10 @@ def main(public_path, oracle_path, candidate_path, report_path):
     report = {"thresholds": thresholds, "profiles": by_profile,
               "lead_failures": lead_failures, "errors": errors,
               "mutation_checks": mutation_checks, "checks": checks,
-        "decision": ("FAIL_METHOD" if errors or not checks["all_in_model_contained"] or not checks["lead_criterion"]
+        "decision": ("FAIL_METHOD" if errors or not checks["all_in_model_contained"]
                            or not checks["invalid_terminal_fail_closed"] or not checks["mutation_audit"] else
-                           "PASS_METHOD_SCOPED" if checks["strict_false_yield_improvement"] and checks["eligible_hazard_yield"]
+                           "PASS_METHOD_SCOPED" if checks["lead_criterion"] and checks["eligible_hazard_yield"]
+                           and checks["in_model_interval_coverage"] and checks["strict_false_yield_improvement"]
                            else "NO_INCREMENTAL_VALUE")}
     with open(report_path,"w",encoding="utf-8") as f: json.dump(report,f,sort_keys=True,indent=2)
     if errors: return 2

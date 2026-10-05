@@ -98,5 +98,5 @@ def write(path: Path, rows):
 if __name__ == "__main__":
     out = Path(__import__("sys").argv[1])
     pub, truth = build()
-    write(out / "public.jsonl", pub)
-    write(out / "oracle.jsonl", truth)
+    write(out / "public" / "public.jsonl", pub)
+    write(out / "oracle" / "oracle.jsonl", truth)
