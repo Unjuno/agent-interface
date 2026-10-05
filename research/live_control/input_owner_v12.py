@@ -88,6 +88,7 @@ class InputOwner:
         active_pointer = False
         revision = 0
         fault = None
+        release_pending = False
         self.ready.set()
 
         def key_is_down(code):
@@ -352,8 +353,9 @@ class InputOwner:
                 raise Cancelled()
 
         def release(reason):
-            nonlocal active,revision
+            nonlocal active,revision,fault,release_pending
             revision += 1
+            release_pending = True
             key_release_attempts = {}
             key_state_errors = []
             # Include every key this owner touched, not only keys still present
@@ -430,6 +432,8 @@ class InputOwner:
             held.clear()
             touched.clear()
             active = None
+            fault = None
+            release_pending = False
             return record
 
         try:
@@ -462,6 +466,10 @@ class InputOwner:
                     continue
                 closing = op == 'close'
                 try:
+                    if release_pending and op not in (
+                            'release', 'close', 'input_state', 'surface_context'):
+                        raise RuntimeError(
+                            'input owner release pending; retry release before actuation')
                     continuation = op == 'continue_move'
                     if continuation:
                         if not isinstance(key,dict) or set(key)!={'owner_id','expected_revision','x','y','reply_until_ns'}:
@@ -485,7 +493,8 @@ class InputOwner:
                             pointer=[point.root_x,point.root_y],focus=focus,
                             active_lease_deadline_ns=active.deadline if active else None,
                             active_lease_time_valid=active is not None and finished<active.deadline,
-                            cancel_requested=active.cancel.is_set() if active else False)
+                            cancel_requested=active.cancel.is_set() if active else False,
+                            release_pending=release_pending)
                     elif op == 'surface_context':
                         result = surface_context(key)
                     elif op in ('release', 'close'):
