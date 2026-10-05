@@ -1,0 +1,11 @@
+OrbStack preflight before candidate execution
+
+Command: docker --context orbstack ps --no-trunc
+Observed: empty container list.
+
+Command: docker --context orbstack image ls --digests --format '{{.Repository}}:{{.Tag}}@{{.Digest}}'
+Observed: daemon error while reading cached blob
+sha256:b138c00ce990cf972f8be1ae4b3f7a11a198ad46e8804b41dabd979052aad8e8:
+open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/b138c00ce990cf972f8be1ae3b4f7a11a198ad46e8804b41dabd979052aad8e8: operation not supported
+
+Disposition: no image pull, container launch, prune, or VM repair. The candidate uses the local bundled Python runtime and makes no claim of container validation.

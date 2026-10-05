@@ -1,0 +1,16 @@
+{
+  "schema": "v39-v15-perkey-cleanup-a08-run-v1",
+  "run_id": "a08-current-main-712a71b-20261005-one-shot",
+  "candidate_process_invocations": 1,
+  "candidate_python_exit_code": 1,
+  "candidate_treatment_actions": 0,
+  "raw_file_present": false,
+  "python_failure": "ModuleNotFoundError: No module named 'input_owner_v12'",
+  "cause": "This worktree used sparse checkout pattern research/doom; research/live_control was absent from the candidate import root.",
+  "python_stderr": "results/candidate.stderr.log",
+  "shell_wrapper_failure": "zsh:3: read-only variable: status",
+  "shell_wrapper_stderr": "results/shell_wrapper.stderr.txt",
+  "disposition": "STOP_BEFORE_TREATMENT_SPARSE_SOURCE_OMISSION",
+  "retry": "A08 was not retried. A09 is a separately identified construction run using the same frozen main source with required source directories checked out before candidate invocation.",
+  "source_commit": "712a71b25dc024b5406b24b568225c0663e7278b"
+}
