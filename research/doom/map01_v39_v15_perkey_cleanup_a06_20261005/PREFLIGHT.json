@@ -1,0 +1,15 @@
+{
+  "active_containers_before_candidate": 0,
+  "cached_image": true,
+  "exit_code": 0,
+  "host_c_free_bytes": 9070546944,
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "image_config_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "observed_at_utc": "2026-10-05T08:38:57Z",
+  "output_directory_empty": true,
+  "preflight_command": "wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -c <read python/platform and cgroup files>",
+  "runtime": "WSLc 3.0.1.0",
+  "schema": "v39-v15-perkey-cleanup-a06-preflight-v1",
+  "source_materialization": "21/21 snapshot SHA-256 and Git blob IDs match exact source commit",
+  "stdout_stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\n{\"python\": \"3.12.15 (main, Oct 1 2026, 21:47:32) [GCC 14.2.0]\", \"platform\": \"Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.41\", \"cgroups\": {\"/sys/fs/cgroup/cpu.max\": \"25000 100000\", \"/sys/fs/cgroup/memory.max\": \"536870912\", \"/sys/fs/cgroup/memory.swap.max\": \"max\", \"/sys/fs/cgroup/cgroup.controllers\": \"cpuset cpu io memory hugetlb pids rdma\"}}"
+}
