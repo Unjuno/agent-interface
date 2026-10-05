@@ -1,0 +1,25 @@
+WSLc inventory: `wslc.exe list` showed zero running containers.
+Host warning: `Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.`
+
+Preflight 1 (did not start a container; unsupported option):
+
+```text
+wslc.exe run --rm --pull never --network none --memory 512M --cpus 1 --read-only python@sha256:1ae5b32b33f502335ed9f5ee7afa4387192e9566b1328fc66da836c77c1cfb65 python -c "import PIL, numpy; print('Pillow', PIL.__version__, 'NumPy', numpy.__version__)"
+```
+
+```text
+option not recognized for this command: '--read-only'
+```
+
+Preflight 2 (pinned cached Python image; no project source was mounted):
+
+```text
+wslc.exe run --rm --pull never --network none --memory 512M --cpus 1 python@sha256:1ae5b32b33f502335ed9f5ee7afa4387192e9566b1328fc66da836c77c1cfb65 python -c "import PIL, numpy; print('Pillow', PIL.__version__, 'NumPy', numpy.__version__)"
+```
+
+```text
+ModuleNotFoundError: No module named 'PIL'
+```
+
+No candidate route ran in WSLc. The ordinary mocked probe ran under Windows
+Python 3.11.9 with Pillow 10.4.0 and NumPy 2.4.6.
