@@ -49,6 +49,55 @@ class InputState:
 
 
 class ExplicitUpLedgerTests(unittest.TestCase):
+    def test_preflight_cleanup_failure_returns_transition_instead_of_raising(self):
+        obj = self.backend(query_error=True)
+        obj.held_keys = {"Q": 81}
+        obj._active_key_holds = {"Q": "prior-hold"}
+        obj._retained_key_holds = {"Q": "prior-hold"}
+        obj._backend_instance_id = "preflight-cleanup"
+        obj.last_input_transitions = [{"event": "prior transition"}]
+        obj.user32.down.add(81)
+
+        def reject_preflight(_program):
+            raise native.Win32BackendError("inert preflight rejection")
+
+        obj.preflight = reject_preflight
+        reply = self.dispatch(obj, "preflight_cleanup_failure", [])
+
+        self.assertEqual(reply["status"], "execution_failed")
+        self.assertEqual(reply["error"], "BACKEND_CLEANUP")
+        self.assertEqual(reply["release"]["verified"], False)
+        self.assertEqual(reply["release"]["error"], "RuntimeError")
+        self.assertIn("inert read unavailable", reply["release"]["detail"])
+        self.assertEqual(len(reply["input_transitions"]), 1)
+        self.assertEqual([(row["operation"], row["cleanup"]) for row in reply["input_transitions"]],
+                         [("up", True)])
+        self.assertEqual(reply["input_transitions"][0]["hold_id"], "prior-hold")
+
+    def test_preflight_cleanup_success_returns_new_transition(self):
+        obj = self.backend()
+        obj.held_keys = {"Q": 81}
+        obj._active_key_holds = {"Q": "prior-hold"}
+        obj._retained_key_holds = {"Q": "prior-hold"}
+        obj._backend_instance_id = "preflight-cleanup"
+        obj.last_input_transitions = [{"event": "prior transition"}]
+        obj.user32.down.add(81)
+
+        def reject_preflight(_program):
+            raise native.Win32BackendError("inert preflight rejection")
+
+        obj.preflight = reject_preflight
+        reply = self.dispatch(obj, "preflight_cleanup_success", [])
+
+        self.assertEqual(reply["status"], "refused")
+        self.assertTrue(reply["release"]["verified"])
+        self.assertEqual(len(reply["input_transitions"]), 1)
+        self.assertEqual([(row["operation"], row["cleanup"]) for row in reply["input_transitions"]],
+                         [("up", True)])
+        self.assertEqual(reply["input_transitions"][0]["hold_id"], "prior-hold")
+        self.assertEqual(obj.user32.down, set())
+        self.assertEqual(obj.held_keys, {})
+
     def setUp(self):
         self.enterContext(patch.object(native.Win32Backend, '__init__',
                                       side_effect=AssertionError('constructor forbidden')))
