@@ -644,6 +644,7 @@ class Win32Backend:
         releases: list[dict[str, Any]] = []
         self._current_input_transitions = []
         self.last_input_transitions = []
+        self.last_execution_release = None
         self._current_program_id = program.get("program_id")
         self._current_admitted_ns = admitted_ns
         started = time.monotonic_ns()
@@ -685,7 +686,16 @@ class Win32Backend:
                     raise Win32BackendError(f"unsupported op {kind}")
         except Exception:
             try:
-                releases.append(self.release_all())
+                self.last_execution_release = self.release_all()
+                releases.append(self.last_execution_release)
+            except Exception as cleanup_error:
+                # Keep the failed cleanup explicit for the session response;
+                # a thrown state query is not evidence that inputs are up.
+                self.last_execution_release = {
+                    "verified": False,
+                    "error": type(cleanup_error).__name__,
+                    "detail": str(cleanup_error),
+                }
             finally:
                 # Cleanup may itself fail after appending partial UP receipts.
                 # Preserve every transition and clear per-execution context
