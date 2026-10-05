@@ -1,5 +1,6 @@
 """Exact episode-tick contract tests for the scorer selected by V39."""
 import ast
+import math
 import time
 import unittest
 from pathlib import Path
@@ -24,13 +25,13 @@ def load_sample_function():
                     if isinstance(node, ast.FunctionDef)
                     and node.name == "_coherent_progress_sample")
     module = ast.Module(body=[function], type_ignores=[])
-    namespace = {"ProgressSample": ProgressSample, "time": time}
+    namespace = {"ProgressSample": ProgressSample, "time": time, "math": math}
     exec(compile(ast.fix_missing_locations(module), str(SOURCE), "exec"), namespace)
     return namespace[function.name]
 
 
 class FakeGame:
-    def __init__(self, before, after, kills=0, deaths=0, ticrate=35):
+    def __init__(self, before, after, kills=0.0, deaths=0.0, ticrate=35):
         self.tics = iter((before, after))
         self.last_tic = after
         self.scorer_reads = 0
@@ -94,11 +95,18 @@ class ExactScorerTickTests(unittest.TestCase):
 
     def test_malformed_progress_counters_are_rejected(self):
         for field, value in (("kills", 1.5), ("kills", True), ("kills", -1),
-                             ("deaths", 2.5), ("deaths", False), ("deaths", -1)):
+                             ("kills", float("nan")), ("kills", float("inf")),
+                             ("deaths", 2.5), ("deaths", False), ("deaths", -1),
+                             ("deaths", float("nan")), ("deaths", float("inf"))):
             with self.subTest(field=field, value=value):
                 game = FakeGame(10, 10, **{field: value})
                 with self.assertRaises(ValueError):
                     self.sample(game, self.variables, 600, clock_ns=lambda: 1)
+
+    def test_integral_float_progress_counters_are_accepted(self):
+        game = FakeGame(10, 10, kills=3.0, deaths=2.0)
+        sample = self.sample(game, self.variables, 600, clock_ns=lambda: 1)
+        self.assertEqual((sample.kills, sample.deaths), (3, 2))
 
     def test_invalid_ticrate_is_rejected(self):
         for value in (35.5, True, 0, -1):

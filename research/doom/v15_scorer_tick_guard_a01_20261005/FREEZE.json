@@ -1,13 +1,14 @@
 {
-  "schema": "v15-scorer-tick-guard-freeze-v1",
+  "schema": "v15-scorer-tick-guard-freeze-v2",
   "base_main": "1fa752f3b8b474cfbf03bee2686ac739ef6e7bda",
   "stacked_on_pr": 7843,
   "stacked_base": "758d803ff2842a0e4f9ded8db119d84c02360a9f",
   "baseline_source_blob": "f71ca01426a703e4160c9403395fed03416c772e",
   "candidate_sha256": {
-    "research/doom/session_map01_v15.py": "60066f5f197dbb44cff5f708c66b0871427a65bdace3a249b8d198429602c1f5",
-    "research/doom/test_session_map01_v15_ticks.py": "b5b23294fd02ddde26bc49bfcc5b0b81fc278149ef2682bb0811ab32d728f618"
+    "research/doom/session_map01_v15.py": "6c013da625ca7ee91a5b065438140c4cef62ba8b2add3fa9ee14b52902b75d79",
+    "research/doom/test_session_map01_v15_ticks.py": "83301f1c0460d18cab4611287903a49d80ea222eb71bb5bb87671b5761978d21"
   },
   "scope": "AST-isolated scorer input contract tests; no game, model, GUI, display, or OS input",
-  "gate": "PASS iff exact nonnegative integer episode tics and kill/death counters plus positive integer tic rate are required; exact bool terminal flags are preserved; malformed bool/fraction/negative values reject; integer controls pass"
+  "counter_api_contract": "ViZDoom get_game_variable returns Python float; accept finite nonnegative integer-valued float or exact nonnegative int; reject bool, fractional, nonfinite, and negative values before conversion",
+  "gate": "PASS iff exact nonnegative integer episode tics, finite nonnegative integral kill/death values, positive integer tic rate and exact bool terminal flags are required; malformed values reject; documented integral-float counter controls pass"
 }

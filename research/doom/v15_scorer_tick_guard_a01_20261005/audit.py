@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 freeze = json.loads((HERE / "FREEZE.json").read_text(encoding="utf-8"))
 result = json.loads((HERE / "RESULT.json").read_text(encoding="utf-8"))
-assert freeze["schema"] == "v15-scorer-tick-guard-freeze-v1"
+assert freeze["schema"] == "v15-scorer-tick-guard-freeze-v2"
 assert result["disposition"] == "PASS_SCORER_TICK_CONTRACT"
 assert subprocess.check_output(
     ["git", "rev-parse", f"{freeze['base_main']}:research/doom/session_map01_v15.py"],
@@ -19,7 +19,7 @@ for relative, expected in freeze["candidate_sha256"].items():
 assert result["baseline"]["fractional_tics"]["accepted"] is True
 assert result["baseline"]["boolean_start"]["accepted"] is True
 assert result["baseline"]["fractional_post_sample"]["accepted"] is True
-assert result["candidate"]["focused_tests_normal"] == "3/3 passed"
-assert result["candidate"]["focused_tests_optimized"] == "3/3 passed"
+assert result["candidate"]["focused_tests_normal"] == "6/6 passed"
+assert result["candidate"]["focused_tests_optimized"] == "6/6 passed"
 assert result["live_game"] is False and result["model_calls"] == 0
 print("AUDIT_PASS: base blob, candidate hashes, recorded test gate, and scope")

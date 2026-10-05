@@ -2,21 +2,58 @@
   "schema": "v15-scorer-tick-guard-result-v1",
   "disposition": "PASS_SCORER_TICK_CONTRACT",
   "baseline": {
-    "fractional_tics": {"raw": [10.5, 11.5], "coerced": [10, 11], "accepted": true},
-    "boolean_start": {"raw": [true, 2], "coerced": [1, 2], "accepted": true},
-    "fractional_post_sample": {"raw": [10, 10.5], "coerced": [10, 10], "accepted": true}
+    "fractional_tics": {
+      "raw": [
+        10.5,
+        11.5
+      ],
+      "coerced": [
+        10,
+        11
+      ],
+      "accepted": true
+    },
+    "boolean_start": {
+      "raw": [
+        true,
+        2
+      ],
+      "coerced": [
+        1,
+        2
+      ],
+      "accepted": true
+    },
+    "fractional_post_sample": {
+      "raw": [
+        10,
+        10.5
+      ],
+      "coerced": [
+        10,
+        10
+      ],
+      "accepted": true
+    },
+    "accepted_malformed_counters": {
+      "fractional": true,
+      "boolean": true,
+      "negative": true
+    }
   },
   "candidate": {
-    "focused_tests_normal": "3/3 passed",
-    "focused_tests_optimized": "3/3 passed",
+    "focused_tests_normal": "6/6 passed",
+    "focused_tests_optimized": "6/6 passed",
     "v15_lifecycle_selection": "8/8 passed with inert executor_v13 import stub",
     "py_compile": "passed",
-    "diff_check": "passed"
+    "diff_check": "passed",
+    "integral_float_counter_control": "3.0 kills / 2.0 deaths accepted as exact scorer counts"
   },
   "environment": "Windows CPython 3.11.9",
   "live_game": false,
   "model_calls": 0,
   "gui": false,
   "os_input": false,
-  "limitation": "Full V39 controller suite unavailable in sparse checkout: doom_hud_signal_v1.py was not materialized. No V39/V15 live composition or task-effect attribution was run."
+  "api_contract": "Official ViZDoom API documents get_game_variable -> float; integral finite nonnegative floats are accepted",
+  "limitation": "Full V39 controller suite unavailable in sparse checkout: doom_hud_signal_v1.py was not materialized. No ViZDoom process, V39/V15 live composition, or task-effect attribution was run."
 }

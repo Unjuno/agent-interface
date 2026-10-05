@@ -5,7 +5,7 @@ terminal-locked progress clock v2. Controller policy, command semantics and v12
 controller-visible event delivery remain unchanged.
 """
 from __future__ import annotations
-import hashlib,json,sys,time
+import hashlib,json,math,sys,time
 from pathlib import Path
 from map01_scorer_stdio_adapter_v1 import MainThreadScorerStdin,ScorerFileSink
 from independent_progress_clock_v2 import ProgressSample
@@ -37,8 +37,13 @@ def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.p
         finished=game.is_episode_finished();dead=game.is_player_dead()
         if type(finished) is not bool or type(dead) is not bool:raise ValueError('invalid terminal scorer flags')
         kills=game.get_game_variable(game_variable.KILLCOUNT);deaths=game.get_game_variable(game_variable.DEATHCOUNT);ticrate=game.get_ticrate()
-        if type(kills) is not int or kills<0:raise ValueError('invalid kill count')
-        if type(deaths) is not int or deaths<0:raise ValueError('invalid death count')
+        if type(kills) is float:
+            if not math.isfinite(kills) or kills<0 or not kills.is_integer():raise ValueError('invalid kill count')
+        elif type(kills) is not int or kills<0:raise ValueError('invalid kill count')
+        if type(deaths) is float:
+            if not math.isfinite(deaths) or deaths<0 or not deaths.is_integer():raise ValueError('invalid death count')
+        elif type(deaths) is not int or deaths<0:raise ValueError('invalid death count')
+        kills=int(kills);deaths=int(deaths)
         if type(ticrate) is not int or ticrate<1:raise ValueError('invalid tic rate')
         timeout_method=getattr(game,'is_episode_timeout_reached',None);timeout_reached=bool(timeout_method()) if callable(timeout_method) else tic_before>=timeout_seconds*ticrate
         tic_after=game.get_episode_time()
