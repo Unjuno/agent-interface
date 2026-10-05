@@ -35,4 +35,3 @@
   },
   "decision": "PASS_IDEMPOTENT_ROW_PROGRESS_SCOPED iff all three idempotent-sink schedules finish with exact payload-equal rows keyed once by release_id, row 1 is not re-appended during row-2 retry, and controls fail closed. Non-idempotent append-then-raise is UNKNOWN if duplicate delivery occurs."
 }
-

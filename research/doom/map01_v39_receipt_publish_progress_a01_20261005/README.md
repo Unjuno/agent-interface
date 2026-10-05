@@ -13,4 +13,3 @@
 **U:** Synthetic publisher/sink protocol only. It does not address mutable owner record completion, owner hold retirement, terminal barriers, X11, GUI/game, model, useful feedback, recovery, or live allocation. It neither repairs #7805 nor closes #59.
 
 Candidate writes RAW.json only to the separate output mount. Auditor reads it without mutation. No retries.
-

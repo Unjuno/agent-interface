@@ -38,4 +38,3 @@ print(json.dumps({
     "non_idempotent_control": "UNKNOWN_DUPLICATE_AFTER_ACK_LOSS",
     "collision_control": "REJECTED",
 }, sort_keys=True))
-
