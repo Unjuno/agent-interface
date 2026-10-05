@@ -1,0 +1,19 @@
+{
+  "allocation": "APPLICATION-QUALIFIED-DRAFT-7409-T0-A01-20261005-01",
+  "role": "container-mount-preflight-only",
+  "formal_candidate_invocations_before_preflight": 0,
+  "formal_auditor_invocations_before_preflight": 0,
+  "exit_code": 0,
+  "runtime": "OrbStack Docker 29.4.0",
+  "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "platform": "linux/arm64",
+  "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=<package>/frozen,dst=/src,readonly --mount type=bind,src=<package>/results/preflight,dst=/out --workdir /src python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c python -I /src/preflight_probe.py",
+  "observed": {
+    "source_read": true,
+    "source_write_rejected": true,
+    "output_write_readback": true,
+    "source_write_probe_created": false
+  },
+  "stdout_sha256": "65b9bd0d1b92308e5490412c635bfd418ceaaa3e0f1368829662df757b54633c",
+  "stderr_bytes": 0
+}
