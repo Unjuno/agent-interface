@@ -1,0 +1,31 @@
+test_v12_expiry_retains_keyup_when_owner_pointer_query_fails (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_pointer_query_fails) ... FAIL
+test_v12_expiry_retains_keyup_when_owner_keymap_query_fails (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_keymap_query_fails) ... FAIL
+
+======================================================================
+FAIL: test_v12_expiry_retains_keyup_when_owner_pointer_query_fails (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_pointer_query_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/v39-cancel-release-current-main-validate/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_executor_v12_expiry_composition.py", line 213, in test_v12_expiry_retains_keyup_when_owner_pointer_query_fails
+    self._assert_expiry_release_survives_aggregate_query_failure("pointer")
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/v39-cancel-release-current-main-validate/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_executor_v12_expiry_composition.py", line 178, in _assert_expiry_release_survives_aggregate_query_failure
+    self.assertEqual(len(expired_ups), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_v12_expiry_retains_keyup_when_owner_keymap_query_fails (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_keymap_query_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/v39-cancel-release-current-main-validate/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_executor_v12_expiry_composition.py", line 216, in test_v12_expiry_retains_keyup_when_owner_keymap_query_fails
+    self._assert_expiry_release_survives_aggregate_query_failure("keymap")
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/private/tmp/v39-cancel-release-current-main-validate/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_executor_v12_expiry_composition.py", line 178, in _assert_expiry_release_survives_aggregate_query_failure
+    self.assertEqual(len(expired_ups), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.081s
+
+FAILED (failures=2)
