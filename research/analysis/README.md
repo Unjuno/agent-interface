@@ -1,10 +1,12 @@
 # Analytical research
 
+- [Issue #8080 blocked vs interleaved practice T0 A01](blocked_interleaved_practice_8080_t0_a01_20261005/REPORT.md) — `METHOD_PASS_SCOPED` for equal synthetic exposure, reversible effects, held-out exclusion, and scorer controls; no human-learning or transfer claim.
 - [Issue #8084 confusion-adaptive practice T0 A02](confusion_adaptive_practice_8084_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED` on six synthetic matrices / 12 schedules; equal exposure, pre-outcome heterogeneity gate, exact neutral fallback, held-out isolation, and independent scorer controls. A01 pre-formal mount-isolation STOP preserved; no human-learning claim.
 - [Issue #8084 T0 A01 pre-formal STOP](confusion_adaptive_practice_8084_t0_a01_20261005/STOP.md) — no candidate/auditor calls; package-wide candidate mount would expose auditor-only held-out/scorer fixture. A02 is separately frozen.
 
 - [Issue #8072 controlled-feedback T0 A02](controlled_feedback_8072_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED` on 100 paired synthetic seeds; controlled median optimism 0.117 vs 0.438 and mean fresh utility 0.818 vs 0.500. Separate raw-only audit reconstructed all rows and rejected four mutations. A01 audit defect preserved; no real evaluation, human, GUI, privacy, or product claim.
 - [Issue #8057 internal vs environmental memory T0](memory_locus_8057_t0_20261005/README.md) — `PASS_METHOD_SCOPED`: independent process audit reconstructs all 96 four-arm task rows; 13/13 tests normal and `-O`; stale/missing/collateral mutations rejected. Authored costs show only a finite crossover illustration; no GUI, model, token, or real-user claim.
+- [Issue #8068 imperfect-repair T0/T1](imperfect_repair_8068_t0_20261005/README.md) — T0 `METHOD_PASS_SCOPED` (WSLc 7/7 normal and `-O`); T1 `HOLD_NO_IDENTIFIABLE_REPAIR_HISTORY`. The authored seven-cycle fixture rejects frozen split, exposure, fault-label, censoring, recurrence and effect-receipt mutations; targeted retained-trace audit found no eligible observed repeated-recovery cohort.
 
 - [Issue #5905 A05 all-frame regression-TTC screen](looming_yield_5905_image_only_t0_2_a05_20261005/REPORT.md) — unregistered host-only exploratory result; independent raw audit 13/13, 18/18 local tests. OLS TTC improved over secant (6/6 vs 5/6) but not pixel/area baselines (both 6/6): `EXPLORATORY_NO_INCREMENTAL_VALUE`. OrbStack nested-OCI preflight STOP; no formal/container or live-control claim.
 
@@ -281,6 +283,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
+<details>
+<summary><strong>Expand all retained result/failure directories</strong></summary>
+
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
@@ -358,6 +363,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`blackwell_observation_dominance_6678_t1_browser_20261003/`](blackwell_observation_dominance_6678_t1_browser_20261003/)
 - [`blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/)
 - [`blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/)
+- [`blocked_interleaved_practice_8080_t0_a01_20261005/`](blocked_interleaved_practice_8080_t0_a01_20261005/)
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
@@ -1002,6 +1008,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
+
+</details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 

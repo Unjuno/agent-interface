@@ -1,0 +1,16 @@
+{
+  "auditor": "SOURCE/audit.py",
+  "auditor_sha256": "8949ed94c09e67b3214cc07f935e3cf84d29a13f36751e6ab5a58a71d5a98bab",
+  "base_main": "ff13baf57d5f1c12819151e668b92cb6db4a7c1c",
+  "candidate": "SOURCE/candidate.py",
+  "candidate_sha256": "83de3d2c8340dbf43495546ed2305c6c0ab74c773bd0e6885f134cbf3f51a5ca",
+  "display": ":129",
+  "hypothesis": "With one key admitted by the exact current-main V4\u2192V3\u2192V12 owner on a mapped focused Xvfb client, calling the wrapper close path emits KeyRelease, verifies empty server state, records verified owner_release(reason=close), and leaves the owner thread stopped.",
+  "one_shot_policy": "Output parent only; A07 leaf must not exist. Candidate once, auditor once if raw exists. Never rerun/overwrite.",
+  "schema": "v39-owner-close-xvfb-freeze-a07-v1",
+  "source_sha256": {
+    "input_owner_v12.py": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+    "input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+  }
+}

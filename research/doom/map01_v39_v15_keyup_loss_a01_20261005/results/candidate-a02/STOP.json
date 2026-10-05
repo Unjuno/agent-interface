@@ -1,0 +1,12 @@
+{
+  "schema": "v39-v15-keyup-loss-construction-stop-v1",
+  "run_id": "MAP01-V39-V15-KEYUP-LOSS-A02-20261005",
+  "disposition": "STOP_FIXTURE_FINALIZER_WRAPPER_ATTRIBUTE",
+  "exit_code": 1,
+  "candidate_raw_created": false,
+  "case_progress": "The normal fake-X case executed and owner.close() returned; the test finalizer then raised AttributeError while reading wrapper.closed. The injected-loss case did not start.",
+  "cause": "V4 transition wrapper exposes close() but no closed attribute; its inner V12 owner owns that field.",
+  "wslc_warning": "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "cleanup": "The WSLc command used --rm and exited.",
+  "no_retry": "This frozen A02 candidate will not be rerun. The A03 repair uses a distinct candidate hash, run identity, and output path."
+}
