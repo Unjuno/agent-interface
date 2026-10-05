@@ -1,0 +1,181 @@
+{
+  "runs": [
+    {
+      "final_down": [],
+      "keymap_query_count": 4,
+      "mode": "sequential_per_key",
+      "ops": [
+        {
+          "bitmap_down": [
+            65,
+            74
+          ],
+          "operation": "keymap-query"
+        },
+        {
+          "keycode": 65,
+          "operation": "key-up"
+        },
+        {
+          "operation": "sync"
+        },
+        {
+          "bitmap_down": [
+            74
+          ],
+          "operation": "keymap-query"
+        },
+        {
+          "bitmap_down": [
+            74
+          ],
+          "operation": "keymap-query"
+        },
+        {
+          "keycode": 74,
+          "operation": "key-up"
+        },
+        {
+          "operation": "sync"
+        },
+        {
+          "bitmap_down": [],
+          "operation": "keymap-query"
+        }
+      ],
+      "queries_between_up_injections": 2,
+      "rows": [
+        {
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "grants_input_authority": false,
+          "injection_succeeded": true,
+          "keycode": 65,
+          "post_down": false,
+          "pre_down": true,
+          "release_attempted": true,
+          "sync_succeeded": true
+        },
+        {
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "grants_input_authority": false,
+          "injection_succeeded": true,
+          "keycode": 74,
+          "post_down": false,
+          "pre_down": true,
+          "release_attempted": true,
+          "sync_succeeded": true
+        }
+      ]
+    },
+    {
+      "final_down": [],
+      "keymap_query_count": 2,
+      "mode": "batched_boundary_samples",
+      "ops": [
+        {
+          "bitmap_down": [
+            65,
+            74
+          ],
+          "operation": "keymap-query"
+        },
+        {
+          "keycode": 65,
+          "operation": "key-up"
+        },
+        {
+          "keycode": 74,
+          "operation": "key-up"
+        },
+        {
+          "operation": "sync"
+        },
+        {
+          "bitmap_down": [],
+          "operation": "keymap-query"
+        }
+      ],
+      "queries_between_up_injections": 0,
+      "rows": [
+        {
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "grants_input_authority": false,
+          "injection_succeeded": true,
+          "keycode": 65,
+          "post_down": false,
+          "pre_down": true,
+          "release_attempted": true,
+          "sync_succeeded": true
+        },
+        {
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "grants_input_authority": false,
+          "injection_succeeded": true,
+          "keycode": 74,
+          "post_down": false,
+          "pre_down": true,
+          "release_attempted": true,
+          "sync_succeeded": true
+        }
+      ]
+    },
+    {
+      "final_down": [
+        74
+      ],
+      "keymap_query_count": 2,
+      "mode": "batched_boundary_samples",
+      "ops": [
+        {
+          "bitmap_down": [
+            65,
+            74
+          ],
+          "operation": "keymap-query"
+        },
+        {
+          "keycode": 65,
+          "operation": "key-up"
+        },
+        {
+          "keycode": 74,
+          "operation": "key-up-failed"
+        },
+        {
+          "operation": "sync"
+        },
+        {
+          "bitmap_down": [
+            74
+          ],
+          "operation": "keymap-query"
+        }
+      ],
+      "queries_between_up_injections": 0,
+      "rows": [
+        {
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "grants_input_authority": false,
+          "injection_succeeded": true,
+          "keycode": 65,
+          "post_down": false,
+          "pre_down": true,
+          "release_attempted": true,
+          "sync_succeeded": true
+        },
+        {
+          "classification": "RELEASE_UNCONFIRMED",
+          "grants_input_authority": false,
+          "injection_succeeded": false,
+          "keycode": 74,
+          "post_down": true,
+          "pre_down": true,
+          "release_attempted": true,
+          "sync_succeeded": false
+        }
+      ]
+    }
+  ],
+  "schema": "issue59-batch-boundary-a01-result-v1",
+  "source_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+}
