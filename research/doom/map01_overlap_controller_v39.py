@@ -426,6 +426,27 @@ def resolve_invalidated_cover_submission(wait, cover_id):
     return {"status": "accepted", "response": response}
 
 
+def resolve_invalidated_cover_renewal(
+        planner, planner_handle, process, wait, cover_id, cover_ids,
+        verified_current_terminal):
+    """Resolve renewal admission before choosing cancellation or retaining terminal.
+
+    The previous cover has already terminated and been verified empty when this
+    helper is entered. An invalidation can race with renewal admission, so only
+    cancel the renewal if its submit was accepted. A rejected renewal has no
+    terminal to wait for; interrupt the dependent planner turn and retain the
+    previous verified terminal.
+    """
+    resolution = resolve_invalidated_cover_submission(wait, cover_id)
+    if resolution["status"] == "rejected":
+        return (planner.interrupt(planner_handle), verified_current_terminal,
+                False)
+    cover_ids.append(cover_id)
+    planner_interrupt, terminal = cancel_invalidated_cover(
+        planner, planner_handle, process, wait, cover_id)
+    return planner_interrupt, terminal, True
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -984,10 +1005,12 @@ def main():
                     next_accepted=submit_cover(next_cover)
                     if next_accepted["event"] == "policy_invalidation":
                         invalidation=next_accepted["invalidation"]
-                        current_cover=next_cover
-                        planner_interrupt,current_terminal=cancel_invalidated_cover(
-                            planner,planner_handle,process,wait,current_cover)
-                        cover_terminals.append(current_terminal)
+                        (planner_interrupt,current_terminal,
+                         renewal_admitted)=resolve_invalidated_cover_renewal(
+                            planner,planner_handle,process,wait,next_cover,
+                            cover_ids,current_terminal)
+                        if renewal_admitted:
+                            cover_terminals.append(current_terminal)
                         break
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)

@@ -13,35 +13,87 @@ sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
 
 
-def extract_renewal_invalidation_branch():
-    tree = ast.parse(Path(controller.__file__).read_bytes())
-    main = next(node for node in tree.body
-                if isinstance(node, ast.FunctionDef) and node.name == "main")
-    branch = next(node for node in ast.walk(main)
-                  if isinstance(node, ast.If) and
-                  any(isinstance(child, ast.Name) and child.id == "next_accepted"
-                      for child in ast.walk(node.test)) and
-                  "policy_invalidation" in ast.dump(node.test))
-    factory = ast.parse(
-        "def factory(next_accepted, next_cover, planner, planner_handle, "
-        "process, wait, cover_terminals):\n"
-        "    invalidation = None\n"
-        "    current_cover = 'cover-0'\n"
-        "    current_terminal = None\n"
-        "    planner_interrupt = None\n").body[0]
-    factory.body.extend([branch, ast.parse("break").body[0]])
-    factory.body = [ast.While(test=ast.Constant(value=True),
-                              body=factory.body, orelse=[])]
-    factory.body += ast.parse(
-        "return invalidation, current_cover, planner_interrupt, "
-        "current_terminal, cover_terminals\n").body
-    module = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
-    scope = {"cancel_invalidated_cover": controller.cancel_invalidated_cover}
-    exec(compile(module, str(controller.__file__), "exec"), scope)
-    return scope["factory"]
-
-
 class Map01V39CoastTests(unittest.TestCase):
+    def test_invalidated_rejected_renewal_interrupts_without_cancelling_unadmitted_id(self):
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+
+        previous_terminal = {"event": "terminal", "id": "cover-0",
+                             "status": "completed",
+                             "release": {"verified": True,
+                                          "keys_down": [], "buttons_down": []}}
+        rejected = {"event": "rejected", "reason": "stale_sequence"}
+        planner, process, handle = Planner(), Process(), object()
+        cover_ids = ["cover-0"]
+        wait_calls = []
+
+        def wait(predicate):
+            wait_calls.append(predicate)
+            self.assertTrue(predicate(rejected))
+            return rejected
+
+        interruption, terminal, admitted = controller.resolve_invalidated_cover_renewal(
+            planner, handle, process, wait, "cover-0-renew-1", cover_ids,
+            previous_terminal)
+
+        self.assertEqual(interruption, {"status": "interrupted"})
+        self.assertIs(terminal, previous_terminal)
+        self.assertFalse(admitted)
+        self.assertEqual(planner.interrupted, [handle])
+        self.assertEqual(process.stdin.writes, [])
+        self.assertEqual(len(wait_calls), 1)
+        self.assertEqual(cover_ids, ["cover-0"])
+
+    def test_invalidated_accepted_renewal_is_cancelled_and_release_verified(self):
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+        class Planner:
+            def __init__(self): self.interrupted = []
+            def interrupt(self, handle):
+                self.interrupted.append(handle)
+                return {"status": "interrupted"}
+
+        cover_id = "cover-0-renew-1"
+        response = {"event": "accepted", "id": cover_id}
+        terminal = {"event": "terminal", "id": cover_id, "status": "cancelled",
+                    "release": {"verified": True,
+                                "keys_down": [], "buttons_down": []}}
+        planner, process, handle = Planner(), Process(), object()
+        cover_ids = ["cover-0"]
+        events = iter((response, terminal))
+
+        def wait(predicate):
+            row = next(events)
+            self.assertTrue(predicate(row))
+            return row
+
+        interruption, actual_terminal, admitted = controller.resolve_invalidated_cover_renewal(
+            planner, handle, process, wait, cover_id, cover_ids,
+            {"event": "terminal", "id": "cover-0", "status": "completed",
+             "release": {"verified": True, "keys_down": [], "buttons_down": []}})
+
+        self.assertEqual(interruption, {"status": "interrupted"})
+        self.assertIs(actual_terminal, terminal)
+        self.assertTrue(admitted)
+        self.assertEqual(planner.interrupted, [handle])
+        self.assertEqual(cover_ids, ["cover-0", cover_id])
+        self.assertEqual(len(process.stdin.writes), 1)
+        self.assertIn('"id": "cover-0-renew-1"', process.stdin.writes[0])
+
+
     def test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in(self):
         args = Namespace(seed=990605, load_fixture_manifest=Path("fixture.json"))
         default = controller.session_command(args, Path("runtime"))
@@ -132,44 +184,19 @@ class Map01V39CoastTests(unittest.TestCase):
                     controller.cancel_invalidated_cover(
                         Planner(), object(), Process(), lambda predicate: terminal, "cover-0")
 
-    def test_renewal_invalidation_interrupts_planner_and_cancels_current_cover(self):
-        invalidation = {"reason": "health_below_floor", "sequence": 18}
-        terminal = {"event": "terminal", "id": "cover-renew-1",
-                    "status": "cancelled", "release": {
-                        "verified": True, "keys_down": [], "buttons_down": []}}
-
-        class Stdin:
-            def __init__(self): self.writes = []
-            def write(self, value): self.writes.append(value)
-            def flush(self): pass
-
-        class Planner:
-            def __init__(self): self.interrupted = []
-            def interrupt(self, handle):
-                self.interrupted.append(handle)
-                return {"status": "interrupted"}
-
-        process = types.SimpleNamespace(stdin=Stdin())
-        planner = Planner()
-        handle = object()
-
-        def wait(predicate):
-            self.assertTrue(predicate(terminal))
-            return terminal
-
-        cover_terminals = []
-        result = extract_renewal_invalidation_branch()(
-            {"event": "policy_invalidation", "invalidation": invalidation},
-            "cover-renew-1", planner, handle, process, wait, cover_terminals)
-
-        self.assertEqual(result[:2], (invalidation, "cover-renew-1"))
-        self.assertEqual(result[2], {"status": "interrupted"})
-        self.assertIs(result[3], terminal)
-        self.assertEqual(result[4], [terminal])
-        self.assertEqual(planner.interrupted, [handle])
-        self.assertEqual(json.loads(process.stdin.writes[0]),
-                         {"op": "cancel", "id": "cover-renew-1"})
-
+    def test_main_resolves_renewal_admission_before_cancellation(self):
+        tree = ast.parse(Path(controller.__file__).read_bytes())
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        branch = next(node for node in ast.walk(main)
+                      if isinstance(node, ast.If) and
+                      "next_accepted" in ast.dump(node.test) and
+                      "policy_invalidation" in ast.dump(node.test))
+        branch_source = ast.unparse(branch)
+        self.assertIn("resolve_invalidated_cover_renewal", branch_source)
+        self.assertIn("if renewal_admitted", branch_source)
+        self.assertIn("cover_terminals.append(current_terminal)", branch_source)
+        self.assertNotIn("current_cover = next_cover", branch_source)
 
 if __name__ == "__main__":
     unittest.main()
