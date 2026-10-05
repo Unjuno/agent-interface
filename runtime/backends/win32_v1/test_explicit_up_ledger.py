@@ -169,7 +169,7 @@ class ExplicitUpLedgerTests(unittest.TestCase):
             # The key DOWN's pre/post samples and cleanup's pre-sample succeed.
             # Fail the strict aggregate sample after cleanup UP was recorded.
             if query_count == 4:
-                raise native.Win32BackendError('aggregate state unavailable')
+                raise RuntimeError('aggregate state unavailable')
             return real_query(vk)
 
         obj.user32.GetAsyncKeyState = fail_aggregate_query
@@ -185,6 +185,9 @@ class ExplicitUpLedgerTests(unittest.TestCase):
             program, current_observation_seq=7, current_binding_revision=3, now_ns=1)
 
         self.assertEqual(reply['status'], 'execution_failed', reply)
+        self.assertEqual(reply['release']['verified'], False)
+        self.assertEqual(reply['release']['error'], 'RuntimeError')
+        self.assertEqual(reply['release']['detail'], 'aggregate state unavailable')
         transitions = reply['input_transitions']
         self.assertEqual([(row['operation'], row['cleanup']) for row in transitions],
                          [('down', False), ('up', True)])

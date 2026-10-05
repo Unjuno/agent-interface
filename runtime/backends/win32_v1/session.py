@@ -49,13 +49,17 @@ class Win32RuntimeSession:
             }
         try:
             result = self.backend.execute(program, admitted_ns=admitted_ns)
-        except Win32BackendError as error:
+        except Exception as error:
             return {
                 "status": "execution_failed",
                 "error": "BACKEND_EXECUTION",
                 "detail": str(error),
                 "backend_emissions": self.backend.emissions,
                 "admitted_ns": admitted_ns,
+                "release": dict(getattr(self.backend, "last_execution_release", None) or {
+                    "verified": False,
+                    "error": "RELEASE_RESULT_UNAVAILABLE",
+                }),
                 "input_transitions": list(
                     getattr(self.backend, "last_input_transitions", ())
                 ),
