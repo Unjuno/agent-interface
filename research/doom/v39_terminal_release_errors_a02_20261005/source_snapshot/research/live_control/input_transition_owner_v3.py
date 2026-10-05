@@ -118,88 +118,7 @@ class InputOwner:
                 if marker[0] is lease:
                     del self._admission_records[admission_key]
 
-    def _call_up_batch(self, lease, keys):
-        if type(keys) is not list or not keys or len(set(keys)) != len(keys):
-            raise ValueError("unique key list required for up_batch")
-        started_ns = time.perf_counter_ns()
-        lease_state = self._lease_state_at(lease, started_ns)
-        markers = {}
-        with self._admission_records_lock:
-            for key in keys:
-                markers[key] = self._admission_records.pop(
-                    self._admission_key(lease, key), None)
-        receipts = self._inner.call("up_batch", lease, keys)
-        returned_ns = time.perf_counter_ns()
-        records_after = self._records_snapshot()
-        if type(receipts) is not list or len(receipts) != len(keys):
-            raise RuntimeError("owner returned malformed up_batch receipts")
-        transitions = []
-        for key, receipt in zip(keys, receipts):
-            marker = markers[key]
-            history_complete = marker is not None and records_after is not None
-            cleanup_intervened = False
-            if history_complete:
-                admitted_lease, record_index, admitted_deadline, admitted_ns = marker
-                if (admitted_lease is not lease
-                        or type(record_index) is not int or record_index < 0
-                        or record_index > len(records_after)
-                        or type(admitted_deadline) is not int
-                        or type(admitted_ns) is not int):
-                    history_complete = False
-                else:
-                    for record in records_after[record_index:]:
-                        if not isinstance(record, dict):
-                            history_complete = False
-                            break
-                        if record.get("event") == "owner_release":
-                            cleanup_deadline = record.get("valid_until_ns")
-                            cleanup_ns = record.get("verified_ns")
-                            if type(cleanup_deadline) is not int or type(cleanup_ns) is not int:
-                                history_complete = False
-                                break
-                            if cleanup_deadline == admitted_deadline and cleanup_ns >= admitted_ns:
-                                cleanup_intervened = True
-            receipt_valid = (
-                type(receipt) is dict
-                and receipt.get("event") == "owner_explicit_keyup"
-                and receipt.get("key") == key
-                and receipt.get("operation") == "up"
-                and receipt.get("owner_id") == self._inner.owner_id
-                and receipt.get("server_keyup_verified") is True
-            )
-            ordinary = (
-                lease_state["ordinary_release_candidate"] and history_complete
-                and not cleanup_intervened and receipt_valid
-            )
-            transitions.append({
-                "event": "input_release_transition",
-                "transition_schema": "input-release-transition-v3",
-                "operation": "up", "key": key,
-                "owner_id": self._inner.owner_id,
-                "intent_token": self._intent_token(lease),
-                "valid_until_ns": getattr(lease, "deadline", None),
-                "release_call_started_ns": started_ns,
-                "release_call_returned_ns": returned_ns,
-                "release_call_bracket_ns": returned_ns - started_ns,
-                "owner_transition_verified": receipt_valid,
-                "owner_explicit_keyup_failure": (
-                    dict(receipt) if not receipt_valid and type(receipt) is dict else None
-                ),
-                "grants_input_authority": False,
-                **lease_state,
-                "owner_release_history_complete": history_complete,
-                "owner_cleanup_intervened": cleanup_intervened,
-                "ordinary_release_candidate": ordinary,
-                "measurement_contract": (
-                    "one serialized owner-thread batch brackets ordered explicit UPs; "
-                    "per-key keymap samples occur after the original UP batch"
-                ),
-            })
-        return transitions
-
     def call(self, operation, lease=None, key=None):
-        if operation == "up_batch":
-            return self._call_up_batch(lease, key)
         if operation not in ("up", "button_up"):
             records_before = (
                 self._records_snapshot()
@@ -207,17 +126,7 @@ class InputOwner:
             )
             self._prune_completed_admissions(records_before)
             started_ns = time.perf_counter_ns() if operation in ("release", "close") else None
-            try:
-                result = self._inner.call(operation, lease, key)
-            except RuntimeError as error:
-                failed_release = getattr(error, "owner_release_record", None)
-                if (operation != "release" or type(failed_release) is not dict or
-                        failed_release.get("event") != "owner_release" or
-                        failed_release.get("verified") is not False):
-                    raise
-                # Surface the bounded failed receipt to the executor so its
-                # terminal can retain the stuck-key state and all attempts.
-                result = failed_release
+            result = self._inner.call(operation, lease, key)
             returned_ns = time.perf_counter_ns() if started_ns is not None else None
             result = self._decorate(result, lease)
             if operation == "release":
@@ -252,20 +161,7 @@ class InputOwner:
         if admission_key is not None:
             with self._admission_records_lock:
                 admission_marker = self._admission_records.pop(admission_key, None)
-        explicit_keyup_failure = None
-        try:
-            result = self._inner.call(operation, lease, key)
-        except RuntimeError as error:
-            failed_receipt = getattr(error, "owner_explicit_keyup_record", None)
-            if (operation != "up" or type(failed_receipt) is not dict or
-                    failed_receipt.get("event") != "owner_explicit_keyup" or
-                    failed_receipt.get("operation") != "up" or
-                    failed_receipt.get("key") != key or
-                    failed_receipt.get("server_keyup_verified") is not False or
-                    failed_receipt.get("key_state_source") != "x11_query_keymap"):
-                raise
-            explicit_keyup_failure = failed_receipt
-            result = None
+        result = self._inner.call(operation, lease, key)
         release_call_returned_ns = time.perf_counter_ns()
         if result is not None:
             raise AssertionError("InputOwner v10 explicit release unexpectedly returned payload")
@@ -318,20 +214,16 @@ class InputOwner:
             "release_call_started_ns": release_call_started_ns,
             "release_call_returned_ns": release_call_returned_ns,
             "release_call_bracket_ns": release_call_returned_ns - release_call_started_ns,
-            "owner_transition_verified": (False if explicit_keyup_failure is not None else None),
-            "owner_explicit_keyup_failure": (
-                dict(explicit_keyup_failure) if explicit_keyup_failure is not None else None
-            ),
+            "owner_transition_verified": None,
             "grants_input_authority": False,
             **lease_state,
             "owner_release_history_complete": owner_release_history_complete,
             "owner_cleanup_intervened": owner_cleanup_intervened,
-            "ordinary_release_candidate": (
-                ordinary_release_candidate and explicit_keyup_failure is None
-            ),
+            "ordinary_release_candidate": ordinary_release_candidate,
             "measurement_contract": (
                 "caller brackets unchanged InputOwner v10 explicit release; the release "
                 "history since admission must contain no same-lease owner cleanup; no "
                 "owner/X11 state sample or telemetry publication occurs inside this call"
             ),
         }
+
