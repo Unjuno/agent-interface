@@ -26,6 +26,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             research/analysis
+            research/vision/interval_ttc_bounded_error_v1
             research/live_control/owner_keyup_keymap_witness_5156_t3_v1
             research/integration/core_admission_composition_57_20261003_01a0ff59
             research/integration/pr6863_review_rescue_20261003
@@ -46,7 +47,7 @@ jobs:
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
       - name: Test Issue #8157 A04 prefix-local audit construction
-        run: python -B -m unittest discover -s research/vision/interval_ttc_bounded_error_v1 -p 'test_audit_only_a04.py' -v
+        run: python -B research/vision/interval_ttc_bounded_error_v1/test_audit_only_a04.py -v
       - name: Test Issue #7802 machine-crash recovery T0 construction
         run: python -B -m unittest discover -s research/analysis/machine_crash_recovery_7802_t0_20261005 -p 'test_*.py' -v
       - name: Test Issue #8152 stochastic trace reducer construction
