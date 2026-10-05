@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "allocation_id": "map01-v39-coast-liveness-live-01",
+  "decision": 5,
+  "turn_id": "01a0a389-810e-7bf3-894e-7a88827c1d49",
+  "observations": {
+    "154": {
+      "step": 8,
+      "health": 61,
+      "ammo": 41,
+      "capture_ns": 55539098519239,
+      "rgb_sha256": "faadcf5f6378e134b17dc254f502ad8748186aa0bad659236748ca84117b068f",
+      "exact_image_join": true
+    },
+    "200": {
+      "step": 7,
+      "health": 51,
+      "ammo": 38,
+      "capture_ns": 55546847220240,
+      "rgb_sha256": "7731f923af45dce8dec01270372f18edce3633e626f3b02a0c43439eec745f1c",
+      "exact_image_join": true
+    },
+    "204": {
+      "step": 8,
+      "health": 51,
+      "ammo": 38,
+      "capture_ns": 55547608529332,
+      "rgb_sha256": "752fbf0e405936fba95a8041fc1b478611441ac167202e8ca7a72ca7926283d3",
+      "exact_image_join": true
+    }
+  },
+  "pending_turn_observations": [
+    200,
+    204
+  ],
+  "protocol": {
+    "single_original_user_message": true,
+    "steer_events": 0,
+    "terminal_status": "interrupted",
+    "answer_eligible": false
+  },
+  "limit": "This retrospective trace proves image-backed observations and protocol ordering only. It cannot establish what an uninterrupted natural answer would have selected or whether any live-game gate is satisfied."
+}
+
