@@ -1,0 +1,14 @@
+{
+  "id": "astra-health-monitor-composition-a01-20261005",
+  "H": "A paired typed observation using the retained 47.0s health=96/ammo=44 sample, evaluated by the current V39 monitor with source health=100 and maximum_health_loss=3, emits a health invalidation; the current final-admission and cancellation helpers then reject the dependent answer and require a verified empty release receipt.",
+  "T": "One host run using actual current-main build_cover_monitor, DoomCoverSignalPairMonitor.observe, final_admission_from_planner_result, and cancel_invalidated_cover with only readers/planner/process/wait terminal at external boundaries. Input is the exact PR #7909 manual readout SHA 610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724. Pin main commit and controller/guard source hashes below.",
+  "D": "PASS only if the typed pair returns paired_signal_invalidation with reason health:below_hard_minimum, input authority false, final admission REJECTED_POLICY_INVALIDATED, planner interrupt occurs, a cancel for cover-4 is emitted, and the existing helper accepts only cancelled+verified+empty terminal evidence.",
+  "C": "The process and terminal receipt are deterministic doubles; the experiment proves the current software composition for a constructed observation only, not that the live reader emits it or the OS/app performed release.",
+  "U": "Synthetic controller composition on one selected manually transcribed point from one edited failed video; no game/model/GUI/OS input, physical key state, useful feedback, bounded live recovery, or task outcome.",
+  "main_base": "3a759c72d6f2bd8a9c98f97f6a20ed2974574a32",
+  "controller_source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "guard_source_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "input_readout_sha256": "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+  "source_values": {"source_health":100,"source_ammo":46,"current_health":96,"current_ammo":44,"game_time_s":47.0,"maximum_health_loss":3,"hard_minimum":97},
+  "runtime": "Codex bundled Python 3.12.14 with Pillow 12.3.0; host Darwin arm64; OrbStack not used"
+}

@@ -1,0 +1,87 @@
+{
+  "format": "astra_visible_effect_probe_a01_v1",
+  "source_video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-ss",
+    "21.5",
+    "-i",
+    "/tmp/astra-full.mp4",
+    "-t",
+    "2.0",
+    "-vf",
+    "fps=5,scale=320:280",
+    "-f",
+    "rawvideo",
+    "-pix_fmt",
+    "rgb24",
+    "pipe:1"
+  ],
+  "frame_count": 10,
+  "threshold": 40,
+  "rows": [
+    {
+      "frame": 0,
+      "video_time_s": 21.5,
+      "new_warm_pixels": 4,
+      "trigger": false
+    },
+    {
+      "frame": 1,
+      "video_time_s": 21.7,
+      "new_warm_pixels": 15,
+      "trigger": false
+    },
+    {
+      "frame": 2,
+      "video_time_s": 21.9,
+      "new_warm_pixels": 96,
+      "trigger": true
+    },
+    {
+      "frame": 3,
+      "video_time_s": 22.1,
+      "new_warm_pixels": 0,
+      "trigger": false
+    },
+    {
+      "frame": 4,
+      "video_time_s": 22.3,
+      "new_warm_pixels": 0,
+      "trigger": false
+    },
+    {
+      "frame": 5,
+      "video_time_s": 22.5,
+      "new_warm_pixels": 0,
+      "trigger": false
+    },
+    {
+      "frame": 6,
+      "video_time_s": 22.7,
+      "new_warm_pixels": 186,
+      "trigger": true
+    },
+    {
+      "frame": 7,
+      "video_time_s": 22.9,
+      "new_warm_pixels": 213,
+      "trigger": true
+    },
+    {
+      "frame": 8,
+      "video_time_s": 23.1,
+      "new_warm_pixels": 176,
+      "trigger": true
+    },
+    {
+      "frame": 9,
+      "video_time_s": 23.3,
+      "new_warm_pixels": 57,
+      "trigger": true
+    }
+  ]
+}

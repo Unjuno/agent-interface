@@ -1,0 +1,19 @@
+{
+  "id": "astra-health-guard-replay-a01-20261005",
+  "claim_scope": "posthoc policy-boundary replay against selected manual HUD readouts from PR #7909",
+  "H": "With source health 100 and critical floor 35, the current V39 health guard's maximum_health_loss parameter determines whether the selected health changes can invalidate cover before, during, or after the observed 56.2s pending / 56.4s local-plan boundary.",
+  "T": "One execution of the exact current-main ObservableSignalGuard.evaluate and AST-extracted current-main map01_overlap_controller_v39.guard_spec against the exact 10 selected manual readouts in input/VISUAL_READOUT.json. Sweep only maximum_health_loss values [3,4,5,6,12]. Source and controller blobs are pinned to main f60752d0fb71595363a80977636ca74c1fd10b21. Construct increasing synthetic sequence/capture deltas preserving the readout's game-time spacing; no input side effects.",
+  "D": "Scoped replay passes only if actual guard outputs match reconstructed hard floors and first invalidation samples: loss 3 -> game 47.0; loss 4/5 -> 54.8; loss 6/12 -> 56.4. Classify only whether the first invalidation sample precedes the last pending sample (56.2) and first local-plan sample (56.4).",
+  "C": "A strict health-loss threshold may interrupt useful cover on benign damage; visible HUD values are sparse manual reads, not the live typed-observation stream. The synthetic monotonic timestamps preserve spacing but do not replay sensor cadence or planner scheduling.",
+  "U": "One edited failed run, selected full-frame manual HUD transcriptions, no OCR, no new video decoding, no game/model/GUI/input, no actual V39 controller session, no independent effect/release/recovery result, and no prospective live allocation.",
+  "input_source": "PR #7909 head 2b7815984dccc7c9fcbf8836677e452ce3347723, VISUAL_READOUT.json SHA-256 610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+  "controller_source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "guard_source_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "main_base": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "candidate_invocations": 1,
+  "audit_invocations": 1,
+  "decision_rows": [46.8,47.0,53.6,53.8,54.6,54.8,56.2,56.4,57.0],
+  "thresholds": [3,4,5,6,12],
+  "model_pending_last_sample_game_s": 56.2,
+  "first_local_plan_sample_game_s": 56.4
+}
