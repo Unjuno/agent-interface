@@ -1,3 +1,7 @@
+# Issue #7921 A02 — V39/V15 A01 chronology audit STOP (2026-10-05)
+
+The audit-only successor pinned the immutable A01 stdout, PRE-RUN and original failed AUDIT. Its frozen host invocation checked raw chronology 27/27 and rejected six mutations, but the wrapper passed A02's own PRE-RUN instead of the copied A01 PRE-RUN; the required source-provenance gate failed. Disposition `STOP_PROTOCOL_INPUT_MISMATCH`, candidate/runtime invocations 0, auditor invocation 1, retries 0. The parent A01 `AUDIT.json` remains FAIL and unchanged; no retry or claim upgrade. See [report and frozen artifacts](research/doom/map01_v39_v15_selected_path_composition_a02_audit_20261005/REPORT.md) and [Issue #7921](https://github.com/Unjuno/agent-interface/issues/7921).
+
 # Issue #6053 T1 — PCAA stage-propagation eligibility (2026-10-04)
 
 The read-only audit of the current Procedural Control Arena v1 returns `HOLD_NO_ELIGIBLE_CHAIN`: it has a stage-level event/result ledger and an authored recovery displacement, but no matched upstream perturbation versus no-disturbance/checkpointed re-grounding contrast. The source explicitly does not provide a hardened held-out process boundary. The existing 14/14 mechanics suite passes, but does not answer the propagation hypothesis. No PCAA episode, GUI, model, container, or input run occurred. See [the report and retained audit](research/analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md) and [Issue #6053](https://github.com/Unjuno/agent-interface/issues/6053).
