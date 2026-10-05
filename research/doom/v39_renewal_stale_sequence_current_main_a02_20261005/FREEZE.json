@@ -1,0 +1,23 @@
+{
+  "schema": "v39-renewal-stale-sequence-frozen-source-a02-freeze-v2",
+  "main_sha": "b6907899f11b036f2af572e8d4794ebb4b7e5c83",
+  "hypothesis": "A newer observation consumed while submit_cover waits for its renewal acknowledgement makes the captured expected_sequence stale; the current controller still raises on the rejection and reaches failure cleanup with the planner await active.",
+  "test": "Reuse the unchanged A01 source-extracted renewal-boundary harness against exact b690 main controller and cleanup blobs; sequence 8 arrives after sequence 7 renewal submission, then stale-sequence rejection.",
+  "decision": "REPRODUCED only if normal and python -O each observe RuntimeError for rejected cover-0-renew-1, retain prior cover verified-empty, do not interrupt the planner before failure cleanup closes it, and leave cleanup_complete false due absent scorer/score/owner-close evidence.",
+  "counterevidence": "If the sequence update is handled without the expected exception or planner lifecycle contradicts the predicate, do not claim reproduction.",
+  "limits": "Synthetic source-extracted construction only; no game, model, GUI, X server, native input, container, allocation, event-frequency estimate, or task-effect claim.",
+  "sources": {
+    "research/doom/map01_overlap_controller_v39.py": {
+      "blob": "e9b437979e87347f6aa4dbefffcc84e9a2d01752",
+      "sha256": "f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8",
+      "bytes": 79833
+    },
+    "research/doom/doom_controller_failure_cleanup_v1.py": {
+      "blob": "d04e167ed182d5faf935e6c23132b164fe9a16ac",
+      "sha256": "e7738973991459f5fe9553383afb4000a1cbb6c755bc5763f11eab85c32dead8",
+      "bytes": 10767
+    }
+  },
+  "harness_sha256": "f58e93a5f50349570b8ff833ead9cf1bbf26499c3854432e14108835fb4411cf",
+  "runner_sha256": "e9dab635b9f17e08eca61b77053a1f5ada2fde02613ee2fd462c470e410a525a"
+}
