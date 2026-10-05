@@ -1058,6 +1058,9 @@ The checker compares the generated block against every child directory with a re
 
 ## Retained construction archives
 
+- [Issue #8022 T0 protocol audit A01](recording_salience_8022_protocol_audit_a01_20261005/RESULT.md) — document-only `HOLD_NO_AUDITABLE_PROTOCOL`; the Issue lacked inspectable consent, capture-parity, task/scoring, and analysis artifacts. No participant study or human outcome was run or inferred, and no study authorization follows.
+
+
 - [Issue #6808 / PR #6821 S03 pre-invocation STOP](looming_visual_assumption_gate_5905_s03_wslc_20261003/STOP.md) — 35 exact original files preserved; main advanced after freeze, construction/candidate/auditor/container/retry counts all zero; no scientific result or S03 rerun.
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
