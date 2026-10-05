@@ -1,0 +1,12 @@
+# Container execution record
+
+Candidate invoked exactly once; exit 0.
+Command: wslc.exe run --rm --pull never --network none --cpus 1 --memory 512m --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<results>,target=/out --env OUTPUT_DIR=/out --workdir /src python:3.12-slim python /src/candidate.py
+
+Independent raw-only auditor invoked exactly once in a separate container; exit 0.
+Command: wslc.exe run --rm --pull never --network none --cpus 1 --memory 512m --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<results>,target=/raw,readonly --workdir /src python:3.12-slim python /src/audit.py /raw/RAW.json
+
+Runtime: WSLc 3.0.1.0; local image python:3.12-slim, image ID sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364. Network none; 1 CPU and 512 MiB requested; no GPU. Both commands emitted: "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap." CPU enforcement was requested but not independently measured. No retries.
+
+Candidate output is RAW.json. Exact combined outputs and exit codes are retained in results/. The auditor mounted both source package and RAW.json read-only and performed no writes.
+

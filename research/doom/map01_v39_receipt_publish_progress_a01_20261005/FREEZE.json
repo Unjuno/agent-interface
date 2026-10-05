@@ -1,0 +1,38 @@
+{
+  "schema": "map01_v39_receipt_publish_progress_a01_freeze_v1",
+  "preregistration_comment": 5987709778,
+  "main_sha": "402c7d1b5147b2a905098f082233db60a47d68db",
+  "candidate_context": {
+    "pr": 7805,
+    "commit": "e00c7f5e5c949095d40ade458355e55ea5990b9d",
+    "path": "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py",
+    "git_blob_sha1": "e7889a7a34fe76df5f230d4108a77055b105a680",
+    "identity_field": "physical_key_measurement.bracket.release_id"
+  },
+  "runtime": {
+    "image": "python:3.12-slim",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "platform": "WSLc 3.0.1.0, linux container",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested": "512m",
+    "gpu": "none"
+  },
+  "hypothesis": "Stable per-row release IDs, row-level retry progress, and an idempotent sink recover all rows after emit-before-append and append-then-raise without duplication; non-idempotent sink cannot establish exactly-once after acknowledgement loss.",
+  "rows": [
+    {"release_id":"owner-a:r1:cleanup-up:65","key":"SPACE","step":4},
+    {"release_id":"owner-a:r1:cleanup-up:74","key":"F8","step":4},
+    {"release_id":"owner-a:r1:cleanup-up:38","key":"A","step":5}
+  ],
+  "schedules": [
+    "normal",
+    "raise_before_append_on_row_2_then_retry",
+    "append_row_2_then_raise_before_ack_then_retry"
+  ],
+  "source_sha256": {
+    "candidate.py": "57ba2b7f9db41a8575dbd1e1960fb23864c3dfdc273861f49ae60ab42e38e25a",
+    "audit.py": "40a6fe1ea627616d1f1bdb6e9ed57d5bd2059b42e94d5ee1d6e18b3cfd79e05c"
+  },
+  "decision": "PASS_IDEMPOTENT_ROW_PROGRESS_SCOPED iff all three idempotent-sink schedules finish with exact payload-equal rows keyed once by release_id, row 1 is not re-appended during row-2 retry, and controls fail closed. Non-idempotent append-then-raise is UNKNOWN if duplicate delivery occurs."
+}
+

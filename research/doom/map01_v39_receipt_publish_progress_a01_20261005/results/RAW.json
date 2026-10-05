@@ -1,0 +1,246 @@
+{
+  "case_order": [
+    "normal",
+    "before_append_row_2",
+    "append_then_raise_row_2",
+    "non_idempotent_append_then_raise_row_2"
+  ],
+  "cases": [
+    {
+      "append_attempts": [
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74",
+        "owner-a:r1:cleanup-up:38"
+      ],
+      "completed_ids": [
+        "owner-a:r1:cleanup-up:38",
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74"
+      ],
+      "duplicates": {},
+      "first_error": null,
+      "idempotent_sink": true,
+      "name": "normal",
+      "persisted": {
+        "owner-a:r1:cleanup-up:38": {
+          "event": "input_release_measurement",
+          "id": "cover-5",
+          "key": "A",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:38"
+            }
+          },
+          "step": 5
+        },
+        "owner-a:r1:cleanup-up:65": {
+          "event": "input_release_measurement",
+          "id": "cover-4",
+          "key": "SPACE",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:65"
+            }
+          },
+          "step": 4
+        },
+        "owner-a:r1:cleanup-up:74": {
+          "event": "input_release_measurement",
+          "id": "cover-4",
+          "key": "F8",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:74"
+            }
+          },
+          "step": 4
+        }
+      }
+    },
+    {
+      "append_attempts": [
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74",
+        "owner-a:r1:cleanup-up:74",
+        "owner-a:r1:cleanup-up:38"
+      ],
+      "completed_ids": [
+        "owner-a:r1:cleanup-up:38",
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74"
+      ],
+      "duplicates": {},
+      "first_error": "injected before-append failure",
+      "idempotent_sink": true,
+      "name": "before_append_row_2",
+      "persisted": {
+        "owner-a:r1:cleanup-up:38": {
+          "event": "input_release_measurement",
+          "id": "cover-5",
+          "key": "A",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:38"
+            }
+          },
+          "step": 5
+        },
+        "owner-a:r1:cleanup-up:65": {
+          "event": "input_release_measurement",
+          "id": "cover-4",
+          "key": "SPACE",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:65"
+            }
+          },
+          "step": 4
+        },
+        "owner-a:r1:cleanup-up:74": {
+          "event": "input_release_measurement",
+          "id": "cover-4",
+          "key": "F8",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:74"
+            }
+          },
+          "step": 4
+        }
+      }
+    },
+    {
+      "append_attempts": [
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74",
+        "owner-a:r1:cleanup-up:74",
+        "owner-a:r1:cleanup-up:38"
+      ],
+      "completed_ids": [
+        "owner-a:r1:cleanup-up:38",
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74"
+      ],
+      "duplicates": {},
+      "first_error": "injected append-then-raise acknowledgement loss",
+      "idempotent_sink": true,
+      "name": "append_then_raise_row_2",
+      "persisted": {
+        "owner-a:r1:cleanup-up:38": {
+          "event": "input_release_measurement",
+          "id": "cover-5",
+          "key": "A",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:38"
+            }
+          },
+          "step": 5
+        },
+        "owner-a:r1:cleanup-up:65": {
+          "event": "input_release_measurement",
+          "id": "cover-4",
+          "key": "SPACE",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:65"
+            }
+          },
+          "step": 4
+        },
+        "owner-a:r1:cleanup-up:74": {
+          "event": "input_release_measurement",
+          "id": "cover-4",
+          "key": "F8",
+          "physical_key_measurement": {
+            "bracket": {
+              "release_id": "owner-a:r1:cleanup-up:74"
+            }
+          },
+          "step": 4
+        }
+      }
+    },
+    {
+      "append_attempts": [
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74",
+        "owner-a:r1:cleanup-up:74",
+        "owner-a:r1:cleanup-up:38"
+      ],
+      "completed_ids": [
+        "owner-a:r1:cleanup-up:38",
+        "owner-a:r1:cleanup-up:65",
+        "owner-a:r1:cleanup-up:74"
+      ],
+      "duplicates": {
+        "owner-a:r1:cleanup-up:74": 1
+      },
+      "first_error": "injected append-then-raise acknowledgement loss",
+      "idempotent_sink": false,
+      "name": "non_idempotent_append_then_raise_row_2",
+      "persisted": {
+        "owner-a:r1:cleanup-up:38": [
+          {
+            "event": "input_release_measurement",
+            "id": "cover-5",
+            "key": "A",
+            "physical_key_measurement": {
+              "bracket": {
+                "release_id": "owner-a:r1:cleanup-up:38"
+              }
+            },
+            "step": 5
+          }
+        ],
+        "owner-a:r1:cleanup-up:65": [
+          {
+            "event": "input_release_measurement",
+            "id": "cover-4",
+            "key": "SPACE",
+            "physical_key_measurement": {
+              "bracket": {
+                "release_id": "owner-a:r1:cleanup-up:65"
+              }
+            },
+            "step": 4
+          }
+        ],
+        "owner-a:r1:cleanup-up:74": [
+          {
+            "event": "input_release_measurement",
+            "id": "cover-4",
+            "key": "F8",
+            "physical_key_measurement": {
+              "bracket": {
+                "release_id": "owner-a:r1:cleanup-up:74"
+              }
+            },
+            "step": 4
+          },
+          {
+            "event": "input_release_measurement",
+            "id": "cover-4",
+            "key": "F8",
+            "physical_key_measurement": {
+              "bracket": {
+                "release_id": "owner-a:r1:cleanup-up:74"
+              }
+            },
+            "step": 4
+          }
+        ]
+      }
+    }
+  ],
+  "controls": {
+    "duplicate_id_different_payload_rejected": true
+  },
+  "expected_ids": [
+    "owner-a:r1:cleanup-up:38",
+    "owner-a:r1:cleanup-up:65",
+    "owner-a:r1:cleanup-up:74"
+  ],
+  "schema": "map01_v39_receipt_publish_progress_a01_raw_v1"
+}
+
