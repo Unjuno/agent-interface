@@ -711,3 +711,8 @@ The earlier #8102 hold is resolved for branch custody, with a separate correctio
 - The earlier 20-commit branch-only history remains reachable via the closed PR head; the ref was redundant after exact path-level content verification.
 
 No candidate, auditor, test, or experiment was rerun.
+
+
+## PR #7774 evidence-branch disposition — 2026-10-05
+
+Keep the open Draft PR #7774 and its source branch. The PR has later, distinct retained evidence beyond its versioned A03 race and identity-guard successors: an A03 audit-seal correction that binds actual frozen bytes, an in-memory malformed-bracket/cursor-custody failure, and V15 release-emitter path and composition checks. Its comments explicitly limit the findings to synthetic/component evidence and leave live input, task effect, feedback, recovery, and MAP01 progress unverified. Closing it or deleting its branch would remove a live review surface and would conflate overlapping predecessors with the later unique packages. Revisit only after a path/blob-level successor audit and current owner/review disposition; this is a hold, not a merge recommendation.
