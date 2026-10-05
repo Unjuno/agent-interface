@@ -1,0 +1,30 @@
+{
+  "schema": "issue-8157-a05-run-record-v1",
+  "allocation": "interval-ttc-posthoc-retained-raw-a05-20261006",
+  "disposition": "STOP_BEFORE_INPUT_READ_ARGUMENT_ROOT_MISMATCH",
+  "freeze_file": "research/vision/interval_ttc_bounded_error_v1/FREEZE_A05.json",
+  "frozen_command": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <repo>/research/vision/interval_ttc_bounded_error_v1/results/POSTHOC_A05_METHOD_SCORE_AUDIT:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/vision/interval_ttc_bounded_error_v1/audit_only_a05.py /src/research/vision/interval_ttc_bounded_error_v1 /out/AUDIT_REPORT.json",
+  "actual_command_arguments": [
+    "python -B",
+    "/src/research/vision/interval_ttc_bounded_error_v1/audit_only_a05.py",
+    "/src/research/vision/interval_ttc_bounded_error_v1",
+    "/out/AUDIT_REPORT.json"
+  ],
+  "actual_command": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <repo>/research/vision/interval_ttc_bounded_error_v1/results/POSTHOC_A05_METHOD_SCORE_AUDIT:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/vision/interval_ttc_bounded_error_v1/audit_only_a05.py /src/research/vision/interval_ttc_bounded_error_v1 /out/AUDIT_REPORT.json",
+  "run_date": "2026-10-06",
+  "exit_code": 1,
+  "program_started": true,
+  "a04_prerequisite_read": false,
+  "a02_raw_inputs_read_by_a05": false,
+  "a05_scoring_started": false,
+  "candidate_invocations": 0,
+  "generator_invocations": 0,
+  "a02_auditor_rerun": 0,
+  "a03_auditor_rerun": 0,
+  "a04_auditor_rerun": 0,
+  "a05_invocation_count": 1,
+  "a05_retries": 0,
+  "stderr_file": "STDERR.txt",
+  "runtime_warning": "WSL reports that swap-limit cgroups are unavailable; memory was limited without swap.",
+  "note": "The frozen command passed the package directory to a program whose first argument is the repository root. Failure occurred while resolving the A04 freeze path, before any input read or scoring. This STOP is retained; no retry or replacement run is permitted by the A05 freeze."
+}
