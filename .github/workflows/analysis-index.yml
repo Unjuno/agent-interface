@@ -48,6 +48,8 @@ jobs:
         run: python research/analysis/check_index.py
       - name: Test Issue #8157 A04 prefix-local audit construction
         run: python -B research/vision/interval_ttc_bounded_error_v1/test_audit_only_a04.py -v
+      - name: Test Issue #8157 A05 posthoc audit construction
+        run: python -B -m unittest research.vision.interval_ttc_bounded_error_v1.test_audit_only_a05 -v
       - name: Test Issue #7802 machine-crash recovery T0 construction
         run: python -B -m unittest discover -s research/analysis/machine_crash_recovery_7802_t0_20261005 -p 'test_*.py' -v
       - name: Test Issue #8152 stochastic trace reducer construction
