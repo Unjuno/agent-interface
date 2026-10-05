@@ -1,6 +1,6 @@
 # Current-main verification — 2026-10-05
 
-The rescue branch was refreshed onto current `main` commit `307b9e2f0420f130e9d933c037cac78501d2e547`. The merge completed without conflicts. The focused fake-Xlib tests were then rerun against the merged V10/V11/V13 sources on local macOS 27.0.1 / CPython 3.14.5:
+The rescue branch was refreshed onto current `main` commit `b5be19963454ce5edafc945b78b100012952dd15`. The merge completed without conflicts. The focused fake-Xlib tests were then rerun against the merged V10/V11/V13 sources on local macOS 27.0.1 / CPython 3.14.5:
 
 - `test_explicit_up_owner_interval.py`: 2/2 passed in normal and optimized Python.
 - `test_input_owner_v13_batch_release_telemetry.py`: 5/5 passed in normal and optimized Python.
