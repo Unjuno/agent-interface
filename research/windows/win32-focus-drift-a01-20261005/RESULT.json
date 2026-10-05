@@ -1,0 +1,28 @@
+{
+  "schema": "win32-focus-drift-fence-result-v1",
+  "outcome": "PASS_SYNTHETIC_FOCUS_DRIFT_FENCE",
+  "environment": "Windows CPython 3.11",
+  "baseline": {
+    "tests": "2/2 fail as expected",
+    "exit_code": 1,
+    "log": "red-parent.log",
+    "sha256": "3467a6adff0c8ff497c3399234254387ded9f82fae92f83dd0fd729d1af69354"
+  },
+  "candidate": {
+    "normal_tests": "56/56 pass",
+    "normal_exit_code": 0,
+    "normal_log": "green-normal.log",
+    "normal_sha256": "7d278b98a60b7f51e1be3f91375b36b682eca097be78f2438e1c0139e3b2a414",
+    "optimized_tests": "56/56 pass",
+    "optimized_exit_code": 0,
+    "optimized_log": "green-optimized.log",
+    "optimized_sha256": "1aca0677e79461a9c3b27d2038795f08a750c7602ee021dc2649b91db6db0a45",
+    "py_compile": "pass",
+    "git_diff_check": "pass"
+  },
+  "live_input": false,
+  "live_application": false,
+  "physical_keyboard_state_proven": false,
+  "application_delivery_proven": false,
+  "residual": "Foreground verification and SendInput are not atomic; a check-to-input race remains."
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "win32-focus-drift-fence-freeze-v1",
+  "parent_pr": 7849,
+  "base_sha": "ef190e1037ff2f9df0cb2e941578a79a9fe0019b",
+  "baseline_source_blob": "95d975f3d085ecc22999aca2e8871de8dc6da1d2",
+  "candidate_sha256": {
+    "runtime/backends/win32_v1/backend.py": "f2ff7166f1e14193e68cb458a046bec114f8163696619298b47d3b5c823f992d",
+    "runtime/backends/win32_v1/test_focus_drift.py": "098f843f64da5accee587a63625a9921a8210021453850462223f7699e5f23f0"
+  },
+  "scope": "Win32 session dispatch with inert User32 and SendInput endpoint; no real OS input"
+}
