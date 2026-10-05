@@ -415,7 +415,6 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [Retained V39 ammo-timeline audit mutation evidence](v39_fire_cover_ammo_timeline_audit_a01_20261005/README.md) — rescued from closed PR #7737 as audit-integrity evidence: A02 rejects all six saved-result corruptions. It does not duplicate the separate repair in #7726 or upgrade the underlying observation.
 | Astra decision-4 dense HUD replay (#59) | [`map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md`](map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md) — 60 encoded frames and independent pixel-delta audit bound the first health-HUD change to game 46.8–47.0 s during model wait; the final 94→87 change straddles the observed return boundary. Posthoc single-run evidence only; no causal or live-control claim. |
 
-
 ## V15 per-key owner evidence (#8102)
 
 - [Frozen-source reproduction correction](v15_perkey_owner_evidence_only_20261005_REPRODUCTION_CORRECTION.md) — verify the frozen candidate commit is present in the fetched PR history without requiring the mutable PR tip to equal that commit. No experiment rerun.
