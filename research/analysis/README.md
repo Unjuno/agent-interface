@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #5905 A05 all-frame regression-TTC screen](looming_yield_5905_image_only_t0_2_a05_20261005/REPORT.md) — unregistered host-only exploratory result; independent raw audit 13/13, 18/18 local tests. OLS TTC improved over secant (6/6 vs 5/6) but not pixel/area baselines (both 6/6): `EXPLORATORY_NO_INCREMENTAL_VALUE`. OrbStack nested-OCI preflight STOP; no formal/container or live-control claim.
+
 - [Issue #5905 A04 exploratory cue screen](looming_yield_5905_image_only_t0_2_a04_20261005/README.md) — unregistered host-side pilot: simple pixel/area frontiers reached 6/6 while secant-TTC reached 2/6 at zero false YIELD on six distinguishable controls; no formal result or independent audit.
 - [Issue #5905 image-only cue A02](looming_yield_5905_image_only_t0_2_a02_20261005/README.md) — `STOP_MAIN_ADVANCED_AFTER_FREEZE`; candidate/auditor 0/0, with an additional preregistration comparator-gate/identifiability flaw preserved.
 - [Issue #5905 image-only cue A03](looming_yield_5905_image_only_t0_2_a03_20261005/README.md) — `STOP_CONSTRUCTION_GATE_REJECTS_ALL_RASTER_CIRCLES`; raster circularity gate rejects every authored disk, and the proposed auditor reuses candidate code; formal candidate/auditor 0/0.
@@ -555,6 +557,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`interval_robustness_6074_t0_20261002/`](interval_robustness_6074_t0_20261002/)
 - [`invariant_confluence_prefix_5547_v1/`](invariant_confluence_prefix_5547_v1/)
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
+- [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
+- [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
+- [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
 - [`issue5730_gate_cleanup_fail_20261001/`](issue5730_gate_cleanup_fail_20261001/)
@@ -562,9 +567,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue59_launch_gate_correction_t1_20261001/`](issue59_launch_gate_correction_t1_20261001/)
 - [`issue59_wsl_cuda_model_route_smoke_20261003/`](issue59_wsl_cuda_model_route_smoke_20261003/)
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
-- [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
-- [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
-- [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
 - [`joint_authority_5805_t0_exploratory/`](joint_authority_5805_t0_exploratory/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
@@ -591,6 +593,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
 - [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
+- [`looming_yield_5905_image_only_t0_2_a05_20261005/`](looming_yield_5905_image_only_t0_2_a05_20261005/)
+- [`looming_yield_5905_image_only_t0_6_a06_20261005/`](looming_yield_5905_image_only_t0_6_a06_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
@@ -644,8 +648,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
 - [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
 - [`native_wsl2_migration_6389_t0_20261002/`](native_wsl2_migration_6389_t0_20261002/)
-- [`needle_role_conflict_probe_6354_a02/`](needle_role_conflict_probe_6354_a02/)
 - [`needle_role_conflict_probe_6354_a02_wslc_validation_20261002/`](needle_role_conflict_probe_6354_a02_wslc_validation_20261002/)
+- [`needle_role_conflict_probe_6354_a02/`](needle_role_conflict_probe_6354_a02/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
