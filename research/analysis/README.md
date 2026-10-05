@@ -1088,6 +1088,8 @@ The checker compares the generated block against every child directory with a re
 
 ## Retained construction archives
 
+- [Issue #8068 T0 A01 duplicate allocation — provenance archive](imperfect_repair_8068_t0_a01_20261005/ARCHIVAL_QUALIFICATION.md) — the original host method raw, WSLc candidate STOP, and WSLc audit over that host raw are preserved verbatim; PR #8092's correction marks this allocation redundant/noncanonical. It is not separate Issue-level evidence or a T0/T1 result.
+
 - [Issue #8022 T0 protocol audit A01](recording_salience_8022_protocol_audit_a01_20261005/RESULT.md) — document-only `HOLD_NO_AUDITABLE_PROTOCOL`; the Issue lacked inspectable consent, capture-parity, task/scoring, and analysis artifacts. No participant study or human outcome was run or inferred, and no study authorization follows.
 
 
