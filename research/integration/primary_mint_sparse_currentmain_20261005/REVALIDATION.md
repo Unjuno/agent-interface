@@ -57,3 +57,14 @@ The entire host_v1 suite was rerun after each main fast-forward, including the
 latest snapshot `1fa854d537bfd711b5dfd99f8c04ab6c35bad286`; the latest rescue
 branch sync merge is `4dec5b9314dc7e9c3647a405d5ccd87fe8459b4f`. These are local
 tests; no claim is made about GitHub Actions.
+
+## Follow-up: synchronization with current main
+
+The rescue branch was synchronized with main snapshot
+`6143b0e25acf8b6e97e5ab6d5ffb85da34985afd`. The test totals above are historical
+results from snapshot `1fa854d537bfd711b5dfd99f8c04ab6c35bad286`; they were not
+rerun during this synchronization. The standalone regression file remains
+discoverable by the documented `test_*.mjs` glob, so its import from
+`test_primary_caller.mjs` was removed to avoid registering it twice. No candidate,
+raw result, or historical experiment artifact was changed. This follow-up makes
+no claim of a fresh focused or full-suite pass.

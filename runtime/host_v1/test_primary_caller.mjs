@@ -5,7 +5,6 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createInstrumentedRelayClient} from './relay_host.mjs';
 import {createPrimaryCaller} from './primary_caller.mjs';
-import './test_primary_mint_sparse_rescue.mjs';
 
 // This catches the #5691 failure: extraction throws before STOP is latched.
 // A synthetic host is necessary to supply an envelope a real relay rejects.
