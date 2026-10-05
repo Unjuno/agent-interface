@@ -1,0 +1,3 @@
+# Post-formal integrity note
+
+During post-formal report preparation, a documentation-only edit briefly changed the frozen package `README.md`. The final freeze-hash verification detected the mismatch before result commit. The README was restored byte-for-byte from freeze commit `53074d2e23c117a24eb9321252359cfd67c2a339`; its SHA-256 now matches `FROZEN.json` (`27f1bdebdc74899d167b0f620beb1a692cdd1fccb98bff5a9805c88e714b8a51`). No candidate/auditor execution occurred while the mismatch existed, and no formal command was rerun. The post-formal baseline discussion remains in separately named supplemental files.
