@@ -241,7 +241,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 | [#5874](https://github.com/Unjuno/agent-interface/issues/5874) | [Research] Thermal-history-conditioned tempo for resident local refinement | open | HOLD, STOP, STOP_METER_OR_ROUTE | — |
 | [#5870](https://github.com/Unjuno/agent-interface/issues/5870) | [Research] Online rent-or-compile timing for unknown method reuse horizons | open | HOLD, FAIL_ONLINE_VALUE, FAIL_SAFETY | — |
 | [#5869](https://github.com/Unjuno/agent-interface/issues/5869) | [Research] Complementarity stress test for marginal evidence stopping | open | FAIL_RESIDUAL, HOLD_UNIDENTIFIABLE, PASS | — |
-| [#5865](https://github.com/Unjuno/agent-interface/issues/5865) | [Research] Query-relative completeness certificates for negative target search | open | FAIL_METHOD, HOLD_NO_COMPLETE_INVENTORY, PASS | #4174 |
+| [#5865](https://github.com/Unjuno/agent-interface/issues/5865) | [Research] Query-relative completeness certificates for negative target search | open | STOP_AUDITOR_ERROR, FAIL_METHOD, HOLD_NO_COMPLETE_INVENTORY, PASS | #4174 |
 | [#5862](https://github.com/Unjuno/agent-interface/issues/5862) | [Research] Feasibility-checked recourse after typed agent-interface stops | open | PASS, FAIL_METHOD, HOLD_MODEL_INADEQUATE | — |
 | [#5855](https://github.com/Unjuno/agent-interface/issues/5855) | [Research] Braess-like route-addition regression under shared verifier congestion | open | FAIL_METHOD, UNCERTAIN, HOLD | — |
 | [#5851](https://github.com/Unjuno/agent-interface/issues/5851) | [Research] Causal critical-path elasticity for choosing interface optimizations | open | FAIL, FAIL_METHOD, HOLD_NO_CAUSAL_ENDPOINT | — |
