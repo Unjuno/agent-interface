@@ -4,8 +4,8 @@
   "predecessor": "A01 constructor STOP, A02 finalizer STOP, A03 batch-vs-physical failure are preserved; A04 tests production per-program cleanup through V13.",
   "base_commit": "402c7d1b5147b2a905098f082233db60a47d68db",
   "hypothesis": "V13 terminal cleanup delegates to V15 inherited release_all, which should surface a dropped KeyRelease via the production V4→V3→V12 input owner keymap scan; V13 should then fail the terminal.",
-  "candidate_sha256": "",
-  "auditor_sha256": "",
+  "candidate_sha256": "1025defdb0a12d57358c27a2bb56d0217caac48d22c317ba63f1e7a3e9520952",
+  "auditor_sha256": "82826a7f45708b5dc93ad1811477da30b365aade28e7eb7f993928e66891eedf",
   "container_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
   "source_sha256": {
     "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
@@ -41,7 +41,7 @@
       "V4→V3→V12 production input owner",
       "V13 terminal executor"
     ],
-    "test_double": "Only the V1 controller action loop is stubbed to feed one F8 down/up list. V15 raw/release batching, V4→V3→V12 owner thread operations, V13 executor, per-program cleanup and terminal classification are production source; Xlib display/XTest/keymap are fake.",
+    "test_double": "A04 executed the frozen candidate source candidate_a04_frozen_stop.py once; this source failed during V15 constructor binding before cases. A05 corrected source is static and unrun.",
     "stop_rule": "One A04 candidate execution. Preserve setup failure, FAIL, or PASS raw; do not rerun. One independent source/raw audit follows only if candidate raw exists."
   },
   "decision_gate": {
