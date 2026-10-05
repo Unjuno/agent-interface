@@ -1,0 +1,145 @@
+{
+  "answer_return_ns": 4386708969800,
+  "cancel_request": {
+    "id": "cover-0",
+    "op": "cancel"
+  },
+  "final_admission": {
+    "action_validity": null,
+    "controller_decided_ns": 4386709526400,
+    "executor_admission": null,
+    "grants_input_authority": false,
+    "input_authority_admitted": false,
+    "planner_terminal": {
+      "answer_eligible": true,
+      "status": "completed",
+      "terminal_observed_ns": 4386708473200,
+      "turn_id": "planner-0"
+    },
+    "policy_invalidation": {
+      "event": "paired_signal_invalidation",
+      "grants_input_authority": false,
+      "monitor_received_ns": 4386708361100,
+      "outcome": {
+        "current_value": 80,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-0",
+        "hard_minimum": 88,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 100.0,
+        "source_value": 100,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 4386708473200,
+      "outcomes": {
+        "ammo": {
+          "current_value": 4,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-0-ammo",
+          "hard_minimum": 1,
+          "keep_existing_policy": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "signal_unchanged",
+          "requires_new_decision": false,
+          "semantic_change_identified": false,
+          "signal_id": "ammo",
+          "source_age_ms": 100.0,
+          "source_value": 4,
+          "status": "UNCHANGED",
+          "task_success_verified": false
+        },
+        "health": {
+          "current_value": 80,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-0",
+          "hard_minimum": 88,
+          "keep_existing_policy": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "below_hard_minimum",
+          "requires_new_decision": true,
+          "semantic_change_identified": true,
+          "signal_id": "health",
+          "source_age_ms": 100.0,
+          "source_value": 100,
+          "status": "HARD_INVALIDATED",
+          "task_success_verified": false
+        }
+      },
+      "reason": "health:below_hard_minimum",
+      "requires_new_decision": true,
+      "sequence": 11,
+      "signals": {
+        "ammo": {
+          "binding": {
+            "focus": 7,
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "surface": 9
+          },
+          "capture_ns": 1100000000,
+          "format": "observable-signal-v1",
+          "sequence": 11,
+          "signal_id": "ammo",
+          "status": "observed",
+          "value": 4
+        },
+        "health": {
+          "binding": {
+            "focus": 7,
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "surface": 9
+          },
+          "capture_ns": 1100000000,
+          "format": "observable-signal-v1",
+          "sequence": 11,
+          "signal_id": "health",
+          "status": "observed",
+          "value": 80
+        }
+      }
+    },
+    "reason": "below_hard_minimum",
+    "revocation": null,
+    "schema": "final-action-admission-v2",
+    "status": "REJECTED_POLICY_INVALIDATED"
+  },
+  "formal_allocation_invocations": 0,
+  "fresh_sequence": 11,
+  "game_model_gui_os_input": false,
+  "invalidation_evaluated_ns": 4386708473200,
+  "invalidation_reason": "health:below_hard_minimum",
+  "planner_answer_eligible_after_interrupt": true,
+  "planner_interrupt": {
+    "status": "interrupt_requested"
+  },
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "terminal": {
+    "event": "terminal",
+    "id": "cover-0",
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "verified": true
+    },
+    "status": "cancelled"
+  }
+}
