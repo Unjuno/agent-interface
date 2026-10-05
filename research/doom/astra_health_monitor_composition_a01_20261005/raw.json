@@ -1,0 +1,32 @@
+{
+  "schema": "astra-health-monitor-composition-a01-v1",
+  "main_base": "3a759c72d6f2bd8a9c98f97f6a20ed2974574a32",
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "guard_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "input_readout_sha256": "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+  "observation_game_time_s": 47.0,
+  "health": 96,
+  "ammo": 44,
+  "output": {
+    "source_admission": "admitted",
+    "hard_minimum": 97,
+    "invalidation_event": "paired_signal_invalidation",
+    "reason": "health:below_hard_minimum",
+    "health_outcome": "HARD_INVALIDATED",
+    "ammo_outcome": "SOFT_CHANGED",
+    "grants_input_authority": false,
+    "final_admission": "REJECTED_POLICY_INVALIDATED",
+    "planner_interrupt": "interrupted",
+    "cancel_request": {
+      "op": "cancel",
+      "id": "cover-4"
+    },
+    "terminal_status": "cancelled",
+    "release": {
+      "verified": true,
+      "keys_down": [],
+      "buttons_down": []
+    },
+    "cancel_helper_returned": true
+  }
+}

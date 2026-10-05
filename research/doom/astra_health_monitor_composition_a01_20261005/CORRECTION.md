@@ -1,0 +1,5 @@
+# Audit-v1 FAIL preservation and provenance correction
+
+The one-shot candidate output remains unchanged. Independent audit-v1 ran once and is retained as `audit_v1/AUDIT.json`: it failed because it compared raw fields `controller_sha256` / `guard_sha256` with freeze keys named `controller_source_sha256` / `guard_source_sha256`. No candidate rerun occurred.
+
+A separate read-only audit successor A02 is under `audit_successor_a02/`. It fixes the key mapping, checks the source files' actual bytes, and copies the exact PR #7909 `VISUAL_READOUT.json` input (SHA-256 `610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724`) so it can independently match the candidate's manually selected source/current health and ammo values to the retained readout. The original A01 command did not load this JSON directly; it used the literal frozen values. This correction does not change the candidate result or convert audit-v1's FAIL into a pass. Audit-v2's separate disposition and scope are explicit in its own package.

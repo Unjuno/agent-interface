@@ -1,0 +1,15 @@
+{
+  "id": "astra-health-monitor-composition-a02-audit-successor-20261005",
+  "purpose": "read-only correction of audit-v1's freeze-key mapping and independent source-readout provenance verification; candidate A01 remains untouched",
+  "H": "The retained A01 composition output agrees with exact PR #7909 selected HUD values, exact current-main controller/guard source bytes, and independently derived invalidation/admission/cancel receipt semantics.",
+  "T": "One audit-only run. Load `../raw.json`, exact copied input `../input/VISUAL_READOUT.json`, and current source files from the A01 base. Check the copied input SHA, source file SHA-256, selected rows at 44.6/47.0/54.8/56.2/56.4 seconds, all fixed output literals, and that the candidate's health floor and invalidation sample match manual data. Do not execute candidate or modify its output.",
+  "D": "PASS only if all source/input identities and literal output assertions match; retain audit-v1 FAIL separately regardless.",
+  "C": "This audits copied manual transcriptions and an output containing deterministic test doubles. It cannot establish actual ViZDoom capture, schedule, X11 key release, or application effect.",
+  "U": "Audit-v2 is a raw/source/input consistency check only; it does not add independent semantic labels or live-system evidence.",
+  "main_base": "3a759c72d6f2bd8a9c98f97f6a20ed2974574a32",
+  "input_readout_sha256": "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+  "controller_source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "guard_source_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "candidate_invocations": 0,
+  "audit_invocations": 1
+}
