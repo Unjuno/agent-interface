@@ -1,0 +1,23 @@
+{
+  "schema": "map01-v39-scorer-only-session-optin-result-v1",
+  "decision": "PASS_SOURCE_SELECTION_ONLY",
+  "environment": "Windows CPython 3.11.9",
+  "checks": {
+    "v39_tests": "5/5 passed",
+    "v15_lifecycle_and_selection_tests": "8/8 passed",
+    "scorer_event_and_visibility_tests": "4/4 passed",
+    "py_compile": "passed",
+    "git_diff_check": "passed"
+  },
+  "unverified": [
+    "V15 anonymous-pipe polling test: Windows select.select raised WinError 10038"
+  ],
+  "not_run": [
+    "V39/V15 live composition",
+    "independently timestamped V39 task-effect attribution",
+    "game/GUI/OS input/model execution",
+    "live allocation or threat exposure"
+  ],
+  "tested_commit": "740c560e7cdf0660ddab602bb1f1c683fc99ab73",
+  "base_commit": "1fa752f3b8b474cfbf03bee2686ac739ef6e7bda"
+}
