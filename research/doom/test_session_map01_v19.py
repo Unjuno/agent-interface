@@ -116,10 +116,13 @@ class MeasuredTailCompositionTests(unittest.TestCase):
         package = types.ModuleType("map01_v39_perkey_bridge_a01")
         bridge = types.ModuleType("map01_v39_perkey_bridge_a01.bridge")
         bridge.Backend = PerKeyBackend
+        telemetry = types.ModuleType("doom_owner_thread_release_batch_backend_v1")
+        telemetry.Backend = BaseBackend
         state_seen = {}
 
         def run_previous():
-            wrapper = session_module.Backend
+            wrapper = telemetry.Backend
+            session_module.Backend = wrapper
             self.assertIsNot(wrapper, BaseBackend)
             self.assertIs(wrapper.__bases__[0], PerKeyBackend)
             backend = wrapper(None, None, lambda _row: None, None)
@@ -138,12 +141,101 @@ class MeasuredTailCompositionTests(unittest.TestCase):
                         "session_map01_v12": session_module,
                         "map01_v39_perkey_bridge_a01": package,
                         "map01_v39_perkey_bridge_a01.bridge": bridge,
+                        telemetry.__name__: telemetry,
                     }):
                 self.assertEqual(candidate.main(), "ok")
             self.assertEqual(state_seen["candidate"][0]["event"], "input_admission")
             self.assertEqual(state_seen["candidate"][1]["event"], "input_release_measurement")
             self.assertEqual(state_seen["candidate"][2], [])
         self.assertIs(session_module.Backend, BaseBackend)
+        self.assertIs(telemetry.Backend, BaseBackend)
+
+    def test_real_v15_chain_keeps_capture_and_restores_backend_bindings(self):
+        class BaseBackend:
+            pass
+
+        class PerKeyBackend:
+            def __init__(self, session, out, emit, signal_readers):
+                self.emit = emit
+                self.held = set()
+
+        class Polling:
+            def __init__(self, *args, **kwargs):
+                pass
+
+            def stats(self):
+                return {"inert": True}
+
+        class Sink:
+            def __init__(self, out):
+                pass
+
+            def finalize(self, stats):
+                pass
+
+        for fail_leaf in (False, True):
+            with self.subTest(fail_leaf=fail_leaf):
+                leaf_error = RuntimeError("inert V12 leaf failure")
+                session = types.ModuleType("session_map01_v12")
+                session.Backend = BaseBackend
+                game_constructor = lambda: self.fail("game must not start")
+                session.vd = types.SimpleNamespace(DoomGame=game_constructor)
+                session.sys = sys
+                telemetry = types.ModuleType("doom_owner_thread_release_batch_backend_v1")
+                telemetry.Backend = BaseBackend
+                executor = types.ModuleType("executor_v13")
+                executor.Executor = type("InertExecutor", (), {})
+                package = types.ModuleType("map01_v39_perkey_bridge_a01")
+                bridge = types.ModuleType("map01_v39_perkey_bridge_a01.bridge")
+                bridge.Backend = PerKeyBackend
+                reached = []
+                original_main = candidate.previous.main
+                original_proxy = candidate.previous._GameProxy
+                original_polling = candidate.previous.MainThreadScorerStdin
+                original_stdin = sys.stdin
+
+                def leaf():
+                    self.assertIs(sys._getframe(1).f_code, original_main.__code__)
+                    self.assertIs(session.Backend, telemetry.Backend)
+                    self.assertIs(session.Backend.__bases__[0], PerKeyBackend)
+                    rows = []
+                    backend = session.Backend(None, None, rows.append, None)
+                    down = {"event": "input_admission", "id": "p", "step": 1}
+                    up = {"event": "input_release_measurement", "id": "p", "step": 1}
+                    backend.held.add("F8")
+                    backend.emit(down)
+                    backend.held.clear()
+                    backend.emit(up)
+                    self.assertEqual(rows, [down, up])
+                    self.assertEqual(backend._v19_state["candidate"], (down, up, []))
+                    reached.append(True)
+                    if fail_leaf:
+                        raise leaf_error
+
+                session.main = leaf
+                modules = {session.__name__: session, telemetry.__name__: telemetry,
+                           executor.__name__: executor, package.__name__: package,
+                           bridge.__name__: bridge}
+                with patch.dict(sys.modules, modules), \
+                        patch.object(sys, "argv", ["v19", "--out", "inert-output"]), \
+                        patch.object(candidate, "MeasuredScorerStdin", Polling), \
+                        patch.object(candidate.previous, "ScorerFileSink", Sink), \
+                        patch.object(candidate.previous, "_merge_sources", return_value=False), \
+                        patch.object(candidate, "_record_source_manifest", return_value=False):
+                    if fail_leaf:
+                        with self.assertRaises(RuntimeError) as raised:
+                            candidate.main()
+                        self.assertIs(raised.exception, leaf_error)
+                    else:
+                        candidate.main()
+                self.assertEqual(reached, [True])
+                self.assertIs(session.Backend, BaseBackend)
+                self.assertIs(telemetry.Backend, BaseBackend)
+                self.assertIs(candidate.previous.main, original_main)
+                self.assertIs(candidate.previous._GameProxy, original_proxy)
+                self.assertIs(candidate.previous.MainThreadScorerStdin, original_polling)
+                self.assertIs(session.vd.DoomGame, game_constructor)
+                self.assertIs(sys.stdin, original_stdin)
 
 
 if __name__ == "__main__":

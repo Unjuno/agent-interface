@@ -91,10 +91,12 @@ def _record_source_manifest(out):
 def main():
     out = Path(previous._option("--out"))
     import session_map01_v12 as session_module
+    import doom_owner_thread_release_batch_backend_v1 as telemetry
     from map01_v39_perkey_bridge_a01.bridge import Backend as PerKeyBackend
 
     state = {}
     original_backend = session_module.Backend
+    original_telemetry_backend = telemetry.Backend
     original_proxy = previous._GameProxy
     original_polling = previous.MainThreadScorerStdin
     polling_holder = {}
@@ -114,7 +116,7 @@ def main():
         polling_holder["polling"] = polling
         return polling
 
-    session_module.Backend = _capture_backend(PerKeyBackend, state)
+    telemetry.Backend = _capture_backend(PerKeyBackend, state)
     previous._GameProxy = TailGameProxy
     previous.MainThreadScorerStdin = capturing_polling
     session_error = None
@@ -125,6 +127,7 @@ def main():
         raise
     finally:
         session_module.Backend = original_backend
+        telemetry.Backend = original_telemetry_backend
         previous._GameProxy = original_proxy
         previous.MainThreadScorerStdin = original_polling
         try:
