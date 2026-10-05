@@ -214,7 +214,19 @@ class InputOwner:
                 key_release_attempts[str(code)] = {
                     "attempts": attempts, "verified": verified,
                 }
-            for button in list(buttons):
+            # An explicit ButtonRelease may be acknowledged by XSync while
+            # the server still reports the button down. Retry every touched
+            # button that remains down, including one removed from `buttons`.
+            try:
+                before_mask = d.screen().root.query_pointer().mask
+            except Exception:
+                retry_buttons = set(buttons) | set(touched_buttons)
+            else:
+                retry_buttons = {
+                    button for button in touched_buttons
+                    if before_mask & (X.Button1Mask << (button - 1))
+                }
+            for button in sorted(retry_buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
             mask = d.screen().root.query_pointer().mask
