@@ -1,0 +1,20 @@
+{
+  "schema": "v39-currentmain-renewal-admission-result-a01",
+  "disposition": "PASS_FOCUSED_LOCAL_REGRESSION_FULL_CONTROLLER_HOLD",
+  "source_parent_commit": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "baseline_red_exit": 1,
+  "candidate_focused_normal": {"exit": 0, "passed": 4, "failed": 0},
+  "candidate_focused_optimized": {"exit": 0, "passed": 4, "failed": 0},
+  "existing_wait_normal": {"exit": 0, "passed": 15, "failed": 0},
+  "existing_wait_optimized": {"exit": 0, "passed": 15, "failed": 0},
+  "py_compile_exit": 0,
+  "scoped_diff_check_exit": 0,
+  "full_controller_suite": {
+    "exit": 1,
+    "disposition": "HOLD_IMPORT_DEPENDENCY_MISSING",
+    "error": "ModuleNotFoundError: No module named PIL"
+  },
+  "game_model_gui_input_container_gpu_or_formal_allocation_used": false,
+  "artifact_audit_scope": "hash_bindings_and_result_shape_only",
+  "issue_59_closed": false
+}
