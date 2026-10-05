@@ -1,0 +1,114 @@
+{
+  "admission_count": 40,
+  "auditor_sha256": "584b715840abb00079a115dc8aaee9185bcf19bfea52bf34a7e43e66d79106f9",
+  "base_commit": "8c45935e065ec36f8d42b7d4e59224900d5a83d2",
+  "candidate_output": "/mnt/a03-results/A03",
+  "candidate_runner_sha256": "bf4d7113e2bcd30da7ce20f80abb2ca9261532488ac31d6c412087bfeeecf10e",
+  "candidate_sha256": "32db5c5310635609f2c6774fcae90aaba8102cfeb554effe6d342df5634d6b77",
+  "client_event_count": 80,
+  "commands_sha256": "03b196f95efb0b8dc395f1dcfdaffa23bd0f2a31dda7cd825dcbc0b200f88dc9",
+  "cycles": 10,
+  "executor_identifier": "xvfb-per-key-a03",
+  "executor_step": 7,
+  "expected_release_batch_sizes": [
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2
+  ],
+  "focus_smoke_sha256": "a3c15765173ae2687a62525286742e904a513d3a437897e6234508914c8195f7",
+  "gate": "PASS_METHOD_SCOPED iff all raw-only audit checks pass. Any complete mismatch is FAIL; failed transfer/setup/focus smoke/missing trace/incomplete cleanup is STOP. Focus smoke once before candidate. Candidate once; auditor once only if raw exists; no retry.",
+  "guest": {
+    "architecture": "arm64",
+    "candidate_display": ":117",
+    "focus_smoke_display": ":118",
+    "image": "ubuntu:noble",
+    "isolate_network": true,
+    "isolated": true,
+    "mounts": {
+      "bundle": "/mnt/a03-bundle",
+      "results": "/mnt/a03-results"
+    },
+    "name": "research-59-v39-xvfb-release-a03-20261005",
+    "xvfb_screen": "640x480x24"
+  },
+  "pattern": [
+    {
+      "down": true,
+      "key": "a"
+    },
+    {
+      "down": false,
+      "key": "a"
+    },
+    {
+      "down": true,
+      "key": "a"
+    },
+    {
+      "down": false,
+      "key": "a"
+    },
+    {
+      "down": true,
+      "key": "a"
+    },
+    {
+      "down": true,
+      "key": "space"
+    },
+    {
+      "down": false,
+      "key": "space"
+    },
+    {
+      "down": false,
+      "key": "a"
+    }
+  ],
+  "preregistration_sha256": "94872f71da7a036f3c55bbd475e7ca0bce976401144cc36e0dac87db7df6fbdb",
+  "readme_sha256": "e555f032823d299ca80a19eda3fe1927ab5a778ad774b9b35b36b88b47c57be6",
+  "release_count": 40,
+  "schema": "map01-v39-xvfb-per-key-release-freeze-a03-v1",
+  "scope": "Xvfb/XTEST dispatch and exact current-main per-key admission/release identity only. No game, model, physical input, useful task feedback, threat response, bounded recovery, or MAP01 progress.",
+  "setup_runner_sha256": "0b5c3a41b1a7c5ebfc6d673d9989d2f463c0dda6c740564678c19c73adc68984",
+  "source_blob_ids": {
+    "doom_retained_input_backend_v4.py": "81484e6146bb8b93a007f338df3e504620924a45",
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "input_transition_owner_v3.py": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51"
+  },
+  "source_manifest_sha256": "6c5d60e289a4b87ffff8e92d9eda20d8d35f2bd9beca5f763b41e864f56a5d5a",
+  "source_sha256": {
+    "doom_retained_input_backend_v4.py": "0e307af96760d7c70e1d2ed7f7810530d38deddec51062c8057c78d7db57b0e0",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_transition_owner_v3.py": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078"
+  },
+  "test_audit_sha256": "819791bd27f0a254554fc24205b1731a788470acc5d471bf486346c830437f84",
+  "verifier_sha256": "b98e7192a8ddbc04275590de73b7bd0db3db70e5b321b3679ef360f9b90caf1e"
+}

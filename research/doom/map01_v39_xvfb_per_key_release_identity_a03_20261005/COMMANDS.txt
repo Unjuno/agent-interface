@@ -1,0 +1,19 @@
+Frozen setup and one-shot commands (run from repository root; see PREREGISTRATION.md)
+
+1. Create one fresh guest with these exact selected mounts:
+orb create --isolated --isolate-network --mount /tmp/agent-interface-59-xvfb-per-key-release-a03/research/doom/map01_v39_xvfb_per_key_release_identity_a03_20261005/bundle-transfer:/mnt/a03-bundle --mount /tmp/agent-interface-59-xvfb-per-key-release-a03/research/doom/map01_v39_xvfb_per_key_release_identity_a03_20261005/results:/mnt/a03-results -a arm64 ubuntu:noble research-59-v39-xvfb-release-a03-20261005
+
+2. Confirm isolated=true and isolate_network=true via orb info. In the guest, copy the one frozen tar bundle locally and verify the transfer before setup:
+mkdir -p "$HOME/map01-v39-xvfb-a03"
+sha256sum -c /mnt/a03-bundle/SHA256SUMS
+tar -xzf /mnt/a03-bundle/experiment.tar -C "$HOME/map01-v39-xvfb-a03"
+cd "$HOME/map01-v39-xvfb-a03"
+python3 RUNNER/verify_bundle.py
+
+3. Setup dependencies once (no candidate invocation):
+bash RUNNER/setup_guest.sh
+
+4. The runner first executes the frozen `:118` focus smoke. If it passes, candidate and then raw-only auditor run once each; no retries:
+bash RUNNER/run_candidate.sh
+
+Candidate output is written to the separately mounted host path results/A03; setup/run stdout, stderr, markers, exit codes and times go under results/logs.
