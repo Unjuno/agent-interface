@@ -23,6 +23,7 @@ SUITES['protocol'].append('test_appserver_utf8_2d0b')
 SUITES['protocol'].append('test_app_server_reply_id_5156')
 SUITES['protocol'].append('test_app_server_utf8')
 SUITES['protocol'].append('test_appserver_process_tree_cleanup_20261004')
+SUITES['protocol'].append('test_appserver_response_ownership_01a0ff2d')
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
 

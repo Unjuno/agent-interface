@@ -1,4 +1,4 @@
-"""Public stdio regression for Boolean IDs followed by a valid Number reply."""
+"""Public stdio regression for Boolean IDs followed by an active integer reply."""
 import json
 from pathlib import Path
 import sys
@@ -17,7 +17,7 @@ else:
         {'id':True,'result':{'payload':'Boolean true must not correlate'}},
         {'id':False,'result':{'payload':'Boolean false must not cache'}},
         {'method':'fixture/notice','params':{'ready':True}},
-        {'id':float(request['id']),'result':{'payload':'valid Number'}},
+        {'id':request['id'],'result':{'payload':'valid Number'}},
     ]
 for message in messages:
     sys.stdout.write(json.dumps(message,separators=(',',':'))+'\n')
@@ -40,6 +40,10 @@ class ReplyIdRegression(unittest.TestCase):
                     self.assertEqual(client.request(method, timeout=1), {'payload':'valid Number'})
                     self.assertEqual(client.wait_notification(lambda row: row.get('method') == 'fixture/notice', timeout=1),
                                      {'method':'fixture/notice','params':{'ready':True}})
+                    self.assertEqual(list(client._notifications), [
+                        {'id':True,'result':{'payload':'Boolean true must not correlate'}},
+                        {'id':False,'result':{'payload':'Boolean false must not cache'}},
+                    ])
                 self.assertEqual(client.process.wait(timeout=1), 0)
             finally:
                 client.close(timeout=1)
@@ -50,8 +54,8 @@ class ReplyIdRegression(unittest.TestCase):
             rows = [json.loads(line) for line in journal.read_text(encoding='utf8').splitlines()]
             self.assertIs(type(rows[0]['message']['id']), int)
             if method != 'fixture/error':
-                self.assertEqual([row['message'].get('id') for row in rows[1:]], [True, False, None, 1.0])
-                self.assertIs(type(rows[-1]['message']['id']), float)
+                self.assertEqual([row['message'].get('id') for row in rows[1:]], [True, False, None, 1])
+                self.assertIs(type(rows[-1]['message']['id']), int)
 
     def test_boolean_noise_preserves_numeric_reply_and_notification(self):
         self.exercise('fixture/result')
