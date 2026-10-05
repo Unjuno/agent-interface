@@ -2,6 +2,10 @@
 
 Status: `SCOPED_TARGET_PASS / NATIVE_FULL_MACOS_BASELINE_FAIL / CONTAINER_STOP / REVIEW_HOLD`.
 
+The detailed first validation below used base `1fa854d`. Before publication,
+the successor was synchronized to live main `9febfe4926cde6629f9751d6444f6b802cf31328`;
+post-sync evidence is recorded at the end of this report.
+
 This is a current-main integration check of the already executed #7094 repair,
 not a new live app-server, model, GUI, or task-effect experiment. The original
 branch and its first outcomes are unchanged.
@@ -18,8 +22,8 @@ branch and its first outcomes are unchanged.
   `506a0a47fc643af7add7a3a9a4d9b3b47dd0d29a` onto current main
   `1fa854d537bfd711b5dfd99f8c04ab6c35bad286`. Conflict resolution retained
   main's process-tree cleanup and UTF-8 test registration, then added the
-  stderr-reader join and stderr regression-suite registration. This successor
-  is `rescue/7094-appserver-stderr-currentmain-20261005`, head
+  stderr-reader join and stderr regression-suite registration. The initial
+  successor checkpoint was `rescue/7094-appserver-stderr-currentmain-20261005`, head
   `91cffcc13286b3d2956b7afe4d272254a6f707fc`; its first commit
   `bdf8383b744c929625b8ac1ccb17709141c60211` adds the regression test before
   the source merge.
@@ -103,3 +107,19 @@ no image/cache pruning or repair was attempted. This is an infrastructure
 - No main merge and no remote branch deletion were performed. Do not merge this
   successor until its hosted checks and fresh independent review/application
   gates pass.
+
+## Latest-main refresh — 2026-10-05
+
+Before publication, `git ls-remote` showed main had advanced to
+`9febfe4926cde6629f9751d6444f6b802cf31328`. A targeted diff from the initial
+base to this main found no changes to the five inherited source/test/runner
+paths. The successor was then merged with this exact main commit; refresh head
+is `dc81a29a7d1aed0133f12a53e89787d35fae7f0f`, with parents
+`4c5dc77d804055009f9f6e53b7362ae3925d66f2` and
+`9febfe4926cde6629f9751d6444f6b802cf31328`.
+
+After that sync, the same six-module target command passed `24/24` normally and
+`24/24` under `python -O` on CPython 3.12.13. The complete local native runner
+was not rerun on this refreshed tree; the detailed macOS baseline comparison
+above is specifically against the earlier `1fa854d` checkpoint. The hosted
+Ubuntu Native MCP check remains pending on the successor.
