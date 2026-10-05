@@ -1,0 +1,2186 @@
+{
+  "capture_rgb_event_join": "UNAVAILABLE: legacy V28/V31 event rows do not contain frame_rgb_sha256; identity is bound by pinned event-log hash, unique sequence, recorded PNG basename, and recorded pointer geometry",
+  "case_count": 17,
+  "checks": 158,
+  "checks_detail": {
+    "event_geometry_join:map01-fixed-threat-v28-live-01:11:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:1:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:33:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:36:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:37:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:51:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:60:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:68:health": true,
+    "event_geometry_join:map01-fixed-threat-v28-live-01:70:health": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:139:ammo": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:181:ammo": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:1:ammo": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:227:ammo": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:233:ammo": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:33:ammo": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:59:ammo": true,
+    "event_geometry_join:map01-soft-context-v31-live-01:92:ammo": true,
+    "event_hash:map01-fixed-threat-v28-live-01": true,
+    "event_hash:map01-soft-context-v31-live-01": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:11:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:1:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:33:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:36:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:37:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:51:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:60:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:68:health": true,
+    "event_image_basename_join:map01-fixed-threat-v28-live-01:70:health": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:139:ammo": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:181:ammo": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:1:ammo": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:227:ammo": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:233:ammo": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:33:ammo": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:59:ammo": true,
+    "event_image_basename_join:map01-soft-context-v31-live-01:92:ammo": true,
+    "label_source_hash:research/doom/test_doom_hud_signal_v1.py": true,
+    "label_source_hash:research/doom/test_doom_hud_signal_v2.py": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:11:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:1:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:33:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:36:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:37:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:51:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:60:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:68:health": true,
+    "manual_label:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:70:health": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:139:ammo": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:181:ammo": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:1:ammo": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:227:ammo": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:233:ammo": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:33:ammo": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:59:ammo": true,
+    "manual_label:doom_hud_signal_v3:map01-soft-context-v31-live-01:92:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:11:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:1:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:33:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:36:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:37:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:51:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:60:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:68:health": true,
+    "manual_label:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:70:health": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:139:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:181:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:1:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:227:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:233:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:33:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:59:ammo": true,
+    "manual_label:doom_hud_signal_v4:map01-soft-context-v31-live-01:92:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:11:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:1:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:33:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:36:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:37:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:51:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:60:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:68:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-fixed-threat-v28-live-01:70:health": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:139:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:181:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:1:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:227:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:233:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:33:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:59:ammo": true,
+    "path_consistency:doom_hud_signal_v3:map01-soft-context-v31-live-01:92:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:11:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:1:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:33:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:36:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:37:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:51:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:60:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:68:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-fixed-threat-v28-live-01:70:health": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:139:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:181:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:1:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:227:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:233:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:33:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:59:ammo": true,
+    "path_consistency:doom_hud_signal_v4:map01-soft-context-v31-live-01:92:ammo": true,
+    "png_hash:map01-fixed-threat-v28-live-01:11:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:1:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:33:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:36:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:37:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:51:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:60:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:68:health": true,
+    "png_hash:map01-fixed-threat-v28-live-01:70:health": true,
+    "png_hash:map01-soft-context-v31-live-01:139:ammo": true,
+    "png_hash:map01-soft-context-v31-live-01:181:ammo": true,
+    "png_hash:map01-soft-context-v31-live-01:1:ammo": true,
+    "png_hash:map01-soft-context-v31-live-01:227:ammo": true,
+    "png_hash:map01-soft-context-v31-live-01:233:ammo": true,
+    "png_hash:map01-soft-context-v31-live-01:33:ammo": true,
+    "png_hash:map01-soft-context-v31-live-01:59:ammo": true,
+    "png_hash:map01-soft-context-v31-live-01:92:ammo": true,
+    "reader_sources_stable_during_run": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:11:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:1:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:33:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:36:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:37:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:51:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:60:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:68:health": true,
+    "rgb_hash:map01-fixed-threat-v28-live-01:70:health": true,
+    "rgb_hash:map01-soft-context-v31-live-01:139:ammo": true,
+    "rgb_hash:map01-soft-context-v31-live-01:181:ammo": true,
+    "rgb_hash:map01-soft-context-v31-live-01:1:ammo": true,
+    "rgb_hash:map01-soft-context-v31-live-01:227:ammo": true,
+    "rgb_hash:map01-soft-context-v31-live-01:233:ammo": true,
+    "rgb_hash:map01-soft-context-v31-live-01:33:ammo": true,
+    "rgb_hash:map01-soft-context-v31-live-01:59:ammo": true,
+    "rgb_hash:map01-soft-context-v31-live-01:92:ammo": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:11:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:1:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:33:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:36:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:37:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:51:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:60:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:68:health": true,
+    "unique_observation:map01-fixed-threat-v28-live-01:70:health": true,
+    "unique_observation:map01-soft-context-v31-live-01:139:ammo": true,
+    "unique_observation:map01-soft-context-v31-live-01:181:ammo": true,
+    "unique_observation:map01-soft-context-v31-live-01:1:ammo": true,
+    "unique_observation:map01-soft-context-v31-live-01:227:ammo": true,
+    "unique_observation:map01-soft-context-v31-live-01:233:ammo": true,
+    "unique_observation:map01-soft-context-v31-live-01:33:ammo": true,
+    "unique_observation:map01-soft-context-v31-live-01:59:ammo": true,
+    "unique_observation:map01-soft-context-v31-live-01:92:ammo": true
+  },
+  "classification": "cross-episode retained regression using pre-existing manual labels; not an independently selected held-out study",
+  "disposition": "PASS",
+  "errors": [],
+  "finished_at_utc": "2026-10-05T04:34:03.817621+00:00",
+  "manifest_sha256": "552e90c00e75c8f9ee5d928f57e1175d84513e85997b7f3283ae126f802449a7",
+  "modules_evaluated": [
+    "doom_hud_signal_v3",
+    "doom_hud_signal_v4"
+  ],
+  "numpy": "2.3.5",
+  "passed_checks": 158,
+  "pillow": "12.3.0",
+  "python": "3.12.14",
+  "reader_source_sha256": {
+    "doom_hud_signal_v1": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "doom_hud_signal_v2": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+    "doom_hud_signal_v3": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7",
+    "doom_hud_signal_v4": "c83bf460d53b35adab43ee905dd17dd43f4dd57ed5030f57f7b3b35db978b75e"
+  },
+  "reader_source_sha256_after": {
+    "doom_hud_signal_v1": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "doom_hud_signal_v2": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+    "doom_hud_signal_v3": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7",
+    "doom_hud_signal_v4": "c83bf460d53b35adab43ee905dd17dd43f4dd57ed5030f57f7b3b35db978b75e"
+  },
+  "results": [
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 100,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24714947011681,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 1,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 1,
+            "best_score": 0.9591078066914498,
+            "digit": 1,
+            "second_score": 0.1736842105263158,
+            "slot": 0
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9510869565217391,
+            "digit": 0,
+            "second_score": 0.29873417721518986,
+            "slot": 1
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9483695652173914,
+            "digit": 0,
+            "second_score": 0.3291139240506329,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 100,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "bbad76889b419ea0bdcf7db88b4e69cf5b1a500b1923449b6e8b00c6331e63b5",
+      "sequence": 1,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 100,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24714947011681,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 1,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 1,
+            "best_score": 0.9591078066914498,
+            "digit": 1,
+            "second_score": 0.1736842105263158,
+            "slot": 0
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9510869565217391,
+            "digit": 0,
+            "second_score": 0.29873417721518986,
+            "slot": 1
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9483695652173914,
+            "digit": 0,
+            "second_score": 0.3291139240506329,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 100,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "bbad76889b419ea0bdcf7db88b4e69cf5b1a500b1923449b6e8b00c6331e63b5",
+      "sequence": 1,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 97,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24718113324128,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 11,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9274193548387096,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 97,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "82340389d0867820374af819c5d2230b2a1445e7b94280860d2e36f3102b9dea",
+      "sequence": 11,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 97,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24718113324128,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9331983805668016,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.058165548098434,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 11,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9274193548387096,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 97,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "82340389d0867820374af819c5d2230b2a1445e7b94280860d2e36f3102b9dea",
+      "sequence": 11,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 100,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24724156980225,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 33,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 1,
+            "best_score": 0.9591078066914498,
+            "digit": 1,
+            "second_score": 0.1736842105263158,
+            "slot": 0
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9510869565217391,
+            "digit": 0,
+            "second_score": 0.29873417721518986,
+            "slot": 1
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9483695652173914,
+            "digit": 0,
+            "second_score": 0.3291139240506329,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 100,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "4d424d4aebf642d358cf5adf0366eb47d640662cd093d366c5cf12f2207f5165",
+      "sequence": 33,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 100,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24724156980225,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 33,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 1,
+            "best_score": 0.9591078066914498,
+            "digit": 1,
+            "second_score": 0.1736842105263158,
+            "slot": 0
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9510869565217391,
+            "digit": 0,
+            "second_score": 0.29873417721518986,
+            "slot": 1
+          },
+          {
+            "best_digit": 0,
+            "best_score": 0.9483695652173914,
+            "digit": 0,
+            "second_score": 0.3291139240506329,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 100,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "4d424d4aebf642d358cf5adf0366eb47d640662cd093d366c5cf12f2207f5165",
+      "sequence": 33,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 93,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24724500955540,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 36,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9274193548387096,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 1
+          },
+          {
+            "best_digit": 3,
+            "best_score": 0.9244851258581236,
+            "digit": 3,
+            "second_score": 0.3333333333333333,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 93,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "1b7a4428dac98d5ce8e133a809c2af5e78893d723e48fc986ec8c7ac1a974449",
+      "sequence": 36,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 93,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24724500955540,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9331983805668016,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.058165548098434,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 36,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9274193548387096,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 1
+          },
+          {
+            "best_digit": 3,
+            "best_score": 0.9244851258581236,
+            "digit": 3,
+            "second_score": 0.3333333333333333,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 93,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "1b7a4428dac98d5ce8e133a809c2af5e78893d723e48fc986ec8c7ac1a974449",
+      "sequence": 36,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 93,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24724568789363,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 37,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9274193548387096,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 1
+          },
+          {
+            "best_digit": 3,
+            "best_score": 0.9244851258581236,
+            "digit": 3,
+            "second_score": 0.3333333333333333,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 93,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "04fa2e5251dad50f1961f56f09460e064493c8c2dc922dc10cb3804cea2a6c42",
+      "sequence": 37,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 93,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24724568789363,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9331983805668016,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.058165548098434,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 37,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9274193548387096,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 1
+          },
+          {
+            "best_digit": 3,
+            "best_score": 0.9244851258581236,
+            "digit": 3,
+            "second_score": 0.3333333333333333,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 93,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "04fa2e5251dad50f1961f56f09460e064493c8c2dc922dc10cb3804cea2a6c42",
+      "sequence": 37,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 87,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24726510382434,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 51,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9328358208955224,
+            "digit": 8,
+            "second_score": 0.34430379746835443,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 87,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "8e6d90552c3c3b49195b54988d32911a81ab1f3995fffd7c2d0add17536618e5",
+      "sequence": 51,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 87,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24726510382434,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9331983805668016,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.058165548098434,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 51,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9328358208955224,
+            "digit": 8,
+            "second_score": 0.34430379746835443,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 87,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "8e6d90552c3c3b49195b54988d32911a81ab1f3995fffd7c2d0add17536618e5",
+      "sequence": 51,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 81,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24729289247170,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 60,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9328358208955224,
+            "digit": 8,
+            "second_score": 0.34430379746835443,
+            "slot": 1
+          },
+          {
+            "best_digit": 1,
+            "best_score": 0.9591078066914498,
+            "digit": 1,
+            "second_score": 0.21144278606965175,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 81,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "c2033dfed65d65ac45ec91aee2e0b5e1fe1c3eca82a12a78bd25c544e61689f3",
+      "sequence": 60,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 81,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24729289247170,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9331983805668016,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.058165548098434,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 60,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9328358208955224,
+            "digit": 8,
+            "second_score": 0.34430379746835443,
+            "slot": 1
+          },
+          {
+            "best_digit": 1,
+            "best_score": 0.9591078066914498,
+            "digit": 1,
+            "second_score": 0.21144278606965175,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 81,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "c2033dfed65d65ac45ec91aee2e0b5e1fe1c3eca82a12a78bd25c544e61689f3",
+      "sequence": 60,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 79,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24731750618320,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 68,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9342105263157895,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 1
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9301075268817204,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 79,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "856ed2640fcda73e3e413c119cd5c36a53f5a8705bd9cb20aa2fa32d21bda1b2",
+      "sequence": 68,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 79,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24731750618320,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9331983805668016,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.058165548098434,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 68,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9342105263157895,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 1
+          },
+          {
+            "best_digit": 9,
+            "best_score": 0.9301075268817204,
+            "digit": 9,
+            "second_score": 0.31413612565445026,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 79,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "856ed2640fcda73e3e413c119cd5c36a53f5a8705bd9cb20aa2fa32d21bda1b2",
+      "sequence": 68,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 73,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24732244508162,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 70,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9342105263157895,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 1
+          },
+          {
+            "best_digit": 3,
+            "best_score": 0.9244851258581236,
+            "digit": 3,
+            "second_score": 0.3333333333333333,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 73,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "51c9de3c5421140dd37676f61a85954ea2eb234272259640c588cca718eba843",
+      "sequence": 70,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-fixed-threat-v28-live-01",
+      "manual_label_match": true,
+      "manual_value": 73,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 24732244508162,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9331983805668016,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.058165548098434,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 70,
+        "signal_id": "health",
+        "slots": [
+          {
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "digit": null,
+            "second_score": 0.055762081784386616,
+            "slot": 0
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9342105263157895,
+            "digit": 7,
+            "second_score": 0.3586387434554974,
+            "slot": 1
+          },
+          {
+            "best_digit": 3,
+            "best_score": 0.9244851258581236,
+            "digit": 3,
+            "second_score": 0.3333333333333333,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 73,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "51c9de3c5421140dd37676f61a85954ea2eb234272259640c588cca718eba843",
+      "sequence": 70,
+      "signal": "health"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 48,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29126724888845,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 1,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9353233830845771,
+            "digit": 8,
+            "second_score": 0.3518987341772152,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 48,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "fd427af0c6bb2a3b20a90cbd89db6e7bc41f815e040d1144d1511d70ef7613ea",
+      "sequence": 1,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 48,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29126724888845,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 1,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9353233830845771,
+            "digit": 8,
+            "second_score": 0.3518987341772152,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 48,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "fd427af0c6bb2a3b20a90cbd89db6e7bc41f815e040d1144d1511d70ef7613ea",
+      "sequence": 1,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 48,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29136569253819,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 33,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9353233830845771,
+            "digit": 8,
+            "second_score": 0.3518987341772152,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 48,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "e18a31f22365da2de130594c4ce8f09b3a76f1148689e223c625da775bd9472d",
+      "sequence": 33,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 48,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29136569253819,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 33,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 8,
+            "best_score": 0.9353233830845771,
+            "digit": 8,
+            "second_score": 0.3518987341772152,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 48,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "e18a31f22365da2de130594c4ce8f09b3a76f1148689e223c625da775bd9472d",
+      "sequence": 33,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 47,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29143979802977,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 59,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.34554973821989526,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 47,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "f21b03c30af429ffda297935a2f08aba91d6c8a31acf4803b7aa5fbeda3df8f7",
+      "sequence": 59,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 47,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29143979802977,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 59,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.34554973821989526,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 47,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "f21b03c30af429ffda297935a2f08aba91d6c8a31acf4803b7aa5fbeda3df8f7",
+      "sequence": 59,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 47,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29149188254426,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 92,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.34554973821989526,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 47,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "fe22a241ff59aa3de5890313e560b93c985cfafd416135a57bbd14e899395e86",
+      "sequence": 92,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 47,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29149188254426,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 92,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 7,
+            "best_score": 0.9368421052631579,
+            "digit": 7,
+            "second_score": 0.34554973821989526,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 47,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "fe22a241ff59aa3de5890313e560b93c985cfafd416135a57bbd14e899395e86",
+      "sequence": 92,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 46,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29157561439631,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 139,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 6,
+            "best_score": 0.9367088607594937,
+            "digit": 6,
+            "second_score": 0.3582089552238806,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 46,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "a10e7e5d871c8be7a88c434bb409b6fdc89bc81e08639e947088d2def749ca1b",
+      "sequence": 139,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 46,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29157561439631,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 139,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 6,
+            "best_score": 0.9367088607594937,
+            "digit": 6,
+            "second_score": 0.3582089552238806,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 46,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "a10e7e5d871c8be7a88c434bb409b6fdc89bc81e08639e947088d2def749ca1b",
+      "sequence": 139,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 45,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29164610048517,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 181,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 5,
+            "best_score": 0.9194630872483222,
+            "digit": 5,
+            "second_score": 0.3394736842105263,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 45,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "1ead39e0e2a795fec6cf6b50d497b587570a79a2125b95f8c7c7b80cf5ab4d2e",
+      "sequence": 181,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 45,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29164610048517,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 181,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 5,
+            "best_score": 0.9194630872483222,
+            "digit": 5,
+            "second_score": 0.3394736842105263,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 45,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "1ead39e0e2a795fec6cf6b50d497b587570a79a2125b95f8c7c7b80cf5ab4d2e",
+      "sequence": 181,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 45,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29172382060482,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 227,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 5,
+            "best_score": 0.9194630872483222,
+            "digit": 5,
+            "second_score": 0.3394736842105263,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 45,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "b68e251d6ed8d35f0a361477a5915f4f1b70d1929f8af88876c08c3aa311e1c0",
+      "sequence": 227,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 45,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29172382060482,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 227,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 5,
+            "best_score": 0.9194630872483222,
+            "digit": 5,
+            "second_score": 0.3394736842105263,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 45,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "b68e251d6ed8d35f0a361477a5915f4f1b70d1929f8af88876c08c3aa311e1c0",
+      "sequence": 227,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 45,
+      "module": "doom_hud_signal_v3",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29173325863973,
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "format": "observable-signal-v1",
+        "sequence": 233,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 5,
+            "best_score": 0.9194630872483222,
+            "digit": 5,
+            "second_score": 0.3394736842105263,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 45,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "3d1601462826485ec867cc3ee2fc36a3a4d0693cb54c80e66ec2bce3e8e8ac19",
+      "sequence": 233,
+      "signal": "ammo"
+    },
+    {
+      "episode": "map01-soft-context-v31-live-01",
+      "manual_label_match": true,
+      "manual_value": 45,
+      "module": "doom_hud_signal_v4",
+      "read_equals_read_frame": true,
+      "result": {
+        "binding": {
+          "focus": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ],
+          "surface": 6291472
+        },
+        "capture_ns": 29173325863973,
+        "evidence": "hash-bound WAD palette-consistent glyphs with checked leading background",
+        "format": "observable-signal-v1",
+        "leading_blank_evidence": [
+          {
+            "background_colors_only": true,
+            "background_score": 0.9412955465587044,
+            "local_background_colors_only": true,
+            "maximum_glyph_score_any_palette": 0.060526315789473685,
+            "slot": 0
+          }
+        ],
+        "palette_indices": [
+          0
+        ],
+        "sequence": 233,
+        "signal_id": "ammo",
+        "slots": [
+          {
+            "best_digit": 7,
+            "best_score": 0.060526315789473685,
+            "digit": null,
+            "second_score": 0.05204460966542751,
+            "slot": 0
+          },
+          {
+            "best_digit": 4,
+            "best_score": 0.9386189258312021,
+            "digit": 4,
+            "second_score": 0.2905759162303665,
+            "slot": 1
+          },
+          {
+            "best_digit": 5,
+            "best_score": 0.9194630872483222,
+            "digit": 5,
+            "second_score": 0.3394736842105263,
+            "slot": 2
+          }
+        ],
+        "status": "observed",
+        "value": 45,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "rgb_sha256": "3d1601462826485ec867cc3ee2fc36a3a4d0693cb54c80e66ec2bce3e8e8ac19",
+      "sequence": 233,
+      "signal": "ammo"
+    }
+  ],
+  "schema": "retained-hud-reader-regression-result-v2",
+  "source_commit": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "started_at_utc": "2026-10-05T04:34:00.736118+00:00",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}

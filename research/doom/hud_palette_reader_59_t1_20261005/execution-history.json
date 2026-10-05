@@ -1,0 +1,121 @@
+{
+  "classification": "ordinary repair regression; no formal allocation replay",
+  "recorded_at": "2026-10-05T04:34:00.199519+00:00",
+  "base_commit": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "command": "DOOM_TEST_WAD=<hash-bound-wad> bundled-python -B -m unittest research/doom/test_doom_hud_signal_v4.py -v",
+  "runs": [
+    {
+      "log": "naive-red.txt",
+      "exit_code": 1,
+      "methods": 8,
+      "failures": 3,
+      "runtime_snapshot": "naive-reader.py.txt"
+    },
+    {
+      "log": "repair-first-test.txt",
+      "exit_code": 1,
+      "methods": 8,
+      "failures": 1,
+      "runtime_snapshot": "blank-global-colors-reader.py.txt"
+    },
+    {
+      "log": "repair-second-test.txt",
+      "exit_code": 0,
+      "methods": 8,
+      "failures": 0
+    },
+    {
+      "log": "final-unit.txt",
+      "exit_code": 0,
+      "methods": 10,
+      "failures": 0
+    },
+    {
+      "log": "composed-unit.txt",
+      "exit_code": 0,
+      "methods": 11,
+      "failures": 0,
+      "python_optimized": false
+    },
+    {
+      "log": "composed-unit-optimized.txt",
+      "exit_code": 0,
+      "methods": 11,
+      "failures": 0,
+      "python_optimized": true
+    },
+    {
+      "log": "source-fixture-unit.txt",
+      "exit_code": 0,
+      "methods": 11,
+      "failures": 0,
+      "python_optimized": false,
+      "fixture_source": "unchanged V1 WAD decoder; not candidate template bank"
+    },
+    {
+      "log": "source-fixture-unit-optimized.txt",
+      "exit_code": 0,
+      "methods": 11,
+      "failures": 0,
+      "python_optimized": true,
+      "fixture_source": "unchanged V1 WAD decoder; not candidate template bank"
+    }
+  ],
+  "logs": [
+    {
+      "log": "naive-red.txt",
+      "local_original_sha256": "ddbafc13ce1b870d10f0d7532b7c87f4b348a2380199d7efef04e9bd4ccb834a",
+      "public_sha256": "29bf48494c36db4ac55b6141396799222f41cf9f05026ae31cf3d6d5d5b589f1",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    },
+    {
+      "log": "repair-first-test.txt",
+      "local_original_sha256": "2fb416c566bfcf2d1556180cabed19201110168403b72f038ee9723945528b41",
+      "public_sha256": "c1db356b5b4fe88444d6bb67a233c2b9a7ea74c0d5d53db2c366673d9daac591",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    },
+    {
+      "log": "repair-second-test.txt",
+      "local_original_sha256": "4831ee2464a7d94e57316000f76fda2e21cdffb9b24e44eae95dcd85256c4f98",
+      "public_sha256": "4831ee2464a7d94e57316000f76fda2e21cdffb9b24e44eae95dcd85256c4f98",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    },
+    {
+      "log": "final-unit.txt",
+      "local_original_sha256": "2b5eaafdecfc511653ac2e086299bd4999fe3718441c5143a22971059c6feabb",
+      "public_sha256": "2b5eaafdecfc511653ac2e086299bd4999fe3718441c5143a22971059c6feabb",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    },
+    {
+      "log": "composed-unit.txt",
+      "local_original_sha256": "6c956e586b1be6b619ed6661e4b971b047b8224cc8d47c59e9557d93dc639d0e",
+      "public_sha256": "6c956e586b1be6b619ed6661e4b971b047b8224cc8d47c59e9557d93dc639d0e",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    },
+    {
+      "log": "composed-unit-optimized.txt",
+      "local_original_sha256": "9cdb511e741063e7ed8a37ccb80bde7694918b930df4313df0eb58c71bdb9cc1",
+      "public_sha256": "9cdb511e741063e7ed8a37ccb80bde7694918b930df4313df0eb58c71bdb9cc1",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    },
+    {
+      "log": "source-fixture-unit.txt",
+      "local_original_sha256": "0498a036eb4958e40f26da546cec8fb76765e5a4f462c1aa28de9882512d12ad",
+      "public_sha256": "0498a036eb4958e40f26da546cec8fb76765e5a4f462c1aa28de9882512d12ad",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    },
+    {
+      "log": "source-fixture-unit-optimized.txt",
+      "local_original_sha256": "be14c62e840bb35c228beed7a650b077bbb8976cc055303a6ee5ffc34fd6f12f",
+      "public_sha256": "be14c62e840bb35c228beed7a650b077bbb8976cc055303a6ee5ffc34fd6f12f",
+      "redaction": "only absolute worktree prefix replaced by <worktree>"
+    }
+  ],
+  "final_source_sha256": {
+    "research/doom/doom_hud_signal_v4.py": "c83bf460d53b35adab43ee905dd17dd43f4dd57ed5030f57f7b3b35db978b75e",
+    "research/doom/test_doom_hud_signal_v4.py": "4730f6e8267da60f2c62e89721a98738e277115de6cd6d0b8de2ab7b393feb77",
+    "research/doom/doom_typed_observation_v1.py": "038537fac0b155025bec50e92eaa9ca434cc3789498199634ded095b151ef555",
+    "research/live_control/action_validity_admission_v1.py": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a"
+  },
+  "updated_at": "2026-10-05T04:43:37.484777+00:00"
+}

@@ -1,0 +1,248 @@
+"""Evaluate retained V3/V4 HUD readers against pre-existing reviewed labels."""
+import argparse
+import copy
+from datetime import datetime, timezone
+import hashlib
+import importlib
+import json
+from pathlib import Path
+import platform
+import subprocess
+import sys
+import traceback
+
+import numpy as np
+from PIL import Image, __version__ as pillow_version
+
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[2]
+DEFAULT_WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
+MODULES = ["doom_hud_signal_v1", "doom_hud_signal_v2",
+           "doom_hud_signal_v3", "doom_hud_signal_v4"]
+
+
+def sha256(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def rgb_sha256(path):
+    with Image.open(path) as opened:
+        return sha256(opened.convert("RGB").tobytes())
+
+
+def utc_now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def load_observations(path):
+    observations = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        if row.get("event") == "observation":
+            observations.setdefault(row.get("sequence"), []).append(row)
+    return observations
+
+
+def source_content(manifest, label):
+    return subprocess.run(
+        ["git", "show", f"{manifest['source_ref']}:{label['path']}"],
+        check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--wad", type=Path, default=DEFAULT_WAD,
+                        help="hash-bound Freedoom WAD; defaults to the repository _vizdoom path")
+    parser.add_argument("--output", type=Path,
+                        help="optional new result path; an existing path is never overwritten")
+    args = parser.parse_args()
+
+    started_at = utc_now()
+    manifest_path = HERE / "manifest.json"
+    manifest_bytes = manifest_path.read_bytes()
+    manifest = json.loads(manifest_bytes)
+    checks, errors, results = {}, [], []
+    preflight_ok = True
+
+    # Check every frozen source-label, event-log, and PNG digest before scoring.
+    for label in manifest["label_sources"]:
+        try:
+            data = source_content(manifest, label)
+            blob = subprocess.run(
+                ["git", "rev-parse", f"{manifest['source_ref']}:{label['path']}"],
+                check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            ).stdout.decode().strip()
+            checks[f"label_source_hash:{label['path']}"] = (
+                sha256(data) == label["sha256"] and blob == label["blob"])
+        except Exception as exc:
+            checks[f"label_source_hash:{label['path']}"] = False
+            errors.append(f"label source {label['path']}: {type(exc).__name__}: {exc}")
+    for episode in manifest["episodes"]:
+        event_path = REPO / episode["events"]
+        identity = episode["id"]
+        try:
+            event_bytes = event_path.read_bytes()
+            checks[f"event_hash:{identity}"] = sha256(event_bytes) == episode["events_sha256"]
+        except Exception as exc:
+            checks[f"event_hash:{identity}"] = False
+            errors.append(f"event log {episode['events']}: {type(exc).__name__}: {exc}")
+        try:
+            observation_map = load_observations(event_path)
+        except Exception as exc:
+            observation_map = {}
+            errors.append(f"parse event log {episode['events']}: {type(exc).__name__}: {exc}")
+        for case in episode["cases"]:
+            case_id = f"{identity}:{case['sequence']}:{episode['signal']}"
+            image_path = REPO / episode["runtime"] / f"{case['sequence']:03}.png"
+            try:
+                png_bytes = image_path.read_bytes()
+                png_hash = sha256(png_bytes)
+                checks[f"png_hash:{case_id}"] = png_hash == case["png_sha256"]
+                rgb_hash = rgb_sha256(image_path)
+                checks[f"rgb_hash:{case_id}"] = rgb_hash == case["rgb_sha256"]
+            except Exception as exc:
+                png_hash = rgb_hash = None
+                checks[f"png_hash:{case_id}"] = False
+                checks[f"rgb_hash:{case_id}"] = False
+                errors.append(f"PNG {image_path}: {type(exc).__name__}: {exc}")
+            candidates = observation_map.get(case["sequence"], [])
+            checks[f"unique_observation:{case_id}"] = len(candidates) == 1
+            if len(candidates) != 1:
+                errors.append(f"expected one observation for {case_id}, found {len(candidates)}")
+            elif rgb_hash is not None:
+                event = candidates[0]
+                checks[f"event_image_basename_join:{case_id}"] = (
+                    Path(event.get("image", "")).name == case["event_image_basename"] ==
+                    image_path.name)
+                checks[f"event_geometry_join:{case_id}"] = (
+                    event.get("pointer_binding", {}).get("geometry") ==
+                    case["event_pointer_geometry"])
+                if not checks[f"event_image_basename_join:{case_id}"]:
+                    errors.append(f"event image basename mismatch for {case_id}")
+                if not checks[f"event_geometry_join:{case_id}"]:
+                    errors.append(f"event pointer geometry mismatch for {case_id}")
+            if (not checks[f"png_hash:{case_id}"] or not checks[f"rgb_hash:{case_id}"] or
+                    not checks[f"unique_observation:{case_id}"] or
+                    (f"event_image_basename_join:{case_id}" in checks and
+                     not checks[f"event_image_basename_join:{case_id}"]) or
+                    (f"event_geometry_join:{case_id}" in checks and
+                     not checks[f"event_geometry_join:{case_id}"])):
+                preflight_ok = False
+    if not all(checks[key] for key in checks if key.startswith("label_source_hash:")):
+        preflight_ok = False
+    if not all(checks[key] for key in checks if key.startswith("event_hash:")):
+        preflight_ok = False
+
+    source_hashes = {}
+    for module_name in MODULES:
+        source_path = REPO / "research/doom" / f"{module_name}.py"
+        try:
+            source_hashes[module_name] = sha256(source_path.read_bytes())
+        except Exception as exc:
+            source_hashes[module_name] = None
+            errors.append(f"reader source {source_path}: {type(exc).__name__}: {exc}")
+
+    wad_hash = None
+    try:
+        wad_hash = sha256(args.wad.read_bytes())
+    except Exception as exc:
+        errors.append(f"WAD read failed: {type(exc).__name__}: {exc}")
+        preflight_ok = False
+
+    module_readers = {}
+    if preflight_ok:
+        sys.path.insert(0, str(REPO / "research/doom"))
+        for module_name in ("doom_hud_signal_v3", "doom_hud_signal_v4"):
+            try:
+                module = importlib.import_module(module_name)
+                module_readers[module_name] = module.DoomStatusNumberReader
+            except Exception as exc:
+                preflight_ok = False
+                errors.append(f"import {module_name}: {type(exc).__name__}: {exc}")
+
+    if preflight_ok:
+        for episode in manifest["episodes"]:
+            event_path = REPO / episode["events"]
+            observation_map = load_observations(event_path)
+            for case in episode["cases"]:
+                sequence, expected = case["sequence"], case["value"]
+                identity = f"{episode['id']}:{sequence}:{episode['signal']}"
+                observation = copy.deepcopy(observation_map[sequence][0])
+                image_path = REPO / episode["runtime"] / f"{sequence:03}.png"
+                observation["image"] = str(image_path)
+                with Image.open(image_path) as opened:
+                    frame = opened.convert("RGB")
+                for module_name, reader_type in module_readers.items():
+                    try:
+                        reader = reader_type(
+                            args.wad, signal_id=episode["signal"],
+                            image_resolver=lambda _value, image_path=image_path: image_path)
+                        retained_result = reader.read(observation)
+                        frame_result = reader.read_frame(observation, frame)
+                        same = retained_result == frame_result
+                        value_ok = (retained_result.get("status") == "observed" and
+                                    retained_result.get("value") == expected)
+                        checks[f"path_consistency:{module_name}:{identity}"] = same
+                        checks[f"manual_label:{module_name}:{identity}"] = value_ok
+                        if not same:
+                            errors.append(f"read/read_frame mismatch: {module_name}:{identity}")
+                        if not value_ok:
+                            errors.append(f"manual label mismatch: {module_name}:{identity}")
+                        result_obj = retained_result
+                    except Exception as exc:
+                        checks[f"path_consistency:{module_name}:{identity}"] = False
+                        checks[f"manual_label:{module_name}:{identity}"] = False
+                        errors.append(f"evaluation error {module_name}:{identity}: {type(exc).__name__}: {exc}")
+                        result_obj = {"exception": type(exc).__name__, "message": str(exc),
+                                      "traceback": traceback.format_exc()}
+                    results.append({
+                        "episode": episode["id"], "sequence": sequence,
+                        "signal": episode["signal"], "manual_value": expected,
+                        "module": module_name, "rgb_sha256": case["rgb_sha256"],
+                        "read_equals_read_frame": checks[f"path_consistency:{module_name}:{identity}"],
+                        "manual_label_match": checks[f"manual_label:{module_name}:{identity}"],
+                        "result": result_obj,
+                    })
+
+    source_hashes_after = {}
+    for module_name in MODULES:
+        path = REPO / "research/doom" / f"{module_name}.py"
+        source_hashes_after[module_name] = sha256(path.read_bytes()) if path.exists() else None
+    checks["reader_sources_stable_during_run"] = source_hashes_after == source_hashes
+    if not checks["reader_sources_stable_during_run"]:
+        errors.append("one or more V1-V4 source files changed during evaluation")
+
+    finished_at = utc_now()
+    report = {
+        "schema": "retained-hud-reader-regression-result-v2",
+        "disposition": "PASS" if not errors and all(checks.values()) else "FAIL",
+        "classification": "cross-episode retained regression using pre-existing manual labels; not an independently selected held-out study",
+        "capture_rgb_event_join": "UNAVAILABLE: legacy V28/V31 event rows do not contain frame_rgb_sha256; identity is bound by pinned event-log hash, unique sequence, recorded PNG basename, and recorded pointer geometry",
+        "manifest_sha256": sha256(manifest_bytes),
+        "source_commit": manifest["source_commit"],
+        "reader_source_sha256": source_hashes,
+        "reader_source_sha256_after": source_hashes_after,
+        "wad_sha256": wad_hash,
+        "python": platform.python_version(),
+        "pillow": pillow_version,
+        "numpy": np.__version__,
+        "started_at_utc": started_at,
+        "finished_at_utc": finished_at,
+        "modules_evaluated": list(module_readers),
+        "case_count": sum(len(episode["cases"]) for episode in manifest["episodes"]),
+        "checks": len(checks), "passed_checks": sum(bool(value) for value in checks.values()),
+        "checks_detail": checks, "errors": errors, "results": results,
+    }
+    payload = json.dumps(report, indent=2, sort_keys=True) + "\n"
+    if args.output:
+        if args.output.exists():
+            raise SystemExit("output exists; refusing overwrite")
+        args.output.write_text(payload, encoding="utf-8")
+    print(payload, end="")
+    if report["disposition"] != "PASS":
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()
