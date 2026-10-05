@@ -19,3 +19,9 @@ Reproduction commands and first-failure history are colocated in the A01 and A02
 ## Subsequent current-main identity check
 
 After execution, `origin/main` advanced to `81a59aed13492ba1d52ea80e03d48c3d8de7b2c5` and still reports r138. The controller Git blob is still `cdf61eec2c030d7456b34a58907e9c43d5d72084` and the production guard blob is still `c0955f976e3a0af6ce926f22cee4a5ddf70ef543`, identical to the frozen f60752d inputs. This leaves the source-composition finding applicable to the latest main source bytes without relabeling or rerunning the f60752d candidate.
+
+## A03 — next-turn delivery follow-up
+
+A03 then fed the unchanged A01 event through the actual V39 `latest_soft_event_summary` and `begin_model_turn` functions with a stub planner. The summary retained ammo source 46/current 37, hard floor 1, sequence 2, and `prior_cover_preserved`; the following prompt contained that exact serialized summary and current ammo 37. The A03 raw/source auditor passed five checks. Disposition: `PASS_NEXT_TURN_DELIVERY`; the A01/A02 finding that the event does not reach the in-flight planner remains unchanged. This confirms delayed availability, not that the model uses the signal well or that a next-turn change succeeds.
+
+The main branch advanced again after A03 to `23174f45a8b802d94fbcdeda6e1ebbca28acc801`. The controller Git blob remains `cdf61eec2c030d7456b34a58907e9c43d5d72084`, the production guard remains `c0955f976e3a0af6ce926f22cee4a5ddf70ef543`, and the current-goal document still states r138. The frozen A01/A02/A03 source identities therefore remain present; none of the candidate runs was relabeled or repeated.
