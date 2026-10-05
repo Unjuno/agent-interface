@@ -2,7 +2,7 @@
 
 ## Result
 
-The independent raw-only audit passes 12 checks over 45 typed observations
+The latest independent raw-only audit passes 25 checks over 45 typed observations
 during A04 decision 5's pending planner turn. In this one retained trace,
 health-loss thresholds of 5, 10, 15, 20, and 25 points would first have crossed
 with approximately 11.990, 10.780, 5.436, 5.436, and 0.354 seconds remaining
@@ -20,9 +20,11 @@ would have appeared early in this trace, but this analysis does not establish
 that interrupting then would improve feedback, control, or survival.
 
 Decision 4 supplies one within-run negative control: the authored cover was
-canceled on `health:source_expired` while health stayed 30→30. A loss-based
-threshold would not have fired on that sample. This single quiet interval does
-not estimate a false-trigger rate.
+canceled on `health:source_expired` while health stayed 30→30. The audit now
+joins its reported source sequence 204 and monitor sequence 216, including
+capture times and health values, to unique raw `typed_observation` events. A
+loss-based threshold would not have fired on that sample. This single quiet
+interval does not estimate a false-trigger rate.
 
 ## H / T / D / C / U
 
@@ -35,12 +37,14 @@ not estimate a false-trigger rate.
   planner start and through its observed terminal. Sweep absolute health-loss
   thresholds 5/10/15/20/25 from the typed source value 30. Compare against the
   existing 20-point final-action bound, and check decision 4's unchanged-health
-  expiry as a negative control. The source A04 archive, event stream, report,
-  source manifest, and their hash manifests are retained under `input/a04/`.
+  expiry as a negative control joined to the raw event stream. The source A04
+  archive, event stream, report, source manifest, and their hash manifests are
+  retained under `input/a04/`.
 - **D:** `PASS_A04_TRACE_REPLAY_AUDIT` requires source-member hashes to match
   A04's retained manifests, ordered pending observations, independent threshold
-  reconstruction, the 20-point final-action rejection, and no negative-control
-  trigger at unchanged health.
+  reconstruction, the 20-point final-action rejection, and a unique raw-event
+  join for decision 4's source and monitor sequence, capture time, status, and
+  health value.
 - **C:** One posthoc replay of A04, whose live run was already completed and is
   preserved in Draft PR #7990. Thresholds were selected after inspecting that
   trace. This is not a new allocation or prospective comparison.
@@ -65,15 +69,20 @@ RESULT_DIR="$out_dir" python3 research/doom/map01_v39_unauthored_coast_health_th
 Both programs use exclusive creation and refuse to replace retained output.
 The candidate and auditor use the selected 45 observations directly from the
 pinned event stream, rather than a hand-entered summary. Retained execution
-outputs are under `results/a01/` through `results/a04/`. A02 is a
+outputs are under `results/a01/` through `results/a05/`. A02 is a
 deterministic reproduction after adding source-manifest checks, not a second
 live trial. A02's candidate bytes match A01 exactly; its auditor still resolved
-the default A01 candidate path. A03 is the authoritative path-bound replay:
+the default A01 candidate path. A03 was the first authoritative path-bound replay:
 the auditor fix reads the candidate from its own `RESULT_DIR`, and the 16-check
 A03 audit passes. After the branch rebased onto main `307b9e2f`, A04 repeated
 the same frozen trace against a fresh output directory; the current V39
 controller source hash remained `f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8`.
-The A04 path-bound candidate/audit pair is the latest retained verification.
+The A04 path-bound candidate/audit pair revalidated the frozen trace. An
+independent PR comment then identified that the decision-4 negative-control
+assertions trusted report values without joining raw observations. A05 keeps
+the same candidate and trace, strengthens only the auditor, and is the latest
+retained verification: 25 checks, including the raw join at sequences 204 and
+216.
 
 | Health-loss trigger | First sampled health | Time from planner start | Time remaining to original terminal |
 |---:|---:|---:|---:|

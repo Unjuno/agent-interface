@@ -34,6 +34,17 @@ Path-bound authoritative A03 pair:
    Both exited 0; the path-bound audit again passed 16 checks over 45
    observations. This is deterministic revalidation of the same A04 trace.
 
+9. After strengthening the independent audit to join decision 4's source and
+   monitor values to unique raw typed observations, both programs ran with
+   `RESULT_DIR=research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/results/a05`.
+   Candidate exit 0; audit exit 0 with `PASS_A04_TRACE_REPLAY_AUDIT`, 25 checks,
+   45 observations, and raw join seq204/seq216 (health 30/30).
+10. In an isolated temporary copy, raw monitor health at seq216 was changed
+    from 30 to 29 and the copied raw/package manifests were updated. The audit
+    exited 1 with `AssertionError` and did not create a new audit output in an
+    empty result directory. No retained input or prior result was changed.
+    Control summary: `results/a05/audit_tamper_control.json`.
+
 The first two candidate invocations during parser setup exited 1 before writing
 any output. The exact failures and fixes are recorded in `RUN_LOG.md`.
 
