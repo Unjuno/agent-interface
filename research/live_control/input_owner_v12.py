@@ -396,7 +396,7 @@ class InputOwner:
                                     cancel.is_set() if callable(getattr(cancel, 'is_set', None))
                                     else None
                                 )
-                                self.records.append(dict(
+                                receipt = dict(
                                     event='owner_explicit_keyup', operation='up',
                                     owner_id=self.owner_id, key=key, keycode=code,
                                     intent_token=getattr(lease, 'intent_token', None),
@@ -411,10 +411,13 @@ class InputOwner:
                                     key_state_source='x11_query_keymap',
                                     cancel_requested_after_sync=cancel_requested_after_sync,
                                     server_sync_completed=bool(key_release_attempts),
-                                    physical_verification_authoritative=False))
+                                    physical_verification_authoritative=False)
+                                self.records.append(receipt)
                                 if not server_keyup_verified:
-                                    raise RuntimeError(
+                                    error = RuntimeError(
                                         'explicit key-up not observed in X11 keymap: ' + str(code))
+                                    error.owner_explicit_keyup_record = receipt
+                                    raise error
                                 del held[code]
                             result = None
                     else:
