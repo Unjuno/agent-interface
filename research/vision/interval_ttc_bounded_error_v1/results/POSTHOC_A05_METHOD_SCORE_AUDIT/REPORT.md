@@ -7,3 +7,5 @@ After the invocation, I reread Issues #7924 and #7970 and found their explicit H
 The earlier A04 result remains `PASS_RAW_RECONCILIATION_ONLY` for raw prefix reconstruction. The original A02 formal disposition remains `FAIL_METHOD`; A03's auditor runtime stop remains preserved. A05 does not change or repair either result. The A05 code and tests are retained for review, but a local invocation test would not change this frozen one-shot STOP.
 
 Pre-invocation local verification matched all eight hashes listed in `FREEZE_A05.json`. A05 unit tests passed 3/3; A04 prefix-audit tests passed 8/8 after restoring the frozen README bytes; the analysis-index checker unit tests passed 17/17. These construction checks do not constitute an A05 score.
+
+The package now disables Git text conversion for its files (`.gitattributes`, `* -text`) so frozen source and artifact hashes remain byte-stable across Windows and Linux checkouts. `SHA256SUMS_A05.txt` records Git blob bytes, not host line-ending-transformed working copies.
