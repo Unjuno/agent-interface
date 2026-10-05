@@ -35,3 +35,18 @@ X11, or OS input was executed here.
   retained here; they are not threshold outcomes.
 - Candidate and auditor `py_compile` passed. The final package checksum check
   and `git diff --check` are recorded with the committed tree.
+- An independent PR comment observed that the A04 negative-control checks
+  compared report values with the candidate but did not bind those values to
+  raw events. A05 leaves the candidate and frozen trace unchanged and extends
+  the auditor to require unique typed-observation sequence IDs, matching
+  source/monitor sequence, capture time, observed health status/value, and the
+  `health:source_expired` reason. The audit emits the raw join in its result.
+- A05 candidate and audit both exited 0. The audit passes 25 checks over the
+  same 45 pending observations and records source seq204 health 30 and monitor
+  seq216 health 30, with their raw capture timestamps.
+- Negative control: in a temporary copy, seq216 raw health was changed to 29
+  and the copied manifests were updated so provenance checks still passed.
+  Audit exited 1 with `AssertionError` and created no audit output in an empty
+  result directory. The original A04 inputs and retained A01-A05 outputs were
+  untouched.
+- Negative-control summary: `results/a05/audit_tamper_control.json`.
