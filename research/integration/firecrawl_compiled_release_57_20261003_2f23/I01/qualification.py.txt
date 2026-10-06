@@ -1,0 +1,7 @@
+import asyncio, json, sys, time
+loop = asyncio.get_running_loop()
+def bridge(coro):
+    return asyncio.run_coroutine_threadsafe(coro, loop).result(timeout=3)
+def read_from_core_thread():
+    return bridge(page.evaluate("() => ({url:location.href,title:document.title,input:document.querySelector('.new-todo').value,rows:[...document.querySelectorAll('.todo-list li')].map(e=>({id:e.dataset.id,title:e.querySelector('label').textContent,completed:e.querySelector('.toggle').checked}))})"))
+print(json.dumps({'python':sys.version,'loopThreadBridge':await asyncio.to_thread(read_from_core_thread),'clock':'perf_counter_ns','inputActions':0},ensure_ascii=False))
