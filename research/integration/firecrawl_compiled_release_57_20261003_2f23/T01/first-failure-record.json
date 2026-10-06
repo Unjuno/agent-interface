@@ -1,0 +1,40 @@
+{
+  "initial": {
+    "success": true,
+    "result": "",
+    "stdout": "{\"url\":\"https://todomvc.com/examples/javascript-es6/dist/\",\"title\":\"TodoMVC: JavaScript Es6 Webpack\",\"observation\":{\"heading\":\"todos\",\"input\":[{\"type\":\"text\",\"className\":\"new-todo\",\"placeholder\":\"What needs to be done?\",\"value\":\"\"},{\"type\":\"checkbox\",\"className\":\"toggle-all\",\"placeholder\":\"\",\"value\":\"on\"}],\"rows\":[],\"scripts\":[{\"src\":\"https://www.google-analytics.com/analytics.js\",\"type\":\"\"},{\"src\":\"https://todomvc.com/examples/javascript-es6/dist/app.bundle.js\",\"type\":\"\"},{\"src\":\"https://todomvc.com/examples/javascript-es6/dist/base.js\",\"type\":\"\"}],\"links\":[{\"text\":\"All\",\"href\":\"#/\"},{\"text\":\"Active\",\"href\":\"#/active\"},{\"text\":\"Completed\",\"href\":\"#/completed\"}]},\"browserVersion\":\"153.0.8010.52\"}\n",
+    "stderr": "",
+    "exitCode": 0
+  },
+  "sourceFailure": {
+    "success": false,
+    "error": "Error: TypeError: A dynamic import callback was not specified.\n    at importModuleDynamicallyCallback (node:internal/modules/esm/utils:295:9)\n    at <anonymous>:1:302\n    at /opt/hangar/execution/node.cjs:83:15",
+    "result": "",
+    "stdout": "",
+    "stderr": "Error: TypeError: A dynamic import callback was not specified.\n    at importModuleDynamicallyCallback (node:internal/modules/esm/utils:295:9)\n    at <anonymous>:1:302\n    at /opt/hangar/execution/node.cjs:83:15",
+    "exitCode": 1
+  },
+  "stop": {
+    "success": true
+  },
+  "stopResponse": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"status\": \"stopped\",\n  \"sessionDurationMs\": 60000,\n  \"creditsBilled\": 2\n}"
+    }
+  ],
+  "initialStart": {
+    "current_time": "2026-10-03 13:40:12 UTC"
+  },
+  "initialEnd": {
+    "current_time": "2026-10-03 13:40:17 UTC"
+  },
+  "stopUtc": {
+    "current_time": "2026-10-03 13:41:15 UTC"
+  },
+  "claimResult": {
+    "id": 5969716042
+  },
+  "status": "STOP_CONSTRUCTION_DYNAMIC_IMPORT_UNAVAILABLE",
+  "appActions": 0
+}
