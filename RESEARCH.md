@@ -170,6 +170,10 @@ explanation or a global MLE. All three run packages, failed starts, raw outputs
 and hashes are retained separately; formal six-case T0 and physical release
 evidence remain pending.
 
+# Issue #6358 C01 — private service-capacity transfer (2026-10-03)
+
+One retained six-arm, 24-request synthetic HTTP/SQLite comparison shows 2/4 exact effects for shared generic advice, 4/4 for explicit routing at the same shared capacity, 4/4 for both ample-capacity arms, 0/4 for expired authority, and 3/4 when one recipient is forbidden from a route. The saved-only independent interpreter agrees with the retained effects, and all four copied corruption controls are refused. This is limited to an intentionally held-slot synthetic capacity premise: static assignment to existing parallel capacity explains the difference. It does not estimate natural arrival patterns, queue/latency distributions, production congestion, task efficiency, physical release, application truth, or #6358 H_PASS. The original candidate/auditor allocation was not replayed. See the [retained report and evidence](research/integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) and [#6358](https://github.com/Unjuno/agent-interface/issues/6358).
+
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
 T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candidate ran once, the independent auditor ran once, retries were zero, and the wrapper's literal backslash-n caused JSON parsing to fail. No raw auditor result exists. The original STOP and receipts are immutable in [the predecessor package](research/analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md).
@@ -177,6 +181,10 @@ T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candida
 The distinct, frozen WSLc successor T0b-01 returned `PASS_METHOD_SCOPED`: one candidate invocation, one independent raw-only auditor invocation, zero retries; 10/10 cases audited with no violations, and construction tests passed 24/24. The independent audit found 20 verifier calls without coalescing, 11 for unsafe predicate-only keying, and 14 for scope-typed keying. Summed per-caller latency was 145/100/115 ms in a stipulated 5 ms serial-service model; only the single truly equivalent overlap fell from two calls / 15 ms to one / 10 ms with scope-typed sharing. Predicate-only keying failed the planted different-target, contradictory-dependency, and restart/ABA controls. Other stale-return, deadline, cancellation, owner-failure, UNKNOWN, and late-caller gates were retained.
 
 These latency values are simulated—not measured CPU, runtime, GUI, or end-to-end performance. WSLc used the cached digest-pinned CPython 3.12.14 image with network disabled, read-only source and output-only mount; it warned that swap/cgroup limits are unsupported. No memory enforcement is claimed. This establishes neither Docker parity nor migration of #6389, real verifier equivalence, runtime serialization, freshness under live GUI changes, or authority sharing. See [the successor report and raw audit](research/analysis/scope_typed_singleflight_6501_t0b_20261002/REPORT.md), [Issue #6501](https://github.com/Unjuno/agent-interface/issues/6501), and immutable [T0 STOP evidence](research/analysis/scope_typed_singleflight_6501_t0_20261002/STOP.json).
+
+## Issue #6501 T01 — Windows native ReadFile cancellation comparison (2026-10-03)
+
+The preserved Windows 11 / CPython 3.12.14 one-shot comparison retains three frozen cells: ordinary completion returned one byte; cancelling the asyncio wrapper left the underlying native read unfinished through its declared 500 ms observation window; `CancelSynchronousIo` returned success and the distinct `ReadFile` completion reported `ERROR_OPERATION_ABORTED` with no data. All cells exited 0 without timeout, and owned threads, handles, and descriptors were joined/closed. The first saved-data auditor falsely accepted two of nine mutations; a separately retained v2 auditor rejected all nine against the unchanged data. This is a scoped native cancellation characterization, distinct from C01 pending-state sampling and from asyncio/Linux evidence. The allocation was consumed and was not replayed. No arbitrary-I/O, pooled-thread, application-effect, portability, performance, or runtime-adoption claim follows. See the [checksummed archival report and original outputs](research/concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) and [#6501](https://github.com/Unjuno/agent-interface/issues/6501).
 
 # Issue #6509: claim-scoped partial verdicts T0 (2026-10-02)
 
@@ -2328,6 +2336,7 @@ The frozen candidate and separate raw-only audit passed the declared authored fi
 # Issue #7986 T0 A01 — action-conditioned incorrect-belief exposure (2026-10-05)
 
 Eight authored event intervals passed the frozen method gate: exposure is zero for an old-but-correct belief (age 10), positive for stale and freshly misbound beliefs (6 and 5 ticks; the latter age 1), excluded outside live authority/opportunity, and distinct from one realized unsafe effect. Missing truth and ambiguous clock return `UNKNOWN`. Candidate receives no truth sidecar. This is a finite method result only—not harm reduction, safety, human, GUI, live, or runtime evidence. See [report and frozen artifacts](research/analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) and [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+
 # Issue #57 — native existing-runtime B01–B03 construction boundary (2026-10-03)
 
 On one owned isolated Debian 12/ARM64 guest, B01 retained a driver-template
@@ -2341,3 +2350,7 @@ application effect, release under held input, or efficiency. Private cookie
 contents were excluded, all first failures and Openbox exit 1 remain retained,
 and no historical script was replayed. See the [B01–B03 archive](research/integration/native_existing_runtime_57_20261003_01a0ff52_b01/REPORT.md)
 and [Issue #57](https://github.com/Unjuno/agent-interface/issues/57).
+
+## Issue #57 D01 — retained native held-input cancellation
+
+The same rescue also preserves 58 D01 archival files from 2026-10-03: one authenticated Debian 12/ARM64 virtual-display XTEST Shift_L hold, an independent down witness, cancellation, verified owner release, and an independent clear key/button witness. The terminal remained cancelled with zero completed steps; Xvfb -9 and Openbox 1 exits and all scope limits remain retained. No model/task attempt or original run was replayed. This is one virtual-display cancellation condition, not physical-hardware release, general GUI reliability, current-main runtime qualification, or an efficiency claim. See the [D01 report and retained raw evidence](research/integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md).
