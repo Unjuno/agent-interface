@@ -26,6 +26,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             research/analysis
+            research/vision/interval_ttc_bounded_error_v1
             research/live_control/owner_keyup_keymap_witness_5156_t3_v1
             research/integration/core_admission_composition_57_20261003_01a0ff59
             research/integration/pr6863_review_rescue_20261003
@@ -45,6 +46,10 @@ jobs:
         run: python -B -m unittest discover -s research/analysis -p 'test_analysis_checkout.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test Issue #8157 A04 prefix-local audit construction
+        run: python -B research/vision/interval_ttc_bounded_error_v1/test_audit_only_a04.py -v
+      - name: Test Issue #8157 A05 posthoc audit construction
+        run: python -B -m unittest research.vision.interval_ttc_bounded_error_v1.test_audit_only_a05 -v
       - name: Test Issue #7802 machine-crash recovery T0 construction
         run: python -B -m unittest discover -s research/analysis/machine_crash_recovery_7802_t0_20261005 -p 'test_*.py' -v
       - name: Test Issue #8152 stochastic trace reducer construction
@@ -160,6 +165,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/preference_manipulation_7678_t0_a02_20261005 -p 'test_*.py' -v
       - name: Test Issue #7790 opportunity-bound preference evidence T0 A01
         run: python -B -m unittest discover -s research/analysis/opportunity_bound_preference_7790_t0_a01_v1 -p 'test_*.py' -v
+      - name: Test Issue #7817 provenance-checked defeasible obligations T0 A01
+        run: python -B -m unittest discover -s research/analysis/provenance_defeasible_obligations_7817_a01_20261005 -p 'test_*.py' -v
       - name: Test Issue #8072 controlled-feedback T0 A02 mutation gates
         run: python -B -m unittest discover -s research/analysis/controlled_feedback_8072_a02_20261005 -p 'test_*.py' -v
       - name: Test Issue #8084 confusion-adaptive practice T0 A01 preserved construction
