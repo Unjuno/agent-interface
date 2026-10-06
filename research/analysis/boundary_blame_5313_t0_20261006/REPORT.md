@@ -42,7 +42,7 @@ The candidate Python process completed exit 0 and wrote the 12-row result plus i
 Base main: `a3e6b0c1ab8d6af5c24abb88a451ce41c4ede028`.
 Pre-execution Git readback matched local blobs for `FREEZE.json`, `PREEXECUTION.md`, and the complete source capsule. Frozen source XZ SHA-256: `641673195771c78a51c8767f35b900afe211541a7a6bfa9485c165b7870ffe53`.
 
-Formal raw SHA-256 values are in the formal capsule. Eight copied-result mutations reject wrong blame, pair collapse, unsupported localization, authority flip, wrong/incomplete repair, unsafe ambiguous admission, and row deletion.
+Formal raw SHA-256 values are in `SHA256SUMS`. Eight copied-result mutations reject wrong blame, pair collapse, unsupported localization, authority flip, wrong/incomplete repair, unsafe ambiguous admission, and row deletion.
 
 ## Environment
 
