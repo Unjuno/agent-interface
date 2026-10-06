@@ -1,0 +1,153 @@
+{
+  "finished_utc": "2026-10-03T06:22:33.135011+00:00",
+  "pid": 8244,
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "request_cases": [
+    {
+      "id": "int-current",
+      "python_type": "int",
+      "value": 1
+    },
+    {
+      "id": "int-stale",
+      "python_type": "int",
+      "value": 2
+    },
+    {
+      "id": "bool-alias",
+      "python_type": "bool",
+      "value": true
+    },
+    {
+      "id": "float-alias",
+      "python_type": "float",
+      "value": 1.0
+    }
+  ],
+  "rows": [
+    {
+      "generation_type": "int",
+      "generation_value": 1,
+      "id": "int-current",
+      "legacy": {
+        "completed": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "disposition": "COMPLETE_VERDICT",
+        "missing": [],
+        "reason": "MANDATORY_COMPLETE"
+      },
+      "strict": {
+        "completed": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "disposition": "COMPLETE_VERDICT",
+        "missing": [],
+        "reason": "MANDATORY_COMPLETE"
+      }
+    },
+    {
+      "generation_type": "int",
+      "generation_value": 2,
+      "id": "int-stale",
+      "legacy": {
+        "completed": [],
+        "disposition": "PARTIAL_UNKNOWN",
+        "missing": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "reason": "GENERATION_OR_SCOPE"
+      },
+      "strict": {
+        "completed": [],
+        "disposition": "PARTIAL_UNKNOWN",
+        "missing": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "reason": "GENERATION_OR_SCOPE"
+      }
+    },
+    {
+      "generation_type": "bool",
+      "generation_value": true,
+      "id": "bool-alias",
+      "legacy": {
+        "completed": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "disposition": "COMPLETE_VERDICT",
+        "missing": [],
+        "reason": "MANDATORY_COMPLETE"
+      },
+      "strict": {
+        "completed": [],
+        "disposition": "PARTIAL_UNKNOWN",
+        "missing": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "reason": "REQUEST_GENERATION_TYPE"
+      }
+    },
+    {
+      "generation_type": "float",
+      "generation_value": 1.0,
+      "id": "float-alias",
+      "legacy": {
+        "completed": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "disposition": "COMPLETE_VERDICT",
+        "missing": [],
+        "reason": "MANDATORY_COMPLETE"
+      },
+      "strict": {
+        "completed": [],
+        "disposition": "PARTIAL_UNKNOWN",
+        "missing": [
+          "identity",
+          "freshness",
+          "effect"
+        ],
+        "reason": "REQUEST_GENERATION_TYPE"
+      }
+    }
+  ],
+  "run_id": "6509-request-generation-types-01a0ff58-B01",
+  "source_input_sha256_after": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "PLAN.md": "cccbc907f61efe907e48c68c5783c1a946b48acba79b844b95deb65e4ebd6ce5",
+    "SOURCE_PINS.json": "e1375098ff591455be724f51af79f3daabaf3ca3b82516705a604df8e9ca8089",
+    "audit.py.txt": "510f5f3a1e2b2a1144e2434be9b7f9045cec9b78942bf4a9c4396e8bea02b005",
+    "input/c03.receipts.jsonl": "a9b45294c3b970f910851385287740798d23bd68b54497a9312c90221b7bad9a",
+    "probe.py.txt": "db24a5ccbf06649933127c9f700728fdcce40a11ef1300bdfe6139e1f5246679",
+    "source/legacy_PLAN.md": "aef5e01eb6416b7957fa7aa30d0fa5e11d10e1a80ca0ebf27f098e02e6fd2b0e",
+    "source/legacy_recovery.py.txt": "c89f792ad995890f44e564864f8af844de314a5675f87f706f54ba1926eac130",
+    "strict_request.py.txt": "86335be523e9a03d2bf1ea2264b842b5bcefaf95eb807363a1974f1ecf5f4f4f"
+  },
+  "source_input_sha256_before": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "PLAN.md": "cccbc907f61efe907e48c68c5783c1a946b48acba79b844b95deb65e4ebd6ce5",
+    "SOURCE_PINS.json": "e1375098ff591455be724f51af79f3daabaf3ca3b82516705a604df8e9ca8089",
+    "audit.py.txt": "510f5f3a1e2b2a1144e2434be9b7f9045cec9b78942bf4a9c4396e8bea02b005",
+    "input/c03.receipts.jsonl": "a9b45294c3b970f910851385287740798d23bd68b54497a9312c90221b7bad9a",
+    "probe.py.txt": "db24a5ccbf06649933127c9f700728fdcce40a11ef1300bdfe6139e1f5246679",
+    "source/legacy_PLAN.md": "aef5e01eb6416b7957fa7aa30d0fa5e11d10e1a80ca0ebf27f098e02e6fd2b0e",
+    "source/legacy_recovery.py.txt": "c89f792ad995890f44e564864f8af844de314a5675f87f706f54ba1926eac130",
+    "strict_request.py.txt": "86335be523e9a03d2bf1ea2264b842b5bcefaf95eb807363a1974f1ecf5f4f4f"
+  },
+  "started_utc": "2026-10-03T06:22:33.134007+00:00"
+}

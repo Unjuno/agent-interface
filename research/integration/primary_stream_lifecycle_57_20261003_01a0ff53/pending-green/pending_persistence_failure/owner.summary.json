@@ -1,0 +1,74 @@
+{
+  "scenario": "pending_persistence_failure",
+  "rows": [
+    {
+      "schema": "agent-interface/primary-stdio-v1",
+      "status": "ready",
+      "state": {
+        "next_id": 1,
+        "busy": false,
+        "stopped": null,
+        "caller_state": {
+          "stopped": null
+        }
+      }
+    },
+    {
+      "schema": "agent-interface/primary-stdio-v1",
+      "status": "command_error",
+      "error": "Error: EEXIST: file already exists, open '<owner-work>/pending-green/pending_persistence_failure/exchange/original-reply-1.json'",
+      "command_id": 1,
+      "command_method": "call",
+      "replay_allowed": false,
+      "state": {
+        "next_id": 2,
+        "busy": false,
+        "stopped": "Error: EEXIST: file already exists, open '<owner-work>/pending-green/pending_persistence_failure/exchange/original-reply-1.json'; inspect retained original files; never replay input",
+        "caller_state": {
+          "stopped": null
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "kind": "output",
+      "status": "ready"
+    },
+    {
+      "kind": "actual_request_accepted",
+      "request": {
+        "id": 1,
+        "tool": "interface_clock",
+        "arguments": {}
+      }
+    },
+    {
+      "kind": "input_failure"
+    },
+    {
+      "kind": "pending_observed_before_release",
+      "settled": false
+    },
+    {
+      "kind": "reply_released"
+    },
+    {
+      "kind": "output",
+      "status": "command_error"
+    },
+    {
+      "kind": "owner_rejected",
+      "original_identity": true,
+      "message": "original pending input failure"
+    }
+  ],
+  "exit": {
+    "code": 0,
+    "signal": null
+  },
+  "listeners": {
+    "input": 0,
+    "output": 0
+  }
+}

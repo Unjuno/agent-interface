@@ -1,0 +1,18 @@
+{
+  "classification": "FAIL_PREDECLARED_OS_DESCRIPTOR_ERROR_INDUCTION",
+  "actual_checker_exit": 1,
+  "original_cell_outcomes": {
+    "healthy_empty_file": 0,
+    "directory_descriptor": 0
+  },
+  "directory_expected_exit": 2,
+  "directory_actual_EISDIR_observed": false,
+  "directory_actual_statuses": [
+    "ready",
+    "terminal"
+  ],
+  "all4_owned_PIDs_absent": true,
+  "original_source_and_all_raw_retained": "public-stdin-fd-first/",
+  "meaning": "This MacNode26 directory FD behaved as EOF. It does not test or falsify the error handler, does not establish actual read syscall failure, and is not relabeled PASS.",
+  "next_distinct_construction": "one regular-file FD deliberately opened O_WRONLY, frozen before invocation; earlier healthy control is not replayed"
+}

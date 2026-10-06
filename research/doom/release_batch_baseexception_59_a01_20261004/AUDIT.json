@@ -1,0 +1,65 @@
+{
+  "baseline_terminal": {
+    "decision_reason": null,
+    "error": null,
+    "event": "terminal",
+    "id": "base-sink-failure",
+    "interruption": null,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "verified": true
+    },
+    "semantic_completion": "program status only; task scoring is separate",
+    "status": "completed",
+    "steps_completed": 0,
+    "terminal_ns": 134838086711200
+  },
+  "candidate_terminal": {
+    "decision_reason": null,
+    "error": "KeyboardInterrupt('release sink acknowledgement interrupted')",
+    "event": "terminal",
+    "id": "base-sink-failure",
+    "interruption": null,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "verified": true
+    },
+    "release_batch_publication": {
+      "confirmed_positions": [
+        0
+      ],
+      "error_type": "KeyboardInterrupt",
+      "event": "input_release_transition",
+      "identifier": "base-sink-failure",
+      "key": "b",
+      "not_attempted_positions": [],
+      "position": 1,
+      "size": 2,
+      "status": "delivery_unknown",
+      "step": 0
+    },
+    "semantic_completion": "program status only; task scoring is separate",
+    "status": "failed",
+    "steps_completed": 0,
+    "terminal_ns": 134838087182300
+  },
+  "checks": {
+    "baseline_emits_false_completed_status": true,
+    "baseline_keyboard_interrupt_escapes_worker": true,
+    "baseline_omits_custody_receipt": true,
+    "candidate_custody_identifier_matches_terminal_id": true,
+    "candidate_does_not_emit_completed_event": true,
+    "candidate_fails_terminal_closed": true,
+    "candidate_preserves_exact_custody": true,
+    "candidate_reports_exception": true,
+    "candidate_source_matches_record": true,
+    "candidate_worker_has_no_uncaught_exception": true,
+    "freeze_bytes_match_run_record": true,
+    "frozen_baseline_source_matches_record": true
+  },
+  "experiment_id": "release-batch-baseexception-59-a01",
+  "independent_audit": "PASS_BASEEXCEPTION_CUSTODY_FAIL_CLOSED",
+  "scope": "Synthetic ExecutorV13 boundary only; no physical release, task effect, or live-control claim."
+}

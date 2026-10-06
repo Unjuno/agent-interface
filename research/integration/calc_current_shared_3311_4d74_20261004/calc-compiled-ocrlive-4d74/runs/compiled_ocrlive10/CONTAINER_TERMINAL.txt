@@ -1,0 +1,95 @@
+[
+  {
+    "Config": {
+      "Cmd": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=3s",
+        "330s",
+        "python3",
+        "-B",
+        "compiled_ocr.py",
+        "0"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/src/sources",
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.15",
+        "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+        "PIP_DISABLE_PIP_VERSION_CHECK=1",
+        "SAL_USE_VCLPLUGIN=gen"
+      ],
+      "Healthcheck": null,
+      "Image": "sha256:86edd8e13599b0e4e035b5865e4fee340740d349308a2a24a1304aa1cb41dde2",
+      "Labels": {
+        "org.unjuno.study": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01"
+      },
+      "StopTimeout": null,
+      "User": "65534:65534",
+      "WorkingDir": "/src"
+    },
+    "Created": "2026-10-03T18:19:40.674259951Z",
+    "HostConfig": {
+      "Memory": 536870912,
+      "NanoCpus": 1000000000,
+      "NetworkMode": "none",
+      "Ulimits": []
+    },
+    "Id": "133902578ede28d0d4acceb619e34ebff305c22c03ec8c6353f2bc6d51708265",
+    "Image": "sha256:86edd8e13599b0e4e035b5865e4fee340740d349308a2a24a1304aa1cb41dde2",
+    "Labels": {
+      "org.unjuno.study": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01"
+    },
+    "Mounts": [
+      {
+        "Destination": "/src",
+        "Name": "",
+        "ReadWrite": false,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\calc-compiled-ocrlive-4d74",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/out",
+        "Name": "",
+        "ReadWrite": true,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\calc-compiled-ocrlive-4d74\\runs\\compiled_ocrlive10",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/tmp",
+        "Name": "",
+        "ReadWrite": true,
+        "Source": "",
+        "Type": "tmpfs"
+      }
+    ],
+    "Name": "/calc-compiled-unknown-3311-4d74-compiled_ocrlive10",
+    "NetworkSettings": {
+      "Networks": {
+        "none": {
+          "Aliases": [],
+          "DriverOpts": {},
+          "Gateway": "",
+          "IPAMConfig": null,
+          "IPAddress": "",
+          "IPPrefixLen": 0,
+          "Links": [],
+          "MacAddress": ""
+        }
+      }
+    },
+    "Ports": {},
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "2026-10-03T18:20:08.00746729Z",
+      "Health": null,
+      "Running": false,
+      "StartedAt": "2026-10-03T18:19:40.912919795Z",
+      "Status": "exited"
+    }
+  }
+]

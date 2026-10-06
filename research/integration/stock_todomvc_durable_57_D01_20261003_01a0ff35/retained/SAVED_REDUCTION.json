@@ -1,0 +1,66 @@
+{
+  "authored_after_run": true,
+  "executed_utc": "2026-10-03T13:01:23.204390+00:00",
+  "reader_pid": 20408,
+  "verdict": "STOP_CREATE_EFFECT;RELOAD_UNREACHED;DURABILITY_UNVERIFIED",
+  "frozen_pins_verified": 23,
+  "official_git_blobs_verified": 13,
+  "states": 2,
+  "actions": 2,
+  "created_rows": 0,
+  "reloads": 0,
+  "negative_controls": [
+    {
+      "name": "false_pass",
+      "rejected": true,
+      "sha256": "addd67f29cb26066106ef4bec66d914845c6392650396ed5542ffe22dd394e1c"
+    },
+    {
+      "name": "invented_reload",
+      "rejected": true,
+      "sha256": "1c787f405a54462fc9f8d1ec82b3d306afd9435cd7130cc0af27271048dbf6a6"
+    },
+    {
+      "name": "invented_row",
+      "rejected": true,
+      "sha256": "4e9588b58886a9df82e2bbda5bd315bf127e72c41c8e82d8b1edea65ce8d480e"
+    },
+    {
+      "name": "wrong_title",
+      "rejected": true,
+      "sha256": "cec91ca7929522b97a9605480a704cad8f52120cb6636cd882a25c3b82d7e093"
+    },
+    {
+      "name": "lost_ax",
+      "rejected": true,
+      "sha256": "987f6909b7a400b9720379527fd9918ac8cdcc95de5f587101ae671256e7503f"
+    },
+    {
+      "name": "lost_end",
+      "rejected": true,
+      "sha256": "57a20ad2464ff4694f12efcc4cd2c235819b73cfe685d3dd31c96c4ca5a05bac"
+    }
+  ],
+  "missing_script_requests": [
+    "view.js",
+    "app.js"
+  ],
+  "missing_request_cause": "UNPROVED; response status not captured",
+  "native_exit_code": 0,
+  "explicit_stop_effect": true,
+  "browser_cleanup": {
+    "raw_original_emitted_utf8_bytes": 3683,
+    "raw_original_emitted_chars": 3665,
+    "transport_checksum": 1618756162,
+    "raw_saved_sha256": "9e588bab79d3534636c3626900d1b74f018ac52d317e059982b2538a086346c2",
+    "transport": "same retained object JSON/string output, saved reconstruction byte-checked with length/rolling checksum; not emitter authentication",
+    "actor_source": "function.toString displayed, matches frozen source except final line ending normalized; no independent byte-authentication",
+    "screenshot": "actual6130-byte clip displayed and full base64 retained in tool; local transfer pending",
+    "dev_errors_warnings": [],
+    "cleanup_navigation": "reported net::ERR_BLOCKED_BY_CLIENT for /__stop; native actual requests/effect later confirms sole request did stop server; no resend",
+    "tab_closed_utc": "2026-10-03T12:45:51.688Z",
+    "actual_owned_tab_inventory": []
+  },
+  "screenshot_sha256": "99ca3252965bae812e1967c634b4072293e16ebc3574438393f7af35feda6b2f",
+  "limits": "Post-run typed reduction, not pre-registered independent scorer. No live replay. No physical input/restart durability/resource comparison."
+}

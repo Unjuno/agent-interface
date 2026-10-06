@@ -1,0 +1,44 @@
+{
+  "study": "issue-5865-negative-delivery-t0a-a03",
+  "phase": "construction_complete_pre_freeze",
+  "repository": {
+    "main_at_preflight": "24cbb631b972eee1723d2372adf53032dfdaab20",
+    "issue_5865": {
+      "state": "OPEN",
+      "assignees": [],
+      "updated_at": "2026-10-05T09:23:42Z"
+    },
+    "matching_open_prs": [
+      {
+        "number": 8136,
+        "state": "OPEN",
+        "draft": true,
+        "purpose": "preserve A01/A02 STOP and first output; no other formal allocation"
+      }
+    ],
+    "matching_open_branches": [
+      "research/5865-negative-delivery-t0a-20261005",
+      "research/5865-negative-delivery-t0a-a02-20261005"
+    ],
+    "main_delta_since_38fe303": "only Issue #8084 A07 unfrozen-generator STOP artifacts; governing-method and Issue #5865 paths unchanged",
+    "resource_gate": "finite local CPU-only standard-library model; no shared GUI/runtime allocation; #5085 is closed"
+  },
+  "predecessors": {
+    "a01": "STOP_BEFORE_CANDIDATE_FREEZE_INTEGRITY_CHANGED; unchanged",
+    "a02": "STOP_AUDITOR_ERROR; output retained unaudited and unchanged"
+  },
+  "delta_from_a02": [
+    "event snapshots deep-copied at emission",
+    "auditor mutation targets typed B:A failure record and tolerates missing nested key without crashing",
+    "unknown-clock scenario explicitly forwards A to B before lookup"
+  ],
+  "construction_tests": {
+    "command": "python3 -m unittest -v research/analysis/negative_evidence_delivery_5865_t0a_a03_20261005/test_construction.py",
+    "status": "PASS",
+    "tests": 4,
+    "formal_candidate_outputs_written": 0
+  },
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "formal_retries": 0
+}

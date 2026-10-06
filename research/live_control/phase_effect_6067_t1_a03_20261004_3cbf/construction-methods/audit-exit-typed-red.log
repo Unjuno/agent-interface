@@ -1,0 +1,16 @@
+test_boolean_or_float_exit_never_terminal_zero (test_audit_state.AuditState.test_boolean_or_float_exit_never_terminal_zero) ... FAIL
+test_exact_terminal_zero_and_three_mounts (test_audit_state.AuditState.test_exact_terminal_zero_and_three_mounts) ... ok
+
+======================================================================
+FAIL: test_boolean_or_float_exit_never_terminal_zero (test_audit_state.AuditState.test_boolean_or_float_exit_never_terminal_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf/test_audit_state.py", line 23, in test_boolean_or_float_exit_never_terminal_zero
+    with self.assertRaises(ValueError):admit_audit_state(state,f,0)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=1)

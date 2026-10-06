@@ -1,0 +1,67 @@
+{
+  "reviewer": "01a0ff59-0820-7c81-8ef1-f7c3e48ab67d",
+  "head_sha": "c97aa0b0a086a64f029a16feef98738157f216d1",
+  "base_sha": "cb13a10dce358649458f5aea00947b8aa43fc5b8",
+  "merge_tree_sha": "0b60862bff6f86c1338cb29868ecb451f7e02803",
+  "source_sha256": "ca8bab6667b55827db29191228125406bd5e9a2fc3dcf7233a083c629657bae3",
+  "exit_code": 0,
+  "commands": [
+    {
+      "name": "finite",
+      "command": [
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\venv\\Scripts\\python.exe",
+        "-B",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\pointer-peer-6874\\runtime\\results\\reviewer-pointer-cross-check\\boundary.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\pointer-peer-6874\\raw.json"
+      ],
+      "started_utc": "2026-10-03T02:00:44.101540+00:00",
+      "ended_utc": "2026-10-03T02:00:44.286623+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "48a05b132324876611b6ed63edf4be8b381107e97b4e75ab3bec0bf11badab46",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "audit",
+      "command": [
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\venv\\Scripts\\python.exe",
+        "-B",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\pointer-peer-6874\\runtime\\results\\reviewer-pointer-cross-check\\audit_boundary.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\pointer-peer-6874\\raw.json",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\pointer-peer-6874\\runtime\\results\\reviewer-pointer-cross-check\\FREEZE.json",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\pointer-peer-6874\\audit.json"
+      ],
+      "started_utc": "2026-10-03T02:00:44.287623+00:00",
+      "ended_utc": "2026-10-03T02:00:44.384839+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "f216be80a39962e63b40d33078857afe53122aafb589a7788014b0c73401bda5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "combined",
+      "command": [
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.cli_v1.test_attempt",
+        "runtime.cli_v1.test_cli",
+        "runtime.cli_v1.test_review",
+        "runtime.cli_v1.test_observe",
+        "runtime.cli_v1.test_golden_v3",
+        "runtime.cli_v1.test_receipt",
+        "runtime.cli_v1.test_receipt_motor_state",
+        "runtime.selector_v1.test_selector",
+        "runtime.motor_state_v1.test_adapter",
+        "runtime.cli_v1.test_native_reference_pointer",
+        "runtime.cli_v1.test_public_presentation",
+        "runtime.kernel.test_kernel"
+      ],
+      "started_utc": "2026-10-03T02:00:44.385839+00:00",
+      "ended_utc": "2026-10-03T02:00:48.471995+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "72899947fb0fb9c8e2a3f0f961108c60f8817e49864eb8bad160c18cab5bab63"
+    }
+  ]
+}

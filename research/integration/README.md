@@ -7,6 +7,12 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
+
+Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.
+
+Retained C01 callback-custody profile and versioned audit correction: [compiled custody v4 cycles](compiled_custody_v4_cycles_C01_20261003_01a0ff35/README.md). Original v1 missed27 complete callback-schedule corruptions; v2 preserves all original timing/raw/results and rejects those copies. `CPU_SECONDS_UNRESOLVED` remains, and counter reads outside wall endpoints are not subtracted or converted. Fresh [saved-data rescue checks](../../runtime/results/compiled_custody_rescue_5775/README.md) are not a measurement replay, clock calibration, practical efficiency or adoption certificate.
+
 ```mermaid
 flowchart LR
     C[Scoped component evidence]
@@ -36,6 +42,8 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
 
+- [#3311 A01 saved click-to-text boundary audit](calc3311_click_text_boundary_20261004_01a0ff51/README.md) — frozen source hashes and saved FODS agree; the first key follows the click without a selected-cell acknowledgement. The saved effect failure is independently reproduced, but native key-to-cell routing and causal attribution remain unobserved. No GUI, input, model, or formal allocation was rerun.
+
 - [Primary stdio busy-bound evidence rescue (#57)](primary_stdio_busy_rescue_20261003/README.md) — PR #6902's finite Windows/Node evidence and CI-selection records are preserved without integrating its unverified runtime/workflow changes; scope remains `PASS_PRIMARY_BUSY_BOUND_SCOPED`.
 
 - [Tk first-character #5260 allocation proposal and construction record](tk_firstchar_5260_a01_20261002/PREREG.md) — 96-row GUI allocation is explicitly **HOLD_NOT_AUTHORIZED**; three construction-only probes are retained, with smoke-03 passing the scoped runner/auditor gate. No formal first-character trials were run.
@@ -50,6 +58,21 @@ Child directory names are retained provenance, not a canonical architecture tree
   — four legacy apps wrote two readiness epochs, four corrected apps wrote
   one; independent construction custody passed, no key/click input and no
   first-character/public-client/migration-benefit qualification.
+
+- [Tk first-character #5260 A04 immutable-ready successor](tk_firstchar_5260_a04_wslc_20261003/REPORT.md)
+  — new48-row scoped method evidence:38 exact/10 nonexact saves, readiness
+  custody48/48; all10 initialh receipts in decoy before target FocusIn.
+  Not a public-client/default-wait/visual/performance/resource qualification.
+
+- [Tk first-character #5260 A05 focus-ack construction](tk_firstchar_5260_a05_wslc_20261003/REPORT.md)
+  — ten fresh apps, method audit passed but H_FAIL:ACK3/4 exact plus1busy
+  refusal, immediate0/4 exact, wrong-target2/2 safe refusals. Private app
+  oracle only; publication/read/admission visibility remains unresolved.
+
+- [Tk receipt #5260 A06 publication/read boundary](tk_receipt_visibility_5260_a06_wslc_20261003/REPORT.md)
+  — eight new no-input writers, artificial100ms publication/read delays;
+  both produce oldstamp expiry4/4 while full trace distinguishes phases.
+  Construction only, not A05 attribution, focus freshness or performance.
 
 ## Preserved older Draft publications
 
@@ -103,3 +126,9 @@ Historical and superseded integration paths remain in place when their exact nam
 - [Passive-reader pagination #3985 / Draft PR #4012](passive_reader_pagination_cost_v1/ARCHIVAL_QUALIFICATION.md): 15 exact source/summary blobs; `HOLD_FULL_RAW_PUBLICATION`, full original raw absent and repository-only audit incomplete. Continue the existing recovery owner; no consumed-allocation rerun or original-branch cleanup.
 - [Inkscape ROI reanchor #4359](inkscape_roi_reanchor_d4p1_v1/RECOVERY_STATUS.md): exact frozen source capsule is recoverable; Issue #4359 reports the completed 30-case scoped PASS, but formal raw/result/audit/control bytes are absent from the branch and its Actions runs. This source-only preservation does not independently verify or integrate the reported formal result; keep the Issue and original branch open for exact-byte recovery.
 - [Inkscape first-motion #4388](inkscape_first_motion_f2a6_v1/RECOVERY_STATUS.md): the ten-file preformal source is preserved; Issue #4388 reports the completed eight-case scoped result, but the formal raw archive was not verified after its 17-fragment publication attempt. This source-only preservation does not independently verify the reported result; retain the Issue and original branch for exact-byte recovery.
+
+- [Retired primary stream source #6919 and independent reviews](../recovery/retired_primary_stream_source_20261004/README.md) — 649 exact archive files plus full source/review histories; failed constructions and V2 CONTENT_HOLD retained, current runtime unchanged, no adoption or transfer of #6979 application authority.
+
+- [Retired primary review supplements #6919](../recovery/retired_primary_review_supplements_20261004/README.md) — 324 exact review files and two source histories; Windows output-pipe witnesses and the original accepted-transport FAIL retained, no old vote transfer or current runtime adoption.
+
+- [Retired checkpoint and nominal-record reviews #6918 / #6923](../recovery/retired_record_review_custody_20261004/README.md) — 64 exact review files and two source histories; first reviewer failures and old preparation tuples retained, no current runtime adoption or historical vote transfer.

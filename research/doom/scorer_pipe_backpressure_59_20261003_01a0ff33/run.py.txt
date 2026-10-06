@@ -1,0 +1,105 @@
+"""One frozen deck; source clock/input are inert, output pipes are native."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+import threading
+import time
+
+root = Path(__file__).resolve().parent
+out = root / 'run-01'
+out.mkdir(exist_ok=False)
+freeze = json.loads((root / 'FREEZE.json').read_text(encoding='utf-8'))
+for pin in freeze['files']:
+    data = (root / pin['path']).read_bytes()
+    assert hashlib.sha256(data).hexdigest() == pin['sha256'], pin['path']
+started = datetime.now(timezone.utc).isoformat()
+outer = time.monotonic() + 45
+rows = []
+for case in freeze['cases']:
+    if time.monotonic() >= outer:
+        raise RuntimeError('outer construction cap reached')
+    case_started = datetime.now(timezone.utc).isoformat()
+    command = [sys.executable, '-I', str(root / 'child.py'), json.dumps(case, sort_keys=True)]
+    proc = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+    messages, stderr_bytes, stdout_chunks = [], [], []
+    lock = threading.Lock()
+    entered = threading.Event()
+    command_seen = threading.Event()
+    reader_errors = []
+    def stderr_reader():
+        total = 0
+        try:
+            for line in proc.stderr:
+                total += len(line)
+                if total > 1048576:
+                    raise RuntimeError('stderr cap')
+                row = json.loads(line)
+                with lock:
+                    messages.append(row)
+                    stderr_bytes.append(line)
+                if row['event'] == 'sink_enter':
+                    entered.set()
+                if row['event'] == 'command':
+                    command_seen.set()
+        except Exception as error:
+            reader_errors.append(repr(error))
+            entered.set()
+    def stdout_reader():
+        total = 0
+        try:
+            while True:
+                chunk = proc.stdout.read(4096)
+                if not chunk:
+                    break
+                total += len(chunk)
+                if total > 1048576:
+                    raise RuntimeError('stdout cap')
+                stdout_chunks.append(chunk)
+        except Exception as error:
+            reader_errors.append(repr(error))
+    err_thread = threading.Thread(target=stderr_reader, daemon=True)
+    err_thread.start()
+    sink_seen = entered.wait(2)
+    command_seen.wait(.2)
+    with lock:
+        pre_drain = list(messages)
+    drain_started_ns = time.perf_counter_ns()
+    out_thread = threading.Thread(target=stdout_reader, daemon=True)
+    out_thread.start()
+    proc.stdin.write(b'DRAIN\n')
+    proc.stdin.flush()
+    proc.stdin.close()
+    timed_out = False
+    try:
+        proc.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        timed_out = True
+        proc.kill()
+        proc.wait(timeout=2)
+    err_thread.join(2)
+    out_thread.join(2)
+    data = b''.join(stdout_chunks)
+    stem = case['id']
+    (out / (stem + '.stdout.bin')).write_bytes(data)
+    (out / (stem + '.stderr.jsonl')).write_bytes(b''.join(stderr_bytes))
+    rows.append({'case': case, 'started_utc': case_started,
+                 'completed_utc': datetime.now(timezone.utc).isoformat(),
+                 'exit_code': proc.returncode, 'timed_out': timed_out,
+                 'sink_seen': sink_seen, 'reader_errors': reader_errors,
+                 'readers_terminal': not err_thread.is_alive() and not out_thread.is_alive(),
+                 'pre_drain_events': pre_drain, 'events': messages,
+                 'drain_started_native_ns': drain_started_ns,
+                 'stdout_bytes': len(data), 'stdout_sha256': hashlib.sha256(data).hexdigest(),
+                 'stdout_hex': data.hex(),
+                 'stderr_sha256': hashlib.sha256(b''.join(stderr_bytes)).hexdigest()})
+    (out / 'raw.json').write_text(json.dumps(rows, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+receipt = {'started_utc': started, 'completed_utc': datetime.now(timezone.utc).isoformat(),
+           'rows': len(rows), 'raw_sha256': hashlib.sha256((out / 'raw.json').read_bytes()).hexdigest(),
+           'freeze_sha256': hashlib.sha256((root / 'FREEZE.json').read_bytes()).hexdigest(),
+           'argv': ['python', '-I', 'run.py'], 'scope': 'native pipe / inert source input and clock'}
+(out / 'RECEIPT.json').write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+print(json.dumps(receipt, sort_keys=True))

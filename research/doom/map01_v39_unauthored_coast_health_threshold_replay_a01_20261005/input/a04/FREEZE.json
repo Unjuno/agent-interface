@@ -1,0 +1,60 @@
+{
+  "issue": 59,
+  "id": "map01-v39-threat-currentmain-a04",
+  "status": "FROZEN_BEFORE_FIRST_MODEL_CALL",
+  "frozen_at_utc": "2026-10-05T04:21:45Z",
+  "main_sha": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "source_closure": "Current main SHA 6860b585305e539ec93896f5adcbf658cbbd8592; V39/V15 dependency paths were verified unchanged since 86748499.",
+  "source_manifest_sha256": "8c44dde84da02101234200aa343ed0465cd649b023655d6f3ca55cbe91f02d19",
+  "hypothesis": "With an enemy visible at model-call start, current-main V39/V15 can use typed current health/ammo evidence to invalidate an inappropriate authored cover before a slow model answer returns; the model answer must then be discarded and the next fresh decision must reflect changed state.",
+  "independent_useful_feedback_definition": "Verified change to health/ammo, kills/progress, threat visibility/position, or exact task outcome that changes action choice; observation sequence freshness alone does not qualify.",
+  "exposure_rule": "Exposure is achieved only if an enemy remains visible during at least one pending model interval and a material typed health/ammo change occurs while an authored cover is active; otherwise record NO_THREAT_EXPOSURE and do not claim guard efficacy.",
+  "primary_endpoint": "Order and latency of typed evidence change, guard, cover cancellation/release, model completion/discard, and next decision; reconcile every input-up, per-key release, terminal receipt, and empty-state result.",
+  "secondary_endpoints": "Exact frame hashes, authored policy/source state, health/ammo, kills/progress, independently useful task change, exit/death/timeout/unfinished, tokens and wall time.",
+  "comparator": "A01-A03 and prior Astra/V39 records are descriptive startup or historical context only; no causal comparison.",
+  "treatment": "map01_overlap_controller_v39.py with --measurement-session V15 release telemetry, current-main V39 policy/schema, continuous MAP01 engine time.",
+  "retry_limit": 0,
+  "stop_rule": "First of six model decisions, player death, terminal MAP01 exit, independent episode end, runtime failure, or 600-second game episode timeout. Preserve first outcome; never rerun this ID or repair it in place.",
+  "output": "/out/map01-v39-threat-currentmain-a04/raw",
+  "runtime_adapters": [
+    "NODE and Codex CLI paths mapped to pinned Linux Codex CLI 0.160.0.",
+    "Display allocator starts at :122; Xvfb wrapper unsets XAUTHORITY only for server; staged session clears XAUTHORITY immediately before DoomGame.init.",
+    "App Server command omits -c mcp_servers.<name>.enabled=false because the isolated container has no MCP definitions; app features remain disabled; initialize/model-list preflight previously passed.",
+    "wslpath shim passes staged Linux source root unchanged as app-server cwd.",
+    "Planner thread starts after V15 ready plus first observation; periodic session-span behavior remains unchanged.",
+    "Fresh cache-free stage excludes all __pycache__ and *.pyc files; no stale staged bytecode participates."
+  ],
+  "conditions": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "codex_cli": "0.160.0",
+    "iterations": 6,
+    "seed": 991034,
+    "session_span": 6,
+    "skill": 1,
+    "map": "MAP01",
+    "measurement_session": true,
+    "fixture": "/out/construction-setup-a23/fixture.json",
+    "fixture_sha256": "80fec0649eba43132b9eb0ba90304cb1231d9146be14efa845470f377413a889",
+    "fixture_save_sha256": "2134df6f44c5adcf8bfe7fe3de04ec7ca7018562c153b279777a980b1218d11e",
+    "fixture_source_frame_sha256": "9af90465ed95dc8e658f90ed07bc29cf6f204d4b00d384dd2a6b1e271bfd3d80",
+    "fixture_source_episode_tic": 1691,
+    "vizdoom": "1.3.0",
+    "episode_timeout_seconds": 600,
+    "image_id": "sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84",
+    "network": "bridge",
+    "container_cpus": 2,
+    "container_memory_bytes": 6442450944,
+    "container_memory_swap_bytes": 6442450944
+  },
+  "prior_outcomes": [
+    "A01: STOP before app-server initialize due invalid config for absent MCP; no model/game input.",
+    "A02: STOP waiting for V15 ready; no model call or GUI input.",
+    "A03: STOP waiting for V15 ready; App Server initialize passed, no model thread/turn, score or owner terminal absent.",
+    "Cache-free construction with seed991032 also stopped in DoomGame.init; no model. Separate no-model constructions with seeds991030,991031,991033 completed initial observation and independent score. Failure is intermittent; root trigger remains unknown."
+  ],
+  "container_launcher": {
+    "path": "/out/map01-v39-threat-currentmain-a04/container-run.sh",
+    "sha256": "76cd3834fb30ad40847d93273746cd5a7b98f4de5bbfb1d750d5e782be0519cc"
+  }
+}

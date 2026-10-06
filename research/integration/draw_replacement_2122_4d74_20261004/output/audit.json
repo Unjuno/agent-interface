@@ -1,0 +1,154 @@
+{
+  "scores": [
+    {
+      "id": "positive_0__fresh_read_reference",
+      "replacement": false,
+      "bound_guard": true,
+      "input_mutations": 1,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "saved": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "generation": {
+        "A": "generation0",
+        "B": "generation0"
+      },
+      "correct_effect_or_refusal": true
+    },
+    {
+      "id": "replacement_0__fresh_read_reference",
+      "replacement": true,
+      "bound_guard": true,
+      "input_mutations": 1,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "saved": {
+        "A": [
+          1700,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "generation": {
+        "A": "generation1",
+        "B": "generation0"
+      },
+      "correct_effect_or_refusal": false
+    },
+    {
+      "id": "replacement_1__fresh_read_reference",
+      "replacement": true,
+      "bound_guard": true,
+      "input_mutations": 1,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "saved": {
+        "A": [
+          1700,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "generation": {
+        "A": "generation1",
+        "B": "generation0"
+      },
+      "correct_effect_or_refusal": false
+    },
+    {
+      "id": "positive_1__fresh_read_reference",
+      "replacement": false,
+      "bound_guard": true,
+      "input_mutations": 1,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "saved": {
+        "A": [
+          1900,
+          1000,
+          500,
+          500
+        ],
+        "B": [
+          2700,
+          1000,
+          500,
+          500
+        ]
+      },
+      "generation": {
+        "A": "generation0",
+        "B": "generation0"
+      },
+      "correct_effect_or_refusal": true
+    }
+  ],
+  "errors": [
+    "admission:replacement_0__fresh_read_reference",
+    "admission:replacement_1__fresh_read_reference"
+  ],
+  "decision": "FAIL_OR_HOLD",
+  "scope": "actualreplacementboundary only; no oldB01regrade/universalidentity/modelvalue"
+}

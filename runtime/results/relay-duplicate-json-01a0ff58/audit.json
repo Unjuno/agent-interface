@@ -1,0 +1,60 @@
+{
+  "decision": "PASS_ORDINARY_DECODER_REPAIR_SCOPED",
+  "rows": 32,
+  "baseline_duplicate_dispatches": 8,
+  "candidate_duplicate_dispatches": 0,
+  "positive_control_dispatches_per_variant": 8,
+  "effective_controls_rejected": [
+    {
+      "name": "missing_row",
+      "reason": "row_denominator"
+    },
+    {
+      "name": "duplicate_row",
+      "reason": "row_identity"
+    },
+    {
+      "name": "false_refusal",
+      "reason": "false_refusal"
+    },
+    {
+      "name": "consumed_refused_id",
+      "reason": "refused_next_id"
+    },
+    {
+      "name": "bool_call_count",
+      "reason": "call_count_type"
+    },
+    {
+      "name": "bool_request_id",
+      "reason": "accepted_id"
+    },
+    {
+      "name": "wrong_forwarded_arguments",
+      "reason": "forwarded_arguments"
+    },
+    {
+      "name": "wrong_source_hash",
+      "reason": "source_binding"
+    },
+    {
+      "name": "wrong_case_hash",
+      "reason": "cases_binding"
+    },
+    {
+      "name": "wrong_followup_id",
+      "reason": "accepted_id"
+    },
+    {
+      "name": "missing_sdk_timestamp",
+      "reason": "returned_schema"
+    },
+    {
+      "name": "bool_sdk_timestamp",
+      "reason": "sdk_interval"
+    }
+  ],
+  "raw_sha256": "b2bf18a56fc9560d643eda8a97031015836b90bf03fce33e6a1ed2400feed5ef",
+  "independence": "authored finite oracle; no producer/relay/MCP imports; same author",
+  "formal_invocations": 0
+}

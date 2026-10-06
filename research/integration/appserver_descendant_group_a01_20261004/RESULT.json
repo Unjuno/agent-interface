@@ -1,0 +1,94 @@
+{
+  "arms": [
+    {
+      "after_close": {
+        "direct": null,
+        "direct_rc": -15,
+        "grandchild": {
+          "pgrp": 347,
+          "ppid": 346,
+          "state": "S"
+        },
+        "group_pids": [
+          347,
+          428
+        ],
+        "reader_alive": true
+      },
+      "arm": "direct-child-termination",
+      "before": {
+        "direct": {
+          "pgrp": 347,
+          "ppid": 347,
+          "state": "S"
+        },
+        "grandchild": {
+          "pgrp": 347,
+          "ppid": 426,
+          "state": "S"
+        },
+        "group_pids": [
+          347,
+          426,
+          428
+        ]
+      },
+      "cleanup_signal": "SIGTERM_SENT",
+      "close_elapsed_seconds": 0.20140252099999856,
+      "close_error": "TimeoutError: app-server reader close timed out",
+      "direct_pid": 426,
+      "ended_utc": "2026-10-04T00:31:49.382989+00:00",
+      "final_direct_rc": -15,
+      "final_grandchild": null,
+      "final_reader_alive": false,
+      "grandchild_pid": 428,
+      "group_mode": false,
+      "pgid": 347,
+      "started_utc": "2026-10-04T00:31:49.111798+00:00"
+    },
+    {
+      "after_close": {
+        "direct": null,
+        "direct_rc": -15,
+        "grandchild": null,
+        "group_pids": [],
+        "reader_alive": false
+      },
+      "arm": "isolated-process-group-termination",
+      "before": {
+        "direct": {
+          "pgrp": 429,
+          "ppid": 347,
+          "state": "S"
+        },
+        "grandchild": {
+          "pgrp": 429,
+          "ppid": 429,
+          "state": "S"
+        },
+        "group_pids": [
+          429,
+          431
+        ]
+      },
+      "cleanup_signal": null,
+      "close_elapsed_seconds": 0.0011255250000061778,
+      "close_error": null,
+      "direct_pid": 429,
+      "ended_utc": "2026-10-04T00:31:49.444796+00:00",
+      "final_direct_rc": -15,
+      "final_grandchild": null,
+      "final_reader_alive": false,
+      "grandchild_pid": 431,
+      "group_mode": true,
+      "pgid": 429,
+      "started_utc": "2026-10-04T00:31:49.383822+00:00"
+    }
+  ],
+  "main_sha": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+  "platform": "linux",
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "schema": "appserver-descendant-group-a01-v1",
+  "source_path": "research/live_control/codex_app_server_client_v2.py",
+  "source_sha256": "243d3c0b242a34317b5cc6234df2f323322271e670c7f38a3b25a35e0b13c768"
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/analysis/wslc_retained_audit_5309_t7_20261003/verify_receipt.py", line 53, in <module>
+    main(sys.argv[1])
+    ~~~~^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/analysis/wslc_retained_audit_5309_t7_20261003/verify_receipt.py", line 47, in main
+    print(json.dumps(validate_receipt(receipt), sort_keys=True, separators=(",", ":")))
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/analysis/wslc_retained_audit_5309_t7_20261003/verify_receipt.py", line 26, in validate_receipt
+    raise ValueError(f"unexpected {field}: {actual!r}")
+ValueError: unexpected failed_probe_yield_fallback_wrong_target: None

@@ -1,0 +1,31 @@
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
+
+def sha(b): return hashlib.sha256(b).hexdigest()
+def now(): return datetime.now(timezone.utc).isoformat()
+root = Path(__file__).resolve().parent
+result = root / "results/raw.json"
+if result.exists(): raise RuntimeError("first boundary already retained; no replay")
+freeze = json.loads((root / "FREEZE.json").read_bytes())
+before = {p: sha((root / p).read_bytes()) for p in freeze["source_input_sha256"]}
+if before != freeze["source_input_sha256"]: raise RuntimeError("frozen input drift")
+legacy_ns = {"__name__": "explicit_legacy_copy"}
+strict_ns = {"__name__": "explicit_strict_copy"}
+exec(compile((root / "source/legacy_recovery.py.txt").read_bytes(), "legacy_recovery.py.txt", "exec"), legacy_ns)
+exec(compile((root / "strict_request.py.txt").read_bytes(), "strict_request.py.txt", "exec"), strict_ns)
+raw = {"run_id": freeze["run_id"], "pid": os.getpid(), "started_utc": now(), "python": sys.version, "request_cases": freeze["request_cases"], "source_input_sha256_before": before, "rows": []}
+for case in freeze["request_cases"]:
+    generation = case["value"]
+    if type(generation).__name__ != case["python_type"]: raise RuntimeError("request type drift")
+    raw["rows"].append({"id": case["id"], "generation_type": type(generation).__name__, "generation_value": generation,
+        "legacy": legacy_ns["recover"](root / "input/c03.receipts.jsonl", generation=generation),
+        "strict": strict_ns["recover"](root / "input/c03.receipts.jsonl", generation=generation, legacy=legacy_ns["recover"])})
+raw["source_input_sha256_after"] = {p: sha((root / p).read_bytes()) for p in before}
+raw["finished_utc"] = now()
+result.parent.mkdir(exist_ok=True)
+result.write_text(json.dumps(raw, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+print(json.dumps({"run_id": raw["run_id"], "rows": len(raw["rows"]), "raw_sha256": sha(result.read_bytes())}, sort_keys=True))

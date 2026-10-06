@@ -1,0 +1,42 @@
+"""Freeze own fixture configs/environment/source then retain first ordinary checks."""
+from datetime import datetime,timezone
+import hashlib,json,shutil,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent;out=root/'checks';out.mkdir(exist_ok=False);cases=root/'independent-cli-first';cases.mkdir(exist_ok=False)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,v):p.write_text(json.dumps(v,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+export=json.loads((root/'EXPORT.json').read_bytes())
+for r in export['blobs']:assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+node=Path(shutil.which('node'));assert node.is_file();configs=[]
+for label in ('healthy-eof','ready-pipe-closed','terminal-pipe-closed'):
+ case=cases/label;case.mkdir(exist_ok=False)
+ config={'host':{'command':str(node),'args':[str(root/'fixture.mjs'),str(case/'fixture-start.json'),str(case/'fixture-exit.json')],
+  'evidenceDirectory':str(case/'host')},'route':'guarded-local','exchangeDirectory':str(case/'exchange')}
+ put(case/'config.json',config);configs.append({'case':label,'sha256':sha((case/'config.json').read_bytes()),'config':config})
+jobs=[('affected-stdio',[str(node),'--test','--test-concurrency=1','--test-reporter=tap','runtime/host_v1/test_primary_stdio.mjs'],root/'source'),
+ ('public-cli-three',[str(node),str(root/'independent-cli.mjs')],root)]
+put(out/'FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'head':export['head'],'proposal_digest':export['proposal_digest'],
+ 'node_version':subprocess.check_output([str(node),'--version']).decode().strip(),'node_binary_sha256':sha(node.read_bytes()),'python_version':sys.version,
+ 'source_manifest_sha256':sha((root/'EXPORT.json').read_bytes()),'fixture_sha256':sha((root/'fixture.mjs').read_bytes()),
+ 'own_cli_witness_sha256':sha((root/'independent-cli.mjs').read_bytes()),'capture_source_sha256':sha(Path(__file__).read_bytes()),'configs':configs,
+ 'jobs':[{'label':l,'command':c,'cwd':str(d)} for l,c,d in jobs],
+ 'H':'whole-owner error guards observe original owned relay cleanup through real public --config and OS stdout pipe closure',
+ 'T':'17 unchanged affected regressions;3 own literal actualCLI cases healthy EOF/closed ready pipe/closed terminal pipe; no command bytes',
+ 'D':'all exits expected0/2/2;original host exit0,typed fixture exit0 and both PIDs absent;no timed guard/native op;any mismatch retains firstFAIL',
+ 'C':'fixture endpoint exit alone may occur on parent death; require actual owner host exit receipt and CLI fault status as distinct joins',
+ 'U':'Windows Node24 ordinary private zero-operation fixture only;no realOS stdin device error/backend/task/release/latency/model/hard I/O guarantee',
+ 'formal_or_original_author_producer_invocations':0})
+for label,cmd,cwd in jobs:
+ start=datetime.now(timezone.utc).isoformat();timed=False
+ try:p=subprocess.run(cmd,cwd=cwd,capture_output=True,timeout=25);stdout,stderr,code=p.stdout,p.stderr,p.returncode
+ except subprocess.TimeoutExpired as e:stdout,stderr,code=e.stdout or b'',e.stderr or b'',None;timed=True
+ (out/(label+'.stdout.txt')).write_bytes(stdout);(out/(label+'.stderr.txt')).write_bytes(stderr)
+ put(out/(label+'.receipt.json'),{'command':cmd,'cwd':str(cwd),'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),
+  'exit_code':code,'timed_out':timed,'stdout_bytes':len(stdout),'stderr_bytes':len(stderr),'stdout_sha256':sha(stdout),'stderr_sha256':sha(stderr)})
+ assert code==0 and not timed,(label,code,stdout[-3000:].decode(errors='replace'),stderr.decode(errors='replace'))
+ if label=='affected-stdio':assert b'# tests 17' in stdout and b'# pass 17' in stdout and b'# fail 0' in stdout
+ else:assert json.loads(stdout)['actual_cases']==3
+ print(json.dumps({'check':label,'exit_code':code,'stdout_sha256':sha(stdout),'stderr_bytes':len(stderr)}),flush=True)
+for r in export['blobs']:assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+put(out/'COMPLETION.json',{'ended_utc':datetime.now(timezone.utc).isoformat(),'status':'PASS_SCOPED','actual_affected_methods':17,
+ 'actual_own_public_cli_cases':3,'source_and_raw_unchanged':True,'vote_yet':False})

@@ -1,0 +1,59 @@
+"""Add finite endpoint repair evidence without rewriting any old archive blob."""
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, os, subprocess
+ROOT=Path(__file__).resolve().parent;REPO=ROOT/'paired-clock-repo';IN=ROOT/'6956-v2-intake'
+PREFIX='runtime/results/paired-clock-01a0ff35-20261003/'
+OUT=REPO/PREFIX/'repair-v2'
+OLD='f0224a64155d0786424bffd64f6dc31103318c44'
+def sha(b):return hashlib.sha256(b).hexdigest()
+def project(b):
+    for a,z in [(b'C:\\\\Users\\\\junny',b'C:\\\\Users\\\\WORKER'),
+        (b'C:\\Users\\WORKER',b'C:\\Users\\WORKER'),(b'C:/Users/WORKER',b'C:/Users/WORKER')]:b=b.replace(a,z)
+    return b
+def put(name,data):
+    p=OUT/name;p.parent.mkdir(parents=True,exist_ok=True)
+    with p.open('xb') as f:f.write(data)
+if OUT.exists():raise ValueError('exclusive v2 archive already prepared')
+OUT.mkdir()
+sources={p.name:p.read_bytes() for p in IN.iterdir() if p.is_file() and p.name!='observed-review.json'}
+for name in ('qualify_6956_endpoint_controls.py','capture_6956_v2_regression.py','audit_6956_v2_saved.py','package_6956_v2_repair.py'):
+    sources['source/'+name+'.txt']=(ROOT/name).read_bytes()
+old_test=subprocess.run(['git','show',OLD+':runtime/cli_v1/test_post_dispatch_capture.py'],cwd=REPO,
+    env=dict(os.environ,GIT_NO_LAZY_FETCH='1'),capture_output=True,check=True).stdout
+sources['source/test_post_dispatch_capture.v1.py.txt']=old_test
+sources['source/test_post_dispatch_capture.v2.py.txt']=(REPO/'runtime/cli_v1/test_post_dispatch_capture.py').read_bytes()
+joins=[]
+for name,raw in sorted(sources.items()):
+    data=project(raw);put(name,data)
+    joins.append({'path':name,'original_bytes':len(raw),'original_sha256':sha(raw),
+        'public_bytes':len(data),'public_sha256':sha(data),
+        'projection':'home path only' if data!=raw else 'unchanged'})
+put('PUBLICATION.json',(json.dumps({'kind':'path-only presentation; originals retained in owned work/6956-v2-intake and source files',
+    'old_archive':'all73 existing files stay at identical bytes/paths; original manifest remains v1',
+    'joins':joins},indent=2)+'\n').encode())
+note='''# Post-dispatch receipt endpoint regression repair v2
+
+Exact original v1 f0224a64155d0786424bffd64f6dc31103318c44 and all73 archived files remain unchanged. This additive repair follows actual reviewer50a9 finding5968411591, whose old scoped vote is not transferred to a materially changed test definition.
+
+The elapsed-sleep minimum remains observed with perf_counter_ns. One separate new regression verifies actual monotonic readings before/after one wait, including finally after a sleep error. Fine and constant-clock positives preserve honest equal readings; neither controlled clock difference nor mocked sleep claims physical elapsed time. Release/wait/capture ordering, exact sleep argument/count and retained lookup checks stay unchanged. Production code/schema/authority are unchanged.
+
+One copied-function comparison ran once, child32220 at10:58:34.337576..10:58:36.700477UTC, exit1. The reviewer reuse-start and outer-start defects survived two old methods and failed all4 new controlled subcases. The +1 reading defect also failed the new method, while the old methods already rejected it. Those two old-survival predictions were wrong: original CONTROL_MISMATCH_RETAIN/exit1, all12 complete logs and sources remain. No matrix/threshold edit or replay converts this first outcome to success. The planned substantive D (healthy four cells and three endpoint controls refused) has direct evidence, with that ancillary prediction failure disclosed.
+
+Actual22 scoped methods (10 post-dispatch,12 public-summary) pass normal child3288 at10:59:15.276844..10:59:17.178713UTC and optimized child34112 at10:59:22.692431..10:59:25.328242UTC, exit0/no skip. Independent saved-data reader32728 at11:01:32.426844..11:01:38.147935UTC verifies the complete log/source/terminal joins and original73 Git images. Its receipt is a saved-data audit, not independent worker approval or runtime replay. Native progress on stderr is retained.
+
+The original paired-clock A01 remains consumed, all12 raw rows/freeze/source/first failures retained, never rerun. Original shared native entry still FAIL (protocol413/2fail/30error events/7skip; harness205/1fail/39error events); no whole-suite/hosted/Linux success or production adoption is claimed. The later private combined diagnostic is separate and unchanged.
+
+PUBLICATION.json lists every selected original/private versus public path-only byte join. Native start/source hashes continue to denote originals. Public projections are not emitter authentication or proof of continued private retention. All Python evidence remains .py.txt; no entrypoint or workflow imports it. New SHA256SUMS covers this additive repair only; the original manifest stays unchanged.
+
+Scope is authored synchronous endpoint provenance plus existing affected regressions. No native GUI/input/backend/model/new worker/GPU/WSLc/container/shared lease, physical release/time calibration, generalized defect coverage, performance/model-cost/product/full-goal success. Current actual main/tree application, same-v2 committee content votes, live rules/checks/identity/authority/cancellation and a sole expected-old forward application remain separate. Root main sends0; globalN/common48h anchor unknown/unextended.
+'''
+put('README.md',note.encode())
+files=sorted(p for p in OUT.rglob('*') if p.is_file())
+put('SHA256SUMS',''.join(sha(p.read_bytes())+'  '+p.relative_to(OUT).as_posix()+'\n' for p in files).encode())
+receipt={'old_head':OLD,'new_archive_files':len(files)+1,'new_manifest_targets':len(files),
+    'projection_joins':len(joins),'changed_public_projections':sum(x['projection']!='unchanged' for x in joins),
+    'new_archive_bytes':sum(p.stat().st_size for p in OUT.rglob('*') if p.is_file()),
+    'manifest_sha256':sha((OUT/'SHA256SUMS').read_bytes()),'created_utc':datetime.now(timezone.utc).isoformat()}
+with (IN/'package-receipt.json').open('x',encoding='utf-8') as f:json.dump(receipt,f,indent=2)
+print(json.dumps(receipt))

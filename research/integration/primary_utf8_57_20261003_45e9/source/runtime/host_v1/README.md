@@ -1,0 +1,617 @@
+# Sequential relay host API
+
+These two Node.js ES modules expose the already exercised relay client and optional host instrumentation outside the research tree. They use only Node built-ins and launch an explicit command supplied by the caller. Copy `relay_client.mjs` and `relay_host.mjs` together to use them outside a checkout. They are separate host files, not Python zipapp entries, and require Node.js 22 or newer. The execution relay can be the portable Python archive; see [public MCP transport](../cli_v1/MCP.md).
+
+```js
+import { createInstrumentedRelayClient } from './relay_host.mjs';
+const client = await createInstrumentedRelayClient({
+  command: '/absolute/python',
+  args: ['/absolute/runtime.pyz', 'relay', '--',
+    '--targets', '/absolute/targets.json',
+    '--output-directory', '/absolute/new-server-records',
+    '--session-mode', 'persistent-x11', '--display', ':99'],
+  evidenceDirectory: '/absolute/new-host-records',
+  minimumEvidenceFreeBytes: 32 * 1024 * 1024,
+  reuseReviewedImages: false,
+});
+const response = await client.send('interface_observe', {
+  target: 'editor', frame: 'screen_physical_px', region: [0, 0, 800, 600],
+});
+await client.present(response.attempt, {
+  text: async value => { /* deliver metadata to the primary agent */ },
+  image: async ({ bytes, mimeType }) => { /* deliver the same reply image */ },
+});
+// After actually reviewing the delivered image:
+await client.review(response.attempt, {
+  task: 'edit', phase: 'observe', reason: 'Describe the state actually reviewed',
+});
+// Use explicit per-call response bindings; do not review mutable latest state.
+// Before EOF, send interface_close and inspect its release/cleanup outcome.
+const closed = await client.send('interface_close', {});
+await client.present(closed.attempt, { text: async value => {}, image: async value => {} });
+await client.close();
+```
+
+The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
+
+[The main integration record](../results/presented-host-main-01/README.md)
+retains the missing-API stop, the source-frozen personal recovery trial, and
+original replies/images. Its extra clock request and image preview are counted;
+it does not establish a matched speed or token improvement.
+
+`sendPresented(tool, args, {text, image})` explicitly composes one request with
+presentation of its original reply. Both callbacks are checked before dispatch
+and snapshotted before waiting. The host owns the full send/presentation interval:
+another send, review or close cannot slip between them. `wait()` returns the same
+pending promise; it never resends. A presentation failure retains the original
+reply and blocks further ordinary input. Direct transport `close()` remains
+available after a failure. This is synchronous sequencing at the caller API,
+not a background queue, automatic replay or proof that pixels were understood.
+
+After reading a presented text-only response, callers may use
+`acknowledgeText(response.attempt, {task, phase, reason})`. It writes a separate
+text acknowledgment bound to the unchanged original reply and completed
+presentation, including any original MCP error flag. It sends no new request,
+cannot stand in for image review, and grants no input authority or task success.
+Image-containing replies still require `review(response.attempt, ...)` after
+actual inspection. Changed retained reply bytes cannot be presented or reviewed
+as the originally delivered response. Callback completion and acknowledgment
+are separate events; neither measures model comprehension or semantic latency.
+
+Both `createRelayClient` and `createInstrumentedRelayClient` check the existing
+parent's filesystem capacity before directory allocation, then check the fresh
+directory and write `storage-preflight.json` before starting the relay child.
+`minimumEvidenceFreeBytes` defaults to 32 MiB and must be a positive safe integer;
+choose a larger floor for the expected session evidence. A known shortage throws
+`EVIDENCE_CAPACITY`; an unavailable capacity measurement throws
+`EVIDENCE_CAPACITY_UNKNOWN`. Neither starts a child or sends an operation. A
+failed directory/write check also occurs before child startup. Construction does
+not fall back to another filesystem, delete evidence, retry, or launch another
+client. An allocated directory left by a failed check remains preserved and
+cannot be reused as a fresh session.
+
+The receipt records filesystem-reported availability at that instant and a
+successful ordinary write, not reserved capacity or crash durability. It does
+not prove quota headroom, WSL virtual-disk physical backing space, or successful
+future writes. In particular, free space reported inside Ubuntu does not imply
+free space on the Windows drive holding its virtual disk. Check backing storage
+separately before a large allocation. Concurrent writers can consume space after
+the check; the existing evidence-failure STOP and no-replay reconciliation rules
+still apply. The receipt is separate from the per-call host timeline and grants
+no input authority or task-success claim. A startup receipt is not an image,
+per-call observation, provider-token measurement or benchmark result.
+
+The `text` callback receives both strings and structured objects, including the MCP result-status object. Pass each value to a sink that accepts its type, or format objects explicitly with `JSON.stringify(value)`; do not unconditionally parse callback values as JSON strings. For a sink accepting only text, use `text: async value => deliverText(typeof value === "string" ? value : JSON.stringify(value))`. A callback failure blocks further ordinary calls; reconcile retained replies and close the original transport rather than replaying input.
+
+The callback bodies above must be implemented by the host; empty callbacks do not constitute observation or review. The API does not supply a model, select actions, mint authority, install sensors, queue calls, restart applications or retry input. It returns metadata and the tool's image unchanged. A review receipt records attribution, not proof of perception or semantic completion.
+
+`send` permits one outstanding call. If a host observation times out, await `wait()` on that same client; do not send again or create another client to replay it. Requests and replies are retained before delivery. Files are exclusive writes in a fresh directory; this is not fsync-backed crash durability or authenticated evidence. Ambiguous tool delivery, malformed replies or host-journal errors require reconciliation. `close()` ends the transport only and does not prove application cleanup. Separate caller-owned cleanup may still be needed.
+
+Optional `reuseReviewedImages: true` references only a byte-identical PNG previously delivered and explicitly reviewed within this live host. Current metadata remains separate; identical pixels do not acknowledge task completion. Default false preserves full image delivery. Host timestamps partition transport/presentation/caller intervals; they do not measure isolated model reasoning, useful feedback, actual tokens/cost or human tempo.
+
+Run `node --test runtime/host_v1/test_*.mjs`. The original research modules and frozen evidence remain unchanged; promotion changes only the local import paths. No performance or generic task-quality improvement is claimed.
+
+
+A program can batch several ordered pointer operations in one dispatch. A drag
+uses `pointer_move` to the observed start, `pointer_button` with `down: true`,
+`pointer_move` to the observed end, then `pointer_button` with `down: false`.
+Focus the configured target in that same program and end with `release_all`.
+This is one pointer executing sequentially. Split programs where the next action
+requires a fresh visual decision; an `observe` inside a program captures a frame
+but does not pause the remaining operations for the model.
+
+[Primary Inkscape batch use](../results/public-inkscape-batch-01/README.md)
+records two visually selected drags in one program, a separate save, returned
+summary/image reviews, full receipt retrieval without input, and independent SVG
+validation. The exact requests are retained as an example, not portable screen
+coordinates or default waiting times. No comparison against unbatched use, token
+usage or human pace was measured.
+
+
+For Linux file-spooled host exchanges, the portable runtime also provides
+`publish-json --path /absolute/fresh-slot.json --value -` and the Python helper
+`runtime.host_v1.file_publication.publish_json`. Supply an already authored JSON
+value; no model, input or authority decision is provided. The existing directory
+must be caller-owned. The helper writes and fsyncs a private temporary file, then
+links the complete bytes exclusively to the final name and syncs the directory.
+A reader waiting on that final name cannot see its partial write. Existing slots
+are never overwritten. This is the unchanged native-exchange publication
+mechanism, exposed for host use.
+
+A post-link failure may leave a complete occupied slot even though the command
+returns exit 2. Inspect it and reconcile the original request; do not republish
+or replay input after an error/timeout. No filesystem-independent crash guarantee
+or producer authentication is implied. Windows/macOS host publication is not
+implemented; use this helper inside the Linux/WSL environment. The sequential
+stdio relay does not require a file-spooled decision.
+
+[Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.
+
+[Primary operation after publication integration](../results/atomic-primary-six-task-01/README.md) completed fresh direct and persistent six-task allocations with separate exact scoring, stale refusal and explicit recovery. It records the remaining timing/acceptance limits.
+
+
+## Authoring and checking input programs
+
+Before dispatch, validate the same program shapes the caller actually generates,
+using `runtime.pyz validate --program /absolute/program.json`. Static validity
+checks syntax and expansion; it does not grant runtime admission or freshness.
+For pointer input, use `pointer_move` with integer `x` and `y`, followed by
+`pointer_button` with `button` and boolean `down`. An observation placed inside
+an input program must precede the final `release_all`. Keep the program factory
+in a fixed module when the interactive host can retain earlier function bindings;
+verify the generated request rather than relying on a helper reassignment.
+
+Inspect the returned image before deciding whether to save or proceed. A completed
+dispatch and verified release do not establish application success. If the image
+lacks the needed completion cue, request a fresh observation on the same live
+session. `interface_results` reads the retained result; it does not wait for the
+application to draw a newer frame. Use `include_image: false` when only metadata
+is needed, and use the documented `interface_close` before closing the transport.
+
+[Primary public six-task comparison](../results/public-six-task-comparison-04/README.md)
+records both routes at 6/6 exact once, changed-layout refusal and explicit recovery,
+and a successful submission whose captured image still lacked the final completion
+cue. Timing, primary caller failures and unmatched lookup-image accounting remain
+scoped; the result does not prove human tempo or token savings.
+
+## Cropped feedback and click coordinates
+
+After inspecting the target layout, an explicit smaller `observe` region can
+keep the field, button and completion cue together. For a capture in
+`screen_physical_px` with returned region `[left, top, width, height]`, a point
+`[u, v]` in the delivered image maps to screen `[left + u, top + v]`. Pointer
+operations in `screen_physical_px` still use those screen coordinates. Cropping
+does not move the target or change the pointer coordinate frame. This formula
+assumes the original image pixel dimensions; account for any host display scaling
+before choosing image coordinates. Do not apply a screen origin to a
+`window_client` capture; that is a different coordinate frame.
+
+For example, the retained private browser task used region `[10,154,1050,400]`.
+Its Save center at image `[365,247]` mapped to screen `[375,401]`. These are
+fixture-specific numbers, not reusable target coordinates. Read the current
+capture metadata and keep the cues needed for the next decision inside the crop.
+A crop excluding the address bar is unsuitable when navigation identity is part
+of the task. Widen an observation explicitly when required context is missing.
+
+[Primary full/ROI comparison](../results/primary-roi-feedback-01/README.md)
+records correct one-time saves in both fresh sessions and 59% fewer pixels in
+the three cropped dispatch captures. The full route needed one explicit requery
+because its navigation image was still blank; that timing difference prevents a
+causal speed or token-saving claim. Completed input/release does not acknowledge
+rendering. Review the returned image before the next input; if it is insufficient,
+request a fresh image on the same session rather than replaying the action.
+
+## When input release remains unverified
+
+On the public `persistent-x11` route, `recovery_required=true` blocks further
+programs. A synchronized release request is not enough to infer that input is
+neutral: a synchronous pointer grab can defer processing of a queued release.
+A later read showing an empty button mask does not clear the session's block.
+The [retained native discriminator](../results/x11-grab-recovery-01/README.md)
+checks this with a separate X connection; it does not identify the cause of every
+historical release failure.
+
+Inspect the retained failed receipt and resolve the condition holding input.
+Then explicitly call `interface_recover_input` with the open session's current
+binding revision. The call only attempts release of tracked inputs. If it returns
+`recovery_failed`, keep ordinary input stopped. Do not replay the old program.
+The interface does not take over another application's grab or silently retry.
+
+After `input_recovered`, use the returned new binding revision. Request or review
+a fresh observation before authoring a new program; the prior program may have
+already changed the application. Optional `target` and `region` request a capture
+after recovery. An unavailable capture does not undo the completed recovery;
+observe separately instead of repeating it. Recovery issues no new lease and
+proves neither task success nor redraw completion.
+
+[Primary state-dependent capture](../results/primary-layout-feedback-01/README.md)
+records a lower-page form crop followed by a full-frame completion observation.
+The saved document cue appeared outside the form crop. Widen capture when the
+next action can replace the document or move the required cue. The retained
+caller setup failures and expired allocation are included; this single known
+task does not establish a general speed or token benefit.
+
+## Authoring deadlines from the live execution clock
+
+For a Windows host dispatching into WSL, call `client.send('interface_clock', {})`
+on the same relay client instead of launching WSL/Python again for every clock
+sample. Read its text block, verify `schema` and the expected `server_instance_id`,
+and use the returned `monotonic_ns` only for an explicitly authorized absolute
+expiry. If parsing into JavaScript Number, require safe integers for the sample
+and resulting deadline. Clock acquisition adds a sequential MCP call; it does not
+issue a lease, select a validity duration, refresh source assertions or recover
+input. A caller already inside the execution host can read that host's monotonic
+clock directly.
+
+[Clock acquisition and primary use](../results/execution-clock-01/README.md)
+retains a fixed local component comparison, startup cost, two fresh known-family
+GUI cases, an expired refusal, and failed construction/check results. The shipped
+MCP route uses the existing connection; the experimental separate clock process
+is not shipped. No whole-task speed, token/cost or human-tempo benefit is claimed.
+
+## Choosing public receipt detail for the next decision
+
+For the public dispatch route, the primary can request the existing summary:
+
+```javascript
+const reply = await client.send('interface_dispatch', {
+  program,
+  current_observation_seq,
+  current_binding_revision,
+  compact: true,
+  report_refs: true,
+  detail: 'summary',
+});
+```
+
+Keep text and image content blocks available to the caller. Eligible completed
+dispatches return `agent-interface/receipt-view-dispatch-summary-v1`, an explicit
+partial historical receipt. It retains the image, complete capture/release/
+activation records, execution outcome, session and raw source digest. Read the
+actual image to decide whether the task completed or another action is needed.
+The summary's completed execution and verified release do not prove application
+success, image readiness, freshness or input authority. Do not decode it as a
+complete raw receipt. The default remains full; failed, incomplete, inconsistent
+or unfamiliar shapes also remain full.
+
+When a decision needs individual waits, operation history or omitted provenance,
+use the returned `presentation.retrieve` instruction. Its
+`interface_results` call with `detail: 'full'` and `include_image: false` reads
+the retained report without input replay or another image. It does not capture
+a newer frame; request a fresh observation on the same session when current
+application state is missing. Full retrieval adds a response and round trip.
+
+[Primary full/summary pair](../results/primary-summary-pair-01/README.md)
+records the same known-family task at exact once in both fresh sessions, equal
+operation shapes and no extra full retrieval. Same-report text was 26.42% smaller
+in the summary arm; unchanged image data remains separate. Actual whole-context
+model usage is retained with cache and fixed-order limits. Neither that byte
+reduction nor the single pair proves lower model cost, faster semantic judgment
+or human-comparable live tempo.
+## Optional sequential primary caller
+
+[Main packaging and personal use](../results/primary-helper-main-01/README.md)
+retains the source-pinned distribution failure, corrected checks, original
+six-task candidate evidence, and a fresh exported-helper trial.
+
+The host bundle also exports `createPrimaryCaller` from `primary_caller.mjs`.
+This is an explicit trial policy with positional operation helpers. It latches
+STOP on unexpected refusals, malformed results, incomplete input, nonneutral
+release, transport/presentation failures, or invalid helper arguments. Once
+stopped, only `interface_close` may be sent; review/acknowledgment still bind
+original retained responses. Choose this policy explicitly for a bounded trial.
+The generic instrumented host remains available for caller-decided recovery.
+
+```js
+import { createPrimaryCaller } from './host-bundle/primary_caller.mjs';
+const primary = createPrimaryCaller(client, 'guarded-local', sinks, [], {
+  reviewWindowId: explicitlyConfiguredWindowId,
+});
+const observed = await primary.observe();
+// Actually inspect the image, then record the returned attempt's review.
+await primary.review(observed.attempt, { task, phase: 'observe', reason });
+const minted = await primary.mint(alias, sourceSequence, point, regionSize);
+await primary.acknowledgeText(minted.attempt, {
+  task, phase: 'mint', reason: 'Read this original mint response',
+});
+const acted = await primary.input(alias, offset, 'click', explicitTail);
+// Review the acted image before the next decision. Do not infer task success
+// from neutral execution alone. Close the public session before the host.
+const closed = await primary.call('interface_close', {});
+await primary.acknowledgeText(closed.attempt, {
+  task, phase: 'close', reason: 'Read the original close outcome',
+});
+await client.close();
+```
+
+`mint` requires four positional arguments and `input` requires alias, explicit
+offset, interaction and tail. `reviewWindow()` uses its configured window ID;
+guarded `observe()` accepts no per-call scope. Direct-route observation uses
+the constructor's explicit snapshotted observation arguments. Image reviews and
+text acknowledgments require `response.attempt`, not the entire response object.
+Exact one-use declared refusal controls are optional trial configuration. They
+do not authorize retries, refresh evidence, infer targets, select actions or
+prove semantic completion. This wrapper's tool allowlist excludes activation;
+the generic host exposes the separately documented activation/recovery route.
+
+For several explicit targets from the same reviewed image, `mintMany` uses one
+registration request with the existing public batch tool:
+
+```js
+const registered = await primary.mintMany(sourceSequence, [
+  { alias: 'field', point: fieldPoint, region_size: [24, 38] },
+  { alias: 'save', point: savePoint, region_size: [24, 14] },
+]);
+await primary.acknowledgeText(registered.attempt, {
+  task, phase: 'mint', reason: 'Read the original batch result and each lifetime',
+});
+// Inspect the original response and primary.state() before deciding on input.
+```
+
+The helper validates 1–8 unique aliases, integer points and sizes, and the exact
+reference field names before sending a copied batch. It stops later ordinary
+calls on partial registration or a source/alias inventory mismatch, while
+returning the original result for review and allowing explicit close. The same
+outcome check applies to raw batch calls through this sequential policy. Earlier
+registrations may remain after a server failure; the failed alias is uncertain.
+There is no rollback, automatic remint, action queue or input replay. Each alias
+retains its own expiry, and every later input still needs fresh visual guards
+and ordinary admission. One registration request does not establish token or
+latency savings.
+The [fresh primary batch case](../results/primary-batch-01/README.md) uses the
+built host helper to register two references in one request, then completes one
+exact-once guarded save with explicit hover re-grounding and bounded completion
+observation. Partial-registration stopping is separately covered by contract
+tests; the live case is not a matched efficiency comparison.
+# Optional feedback after public input release
+
+For a primary-facing decision sequence and the immediate/delayed/cue tradeoff,
+see [choosing input feedback](FEEDBACK.md).
+
+The `persistent-x11` public MCP route accepts `inspect_after: "app"` with
+`inspect_after_region: [0, 0, 1280, 800]`. It captures that explicit physical
+screen region after completed input and verified neutral release, and rechecks
+focused-target metadata. The default adds no capture. Inspection never selects
+a target, advances binding or grants input authority.
+
+A program can omit its inline `observe` when this later image is the intended
+feedback. If both exist, both are retained; an eligible later capture is selected
+for delivery. Its reference names `post_dispatch_observation_id` and
+`capture_phase: "after_dispatch_release"`. Capture failure or changed target
+retains the original execution result and any inline image. Never replay input
+to recover a receipt or image.
+
+`inspect_after_wait_ms` optionally requests a 0–1000ms sleep after verified
+release and before capture. It requires a region and records `capture_wait`
+with `update_observed: null`. This is a fixed delay, not redraw detection or
+semantic completion. Retained-result lookup neither sleeps nor recaptures.
+
+For an eligible no-inline-observe post-release result, request `compact: true`,
+`report_refs: true`, `detail: "summary"`. The server uses its pre-invocation
+program copy to validate completed-operation and wait counts. The summary
+labels this separate invocation provenance; the report digest identifies the
+raw report. Full lookup retains `retained_call.arguments.program`. Unknown,
+failed or inconsistent shapes retain full feedback. CLI summaries do not have
+this server invocation context.
+
+The [current-main real Calc trial](../results/calc-main-entry-01/README.md)
+demonstrates why completed input and a later metadata sample do not establish
+that the captured image contains the completion cue. Read the actual image and
+request another observation when needed. Optional availability is not evidence
+of general speed, human tempo, token savings or a completed six-task integration.
+
+The [delayed completion case](../results/completion-feedback-01/README.md)
+exercises this continuation through the built public runtime: Save returned a
+pending image after verified release; one explicit `primary.observe()` on the
+same live connection returned the task-bound completion cue. Save was issued
+once. Review the pending image as incomplete, then review the new image before
+claiming visible completion. Choose an observation budget and stopping rule for
+the task; if its cue is still absent, retain an unresolved outcome rather than
+repeating input or observing indefinitely. This authored single case establishes
+the continuation mechanics, not a general semantic detector or a wait default.
+
+
+`inputWithFeedback(alias, offset, interaction, tail, policy)` explicitly requests
+the existing guarded input's read-only app cue composition. `policy` requires
+`expected_title`; `rejected_titles` defaults to [] and `timeout_ms` to 2000
+(0..10000). Arguments are snapshotted before dispatch. The existing four-argument
+`input` method remains unchanged. Missing or inconsistent requested cue data
+latches STOP while returning original evidence, even if input says completed.
+Pending/rejected/unstable responses also stop ordinary calls; close remains
+available. Matched titles are app conventions, not task completion or authority.
+
+
+`presentOriginal(attempt)` explicitly presents one already delivered, retained
+response through the configured primary sinks. It always requests the original
+full image from the existing host, even when reviewed-image reuse is enabled.
+It sends no tool request, captures no new frame and never retries input. The host
+checks the retained reply digest; changed bytes or an unknown attempt fail closed.
+Primary STOP stays sticky, while the host's own evidence/busy/closed state can
+still prevent presentation. This local review aid cannot establish freshness,
+task success or authority. Sink callbacks are snapshotted before the host call.
+The method returns the host presentation completion, not a new response/attempt.
+Original response and review records are preserved; presentation events record
+the same source identity. It does not overwrite a prior mistaken review, record
+a correction automatically, or permit a second ordinary `review` at the same
+exclusive receipt path. No automatic reread policy or efficiency claim is added.
+
+
+## File presentation for explicit primary commands
+
+The optional `primary_exchange.mjs` adapter extracts the primary command and
+file-presentation mechanics previously authored separately in live trials.
+It uses the existing instrumented host and primary policy; it starts no process
+and supplies no task decisions. Configure and retain the host as above, then:
+
+```js
+import { createPrimaryExchange } from './host-bundle/primary_exchange.mjs';
+const exchange = await createPrimaryExchange({
+  host: client, route: 'guarded-local', directory: '/absolute/fresh-exchange',
+});
+const observed = await exchange.execute({ id: 1, method: 'observe', args: [] });
+// Deliver observed.presented_text and actually view observed.images[].path.
+// Forward the image viewer's returned fidelity option when emitting that image.
+await exchange.execute({ id: 2, method: 'review', args: [observed.attempt, {
+  task: 'edit', phase: 'observe', reason: 'Describe the actual image inspected',
+}] });
+// Mint/input require the same explicit positional arguments as the primary.
+// Explicit public close and inspected release outcome come before host close.
+const closed = await exchange.execute({ id: 3, method: 'call',
+  args: ['interface_close', {}] });
+// Read the returned close text. An acknowledgment is still a separate decision.
+await client.close();
+```
+
+The exact envelope is `{id,method,args}`. IDs are sequential safe integers,
+beginning at 1; positional args are finite JSON. Methods are `observe`, `mint`,
+`mintMany`, `input`, `inputWithFeedback`, `reviewWindow`, `review`,
+`acknowledgeText`, `presentOriginal` and allowlisted primary `call`. Guarded and
+direct-post routes retain their existing arguments/configuration. Each command
+is snapshotted and consumes its ID before persistence/dispatch. Concurrent or
+duplicate commands are refused; no queue, input replay or implicit review exists.
+
+The fresh directory is exclusive and its parent must already exist. Each
+accepted command retains an exclusive request file, the JSON-serialized original
+returned value, exact PNG bytes from the existing presentation callback, and
+the presentation descriptor. `original_reply_path` points to this serialized
+returned value (including the host attempt), not the relay's byte-identical raw
+reply file; that existing raw reply remains in the host evidence directory.
+Void local presentation completion serializes as null and creates no new attempt.
+`presented_text` retains strings and structured status objects in their original
+callback order. Images include absolute path, byte count, MIME type and SHA256.
+Files are ordinary exclusive writes, not an atomic polling protocol, crash
+durability guarantee or authenticated evidence. Use the returned descriptor only
+after successful execute completion; do not poll partially written files.
+
+File callback completion means file publication, not delivery to or perception
+by a model. The outer caller must deliver the text/image, inspect them and
+explicitly review/acknowledge the same original attempt. Descriptors neither
+refresh source time nor grant authority or task success. No image resizing,
+reencoding or requested image-fidelity policy is supplied by this adapter.
+
+A request-file failure sends no host operation; a later image/reply/descriptor
+write failure can follow a completed input. Either latches exchange STOP and
+retains the consumed ID. Only explicit `call('interface_close', {})` is allowed
+after that exchange failure. Primary STOP remains separately visible and sticky.
+Inspect the same host's retained reply and actual application state; never resend
+an uncertain command. The owner must retain and close the same transport; this
+adapter does not manage EOF, process lifetime or application cleanup.
+
+Contract tests include duplicate/overlapping commands, argument mutation,
+request/image/reply persistence failures and explicit original presentation.
+They use synthetic host data, not a model/GUI performance comparison. Fewer
+lines of per-trial adapter code do not prove fewer model tokens, lower cost or
+human-like task tempo. A fresh source-frozen self-use case is required before
+claiming improved practical usability.
+A [fresh packaged primary exchange case](../results/primary-exchange-live-01/README.md)
+retains personal READY/Save/SAVED operation through this adapter, one independent
+app effect, exact PNG identity, explicit release/cleanup and actual source usage.
+It establishes one functional self-use path; the roughly 87-second host span and
+unmatched usage do not establish general efficiency or human-comparable tempo.
+
+
+## One persistent primary command stream
+
+The optional CLI `node host-bundle/primary_stdio.mjs --config /absolute/config.json`
+starts one explicitly configured relay host and uses the existing primary exchange.
+Its stdout must be a managed pipe or caller-owned fresh output file, not a TTY.
+TTY stdout is refused before starting a relay: terminal rendering can insert
+wraps/cursor controls into long output and is not a byte-exact JSON-lines channel.
+It starts no application or display, discovers no target and chooses no action.
+For a packaged runtime, an example configuration is:
+
+```json
+{
+  "host": {
+    "command": "/absolute/python",
+    "args": ["/absolute/runtime.pyz", "relay", "--", "--targets", "/absolute/targets.json", "--output-directory", "/absolute/fresh-server", "--session-mode", "guarded-x11", "--display", ":99"],
+    "evidenceDirectory": "/absolute/fresh-host"
+  },
+  "route": "guarded-local",
+  "exchangeDirectory": "/absolute/fresh-exchange"
+}
+```
+
+Use an existing owned display/window and absolute paths. All three directories
+are fresh and their parent directories already exist. Optional `expectations`
+and `primaryOptions` preserve the existing primary policy configuration.
+For `direct-post`, supply explicit `primaryOptions.observationArguments` before
+using observe. This CLI is a line transport, not a new MCP server registration.
+
+Wait for the JSON `ready` line, then send exactly one finite JSON command line:
+
+```json
+{"id":1,"method":"observe","args":[]}
+```
+
+Each stdout line declares schema `agent-interface/primary-stdio-v1`. A `returned`
+line carries the existing exchange result: original text callback values, PNG
+file descriptors and the original returned-value path. It does not include
+image base64. An outer tool/agent must actually view those unchanged images and
+record the original attempt's explicit review. Original data remains in the
+exchange/host files; a successful stdout write is not model comprehension.
+
+Await that result and inspect it before issuing the next command. Additional
+lines while a command is outstanding receive `busy` with operation_invoked=false
+for that rejected line; they are not queued or given a new ID. The existing
+pending input may still execute. Do not pipe a whole future action script at
+once. Malformed JSON receives `refused` without an exchange call. Exchange
+errors receive `command_error`, current state and replay_allowed=false; inspect
+the original files instead of repeating a consumed command. Stream output
+failure stops accepting commands and waits for the same pending promise before
+closing the original transport. It does not prove that input was cancelled.
+
+Raw byte stdin must be valid UTF-8. Malformed byte sequences, including an
+unfinished sequence at EOF, stop intake before the affected chunk can reach
+the exchange; the CLI exits 2 after observing the same accepted command and
+closing its original transport. No replacement-character command is created.
+An otherwise valid prefix in that same unaccepted corrupted chunk is refused
+too. Already decoded text callers retain their existing behavior; the original
+bytes lost upstream cannot be validated here. Valid literal U+FFFD and split
+multibyte UTF-8 remain valid. This adds no hard I/O deadline or line-size bound,
+and transport closure still does not prove application cleanup or input release.
+
+Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
+and then end stdin. EOF waits for the outstanding command and closes only the
+same transport; it never fabricates a public-close request or task completion.
+The final `terminal` line reports transport exit/current primary state, not app
+cleanup or success. Signal termination/crash is not graceful EOF; the outer
+owner remains responsible for application/display lifecycle and reconciliation.
+
+This avoids caller-authored command/reply polling files while preserving the
+existing exchange evidence writes. A host with a persistent terminal handle can
+send a line, parse its result and present the referenced image in one outer tool
+turn. Read only complete schema-tagged JSON lines from the raw pipe/file. Do not
+decode the terminal's rendered output as raw JSON. For interactive stdin with
+file output, redirect stdout to a fresh owned file and read completed records;
+original image descriptors still refer to the exchange's unchanged PNGs. There is no automatic token/image compression,
+retry, background sensor or model policy, and no generic tempo/cost gain is proved.
+
+
+The [first terminal connection record](../results/primary-stdio-terminal-01/README.md)
+preserves the rendered-JSON fidelity failure and refused public close under a
+nonpersistent no-GUI server. It is not a successful GUI/close trial. The [corrected raw-file clock connection](../results/primary-stdio-pipe-01/README.md)
+checks original metadata, exported source and EOF/exit through the actual primary
+terminal handle without per-command input files. It proves a no-GUI transport
+path. The [fresh guarded primary stdio case](../results/primary-stdio-live-01/README.md)
+personally uses the packaged CLI for READY/Save/SAVED, original image reviews
+and verified public close before EOF. Full raw stream, original replies, exact
+encoded tool images, independent app events and actual usage remain retained.
+The 74.60-second host span is not human-comparable tempo or a matched token gain;
+this establishes one functional integration path only.
+
+For a `direct-post` configuration backed by `persistent-x11`, the primary also
+accepts explicit `call` commands for `interface_inspect_target` and
+`interface_review_target`. These are the existing public modal-selection tools,
+not a new activation or recovery policy. Read/view the inspection evidence,
+then separately choose the review request with its one-use ID. A returned
+`review_request` is never executed automatically. Selecting a target does not
+supply an input lease, prove task success or replace reviewing its image.
+Pass the current returned binding revision explicitly with subsequent dispatch.
+Both calls may request their existing `screen_region` image. Expired/changed
+selection errors retain the original response and latch the existing STOP;
+no automatic retry or after-STOP inspection is enabled. Guarded mode continues
+to use its own explicit window-review contract. A one-shot public server does
+not provide these persistent tools and its MCP refusal still stops the caller.
+
+`interface_dispatch` MCP arguments differ from CLI switches: do not send the
+CLI `review` flag. The actual MCP tool schema lists its accepted fields. To
+receive an image, include an explicit `observe` program operation or request
+supported `inspect_after` + `inspect_after_region` in persistent mode. A capture
+flag cannot replace inspecting the returned image/release. Read the actual
+schema before authoring a request; unexpected top-level fields are refused
+before input, and this primary's STOP forbids correcting/resending that trial.
+The syntax-only `interface_validate` tool checks the bounded program, not input
+authority, current target dependencies or outer dispatch argument correctness.
+
+
+Primary stdio command failures include `command_id` and `command_method` to
+identify the rejected request. Non-integer IDs and non-string/unbounded method names are null. These are
+correlation metadata, not completion, input-delivery or replay evidence.
+`state.next_id` remains authoritative for the next envelope: envelope validation
+can reject before consuming an ID, while a later failure consumes it. Do not
+infer a failed ID by subtracting one from next_id. Preserve the error and state;
+a stopped exchange permits only the existing explicit interface_close call.
+Image review uses `review(attempt, {task, phase, reason})` with a positive integer
+attempt and nonempty strings after actually inspecting the image. Nested image/
+text attribution is not this method's review contract.

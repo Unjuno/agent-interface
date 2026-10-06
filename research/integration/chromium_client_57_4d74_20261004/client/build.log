@@ -1,0 +1,13 @@
+[1/2] FROM docker.io/library/chromium-integrated-57-4d74:20261004
+[2/2] RUN /usr/local/bin/python3 -m pip install --no-cache-dir numpy==2.3.3
+  | Collecting numpy==2.3.3
+  |   Downloading numpy-2.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+  | Downloading numpy-2.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.6 MB)
+  |    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.6/16.6 MB 5.1 MB/s eta 0:00:00
+  | Installing collected packages: numpy
+  | Successfully installed numpy-2.3.3
+  | WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+exporting to image
+  | exporting layers
+  | writing image sha256:60e3ebbeb661b25baf8cf78c4c6273a66d95c28f58dcb6e25631771f7808c45c
+  | naming to docker.io/library/chromium-current-client-57-4d74:20261004

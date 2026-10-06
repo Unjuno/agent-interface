@@ -1,0 +1,46 @@
+"""Freeze-bound owned private-engine collector once. No restart/retry path."""
+import pathlib,subprocess,json,hashlib,tarfile,io,datetime,time,sys
+root=pathlib.Path(__file__).resolve().parent
+prefix=['/opt/homebrew/bin/orb','run','-m','research-6695-docker-01a0ff52','-u','root']
+freeze=json.loads((root/'FREEZE.json').read_text());files=freeze['frozen_inputs']
+for name,entry in files.items():
+ b=(root/name).read_bytes();assert len(b)==entry['bytes'] and hashlib.sha256(b).hexdigest()==entry['sha256'],name
+marker=root/'NATIVE_SEND_ONCE.json'
+# Exclusively establish send consumption before any source transfer/launch, preserved even on STOP.
+with marker.open('x') as f:json.dump({'allocation':freeze['allocation'],'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'freeze_sha256':hashlib.sha256((root/'FREEZE.json').read_bytes()).hexdigest()},f)
+gsrc='/var/tmp/predicate-b64b-c01-src';gout='/var/tmp/predicate-b64b-c01-out';image=freeze['image'];buffer=io.BytesIO()
+with tarfile.open(fileobj=buffer,mode='w') as t:
+ for name in files:
+  b=(root/name).read_bytes();info=tarfile.TarInfo(name);info.size=len(b);info.mode=0o444;t.addfile(info,io.BytesIO(b))
+ for name in ['FREEZE.json']:
+  b=(root/name).read_bytes();info=tarfile.TarInfo(name);info.size=len(b);info.mode=0o444;t.addfile(info,io.BytesIO(b))
+setup="import pathlib,tarfile,sys,os;src=pathlib.Path(sys.argv[1]);out=pathlib.Path(sys.argv[2]);src.mkdir();out.mkdir();out.chmod(0o777);t=tarfile.open(fileobj=sys.stdin.buffer,mode='r|');t.extractall(src,filter='data')"
+r=subprocess.run(prefix+['python3','-c',setup,gsrc,gout],input=buffer.getvalue(),capture_output=True,timeout=15)
+(root/'source-transfer.stdout').write_bytes(r.stdout);(root/'source-transfer.stderr').write_bytes(r.stderr)
+if r.returncode:raise RuntimeError('source transfer STOP '+str(r.returncode))
+readback_code="import pathlib,hashlib,json,sys;root=pathlib.Path(sys.argv[1]);print(json.dumps({p.name:{'bytes':len(p.read_bytes()),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in root.iterdir() if p.is_file()},sort_keys=True))"
+r=subprocess.run(prefix+['python3','-c',readback_code,gsrc],capture_output=True,timeout=10)
+(root/'guest-source-readback.json').write_bytes(r.stdout);(root/'guest-source-readback.stderr').write_bytes(r.stderr)
+assert r.returncode==0
+actual_inputs=json.loads(r.stdout)
+for name,entry in files.items():assert actual_inputs[name]==entry,name
+assert actual_inputs['FREEZE.json']['sha256']==hashlib.sha256((root/'FREEZE.json').read_bytes()).hexdigest()
+argv=prefix+['docker','run','--name','predicate-native-c01-b64b','--label','worker=01a0ff52-b64b','--label','allocation=17-PREDICATE-CONDITION-C01-20261003-b64b','--pull','never','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--cpus','1','--memory','256m','--memory-swap','256m','--pids-limit','64','--tmpfs','/tmp:rw,nosuid,nodev,noexec,size=16m','--user','65534:65534','-v',gsrc+':/src:ro','-v',gout+':/out:rw',image,'python','-B','/src/collect.py']
+start=datetime.datetime.now(datetime.timezone.utc).isoformat();status=None;error=None
+try:
+ r=subprocess.run(argv,capture_output=True,timeout=40);stdout=r.stdout;stderr=r.stderr;status=r.returncode
+except subprocess.TimeoutExpired as e:
+ stdout=e.stdout or b'';stderr=e.stderr or b'';error='container wall fallback consumed; no replay';stop=subprocess.run(prefix+['docker','stop','--time','1','predicate-native-c01-b64b'],capture_output=True,timeout=5);(root/'container-timeout-stop.stdout').write_bytes(stop.stdout);(root/'container-timeout-stop.stderr').write_bytes(stop.stderr)
+(root/'native.stdout').write_bytes(stdout);(root/'native.stderr').write_bytes(stderr)
+receipt={'allocation':freeze['allocation'],'argv':argv,'utc_start':start,'utc_end':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':status,'error':error,'stdout_bytes':len(stdout),'stdout_sha256':hashlib.sha256(stdout).hexdigest(),'stderr_bytes':len(stderr),'stderr_sha256':hashlib.sha256(stderr).hexdigest(),'freeze_sha256':hashlib.sha256((root/'FREEZE.json').read_bytes()).hexdigest()}
+(root/'native.receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
+# Always retain terminal inspect and full owned guest outputs, including first STOP.
+i=subprocess.run(prefix+['docker','inspect','predicate-native-c01-b64b'],capture_output=True,timeout=10);(root/'native-inspect.json').write_bytes(i.stdout);(root/'native-inspect.stderr').write_bytes(i.stderr)
+t=subprocess.run(prefix+['tar','-cf','-', '-C',gout,'.'],capture_output=True,timeout=10);(root/'guest-output.tar').write_bytes(t.stdout);(root/'guest-tar.stderr').write_bytes(t.stderr)
+receipt['inspect_exit_code']=i.returncode;receipt['output_export_exit_code']=t.returncode;receipt['guest_output_tar_bytes']=len(t.stdout);receipt['guest_output_tar_sha256']=hashlib.sha256(t.stdout).hexdigest();(root/'native.receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
+assert t.returncode==0 and len(t.stdout)<2097152
+raw=root/'raw';raw.mkdir()
+with tarfile.open(fileobj=io.BytesIO(t.stdout)) as t:t.extractall(raw,filter='data')
+actual=sum(p.stat().st_size for p in raw.rglob('*') if p.is_file());assert actual<2097152
+print(json.dumps({'receipt':receipt,'output_file_bytes':actual},sort_keys=True))
+raise SystemExit(0 if status==0 and i.returncode==0 else 2)

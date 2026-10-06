@@ -1,0 +1,190 @@
+test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) ... 
+  test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) (captured=0) ... FAIL
+  test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) (captured=100) ... FAIL
+  test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) (captured=109) ... FAIL
+test_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) ... 
+  test_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) (captured=0) ... FAIL
+  test_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) (captured=10) ... FAIL
+  test_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) (captured=19) ... FAIL
+test_equal_boundaries_and_later_captures_remain_valid (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_equal_boundaries_and_later_captures_remain_valid) ... ok
+test_future_effect_capture_preserves_verified_prefix (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_effect_capture_preserves_verified_prefix) ... 
+  test_future_effect_capture_preserves_verified_prefix (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_effect_capture_preserves_verified_prefix) (captures=(5, 101, 120)) ... FAIL
+  test_future_effect_capture_preserves_verified_prefix (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_effect_capture_preserves_verified_prefix) (captures=(5, 30, 201)) ... FAIL
+test_future_initial_capture_does_not_authorize_input (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_initial_capture_does_not_authorize_input) ... 
+  test_future_initial_capture_does_not_authorize_input (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_initial_capture_does_not_authorize_input) (captured=11) ... FAIL
+  test_future_initial_capture_does_not_authorize_input (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_initial_capture_does_not_authorize_input) (captured=1000) ... FAIL
+
+======================================================================
+FAIL: test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) (captured=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 88, in test_capture_before_final_execution_return_cannot_complete
+    self.assert_stopped(CaptureDriver((5, 30, captured)), 2, 1)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) (captured=100)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 88, in test_capture_before_final_execution_return_cannot_complete
+    self.assert_stopped(CaptureDriver((5, 30, captured)), 2, 1)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_capture_before_final_execution_return_cannot_complete (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_final_execution_return_cannot_complete) (captured=109)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 88, in test_capture_before_final_execution_return_cannot_complete
+    self.assert_stopped(CaptureDriver((5, 30, captured)), 2, 1)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) (captured=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 83, in test_capture_before_first_execution_return_cannot_verify_or_continue
+    self.assert_stopped(CaptureDriver((5, captured, 120)), 1, 0)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) (captured=10)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 83, in test_capture_before_first_execution_return_cannot_verify_or_continue
+    self.assert_stopped(CaptureDriver((5, captured, 120)), 1, 0)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_capture_before_first_execution_return_cannot_verify_or_continue (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_capture_before_first_execution_return_cannot_verify_or_continue) (captured=19)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 83, in test_capture_before_first_execution_return_cannot_verify_or_continue
+    self.assert_stopped(CaptureDriver((5, captured, 120)), 1, 0)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_future_effect_capture_preserves_verified_prefix (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_effect_capture_preserves_verified_prefix) (captures=(5, 101, 120))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 95, in test_future_effect_capture_preserves_verified_prefix
+    self.assert_stopped(CaptureDriver(captures), completed, verified)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_future_effect_capture_preserves_verified_prefix (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_effect_capture_preserves_verified_prefix) (captures=(5, 30, 201))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 95, in test_future_effect_capture_preserves_verified_prefix
+    self.assert_stopped(CaptureDriver(captures), completed, verified)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_future_initial_capture_does_not_authorize_input (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_initial_capture_does_not_authorize_input) (captured=11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 78, in test_future_initial_capture_does_not_authorize_input
+    self.assert_stopped(CaptureDriver((captured, 30, 120)), 0, 0)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+======================================================================
+FAIL: test_future_initial_capture_does_not_authorize_input (runtime.core_v1.test_compiled_observation_order.CompiledObservationOrderTests.test_future_initial_capture_does_not_authorize_input) (captured=1000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 78, in test_future_initial_capture_does_not_authorize_input
+    self.assert_stopped(CaptureDriver((captured, 30, 120)), 0, 0)
+  File "<workspace>\runtime\core_v1\test_compiled_observation_order.py", line 64, in assert_stopped
+    self.assertEqual((receipt["outcome"], receipt["reason"]),
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'stale_observation')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'stale_observation')
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.005s
+
+FAILED (failures=10)

@@ -1,0 +1,45 @@
+"""Prospective immutable input/source/config freeze, one collector invocation."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,platform,shutil,subprocess,sys,uuid
+ROOT=Path(__file__).resolve().parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,v):p.write_text(json.dumps(v,indent=2,sort_keys=True,ensure_ascii=False)+'\n',encoding='utf-8')
+out=ROOT/'first';out.mkdir(exist_ok=False)
+node=Path(shutil.which('node'));source=json.loads((ROOT/'SOURCE.json').read_bytes())
+for x in source['files']:assert sha((ROOT/'source'/x['path']).read_bytes())==x['sha256']
+prefix=b'{"id":1,"method":"call","args":["interface_clock",{"label":"'
+suffix=b'"}]}\n'
+specs=[('ascii',[prefix+b'plain'+suffix],True,'plain'),
+ ('unicode-split',[prefix+b'\xe3',b'\x81',b'\x82'+suffix],True,'あ'),
+ ('replacement-valid',[prefix+b'\xef\xbf\xbd'+suffix],True,'\ufffd'),
+ ('invalid-ff',[prefix+b'\xff'+suffix],False,None),
+ ('incomplete-e3',[prefix+b'\xe3'+suffix],False,None)]
+cells=[]
+for name,chunks,valid,label in specs:
+ d=out/name;d.mkdir(exist_ok=False);nonce=str(uuid.uuid4())
+ config={'host':{'command':str(node),'args':[str(ROOT/'fixture.mjs'),str(d),nonce],'evidenceDirectory':str(d/'host')},'route':'guarded-local','exchangeDirectory':str(d/'exchange')}
+ put(d/'config.json',config);payload=b''.join(chunks)
+ (d/'input.original.bin').write_bytes(payload);(d/'input.hex.txt').write_text(payload.hex()+'\n',encoding='ascii')
+ cells.append({'name':name,'nonce':nonce,'chunks_hex':[c.hex() for c in chunks],'input_bytes':len(payload),'input_sha256':sha(payload),
+ 'strict_utf8_valid':valid,'strict_label':label,'config_sha256':sha((d/'config.json').read_bytes())})
+put(ROOT/'PLAN.json',{'H':'replacement decoding may collapse malformed OS stdin bytes into an admitted valid U+FFFD command, losing original-byte identity before dispatch',
+ 'T':'one pass/five literal public --config children: ASCII/split valid UTF8/U+FFFD/FF/incomplete E3; only own inert clock-label echo fixture',
+ 'D':'preserve all rows; valid3 must retain decoded values; malformed2 should be refused before exchange/relay operation; any admitted malformed byte is a scoped counterexample; join exact persisted requests/IDs/process endpoints',
+ 'C':'a decoded string can be valid JSON while its original transport bytes are invalid UTF8; raw input is the comparator, not reparsed normalized files',
+ 'U':'directed ordinary Windows construction, no natural failure rate/backend/SDK/input/model/task/release/clock/performance proof; chunks are writer operations not guaranteed OS read partitions',
+ 'stop':'all five cells once; no early success; CLI7s/fixture5s guards fail and preserve first output; later audit repairs do not repeat this pass',
+ 'cells':cells,'source_main':source['main'],'native_operations':0,'formal_or_historical_producer_replays':0})
+command=[str(node),str(ROOT/'collect.mjs')]
+put(ROOT/'FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'source':source,'plan_sha256':sha((ROOT/'PLAN.json').read_bytes()),
+ 'collector_sha256':sha((ROOT/'collect.mjs').read_bytes()),'fixture_sha256':sha((ROOT/'fixture.mjs').read_bytes()),'capture_sha256':sha(Path(__file__).read_bytes()),
+ 'auditor_sha256':sha((ROOT/'audit_raw.py').read_bytes()),'node_version':subprocess.check_output([str(node),'--version']).decode().strip(),
+ 'node_binary_sha256':sha(node.read_bytes()),'python_version':sys.version,'python_binary_sha256':sha(Path(sys.executable).read_bytes()),
+ 'platform':platform.platform(),'command':command,'cwd':str(ROOT),'five_configs_frozen':True})
+start=datetime.now(timezone.utc).isoformat();r=subprocess.run(command,cwd=ROOT,capture_output=True,timeout=45)
+(out/'collector.stdout.txt').write_bytes(r.stdout);(out/'collector.stderr.txt').write_bytes(r.stderr)
+put(out/'COLLECTOR_RECEIPT.json',{'command':command,'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':r.returncode,
+ 'stdout_sha256':sha(r.stdout),'stderr_sha256':sha(r.stderr),'stdout_bytes':len(r.stdout),'stderr_bytes':len(r.stderr)})
+assert r.returncode==0,(r.returncode,r.stderr)
+for x in source['files']:assert sha((ROOT/'source'/x['path']).read_bytes())==x['sha256']
+print(r.stdout.decode(),end='')

@@ -1,0 +1,115 @@
+{
+  "disposition": "PASS_SCOPED_PIXEL_MISMATCH_YIELD",
+  "errors": [],
+  "graph_outcome": "SAFE_YIELD",
+  "native_programs": 1,
+  "observations": 2,
+  "pixel_rows": [
+    {
+      "state": "first",
+      "matches": false,
+      "rgb_sha256": "1494bd53604ee2e3ff9dc9c0b030d72c9d5e4f7ccb5eb4a7cacc13d342b8630e"
+    },
+    {
+      "state": "second",
+      "matches": false,
+      "rgb_sha256": "6d83938dc5219553cb832b1b7aef441a228e9b0e048cbf5df1025132cd6746d2"
+    }
+  ],
+  "saved_effects": [
+    {
+      "pass_effect": true,
+      "populated": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "32",
+          "32",
+          null
+        ],
+        [
+          1,
+          1,
+          "37",
+          "37",
+          null
+        ],
+        [
+          1,
+          2,
+          "1184",
+          "1184",
+          "of:=[.A2]*[.B2]"
+        ]
+      ],
+      "expected": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "32",
+          "32",
+          null
+        ],
+        [
+          1,
+          1,
+          "37",
+          "37",
+          null
+        ],
+        [
+          1,
+          2,
+          "1184",
+          "1184",
+          "of:=[.A2]*[.B2]"
+        ]
+      ]
+    }
+  ],
+  "primary_usage": "UNKNOWN",
+  "additional_benchmark_client_calls": 0,
+  "limits": "Fixed-render known-row image templates, not generic OCR or proof of save persistence from pixels; independent XML scoring separated. No same-model comparison or cost advantage."
+}

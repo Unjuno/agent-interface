@@ -1,0 +1,28 @@
+{
+  "legal_pair_denominator": 10,
+  "mixed_expected_rows": 40,
+  "exhaustive_context_pair_rows": 80,
+  "mixed_rows": 40,
+  "separate_equal_budget_rows": 40,
+  "coverage_exact": true,
+  "detects": {
+    "joint": {
+      "mixed_occ": true,
+      "separate_equal_budget": false
+    },
+    "factor": {
+      "mixed_occ": true,
+      "separate_equal_budget": true
+    },
+    "order": {
+      "mixed_occ": true,
+      "separate_equal_budget": true
+    },
+    "order_invariant": {
+      "mixed_occ": true,
+      "separate_equal_budget": true
+    }
+  },
+  "errors": [],
+  "scope": "synthetic finite method only; not a GUI safety or reliability result"
+}

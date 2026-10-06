@@ -1,0 +1,43 @@
+{
+  "created_utc": "2026-10-03T18:38:36.503413+00:00",
+  "scope": "POSTRUN_SAVED_STRUCTURAL_CONSISTENCY_ONLY",
+  "native_runs": 0,
+  "formal_auditor_runs": 0,
+  "raw_sha256": "25d9a8ff49ca13f7b8a2ea1b32557305df34966990ef75141aeffb18d1effd24",
+  "first_status_unchanged": "FAIL_SINGLE_CUE_IDENTITY_SAFETY",
+  "actual_saved_rows_check": true,
+  "rows": 21,
+  "td_red": {
+    "tests": 6,
+    "failures": 6,
+    "exit": 1,
+    "stub": "check_rows returnedFalse without exceptions"
+  },
+  "controls": [
+    {
+      "name": "invented_ops",
+      "original_frozen_auditor_accepted": true,
+      "supplement_rejected": true
+    },
+    {
+      "name": "wrong_window_ids",
+      "original_frozen_auditor_accepted": true,
+      "supplement_rejected": true
+    },
+    {
+      "name": "negative_reversed_acquisition",
+      "original_frozen_auditor_accepted": true,
+      "supplement_rejected": true
+    },
+    {
+      "name": "reacquisition_before_mutation",
+      "original_frozen_auditor_accepted": true,
+      "supplement_rejected": true
+    },
+    {
+      "name": "zero_elapsed",
+      "original_frozen_auditor_accepted": true,
+      "supplement_rejected": true
+    }
+  ]
+}

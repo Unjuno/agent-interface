@@ -1,0 +1,1 @@
+A02 original STOP immutable. post_model_observe now returns checked_target with real mint records; post_model_revalidate consumes that observed candidate and passes it back explicitly. Independently score even exception prefixes before closing client; unavailable scoring is recorded separately. New seeds991069/991070. Regression/freeze required; not started.

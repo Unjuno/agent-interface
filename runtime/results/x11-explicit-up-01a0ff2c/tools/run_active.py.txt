@@ -1,0 +1,17 @@
+import hashlib,json,os,subprocess,sys
+from pathlib import Path
+from datetime import datetime,timezone
+root=Path(__file__).resolve().parents[2];work=Path(__file__).resolve().parent;out=root/'outputs/x11-explicit-up-01a0ff2c'
+phase=sys.argv[1];dest=out/phase;dest.mkdir(exist_ok=False)
+tree=work/('baseline-tree' if phase.startswith('activeRED') else 'candidate-tree')
+sha=lambda b:hashlib.sha256(b).hexdigest();utc=lambda:datetime.now(timezone.utc).isoformat()
+files=sorted(p for p in tree.rglob('*') if p.is_file());pins={p.relative_to(tree).as_posix():sha(p.read_bytes()) for p in files}
+argv=[sys.executable]+(['-O'] if phase.endswith('optimized') else [])+['-B',str(tree/'runtime/backends/x11_v1/test_explicit_up_ledger.py')]
+env=dict(os.environ);env['PYTHONIOENCODING']='utf8';started=utc();child=subprocess.Popen(argv,cwd=tree,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+r={'phase':phase,'kind':'ordinary portable source regression; loader changed only from first construction','argv':argv,'cwd':str(tree),'pid':child.pid,'supervisor_pid':os.getpid(),'started_utc':started,'source_pins':pins,'reader_sha256':sha(Path(__file__).read_bytes()),'native_calls':0,'formal_replay':0}
+(dest/'START.json').write_text(json.dumps(r,indent=2),encoding='utf8')
+try:stdout,stderr=child.communicate(timeout=30);timeout=False
+except subprocess.TimeoutExpired:child.kill();stdout,stderr=child.communicate();timeout=True
+(dest/'stdout.txt').write_bytes(stdout);(dest/'stderr.txt').write_bytes(stderr)
+r.update(ended_utc=utc(),exit_code=child.returncode,timeout=timeout,streams={n:{'bytes':len(b),'sha256':sha(b)} for n,b in [('stdout.txt',stdout),('stderr.txt',stderr)]},source_unchanged=all(sha((tree/p).read_bytes())==h for p,h in pins.items()))
+(dest/'RESULT.json').write_text(json.dumps(r,indent=2),encoding='utf8');print(json.dumps(r));print(stderr.decode().splitlines()[-4:]);sys.exit(child.returncode)

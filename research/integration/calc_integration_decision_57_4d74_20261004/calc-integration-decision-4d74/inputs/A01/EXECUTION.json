@@ -1,0 +1,292 @@
+{
+  "application_retries": 0,
+  "sessions": [
+    {
+      "argv": [
+        "C:\\Program Files\\WSL\\wslc.exe",
+        "run",
+        "--name",
+        "calc3311-4d74-session1-direct",
+        "--pull",
+        "never",
+        "--network",
+        "none",
+        "--cpus",
+        "1",
+        "--memory",
+        "512m",
+        "--user",
+        "65534:65534",
+        "--tmpfs",
+        "/tmp:rw,size=64m,mode=1777",
+        "--env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "--env",
+        "PYTHONPATH=/src/sources",
+        "--volume",
+        "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\calc-realapp-integration-4d74\\candidate-input:/src:ro",
+        "--volume",
+        "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\calc-realapp-integration-4d74\\runs\\session1-direct:/out",
+        "--workdir",
+        "/src",
+        "sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55",
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=3s",
+        "900s",
+        "python3",
+        "-B",
+        "native_sequence.py",
+        "0"
+      ],
+      "cache_attempts": [],
+      "ended_wall_ns": 1791044824065387500,
+      "errors": [
+        "Traceback (most recent call last):\n  File \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\calc-realapp-integration-4d74\\measured_driver.py\", line 109, in <module>\n    if score['errors']:raise RuntimeError('first saved-effect failure '+json.dumps(score['errors']))\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: first saved-effect failure [\"saved effect or collateral cell content\"]\n"
+      ],
+      "index": 0,
+      "mode": "direct",
+      "model_stages": [
+        {
+          "dynamic_calls": 1,
+          "label": "task0",
+          "thread_id": "01a10296-e341-7d10-adf4-a3c68c000cfc",
+          "usage": {
+            "cacheWriteInputTokens": 0,
+            "cachedInputTokens": 7936,
+            "inputTokens": 44058,
+            "outputTokens": 178,
+            "reasoningOutputTokens": 98,
+            "totalTokens": 44236
+          },
+          "wall_ns": 8974983900
+        },
+        {
+          "dynamic_calls": 1,
+          "label": "task1",
+          "thread_id": "01a10297-064c-73b3-b111-8af6436f8388",
+          "usage": {
+            "cacheWriteInputTokens": 0,
+            "cachedInputTokens": 7936,
+            "inputTokens": 44125,
+            "outputTokens": 265,
+            "reasoningOutputTokens": 187,
+            "totalTokens": 44390
+          },
+          "wall_ns": 9593792400
+        }
+      ],
+      "native_exit": 143,
+      "native_pid": 44656,
+      "started_wall_ns": 1791044798473610300,
+      "tasks": [
+        {
+          "index": 0,
+          "label": "task0",
+          "score": {
+            "effect": {
+              "expected": [
+                [
+                  0,
+                  0,
+                  "a",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  1,
+                  "b",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  2,
+                  "product",
+                  null,
+                  null
+                ],
+                [
+                  1,
+                  0,
+                  "13",
+                  "13",
+                  null
+                ],
+                [
+                  1,
+                  1,
+                  "17",
+                  "17",
+                  null
+                ],
+                [
+                  1,
+                  2,
+                  "221",
+                  "221",
+                  "of:=[.A2]*[.B2]"
+                ]
+              ],
+              "pass_effect": true,
+              "populated": [
+                [
+                  0,
+                  0,
+                  "a",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  1,
+                  "b",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  2,
+                  "product",
+                  null,
+                  null
+                ],
+                [
+                  1,
+                  0,
+                  "13",
+                  "13",
+                  null
+                ],
+                [
+                  1,
+                  1,
+                  "17",
+                  "17",
+                  null
+                ],
+                [
+                  1,
+                  2,
+                  "221",
+                  "221",
+                  "of:=[.A2]*[.B2]"
+                ]
+              ]
+            },
+            "errors": []
+          }
+        },
+        {
+          "index": 1,
+          "label": "task1",
+          "score": {
+            "effect": {
+              "expected": [
+                [
+                  0,
+                  0,
+                  "a",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  1,
+                  "b",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  2,
+                  "product",
+                  null,
+                  null
+                ],
+                [
+                  1,
+                  0,
+                  "19",
+                  "19",
+                  null
+                ],
+                [
+                  1,
+                  1,
+                  "23",
+                  "23",
+                  null
+                ],
+                [
+                  1,
+                  2,
+                  "437",
+                  "437",
+                  "of:=[.A2]*[.B2]"
+                ]
+              ],
+              "pass_effect": false,
+              "populated": [
+                [
+                  0,
+                  0,
+                  "a",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  1,
+                  "b",
+                  null,
+                  null
+                ],
+                [
+                  0,
+                  2,
+                  "product",
+                  null,
+                  null
+                ],
+                [
+                  1,
+                  0,
+                  "9",
+                  "9",
+                  null
+                ],
+                [
+                  1,
+                  1,
+                  "23",
+                  "23",
+                  null
+                ],
+                [
+                  1,
+                  2,
+                  "207",
+                  "207",
+                  "of:=[.A2]*[.B2]"
+                ],
+                [
+                  2,
+                  0,
+                  "1",
+                  "1",
+                  null
+                ]
+              ]
+            },
+            "errors": [
+              "saved effect or collateral cell content"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "status": "STOP_FIRST_FAILURE"
+}

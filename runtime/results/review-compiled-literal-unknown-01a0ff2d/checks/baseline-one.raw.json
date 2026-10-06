@@ -1,0 +1,173 @@
+{
+  "rows": [
+    {
+      "caller_plan_unchanged": true,
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "review-mixed-predicates",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "frame-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": "initial",
+                "ready": true
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private-review-fixture",
+            "symbol": {
+              "dependencies": [
+                "phase",
+                "ready"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 10000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase",
+              "ready"
+            ],
+            "state": "initial"
+          },
+          {
+            "required_predicates": [
+              "phase",
+              "ready"
+            ],
+            "state": "middle"
+          }
+        ],
+        "verify": []
+      },
+      "case": "matching-mixed-literal",
+      "final": {
+        "phase": "done",
+        "ready": true
+      },
+      "late": false,
+      "middle": {
+        "phase": "unknown",
+        "ready": true
+      },
+      "reference": "independent-witness",
+      "result": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter",
+            "event": "branch_selected",
+            "evidence_ref": "frame-1",
+            "matched_conditions": {
+              "phase": "initial",
+              "ready": true
+            },
+            "outcome": "action",
+            "state": "initial"
+          },
+          {
+            "action": "enter",
+            "action_id": "action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter",
+            "event": "effect_checked",
+            "evidence_ref": "frame-2",
+            "status": "unavailable",
+            "verifier": "compiled_predicate_condition"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "effect_unavailable"
+          }
+        ],
+        "elapsed_ns": 0,
+        "ended_ns": 0,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "review-mixed-predicates",
+        "latest_evidence_ref": "frame-2",
+        "method": "bounded-two-step",
+        "method_version": "1",
+        "observations": [
+          {
+            "captured_ns": 0,
+            "evidence_digest": "frame-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": "initial",
+              "ready": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 0,
+            "evidence_digest": "frame-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": "unknown",
+              "ready": true
+            },
+            "sequence": 2
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter",
+          "effect_ref": "stub-effect",
+          "expected_effect": {
+            "phase": "unknown",
+            "ready": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "effect_unavailable",
+        "session_scope": "private-review-fixture",
+        "started_ns": 0,
+        "transitions": [
+          {
+            "action": "enter",
+            "action_id": "action-1",
+            "effect_ref": "stub-effect",
+            "evidence_ref": "frame-1",
+            "from_state": "initial",
+            "matched_conditions": {
+              "phase": "initial",
+              "ready": true
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "middle"
+          }
+        ]
+      },
+      "stale": false,
+      "verdict": "succeeded"
+    }
+  ],
+  "variant": "baseline"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "owner-telemetry-cancel-cause-a01-freeze-v1",
+  "issue": 59,
+  "allocation_id": "map01-v39-owner-telemetry-cancel-cause-a01-20261004",
+  "base_commit": "0f50064a7ea7a69c51cb6751ac313b0c8b5ec9e2",
+  "base_owner_sha256": "09cc23e67e6a3de1b0029fbb0184cdf54d3d8e29561281870d2b0b76027511d8",
+  "candidate_owner_sha256": "f46dd62edd085afe29fe031f74a31397bb568f583affde0a26ac79686625d433",
+  "candidate_runner_sha256": "7c62d460b501d4fc85e10f2c2fbae2afde22073e06dfd1d0fa3cc814d28daca5",
+  "hypothesis": "The #7429 telemetry-preserving owner v12 classifies release as cancelled when cancellation becomes visible after the dispatch sample and before its verified release record, without losing V11 explicit-up interval telemetry.",
+  "cases": [
+    "parent owner forced post-sample cancellation",
+    "candidate owner forced post-sample cancellation",
+    "candidate uncancelled cleanup positive control",
+    "candidate explicit-up telemetry exercise"
+  ],
+  "decision": {
+    "parent_forced_cancel_reason": "release",
+    "candidate_forced_cancel_reason": "cancelled",
+    "candidate_ordinary_reason": "release",
+    "all_releases_verified_empty": true,
+    "candidate_up_event": "input_release_rpc",
+    "candidate_up_grants_authority": false,
+    "candidate_parent_owner_module": "input_owner_v11"
+  },
+  "container_preflight": {
+    "command": "docker image inspect python:3.14 --format '{{.Id}}'",
+    "result": "STOP: no such image",
+    "action": "No pull/build; run only host fake-Xlib construction and label it non-container."
+  },
+  "scope": "Deterministic fake-Xlib software scheduling only; no physical X11, application, game, model, task effect, recovery, or live allocation.",
+  "retries": "No candidate retries; baseline and candidate are each exercised once at the forced boundary, plus one ordinary control and one telemetry control."
+}
