@@ -2354,3 +2354,18 @@ and [Issue #57](https://github.com/Unjuno/agent-interface/issues/57).
 ## Issue #57 D01 — retained native held-input cancellation
 
 The same rescue also preserves 58 D01 archival files from 2026-10-03: one authenticated Debian 12/ARM64 virtual-display XTEST Shift_L hold, an independent down witness, cancellation, verified owner release, and an independent clear key/button witness. The terminal remained cancelled with zero completed steps; Xvfb -9 and Openbox 1 exits and all scope limits remain retained. No model/task attempt or original run was replayed. This is one virtual-display cancellation condition, not physical-hardware release, general GUI reliability, current-main runtime qualification, or an efficiency claim. See the [D01 report and retained raw evidence](research/integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md).
+
+# Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
+
+This archive preserves one bounded ordinary remote-browser task (T01) with
+provider-reported app effects and one compiled-core bridge boundary (I01).
+T01's finite task effect was independently checked in the retained public
+evidence; this does not establish a general GUI result. I01's add action changed
+the application, but the provider supplied no release/neutral-state telemetry:
+the outcome remains `RUNTIME_FAILED` / `HOLD_RELEASE_TELEMETRY` with zero
+completed transitions and release `UNVERIFIED`. Do not infer no effect from
+zero completed transitions and do not resend the action. The prior sessions,
+source pins, raw responses, projections, hashes, and first failures are
+preserved; no consumed remote task was rerun for rescue. See the [complete
+archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
+and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).
