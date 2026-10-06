@@ -1,0 +1,26 @@
+{
+  "allocation_id": "V39-CLEANUP-COMPOSITION-C01-20261004-01",
+  "auditor_invocations": "one, only if candidate exits zero",
+  "candidate_invocations": 1,
+  "confounds": "BaseBackend hold sequencing and all Xlib/XTest behavior are deterministic test doubles.",
+  "decision": "Require one admission and one release receipt; cancellation snapshot false; one verified cancelled cleanup; correlated cleanup; ordinary_release_candidate=false; owner_transition_verified=false; empty owned state; exactly one press/release pair; no key down; mutation of verification claim rejected by independent audit.",
+  "execution_route": "local Python process; fake Xlib/XTest; no X server and no real input",
+  "hypothesis": "If cancellation becomes visible after input_transition_owner_v3 snapshots it but before input_owner_v10 processes queued up, the v39 backend records cleanup correlation while publishing owner_transition_verified=false.",
+  "retry_policy": "retain first outcome; construction harness correction requires a distinct record",
+  "schema": "v39-owner-cleanup-composition-freeze-v1",
+  "scope": "One key and one cancellation interleaving; no live X server, physical state, application consumption, task effect, latency, cross-platform, or safety inference.",
+  "sha256": {
+    "README.md": "91c2cc597da1a11cf5048316a346b8693e127cf469e3cd28dff7e07dd811d58e",
+    "audit.py": "7e1339b9bb820d7a9e9e1149e65b5a0e4e6884359b77b41a08c893641101407a",
+    "composition_probe.py": "bc3fbc6ac37a90434b5681ef2043cf7d4f007ef0877f68f5d8fd6d4efd3e2f54",
+    "sources/doom_typed_release_backend_v3.py": "61f66e3b6afc92b2b646d0fe9e38ffc841e405e8955fc98eed3c2b6f2b843adb",
+    "sources/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "sources/input_transition_owner_v3.py": "f6d9a1f30014299407472b11016504dc1605b34837dc71761ad0976ddd3d1f27"
+  },
+  "source_commits": {
+    "main_owner": "f11ee9d051239094cf3679e19c80bd7deaed0564",
+    "transition_wrapper_pr7376": "4dacf68632b686948c0c2dee6742ffa67dc13efb",
+    "v39_backend": "c7191e17d25a58dad1f14c048b1f3ce88d77b141"
+  },
+  "treatment": "Run the committed v39 typed release backend with the exact PR #7376 wrapper and current-main owner snapshots. Use a real owner thread, fake Xlib/XTest, and deterministic cancellation interleaving."
+}

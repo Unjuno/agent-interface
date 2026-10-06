@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "backend_receipts_bind_each_occurrence": false,
+    "frozen_sources_match": true,
+    "identity_and_single_candidate": false,
+    "owner_empty_and_verified_close": false,
+    "six_32_byte_keymap_witnesses_false_true_false": false,
+    "started_receipt_and_frozen_environment": true,
+    "two_unique_occurrence_tokens": false,
+    "xvfb_tcp_and_process_cleanup": false
+  },
+  "failed_checks": [
+    "backend_receipts_bind_each_occurrence",
+    "identity_and_single_candidate",
+    "owner_empty_and_verified_close",
+    "six_32_byte_keymap_witnesses_false_true_false",
+    "two_unique_occurrence_tokens",
+    "xvfb_tcp_and_process_cleanup"
+  ],
+  "gate": "FAIL_OR_HOLD_V39_KEYMAP_WITNESS",
+  "schema": "map01-v39-owner-keymap-witness-audit-v1",
+  "scope": "virtual X11 server state only; no physical key, application effect, or task-control claim"
+}

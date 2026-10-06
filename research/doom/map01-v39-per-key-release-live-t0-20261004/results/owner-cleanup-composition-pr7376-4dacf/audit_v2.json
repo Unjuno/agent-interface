@@ -1,0 +1,61 @@
+{
+  "auditor_invocations": 1,
+  "auditor_sha256": "9a3243f940eed55188f7e15b561c76b4d4c3bf53b58bfa9f387eba0cc165d7cf",
+  "baseline_checks_passed": 9,
+  "baseline_checks_total": 9,
+  "candidate_invocations": 0,
+  "checks": {
+    "cleanup_flag_agrees_with_timestamp": true,
+    "cleanup_timestamp_inside_release_bracket": true,
+    "fail_closed_transition_publication": true,
+    "no_key_left_down": true,
+    "one_admission_and_release": true,
+    "one_press_and_release": true,
+    "one_verified_cancel_cleanup": true,
+    "release_call_interval_ordered": true,
+    "snapshot_preceded_cleanup": true
+  },
+  "errors": [],
+  "mutation_controls": [
+    {
+      "name": "cleanup_before_release_call",
+      "rejected": true
+    },
+    {
+      "name": "cleanup_after_release_return",
+      "rejected": true
+    },
+    {
+      "name": "inverted_release_interval",
+      "rejected": true
+    },
+    {
+      "name": "missing_cleanup_timestamp",
+      "rejected": true
+    },
+    {
+      "name": "boolean_cleanup_timestamp",
+      "rejected": true
+    },
+    {
+      "name": "duplicate_cleanup_receipt",
+      "rejected": true
+    },
+    {
+      "name": "cleanup_intervened_flag_cleared",
+      "rejected": true
+    },
+    {
+      "name": "transition_claims_verified",
+      "rejected": true
+    }
+  ],
+  "mutation_controls_rejected": 8,
+  "mutation_controls_total": 8,
+  "parent_audit_status": "PASS_CONSTRUCTION_OWNER_CLEANUP_FAIL_CLOSED",
+  "raw_sha256": "6d0742bc740dee53a61c03c53eb39b7a01aa4f82f1b3ae74b04790be1ba52d90",
+  "retries": 0,
+  "schema": "v39-owner-cleanup-composition-audit-v2",
+  "scope": "Raw-only re-audit of one deterministic fake-Xlib/XTest construction record. The verified owner-cleanup timestamp is checked inside the recorded release-call bracket; this is not live X11, physical input, application effect, task-control, or latency evidence.",
+  "status": "PASS_TEMPORAL_RECEIPT_BINDING_SCOPED"
+}

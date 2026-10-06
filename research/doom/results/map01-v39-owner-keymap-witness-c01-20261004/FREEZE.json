@@ -1,0 +1,43 @@
+{
+  "allocation_id": "MAP01-V39-OWNER-KEYMAP-WITNESS-C01-20261004-01",
+  "network_isolation": "none",
+  "protocol": {
+    "auditor_invocations": 1,
+    "candidate_invocations": 1,
+    "network_calls": "none",
+    "occurrences": 2,
+    "retry": "none",
+    "xvfb_tcp_enabled": false
+  },
+  "runtime_environment_sha256": "ac2ed7508e62d5051315277b6ea154e393e1b3eccbd0e064a9aec2a446f77808",
+  "schema": "map01-v39-owner-keymap-witness-freeze-v1",
+  "sha256": {
+    "ENVIRONMENT.json": "ac2ed7508e62d5051315277b6ea154e393e1b3eccbd0e064a9aec2a446f77808",
+    "README.md": "4c9d33ef43955d69971297e394bccd8e63a2876b56d927dd622e44df922edff7",
+    "SETUP.md": "21fff6c6f96d7444898444be0fd834690f9a018ce7ff3ca6dcdeaa1531f50311",
+    "audit.py": "ea90d3ca046db272406e19aa06ea9dfb17a5bd1026262decbef9f6bb21258dc6",
+    "candidate.py": "f5d2ae80700d26dc85a472ab864ce4b047c40321b1bf5ca7957606ffb2f4b4c8",
+    "capture_environment.py": "d5ec56d69c266dd0626e571aefb3607d3065ab57582270ff46b420b121b54dd9",
+    "cases.json": "0fa0596bbe3ac7a598017ada65090483dab4b454487443961573369642fda55f",
+    "sources/doom_typed_release_backend_v3.py": "61f66e3b6afc92b2b646d0fe9e38ffc841e405e8955fc98eed3c2b6f2b843adb",
+    "sources/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "sources/input_transition_owner_v3.py": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078"
+  },
+  "source_provenance": {
+    "doom_typed_release_backend_v3.py": {
+      "branch": "research/59-v39-release-telemetry",
+      "commit": "2b9cc1ab0b157ef1cad1e7282c97fdf901269a2d",
+      "repository": "Unjuno/agent-interface"
+    },
+    "input_owner_v10.py": {
+      "commit": "13bab54ea6d91978247ecc1b70e5060db752367a",
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "repository": "Unjuno/agent-interface"
+    },
+    "input_transition_owner_v3.py": {
+      "commit": "cf4904c678830ebe1de84ec34c07df01f8be8b34",
+      "pull_request": 7376,
+      "repository": "Unjuno/agent-interface"
+    }
+  }
+}
