@@ -1,0 +1,40 @@
+{
+  "construction_only": true,
+  "events": [
+    {
+      "exit": 1,
+      "stage": "red",
+      "stderr": "Traceback (most recent call last):\n  File \"/mnt/data/typed_elapsed_a17/test_restore.py\", line 11, in <module>\n    import restore_results\nModuleNotFoundError: No module named 'restore_results'\n",
+      "stdout": ""
+    },
+    {
+      "exit": 0,
+      "stage": "green",
+      "stderr": "test_bad_digest (__main__.RestoreTests.test_bad_digest) ... ok\ntest_bound (__main__.RestoreTests.test_bound) ... ok\ntest_complete_roundtrip (__main__.RestoreTests.test_complete_roundtrip) ... ok\ntest_existing_destination (__main__.RestoreTests.test_existing_destination) ... ok\ntest_malformed_encoding (__main__.RestoreTests.test_malformed_encoding) ... ok\ntest_unsafe_path_with_rehashed_payload (__main__.RestoreTests.test_unsafe_path_with_rehashed_payload) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.004s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "exit": 0,
+      "stage": "final",
+      "stderr": "test_bad_digest (__main__.RestoreTests.test_bad_digest) ... ok\ntest_bound (__main__.RestoreTests.test_bound) ... ok\ntest_complete_roundtrip (__main__.RestoreTests.test_complete_roundtrip) ... ok\ntest_existing_destination (__main__.RestoreTests.test_existing_destination) ... ok\ntest_malformed_encoding (__main__.RestoreTests.test_malformed_encoding) ... ok\ntest_unsafe_path_with_rehashed_payload (__main__.RestoreTests.test_unsafe_path_with_rehashed_payload) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.004s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "exit": 0,
+      "stage": "xz_final",
+      "stderr": "test_bad_digest (__main__.RestoreTests.test_bad_digest) ... ok\ntest_bound (__main__.RestoreTests.test_bound) ... ok\ntest_complete_roundtrip (__main__.RestoreTests.test_complete_roundtrip) ... ok\ntest_existing_destination (__main__.RestoreTests.test_existing_destination) ... ok\ntest_malformed_encoding (__main__.RestoreTests.test_malformed_encoding) ... ok\ntest_unsafe_path_with_rehashed_payload (__main__.RestoreTests.test_unsafe_path_with_rehashed_payload) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.009s\n\nOK\n",
+      "stdout": ""
+    }
+  ],
+  "schema": "a17-packaging-check-v1",
+  "unreferenced_transcription_trees": [
+    "63716167bfce66397e29639f948d679cf6249162",
+    "3381651a29366abd592c041678eba8c07b66762d"
+  ],
+  "xz_transport_blobs_match": [
+    "b1463035ce6da1bd61263bc3f3669c62cdbb1bc7",
+    "cb25448d5fd6da5ca1573aa9756bb4d8fbb4cc27",
+    "a72838ff68136ba3c2909f6f6e836bcd0c710f18",
+    "d4d1f4a3b5dfe5e8da4357320f430534e6b59e3d"
+  ]
+}
