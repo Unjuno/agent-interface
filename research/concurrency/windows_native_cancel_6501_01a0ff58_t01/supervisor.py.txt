@@ -1,0 +1,27 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import subprocess,sys,hashlib,json,os
+R=Path(__file__).resolve().parents[2];W=R/'work/ownedwinpipe6501-t01';O=R/'outputs/ownedwinpipe6501-t01';H=lambda b:hashlib.sha256(b).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat()
+assert not (O/'FREEZE.json').exists()
+sources=[W/'probe.py',W/'audit.py',Path(__file__),O/'PLAN.md']
+freeze={'allocation':'6501-WINDOWS-READFILE-T01-01a0ff58-20261003','created_utc':now(),'worker':'01a0ff58-6178-7ea1-a6d5-cf09260b91e3','claim':5970043999,'inputs':{p.relative_to(R).as_posix():H(p.read_bytes()) for p in sources},'python_binary':{'path':sys.executable,'sha256':H(Path(sys.executable).read_bytes())},'order':['normal_D','wrapper_cancel','native_cancel'],'outer_seconds':8,'comparative_invocations':3,'c01_dependencies':json.loads((R/'outputs/ownedwinpipe6501-c01/RESULT.json').read_bytes())['dependencies']}
+(O/'FREEZE.json').write_text(json.dumps(freeze,sort_keys=True,indent=2)+'\n',encoding='utf8')
+records=[]
+for mode in freeze['order']:
+    d=O/mode;d.mkdir(exist_ok=False);command=[sys.executable,'-B',str(W/'probe.py'),str(W/mode),mode];start=now();p=subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE);rec={'command':command,'start_utc':start,'pid':p.pid,'supervisor_pid':os.getpid(),'timeout':False};(d/'START_RECEIPT.json').write_text(json.dumps(rec,sort_keys=True,indent=2)+'\n',encoding='utf8')
+    try:out,err=p.communicate(timeout=8)
+    except subprocess.TimeoutExpired:p.kill();out,err=p.communicate(timeout=3);rec['timeout']=True
+    rec.update({'end_utc':now(),'exit':p.returncode,'stdout_bytes':len(out),'stderr_bytes':len(err),'stdout_sha256':H(out),'stderr_sha256':H(err),'inputs_unchanged':all(H((R/path).read_bytes())==sha for path,sha in freeze['inputs'].items()),'owned_child_terminal':p.poll() is not None})
+    (d/'stdout.txt').write_bytes(out);(d/'stderr.txt').write_bytes(err)
+    for name in ('START.json','RESULT.json','events.json'):
+        q=W/mode/name
+        if q.exists():(d/name).write_bytes(q.read_bytes())
+    if (d/'RESULT.json').exists():
+        actual=json.loads((d/'RESULT.json').read_bytes());rec['dependencies_match_c01']=actual['dependencies']==freeze['c01_dependencies']
+    (d/'RECEIPT.json').write_text(json.dumps(rec,sort_keys=True,indent=2)+'\n',encoding='utf8');records.append(rec)
+    if rec['timeout'] or rec['exit']!=0 or not rec['inputs_unchanged'] or not rec.get('dependencies_match_c01'):
+        (O/'STOP.json').write_text(json.dumps({'status':'STOP_INFRASTRUCTURE','mode':mode,'completed_cells':len(records),'records':records},sort_keys=True,indent=2)+'\n',encoding='utf8');print(json.dumps({'status':'STOP_INFRASTRUCTURE','mode':mode}));raise SystemExit(2)
+for p in sources:(O/(p.name+'.txt')).write_bytes(p.read_bytes())
+(O/'BOUNDARY.json').write_text(json.dumps({'status':'THREE_CELLS_TERMINAL','records':records,'end_utc':now()},sort_keys=True,indent=2)+'\n',encoding='utf8')
+print(json.dumps({'status':'THREE_CELLS_TERMINAL','pids':[x['pid'] for x in records],'start_utc':records[0]['start_utc'],'end_utc':records[-1]['end_utc']}))
+
