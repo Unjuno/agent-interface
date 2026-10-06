@@ -1,39 +1,464 @@
 {
   "schema": "relation-first-synthetic-discriminator-v1",
   "sources": [
-    {"id":"S1","keywords":["ecology","cue","habitat","trap"],"kind":"lowlex_highrel","relations":["cached_evidence->decision","world_change->stale_evidence","stale_evidence->unsafe_choice","fresh_check->yield_or_continue"],"testable":true,"valid_for":["T1"]},
-    {"id":"S2","keywords":["gui","stale","focus","target","widget"],"kind":"highlex_lowrel","relations":["surface_similarity->retrieval","layout_change->rename","rename->display"],"testable":true,"valid_for":[]},
-    {"id":"S3","keywords":["payments","idempotency","ledger","ack"],"kind":"lowlex_highrel","relations":["uncertain_outcome->retry_risk","retry->duplicate_effect","durable_receipt->outcome_resolution","unknown->hold"],"testable":true,"valid_for":["T2"]},
-    {"id":"S4","keywords":["retry","effect","receipt","duplicate","gui"],"kind":"highlex_lowrel","relations":["retry->faster_completion","receipt->logging"],"testable":true,"valid_for":[]},
-    {"id":"S5","keywords":["telemetry","packet","staleness","age"],"kind":"lowlex_highrel","relations":["producer_event->queue","queue_delay->age","aged_evidence->decision_risk","expiry->drop_or_reobserve"],"testable":true,"valid_for":["T3"]},
-    {"id":"S6","keywords":["observation","queue","freshness","delay","screen"],"kind":"highlex_lowrel","relations":["screen->encode","encode->store"],"testable":true,"valid_for":[]},
-    {"id":"S7","keywords":["reliability","repair","virtual","age"],"kind":"lowlex_highrel","relations":["fault->repair","repair->residual_state","residual_state->recurrence","history->repair_choice"],"testable":true,"valid_for":["T4"]},
-    {"id":"S8","keywords":["recovery","reset","state","fault","gui"],"kind":"highlex_lowrel","relations":["reset->restart","restart->same_state"],"testable":true,"valid_for":[]},
-    {"id":"S9","keywords":["compiler","control","flow","uniqueness"],"kind":"lowlex_highrel","relations":["plan->selected_branch","world_change->branch_set","branch_ambiguity->reject","selected_dependencies->admission"],"testable":true,"valid_for":["T5"]},
-    {"id":"S10","keywords":["branch","guard","dependency","admission","gui"],"kind":"highlex_lowrel","relations":["guard->logging","dependency->documentation"],"testable":true,"valid_for":[]},
-    {"id":"S11","keywords":["device","lease","neutrality","witness"],"kind":"lowlex_highrel","relations":["actuation->held_state","cancel->release_request","release_evidence->neutrality","missing_evidence->unknown"],"testable":true,"valid_for":["T6"]},
-    {"id":"S12","keywords":["release","key","owner","cleanup","keyboard"],"kind":"highlex_lowrel","relations":["key->event","owner->thread"],"testable":true,"valid_for":[]},
-    {"id":"S13","keywords":["memoization","fingerprint","dependencykey","memo"],"kind":"lowlex_highrel","relations":["cached_result->reuse","dependency_change->invalidate","unrelated_change->preserve","ambiguous_match->yield"],"testable":true,"valid_for":["T7"]},
-    {"id":"S14","keywords":["cache","reuse","version","invalid","gui"],"kind":"highlex_lowrel","relations":["cache->speed","version->label"],"testable":true,"valid_for":[]},
-    {"id":"S15","keywords":["realtime","reservation","blocking","budget"],"kind":"lowlex_highrel","relations":["task->resource_wait","blocking->deadline_risk","bounded_inheritance->service","invalid_edge->fail_closed"],"testable":true,"valid_for":["T8"]},
-    {"id":"S16","keywords":["scheduler","deadline","resource","wait","gui"],"kind":"highlex_lowrel","relations":["scheduler->priority","deadline->timestamp"],"testable":true,"valid_for":[]},
-    {"id":"S17","keywords":["database","transaction","commit"],"kind":"neutral","relations":["write->commit","commit->visibility"],"testable":true,"valid_for":[]},
-    {"id":"S18","keywords":["vision","region","attention"],"kind":"neutral","relations":["image->region","region->score"],"testable":true,"valid_for":[]},
-    {"id":"S19","keywords":["filesystem","snapshot","copy"],"kind":"neutral","relations":["state->snapshot","snapshot->restore"],"testable":true,"valid_for":[]},
-    {"id":"S20","keywords":["network","retry","timeout"],"kind":"neutral","relations":["request->timeout","timeout->retry"],"testable":true,"valid_for":[]},
-    {"id":"S21","keywords":["queue","batch","throughput"],"kind":"neutral","relations":["items->batch","batch->throughput"],"testable":true,"valid_for":[]},
-    {"id":"S22","keywords":["control","state","machine"],"kind":"neutral","relations":["state->transition","transition->state"],"testable":true,"valid_for":[]},
-    {"id":"S23","keywords":["logging","trace","audit"],"kind":"neutral","relations":["event->log","log->audit"],"testable":true,"valid_for":[]},
-    {"id":"S24","keywords":["planning","action","goal"],"kind":"neutral","relations":["goal->plan","plan->action"],"testable":true,"valid_for":[]}
+    {
+      "id": "S1",
+      "keywords": [
+        "ecology",
+        "cue",
+        "habitat",
+        "trap"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "cached_evidence->decision",
+        "world_change->stale_evidence",
+        "stale_evidence->unsafe_choice",
+        "fresh_check->yield_or_continue"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T1"
+      ]
+    },
+    {
+      "id": "S2",
+      "keywords": [
+        "gui",
+        "stale",
+        "focus",
+        "target",
+        "widget"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "surface_similarity->retrieval",
+        "layout_change->rename",
+        "rename->display"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S3",
+      "keywords": [
+        "payments",
+        "idempotency",
+        "ledger",
+        "ack"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "uncertain_outcome->retry_risk",
+        "retry->duplicate_effect",
+        "durable_receipt->outcome_resolution",
+        "unknown->hold"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T2"
+      ]
+    },
+    {
+      "id": "S4",
+      "keywords": [
+        "retry",
+        "effect",
+        "receipt",
+        "duplicate",
+        "gui"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "retry->faster_completion",
+        "receipt->logging"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S5",
+      "keywords": [
+        "telemetry",
+        "packet",
+        "staleness",
+        "age"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "producer_event->queue",
+        "queue_delay->age",
+        "aged_evidence->decision_risk",
+        "expiry->drop_or_reobserve"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T3"
+      ]
+    },
+    {
+      "id": "S6",
+      "keywords": [
+        "observation",
+        "queue",
+        "freshness",
+        "delay",
+        "screen"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "screen->encode",
+        "encode->store"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S7",
+      "keywords": [
+        "reliability",
+        "repair",
+        "virtual",
+        "age"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "fault->repair",
+        "repair->residual_state",
+        "residual_state->recurrence",
+        "history->repair_choice"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T4"
+      ]
+    },
+    {
+      "id": "S8",
+      "keywords": [
+        "recovery",
+        "reset",
+        "state",
+        "fault",
+        "gui"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "reset->restart",
+        "restart->same_state"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S9",
+      "keywords": [
+        "compiler",
+        "control",
+        "flow",
+        "uniqueness"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "plan->selected_branch",
+        "world_change->branch_set",
+        "branch_ambiguity->reject",
+        "selected_dependencies->admission"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T5"
+      ]
+    },
+    {
+      "id": "S10",
+      "keywords": [
+        "branch",
+        "guard",
+        "dependency",
+        "admission",
+        "gui"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "guard->logging",
+        "dependency->documentation"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S11",
+      "keywords": [
+        "device",
+        "lease",
+        "neutrality",
+        "witness"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "actuation->held_state",
+        "cancel->release_request",
+        "release_evidence->neutrality",
+        "missing_evidence->unknown"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T6"
+      ]
+    },
+    {
+      "id": "S12",
+      "keywords": [
+        "release",
+        "key",
+        "owner",
+        "cleanup",
+        "keyboard"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "key->event",
+        "owner->thread"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S13",
+      "keywords": [
+        "memoization",
+        "fingerprint",
+        "dependencykey",
+        "memo"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "cached_result->reuse",
+        "dependency_change->invalidate",
+        "unrelated_change->preserve",
+        "ambiguous_match->yield"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T7"
+      ]
+    },
+    {
+      "id": "S14",
+      "keywords": [
+        "cache",
+        "reuse",
+        "version",
+        "invalid",
+        "gui"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "cache->speed",
+        "version->label"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S15",
+      "keywords": [
+        "realtime",
+        "reservation",
+        "blocking",
+        "budget"
+      ],
+      "kind": "lowlex_highrel",
+      "relations": [
+        "task->resource_wait",
+        "blocking->deadline_risk",
+        "bounded_inheritance->service",
+        "invalid_edge->fail_closed"
+      ],
+      "testable": true,
+      "valid_for": [
+        "T8"
+      ]
+    },
+    {
+      "id": "S16",
+      "keywords": [
+        "scheduler",
+        "deadline",
+        "resource",
+        "wait",
+        "gui"
+      ],
+      "kind": "highlex_lowrel",
+      "relations": [
+        "scheduler->priority",
+        "deadline->timestamp"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S17",
+      "keywords": [
+        "database",
+        "transaction",
+        "commit"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "write->commit",
+        "commit->visibility"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S18",
+      "keywords": [
+        "vision",
+        "region",
+        "attention"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "image->region",
+        "region->score"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S19",
+      "keywords": [
+        "filesystem",
+        "snapshot",
+        "copy"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "state->snapshot",
+        "snapshot->restore"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S20",
+      "keywords": [
+        "network",
+        "retry",
+        "timeout"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "request->timeout",
+        "timeout->retry"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S21",
+      "keywords": [
+        "queue",
+        "batch",
+        "throughput"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "items->batch",
+        "batch->throughput"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S22",
+      "keywords": [
+        "control",
+        "state",
+        "machine"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "state->transition",
+        "transition->state"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S23",
+      "keywords": [
+        "logging",
+        "trace",
+        "audit"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "event->log",
+        "log->audit"
+      ],
+      "testable": true,
+      "valid_for": []
+    },
+    {
+      "id": "S24",
+      "keywords": [
+        "planning",
+        "action",
+        "goal"
+      ],
+      "kind": "neutral",
+      "relations": [
+        "goal->plan",
+        "plan->action"
+      ],
+      "testable": true,
+      "valid_for": []
+    }
   ],
   "targets": [
-    {"id":"T1","keywords":["gui","stale","focus","target"],"relations":["cached_evidence->decision","world_change->stale_evidence","stale_evidence->unsafe_choice","fresh_check->yield_or_continue"]},
-    {"id":"T2","keywords":["retry","effect","receipt","duplicate"],"relations":["uncertain_outcome->retry_risk","retry->duplicate_effect","durable_receipt->outcome_resolution","unknown->hold"]},
-    {"id":"T3","keywords":["observation","queue","freshness","delay"],"relations":["producer_event->queue","queue_delay->age","aged_evidence->decision_risk","expiry->drop_or_reobserve"]},
-    {"id":"T4","keywords":["recovery","reset","state","fault"],"relations":["fault->repair","repair->residual_state","residual_state->recurrence","history->repair_choice"]},
-    {"id":"T5","keywords":["branch","guard","dependency","admission"],"relations":["plan->selected_branch","world_change->branch_set","branch_ambiguity->reject","selected_dependencies->admission"]},
-    {"id":"T6","keywords":["release","key","owner","cleanup"],"relations":["actuation->held_state","cancel->release_request","release_evidence->neutrality","missing_evidence->unknown"]},
-    {"id":"T7","keywords":["cache","reuse","version","invalid"],"relations":["cached_result->reuse","dependency_change->invalidate","unrelated_change->preserve","ambiguous_match->yield"]},
-    {"id":"T8","keywords":["scheduler","deadline","resource","wait"],"relations":["task->resource_wait","blocking->deadline_risk","bounded_inheritance->service","invalid_edge->fail_closed"]}
+    {
+      "id": "T1",
+      "keywords": ["gui","stale","focus","target"],
+      "relations": ["cached_evidence->decision","world_change->stale_evidence","stale_evidence->unsafe_choice","fresh_check->yield_or_continue"]
+    },
+    {
+      "id": "T2",
+      "keywords": ["retry","effect","receipt","duplicate"],
+      "relations": ["uncertain_outcome->retry_risk","retry->duplicate_effect","durable_receipt->outcome_resolution","unknown->hold"]
+    },
+    {
+      "id": "T3",
+      "keywords": ["observation","queue","freshness","delay"],
+      "relations": ["producer_event->queue","queue_delay->age","aged_evidence->decision_risk","expiry->drop_or_reobserve"]
+    },
+    {
+      "id": "T4",
+      "keywords": ["recovery","reset","state","fault"],
+      "relations": ["fault->repair","repair->residual_state","residual_state->recurrence","history->repair_choice"]
+    },
+    {
+      "id": "T5",
+      "keywords": ["branch","guard","dependency","admission"],
+      "relations": ["plan->selected_branch","world_change->branch_set","branch_ambiguity->reject","selected_dependencies->admission"]
+    },
+    {
+      "id": "T6",
+      "keywords": ["release","key","owner","cleanup"],
+      "relations": ["actuation->held_state","cancel->release_request","release_evidence->neutrality","missing_evidence->unknown"]
+    },
+    {
+      "id": "T7",
+      "keywords": ["cache","reuse","version","invalid"],
+      "relations": ["cached_result->reuse","dependency_change->invalidate","unrelated_change->preserve","ambiguous_match->yield"]
+    },
+    {
+      "id": "T8",
+      "keywords": ["scheduler","deadline","resource","wait"],
+      "relations": ["task->resource_wait","blocking->deadline_risk","bounded_inheritance->service","invalid_edge->fail_closed"]
+    }
   ]
 }
