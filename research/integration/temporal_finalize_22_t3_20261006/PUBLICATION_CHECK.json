@@ -1,0 +1,47 @@
+{
+  "all_members_byte_equal": true,
+  "all_parts_remote_blob_equal": true,
+  "audit": {
+    "argv": [
+      "/opt/pyvenv/bin/python",
+      "-S",
+      "-B",
+      "audit.py",
+      "evaluation-01",
+      "--controls"
+    ],
+    "returncode": 0,
+    "stdout_sha256": "06b81f7fc738f512433e7d1a6591033dd87c1ba491db00da33e24f8b65ae757b"
+  },
+  "audit_byte_equal": true,
+  "new_scientific_invocations": 0,
+  "original_files": 38,
+  "packaging_tests": 6,
+  "units": {
+    "argv": [
+      "/opt/pyvenv/bin/python",
+      "-S",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_finalize"
+    ],
+    "returncode": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "units_optimized": {
+    "argv": [
+      "/opt/pyvenv/bin/python",
+      "-S",
+      "-B",
+      "-O",
+      "-m",
+      "unittest",
+      "-v",
+      "test_finalize"
+    ],
+    "returncode": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
