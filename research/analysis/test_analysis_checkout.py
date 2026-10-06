@@ -41,6 +41,7 @@ class SparseCheckoutDependencies(unittest.TestCase):
                 paths.append(line.strip())
         required = {
             'research/analysis/check_index.py',
+            'research/analysis/stochastic_trace_reducer_8152_t0_20261005/test_construction.py',
             'research/integration/core_admission_composition_57_20261003_01a0ff59/test_archival.py',
             'research/integration/pr6863_review_rescue_20261003/test_archival.py',
             'research/integration/pr6863_review_20261003_01a0ff58/verify.py',

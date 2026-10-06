@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
+
 - Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
 
 - Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — finite-model PASS_METHOD_SCOPED/H_PASS_SCOPED; OrbStack unavailable, host-only; no full-CBS or runtime claim. [Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
@@ -126,6 +128,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 ## Analytical studies
 
+- [`analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md`](analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md) — Issue #6053 T1 read-only PCAA eligibility audit: `HOLD_NO_ELIGIBLE_CHAIN`; Arena v1 has stage diagnostics but no matched upstream perturbation/re-grounding contrast or hardened held-out source isolation.
 - [`analysis/action_bound_residual_6619_t0_v1/REPORT.md`](analysis/action_bound_residual_6619_t0_v1/REPORT.md) — Issue #6619 WSLc T0 retained as audit-control STOP; no scientific PASS or live-control claim.
 - [Cyclic grounding #4431 / Draft PR #4443 published-byte archive](analysis/cyclic_justification_grounding_delivery_t6g2_v1/ARCHIVAL_QUALIFICATION.md) — nine exact published files (25,174 bytes); reported `PASS_LOCAL_CYCLIC_GROUNDING_CONTRACT` remains separate from `HOLD_REMOTE_RAW_DELIVERY`; full raw/audit/control/process bundle absent, no independent reproduction or runtime promotion.
 
