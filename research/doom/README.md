@@ -421,3 +421,7 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 ## V15 per-key owner evidence (#8102)
 
 - [Frozen-source reproduction correction](v15_perkey_owner_evidence_only_20261005_REPRODUCTION_CORRECTION.md) — verify the frozen candidate commit is present in the fetched PR history without requiring the mutable PR tip to equal that commit. No experiment rerun.
+
+## A05 raw-bound health negative control (#8214)
+
+- [Retained A05 audit and outputs](map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/README.md) — the saved auditor binds source/monitor sequences 204/216 to raw health and capture-time evidence; 25 recorded checks over 45 observations in one posthoc trace. No live run or interruption-effect claim. [Preservation qualification](map01_v39_health_threshold_a05_8214_QUALIFICATION.md) distinguishes the original source/output hash label and the limits of the saved control record.
