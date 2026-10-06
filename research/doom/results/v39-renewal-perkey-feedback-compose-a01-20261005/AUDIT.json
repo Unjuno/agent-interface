@@ -1,0 +1,21 @@
+{
+  "schema": "issue59-v39-renewal-perkey-feedback-compose-a01-audit",
+  "checks": {
+    "base_commit_exists": true,
+    "base_is_ancestor": true,
+    "base_v39_blob_matches": true,
+    "sources:research/doom/map01_overlap_controller_v39.py": true,
+    "sources:research/doom/session_map01_v12.py": true,
+    "sources:research/doom/session_map01_v15.py": true,
+    "sources:research/doom/v39_measurement_backend_selection_v1.py": true,
+    "tests:research/doom/test_map01_overlap_controller_v39.py": true,
+    "tests:research/doom/test_overlap_controller_v39_wait.py": true,
+    "tests:research/doom/test_v39_soft_stale_renewal_v1.py": true,
+    "tests:research/doom/test_controller_failure_cleanup_v1.py": true,
+    "tests:research/doom/test_source_refresh_v1.py": true,
+    "tests:research/doom/test_map01_v39_typed_state_feedback.py": true,
+    "tests:research/doom/test_map01_v39_legacy_owner_identity.py": true,
+    "tests:research/doom/test_map01_v15_perkey_backend_selection.py": true
+  },
+  "pass": true
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "v15-perkey-owner-revalidation-run-v1",
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "source_manifest_sha256": "6da87766da4e07ecf6365cfc536b509ec4ebb61927f529c45dd78ff9eb834a56",
+  "repair_freeze": "FREEZE_REPAIR_01.json",
+  "command": "python -B research/doom/v15_perkey_import_59_e0cc_a02_20261005/replay_startup_v2.py research/doom/v15_perkey_import_59_e0cc_a02_20261005/results/current-head-4158-run02",
+  "runtime": "Windows Python 3.11.9; Pillow 10.4.0; NumPy 2.4.6",
+  "run_status": "all three guarded startup probes exit 0",
+  "routes": {
+    "v12-perkey": {
+      "selected_owner": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "matches_a01": true,
+      "session_started": false,
+      "owner_instantiated": false,
+      "forbidden_calls": []
+    },
+    "v15-default": {
+      "selected_owner": "research/live_control/input_transition_owner_v4.py",
+      "owner_sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+      "matches_a01": false,
+      "session_started": false,
+      "owner_instantiated": false,
+      "forbidden_calls": []
+    },
+    "v15-perkey": {
+      "selected_owner": "research/live_control/input_owner_v12.py",
+      "owner_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "matches_a01": false,
+      "recorded_a01_owner_sha256": null,
+      "session_started": false,
+      "owner_instantiated": false,
+      "forbidden_calls": []
+    }
+  },
+  "feature_disposition": "FAIL_V15_PERKEY_SELECTED_OWNER_IDENTITY",
+  "interpretation": "The combined route still selects the raw current V12 owner rather than the archived A01 owner. The failure is import/owner identity at startup; it says nothing about an instantiated owner's UP behavior or physical release.",
+  "not_run": ["game", "GUI", "X server", "model", "owner thread", "native input", "live allocation"]
+}

@@ -1,0 +1,147 @@
+"""Independent readback for mixed-UP-error repair; does not execute candidate code."""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+JOB = Path(__file__).resolve().parents[1]
+RUNS = ("mixed-error-red-v1", "owner-green-v2", "composition-green-v4",
+        "adjacent-v2", "projector-legacy-v1", "startup-green-v2")
+
+
+def sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def rows(path: Path) -> list[dict]:
+    return [json.loads(x) for x in path.read_text().splitlines() if x.strip()]
+
+
+def check(checks: list[dict], name: str, ok: bool, **evidence) -> None:
+    checks.append({"name": name, "pass": bool(ok), **evidence})
+
+
+def main() -> dict:
+    checks: list[dict] = []
+    retained: dict[str, dict] = {}
+    changed = json.loads((JOB / "changed-source-manifest.json").read_text())
+    base = json.loads((JOB / "base-source-manifest.json").read_text())
+    allowed = {p: {h} for p, h in base.items()}
+    for p, h in changed.items():
+        allowed.setdefault(p, set()).add(h)
+    # Final composition test snapshots are intentionally versioned in the run maps.
+    allowed.setdefault("research/live_control/test_batch_key_measurement_composition.py", set()).update(
+        json.loads((JOB / name / "sources.json").read_text()).get(
+            "research/live_control/test_batch_key_measurement_composition.py")
+        for name in ("composition-green-v3", "composition-green-v4"))
+
+    for name in RUNS:
+        root = JOB / name
+        receipt = json.loads((root / "receipt.json").read_text())
+        failures = []
+        for stream in ("stdout", "stderr"):
+            if receipt.get(stream + "_sha256") != sha(root / (stream + ".txt")):
+                failures.append(stream + "_sha256")
+        for trace_name, digest in receipt.get("traces", {}).items():
+            trace = root / "traces" / trace_name
+            if not trace.is_file() or sha(trace) != digest:
+                failures.append("trace:" + trace_name)
+        source_map = json.loads((root / "sources.json").read_text())
+        unknown = [(p, h) for p, h in source_map.items() if h not in allowed.get(p, set())]
+        retained[name] = {"receipt": receipt, "rows": rows(root / "stdout.txt"),
+                          "stderr": (root / "stderr.txt").read_text(),
+                          "source_map": source_map}
+        check(checks, name + "_retained_receipt_and_source_pins",
+              not failures and not unknown, exit_code=receipt.get("exit_code"),
+              receipt_failures=failures, source_map_count=len(source_map),
+              unknown_source_hashes=unknown)
+
+    red = retained["mixed-error-red-v1"]
+    red_rows = red["rows"]
+    red_case = red_rows[0] if len(red_rows) == 1 else {}
+    red_up = [e for e in red_case.get("events", [])
+              if e.get("event") == "input_release_transition"]
+    red_a = next((e for e in red_up if e.get("key") == "A"), {})
+    red_w = next((e for e in red_up if e.get("key") == "W"), {})
+    red_proj_w = [p for p in red_case.get("projection", []) if p.get("key") == "W"]
+    red_expected = (
+        red["receipt"].get("exit_code") == 1
+        and "FAILED (failures=1)" in red["stderr"]
+        and red_a.get("owner_thread_keyup_receipt", {}).get("server_keyup_verified") is True
+        and red_a.get("owner_thread_keyup_receipt", {}).get("physical_key_measurement", {}).get("classification") == "KEYMAP_EDGE_UNCONFIRMED"
+        and red_w.get("owner_thread_keyup_receipt", {}).get("server_keyup_verified") is True
+        and red_w.get("owner_thread_keyup_receipt", {}).get("physical_key_measurement", {}).get("classification") == "CONFIRMED_PHYSICAL_UP"
+        and red_w.get("owner_thread_keyup_receipt", {}).get("physical_key_measurement", {}).get("bracket") is not None
+        and len(red_proj_w) == 1
+        and red_proj_w[0].get("status") == "adapter_edge_brackets_paired"
+    )
+    check(checks, "pre_repair_mixed_error_red_exposes_sibling_bracket",
+          red_expected, up_keys=[e.get("key") for e in red_up],
+          projected_w_status=[p.get("status") for p in red_proj_w],
+          evidence_scope="synthetic fake-X owner/projector reproduction")
+
+    comp = retained["composition-green-v4"]
+    comp_rows = comp["rows"]
+    mixed = [r for r in comp_rows if r.get("case", "").endswith(
+        "test_delivered_up_with_send_error_suppresses_sibling_bracket")]
+    up_receipts = [e for r in mixed for e in r.get("events", [])
+                   if e.get("event") == "input_release_transition"]
+    projected = [p for r in mixed for p in r.get("projection", [])]
+    green_mixed_ok = (
+        comp["receipt"].get("exit_code") == 0
+        and "Ran 8 tests" in comp["stderr"] and "OK" in comp["stderr"]
+        and len(mixed) == 1 and len(up_receipts) == 2
+        and all(e.get("physical_key_measurement", {}).get("classification") == "BATCH_RELEASE_UNCONFIRMED"
+                and e.get("physical_key_measurement", {}).get("bracket") is None
+                and e.get("physical_key_measurement", {}).get("adapter_edge") is None
+                and e.get("physical_key_measurement", {}).get("actuation_id") is None
+                for e in up_receipts)
+        and len(projected) >= 2
+        and all(p.get("status") == "adapter_edge_receipt_incomplete"
+                and p.get("up_edge_interval_ns") is None for p in projected)
+    )
+    check(checks, "repaired_mixed_error_suppresses_every_edge_and_projection",
+          green_mixed_ok, up_receipt_count=len(up_receipts),
+          projected_statuses=[p.get("status") for p in projected])
+
+    owner = retained["owner-green-v2"]
+    owner_ok = (owner["receipt"].get("exit_code") == 0
+                and "Ran 9 tests" in owner["stderr"] and "OK" in owner["stderr"])
+    check(checks, "owner_green_v2_retained_pass", owner_ok)
+    adjacent = retained["adjacent-v2"]
+    adjacent_ok = (adjacent["receipt"].get("exit_code") == 0
+                   and "Ran 8 tests" in adjacent["stderr"] and "OK" in adjacent["stderr"]
+                   and all(row.get("real_x11") is False for row in adjacent["rows"]))
+    check(checks, "adjacent_v2_retained_synthetic_regressions", adjacent_ok,
+          row_count=len(adjacent["rows"]))
+    legacy = retained["projector-legacy-v1"]
+    check(checks, "legacy_projector_compatibility_retained",
+          legacy["receipt"].get("exit_code") == 0
+          and "Ran 16 tests" in legacy["stderr"] and "OK" in legacy["stderr"])
+    startup = retained["startup-green-v2"]
+    check(checks, "startup_guard_green_v2_retained",
+          startup["receipt"].get("exit_code") == 0
+          and "Ran 5 tests" in startup["stderr"] and "OK" in startup["stderr"]
+          and len(startup["rows"]) == 5
+          and all(r.get("forbidden_calls") == [] and r.get("session_started") is False
+                  and r.get("owner_instantiated") is False for r in startup["rows"]))
+
+    owner_hash = changed.get("research/live_control/input_owner_v12.py")
+    comp_hash = changed.get("research/live_control/test_batch_key_measurement_composition.py")
+    check(checks, "current_owner_and_composition_source_pins_match_final_run",
+          retained["composition-green-v4"]["source_map"].get("research/live_control/input_owner_v12.py") == owner_hash
+          and retained["composition-green-v4"]["source_map"].get("research/live_control/test_batch_key_measurement_composition.py") == comp_hash,
+          owner_v2_hash=retained["composition-green-v4"]["source_map"].get("research/live_control/input_owner_v12.py"),
+          manifest_owner_hash=owner_hash)
+    return {"status": "PASS_READBACK" if all(x["pass"] for x in checks) else "FAIL_READBACK",
+            "audit_scope": "read-only hashes and retained synthetic stdout/stderr/JSON; no candidate/test execution",
+            "checks": checks,
+            "limitations": ["No live X input, Doom/game, GUI, application-consumption, latency, or task-benefit claim.",
+                            "Mixed-error red-v1 is intentionally preserved as a pre-repair failure.",
+                            "Legacy projector run is a compatibility cross-check, not a new measurement result."]}
+
+
+if __name__ == "__main__":
+    output = main()
+    print(json.dumps(output, sort_keys=True, indent=2))

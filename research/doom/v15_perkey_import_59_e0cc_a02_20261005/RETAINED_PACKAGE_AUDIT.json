@@ -1,0 +1,41 @@
+{
+  "scope": "Readback of retained A02 evidence after pruning only verified duplicate materialized copies; no candidate rerun.",
+  "schema": "v15-perkey-retained-package-audit-v1",
+  "integrity_pass": true,
+  "checks": [
+    {
+      "pass": true,
+      "details": [],
+      "name": "all_frozen_source_snapshots_retained"
+    },
+    {
+      "pass": true,
+      "details": true,
+      "name": "pre_prune_materialized_source_readback_retained"
+    },
+    {
+      "pass": true,
+      "details": [
+        "v12-perkey",
+        "v15-default",
+        "v15-perkey"
+      ],
+      "name": "three_retained_routes_match_no_side_effect_boundary"
+    },
+    {
+      "pass": true,
+      "details": {
+        "v12_owner": "research\\doom\\map01_attack_onset_phase_allocation_02_v1\\dependencies\\v12\\input_owner_v12.py",
+        "v15_owner": "research\\live_control\\input_owner_v12.py"
+      },
+      "name": "v15_perkey_identity_failure_reproduced"
+    },
+    {
+      "pass": true,
+      "details": "FAIL_V15_PERKEY_SELECTED_OWNER_IDENTITY",
+      "name": "independent_feature_audit_retained"
+    }
+  ],
+  "feature_disposition": "FAIL_V15_PERKEY_SELECTED_OWNER_IDENTITY",
+  "source_ref": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b"
+}

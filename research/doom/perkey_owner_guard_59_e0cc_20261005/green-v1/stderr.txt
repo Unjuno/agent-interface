@@ -1,0 +1,39 @@
+test_v12_cached_owner_rejects_before_session (__main__.PerKeyOwnerSourceGuardTest.test_v12_cached_owner_rejects_before_session) ... FAIL
+test_v12_perkey_keeps_the_requested_owner (__main__.PerKeyOwnerSourceGuardTest.test_v12_perkey_keeps_the_requested_owner) ... ok
+test_v15_default_keeps_release_batch_owner (__main__.PerKeyOwnerSourceGuardTest.test_v15_default_keeps_release_batch_owner) ... ok
+test_v15_perkey_rejects_before_session (__main__.PerKeyOwnerSourceGuardTest.test_v15_perkey_rejects_before_session) ... FAIL
+
+======================================================================
+FAIL: test_v12_cached_owner_rejects_before_session (__main__.PerKeyOwnerSourceGuardTest.test_v12_cached_owner_rejects_before_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/source/research/doom/test_perkey_owner_source_guard.py", line 124, in test_v12_cached_owner_rejects_before_session
+    self.assert_rejected(self.run_route("v12-cached-perkey"))
+  File "<RUN_ROOT>/source/research/doom/test_perkey_owner_source_guard.py", line 111, in assert_rejected
+    self.assertEqual(observed["outcome"], "rejected")
+AssertionError: 'selected' != 'rejected'
+- selected
+? ^ ^
++ rejected
+? ^ ^
+
+
+======================================================================
+FAIL: test_v15_perkey_rejects_before_session (__main__.PerKeyOwnerSourceGuardTest.test_v15_perkey_rejects_before_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/source/research/doom/test_perkey_owner_source_guard.py", line 133, in test_v15_perkey_rejects_before_session
+    self.assert_rejected(self.run_route("v15-perkey"))
+  File "<RUN_ROOT>/source/research/doom/test_perkey_owner_source_guard.py", line 111, in assert_rejected
+    self.assertEqual(observed["outcome"], "rejected")
+AssertionError: 'selected' != 'rejected'
+- selected
+? ^ ^
++ rejected
+? ^ ^
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.943s
+
+FAILED (failures=2)

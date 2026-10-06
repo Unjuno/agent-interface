@@ -1,0 +1,13 @@
+import json,subprocess,datetime,hashlib
+from pathlib import Path
+b=Path(__file__).resolve().parent
+code="""import json,pathlib,hashlib,subprocess; b=pathlib.Path('/home/study/native-executor');l=json.loads((b/'source-lock.json').read_bytes());matches=[hashlib.sha256((b/'source'/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in l['files']]; procs=subprocess.check_output(['ps','-eo','pid,comm'],text=True).splitlines(); print(json.dumps({'source_matches':sum(matches),'source_total':len(matches),'raw_sha256':hashlib.sha256((b/'runs/v15-native-executor-01/raw.json').read_bytes()).hexdigest(),'xvfb_processes':[s for s in procs if s.split()[-1]=='Xvfb'],'unit_state':subprocess.run(['systemctl','show','v15-native-executor-01-e0cc.service','--property=ActiveState','--value'],capture_output=True,text=True).stdout.strip()}))"""
+argv=['/opt/homebrew/bin/orb','-m','v15-native-e0cc-20261005','-u','study','-w','/home/study/native-executor','python3','-c',code]
+p=subprocess.run(argv,capture_output=True,text=True,timeout=15)
+with (b/'postrun-readback.json').open('x') as f:json.dump({'argv':argv,'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr},f,indent=2);f.write('\n')
+assert p.returncode==0;r=json.loads(p.stdout);assert r['source_matches']==r['source_total']==81 and r['xvfb_processes']==[] and r['unit_state']=='inactive';assert r['raw_sha256']==hashlib.sha256((b/'run-01/raw.json').read_bytes()).hexdigest()
+argv=['/opt/homebrew/bin/orbctl','stop','v15-native-e0cc-20261005'];p=subprocess.run(argv,capture_output=True,text=True,timeout=20)
+q=subprocess.run(['/opt/homebrew/bin/orbctl','info','v15-native-e0cc-20261005'],capture_output=True,text=True,timeout=10)
+with (b/'vm-stop.json').open('x') as f:json.dump({'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'argv':argv,'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr,'info_exit':q.returncode,'info':q.stdout},f,indent=2);f.write('\n')
+assert p.returncode==0 and q.returncode==0 and 'State: stopped' in q.stdout and '01M45XCN5QP1RX0FXKCA68PBPM' in q.stdout
+print(json.dumps({'source_matches':81,'raw_matches':True,'xvfb_processes':[],'unit':'inactive','vm':'stopped'}))

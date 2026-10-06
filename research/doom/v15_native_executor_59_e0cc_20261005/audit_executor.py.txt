@@ -1,0 +1,152 @@
+"""Independent saved-only native Executor audit. Does not import candidate code."""
+import argparse,copy,hashlib,json
+from pathlib import Path
+
+def audit(raw, source_lock):
+ checks=[]
+ def ck(name,condition):checks.append({'check':name,'pass':bool(condition)})
+ def neutral(v):return type(v) is dict and set(v)=={'a','s','w'} and all(x is False for x in v.values())
+ def release(v):return type(v) is dict and v.get('verified') is True and v.get('keys_down')==[] and v.get('buttons_down')==[] and v.get('keys_unknown',[])==[] and v.get('key_state_errors',[])==[]
+ def identity(m):return tuple(m.get(k) for k in ('owner_id','intent_token','key','actuation_id'))
+ def measurement(m,key,token,edge,prefix):
+  ck(prefix+'.class',m.get('classification')=='CONFIRMED_PHYSICAL_'+edge.upper())
+  ck(prefix+'.key_token',m.get('key')==key and m.get('intent_token')==token)
+  ck(prefix+'.bound_identity',all(identity(m)) and identity(m)==identity(m.get('adapter_edge',{})))
+  ck(prefix+'.no_authority',m.get('grants_input_authority') is False and m.get('application_consumption_observed') is False)
+  for which,want in [('pre_sample',edge=='up'),('post_sample',edge=='down')]:
+   s=m.get(which,{})
+   ck(prefix+'.'+which,s.get('available') is True and s.get('down') is want and s.get('error') is None and type(s.get('started_ns')) is int and type(s.get('finished_ns')) is int and s['started_ns']<=s['finished_ns'])
+  if all(type(m.get(k,{}).get('finished_ns')) is int for k in ['pre_sample','post_sample']):
+   req=m.get('press_request_ns' if edge=='down' else 'release_request_ns');sync=m.get('sync_return_ns')
+   ck(prefix+'.time_order',type(req) is int and type(sync) is int and m['pre_sample']['finished_ns']<=req<=sync<=m['post_sample']['finished_ns'])
+ try:
+  ck('schema',raw.get('schema')=='v15-native-executor-probe-v1')
+  ck('fatal_absent',raw.get('fatal') is None)
+  ck('source_head',raw.get('source_head')==source_lock['head'])
+  source={r['path']:r['sha256'] for r in source_lock['files']}
+  ck('source_before_after',raw.get('source_before')==source and raw.get('source_after')==source and raw.get('source_unchanged') is True)
+  ck('autorepeat_off',raw.get('x_server',{}).get('autorepeat_disabled') is True)
+  rc=raw.get('runtime_controls',{})
+  for k,v in [('cpu.max','100000 100000'),('memory.max','1073741824'),('memory.swap.max','0'),('pids.max','64')]:ck('cgroup.'+k,rc.get(k)==v)
+  ck('only_loopback',[x[1] for x in rc.get('network_interfaces',[])]==['lo'])
+  loaded=raw.get('source_files_loaded',{})
+  ck('loaded_nonempty',len(loaded)>=32)
+  for path,h in loaded.items():ck('loaded.'+path,source.get(path)==h)
+  for req in ['research/live_control/executor_v13.py','research/live_control/executor_v12.py','research/live_control/input_owner_v12.py','research/live_control/input_transition_owner_v4.py','research/doom/doom_batch_key_measurement_backend_v1.py','research/doom/doom_typed_coast_backend_v1.py','research/live_control/session_v4.py']:
+   ck('required_loaded.'+req,req in loaded)
+  ck('initial_neutral',neutral(raw.get('initial_keymap')))
+  ck('final_neutral',neutral(raw.get('final_keymap')))
+  ck('no_late_native_events',raw.get('final_native_events')==[])
+  shutdown=raw.get('shutdown',{})
+  for k in ['executor_close','owner_close','session_display_close','window_destroy','observer_close']:ck('shutdown.'+k,shutdown.get(k)=='ok')
+  ck('owner_stopped',shutdown.get('owner_stopped') is True and shutdown.get('owner_thread_alive') is False)
+  ck('xvfb_exit',shutdown.get('xvfb_exit')==0)
+  ck('watchers_stopped',shutdown.get('executor_threads_alive')==[])
+  ck('shutdown_no_errors',not any('error' in k for k in shutdown))
+  all_events=raw['executor_events']; programs=raw['programs']; codes=raw['x_server']['keycodes']
+  ck('case_set',set(programs)=={'ordered_normal','cancel_hold','follow_on'})
+  ck('distinct_keycodes',set(codes)=={'a','s','w'} and len(set(codes.values()))==3 and all(type(v) is int and 0<v<256 for v in codes.values()))
+  tokens=[];last_terminal=-1;last_inactive=-1;admission_ids=[]
+  for name,keys,duration,status in [('ordered_normal',['a','s','w'],350,'completed'),('cancel_hold',['a','s'],2000,'cancelled'),('follow_on',['w'],180,'completed')]:
+   p=programs[name];pid=p['identifier'];events=[e for e in all_events if e.get('id')==pid]
+   def rows(kind):return [e for e in events if e.get('event')==kind]
+   accepted=rows('accepted');terminals=rows('terminal');downs=rows('input_admission');ups=rows('input_release_transition');started=rows('step_started')
+   ck(name+'.definition',p.get('keys_requested')==keys and p.get('duration_ms')==duration)
+   ck(name+'.one_accept',len(accepted)==1);ck(name+'.one_terminal',len(terminals)==1)
+   if len(accepted)!=1 or len(terminals)!=1:continue
+   a,t=accepted[0],terminals[0];token=a.get('intent_token');tokens.append(token)
+   expected=[{'op':'hold','keys':keys,'duration_ms':duration}]
+   digest=hashlib.sha256(json.dumps(expected,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()).hexdigest()
+   ck(name+'.program_digest',a.get('program_sha256')==digest and a.get('steps')==1)
+   ck(name+'.latest_observation',any(e.get('event')=='observation' and e.get('sequence')==p['pre_submit_sequence'] and e.get('capture_ns',10**30)<a['accepted_ns'] for e in all_events))
+   ck(name+'.bounded_accept',a.get('valid_until_ns')==p.get('valid_until_ns') and a['accepted_ns']<p['valid_until_ns']<=a['accepted_ns']+12_000_000_000)
+   ck(name+'.sequential',a['accepted_ns']>last_terminal)
+   ck(name+'.submit_after_previous_inactive',p.get('submit_started_ns',-1)>last_inactive)
+   ck(name+'.inactive_after_terminal',p.get('executor_inactive_ns',-1)>=t['terminal_ns'])
+   last_inactive=p.get('executor_inactive_ns',-1)
+   last_terminal=t['terminal_ns']
+   ck(name+'.one_step_start',len(started)==1 and started[0].get('step')==0 and started[0].get('operation')=='hold')
+   ck(name+'.terminal_status',t.get('status')==status and t.get('error') is None and t.get('steps_completed')==(0 if status=='cancelled' else 1))
+   ck(name+'.terminal_release',release(t.get('release')) and t['release'].get('verified_ns',10**30)<=t['terminal_ns'])
+   ck(name+'.case_terminal_copy',p.get('terminal')==t)
+   ck(name+'.inactive_and_joined',p.get('worker_joined') is True and p.get('executor_active_after_terminal') is True)
+   for fld in ['keymap_before','keymap_after_terminal','keymap_after_case']:ck(name+'.'+fld,neutral(p.get(fld)))
+   ck(name+'.native_down_witness',all(p.get('keymap_after_down_witness',{}).get(k) is True for k in keys))
+   ck(name+'.admissions',len(downs)==len(keys) and [d.get('key') for d in downs]==keys)
+   ck(name+'.admission_copy',p.get('admissions')==downs)
+   ck(name+'.release_copy',p.get('input_release_transitions')==ups)
+   dmap={d['key']:d for d in downs}
+   for d in downs:
+    ck(name+'.down_context.'+d['key'],d.get('intent_token')==token and d.get('step')==0)
+    m=d.get('physical_key_measurement',{});measurement(m,d['key'],token,'down',name+'.down.'+d['key']);admission_ids.append(identity(m))
+   native=p.get('native_events',[])
+   ck(name+'.native_recipient',all(e.get('event_window')==raw['x_server']['window_id'] and e.get('send_event') is False for e in native))
+   press=[e['detail'] for e in native if e.get('type')=='KeyPress']; up=[e['detail'] for e in native if e.get('type')=='KeyRelease']
+   ck(name+'.native_down_order',press==[codes[k] for k in keys])
+   ck(name+'.native_up_members',sorted(up)==sorted(codes[k] for k in keys))
+   ck(name+'.no_extra_events',len(native)==2*len(keys))
+   if status=='completed':
+    ck(name+'.complete_batch',len(ups)==len(keys) and all(u.get('release_batch_complete') is True and u.get('owner_transition_verified') is True for u in ups))
+    ck(name+'.batch_positions',[u.get('release_batch_position') for u in ups]==list(range(len(keys))))
+    ck(name+'.native_receipt_order',[codes.get(u.get('key')) for u in ups]==up)
+    for u in ups:
+     k=u['key'];m=u.get('physical_key_measurement',{});measurement(m,k,token,'up',name+'.up.'+k)
+     ck(name+'.edge_join.'+k,k in dmap and identity(m)==identity(dmap[k]['physical_key_measurement']))
+     ck(name+'.ordinary.'+k,u.get('ordinary_release_candidate') is True and u.get('physical_verification_authoritative') is False)
+     rec=u.get('owner_thread_keyup_receipt',{})
+     ck(name+'.receipt_join.'+k,rec.get('physical_key_measurement')==m and rec.get('intent_token')==token and rec.get('server_keyup_verified') is True and rec.get('server_key_down_after_keyup') is False)
+    ck(name+'.completed_event',len(rows('step_completed'))==1)
+    ck(name+'.no_cancel',rows('cancel_requested')==[] and rows('input_released')==[])
+   else:
+    cancel=rows('cancel_requested');rel=rows('input_released');ck(name+'.cancel_matched',len(cancel)==1 and cancel[0].get('matched') is True and p.get('cancel_matched') is True)
+    ck(name+'.release_once',len(rel)==1 and rows('input_release_unverified')==[])
+    ck(name+'.no_step_completed',rows('step_completed')==[])
+    if len(cancel)==1:
+     ck(name+'.cancel_after_witness',p['down_witness_ns']<=cancel[0]['requested_ns']<t['terminal_ns'])
+    if len(rel)==1:
+     r=rel[0];record=r.get('owner_release',{})
+     ck(name+'.release_verified',release(record) and record.get('reason')=='cancelled')
+     ck(name+'.release_token',r.get('intent_token')==token and t.get('interruption',{}).get('intent_token')==token and t['interruption'].get('record')==record)
+     ck(name+'.release_order',record['verified_ns']<=r['published_ns']<=t['terminal_ns'] and events.index(r)<events.index(t))
+     ck(name+'.pending_no_authority',r.get('program_terminal_pending') is True and r.get('grants_input_authority') is False)
+     for d in downs:
+      k=d['key'];candidates=[u.get('physical_key_measurement') for u in ups if u.get('key')==k]
+      candidates += [x.get('physical_key_measurement') for x in record.get('key_release_attempts',{}).values()]
+      matched=[m for m in candidates if isinstance(m,dict) and identity(m)==identity(d['physical_key_measurement']) and m.get('classification')=='CONFIRMED_PHYSICAL_UP']
+      ck(name+'.cancel_edge_join.'+k,len(matched)>=1)
+      for i,m in enumerate(matched):measurement(m,k,token,'up',name+'.cancelup.'+k+'.'+str(i))
+  ck('three_distinct_tokens',len(tokens)==3 and len(set(tokens))==3 and all(type(t) is str and len(t)>0 for t in tokens))
+  ck('unique_actuations',len(admission_ids)==6 and len(set(admission_ids))==6)
+  observations=[e for e in all_events if e.get('event')=='observation'];typed=[e for e in all_events if e.get('event')=='typed_observation']
+  ck('real_observations_exist',len(observations)>=6 and len(typed)==len(observations))
+  ck('observation_sequences',[e.get('sequence') for e in observations]==list(range(1,len(observations)+1)))
+  for o in observations:
+   match=[v for v in typed if v.get('sequence')==o['sequence']]
+   ck('frame_match.'+str(o['sequence']),len(match)==1 and all(match[0].get(k)==o.get(k) for k in ['id','step','capture_ns','pointer_binding','frame_rgb_sha256']))
+   if len(match)==1:
+    v=match[0];ck('unknown_fixture.'+str(o['sequence']),set(v.get('signals',{}))=={'health','ammo'} and all(s.get('status')=='unknown' and s.get('value') is None and s.get('capture_ns')==v['capture_ns'] for s in v['signals'].values()))
+ except Exception as e:ck('audit_schema_exception.'+type(e).__name__+':'+str(e),False)
+ failures=[c['check'] for c in checks if not c['pass']]
+ return {'classification':'PASS_NATIVE_EXECUTOR_COMPOSITION_SCOPED' if not failures else 'FAIL_NATIVE_EXECUTOR_COMPOSITION_SCOPED','checks':checks,'passed':len(checks)-len(failures),'total':len(checks),'failures':failures}
+
+def main():
+ p=argparse.ArgumentParser();p.add_argument('raw',type=Path);p.add_argument('source_lock',type=Path);p.add_argument('output',type=Path);args=p.parse_args()
+ raw=json.loads(args.raw.read_bytes());r=audit(raw,json.loads(args.source_lock.read_bytes()));r['raw_sha256']=hashlib.sha256(args.raw.read_bytes()).hexdigest()
+ def ck(n,v):r['checks'].append({'check':n,'pass':bool(v)})
+ try:
+  inventory=raw.get('artifact_inventory',[])
+  ck('artifact_inventory_nonempty',len(inventory)>=7)
+  for item in inventory:
+   path=(args.raw.parent/item['path']).resolve()
+   ck('artifact.'+item['path'],path.is_relative_to(args.raw.parent.resolve()) and path.is_file() and path.stat().st_size==item['bytes'] and hashlib.sha256(path.read_bytes()).hexdigest()==item['sha256'])
+  from PIL import Image
+  for o in raw.get('executor_events',[]):
+   if o.get('event')=='observation':
+    p=args.raw.parent/'backend-artifacts'/Path(o['image']).name
+    with Image.open(p) as im: rgb=im.convert('RGB');digest=hashlib.sha256(rgb.tobytes()).hexdigest()
+    ck('png_rgb.'+str(o['sequence']),digest==o['frame_rgb_sha256'] and rgb.size==(640,480))
+ except Exception as e:ck('artifact_exception.'+type(e).__name__+':'+str(e),False)
+ r['failures']=[c['check'] for c in r['checks'] if not c['pass']];r['total']=len(r['checks']);r['passed']=r['total']-len(r['failures']);r['classification']='PASS_NATIVE_EXECUTOR_COMPOSITION_SCOPED' if not r['failures'] else 'FAIL_NATIVE_EXECUTOR_COMPOSITION_SCOPED'
+ with args.output.open('x') as f:json.dump(r,f,indent=2);f.write('\n')
+ print(json.dumps({k:v for k,v in r.items() if k!='checks'}));return bool(r['failures'])
+if __name__=='__main__':raise SystemExit(main())

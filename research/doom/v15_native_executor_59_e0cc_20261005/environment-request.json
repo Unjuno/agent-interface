@@ -1,0 +1,15 @@
+{
+  "at_utc": "2026-10-05T12:36:47.773039+00:00",
+  "argv": [
+    "/opt/homebrew/bin/orb",
+    "-m",
+    "v15-native-e0cc-20261005",
+    "-u",
+    "study",
+    "-w",
+    "/home/study",
+    "python3",
+    "-c",
+    "import json,platform,subprocess,pathlib; print(json.dumps({'python':platform.python_version(),'platform':platform.platform(),'packages':subprocess.check_output(['dpkg-query','-W','-f=${Package}=${Version}\\n'],text=True),'isolation':pathlib.Path('/proc/1/cgroup').read_text()}))"
+  ]
+}

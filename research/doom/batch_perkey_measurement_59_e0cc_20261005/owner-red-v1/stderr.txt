@@ -1,0 +1,164 @@
+test_batch_pre_or_post_sample_failure_suppresses_every_bracket (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_batch_pre_or_post_sample_failure_suppresses_every_bracket) ... 
+  test_batch_pre_or_post_sample_failure_suppresses_every_bracket (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_batch_pre_or_post_sample_failure_suppresses_every_bracket) (failed_offset=1) ... ERROR
+  test_batch_pre_or_post_sample_failure_suppresses_every_bracket (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_batch_pre_or_post_sample_failure_suppresses_every_bracket) (failed_offset=2) ... ERROR
+test_cleanup_then_same_key_cannot_reuse_retired_identity (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_cleanup_then_same_key_cannot_reuse_retired_identity) ... ERROR
+test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press) ... 
+  test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press) (invalidator='cancel') ... ERROR
+  test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press) (invalidator='focus') ... ERROR
+  test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press) (invalidator='expiry') ... ERROR
+test_duplicate_down_cannot_create_or_complete_a_second_pair (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_duplicate_down_cannot_create_or_complete_a_second_pair) ... ERROR
+test_first_and_last_key_retry_keep_per_key_up_brackets (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_first_and_last_key_retry_keep_per_key_up_brackets) ... 
+  test_first_and_last_key_retry_keep_per_key_up_brackets (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_first_and_last_key_retry_keep_per_key_up_brackets) (retry_key='W') ... ERROR
+  test_first_and_last_key_retry_keep_per_key_up_brackets (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_first_and_last_key_retry_keep_per_key_up_brackets) (retry_key='A') ... ERROR
+test_measurement_disabled_keeps_legacy_query_count (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_measurement_disabled_keeps_legacy_query_count) ... ERROR
+test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down) ... ERROR
+test_rehold_same_key_mints_a_distinct_identity (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_rehold_same_key_mints_a_distinct_identity) ... ERROR
+test_two_key_down_and_batch_up_preserve_a01_pairs (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_two_key_down_and_batch_up_preserve_a01_pairs) ... ERROR
+
+======================================================================
+ERROR: test_batch_pre_or_post_sample_failure_suppresses_every_bracket (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_batch_pre_or_post_sample_failure_suppresses_every_bracket) (failed_offset=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 311, in test_batch_pre_or_post_sample_failure_suppresses_every_bracket
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_batch_pre_or_post_sample_failure_suppresses_every_bracket (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_batch_pre_or_post_sample_failure_suppresses_every_bracket) (failed_offset=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 311, in test_batch_pre_or_post_sample_failure_suppresses_every_bracket
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_cleanup_then_same_key_cannot_reuse_retired_identity (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_cleanup_then_same_key_cannot_reuse_retired_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 375, in test_cleanup_then_same_key_cannot_reuse_retired_identity
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press) (invalidator='cancel')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 349, in test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press) (invalidator='focus')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 349, in test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press) (invalidator='expiry')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 349, in test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_duplicate_down_cannot_create_or_complete_a_second_pair (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_duplicate_down_cannot_create_or_complete_a_second_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 256, in test_duplicate_down_cannot_create_or_complete_a_second_pair
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_first_and_last_key_retry_keep_per_key_up_brackets (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_first_and_last_key_retry_keep_per_key_up_brackets) (retry_key='W')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 285, in test_first_and_last_key_retry_keep_per_key_up_brackets
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_first_and_last_key_retry_keep_per_key_up_brackets (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_first_and_last_key_retry_keep_per_key_up_brackets) (retry_key='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 285, in test_first_and_last_key_retry_keep_per_key_up_brackets
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_measurement_disabled_keeps_legacy_query_count (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_measurement_disabled_keeps_legacy_query_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 231, in test_measurement_disabled_keeps_legacy_query_count
+    self.start_owner(measure=False)
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 327, in test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_rehold_same_key_mints_a_distinct_identity (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_rehold_same_key_mints_a_distinct_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 243, in test_rehold_same_key_mints_a_distinct_identity
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+======================================================================
+ERROR: test_two_key_down_and_batch_up_preserve_a01_pairs (test_input_owner_v12_key_measurement.KeyMeasurementTests.test_two_key_down_and_batch_up_preserve_a01_pairs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 211, in test_two_key_down_and_batch_up_preserve_a01_pairs
+    self.start_owner()
+  File "<private-job>/source/research/live_control/test_input_owner_v12_key_measurement.py", line 157, in start_owner
+    self.owner = self.InputOwner(":fake", measure_key_edges=measure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: InputOwner.__init__() got an unexpected keyword argument 'measure_key_edges'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.036s
+
+FAILED (errors=13)

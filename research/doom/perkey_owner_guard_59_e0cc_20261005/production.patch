@@ -1,0 +1,26 @@
+diff --git a/research/doom/session_map01_v12.py b/research/doom/session_map01_v12.py
+index e2d596984c..02461ceaa4 100644
+--- a/research/doom/session_map01_v12.py
++++ b/research/doom/session_map01_v12.py
+@@ -4,6 +4,7 @@ import argparse
+ import contextlib
+ import hashlib
+ import importlib.util
++import inspect
+ import json
+ import os
+ import shutil
+@@ -145,6 +146,13 @@ def main():
+         bridge_module = importlib.util.module_from_spec(bridge_spec)
+         bridge_spec.loader.exec_module(bridge_module)
+         selected_backend = bridge_module.Backend
++        # sys.path cannot replace a previously cached InputOwner implementation.
++        selected_owner = selected_backend.__init__.__globals__["InputOwner"]
++        if Path(inspect.getfile(selected_owner)).resolve() != PERKEY_OWNER.resolve():
++            raise RuntimeError(
++                "per-key measurement owner source mismatch; refusing startup. "
++                "The requested A01 owner is not active; this session "
++                "composition is unsupported.")
+         source_paths.extend((PERKEY_BRIDGE, PERKEY_OWNER))
+     for path in source_paths:
+         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()

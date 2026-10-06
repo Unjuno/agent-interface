@@ -1,0 +1,58 @@
+[
+  {
+    "name": "source-whitespace",
+    "command": [
+      "/run/current-system/sw/bin/git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      "research/doom/map01_overlap_controller_v39.py",
+      "research/doom/test_map01_overlap_controller_v39.py",
+      "research/doom/test_map01_overlap_controller_v39_initial_frame.py",
+      "research/doom/test_perkey_owner_source_guard.py",
+      "research/live_control/observable_signal_guard_v2.py",
+      "research/live_control/test_observable_signal_guard_v2.py"
+    ],
+    "exit_code": 0,
+    "stdout_lines": 0
+  },
+  {
+    "name": "all-staged-whitespace",
+    "command": [
+      "/run/current-system/sw/bin/git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit_code": 2,
+    "stdout_lines": 15
+  },
+  {
+    "name": "staged-numstat",
+    "command": [
+      "/run/current-system/sw/bin/git",
+      "diff",
+      "--cached",
+      "--numstat"
+    ],
+    "exit_code": 0,
+    "stdout_lines": 576
+  },
+  {
+    "name": "artifact-manifest",
+    "files": 569,
+    "errors": []
+  },
+  {
+    "name": "source-final-hashes",
+    "files": {
+      "research/doom/map01_overlap_controller_v39.py": "3352d1dee893d23e2cc34dfb644464963d7110963595dbdd540949cca3ddff35",
+      "research/doom/test_map01_overlap_controller_v39.py": "0fb883587da8afdfda2a01663322ea5daf5dbdf286523ae08c947a83cc074025",
+      "research/doom/test_map01_overlap_controller_v39_initial_frame.py": "6dfdc140a7a33dadf47eacc9e0fa80d53dfa00ce8ce6c7e3f57e76de910cb6ad",
+      "research/doom/test_perkey_owner_source_guard.py": "9a04a2c1ec84c0d8e44608dbaf5ec6b278b3b84e09781a8d704b1d454ccbdf7c",
+      "research/live_control/observable_signal_guard_v2.py": "a93ec77e6ae9c9132656927752b443a3cd4864d4418d4bddbde5ba33fbdb4e3a",
+      "research/live_control/test_observable_signal_guard_v2.py": "fd2938d1b44f68c9818e18703c21e23850f84e07b6304d931a1307346d4f4b6a"
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "scope": "ordinary private fake-Xlib regression; no formal allocation",
+  "prior_pr_head": "a946b4288e396944bac329ae0a0ab44705f781c5",
+  "main_read": "6f4a288d25343defd56b2dacdf596d1d89307e41",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "runtime": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "source_paths": 62,
+  "distinct_source_blobs": 63,
+  "final_files": {
+    "input_owner_v12.py": "04cc3f9e76071cf600dd3971cb43c30fcb4172792beb845b8445963057fa88e4",
+    "key_edge_measurement_v1.py": "7f12186c03b4f0c4bd9f2783fcc62dc848c43a8508082a9d09143bbc961ca0df",
+    "test_input_owner_v12_cleanup_measurement.py": "822859c779d8cb9b100c7ae76dcfbb4736154b3d289d38208b5c697523340d47"
+  },
+  "test_command": "PYTHONPATH=source/research/live_control:source/research/doom python3 [-O] -m unittest test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests test_input_owner_v12_key_measurement test_input_owner_v12_batch_sample_custody test_batch_key_measurement_composition test_input_owner_v12_explicit_up_cancel test_input_owner_v12_wheel_cleanup test_input_transition_owner_v4 -v",
+  "full_command": "E0CC_TEST_CLEANUP_FIRST=1 python3 -B probe_controller.py <fresh-directory> <scenario>",
+  "source_note": "full01 uses measurement-only-owner.py.txt; full02-04 use final owner. Actual V39 bytes preserve production line endings.",
+  "extra_manifest_only_sources": [
+    "research/doom/doom_batch_key_measurement_backend_v1.py"
+  ]
+}

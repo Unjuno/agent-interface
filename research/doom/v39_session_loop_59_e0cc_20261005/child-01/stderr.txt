@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/child_session.py", line 20, in <module>
+    import session_map01_v12 as base
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_map01_v12.py", line 23, in <module>
+    from doom_typed_release_backend_v1 import Backend, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/doom_typed_coast_backend_v1.py", line 6, in <module>
+    from coast_backend_v1 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/coast_backend_v1.py", line 4, in <module>
+    from session_v10 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v10.py", line 2, in <module>
+    from session_v9 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v9.py", line 5, in <module>
+    from session_v8 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v8.py", line 3, in <module>
+    from session_v7 import Backend as Previous,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v7.py", line 2, in <module>
+    from session_v6 import Backend as Previous, suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v6.py", line 4, in <module>
+    from session_v4 import Encoder,Decoder,Frame,ImageArtifactSink,suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/live_control/session_v4.py", line 22, in <module>
+    import gui_suite as suite
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/observation_gating/gui_suite.py", line 10, in <module>
+    import http.server
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/http/server.py", line 94, in <module>
+    import http.client
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/http/client.py", line 1498, in <module>
+    import ssl
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/ssl.py", line 955, in <module>
+    class SSLSocket(socket):
+TypeError: function() argument 'code' must be code, not str

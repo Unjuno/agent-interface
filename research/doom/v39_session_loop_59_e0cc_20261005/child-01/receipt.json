@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/child_session.py",
+    "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/source/research/doom/session_map01_v15.py",
+    "--out",
+    "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/child-01/runtime",
+    "--seed",
+    "17",
+    "--timeout-seconds",
+    "15",
+    "--per-key-input-measurement"
+  ],
+  "started_unix_ns": 1791193115795447000,
+  "ended_unix_ns": 1791193116058226000,
+  "exit_code": 1,
+  "error": "Traceback (most recent call last):\n  File \"/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/probe_child.py\", line 51, in <module>\n    wait(lambda r: r[\"event\"] == \"ready\")\n  File \"/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/probe_child.py\", line 42, in wait\n    raise RuntimeError(\"child stdout closed before expected event\")\nRuntimeError: child stdout closed before expected event\n",
+  "reader_stopped": true,
+  "claim": "real child Session probe only; not full V39; fake external environment"
+}

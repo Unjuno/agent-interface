@@ -1,0 +1,8 @@
+{
+  "scope": "reconstructed execution context for the already-retained original receipts; original logs/receipts unchanged",
+  "pythonpath_order": ["source", "source/research/doom", "source/research/live_control", "source/research/observation_gating", "source/research/observation_tiles"],
+  "environment_overrides": {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1"},
+  "per_module_timeout_seconds": 45,
+  "execution": "one fresh process per module, sequential; actual full command and cwd recorded in receipts.json",
+  "known_runner_failure": "doom first selected research/doom/session_v7.py in batch composition; scoped-tests-02 changes only path precedence"
+}

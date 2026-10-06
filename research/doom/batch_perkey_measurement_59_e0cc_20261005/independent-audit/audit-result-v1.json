@@ -1,0 +1,150 @@
+{
+  "checks": [
+    {
+      "exit_code": 1,
+      "name": "startup-red-v1_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 60,
+      "unknown_source_hashes": []
+    },
+    {
+      "exit_code": 0,
+      "name": "startup-green-v1_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 64,
+      "unknown_source_hashes": []
+    },
+    {
+      "exit_code": 1,
+      "name": "owner-red-v1_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 61,
+      "unknown_source_hashes": []
+    },
+    {
+      "exit_code": 0,
+      "name": "owner-green-v1_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 64,
+      "unknown_source_hashes": []
+    },
+    {
+      "exit_code": 1,
+      "name": "composition-green-v1_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 64,
+      "unknown_source_hashes": []
+    },
+    {
+      "exit_code": 0,
+      "name": "composition-green-v2_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 64,
+      "unknown_source_hashes": []
+    },
+    {
+      "exit_code": 0,
+      "name": "composition-green-v3_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 64,
+      "unknown_source_hashes": []
+    },
+    {
+      "exit_code": 0,
+      "name": "adjacent-v1_receipt_and_source_map_pins",
+      "pass": true,
+      "receipt_failures": [],
+      "source_map_count": 64,
+      "unknown_source_hashes": []
+    },
+    {
+      "name": "green_startup_selects_explicit_current_owner_without_starting_session",
+      "pass": true,
+      "routes": {
+        "v12-cached-perkey": "rejected",
+        "v12-perkey": "selected",
+        "v15-archived-perkey": "rejected",
+        "v15-default": "selected",
+        "v15-perkey": "selected"
+      }
+    },
+    {
+      "failures_summary": [
+        "FAILED (failures=2)"
+      ],
+      "name": "red_startup_retains_two_pre_guard_failures",
+      "pass": true
+    },
+    {
+      "name": "owner_red_is_pre_keyword_fixture_failure_not_a_green_run",
+      "pass": true
+    },
+    {
+      "measurement_count": 16,
+      "measurement_errors": [],
+      "name": "owner_green_raw_measurement_shapes_and_scope",
+      "pass": true,
+      "test_names": [
+        "test_batch_pre_or_post_sample_failure_suppresses_every_bracket",
+        "test_cleanup_then_same_key_cannot_reuse_retired_identity",
+        "test_down_measurement_query_rechecks_cancel_focus_and_expiry_before_press",
+        "test_duplicate_down_cannot_create_or_complete_a_second_pair",
+        "test_first_and_last_key_retry_keep_per_key_up_brackets",
+        "test_measurement_disabled_keeps_legacy_query_count",
+        "test_one_persistently_unverified_key_suppresses_all_batch_edges_and_down",
+        "test_rehold_same_key_mints_a_distinct_identity",
+        "test_two_key_down_and_batch_up_preserve_a01_pairs"
+      ]
+    },
+    {
+      "measurements": 6,
+      "name": "owner_green_unknown_and_persistent_up_are_unconfirmed",
+      "pass": true
+    },
+    {
+      "count": 3,
+      "name": "down_query_hooks_reached_and_invalidated_cases_sent_no_press",
+      "pass": true
+    },
+    {
+      "name": "disabled_measurement_keeps_old_query_count",
+      "pass": true
+    },
+    {
+      "name": "composition_v1_harness_failure_retained",
+      "pass": true
+    },
+    {
+      "name": "composition_v2_repair_pass_retained",
+      "pass": true
+    },
+    {
+      "cases": [
+        "test_cancel_during_batch_sample_does_not_become_an_ordinary_pair",
+        "test_expiry_during_batch_sample_does_not_become_an_ordinary_pair",
+        "test_focus_change_during_batch_sample_does_not_become_an_ordinary_pair",
+        "test_projection_rejects_altered_basis_authority_identity_and_batch_status",
+        "test_retry_keeps_shared_sample_for_the_other_key",
+        "test_two_keys_pair_through_actual_wrapper_and_batch_publisher",
+        "test_unknown_post_sample_never_projects_a_complete_pair"
+      ],
+      "name": "composition_v3_pairs_valid_batches_and_rejects_bad_windows",
+      "pass": true
+    },
+    {
+      "name": "adjacent_owner_v12_v4_v13_regressions_pass",
+      "pass": true
+    }
+  ],
+  "interpretation_limit": "fake-X tests establish test-composition behavior only, not live keyboard state, application consumption, effect, or benefit",
+  "schema": "batch-perkey-measurement-independent-raw-audit-v1",
+  "scope": "independent receipt/source-map/raw-JSON readback only; no candidate, test, model, game, GUI, real X11, or latency execution",
+  "status": "PASS_READBACK"
+}

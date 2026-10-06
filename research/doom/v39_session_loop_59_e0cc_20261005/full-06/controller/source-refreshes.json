@@ -1,0 +1,80 @@
+[
+  {
+    "format": "doom-source-refresh-v1",
+    "status": "already_observed",
+    "source_sequence": 1,
+    "attempts": [],
+    "iteration": 0
+  },
+  {
+    "format": "doom-source-refresh-v1",
+    "status": "already_observed",
+    "source_sequence": 7,
+    "attempts": [],
+    "iteration": 1
+  },
+  {
+    "format": "doom-source-refresh-v1",
+    "status": "recovered",
+    "source_sequence": 10,
+    "attempts": [
+      {
+        "id": "source-refresh-2-0",
+        "expected_sequence": 10,
+        "command": {
+          "op": "submit",
+          "id": "source-refresh-2-0",
+          "expected_sequence": 10,
+          "valid_until_ns": 22749798283457,
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ]
+        },
+        "acceptance": {
+          "event": "accepted",
+          "id": "source-refresh-2-0",
+          "steps": 1,
+          "program_sha256": "236e05f5e6fd23b5f8e7ace2c4af847c4fc31d9a311adb53ef364326770752fb",
+          "intent_token": "473779fddf62422f8dc1a0a6350a7415",
+          "valid_until_ns": 22749798283457,
+          "accepted_ns": 22747798864750,
+          "emit_ns": 22747798866250
+        },
+        "observation_sequence": 11,
+        "terminal": {
+          "event": "terminal",
+          "id": "source-refresh-2-0",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 22747807108916,
+            "valid_until_ns": null,
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_source": "x11_query_keymap",
+            "intent_token": "473779fddf62422f8dc1a0a6350a7415",
+            "release_call_started_ns": 22747806880583,
+            "release_call_returned_ns": 22747807124791
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 22747807146208,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_ns": 22747807147416
+        }
+      }
+    ],
+    "recovered_sequence": 11,
+    "iteration": 2
+  }
+]

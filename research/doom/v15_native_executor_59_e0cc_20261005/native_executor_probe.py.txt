@@ -1,0 +1,512 @@
+#!/usr/bin/env python3
+"""Private Xvfb probe for real V15 Backend.execute + ExecutorV13 composition.
+
+This exercises only synthetic X11 windows; no game, controller, model, or live
+host display is used. Freeze this driver and its independent audit before the
+single bounded invocation. Output path is create-exclusive and raw is written
+once even when a case raises.
+"""
+from __future__ import annotations
+
+import argparse
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import select
+import socket
+import subprocess
+import sys
+import threading
+import time
+import traceback
+import uuid
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def safe(value):
+    if value is None or type(value) in (str, int, float, bool):
+        return value
+    if isinstance(value, bytes):
+        return value.hex()
+    if isinstance(value, dict):
+        return {str(k): safe(v) for k, v in value.items()}
+    if isinstance(value, (tuple, list, set)):
+        return [safe(v) for v in value]
+    return repr(value)
+
+
+def wait_display(proc, timeout=5):
+    ready, _, _ = select.select([proc.stdout], [], [], timeout)
+    if not ready:
+        raise TimeoutError("Xvfb did not publish display number")
+    value = proc.stdout.readline()
+    if not value or not value.strip().isdigit():
+        raise RuntimeError("invalid Xvfb displayfd response")
+    return ":" + value.decode("ascii").strip()
+
+
+def raw_owner(owner):
+    current = owner
+    for _ in range(5):
+        child = getattr(current, "_inner", None)
+        if child is None:
+            return current
+        current = child
+    return current
+
+
+def hashes_loaded(source_root):
+    loaded = {}
+    for name, module in sorted(sys.modules.items()):
+        file = getattr(module, "__file__", None)
+        if not file:
+            continue
+        try:
+            path = Path(file).resolve()
+            rel = path.relative_to(source_root)
+        except (OSError, ValueError):
+            continue
+        if path.is_file():
+            loaded[str(rel)] = sha256(path)
+    return loaded
+
+
+def server_keymap(display, codes):
+    bitmap = display.query_keymap()
+    return {key: bool(bitmap[code // 8] & (1 << (code % 8)))
+            for key, code in codes.items()}
+
+
+def drain_events(display, window):
+    display.sync()
+    rows = []
+    while display.pending_events():
+        event = display.next_event()
+        if event.type not in (2, 3):
+            continue
+        event_window = getattr(event, "window", None)
+        event_window_id = int(getattr(event_window, "id", event_window))
+        if event_window_id != int(window.id):
+            continue
+        rows.append({"type": "KeyPress" if event.type == 2 else "KeyRelease",
+                     "detail": int(event.detail), "time": int(event.time),
+                     "event_window": event_window_id,
+                     "send_event": bool(event.send_event)})
+    return rows
+
+
+class UnknownReader:
+    """Constructor seam: explicit UNKNOWN, bound to each captured frame."""
+    def __init__(self, name):
+        self.name = name
+
+    def read_frame(self, metadata, _image):
+        return {"format": "native-probe-unknown-v1", "status": "unknown",
+                "signal_id": self.name, "value": None,
+                "sequence": metadata["sequence"],
+                "capture_ns": metadata["capture_ns"],
+                "binding": copy.deepcopy(metadata["pointer_binding"]),
+                "wad_sha256": "0" * 64, "reason": "synthetic Xvfb probe has no game HUD"}
+
+
+class SyntheticSession:
+    def __init__(self, name, display, window):
+        self.name, self.d, self.window = name, display, window
+
+    def context(self):
+        return {"windows": ["V15 synthetic Xvfb probe"],
+                "active_window": int(self.window.id),
+                "screen": [int(self.d.screen().width_in_pixels),
+                           int(self.d.screen().height_in_pixels)],
+                "environment": "synthetic Xvfb; no game"}
+
+
+class EventSink:
+    def __init__(self):
+        self.rows = []
+        self.cv = threading.Condition()
+
+    def __call__(self, row):
+        saved = copy.deepcopy(row)
+        with self.cv:
+            saved["_event_serial"] = len(self.rows)
+            saved["_observed_ns"] = time.perf_counter_ns()
+            self.rows.append(saved)
+            self.cv.notify_all()
+
+    def wait_for(self, predicate, start, timeout_s):
+        deadline = time.monotonic() + timeout_s
+        with self.cv:
+            while True:
+                for row in self.rows[start:]:
+                    if predicate(row):
+                        return copy.deepcopy(row)
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise TimeoutError("event wait timed out")
+                self.cv.wait(min(remaining, 0.1))
+
+
+def wait_terminal(sink, start, identifier, timeout_s=10):
+    return sink.wait_for(lambda row: row.get("event") == "terminal" and
+                         row.get("id") == identifier, start, timeout_s)
+
+
+def create_window(observer, X, Xatom, name):
+    screen = observer.screen()
+    win = screen.root.create_window(
+        20, 20, 360, 240, 0, X.CopyFromParent, X.InputOutput,
+        X.CopyFromParent, event_mask=X.KeyPressMask | X.KeyReleaseMask)
+    wm_name = observer.intern_atom("_NET_WM_NAME")
+    utf8 = observer.intern_atom("UTF8_STRING")
+    win.change_property(wm_name, utf8, 8, name.encode("utf-8"))
+    win.map()
+    observer.sync()
+    active = observer.intern_atom("_NET_ACTIVE_WINDOW")
+    screen.root.change_property(active, Xatom.WINDOW, 32, [int(win.id)])
+    win.set_input_focus(X.RevertToParent, X.CurrentTime)
+    observer.sync()
+    focus = observer.get_input_focus().focus
+    focus_id = int(getattr(focus, "id", focus))
+    if focus_id != int(win.id):
+        raise RuntimeError(f"synthetic focus mismatch: got {focus_id}, want {win.id}")
+    return win
+
+
+def keycodes(observer, XK, names):
+    result = {name: int(observer.keysym_to_keycode(XK.string_to_keysym(name)))
+              for name in names}
+    if any(code <= 0 for code in result.values()) or len(set(result.values())) != len(result):
+        raise RuntimeError("test keys do not have distinct X keycodes")
+    return result
+
+
+def runtime_controls():
+    membership = Path("/proc/self/cgroup").read_text(encoding="utf-8").strip()
+    relative = None
+    for line in membership.splitlines():
+        fields = line.split(":", 2)
+        if len(fields) == 3 and fields[0] == "0" and fields[1] == "":
+            relative = fields[2].lstrip("/")
+            break
+    root = Path("/sys/fs/cgroup").resolve()
+    cgroup = (root / relative).resolve() if relative is not None else None
+    if cgroup is not None and not cgroup.is_relative_to(root):
+        raise RuntimeError("unified cgroup path escapes /sys/fs/cgroup")
+    values = {"uid": os.getuid()}
+    for key in ("cpu.max", "memory.max", "memory.swap.max", "pids.max"):
+        if cgroup is None:
+            values[key] = {"unavailable": "unified cgroup-v2 path not found"}
+        else:
+            try:
+                values[key] = (cgroup / key).read_text(encoding="utf-8").strip()
+            except OSError as exc:
+                values[key] = {"unavailable": repr(exc)}
+    return {"network_namespace": os.readlink("/proc/self/ns/net"),
+            "cgroup_membership": membership,
+            "network_interfaces": socket.if_nameindex(), **values}
+
+
+def owner_records(backend):
+    rows = getattr(raw_owner(backend.owner), "records", [])
+    return [copy.deepcopy(row) for row in rows if isinstance(row, dict)]
+
+
+def run_program(name, keys, duration_ms, cancel_after_held, backend, executor,
+                sink, observer, window, codes, raw, X, XK):
+    identifier = "native-" + name + "-" + uuid.uuid4().hex[:8]
+    backend.snapshot("pre-" + name, -1)
+    expected_sequence = backend.sequence
+    lease_deadline = time.perf_counter_ns() + 12_000_000_000
+    start = len(sink.rows)
+    before_events = len(raw["window_events"])
+    submit_started_ns = time.perf_counter_ns()
+    raw["programs"][name] = {
+        "identifier": identifier, "keys_requested": list(keys),
+        "duration_ms": duration_ms, "pre_submit_sequence": expected_sequence,
+        "valid_until_ns": lease_deadline,
+        "keymap_before": server_keymap(observer, codes),
+        "before": server_keymap(observer, codes),
+        "event_start_index": start,
+        "owner_record_start_index": len(owner_records(backend)),
+        "window_event_start_index": before_events,
+        "admissions": [], "input_release_transitions": [],
+        "native_events": [], "owner_records": [],
+        "submit_started_ns": submit_started_ns,
+        "down_witness_ns": None, "keymap_down_witness": None,
+        "cancel_requested_ns": None, "cancel_result": None,
+        "terminal_ns": None, "worker_joined": False,
+    }
+    row = raw["programs"][name]
+    executor.submit(identifier,
+                    [{"op": "hold", "keys": list(keys), "duration_ms": duration_ms}],
+                    expected_sequence=expected_sequence,
+                    valid_until_ns=lease_deadline)
+    active = executor.active
+    if active is None or active[0] != identifier:
+        raise RuntimeError("executor did not retain submitted intent")
+    worker = active[2]
+    held_event = sink.wait_for(
+        lambda event: event.get("event") == "keys_held" and event.get("id") == identifier,
+        start, 8.0)
+    row["keys_held_event"] = held_event
+    row["keymap_down_query_started_ns"] = time.perf_counter_ns()
+    row["keymap_after_down_witness"] = server_keymap(observer, codes)
+    row["keymap_down_query_finished_ns"] = time.perf_counter_ns()
+    row["down_witness_ns"] = row["keymap_down_query_finished_ns"]
+    row["keymap_down_witness"] = copy.deepcopy(row["keymap_after_down_witness"])
+    row["native_events_after_down"] = drain_events(observer, window)
+    if cancel_after_held:
+        if not all(row["keymap_after_down_witness"].get(k) for k in keys):
+            raise RuntimeError("cancel triggered without native server down witness")
+        matched = executor.cancel(identifier)
+        row["cancel_requested_ns"] = time.perf_counter_ns()
+        row["cancel_matched"] = bool(matched)
+        row["cancel_result"] = bool(matched)
+        if not matched:
+            raise RuntimeError("executor did not match active cancellation")
+        row["cancel_requested_event"] = sink.wait_for(
+            lambda event: event.get("event") == "cancel_requested" and event.get("id") == identifier,
+            start, 3.0)
+    terminal = wait_terminal(sink, start, identifier, 12.0)
+    row["terminal_wait_returned_ns"] = time.perf_counter_ns()
+    row["terminal"] = terminal
+    row["terminal_ns"] = time.perf_counter_ns()
+    worker.join(timeout=5.0)
+    row["worker_joined"] = not worker.is_alive()
+    row["executor_active_after_terminal"] = executor.active is None
+    row["executor_inactive_ns"] = time.perf_counter_ns()
+    row["keymap_after_terminal"] = server_keymap(observer, codes)
+    row["native_events_after_terminal"] = drain_events(observer, window)
+    row["owner_records"] = owner_records(backend)[row["owner_record_start_index"]:]
+    row["events"] = copy.deepcopy(sink.rows[start:])
+    row["admissions"] = [event for event in row["events"]
+                         if event.get("event") == "input_admission"]
+    row["input_release_transitions"] = [event for event in row["events"]
+                                        if event.get("event") == "input_release_transition"]
+    relevant = [event for event in row["native_events_after_down"] +
+                row["native_events_after_terminal"]]
+    row["native_events"] = [event for event in relevant
+                             if event.get("event_window") == int(window.id)]
+    row["keymap_after_case"] = server_keymap(observer, codes)
+    row["after"] = copy.deepcopy(row["keymap_after_case"])
+    # Keep expected native event order as observed by the independent X client.
+    row["native_key_event_order"] = [
+        {"type": item["type"], "key": next((k for k, code in codes.items()
+                                               if code == item["detail"]), None),
+         "detail": item["detail"], "time": item["time"]}
+        for item in row["native_events"]]
+    row["window_events"] = copy.deepcopy(row["native_key_event_order"])
+    return row
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("output_dir", help="new output directory; must not exist")
+    args = parser.parse_args()
+    out = Path(args.output_dir).expanduser().resolve()
+    out.mkdir(parents=True, exist_ok=False)
+    source_root = Path(os.environ.get(
+        "V15_NATIVE_SOURCE", str(Path(__file__).resolve().parent / "source"))).resolve()
+    if not source_root.is_dir():
+        raise RuntimeError(f"source export unavailable: {source_root}")
+    source_lock = source_root.parent / "source-lock.json"
+    if not source_lock.is_file():
+        raise RuntimeError("frozen source-lock.json missing")
+    lock_data = json.loads(source_lock.read_text(encoding="utf-8"))
+    expected_head = "daa156edd8df541dfe0192c3f6f0c69b36b92fa2"
+    if lock_data.get("head") != expected_head:
+        raise RuntimeError("source lock is not pinned to the requested HEAD")
+    source_before = {}
+    for item in lock_data.get("files", []):
+        rel = item.get("path")
+        source = source_root / rel if isinstance(rel, str) else None
+        if source is None or not source.is_file() or sha256(source) != item.get("sha256"):
+            raise RuntimeError(f"source lock mismatch before run: {rel!r}")
+        source_before[rel] = item["sha256"]
+    for rel in ("research/live_control", "research/doom",
+                "research/observation_gating", "research/observation_tiles",
+                "research/real_apps_v1"):
+        sys.path.insert(0, str(source_root / rel))
+    sys.path.insert(0, str(source_root))
+
+    xvfb_err = (out / "xvfb.stderr").open("x", encoding="utf-8")
+    raw_path = out / "raw.json"
+    result = {
+        "schema": "v15-native-executor-probe-v1",
+        "source_head": "daa156edd8df541dfe0192c3f6f0c69b36b92fa2",
+        "source_root": "frozen export",
+        "source_lock_sha256": sha256(source_lock),
+        "source_before": dict(sorted(source_before.items())),
+        "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "python": sys.version, "platform": platform.platform(),
+        "source_files_loaded": {}, "xvfb": {}, "x_server": {},
+        "runtime_controls": {}, "programs": {}, "executor_events": [],
+        "owner_records_final": [], "shutdown": {}, "fatal": None, "errors": [],
+        "scope": {"real_executor_v13": True, "real_v15_backend_constructor": True,
+                  "real_backend_execute_hold": True, "real_xlib_xtest": True,
+                  "synthetic_xvfb_only": True, "game": False, "model": False,
+                  "full_v39_controller": False, "host_display": False,
+                  "hud_ground_truth": False, "input_authority_claim": False},
+    }
+    xvfb = observer = session_display = window = backend = executor = None
+    sink = EventSink()
+    try:
+        xvfb = subprocess.Popen(
+            ["Xvfb", "-displayfd", "1", "-screen", "0", "640x480x24",
+             "+extension", "XTEST", "-nolisten", "tcp", "-ac", "-noreset"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=xvfb_err,
+            close_fds=True)
+        display_name = wait_display(xvfb)
+        result["xvfb"] = {"display": display_name, "pid": xvfb.pid,
+                          "args": ["Xvfb", "-displayfd", "1", "-screen", "0",
+                                   "640x480x24", "+extension", "XTEST", "-nolisten",
+                                   "tcp", "-ac", "-noreset"]}
+        from Xlib import X, XK, Xatom, display
+        observer = display.Display(display_name)
+        keyboard_before = safe(observer.get_keyboard_control())
+        observer.change_keyboard_control(auto_repeat_mode=X.AutoRepeatModeOff)
+        observer.sync()
+        keyboard_readback = observer.get_keyboard_control()
+        window = create_window(observer, X, Xatom, "V15 native executor test window")
+        session_display = display.Display(display_name)
+        session = SyntheticSession(display_name, session_display, window)
+        codes = keycodes(observer, XK, ("a", "s", "w"))
+        result["x_server"] = {"vendor": str(observer.display.info.vendor),
+                              "release": int(observer.display.info.release_number),
+                              "screen": [int(observer.screen().width_in_pixels),
+                                         int(observer.screen().height_in_pixels)],
+                              "window_id": int(window.id),
+                              "keycodes": codes,
+                              "keyboard_control_before": keyboard_before,
+                              "keyboard_control_after": safe(keyboard_readback),
+                              "autorepeat_disabled": (
+                                  getattr(keyboard_readback, "global_auto_repeat", None) ==
+                                  X.AutoRepeatModeOff)}
+        result["runtime_controls"] = runtime_controls()
+        from doom_batch_key_measurement_backend_v1 import Backend
+        from executor_v13 import Executor
+        backend = Backend(session, out / "backend-artifacts", sink,
+                          {"health": UnknownReader("health"),
+                           "ammo": UnknownReader("ammo")})
+        executor = Executor(backend, sink)
+        raw_context = {"window_events": [], "programs": result["programs"]}
+        backend.snapshot("initial", -1)
+        result["initial_sequence"] = backend.sequence
+        result["initial_keymap"] = server_keymap(observer, codes)
+        # Case definitions are pinned by PROTOCOL.md. Hold release order is
+        # deliberately read from the server event stream because production
+        # iterates a set rather than promising lexical/insertion order.
+        run_program("ordered_normal", ("a", "s", "w"), 350, False,
+                    backend, executor, sink, observer, window, codes,
+                    raw_context, X, XK)
+        run_program("cancel_hold", ("a", "s"), 2000, True,
+                    backend, executor, sink, observer, window, codes,
+                    raw_context, X, XK)
+        if executor.active is not None:
+            raise RuntimeError("cancelled executor job remained active")
+        run_program("follow_on", ("w",), 180, False,
+                    backend, executor, sink, observer, window, codes,
+                    raw_context, X, XK)
+        result["executor_events"] = copy.deepcopy(sink.rows)
+    except BaseException as exc:
+        result["fatal"] = {"type": type(exc).__name__, "message": str(exc),
+                           "traceback": traceback.format_exc()}
+        result["errors"].append(copy.deepcopy(result["fatal"]))
+        result["executor_events"] = copy.deepcopy(sink.rows)
+    finally:
+        if executor is not None:
+            try:
+                executor.close()
+                result["shutdown"]["executor_close"] = "ok"
+            except BaseException as exc:
+                result["shutdown"]["executor_close"] = repr(exc)
+        if backend is not None:
+            try:
+                backend.owner.close()
+                result["shutdown"]["owner_close"] = "ok"
+            except BaseException as exc:
+                result["shutdown"]["owner_close"] = repr(exc)
+            try:
+                inner = raw_owner(backend.owner)
+                result["owner_records_final"] = [copy.deepcopy(row) for row in inner.records]
+                result["shutdown"]["owner_stopped"] = bool(inner.stopped.is_set())
+                result["shutdown"]["owner_thread_alive"] = bool(inner.thread.is_alive())
+            except BaseException as exc:
+                result["shutdown"]["owner_readback_error"] = repr(exc)
+        if observer is not None:
+            try:
+                result["final_keymap"] = server_keymap(observer, codes)
+                result["final_native_events"] = drain_events(observer, window)
+            except BaseException as exc:
+                result["shutdown"]["final_observer_error"] = repr(exc)
+        if session_display is not None:
+            try:
+                session_display.close()
+                result["shutdown"]["session_display_close"] = "ok"
+            except BaseException as exc:
+                result["shutdown"]["session_display_close"] = repr(exc)
+        if window is not None and observer is not None:
+            try:
+                window.destroy()
+                observer.sync()
+                result["shutdown"]["window_destroy"] = "ok"
+            except BaseException as exc:
+                result["shutdown"]["window_destroy"] = repr(exc)
+        if observer is not None:
+            try:
+                observer.close()
+                result["shutdown"]["observer_close"] = "ok"
+            except BaseException as exc:
+                result["shutdown"]["observer_close"] = repr(exc)
+        if xvfb is not None:
+            try:
+                xvfb.terminate()
+                xvfb.wait(timeout=3)
+                result["shutdown"]["xvfb_exit"] = xvfb.returncode
+            except BaseException as exc:
+                result["shutdown"]["xvfb_stop_error"] = repr(exc)
+                try:
+                    xvfb.kill()
+                    xvfb.wait(timeout=2)
+                except BaseException as kill_exc:
+                    result["shutdown"]["xvfb_kill_error"] = repr(kill_exc)
+        xvfb_err.close()
+        result["ended_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        result["source_files_loaded"] = hashes_loaded(source_root)
+        result["loaded_modules"] = copy.deepcopy(result["source_files_loaded"])
+        result["source_after"] = {
+            rel: sha256(source_root / rel) if (source_root / rel).is_file() else None
+            for rel in source_before}
+        result["source_unchanged"] = result["source_after"] == source_before
+        result["artifact_inventory"] = [
+            {"path": str(path.relative_to(out)), "bytes": path.stat().st_size,
+             "sha256": sha256(path)}
+            for path in sorted(out.rglob("*"))
+            if path.is_file() and path != raw_path and path.name != "xvfb.stderr"]
+        if executor is not None:
+            result["shutdown"]["executor_threads_alive"] = [
+                thread.name for thread in executor.release_watchers if thread.is_alive()]
+        try:
+            raw_path.open("x", encoding="utf-8").write(json.dumps(
+                safe(result), sort_keys=True, indent=2) + "\n")
+        except BaseException:
+            # Preserve a raw file even if final serialization encounters an
+            # unexpected object; no retry may overwrite a previous result.
+            if not raw_path.exists():
+                raw_path.open("x", encoding="utf-8").write(json.dumps(
+                    {"schema": result["schema"], "fatal": result.get("fatal"),
+                     "serialization_error": traceback.format_exc()}, indent=2) + "\n")
+    if result["fatal"] is not None:
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

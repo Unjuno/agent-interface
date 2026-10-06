@@ -1,0 +1,207 @@
+"""Synthetic external X/game/capture/HUD seams; no executor/backend replacement."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
+import threading
+import time
+import types
+
+from PIL import Image
+
+
+class HudReader:
+    def __init__(self, wad=None, signal_id="health"):
+        self.signal_id = signal_id
+        self.wad_sha256 = hashlib.sha256(b"synthetic-wad").hexdigest()
+
+    def read_frame(self, observation, frame):
+        value = frame.convert("RGB").getpixel((0, 0))[0 if self.signal_id == "health" else 1]
+        unknown = self.signal_id == "health" and value == 255
+        return {"format": "observable-signal-v1", "status": "unknown" if unknown else "observed",
+                "signal_id": self.signal_id, "value": None if unknown else value,
+                "sequence": observation["sequence"], "capture_ns": observation["capture_ns"],
+                "binding": observation["pointer_binding"], "wad_sha256": self.wad_sha256}
+
+    def read(self, observation):
+        with Image.open(observation["image"]) as frame:
+            return self.read_frame(observation, frame)
+
+
+def install(state_dir):
+    state_dir = Path(state_dir)
+    state_dir.mkdir(parents=True, exist_ok=True)
+    keys, connections, forbidden = set(), [], []
+    trace_lock = threading.RLock()
+    def record(kind, **values):
+        with trace_lock, (state_dir / "fake-external.jsonl").open("a") as stream:
+            stream.write(json.dumps({"event": kind, "at_ns": time.perf_counter_ns(), **values}) + "\n")
+    def refuse(*args, **kwargs):
+        forbidden.append("unexpected child process/network construction")
+        raise AssertionError(forbidden[-1])
+
+    class Window:
+        def __init__(self, identity=41):
+            self.id = identity
+        def get_full_property(self, atom, kind):
+            return types.SimpleNamespace(value=[41])
+        def query_pointer(self):
+            return types.SimpleNamespace(mask=0, root_x=0, root_y=0, child=Window(41))
+        def get_geometry(self):
+            return types.SimpleNamespace(x=0, y=0, width=640, height=480, border_width=0)
+        def translate_coords(self, other, x, y):
+            return types.SimpleNamespace(x=0, y=0, child=Window(41))
+        def get_attributes(self):
+            return types.SimpleNamespace(map_state=2)
+        def query_tree(self):
+            return types.SimpleNamespace(parent=Window(1), children=[])
+
+    names = ("Left", "Right", "Up", "Down", "a", "d", "w", "s", "e", "Return",
+             "space", "Control_L", "Shift_L", "F8", "Escape", "A", "W")
+    codes = {key: index + 20 for index, key in enumerate(names)}
+    class Display:
+        def __init__(self, name):
+            self.name, self.closed, self.root = name, False, Window(1)
+            connections.append(self)
+        def screen(self):
+            return types.SimpleNamespace(root=self.root)
+        def intern_atom(self, name):
+            return 1
+        def get_input_focus(self):
+            return types.SimpleNamespace(focus=Window())
+        def create_resource_object(self, kind, identity):
+            return Window(identity)
+        def keysym_to_keycode(self, symbol):
+            return codes.get(symbol, 0)
+        def query_keymap(self):
+            bitmap = bytearray(32)
+            with trace_lock:
+                for code in keys:
+                    bitmap[code // 8] |= 1 << (code % 8)
+                record("keymap_sample", keys=sorted(keys))
+            return bytes(bitmap)
+        def sync(self):
+            record("sync")
+        def close(self):
+            self.closed = True
+            record("display_close")
+
+    x = types.ModuleType("Xlib.X")
+    x.KeyPress, x.KeyRelease, x.ButtonPress, x.ButtonRelease = 2, 3, 4, 5
+    x.Button1Mask, x.AnyPropertyType, x.IsViewable = 256, 0, 2
+    xk = types.ModuleType("Xlib.XK")
+    xk.string_to_keysym = lambda key: key
+    display = types.ModuleType("Xlib.display")
+    display.Display = Display
+    error = types.ModuleType("Xlib.error")
+    error.BadWindow = type("BadWindow", (Exception,), {})
+    error.BadDrawable = type("BadDrawable", (Exception,), {})
+    ext = types.ModuleType("Xlib.ext")
+    xtest = types.ModuleType("Xlib.ext.xtest")
+    def fake_input(connection, event, code, **kwargs):
+        if connection.closed:
+            raise AssertionError("input on closed fake connection")
+        with trace_lock:
+            if event == 2:
+                keys.add(code)
+            elif event == 3:
+                signal_path = Path(os.environ.get("E0CC_TEST_SIGNAL_PATH", str(state_dir / "signal.json")))
+                value = json.loads(signal_path.read_text()) if signal_path.exists() else {}
+                if value.get("drop_key_up") is True:
+                    record("injected_key_up_drop", code=code, keys=sorted(keys))
+                    return
+                keys.discard(code)
+            else:
+                raise AssertionError("unexpected non-key synthetic input")
+            record("key_event", event_type=event, code=code, keys=sorted(keys))
+    xtest.fake_input = fake_input
+    ext.xtest = xtest
+    xlib = types.ModuleType("Xlib")
+    xlib.X, xlib.XK, xlib.display, xlib.error, xlib.ext = x, xk, display, error, ext
+    sys.modules.update({"Xlib": xlib, "Xlib.X": x, "Xlib.XK": xk,
+                        "Xlib.display": display, "Xlib.error": error,
+                        "Xlib.ext": ext, "Xlib.ext.xtest": xtest})
+
+    class Session:
+        def __init__(self):
+            self.name, self.tmp = ":synthetic-e0cc", state_dir / "session"
+            self.tmp.mkdir(exist_ok=True)
+            self.env = {key: str(self.tmp) for key in ("XAUTHORITY", "HOME", "XDG_CONFIG_HOME",
+                                                        "XDG_CACHE_HOME", "XDG_RUNTIME_DIR")}
+            self.env["DISPLAY"] = self.name
+            self.d = Display(self.name)
+        def _wait(self, predicate, timeout, label):
+            if not predicate():
+                raise AssertionError(label)
+        def windows(self):
+            return "0x00000029 0 synthetic Synthetic Doom\n"
+        def focus(self, title):
+            record("focus", title=title)
+        def context(self):
+            return {"title": "Synthetic Doom", "focus": 41, "active_window": 41}
+        def close(self):
+            self.d.close()
+
+    class Game:
+        def __init__(self):
+            self.started = None
+            self.ticrate = 35
+        def __getattr__(self, name):
+            if name.startswith("set_"):
+                return lambda *args: None
+            raise AttributeError(name)
+        def init(self):
+            self.started = time.perf_counter()
+        def close(self):
+            record("game_close")
+        def load(self, path):
+            record("synthetic_game_load", save_sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest())
+        def advance_action(self, *args):
+            pass
+        def get_episode_time(self):
+            return int((time.perf_counter() - self.started) * self.ticrate)
+        def get_mode(self):
+            return "SYNTHETIC_ASYNC_SPECTATOR"
+        def get_ticrate(self):
+            return self.ticrate
+        def is_episode_finished(self):
+            return False
+        def is_player_dead(self):
+            return False
+        def is_episode_timeout_reached(self):
+            return False
+        def get_game_variable(self, variable):
+            return 0
+        def get_total_reward(self):
+            return 0
+
+    vd = types.ModuleType("vizdoom")
+    vd.__file__ = str(state_dir / "fake-vizdoom.py")
+    vd.__version__, vd.DoomGame = "synthetic-e0cc", Game
+    vd.Mode = types.SimpleNamespace(ASYNC_SPECTATOR="fake")
+    vd.ScreenResolution = types.SimpleNamespace(RES_640X480="fake")
+    vd.GameVariable = types.SimpleNamespace(DEATHCOUNT="deaths", KILLCOUNT="kills")
+    vd.Button = types.SimpleNamespace(**{name: name for name in (
+        "TURN_LEFT", "TURN_RIGHT", "MOVE_FORWARD", "MOVE_BACKWARD", "MOVE_LEFT", "MOVE_RIGHT", "ATTACK", "USE", "SPEED")})
+    (state_dir / "freedoom2.wad").write_bytes(b"synthetic-wad")
+    sys.modules["vizdoom"] = vd
+    from PIL import ImageGrab
+    def grab(**kwargs):
+        signal = Path(os.environ.get("E0CC_TEST_SIGNAL_PATH", str(state_dir / "signal.json")))
+        values = json.loads(signal.read_text()) if signal.exists() else {"health": 100, "ammo": 20}
+        return Image.new("RGB", (640, 480), (values["health"], values["ammo"], 1))
+    ImageGrab.grab = grab
+    # Child session is the only process allowed here. Real GUI launch is replaced
+    # by Session before V12.main runs; any missed launch/network boundary fails.
+    import subprocess, socket
+    subprocess.Popen = subprocess.run = subprocess.call = subprocess.check_output = refuse
+    socket.create_connection = refuse
+    socket.socket.connect = socket.socket.connect_ex = refuse
+    socket.socket.bind = socket.socket.listen = refuse
+    def finish():
+        result = {"fake_keys_down": sorted(keys), "connections": len(connections),
+                  "closed_connections": sum(connection.closed for connection in connections),
+                  "forbidden_calls": forbidden}
+        (state_dir / "fake-state.json").write_text(json.dumps(result, indent=2) + "\n")
+    return Session, finish

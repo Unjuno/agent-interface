@@ -1,0 +1,83 @@
+--- a/research/doom/map01_overlap_controller_v39.py
++++ b/research/doom/map01_overlap_controller_v39.py
+@@ -418,6 +418,33 @@
+             release.get("buttons_down") != [] or release.get("keys_down") != []):
+         raise RuntimeError("invalidated cover did not verify empty release")
+     return planner_interrupt, terminal
++
++
++def wait_for_invalidation_frame(latest, invalidation, wait, timeout=5):
++    """Require the RGB observation paired with invalidation before replanning."""
++    sequence = invalidation.get("sequence") if type(invalidation) is dict else None
++    capture_ns = invalidation.get("capture_ns") if type(invalidation) is dict else None
++    binding = invalidation.get("pointer_binding") if type(invalidation) is dict else None
++    frame_hash = invalidation.get("frame_rgb_sha256") if type(invalidation) is dict else None
++    if (type(sequence) is not int or sequence < 1 or
++            type(capture_ns) is not int or capture_ns < 1 or type(binding) is not dict or
++            (frame_hash is not None and
++             (type(frame_hash) is not str or len(frame_hash) != 64))):
++        raise RuntimeError("policy invalidation lacks a valid observation identity")
++
++    def qualifies(row):
++        return (type(row) is dict and row.get("event") == "observation" and
++                type(row.get("sequence")) is int and row["sequence"] >= sequence and
++                type(row.get("capture_ns")) is int and row["capture_ns"] >= capture_ns and
++                _typed_json_equal(row.get("pointer_binding"), binding) and
++                (frame_hash is None or row.get("frame_rgb_sha256") == frame_hash))
++
++    if qualifies(latest):
++        return latest
++    end = time.monotonic() + timeout
++    while time.monotonic() < end:
++        return wait(qualifies, timeout=max(.001, end - time.monotonic()))
++    raise TimeoutError("fresh full observation did not follow policy invalidation")
+ 
+ 
+ def cancel_invalidated_cover_before_plan(process, wait, cover_id):
+@@ -1423,9 +1450,14 @@
+                     cancellation = cancel_invalidated_cover_before_plan(
+                         process, wait, cover)
+                     cover_terminals.append(cancellation["terminal"])
++                invalidated_source_image = str(latest["image"])
++                if invalidation is not None:
++                    latest = wait_for_invalidation_frame(latest, invalidation, wait)
+                 decisions.append({
+                     "iteration": index,
+-                    "source_image": str(latest["image"]),
++                    "source_image": invalidated_source_image,
++                    "invalidation_frame_image": (None if invalidation is None else
++                                                 str(latest["image"])),
+                     "model_image": None,
+                     "model_image_sha256": None,
+                     "action": {"state": "not_started"},
+@@ -1588,6 +1620,7 @@
+                 planner_result,planner_terminal_observed_ns,
+                 invalidation,time.perf_counter_ns())
+             if invalidation is not None:
++                latest = wait_for_invalidation_frame(latest, invalidation, wait)
+                 decisions.append({"iteration":index,"source_image":str(source_image),"model_image":str(image),
+                   "model_image_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),"action":action,
+                   "effect_memory":effect_memory,"usage":usage,"model_ns":model_ns,
+--- a/research/live_control/observable_signal_guard_v2.py
++++ b/research/live_control/observable_signal_guard_v2.py
+@@ -1,5 +1,6 @@
+ """One-way typed signal validity envelope with monitor-stage clocks."""
+ import json
++from copy import deepcopy
+ import time
+ 
+ 
+@@ -128,6 +129,13 @@
+                  "outcome_evaluated_ns": outcome_evaluated_ns,
+                  "signal_extraction_ms": (signal_extracted_ns - monitor_received_ns) / 1e6,
+                  "outcome_evaluation_ms": (outcome_evaluated_ns - signal_extracted_ns) / 1e6}
++        # Keep the originating observation identity even when extraction failed.
++        # A later full-frame barrier must not substitute a newer row or rely on
++        # identity that may be absent from an UNKNOWN signal.
++        event["capture_ns"] = observation.get("capture_ns")
++        event["pointer_binding"] = deepcopy(observation.get("pointer_binding"))
++        if "frame_rgb_sha256" in observation:
++            event["frame_rgb_sha256"] = observation["frame_rgb_sha256"]
+         if outcome["status"] == "SOFT_CHANGED":
+             if outcome["current_value"] != self.last_signal_value:
+                 self.soft_event_count += 1

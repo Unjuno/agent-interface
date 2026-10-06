@@ -1,0 +1,194 @@
+"""Run real V39 with real Session child; external environment/model are fake.
+
+Ordinary construction probe, never a live or formal allocation. No synthetic
+Session protocol events are injected. Keep production report verbatim, including
+its fixed real-MAP01 claim string, which is not evidence of a real environment.
+"""
+import atexit
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import threading
+import time
+import traceback
+from types import SimpleNamespace
+
+from PIL import Image
+from fake_environment import HudReader
+
+job = Path(__file__).resolve().parent
+run = job / sys.argv[1]
+scenario = sys.argv[2] if len(sys.argv) > 2 else "hard_change"
+run.mkdir(exist_ok=False)
+source = job / "source"
+sys.path.insert(0, str(source))
+for name in ("observation_tiles", "observation_gating", "live_control", "doom"):
+    sys.path.insert(0, str(source / "research" / name))
+for name in ("probe_controller.py", "fake_environment.py", "child_session.py"):
+    (run / (name + ".txt")).write_bytes((job / name).read_bytes())
+
+def write_json(path, value):
+    path.write_text(json.dumps(value, indent=2) + "\n")
+
+timeline_lock = threading.Lock()
+def record(event, **fields):
+    with timeline_lock, (run / "harness-timeline.jsonl").open("a") as stream:
+        stream.write(json.dumps({"event": event, "at_ns": time.perf_counter_ns(), **fields}) + "\n")
+
+signal_path = run / "signal.json"
+def set_health(health):
+    tmp = signal_path.with_suffix(".tmp")
+    write_json(tmp, {"health": health, "ammo": 20})
+    tmp.replace(signal_path)
+    record("external_pixel_signal", health=health)
+
+set_health(100)
+fixture_dir = run / "fixture"
+fixture_dir.mkdir()
+fixture_image = fixture_dir / "synthetic.png"
+Image.new("RGB", (640, 480), (100, 20, 1)).save(fixture_image)
+fixture_hash = hashlib.sha256(fixture_image.read_bytes()).hexdigest()
+fixture = fixture_dir / "fixture.json"
+write_json(fixture, {
+    "schema": "map01_os_input_fixture_v1", "map": "MAP01", "skill": 1,
+    "vizdoom": "synthetic-e0cc", "iwad_sha256": hashlib.sha256(b"synthetic-wad").hexdigest(),
+    "save_file": fixture_image.name, "save_sha256": fixture_hash,
+    "source_frame": fixture_image.name, "source_frame_sha256": fixture_hash,
+    "setup_input_contract": "fixture state reached through the same X11 Executor and recorded OS-input/coast programs; save is setup-only",
+    "episode_tic": 0, "source_observation": {"event": "observation", "exact": True},
+    "construction_scope": "synthetic external game only; PNG is not a real game save",
+})
+
+class FakeClient:
+    def __init__(self, *args, **kwargs):
+        self.closed = False
+        record("fake_model_client_created")
+    def initialize(self):
+        record("fake_model_client_initialized")
+    def close(self, timeout=None):
+        self.closed = True
+        record("fake_model_client_closed")
+
+def active_answer():
+    return {
+        "state": "active", "commands": [{"action": "strafe_left", "extent": "pulse"}],
+        "action_validity": [{"critical_health_minimum": 35, "maximum_health_loss": 12,
+                             "minimum_ammo": 0, "max_current_age_ms": 1000}],
+        "contingencies": [], "next_cover": [{"action": "strafe_left", "extent": "short"}],
+        "next_cover_validity": [{"signal_id": "health", "critical_health_minimum": 35,
+                                 "maximum_health_loss": 12, "max_source_age_ms": 30000}],
+    }
+
+class FakePlanner:
+    def __init__(self, *args, **kwargs):
+        self.thread_id = "synthetic-model-thread"
+        self.turns = 0
+        self.interrupted = threading.Event()
+    def start_session(self):
+        record("fake_model_session_started")
+    def begin_turn(self, prompt, output_schema, image_path):
+        self.turns += 1
+        handle = SimpleNamespace(thread_id=self.thread_id, turn_id=f"synthetic-turn-{self.turns}")
+        record("fake_model_begin", turn=self.turns, turn_id=handle.turn_id, prompt=prompt,
+               image_path=image_path, image_sha256=hashlib.sha256(Path(image_path).read_bytes()).hexdigest())
+        return handle
+    def await_turn(self, handle, timeout):
+        turn = int(handle.turn_id.rsplit("-", 1)[-1])
+        record("fake_model_await", turn=turn)
+        if turn == 2 and scenario != "normal":
+            time.sleep(.05)
+            set_health(60)
+            if not self.interrupted.wait(6):
+                raise AssertionError("real controller did not interrupt the pending model")
+            # Deliberately deliver an otherwise eligible stale answer after
+            # cancellation. The actual controller must refuse this answer.
+            time.sleep(.02)
+        else:
+            time.sleep(.05)
+        answer = active_answer() if turn < 3 else {
+            "state": "dead", "commands": [], "action_validity": [],
+            "contingencies": [], "next_cover": [], "next_cover_validity": [],
+        }
+        record("fake_model_return", turn=turn, answer_state=answer["state"], eligible=True)
+        return SimpleNamespace(answer=answer, usage={}, handle=handle, status="completed",
+                               answer_eligible=True, cancellation_requested=False, error=None)
+    def interrupt(self, handle):
+        record("fake_model_interrupt", turn_id=handle.turn_id)
+        self.interrupted.set()
+        return {"requested": True, "thread_id": handle.thread_id, "turn_id": handle.turn_id}
+
+class CommandLog:
+    def __init__(self, stream):
+        self.stream = stream
+    def write(self, value):
+        record("controller_stdin_write", text=value)
+        return self.stream.write(value)
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+children = []
+def start_child(command, **kwargs):
+    # Preserve every argument generated by the actual session_command.
+    actual = [command[0], "-B", str(job / "child_session.py"), *command[1:]]
+    write_json(run / "child-command.json", {"generated": command, "bootstrapped": actual})
+    env = dict(os.environ, E0CC_TEST_EXTERNAL_DIR=str(run / "external"),
+               E0CC_TEST_SIGNAL_PATH=str(signal_path), PYTHONDONTWRITEBYTECODE="1",
+               OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1")
+    child = subprocess.Popen(actual, **kwargs, env=env)
+    child.stdin = CommandLog(child.stdin)
+    children.append(child)
+    record("actual_child_started", pid=child.pid)
+    return child
+
+import map01_overlap_controller_v39 as controller
+controller.CodexAppServerClient = FakeClient
+controller.PersistentPlannerAdapter = FakePlanner
+controller.DoomStatusNumberReader = HudReader
+controller.win = lambda path: str(path)
+controller.subprocess = SimpleNamespace(Popen=start_child)
+sys.argv = [str(Path(controller.__file__)), "--out", str(run / "controller"),
+            "--iterations", "3", "--seed", "17", "--model", "synthetic-no-model",
+            "--effort", "medium", "--load-fixture-manifest", str(fixture),
+            "--measurement-session", "--per-key-input-measurement"]
+write_json(run / "controller-command.json", sys.argv)
+started = time.time_ns()
+error = None
+def timeout_handler(*args):
+    raise TimeoutError("ordinary construction run exceeded 35 seconds")
+signal.signal(signal.SIGALRM, timeout_handler)
+signal.alarm(35)
+try:
+    controller.main()
+except BaseException:
+    error = traceback.format_exc()
+finally:
+    signal.alarm(0)
+    for child in children:
+        if child.poll() is None:
+            child.terminate()
+            try:
+                child.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                child.kill();child.wait(timeout=3)
+        for name in ("stdin", "stdout", "stderr"):
+            stream = getattr(child, name)
+            if not stream.closed:
+                if name == "stderr":
+                    (run / "child-stderr-after.txt").write_text(stream.read())
+                stream.close()
+    loaded = {}
+    for module in tuple(sys.modules.values()):
+        path = getattr(module, "__file__", None)
+        if path and Path(path).is_file() and Path(path).is_relative_to(source):
+            loaded[str(Path(path).relative_to(source))] = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    write_json(run / "parent-loaded-sources.json", loaded)
+    result = {"scenario": scenario, "started_unix_ns": started, "ended_unix_ns": time.time_ns(),
+              "error": error, "child_exit_codes": [child.returncode for child in children],
+              "claim": "real V39 and real child Session integration under fake external X/game/capture/HUD/model; no real task effect"}
+    write_json(run / "receipt.json", result)
+    print(json.dumps(result, indent=2))
+sys.exit(1 if error else 0)

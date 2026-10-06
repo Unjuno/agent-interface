@@ -1,0 +1,12 @@
+"""New no-input infrastructure check. Does not alter the original candidate FAIL."""
+import datetime,json,subprocess
+from pathlib import Path
+b=Path(__file__).resolve().parent
+code="""import json,os,subprocess,pathlib; print(json.dumps({'self_ns':os.readlink('/proc/self/ns/net'),'init_ns':'unavailable: study cannot read proc1 namespace; retained first diagnostic error','links':json.loads(subprocess.check_output(['ip','-j','link','show'])),'addresses':json.loads(subprocess.check_output(['ip','-j','address','show'])),'routes':json.loads(subprocess.check_output(['ip','-j','route','show','table','all'])),'routes6':json.loads(subprocess.check_output(['ip','-6','-j','route','show','table','all']))}))"""
+argv=['/opt/homebrew/bin/orb','-m','v15-native-e0cc-20261005','-u','root','-w','/root','systemd-run','--quiet','--wait','--pipe','--collect','--unit=v15-native-net-diagnosis-02-e0cc','-p','User=study','-p','PrivateNetwork=yes','-p','PrivateTmp=yes','-p','CPUQuota=100%','-p','MemoryMax=1G','-p','MemorySwapMax=0','-p','TasksMax=64','-p','RuntimeMaxSec=10','-p','ProtectSystem=strict','-p','NoNewPrivileges=yes','/usr/bin/python3','-c',code]
+with (b/'network-diagnosis-02-request.json').open('x') as f:json.dump({'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'new namespace, no Xvfb/input/candidate; cannot reconstruct original namespace flags or replace its original FAIL','decision':'If the extra names are down/unaddressed/unrouted, this supports an overstrict name-only gate for future repair; original frozen audit remains FAIL.','argv':argv},f,indent=2);f.write('\n')
+p=subprocess.run(argv,capture_output=True,text=True,timeout=25)
+with (b/'network-diagnosis-02-result.json').open('x') as f:json.dump({'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr},f,indent=2);f.write('\n')
+print(p.returncode)
+if p.returncode==0:
+ r=json.loads(p.stdout);print(json.dumps({'namespace_comparison':'unavailable','links':[{k:l.get(k) for k in ['ifname','flags','operstate','link_type']} for l in r['links']],'addresses':{l['ifname']:l['addr_info'] for l in r['addresses']},'routes':r['routes'],'routes6':r['routes6']}))

@@ -1,0 +1,109 @@
+diff --git a/research/doom/test_overlap_controller_v39_wait.py b/research/doom/test_overlap_controller_v39_wait.py
+index fe15bfcee6..9850d03380 100644
+--- a/research/doom/test_overlap_controller_v39_wait.py
++++ b/research/doom/test_overlap_controller_v39_wait.py
+@@ -100,0 +101,13 @@ def extract_top_level_function(name):
++def extract_invalidation_frame_wait():
++    tree = ast.parse(SOURCE.read_bytes())
++    wanted = {"_typed_json_equal", "wait_for_invalidation_frame"}
++    functions = [node for node in tree.body
++                 if isinstance(node, ast.FunctionDef) and node.name in wanted]
++    if {node.name for node in functions} != wanted:
++        return None
++    module = ast.fix_missing_locations(ast.Module(body=functions, type_ignores=[]))
++    scope = {"time": time}
++    exec(compile(module, str(SOURCE), "exec"), scope)
++    return scope["wait_for_invalidation_frame"]
++
++
+@@ -150,0 +164,4 @@ def extract_initial_cover_gate():
++    typed_equal = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
++                       and node.name == "_typed_json_equal")
++    frame_barrier = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
++                         and node.name == "wait_for_invalidation_frame")
+@@ -173 +190,2 @@ def extract_initial_cover_gate():
+-    module = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
++    module = ast.fix_missing_locations(ast.Module(
++        body=[typed_equal, frame_barrier, factory], type_ignores=[]))
+@@ -209,0 +228,41 @@ class WaitTests(unittest.TestCase):
++    def test_invalidation_frame_waits_for_fresh_full_identity_match(self):
++        barrier = extract_invalidation_frame_wait()
++        self.assertIsNotNone(barrier)
++        binding = {"focus": 41, "surface": 41,
++                   "geometry": [0, 0, 640, 480]}
++        frame_hash = "a" * 64
++        invalidation = {"sequence": 9, "capture_ns": 900,
++                        "pointer_binding": binding,
++                        "frame_rgb_sha256": frame_hash}
++        latest = {"event": "observation", "sequence": 8, "capture_ns": 850,
++                  "pointer_binding": binding, "frame_rgb_sha256": frame_hash,
++                  "image": "old.png"}
++        candidates = [
++            {"event": "observation", "sequence": 10, "capture_ns": 1000,
++             "pointer_binding": {**binding, "focus": 42},
++             "frame_rgb_sha256": frame_hash, "image": "wrong-binding.png"},
++            {"event": "observation", "sequence": 9, "capture_ns": 899,
++             "pointer_binding": binding, "frame_rgb_sha256": frame_hash,
++             "image": "stale-capture.png"},
++            {"event": "observation", "sequence": 10, "capture_ns": 1001,
++             "pointer_binding": binding, "frame_rgb_sha256": "b" * 64,
++             "image": "wrong-frame.png"},
++            {"event": "observation", "sequence": 9, "capture_ns": 900,
++             "pointer_binding": binding, "frame_rgb_sha256": frame_hash,
++             "image": "invalidation-frame.png"},
++        ]
++        seen = []
++
++        def wait(predicate, timeout):
++            while candidates:
++                row = candidates.pop(0)
++                seen.append(row)
++                if predicate(row):
++                    return row
++            raise AssertionError("frame barrier accepted no matching observation")
++
++        selected = barrier(latest, invalidation, wait, timeout=1)
++        self.assertEqual(len(seen), 4)
++        self.assertIs(selected, seen[-1])
++        self.assertEqual(selected["image"], "invalidation-frame.png")
++
+@@ -288,3 +347,7 @@ class WaitTests(unittest.TestCase):
+-        observation = {"event": "observation", "sequence": 8, "health": 70,
+-                       "image": "fresh.png"}
+-        invalidation = {"reason": "health_below_floor", "sequence": 8}
++        binding = {"focus": 41, "surface": 41, "geometry": [0, 0, 640, 480]}
++        observation = {"event": "observation", "sequence": 8, "capture_ns": 800,
++                       "pointer_binding": binding, "frame_rgb_sha256": "a" * 64,
++                       "health": 70, "image": "fresh.png"}
++        invalidation = {"reason": "health_below_floor", "sequence": 8,
++                        "capture_ns": 800, "pointer_binding": binding,
++                        "frame_rgb_sha256": "a" * 64}
+@@ -326,0 +390 @@ class WaitTests(unittest.TestCase):
++        self.assertEqual(decisions[0]["invalidation_frame_image"], "fresh.png")
+@@ -332,3 +396,7 @@ class WaitTests(unittest.TestCase):
+-        observation = {"event": "observation", "sequence": 8, "health": 70,
+-                       "image": "fresh.png"}
+-        invalidation = {"reason": "health_below_floor", "sequence": 8}
++        binding = {"focus": 41, "surface": 41, "geometry": [0, 0, 640, 480]}
++        observation = {"event": "observation", "sequence": 8, "capture_ns": 800,
++                       "pointer_binding": binding, "frame_rgb_sha256": "a" * 64,
++                       "health": 70, "image": "fresh.png"}
++        invalidation = {"reason": "health_below_floor", "sequence": 8,
++                        "capture_ns": 800, "pointer_binding": binding,
++                        "frame_rgb_sha256": "a" * 64}
+@@ -362,0 +431 @@ class WaitTests(unittest.TestCase):
++        self.assertEqual(decisions[0]["invalidation_frame_image"], "fresh.png")
+diff --git a/research/doom/test_v39_measurement_session_comp.py b/research/doom/test_v39_measurement_session_comp.py
+index eda314ce27..1b7402b2e9 100644
+--- a/research/doom/test_v39_measurement_session_comp.py
++++ b/research/doom/test_v39_measurement_session_comp.py
+@@ -80,0 +81,2 @@ class MeasurementSessionComposition(unittest.TestCase):
++            captured["perkey_bridge"] = str(base.PERKEY_BRIDGE)
++            captured["perkey_owner"] = str(base.PERKEY_OWNER)
+@@ -88,0 +91 @@ class MeasurementSessionComposition(unittest.TestCase):
++            "HERE": DOOM, "RESEARCH": ROOT / "research",
+@@ -106,0 +110,4 @@ class MeasurementSessionComposition(unittest.TestCase):
++        self.assertEqual(Path(captured["perkey_bridge"]),
++                         DOOM / "doom_batch_key_measurement_backend_v1.py")
++        self.assertEqual(Path(captured["perkey_owner"]),
++                         ROOT / "research" / "live_control" / "input_owner_v12.py")

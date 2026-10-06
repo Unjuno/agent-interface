@@ -1,0 +1,14 @@
+test_delivered_up_with_send_error_suppresses_sibling_bracket (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_delivered_up_with_send_error_suppresses_sibling_bracket) ... FAIL
+
+======================================================================
+FAIL: test_delivered_up_with_send_error_suppresses_sibling_bracket (test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_delivered_up_with_send_error_suppresses_sibling_bracket)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-job>/source/research/live_control/test_batch_key_measurement_composition.py", line 134, in test_delivered_up_with_send_error_suppresses_sibling_bracket
+    self.assertIsNone(data['bracket'])
+AssertionError: {'owner_id': '30581d165fe2444ba767912b6e422ae9', 'intent_token': 'measurement-intent', 'key': 'W', 'grants_input_authority': False, 'application_consumption_observed': False, 'status': 'CONFIRMED_PHYSICAL_UP', 'actuation_id': '30581d165fe2444ba767912b6e422ae9:1', 'physical_up_interval': [18880510616750, 18880510627833]} is not None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.284s
+
+FAILED (failures=1)

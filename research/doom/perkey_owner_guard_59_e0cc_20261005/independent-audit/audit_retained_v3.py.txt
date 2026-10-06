@@ -1,0 +1,190 @@
+"""Read-only verification of retained per-key owner startup-guard evidence."""
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+REPO = ROOT.parent / "perkey-owner-guard-repo-e0cc-20261005"
+ROUTES = {
+    "v12-cached-perkey": {"outcome": "rejected", "owner": None},
+    "v12-perkey": {
+        "outcome": "selected",
+        "owner": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+    },
+    "v15-default": {
+        "outcome": "selected",
+        "owner": "research/live_control/input_transition_owner_v4.py",
+    },
+    "v15-perkey": {"outcome": "rejected", "owner": None},
+}
+
+
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def load_lines(path: Path) -> list[dict]:
+    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+
+def main() -> None:
+    checks = []
+    # Preserve and characterize construction attempts, rather than treating them as tests.
+    red1 = ROOT / "red-v1"
+    red1_receipt = json.loads((red1 / "receipt.json").read_text())
+    red1_error = (red1 / "stderr.txt").read_text()
+    checks.append({
+        "name": "red_v1_is_export_race_not_test_execution",
+        "pass": (red1_receipt["exit_code"] == 2 and "can't open file" in red1_error
+                 and "Ran " not in red1_error),
+        "exit_code": red1_receipt["exit_code"],
+        "failure_kind": "test file absent during source export",
+    })
+
+    # The original negative result remains preserved; green-v1 was the same unpatched run.
+    r2 = ROOT / "red-v2"
+    g1 = ROOT / "green-v1"
+    r2_receipt = json.loads((r2 / "receipt.json").read_text())
+    g1_receipt = json.loads((g1 / "receipt.json").read_text())
+    r2_out, r2_err = (r2 / "stdout.txt").read_bytes(), (r2 / "stderr.txt").read_bytes()
+    g1_out, g1_err = (g1 / "stdout.txt").read_bytes(), (g1 / "stderr.txt").read_bytes()
+    def normalized_test_stderr(value: bytes) -> bytes:
+        return re.sub(rb"Ran 4 tests in [0-9.]+s", b"Ran 4 tests in <elapsed>s", value)
+    checks.append({
+        "name": "red_v2_and_green_v1_same_unpatched_two_failure_output",
+        "pass": (r2_receipt["exit_code"] == g1_receipt["exit_code"] == 1
+                 and r2_out == g1_out and normalized_test_stderr(r2_err) == normalized_test_stderr(g1_err)
+                 and r2_receipt["stdout_sha256"] == digest(r2 / "stdout.txt")
+                 and r2_receipt["stderr_sha256"] == digest(r2 / "stderr.txt")
+                 and g1_receipt["stdout_sha256"] == digest(g1 / "stdout.txt")
+                 and g1_receipt["stderr_sha256"] == digest(g1 / "stderr.txt")),
+        "stderr_difference": "elapsed test duration only",
+        "two_expected_mismatch_cases_fail_before_fix": True,
+        "green_v1_is_not_a_patched_run": True,
+    })
+
+    # Check every retained green-v2 route and its execution receipt.
+    g2 = ROOT / "green-v2"
+    receipt = json.loads((g2 / "receipt.json").read_text())
+    lines = load_lines(g2 / "stdout.txt")
+    stderr_path = g2 / "stderr.txt"
+    stderr = stderr_path.read_text()
+    actual = {row["route"]: row for row in lines}
+    route_errors = []
+    for route, expected in ROUTES.items():
+        row = actual.get(route)
+        if row is None:
+            route_errors.append(f"{route}:missing")
+            continue
+        if row.get("outcome") != expected["outcome"]:
+            route_errors.append(f"{route}:outcome")
+        if expected["owner"] is not None and row.get("owner_file") != expected["owner"]:
+            route_errors.append(f"{route}:owner")
+        if row.get("forbidden_calls") != [] or row.get("owner_instantiated") is not False:
+            route_errors.append(f"{route}:construction_boundary")
+        if expected["outcome"] == "rejected":
+            if (row.get("session_boundary_reached") is not False
+                    or row.get("session_started") is not False
+                    or row.get("manifest_written") is not False
+                    or "source mismatch" not in row.get("error", "")):
+                route_errors.append(f"{route}:not_preconstruction_rejection")
+        elif row.get("session_boundary_reached") is not True or row.get("manifest_written") is not True:
+            route_errors.append(f"{route}:positive_control")
+    checks.append({
+        "name": "green_v2_four_routes_and_retained_receipt",
+        "pass": (receipt["exit_code"] == 0 and len(lines) == 4 and not route_errors
+                 and receipt["stdout_sha256"] == digest(g2 / "stdout.txt")
+                 and receipt["stderr_sha256"] == digest(stderr_path)
+                 and "Ran 4 tests" in stderr and "OK" in stderr),
+        "exit_code": receipt["exit_code"],
+        "routes": {key: {"outcome": value.get("outcome"),
+                         "owner_file": value.get("owner_file"),
+                         "owner_instantiated": value.get("owner_instantiated"),
+                         "forbidden_calls": value.get("forbidden_calls")}
+                   for key, value in actual.items()},
+        "route_errors": route_errors,
+    })
+
+    # Bind the actual patched module in the candidate worktree to the executed source pin.
+    source_map = json.loads((g2 / "sources.json").read_text())
+    session_rel = "research/doom/session_map01_v12.py"
+    candidate_session = REPO / session_rel
+    checks.append({
+        "name": "green_v2_executed_session_matches_candidate_worktree",
+        "pass": (candidate_session.is_file()
+                 and source_map.get(session_rel) == digest(candidate_session)
+                 and source_map.get(session_rel) != json.loads(
+                     (ROOT / "base-source-manifest.json").read_text())["files"][session_rel]["sha256"]),
+        "executed_session_sha256": source_map.get(session_rel),
+        "candidate_session_sha256": digest(candidate_session) if candidate_session.is_file() else None,
+        "baseline_session_sha256": json.loads(
+            (ROOT / "base-source-manifest.json").read_text())["files"][session_rel]["sha256"],
+    })
+
+    base_manifest = json.loads((ROOT / "base-source-manifest.json").read_text())
+    base_errors = []
+    for rel, pin in base_manifest["files"].items():
+        path = ROOT / "source" / rel
+        if (not path.is_file() or digest(path) != pin["sha256"]
+                or path.stat().st_size != pin["size"]):
+            base_errors.append(rel)
+    green_source_map = json.loads((g2 / "sources.json").read_text())
+    green_errors = [rel for rel, value in green_source_map.items()
+                    if not (ROOT / "source" / rel).is_file()
+                    or digest(ROOT / "source" / rel) != value]
+    red_source_map = json.loads((r2 / "sources.json").read_text())
+    red_errors = [rel for rel, value in red_source_map.items()
+                  if not (ROOT / "source" / rel).is_file()
+                  or digest(ROOT / "source" / rel) != value]
+    checks.append({
+        "name": "source_export_and_route_manifest_hashes",
+        "pass": (len(base_manifest["files"]) == 56 and not base_errors
+                 and not green_errors and red_errors == [session_rel]),
+        "base_manifest_entries": len(base_manifest["files"]),
+        "baseline_source_errors": base_errors,
+        "green_v2_source_map_errors": green_errors,
+        "red_v2_expected_prepatch_source_mismatch": red_errors,
+    })
+
+    status = subprocess.run(["git", "status", "--short"], cwd=REPO, check=True,
+                            capture_output=True, text=True).stdout.splitlines()
+    diff = subprocess.run(["git", "diff", "--", session_rel], cwd=REPO, check=True,
+                          capture_output=True, text=True).stdout
+    expected_status = {" M research/doom/session_map01_v12.py",
+                       "?? research/doom/test_perkey_owner_source_guard.py"}
+    source_change_ok = (
+        set(status) == expected_status
+        and "import inspect" in diff
+        and 'selected_backend.__init__.__globals__["InputOwner"]' in diff
+        and "Path(inspect.getfile(selected_owner)).resolve() != PERKEY_OWNER.resolve()" in diff
+        and "per-key measurement owner source mismatch; refusing startup." in diff
+    )
+    checks.append({
+        "name": "candidate_worktree_delta_is_guard_plus_new_regression_test",
+        "pass": source_change_ok,
+        "status": status,
+        "production_delta_scope": "session_map01_v12.py import inspect + selected owner path guard only",
+    })
+
+    result = {
+        "schema": "perkey-owner-source-guard-independent-audit-v1",
+        "base_commit": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+        "checks": checks,
+        "pass": all(item["pass"] for item in checks),
+        "limitations": [
+            "Startup-selection only; no owner construction, UP execution, X11, game, or model run.",
+            "The path guard rejects the incompatible combined route but does not implement an A01 measurement/batch adapter.",
+            "red-v1 was a source-export race; green-v1 repeated the unpatched red-v2 result.",
+        ],
+    }
+    out = Path(__file__).with_name("audit-result-v3.json")
+    out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    print(json.dumps({"pass": result["pass"], "checks": checks}, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

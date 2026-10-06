@@ -1,0 +1,130 @@
+"""Current raw owner -> V4 -> batch publisher -> V39 receipt projection."""
+import ast
+import copy
+import hashlib
+import json
+from pathlib import Path
+import sys
+import types
+import unittest
+from unittest.mock import patch
+
+import test_input_owner_v12_key_measurement as fixture
+
+
+def load_projector():
+    path = Path(__file__).resolve().parents[1] / 'doom/map01_overlap_controller_v39.py'
+    parsed = ast.parse(path.read_text())
+    function = next(node for node in parsed.body
+                    if isinstance(node, ast.FunctionDef) and node.name == 'input_edge_receipts')
+    namespace = {'hashlib': hashlib}
+    exec(compile(ast.Module(body=[function], type_ignores=[]), str(path), 'exec'), namespace)
+    return namespace['input_edge_receipts']
+
+
+class BatchMeasurementCompositionTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture = fixture.KeyMeasurementTests()
+        self.fixture.setUp()
+        self.modules = patch.dict(sys.modules)
+        self.modules.start()
+        for name in ('input_transition_owner_v3', 'input_transition_owner_v4',
+                     'doom_owner_thread_release_batch_backend_v1',
+                     'doom_batch_key_measurement_backend_v1'):
+            sys.modules.pop(name, None)
+        from doom_batch_key_measurement_backend_v1 import Backend
+        from doom_typed_release_backend_v2 import Backend as Ancestor
+
+        def inert_ancestor(backend, session, out, emit, signal_readers):
+            backend.owner = types.SimpleNamespace(close=lambda: None)
+            backend.emit = emit
+            backend.held = set()
+
+        self.events = []
+        with patch.object(Ancestor, '__init__', inert_ancestor):
+            self.backend = Backend(types.SimpleNamespace(name=':fake'), None, self.events.append, {})
+        self.fixture.owner = self.backend.owner
+        self.lease = fixture.FakeLease()
+        self.backend.lease = self.lease
+        self.backend._input_event_context = ('program', 0)
+        self.backend._release_batch.context = {'identifier': 'program', 'step': 0,
+                                                'rows': [], 'pending_ups': []}
+        self.project = load_projector()
+
+    def tearDown(self):
+        try:
+            self.fixture.tearDown()
+        finally:
+            self.modules.stop()
+
+    def run_batch(self, drop_code=None, fail_post=False):
+        for key in ('W', 'A'):
+            self.backend.raw('down', key)
+        if drop_code is not None:
+            self.fixture.fake.drop_counts[drop_code] = 1
+        if fail_post:
+            self.fixture.fake.fail_queries.add(self.fixture.fake.query_count + 2)
+        batch_start = len(self.fixture.fake.trace)
+        for key in ('A', 'W'):
+            self.backend.raw('up', key)
+        batch_trace = self.fixture.fake.trace[batch_start:]
+        result = self.project(self.events)
+        print(json.dumps({'case': self.id(), 'drop_code': drop_code, 'fail_post': fail_post,
+                          'events': self.events, 'projection': result,
+                          'batch_trace': batch_trace,
+                          'delivery': self.backend._last_release_batch_delivery}, sort_keys=True), flush=True)
+        queries = [i for i, row in enumerate(batch_trace) if row[0] == 'query_keymap']
+        self.assertGreaterEqual(len(queries), 2)
+        self.assertEqual([row[2] for row in batch_trace[queries[0]+1:queries[1]]
+                          if row[:2] == ('key_event', 3)], [39, 38])
+        return result
+
+    def test_two_keys_pair_through_actual_wrapper_and_batch_publisher(self):
+        result = self.run_batch()
+        self.assertEqual(len(result), 2)
+        self.assertTrue(all(row['status'] == 'adapter_edge_brackets_paired' for row in result))
+        self.assertTrue(all(row['up_interval_basis'] == 'shared_batch_snapshot' for row in result))
+        self.assertEqual(len({row['batch_id'] for row in result}), 1)
+        self.assertTrue(all(row['grants_input_authority'] is False for row in result))
+        self.assertEqual([row['state'] for row in self.backend._last_release_batch_delivery['positions']],
+                         ['confirmed', 'confirmed'])
+
+    def test_retry_keeps_shared_sample_for_the_other_key(self):
+        result = self.run_batch(drop_code=39)
+        self.assertTrue(all(row['status'] == 'adapter_edge_brackets_paired' for row in result))
+        by_key = {row['key']: row for row in result}
+        self.assertEqual(by_key['A']['post_sample_basis'], 'key_retry')
+        self.assertEqual(by_key['W']['post_sample_basis'], 'shared_batch')
+        self.assertLess(by_key['W']['up_edge_interval_ns'][1], by_key['A']['up_edge_interval_ns'][1])
+
+    def test_unknown_post_sample_never_projects_a_complete_pair(self):
+        result = self.run_batch(fail_post=True)
+        self.assertTrue(result)
+        self.assertTrue(all(row['status'] != 'adapter_edge_brackets_paired' for row in result))
+        self.assertTrue(self.backend.owner.call('input_state')['release_pending'])
+
+    def test_projection_rejects_altered_basis_authority_identity_and_batch_status(self):
+        self.run_batch()
+        changes = [
+            ('interval_basis', 'key_snapshot'), ('grants_input_authority', True),
+            ('application_consumption_observed', True), ('batch_id', None),
+            ('schema', 'a01'), ('actuation_id', 'other'),
+        ]
+        for field, value in changes:
+            altered = copy.deepcopy(self.events)
+            up = next(row for row in altered if row['event'] == 'input_release_transition')
+            up['physical_key_measurement'][field] = value
+            receipts = self.project(altered)
+            self.assertFalse(any(row['key'] == up['key'] and row['status'] == 'adapter_edge_brackets_paired'
+                                 for row in receipts), field)
+        for field in ('release_batch_complete', 'owner_transition_verified',
+                      'ordinary_release_candidate', 'owner_thread_keyup_verified_after_batch'):
+            altered = copy.deepcopy(self.events)
+            up = next(row for row in altered if row['event'] == 'input_release_transition')
+            up[field] = False
+            self.assertFalse(any(row['key'] == up['key'] and row['status'] == 'adapter_edge_brackets_paired'
+                                 for row in self.project(altered)), field)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,1561 @@
+diff --git a/research/doom/doom_batch_key_measurement_backend_v1.py b/research/doom/doom_batch_key_measurement_backend_v1.py
+new file mode 100644
+index 0000000000..5b07504d68
+--- /dev/null
++++ b/research/doom/doom_batch_key_measurement_backend_v1.py
+@@ -0,0 +1,22 @@
++"""V15 opt-in keymap brackets on the current ordered-release backend."""
++from doom_owner_thread_release_batch_backend_v1 import Backend as Previous, suite
++from input_owner_v12 import InputOwner
++from pathlib import Path
++import key_edge_measurement_v1
++from input_transition_owner_v4 import InputOwner as TransitionOwner
++
++
++class Backend(Previous):
++    measurement_sources = (Path(key_edge_measurement_v1.__file__),)
++
++    def __init__(self, session, out, emit, signal_readers):
++        # Keep the current owner, transition validation and delivery ledger.
++        # The startup source guard checks the actual raw InputOwner above.
++        def measured_owner(display_name):
++            return InputOwner(display_name, measure_key_edges=True)
++
++        def transition_owner(display_name):
++            return TransitionOwner(display_name, _owner_cls=measured_owner)
++
++        super().__init__(session, out, emit, signal_readers,
++                         _owner_cls=transition_owner)
+diff --git a/research/doom/doom_owner_thread_release_batch_backend_v1.py b/research/doom/doom_owner_thread_release_batch_backend_v1.py
+index 193c2bd231..0d079174cb 100644
+--- a/research/doom/doom_owner_thread_release_batch_backend_v1.py
++++ b/research/doom/doom_owner_thread_release_batch_backend_v1.py
+@@ -10,10 +10,10 @@ from input_transition_owner_v4 import InputOwner
+ class Backend(Previous):
+     """Opt-in release composition; controller and default backend are unchanged."""
+ 
+-    def __init__(self, session, out, emit, signal_readers):
++    def __init__(self, session, out, emit, signal_readers, *, _owner_cls=InputOwner):
+         super().__init__(session, out, emit, signal_readers)
+         self.owner.close()
+-        self.owner = InputOwner(session.name)
++        self.owner = _owner_cls(session.name)
+         self._release_batch = threading.local()
+         self._last_release_batch_delivery = None
+ 
+diff --git a/research/doom/map01_motor_responder_v10.txt b/research/doom/map01_motor_responder_v10.txt
+index 9ee9fe93d9..ef32ef849a 100644
+--- a/research/doom/map01_motor_responder_v10.txt
++++ b/research/doom/map01_motor_responder_v10.txt
+@@ -1,3 +1,4 @@
+ You are the visual high-level controller for a continuously advancing normal game of Freedoom 2 MAP01 on skill 1. The image is a 2x2 temporal sheet, oldest to newest in reading order. The prompt lists any previous semantic actions whose viewport effect was below a conservative visual threshold. Avoid immediately repeating a listed action. This is pixel evidence only and does not prove hidden position, collision, door state, damage, or task failure. Return only schema-valid JSON. Select semantic motor commands; the local interface compiles them into short calibrated OS-key pulses and obtains new visual feedback. `after_command` is a zero-based index into the primary `commands`. If that command has `no_visible_effect`, the local interface skips the remaining primary tail and immediately executes the contingency commands without another model call. Add a contingency only when a visible effect is reasonably expected and a safe, useful fallback is clear, especially around uncertain doors or blocked movement. Keep it short. Do not add contingencies for attack-hit confirmation. Do not encode raw key names or durations. Use temporal change to detect stalls. Prefer several short corrections over one large turn. Use `use` near doors or switches. Use `advance_fire` or `retreat_fire` only for visible or strongly indicated threats. Set state to dead only for an unmistakable death screen, and exit_or_transition only for an unmistakable completed-level transition. In a non-active state return empty commands and contingencies. Otherwise use active and at least one command. Do not request an automap, pause, save state, engine state, labels, coordinates, tools, or prose outside JSON.
+  `next_cover` is a compact conservative policy for the following model-inference interval, after the current primary commands. The local runtime may repeat and renew it while inference remains pending. For active state use an empty next_cover when no threat is visible; the runtime compiles empty to coast. Otherwise provide 1-4 cover commands. During a visible threat prefer alternating strafe or bounded retreat. Include fire only when a threat is visible and the HUD shows ammunition remaining. Since this policy may repeat from a later view, never use coast, forward, turn, or use as an item in next_cover. For active state return exactly one `next_cover_validity` item. `critical_health_minimum` is the absolute health below which that exact cover is no longer appropriate. `maximum_health_loss` is the smaller short-horizon loss it may absorb from the fresh health at admission and must be 0-20. The runtime uses the stricter of those two conditions. `max_source_age_ms` is at most 30000. This condition can preserve already admitted cover through expected changes but never adds an action. Terminal state uses empty next_cover and empty next_cover_validity.
+  For active state also return exactly one `action_validity` item for the immediate `commands`, separate from `next_cover_validity`. Set its `critical_health_minimum` to the absolute health below which those immediate commands are no longer appropriate and `maximum_health_loss` to the 0-20 additional loss they may tolerate from the exact source frame. Set `max_current_age_ms` between 100 and 1000; it bounds the age of the fresh local screen evidence checked immediately before Executor admission. If any immediate command is `fire`, `advance_fire`, or `retreat_fire`, set `minimum_ammo` to at least 1. For commands without fire, set `minimum_ammo` to 0 because ammo is unrelated to their applicability. The runtime recomputes health and, when required, ammo from one current exact screen frame. Missing, stale, mismatched, or failed evidence rejects these immediate commands and asks for a new decision. This validity item never grants input authority. Terminal state uses empty `action_validity`.
++The prompt may list exact public HUD health/ammo comparisons from the previous action intervals. Treat them only as state observations: they may be environmental, do not establish what caused a change, and do not establish a hit or benefit. Viewport change alone is not a task effect.
+diff --git a/research/doom/map01_overlap_controller_v39.py b/research/doom/map01_overlap_controller_v39.py
+index e9b437979e..e2de3df293 100644
+--- a/research/doom/map01_overlap_controller_v39.py
++++ b/research/doom/map01_overlap_controller_v39.py
+@@ -50,6 +50,32 @@ DISABLED_FEATURES = [
+ DISABLED_MCPS = ["blender", "chrome-devtools", "node_repl", "playwright", "puppeteer"]
+ WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
+ MAX_AUTHORED_HEALTH_LOSS = 20
++STALE_SEQUENCE_REJECTION_REASON = "latest observation sequence required before input"
++
++
++def classify_cover_renewal_response(response):
++    """Treat only an expected stale-sequence rejection as no renewal admission."""
++    if type(response) is dict and response.get("event") == "accepted":
++        return {"status": "accepted"}
++    if (type(response) is dict and response.get("event") == "rejected" and
++            response.get("reason") == STALE_SEQUENCE_REJECTION_REASON):
++        return {"status": "stale_sequence_no_cover",
++                "reason": STALE_SEQUENCE_REJECTION_REASON}
++    raise RuntimeError(response)
++
++
++def wait_without_active_cover(wait, observation_monitor, planner, planner_handle):
++    """Keep observing while inference runs after a rejected, unadmitted renewal."""
++    try:
++        boundary = wait(lambda row: False, timeout=.1,
++                        observation_monitor=observation_monitor)
++    except TimeoutError:
++        return None
++    if boundary.get("event") not in ("policy_invalidation", "running_action_invalidation"):
++        raise RuntimeError(boundary)
++    invalidation = boundary.get("invalidation", boundary)
++    return {"invalidation": invalidation,
++            "planner_interrupt": planner.interrupt(planner_handle)}
+ 
+ 
+ def reusable_cover(decisions):
+@@ -376,8 +402,10 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
+     return monitor, receipt
+ 
+ 
+-def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
+-    planner_interrupt = planner.interrupt(planner_handle)
++def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id,
++                             planner_interrupt=None):
++    if planner_interrupt is None:
++        planner_interrupt = planner.interrupt(planner_handle)
+     process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+     process.stdin.flush()
+     terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+@@ -392,6 +420,71 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
+     return planner_interrupt, terminal
+ 
+ 
++def wait_for_invalidation_frame(latest, invalidation, wait, timeout=5):
++    """Require the RGB observation paired with invalidation before replanning."""
++    sequence = invalidation.get("sequence") if type(invalidation) is dict else None
++    capture_ns = invalidation.get("capture_ns") if type(invalidation) is dict else None
++    binding = invalidation.get("pointer_binding") if type(invalidation) is dict else None
++    frame_hash = invalidation.get("frame_rgb_sha256") if type(invalidation) is dict else None
++    if (type(sequence) is not int or sequence < 1 or
++            type(capture_ns) is not int or capture_ns < 1 or type(binding) is not dict or
++            (frame_hash is not None and
++             (type(frame_hash) is not str or len(frame_hash) != 64))):
++        raise RuntimeError("policy invalidation lacks a valid observation identity")
++
++    def qualifies(row):
++        return (type(row) is dict and row.get("event") == "observation" and
++                type(row.get("sequence")) is int and row["sequence"] >= sequence and
++                type(row.get("capture_ns")) is int and row["capture_ns"] >= capture_ns and
++                _typed_json_equal(row.get("pointer_binding"), binding) and
++                (frame_hash is None or row.get("frame_rgb_sha256") == frame_hash))
++
++    if qualifies(latest):
++        return latest
++    end = time.monotonic() + timeout
++    while time.monotonic() < end:
++        return wait(qualifies, timeout=max(.001, end - time.monotonic()))
++    raise TimeoutError("fresh full observation did not follow policy invalidation")
++
++
++def cancel_invalidated_cover_before_plan(process, wait, cover_id):
++    """Cancel an invalidated initial cover and require release before retrying."""
++    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
++    process.stdin.flush()
++    requested = wait(lambda row: row.get("event") == "cancel_requested" and
++                     row.get("id") == cover_id)
++    released = wait(lambda row: row.get("event") in
++                    ("input_released", "input_release_unverified") and
++                    row.get("id") == cover_id)
++    terminal = wait(lambda row: row.get("event") == "terminal" and
++                    row.get("id") == cover_id)
++    owner_release = released.get("owner_release", {})
++    terminal_release = terminal.get("release", {})
++    if (requested.get("matched") is not True or
++            released.get("event") != "input_released" or
++            released.get("program_terminal_pending") is not True or
++            released.get("grants_input_authority") is not False or
++            owner_release.get("verified") is not True or
++            owner_release.get("keys_down") != [] or
++            owner_release.get("buttons_down") != [] or
++            terminal.get("status") != "cancelled" or
++            terminal_release.get("verified") is not True or
++            terminal_release.get("keys_down") != [] or
++            terminal_release.get("buttons_down") != []):
++        raise RuntimeError("invalidated initial cover did not verify empty release")
++    return {"cancel_requested": requested, "input_released": released,
++            "terminal": terminal}
++
++
++def resolve_invalidated_cover_submission(wait, cover_id):
++    """Distinguish an accepted cover from a submit rejected during invalidation."""
++    response = wait(lambda row: row.get("event") in ("accepted", "rejected") and
++                    (row.get("id") == cover_id or row.get("event") == "rejected"))
++    if response.get("event") == "rejected":
++        return {"status": "rejected", "response": response}
++    return {"status": "accepted", "response": response}
++
++
+ def admitted_cover_commands(commands, validity_admission):
+     if validity_admission.get("status") != "admitted":
+         return []
+@@ -587,16 +680,17 @@ def app_server_command():
+ 
+ 
+ def session_command(args, runtime):
+-    # Keep the established v12 session as the default. The opt-in v15 wrapper
+-    # adds scorer-only progress sampling and per-key release telemetry without
+-    # exposing scorer state through the controller event stream.
++    # Keep v12 as default; v15 adds scorer-only progress sampling.
+     session = ("session_map01_v15.py"
+                if getattr(args, "measurement_session", False)
+                else "session_map01_v12.py")
+-    return [sys.executable, str(HERE / session),
+-            "--out", str(runtime), "--seed", str(args.seed),
+-            "--timeout-seconds", "600", "--skill", "1",
+-            "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
++    command = [sys.executable, str(HERE / session),
++               "--out", str(runtime), "--seed", str(args.seed),
++               "--timeout-seconds", "600", "--skill", "1",
++               "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
++    if getattr(args, "per_key_input_measurement", False):
++        command.append("--per-key-input-measurement")
++    return command
+ 
+ 
+ def validate_action(action):
+@@ -616,14 +710,18 @@ def validate_action(action):
+ 
+ 
+ def begin_model_turn(planner, root, image, effect_memory, source_health, source_ammo,
+-                     prior_soft_event_summary, output_schema):
++                     prior_soft_event_summary, output_schema,
++                     prior_state_feedback=None):
+     prompt_text = ("Select the next bounded MAP01 action from the new temporal sheet.\n"
+                    + f"Current locally verified health: {source_health}.\n"
+                    + f"Current locally verified ammo: {source_ammo}.\n"
+                    + "Newest typed soft event from the preceding control interval: "
+                    + json.dumps(prior_soft_event_summary, separators=(",", ":")) + "\n"
+                    + "Previous no-visible-effect actions: "
+-                   + json.dumps(effect_memory, separators=(",", ":")) + "\n")
++                   + json.dumps(effect_memory, separators=(",", ":")) + "\n"
++                   + "Previous action-interval public HUD evidence (observed after action; "
++                   + "not causal or beneficial evidence): "
++                   + json.dumps(prior_state_feedback or [], separators=(",", ":")) + "\n")
+     (root / "prompt.txt").write_text(prompt_text)
+     return planner.begin_turn(prompt_text, output_schema=output_schema,
+                               image_path=win(image))
+@@ -673,25 +771,515 @@ def compile_cover(commands):
+     return steps
+ 
+ 
+-def effect_receipts(commands, before, observations, accepted_ns):
++def action_state_feedback(before, after, typed_observations):
++    """Compare public HUD values only across source-bound typed captures."""
++    def read(observation):
++        if (type(observation.get("sequence")) is not int or
++                type(observation.get("capture_ns")) is not int or
++                type(observation.get("step")) is not int):
++            return None, "typed_frame_identity_mismatch"
++        matches = [row for row in typed_observations
++                   if type(row) is dict and row.get("event") == "typed_observation" and
++                   row.get("sequence") == observation.get("sequence")]
++        if len(matches) != 1:
++            return None, "typed_frame_missing_or_ambiguous"
++        row = matches[0]
++        frame_hash = observation.get("frame_rgb_sha256")
++        if (row.get("schema") != "doom-typed-observation-v1" or
++                row.get("pointer_binding") != observation.get("pointer_binding") or
++                type(row.get("sequence")) is not int or
++                type(row.get("capture_ns")) is not int or
++                type(row.get("step")) is not int or
++                row.get("capture_ns") != observation.get("capture_ns") or
++                row.get("id") != observation.get("id") or
++                row.get("step") != observation.get("step") or
++                type(frame_hash) is not str or len(frame_hash) != 64 or
++                any(char not in "0123456789abcdef" for char in frame_hash) or
++                row.get("frame_rgb_sha256") != frame_hash):
++            return None, "typed_frame_identity_mismatch"
++        signals = row.get("signals")
++        binding = observation.get("pointer_binding")
++        if (type(binding) is not dict or type(signals) is not dict or
++                set(signals) != {"health", "ammo"}):
++            return None, "typed_signal_unavailable"
++        normalized = {}
++        wad_sha256 = None
++        for name in ("health", "ammo"):
++            signal = signals.get(name)
++            if (type(signal) is not dict or signal.get("status") != "observed" or
++                    signal.get("signal_id") != name or
++                    type(signal.get("value")) is not int or
++                    type(signal.get("sequence")) is not int or
++                    signal.get("sequence") != observation.get("sequence") or
++                    type(signal.get("capture_ns")) is not int or
++                    signal.get("capture_ns") != observation.get("capture_ns") or
++                    signal.get("binding") != binding):
++                return None, "typed_signal_unavailable"
++            lower, upper = (1, 200) if name == "health" else (0, 999)
++            if not lower <= signal["value"] <= upper:
++                return None, "typed_signal_unavailable"
++            signal_wad = signal.get("wad_sha256")
++            if (type(signal_wad) is not str or len(signal_wad) != 64 or
++                    any(char not in "0123456789abcdef" for char in signal_wad)):
++                return None, "typed_signal_unavailable"
++            if wad_sha256 is not None and signal_wad != wad_sha256:
++                return None, "typed_signal_binding_mismatch"
++            wad_sha256 = signal_wad
++            normalized[name] = signal["value"]
++        return {"binding": binding, "wad_sha256": wad_sha256,
++                "signals": normalized}, None
++
++    previous, reason = read(before)
++    if previous is None:
++        return {"status": "unavailable", "reason": reason}
++    current, reason = read(after)
++    if current is None:
++        return {"status": "unavailable", "reason": reason}
++    if (after["sequence"] <= before["sequence"] or
++            after["capture_ns"] <= before["capture_ns"]):
++        return {"status": "unavailable", "reason": "typed_frame_order_invalid"}
++    if (current["binding"] != previous["binding"] or
++            current["wad_sha256"] != previous["wad_sha256"]):
++        return {"status": "unavailable", "reason": "typed_signal_binding_mismatch"}
++    return {
++        "status": "observed",
++        "from_sequence": before["sequence"],
++        "to_sequence": after["sequence"],
++        "signals": {
++            name: {"before": previous["signals"][name],
++                   "after": current["signals"][name],
++                   "delta": current["signals"][name] - previous["signals"][name]}
++            for name in ("health", "ammo")},
++        "scope": "public HUD transition observed after action; not causal or beneficial evidence",
++    }
++
++
++def input_edge_receipts(events):
++    """Project legacy owner receipts and measured X-adapter edge brackets separately."""
++    grouped = {}
++    adapter_grouped = {}
++    invalid = []
++    for event in events:
++        if type(event) is not dict:
++            continue
++        event_name = event.get("event")
++        measurement = event.get("physical_key_measurement")
++        adapter_edge = (measurement.get("adapter_edge")
++                        if type(measurement) is dict else None)
++        adapter_candidate = (
++            event_name == "input_release_measurement" or
++            (event_name == "input_release_transition" and type(measurement) is dict
++             and measurement.get("schema") == "keymap-batch-edge-v1") or
++            (event_name == "input_admission" and type(measurement) is dict))
++        if adapter_candidate:
++            edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
++            expected_edge = ("down" if event_name == "input_admission" else "up")
++            identifier, step, key, token = (event.get("id"), event.get("step"),
++                                            event.get("key"), event.get("intent_token"))
++            if (type(identifier) is not str or not identifier or
++                    type(step) is not int or step < 0 or
++                    type(key) is not str or not key or
++                    type(token) is not str or not token):
++                invalid.append({
++                    "status": "identity_unavailable",
++                    "event": event_name,
++                    "step": step if type(step) is int else None,
++                    "key": key if type(key) is str else None,
++                    "scope": "adapter edge bracket unpaired; source event identity incomplete",
++                })
++                continue
++            actuation_id = (adapter_edge.get("actuation_id")
++                            if type(adapter_edge) is dict else None)
++            if (actuation_id is not None and
++                    (type(actuation_id) is not str or not actuation_id)):
++                invalid.append({
++                    "status": "identity_unavailable",
++                    "event": event_name,
++                    "step": step,
++                    "key": key,
++                    "scope": "adapter edge bracket unpaired; actuation identity is invalid",
++                })
++                continue
++            bucket = adapter_grouped.setdefault(
++                (identifier, step, key, token, actuation_id),
++                {"down": [], "up": []})
++            # Outer event type and nested edge label are both part of the
++            # receipt identity. Do not let one release event supply a press.
++            bucket[expected_edge].append(event)
++            continue
++        if event_name not in ("input_admission", "input_release_transition"):
++            continue
++        identifier = event.get("id")
++        step = event.get("step")
++        key = event.get("key")
++        token = event.get("intent_token")
++        if (type(identifier) is not str or not identifier or
++                type(step) is not int or step < 0 or
++                type(key) is not str or not key or
++                type(token) is not str or not token):
++            invalid.append({
++                "status": "identity_unavailable",
++                "event": event["event"],
++                "step": step if type(step) is int else None,
++                "key": key if type(key) is str else None,
++                "scope": "per-key timing unpaired; source event identity incomplete",
++            })
++            continue
++        has_admission_position = "admission_position" in event
++        admission_position = event.get("admission_position")
++        if (has_admission_position and
++                (type(admission_position) is not int or admission_position < 0)):
++            invalid.append({
++                "status": "identity_unavailable",
++                "event": event["event"],
++                "step": step,
++                "key": key,
++                "scope": "per-key timing unpaired; admission position is invalid",
++            })
++            continue
++        group_key = (identifier, step, key, token, admission_position)
++        bucket = grouped.setdefault(group_key, {"admission": [], "release": []})
++        bucket["admission" if event["event"] == "input_admission" else "release"].append(event)
++
++    receipts = list(invalid)
++    for (identifier, step, key, token, actuation_id), bucket in adapter_grouped.items():
++        downs, ups = bucket["down"], bucket["up"]
++        down = downs[0] if len(downs) == 1 else None
++        up = ups[0] if len(ups) == 1 else None
++
++        def edge_of(row):
++            data = row.get("physical_key_measurement") if row else None
++            return data.get("adapter_edge") if type(data) is dict else None
++
++        def valid_interval(value):
++            return (type(value) is list and len(value) == 2 and
++                    all(type(item) is int for item in value) and value[0] <= value[1])
++
++        def bracket_matches(data, edge, edge_name, status):
++            bracket = data.get("bracket") if type(data) is dict else None
++            interval_name = ("physical_down_interval" if edge_name == "down"
++                             else "physical_up_interval")
++            return (
++                type(bracket) is dict and type(edge) is dict and
++                bracket.get("key") == edge.get("key") and
++                bracket.get("owner_id") == edge.get("owner_id") and
++                bracket.get("intent_token") == edge.get("intent_token") and
++                bracket.get(interval_name) == edge.get("interval") and
++                bracket.get("status") == status and
++                bracket.get("grants_input_authority") is False and
++                bracket.get("application_consumption_observed") is False)
++
++        def admission_window_matches(row, data):
++            pre = data.get("pre_sample") if type(data) is dict else None
++            admitted_ns = row.get("admitted_ns") if type(row) is dict else None
++            return (
++                type(pre) is dict and type(admitted_ns) is int and
++                type(pre.get("started_ns")) is int and
++                admitted_ns <= pre["started_ns"])
++
++        def sample_window_matches(data, row, edge_name):
++            pre = data.get("pre_sample") if type(data) is dict else None
++            post = data.get("post_sample") if type(data) is dict else None
++            pre_down, post_down = (False, True) if edge_name == "down" else (True, False)
++
++            def valid_sample(sample, expected_down):
++                return (
++                    type(sample) is dict and sample.get("available") is True and
++                    sample.get("down") is expected_down and sample.get("error") is None and
++                    type(sample.get("started_ns")) is int and
++                    type(sample.get("finished_ns")) is int and
++                    sample["started_ns"] <= sample["finished_ns"])
++
++            request_name = "press_request_ns" if edge_name == "down" else "release_request_ns"
++            request_ns = data.get(request_name) if type(data) is dict else None
++            sync_ns = data.get("sync_return_ns") if type(data) is dict else None
++            if (not valid_sample(pre, pre_down) or not valid_sample(post, post_down) or
++                    type(request_ns) is not int or type(sync_ns) is not int or
++                    pre["finished_ns"] > request_ns or request_ns > sync_ns or
++                    sync_ns > post["started_ns"] or
++                    edge_name == "down" and (type(row.get("input_ack_ns")) is not int or
++                                                  row.get("input_ack_ns") != sync_ns) or
++                    edge_name == "up" and data.get("release_attempted") is not True):
++                return False
++            bracket = data.get("bracket")
++            interval_name = "physical_down_interval" if edge_name == "down" else "physical_up_interval"
++            return (type(bracket) is dict and
++                    bracket.get(interval_name) == [pre["finished_ns"], post["finished_ns"]])
++
++        down_data = down.get("physical_key_measurement") if down else None
++        up_data = up.get("physical_key_measurement") if up else None
++        down_edge, up_edge = edge_of(down), edge_of(up)
++        down_interval = down_edge.get("interval") if type(down_edge) is dict else None
++        up_interval = up_edge.get("interval") if type(up_edge) is dict else None
++        down_actuation = down_edge.get("actuation_id") if type(down_edge) is dict else None
++        up_actuation = up_edge.get("actuation_id") if type(up_edge) is dict else None
++        down_owner = down_edge.get("owner_id") if type(down_edge) is dict else None
++        up_owner = up_edge.get("owner_id") if type(up_edge) is dict else None
++        no_application_consumption_conflict = all(
++            type(row) is dict and
++            ("application_consumption_observed" not in row or
++             row.get("application_consumption_observed") is False)
++            for row in (
++                down, up, down_data, up_data, down_edge, up_edge,
++                down_data.get("bracket") if type(down_data) is dict else None,
++                up_data.get("bracket") if type(up_data) is dict else None,
++                down_data.get("pre_sample") if type(down_data) is dict else None,
++                down_data.get("post_sample") if type(down_data) is dict else None,
++                up_data.get("pre_sample") if type(up_data) is dict else None,
++                up_data.get("post_sample") if type(up_data) is dict else None))
++        complete = (
++            len(downs) == 1 and len(ups) == 1 and
++            type(down_data) is dict and type(up_data) is dict and
++            type(down_edge) is dict and type(up_edge) is dict and
++            down_edge.get("edge") == "down" and up_edge.get("edge") == "up" and
++            down_data.get("edge") == "down" and up_data.get("edge") == "up" and
++            down_data.get("classification") == "CONFIRMED_PHYSICAL_DOWN" and
++            up_data.get("classification") == "CONFIRMED_PHYSICAL_UP" and
++            down_data.get("identity_status") == "MINTED" and
++            up_data.get("identity_status") == "RETIRED" and
++            down_data.get("actuation_id") == down_edge.get("actuation_id") and
++            up_data.get("actuation_id") == up_edge.get("actuation_id") and
++            down_data.get("grants_input_authority") is False and
++            up_data.get("grants_input_authority") is False and
++            down_edge.get("status") == "CONFIRMED_PHYSICAL_DOWN" and
++            up_edge.get("status") == "CONFIRMED_PHYSICAL_UP" and
++            valid_interval(down_interval) and valid_interval(up_interval) and
++            down_interval[1] < up_interval[0] and
++            type(down_actuation) is str and bool(down_actuation) and
++            down_actuation == up_actuation and
++            type(down_owner) is str and bool(down_owner) and down_owner == up_owner and
++            all(row.get("id") == identifier and row.get("step") == step and
++                row.get("key") == key and row.get("intent_token") == token and
++                row.get("owner_id") == down_owner and
++                row.get("grants_input_authority",
++                        row["physical_key_measurement"].get("grants_input_authority")) is False
++                for row in (down, up)) and
++            all(edge.get("key") == key and edge.get("intent_token") == token and
++                edge.get("actuation_id") == down_actuation and
++                edge.get("owner_id") == down_owner and
++                edge.get("grants_input_authority") is False
++                for edge in (down_edge, up_edge)) and
++            down_data.get("application_consumption_observed") is False and
++            up_data.get("application_consumption_observed") is False and
++            no_application_consumption_conflict and
++            bracket_matches(down_data, down_edge, "down", "CONFIRMED_PHYSICAL_DOWN") and
++            bracket_matches(up_data, up_edge, "up", "CONFIRMED_PHYSICAL_UP") and
++            admission_window_matches(down, down_data) and
++            sample_window_matches(down_data, down, "down") and
++            sample_window_matches(up_data, up, "up"))
++        batch_measurement = any(type(data) is dict and data.get("schema") == "keymap-batch-edge-v1"
++                                for data in (down_data, up_data))
++        if batch_measurement:
++            owner_receipt = up.get("owner_thread_keyup_receipt") if up else None
++            complete = complete and (
++                down_data.get("schema") == up_data.get("schema") == "keymap-batch-edge-v1"
++                and down_data.get("interval_basis") == "key_snapshot"
++                and up_data.get("interval_basis") == "shared_batch_snapshot"
++                and up_data.get("post_sample_basis") in ("shared_batch", "key_retry")
++                and type(up_data.get("batch_id")) is str and bool(up_data["batch_id"])
++                and up.get("event") == "input_release_transition"
++                and up.get("release_batch_complete") is True
++                and up.get("owner_transition_verified") is True
++                and up.get("owner_thread_keyup_verified_after_batch") is True
++                and up.get("ordinary_release_candidate") is True
++                and type(owner_receipt) is dict
++                and owner_receipt.get("physical_key_measurement") == up_data)
++        receipts.append({
++            "measurement_schema": "keymap-batch-edge-v1" if batch_measurement else "a01-perkey",
++            "up_interval_basis": "shared_batch_snapshot" if batch_measurement else "key_snapshot",
++            "batch_id": up_data.get("batch_id") if batch_measurement and complete else None,
++            "post_sample_basis": up_data.get("post_sample_basis") if batch_measurement and complete else None,
++            "status": "adapter_edge_brackets_paired" if complete else
++                      "adapter_edge_receipt_incomplete",
++            "program_id_sha256": hashlib.sha256(identifier.encode("utf-8")).hexdigest(),
++            "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
++            "owner_id_sha256": (hashlib.sha256(down_owner.encode("utf-8")).hexdigest()
++                                if type(down_owner) is str else None),
++            "actuation_id_sha256": (hashlib.sha256(actuation_id.encode("utf-8")).hexdigest()
++                                    if type(actuation_id) is str else None),
++            "step": step,
++            "key": key,
++            "input_admitted_ns": (down.get("admitted_ns") if complete else None),
++            "down_press_request_ns": (down_data.get("press_request_ns")
++                                      if complete else None),
++            "down_sync_return_ns": (down_data.get("sync_return_ns")
++                                    if complete else None),
++            "down_edge_interval_ns": down_interval if complete else None,
++            "up_release_request_ns": (up_data.get("release_request_ns")
++                                      if complete else None),
++            "up_sync_return_ns": (up_data.get("sync_return_ns")
++                                  if complete else None),
++            "up_edge_interval_ns": up_interval if complete else None,
++            "grants_input_authority": False if complete else None,
++            "application_consumption_observed": False if complete else None,
++            "scope": ("InputOwner v12 X-server keymap sampling brackets; no application "
++                      "receipt, physical dwell claim, or task-benefit claim"),
++        })
++    for (identifier, step, key, token, admission_position), bucket in grouped.items():
++        admissions = bucket["admission"]
++        releases = bucket["release"]
++        admission = admissions[0] if len(admissions) == 1 else None
++        release = releases[0] if len(releases) == 1 else None
++        owner_v11 = release.get("owner_keyup_receipt") if release else None
++        v11_contract = bool(release and (
++            "owner_keyup_receipt" in release or "owner_keyup_join" in release))
++        owner = (owner_v11 if v11_contract else
++                 (release.get("owner_thread_keyup_receipt") if release else None))
++        admitted_ns = admission.get("admitted_ns") if admission else None
++        input_ack_ns = admission.get("input_ack_ns") if admission else None
++        release_started_ns = release.get("release_call_started_ns") if release else None
++        release_returned_ns = release.get("release_call_returned_ns") if release else None
++        admission_owner_id = (admission.get("owner_id")
++                              if type(admission) is dict else None)
++        keyup_started_ns = (owner.get("owner_keyup_started_ns")
++                            if v11_contract and type(owner) is dict else
++                            (owner.get("owner_keyrelease_started_ns")
++                             if type(owner) is dict else None))
++        sync_returned_ns = owner.get("owner_sync_returned_ns") if type(owner) is dict else None
++        if v11_contract:
++            sync_completed = (type(owner) is dict and
++                              owner.get("xsync_completed") is True and
++                              owner.get("sync_error") is None)
++            owner_history_complete = (
++                release.get("owner_release_history_complete") is True and
++                release.get("owner_cleanup_intervened") is False)
++            owner_verified = (
++                release.get("owner_keyup_join") == "MATCHED_EXPLICIT_KEYUP" and
++                release.get("owner_transition_verified") is True and
++                release.get("admission_identity_status") == "matched" and
++                release.get("admission_position") == admission_position and
++                release.get("ordinary_release_candidate") is True)
++            owner_contract_valid = (
++                type(owner) is dict and
++                owner.get("event") == "owner_keyup" and
++                owner.get("schema") == "owner-keyup-v11" and
++                owner.get("reason") == "explicit_up" and
++                owner.get("key") == key and owner.get("intent_token") == token and
++                type(admission_owner_id) is str and bool(admission_owner_id) and
++                release.get("owner_id") == admission_owner_id and
++                owner.get("owner_id") == admission_owner_id and
++                type(admission_position) is int and
++                admission.get("admission_position") == admission_position and
++                owner.get("physical_verification_authoritative") is False and
++                owner.get("grants_input_authority") is False and
++                release.get("physical_verification_authoritative") is False and
++                release.get("grants_input_authority") is False)
++        else:
++            sync_completed = (type(owner) is dict and
++                              owner.get("server_sync_completed") is True)
++            owner_history_complete = (
++                release.get("owner_thread_keyup_history_complete") is True
++                if release else False)
++            owner_verified = (release.get("owner_thread_keyup_verified") is True
++                              if release else False)
++            owner_identity_layers = (admission, release, owner)
++            owner_id_presence = tuple(
++                type(row) is dict and "owner_id" in row
++                for row in owner_identity_layers)
++            owner_id_values = tuple(
++                row.get("owner_id") if type(row) is dict else None
++                for row in owner_identity_layers)
++            owner_identity_valid = (
++                not any(owner_id_presence) or
++                (all(owner_id_presence) and
++                 all(type(value) is str and bool(value)
++                     for value in owner_id_values) and
++                 len(set(owner_id_values)) == 1))
++            owner_contract_valid = (
++                type(owner) is dict and
++                owner.get("event") == "owner_explicit_keyup" and
++                owner_identity_valid)
++
++        if len(admissions) > 1 or len(releases) > 1:
++            status = "ambiguous_input_edges"
++        elif admission is None:
++            status = "release_without_admission"
++        elif release is None:
++            status = "admission_without_release"
++        elif (release.get("operation") != "up" or type(owner) is not dict or
++              not owner_contract_valid or
++              owner.get("key") != key or owner.get("intent_token") != token or
++              not sync_completed or not owner_verified or
++              not owner_history_complete or
++              type(admitted_ns) is not int or type(input_ack_ns) is not int or
++              input_ack_ns < admitted_ns or
++              type(release_started_ns) is not int or type(release_returned_ns) is not int or
++              type(keyup_started_ns) is not int or type(sync_returned_ns) is not int or
++              keyup_started_ns < input_ack_ns or
++              release_started_ns < input_ack_ns or
++              keyup_started_ns < release_started_ns or
++              sync_returned_ns < keyup_started_ns or
++              release_returned_ns < sync_returned_ns):
++            status = "release_receipt_incomplete"
++        else:
++            status = "paired"
++
++        def delta_ms(start, end):
++            if type(start) is int and type(end) is int and end >= start:
++                return round((end - start) / 1_000_000, 6)
++            return None
++
++        receipts.append({
++            "status": status,
++            "program_id_sha256": hashlib.sha256(identifier.encode("utf-8")).hexdigest(),
++            "intent_token_sha256": hashlib.sha256(token.encode("utf-8")).hexdigest(),
++            "step": step,
++            "key": key,
++            "admission_position": admission_position,
++            "admitted_ns": admitted_ns if type(admitted_ns) is int else None,
++            "input_ack_ns": input_ack_ns if type(input_ack_ns) is int else None,
++            "release_call_started_ns": release_started_ns if type(release_started_ns) is int else None,
++            "owner_keyrelease_started_ns": (keyup_started_ns
++                                             if type(keyup_started_ns) is int else None),
++            "owner_sync_returned_ns": (sync_returned_ns
++                                        if type(sync_returned_ns) is int else None),
++            "release_call_returned_ns": release_returned_ns if type(release_returned_ns) is int else None,
++            "admitted_to_owner_keyup_start_ms": (delta_ms(admitted_ns, keyup_started_ns)
++                                                  if status == "paired" else None),
++            "input_ack_to_owner_keyup_start_ms": (delta_ms(input_ack_ns, keyup_started_ns)
++                                                  if status == "paired" else None),
++            "server_sync_completed": sync_completed,
++            "owner_thread_keyup_verified": owner_verified,
++            "owner_keyup_history_complete": owner_history_complete,
++            "physical_verification_authoritative": (
++                release.get("physical_verification_authoritative") is True
++                if release else False),
++            "scope": ("owner admission-to-keyup-request timing; server synchronization only, "
++                      "not physical key-down duration or task benefit"),
++        })
++    return receipts
++
++
++def effect_receipts(commands, before, observations, accepted_ns,
++                    typed_observations=()):
+     previous=descriptor(Path(before["image"]));receipts=[]
++    previous_observation = before
+     for index,command in enumerate(commands):
+         samples=[row for row in observations if row["step"]==index]
+         if not samples:
+             raise RuntimeError(f"hold step {index} produced no effect observation")
++        feedback_observation=samples[0]
+         observation=samples[-1]
+         current=descriptor(Path(observation["image"]));mae=normalized_mae(previous,current)
+         receipts.append({"action":command["action"],"extent":command["extent"],
+           "result":"no_visible_effect" if mae<=0.015 else "visible_change",
+           "normalized_mae":mae,"no_visible_effect_threshold_lte":0.015,
++          "program_id_sha256":(hashlib.sha256(observation["id"].encode("utf-8")).hexdigest()
++                               if type(observation.get("id")) is str else None),
++          "executor_step":observation.get("step"),
+           "after_sequence":observation["sequence"],
+           "effect_observed_ns":observation["capture_ns"],
++          "feedback_sequence":feedback_observation["sequence"],
++          "feedback_capture_ns":feedback_observation["capture_ns"],
+           "samples":len(samples),
+           "plan_accept_to_first_capture_ms":(samples[0]["capture_ns"]-accepted_ns)/1e6,
+           "plan_accept_to_last_capture_ms":(observation["capture_ns"]-accepted_ns)/1e6,
+           "capture_ms_total":sum(row["capture_ms"] for row in samples),
+-          "scope":"viewport pixels only"})
++          "scope":"viewport pixels only",
++          "state_feedback":action_state_feedback(
++              previous_observation, feedback_observation, typed_observations)})
+         previous=current
++        previous_observation = observation
+     return receipts
+ 
+ 
+@@ -719,7 +1307,9 @@ def main():
+     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
+     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
+     parser.add_argument("--measurement-session", action="store_true",
+-                        help="opt into V15 scorer-only and per-key release telemetry")
++                        help="opt into V15 scorer-only progress sampling")
++    parser.add_argument("--per-key-input-measurement", action="store_true",
++                        help="measure keymap brackets (shared-batch v1 with V15; A01 with V12)")
+     args = parser.parse_args()
+     args.out.mkdir(parents=True, exist_ok=False)
+     planner_client = CodexAppServerClient(
+@@ -785,6 +1375,7 @@ def main():
+             raise RuntimeError("v28 requires a loaded fixture receipt")
+         latest = wait(lambda r:r["event"] == "observation")
+         decisions=[];model_session_id=planner.thread_id
++        cover_renewal_rejections=[]
+         source_refreshes=[]
+         program_admissions=0
+         for index in range(args.iterations):
+@@ -823,19 +1414,90 @@ def main():
+                 cover_policy_source_iteration)
+             failure_cleanup.set_stage("cover_program_compile")
+             cover_steps=compile_cover(cover_semantic)
++            prior_receipts=[] if not decisions else decisions[-1].get("effect_receipts",[])
++            effect_memory=[row["action"] for row in prior_receipts
++                           if row["result"]=="no_visible_effect"]
++            prior_soft_event_summary=latest_soft_event_summary(decisions)
+             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
+-            def submit_cover(identifier):
++            def submit_cover(identifier, allow_rejection=False):
+                 nonlocal clock_ns
+                 clock_ns=time.perf_counter_ns()
+                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
+                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
+                 process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
+                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
+-                              (r.get("id")==identifier or r["event"]=="rejected"))
++                              (r.get("id")==identifier or r["event"]=="rejected"),
++                              observation_monitor=validity_monitor)
++                if accepted["event"] == "policy_invalidation":
++                    return accepted
++                if accepted["event"] == "rejected" and allow_rejection:
++                    return accepted
+                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
+                 cover_ids.append(identifier);return accepted
+             failure_cleanup.set_stage("cover_program_admission")
+-            submit_cover(cover)
++            initial_cover_admission = submit_cover(cover, allow_rejection=True)
++            if initial_cover_admission["event"] in ("policy_invalidation", "rejected"):
++                invalidation = initial_cover_admission.get("invalidation")
++                if initial_cover_admission["event"] == "rejected":
++                    admission_resolution = {"status": "rejected",
++                                            "response": initial_cover_admission}
++                else:
++                    admission_resolution = resolve_invalidated_cover_submission(
++                        wait, cover)
++                cancellation = None
++                if admission_resolution["status"] == "accepted":
++                    cover_ids.append(cover)
++                    cancellation = cancel_invalidated_cover_before_plan(
++                        process, wait, cover)
++                    cover_terminals.append(cancellation["terminal"])
++                invalidated_source_image = str(latest["image"])
++                if invalidation is not None:
++                    latest = wait_for_invalidation_frame(latest, invalidation, wait)
++                decisions.append({
++                    "iteration": index,
++                    "source_image": invalidated_source_image,
++                    "invalidation_frame_image": (None if invalidation is None else
++                                                 str(latest["image"])),
++                    "model_image": None,
++                    "model_image_sha256": None,
++                    "action": {"state": "not_started"},
++                    "effect_memory": effect_memory,
++                    "usage": None,
++                    "model_ns": 0,
++                    "prior_soft_event_summary": prior_soft_event_summary,
++                    "model_session_id": model_session_id,
++                    "planner_turn_id": None,
++                    "planner_turn_status": "not_started",
++                    "planner_answer_eligible": False,
++                    "planner_terminal_observed_ns": None,
++                    "final_action_admission": {
++                        "status": "not_started",
++                        "reason": "cover_invalidated_before_planner"},
++                    "initial_cover_submission_id": cover,
++                    "initial_cover_admission_result": initial_cover_admission,
++                    "initial_cover_admission_resolution": admission_resolution,
++                    "planner_cancellation_requested": False,
++                    "planner_interrupt": None,
++                    "controller_model_started_ns": None,
++                    "controller_model_ended_ns": None,
++                    "cover_program_ids": cover_ids,
++                    "cover_renewals": 0,
++                    "cover_renewal_gaps_ms": cover_renewal_gaps_ms,
++                    "cover_policy": cover_semantic,
++                    "cover_policy_source_iteration": cover_policy_source_iteration,
++                    "cover_validity_admission": validity_admission,
++                    "cover_validity_soft_events": validity_monitor.soft_event_count,
++                    "cover_validity_latest_soft_event": validity_monitor.latest_soft_event,
++                    "policy_invalidation": invalidation,
++                    "cover_admission_cancellation": cancellation,
++                    "cover_program_admitted": admission_resolution["status"] == "accepted",
++                    "model_action_discarded": False,
++                    "discard_reason": (
++                        "planner_not_started_cover_invalidated" if invalidation else
++                        "planner_not_started_cover_rejected"),
++                    "cover_terminal_before_plan": cancellation is not None,
++                    "plan_terminal": "not_started"})
++                continue
+             failure_cleanup.set_stage("decision_artifact_prepare")
+             model_root=args.out/f"decision-{index}"
+             model_root.mkdir()
+@@ -853,6 +1515,12 @@ def main():
+             prior_receipts=[] if not decisions else decisions[-1].get("effect_receipts",[])
+             effect_memory=[row["action"] for row in prior_receipts
+                            if row["result"]=="no_visible_effect"]
++            prior_state_feedback=[{
++                "action":row["action"],"extent":row["extent"],
++                "viewport_result":row["result"],
++                "state_feedback":row.get("state_feedback",{
++                    "status":"unavailable","reason":"not_recorded"})}
++                for row in prior_receipts]
+             prior_soft_event_summary=latest_soft_event_summary(decisions)
+             image=model_root/"temporal-sheet.png"
+             prior=[Path(row["source_image"]) for row in decisions]
+@@ -862,13 +1530,22 @@ def main():
+             planner_handle=begin_model_turn(
+                 planner,model_root,image,effect_memory,
+                 source_health_signal["value"],source_ammo_signal["value"],
+-                prior_soft_event_summary,output_schema)
++                prior_soft_event_summary,output_schema,prior_state_feedback)
+             planner_interrupt=None
+             with ThreadPoolExecutor(max_workers=1) as pool:
+                 future=pool.submit(planner.await_turn,planner_handle,90)
+                 current_cover=cover
+                 current_terminal=None
++                renewal_admission_resolution=None
+                 while not future.done():
++                    if current_cover is None:
++                        boundary = wait_without_active_cover(
++                            wait, invalidation_monitor, planner, planner_handle)
++                        if boundary is not None:
++                            invalidation=boundary["invalidation"]
++                            planner_interrupt=boundary["planner_interrupt"]
++                            break
++                        continue
+                     try:
+                         boundary=wait(lambda r:r["event"]=="terminal" and
+                                       r.get("id")==current_cover,timeout=.1,
+@@ -885,7 +1562,35 @@ def main():
+                     cover_terminals.append(current_terminal)
+                     if future.done():break
+                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
+-                    next_accepted=submit_cover(next_cover)
++                    renewal_expected_sequence=latest["sequence"]
++                    next_accepted=submit_cover(next_cover, allow_rejection=True)
++                    if next_accepted["event"] == "policy_invalidation":
++                        invalidation=next_accepted["invalidation"]
++                        planner_interrupt=planner.interrupt(planner_handle)
++                        renewal_admission_resolution=resolve_invalidated_cover_submission(
++                            wait,next_cover)
++                        if renewal_admission_resolution["status"] == "accepted":
++                            cover_ids.append(next_cover)
++                            current_cover=next_cover
++                            planner_interrupt,current_terminal=cancel_invalidated_cover(
++                                planner,planner_handle,process,wait,current_cover,
++                                planner_interrupt=planner_interrupt)
++                            cover_terminals.append(current_terminal)
++                        # If rejected, the prior terminal remains current; the
++                        # invalidated answer is already interrupted.
++                        break
++                    renewal_outcome=classify_cover_renewal_response(next_accepted)
++                    if renewal_outcome["status"] == "stale_sequence_no_cover":
++                        cover_renewal_rejections.append({
++                            "iteration": index, "id": next_cover,
++                            "reason": renewal_outcome["reason"],
++                            "submitted_sequence": renewal_expected_sequence,
++                            "latest_sequence_after_rejection": latest["sequence"],
++                            "admitted": False,
++                            "previous_cover_terminal_retained": current_terminal,
++                        })
++                        current_cover=None
++                        continue
+                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
+                         current_terminal["terminal_ns"])/1e6)
+                     current_cover=next_cover;current_terminal=None
+@@ -915,6 +1620,7 @@ def main():
+                 planner_result,planner_terminal_observed_ns,
+                 invalidation,time.perf_counter_ns())
+             if invalidation is not None:
++                latest = wait_for_invalidation_frame(latest, invalidation, wait)
+                 decisions.append({"iteration":index,"source_image":str(source_image),"model_image":str(image),
+                   "model_image_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),"action":action,
+                   "effect_memory":effect_memory,"usage":usage,"model_ns":model_ns,
+@@ -930,6 +1636,7 @@ def main():
+                   "controller_model_started_ns":model_started_ns,"controller_model_ended_ns":model_ended_ns,
+                   "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
+                   "cover_renewal_gaps_ms":cover_renewal_gaps_ms,
++                  "cover_renewal_admission_resolution":renewal_admission_resolution,
+                   "cover_policy":cover_semantic,"cover_policy_source_iteration":cover_policy_source_iteration,
+                   "cover_validity_admission":validity_admission,
+                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
+@@ -1102,7 +1809,7 @@ def main():
+                                if row.get("event")=="observation" and row.get("id")==identifier]
+                 completed=len(commands) if not invalidated else terminal["steps_completed"]
+                 receipts=(effect_receipts(commands[:completed],before,observations,
+-                                          accepted["accepted_ns"])
++                                          accepted["accepted_ns"],all_events)
+                           if completed else [])
+                 records=[]
+                 for local_index,(command,receipt) in enumerate(zip(commands[:completed],receipts)):
+@@ -1274,15 +1981,27 @@ def main():
+                     typed,full,{"health":signal_reader,"ammo":ammo_reader})
+                 reconciliation["sequence"]=sequence
+                 typed_reconciliations.append(reconciliation)
++        per_key_input_receipts = input_edge_receipts(all_events)
+         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
+           "source_refreshes":source_refreshes,
+           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
+           "measurement_session":("v15_scorer_only_per_key_release"
+                                   if args.measurement_session else "v12_default"),
+           "model_session_span":args.session_span,
+-          "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
++          "model_session_ids":list(dict.fromkeys(
++              row["model_session_id"] for row in decisions
++              if row.get("planner_turn_id") is not None)),
+           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
+           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
++          "state_feedback_contract":"compare hash-bound typed public health/ammo values at exact before/after action observations and expose the observed transition in the next planner prompt as correlation only; never infer a hit or benefit",
++          "input_edge_receipt_contract":("legacy input_release_transition rows pair per-key admissions "
++              "with exact owner-thread key-up receipts; optional A01 adapter rows pair X-server "
++              "down/up keymap sampling brackets by program, step, key, intent and actuation. "
++              "These are distinct evidence types; neither establishes application consumption or task benefit"),
++          "input_measurement_backend":("input-owner-v12-batch-keymap-v1" if args.measurement_session else "input-owner-v12-perkey-bridge") if args.per_key_input_measurement else ("owner-thread-release-batch-v1" if args.measurement_session else "typed-release-v1-default"),
++          "input_edge_receipts":per_key_input_receipts,
++          "input_edge_receipt_statuses":dict(Counter(
++              row["status"] for row in per_key_input_receipts)),
+           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
+           "final_action_admission_contract":"historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
+           "running_action_contract":"the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
+@@ -1331,10 +2050,12 @@ def main():
+           "runtime_fixture":runtime_fixture,
+           "fixture_contract":"hash/IWAD/engine/map/skill checked before load; measured control begins after load; fixture grants no action authority",
+           "planner_contract":"one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
+-          "planner_turns":len(decisions),
++          "planner_turns":sum(row.get("planner_turn_id") is not None for row in decisions),
+           "planner_interruption_requests":sum(x.get("planner_interrupt") is not None for x in decisions),
+           "planner_interrupted_completions":sum(x.get("planner_turn_status")=="interrupted" for x in decisions),
+-          "planner_ineligible_answers":sum(not x.get("planner_answer_eligible",False) for x in decisions),
++          "planner_ineligible_answers":sum(
++              x.get("planner_turn_id") is not None and
++              not x.get("planner_answer_eligible",False) for x in decisions),
+           "policy_invalidation_contract":"authored cover health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; unauthored empty coast has no policy to invalidate and does not interrupt a pending answer on damage; exact observations and fresh immediate action validity remain mandatory; this never grants input authority or proves success",
+           "policy_invalidations":sum(x.get("policy_invalidation") is not None for x in decisions),
+           "cover_validity_soft_events":sum(x.get("cover_validity_soft_events",0) for x in decisions),
+@@ -1345,6 +2066,7 @@ def main():
+               x["final_action_admission"]["status"] for x in decisions)),
+           "cover_programs":sum(len(x.get("cover_program_ids",[])) for x in decisions),
+           "cover_renewals":sum(x.get("cover_renewals",0) for x in decisions),
++          "cover_renewal_rejections":cover_renewal_rejections,
+           "cover_renewal_gaps_ms":[gap for x in decisions for gap in x.get("cover_renewal_gaps_ms",[])],
+           "model_authored_cover_policies":sum(isinstance(x.get("action"),dict) and
+               x["action"]["state"]=="active" and not x.get("model_action_discarded",False)
+diff --git a/research/doom/session_map01_v12.py b/research/doom/session_map01_v12.py
+index e701035302..7ccd489625 100644
+--- a/research/doom/session_map01_v12.py
++++ b/research/doom/session_map01_v12.py
+@@ -3,6 +3,8 @@
+ import argparse
+ import contextlib
+ import hashlib
++import importlib.util
++import inspect
+ import json
+ import os
+ import shutil
+@@ -25,6 +27,9 @@ from doom_hud_signal_v3 import DoomStatusNumberReader
+ FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
+ SETUP_INPUT_CONTRACT = ("fixture state reached through the same X11 Executor and "
+                         "recorded OS-input/coast programs; save is setup-only")
++PERKEY_BRIDGE = HERE / "map01_v39_perkey_bridge_a01" / "bridge.py"
++PERKEY_OWNER = (HERE / "map01_attack_onset_phase_allocation_02_v1" /
++                "dependencies" / "v12" / "input_owner_v12.py")
+ 
+ 
+ def file_sha256(path):
+@@ -85,6 +90,8 @@ def main():
+     parser.add_argument("--skill", type=int, choices=range(1,6), default=1)
+     parser.add_argument("--fixture-out", type=Path)
+     parser.add_argument("--load-fixture-manifest", type=Path)
++    parser.add_argument("--per-key-input-measurement", action="store_true",
++                        help="opt in to the A01 InputOwner v12 X-adapter edge telemetry")
+     args = parser.parse_args()
+     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
+         parser.error("fixture-out must be a .png save container")
+@@ -108,7 +115,7 @@ def main():
+             print(encoded, flush=True)
+ 
+     sources = {}
+-    for path in (Path(__file__), HERE.parent / "live_control/session_v8.py",
++    source_paths = [Path(__file__), HERE.parent / "live_control/session_v8.py",
+                  HERE.parent / "live_control/executor_v12.py",
+                  HERE.parent / "live_control/executor_v11.py",
+                  HERE.parent / "live_control/executor_v5.py",
+@@ -126,7 +133,29 @@ def main():
+                  HERE / "doom_typed_observation_v1.py",
+                  HERE / "doom_hud_signal_v3.py",
+                  HERE / "doom_hud_signal_v2.py",
+-                 HERE / "doom_hud_signal_v1.py"):
++                 HERE / "doom_hud_signal_v1.py"]
++    selected_backend = Backend
++    if args.per_key_input_measurement:
++        if not PERKEY_BRIDGE.is_file() or not PERKEY_OWNER.is_file():
++            raise FileNotFoundError("per-key measurement source closure is incomplete")
++        sys.path.insert(0, str(PERKEY_OWNER.parent))
++        bridge_spec = importlib.util.spec_from_file_location(
++            "map01_v39_perkey_bridge_a01_backend", PERKEY_BRIDGE)
++        if bridge_spec is None or bridge_spec.loader is None:
++            raise ImportError("could not load per-key measurement bridge")
++        bridge_module = importlib.util.module_from_spec(bridge_spec)
++        bridge_spec.loader.exec_module(bridge_module)
++        selected_backend = bridge_module.Backend
++        # sys.path cannot replace a previously cached InputOwner implementation.
++        selected_owner = selected_backend.__init__.__globals__["InputOwner"]
++        if Path(inspect.getfile(selected_owner)).resolve() != PERKEY_OWNER.resolve():
++            raise RuntimeError(
++                "per-key measurement owner source mismatch; refusing startup. "
++                "The requested measurement owner is not active; this session "
++                "composition is unsupported.")
++        source_paths.extend((PERKEY_BRIDGE, PERKEY_OWNER))
++        source_paths.extend(getattr(selected_backend, "measurement_sources", ()))
++    for path in source_paths:
+         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
+     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
+     try:
+@@ -222,7 +251,7 @@ def main():
+             signal_readers = {
+                 name: DoomStatusNumberReader(iwad, signal_id=name)
+                 for name in ("health", "ammo")}
+-            backend = Backend(session, args.out, emit, signal_readers)
++            backend = selected_backend(session, args.out, emit, signal_readers)
+         executor = Executor(backend, emit)
+         operations = ["submit", "cancel", "clock", "finish"]
+         if args.fixture_out is not None:
+diff --git a/research/doom/session_map01_v15.py b/research/doom/session_map01_v15.py
+index f71ca01426..2d6974c20f 100644
+--- a/research/doom/session_map01_v15.py
++++ b/research/doom/session_map01_v15.py
+@@ -9,6 +9,7 @@ import hashlib,json,sys,time
+ from pathlib import Path
+ from map01_scorer_stdio_adapter_v1 import MainThreadScorerStdin,ScorerFileSink
+ from independent_progress_clock_v2 import ProgressSample
++from v39_measurement_backend_selection_v1 import preserve_opt_in_measurement_backend
+ HERE=Path(__file__).resolve().parent;RESEARCH=HERE.parent
+ 
+ def _option(name,default=None):
+@@ -24,7 +25,10 @@ def _merge_sources(out):
+     path=Path(out)/'sources.json'
+     if not path.exists():return False
+     data=json.loads(path.read_text(encoding='utf-8'))
+-    additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
++    additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py',HERE/'v39_measurement_backend_selection_v1.py',RESEARCH/'live_control/key_edge_measurement_v1.py']
++    if '--per-key-input-measurement' in sys.argv[1:]:
++        additions.extend([HERE/'doom_batch_key_measurement_backend_v1.py',
++                          RESEARCH/'live_control/key_edge_measurement_v1.py'])
+     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
+     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
+ 
+@@ -105,6 +109,7 @@ class _GameProxy:
+             raise self._close_error
+         return result
+ 
++
+ def main():
+     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
+     if timeout_seconds<10:raise ValueError('timeout must leave scoring slack')
+@@ -120,7 +125,13 @@ def main():
+     original_ctor=base.vd.DoomGame;original_stdin=sys.stdin;polling=MainThreadScorerStdin(original_stdin,sample_game,sink,sample_hz=35.0)
+     def ctor(*args,**kwargs):
+         proxy=_GameProxy(original_ctor(*args,**kwargs),final_sample);holder['game']=proxy;return proxy
+-    base.vd.DoomGame=ctor;base.Backend=TelemetryBackend;base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
++    base.vd.DoomGame=ctor
++    if '--per-key-input-measurement' in sys.argv[1:]:
++        base.PERKEY_BRIDGE = HERE / 'doom_batch_key_measurement_backend_v1.py'
++        base.PERKEY_OWNER = RESEARCH / 'live_control/input_owner_v12.py'
++    preserve_opt_in_measurement_backend(
++        base, TelemetryBackend, sys.argv[1:])
++    base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
+     try:base.main()
+     finally:
+         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
+diff --git a/research/doom/v39_measurement_backend_selection_v1.py b/research/doom/v39_measurement_backend_selection_v1.py
+new file mode 100644
+index 0000000000..c7d84b1b8b
+--- /dev/null
++++ b/research/doom/v39_measurement_backend_selection_v1.py
+@@ -0,0 +1,8 @@
++"""Backend choice helper for the V15 scorer plus optional V39 edge measurement."""
++
++
++def preserve_opt_in_measurement_backend(base, release_batch_backend, argv):
++    """Do not replace v12's A01 backend after its CLI parser selects it."""
++    if "--per-key-input-measurement" not in argv:
++        base.Backend = release_batch_backend
++    return base.Backend
+diff --git a/research/live_control/input_owner_v12.py b/research/live_control/input_owner_v12.py
+index d11a9b1328..5622e684f5 100644
+--- a/research/live_control/input_owner_v12.py
++++ b/research/live_control/input_owner_v12.py
+@@ -10,10 +10,13 @@ import uuid
+ from Xlib import X, XK, display, error
+ from Xlib.ext import xtest
+ from executor_v3 import Cancelled, DecisionRequired
++from key_edge_measurement_v1 import KeyEdgeMeasurements, key_sample
++from lease import Expired
+ 
+ 
+ class InputOwner:
+-    def __init__(self, display_name):
++    def __init__(self, display_name, *, measure_key_edges=False):
++        self.measure_key_edges = measure_key_edges is True
+         self.requests = queue.Queue()
+         self.owner_id = uuid.uuid4().hex
+         self.records = []
+@@ -85,10 +88,12 @@ class InputOwner:
+         buttons = {}
+         touched_buttons = set()
+         active = None
++        last_cleanup = None  # exact lease object and verified interruption reason
+         active_pointer = False
+         revision = 0
+         fault = None
+         release_pending = False
++        measurement = KeyEdgeMeasurements(self.owner_id) if self.measure_key_edges else None
+         self.ready.set()
+ 
+         def key_is_down(code):
+@@ -101,9 +106,10 @@ class InputOwner:
+             except Exception as exc:
+                 return None, {"type": type(exc).__name__, "message": str(exc)[:200]}, time.perf_counter_ns()
+ 
+-        def release_key(code, *, max_attempts=3, force_first=False):
++        def release_key(code, *, max_attempts=3, force_first=False, capture_measurement=False):
+             attempts = []
+-            server_down, before_error, _ = sample_key_down(code)
++            before_started_ns = time.perf_counter_ns() if capture_measurement else None
++            server_down, before_error, before_finished_ns = sample_key_down(code)
+             for attempt in range(1, max_attempts + 1):
+                 if server_down is False and not (force_first and attempt == 1):
+                     break
+@@ -120,6 +126,7 @@ class InputOwner:
+                 except Exception as exc:
+                     sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                 sync_returned_ns = time.perf_counter_ns() if sync_error is None else None
++                after_started_ns = time.perf_counter_ns() if capture_measurement else None
+                 server_down, after_error, sampled_ns = sample_key_down(code)
+                 attempts.append({
+                     "attempt": attempt,
+@@ -133,11 +140,32 @@ class InputOwner:
+                     "keyrelease_error": release_error,
+                     "sync_error": sync_error,
+                 })
++                if capture_measurement:
++                    # Retain observations already required for release/retry.
++                    # Do not insert another keymap request into cleanup.
++                    attempts[-1].update(
++                        measurement_pre_sample=dict(
++                            available=observed_down_before is not None and before_error is None,
++                            down=observed_down_before, error=before_error,
++                            started_ns=before_started_ns, finished_ns=before_finished_ns),
++                        measurement_post_sample=dict(
++                            available=server_down is not None and after_error is None,
++                            down=server_down, error=after_error,
++                            started_ns=after_started_ns, finished_ns=sampled_ns))
++                before_started_ns, before_finished_ns = after_started_ns, sampled_ns
+                 before_error = after_error
+                 if server_down is False:
+                     break
+             return attempts, server_down is False
+ 
++        def measured_sample(code):
++            started = time.perf_counter_ns()
++            try:
++                bitmap, sample_error = d.query_keymap(), None
++            except Exception as exc:
++                bitmap, sample_error = None, {"type": type(exc).__name__, "message": str(exc)[:200]}
++            return key_sample(bitmap, sample_error, started, time.perf_counter_ns(), code)
++
+         def release_keys_batch(lease, keys):
+             nonlocal fault,release_pending
+             if (type(keys) is not list or not keys or
+@@ -145,6 +173,18 @@ class InputOwner:
+                     len(set(keys)) != len(keys)):
+                 raise ValueError('unique non-empty key list required for up_batch')
+             if active is not lease or lease is None:
++                # The owner watchdog can finish cleanup before the caller's
++                # finally-path UP batch arrives. Preserve that exact lease's
++                # interruption; do not inject or manufacture explicit-UP rows.
++                if (active is None and last_cleanup is not None
++                        and last_cleanup[0] is lease):
++                    reason = last_cleanup[1]
++                    if reason == 'cancelled':
++                        raise Cancelled()
++                    if reason == 'expired':
++                        raise Expired()
++                    if reason in ('focus_changed', 'surface_changed'):
++                        raise DecisionRequired(reason)
+                 raise ValueError('up_batch requires the active input lease')
+             codes = []
+             for key in keys:
+@@ -156,12 +196,15 @@ class InputOwner:
+             # The pre-sample occurs before the ordered UP sequence. Send every
+             # original explicit UP before sampling again; this preserves the
+             # release-batch no-query-between-UPs contract.
++            before_started_ns = time.perf_counter_ns() if measurement else None
+             try:
+                 before_bitmap = d.query_keymap()
+                 before_error = None
+             except Exception as exc:
+                 before_bitmap = None
+                 before_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
++            before_finished_ns = time.perf_counter_ns() if measurement else None
++            batch_id = f"{self.owner_id}:batch:{revision}"
+             attempt_rows = {}
+             for key, code in codes:
+                 started_ns = time.perf_counter_ns()
+@@ -191,23 +234,27 @@ class InputOwner:
+                     'sync_error': sync_error,
+                 }]
+ 
++            # Keep the shared initial snapshot separate from per-key retry samples.
++            batch_started_ns = time.perf_counter_ns() if measurement else None
+             try:
+-                bitmap = d.query_keymap()
+-                sample_error = None
+-                sampled_ns = time.perf_counter_ns()
++                batch_bitmap = d.query_keymap()
++                batch_sample_error = None
++                batch_sampled_ns = time.perf_counter_ns()
+             except Exception as exc:
+-                bitmap = None
+-                sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+-                sampled_ns = time.perf_counter_ns()
++                batch_bitmap = None
++                batch_sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
++                batch_sampled_ns = time.perf_counter_ns()
+             receipts = []
+             for key, code in codes:
+                 attempts = attempt_rows[code]
++                final_started_ns = batch_started_ns
++                final_bitmap, final_error, final_ns = batch_bitmap, batch_sample_error, batch_sampled_ns
+                 server_down = (
+-                    bool(bitmap[code // 8] & (1 << (code % 8)))
+-                    if bitmap is not None else None)
+-                attempts[0]['keymap_sampled_ns'] = sampled_ns
++                    bool(batch_bitmap[code // 8] & (1 << (code % 8)))
++                    if batch_bitmap is not None else None)
++                attempts[0]['keymap_sampled_ns'] = batch_sampled_ns
+                 attempts[0]['server_key_down_after'] = server_down
+-                attempts[0]['keymap_after_error'] = sample_error
++                attempts[0]['keymap_after_error'] = batch_sample_error
+                 while server_down is True and len(attempts) < 3:
+                     started_ns = time.perf_counter_ns()
+                     release_error = None
+@@ -221,6 +268,7 @@ class InputOwner:
+                     except Exception as exc:
+                         sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                     sync_ns = time.perf_counter_ns() if sync_error is None else None
++                    retry_started_ns = time.perf_counter_ns() if measurement else None
+                     try:
+                         bitmap = d.query_keymap()
+                         sample_error = None
+@@ -229,6 +277,8 @@ class InputOwner:
+                         bitmap = None
+                         sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                         sampled_ns = time.perf_counter_ns()
++                    final_started_ns = retry_started_ns
++                    final_bitmap, final_error, final_ns = bitmap, sample_error, sampled_ns
+                     server_down = (
+                         bool(bitmap[code // 8] & (1 << (code % 8)))
+                         if bitmap is not None else None)
+@@ -267,11 +317,32 @@ class InputOwner:
+                     physical_verification_authoritative=False,
+                     release_batch_initial_up_count=len(codes),
+                     release_batch_key_order=[item[0] for item in codes])
++                if measurement:
++                    receipt['physical_key_measurement'] = measurement.edge(
++                        'up', code, key, getattr(lease, 'intent_token', None),
++                        key_sample(before_bitmap, before_error, before_started_ns, before_finished_ns, code),
++                        key_sample(final_bitmap, final_error, final_started_ns, final_ns, code),
++                        attempts[0]['keyrelease_started_ns'], attempts[-1]['sync_returned_ns'],
++                        operation_ok=verified and all(
++                            row['keyrelease_error'] is None and row['sync_error'] is None
++                            and row['keymap_before_error'] is None and row['keymap_after_error'] is None
++                            for row in attempts),
++                        batch_id=batch_id,
++                        post_sample_basis='shared_batch' if len(attempts) == 1 else 'key_retry')
+                 self.records.append(receipt)
+                 receipts.append(receipt)
+             if any(not receipt["server_keyup_verified"] for receipt in receipts):
+                 fault = RuntimeError("input owner failed closed after unverified key-up")
+                 release_pending = True
++            if measurement and any(
++                    receipt['physical_key_measurement']['classification'] != 'CONFIRMED_PHYSICAL_UP'
++                    for receipt in receipts):
++                # Key state can be neutral even when a send/sync raised. Keep
++                # cleanup state separate from the certainty of the batch edges.
++                for receipt in receipts:
++                    data = receipt['physical_key_measurement']
++                    data.update(classification='BATCH_RELEASE_UNCONFIRMED', bracket=None,
++                                adapter_edge=None, actuation_id=None, identity_status='UNAVAILABLE')
+             return receipts
+ 
+         def focus_id():
+@@ -357,7 +428,7 @@ class InputOwner:
+                 raise Cancelled()
+ 
+         def release(reason):
+-            nonlocal active,revision,fault,release_pending
++            nonlocal active,revision,fault,release_pending,last_cleanup
+             revision += 1
+             release_pending = True
+             key_release_attempts = {}
+@@ -367,10 +438,26 @@ class InputOwner:
+             release_codes = list(held)
+             release_codes.extend(sorted(set(touched) - set(held)))
+             for code in release_codes:
+-                attempts, verified = release_key(code)
++                lineage = measurement.active.get(code) if measurement else None
++                owned_lease = held.get(code)
++                attempts, verified = release_key(code, capture_measurement=measurement is not None)
+                 key_release_attempts[str(code)] = {
+                     "attempts": attempts, "verified": verified,
+                 }
++                if lineage is not None and attempts:
++                    key_release_attempts[str(code)]["physical_key_measurement"] = measurement.edge(
++                        'up', code, lineage[0], getattr(owned_lease, 'intent_token', None),
++                        attempts[0]['measurement_pre_sample'],
++                        attempts[-1]['measurement_post_sample'],
++                        attempts[0]['keyrelease_started_ns'], attempts[-1]['sync_returned_ns'],
++                        owned_before=owned_lease is not None,
++                        operation_ok=owned_lease is not None and verified and all(
++                            a['keyrelease_error'] is None and a['sync_error'] is None
++                            for a in attempts), cleanup=True)
++            if measurement:
++                # Any no-op, failed or unobserved lineage ends at this cleanup
++                # boundary too. It must not be reused by a later explicit UP.
++                measurement.clear()
+             # An explicit ButtonRelease may be acknowledged by XSync while
+             # the server still reports the button down. Retry every touched
+             # button that remains down, including one removed from `buttons`.
+@@ -436,6 +523,8 @@ class InputOwner:
+             touched_buttons.clear()
+             held.clear()
+             touched.clear()
++            if active is not None:
++                last_cleanup = (active, reason)
+             active = None
+             fault = None
+             release_pending = False
+@@ -575,18 +664,41 @@ class InputOwner:
+                             if lease.cancel.is_set():
+                                 raise Cancelled()
+                             admitted = time.perf_counter_ns()
++                            owned_before = code in held
++                            if measurement:
++                                measurement.forget(code)
++                                pre_sample = measured_sample(code)
++                                # The extra round trip must not weaken admission.
++                                if getattr(lease, 'focus_invalid', False) or invalid_focus(lease):
++                                    lease.focus_invalid = True
++                                    raise DecisionRequired()
++                                lease.check()
++                                if time.perf_counter_ns() >= lease.deadline:
++                                    raise DecisionRequired('input lease expired during measurement')
++                                if lease.cancel.is_set():
++                                    raise Cancelled()
+                             active = lease
++                            last_cleanup = None
+                             active_pointer = False
+                             touched.add(code)
+                             held[code] = lease
++                            press_request_ns = time.perf_counter_ns() if measurement else None
+                             xtest.fake_input(d, X.KeyPress, code)
+                             d.sync()
++                            ack_ns = time.perf_counter_ns()
+                             result = dict(event='input_admission', key=key, admitted_ns=admitted,
+-                                          input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
++                                          input_ack_ns=ack_ns, valid_until_ns=lease.deadline)
++                            if measurement:
++                                result['physical_key_measurement'] = measurement.edge(
++                                    'down', code, key, getattr(lease, 'intent_token', None),
++                                    pre_sample, measured_sample(code), press_request_ns, ack_ns,
++                                    owned_before=owned_before)
+                         else:
+                             # Cleanup from an old intent must never release a newer hold.
+                             if code in held and held[code] is not lease:
+                                 raise ValueError('key belongs to another intent')
++                            if measurement:
++                                measurement.forget(code)
+                             if code in held:
+                                 key_release_attempts, server_keyup_verified = release_key(
+                                     code, force_first=True)
+diff --git a/research/live_control/input_transition_owner_v4.py b/research/live_control/input_transition_owner_v4.py
+index ac1cc0e671..159c5d310e 100644
+--- a/research/live_control/input_transition_owner_v4.py
++++ b/research/live_control/input_transition_owner_v4.py
+@@ -113,6 +113,8 @@ class InputOwner(Previous):
+                         "original UP sequence and verify X-server state only"
+                     ),
+                 })
++                if receipt is not None and isinstance(receipt.get("physical_key_measurement"), dict):
++                    row["physical_key_measurement"] = dict(receipt["physical_key_measurement"])
+                 joined.append(row)
+             return joined
+         if operation != "up":
+diff --git a/research/live_control/key_edge_measurement_v1.py b/research/live_control/key_edge_measurement_v1.py
+new file mode 100644
+index 0000000000..775c58961e
+--- /dev/null
++++ b/research/live_control/key_edge_measurement_v1.py
+@@ -0,0 +1,73 @@
++"""Optional conservative keymap brackets; never evidence of application input.
++
++The A01 field names are retained for the existing projection. The version and
++interval basis distinguish individual DOWN samples from correlated batch UP
++samples, and per-key emergency cleanup observations. This recorder owns no input authority and runs on the owner thread.
++"""
++
++
++class KeyEdgeMeasurements:
++    def __init__(self, owner_id):
++        self.owner_id = owner_id
++        self.generation = 0
++        self.active = {}
++
++    def forget(self, code):
++        self.active.pop(code, None)
++
++    def clear(self):
++        # Cleanup may have acted without a pairable explicit UP measurement.
++        self.active.clear()
++
++    def edge(self, edge, code, key, token, pre, post, request_ns, sync_ns,
++             *, owned_before=False, operation_ok=True, batch_id=None,
++             post_sample_basis=None, cleanup=False):
++        previous = self.active.pop(code, None)
++        expected_pre, expected_post = (False, True) if edge == "down" else (True, False)
++        confirmed = (
++            operation_ok and isinstance(token, str) and bool(token)
++            and pre["available"] is True and post["available"] is True
++            and pre["error"] is None and post["error"] is None
++            and pre["down"] is expected_pre and post["down"] is expected_post
++            and all(type(n) is int for n in
++                    (pre["started_ns"], pre["finished_ns"], request_ns,
++                     sync_ns, post["started_ns"], post["finished_ns"]))
++            and pre["started_ns"] <= pre["finished_ns"] <= request_ns
++            <= sync_ns <= post["started_ns"] <= post["finished_ns"]
++        )
++        identity = None
++        if edge == "down":
++            confirmed = confirmed and not owned_before and previous is None
++            if confirmed:
++                self.generation += 1
++                identity = f"{self.owner_id}:{self.generation}"
++                self.active[code] = (key, token, identity)
++        else:
++            confirmed = confirmed and previous is not None and previous[:2] == (key, token)
++            if confirmed:
++                identity = previous[2]
++        status = ("CONFIRMED_PHYSICAL_" + edge.upper() if confirmed
++                  else "KEYMAP_EDGE_UNCONFIRMED")
++        basis = ("key_snapshot" if edge == "down" else
++                 "per_key_cleanup_snapshot" if cleanup else "shared_batch_snapshot")
++        interval = [pre["finished_ns"], post["finished_ns"]] if confirmed else None
++        common = dict(owner_id=self.owner_id, intent_token=token, key=key,
++                      grants_input_authority=False, application_consumption_observed=False)
++        bracket = dict(common, status=status, actuation_id=identity, **{f"physical_{edge}_interval": interval}) if confirmed else None
++        adapter = dict(common, edge=edge, status=status, actuation_id=identity,
++                       interval=interval) if confirmed else None
++        return dict(common, schema="keymap-batch-edge-v1", interval_basis=basis,
++                    scope="conservative X-server keymap observation bracket; no physical dwell or application receipt",
++                    edge=edge, classification=status, bracket=bracket,
++                    actuation_id=identity,
++                    identity_status=("MINTED" if edge == "down" else "RETIRED") if confirmed else "UNAVAILABLE",
++                    pre_sample=pre, post_sample=post,
++                    **{("press_request_ns" if edge == "down" else "release_request_ns"): request_ns},
++                    sync_return_ns=sync_ns, release_attempted=edge == "up",
++                    adapter_edge=adapter, batch_id=batch_id, post_sample_basis=post_sample_basis)
++
++
++def key_sample(bitmap, error, started_ns, finished_ns, code):
++    return dict(available=bitmap is not None and error is None,
++                down=bool(bitmap[code // 8] & (1 << (code % 8))) if bitmap is not None else None,
++                started_ns=started_ns, finished_ns=finished_ns, error=error)
+diff --git a/research/live_control/observable_signal_guard_v2.py b/research/live_control/observable_signal_guard_v2.py
+index c0955f976e..1e7ad4f936 100644
+--- a/research/live_control/observable_signal_guard_v2.py
++++ b/research/live_control/observable_signal_guard_v2.py
+@@ -1,5 +1,6 @@
+ """One-way typed signal validity envelope with monitor-stage clocks."""
+ import json
++from copy import deepcopy
+ import time
+ 
+ 
+@@ -128,6 +129,13 @@ class ObservableSignalPolicyMonitor:
+                  "outcome_evaluated_ns": outcome_evaluated_ns,
+                  "signal_extraction_ms": (signal_extracted_ns - monitor_received_ns) / 1e6,
+                  "outcome_evaluation_ms": (outcome_evaluated_ns - signal_extracted_ns) / 1e6}
++        # Keep the originating observation identity even when extraction failed.
++        # A later full-frame barrier must not substitute a newer row or rely on
++        # identity that may be absent from an UNKNOWN signal.
++        event["capture_ns"] = observation.get("capture_ns")
++        event["pointer_binding"] = deepcopy(observation.get("pointer_binding"))
++        if "frame_rgb_sha256" in observation:
++            event["frame_rgb_sha256"] = observation["frame_rgb_sha256"]
+         if outcome["status"] == "SOFT_CHANGED":
+             if outcome["current_value"] != self.last_signal_value:
+                 self.soft_event_count += 1

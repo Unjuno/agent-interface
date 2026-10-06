@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orb",
+    "-m",
+    "v15-native-e0cc-20261005",
+    "-u",
+    "study",
+    "-w",
+    "/home/study/native-executor",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "python3",
+    "-c",
+    "import sys,pathlib,json; p=pathlib.Path('/home/study/native-executor/source');sys.path[:0]=[str(p/rel) for rel in ['research/live_control','research/doom','research/observation_gating','research/observation_tiles','research/real_apps_v1','']];from doom_batch_key_measurement_backend_v1 import Backend;print(json.dumps({'mro':[c.__module__+'.'+c.__name__ for c in Backend.__mro__],'release_definitions':[c.__module__ for c in Backend.__mro__ if 'release_all' in c.__dict__]}))"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"mro\": [\"doom_batch_key_measurement_backend_v1.Backend\", \"doom_owner_thread_release_batch_backend_v1.Backend\", \"doom_typed_release_backend_v2.Backend\", \"doom_typed_release_backend_v1.Backend\", \"doom_typed_coast_backend_v1.Backend\", \"coast_backend_v1.Backend\", \"session_v10.Backend\", \"session_v9.Backend\", \"session_v8.Backend\", \"session_v7.Backend\", \"session_v6.Backend\", \"session_v5.Backend\", \"session_v4.Backend\", \"builtins.object\"], \"release_definitions\": [\"doom_owner_thread_release_batch_backend_v1\", \"session_v5\", \"session_v4\"]}\n",
+  "stderr": "",
+  "scope": "import-only MRO inspection, zero constructors/Xvfb/input"
+}

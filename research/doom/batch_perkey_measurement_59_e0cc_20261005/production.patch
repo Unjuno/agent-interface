@@ -1,0 +1,301 @@
+diff --git a/research/doom/doom_owner_thread_release_batch_backend_v1.py b/research/doom/doom_owner_thread_release_batch_backend_v1.py
+index 193c2bd231..0d079174cb 100644
+--- a/research/doom/doom_owner_thread_release_batch_backend_v1.py
++++ b/research/doom/doom_owner_thread_release_batch_backend_v1.py
+@@ -10,10 +10,10 @@ from input_transition_owner_v4 import InputOwner
+ class Backend(Previous):
+     """Opt-in release composition; controller and default backend are unchanged."""
+ 
+-    def __init__(self, session, out, emit, signal_readers):
++    def __init__(self, session, out, emit, signal_readers, *, _owner_cls=InputOwner):
+         super().__init__(session, out, emit, signal_readers)
+         self.owner.close()
+-        self.owner = InputOwner(session.name)
++        self.owner = _owner_cls(session.name)
+         self._release_batch = threading.local()
+         self._last_release_batch_delivery = None
+ 
+diff --git a/research/doom/map01_overlap_controller_v39.py b/research/doom/map01_overlap_controller_v39.py
+index 4d48ba24f7..b3bb82c0bb 100644
+--- a/research/doom/map01_overlap_controller_v39.py
++++ b/research/doom/map01_overlap_controller_v39.py
+@@ -836,7 +836,9 @@ def input_edge_receipts(events):
+         adapter_edge = (measurement.get("adapter_edge")
+                         if type(measurement) is dict else None)
+         adapter_candidate = (
+-            event_name == "input_release_measurement" or
++            event_name == "input_release_measurement" or
++            (event_name == "input_release_transition" and type(measurement) is dict
++             and measurement.get("schema") == "keymap-batch-edge-v1") or
+             (event_name == "input_admission" and type(measurement) is dict))
+         if adapter_candidate:
+             edge_name = adapter_edge.get("edge") if type(adapter_edge) is dict else None
+@@ -1034,7 +1036,28 @@ def input_edge_receipts(events):
+             admission_window_matches(down, down_data) and
+             sample_window_matches(down_data, down, "down") and
+             sample_window_matches(up_data, up, "up"))
++        batch_measurement = any(type(data) is dict and data.get("schema") == "keymap-batch-edge-v1"
++                                for data in (down_data, up_data))
++        if batch_measurement:
++            owner_receipt = up.get("owner_thread_keyup_receipt") if up else None
++            complete = complete and (
++                down_data.get("schema") == up_data.get("schema") == "keymap-batch-edge-v1"
++                and down_data.get("interval_basis") == "key_snapshot"
++                and up_data.get("interval_basis") == "shared_batch_snapshot"
++                and up_data.get("post_sample_basis") in ("shared_batch", "key_retry")
++                and type(up_data.get("batch_id")) is str and bool(up_data["batch_id"])
++                and up.get("event") == "input_release_transition"
++                and up.get("release_batch_complete") is True
++                and up.get("owner_transition_verified") is True
++                and up.get("owner_thread_keyup_verified_after_batch") is True
++                and up.get("ordinary_release_candidate") is True
++                and type(owner_receipt) is dict
++                and owner_receipt.get("physical_key_measurement") == up_data)
+         receipts.append({
++            "measurement_schema": "keymap-batch-edge-v1" if batch_measurement else "a01-perkey",
++            "up_interval_basis": "shared_batch_snapshot" if batch_measurement else "key_snapshot",
++            "batch_id": up_data.get("batch_id") if batch_measurement and complete else None,
++            "post_sample_basis": up_data.get("post_sample_basis") if batch_measurement and complete else None,
+             "status": "adapter_edge_brackets_paired" if complete else
+                       "adapter_edge_receipt_incomplete",
+             "program_id_sha256": hashlib.sha256(identifier.encode("utf-8")).hexdigest(),
+@@ -1255,7 +1278,7 @@ def main():
+     parser.add_argument("--measurement-session", action="store_true",
+                         help="opt into V15 scorer-only progress sampling")
+     parser.add_argument("--per-key-input-measurement", action="store_true",
+-                        help="load the source-hashed A01 per-key X-adapter measurement bridge")
++                        help="measure keymap brackets (shared-batch v1 with V15; A01 with V12)")
+     args = parser.parse_args()
+     args.out.mkdir(parents=True, exist_ok=False)
+     planner_client = CodexAppServerClient(
+@@ -1938,7 +1961,7 @@ def main():
+               "with exact owner-thread key-up receipts; optional A01 adapter rows pair X-server "
+               "down/up keymap sampling brackets by program, step, key, intent and actuation. "
+               "These are distinct evidence types; neither establishes application consumption or task benefit"),
+-          "input_measurement_backend":"input-owner-v12-perkey-bridge" if args.per_key_input_measurement else "typed-release-v1-default",
++          "input_measurement_backend":("input-owner-v12-batch-keymap-v1" if args.measurement_session else "input-owner-v12-perkey-bridge") if args.per_key_input_measurement else ("owner-thread-release-batch-v1" if args.measurement_session else "typed-release-v1-default"),
+           "input_edge_receipts":per_key_input_receipts,
+           "input_edge_receipt_statuses":dict(Counter(
+               row["status"] for row in per_key_input_receipts)),
+diff --git a/research/doom/session_map01_v12.py b/research/doom/session_map01_v12.py
+index 02461ceaa4..a14fa0b805 100644
+--- a/research/doom/session_map01_v12.py
++++ b/research/doom/session_map01_v12.py
+@@ -154,6 +154,7 @@ def main():
+                 "The requested A01 owner is not active; this session "
+                 "composition is unsupported.")
+         source_paths.extend((PERKEY_BRIDGE, PERKEY_OWNER))
++        source_paths.extend(getattr(selected_backend, "measurement_sources", ()))
+     for path in source_paths:
+         sources[str(path.relative_to(HERE.parent))] = hashlib.sha256(path.read_bytes()).hexdigest()
+     (args.out / "sources.json").write_text(json.dumps(sources, indent=2))
+diff --git a/research/doom/session_map01_v15.py b/research/doom/session_map01_v15.py
+index 6348e2c9fb..2d6974c20f 100644
+--- a/research/doom/session_map01_v15.py
++++ b/research/doom/session_map01_v15.py
+@@ -25,7 +25,10 @@ def _merge_sources(out):
+     path=Path(out)/'sources.json'
+     if not path.exists():return False
+     data=json.loads(path.read_text(encoding='utf-8'))
+-    additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py',HERE/'v39_measurement_backend_selection_v1.py']
++    additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py',HERE/'v39_measurement_backend_selection_v1.py',RESEARCH/'live_control/key_edge_measurement_v1.py']
++    if '--per-key-input-measurement' in sys.argv[1:]:
++        additions.extend([HERE/'doom_batch_key_measurement_backend_v1.py',
++                          RESEARCH/'live_control/key_edge_measurement_v1.py'])
+     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
+     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
+ 
+@@ -123,6 +126,9 @@ def main():
+     def ctor(*args,**kwargs):
+         proxy=_GameProxy(original_ctor(*args,**kwargs),final_sample);holder['game']=proxy;return proxy
+     base.vd.DoomGame=ctor
++    if '--per-key-input-measurement' in sys.argv[1:]:
++        base.PERKEY_BRIDGE = HERE / 'doom_batch_key_measurement_backend_v1.py'
++        base.PERKEY_OWNER = RESEARCH / 'live_control/input_owner_v12.py'
+     preserve_opt_in_measurement_backend(
+         base, TelemetryBackend, sys.argv[1:])
+     base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
+diff --git a/research/live_control/input_owner_v12.py b/research/live_control/input_owner_v12.py
+index 0f39d64308..7a101d2777 100644
+--- a/research/live_control/input_owner_v12.py
++++ b/research/live_control/input_owner_v12.py
+@@ -10,10 +10,12 @@ import uuid
+ from Xlib import X, XK, display, error
+ from Xlib.ext import xtest
+ from executor_v3 import Cancelled, DecisionRequired
++from key_edge_measurement_v1 import KeyEdgeMeasurements, key_sample
+ 
+ 
+ class InputOwner:
+-    def __init__(self, display_name):
++    def __init__(self, display_name, *, measure_key_edges=False):
++        self.measure_key_edges = measure_key_edges is True
+         self.requests = queue.Queue()
+         self.owner_id = uuid.uuid4().hex
+         self.records = []
+@@ -89,6 +91,7 @@ class InputOwner:
+         revision = 0
+         fault = None
+         release_pending = False
++        measurement = KeyEdgeMeasurements(self.owner_id) if self.measure_key_edges else None
+         self.ready.set()
+ 
+         def key_is_down(code):
+@@ -138,6 +141,14 @@ class InputOwner:
+                     break
+             return attempts, server_down is False
+ 
++        def measured_sample(code):
++            started = time.perf_counter_ns()
++            try:
++                bitmap, sample_error = d.query_keymap(), None
++            except Exception as exc:
++                bitmap, sample_error = None, {"type": type(exc).__name__, "message": str(exc)[:200]}
++            return key_sample(bitmap, sample_error, started, time.perf_counter_ns(), code)
++
+         def release_keys_batch(lease, keys):
+             nonlocal fault,release_pending
+             if (type(keys) is not list or not keys or
+@@ -156,12 +167,15 @@ class InputOwner:
+             # The pre-sample occurs before the ordered UP sequence. Send every
+             # original explicit UP before sampling again; this preserves the
+             # release-batch no-query-between-UPs contract.
++            before_started_ns = time.perf_counter_ns() if measurement else None
+             try:
+                 before_bitmap = d.query_keymap()
+                 before_error = None
+             except Exception as exc:
+                 before_bitmap = None
+                 before_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
++            before_finished_ns = time.perf_counter_ns() if measurement else None
++            batch_id = f"{self.owner_id}:batch:{revision}"
+             attempt_rows = {}
+             for key, code in codes:
+                 started_ns = time.perf_counter_ns()
+@@ -192,6 +206,7 @@ class InputOwner:
+                 }]
+ 
+             # Keep the shared initial snapshot separate from per-key retry samples.
++            batch_started_ns = time.perf_counter_ns() if measurement else None
+             try:
+                 batch_bitmap = d.query_keymap()
+                 batch_sample_error = None
+@@ -203,6 +218,8 @@ class InputOwner:
+             receipts = []
+             for key, code in codes:
+                 attempts = attempt_rows[code]
++                final_started_ns = batch_started_ns
++                final_bitmap, final_error, final_ns = batch_bitmap, batch_sample_error, batch_sampled_ns
+                 server_down = (
+                     bool(batch_bitmap[code // 8] & (1 << (code % 8)))
+                     if batch_bitmap is not None else None)
+@@ -222,6 +239,7 @@ class InputOwner:
+                     except Exception as exc:
+                         sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                     sync_ns = time.perf_counter_ns() if sync_error is None else None
++                    retry_started_ns = time.perf_counter_ns() if measurement else None
+                     try:
+                         bitmap = d.query_keymap()
+                         sample_error = None
+@@ -230,6 +248,8 @@ class InputOwner:
+                         bitmap = None
+                         sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                         sampled_ns = time.perf_counter_ns()
++                    final_started_ns = retry_started_ns
++                    final_bitmap, final_error, final_ns = bitmap, sample_error, sampled_ns
+                     server_down = (
+                         bool(bitmap[code // 8] & (1 << (code % 8)))
+                         if bitmap is not None else None)
+@@ -268,11 +288,28 @@ class InputOwner:
+                     physical_verification_authoritative=False,
+                     release_batch_initial_up_count=len(codes),
+                     release_batch_key_order=[item[0] for item in codes])
++                if measurement:
++                    receipt['physical_key_measurement'] = measurement.edge(
++                        'up', code, key, getattr(lease, 'intent_token', None),
++                        key_sample(before_bitmap, before_error, before_started_ns, before_finished_ns, code),
++                        key_sample(final_bitmap, final_error, final_started_ns, final_ns, code),
++                        attempts[0]['keyrelease_started_ns'], attempts[-1]['sync_returned_ns'],
++                        operation_ok=verified and all(
++                            row['keyrelease_error'] is None and row['sync_error'] is None
++                            and row['keymap_before_error'] is None and row['keymap_after_error'] is None
++                            for row in attempts),
++                        batch_id=batch_id,
++                        post_sample_basis='shared_batch' if len(attempts) == 1 else 'key_retry')
+                 self.records.append(receipt)
+                 receipts.append(receipt)
+             if any(not receipt["server_keyup_verified"] for receipt in receipts):
+                 fault = RuntimeError("input owner failed closed after unverified key-up")
+                 release_pending = True
++                if measurement:
++                    for receipt in receipts:
++                        data = receipt['physical_key_measurement']
++                        data.update(classification='BATCH_RELEASE_UNCONFIRMED', bracket=None,
++                                    adapter_edge=None, actuation_id=None, identity_status='UNAVAILABLE')
+             return receipts
+ 
+         def focus_id():
+@@ -361,6 +398,8 @@ class InputOwner:
+             nonlocal active,revision,fault,release_pending
+             revision += 1
+             release_pending = True
++            if measurement:
++                measurement.clear()
+             key_release_attempts = {}
+             key_state_errors = []
+             # Include every key this owner touched, not only keys still present
+@@ -574,18 +613,40 @@ class InputOwner:
+                             if lease.cancel.is_set():
+                                 raise Cancelled()
+                             admitted = time.perf_counter_ns()
++                            owned_before = code in held
++                            if measurement:
++                                measurement.forget(code)
++                                pre_sample = measured_sample(code)
++                                # The extra round trip must not weaken admission.
++                                if getattr(lease, 'focus_invalid', False) or invalid_focus(lease):
++                                    lease.focus_invalid = True
++                                    raise DecisionRequired()
++                                lease.check()
++                                if time.perf_counter_ns() >= lease.deadline:
++                                    raise DecisionRequired('input lease expired during measurement')
++                                if lease.cancel.is_set():
++                                    raise Cancelled()
+                             active = lease
+                             active_pointer = False
+                             touched.add(code)
+                             held[code] = lease
++                            press_request_ns = time.perf_counter_ns() if measurement else None
+                             xtest.fake_input(d, X.KeyPress, code)
+                             d.sync()
++                            ack_ns = time.perf_counter_ns()
+                             result = dict(event='input_admission', key=key, admitted_ns=admitted,
+-                                          input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
++                                          input_ack_ns=ack_ns, valid_until_ns=lease.deadline)
++                            if measurement:
++                                result['physical_key_measurement'] = measurement.edge(
++                                    'down', code, key, getattr(lease, 'intent_token', None),
++                                    pre_sample, measured_sample(code), press_request_ns, ack_ns,
++                                    owned_before=owned_before)
+                         else:
+                             # Cleanup from an old intent must never release a newer hold.
+                             if code in held and held[code] is not lease:
+                                 raise ValueError('key belongs to another intent')
++                            if measurement:
++                                measurement.forget(code)
+                             if code in held:
+                                 key_release_attempts, server_keyup_verified = release_key(
+                                     code, force_first=True)
+diff --git a/research/live_control/input_transition_owner_v4.py b/research/live_control/input_transition_owner_v4.py
+index ac1cc0e671..159c5d310e 100644
+--- a/research/live_control/input_transition_owner_v4.py
++++ b/research/live_control/input_transition_owner_v4.py
+@@ -113,6 +113,8 @@ class InputOwner(Previous):
+                         "original UP sequence and verify X-server state only"
+                     ),
+                 })
++                if receipt is not None and isinstance(receipt.get("physical_key_measurement"), dict):
++                    row["physical_key_measurement"] = dict(receipt["physical_key_measurement"])
+                 joined.append(row)
+             return joined
+         if operation != "up":

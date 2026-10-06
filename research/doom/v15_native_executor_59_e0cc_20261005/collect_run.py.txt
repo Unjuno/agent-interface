@@ -1,0 +1,11 @@
+import hashlib,io,json,subprocess,tarfile,datetime
+from pathlib import Path
+b=Path(__file__).resolve().parent;orb=['/opt/homebrew/bin/orb','-m','v15-native-e0cc-20261005','-u','study','-w','/home/study/native-executor']
+def save(n,d):
+ with (b/n).open('x') as f:json.dump(d,f,indent=2);f.write('\n')
+p=subprocess.run(orb+['tar','-c','-C','runs/v15-native-executor-01','.'],capture_output=True,timeout=30)
+save('raw-transfer.json',{'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':p.returncode,'tar_sha256':hashlib.sha256(p.stdout).hexdigest(),'tar_bytes':len(p.stdout),'stderr':p.stderr.decode()});assert p.returncode==0
+out=b/'run-01';out.mkdir()
+with tarfile.open(fileobj=io.BytesIO(p.stdout),mode='r:') as t:t.extractall(out,filter='data')
+r=json.loads((out/'raw.json').read_bytes())
+print(json.dumps({'fatal':r.get('fatal'),'programs':{k:{'status':v.get('terminal',{}).get('status'),'error':v.get('terminal',{}).get('error'),'events':len(v.get('native_events',[]))} for k,v in r.get('programs',{}).items()},'shutdown':r.get('shutdown'),'raw_bytes':(out/'raw.json').stat().st_size,'runtime_controls':r.get('runtime_controls')}))

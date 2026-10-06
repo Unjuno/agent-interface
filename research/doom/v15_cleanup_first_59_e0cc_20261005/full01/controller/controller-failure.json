@@ -1,0 +1,105 @@
+{
+  "format": "controller-failure-cleanup-v1",
+  "primary_error_type": "RuntimeError",
+  "failed_stage": "planner_turn",
+  "stages": [
+    {
+      "stage": "child_poll_before",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "finish_send",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "post_control_score_wait",
+      "status": "returned",
+      "result": {
+        "event": "post_control_score",
+        "map": "MAP01",
+        "skill": 1,
+        "map_exit": false,
+        "episode_finished": false,
+        "player_dead": false,
+        "wall_control_ns": 508653583,
+        "death_count": 0,
+        "kill_count": 0,
+        "one_life_map_exit": false,
+        "episode_timeout_seconds": 600,
+        "reward": 0,
+        "scorer_refresh_calls_after_control": 1,
+        "emit_ns": 582490097250
+      }
+    },
+    {
+      "stage": "child_wait",
+      "status": "returned",
+      "result": 0
+    },
+    {
+      "stage": "child_stdin_close_worker_start",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "child_stdin_close",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "child_poll_after",
+      "status": "returned",
+      "result": 0
+    },
+    {
+      "stage": "planner_close_worker_start",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "planner_close",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "atexit_unregister",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "stdout_reader_join",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "stdout_reader_alive",
+      "status": "returned",
+      "result": false
+    },
+    {
+      "stage": "score_file_presence",
+      "status": "returned",
+      "result": true
+    },
+    {
+      "stage": "owner_events_presence",
+      "status": "returned",
+      "result": true
+    }
+  ],
+  "input_release_verified": false,
+  "input_releases_verified_empty": true,
+  "scope": "owned child process only; no physical release or scorer certificate",
+  "child_exit_code": 0,
+  "stdout_reader_retired": true,
+  "stdout_reader_errors": [],
+  "input_terminals_complete": true,
+  "input_release_verified_empty": true,
+  "scorer_terminal_observed": true,
+  "score_file_present": true,
+  "owner_events_present": true,
+  "owner_events_closed": false,
+  "cleanup_complete": false
+}

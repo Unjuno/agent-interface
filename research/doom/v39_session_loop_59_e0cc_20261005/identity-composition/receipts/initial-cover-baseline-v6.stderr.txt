@@ -1,0 +1,43 @@
+test_missing_matching_frame_times_out_without_decision (__main__.TestInitialCoverInvalidationBarrier.test_missing_matching_frame_times_out_without_decision) ... FAIL
+test_unverified_release_raises_before_waiting_for_frame (__main__.TestInitialCoverInvalidationBarrier.test_unverified_release_raises_before_waiting_for_frame) ... FAIL
+test_waits_for_exact_matching_frame_after_verified_release (__main__.TestInitialCoverInvalidationBarrier.test_waits_for_exact_matching_frame_after_verified_release) ... FAIL
+
+======================================================================
+FAIL: test_missing_matching_frame_times_out_without_decision (__main__.TestInitialCoverInvalidationBarrier.test_missing_matching_frame_times_out_without_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 142, in test_missing_matching_frame_times_out_without_decision
+    with self.assertRaises(TimeoutError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_unverified_release_raises_before_waiting_for_frame (__main__.TestInitialCoverInvalidationBarrier.test_unverified_release_raises_before_waiting_for_frame)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 160, in test_unverified_release_raises_before_waiting_for_frame
+    with self.assertRaisesRegex(RuntimeError, "did not verify empty release"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_waits_for_exact_matching_frame_after_verified_release (__main__.TestInitialCoverInvalidationBarrier.test_waits_for_exact_matching_frame_after_verified_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 123, in test_waits_for_exact_matching_frame_after_verified_release
+    self.assertEqual([r.get("sequence") for r in queue.returned if r["event"] == "observation"], [5])
+AssertionError: Lists differ: [] != [5]
+
+Second list contains 1 additional elements.
+First extra element 0:
+5
+
+- []
++ [5]
+?  +
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.040s
+
+FAILED (failures=3)

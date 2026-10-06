@@ -1,0 +1,183 @@
+{
+  "audit_integrity_pass": false,
+  "checks": [
+    {
+      "name": "all_56_frozen_snapshots_match_manifest",
+      "details": [],
+      "pass": true
+    },
+    {
+      "name": "all_56_materialized_sources_match_manifest",
+      "details": [],
+      "pass": true
+    },
+    {
+      "name": "candidate_source_ref_is_exact_head",
+      "details": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+      "pass": true
+    },
+    {
+      "name": "all_three_route_probes_reached_exit_zero",
+      "details": [
+        {
+          "route": "v12-perkey",
+          "exit_code": 0
+        },
+        {
+          "route": "v15-default",
+          "exit_code": 0
+        },
+        {
+          "route": "v15-perkey",
+          "exit_code": 0
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "v12-perkey_stdout_matches_result",
+      "details": "v12-perkey",
+      "pass": true
+    },
+    {
+      "name": "v12-perkey_stderr_empty",
+      "details": "v12-perkey",
+      "pass": true
+    },
+    {
+      "name": "v12-perkey_selected_owner_hash_matches_manifest",
+      "details": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "pass": true
+    },
+    {
+      "name": "v12-perkey_reached_guarded_boundary_without_side_effects",
+      "details": "v12-perkey",
+      "pass": true
+    },
+    {
+      "name": "v12-perkey_selected_expected_owner",
+      "details": {
+        "expected": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+        "observed": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py"
+      },
+      "pass": true
+    },
+    {
+      "name": "v15-default_stdout_matches_result",
+      "details": "v15-default",
+      "pass": true
+    },
+    {
+      "name": "v15-default_stderr_empty",
+      "details": "v15-default",
+      "pass": true
+    },
+    {
+      "name": "v15-default_selected_owner_hash_matches_manifest",
+      "details": "research/live_control/input_transition_owner_v4.py",
+      "pass": true
+    },
+    {
+      "name": "v15-default_reached_guarded_boundary_without_side_effects",
+      "details": "v15-default",
+      "pass": true
+    },
+    {
+      "name": "v15-default_selected_expected_owner",
+      "details": {
+        "expected": "research/live_control/input_transition_owner_v4.py",
+        "observed": "research/live_control/input_transition_owner_v4.py"
+      },
+      "pass": true
+    },
+    {
+      "name": "v15-perkey_stdout_matches_result",
+      "details": "v15-perkey",
+      "pass": true
+    },
+    {
+      "name": "v15-perkey_stderr_empty",
+      "details": "v15-perkey",
+      "pass": true
+    },
+    {
+      "name": "v15-perkey_selected_owner_hash_matches_manifest",
+      "details": "research/live_control/input_owner_v12.py",
+      "pass": true
+    },
+    {
+      "name": "v15-perkey_reached_guarded_boundary_without_side_effects",
+      "details": "v15-perkey",
+      "pass": true
+    },
+    {
+      "name": "v15-perkey_selected_expected_owner",
+      "details": {
+        "expected": "research/live_control/input_owner_v12.py",
+        "observed": "research/live_control/input_owner_v12.py"
+      },
+      "pass": true
+    },
+    {
+      "name": "v15_perkey_raw_owner_mismatch_is_exactly_classified",
+      "details": {
+        "a01": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+        "observed": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+        "raw": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df"
+      },
+      "pass": true
+    },
+    {
+      "name": "first_environment_stop_preserved",
+      "details": {
+        "route": "v12-perkey",
+        "exit_code": 1
+      },
+      "pass": false
+    }
+  ],
+  "disposition": "FAIL_V15_PERKEY_SELECTED_OWNER_IDENTITY",
+  "interpretation_limit": "Startup class identity only; no InputOwner was instantiated and no DOWN/UP, X/OS release, application effect, live threat, or task outcome was observed.",
+  "failures": [
+    "first_environment_stop_preserved"
+  ],
+  "routes": {
+    "v15-perkey": {
+      "owner_matches_a01": false,
+      "expected_owner": "research/live_control/input_owner_v12.py",
+      "owner_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "owner_file": "research/live_control/input_owner_v12.py",
+      "recorded_a01_owner_sha256": null,
+      "reached_guarded_boundary": true,
+      "expected_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "source_identity_matches_manifest": true,
+      "forbidden_calls": []
+    },
+    "v12-perkey": {
+      "owner_matches_a01": true,
+      "expected_owner": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "owner_file": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "recorded_a01_owner_sha256": null,
+      "reached_guarded_boundary": true,
+      "expected_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "source_identity_matches_manifest": true,
+      "forbidden_calls": []
+    },
+    "v15-default": {
+      "owner_matches_a01": false,
+      "expected_owner": "research/live_control/input_transition_owner_v4.py",
+      "owner_sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+      "owner_file": "research/live_control/input_transition_owner_v4.py",
+      "recorded_a01_owner_sha256": null,
+      "reached_guarded_boundary": true,
+      "expected_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "source_identity_matches_manifest": true,
+      "forbidden_calls": []
+    }
+  },
+  "schema": "v15-perkey-owner-revalidation-audit-v1",
+  "feature_gate_pass": false,
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "source_count": 56
+}

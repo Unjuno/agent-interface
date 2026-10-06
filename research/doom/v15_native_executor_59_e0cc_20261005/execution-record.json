@@ -1,0 +1,43 @@
+{
+  "recorded_after_execution_utc": "2026-10-05T12:53:28.293088+00:00",
+  "native_candidate_invocations": 1,
+  "candidate_exit_code": 0,
+  "candidate_argv_receipt": "run-01-request.json",
+  "candidate_result_receipt": "run-01-result.json",
+  "auditor": {
+    "argv": [
+      "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/audit_executor.py",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/run-01/raw.json",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/source-lock.json",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/run-01/audit.json"
+    ],
+    "exit_code": 1,
+    "classification": "FAIL_NATIVE_EXECUTOR_COMPOSITION_SCOPED",
+    "passed": 337,
+    "total": 338,
+    "failures": [
+      "only_loopback"
+    ]
+  },
+  "mutation_diagnostic": {
+    "argv": [
+      "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/audit_mutations_delta.py",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/run-01/raw.json",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/source-lock.json",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v15-native-executor-e0cc-20261005/run-01/audit-mutations-delta.json"
+    ],
+    "exit_code": 0,
+    "rejected_with_additional_failures": 8,
+    "total": 8,
+    "original_frozen_control_driver_invocations": 0
+  },
+  "network_diagnostics": {
+    "candidate_invocations": 0,
+    "first_exit": 1,
+    "first_error": "PermissionError reading proc1 namespace as study",
+    "second_exit": 0,
+    "second_scope": "different new private network namespace; no candidate or input; original frozen FAIL retained"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "passed": 75,
+  "total": 75,
+  "runs": [
+    {
+      "run": "full01",
+      "status": "failed",
+      "cleanup_verified": true,
+      "next_model": false,
+      "up_classification": "CONFIRMED_PHYSICAL_UP",
+      "fake_keys_down": []
+    },
+    {
+      "run": "full02",
+      "status": "cancelled",
+      "cleanup_verified": true,
+      "next_model": true,
+      "up_classification": "CONFIRMED_PHYSICAL_UP",
+      "fake_keys_down": []
+    },
+    {
+      "run": "full03",
+      "status": "cancelled",
+      "cleanup_verified": true,
+      "next_model": true,
+      "up_classification": "CONFIRMED_PHYSICAL_UP",
+      "fake_keys_down": []
+    },
+    {
+      "run": "full04",
+      "status": "failed",
+      "cleanup_verified": false,
+      "next_model": false,
+      "up_classification": "KEYMAP_EDGE_UNCONFIRMED",
+      "fake_keys_down": [
+        24
+      ]
+    }
+  ],
+  "claim": "synthetic schedule and retained raw only; no live OS/task/latency result"
+}

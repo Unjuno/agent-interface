@@ -1,0 +1,56 @@
+test_missing_matching_frame_times_out_without_decision (__main__.TestInitialCoverInvalidationBarrier.test_missing_matching_frame_times_out_without_decision) ... ERROR
+test_unverified_release_raises_before_waiting_for_frame (__main__.TestInitialCoverInvalidationBarrier.test_unverified_release_raises_before_waiting_for_frame) ... ERROR
+test_waits_for_exact_matching_frame_after_verified_release (__main__.TestInitialCoverInvalidationBarrier.test_waits_for_exact_matching_frame_after_verified_release) ... ERROR
+
+======================================================================
+ERROR: test_missing_matching_frame_times_out_without_decision (__main__.TestInitialCoverInvalidationBarrier.test_missing_matching_frame_times_out_without_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 143, in test_missing_matching_frame_times_out_without_decision
+    make_initial_branch()(
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 51, in make_initial_branch
+    exec(compile(module, str(CONTROLLER_PATH), "exec"), scope)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/base/map01_overlap_controller_v39.py", line 1468
+    continue
+    ^^^^^^^^
+SyntaxError: 'continue' not properly in loop
+
+======================================================================
+ERROR: test_unverified_release_raises_before_waiting_for_frame (__main__.TestInitialCoverInvalidationBarrier.test_unverified_release_raises_before_waiting_for_frame)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 161, in test_unverified_release_raises_before_waiting_for_frame
+    make_initial_branch()(
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 51, in make_initial_branch
+    exec(compile(module, str(CONTROLLER_PATH), "exec"), scope)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/base/map01_overlap_controller_v39.py", line 1468
+    continue
+    ^^^^^^^^
+SyntaxError: 'continue' not properly in loop
+
+======================================================================
+ERROR: test_waits_for_exact_matching_frame_after_verified_release (__main__.TestInitialCoverInvalidationBarrier.test_waits_for_exact_matching_frame_after_verified_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 121, in test_waits_for_exact_matching_frame_after_verified_release
+    result, queue, stdin = self.execute(self.base_rows + [self.wrong_binding, self.stale, self.exact])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 114, in execute
+    result = make_initial_branch()(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/tests/test_initial_cover_identity_barrier.py", line 51, in make_initial_branch
+    exec(compile(module, str(CONTROLLER_PATH), "exec"), scope)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/v39-session-loop-e0cc-20261005/identity-composition/base/map01_overlap_controller_v39.py", line 1468
+    continue
+    ^^^^^^^^
+SyntaxError: 'continue' not properly in loop
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.049s
+
+FAILED (errors=3)

@@ -1,0 +1,41 @@
+{
+  "schema": "issue59-v39-renewal-perkey-feedback-compose-a01",
+  "base_main_commit": "1eac6ea9f5b91cc10a8c3dc20374b9d79ffcf179",
+  "base_main_v39_controller_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "composed_input_heads": {
+    "renewal": "bf59025dd6fcd09c275844f6f1e961b155cbcbd3",
+    "per_key_feedback": "927785e7e98827cb6873e1a682975a9dd89d5c4f"
+  },
+  "sources": {
+    "research/doom/map01_overlap_controller_v39.py": "309d100c9b5d26dc940b2c61d417d6aef2cac405462db85a7f48f7c948ba3f8a",
+    "research/doom/session_map01_v12.py": "ef89fa60d5ae71b6d5b4633d0d92820f8ce2f032cd59f142542ec00d4fd1db0d",
+    "research/doom/session_map01_v15.py": "95082c0c2a40e629c28ba3f1b0391244c7bbe0f7896d47662763258b04a3a88f",
+    "research/doom/v39_measurement_backend_selection_v1.py": "922169f62166b3def219879d1a70ab8541a25665e9b1e0bb50f8fde5a36e9a05"
+  },
+  "tests": {
+    "research/doom/test_map01_overlap_controller_v39.py": "110bed798f4af5c1760fa33722a87a1c346e45c901cc6302040e162eb0e75aa8",
+    "research/doom/test_overlap_controller_v39_wait.py": "b107076604da9954bd3496a0741d3f8cc48b02cc4847c106da6f0e6e4ca24eba",
+    "research/doom/test_v39_soft_stale_renewal_v1.py": "a5f974db5bec99ea5ae1f5ea85eaf2200d8c6684d2ad4a206f7db94e8fe901d0",
+    "research/doom/test_controller_failure_cleanup_v1.py": "4b7e33c777974cb1f95984e6c9f25a24ea9f062ee2cdd885f1bcb118f8612e65",
+    "research/doom/test_source_refresh_v1.py": "3dd0662069421679a8257db012088fed9266d88835a8363e08a00d1f083bbab7",
+    "research/doom/test_map01_v39_typed_state_feedback.py": "7f06a594aa1daef570fc56e055aa896c2ccdc040c70dcb17bc703564ac1f2ecf",
+    "research/doom/test_map01_v39_legacy_owner_identity.py": "e3f360233f92c75174bdd48794473eef08eefdb8bc9a9bca81637bd4a12feab6",
+    "research/doom/test_map01_v15_perkey_backend_selection.py": "17355548b4483e09c8b4e89554011471b8a2e99b5c6565d8c7b0ad3627e88f85"
+  },
+  "validation": {
+    "python": "3.12.10",
+    "py_compile": "PASS",
+    "normal_unittest": "94 run, PASS, 1 Windows/POSIX-specific skip",
+    "optimized_unittest": "94 run, PASS, 1 Windows/POSIX-specific skip",
+    "controller_session_command": "v15 + per-key opt-in regression PASS",
+    "v15_backend_preservation": "PASS",
+    "scope": "local deterministic integration overlay; no game/model/GUI/input/allocation run"
+  },
+  "scope_limits": [
+    "No prospective threat-exposure evidence",
+    "No physical key occupancy claim from these local tests",
+    "No application consumption or independently useful task-effect onset established",
+    "No recovery, survival, or MAP01 completion claim",
+    "No Issue #59 exit criterion satisfied"
+  ]
+}

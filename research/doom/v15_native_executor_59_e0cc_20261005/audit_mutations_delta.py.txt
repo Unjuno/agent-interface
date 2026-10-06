@@ -1,0 +1,33 @@
+"""Saved-raw diagnostic: require additional failures beyond the preserved baseline FAIL. Original frozen control driver remains uninvoked; eight semantic mutations are unchanged."""
+import copy,hashlib,json,sys
+from pathlib import Path
+from audit_executor import audit
+rawpath,lockpath,out=map(Path,sys.argv[1:])
+base=json.loads(rawpath.read_bytes());lock=json.loads(lockpath.read_bytes())
+def event(r,case,kind):
+ pid=r['programs'][case]['identifier']
+ return next(e for e in r['executor_events'] if e.get('id')==pid and e.get('event')==kind)
+def sync(r):
+ for p in r['programs'].values():
+  ev=[e for e in r['executor_events'] if e.get('id')==p['identifier']]
+  p['events']=copy.deepcopy(ev)
+  for fld,kind in [('admissions','input_admission'),('input_release_transitions','input_release_transition')]:p[fld]=copy.deepcopy([e for e in ev if e.get('event')==kind])
+  ts=[e for e in ev if e.get('event')=='terminal']
+  if ts:p['terminal']=copy.deepcopy(ts[0])
+baseline=audit(base,lock);baseline_failures=set(baseline['failures']);assert baseline_failures=={'only_loopback'},baseline_failures
+results=[]
+for label in ['missing_normal_up','wrong_release_token','nonempty_cancel_terminal','follow_on_before_cancel_terminal','missing_cancel_release','wrong_native_order','wrong_capture_epoch','no_native_down_witness']:
+ r=copy.deepcopy(base)
+ if label=='missing_normal_up':r['executor_events'].remove(event(r,'ordered_normal','input_release_transition'))
+ elif label=='wrong_release_token':event(r,'ordered_normal','input_release_transition')['physical_key_measurement']['intent_token']='wrong-lease'
+ elif label=='nonempty_cancel_terminal':event(r,'cancel_hold','terminal')['release']['keys_down']=[r['x_server']['keycodes']['a']]
+ elif label=='follow_on_before_cancel_terminal':event(r,'follow_on','accepted')['accepted_ns']=event(r,'cancel_hold','terminal')['terminal_ns']-1
+ elif label=='missing_cancel_release':r['executor_events'].remove(event(r,'cancel_hold','input_released'))
+ elif label=='wrong_native_order':
+  rows=r['programs']['ordered_normal']['native_events'];ups=[i for i,e in enumerate(rows) if e['type']=='KeyRelease'];rows[ups[0]],rows[ups[1]]=rows[ups[1]],rows[ups[0]]
+ elif label=='wrong_capture_epoch':next(e for e in r['executor_events'] if e['event']=='typed_observation')['capture_ns']+=1
+ elif label=='no_native_down_witness':r['programs']['cancel_hold']['keymap_after_down_witness']['s']=False
+ sync(r);a=audit(r,lock);new_failures=sorted(set(a['failures'])-baseline_failures);results.append({'control':label,'rejected':bool(new_failures),'failures':a['failures'],'additional_failures':new_failures})
+report={'raw_sha256':hashlib.sha256(rawpath.read_bytes()).hexdigest(),'controls':results,'rejected':sum(x['rejected'] for x in results),'total':len(results),'baseline_failures':sorted(baseline_failures),'method':'Post-run diagnostic version preserves the original baseline FAIL; rejection requires new semantic failures. Copies only; re-synchronize duplicated per-case event views before audit so rejection does not rely on stale copies.'}
+with out.open('x') as f:json.dump(report,f,indent=2);f.write('\n')
+print(json.dumps({'rejected':report['rejected'],'total':report['total']}));raise SystemExit(report['rejected']!=report['total'])

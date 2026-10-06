@@ -1,0 +1,83 @@
+"""Ordinary preliminary real-child Session command probe (not full V39)."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import queue
+import subprocess
+import sys
+import threading
+import time
+import traceback
+
+job = Path(__file__).resolve().parent
+run = job / sys.argv[1]
+run.mkdir(exist_ok=False)
+source = job / "source"
+for name in ("fake_environment.py", "child_session.py", "probe_child.py"):
+    (run / (name + ".txt")).write_bytes((job / name).read_bytes())
+command = [sys.executable, "-B", str(job / "child_session.py"),
+           str(source / "research/doom/session_map01_v15.py"),
+           "--out", str(run / "runtime"), "--seed", "17", "--timeout-seconds", "15",
+           "--per-key-input-measurement"]
+env = dict(os.environ, E0CC_TEST_EXTERNAL_DIR=str(run / "external"),
+           PYTHONDONTWRITEBYTECODE="1", OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1")
+started = time.time_ns()
+received = queue.Queue()
+with (run / "stderr.txt").open("w") as stderr:
+    process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                               stderr=stderr, text=True, bufsize=1, env=env)
+    def read():
+        with (run / "stdout.txt").open("w") as output:
+            for line in process.stdout:
+                output.write(line);output.flush()
+                received.put(json.loads(line))
+        received.put(None)
+    reader = threading.Thread(target=read, daemon=True)
+    reader.start()
+    def wait(predicate):
+        while True:
+            row = received.get(timeout=12)
+            if row is None:
+                raise RuntimeError("child stdout closed before expected event")
+            if predicate(row):
+                return row
+    def send(row):
+        with (run / "commands.jsonl").open("a") as commands:
+            commands.write(json.dumps(row) + "\n")
+        process.stdin.write(json.dumps(row) + "\n");process.stdin.flush()
+    error = None
+    try:
+        wait(lambda r: r["event"] == "ready")
+        observation = wait(lambda r: r["event"] == "observation")
+        send({"op": "submit", "id": "ordinary-probe", "expected_sequence": observation["sequence"],
+              "valid_until_ns": time.perf_counter_ns() + 3_000_000_000,
+              "steps": [{"op": "hold", "keys": ["a", "space"], "duration_ms": 120},
+                        {"op": "observe"}]})
+        accepted = wait(lambda r: r["event"] in ("accepted", "rejected"))
+        assert accepted["event"] == "accepted", accepted
+        terminal = wait(lambda r: r["event"] == "terminal")
+        assert terminal["status"] == "completed", terminal
+        assert terminal["release"]["verified"] is True, terminal
+        send({"op": "finish"})
+        wait(lambda r: r["event"] == "post_control_score")
+        assert process.wait(timeout=8) == 0
+    except BaseException:
+        error = traceback.format_exc()
+        if process.poll() is None:
+            process.stdin.close()
+            try:
+                process.wait(timeout=8)
+            except subprocess.TimeoutExpired:
+                process.kill();process.wait()
+    finally:
+        reader.join(timeout=3)
+        process.stdout.close()
+        if not process.stdin.closed:
+            process.stdin.close()
+result = {"command": command, "started_unix_ns": started, "ended_unix_ns": time.time_ns(),
+          "exit_code": process.returncode, "error": error, "reader_stopped": not reader.is_alive(),
+          "claim": "real child Session probe only; not full V39; fake external environment"}
+(run / "receipt.json").write_text(json.dumps(result, indent=2) + "\n")
+print(json.dumps(result));print((run / "stderr.txt").read_text()[-12000:])
+sys.exit(1 if error else 0)
