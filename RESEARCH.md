@@ -2390,3 +2390,6 @@ source pins, raw responses, projections, hashes, and first failures are
 preserved; no consumed remote task was rerun for rescue. See the [complete
 archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
 and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).
+# Issue #8313 — matched-context integrity T0 A01 (2026-10-07)
+
+`HOLD_AUDITOR_COVERAGE`: the frozen no-model candidate and separate raw-only auditor each ran once with zero retries; the auditor returned raw PASS, and four hash-refreshed corruption controls were rejected. Post-run review found it does not prove complete baseline evidence equality or exact common serialized bytes outside the history slot. Preserve the first result; no repair or rerun. Host Python 3.14.5, standard library only. No model study is authorized. See the [report and frozen evidence](research/analysis/proactive_interference_5947_t0_a01_20261007/REPORT.md), [post-run review](research/analysis/proactive_interference_5947_t0_a01_20261007/POSTRUN_REVIEW.md), [Issue #8313](https://github.com/Unjuno/agent-interface/issues/8313), and parent [Issue #5947](https://github.com/Unjuno/agent-interface/issues/5947).

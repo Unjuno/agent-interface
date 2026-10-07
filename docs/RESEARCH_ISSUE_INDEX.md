@@ -216,6 +216,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 | [#5957](https://github.com/Unjuno/agent-interface/issues/5957) | Successor #5318: independently audit retained raw after guard-oracle mismatch | open | STOP_INDEPENDENT_AUDITOR_ORACLE_MISMATCH, PASS_RAW_AUDIT_SUCCESSOR_SCOPED, STOP_RAW_PROVENANCE | #5318 |
 | [#5955](https://github.com/Unjuno/agent-interface/issues/5955) | [Research] Entitlement-gated progress displays for branching agent tasks | open | FAIL_METHOD, HOLD | — |
 | [#5951](https://github.com/Unjuno/agent-interface/issues/5951) | [Research] Source-anchored preservation of user constraints across task-contract transformation | open | FAIL_METHOD, HOLD, PASS | — |
+| [#8313](https://github.com/Unjuno/agent-interface/issues/8313) | [Research successor #5947] Freeze matched-context integrity T0 before model study | open | HOLD_AUDITOR_COVERAGE | #5947 |
 | [#5947](https://github.com/Unjuno/agent-interface/issues/5947) | [Research] Multi-update proactive interference in model-facing GUI memory | open | FAIL_SAFETY, HOLD | — |
 | [#5944](https://github.com/Unjuno/agent-interface/issues/5944) | [Research] Append-only human contestation of scoped agent task-outcome claims | open | FAIL_METHOD, HOLD, PASS | — |
 | [#5941](https://github.com/Unjuno/agent-interface/issues/5941) | [Research] Prevent peer-verdict exposure from masquerading as independent verifier evidence | open | PASS, FAIL, HOLD | — |
