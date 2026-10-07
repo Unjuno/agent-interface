@@ -1,0 +1,28 @@
+{
+  "schema": "v39-currentmain-renewal-admission-a01",
+  "frozen_at_utc": "2026-10-05T05:42:19Z",
+  "classification": "local_code_regression_not_formal_allocation",
+  "issue": 59,
+  "source_parent_commit": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "candidate_branch": "research/59-renewal-currentmain-integration-a01",
+  "candidate_controller": "candidate_controller.py",
+  "candidate_controller_sha256": "e3b0659710ee8fe6a06209acae7ca558d35a5bb1f595ec021af83bac909c7645",
+  "candidate_test": "candidate_test.py",
+  "candidate_test_sha256": "a5f974db5bec99ea5ae1f5ea85eaf2200d8c6684d2ad4a206f7db94e8fe901d0",
+  "baseline_controller": "results/base_controller.py",
+  "baseline_controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "environment": {
+    "os": "macOS Darwin arm64",
+    "python": "3.12.13",
+    "backend": "stdlib-only extracted controller closures; no GUI/backend import"
+  },
+  "decision_conditions": {
+    "cases": ["accepted admission", "soft observation plus stale-sequence rejection", "unexpected rejection", "coverless soft event", "coverless hard invalidation"],
+    "candidate_expected": "4/4 focused regression cases pass in normal and optimized Python; 15/15 existing wait cases pass in both modes",
+    "baseline_expected": "the fixed test suite fails against current main because stale-rejection classification and coverless invalidation handling are absent",
+    "full_controller_import": "record exact dependency failure; do not use synthetic import stubs"
+  },
+  "pre_freeze_exploration": "The same source/test bytes had one normal and one optimized local check before this receipt was written. Those construction checks are exploratory; the post-freeze runs are captured separately. No formal/live allocation was consumed.",
+  "live_game_or_model_executed": false,
+  "container_or_gpu_used": false
+}
