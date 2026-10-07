@@ -1,0 +1,56 @@
+{
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-T0-20261004-01",
+  "preregistration": "https://github.com/Unjuno/agent-interface/issues/7327#issuecomment-5974956400",
+  "main_sha": "4d42238694c55aaa29bf47cb13a5b8d4c5d4074a",
+  "source_branch": "research/logical-time-symmetry-7327-t0-20261004",
+  "source_tip_before_run": "0704cf47a14e8160279f859de9f1d11c8931be30",
+  "source_sha256": {
+    "spec.json": "a4adb90acf46abd0881dfe71a69af44185fe698c98cdec4d90a9633841ebc04b",
+    "candidate.py": "49f4c0d759a020b54faf6d76056509b6ed1d974151297c32f3117534f6a2405e",
+    "audit.py": "0c48339572de7aa45fd7e932af12d92f1eea73da074e2a9cc4567c174568de5d"
+  },
+  "runtime": {
+    "wslc_version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "512M",
+    "memory_hard_cap_claimed": false,
+    "pull": "never",
+    "source_mount": "read-only",
+    "audit_input_mount": "read-only",
+    "removal": "--rm"
+  },
+  "candidate": {
+    "count": 1,
+    "exit_code": 0,
+    "command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --volume <source>:/src:ro --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B candidate.py spec.json",
+    "stdout": "candidate.raw.json",
+    "stderr": "candidate.stderr.txt"
+  },
+  "auditor": {
+    "count": 1,
+    "exit_code": 0,
+    "command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --volume <source>:/src:ro --volume <output>:/out:ro --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B audit.py spec.json /out/candidate.raw.json",
+    "stdout": "audit.receipt.json",
+    "stderr": "audit.stderr.txt",
+    "receipt": {
+      "candidate_rows": 6,
+      "errors": [],
+      "mutation_controls": 4,
+      "mutation_rejections": 4,
+      "status": "PASS_LOGICAL_TIME_SYMMETRY_SCOPED"
+    }
+  },
+  "retries": 0,
+  "resource_warnings": [
+    "kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."
+  ],
+  "coverage_limitations": [
+    "No nonzero fixed backend/startup delay test",
+    "No nonzero clock-quantization test",
+    "No physical/semantic rate-transformation test"
+  ],
+  "foreign_container_note": "One unrelated active container was observed after the run; read-only inspect associated it with a separate #5260 checkout and test command. It was left untouched. No candidate/auditor container remained in the inventory."
+}

@@ -642,6 +642,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`logical_time_symmetry_7327_fixed_overhead_t3_20261004/`](logical_time_symmetry_7327_fixed_overhead_t3_20261004/)
 - [`logical_time_symmetry_7327_fixed_overhead_t4_20261004/`](logical_time_symmetry_7327_fixed_overhead_t4_20261004/)
 - [`logical_time_symmetry_7327_fixed_overhead_t5_audit_20261004/`](logical_time_symmetry_7327_fixed_overhead_t5_audit_20261004/)
+- [`logical_time_symmetry_7327_t0_20261004/`](logical_time_symmetry_7327_t0_20261004/)
 - [`logical_time_symmetry_7327_unit_t1_20261004/`](logical_time_symmetry_7327_unit_t1_20261004/)
 - [`logical_time_symmetry_7327_unit_t2_20261004/`](logical_time_symmetry_7327_unit_t2_20261004/)
 - [`looming_visual_assumption_gate_5905_s02_wslc_20261003/`](looming_visual_assumption_gate_5905_s02_wslc_20261003/)
