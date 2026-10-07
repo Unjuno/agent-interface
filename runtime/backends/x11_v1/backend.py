@@ -218,10 +218,41 @@ class X11Backend:
         if not down:
             self.held_keycodes.pop(key, None)
 
+    def _reject_held_nonmodifier_overlap(
+        self, key_sequences: list[list[str]], *, held_keycodes: dict[str, int] | None = None
+    ) -> None:
+        held = self.held_keycodes if held_keycodes is None else held_keycodes
+        owned_codes = set(held.values())
+        if not owned_codes:
+            return
+        modifier_codes = {
+            code for row in self.d.get_modifier_mapping() for code in row if code
+        }
+        for keys in key_sequences:
+            for key in keys:
+                code = held.get(key)
+                if code is None:
+                    code = self._keycode(key)
+                if code in owned_codes and code not in modifier_codes:
+                    raise X11BackendError(
+                        "key chord overlaps an already-held nonmodifier; release it first")
+
     def key_chord(self, keys: list[str]) -> None:
+        # A chord may borrow an already-held same-owner modifier, but not a key
+        # whose key-down edge is required by the chord or text operation.
+        # Compare physical keycodes so aliases such as SHIFT and Shift_L match.
+        self._reject_held_nonmodifier_overlap([keys])
+        owned_codes = set(self.held_keycodes.values())
+        acquired = []
         for key in keys:
+            code = self.held_keycodes.get(key)
+            if code is None:
+                code = self._keycode(key)
+            if code not in owned_codes:
+                acquired.append(key)
+        for key in acquired:
             self.key_state(key, True)
-        for key in reversed(keys):
+        for key in reversed(acquired):
             self.key_state(key, False)
 
     def _refresh_keyboard_mapping(self) -> bool:
@@ -252,6 +283,10 @@ class X11Backend:
 
     def preflight(self, program: dict[str, Any]):
         """Validate before input; return the core keyboard map used for preflight."""
+        # Pacing splits one text payload into several operations. Track the
+        # successful prefix's holds without changing the real cleanup ledger,
+        # so a known late collision is refused before focus or prefix input.
+        planned_held = dict(self.held_keycodes)
         keyboard_mapping = None
         if any(op["op"] in {"text", "key_chord", "key_state"} for op in program["ops"]):
             self._refresh_keyboard_mapping()
@@ -269,12 +304,24 @@ class X11Backend:
             elif kind == "verify":
                 raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
             elif kind == "text":
-                self._text_plan(op["text"])
+                self._reject_held_nonmodifier_overlap(
+                    self._text_plan(op["text"]), held_keycodes=planned_held)
             elif kind == "key_chord":
                 for key in op["keys"]:
                     self._keycode(key)
+                self._reject_held_nonmodifier_overlap(
+                    [op["keys"]], held_keycodes=planned_held)
             elif kind == "key_state":
-                self._keycode(op["key"])
+                key = op["key"]
+                code = planned_held.get(key)
+                if code is None:
+                    code = self._keycode(key)
+                if op["down"]:
+                    planned_held[key] = code
+                else:
+                    planned_held.pop(key, None)
+            elif kind == "release_all":
+                planned_held.clear()
         return keyboard_mapping
 
     def _text_plan(self, value: str) -> list[list[str]]:
@@ -313,7 +360,11 @@ class X11Backend:
 
     def text(self, value: str) -> None:
         # Resolve the entire supported payload before emitting its first key.
-        for keys in self._text_plan(value):
+        plan = self._text_plan(value)
+        # Validate every planned tap up front: a later held-letter collision
+        # must not leave an earlier prefix of the text in the target.
+        self._reject_held_nonmodifier_overlap(plan)
+        for keys in plan:
             self.key_chord(keys)
 
     def scroll(self, dx: int, dy: int) -> None:
