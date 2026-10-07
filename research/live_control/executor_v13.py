@@ -100,6 +100,17 @@ class Executor(Previous):
                      else "release_batch_delivery")
             release[field] = dict(cleanup_publication)
 
+    @staticmethod
+    def _measurement_publish_error(exc):
+        publication = getattr(exc, "measurement_publish_error", None)
+        if type(publication) is not dict:
+            return None
+        error_type = publication.get("type")
+        message = publication.get("message")
+        if type(error_type) is not str or type(message) is not str:
+            return None
+        return {"type": error_type[:80], "message": message[:200]}
+
     def _run(self, identifier, steps, lease):
         try:
             self._run_with_watcher_cleanup(identifier, steps, lease)
@@ -111,6 +122,7 @@ class Executor(Previous):
     def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
         release_batch_publication = None
+        measurement_publish_error = None
         process_exception = None; process_traceback = None
         try:
             for index, step in enumerate(steps):
@@ -133,6 +145,7 @@ class Executor(Previous):
             publication = getattr(exc, "release_batch_publication", None)
             if isinstance(publication, dict):
                 release_batch_publication = dict(publication)
+            measurement_publish_error = self._measurement_publish_error(exc)
             if not isinstance(exc, Exception):
                 process_exception = exc
                 process_traceback = exc.__traceback__
@@ -196,6 +209,8 @@ class Executor(Previous):
                            "decision_reason": decision_reason,
                            "terminal_ns": time.perf_counter_ns(),
                            "semantic_completion": "program status only; task scoring is separate"}
+                if measurement_publish_error is not None:
+                    terminal["measurement_publish_error"] = measurement_publish_error
                 self.emit(terminal)
                 self.active = None
             stop = self.release_watch_stops.get(identifier)
