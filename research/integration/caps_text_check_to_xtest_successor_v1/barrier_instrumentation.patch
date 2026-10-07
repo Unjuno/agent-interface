@@ -2,7 +2,7 @@ diff --git a/runtime/backends/x11_v1/backend.py b/runtime/backends/x11_v1/backen
 index 0000000..0000000 100644
 --- a/runtime/backends/x11_v1/backend.py
 +++ b/runtime/backends/x11_v1/backend.py
-@@ -1,8 +1,10 @@
+@@ -1,10 +1,12 @@
  """X11/XTEST implementation of the runtime core v1 backend boundary.
  
  This implementation is intentionally narrow: X11 only, strict ASCII text, and
@@ -15,7 +15,7 @@ index 0000000..0000000 100644
 +import socket
  import time
  from typing import Any
-@@ -312,10 +314,23 @@ class X11Backend:
+@@ -312,7 +314,23 @@ class X11Backend:
      def text(self, value: str) -> None:
          # Research candidate k8n4: this query is not atomic with later input.
          plan = self._text_plan(value)
