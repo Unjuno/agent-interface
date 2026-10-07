@@ -72,3 +72,45 @@ formal case count is claimed.
 4. Freeze exact source closure, environment, schedule, expected outcomes, audit,
    and mutation controls in this directory and read them back from GitHub before
    the first formal case. Formal count/batches are not yet chosen or run.
+
+## Public-dispatch construction gate
+
+At branch commit `d40dd8a3e`, the excluded test
+`python3 -B test_public_dispatch_probe.py` passed one current-main arm, one
+stable #8255-guard arm and one guard/interposition arm, each in a fresh
+TCP-disabled Xvfb. The current and stable-guard Entry values were `aB2`; the
+interposed guard value was `Ab2`, while the runtime dispatch still reported
+`completed`. The explicit fixture-only hook is applied only to a copied runtime
+tree after the exact #8255 candidate patch; it blocks after saving the
+LockMask=0 sample and before `key_chord` can issue the first XTEST event.
+
+The actor is a separate process and X client. It received `LOCK_ON:0`, sampled
+LockMask=0, synchronously called `XkbLockModifiers` plus `XSync`, observed
+LockMask=1, then returned its ACK. In the retained fresh construction run, ACK
+time was `21133200546299 ns`; the Tk Entry's first KeyPress (`A`, keycode 38)
+was `21133201423305 ns`, 877,006 ns later. The resulting value was `Ab2`; final
+LockMask remained 1, all 32 XQueryKeymap bytes were zero, all three dispatches
+and app processes exited 0, and the actor exited 0 with empty stderr. This is a
+finite construction counterexample for the candidate guard in this VM/Xvfb
+setup, not a formal research allocation, natural failure-rate estimate, or
+production result.
+
+`CONSTRUCTION_RESULTS.json` retains each arm's complete runner record and
+program: source/module hashes, process IDs/argv/exits, dispatch response,
+independent X-server before/after snapshots, app event/value journal, actor
+request/ACK, and errors. Its local raw-record audit confirmed 11 imported
+runtime modules; every non-backend imported module hash is identical across
+the three arms, and the two guard arms use the same candidate backend hash.
+The main backend SHA-256 remains
+`6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db`.
+The candidate guard source and fixture hook are research-only copies. No
+production runtime file is modified.
+
+Construction-only incidents retained in this branch: (1) an initial Python
+smoke had a shell quoting syntax error before input; (2) the first direct
+interposition probe sent input but failed at `.map` because Python-Xlib 0.33
+returns `query_keymap()` as a list; (3) the first barrier patch had malformed
+hunk counts and failed to apply before any candidate dispatch. Each failure was
+corrected before the passing end-to-end construction test; none is a formal
+scientific FAIL. `test_lock_actor.py` and `test_public_dispatch_probe.py`
+exercise only setup/construction; they are not the formal allocation.

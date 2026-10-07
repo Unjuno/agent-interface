@@ -1,0 +1,1212 @@
+{
+  "schema": "caps-text-query-xtest-construction-results-v1",
+  "scope": "excluded construction only; no formal allocation",
+  "source_vm_path": "/home/research/caps-public-dispatch-construction-20261007",
+  "arms": {
+    "current": {
+      "record.json": {
+        "actual": "aB2",
+        "after": {
+          "ended_ns": 21129605363453,
+          "focus": 4194318,
+          "keymap": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lockmask": 0,
+          "mask": 0,
+          "started_ns": 21129605043243
+        },
+        "app": {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/app_fixture.py",
+            "/home/research/caps-public-dispatch-construction-20261007/current/app.jsonl"
+          ],
+          "exit": 0,
+          "pid": 4719,
+          "ready": {
+            "event": "ready",
+            "ns": 21129503524407,
+            "pid": 4719,
+            "root": 4194316,
+            "window": 4194318
+          }
+        },
+        "app_after": {
+          "command": "snapshot",
+          "event": "snapshot",
+          "ns": 21129604662948,
+          "pid": 4719,
+          "value": "aB2"
+        },
+        "app_before": {
+          "command": "snapshot",
+          "event": "snapshot",
+          "ns": 21129539315783,
+          "pid": 4719,
+          "value": ""
+        },
+        "arm": "current",
+        "before": {
+          "ended_ns": 21129504744707,
+          "focus": 4194317,
+          "keymap": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lockmask": 0,
+          "mask": 0,
+          "started_ns": 21129503987410
+        },
+        "dispatch_ended_ns": 21129569780038,
+        "dispatch_started_ns": 21129540272539,
+        "driver_pid": 4716,
+        "ended_ns": 21129664058198,
+        "entry_events": [
+          {
+            "event": "ready",
+            "ns": 21129503524407,
+            "pid": 4719,
+            "root": 4194316,
+            "window": 4194318
+          },
+          {
+            "command": "snapshot",
+            "event": "snapshot",
+            "ns": 21129539315783,
+            "pid": 4719,
+            "value": ""
+          },
+          {
+            "char": "a",
+            "event": "KeyPress",
+            "keycode": 38,
+            "keysym": "a",
+            "ns": 21129564901670,
+            "pid": 4719,
+            "state": 0
+          },
+          {
+            "event": "value",
+            "ns": 21129565281131,
+            "pid": 4719,
+            "value": "a"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 38,
+            "keysym": "a",
+            "ns": 21129566170054,
+            "pid": 4719,
+            "state": 0
+          },
+          {
+            "char": "",
+            "event": "KeyPress",
+            "keycode": 50,
+            "keysym": "Shift_L",
+            "ns": 21129566516515,
+            "pid": 4719,
+            "state": 0
+          },
+          {
+            "char": "B",
+            "event": "KeyPress",
+            "keycode": 56,
+            "keysym": "B",
+            "ns": 21129566808225,
+            "pid": 4719,
+            "state": 1
+          },
+          {
+            "event": "value",
+            "ns": 21129567102102,
+            "pid": 4719,
+            "value": "aB"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 56,
+            "keysym": "B",
+            "ns": 21129567705106,
+            "pid": 4719,
+            "state": 1
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 50,
+            "keysym": "Shift_L",
+            "ns": 21129568107276,
+            "pid": 4719,
+            "state": 1
+          },
+          {
+            "char": "2",
+            "event": "KeyPress",
+            "keycode": 11,
+            "keysym": "2",
+            "ns": 21129568557404,
+            "pid": 4719,
+            "state": 0
+          },
+          {
+            "event": "value",
+            "ns": 21129568630113,
+            "pid": 4719,
+            "value": "aB2"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 11,
+            "keysym": "2",
+            "ns": 21129569338701,
+            "pid": 4719,
+            "state": 0
+          },
+          {
+            "command": "snapshot",
+            "event": "snapshot",
+            "ns": 21129604662948,
+            "pid": 4719,
+            "value": "aB2"
+          },
+          {
+            "command": "close",
+            "event": "snapshot",
+            "ns": 21129643813056,
+            "pid": 4719,
+            "value": "aB2"
+          },
+          {
+            "event": "exit",
+            "ns": 21129645228649,
+            "pid": 4719,
+            "value": "aB2"
+          }
+        ],
+        "errors": [],
+        "expected": "aB2",
+        "ipc": [
+          {
+            "direction": "fixture-ready",
+            "raw": "{\"event\": \"ready\", \"ns\": 21129503524407, \"pid\": 4719, \"window\": 4194318, \"root\": 4194316}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"snapshot\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 21129539315783, \"pid\": 4719, \"value\": \"\"}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"snapshot\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 21129604662948, \"pid\": 4719, \"value\": \"aB2\"}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"close\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"close\", \"event\": \"snapshot\", \"ns\": 21129643813056, \"pid\": 4719, \"value\": \"aB2\"}\n"
+          }
+        ],
+        "kind": "excluded-public-dispatch-construction-only",
+        "main_backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+        "repo_head": "d40dd8a3e2d4175dae5a7e8be799e85f9276c6e6",
+        "response": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "activations": [],
+              "completed_ops": [
+                0,
+                1,
+                2
+              ],
+              "emissions": 8,
+              "ended_ns": 21129569582369,
+              "observations": [],
+              "program_emissions": 8,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 21129569580911,
+                  "verified": true
+                }
+              ],
+              "started_ns": 21129564456625,
+              "waits": []
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "runtime_imports": {
+          "runtime.backends.x11_v1": {
+            "path": "runtime/backends/x11_v1/__init__.py",
+            "sha256": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b"
+          },
+          "runtime.backends.x11_v1.backend": {
+            "path": "runtime/backends/x11_v1/backend.py",
+            "sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"
+          },
+          "runtime.backends.x11_v1.session": {
+            "path": "runtime/backends/x11_v1/session.py",
+            "sha256": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62"
+          },
+          "runtime.cli_v1": {
+            "path": "runtime/cli_v1/__init__.py",
+            "sha256": "8832365589e82ecba394d10ae11a381f146edfb68b981551ccbae8b95e4ac967"
+          },
+          "runtime.cli_v1.api": {
+            "path": "runtime/cli_v1/api.py",
+            "sha256": "47d4413b5633b334e21e158ffe5c4155b5ec3f24dd7c942f1e7ba91361632ca6"
+          },
+          "runtime.core_v1": {
+            "path": "runtime/core_v1/__init__.py",
+            "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+          },
+          "runtime.core_v1.contract": {
+            "path": "runtime/core_v1/contract.py",
+            "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+          },
+          "runtime.core_v1.platform_probe": {
+            "path": "runtime/core_v1/platform_probe.py",
+            "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+          },
+          "runtime.core_v1.sequence": {
+            "path": "runtime/core_v1/sequence.py",
+            "sha256": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d"
+          },
+          "runtime.selector_v1": {
+            "path": "runtime/selector_v1/__init__.py",
+            "sha256": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881"
+          },
+          "runtime.selector_v1.selector": {
+            "path": "runtime/selector_v1/selector.py",
+            "sha256": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+          }
+        },
+        "started_ns": 21129417119468
+      },
+      "program.json": {
+        "authority": {
+          "expires_at_ns": 21149539743161,
+          "lease_id": "private-fixture-only"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "entry"
+          },
+          {
+            "op": "text",
+            "text": "aB2"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "construction-current",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      }
+    },
+    "guard-stable": {
+      "record.json": {
+        "actual": "aB2",
+        "after": {
+          "ended_ns": 21131843678087,
+          "focus": 4194318,
+          "keymap": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lockmask": 0,
+          "mask": 0,
+          "started_ns": 21131843501919
+        },
+        "app": {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/app_fixture.py",
+            "/home/research/caps-public-dispatch-construction-20261007/guard-stable/app.jsonl"
+          ],
+          "exit": 0,
+          "pid": 4743,
+          "ready": {
+            "event": "ready",
+            "ns": 21131761343260,
+            "pid": 4743,
+            "root": 4194316,
+            "window": 4194318
+          }
+        },
+        "app_after": {
+          "command": "snapshot",
+          "event": "snapshot",
+          "ns": 21131843308543,
+          "pid": 4743,
+          "value": "aB2"
+        },
+        "app_before": {
+          "command": "snapshot",
+          "event": "snapshot",
+          "ns": 21131795807252,
+          "pid": 4743,
+          "value": ""
+        },
+        "arm": "guard-stable",
+        "barrier_patch_sha256": "3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e",
+        "before": {
+          "ended_ns": 21131761615471,
+          "focus": 4194317,
+          "keymap": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lockmask": 0,
+          "mask": 0,
+          "started_ns": 21131761484220
+        },
+        "candidate_backend_sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d",
+        "dispatch_ended_ns": 21131808405965,
+        "dispatch_started_ns": 21131796166046,
+        "driver_pid": 4738,
+        "ended_ns": 21131889329407,
+        "entry_events": [
+          {
+            "event": "ready",
+            "ns": 21131761343260,
+            "pid": 4743,
+            "root": 4194316,
+            "window": 4194318
+          },
+          {
+            "command": "snapshot",
+            "event": "snapshot",
+            "ns": 21131795807252,
+            "pid": 4743,
+            "value": ""
+          },
+          {
+            "char": "a",
+            "event": "KeyPress",
+            "keycode": 38,
+            "keysym": "a",
+            "ns": 21131807350499,
+            "pid": 4743,
+            "state": 0
+          },
+          {
+            "event": "value",
+            "ns": 21131807444541,
+            "pid": 4743,
+            "value": "a"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 38,
+            "keysym": "a",
+            "ns": 21131807658376,
+            "pid": 4743,
+            "state": 0
+          },
+          {
+            "char": "",
+            "event": "KeyPress",
+            "keycode": 50,
+            "keysym": "Shift_L",
+            "ns": 21131807749669,
+            "pid": 4743,
+            "state": 0
+          },
+          {
+            "char": "B",
+            "event": "KeyPress",
+            "keycode": 56,
+            "keysym": "B",
+            "ns": 21131807830502,
+            "pid": 4743,
+            "state": 1
+          },
+          {
+            "event": "value",
+            "ns": 21131807850669,
+            "pid": 4743,
+            "value": "aB"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 56,
+            "keysym": "B",
+            "ns": 21131807963128,
+            "pid": 4743,
+            "state": 1
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 50,
+            "keysym": "Shift_L",
+            "ns": 21131808038004,
+            "pid": 4743,
+            "state": 1
+          },
+          {
+            "char": "2",
+            "event": "KeyPress",
+            "keycode": 11,
+            "keysym": "2",
+            "ns": 21131808106838,
+            "pid": 4743,
+            "state": 0
+          },
+          {
+            "event": "value",
+            "ns": 21131808125671,
+            "pid": 4743,
+            "value": "aB2"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 11,
+            "keysym": "2",
+            "ns": 21131808225339,
+            "pid": 4743,
+            "state": 0
+          },
+          {
+            "command": "snapshot",
+            "event": "snapshot",
+            "ns": 21131843308543,
+            "pid": 4743,
+            "value": "aB2"
+          },
+          {
+            "command": "close",
+            "event": "snapshot",
+            "ns": 21131878103036,
+            "pid": 4743,
+            "value": "aB2"
+          },
+          {
+            "event": "exit",
+            "ns": 21131878832666,
+            "pid": 4743,
+            "value": "aB2"
+          }
+        ],
+        "errors": [],
+        "expected": "aB2",
+        "ipc": [
+          {
+            "direction": "fixture-ready",
+            "raw": "{\"event\": \"ready\", \"ns\": 21131761343260, \"pid\": 4743, \"window\": 4194318, \"root\": 4194316}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"snapshot\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 21131795807252, \"pid\": 4743, \"value\": \"\"}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"snapshot\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 21131843308543, \"pid\": 4743, \"value\": \"aB2\"}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"close\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"close\", \"event\": \"snapshot\", \"ns\": 21131878103036, \"pid\": 4743, \"value\": \"aB2\"}\n"
+          }
+        ],
+        "kind": "excluded-public-dispatch-construction-only",
+        "main_backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+        "predecessor_patch_sha256": "86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65",
+        "repo_head": "d40dd8a3e2d4175dae5a7e8be799e85f9276c6e6",
+        "response": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "activations": [],
+              "completed_ops": [
+                0,
+                1,
+                2
+              ],
+              "emissions": 8,
+              "ended_ns": 21131808322756,
+              "observations": [],
+              "program_emissions": 8,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 21131808321798,
+                  "verified": true
+                }
+              ],
+              "started_ns": 21131806872454,
+              "waits": []
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "runtime_imports": {
+          "runtime.backends.x11_v1": {
+            "path": "runtime/backends/x11_v1/__init__.py",
+            "sha256": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b"
+          },
+          "runtime.backends.x11_v1.backend": {
+            "path": "runtime/backends/x11_v1/backend.py",
+            "sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d"
+          },
+          "runtime.backends.x11_v1.session": {
+            "path": "runtime/backends/x11_v1/session.py",
+            "sha256": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62"
+          },
+          "runtime.cli_v1": {
+            "path": "runtime/cli_v1/__init__.py",
+            "sha256": "8832365589e82ecba394d10ae11a381f146edfb68b981551ccbae8b95e4ac967"
+          },
+          "runtime.cli_v1.api": {
+            "path": "runtime/cli_v1/api.py",
+            "sha256": "47d4413b5633b334e21e158ffe5c4155b5ec3f24dd7c942f1e7ba91361632ca6"
+          },
+          "runtime.core_v1": {
+            "path": "runtime/core_v1/__init__.py",
+            "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+          },
+          "runtime.core_v1.contract": {
+            "path": "runtime/core_v1/contract.py",
+            "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+          },
+          "runtime.core_v1.platform_probe": {
+            "path": "runtime/core_v1/platform_probe.py",
+            "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+          },
+          "runtime.core_v1.sequence": {
+            "path": "runtime/core_v1/sequence.py",
+            "sha256": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d"
+          },
+          "runtime.selector_v1": {
+            "path": "runtime/selector_v1/__init__.py",
+            "sha256": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881"
+          },
+          "runtime.selector_v1.selector": {
+            "path": "runtime/selector_v1/selector.py",
+            "sha256": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+          }
+        },
+        "started_ns": 21129756050009
+      },
+      "program.json": {
+        "authority": {
+          "expires_at_ns": 21151795966128,
+          "lease_id": "private-fixture-only"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "entry"
+          },
+          {
+            "op": "text",
+            "text": "aB2"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "construction-guard-stable",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      }
+    },
+    "guard-interposed": {
+      "record.json": {
+        "actor": {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/lock_actor.py",
+            "/home/research/caps-public-dispatch-construction-20261007/guard-interposed/caps-barrier.sock",
+            ":99"
+          ],
+          "exit": 0,
+          "pid": 4769,
+          "stderr": "",
+          "stdout": "{\"accepted\": 1, \"ack_ns\": 21133200546299, \"actor_pid\": 4769, \"candidate_sample\": 0, \"mutation_started_ns\": 21133198382701, \"mutation_sync_ns\": 21133200542424, \"post_lock\": 1, \"pre_lock\": 0, \"received_ns\": 21133190505270, \"request\": \"LOCK_ON:0\"}\n"
+        },
+        "actual": "Ab2",
+        "after": {
+          "ended_ns": 21133238184938,
+          "focus": 4194318,
+          "keymap": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lockmask": 1,
+          "mask": 2,
+          "started_ns": 21133237983145
+        },
+        "app": {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/app_fixture.py",
+            "/home/research/caps-public-dispatch-construction-20261007/guard-interposed/app.jsonl"
+          ],
+          "exit": 0,
+          "pid": 4767,
+          "ready": {
+            "event": "ready",
+            "ns": 21133110105915,
+            "pid": 4767,
+            "root": 4194316,
+            "window": 4194318
+          }
+        },
+        "app_after": {
+          "command": "snapshot",
+          "event": "snapshot",
+          "ns": 21133237740810,
+          "pid": 4767,
+          "value": "Ab2"
+        },
+        "app_before": {
+          "command": "snapshot",
+          "event": "snapshot",
+          "ns": 21133142200931,
+          "pid": 4767,
+          "value": ""
+        },
+        "arm": "guard-interposed",
+        "barrier_patch_sha256": "3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e",
+        "before": {
+          "ended_ns": 21133110449500,
+          "focus": 4194317,
+          "keymap": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lockmask": 0,
+          "mask": 0,
+          "started_ns": 21133110281124
+        },
+        "candidate_backend_sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d",
+        "dispatch_ended_ns": 21133202314311,
+        "dispatch_started_ns": 21133178687812,
+        "driver_pid": 4762,
+        "ended_ns": 21133281661660,
+        "entry_events": [
+          {
+            "event": "ready",
+            "ns": 21133110105915,
+            "pid": 4767,
+            "root": 4194316,
+            "window": 4194318
+          },
+          {
+            "command": "snapshot",
+            "event": "snapshot",
+            "ns": 21133142200931,
+            "pid": 4767,
+            "value": ""
+          },
+          {
+            "char": "A",
+            "event": "KeyPress",
+            "keycode": 38,
+            "keysym": "A",
+            "ns": 21133201423305,
+            "pid": 4767,
+            "state": 2
+          },
+          {
+            "event": "value",
+            "ns": 21133201516681,
+            "pid": 4767,
+            "value": "A"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 38,
+            "keysym": "A",
+            "ns": 21133201793099,
+            "pid": 4767,
+            "state": 2
+          },
+          {
+            "char": "",
+            "event": "KeyPress",
+            "keycode": 50,
+            "keysym": "Shift_L",
+            "ns": 21133201829308,
+            "pid": 4767,
+            "state": 2
+          },
+          {
+            "char": "b",
+            "event": "KeyPress",
+            "keycode": 56,
+            "keysym": "b",
+            "ns": 21133201861517,
+            "pid": 4767,
+            "state": 3
+          },
+          {
+            "event": "value",
+            "ns": 21133201879892,
+            "pid": 4767,
+            "value": "Ab"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 56,
+            "keysym": "B",
+            "ns": 21133201918059,
+            "pid": 4767,
+            "state": 3
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 50,
+            "keysym": "Shift_L",
+            "ns": 21133202135852,
+            "pid": 4767,
+            "state": 3
+          },
+          {
+            "char": "2",
+            "event": "KeyPress",
+            "keycode": 11,
+            "keysym": "2",
+            "ns": 21133202164435,
+            "pid": 4767,
+            "state": 2
+          },
+          {
+            "event": "value",
+            "ns": 21133202181686,
+            "pid": 4767,
+            "value": "Ab2"
+          },
+          {
+            "char": "",
+            "event": "KeyRelease",
+            "keycode": 11,
+            "keysym": "2",
+            "ns": 21133202217227,
+            "pid": 4767,
+            "state": 2
+          },
+          {
+            "command": "snapshot",
+            "event": "snapshot",
+            "ns": 21133237740810,
+            "pid": 4767,
+            "value": "Ab2"
+          },
+          {
+            "command": "close",
+            "event": "snapshot",
+            "ns": 21133271626964,
+            "pid": 4767,
+            "value": "Ab2"
+          },
+          {
+            "event": "exit",
+            "ns": 21133272198177,
+            "pid": 4767,
+            "value": "Ab2"
+          }
+        ],
+        "errors": [],
+        "expected": "Ab2",
+        "ipc": [
+          {
+            "direction": "fixture-ready",
+            "raw": "{\"event\": \"ready\", \"ns\": 21133110105915, \"pid\": 4767, \"window\": 4194318, \"root\": 4194316}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"snapshot\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 21133142200931, \"pid\": 4767, \"value\": \"\"}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"snapshot\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 21133237740810, \"pid\": 4767, \"value\": \"Ab2\"}\n"
+          },
+          {
+            "direction": "to-app",
+            "raw": "{\"command\": \"close\"}\n"
+          },
+          {
+            "direction": "from-app",
+            "raw": "{\"command\": \"close\", \"event\": \"snapshot\", \"ns\": 21133271626964, \"pid\": 4767, \"value\": \"Ab2\"}\n"
+          }
+        ],
+        "kind": "excluded-public-dispatch-construction-only",
+        "main_backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+        "predecessor_patch_sha256": "86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65",
+        "repo_head": "d40dd8a3e2d4175dae5a7e8be799e85f9276c6e6",
+        "response": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "activations": [],
+              "completed_ops": [
+                0,
+                1,
+                2
+              ],
+              "emissions": 8,
+              "ended_ns": 21133202255644,
+              "observations": [],
+              "program_emissions": 8,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 21133202254478,
+                  "verified": true
+                }
+              ],
+              "started_ns": 21133190190060,
+              "waits": []
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "runtime_imports": {
+          "runtime.backends.x11_v1": {
+            "path": "runtime/backends/x11_v1/__init__.py",
+            "sha256": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b"
+          },
+          "runtime.backends.x11_v1.backend": {
+            "path": "runtime/backends/x11_v1/backend.py",
+            "sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d"
+          },
+          "runtime.backends.x11_v1.session": {
+            "path": "runtime/backends/x11_v1/session.py",
+            "sha256": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62"
+          },
+          "runtime.cli_v1": {
+            "path": "runtime/cli_v1/__init__.py",
+            "sha256": "8832365589e82ecba394d10ae11a381f146edfb68b981551ccbae8b95e4ac967"
+          },
+          "runtime.cli_v1.api": {
+            "path": "runtime/cli_v1/api.py",
+            "sha256": "47d4413b5633b334e21e158ffe5c4155b5ec3f24dd7c942f1e7ba91361632ca6"
+          },
+          "runtime.core_v1": {
+            "path": "runtime/core_v1/__init__.py",
+            "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+          },
+          "runtime.core_v1.contract": {
+            "path": "runtime/core_v1/contract.py",
+            "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+          },
+          "runtime.core_v1.platform_probe": {
+            "path": "runtime/core_v1/platform_probe.py",
+            "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+          },
+          "runtime.core_v1.sequence": {
+            "path": "runtime/core_v1/sequence.py",
+            "sha256": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d"
+          },
+          "runtime.selector_v1": {
+            "path": "runtime/selector_v1/__init__.py",
+            "sha256": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881"
+          },
+          "runtime.selector_v1.selector": {
+            "path": "runtime/selector_v1/selector.py",
+            "sha256": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+          }
+        },
+        "started_ns": 21131956502919
+      },
+      "program.json": {
+        "authority": {
+          "expires_at_ns": 21153178492811,
+          "lease_id": "private-fixture-only"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "entry"
+          },
+          {
+            "op": "text",
+            "text": "aB2"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "construction-guard-interposed",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      }
+    }
+  }
+}
+
