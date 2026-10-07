@@ -1147,6 +1147,10 @@ The checker compares the generated block against every child directory with a re
 
 - [D01 retained native held-input cancellation](../integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md) — 58 unchanged archival files retain one virtual-display Shift_L down/cancel/release condition, cancelled terminal and original cleanup exit codes. No physical-hardware, current-main task, or efficiency qualification; no producer replay.
 
+# Issue #57 — primary caller release-shape E01 evidence archive
+
+- [E01 source and private-candidate packets](../integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md) — first 48-cell caller failure and distinct inert candidate result retained separately; no native or production claim, no replay. PR #7071 remains the separate integration/review path.
+
 # Issue #57 — Firecrawl compiled release-boundary evidence
 
 - [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.
