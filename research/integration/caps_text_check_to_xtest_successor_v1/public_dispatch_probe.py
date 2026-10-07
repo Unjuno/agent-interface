@@ -1,7 +1,8 @@
-"""One excluded public-dispatch construction case under xvfb-run.
+"""One public-dispatch case under xvfb-run.
 
-This probe is not a formal allocator. One invocation creates exactly one arm
-and preserves its process, IPC, Entry, X-server and imported-source evidence.
+One invocation creates exactly one arm and preserves its process, IPC, Entry,
+X-server and imported-source evidence. Construction is the default mode;
+formal cases require an explicit preregistered mode flag and distinct output.
 """
 from __future__ import annotations
 
@@ -10,6 +11,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import platform
 import shutil
 import socket
 import subprocess
@@ -23,6 +25,7 @@ from Xlib import X, display
 MAIN_BACKEND_SHA256 = "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"
 PREDECESSOR_PATCH = Path("research/integration/caps_text_boundary_k8n4_v1/study/candidate.patch")
 BARRIER_PATCH = Path("research/integration/caps_text_check_to_xtest_successor_v1/barrier_instrumentation.patch")
+FREEZE_FILE = Path("research/integration/caps_text_check_to_xtest_successor_v1/FREEZE.json")
 HOOK_ENV = "AGENT_INTERFACE_CAPS_BARRIER_SOCKET"
 
 
@@ -55,6 +58,61 @@ def snapshot(d) -> dict:
     }
 
 
+def xvfb_identity() -> dict:
+    expected_pid = os.environ.get("AGENT_INTERFACE_XVFB_PID")
+    if expected_pid:
+        pid = int(expected_pid)
+        argv = [part.decode("utf-8", "replace") for part in
+                Path(f"/proc/{pid}/cmdline").read_bytes().split(b"\0") if part]
+        if not argv or "Xvfb" not in Path(argv[0]).name:
+            raise RuntimeError("formal Xvfb PID does not identify the expected server")
+        if "-nolisten" not in argv or "tcp" not in argv:
+            raise RuntimeError("formal Xvfb does not disable TCP listening")
+        return {"display": os.environ["DISPLAY"], "pid": pid, "argv": argv}
+    rows = subprocess.check_output(["ps", "-eo", "pid=,args="], text=True).splitlines()
+    display_name = os.environ["DISPLAY"]
+    matches = []
+    for row in rows:
+        try:
+            pid_text, argv = row.strip().split(None, 1)
+        except ValueError:
+            continue
+        if "Xvfb" in argv and display_name in argv:
+            matches.append({"pid": int(pid_text), "argv": argv.split()})
+    if len(matches) != 1:
+        raise RuntimeError(f"expected one private Xvfb for {display_name}; found {matches}")
+    return {"display": display_name, **matches[0]}
+
+
+def network_boundary() -> dict:
+    """Capture the network namespace and reject any non-local route/interface."""
+    own_ns = Path("/proc/self/ns/net").stat().st_ino
+    init_ns = Path("/proc/1/ns/net").stat().st_ino
+    interfaces = socket.if_nameindex()
+    ipv4_routes = [line for line in Path("/proc/net/route").read_text().splitlines()[1:]
+                   if line.split() and line.split()[0] != "lo"]
+    ipv6_routes = [line for line in Path("/proc/net/ipv6_route").read_text().splitlines()
+                   if line.split() and line.split()[-1] != "lo"]
+    up_non_loopback = []
+    for _, name in interfaces:
+        if name == "lo":
+            continue
+        flags = int(Path("/sys/class/net", name, "flags").read_text().strip(), 16)
+        if flags & 1:  # IFF_UP
+            up_non_loopback.append(name)
+    result = {
+        "namespace_inode": own_ns,
+        "pid1_namespace_inode": init_ns,
+        "interfaces": interfaces,
+        "ipv4_non_loopback_routes": ipv4_routes,
+        "ipv6_non_loopback_routes": ipv6_routes,
+        "up_non_loopback_interfaces": up_non_loopback,
+    }
+    if own_ns == init_ns or ipv4_routes or ipv6_routes or up_non_loopback:
+        raise RuntimeError("formal case is not isolated in a route-free network namespace")
+    return result
+
+
 def prepare_guard(repo: Path, out: Path) -> Path:
     candidate = out / "guard_source"
     candidate.mkdir()
@@ -69,22 +127,38 @@ def main() -> int:
     parser.add_argument("--repo", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--arm", choices=("current", "guard-stable", "guard-interposed"), required=True)
+    parser.add_argument("--mode", choices=("construction", "formal"), default="construction")
+    parser.add_argument("--case-id")
     args = parser.parse_args()
+    if args.mode == "formal" and not args.case_id:
+        parser.error("--case-id is required in formal mode")
     repo = args.repo.resolve()
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
     baseline_backend = repo / "runtime/backends/x11_v1/backend.py"
     if sha256(baseline_backend) != MAIN_BACKEND_SHA256:
         raise RuntimeError("current-main backend identity differs from preregistered source")
+    freeze = json.loads((repo / FREEZE_FILE).read_text(encoding="utf-8"))
+    if freeze.get("status") != "FROZEN_NOT_STARTED":
+        raise RuntimeError("formal plan is not frozen-not-started")
 
     record = {
-        "kind": "excluded-public-dispatch-construction-only",
+        "kind": f"{args.mode}-public-dispatch-case",
+        "study_id": "caps-text-query-xtest-a01-20261007",
+        "case_id": args.case_id,
         "arm": args.arm,
+        "network_boundary": network_boundary() if args.mode == "formal" else None,
         "repo_head": subprocess.check_output(
             ["git", "-C", str(repo), "rev-parse", "HEAD"], text=True
         ).strip(),
         "main_backend_sha256": sha256(baseline_backend),
         "driver_pid": os.getpid(),
+        "runner_sha256": sha256(Path(__file__).resolve()),
+        "freeze_sha256": sha256(repo / FREEZE_FILE),
+        "python_version": sys.version,
+        "platform": platform.platform(),
+        "display": os.environ["DISPLAY"],
+        "display_server": xvfb_identity(),
         "started_ns": time.monotonic_ns(),
         "errors": [],
         "ipc": [],
@@ -97,11 +171,16 @@ def main() -> int:
         source = repo
         if args.arm.startswith("guard-"):
             source = prepare_guard(repo, out)
-            record["candidate_backend_sha256"] = sha256(
-                source / "runtime/backends/x11_v1/backend.py"
-            )
+            record["candidate_backend_sha256"] = sha256(source / "runtime/backends/x11_v1/backend.py")
             record["predecessor_patch_sha256"] = sha256(repo / PREDECESSOR_PATCH)
             record["barrier_patch_sha256"] = sha256(repo / BARRIER_PATCH)
+            frozen_source = freeze["source_base"]
+            if record["candidate_backend_sha256"] != frozen_source["candidate_backend_sha256"]:
+                raise RuntimeError("#8255 candidate backend differs from frozen identity")
+            if record["predecessor_patch_sha256"] != frozen_source["predecessor_candidate_patch_sha256"]:
+                raise RuntimeError("#8255 candidate patch differs from frozen identity")
+            if record["barrier_patch_sha256"] != frozen_source["fixture_instrumentation_sha256"]:
+                raise RuntimeError("fixture instrumentation differs from frozen identity")
         sys.path.insert(0, str(source))
         from runtime.cli_v1.api import dispatch
 
@@ -150,7 +229,8 @@ def main() -> int:
 
         program = {
             "schema": "agent-interface/program-v1",
-            "program_id": "construction-" + args.arm,
+            "program_id": ("formal-" + args.case_id + "-" + args.arm
+                           if args.mode == "formal" else "construction-" + args.arm),
             "source": {"observation_seq": 1, "binding_revision": 1},
             "authority": {"lease_id": "private-fixture-only",
                           "expires_at_ns": time.monotonic_ns() + 20_000_000_000},
@@ -161,6 +241,8 @@ def main() -> int:
                 {"op": "release_all"},
             ],
         }
+        record["program_id"] = program["program_id"]
+        record["program"] = program
         (out / "program.json").write_text(json.dumps(program, indent=2, sort_keys=True) + "\n")
         record["dispatch_started_ns"] = time.monotonic_ns()
         response = dispatch(
@@ -183,6 +265,9 @@ def main() -> int:
         app_request("close")
         app.wait(timeout=5)
         record["app"]["exit"] = app.returncode
+        app_err.flush()
+        app_err.close()
+        record["app_stderr"] = (out / "app.stderr").read_text(encoding="utf-8")
         record["entry_events"] = [
             json.loads(line) for line in app_log.read_text(encoding="utf-8").splitlines()
         ]

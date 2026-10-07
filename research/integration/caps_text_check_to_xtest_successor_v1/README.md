@@ -8,12 +8,13 @@ result.
 ## Status
 
 - GitHub preregistration: [Issue #8328](https://github.com/Unjuno/agent-interface/issues/8328).
-- Intake main: `798ac5ad709168ff1d27b115f10f4f96b126bb71`.
+- Intake main: `798ac5ad709168ff1d27b115f10f4f96b126bb71`; current-main refresh: `d6b3376aaabb6738dbf8e6a8184fe10e66aa937d`.
 - Exact main backend source SHA-256:
   `6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db`.
 - Exact retained #8255 candidate patch SHA-256:
   `86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65`.
-- No source freeze and no formal case has started.
+- `origin/main` was merged into the additive research branch; the two intervening main commits add unrelated Windows-pipe evidence and leave the X11 backend byte-identical (same SHA-256 above). The branch is now based on that current main.
+- The exact 9-case schedule, 11-module public-dispatch source closure, decision rule, environment, no-rerun policy, evidence fields and 15 corruption controls are frozen in `FREEZE.json` and `SOURCE_MANIFEST.json`. The formal allocation remains not started until this exact snapshot and plan are read back from GitHub.
 - `construction_probe.py` is excluded environment/setup code; it does not
   exercise the public dispatch or the #8255 candidate guard.
 
@@ -28,8 +29,11 @@ installation and source retrieval precede any formal freeze. Formal work must
 avoid outbound experiment traffic and unrelated/shared VMs.
 
 Installed construction dependencies include Xvfb 21.1.12, Python 3.12.3,
-Python-Xlib 0.33, Tk 8.6.14, GCC 13.3 and libX11 development headers. A separate
+Python-Xlib 0.33, Tk 8.6.14, GCC 13.2.0 and libX11 development headers. A separate
 TCP-disabled private Xvfb/Tk/XTEST smoke produced exact Entry value `aB2`.
+Xvfb writes a fixed nonfatal XKB keysym warning block on stderr in this image;
+the bytes are retained in `XVFB_EXPECTED_STDERR.txt` and every preflight/case
+checks that exact digest.
 The initial runner syntax error occurred before input and was corrected; neither
 smoke is a formal outcome.
 
@@ -59,19 +63,25 @@ It did not execute the #8255 `TEXT_LOCK_GUARD`, public dispatch, a separate
 controller process/IPC barrier, or any formal schedule. No source freeze or
 formal case count is claimed.
 
+## Formal allocation freeze and current-main overlap review
+
+The issue-level construction outcome above is retained unchanged. Open PR #8308 is a parallel held-key repair against the same backend file; the latest GitHub metadata marks it ready for review at head `dae92e12097907e860f68d6ee22a10cb23ace442`, and it is not integrated into main. This study's fixed `aB2` program holds no keys/modifiers; it freezes the #8255 guard patch and main backend source from current main `d6b3376aaabb6738dbf8e6a8184fe10e66aa937d`, and does not evaluate #8308 semantics. If the production backend source changes before the allocation, the run script must stop at its SHA gate; no silent source substitution is permitted.
+
+`FREEZE.json` preregisters three interleaved fresh-Xvfb blocks (CURRENT, guard-stable, guard-interposed), nine total cases, exact order `C01,G01,I01,C02,G02,I02,C03,G03,I03`, fixed payload `aB2`, and no replacement/rerun or post-outcome tuning. `SOURCE_MANIFEST.json` pins the full imported runtime closure and executable inputs. `run_formal_once.sh` enters a fresh network namespace with no non-loopback interface or route; `run_formal.py` verifies the frozen commit and hashes, captures Xvfb/app/actor identities and exits, and stops at the first unexpected or ambiguous case. `audit_formal.py` checks event/value, dispatch, actor ACK-before-first-KeyPress, LockMask/keymap cleanup, process/Xvfb identities, imported-source closure, and runs 15 effective corruption controls. A formal run is not authorized until the frozen commit and file content have been read back from GitHub and the VM has that exact checkout.
+
+The first host-only attempt to run X11 construction tests on macOS stopped before launching a case because the host has neither Python-Xlib nor `xvfb-run`; the three pure raw-auditor synthetic tests passed. This host STOP is not a scientific outcome. The dedicated VM has the X11 dependencies installed and will be used for formal cases if its frozen source can be refreshed without weakening isolation.
+
 ## Next gates
 
-1. Run the excluded `construction_probe.py` in two fresh private Xvfb sessions
-   (stable OFF and synchronously interposed ON), retaining complete raw output.
-2. Confirm actual first-character behavior and lock actor acknowledgment. If it
-   does not establish the intended ordering or effect, repair only construction
-   code and preserve the incident; do not count it as a formal case.
-3. Build the actual public-dispatch candidate/barrier runner from exact #8255
-   source; keep the controller a separate X client and use an explicit IPC
-   barrier, never a timing sleep.
-4. Freeze exact source closure, environment, schedule, expected outcomes, audit,
-   and mutation controls in this directory and read them back from GitHub before
-   the first formal case. Formal count/batches are not yet chosen or run.
+1. Commit/push this freeze and construction auditor tests; read the exact commit,
+   `FREEZE.json`, and runner/auditor files back from GitHub before allocation.
+2. Refresh the private VM to that immutable study snapshot; confirm exact
+   source, dependency versions, and clean run root before entering the isolated
+   network namespace for formal execution.
+3. Execute the nine frozen cases once in order. Preserve a partial run and STOP
+   on the first unexpected or ambiguous outcome; never replace or rerun a case.
+4. Run the raw-only auditor and all 15 corruption controls, then publish exact
+   hashes and scoped PASS/FAIL/STOP to this Issue and an additive result report.
 
 ## Public-dispatch construction gate
 
