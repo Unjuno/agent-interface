@@ -59,3 +59,5 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 - [Branch-to-open-PR crosswalk](BRANCH_CROSSWALK_20261007_121116Z.csv)
 - [Unpaired-branch triage](BRANCH_ORPHAN_TRIAGE_20261007_121116Z.csv)
 - PR #8308 was opened as a Draft from the rebased rescue branch; it targets the verified current main eaa7195763e7545101868435ca529dcf027a8617 and preserves the original source PR #8296 as provenance. Local focused/regression verification is recorded in the rescue ledger; independent review and integration remain pending.
+
+- PR #8308 current check snapshot at head 686a7d86a7cb: 10 checks succeeded and ormal was skipped. The source PR's prior checks are not being substituted for this head's CI. The closed source branch remains retained until the successor integrates, preserving exact original commit reachability.
