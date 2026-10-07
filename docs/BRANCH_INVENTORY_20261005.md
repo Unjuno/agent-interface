@@ -140,3 +140,12 @@ Four merged rescue refs were removed after verifying each exact tip was an ances
 Each remote ref was deleted with an expected-tip lease. The four closed PR pull-head refs remain fetchable at their former tips. No experiment, auditor, or replay was rerun. A separate audit kept #8227's source ref because its tip was not an ancestor of current main; no cleanup is inferred for that branch.
 
 The latest non-atomic branch-head count after these operations was 424; ongoing concurrent updates may change it.
+## Additional merged-source ref cleanup — 2026-10-07
+
+Removed three more merged PR source refs after confirming the exact remote tip was an ancestor of fetched `main` `133dafbd8f616b7d2f2ca8b14a3ba863b63f0933`, no open PR used the branch as head or base, and no local worktree used it:
+
+- #8245 `engineering/receipt-empty-index-20261006-r7p4` at `18be81517fd2f28848b9f497c4190d9ba7b2c4c8`.
+- #8243 `research/59-8094-currentmain-delta-audit-20261006` at `a290629443f590e4ed792f20f37199e180b05f64`.
+- #8247 `rescue/7223-uncertain-relay-current-main-20261006` at `401d5171c91ed90097ac2de80c7df12a9f70e0b1`.
+
+Each ref was deleted with an expected-tip lease; closed PR pull-head refs remain fetchable. No test or experiment was rerun. The latest non-atomic remote-head count was 422 after these deletions.
