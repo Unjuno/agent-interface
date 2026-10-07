@@ -13,9 +13,19 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "892fec8ad9d2c92b07c6613305d5053aee3bfc5d4b42f8896e0bae9ce340f130"
+FROZEN_PLAN_SHA256 = "48969b57f1be88ab8a9d8bcd039271978cd0488cc17384b724dce38b34406eb7"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
+
+
+def xvfb_stderr_blocks(raw: bytes) -> int | None:
+    block = (Path(__file__).resolve().parent / "XVFB_EXPECTED_STDERR.txt").read_bytes()
+    if not block or len(raw) % len(block):
+        return None
+    count = len(raw) // len(block)
+    if count not in FROZEN_PLAN["environment"]["expected_xvfb_stderr_blocks"] or raw != block * count:
+        return None
+    return count
 
 
 def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
@@ -125,7 +135,13 @@ def audit(root: Path) -> tuple[list[str], dict]:
             errors.append("pre-allocation environment preflight")
         if preflight.get("xvfb", {}).get("exit") != 0 or not preflight.get("xtest_present"):
             errors.append("preflight Xvfb/XTEST")
-        if preflight.get("xvfb", {}).get("stderr_sha256") != EXPECTED_XVFB_STDERR_SHA256:
+        preflight_stderr_path = root / "preflight-xvfb" / "xvfb.stderr"
+        if preflight_stderr_path.is_file():
+            preflight_stderr = preflight_stderr_path.read_bytes()
+        else:
+            preflight_stderr = preflight.get("xvfb", {}).get("stderr", "").encode()
+        if (xvfb_stderr_blocks(preflight_stderr) is None or
+                preflight.get("xvfb", {}).get("stderr_blocks") != xvfb_stderr_blocks(preflight_stderr)):
             errors.append("preflight Xvfb stderr identity")
         boundary = preflight.get("network_boundary", {})
         if (boundary.get("namespace_inode") == boundary.get("pid1_namespace_inode") or
@@ -187,7 +203,8 @@ def audit(root: Path) -> tuple[list[str], dict]:
             xvfb = supervisor.get("xvfb", {})
             if not xvfb.get("socket_removed") or not xvfb.get("lock_removed"):
                 errors.append(f"{case_id}: Xvfb cleanup")
-            if hashlib.sha256(xvfb.get("stderr", "").encode()).hexdigest() != EXPECTED_XVFB_STDERR_SHA256:
+            xvfb_raw = xvfb.get("stderr", "").encode()
+            if xvfb_stderr_blocks(xvfb_raw) is None or xvfb.get("stderr_blocks") != xvfb_stderr_blocks(xvfb_raw):
                 errors.append(f"{case_id}: unexpected Xvfb stderr")
             probe_stderr = root / case_id / "probe.stderr"
             if not probe_stderr.is_file() or probe_stderr.read_text(errors="replace"):

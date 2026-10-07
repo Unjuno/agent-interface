@@ -7,7 +7,6 @@ import json
 import os
 from pathlib import Path
 import platform
-import select
 import signal
 import socket
 import subprocess
@@ -21,6 +20,17 @@ STUDY = Path(__file__).resolve().parent
 
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def xvfb_warning_blocks(raw: bytes, freeze: dict) -> int:
+    expected = (STUDY / "XVFB_EXPECTED_STDERR.txt").read_bytes()
+    allowed = freeze["environment"]["expected_xvfb_stderr_blocks"]
+    if not expected or len(raw) % len(expected):
+        raise RuntimeError("Xvfb stderr is not an exact repetition of the frozen warning block")
+    count = len(raw) // len(expected)
+    if count not in allowed or raw != expected * count:
+        raise RuntimeError("Xvfb stderr differs from the frozen warning-block allowance")
+    return count
 
 
 def network_snapshot() -> dict:
@@ -118,7 +128,14 @@ def environment_preflight(freeze: dict, out: Path) -> dict:
         stdout.close()
         stderr.close()
     stderr_sha256 = digest(check_dir / "xvfb.stderr")
-    expected_stderr_sha256 = environment["expected_xvfb_stderr_sha256"]
+    stderr_raw = (check_dir / "xvfb.stderr").read_bytes()
+    try:
+        stderr_blocks = xvfb_warning_blocks(stderr_raw, freeze)
+        stderr_warning_error = None
+    except RuntimeError as exc:
+        block = (STUDY / "XVFB_EXPECTED_STDERR.txt").read_bytes()
+        stderr_blocks = len(stderr_raw) // len(block) if block else 0
+        stderr_warning_error = str(exc)
     result = {"study_id": STUDY_ID, "scope": "excluded pre-allocation readiness only",
               "network_boundary": boundary, "python": python_version,
               "python_xlib": xlib_version, "tk": tk_version,
@@ -127,12 +144,15 @@ def environment_preflight(freeze: dict, out: Path) -> dict:
               "display": display_name, "exit": code,
               "stdout": (check_dir / "xvfb.stdout").read_text(errors="replace"),
               "stderr": (check_dir / "xvfb.stderr").read_text(errors="replace"),
-              "stderr_sha256": stderr_sha256,
+              "stderr_sha256": stderr_sha256, "stderr_blocks": stderr_blocks,
+              "stderr_warning_error": stderr_warning_error,
               "socket_removed": not Path("/tmp/.X11-unix", "X" + display_name[1:]).exists(),
               "lock_removed": not Path("/tmp/.X" + display_name[1:] + "-lock").exists()},
-              "xtest_present": True, "status": "PASS" if code == 0 else "STOP"}
+              "xtest_present": True,
+              "status": "PASS" if code == 0 and stderr_warning_error is None else "STOP"}
     (out / "PREFLIGHT.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
-    if (code != 0 or stderr_sha256 != expected_stderr_sha256 or
+    (out / "preflight-xvfb" / "xvfb.stderr.sha256").write_text(stderr_sha256 + "\n")
+    if (code != 0 or stderr_warning_error is not None or
             not result["xvfb"]["socket_removed"] or not result["xvfb"]["lock_removed"]):
         raise RuntimeError("pre-allocation Xvfb readiness/cleanup did not pass")
     return result
@@ -141,27 +161,33 @@ def environment_preflight(freeze: dict, out: Path) -> dict:
 def start_xvfb(out: Path) -> tuple[subprocess.Popen, str, list[str], object, object]:
     stdout = (out / "xvfb.stdout").open("xb")
     stderr = (out / "xvfb.stderr").open("xb")
-    read_fd, write_fd = os.pipe()
-    argv = ["Xvfb", "-displayfd", str(write_fd), "-screen", "0", "640x240x24",
-            "-nolisten", "tcp", "-ac"]
-    proc = subprocess.Popen(argv, pass_fds=(write_fd,), stdout=stdout, stderr=stderr,
-                            start_new_session=True)
-    os.close(write_fd)
+    display_number = next((n for n in range(99, 110)
+                           if not Path(f"/tmp/.X{n}-lock").exists()
+                           and not Path(f"/tmp/.X11-unix/X{n}").exists()), None)
+    if display_number is None:
+        stdout.close()
+        stderr.close()
+        raise RuntimeError("no prechecked private Xvfb display is free")
+    display_name = ":" + str(display_number)
+    argv = ["Xvfb", display_name, "-screen", "0", "640x240x24", "-nolisten", "tcp", "-ac"]
+    proc = subprocess.Popen(argv, stdout=stdout, stderr=stderr, start_new_session=True)
     try:
-        ready, _, _ = select.select([read_fd], [], [], 10)
-        if not ready:
-            raise TimeoutError("Xvfb did not allocate a display")
-        display_number = os.read(read_fd, 64).decode("ascii").strip()
-        if not display_number.isdigit() or proc.poll() is not None:
-            raise RuntimeError("Xvfb exited or returned an invalid display number")
-        return proc, ":" + display_number, argv, stdout, stderr
+        socket_path = Path("/tmp/.X11-unix", "X" + str(display_number))
+        deadline = time.monotonic() + 10
+        while not socket_path.exists():
+            if proc.poll() is not None:
+                raise RuntimeError(f"Xvfb exited before creating its display socket: {proc.returncode}")
+            if time.monotonic() >= deadline:
+                raise TimeoutError("Xvfb did not create its display socket")
+            time.sleep(0.02)
+        if proc.poll() is not None:
+            raise RuntimeError(f"Xvfb exited immediately after socket creation: {proc.returncode}")
+        return proc, display_name, argv, stdout, stderr
     except Exception:
         stop_process(proc)
         stdout.close()
         stderr.close()
         raise
-    finally:
-        os.close(read_fd)
 
 
 def stop_process(proc: subprocess.Popen) -> int:
@@ -174,7 +200,7 @@ def stop_process(proc: subprocess.Popen) -> int:
         return proc.wait(timeout=5)
 
 
-def execute_case(repo: Path, row: dict, case_dir: Path) -> dict:
+def execute_case(repo: Path, row: dict, case_dir: Path, freeze: dict) -> dict:
     case_dir.mkdir()
     network = network_snapshot()
     server = None
@@ -231,6 +257,13 @@ def execute_case(repo: Path, row: dict, case_dir: Path) -> dict:
         if "xvfb" in result:
             result["xvfb"]["stdout"] = (case_dir / "xvfb.stdout").read_text(errors="replace")
             result["xvfb"]["stderr"] = (case_dir / "xvfb.stderr").read_text(errors="replace")
+            try:
+                result["xvfb"]["stderr_blocks"] = xvfb_warning_blocks(
+                    (case_dir / "xvfb.stderr").read_bytes(), freeze
+                )
+            except RuntimeError as exc:
+                result["xvfb"]["stderr_blocks"] = None
+                result["errors"].append(str(exc))
             display_number = result["xvfb"]["display"][1:]
             result["xvfb"]["socket_removed"] = not Path("/tmp/.X11-unix", "X" + display_number).exists()
             result["xvfb"]["lock_removed"] = not Path("/tmp/.X" + display_number + "-lock").exists()
@@ -267,7 +300,7 @@ def main() -> int:
     (out / "RAW_INDEX.json").write_text(json.dumps(index, indent=2, sort_keys=True) + "\n")
     for row in schedule:
         case_dir = out / row["case_id"]
-        summary = execute_case(repo, row, case_dir)
+        summary = execute_case(repo, row, case_dir, freeze)
         index["cases"][row["case_id"]] = {
             "arm": row["arm"],
             "supervisor_sha256": digest(case_dir / "supervisor.json"),
@@ -284,12 +317,11 @@ def main() -> int:
         if supervisor.get("errors"):
             failures.extend(supervisor["errors"])
         xvfb = supervisor.get("xvfb", {})
-        expected_xvfb_stderr = freeze["environment"]["expected_xvfb_stderr_sha256"]
-        if digest(case_dir / "xvfb.stderr") != expected_xvfb_stderr:
-            failures.append("unexpected Xvfb stderr")
         if (not xvfb.get("socket_removed") or not xvfb.get("lock_removed") or
                 xvfb.get("pid") != supervisor.get("record_display_server_pid")):
             failures.append("Xvfb cleanup or process identity")
+        if xvfb.get("stderr_blocks") not in freeze["environment"]["expected_xvfb_stderr_blocks"]:
+            failures.append("unexpected Xvfb stderr block count")
         if (case_dir / "probe.stderr").read_text(errors="replace"):
             failures.append("probe stderr")
         record_path = case_dir / "probe" / "record.json"

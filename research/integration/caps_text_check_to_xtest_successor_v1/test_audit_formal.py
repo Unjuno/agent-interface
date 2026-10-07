@@ -83,7 +83,8 @@ class FormalAuditTest(unittest.TestCase):
                 "scope": "excluded pre-allocation readiness only", "status": "PASS",
                 "network_boundary": preflight_boundary, "xtest_present": True,
                 "xvfb": {"exit": 0,
-                         "stderr_sha256": FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]}
+                         "stderr": (Path(__file__).resolve().parent / "XVFB_EXPECTED_STDERR.txt").read_text(),
+                         "stderr_blocks": 1}
             }))
             for index, (case_id, arm) in enumerate((("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interposed"),
                                  ("C02", "current"), ("G02", "guard-stable"), ("I02", "guard-interposed"),
@@ -104,7 +105,8 @@ class FormalAuditTest(unittest.TestCase):
                     "errors": [], "network_boundary": row["network_boundary"],
                     "record_display_server_pid": row["display_server"]["pid"],
                     "xvfb": {"socket_removed": True, "lock_removed": True,
-                             "stderr": (Path(__file__).resolve().parent / "XVFB_EXPECTED_STDERR.txt").read_text()},
+                             "stderr": (Path(__file__).resolve().parent / "XVFB_EXPECTED_STDERR.txt").read_text(),
+                             "stderr_blocks": 1},
                 }))
             case_index = {}
             for case_id, arm in (("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interposed"),

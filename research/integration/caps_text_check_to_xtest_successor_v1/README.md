@@ -31,11 +31,21 @@ avoid outbound experiment traffic and unrelated/shared VMs.
 Installed construction dependencies include Xvfb 21.1.12, Python 3.12.3,
 Python-Xlib 0.33, Tk 8.6.14, GCC 13.2.0 and libX11 development headers. A separate
 TCP-disabled private Xvfb/Tk/XTEST smoke produced exact Entry value `aB2`.
-Xvfb writes a fixed nonfatal XKB keysym warning block on stderr in this image;
-the bytes are retained in `XVFB_EXPECTED_STDERR.txt` and every preflight/case
-checks that exact digest.
+Xvfb writes a fixed nonfatal XKB keysym warning block on stderr in this image.
+The exact bytes are retained in `XVFB_EXPECTED_STDERR.txt`; preflight and each
+case accept only one or two exact concatenated copies. Any other bytes or count
+stops the run. A preallocation start emitted two copies, so the amended freeze
+records that observed multiplicity without weakening byte identity.
 The initial runner syntax error occurred before input and was corrected; neither
 smoke is a formal outcome.
+
+Before formal allocation, the original frozen commit `f393aed694248db712ec4e3393b80504d6bc0ce5`
+produced two additional readiness STOPs: a preflight stderr multiplicity mismatch
+and an excluded construction attempt where Xvfb's `-displayfd` pipe failed before
+public dispatch. Both raw records are retained under `preallocation_stop_01/`
+and `preallocation_stop_02/`. No formal case began and no allocation was
+consumed. The amended runner selects an already-free explicit display from
+`:99`–`:109`, checks for its socket, and keeps the exact warning bytes/count gate.
 
 The first LockMask interposition probe reached XTEST input but exited before
 printing its result because Python-Xlib 0.33 `Display.query_keymap()` returns a
