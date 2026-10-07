@@ -1,7 +1,7 @@
 # A01 formal launch failure — terminal STOP
 
-Allocation: `7934-DECISION-VALUE-ACQUISITION-A01-20261007`  
-Issue: #7934  
+Allocation: `7934-DECISION-VALUE-ACQUISITION-A01-20261007`\
+Issue: #7934\
 Disposition: **STOP_OUTPUT_PATH_MISSING**; this is an execution/setup failure, not a scientific result.
 
 The frozen protocol required the candidate output at
@@ -36,4 +36,3 @@ container-claim boundary are recorded in `PREFLIGHT.json` and `PROTOCOL.md`.
 | Candidate | 1 | 1 | none; parent directory missing |
 | Scorer | 0 | — | not run |
 | Independent auditor | 0 | — | not run |
-
