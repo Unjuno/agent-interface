@@ -219,9 +219,19 @@ class X11Backend:
             self.held_keycodes.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
+        # A chord borrows a same-owner key already held by an earlier operation.
+        # Compare physical keycodes so aliases such as SHIFT and Shift_L match.
+        owned_codes = set(self.held_keycodes.values())
+        acquired = []
         for key in keys:
+            code = self.held_keycodes.get(key)
+            if code is None:
+                code = self._keycode(key)
+            if code not in owned_codes:
+                acquired.append(key)
+        for key in acquired:
             self.key_state(key, True)
-        for key in reversed(keys):
+        for key in reversed(acquired):
             self.key_state(key, False)
 
     def _refresh_keyboard_mapping(self) -> bool:
