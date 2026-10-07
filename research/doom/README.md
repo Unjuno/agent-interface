@@ -429,3 +429,6 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 ## V39 feedback-onset custody audit A01 (#8213)
 
 - [Preserved five-file audit package](feedback_onset_audit_a01_20261005/README.md) — 634 retained events, 39 admissions, no per-key release measurement/transition or independently timestamped in-run task-effect event; one post-control score does not locate effect onset. [Original #7602 README](feedback_onset_a01_8213_SOURCE_README.md) preserves the pre-correction replay path. Construction STOP retained; no new audit or live run.
+## V39 delivered-but-unacknowledged input cleanup (#59)
+
+- [A02 construction result](map01_v39_input_ack_loss_cleanup_a02_20261007/README.md) — a fake provider applied KeyPress then raised before acknowledgment; the selected V39/V15/Executor/owner path failed the action and recorded verified empty fake-server state during terminal cleanup. No physical-key, app-effect, or task-success claim.

@@ -1,0 +1,41 @@
+{
+  "arms": {
+    "delivered_error": {
+      "final_fake_keycodes_down": [],
+      "injected_count": 1,
+      "release_transition_count": 0,
+      "request_events": [
+        2,
+        3
+      ],
+      "requests": 2,
+      "steps_completed": 0,
+      "terminal": "failed",
+      "terminal_owner_release": {
+        "keys_down": [],
+        "reason": "release",
+        "verified": true
+      }
+    },
+    "normal": {
+      "final_fake_keycodes_down": [],
+      "release_transition_count": 1,
+      "requests": 2,
+      "steps_completed": 1,
+      "terminal": "completed",
+      "terminal_owner_release_verified": true
+    }
+  },
+  "audit_exit_code": 0,
+  "audit_sha256": "ae7b998a80e6749bb8de5eef10a3ddeee45809da6796c810ca19dc49fffa2f07",
+  "classification": "PASS_SCOPED",
+  "limits": [
+    "fake X state only; not physical keyboard or OS input",
+    "test-only action loop/session seam; selected V39/V15/Executor/owner chain is from the frozen 21-file source closure",
+    "no GUI, Doom, model, application effect, useful feedback, or task success"
+  ],
+  "raw_sha256": "d7951542afce48e411852c669522d004f93c0f81a6eb47011c6c33b3377d14a9",
+  "run_id": "input-ack-loss-a02-decc1896e3e8-20261007",
+  "schema": "issue59-input-ack-loss-cleanup-a02-result-v1",
+  "source_main": "decc1896e3e85ab2fdbb7ec4678f958eb6561d0f"
+}

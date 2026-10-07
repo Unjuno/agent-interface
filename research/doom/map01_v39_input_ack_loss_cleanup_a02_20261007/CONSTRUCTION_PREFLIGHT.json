@@ -1,0 +1,17 @@
+{
+  "candidate_sha256": "3a594d3b85822f57d692d66ad26139e849a58661ad569efed89009ca46a8ce85",
+  "command_summary": "Load candidate module without __main__, select sources/main, install fake X module shims, import selected release-batch Backend and ExecutorV13; no owner instance created.",
+  "fake_input_requests": 0,
+  "game_or_gui_accessed": false,
+  "imports": [
+    "doom_owner_thread_release_batch_backend_v1.Backend",
+    "executor_v13.Executor"
+  ],
+  "network_calls": 0,
+  "owner_instantiated": false,
+  "result": "PASS_IMPORTS_NO_INPUT",
+  "schema": "issue59-input-ack-loss-cleanup-a02-construction-preflight-v1",
+  "source_file_count": 21,
+  "source_manifest_sha256": "1bae8c2b6af430cdb55d23359d81c17265066f3035ea09e99ad27fd8d3fd052e",
+  "stage": "after freeze, before the one candidate invocation"
+}
