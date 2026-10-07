@@ -1,0 +1,122 @@
+{
+  "base": "816724f93a7239b3ad9b5ebb2e5f79b8a103b2db",
+  "controls": [
+    "matching literal unknown",
+    "matching ordinary string",
+    "missing predicate",
+    "nonmatching legacy unknown",
+    "type mismatch",
+    "unavailable verifier",
+    "failed verifier"
+  ],
+  "created_utc": "2026-10-03T04:55:38.488736+00:00",
+  "decision": "first regression against original bytes before any candidate source edit; focused controls and complete core suite must preserve prior boundaries",
+  "files": [
+    {
+      "bytes": 9051,
+      "git_blob": "2d6d206c05058f7fd4045b9a7b4367c9284132d8",
+      "mode": "100644",
+      "path": "runtime/core_v1/test_contract.py",
+      "sha256": "4ace062f12a1ae5139f0c3eb15a83f0243aa6648cc5c78dca3e5b0ff86170344"
+    },
+    {
+      "bytes": 20213,
+      "git_blob": "418f2660e1658f1c921ad14bcc38638734521e9d",
+      "mode": "100644",
+      "path": "runtime/core_v1/compiled_gui.py",
+      "sha256": "ccaff4ce59cfbe7af76bfe80655c968eed7855acdb7514df64730790766cf7f7"
+    },
+    {
+      "bytes": 3304,
+      "git_blob": "42be1a2c68c1eb6a9d328ef0143b183aca93b330",
+      "mode": "100644",
+      "path": "runtime/core_v1/test_compiled_admission_sequence_01a0ff33.py",
+      "sha256": "5ed96ae954a91b94adfc061759df7f24dbb66586c97f6f0152a8912861ec6b68"
+    },
+    {
+      "bytes": 823,
+      "git_blob": "659531954db218d4c04849fe937df80ad1fcf495",
+      "mode": "100644",
+      "path": "runtime/core_v1/__init__.py",
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+    },
+    {
+      "bytes": 4714,
+      "git_blob": "8788005073995b613b56ad68532a439078e253d9",
+      "mode": "100644",
+      "path": "runtime/core_v1/sequence.py",
+      "sha256": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d"
+    },
+    {
+      "bytes": 1898,
+      "git_blob": "8fe6982c95fb385986114017bc0f9fcc8fd4dca9",
+      "mode": "100644",
+      "path": "runtime/core_v1/platform_probe.py",
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+    },
+    {
+      "bytes": 15001,
+      "git_blob": "92273501bc52be9d344ffb68c34a298a77f41bdf",
+      "mode": "100644",
+      "path": "runtime/core_v1/contract.py",
+      "sha256": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9"
+    },
+    {
+      "bytes": 3678,
+      "git_blob": "9ab7b177f49e76c31898cd96f87c1bbdcd3e9969",
+      "mode": "100644",
+      "path": "runtime/core_v1/COMPILED_GUI.md",
+      "sha256": "fa64aa8cf8c7e240981049f93435ef16fdc68f37c6d34ea8e62c92be3284eac9"
+    },
+    {
+      "bytes": 11410,
+      "git_blob": "9d8f7f671dd91b62be74d240d374ab8a0931acfb",
+      "mode": "100644",
+      "path": "runtime/core_v1/test_compiled_gui.py",
+      "sha256": "b2962f17726e8a07767a84b2c8c5e4adf0c8a16fa4c38a10fedab3c360ceebaf"
+    },
+    {
+      "bytes": 4664,
+      "git_blob": "b7ddde9b7036694370c097ac59c1e613aa24509c",
+      "mode": "100644",
+      "path": "runtime/core_v1/test_manifest_enum_types.py",
+      "sha256": "97b9cfabdfec9ebcf9e0e7ad747533b4e34e252af5385163e3a8821a6281093a"
+    },
+    {
+      "bytes": 1584,
+      "git_blob": "bad3b92da471b83dcb7194671710cfee8ad06df5",
+      "mode": "100644",
+      "path": "runtime/core_v1/test_platform_probe.py",
+      "sha256": "6e5cd761e071d366039b976baa449f246f077d4e6dc38e88d2f94d0c9fac844e"
+    },
+    {
+      "bytes": 6232,
+      "git_blob": "c197e366fee40903d68a9d08a47a7bddb58021f1",
+      "mode": "100644",
+      "path": "runtime/core_v1/test_program_enum_types_e9q4.py",
+      "sha256": "4fb54a5006130cc0f1a3d3aeed137cc5d1064f181cb7ab0933435ca2463f85eb"
+    },
+    {
+      "bytes": 741,
+      "git_blob": "d00e5508f824bbb530fa67d2089b24572d5a9ef3",
+      "mode": "100644",
+      "path": "runtime/core_v1/backend.py",
+      "sha256": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68"
+    },
+    {
+      "bytes": 798,
+      "git_blob": "d81d5809273560ab5c8071a6db99b18305013d6c",
+      "mode": "100644",
+      "path": "runtime/core_v1/doctor.py",
+      "sha256": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098"
+    }
+  ],
+  "hypothesis": "an explicitly matching valid scalar literal unknown reaches the existing required independent effect callback; absent/nonmatching unknown and negative callback verdicts remain finite refusal",
+  "limits": [
+    "no raw authentication",
+    "no untrusted-callback sandbox",
+    "no GUI/backend/model/physical release or timing result"
+  ],
+  "scope": "ordinary private repair; no formal allocation or source-arm producer replay",
+  "worker": "01a0ff35-50a9-7a31-9007-2caa36152d68"
+}
