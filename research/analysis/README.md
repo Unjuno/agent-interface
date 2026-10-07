@@ -1,5 +1,14 @@
 # Analytical research
 
+- [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
+
+- [Issue #7817 provenance-checked defeasible obligations T0 A01](provenance_defeasible_obligations_7817_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: ten finite obligation contexts and five hostile mutations independently audited; advisory-only synthetic semantics.
+
+- [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
+
+
+- [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
+
 - [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
 - [Issue #8135 cross-episode counterparty T0 A02](persistent_counterparty_8135_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED`: persistent learner changed later variants conditional on public history while frequency-matched sham remained history-independent; 64 authorized effects, zero unauthorized effects, 5/5 mutations rejected. A01 auditor-schema failure preserved; no real-service adaptation claim.
 - [Issue #8135 T0 A01 auditor-schema failure](persistent_counterparty_8135_t0_a01_20261005/FORMAL_FAILURE.md) — candidate 1/1 exit 0, auditor 1/1 exit 1 (`episode_field_set`); no audit JSON, retries 0; not a scientific result and not rerun.
@@ -7,6 +16,9 @@
 - [Issue #8049 A02 pre-container STOP](ipcw_repeated_uncertainty_7993_a02_20261005/STOP.md) — Docker rejected invalid bare `rw` mount syntax before candidate/auditor execution; distinct fresh-seed A03 follows.
 - [Issue #7924 WSLc private-session portability smoke](wslc_private_session_portability_20261005/STOP.md) — `STOP_SESSION_STORAGE_NOT_FOUND`: one named `system session enter` invocation rejected the proposed fresh storage path before any container invocation; no retry, default-session operation, Docker use, or scientific/runtime inference.
 
+- [Issue #8088 specification-diverse challenge T0 A01](spec_diversity_8088_t0_a01_20261005/REPORT.md) — `HOLD_BASELINE_ORACLE_COVERAGE`: C06 “All restores visibility” was not observed; candidate and auditor shared a predicate gap. One-shot outputs preserved, no rerun.
+- [Issue #8088 specification-diverse challenge T0 A02](spec_diversity_8088_t0_a02_20261005/REPORT.md) — `HOLD_C02_LIST_IDENTITY_COVERAGE`: cross-list preservation escaped the flattened C02 predicate; raw and one-shot counts retained, no rerun.
+- [Issue #8088 specification-diverse challenge T0 A03](spec_diversity_8088_t0_a03_20261005/REPORT.md) — `NO_INCREMENTAL_VALUE_SCOPED`: 8 baselines, 6/6 single-clause controls, independent audit 14/14; A01/A02 oracle-coverage HOLDs preserved. Synthetic packet only.
 - [Issue #8080 blocked vs interleaved practice T0 A01](blocked_interleaved_practice_8080_t0_a01_20261005/REPORT.md) — `METHOD_PASS_SCOPED` for equal synthetic exposure, reversible effects, held-out exclusion, and scorer controls; no human-learning or transfer claim.
 - [Issue #8084 T0 A03 diagnostic-reliability screen](confusion_adaptive_practice_8084_t0_a03_20261005/README.md) — `STOP_AUDIT_INPUT_HANDOFF_PATH_ERROR`: fixture 6,000 rows; candidate exit 0, single auditor exit 1 because a host relative-path copy missed the auditor input mount; accepted audit 0/6,000; no scientific inference. Exact candidate output and failed logs retained, not rerun.
 - [Issue #8084 confusion-adaptive practice T0 A02](confusion_adaptive_practice_8084_t0_a02_20261005/REPORT.md) — `METHOD_PASS_SCOPED` on six synthetic matrices / 12 schedules; equal exposure, pre-outcome heterogeneity gate, exact neutral fallback, held-out isolation, and independent scorer controls. A01 pre-formal mount-isolation STOP preserved; no human-learning claim.
@@ -26,6 +38,8 @@
 
 - Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — PASS_METHOD_SCOPED/H_PASS_SCOPED for the authored finite one-CPU model; OrbStack image-content access was unavailable, so host-only stdlib execution was used; no full-CBS, runtime, or scheduler claim.
 
+- [Issue #7748 duplicate-job-ID boundary A02](processor_demand_witness_7748_duplicate_id_a02_20261005/REPORT.md) — `PASS_DUPLICATE_ID_BOUNDARY_SCOPED`; three synthetic traces, candidate/auditor each once with zero errors. A01 auditor exit-mismatch STOP preserved separately; no scheduler/runtime claim.
+- [Issue #7748 duplicate-job-ID boundary A01](processor_demand_witness_7748_duplicate_id_a01_20261005/REPORT.md) — `STOP_AUDITOR_EXIT_MISMATCH`; auditor wrote scoped PASS JSON but exited 1, retries 0. Separate A02 corrects CLI exit mapping; A01 is not rerun.
 - [Issue #8061 successor to #7748 — unknown job-class boundary](processor_demand_witness_7748_class_enum_a01_20261005/REPORT.md) — `PASS_CLASS_BOUNDARY_SCOPED` on seven rows; unknown/malformed labels HOLD before control-only demand. OrbStack OCI preflight STOP; host-only stdlib run, no scheduler/runtime claim.
 
 - [Issue #7678 manipulation-sensitivity successor T0 A02](preference_manipulation_7678_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 7,774 candidate/oracle rows; exhaustive null under the declared set utility (0 safe-beneficial deviations in both partitions); A01 HOLD preserved.
@@ -77,8 +91,7 @@
 - [`adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md`](adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md) — #6358 Mac-host T0 A02: shared/high-adoption recipient-specific routing resolved 4/4 versus 2/4 for generic, witness, public-stagger, and wording-placebo arms; independent audit passed 56/56 synthetic ledgers. No human, GUI, production, or causal claim; both earlier pre-candidate STOPs remain preserved.
 
 - [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
-- [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/)
-- [`backpressure_5372_telemetry_cap_20261003_api/`](backpressure_5372_telemetry_cap_20261003_api/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
+- [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
 - [#5372 telemetry-cap comparison](backpressure_5372_telemetry_cap_20261003_api/REPORT.md) — `SUBSUMED_BY_AUTHORITATIVE_CAP_SCOPED`; preserve the simpler atomic cap for the finite single-owner homogeneous-job model, with raw/audit and HOLD limits retained.
 
 - [`wslc_control_plane_6669_t1_20261003/REPORT.md`](wslc_control_plane_6669_t1_20261003/REPORT.md) — Issue #6669 isolated WSLc 3.0.1.0 control-plane T1: bounded 640 MiB synthetic pressure with cgroup, PSI and control-operation evidence; SIGTERM-aware candidate stopped cleanly and raw auditor/mutation checks passed. Container memory-cap enforcement remains unproven.
@@ -344,6 +357,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`auditor_completion_5895_t0_20261001_01/`](auditor_completion_5895_t0_20261001_01/)
 - [`auditor_completion_5895_t4_20261001_8d0c7f53/`](auditor_completion_5895_t4_20261001_8d0c7f53/)
 - [`auditor_completion_5895_t6_20261001_8d0c7f53_amd64/`](auditor_completion_5895_t6_20261001_8d0c7f53_amd64/)
+- [`backpressure_5372_telemetry_cap_20261003_api/`](backpressure_5372_telemetry_cap_20261003_api/)
 - [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/)
 - [`backward_observable_guards_6256_comparator_t2_20261002/`](backward_observable_guards_6256_comparator_t2_20261002/)
 - [`backward_observable_guards_6256_stale_generation_t1_20261002/`](backward_observable_guards_6256_stale_generation_t1_20261002/)
@@ -499,6 +513,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
+- [`epoch_transform_chain_8185_a02_20261005/`](epoch_transform_chain_8185_a02_20261005/)
 - [`error_carry_6081_s04_20261003/`](error_carry_6081_s04_20261003/)
 - [`error_carry_6081_successor_orbstack_20261002/`](error_carry_6081_successor_orbstack_20261002/)
 - [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
@@ -600,9 +615,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
 - [`issue5730_gate_cleanup_fail_20261001/`](issue5730_gate_cleanup_fail_20261001/)
 - [`issue5760_assignment_exposure_t0_20261001/`](issue5760_assignment_exposure_t0_20261001/)
+- [`issue59_8094_currentmain_delta_audit_20261006/`](issue59_8094_currentmain_delta_audit_20261006/)
 - [`issue59_launch_gate_correction_t1_20261001/`](issue59_launch_gate_correction_t1_20261001/)
 - [`issue59_wsl_cuda_model_route_smoke_20261003/`](issue59_wsl_cuda_model_route_smoke_20261003/)
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
+- [`issue7367_audit_binding_a02_20261005/`](issue7367_audit_binding_a02_20261005/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
@@ -644,6 +661,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_yield_5905_image_only_t0_9_a09_20261005/`](looming_yield_5905_image_only_t0_9_a09_20261005/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
+- [`machine_crash_recovery_7802_t0_20261005/`](machine_crash_recovery_7802_t0_20261005/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
 - [`map01_delay_gain_t1_trace_eligibility_6195_20261001_01/`](map01_delay_gain_t1_trace_eligibility_6195_20261001_01/)
 - [`map01_global_owner_invariance_59_t0_20261001/`](map01_global_owner_invariance_59_t0_20261001/)
@@ -748,11 +766,13 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_timestamp_order_5156_t3_20261004/`](owner_keyup_timestamp_order_5156_t3_20261004/)
 - [`owner_keyup_timestamp_order_5156_t4_20261004/`](owner_keyup_timestamp_order_5156_t4_20261004/)
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
+- [`pairwise_interaction_7799_t0_a01_20261005/`](pairwise_interaction_7799_t0_a01_20261005/)
 - [`partial_order_audit_6505_orbstack_a01_20261003/`](partial_order_audit_6505_orbstack_a01_20261003/)
 - [`partial_order_audit_6505_orbstack_a02_20261003/`](partial_order_audit_6505_orbstack_a02_20261003/)
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
 - [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
+- [`pcaa_stage_propagation_6053_t1_20261004/`](pcaa_stage_propagation_6053_t1_20261004/)
 - [`pending_outcome_route_learning_6129_t0_20261002/`](pending_outcome_route_learning_6129_t0_20261002/)
 - [`persistence_gated_throttle_6650_control_replay_20261002_01/`](persistence_gated_throttle_6650_control_replay_20261002_01/)
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
@@ -804,9 +824,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`probabilistic_automaton_dwell_censor_r2_v1/`](probabilistic_automaton_dwell_censor_r2_v1/)
 - [`probabilistic_automaton_retained_calibration_r3_v1/`](probabilistic_automaton_retained_calibration_r3_v1/)
 - [`processor_demand_witness_7748_class_enum_a01_20261005/`](processor_demand_witness_7748_class_enum_a01_20261005/)
+- [`processor_demand_witness_7748_duplicate_id_a01_20261005/`](processor_demand_witness_7748_duplicate_id_a01_20261005/)
+- [`processor_demand_witness_7748_duplicate_id_a02_20261005/`](processor_demand_witness_7748_duplicate_id_a02_20261005/)
 - [`processor_demand_witness_7748_t0_20261005/`](processor_demand_witness_7748_t0_20261005/)
 - [`protective_local_adaptation_6367_reaudit_v1/`](protective_local_adaptation_6367_reaudit_v1/)
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
+- [`provenance_defeasible_obligations_7817_a01_20261005/`](provenance_defeasible_obligations_7817_a01_20261005/)
 - [`provenance_memory_authority_7167_t0_20261004/`](provenance_memory_authority_7167_t0_20261004/)
 - [`quality_diversity_5908_t1_20261002/`](quality_diversity_5908_t1_20261002/)
 - [`query_version_writer_atomicity_v1/`](query_version_writer_atomicity_v1/)
@@ -931,6 +954,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spatial_block_position_6590_t1_geometry_design_v2/`](spatial_block_position_6590_t1_geometry_design_v2/)
 - [`spatial_block_position_6590_t1_geometry_feasibility_v1/`](spatial_block_position_6590_t1_geometry_feasibility_v1/)
 - [`spatial_block_position_6590_t1_orbstack_v2/`](spatial_block_position_6590_t1_orbstack_v2/)
+- [`spec_diversity_8088_t0_a01_20261005/`](spec_diversity_8088_t0_a01_20261005/)
+- [`spec_diversity_8088_t0_a02_20261005/`](spec_diversity_8088_t0_a02_20261005/)
+- [`spec_diversity_8088_t0_a03_20261005/`](spec_diversity_8088_t0_a03_20261005/)
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
@@ -1111,3 +1137,13 @@ The checker compares the generated block against every child directory with a re
 - [Issue #8084 T0 A08 fixed-gate frontier fresh-seed screen](confusion_adaptive_practice_8084_t0_a08_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; 80,000 fresh synthetic rows independently reconstructed, all five mutation controls rejected, and two frozen span/peak gates met the Wilson criteria for every authored profile at n=20 and n=100. No human/GUI inference.
 - [Issue #8084 T0 A09 overdispersion robustness screen](confusion_adaptive_practice_8084_t0_a09_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; independent audit passed 80,000 fresh Beta-binomial stress rows and all five mutations, but none of the unchanged gates met both sensitivity/specificity bounds across authored profiles. Synthetic only.
 - [Issue #8084 T0 A10 finite overdispersion frontier](confusion_adaptive_practice_8084_t0_a10_20261005/REPORT.md) — `METHOD_PASS_SCOPED`; independent audit of 160,000 rows and five mutations; no gate qualifies at finite κ=20/40/80/160, while fixed-rate reference arm qualifies span .40/peak .80. Synthetic-only frontier, no human/GUI claim.
+
+# Issue #57 — native existing-runtime B01–B03 construction archive
+
+- [B01–B03 retained construction evidence](../integration/native_existing_runtime_57_20261003_01a0ff52_b01/REPORT.md) — two first setup failures preserved; B03 observed capture plus verified empty input release but no input-down, model turn, or task. Construction only, not current-main or task qualification. All 221 manifest entries independently hash-checked during rescue; no archived producer replay.
+
+- [D01 retained native held-input cancellation](../integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md) — 58 unchanged archival files retain one virtual-display Shift_L down/cancel/release condition, cancelled terminal and original cleanup exit codes. No physical-hardware, current-main task, or efficiency qualification; no producer replay.
+
+# Issue #57 — Firecrawl compiled release-boundary evidence
+
+- [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.

@@ -1,0 +1,44 @@
+{
+  "issue": 8157,
+  "allocation": "interval-ttc-audit-only-a03-20261005",
+  "source_main_sha": "b5be19963454ce5edafc945b78b100012952dd15",
+  "a02_pr": 8194,
+  "a02_head_branch": "research/8157-bounded-ttc-formal-a02-20261005",
+  "a02_head_sha": "6314772b3e1f2e304ac9348ccfd5217106d7390b",
+  "a02_source_commit": "1e30e1e4e9ca7280a7337ed7a9c69afbf9a65072",
+  "protocol": "PROTOCOL_A03_AUDIT_ONLY.md",
+  "protocol_sha256": "18378771cc4efbcb124ec0b35a1947549a28ae3645244fb04fc19333eb1270cb",
+  "audit_program": "audit_only_a03.py",
+  "audit_program_sha256": "a6216b22d6fb808fb0b4f754ffd02345bc2832e4b132f42c4df136807789e16a",
+  "test_program": "test_audit_only_a03.py",
+  "test_program_sha256": "9c098206588803df6e3612fbe7a8307b42fb29abce3dd9a64150d8efc229d0ef",
+  "a02_artifact_sha256": {
+    "public": "c04d597eb90483b51e055704dbfd72429d83fb9f804d78b0470fee97192315d9",
+    "oracle": "298fbe931ae91ebbf31abb89f17ad0e652cb9418cb5d2b108c7f9d2a14d3410c",
+    "candidate": "c35b44be558110784b94a92d9b0d2df83db75c519218fd6ea88a65055cd54557",
+    "first_audit": "47f192cd92f257388f37792b8a1297d311306e58adf41d79232c36534d1c0a1a"
+  },
+  "runtime": {
+    "name": "WSLc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512M",
+    "source_mount": "read-only",
+    "output_mount": "read-write",
+    "swap_limit": "unavailable; WSL reports kernel/cgroup capability warning"
+  },
+  "invocations": {
+    "a02_candidate_historical": 1,
+    "a02_auditor_historical": 1,
+    "a02_generator_historical": 1,
+    "a03_candidate": 0,
+    "a03_generator": 0,
+    "a03_auditor": 1,
+    "a03_retries": 0
+  },
+  "formal_command": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <repo>/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A03_AUDIT_ONLY:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/vision/interval_ttc_bounded_error_v1/audit_only_a03.py /src/research/vision/interval_ttc_bounded_error_v1 /out/AUDIT_REPORT.json",
+  "decision_scope": "raw reconciliation only; A02 FAIL_METHOD remains unchanged"
+}
