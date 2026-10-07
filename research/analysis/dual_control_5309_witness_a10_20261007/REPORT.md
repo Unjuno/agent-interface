@@ -12,6 +12,10 @@ Formal A10 disposition: **`FAIL_AUDIT_VERDICT_COUNT_BUG`**. Candidate and enviro
 - **C:** All dynamics, predictions and costs are authored and deterministic; this tests a finite method boundary only. Host process separation is weaker than the container mount separation used in A08.
 - **U:** No live GUI, natural frequency, calibrated costs/risk, model behavior, runtime, physical input/release, user, safety, or product claim.
 
+## Topology construct-validity correction
+
+Post-run source/raw review found that the graph families have distinct degree signatures and alter `next_state`/commit labels, but the witness-survival mapping is identical in every family (`action-a` loses, `action-b` preserves). The candidate's ranking decision therefore does not depend on the graph's transition structure. A10 did **not** establish transfer across non-isomorphic witness dynamics; its topology factor is a structural fixture variation, not an effective treatment. The retrospective v2 audit verifies those authored rows, not the intended topology-transfer hypothesis. A future allocation must derive witness availability from topology-specific transitions and produce different action/outcome mappings across graph families.
+
 ## Retained outcomes
 
 The initial auditor output had 264 reconstructed rows, `errors=[]`, 132 cases and zero authority grants, but emitted `FAIL_AUDIT`. Its source checked `reconstructed == 144`; A10's frozen matrix specifies 264. This is preserved as the official first disposition.
