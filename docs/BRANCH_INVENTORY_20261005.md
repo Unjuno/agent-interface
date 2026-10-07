@@ -526,3 +526,7 @@ GitHub CLI/API authentication was unavailable at this check, so a Draft PR could
 ## Main refresh after #8284 snapshot — 2026-10-07 11:12 UTC
 
 Fetched and merged remote `main` at `9fb2dd6782d1d1477a00d14be870487fd4c54fa2`; this inventory branch now has that exact main tip as its second parent. The merge is a source-history refresh only. It does not refresh the open-PR/branch census: anonymous GitHub REST reads returned 403 rate-limit exceeded, and `gh auth status` reports no authenticated host. The last full census remains 10:57 UTC. No PR metadata, review state, branch protection, or current ref count is inferred from the new main read.
+
+## #59 precursor rescue refreshed on current main — 2026-10-07 11:26 UTC
+
+Advanced `rescue/59-paired-epoch-a03-precursor-20261007` from `515a1fb88217551e4c675ea648264a43ff227946` to `ddaa31c45659cec235464df110fdd44a7657a798` and pushed the fast-forward. The refresh merge records the prior rescue commit and current main `9fb2dd6782d1d1477a00d14be870487fd4c54fa2` as parents. `origin/main...rescue` still shows exactly ten changed paths: the same nine package files plus one index row. The source package blob IDs were not rewritten; no experiment, candidate, auditor, or test was run. `git diff --check` needed `core.whitespace=cr-at-eol` because these frozen source files use CRLF; no trailing-space edits were made. The rescue is still not an independently reviewed or merged PR, and the census/authentication limitation above remains.
