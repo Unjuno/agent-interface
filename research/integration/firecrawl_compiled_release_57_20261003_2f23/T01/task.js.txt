@@ -1,0 +1,31 @@
+page.setDefaultTimeout(2000);
+const snapshot=()=>({url:location.href,input:document.querySelector('.new-todo').value,rows:[...document.querySelectorAll('.todo-list li')].map(e=>({id:e.dataset.id,title:e.querySelector('label')?.textContent,completed:e.querySelector('.toggle')?.checked,editing:e.classList.contains('editing')})),selected:document.querySelector('.filters .selected')?.getAttribute('href'),active:Number(document.querySelector('.todo-count strong')?.textContent??0)});
+let step=0;
+async function verify(expected){const s=await page.evaluate(snapshot);console.log(JSON.stringify({kind:'observation',step:step++,state:s,expected}));const actual={input:s.input,rows:s.rows.slice().sort((a,b)=>Number(a.id)-Number(b.id)),selected:s.selected,active:s.active};if(JSON.stringify(actual)!==JSON.stringify(expected))throw Error('STOP_TASK_EFFECT');}
+async function action(name,f){console.log(JSON.stringify({kind:'action-start',name,utc:new Date().toISOString()}));await f();console.log(JSON.stringify({kind:'action-return',name,utc:new Date().toISOString()}));}
+const target='2f23 remote <&> 東京',near=target+' extra',edited='2f23 remote edited 東京';
+const row=(id,title,completed=false)=>({id:String(id),title,completed,editing:false});
+const state=(rows,active,selected='#/')=>({input:'',rows,selected,active});
+await verify(state([],0));
+for(const [title,rows] of [[target,[row(1,target)]],[near,[row(1,target),row(2,near)]]]){
+ await action('focus-new-'+title,()=>page.locator('.new-todo').click());
+ await action('type-new-'+title,()=>page.locator('.new-todo').pressSequentially(title));
+ await action('blur-new-'+title,()=>page.locator('.new-todo').press('Tab'));
+ await verify(state(rows,rows.length));
+}
+await action('edit-target-open',()=>page.locator('.todo-list li[data-id="1"] label').dblclick());
+const editing=await page.evaluate(snapshot);console.log(JSON.stringify({kind:'editing-observation',state:editing}));if(editing.rows.find(r=>r.id==='1')?.editing!==true||await page.locator('.todo-list li[data-id="1"] .edit').inputValue()!==target)throw Error('STOP_EDIT_OPEN');
+await action('edit-target-fill',()=>page.locator('.todo-list li[data-id="1"] .edit').fill(edited));
+await action('edit-target-commit',()=>page.locator('.todo-list li[data-id="1"] .edit').press('Enter'));
+await verify(state([row(1,edited),row(2,near)],2));
+await action('complete-target',()=>page.locator('.todo-list li[data-id="1"] .toggle').click());
+await verify(state([row(1,edited,true),row(2,near)],1));
+for(const [href,rows] of [['#/completed',[row(1,edited,true)]],['#/active',[row(2,near)]],['#/',[row(1,edited,true),row(2,near)]]]){
+ await action('filter-'+href,()=>page.locator('.filters a[href="'+href+'"]').click());
+ await page.waitForFunction(h=>document.querySelector('.filters .selected')?.getAttribute('href')===h,href,{timeout:1500});
+ await verify(state(rows,1,href));
+}
+await action('reload-memory-storage',()=>page.reload({waitUntil:'load',timeout:5000}));
+await verify(state([],0));
+console.log(JSON.stringify({kind:'terminal',outcome:'PASS_FINITE_REMOTE_DEMO_TASK',durability:'EXPECTED_MEMORY_RESET_ONLY',taskReplay:0}));
+

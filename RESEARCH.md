@@ -2367,3 +2367,18 @@ without rerunning either producer. The package explicitly does not establish
 that a conforming backend emits these shapes, physical release, real task
 effects, or production suitability. No candidate runtime change is proposed
 here; #7071 remains the separate integration/review path. See the [E01 archive](research/integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md), [Issue #57 source/result records](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969803925), and [PR #7071](https://github.com/Unjuno/agent-interface/pull/7071).
+
+# Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
+
+This archive preserves one bounded ordinary remote-browser task (T01) with
+provider-reported app effects and one compiled-core bridge boundary (I01).
+T01's finite task effect was independently checked in the retained public
+evidence; this does not establish a general GUI result. I01's add action changed
+the application, but the provider supplied no release/neutral-state telemetry:
+the outcome remains `RUNTIME_FAILED` / `HOLD_RELEASE_TELEMETRY` with zero
+completed transitions and release `UNVERIFIED`. Do not infer no effect from
+zero completed transitions and do not resend the action. The prior sessions,
+source pins, raw responses, projections, hashes, and first failures are
+preserved; no consumed remote task was rerun for rescue. See the [complete
+archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
+and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).

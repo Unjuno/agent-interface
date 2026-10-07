@@ -92,6 +92,7 @@
 
 - [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
 - [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
+- [#5372 telemetry-cap comparison](backpressure_5372_telemetry_cap_20261003_api/REPORT.md) — `SUBSUMED_BY_AUTHORITATIVE_CAP_SCOPED`; preserve the simpler atomic cap for the finite single-owner homogeneous-job model, with raw/audit and HOLD limits retained.
 
 - [`wslc_control_plane_6669_t1_20261003/REPORT.md`](wslc_control_plane_6669_t1_20261003/REPORT.md) — Issue #6669 isolated WSLc 3.0.1.0 control-plane T1: bounded 640 MiB synthetic pressure with cgroup, PSI and control-operation evidence; SIGTERM-aware candidate stopped cleanly and raw auditor/mutation checks passed. Container memory-cap enforcement remains unproven.
 
@@ -356,6 +357,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`auditor_completion_5895_t0_20261001_01/`](auditor_completion_5895_t0_20261001_01/)
 - [`auditor_completion_5895_t4_20261001_8d0c7f53/`](auditor_completion_5895_t4_20261001_8d0c7f53/)
 - [`auditor_completion_5895_t6_20261001_8d0c7f53_amd64/`](auditor_completion_5895_t6_20261001_8d0c7f53_amd64/)
+- [`backpressure_5372_telemetry_cap_20261003_api/`](backpressure_5372_telemetry_cap_20261003_api/)
 - [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/)
 - [`backward_observable_guards_6256_comparator_t2_20261002/`](backward_observable_guards_6256_comparator_t2_20261002/)
 - [`backward_observable_guards_6256_stale_generation_t1_20261002/`](backward_observable_guards_6256_stale_generation_t1_20261002/)
@@ -1145,3 +1147,7 @@ The checker compares the generated block against every child directory with a re
 # Issue #57 — primary caller release-shape E01 evidence archive
 
 - [E01 source and private-candidate packets](../integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md) — first 48-cell caller failure and distinct inert candidate result retained separately; no native or production claim, no replay. PR #7071 remains the separate integration/review path.
+
+# Issue #57 — Firecrawl compiled release-boundary evidence
+
+- [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.
