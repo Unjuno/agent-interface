@@ -20,9 +20,11 @@ This is a new, one-shot allocation under the still-open Issue #7059. It preserve
 
 `FREEZE.json` binds the exact fixture, candidate, auditor, construction test, Node image digest, exact role commands and one-candidate/one-auditor stopping rule. Formal outputs belong only under `results/candidate/` and `results/auditor/`. Existing files cause immediate stop; do not replace them.
 
-## Formal output (pending)
+## Formal result
 
-No formal candidate or auditor invocation has occurred. This package is not a result until the frozen one-shot run and independent audit have both been recorded.
+`PASS_METHOD_SCOPED`: one candidate invocation exited 0 and produced a 57,758-byte raw ledger; one separate auditor invocation exited 0, reconstructed 10/10 rows across five cases and two roster-text arms, and rejected all six integrity mutations. Candidate SHA-256: `e6f40d961b88b1b328f6154a1a19af3a214552c6bde2689476135de0e37e7f01`; auditor SHA-256: `a5e1999ac1861717329f894707437a68fd5dc8abb4288165c0f165f7f90062c1`. See `REPORT.md`, `RUN_RECORD.json`, and `SHA256SUMS.txt`.
+
+The synthetic truth table contains a harmful missed check that remains incorrect in both arms, a fewer-checks/same-correctness case, a valid UNKNOWN case, and a missing-tool-log case held in both arms. Therefore this run validates ledger observability and classifications only; it does not show that roster disclosure changes reviewer behavior or outcomes.
 
 ## Reproduction and custody
 
