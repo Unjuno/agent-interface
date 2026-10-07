@@ -12,7 +12,9 @@ import sys
 
 HERE = Path(__file__).resolve().parent
 RESULT = HERE / "RESULT.json"
+APPLICABILITY = HERE / "CURRENT_MAIN_APPLICABILITY.json"
 EXPECTED_FILES = {
+    "CURRENT_MAIN_APPLICABILITY.json",
     "README.md",
     "audit-attempt-v1-failure.txt",
     "audit_recheck.py",
@@ -52,6 +54,14 @@ def main() -> int:
         return fail("base_identity")
     if result.get("candidate") != "c6f5a122afee85e44bec5c39b80f02e6b939d56a":
         return fail("candidate_identity")
+    try:
+        applicability = json.loads(APPLICABILITY.read_text(encoding="utf-8"))
+    except Exception as exc:
+        return fail(f"applicability_read:{type(exc).__name__}")
+    if applicability.get("main_production_source_git_blob") != applicability.get("ab_base_production_source_git_blob"):
+        return fail("current_main_source_identity")
+    if applicability.get("main_preexisting_test_git_blob") == applicability.get("candidate_frozen_eight_case_test_git_blob"):
+        return fail("test_identity_distinction")
     frozen_test = HERE / "frozen_test.py"
     try:
         test_data = frozen_test.read_bytes()

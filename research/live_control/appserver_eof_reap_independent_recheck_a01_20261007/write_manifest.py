@@ -10,6 +10,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FILES = [
+    "CURRENT_MAIN_APPLICABILITY.json",
     "README.md",
     "audit-attempt-v1-failure.txt",
     "audit_recheck.py",

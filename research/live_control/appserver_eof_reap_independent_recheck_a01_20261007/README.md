@@ -30,6 +30,13 @@ raised `PermissionError` from `os.killpg` for an exited, unreaped child. The
 PR implementation passed all eight cases. The ordinary three process-tree
 tests present on base passed in the baseline run.
 
+Applicability was rechecked after main advanced to
+`dd37f2ddbdb0a424e43676545595f5537e435473`: the production client blob is still
+`338b5fbdf436e14768274b9de6a3d3bb13fd274c`, identical to the A/B base source.
+The frozen eight-case test itself comes from the PR candidate; main still has
+its earlier three-case test file (`fd0d8dfd7dbfa50c767f108487295fd4fec25a34`).
+These distinct identities are recorded in `CURRENT_MAIN_APPLICABILITY.json`.
+
 This is a local regression recheck of one app-server client cleanup path. It is
 not a live GUI, native-input, game, model, task-effect, useful-feedback,
 recovery-efficacy, or OS shutdown worst-case result. It does not independently
