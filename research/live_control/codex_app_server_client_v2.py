@@ -115,7 +115,10 @@ class CodexAppServerClient:
                 # Windows pipe support requires Python 3.12 or later.
                 os.set_blocking(fd, False)
                 self._stdin_fd = fd
-            self._record("sent", json.loads(data))
+            snapshot = json.loads(data)
+            # The durable preparation row gates admission and the pipe write,
+            # but does not claim bytes reached the peer.
+            self._record("send_prepared", snapshot)
             if deadline <= time.monotonic():
                 raise TimeoutError("app-server send budget expired; no send attempted")
             if request_id is not None:
@@ -150,8 +153,17 @@ class CodexAppServerClient:
                             waiter = select.poll()
                             waiter.register(self._stdin_fd, select.POLLOUT)
                             waiter.poll(min(remaining, 1) * 1000)
+                self._record("sent", snapshot)
             except BaseException as error:
                 self._send_uncertain = True
+                if sent:
+                    try:
+                        self._record("send_uncertain", {
+                            "message": snapshot, "sent_bytes": sent,
+                            "total_bytes": len(data), "reason": type(error).__name__,
+                        })
+                    except Exception:
+                        pass
                 if not isinstance(error, Exception):
                     raise
                 raise AppServerWriteUncertain(sent, len(data), type(error).__name__) from error

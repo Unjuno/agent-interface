@@ -4,6 +4,7 @@ import io
 import json
 import os
 import queue
+import tempfile
 import threading
 import time
 import unittest
@@ -21,7 +22,7 @@ class Clock:
 
 
 @contextmanager
-def owned_client():
+def owned_client(journal_path=None):
     read_fd, write_fd = os.pipe()
 
     class ReceiveLane:
@@ -55,7 +56,8 @@ def owned_client():
         def wait(self, timeout=None):
             return 0
 
-    client = module.CodexAppServerClient([], process_factory=lambda *_a, **_k: Process())
+    client = module.CodexAppServerClient(
+        [], process_factory=lambda *_a, **_k: Process(), journal_path=journal_path)
     try:
         yield client, read_fd
     finally:
@@ -208,6 +210,56 @@ class AppServerSendDeadlineTests(unittest.TestCase):
             clock.now = 0
             client._write({"method": "later"}, deadline=time.monotonic() + 1)
             self.assertEqual(os.read(read_fd, 4096), wire({"method": "later"}))
+
+    def test_journal_flush_expiring_budget_is_not_recorded_as_sent(self):
+        clock = Clock()
+        with tempfile.TemporaryDirectory() as directory:
+            journal_path = os.path.join(directory, "protocol.jsonl")
+            with owned_client(journal_path=journal_path) as (client, read_fd):
+                real_flush = client._journal.flush
+
+                def flush_past_deadline():
+                    real_flush()
+                    clock.now = 11
+
+                with patch.object(module.time, "monotonic", clock), \
+                        patch.object(client._journal, "flush", side_effect=flush_past_deadline):
+                    with self.assertRaises(TimeoutError):
+                        client._write({"method": "journal-over-budget"}, deadline=10)
+                os.set_blocking(read_fd, False)
+                with self.assertRaises(BlockingIOError):
+                    os.read(read_fd, 4096)
+
+            with open(journal_path, encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            self.assertFalse(any(row["direction"] == "sent" for row in rows), rows)
+            self.assertEqual([row["direction"] for row in rows], ["send_prepared"])
+
+    def test_partial_write_is_journaled_as_uncertain_not_sent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal_path = os.path.join(directory, "protocol.jsonl")
+            with owned_client(journal_path=journal_path) as (client, _read_fd):
+                attempts = 0
+
+                def partial_then_fail(_fd, _data):
+                    nonlocal attempts
+                    attempts += 1
+                    if attempts == 1:
+                        return 3
+                    raise OSError("fixture write failure")
+
+                with patch.object(module.os, "write", side_effect=partial_then_fail):
+                    self.assert_uncertain(
+                        lambda: client._write({"method": "partial"},
+                                               deadline=time.monotonic() + 1),
+                        3, len(wire({"method": "partial"})))
+
+            with open(journal_path, encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            self.assertEqual([row["direction"] for row in rows],
+                             ["send_prepared", "send_uncertain"])
+            self.assertEqual(rows[1]["message"]["sent_bytes"], 3)
+            self.assertFalse(any(row["direction"] == "sent" for row in rows))
 
     def test_request_spends_one_budget_on_send_and_response_wait(self):
         clock = Clock()
