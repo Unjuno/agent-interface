@@ -712,7 +712,7 @@ class InputOwner:
                                             physical_key_measurement=edge,
                                             input_error_type=type(exc).__name__,
                                             input_error=str(exc)[:200])
-                                    except (AttributeError, TypeError):
+                                    except Exception:
                                         pass
                                 raise
                             ack_ns = time.perf_counter_ns()

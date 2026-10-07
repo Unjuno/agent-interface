@@ -154,6 +154,23 @@ class BatchMeasurementCompositionTests(unittest.TestCase):
         self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
         self.assertEqual(self.fixture.fake.down, set())
 
+    def test_measurement_failure_does_not_mask_down_error(self):
+        original_sync = self.fixture.fake.sync
+
+        def sync_then_fail():
+            original_sync()
+            raise OSError('synthetic DOWN acknowledgement loss')
+
+        from key_edge_measurement_v1 import KeyEdgeMeasurements
+        with patch.object(self.fixture.fake, 'sync', sync_then_fail):
+            with patch.object(KeyEdgeMeasurements, 'edge', side_effect=RuntimeError(
+                    'synthetic measurement failure')):
+                with self.assertRaisesRegex(OSError, 'DOWN acknowledgement loss'):
+                    self.backend.raw('W', True)
+        self.assertEqual(self.fixture.fake.down, {38})
+        self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
+        self.assertEqual(self.fixture.fake.down, set())
+
     def test_delivered_up_with_send_error_suppresses_sibling_bracket(self):
         xtest = sys.modules['Xlib.ext.xtest']
         original = xtest.fake_input

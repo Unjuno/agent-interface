@@ -235,7 +235,7 @@ class Backend(Previous):
                                 "type": type(publish_exc).__name__,
                                 "message": str(publish_exc)[:200],
                             }
-                        except (AttributeError, TypeError):
+                        except Exception:
                             pass
                 raise
             self.held.add(key)
