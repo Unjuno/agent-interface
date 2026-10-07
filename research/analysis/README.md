@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #59 retained Astra / V39 health-guard scenario replay A01](../doom/map01_astra_v39_guard_replay_59_a01_20261007/README.md) — `STOP_DUPLICATE_PRIOR_EVIDENCE`: redundant 12-scenario selected-HUD replay retained as a duplicate-run receipt; prior V28 21-budget counterfactual and 52-event paired V39 replay are stronger. No new scientific result.
+
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.

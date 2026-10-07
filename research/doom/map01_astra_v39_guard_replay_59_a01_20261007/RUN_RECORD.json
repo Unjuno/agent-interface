@@ -1,0 +1,45 @@
+{
+  "schema": "map01-astra-v39-health-guard-scenario-run-record-v1",
+  "allocation_id": "MAP01-ASTRA-V39-GUARD-REPLAY-59-A01-20261007",
+  "base_commit": "798ac5ad709168ff1d27b115f10f4f96b126bb71",
+  "allocation_disposition": "STOP_DUPLICATE_PRIOR_EVIDENCE",
+  "superseded_by_existing_evidence": [
+    "research/doom/v28_health_envelope_counterfactual_a01_20261005/README.md",
+    "research/doom/v39_current_main_paired_guard_replay_a01_20261005/README.md"
+  ],
+  "scientific_result_accepted": false,
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "output": "results/candidate.raw.json",
+    "sha256": "b92285342e84f1b19f558802068f600862371c5e64bade7aaf8dc0470909c0cc",
+    "stdout": "PASS_SCENARIO_REPLAY_ONLY; 12 scenarios"
+  },
+  "independent_auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "output": "results/audit.stdout.json",
+    "stdout_sha256": "4272e9486d0571b2b277ac209f224fdc320f5772e18f62dcaa96abf2fc484d85",
+    "stdout": "PASS; zero errors; 12 scenarios"
+  },
+  "construction_tests": {
+    "invocations": 1,
+    "exit_code": 0,
+    "result": "8/8 passed in pinned network-disabled container"
+  },
+  "additional_checks": {
+    "py_compile": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "container": {
+    "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "requested_cpus": 1,
+    "requested_memory": "1g",
+    "requested_pids_limit": 64,
+    "resource_enforcement_verified": false
+  },
+  "preserved_launcher_stop": "One additional construction-test Docker launch was rejected before container start because its image reference had an invalid checksum digest length (exit 125). Candidate and auditor formal/scenario invocations had already completed once each and were not rerun; construction tests then ran once with the exact frozen image and passed.",
+  "limits": "Posthoc manual selected-HUD scenario replay only. No live V39, model, game, GUI, OS input, paired dense ammo, threshold qualification, or task-effect result."
+}
