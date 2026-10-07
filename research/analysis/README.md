@@ -486,6 +486,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`decision_reversal_6003_container_repro_a02_20261003/`](decision_reversal_6003_container_repro_a02_20261003/)
 - [`decision_reversal_6003_t0_v1/`](decision_reversal_6003_t0_v1/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
+- [`decision_value_7934_a01_20261007/`](decision_value_7934_a01_20261007/)
 - [`delay_gain_stability_6195_t0_host_20261001_01/`](delay_gain_stability_6195_t0_host_20261001_01/)
 - [`delayed_gui_effect_attribution_7487_t0_20261004/`](delayed_gui_effect_attribution_7487_t0_20261004/)
 - [`denial_aware_deferral_authority_6422_a02_20261002_v1/`](denial_aware_deferral_authority_6422_a02_20261002_v1/)
