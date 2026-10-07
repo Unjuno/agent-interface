@@ -74,6 +74,10 @@ def main() -> int:
         return fail("merge_recheck_format")
     if merge_recheck.get("merge_tree") != "5892b52e95e6e5a0f1ded3477ae0ac74aede7d04":
         return fail("merge_tree_identity")
+    if merge_recheck.get("current_pr_8290_head") != "8b7d4bc56719cf1895363f36ed13673cd949f5e2":
+        return fail("current_pr_head_identity")
+    if merge_recheck.get("current_pr_8290_head_tree") != merge_recheck.get("merge_tree"):
+        return fail("current_pr_head_tree_match")
     if merge_recheck.get("current_main_source_blob") != "338b5fbdf436e14768274b9de6a3d3bb13fd274c":
         return fail("merge_current_source_identity")
     if len(merge_raw) != merge_recheck.get("raw_stdout_bytes") or sha256(merge_raw) != merge_recheck.get("raw_stdout_sha256"):

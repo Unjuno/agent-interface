@@ -41,7 +41,9 @@ The PR candidate was also merged virtually onto the then-current main
 `074f00a0db5baf48a42ed446043f7e1081a40ed7` (merge tree
 `5892b52e95e6e5a0f1ded3477ae0ac74aede7d04`) and its eight-case suite passed
 8/8 in a detached temporary worktree. Raw stdout and the exact tree/source
-identities are recorded in `CURRENT_MAIN_MERGE_RECHECK.json`.
+identities are recorded in `CURRENT_MAIN_MERGE_RECHECK.json`. The current PR
+#8290 head `8b7d4bc56719cf1895363f36ed13673cd949f5e2` resolves to that exact
+tree SHA, so the run covers its current candidate tree byte-for-byte.
 
 This is a local regression recheck of one app-server client cleanup path. It is
 not a live GUI, native-input, game, model, task-effect, useful-feedback,
