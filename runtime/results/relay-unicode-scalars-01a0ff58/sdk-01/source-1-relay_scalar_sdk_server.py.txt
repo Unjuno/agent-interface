@@ -1,0 +1,12 @@
+import sys,json,os,datetime,pathlib
+from mcp.server.fastmcp import FastMCP
+out=pathlib.Path(sys.argv[1]);server=FastMCP('private-scalar-admission-echo')
+def record(event,**fields):
+    with (out/'server.jsonl').open('a',encoding='ascii') as f:f.write(json.dumps({'event':event,'pid':os.getpid(),'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),**fields},ensure_ascii=True)+'\n')
+record('server_start')
+@server.tool(name='interface_validate')
+def echo(program:dict)->dict:
+    record('synthetic_tool_entry',program=program)
+    return {'received':program}
+server.run(transport='stdio')
+record('server_return')

@@ -1,0 +1,59 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-independent-audit-freeze-v1",
+  "audit_invocation": 1,
+  "probe_rerun": false,
+  "candidate_pr_head": "1ef5611356ff217f0981843ae854ef871967e999",
+  "base_main_sha": "16c74566b64f32d7fe035c7724bcfe3865863a91",
+  "candidate_source_bindings": {
+    "SOURCE/input_owner_v13_candidate.py": {
+      "path": "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py",
+      "blob_sha": "82d3881dd4064f58e847420bb336a70cd84ee307",
+      "sha256": "f359d6a4f25f9dc6a9c2e479d8c401884b7aaa8c37ddeb44c25c4bfaa3e78413"
+    },
+    "SOURCE/bridge_v2_candidate.py": {
+      "path": "research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py",
+      "blob_sha": "ee1220cdc3d93d96aa1051c072ca7dceeb59c35d",
+      "sha256": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1"
+    }
+  },
+  "local_inputs": {
+    "audit_probe_v2.py": {
+      "sha256": "e9fbfc6762ce9f725129f839446ded96a54f399519cc0abb5611bf11594904b4"
+    },
+    "FREEZE.json": {
+      "sha256": "a3a6d30781616b024c7d8f3ae4d9fd0d501fcddaf766709f7b86a5c4bf0740e9"
+    },
+    "SOURCE/input_owner_v13_candidate.py": {
+      "sha256": "f359d6a4f25f9dc6a9c2e479d8c401884b7aaa8c37ddeb44c25c4bfaa3e78413"
+    },
+    "SOURCE/bridge_v2_candidate.py": {
+      "sha256": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1"
+    },
+    "results/construction-a01/outcome.json": {
+      "sha256": "f96d46c241576dc301e193c72a3cdfdbdbb0653db4e3aa9ca2f8f760020a3068"
+    },
+    "audit_probe.py": {
+      "sha256": "da232c00989eeb487aea79edada665f8a79a7087506aa79b3e7e3287106414c6"
+    },
+    "results/preflight-stop-a01/FREEZE-initial.json": {
+      "sha256": "60751e7a4e8f81443bc2164957bc2b06923a744114e6f76391b8251197e406ba"
+    },
+    "results/preflight-stop-a01/STOP.json": {
+      "sha256": "6a9e8459872db4a81e8cbacc8f4fca2d2f78631bd4f6219e2c1b2be969b6d0c1"
+    },
+    "results/preflight-stop-a01/runner-attempt01.log": {
+      "sha256": "24881f698f7c9fd05cf6b114e02a7fc2a4baf10257dab66c0c56c7a401e790c1"
+    },
+    "results/audit-stop-a01/AUDIT-attempt01.json": {
+      "sha256": "1af4d5abbb5eb47173a6c4ebbd12dd73d95f5a2c23c9ee8c9c05d34d1707c855"
+    },
+    "results/audit-stop-a01/RESULT-attempt01.json": {
+      "sha256": "dc4ca247b422ae2f58964774580d593c303dd47aa238f82592c279392938889d"
+    },
+    "results/audit-stop-a01/STOP.json": {
+      "sha256": "7cf134ae1f6bcf880f1edf6d5584d5c0cf46331ae7f1dd93bfdf660adfeaf6c9"
+    }
+  },
+  "decision": "Audit passes only if exact source bindings, owner release ordering, a one-row neutral control, and both post-up aggregate query failure raw outcomes match the frozen criteria.",
+  "scope": "Read-only verification of retained experiment output; no owner/candidate/test rerun."
+}

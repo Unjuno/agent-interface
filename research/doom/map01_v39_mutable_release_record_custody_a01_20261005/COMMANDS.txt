@@ -1,0 +1,17 @@
+Frozen base check / no-input preflight:
+git rev-parse HEAD
+python3 -B -m py_compile research/doom/map01_v39_mutable_release_record_custody_a01_20261005/*.py
+python3 -B research/doom/map01_v39_mutable_release_record_custody_a01_20261005/preflight.py
+
+A01 stopped before container creation (exact command/error in STOP_A01.txt). It is not rerunnable under that run ID.
+
+A02 one-shot container candidate command:
+docker run --rm --platform linux/arm64 --network none --cpus=1 --memory=1g --memory-swap=1g --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --env PYTHONDONTWRITEBYTECODE=1 --mount type=bind,src=/private/tmp/agent-interface-59-executor-v12-a01,dst=/workspace,readonly --mount type=bind,src=/private/tmp/agent-interface-59-executor-v12-a01/research/doom/map01_v39_mutable_release_record_custody_a01_20261005/results/formal_02,dst=/workspace/research/doom/map01_v39_mutable_release_record_custody_a01_20261005/results/formal_02 --workdir /workspace python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python -B research/doom/map01_v39_mutable_release_record_custody_a01_20261005/run_candidate.py
+
+Independent raw-only audit; do not rerun candidate:
+python3 -B research/doom/map01_v39_mutable_release_record_custody_a01_20261005/audit.py
+
+The first audit wrapper attempt wrote to formal_01/audit.json; the correction and byte-identical readback are recorded in AUDIT_WRAPPER_NOTE.txt. The no-input preflight is intentionally not rerun after candidate output exists; it refuses to overwrite.
+
+Package integrity from repository root:
+shasum -a 256 -c research/doom/map01_v39_mutable_release_record_custody_a01_20261005/SHA256SUMS.txt

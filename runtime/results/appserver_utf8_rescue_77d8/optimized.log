@@ -1,0 +1,24 @@
+test_ascii_reply_remains_exact (test_app_server_utf8.Utf8ReceiveRegression.test_ascii_reply_remains_exact) ... ok
+test_literal_accented_utf8_reply_remains_exact (test_app_server_utf8.Utf8ReceiveRegression.test_literal_accented_utf8_reply_remains_exact) ... ok
+test_literal_japanese_reply_and_notification_remain_exact (test_app_server_utf8.Utf8ReceiveRegression.test_literal_japanese_reply_and_notification_remain_exact) ... ok
+test_notification_eof_does_not_read_stderr (test_app_server_eof_stop.EofStopRegression.test_notification_eof_does_not_read_stderr) ... ok
+test_queued_notification_survives_stdout_eof (test_app_server_eof_stop.EofStopRegression.test_queued_notification_survives_stdout_eof) ... ok
+test_queued_reply_survives_stdout_eof (test_app_server_eof_stop.EofStopRegression.test_queued_reply_survives_stdout_eof) ... ok
+test_request_eof_does_not_read_stderr (test_app_server_eof_stop.EofStopRegression.test_request_eof_does_not_read_stderr) ... ok
+test_boolean_noise_preserves_numeric_reply_and_notification (test_app_server_reply_id_5156.ReplyIdRegression.test_boolean_noise_preserves_numeric_reply_and_notification) ... ok
+test_matching_server_error_is_preserved (test_app_server_reply_id_5156.ReplyIdRegression.test_matching_server_error_is_preserved) ... ok
+test_already_closed_journal_does_not_acquire_contended_lock (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_already_closed_journal_does_not_acquire_contended_lock) ... ok
+test_contended_journal_reports_incomplete_retirement (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_contended_journal_reports_incomplete_retirement) ... ok
+test_explicit_none_timeout_preserves_unlimited_journal_mode (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_explicit_none_timeout_preserves_unlimited_journal_mode) ... ok
+test_explicit_none_timeout_without_journal_preserves_reader_join (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_explicit_none_timeout_without_journal_preserves_reader_join) ... ok
+test_journal_close_exception_preserves_error_and_releases_lock (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_journal_close_exception_preserves_error_and_releases_lock) ... ok
+test_no_journal_does_not_acquire_contended_lock (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_no_journal_does_not_acquire_contended_lock) ... ok
+test_uncontended_journal_retires_without_changing_bytes (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_uncontended_journal_retires_without_changing_bytes) ... ok
+test_healthy_eof_retires_reader_and_journal (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_healthy_eof_retires_reader_and_journal) ... ok
+test_live_reader_preserves_journal_and_late_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_preserves_journal_and_late_frame) ... ok
+test_live_reader_without_journal_reports_incomplete_and_keeps_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_without_journal_reports_incomplete_and_keeps_frame) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.344s
+
+OK

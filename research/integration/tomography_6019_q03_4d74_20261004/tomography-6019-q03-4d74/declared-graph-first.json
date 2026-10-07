@@ -1,0 +1,20 @@
+{
+  "input_sha256": "1a51a148166f21e9884982de2d1a87d46cae6736a5db5767a4023b61bb420f15",
+  "pair_decisions": 2187,
+  "declared_graph": {
+    "true_claims": 729,
+    "false_claims": 0,
+    "probes": 0,
+    "condition": "complete trustworthy current service assignment metadata is available"
+  },
+  "intervention": {
+    "true_claims": 189,
+    "false_claims": 0,
+    "missed_shared_pairs": 540,
+    "probes": 2187,
+    "added_service_ticks": 17496,
+    "added_task_endpoint_ticks": 5589
+  },
+  "decision": "PREFER_EXPLICIT_METADATA_WHEN_QUALIFIED; HOLD_OPERATIONAL_PROBING_WITHOUT_METADATA_OR_MATCHED_EVIDENCE",
+  "scope": "metadata oracle is conditional fixture baseline, not evidence real backend metadata exists or is current"
+}

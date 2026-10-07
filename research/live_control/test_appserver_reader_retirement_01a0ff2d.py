@@ -83,6 +83,7 @@ class ReaderRetirementTests(unittest.TestCase):
                 wfd = None
                 parent.wait(timeout=2)
                 record['parent_exit_before_close'] = parent.returncode
+                record['parent_stderr_base64'] = base64.b64encode(parent.stderr.read().encode()).decode()
                 if held:
                     deadline = time.monotonic() + 2
                     while not ready.exists() and time.monotonic() < deadline and writer.poll() is None:
@@ -150,7 +151,6 @@ class ReaderRetirementTests(unittest.TestCase):
                         parent.wait(timeout=2)
                         record['driver_parent_kill_required'] = True
                     record['parent_final_exit'] = parent.returncode
-                    record['parent_stderr_base64'] = base64.b64encode(parent.stderr.read().encode()).decode()
                     for name in ('stdin', 'stdout', 'stderr'):
                         getattr(parent, name).close()
                     record['parent_driver_closed_handles'] = [getattr(parent, p).closed for p in ('stdin', 'stdout', 'stderr')]

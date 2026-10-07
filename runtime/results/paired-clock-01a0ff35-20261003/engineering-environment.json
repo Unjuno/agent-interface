@@ -1,0 +1,24 @@
+{
+  "kind": "read-only package metadata after ordinary tests; no binary/package change",
+  "argv": [
+    "C:\\Users\\WORKER\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\mcp-shutdown-venv312\\Scripts\\python.exe",
+    "-B",
+    "-c",
+    "import importlib.metadata,json,sys; print(json.dumps({'python':sys.version,'versions':{n:importlib.metadata.version(n) for n in ['mcp','Pillow','numpy','pydantic','anyio']}}))"
+  ],
+  "started_utc": "2026-10-03T07:35:26.013636+00:00",
+  "observed_utc": "2026-10-03T07:35:26.123623+00:00",
+  "exit_code": 0,
+  "stdout_sha256": "24e5b344ba58fc0f9e457a3609d11b01e28aa3441c19bc766787cac9aaaf55c8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observed": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "versions": {
+      "mcp": "1.30.0",
+      "Pillow": "10.2.0",
+      "numpy": "1.26.4",
+      "pydantic": "2.13.4",
+      "anyio": "4.14.2"
+    }
+  }
+}

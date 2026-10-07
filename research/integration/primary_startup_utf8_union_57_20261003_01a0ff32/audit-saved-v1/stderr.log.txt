@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<PRIVATE_ROOT>\outputs\primary-startup-utf8-union-01a0ff32-a01\audit_saved_v1.py", line 29, in <module>
+    check(result==json.loads((OUT/('case-'+case)/'stdout.raw').read_text()),'RESULT/full captured stdout '+case)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PRIVATE_RUNTIME>\python\Lib\pathlib.py", line 1028, in read_text
+    return f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'cp932' codec can't decode byte 0x82 in position 555: illegal multibyte sequence

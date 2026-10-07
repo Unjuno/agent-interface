@@ -1,0 +1,24 @@
+test_ack_after_post_down_sample_fails (test_audit_temporal_v2.TemporalBindingTests.test_ack_after_post_down_sample_fails) ... ok
+test_ack_at_or_after_lease_deadline_fails (test_audit_temporal_v2.TemporalBindingTests.test_ack_at_or_after_lease_deadline_fails) ... ok
+test_admission_after_down_witness_fails (test_audit_temporal_v2.TemporalBindingTests.test_admission_after_down_witness_fails) ... ok
+test_admission_before_pre_down_fails (test_audit_temporal_v2.TemporalBindingTests.test_admission_before_pre_down_fails) ... ok
+test_cross_occurrence_timestamps_fail (test_audit_temporal_v2.TemporalBindingTests.test_cross_occurrence_timestamps_fail) ... ok
+test_down_sample_at_lease_deadline_fails (test_audit_temporal_v2.TemporalBindingTests.test_down_sample_at_lease_deadline_fails) ... ok
+test_duplicate_admission_fails (test_audit_temporal_v2.TemporalBindingTests.test_duplicate_admission_fails) ... ok
+test_empty_occurrence_set_fails (test_audit_temporal_v2.TemporalBindingTests.test_empty_occurrence_set_fails) ... ok
+test_full_report_fails_closed_on_malformed_parent_event (test_audit_temporal_v2.TemporalBindingTests.test_full_report_fails_closed_on_malformed_parent_event) ... ok
+test_malformed_occurrence_or_event_fails_closed (test_audit_temporal_v2.TemporalBindingTests.test_malformed_occurrence_or_event_fails_closed) ... ok
+test_missing_or_duplicate_admission_fails (test_audit_temporal_v2.TemporalBindingTests.test_missing_or_duplicate_admission_fails) ... ok
+test_ordered_admission_and_ack_inside_down_witness_pass (test_audit_temporal_v2.TemporalBindingTests.test_ordered_admission_and_ack_inside_down_witness_pass) ... ok
+test_temporal_audit_rejects_missing_times_accepted_by_parent_audit (test_audit_temporal_v2.TemporalBindingTests.test_temporal_audit_rejects_missing_times_accepted_by_parent_audit) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.010s
+
+OK
+
+Fail-closed entrypoint regression run after hardening main():
+`python3 -m pytest -q test_audit_temporal_v2.py test_audit.py`
+19 passed, 5 subtests passed. This includes stale-PASS replacement for each of
+the five non-object JSON roots, invalid JSON, and valid input, plus all prior
+temporal and parent-auditor mutation cases.

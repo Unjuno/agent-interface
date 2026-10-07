@@ -1,0 +1,118 @@
+{
+  "started_utc": "2026-10-03T14:06:04.888826+00:00",
+  "pid": 483,
+  "model_calls": 0,
+  "input_down_calls": 0,
+  "formal_task_attempts": 0,
+  "scope": "ordinary historical-source native construction only",
+  "cgroup": {
+    "cpu.max": "100000 100000",
+    "memory.max": "805306368",
+    "pids.max": "256"
+  },
+  "uid": 501,
+  "display": ":120",
+  "unauthenticated_probe": {
+    "exit_code": 1,
+    "stdout_bytes": 0,
+    "stderr": "Authorization required, but no authorization protocol specified\n\nxdpyinfo:  unable to open display \":120\".\n"
+  },
+  "fixture_tasks": 6,
+  "windows": "0x00600002  0 unjuno-57-5884-debian-a02-20261003 about:blank - Chromium\n",
+  "session_children": [
+    {
+      "pid": 486,
+      "argv": [
+        "Xvfb",
+        ":120",
+        "-screen",
+        "0",
+        "1280x800x24",
+        "-auth",
+        "/tmp/realapp-x-6cuprb_k/Xauthority",
+        "-nolisten",
+        "tcp"
+      ]
+    },
+    {
+      "pid": 490,
+      "argv": [
+        "openbox",
+        "--config-file",
+        "/etc/xdg/openbox/rc.xml"
+      ]
+    },
+    {
+      "pid": 509,
+      "argv": [
+        "/usr/bin/chromium",
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-background-networking",
+        "--disable-component-update",
+        "--disable-sync",
+        "--password-store=basic",
+        "--user-data-dir=/tmp/realapp-x-6cuprb_k/browser-profile",
+        "about:blank"
+      ]
+    }
+  ],
+  "observation": {
+    "sequence": 1,
+    "capture_ns": 46577007432700,
+    "pointer_binding": {
+      "focus": 6291458,
+      "surface": 6291458,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    }
+  },
+  "image_size": [
+    1280,
+    800
+  ],
+  "release": {
+    "event": "owner_release",
+    "reason": "release",
+    "verified": true,
+    "buttons_down": [],
+    "keys_down": [],
+    "verified_ns": 46577116910571,
+    "valid_until_ns": null
+  },
+  "owner_records_before_close": [
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 46577116910571,
+      "valid_until_ns": null
+    }
+  ],
+  "status": "PASS_CONSTRUCTION",
+  "owner_thread_alive_after_close": false,
+  "child_exits": [
+    {
+      "pid": 486,
+      "exit_code": 0
+    },
+    {
+      "pid": 490,
+      "exit_code": 1
+    },
+    {
+      "pid": 509,
+      "exit_code": 0
+    }
+  ],
+  "ended_utc": "2026-10-03T14:06:06.339959+00:00",
+  "public_bytes": 34809
+}

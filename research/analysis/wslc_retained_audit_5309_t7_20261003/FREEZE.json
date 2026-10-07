@@ -1,0 +1,70 @@
+{
+  "schema": "wslc-retained-audit-5309-t7-freeze-v1",
+  "issue": 6975,
+  "source_issue": 5309,
+  "allocation_id": "WSLC-AUDIT-5309-T7-20261003-01",
+  "status": "FROZEN_PRE_FORMAL",
+  "main_sha": "42c86df0923aff536a1ee3a592b9fb74582891df",
+  "input": {
+    "path": "research/experiments/dual_control_5309_t6/raw.json",
+    "git_blob_sha1": "c85dc5cf32838e3ef7d63b0f57933a90bb66d59f",
+    "sha256": "0b93411768024bd62f035422ec9bf613e15f89b905347c104f735aa45bf4847e",
+    "bytes": 73530,
+    "semantic_sha256": "a7bd0adc9485df7161b7ce85c27b1dc58fad71ee2fee9cfe081cc61337b0e193"
+  },
+  "auditor": {
+    "path": "research/experiments/dual_control_5309_t6/audit.py",
+    "git_blob_sha1": "7333bdbd0e02df84a64161e773a261d53e76bb27",
+    "sha256": "dce1416b4ca42e6bf0ef847aa9c4aa42a4e8fe415571401d683257cd97adbae5",
+    "bytes": 2515,
+    "candidate_runs": 0
+  },
+  "host": {
+    "windows_build": "10.0.26200.9550",
+    "wsl_package": "3.0.1.0",
+    "wsl_kernel": "6.18.40.1-1",
+    "distro": "Ubuntu",
+    "distro_wsl_version": 2,
+    "wslc": "3.0.1.0"
+  },
+  "image": {
+    "local_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "repo_digest": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "architecture": "amd64",
+    "python": "3.12.14",
+    "pull": "never"
+  },
+  "limits": {
+    "candidate_invocations_max": 0,
+    "auditor_invocations_max": 1,
+    "retries": 0,
+    "network": "none",
+    "cpus": 1,
+    "memory_limit_requested": false,
+    "rootfs_read_only": false,
+    "pids_limit": null,
+    "source_mount": "read-only",
+    "output_mount": "dedicated read-write"
+  },
+  "container_name": "unjuno-wslc-audit-5309-t7-20261003",
+  "container_command": [
+    "wslc.exe", "run", "--rm", "--pull", "never", "--network", "none",
+    "--cpus", "1", "--name", "unjuno-wslc-audit-5309-t7-20261003",
+    "--volume", "<source-path>:/src:ro",
+    "--volume", "<output-path>:/out:rw",
+    "--workdir", "/src",
+    "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "sh", "-c",
+    "python -B /src/research/experiments/dual_control_5309_t6/audit.py /src/research/experiments/dual_control_5309_t6/raw.json > /out/audit.stdout.json"
+  ],
+  "scope_limits": [
+    "retained synthetic evidence audit only",
+    "no Docker comparison",
+    "no native WSL2 comparison",
+    "no speed or memory-benefit claim",
+    "no effective memory/swap-cap claim",
+    "no read-only-rootfs or pids-limit parity claim",
+    "no candidate rerun, GUI, model, user data, or application effect"
+  ]
+}
+

@@ -1,0 +1,6 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/data/reduce_v2.py", line 19, in <module>
+    g18=dict(model_contexts=1,model_turns=len(m['turn_start_requests']),registered_calls=m['dynamic_calls'],native_programs=len(g['native_attempts']),saved_prefix_tasks=1,censored_native_tasks=1,usage=gu,model_context_wall_ns=m['ended_wall_ns']-m['started_wall_ns'],graph_wall_ns=g['compiled_result']['elapsed_ns'],effect=first,outcome=g['compiled_result']['outcome'],reason=g['compiled_result']['reason'],report_repair='separate retained semantic audit, not recomputed by numerical reader',disposition='PARTIAL_EFFECT; HOLD_TASK_AND_EFFICIENCY')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: object of type 'int' has no len()

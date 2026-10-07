@@ -1,0 +1,18 @@
+import datetime,hashlib,json,os,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent
+out=root.parents[1]/'outputs'/'v39-queue-budget-repair-01a0ff2c'
+tag=sys.argv[1]
+if tag not in ('GREEN','OPTIMIZED'): raise RuntimeError('tag')
+if (out/(tag+'.receipt.json')).exists(): raise RuntimeError('existing receipt')
+paths=['map01_overlap_controller_v39.py','test_overlap_controller_v39_budget.py','test_overlap_controller_v39_wait.py']
+pins={n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in paths}
+command=[sys.executable]+(['-O'] if tag=='OPTIMIZED' else [])+['-m','unittest','discover','-s',str(root),'-p','test_overlap_controller_v39_*.py','-v']
+start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+with (out/(tag+'.stdout.txt')).open('wb') as stdout,(out/(tag+'.stderr.txt')).open('wb') as stderr:
+    child=subprocess.Popen(command,stdout=stdout,stderr=stderr)
+    rc=child.wait(timeout=30)
+receipt={'tag':tag,'pid':child.pid,'wrapper_pid':os.getpid(),'utc_start':start,'utc_end':datetime.datetime.now(datetime.timezone.utc).isoformat(),'command':command,'exit_code':rc,'source_pins':pins,'pins_unchanged':all(hashlib.sha256((root/n).read_bytes()).hexdigest()==v for n,v in pins.items())}
+(out/(tag+'.receipt.json')).write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps(receipt))
+raise SystemExit(rc)

@@ -1,0 +1,89 @@
+{
+  "all8_original_worker_fixture_pids_observed_absent": true,
+  "cells": [
+    {
+      "both_original_pids_observed_absent": true,
+      "custody_pass": true,
+      "disposition": "PASS_FIRST_BACKLOG_RETAINED",
+      "fixture_pid": 39776,
+      "later_output": false,
+      "variant": "peer",
+      "worker_pid": 42780
+    },
+    {
+      "both_original_pids_observed_absent": true,
+      "custody_pass": true,
+      "disposition": "FAIL_FIRST_BACKLOG_MASKED_BY_LATER_OUTPUT",
+      "fixture_pid": 37304,
+      "later_output": true,
+      "variant": "peer",
+      "worker_pid": 36720
+    },
+    {
+      "both_original_pids_observed_absent": true,
+      "custody_pass": true,
+      "disposition": "PASS_FIRST_BACKLOG_RETAINED",
+      "fixture_pid": 36584,
+      "later_output": false,
+      "variant": "combined",
+      "worker_pid": 33560
+    },
+    {
+      "both_original_pids_observed_absent": true,
+      "custody_pass": true,
+      "disposition": "FAIL_FIRST_BACKLOG_MASKED_BY_LATER_OUTPUT",
+      "fixture_pid": 33832,
+      "later_output": true,
+      "variant": "combined",
+      "worker_pid": 33288
+    }
+  ],
+  "copied_data_controls": [
+    {
+      "name": "bool-exit",
+      "rejected": true
+    },
+    {
+      "name": "float-pid",
+      "rejected": true
+    },
+    {
+      "name": "false-child-absence",
+      "rejected": true
+    },
+    {
+      "name": "false-foreign",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-request",
+      "rejected": true
+    },
+    {
+      "name": "invented-first-retention",
+      "rejected": true
+    },
+    {
+      "name": "promote-fail",
+      "rejected": true
+    },
+    {
+      "name": "changed-original-nonce",
+      "rejected": true
+    },
+    {
+      "name": "first-error-changed",
+      "rejected": true
+    },
+    {
+      "name": "false-endpoint-identity",
+      "rejected": true
+    }
+  ],
+  "custody_passes": 4,
+  "diagnostic_failures": 2,
+  "diagnostic_pass_controls": 2,
+  "first_wrong_fixture_outcome_preserved": true,
+  "limits": "New ordinary real inert relay with controlled global Error constructor observation preserving prototype and exact product bytes; first wrong JSON-RPC fixture/reader ENOENT retained separately, corrected to actual relay envelope without changing product/source or D. No author laterINPUT, peer decoder, formal/native/original producer/auditor replay. No actual backend/input/task/release/atomicready/general recovery/hardbound/efficiency proof.",
+  "status": "FAIL_FIRST_BACKLOG_MASKED_BY_LATER_OUTPUT"
+}

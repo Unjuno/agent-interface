@@ -1,0 +1,38 @@
+test_blank_page_coordinates_refuse_before_registry_insert (__main__.RetainedScreenshotGroundingTests.test_blank_page_coordinates_refuse_before_registry_insert) ... FAIL
+test_visible_form_coordinates_resolve (__main__.RetainedScreenshotGroundingTests.test_visible_form_coordinates_resolve) ... FAIL
+
+======================================================================
+FAIL: test_blank_page_coordinates_refuse_before_registry_insert (__main__.RetainedScreenshotGroundingTests.test_blank_page_coordinates_refuse_before_registry_insert)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-2\work\coordinate-grounding-a01\research\integration\coordinate_grounding_gate_57_a01_20261004\a02-retained-screenshot-grounding\out\preregistered_expectation_test.py", line 75, in test_blank_page_coordinates_refuse_before_registry_insert
+    self.assertEqual(outcomes, [
+AssertionError: Lists differ: [{'status': 'VALID', 'eligible': True, 'reason': 'exac[129 chars]: 1}] != [{'status': 'FLAT_REFUSED', 'eligible': False, 'regist[81 chars]: 0}]
+
+First differing element 0:
+{'status': 'VALID', 'eligible': True, 'reason': 'exac[34 chars]': 1}
+{'status': 'FLAT_REFUSED', 'eligible': False, 'registry_entries': 0}
+
++ [{'eligible': False, 'registry_entries': 0, 'status': 'FLAT_REFUSED'},
++  {'eligible': False, 'registry_entries': 0, 'status': 'FLAT_REFUSED'}]
+- [{'eligible': True,
+-   'reason': 'exact_region_match',
+-   'registry_entries': 1,
+-   'status': 'VALID'},
+-  {'eligible': True,
+-   'reason': 'exact_region_match',
+-   'registry_entries': 1,
+-   'status': 'VALID'}]
+
+======================================================================
+FAIL: test_visible_form_coordinates_resolve (__main__.RetainedScreenshotGroundingTests.test_visible_form_coordinates_resolve)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-2\work\coordinate-grounding-a01\research\integration\coordinate_grounding_gate_57_a01_20261004\a02-retained-screenshot-grounding\out\preregistered_expectation_test.py", line 69, in test_visible_form_coordinates_resolve
+    self.assertTrue(all(result["status"] == "VALID" and result["eligible"] is True
+AssertionError: False is not true : [(2, 'field', {'status': 'VALID', 'eligible': True, 'reason': 'exact_region_match', 'registry_entries': 1}), (2, 'submit', {'status': 'VALID', 'eligible': True, 'reason': 'exact_region_match', 'registry_entries': 1}), (4, 'field', {'status': 'FLAT_REFUSED', 'eligible': False, 'registry_entries': 0}), (4, 'submit', {'status': 'VALID', 'eligible': True, 'reason': 'exact_region_match', 'registry_entries': 1}), (5, 'field', {'status': 'FLAT_REFUSED', 'eligible': False, 'registry_entries': 0}), (5, 'submit', {'status': 'VALID', 'eligible': True, 'reason': 'exact_region_match', 'registry_entries': 1}), (6, 'field', {'status': 'FLAT_REFUSED', 'eligible': False, 'registry_entries': 0}), (6, 'submit', {'status': 'VALID', 'eligible': True, 'reason': 'exact_region_match', 'registry_entries': 1})]
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.073s
+
+FAILED (failures=2)

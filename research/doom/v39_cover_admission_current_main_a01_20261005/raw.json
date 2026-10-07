@@ -1,0 +1,42 @@
+{
+  "gui": false,
+  "live_game": false,
+  "main_git_blob_sha1": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "main_source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "main_wait": {
+    "latest_sequence": 17,
+    "monitor_seen_sequences": [],
+    "queued_events": [],
+    "result": {
+      "accepted_ns": 123,
+      "event": "accepted",
+      "id": "cover-0"
+    }
+  },
+  "model_calls": 0,
+  "os_input": false,
+  "pr_git_blob_sha1": "dd1f7ab589f25108e2ea1c7518cdd4444791a6d0",
+  "pr_helper_with_main_wait": {
+    "latest_sequence": 17,
+    "monitor_seen_sequences": [
+      17
+    ],
+    "queued_events": [
+      {
+        "accepted_ns": 123,
+        "event": "accepted",
+        "id": "cover-0"
+      }
+    ],
+    "result": {
+      "event": "policy_invalidation",
+      "invalidation": {
+        "reason": "health_below_floor",
+        "sequence": 17
+      }
+    }
+  },
+  "pr_source_sha256": "c056725908c683bef8f4f95ea7cb46aefedbe48ae3deb3cf801372d9be4818a4",
+  "real_x_server": false,
+  "schema": "v39-cover-admission-main-replay-raw-v1"
+}

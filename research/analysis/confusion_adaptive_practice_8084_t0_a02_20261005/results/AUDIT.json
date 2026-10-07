@@ -1,0 +1,26 @@
+{
+  "decision": "METHOD_PASS_SCOPED",
+  "errors": [],
+  "human_effect": "NOT_TESTED",
+  "matrix_cases": 6,
+  "schedule_rows": 12,
+  "scope": "synthetic schedule and scorer method readiness only",
+  "scoring_controls": [
+    {
+      "id": "valid",
+      "score": "VALID_EXACT_EFFECT"
+    },
+    {
+      "id": "wrong-target",
+      "score": "REJECT_WRONG_TARGET"
+    },
+    {
+      "id": "false-success",
+      "score": "REJECT_FALSE_SUCCESS"
+    },
+    {
+      "id": "outside-family",
+      "score": "UNKNOWN_OUTSIDE_FAMILY"
+    }
+  ]
+}

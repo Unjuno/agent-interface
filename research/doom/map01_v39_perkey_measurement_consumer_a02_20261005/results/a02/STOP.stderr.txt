@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "run.py", line 43, in <module>
+    main()
+  File "run.py", line 17, in main
+    raw, events = load_events(HERE / "INPUT_EVENTS.jsonl")
+  File "candidate.py", line 144, in load_events
+    _need(hashlib.sha256(raw).hexdigest() == EXPECTED_INPUT_SHA256,
+  File "candidate.py", line 17, in _need
+    raise EvidenceError(message)
+candidate.EvidenceError: input bytes do not match freeze

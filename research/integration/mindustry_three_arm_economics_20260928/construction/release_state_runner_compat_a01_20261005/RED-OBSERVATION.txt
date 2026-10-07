@@ -1,0 +1,6 @@
+Initial focused regression against the pre-fix synthetic_bridge_exchange:
+
+- Expected: release receipt has verified=true, keys_down=[], buttons_down=[] and TargetSocketSubmitter accepts the matching terminal.
+- Observed: assertion failed. Actual receipt was {"verified": true}; expected empty held-input sets were absent.
+- Classification: intended red regression proving stale producer-fixture incompatibility; not a formal experiment failure.
+- After updating the synthetic producer fixture: focused test passed.

@@ -1,0 +1,34 @@
+{
+  "data_only": true,
+  "original_producer_replays": 0,
+  "red": {
+    "methods": 17,
+    "failures": 4
+  },
+  "green_methods": 17,
+  "optimized_methods": 17,
+  "new_complete_rows_per_endpoint": 13,
+  "exact_only_caller_changed": [
+    "research/live_control/adaptive_acquisition_caller_v3.py"
+  ],
+  "negative_controls": [
+    {
+      "case": "false-prefix",
+      "rejected": true
+    },
+    {
+      "case": "invented-release",
+      "rejected": true
+    },
+    {
+      "case": "effect-after-refusal",
+      "rejected": true
+    }
+  ],
+  "source_sha256": {
+    "research\\live_control\\adaptive_acquisition_caller_v3.py": "e857165986c56c20bd5624873de3ab95bb16f9ef36bcc670e25a88211f601bfa",
+    "research\\live_control\\test_adaptive_acquisition_caller_refusal_v3.py": "a59a58584b42244147f56b54c6a0e4689afce12d4813223bab4d72eb49973885",
+    "research\\live_control\\test_adaptive_acquisition_caller_v3.py": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693",
+    "runtime\\core_v1\\compiled_gui.py": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1"
+  }
+}

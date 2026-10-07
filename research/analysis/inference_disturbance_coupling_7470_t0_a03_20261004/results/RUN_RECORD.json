@@ -1,0 +1,18 @@
+{
+  "schema": "inference-disturbance-coupling-circular-phase-run-v1",
+  "issue": 7470,
+  "allocation": "INFERENCE-DISTURBANCE-COUPLING-7470-T0-20261004-A03",
+  "base_main": "f7e8a365b45841fe6adc69f4130eb513e4a4c4ff",
+  "source_commit": "bcbb8cdac64b1074cf54fbd2c1cbcf40e8b76a81",
+  "freeze_sha256": "d70f63cb9f08ceb81486ea9db184c6e74b31cd25a2e9b7e3bbe25f2eab6184e1",
+  "candidate": {"invocations": 1, "exit_code": 0, "shifts": 4, "trajectories": 8, "sha256": "bc95a1d75f9697ab8181ead048279b2182bd47a5effd0121f7771e39ffbbed75"},
+  "auditor": {"invocations": 1, "exit_code": 0, "reconstructed": 8, "mutations_rejected": 3},
+  "phase_peaks": [8.0, 6.5, 6.0, 6.5],
+  "phase_stale_severity_exposure": [20, 14, 12, 14],
+  "phase_outside_envelope_counts": [1, 1, 0, 1],
+  "posthoc_pearson_latency_disturbance": [0.25, -0.05, -0.15, -0.05],
+  "scope": "finite circular rotations; explicit period-to-period seam transition omitted; not full conformance to Issue clarification",
+  "retries": 0,
+  "container_candidate_invocations": 0,
+  "container_auditor_invocations": 0
+}
