@@ -1581,10 +1581,26 @@ def main():
                         # interruption transport itself fails.
                         if not future.done():
                             try:
-                                planner.interrupt(planner_handle)
+                                interrupt_result = planner.interrupt(planner_handle)
                             except BaseException as interrupt_error:
                                 error.add_note("planner interrupt failed: " +
                                                type(interrupt_error).__name__)
+                                try:
+                                    planner.abort_pending_turn()
+                                except BaseException as abort_error:
+                                    error.add_note("planner transport abort failed: " +
+                                                   type(abort_error).__name__)
+                            else:
+                                if (isinstance(interrupt_result, dict) and
+                                        interrupt_result.get("outcome") == "request_error"):
+                                    error.add_note("planner interrupt transport failed")
+                                    try:
+                                        planner.abort_pending_turn()
+                                    except BaseException as abort_error:
+                                        error.add_note("planner transport abort failed: " +
+                                                       type(abort_error).__name__)
+                                    else:
+                                        error.add_note("pending planner turn transport aborted")
                         raise
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"

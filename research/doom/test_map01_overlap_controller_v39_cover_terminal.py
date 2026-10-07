@@ -29,7 +29,8 @@ class NextBoundary(RuntimeError):
 class CoverTerminalTests(unittest.TestCase):
     def exercise(self, name, status, release, *, pending=True, renewed=False,
                  complete_at_terminal=False, executor_failure=False,
-                 interrupt_failure=False):
+                 interrupt_failure=False, interrupt_request_error=False,
+                 planner_wait_cap=2):
         trace = {"case": name, "commands": [], "events": [], "timeline": []}
         started = threading.Event()
         complete = threading.Event()
@@ -109,7 +110,8 @@ class CoverTerminalTests(unittest.TestCase):
             def close(self): complete.set()
             def await_turn(self, handle, timeout):
                 started.set()
-                if pending and not complete.wait(2):
+                trace["planner_timeout_requested"] = timeout
+                if pending and not complete.wait(min(timeout, planner_wait_cap)):
                     raise RuntimeError("test planner was not interrupted")
                 trace["timeline"].append("planner_return")
                 return SimpleNamespace(answer={"state": "active"}, usage={},
@@ -117,10 +119,16 @@ class CoverTerminalTests(unittest.TestCase):
                                        answer_eligible=True, cancellation_requested=False)
             def interrupt(self, handle):
                 trace["timeline"].append("interrupt:" + handle.turn_id)
-                complete.set()
                 if interrupt_failure:
                     raise KeyboardInterrupt("synthetic interrupt transport error")
+                if interrupt_request_error:
+                    return {"outcome": "request_error", "response": {"error": "synthetic"}}
+                complete.set()
                 return {"status": "interrupted"}
+            def abort_pending_turn(self):
+                trace["timeline"].append("abort_transport")
+                complete.set()
+                return {"outcome": "aborted"}
 
         planner = Planner()
 
@@ -195,12 +203,14 @@ class CoverTerminalTests(unittest.TestCase):
             ]
             with ExitStack() as stack:
                 for replacement in replacements: stack.enter_context(replacement)
+                started_ns = time.perf_counter_ns()
                 try:
                     controller.main()
                 except RuntimeError as error:
                     trace["error"] = {"type": type(error).__name__, "message": str(error)}
                     trace["error_notes"] = getattr(error, "__notes__", [])
                 finally:
+                    trace["main_elapsed_ns"] = time.perf_counter_ns() - started_ns
                     complete.set()
                     if executor is not None:
                         executor.close()
@@ -264,10 +274,25 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertTrue(trace["executor_watchers_retired"])
 
     def test_interrupt_transport_error_keeps_terminal_failure_primary(self):
-        trace = self.exercise("interrupt-error", "failed", NEUTRAL, interrupt_failure=True)
+        trace = self.exercise("interrupt-error", "failed", NEUTRAL,
+                              interrupt_request_error=True, planner_wait_cap=0.15)
+        self.assert_rejected(trace)
+        self.assertIn("injected input error", trace["error"]["message"])
+        self.assertEqual(trace["error_notes"], [
+            "planner interrupt transport failed",
+            "pending planner turn transport aborted"])
+        self.assertEqual(trace["planner_timeout_requested"], 90)
+        self.assertIn("abort_transport", trace["timeline"])
+        self.assertLess(trace["main_elapsed_ns"], 100_000_000)
+
+    def test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary(self):
+        trace = self.exercise("interrupt-exception", "failed", NEUTRAL,
+                              interrupt_failure=True, planner_wait_cap=0.15)
         self.assert_rejected(trace)
         self.assertIn("injected input error", trace["error"]["message"])
         self.assertEqual(trace["error_notes"], ["planner interrupt failed: KeyboardInterrupt"])
+        self.assertIn("abort_transport", trace["timeline"])
+        self.assertLess(trace["main_elapsed_ns"], 100_000_000)
 
     def test_post_answer_cancel_rejects_bad_terminal(self):
         cases = {"failed": ("failed", NEUTRAL), "decision": ("needs_decision", NEUTRAL),
