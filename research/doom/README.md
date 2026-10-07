@@ -463,3 +463,7 @@ fake owners and retained logs do not establish physical key state, application
 consumption, or useful feedback; the historical WSLc run also records
 unavailable swap isolation. U — current-main live V39 telemetry and task-effect
 gates remain open; this archive makes no code promotion.
+
+## PR #7414 recorder-boundary successor evidence
+
+- [Rescued construction and malformed-auditor probes](results/map01-v39-recorder-boundary-probe-7414-20261004/README.md) — recorder-boundary regression is red on #7386 parent and green after repair; candidate/auditor suite 13/13. Separate malformed keymap-hex input probe changed from uncaught `ValueError` to explicit FAIL/HOLD. Source commit/blob/SHA provenance is pinned. Synthetic construction only; no live allocation or X11 action. Original source branch remains stacked under Draft #7386/#7355 and is not directly mergeable to main.
