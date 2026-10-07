@@ -157,3 +157,6 @@ Removed two additional merged source refs after current-main ancestry, exact tip
 - #8225 `fix/research-index-vision-namespace-20261006` at `d33bbacc3b6ea08ad8bd3050272c7ae95837d2f6`.
 
 Both were deleted with expected-tip leases, and their closed pull-head refs remain available. #8224's merged PR head (`8afc43ba90c2fd37c9f4fea4a33dc06abfe50eeb`) is not an ancestor of fetched main, so retain its branch pending a separate content/history comparison. The latest non-atomic remote-head count was 421.
+## Correction — #8224 source-ref disposition — 2026-10-07
+
+The earlier hold for #8224 was based on its source tip not being an ancestor of current main. A later path-level check resolves that hold: all four changed files (`.gitattributes`, the A05 STOP report, its checksum file, and STOP record) have identical Git blob IDs at the former head `8afc43ba90c2fd37c9f4fea4a33dc06abfe50eeb` and main. PR #8224 is closed-merged; open head/base searches and the local worktree registry had no dependents. The source ref was deleted with an exact-tip lease; `refs/pull/8224/head` remains fetchable. No experiment or auditor was rerun.
