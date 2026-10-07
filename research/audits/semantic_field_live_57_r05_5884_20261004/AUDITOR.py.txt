@@ -1,0 +1,23 @@
+import pathlib,json,tarfile,importlib.util,hashlib,copy
+w=pathlib.Path(__file__).resolve().parent
+with tarfile.open(w/'collect.stdout') as t:
+ ms=[m for m in t if m.isfile()];assert len(ms)<500 and sum(m.size for m in ms)<10485760
+ rows={m.name:t.extractfile(m).read() for m in ms}
+result=json.loads(rows['actual/outcome.json']);answer=json.loads(rows['actual/model-answer.json']);history=[json.loads(x) for x in rows['actual/client/runtime/submission-history.jsonl'].splitlines()];events=[json.loads(x) for x in rows['actual/client/runtime/events.jsonl'].splitlines()];programs=json.loads(rows['actual/programs.json']);task=json.loads(rows['actual/ready.json'])['goal']['tasks'][0];source=json.loads(rows['actual/source.json'])
+spec=importlib.util.spec_from_file_location('independent_provider','work/native-comparison-57-01a0ff52-p01/model_auditor.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+pre=m.load(w/'preflight-private/protocol.private.jsonl',model='gpt-5.6-luna',effort='low');model=m.load(w/'model-private/protocol.private.jsonl',model='gpt-5.6-luna',effort='low');assert len(pre)==len(model)==1 and pre[0]['model_images']==0 and model[0]['model_images']==1
+image_sha=hashlib.sha256(rows['actual/bridge/input-001.png']).hexdigest();assert model[0]['image_sha256']==[image_sha];assert image_sha==hashlib.sha256(rows['actual/client/runtime/'+pathlib.Path(source['image']).name]).hexdigest();assert model[0]['call_id']==answer['call_id'] and model[0]['answer']==answer['raw'] and model[0]['usage']==answer['usage']
+def effect(h):return len(h)==1 and h[0]['task_id']==task['task_id'] and h[0]['submitted_values']==[task['token']] and h[0]['expected_token']==task['token'] and h[0]['layout']==task['layout'] and h[0]['exact'] is True
+assert effect(history);controls=[]
+for label in ['wrong-token','duplicate','wrong-task']:
+ c=copy.deepcopy(history)
+ if label=='wrong-token':c[0]['submitted_values']=['wrong']
+ if label=='duplicate':c.append(c[0])
+ if label=='wrong-task':c[0]['task_id']='task-2'
+ assert not effect(c);controls.append(label)
+assert result['independent'] in events and result['independent']['success'] is False and result['independent']['record_count']==1 and result['independent']['exact_counts']['task-1']==1
+assert all(p['terminal']['status']=='completed' and p['terminal'] in events and p['terminal']['release']['verified'] is True and not p['terminal']['release']['keys_down'] and not p['terminal']['release']['buttons_down'] for p in programs)
+checks=[r for p in programs for r in p['target_checks']];admissions=[r for p in programs for r in p['pointer_admissions']]
+assert checks and all(r['eligible'] is True for r in checks)
+usage={k:pre[0]['usage'][k]+model[0]['usage'][k] for k in answer['usage']}
+print(json.dumps({'disposition':'PASS_ONE_LIVE_SEMANTIC_SELECTION_EFFECT_SCOPED_HOLD_BROADER_QUALIFICATION','provider':model,'preflight':pre,'all_stage_usage':usage,'original_post_count':1,'original_full_oracle_success':False,'unattempted_tasks':5,'programs':len(programs),'eligible_target_checks':len(checks),'pointer_admissions':len(admissions),'live_image_sha256':image_sha,'rejected_effect_copies':controls,'natural_exit':result['natural_exit'],'resource_enforcement':'configured; no in-unit effective sample in this protocol','guest_source_verification':'host source pins and transferred tar retained; no separate pre-run guest byte-readback','provider_raw_publication':'private local only'},indent=2))

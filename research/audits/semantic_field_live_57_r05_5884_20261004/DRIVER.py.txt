@@ -1,0 +1,22 @@
+import pathlib,sys,json,time,subprocess,signal
+HERE=pathlib.Path(__file__).resolve().parent;sys.path.insert(0,str(HERE/'source/research/live_control'))
+import integrated_efficiency_client_v1 as module
+from guarded_plain_client import GuardedPlainClient
+from model_bridge import ModelBridge
+root=HERE/'actual';root.mkdir();workspace=root/'workspace';workspace.mkdir()
+def dump(n,v):(root/n).write_text(json.dumps(v,indent=2)+'\n')
+def alarm(*a):raise TimeoutError('R05 driver100s')
+signal.signal(signal.SIGALRM,alarm);signal.alarm(100)
+orig=module.subprocess.Popen
+def launch(args,**kw):
+ args=list(args)
+ if any(str(x).endswith('integrated_efficiency_socket_v1.py') for x in args):args+=['--chromium','/usr/bin/chromium']
+ return orig(args,**kw)
+module.subprocess.Popen=launch
+client=GuardedPlainClient(root/'client',57041017);bridge=ModelBridge(root/'bridge');result={'run_id':'57-semantic-field-live-R05-20261004-5884','status':'incomplete'}
+try:
+ client.start();dump('ready.json',client.ready);task=client.ready['goal']['tasks'][0];source=client.navigate(task);dump('source.json',source)
+ answer=bridge.call(root/'grounding','Locate the editable field labelled Value and its Save control. Ignore the Scratch field. Return source-observation pixel points only.',pathlib.Path(source['image']),'plain',workspace);dump('model-answer.json',answer)
+ result['execution']=client.execute_plain(task,answer['grounding']);result['independent']=client.finish('finish-R05-5884');client.process.wait(timeout=2);result.update(status='finished',natural_exit=client.process.returncode,model_calls=bridge.count)
+finally:
+ dump('programs.json',client.programs);dump('outcome.json',result);client.close();signal.alarm(0)

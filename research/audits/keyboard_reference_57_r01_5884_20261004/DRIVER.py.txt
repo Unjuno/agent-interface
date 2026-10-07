@@ -1,0 +1,26 @@
+import pathlib,sys,json,time,subprocess,signal
+sys.path.insert(0,str(pathlib.Path('source/research/live_control').resolve()))
+import integrated_efficiency_client_v1 as m
+root=pathlib.Path('actual');root.mkdir()
+def dump(n,v):(root/n).write_text(json.dumps(v,indent=2)+'\n')
+def alarm(*a):raise TimeoutError('R01 driver60s boundary')
+signal.signal(signal.SIGALRM,alarm);signal.alarm(60)
+orig=m.subprocess.Popen
+def launch(args,**kw):
+ args=list(args)
+ if any(str(x).endswith('integrated_efficiency_socket_v1.py') for x in args):args+=['--chromium','/usr/bin/chromium']
+ return orig(args,**kw)
+m.subprocess.Popen=launch
+c=m.RuntimeClient(root/'client',57041014);result={'run_id':'57-keyboard-reference-R01-20261004-5884','model_calls':0,'images_to_model':0,'tasks':[]};t=time.monotonic_ns()
+try:
+ cg=next(x.split(':',2)[2] for x in pathlib.Path('/proc/self/cgroup').read_text().splitlines() if x.startswith('0::'));r=pathlib.Path('/sys/fs/cgroup'+cg);dump('resources.json',{k:(r/k).read_text().strip() for k in ['cpu.max','memory.max','pids.max']})
+ c.start();ready=time.monotonic_ns();dump('ready.json',c.ready)
+ for task in c.ready['goal']['tasks']:
+  a=time.monotonic_ns();c.navigate(task)
+  row=c.submit('keyboard-'+task['task_id'],[{'op':'chord','modifier':'Control_L','key':'a'},{'op':'text','text':task['token']},{'op':'key','key':'Return'},{'op':'settle','quiet_ms':80,'timeout_ms':500}])
+  result['tasks'].append({'task_id':task['task_id'],'terminal':row['terminal'],'elapsed_ns':time.monotonic_ns()-a});dump('partial.json',result)
+  if row['terminal']['status']!='completed':raise RuntimeError('R01 terminal failure')
+ result['independent']=c.finish('finish-R01-5884');result.update(start_to_ready_ns=ready-t,ready_to_oracle_ns=time.monotonic_ns()-ready,programs=len(c.programs),durable_calls=c.durable_calls)
+ c.process.wait(timeout=2);result['natural_exit']=c.process.returncode
+finally:
+ dump('programs.json',c.programs);dump('outcome.json',result);c.close();signal.alarm(0)
