@@ -31,7 +31,6 @@ test('one command preserves original text and bytes, with exclusive source-bound
   await assert.rejects(exchange.execute({id:1,method:'observe',args:[]}),/next command id/);
   assert.equal(calls,1);
 });
-
 test('overlap refuses instead of queuing and snapshots the original arguments',async()=>{
   let resolve;let calls=0;let received;
   const {exchange}=await fixture(async(_tool,args)=>{
@@ -140,4 +139,3 @@ test('command metadata survives actual exchange/caller/relay path and cannot lea
   assert.equal(host.state().attempts,2);assert.equal(exchange.state().next_id,3);
  }finally{await host.close();}
 });
-
