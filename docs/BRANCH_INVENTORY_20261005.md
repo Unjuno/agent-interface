@@ -128,3 +128,15 @@ Deleted `fix/8102-frozen-fetch-instructions-20261005` at exact tip `2edb17d7c398
 ## Merged #8223 evidence-ref cleanup — 2026-10-07
 
 Deleted `rescue/scorer-readback-evidence-7698-current-main-20261005` at exact tip `f788f4d168dca7602f8250b4eed6b5b0b9c51833`. PR #8223 is merged as `2976694a1dbe07ad301b785b193e9f1f5aef6f59`, an ancestor of current main. All six scorer package files have identical blob IDs at the former head and main; the DOOM index still contains the rescue entry, with later additive entries explaining its different whole-file blob. No open head/base dependents remained. The clean, agent-created rescue worktree and its stale local branch ref were removed. The source branch is absent after deletion; `refs/pull/8223/head` remains fetchable at the former tip. No experiment, test, auditor, or replay was rerun.
+## Merged rescue-ref cleanup — 2026-10-07
+
+Four merged rescue refs were removed after verifying each exact tip was an ancestor of fetched `main` `133dafbd8f616b7d2f2ca8b14a3ba863b63f0933`, each PR was closed-merged, and targeted open-PR head/base searches returned no dependents:
+
+- #8213 `rescue/59-feedback-onset-a01-20261005` at `68f9bf84efd6a81903b8abe2b61a4cd60860aa8d` (merge `f13d088c17566f41da76960a83e9eb8f1ff4dc90`).
+- #8214 `rescue/59-health-negative-control-a05-currentmain-20261005` at `fed88986678db44f91cefcddd53dac802d59f70b` (merge `c2f9515c25b2aa8045f2a2272dc0fac7354f213e`).
+- #8173 `rescue/59-app-consumption-audit-lineage-main-20261005` at `ad8fbcfe60769eef342e54bd956428a515c4a02f` (merge `9af8bda3ead852955bd879301a7a2ba2f94ab629`).
+- #8215 `rescue/59-app-consumption-a01-20261005` at `af2c93f410590195d1194700bcb50e15a64a9e6f` (merge `378ea2ec69aeedc0e4fbe3ce76d071fe023d4de5`). Its clean agent-created worktree and local branch were removed before deleting the remote ref.
+
+Each remote ref was deleted with an expected-tip lease. The four closed PR pull-head refs remain fetchable at their former tips. No experiment, auditor, or replay was rerun. A separate audit kept #8227's source ref because its tip was not an ancestor of current main; no cleanup is inferred for that branch.
+
+The latest non-atomic branch-head count after these operations was 424; ongoing concurrent updates may change it.
