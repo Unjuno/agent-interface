@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
+
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
 
 - [Issue #7817 provenance-checked defeasible obligations T0 A01](provenance_defeasible_obligations_7817_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: ten finite obligation contexts and five hostile mutations independently audited; advisory-only synthetic semantics.
@@ -1031,6 +1033,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`user_relative_benefit_6593_t0_v1/`](user_relative_benefit_6593_t0_v1/)
 - [`user_worthwhile_benefit_7411_t0_a01_20261004/`](user_worthwhile_benefit_7411_t0_a01_20261004/)
 - [`vector_constraint_approachability_7808_a01_20261005/`](vector_constraint_approachability_7808_a01_20261005/)
+- [`verdict_free_7059_t0_a02_20261007/`](verdict_free_7059_t0_a02_20261007/)
 - [`verification_ir_alias_boundary_5504_a01_20261003/`](verification_ir_alias_boundary_5504_a01_20261003/)
 - [`verifier_cascade_capacity_5375_t0a2_20261002/`](verifier_cascade_capacity_5375_t0a2_20261002/)
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
