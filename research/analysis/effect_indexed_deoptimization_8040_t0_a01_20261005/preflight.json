@@ -1,0 +1,19 @@
+{
+  "allocation": "UNJUNO-8040-EFFECT-INDEXED-DEOPT-T0-A01-20261005",
+  "observed_minute_local": "2026-10-05 15:28 Asia/Tokyo",
+  "intended_runtime": "macOS OrbStack container; pinned local python image with pull prohibited",
+  "docker_engine": "responded; Linux/aarch64, Engine 29.4.0, 98 containers, 128 images reported",
+  "image_inspect_command": "docker --context orbstack image inspect python:3.12-slim --format ...",
+  "image_inspect_exit": 1,
+  "error": "containerd content blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported",
+  "disposition": "STOP_ORBSTACK_IMAGE_CONTENT_READ_OPERATION_NOT_SUPPORTED",
+  "mutations_attempted": [],
+  "native_host_substitution": "separately disclosed in protocol; not a container/isolation result",
+  "host_snapshot": {
+    "os": "macOS 27.0.1 arm64",
+    "logical_cpus": 10,
+    "load_average_1_5_15": [39.17, 40.58, 38.71],
+    "available_disk_bytes_approx": 687194767360,
+    "vm_stat_throttled_pages": 0
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "allocation": "UNJUNO-8040-EFFECT-INDEXED-DEOPT-T0-A01-20261005",
+  "base_commit": "d3a51bc4c962b223d05280225042b96a033df8bf",
+  "branch": "research/8040-effect-indexed-deopt-t0-a01-20261005",
+  "environment": {
+    "container": "none",
+    "execution": "native host substitution after retained OrbStack image-content STOP; one low-priority sequential process",
+    "host": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "network_enforcement": "none",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "files": {
+    "CONSTRUCTION_RECORD.md": "c65b04f821baaea62fd819c1b7acc1bf9a6952fb964f4aed2c207b215df157f6",
+    "README.md": "27f1bdebdc74899d167b0f620beb1a692cdd1fccb98bff5a9805c88e714b8a51",
+    "audit.py": "b8afdd1dc25c82664e3044b4b0af2d866039136ac70d52878a9ee495a56ed4cc",
+    "build_fixture.py": "f5f1dde34a9d608c463148022e965582c822429d11de027badf627dde274d1aa",
+    "candidate.py": "049b4100d8edaee890b01ba676e226fc42a2eaedd725385d03f3a5226110585c",
+    "construction.build.log": "25976adf3908c98033be3bff482864029b4a133c3027f1cbffca6c60e00d000a",
+    "construction.normal.log": "2be084964b3745c3c08103f082bb3dffb03bd15d0f9c04663b21cb0f21958bb2",
+    "construction.optimized.log": "4b2a193cdce7a5611a09727202ade1d8bcaa2121cbff45dfa7489f0045c03418",
+    "construction.pycompile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight.json": "bf1bf91d9f4d6defcaa3b3c8fcf8e32e04793823eb022c595a35ead9db6b3cc9",
+    "prepare_freeze.py": "719e74aa0ddfd34f626de469cd6130d7986ec7865b5f3b51f112530bc1b972c9",
+    "protocol.md": "978cb89c5a7e20c83973af456a54a21b20bbaba2dd3befcd6bccb09732ebb5ea",
+    "public_trace.json": "f87bc5a55c3fe172c79d355c81cb4899bfa15212f9025cf20869b675f9d335e8",
+    "run_formal.py": "0b2752d17ef180fcc80e6fc173fdae5b33a1926990af166eb1a024ebed2e5657",
+    "test_construction.py": "e49d303a7ac6ac84e59c3c26990e2a88ab670899ee10334522cf8412f8fa99ac",
+    "truth_sidecar.json": "78e0ed8e5d35844c824d6dc706e6ed2fa040c32292b814f9f59530059ae512d3"
+  },
+  "formal_invocations_before_freeze": {
+    "auditor": 0,
+    "candidate": 0,
+    "driver": 0
+  },
+  "issue": 8040,
+  "package_path": "research/analysis/effect_indexed_deoptimization_8040_t0_a01_20261005"
+}

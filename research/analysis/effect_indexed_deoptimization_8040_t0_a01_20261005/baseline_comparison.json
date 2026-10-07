@@ -1,0 +1,273 @@
+{
+  "classification": "READ_ONLY_SUPPLEMENT; not a new candidate/auditor allocation and not part of FROZEN.json",
+  "input_audit": "saved A01 candidate rows equal independent raw reconstruction; zero audit errors",
+  "rows": [
+    {
+      "case_id": "start_before_effects",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": 0,
+        "disposition": "READY_AT_CURSOR",
+        "execution_authorized": false,
+        "verified_prefix": []
+      },
+      "known_verified_prefix": [],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 0
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "one_verified_prefix",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": 1,
+        "disposition": "READY_AT_CURSOR",
+        "execution_authorized": false,
+        "verified_prefix": [
+          "prepare_record"
+        ]
+      },
+      "known_verified_prefix": [
+        "prepare_record"
+      ],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 1
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "known_no_effect_pending",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": 0,
+        "disposition": "RESOLUTION_REQUIRED_AT_CURSOR",
+        "execution_authorized": false,
+        "verified_prefix": []
+      },
+      "known_verified_prefix": [],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 0
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "unknown_first_effect",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": null,
+        "disposition": "YIELD_UNKNOWN",
+        "execution_authorized": false,
+        "verified_prefix": []
+      },
+      "known_verified_prefix": [],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 0
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "unknown_after_verified_prefix",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": null,
+        "disposition": "YIELD_UNKNOWN",
+        "execution_authorized": false,
+        "verified_prefix": [
+          "prepare_record"
+        ]
+      },
+      "known_verified_prefix": [
+        "prepare_record"
+      ],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 1
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "two_verified_prefix",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": 2,
+        "disposition": "READY_AT_CURSOR",
+        "execution_authorized": false,
+        "verified_prefix": [
+          "prepare_record",
+          "commit_record"
+        ]
+      },
+      "known_verified_prefix": [
+        "prepare_record",
+        "commit_record"
+      ],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 2
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "stale_generation",
+      "comparison_eligible": false,
+      "effect_indexed_map": {
+        "cursor": null,
+        "disposition": "YIELD_UNKNOWN",
+        "execution_authorized": false,
+        "verified_prefix": []
+      },
+      "known_verified_prefix": [],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": null
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "missing_map_entry",
+      "comparison_eligible": false,
+      "effect_indexed_map": {
+        "cursor": null,
+        "disposition": "YIELD_UNKNOWN",
+        "execution_authorized": false,
+        "verified_prefix": []
+      },
+      "known_verified_prefix": [],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": null
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "inside_one_to_many_lowering",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": null,
+        "disposition": "YIELD_UNKNOWN",
+        "execution_authorized": false,
+        "verified_prefix": [
+          "prepare_record"
+        ]
+      },
+      "known_verified_prefix": [
+        "prepare_record"
+      ],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 1
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "misbound_receipt",
+      "comparison_eligible": false,
+      "effect_indexed_map": {
+        "cursor": null,
+        "disposition": "YIELD_UNKNOWN",
+        "execution_authorized": false,
+        "verified_prefix": []
+      },
+      "known_verified_prefix": [],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": null
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "end_of_program_is_not_success",
+      "comparison_eligible": true,
+      "effect_indexed_map": {
+        "cursor": 3,
+        "disposition": "CURSOR_AT_END_UNVERIFIED",
+        "execution_authorized": false,
+        "verified_prefix": [
+          "prepare_record",
+          "commit_record",
+          "send_receipt"
+        ]
+      },
+      "known_verified_prefix": [
+        "prepare_record",
+        "commit_record",
+        "send_receipt"
+      ],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": 3
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    },
+    {
+      "case_id": "extra_unreached_receipt",
+      "comparison_eligible": false,
+      "effect_indexed_map": {
+        "cursor": null,
+        "disposition": "YIELD_UNKNOWN",
+        "execution_authorized": false,
+        "verified_prefix": []
+      },
+      "known_verified_prefix": [],
+      "restart_from_zero": {
+        "cursor": 0,
+        "known_effect_replays": null
+      },
+      "unconditional_stop": {
+        "continued": false,
+        "cursor": null
+      }
+    }
+  ],
+  "schema": "unjuno.issue8040.postformal_baseline_comparison.v1",
+  "summary": {
+    "advanced_case_ids": [
+      "one_verified_prefix",
+      "two_verified_prefix"
+    ],
+    "comparison_eligible_rows": 8,
+    "effect_map_advanced_verified_prefix_continuations": 2,
+    "end_of_macro_is_still_unverified": true,
+    "execution_authorized_by_map": false,
+    "restart_from_zero_known_verified_effect_replays": 8,
+    "unconditional_stop_continuations": 0
+  }
+}

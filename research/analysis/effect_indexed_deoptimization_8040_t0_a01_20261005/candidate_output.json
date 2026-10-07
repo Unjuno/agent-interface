@@ -1,0 +1,139 @@
+{
+  "allocation": "UNJUNO-8040-EFFECT-INDEXED-DEOPT-T0-A01-20261005",
+  "rows": [
+    {
+      "authority_extended": false,
+      "case_id": "start_before_effects",
+      "completion_claim": false,
+      "disposition": "READY_AT_CURSOR",
+      "execution_authorized": false,
+      "generic_cursor": 0,
+      "reason": "NO_PREFIX_EFFECTS",
+      "verified_prefix": []
+    },
+    {
+      "authority_extended": false,
+      "case_id": "one_verified_prefix",
+      "completion_claim": false,
+      "disposition": "READY_AT_CURSOR",
+      "execution_authorized": false,
+      "generic_cursor": 1,
+      "reason": "ALL_PREFIX_EFFECTS_VERIFIED",
+      "verified_prefix": [
+        "prepare_record"
+      ]
+    },
+    {
+      "authority_extended": false,
+      "case_id": "known_no_effect_pending",
+      "completion_claim": false,
+      "disposition": "RESOLUTION_REQUIRED_AT_CURSOR",
+      "execution_authorized": false,
+      "generic_cursor": 0,
+      "reason": "KNOWN_NO_EFFECT_REQUIRES_GENERIC_RESOLUTION",
+      "verified_prefix": []
+    },
+    {
+      "authority_extended": false,
+      "case_id": "unknown_first_effect",
+      "completion_claim": false,
+      "disposition": "YIELD_UNKNOWN",
+      "execution_authorized": false,
+      "generic_cursor": null,
+      "reason": "PREFIX_EFFECT_UNKNOWN",
+      "verified_prefix": []
+    },
+    {
+      "authority_extended": false,
+      "case_id": "unknown_after_verified_prefix",
+      "completion_claim": false,
+      "disposition": "YIELD_UNKNOWN",
+      "execution_authorized": false,
+      "generic_cursor": null,
+      "reason": "PREFIX_EFFECT_UNKNOWN",
+      "verified_prefix": [
+        "prepare_record"
+      ]
+    },
+    {
+      "authority_extended": false,
+      "case_id": "two_verified_prefix",
+      "completion_claim": false,
+      "disposition": "READY_AT_CURSOR",
+      "execution_authorized": false,
+      "generic_cursor": 2,
+      "reason": "ALL_PREFIX_EFFECTS_VERIFIED",
+      "verified_prefix": [
+        "prepare_record",
+        "commit_record"
+      ]
+    },
+    {
+      "authority_extended": false,
+      "case_id": "stale_generation",
+      "completion_claim": false,
+      "disposition": "YIELD_UNKNOWN",
+      "execution_authorized": false,
+      "generic_cursor": null,
+      "reason": "STALE_OBSERVATION_GENERATION",
+      "verified_prefix": []
+    },
+    {
+      "authority_extended": false,
+      "case_id": "missing_map_entry",
+      "completion_claim": false,
+      "disposition": "YIELD_UNKNOWN",
+      "execution_authorized": false,
+      "generic_cursor": null,
+      "reason": "SAFEPOINT_MISSING",
+      "verified_prefix": []
+    },
+    {
+      "authority_extended": false,
+      "case_id": "inside_one_to_many_lowering",
+      "completion_claim": false,
+      "disposition": "YIELD_UNKNOWN",
+      "execution_authorized": false,
+      "generic_cursor": null,
+      "reason": "PARTIAL_SPECIALIZED_OPERATION",
+      "verified_prefix": [
+        "prepare_record"
+      ]
+    },
+    {
+      "authority_extended": false,
+      "case_id": "misbound_receipt",
+      "completion_claim": false,
+      "disposition": "YIELD_UNKNOWN",
+      "execution_authorized": false,
+      "generic_cursor": null,
+      "reason": "RECEIPT_BINDING_INVALID",
+      "verified_prefix": []
+    },
+    {
+      "authority_extended": false,
+      "case_id": "end_of_program_is_not_success",
+      "completion_claim": false,
+      "disposition": "CURSOR_AT_END_UNVERIFIED",
+      "execution_authorized": false,
+      "generic_cursor": 3,
+      "reason": "ALL_PREFIX_EFFECTS_VERIFIED",
+      "verified_prefix": [
+        "prepare_record",
+        "commit_record",
+        "send_receipt"
+      ]
+    },
+    {
+      "authority_extended": false,
+      "case_id": "extra_unreached_receipt",
+      "completion_claim": false,
+      "disposition": "YIELD_UNKNOWN",
+      "execution_authorized": false,
+      "generic_cursor": null,
+      "reason": "PREFIX_RECEIPT_COUNT_INVALID",
+      "verified_prefix": []
+    }
+  ],
+  "schema": "unjuno.issue8040.deopt_candidate.v1"
+}
