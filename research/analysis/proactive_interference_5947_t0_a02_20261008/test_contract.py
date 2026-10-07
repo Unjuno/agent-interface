@@ -88,11 +88,18 @@ def apply_mutation(rows, name):
     elif name == "baseline_identity":
         target["baseline_source_id"] = "forged/source"
         target["baseline_bytes"] = json.dumps({"value": "old", "source_id": "forged/source"}, separators=(",", ":")).encode().hex()
-    elif name == "common_byte": target["prefix_hex"] = ("00" if target["prefix_hex"][:2] != "00" else "01") + target["prefix_hex"][2:]
+    elif name == "common_byte":
+        target["prefix_hex"] = ("00" if target["prefix_hex"][:2] != "00" else "01") + target["prefix_hex"][2:]
+        target["serialized_context_hex"] = target["prefix_hex"] + target["history_slot_hex"] + target["suffix_hex"]
     elif name == "cue_offset": target["current_cue_offset"] += 1
     elif name == "lineage":
-        target = next(r for r in out if r["kind"] == "matched" and r["depth"] == 1)
-        target["lineage"] = []
+        target = next(r for r in out if r["kind"] == "matched" and r["arm"] == "FULL_CONFLICTING_HISTORY" and r["depth"] == 4)
+        slot = bytes.fromhex(target["history_slot_hex"])
+        history = slot.rstrip(b" ").split(b";")
+        shortened = b";".join(history[1:])
+        new_slot = shortened + b" " * (len(slot) - len(shortened))
+        target["history_slot_hex"] = new_slot.hex()
+        target["serialized_context_hex"] = target["prefix_hex"] + new_slot.hex() + target["suffix_hex"]
     elif name == "observed_inference":
         target = next(r for r in out if r["arm"] == "SOURCE_LINKED_DELTA" and r["depth"] > 0)
         target["delta_evidence"] = "OBSERVED"
