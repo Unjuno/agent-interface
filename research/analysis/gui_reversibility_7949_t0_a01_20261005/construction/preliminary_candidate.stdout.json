@@ -1,0 +1,420 @@
+{
+  "candidate": "candidate.py",
+  "cases": [
+    {
+      "common_sequences": [
+        [
+          "restore_a",
+          "restore_b"
+        ],
+        [
+          "restore_b",
+          "restore_a"
+        ]
+      ],
+      "expected": "UNIVERSALLY_UNIFORM",
+      "id": "uniform",
+      "label": "UNIVERSALLY_UNIFORM",
+      "reason": "common_sequence",
+      "static_label": "UNIVERSALLY_UNIFORM",
+      "trace": [
+        {
+          "outcome": "100",
+          "receipt": "r100",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_b"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "100",
+                "000"
+              ]
+            }
+          ]
+        },
+        {
+          "outcome": "010",
+          "receipt": "r010",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "010",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_a"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "expected": "UNIVERSALLY_BRANCHING",
+      "id": "branching",
+      "label": "UNIVERSALLY_BRANCHING",
+      "policies": {
+        "r010": [
+          [
+            "restore_b"
+          ],
+          [
+            "restore_b",
+            "restore_a"
+          ],
+          [
+            "restore_b",
+            "restore_b"
+          ]
+        ],
+        "r100": [
+          [
+            "restore_a"
+          ],
+          [
+            "restore_a",
+            "restore_a"
+          ],
+          [
+            "restore_a",
+            "restore_b"
+          ]
+        ]
+      },
+      "reason": "receipt_conditioned_policy",
+      "static_label": "UNIVERSALLY_UNIFORM",
+      "trace": [
+        {
+          "outcome": "100",
+          "receipt": "r100",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_b"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            }
+          ]
+        },
+        {
+          "outcome": "010",
+          "receipt": "r010",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_a"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "expected": "PARTIALLY_RECOVERABLE",
+      "id": "partial",
+      "label": "PARTIALLY_RECOVERABLE",
+      "reason": "unreachable_outcome",
+      "static_label": "UNIVERSALLY_UNIFORM",
+      "trace": [
+        {
+          "outcome": "100",
+          "receipt": "r100",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_b"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            }
+          ]
+        },
+        {
+          "outcome": "010",
+          "receipt": "r010",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_a"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            }
+          ]
+        },
+        {
+          "outcome": "001",
+          "receipt": "r001",
+          "recoveries": []
+        }
+      ]
+    },
+    {
+      "expected": "UNKNOWN",
+      "id": "ambiguous",
+      "label": "UNKNOWN",
+      "reason": "indistinguishable_outcomes_require_different_recovery",
+      "static_label": "UNIVERSALLY_UNIFORM",
+      "trace": [
+        {
+          "outcome": "100",
+          "receipt": "same",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_a"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_a",
+                "restore_b"
+              ],
+              "states": [
+                "100",
+                "000",
+                "000"
+              ]
+            }
+          ]
+        },
+        {
+          "outcome": "010",
+          "receipt": "same",
+          "recoveries": [
+            {
+              "actions": [
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_a"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            },
+            {
+              "actions": [
+                "restore_b",
+                "restore_b"
+              ],
+              "states": [
+                "010",
+                "000",
+                "000"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "expected": "UNKNOWN",
+      "id": "incomplete",
+      "label": "UNKNOWN",
+      "reason": "incomplete_coverage",
+      "static_label": "UNIVERSALLY_UNIFORM",
+      "trace": []
+    },
+    {
+      "expected": "UNKNOWN",
+      "id": "external_write",
+      "label": "UNKNOWN",
+      "reason": "invalidated_receipt",
+      "static_label": "UNIVERSALLY_UNIFORM",
+      "trace": []
+    }
+  ],
+  "model_id": "gui-reversibility-7949-t0-a01-20261005",
+  "run_id": "gui-reversibility-7949-t0-a01-20261005"
+}

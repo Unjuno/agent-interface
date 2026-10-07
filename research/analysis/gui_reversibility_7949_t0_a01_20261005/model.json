@@ -1,0 +1,28 @@
+{
+  "model_id": "gui-reversibility-7949-t0-a01-20261005",
+  "target": "000",
+  "horizon": 2,
+  "variables": ["a", "b", "external"],
+  "schemas": {
+    "edit": ["100", "010", "110"],
+    "submit": ["100", "010", "001", "111"]
+  },
+  "recovery": {
+    "uniform": {
+      "restore_a": {"100": "000", "010": "010", "000": "000"},
+      "restore_b": {"010": "000", "100": "100", "000": "000"}
+    },
+    "branching": {
+      "restore_a": {"100": "000", "010": "110", "000": "000", "110": "110", "101": "101"},
+      "restore_b": {"010": "000", "100": "101", "000": "000", "110": "110", "101": "101"}
+    }
+  },
+  "cases": [
+    {"id": "uniform", "schema": "edit", "outcomes": ["100", "010"], "receipt_classes": {"100": "r100", "010": "r010"}, "coverage_complete": true, "receipt_valid": true, "recovery_table": "uniform", "static_reversible": true, "expected": "UNIVERSALLY_UNIFORM"},
+    {"id": "branching", "schema": "edit", "outcomes": ["100", "010"], "receipt_classes": {"100": "r100", "010": "r010"}, "coverage_complete": true, "receipt_valid": true, "recovery_table": "branching", "static_reversible": true, "expected": "UNIVERSALLY_BRANCHING"},
+    {"id": "partial", "schema": "submit", "outcomes": ["100", "010", "001"], "receipt_classes": {"100": "r100", "010": "r010", "001": "r001"}, "coverage_complete": true, "receipt_valid": true, "recovery_table": "branching", "static_reversible": true, "expected": "PARTIALLY_RECOVERABLE"},
+    {"id": "ambiguous", "schema": "edit", "outcomes": ["100", "010"], "receipt_classes": {"100": "same", "010": "same"}, "coverage_complete": true, "receipt_valid": true, "recovery_table": "branching", "static_reversible": true, "expected": "UNKNOWN"},
+    {"id": "incomplete", "schema": "submit", "outcomes": ["100", "010", "001", "111"], "receipt_classes": {"100": "r100", "010": "r010", "001": "r001", "111": "r111"}, "coverage_complete": false, "receipt_valid": true, "recovery_table": "branching", "static_reversible": true, "expected": "UNKNOWN"},
+    {"id": "external_write", "schema": "submit", "outcomes": ["100", "010"], "receipt_classes": {"100": "r100", "010": "r010"}, "coverage_complete": true, "receipt_valid": false, "intervening_external_write": true, "recovery_table": "branching", "static_reversible": true, "expected": "UNKNOWN"}
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "auditor": "audit.py",
+  "base_commit": "402c7d1b5147b2a905098f082233db60a47d68db",
+  "candidate": "candidate.py",
+  "decision": {
+    "fail": "any false recovery certificate or candidate/oracle/class expectation mismatch",
+    "pass": "all six complete-case labels match the oracle; uniform and branching positives remain distinct; partial is not certified; incomplete, stale and observationally ambiguous cases are UNKNOWN; incomplete/stale mutations fail closed",
+    "uncertain": "exact state enumeration or audit cannot be reconstructed"
+  },
+  "fixed_command": "python -B run_candidate.py",
+  "frozen_files_sha256": {
+    "README.md": "c9493873a5f0cf1ddbd5607b8cf8c15d8b845c25aa6030f6abbcdb418dc08f7d",
+    "audit.py": "66118fbb7a8bff8f575b174faf35a584b5798d7514f849dcdf40f86af2a62158",
+    "candidate.py": "94739c84a14dc9d2e539358d639379684efd1a8dfc2733ed30ab8668440d6be0",
+    "model.json": "fd5abd51f4f72d51afb037419e4a0e42ba5b9d0edf608b856426525b18faefa3",
+    "oracle.py": "47811b9427c007ab3e9a174a4437bb6f8357dd9059441104477608241107d6e1",
+    "run_candidate.py": "8823c19257f2a72a1462fd88a611172ffd89cb83adff765d5f053ff5d3bf9ea4"
+  },
+  "input": "model.json",
+  "issue": 7949,
+  "method": "deterministic exhaustive finite-model candidate, separately checked by oracle",
+  "native_execution_environment": {
+    "cpu_workers": 1,
+    "gui_or_model": false,
+    "host": "Windows 10 build 26200.9550",
+    "network_used_by_candidate": false,
+    "python": "3.12.10",
+    "status": "planned fallback because required WSLc commands did not return"
+  },
+  "oracle": "oracle.py",
+  "run_id": "gui-reversibility-7949-t0-a01-20261005",
+  "runner": "run_candidate.py",
+  "scope": "Finite authored transition model only; no GUI, live application, authorization, real compensation, task effect or safety claim.",
+  "wslc_attempt": {
+    "cli": "WSL 3.0.1.0 / WSLc session wslc-cli-junny",
+    "commands_that_stalled": [
+      "wslc images",
+      "wslc list --all",
+      "wslc images --all --digests --format json",
+      "wslc --session wslc-cli-junny list",
+      "wslc pull python:3.13-slim",
+      "wslc images --digests --no-trunc --format json"
+    ],
+    "formal_candidate_started": false,
+    "observation": "Each remained without output beyond 10 seconds; only processes started by this task were interrupted. No container candidate command was started.",
+    "status": "STOP_BEFORE_CANDIDATE"
+  }
+}
