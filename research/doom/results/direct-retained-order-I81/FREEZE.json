@@ -1,0 +1,20 @@
+{
+  "schema": "map01-direct-retained-input-order-construction-freeze-v1",
+  "repository": "Unjuno/agent-interface",
+  "base_commit": "4ca1db66b6adcb4ea15fc3c744315ad39a87749e",
+  "candidate_source_path": "research/doom/analyze_map01_direct_retained_input_v1.py",
+  "candidate_source_sha256": "c0187d5a95751e340f66fbbb03fe9066899bdb9c795a3dcaf1fd3be291d13496",
+  "regression_test_path": "research/doom/test_analyze_map01_direct_retained_input_v1.py",
+  "regression_test_sha256": "b48e71ea9d4a36365603e3d7dc9d28f58f685f9e5754e2d59bde461c3cc66917",
+  "matrix_runner_path": "research/doom/results/direct-retained-order-I81/candidate_matrix.py",
+  "matrix_runner_sha256": "32dea90947274cd1c37e7606861bc348776bf2aefaa8ed17b1a8679dc5e6da3a",
+  "raw_only_auditor_path": "research/doom/results/direct-retained-order-I81/audit_matrix.py",
+  "raw_only_auditor_sha256": "ede1349a6a65de5853e85d775f1a756e034643ad5c46a0c0aaaebc7672f2bb17",
+  "decision_domain": "all four-timestamp tuples in {0,1,2,3}^4",
+  "candidate_command": "python research/doom/results/direct-retained-order-I81/candidate_matrix.py --output-dir <fresh-dir>",
+  "auditor_command": "python research/doom/results/direct-retained-order-I81/audit_matrix.py --input-dir <fresh-dir>",
+  "decision": "PASS_ORDERING_INVARIANT",
+  "formal_allocation": false,
+  "live_resource_used": false,
+  "historical_outputs_modified": false
+}

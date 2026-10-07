@@ -1,0 +1,174 @@
+{
+  "schema": "pr7356-intent-token-identity-boundary-candidate-v1",
+  "source_sha256": "c0187d5a95751e340f66fbbb03fe9066899bdb9c795a3dcaf1fd3be291d13496",
+  "results": [
+    {
+      "case": "valid_nonempty_string",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "field_absent_both",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": null,
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "explicit_null_both",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": null,
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "mismatch_nonempty_strings",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 1,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case": "missing_release_token",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": false,
+        "hold_count": 0,
+        "unmatched_admission_count": 1,
+        "invalid_release_count": 1,
+        "holds": [],
+        "decision": "FAIL: retained-input duration is not identifiable from this trace"
+      }
+    },
+    {
+      "case": "empty_string_both",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": "",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "integer_both",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": 17,
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "boolean_both",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "holds": [
+          {
+            "intent_token": true,
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    }
+  ]
+}

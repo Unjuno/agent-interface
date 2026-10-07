@@ -1,0 +1,25 @@
+test_absent_and_null_intent_tokens_fail_closed (test_analyze_map01_direct_retained_input_v1.Tests.test_absent_and_null_intent_tokens_fail_closed) ... 
+  test_absent_and_null_intent_tokens_fail_closed (test_analyze_map01_direct_retained_input_v1.Tests.test_absent_and_null_intent_tokens_fail_closed) (token_state='absent') ... FAIL
+  test_absent_and_null_intent_tokens_fail_closed (test_analyze_map01_direct_retained_input_v1.Tests.test_absent_and_null_intent_tokens_fail_closed) (token_state='null') ... FAIL
+test_absent_release_intent_token_fails_closed (test_analyze_map01_direct_retained_input_v1.Tests.test_absent_release_intent_token_fails_closed) ... ok
+
+======================================================================
+FAIL: test_absent_and_null_intent_tokens_fail_closed (test_analyze_map01_direct_retained_input_v1.Tests.test_absent_and_null_intent_tokens_fail_closed) (token_state='absent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\outputs\pr7356-identity-v2-review\red-before-fix\test_analyze_map01_direct_retained_input_v1.py", line 128, in test_absent_and_null_intent_tokens_fail_closed
+    self.assertFalse(result["measurement_ready"], result)
+AssertionError: True is not false : {'schema': 'map01-direct-retained-input-v1', 'measurement_ready': True, 'hold_count': 1, 'unmatched_admission_count': 0, 'invalid_release_count': 0, 'holds': [{'intent_token': None, 'key': 'Up', 'retained_lower_ms': 2e-05, 'retained_upper_ms': 4e-05, 'censor_width_ms': 2e-05, 'source_events': ['input_admission', 'input_release_transition']}], 'decision': 'PASS: direct bounded release evidence available'}
+
+======================================================================
+FAIL: test_absent_and_null_intent_tokens_fail_closed (test_analyze_map01_direct_retained_input_v1.Tests.test_absent_and_null_intent_tokens_fail_closed) (token_state='null')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-5\outputs\pr7356-identity-v2-review\red-before-fix\test_analyze_map01_direct_retained_input_v1.py", line 128, in test_absent_and_null_intent_tokens_fail_closed
+    self.assertFalse(result["measurement_ready"], result)
+AssertionError: True is not false : {'schema': 'map01-direct-retained-input-v1', 'measurement_ready': True, 'hold_count': 1, 'unmatched_admission_count': 0, 'invalid_release_count': 0, 'holds': [{'intent_token': None, 'key': 'Up', 'retained_lower_ms': 2e-05, 'retained_upper_ms': 4e-05, 'censor_width_ms': 2e-05, 'source_events': ['input_admission', 'input_release_transition']}], 'decision': 'PASS: direct bounded release evidence available'}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

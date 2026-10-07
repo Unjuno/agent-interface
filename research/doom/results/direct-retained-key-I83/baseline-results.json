@@ -1,0 +1,81 @@
+{
+  "schema": "map01-retained-input-key-boundary-baseline-I83-v1",
+  "source_sha256": "1e989803aacb6186036b7cba0fe33523b7ad6ad81c01bc5346b4e7710df6727a",
+  "results": [
+    {
+      "case": "valid_pair_control",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "invalid_admission_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "missing_key_admission_after_valid_pair",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "invalid_admission_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    },
+    {
+      "case": "null_key_admission_after_valid_pair",
+      "result": {
+        "schema": "map01-direct-retained-input-v1",
+        "measurement_ready": true,
+        "hold_count": 1,
+        "unmatched_admission_count": 0,
+        "invalid_release_count": 0,
+        "invalid_admission_count": 0,
+        "holds": [
+          {
+            "intent_token": "t",
+            "key": "Up",
+            "retained_lower_ms": 2e-05,
+            "retained_upper_ms": 4e-05,
+            "censor_width_ms": 2e-05,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "decision": "PASS: direct bounded release evidence available"
+      }
+    }
+  ]
+}

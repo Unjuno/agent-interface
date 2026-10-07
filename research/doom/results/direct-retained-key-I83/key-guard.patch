@@ -1,0 +1,23 @@
+--- a/research/doom/analyze_map01_direct_retained_input_v1.py
++++ b/research/doom/analyze_map01_direct_retained_input_v1.py
+@@ -16,13 +16,17 @@
+     invalid_admissions = []
+     for row in events:
+         event = row.get("event")
+-        if event == "input_admission" and row.get("key") is not None:
++        if event == "input_admission":
++            key = row.get("key")
+             token = row.get("intent_token")
++            if key is None:
++                invalid_admissions.append(row)
++                continue
+             if token is None:
+                 invalid_admissions.append(row)
+-                pending[(None, row["key"])].append(row)
++                pending[(None, key)].append(row)
+                 continue
+-            pending[(token, row["key"])].append(row)
++            pending[(token, key)].append(row)
+         elif event == "input_release_transition" and row.get("operation") == "up":
+             token = row.get("intent_token")
+             key = row.get("key")
