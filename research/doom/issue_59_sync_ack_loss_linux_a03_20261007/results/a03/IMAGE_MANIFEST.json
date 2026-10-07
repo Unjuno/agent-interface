@@ -1,0 +1,60 @@
+[
+    {
+        "Id": "sha256:b82a3260f3e5839b9dce6d745233f09c9189d5f2154cf7a6d18e24d190c10907",
+        "RepoTags": [
+            "issue59-sync-ack-loss-a03:ca8f4113"
+        ],
+        "RepoDigests": [
+            "issue59-sync-ack-loss-a03@sha256:b82a3260f3e5839b9dce6d745233f09c9189d5f2154cf7a6d18e24d190c10907"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-07T18:33:02.035762671+09:00",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.15",
+                "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PIP_DISABLE_PIP_VERSION_CHECK=1",
+                "PYTHONDONTWRITEBYTECODE=1",
+                "OMP_NUM_THREADS=1",
+                "OPENBLAS_NUM_THREADS=1"
+            ],
+            "Cmd": [
+                "python3"
+            ]
+        },
+        "Architecture": "arm64",
+        "Os": "linux",
+        "Size": 74855840,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:8227a1264c7ff2f8bd125b585e62c1cec77dd2099c985c33e08d34292d06144f",
+                "sha256:8e2be503717272d4f4f0e02e726fa56ede53bceb1951faa0a968b4a7a64b56e3",
+                "sha256:fcda622f7893cdd820b98f1cc0bd608bf43a10bb9bfc9bc09a71033d64c68944",
+                "sha256:3171a6e7233900b64eba1aeb29207d880671af8cee44163aa9f97331b3821b61",
+                "sha256:164fa5a22e0c95ffa4b63d38db30f8977db3c798873f5d9268105cec06401a19",
+                "sha256:39dadde24f18c92109dad0b7d2de0c83da9c79294bbd0b922cd1404b1ce2d6b4"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-07T09:36:43.150683441Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:b82a3260f3e5839b9dce6d745233f09c9189d5f2154cf7a6d18e24d190c10907",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "4vwzrz8h0rre6oq71w792e7vl",
+                    "CreatedAt": "2026-10-07T18:36:43.188237284+09:00"
+                }
+            ]
+        }
+    }
+]
