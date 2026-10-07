@@ -1,0 +1,46 @@
+{
+  "base_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "candidate_source_commit": "4cfc5db38bc2a088b8c5901ffe1d8817ab85f099",
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "et-xmlfile": "2.0.0",
+    "numpy": "2.5.3",
+    "openpyxl": "3.1.5",
+    "python-xlib": "0.33",
+    "six": "1.17.0"
+  },
+  "expected_test_count": 11,
+  "harness_sha256": {
+    "Dockerfile": "ac91b5a65f33a0b6b33eb06a4d64c1466656b1c47f760a82ea58d21b226017cd",
+    "PROTOCOL.md": "0fcf5228016626008f78d95cb8688ce82f9cc9c5abad25d96db663c6620f93b7",
+    "audit.py": "2bd1091980b47a07fd8490591f259ce97ab7981e30a6da626a4f236b14726107",
+    "requirements.lock": "0c5e72335bd5d5836749f05f0ff91dbd424d3e5705569716f7972185ade62203",
+    "run_container.sh": "2e4f3c4c78e40b6fd1993db7afd4cf303d0626613c3a393133e6ac2ee79f84a9",
+    "run_tests.py": "e18bedf78b6623b348c96f7d1e96be393ca127819c0369adfff7b5dc89382b75"
+  },
+  "mount_policy": {
+    "research/doom": "read-only",
+    "research/live_control": "read-only",
+    "research/observation_gating": "read-only",
+    "research/observation_tiles": "read-only",
+    "results/a02": "read-write"
+  },
+  "resource_caps": {
+    "cpus": 1,
+    "memory_bytes": 1073741824,
+    "network": "none",
+    "pids": 64,
+    "rootfs_read_only": true,
+    "tmpfs_tmp_bytes": 33554432
+  },
+  "retry_policy": "one build, one container start, one saved-raw audit; preserve first STOP/FAIL",
+  "schema": "issue-59-sync-ack-loss-linux-a02-freeze-v1",
+  "scope": "fake-X Linux/Python 3.12 regression replay; no real display, game, GPU, host input or application effect",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "66718149ba23b450e7a97ed93dbdfa98e9e977439929e4a324f54f7f66897d62",
+    "research/live_control/input_owner_v12.py": "fb1e44f7b9dc9ef1068332a938d699c6cd4a0c9d4afe75661c8bf8c16c2db052",
+    "research/live_control/key_edge_measurement_v1.py": "7f12186c03b4f0c4bd9f2783fcc62dc848c43a8508082a9d09143bbc961ca0df",
+    "research/live_control/test_batch_key_measurement_composition.py": "9feefccb8c9f9aff4a3579185d53ca814e509f5aca8e23d7e5cf1eb0ced833e3"
+  },
+  "suite": "test_batch_key_measurement_composition"
+}
