@@ -1,0 +1,16 @@
+{
+  "allocation": "5309-IDENT-A02-HOSTCPU-20261007",
+  "prior": {"b0": 0.25, "h0": 0.25, "b1": 0.25, "h1": 0.25},
+  "mode_observation": {"b0": "mode0", "h0": "mode0", "b1": "mode1", "h1": "mode1"},
+  "safety_class": {"b0": "benign", "h0": "hazard", "b1": "benign", "h1": "hazard"},
+  "actions": {
+    "probe_mode": {"information_role": "reveals mode only", "opportunity_cost_by_state": {"b0": 0, "h0": 1, "b1": 0, "h1": 1}},
+    "repeat": {"information_role": "routine observation", "progress_on_benign": true},
+    "witness": {"information_role": "decision-relevant separator"}
+  },
+  "repeat_count": 5,
+  "exogenous_opportunity_stream": ["opp-1", "opp-2"],
+  "scenarios": ["mode_alias", "separator_available", "no_separator", "expiry_before_separator", "one_step_null"],
+  "planned_probe_sequences": {"separator_available": ["witness"], "no_separator": ["repeat"], "expiry_before_separator": ["repeat", "witness"], "one_step_null": ["witness"]},
+  "boundary": {"authority_from_information": false, "refused_action_has_observation": false}
+}
