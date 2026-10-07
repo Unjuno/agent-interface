@@ -498,6 +498,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
+- [`dual_control_5309_witness_a09_20261007/`](dual_control_5309_witness_a09_20261007/)
+- [`dual_control_5309_witness_a10_20261007/`](dual_control_5309_witness_a10_20261007/)
+- [`dual_control_5309_witness_a12_20261007/`](dual_control_5309_witness_a12_20261007/)
 - [`effect_interference_5366_t2_v1/`](effect_interference_5366_t2_v1/)
 - [`effect_interference_5366_t3_v1/`](effect_interference_5366_t3_v1/)
 - [`effect_overlap_6278_filter_control_t0_v3/`](effect_overlap_6278_filter_control_t0_v3/)
@@ -574,6 +577,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
 - [`guard_proposal_risk_6143_t0_20261002/`](guard_proposal_risk_6143_t0_20261002/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
+- [`gui_modality_pid_7712_t0_20261005/`](gui_modality_pid_7712_t0_20261005/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
 - [`hazard_checkpoint_7466_adaptive_cost_a02_20261004/`](hazard_checkpoint_7466_adaptive_cost_a02_20261004/)
 - [`hazard_checkpoint_7466_feedback_gate_a03_20261004/`](hazard_checkpoint_7466_feedback_gate_a03_20261004/)
@@ -765,6 +769,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_timestamp_order_5156_t2_20261004/`](owner_keyup_timestamp_order_5156_t2_20261004/)
 - [`owner_keyup_timestamp_order_5156_t3_20261004/`](owner_keyup_timestamp_order_5156_t3_20261004/)
 - [`owner_keyup_timestamp_order_5156_t4_20261004/`](owner_keyup_timestamp_order_5156_t4_20261004/)
+- [`owner_keyup_timestamp_order_5156_t5_20261005/`](owner_keyup_timestamp_order_5156_t5_20261005/)
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
 - [`pairwise_interaction_7799_t0_a01_20261005/`](pairwise_interaction_7799_t0_a01_20261005/)
 - [`partial_order_audit_6505_orbstack_a01_20261003/`](partial_order_audit_6505_orbstack_a01_20261003/)
@@ -1143,6 +1148,10 @@ The checker compares the generated block against every child directory with a re
 - [B01–B03 retained construction evidence](../integration/native_existing_runtime_57_20261003_01a0ff52_b01/REPORT.md) — two first setup failures preserved; B03 observed capture plus verified empty input release but no input-down, model turn, or task. Construction only, not current-main or task qualification. All 221 manifest entries independently hash-checked during rescue; no archived producer replay.
 
 - [D01 retained native held-input cancellation](../integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md) — 58 unchanged archival files retain one virtual-display Shift_L down/cancel/release condition, cancelled terminal and original cleanup exit codes. No physical-hardware, current-main task, or efficiency qualification; no producer replay.
+
+# Issue #57 — primary caller release-shape E01 evidence archive
+
+- [E01 source and private-candidate packets](../integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md) — first 48-cell caller failure and distinct inert candidate result retained separately; no native or production claim, no replay. PR #7071 remains the separate integration/review path.
 
 # Issue #57 — Firecrawl compiled release-boundary evidence
 

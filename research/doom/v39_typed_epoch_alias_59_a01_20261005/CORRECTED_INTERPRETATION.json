@@ -1,0 +1,17 @@
+{
+  "audit_checks": "53/53",
+  "audit_classification": "PASS_AUDIT_RECONSTRUCTS_SOURCE_FAIL_OPEN",
+  "auditor_rerun": false,
+  "candidate_rerun": false,
+  "corrected_classification": "FAIL_OPEN_EPOCH_IDENTITY_GAP",
+  "format": "issue59-v39-typed-epoch-alias-corrected-interpretation-v1",
+  "observed_control_accepted": true,
+  "observed_malformed_aliases_accepted": 8,
+  "observed_malformed_aliases_rejected": 0,
+  "original_audit_sha256": "0e066966593d2c8187360bbd919063ec47208538a8c4aab9246af17d4632faef",
+  "original_candidate_classification": "FAIL_CLOSED_EPOCH_IDENTITY_GAP",
+  "original_freeze_sha256": "975c956d7a85be59e1ad949ff396965551e29ae117efc7909087670cc164a79d",
+  "original_preregistration_sha256": "317950cead9cf55d0d1c5d2dec7ee2a471f67384c3c70202a0e87c63bc68d072",
+  "original_result_sha256": "55dc88cd3fb8e6fdda786332649e130d4510d828353c014107eb3bc08f3bd313",
+  "reason": "The frozen decision predicate required rejection of all malformed aliases; the raw observed acceptance fails that predicate. Only the classification label was wrong."
+}

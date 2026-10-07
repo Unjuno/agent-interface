@@ -43,9 +43,17 @@ Read-only feasibility audit of pinned main evidence: all 1,051 files in the publ
 
 The native, unprivileged macOS `powermetrics` probe refused to run without superuser access; no privilege escalation was attempted. Its local documentation identifies reported power as estimated and process Energy Impact as a rough proxy, not a cumulative joule counter with explicit resolution. Disposition `HOLD_ENERGY_SENSOR_UNAVAILABLE`; the first two auditor attempts' man-page-format parsing failures remain preserved, while v3 independently confirmed the stop. No GUI/model/route task or energy comparison was run. See [report and raw evidence](research/analysis/client_energy_per_effect_7728_t0_20261005/REPORT.md) and [Issue #7728](https://github.com/Unjuno/agent-interface/issues/7728).
 
+# Issue #7712 T0/T1 — discrete PID fixture and target-feasibility hold (2026-10-04)
+
+The one frozen T0 candidate invocation matched the declared bivariate Williams–Beer `I_min` atoms on six exact integer-count fixtures; the raw-only audit passed, and an independently frozen v2 mutation suite passed 5/5 including target relabeling. A read-only T1 audit of 72 retained same-capture modality bundles found coherent screenshot/crop/accessibility data and authored state labels, but no independently labeled safe action or measured effect; disposition remains `HOLD_NO_SAFE_ACTION_EFFECT_LABELS`. This qualifies arithmetic only and does not establish natural GUI synergy, acquisition-cost benefit, model behavior, or task effect. Candidate was not rerun during rescue; no new GUI, input, container, or formal allocation occurred. See the [retained report and corrections](research/analysis/gui_modality_pid_7712_t0_20261005/REPORT.md), [T1 audit](research/analysis/gui_modality_pid_7712_t0_20261005/t1_readonly_audit/T1_REPORT.md), and [Issue #7712](https://github.com/Unjuno/agent-interface/issues/7712).
+
 # Issue #59 A01 — ammo depletion during renewable fire cover (2026-10-05)
 
 Current-main v39's synthetic monitor-boundary probe returned `FAIL_AMMO_DEPLETION_NOT_GUARDED`: while a notional active fire cover had health=100, typed ammo 4→0 did not trigger a policy-invalidation event; unchanged positive ammo was preserved and health 100→89 correctly invalidated. The independent source-level audit passed 7/7 checks. This is not live firing, game, key-release, survival, or usefulness evidence; formal live allocation remained 0/0. OrbStack's read-only image inventory failed on a cached containerd blob, so no image pull/build/restart occurred; the stdlib-only boundary ran on host CPython 3.14.5. Any live successor requires a separately assigned lane. See [report and frozen artifacts](research/doom/v39_ammo_cover_guard_59_a01_20261005/REPORT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #59 A01 — typed observation epoch alias boundary (2026-10-05)
+
+The retained source-boundary probe accepted eight Boolean/float aliases in typed health/ammo row epochs while the enclosing epoch was integer `1`; the integer control passed. The stored raw-only audit was rerun on the successor and reconstructed 53/53 checks. The frozen result's `FAIL_CLOSED` label is wrong; the separately retained correction records the fail-open interpretation without changing the original freeze/raw output. This offline boundary result does not show malformed in-tree readers or live input/effect, threat response, recovery, or MAP01 behavior. The experiment was host-only; no container claim or new candidate invocation is made. See the [report and immutable artifacts](research/doom/v39_typed_epoch_alias_59_a01_20261005/REPORT.md), [interpretation correction](research/doom/v39_typed_epoch_alias_59_a01_20261005/CORRECTION.md), and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
 
 # Issue #59 A02 — composed health/ammo cover guard (2026-10-05)
 
@@ -2354,6 +2362,19 @@ and [Issue #57](https://github.com/Unjuno/agent-interface/issues/57).
 ## Issue #57 D01 — retained native held-input cancellation
 
 The same rescue also preserves 58 D01 archival files from 2026-10-03: one authenticated Debian 12/ARM64 virtual-display XTEST Shift_L hold, an independent down witness, cancellation, verified owner release, and an independent clear key/button witness. The terminal remained cancelled with zero completed steps; Xvfb -9 and Openbox 1 exits and all scope limits remain retained. No model/task attempt or original run was replayed. This is one virtual-display cancellation condition, not physical-hardware release, general GUI reliability, current-main runtime qualification, or an efficiency claim. See the [D01 report and retained raw evidence](research/integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md).
+
+# Issue #57 — primary caller release-shape E01 archive (2026-10-03)
+
+The original 48-cell unchanged-caller arm retains `FAIL_SHAPE_ADMISSION_SCOPED`:
+malformed release-array aliases permitted eight invalid continuations. A
+separately frozen private candidate's 48 cells had zero invalid continuations,
+preserved eight healthy rows and changed 16 alias rows; this is inert fake-host
+construction evidence only. Source and private-candidate packets, first result,
+raw rows, saved auditors, native receipts, and byte-join custody are archived
+without rerunning either producer. The package explicitly does not establish
+that a conforming backend emits these shapes, physical release, real task
+effects, or production suitability. No candidate runtime change is proposed
+here; #7071 remains the separate integration/review path. See the [E01 archive](research/integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md), [Issue #57 source/result records](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969803925), and [PR #7071](https://github.com/Unjuno/agent-interface/pull/7071).
 
 # Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
 
