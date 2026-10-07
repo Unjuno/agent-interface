@@ -1,0 +1,13 @@
+{
+  "allocation": "5749-repair-escalation-t0-a01-20261007",
+  "policies": ["repeat_open", "evidence_bounded", "fixed_targeted", "offer_candidate"],
+  "cases": [
+    {"id":"known_locus_uninformative", "locus":"known", "reply":"uninformative", "support":["A"], "forbidden":["X"], "expected_resolution":"targeted", "expected_candidate":null},
+    {"id":"unknown_locus_signal_loss", "locus":"unknown", "reply":"uninformative", "support":["A"], "forbidden":[], "expected_resolution":"open", "expected_candidate":null},
+    {"id":"single_supported_candidate", "locus":"known", "reply":"uninformative", "support":["A"], "forbidden":[], "expected_resolution":"candidate", "expected_candidate":"A"},
+    {"id":"multiple_supported_candidates", "locus":"known", "reply":"uninformative", "support":["A","B"], "forbidden":[], "expected_resolution":"open", "expected_candidate":null},
+    {"id":"none_unsure_decline", "locus":"known", "reply":"decline", "support":["A"], "forbidden":[], "expected_resolution":"yield", "expected_candidate":null},
+    {"id":"stale_choice_version", "locus":"known", "reply":"stale", "support":["A"], "forbidden":[], "expected_resolution":"yield", "expected_candidate":null},
+    {"id":"candidate_forbidden", "locus":"known", "reply":"uninformative", "support":["X"], "forbidden":["X"], "expected_resolution":"yield", "expected_candidate":null}
+  ]
+}

@@ -37,6 +37,8 @@ jobs:
           python-version: '3.12'
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test Issue #5749 evidence-bounded repair escalation T0 A02
+        run: python -B -m unittest discover -s research/analysis/preference_uncertainty_5749_t0_a02_20261007 -p 'test_*.py' -v
       - name: Test Issue #6808 S06 photometric invariance construction
         run: python -B -m unittest discover -s research/analysis/looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003 -p 'test_*.py' -v
       - name: Test #6749 corrected prefix-stability successor construction

@@ -1,0 +1,20 @@
+{
+  "allocation": "5749-repair-escalation-t0-a01-20261007",
+  "issue": 5749,
+  "base_commit": "fa791fe937fb24245e785d9e22928b3f4a6a42ae",
+  "image": "python:3.13-alpine@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a",
+  "platform": "linux/arm64",
+  "network": "none",
+  "rootfs": "read-only",
+  "cpus": 1,
+  "memory": "512m",
+  "pids_limit": 64,
+  "source_sha256": {
+    "candidate.py": "67f2768eec033be45932946877beda501d088297c0b6de0db850d3173cd11ef6",
+    "auditor.py": "bc69aefd3b143e33f8de57245cf730ec6b8666595e0040e59952760818c55339",
+    "fixture.json": "707a034ed04008354a8f709b64a35390f451afa61ec1cd7b7328e7acf0c92dd1",
+    "test_construction.py": "896fabafdb6ee0bd5cb3bf3ae996e71a2c00d25982b061a78484b8e16bf5dfd4"
+  },
+  "formal_invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "container_command": "/Users/taka/.orbstack/bin/docker run --rm --network none --read-only --cpus 1 --memory 512m --pids-limit 64 -v /Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7790-opportunity-a02-20261007/research/analysis/preference_uncertainty_5749_repair_escalation_a01:/src:ro -v /Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7790-opportunity-a02-20261007/research/analysis/preference_uncertainty_5749_repair_escalation_a01/results/formal01:/out:rw -w /src python:3.13-alpine@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a sh -lc 'python candidate.py > /out/raw.json && python auditor.py /out/raw.json fixture.json > /out/audit.json && cat /out/audit.json'"
+}

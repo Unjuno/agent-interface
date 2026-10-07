@@ -1,0 +1,23 @@
+{
+  "allocation": "5749-repair-escalation-t0-a02-20261007",
+  "issue": 5749,
+  "predecessor": "5749-repair-escalation-t0-a01-20261007",
+  "predecessor_disposition": "FORMAL01_AUDIT_PASS_WITH_FIXTURE_EXPECTATION_MISMATCH; preserved unchanged",
+  "base_commit": "fa791fe937fb24245e785d9e22928b3f4a6a42ae",
+  "image": "python:3.13-alpine@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a",
+  "platform": "linux/arm64",
+  "network": "none",
+  "rootfs": "read-only",
+  "cpus": 1,
+  "memory": "512m",
+  "pids_limit": 64,
+  "source_sha256": {
+    "candidate.py": "2932393484eb9210a03be44076906de869be8069110c36506d25c0986b352fd8",
+    "auditor.py": "4bafad79ccbee0e79864a9ac7c97a03c9cc11b0c404b3609703a99e290cbbbd9",
+    "fixture_a02.json": "7959d1869425489289c24528be75c33b7338aca8ac790e0e9c3c9231a9ed7da3",
+    "test_construction.py": "20a7381af5f4169285c2ed1ee7c6f3d2c296f4cdea103623896f83b0b5c4a1c8"
+  },
+  "formal_invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "decision_contract": "Auditor independently reconstructs all policy outputs and exact counts from fixture; only evidence_bounded may offer the unique candidate when offer_allowed=true; unknown locus stays open; multiple supported interpretations stay open; decline/stale/no-admissible candidates yield.",
+  "container_command": "/Users/taka/.orbstack/bin/docker run --rm --network none --read-only --cpus 1 --memory 512m --pids-limit 64 -v /Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7790-opportunity-a02-20261007/research/analysis/preference_uncertainty_5749_t0_a02_20261007:/src:ro -v /Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7790-opportunity-a02-20261007/research/analysis/preference_uncertainty_5749_t0_a02_20261007/results/formal02:/out:rw -w /src python:3.13-alpine@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a sh -lc 'python candidate.py > /out/raw.json && python auditor.py /out/raw.json fixture_a02.json > /out/audit.json && cat /out/audit.json'"
+}

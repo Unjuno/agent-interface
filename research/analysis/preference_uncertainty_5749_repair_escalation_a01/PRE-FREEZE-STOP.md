@@ -1,0 +1,3 @@
+# Preserved pre-freeze container wiring stop
+
+The first isolated container command used `--read-only` but redirected candidate output to `/tmp/raw.json` without a writable tmpfs or output mount. The shell failed with `can't create /tmp/raw.json: Read-only file system` before starting `candidate.py`; candidate and auditor invocation counts were both zero. This is a harness wiring stop, not a scientific result. No retry of that command was made. The corrected, explicitly mounted output path and final source/image freeze are recorded in `FREEZE.json`; only that subsequent frozen invocation is the formal allocation.
