@@ -26,11 +26,13 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 
 - After the 12:11 UTC inventory, current main advanced to dd37f2ddbdb0a424e43676545595f5537e435473. Verified the recorded 4435 custody tip is contained in that main, has no PR/worktree/base dependency, and is unprotected; deleted only that remote branch. Its tip remains reachable from main. The deletion is recorded in [branch retirements](BRANCH_RETIREMENTS_20261007_1221Z.csv).
 
+- PR #8295 (A12) merged at 12:17 UTC and PR #8289 (A09) merged at 12:24 UTC. Both source branches are now deleted after verifying exact head-tip reachability from main, zero open PR base dependencies, no worktree owner, and prior API protection=false. PRs #8291/#8292 now target main, so the remaining A10/A11 branches stay under active PRs.
+
 ## Live state check — 2026-10-07 12:27 UTC
 
-- Current main is 074f00a0db5baf48a42ed446043f7e1081a40ed7. The retired 4435 custody tip remains an ancestor of this main.
+- Current main is 074f00a0db5baf48a42ed446043f7e1081a40ed7. The retired 4435 custody, A09, and A12 tips remain ancestors of this main.
 - GitHub pull dashboard reports 379 open PRs across 16 pages; the list changed during capture, so no fresh PR/branch crosswalk is asserted from that page view.
-- [Current branch tips](BRANCH_TIPS_20261007_122720Z.csv) records 450 remote branches from one ls-remote response.
+- [Current branch tips](BRANCH_TIPS_20261007_123127Z.csv) records 449 remote branches from one ls-remote response.
 
 ## Follow-up policy
 
