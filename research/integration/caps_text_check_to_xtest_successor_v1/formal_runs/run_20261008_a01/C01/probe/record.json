@@ -1,0 +1,441 @@
+{
+  "actual": "aB2",
+  "after": {
+    "ended_ns": 23279290665840,
+    "focus": 4194318,
+    "keymap": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "lockmask": 0,
+    "mask": 0,
+    "started_ns": 23279290493631
+  },
+  "app": {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/app_fixture.py",
+      "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/formal_runs/run_20261008_a01/C01/probe/app.jsonl"
+    ],
+    "exit": 0,
+    "pid": 5915,
+    "ready": {
+      "event": "ready",
+      "ns": 23279206683974,
+      "pid": 5915,
+      "root": 4194316,
+      "window": 4194318
+    }
+  },
+  "app_after": {
+    "command": "snapshot",
+    "event": "snapshot",
+    "ns": 23279290247212,
+    "pid": 5915,
+    "value": "aB2"
+  },
+  "app_before": {
+    "command": "snapshot",
+    "event": "snapshot",
+    "ns": 23279238972435,
+    "pid": 5915,
+    "value": ""
+  },
+  "app_stderr": "",
+  "arm": "current",
+  "before": {
+    "ended_ns": 23279206941976,
+    "focus": 4194317,
+    "keymap": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "lockmask": 0,
+    "mask": 0,
+    "started_ns": 23279206806808
+  },
+  "case_id": "C01",
+  "dispatch_ended_ns": 23279250776194,
+  "dispatch_started_ns": 23279239350105,
+  "display": ":99",
+  "display_server": {
+    "argv": [
+      "Xvfb",
+      ":99",
+      "-screen",
+      "0",
+      "640x240x24",
+      "-nolisten",
+      "tcp",
+      "-ac"
+    ],
+    "display": ":99",
+    "pid": 5909
+  },
+  "driver_pid": 5912,
+  "ended_ns": 23279340719233,
+  "entry_events": [
+    {
+      "event": "ready",
+      "ns": 23279206683974,
+      "pid": 5915,
+      "root": 4194316,
+      "window": 4194318
+    },
+    {
+      "command": "snapshot",
+      "event": "snapshot",
+      "ns": 23279238972435,
+      "pid": 5915,
+      "value": ""
+    },
+    {
+      "char": "a",
+      "event": "KeyPress",
+      "keycode": 38,
+      "keysym": "a",
+      "ns": 23279250487775,
+      "pid": 5915,
+      "state": 0
+    },
+    {
+      "event": "value",
+      "ns": 23279250586818,
+      "pid": 5915,
+      "value": "a"
+    },
+    {
+      "char": "",
+      "event": "KeyRelease",
+      "keycode": 38,
+      "keysym": "a",
+      "ns": 23279250732527,
+      "pid": 5915,
+      "state": 0
+    },
+    {
+      "char": "",
+      "event": "KeyPress",
+      "keycode": 50,
+      "keysym": "Shift_L",
+      "ns": 23279250808653,
+      "pid": 5915,
+      "state": 0
+    },
+    {
+      "char": "B",
+      "event": "KeyPress",
+      "keycode": 56,
+      "keysym": "B",
+      "ns": 23279250844570,
+      "pid": 5915,
+      "state": 1
+    },
+    {
+      "event": "value",
+      "ns": 23279250863445,
+      "pid": 5915,
+      "value": "aB"
+    },
+    {
+      "char": "",
+      "event": "KeyRelease",
+      "keycode": 56,
+      "keysym": "B",
+      "ns": 23279250903945,
+      "pid": 5915,
+      "state": 1
+    },
+    {
+      "char": "",
+      "event": "KeyRelease",
+      "keycode": 50,
+      "keysym": "Shift_L",
+      "ns": 23279250931446,
+      "pid": 5915,
+      "state": 1
+    },
+    {
+      "char": "2",
+      "event": "KeyPress",
+      "keycode": 11,
+      "keysym": "2",
+      "ns": 23279250957446,
+      "pid": 5915,
+      "state": 0
+    },
+    {
+      "event": "value",
+      "ns": 23279250974029,
+      "pid": 5915,
+      "value": "aB2"
+    },
+    {
+      "char": "",
+      "event": "KeyRelease",
+      "keycode": 11,
+      "keysym": "2",
+      "ns": 23279251023655,
+      "pid": 5915,
+      "state": 0
+    },
+    {
+      "command": "snapshot",
+      "event": "snapshot",
+      "ns": 23279290247212,
+      "pid": 5915,
+      "value": "aB2"
+    },
+    {
+      "command": "close",
+      "event": "snapshot",
+      "ns": 23279330947865,
+      "pid": 5915,
+      "value": "aB2"
+    },
+    {
+      "event": "exit",
+      "ns": 23279331643412,
+      "pid": 5915,
+      "value": "aB2"
+    }
+  ],
+  "errors": [],
+  "expected": "aB2",
+  "freeze_sha256": "48969b57f1be88ab8a9d8bcd039271978cd0488cc17384b724dce38b34406eb7",
+  "ipc": [
+    {
+      "direction": "fixture-ready",
+      "raw": "{\"event\": \"ready\", \"ns\": 23279206683974, \"pid\": 5915, \"window\": 4194318, \"root\": 4194316}\n"
+    },
+    {
+      "direction": "to-app",
+      "raw": "{\"command\": \"snapshot\"}\n"
+    },
+    {
+      "direction": "from-app",
+      "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 23279238972435, \"pid\": 5915, \"value\": \"\"}\n"
+    },
+    {
+      "direction": "to-app",
+      "raw": "{\"command\": \"snapshot\"}\n"
+    },
+    {
+      "direction": "from-app",
+      "raw": "{\"command\": \"snapshot\", \"event\": \"snapshot\", \"ns\": 23279290247212, \"pid\": 5915, \"value\": \"aB2\"}\n"
+    },
+    {
+      "direction": "to-app",
+      "raw": "{\"command\": \"close\"}\n"
+    },
+    {
+      "direction": "from-app",
+      "raw": "{\"command\": \"close\", \"event\": \"snapshot\", \"ns\": 23279330947865, \"pid\": 5915, \"value\": \"aB2\"}\n"
+    }
+  ],
+  "kind": "formal-public-dispatch-case",
+  "main_backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+  "network_boundary": {
+    "interfaces": [
+      [
+        1,
+        "lo"
+      ],
+      [
+        2,
+        "tunl0"
+      ],
+      [
+        3,
+        "sit0"
+      ],
+      [
+        4,
+        "ip6tnl0"
+      ]
+    ],
+    "ipv4_non_loopback_routes": [],
+    "ipv6_non_loopback_routes": [],
+    "namespace_inode": 4026533664,
+    "pid1_namespace_inode": 4026533393,
+    "up_non_loopback_interfaces": []
+  },
+  "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.39",
+  "program": {
+    "authority": {
+      "expires_at_ns": 23299239151936,
+      "lease_id": "private-fixture-only"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "entry"
+      },
+      {
+        "op": "text",
+        "text": "aB2"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "formal-C01-current",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "program_id": "formal-C01-current",
+  "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "repo_head": "d5732e6628a48481dd6cfc93297626811bdf528f",
+  "response": {
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ],
+        "emissions": 8,
+        "ended_ns": 23279250724986,
+        "observations": [],
+        "program_emissions": 8,
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 23279250723944,
+            "verified": true
+          }
+        ],
+        "started_ns": 23279250074897,
+        "waits": []
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned"
+  },
+  "runner_sha256": "1a5d4bd63e096f1deb9177c7ecd355c2b3194e0c061ad2b62ca21b1a75bbfc55",
+  "runtime_imports": {
+    "runtime.backends.x11_v1": {
+      "path": "runtime/backends/x11_v1/__init__.py",
+      "sha256": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b"
+    },
+    "runtime.backends.x11_v1.backend": {
+      "path": "runtime/backends/x11_v1/backend.py",
+      "sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"
+    },
+    "runtime.backends.x11_v1.session": {
+      "path": "runtime/backends/x11_v1/session.py",
+      "sha256": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62"
+    },
+    "runtime.cli_v1": {
+      "path": "runtime/cli_v1/__init__.py",
+      "sha256": "8832365589e82ecba394d10ae11a381f146edfb68b981551ccbae8b95e4ac967"
+    },
+    "runtime.cli_v1.api": {
+      "path": "runtime/cli_v1/api.py",
+      "sha256": "47d4413b5633b334e21e158ffe5c4155b5ec3f24dd7c942f1e7ba91361632ca6"
+    },
+    "runtime.core_v1": {
+      "path": "runtime/core_v1/__init__.py",
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+    },
+    "runtime.core_v1.contract": {
+      "path": "runtime/core_v1/contract.py",
+      "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+    },
+    "runtime.core_v1.platform_probe": {
+      "path": "runtime/core_v1/platform_probe.py",
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+    },
+    "runtime.core_v1.sequence": {
+      "path": "runtime/core_v1/sequence.py",
+      "sha256": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d"
+    },
+    "runtime.selector_v1": {
+      "path": "runtime/selector_v1/__init__.py",
+      "sha256": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881"
+    },
+    "runtime.selector_v1.selector": {
+      "path": "runtime/selector_v1/selector.py",
+      "sha256": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+    }
+  },
+  "started_ns": 23278932960036,
+  "study_id": "caps-text-query-xtest-a01-20261007"
+}
