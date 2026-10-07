@@ -19,14 +19,6 @@ class QuartzBackendError(RuntimeError):
     pass
 
 
-class QuartzExecutionError(QuartzBackendError):
-    """A stopped program with its original error and cleanup evidence."""
-
-    def __init__(self, execution: dict[str, Any]):
-        self.execution = execution
-        super().__init__(execution["error"])
-
-
 class CGPoint(ctypes.Structure):
     _fields_ = [("x", ctypes.c_double), ("y", ctypes.c_double)]
 
@@ -250,12 +242,9 @@ class QuartzBackend:
 
     def key_state(self, key: str, down: bool) -> None:
         code = key_code(key)
-        event = self.cg.CGEventCreateKeyboardEvent(None, code, down)
-        # Post/disposal may raise after input took effect. Keep ownership until
-        # release/readback resolves it; event creation alone emits no input.
-        if down and event: self.held_keys[key] = code
-        self._post(event)
-        if not down: self.held_keys.pop(key, None)
+        self._post(self.cg.CGEventCreateKeyboardEvent(None, code, down))
+        if down: self.held_keys[key] = code
+        else: self.held_keys.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys: self.key_state(key, True)
@@ -285,10 +274,9 @@ class QuartzBackend:
     def pointer_button(self, button: str, down: bool) -> None:
         if button not in BUTTONS: raise QuartzBackendError(f"unsupported button {button}")
         number, down_type, up_type = BUTTONS[button]; x, y = self.pointer_position()
-        event = self.cg.CGEventCreateMouseEvent(None, down_type if down else up_type, CGPoint(x, y), number)
-        if down and event: self.held_buttons.add(button)
-        self._post(event)
-        if not down: self.held_buttons.discard(button)
+        self._post(self.cg.CGEventCreateMouseEvent(None, down_type if down else up_type, CGPoint(x, y), number))
+        if down: self.held_buttons.add(button)
+        else: self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
         self._post(self.cg.CGEventCreateScrollWheelEvent(None, KCG_SCROLL_EVENT_UNIT_LINE, 2, int(dy), int(dx)))
@@ -325,81 +313,19 @@ class QuartzBackend:
             elif kind == "pointer_button" and op["button"] not in BUTTONS: raise QuartzBackendError(f"unsupported button {op['button']}")
 
     def release_all(self) -> dict[str, Any]:
-        tracked_keys = dict(self.held_keys)
-        tracked_buttons = sorted(self.held_buttons)
-        errors = []
-
-        def failed(stage: str, target: str, error: Exception) -> None:
-            errors.append({"stage": stage, "target": target, "error": repr(error)})
-
-        # One bad event must not prevent the remaining tracked releases.
-        for name, code in tracked_keys.items():
-            try:
-                self._post(self.cg.CGEventCreateKeyboardEvent(None, code, False))
-            except Exception as error:
-                failed("key_release", name, error)
-        for button in tracked_buttons:
-            try:
-                number, _, up_type = BUTTONS[button]
-                x, y = self.pointer_position()
-                self._post(self.cg.CGEventCreateMouseEvent(
-                    None, up_type, CGPoint(x, y), number))
-            except Exception as error:
-                failed("button_release", button, error)
-        time.sleep(0.02)
-
-        keys, buttons, keys_unknown, buttons_unknown = [], [], [], []
-        for name, code in tracked_keys.items():
-            try:
-                down = self.cg.CGEventSourceKeyState(
-                    KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, code)
-            except Exception as error:
-                keys_unknown.append(name)
-                failed("key_readback", name, error)
-            else:
-                if down:
-                    keys.append(name)
-                else:
-                    self.held_keys.pop(name, None)
-        for button in tracked_buttons:
-            try:
-                down = self.cg.CGEventSourceButtonState(
-                    KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, BUTTONS[button][0])
-            except Exception as error:
-                buttons_unknown.append(button)
-                failed("button_readback", button, error)
-            else:
-                if down:
-                    buttons.append(button)
-                else:
-                    self.held_buttons.discard(button)
-        return {"keys_down": sorted(keys), "buttons_down": sorted(buttons),
-                "keys_unknown": sorted(keys_unknown), "buttons_unknown": sorted(buttons_unknown),
-                "errors": errors, "verified": not errors and not keys and not buttons,
-                "monotonic_ns": time.monotonic_ns()}
-
-    def _release_after_failure(self) -> dict[str, Any]:
-        try:
-            return self.release_all()
-        except Exception as error:
-            # Preserve the original operation error even if cleanup itself fails.
-            return {"verified": False, "keys_down": [], "buttons_down": [],
-                    "keys_unknown": sorted(self.held_keys),
-                    "buttons_unknown": sorted(self.held_buttons),
-                    "errors": [{"stage": "release_all", "error": repr(error)}],
-                    "monotonic_ns": time.monotonic_ns()}
+        tracked_keys = dict(self.held_keys); tracked_buttons = set(self.held_buttons)
+        for code in list(self.held_keys.values()): self._post(self.cg.CGEventCreateKeyboardEvent(None, code, False))
+        for button in list(self.held_buttons):
+            number, _, up_type = BUTTONS[button]; x, y = self.pointer_position(); self._post(self.cg.CGEventCreateMouseEvent(None, up_type, CGPoint(x, y), number))
+        self.held_keys.clear(); self.held_buttons.clear(); time.sleep(0.02)
+        keys = sorted(name for name, code in tracked_keys.items() if self.cg.CGEventSourceKeyState(KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, code))
+        buttons = sorted(button for button in tracked_buttons if self.cg.CGEventSourceButtonState(KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, BUTTONS[button][0]))
+        return {"keys_down": keys, "buttons_down": buttons, "verified": not keys and not buttons, "monotonic_ns": time.monotonic_ns()}
 
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
-        observations=[]; releases=[]; completed_ops=[]; started=time.monotonic_ns(); index=None
-
-        def evidence() -> dict[str, Any]:
-            return {"started_ns": started, "ended_ns": time.monotonic_ns(),
-                    "emissions": self.emissions, "observations": observations,
-                    "releases": releases, "completed_ops": completed_ops}
-
+        self.preflight(program); observations=[]; releases=[]; started=time.monotonic_ns()
         try:
-            self.preflight(program)
-            for index, op in enumerate(program["ops"]):
+            for op in program["ops"]:
                 kind=op["op"]
                 if kind=="focus": self.focus(op["target"])
                 elif kind=="key_chord": self.key_chord(op["keys"])
@@ -411,13 +337,8 @@ class QuartzBackend:
                 elif kind=="observe": observations.append(self.capture(op["frame"],op["x"],op["y"],op["w"],op["h"]))
                 elif kind=="wait_update": time.sleep(op["timeout_ms"]/1000.0)
                 elif kind=="verify": pass
-                elif kind=="release_all": releases.append(self._release_after_failure())
+                elif kind=="release_all": releases.append(self.release_all())
                 else: raise QuartzBackendError(f"unsupported op {kind}")
-                completed_ops.append(index)
-        except Exception as error:
-            releases.append(self._release_after_failure())
-            partial = evidence()
-            partial.update(error=repr(error), failed_op=index,
-                           failed_op_effect="unknown; may have emitted partial input")
-            raise QuartzExecutionError(partial) from error
-        return evidence()
+        except Exception:
+            releases.append(self.release_all()); raise
+        return {"started_ns":started,"ended_ns":time.monotonic_ns(),"emissions":self.emissions,"observations":observations,"releases":releases}

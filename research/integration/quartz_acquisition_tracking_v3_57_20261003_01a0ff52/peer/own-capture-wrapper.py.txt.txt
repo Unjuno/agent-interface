@@ -1,0 +1,25 @@
+"""Keep each ordinary engineering command's first bytes and exit receipt."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+root, output, label = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), sys.argv[3]
+command = sys.argv[4:]
+destination = output / label
+destination.mkdir(parents=True, exist_ok=False)
+started = datetime.now(timezone.utc).isoformat()
+result = subprocess.run(command, cwd=root, capture_output=True, timeout=120)
+ended = datetime.now(timezone.utc).isoformat()
+for name, data in (('stdout.log', result.stdout), ('stderr.log', result.stderr)):
+    (destination / name).write_bytes(data)
+record = {'label': label, 'argv': command, 'cwd': str(root), 'started_utc': started,
+          'ended_utc': ended, 'exit_code': result.returncode,
+          'stdout_sha256': hashlib.sha256(result.stdout).hexdigest(),
+          'stderr_sha256': hashlib.sha256(result.stderr).hexdigest()}
+(destination / 'receipt.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+print(json.dumps(record))
+print((result.stdout + result.stderr).decode('utf-8', errors='replace')[-1800:])
+sys.exit(result.returncode)
