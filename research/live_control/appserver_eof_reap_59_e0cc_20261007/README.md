@@ -63,6 +63,12 @@ and source/test hashes. Only absolute workspace/runtime prefixes in 24 text
 members were projected for publication; the manifest retains original and
 published hashes. Original local files are preserved.
 
+A separate helper readback of the two repaired cells passed 20/20 checks.
+`repair-audit.tar.xz` and `REPAIR_AUDIT_MANIFEST.json` retain its v1 path error,
+v2 audit-predicate false negative, and corrected v3 report. No producer was
+rerun, and the original 285-member archive remains unchanged. This additional
+readback is not a quorum vote.
+
 From repository root, with `research/live_control` on `PYTHONPATH`, run:
 
 ```sh
