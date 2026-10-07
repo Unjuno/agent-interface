@@ -1,0 +1,29 @@
+{
+  "allocation": "5309-FOURARM-A03-HOSTCPU-20261007",
+  "main_sha": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "python": "3.14.5",
+  "execution": "host CPU, Python standard library only; no network API, GUI, model, OS input, or live authority; no OS-level isolation claimed",
+  "container": {
+    "used": false,
+    "stop_reason": "OrbStack Running, but Docker inventory failed on containerd content blob sha256:08e8b41ebd1476eff067939e0192d49e4014c21bab11a4d793429187e4242704 with operation not supported",
+    "image": null
+  },
+  "receipt_schema_source": {
+    "commit": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+    "path": "runtime/kernel/contracts.py",
+    "sha256": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969"
+  },
+  "formal_invocations_allowed": {"candidate": 1, "auditor": 1, "retries": 0},
+  "sha256": {
+    "PRE_REGISTRATION.md": "ec4d0d83839576d805dfa6ab5e0a80c0b32c5b8d8c945eb5652eefdce13f7d8d",
+    "CONSTRUCTION_RECORD.md": "4fd7eb053cf7b6877af539371ce75f356438529b9f8d9c9e5ab41bedb578d904",
+    "fixture.json": "d2ac1b0ffab4c4717ce9b74cf217943aa96a0bb5c8a2868091d5258f990f3eb9",
+    "oracle_truth.json": "518631dee7e052214a97b4c78ee84d22ed9808b6cbcb6e8af5a878a54316a5dc",
+    "candidate.py": "1c333c9530533aca6f4f6b2567b16b6eaea9e066ff411d0e6d5533df3b55be4b",
+    "auditor.py": "a8e1b67981584836d28546d81fee1af229e9010adc8a3f4efa80c5cfd6f2f3d6",
+    "contracts_snapshot.py": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+    "test_construction.py": "c09c0b5aca2bb07629f511491ff80e42343ea9faf8c854eb3168fa90665c40a2",
+    "SOURCE_PROVENANCE.json": "790ad89883d9a465781d35c56e5bdc7001f225a1216fe250bdee1dc503772114"
+  },
+  "frozen_decision_gate": "PASS_DUAL_PURPOSE_ACTION_SCOPED only when the independent auditor verifies all 112 frozen rows; identical TASK_ONLY/DUAL admitted task sets and risk envelope; primary fresh held-out completions 6/6 for TASK_ONLY, EXPLICIT_SAFE_PROBE, and DUAL_PURPOSE; DUAL mean synthetic latency strictly below both task-only recovery and explicit probe; no per-case DUAL increase in wrong-target, collateral, or unsafe effects versus either comparator; stale censoring, duplicate deduplication, exact bounded key release, no authority grant, witness-loss and no-safe-path yields; and the cost-reversal sensitivity shows explicit probe can be faster. Any unmet gate retains FAIL/HOLD/UNCERTAIN with zero retries."
+}

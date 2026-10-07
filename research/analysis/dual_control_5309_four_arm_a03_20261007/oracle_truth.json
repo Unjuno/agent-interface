@@ -1,0 +1,19 @@
+{
+  "safe_commit_is_exact_target": true,
+  "wrong_target_is_reversible": true,
+  "wrong_target_collateral": false,
+  "wrong_target_unsafe": false,
+  "open_common_task_effect": "common-subgoal-complete",
+  "probe_task_effect": "none",
+  "commit_task_effect": "target-specific-subgoal-complete",
+  "valid_receipt_condition": "fresh",
+  "duplicate_receipt_reuses_event_identity": true,
+  "stale_receipt_must_not_update_belief": true,
+  "task_only_wrong_commit_feedback": "generic-noncompletion",
+  "independent_effect_witness_required_for_completion": true,
+  "authority_grant_on_every_action": false,
+  "key_down_requires_exactly_one_matching_key_up": true,
+  "nonempty_held_key_set_at_terminal_is_failure": true,
+  "unsafe_action_ids": [],
+  "collateral_action_ids": []
+}
