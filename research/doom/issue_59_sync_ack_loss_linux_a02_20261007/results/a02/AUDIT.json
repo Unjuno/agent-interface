@@ -1,0 +1,176 @@
+{
+  "checks": [
+    {
+      "check": "source hash matches: research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "pass": true
+    },
+    {
+      "check": "source hash matches: research/live_control/input_owner_v12.py",
+      "pass": true
+    },
+    {
+      "check": "source hash matches: research/live_control/key_edge_measurement_v1.py",
+      "pass": true
+    },
+    {
+      "check": "source hash matches: research/live_control/test_batch_key_measurement_composition.py",
+      "pass": true
+    },
+    {
+      "check": "harness hash matches: Dockerfile",
+      "pass": true
+    },
+    {
+      "check": "harness hash matches: PROTOCOL.md",
+      "pass": true
+    },
+    {
+      "check": "harness hash matches: audit.py",
+      "pass": true
+    },
+    {
+      "check": "harness hash matches: requirements.lock",
+      "pass": true
+    },
+    {
+      "check": "harness hash matches: run_container.sh",
+      "pass": true
+    },
+    {
+      "check": "harness hash matches: run_tests.py",
+      "pass": true
+    },
+    {
+      "check": "raw schema recognized",
+      "pass": true
+    },
+    {
+      "check": "candidate source commit matches freeze",
+      "pass": true
+    },
+    {
+      "check": "base image digest matches freeze",
+      "pass": true
+    },
+    {
+      "check": "raw source digests match freeze",
+      "pass": true
+    },
+    {
+      "check": "runner reports successful tests",
+      "pass": false
+    },
+    {
+      "check": "all 11 focused tests ran",
+      "pass": true
+    },
+    {
+      "check": "runner reported no failures or errors",
+      "pass": false
+    },
+    {
+      "check": "Python 3.12 runtime recorded",
+      "pass": true
+    },
+    {
+      "check": "installed package versions match freeze",
+      "pass": true
+    },
+    {
+      "check": "effective cgroup limits match declared caps",
+      "pass": true
+    },
+    {
+      "check": "runner event digest matches retained event bytes",
+      "pass": true
+    },
+    {
+      "check": "exactly one ack-loss evidence row",
+      "pass": false
+    },
+    {
+      "check": "keycode 38 observed down before cleanup",
+      "pass": false
+    },
+    {
+      "check": "DOWN attempt event retained",
+      "pass": false
+    },
+    {
+      "check": "injected sync error and missing acknowledgement retained",
+      "pass": false
+    },
+    {
+      "check": "DOWN classified unconfirmed",
+      "pass": false
+    },
+    {
+      "check": "no bracket or actuation identity fabricated",
+      "pass": true
+    },
+    {
+      "check": "post-sample records delivered key down",
+      "pass": false
+    },
+    {
+      "check": "pre-sample records available key up",
+      "pass": false
+    },
+    {
+      "check": "sample and authority fields are scoped correctly",
+      "pass": false
+    },
+    {
+      "check": "cleanup release verified",
+      "pass": false
+    },
+    {
+      "check": "cleanup keymap verifies key up",
+      "pass": false
+    },
+    {
+      "check": "cleanup uses exactly one physical-code release attempt",
+      "pass": false
+    },
+    {
+      "check": "final fake-X state neutral",
+      "pass": false
+    },
+    {
+      "check": "container uses retained image ID",
+      "pass": true
+    },
+    {
+      "check": "container runtime network disabled",
+      "pass": true
+    },
+    {
+      "check": "container resource caps match protocol",
+      "pass": true
+    },
+    {
+      "check": "container filesystem and privilege restrictions match protocol",
+      "pass": true
+    },
+    {
+      "check": "source mounts readonly and output mount writable",
+      "pass": true
+    },
+    {
+      "check": "container completed with exit code zero",
+      "pass": false
+    },
+    {
+      "check": "frozen runner recorded RUN_PASS",
+      "pass": false
+    }
+  ],
+  "container_exit_code": 1,
+  "container_id": "ecc32507bf0c8eeca4f3239a0f2a4ef95f8f942a089e907cec8077c421f4ece6",
+  "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "image_id": "sha256:1fa60ebae24271ba3f74eb75deb073d7802d395c457cd322a9ef1ee909880cd5",
+  "raw_sha256": "e10fab96d4f5e0e25601098635f05d8587b00e46b65fd501764ceadce2171865",
+  "schema": "issue-59-sync-ack-loss-linux-a02-audit-v1",
+  "source_commit": "4cfc5db38bc2a088b8c5901ffe1d8817ab85f099",
+  "status": "FAIL_AUDIT"
+}
