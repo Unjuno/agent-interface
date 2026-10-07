@@ -1,0 +1,258 @@
+[
+    {
+        "Id": "9aa04503690f48a437be75f749d5117d6b1ce30cb46b747f32b2431e10d9742d",
+        "Created": "2026-10-07T09:33:05.133280808Z",
+        "Path": "python",
+        "Args": [
+            "-B",
+            "/workspace/research/doom/issue_59_sync_ack_loss_linux_a01_20261007/run_tests.py"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 1,
+            "Error": "",
+            "StartedAt": "2026-10-07T09:33:05.451640204Z",
+            "FinishedAt": "2026-10-07T09:33:06.145685407Z"
+        },
+        "Image": "sha256:d4ed375896dee3b0cdd37f099784d119a803a3aad2dd5416c038e147a686d406",
+        "ResolvConfPath": "/var/lib/docker/containers/9aa04503690f48a437be75f749d5117d6b1ce30cb46b747f32b2431e10d9742d/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/9aa04503690f48a437be75f749d5117d6b1ce30cb46b747f32b2431e10d9742d/hostname",
+        "HostsPath": "/var/lib/docker/containers/9aa04503690f48a437be75f749d5117d6b1ce30cb46b747f32b2431e10d9742d/hosts",
+        "LogPath": "/var/lib/docker/containers/9aa04503690f48a437be75f749d5117d6b1ce30cb46b747f32b2431e10d9742d/9aa04503690f48a437be75f749d5117d6b1ce30cb46b747f32b2431e10d9742d-json.log",
+        "Name": "/issue59-sync-ack-loss-a01-e0013259",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "5",
+                    "max-size": "20m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,nosuid,nodev,noexec,size=32m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 8403288064,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 1073741824,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 2147483648,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 64,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/live_control",
+                    "Target": "/workspace/research/live_control",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/doom",
+                    "Target": "/workspace/research/doom",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/doom/issue_59_sync_ack_loss_linux_a01_20261007/results/a01",
+                    "Target": "/out"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/doom/issue_59_sync_ack_loss_linux_a01_20261007/results/a01",
+                "Destination": "/out",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/live_control",
+                "Destination": "/workspace/research/live_control",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/doom",
+                "Destination": "/workspace/research/doom",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "9aa04503690f",
+            "Domainname": "",
+            "User": "501:20",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.15",
+                "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PIP_DISABLE_PIP_VERSION_CHECK=1",
+                "PYTHONDONTWRITEBYTECODE=1",
+                "OMP_NUM_THREADS=1",
+                "OPENBLAS_NUM_THREADS=1"
+            ],
+            "Cmd": [
+                "python",
+                "-B",
+                "/workspace/research/doom/issue_59_sync_ack_loss_linux_a01_20261007/run_tests.py"
+            ],
+            "Image": "issue59-sync-ack-loss-a01:e0013259",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "be4d057ee3ffc26baf9220196f1b89ed6bef1d8bcc10973725f59293e4e88c31",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:6ac32e12ab779cf6d36313a6e679196f30a083f2b162e5c12a4f40c30c30008f",
+            "size": 1436,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]

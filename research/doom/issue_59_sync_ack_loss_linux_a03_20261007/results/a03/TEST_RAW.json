@@ -1,0 +1,49 @@
+{
+  "base_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "candidate_source_commit": "ca8f4113510b4b01a8e7d001dfe812dcc7b640a9",
+  "cgroup_limits": {
+    "cpu.max": "100000 100000",
+    "memory.max": "1073741824",
+    "pids.max": "64"
+  },
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "et-xmlfile": "2.0.0",
+    "numpy": "2.5.3",
+    "openpyxl": "3.1.5",
+    "python-xlib": "0.33",
+    "six": "1.17.0"
+  },
+  "ended_monotonic_ns": 3747878112446,
+  "ended_utc": "2026-10-07T09:36:44.915407+00:00",
+  "errors": [],
+  "events_sha256": "73522cff8ae5e11591f42cd45af7ee17d8230478b2a2a7e8fd740e50b15d7bfc",
+  "exit_code": 0,
+  "failures": [],
+  "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+  "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]",
+  "schema": "issue-59-sync-ack-loss-linux-a03-v1",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "66718149ba23b450e7a97ed93dbdfa98e9e977439929e4a324f54f7f66897d62",
+    "research/live_control/input_owner_v12.py": "fb1e44f7b9dc9ef1068332a938d699c6cd4a0c9d4afe75661c8bf8c16c2db052",
+    "research/live_control/key_edge_measurement_v1.py": "7f12186c03b4f0c4bd9f2783fcc62dc848c43a8508082a9d09143bbc961ca0df",
+    "research/live_control/test_batch_key_measurement_composition.py": "9feefccb8c9f9aff4a3579185d53ca814e509f5aca8e23d7e5cf1eb0ced833e3"
+  },
+  "started_monotonic_ns": 3747150694859,
+  "started_utc": "2026-10-07T09:36:44.187988+00:00",
+  "status": "PASS_TESTS",
+  "test_ids": [
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_cancel_during_batch_sample_does_not_become_an_ordinary_pair",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_delivered_down_with_sync_error_is_retained_as_unconfirmed",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_delivered_up_with_send_error_suppresses_sibling_bracket",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_expiry_during_batch_sample_does_not_become_an_ordinary_pair",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_focus_change_during_batch_sample_does_not_become_an_ordinary_pair",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_measurement_failure_does_not_mask_down_error",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_measurement_publish_error_does_not_mask_down_error",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_projection_rejects_altered_basis_authority_identity_and_batch_status",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_retry_keeps_shared_sample_for_the_other_key",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_two_keys_pair_through_actual_wrapper_and_batch_publisher",
+    "test_batch_key_measurement_composition.BatchMeasurementCompositionTests.test_unknown_post_sample_never_projects_a_complete_pair"
+  ],
+  "tests_run": 11
+}

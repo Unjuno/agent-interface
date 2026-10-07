@@ -1,0 +1,12 @@
+candidate_source_commit=4cfc5db38bc2a088b8c5901ffe1d8817ab85f099
+freeze_commit=243b93c144c9da6c7df349498768bc5b36a7daca
+docker_cli=/Users/taka/.orbstack/bin/docker
+host_uid=501
+host_gid=20
+build: /Users/taka/.orbstack/bin/docker build --pull --progress=plain --file /Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/doom/issue_59_sync_ack_loss_linux_a02_20261007/Dockerfile --tag issue59-sync-ack-loss-a02:4cfc5db3 /Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/doom/issue_59_sync_ack_loss_linux_a02_20261007
+image_manifest: /Users/taka/.orbstack/bin/docker image inspect issue59-sync-ack-loss-a02:4cfc5db3
+create: /Users/taka/.orbstack/bin/docker create --name issue59-sync-ack-loss-a02-4cfc5db3 --network none --memory 1073741824 --cpus 1 --pids-limit 64 --read-only --tmpfs /tmp:rw,nosuid,nodev,noexec,size=32m --cap-drop ALL --security-opt no-new-privileges --user 501:20 --mount research/live_control:/workspace/research/live_control:ro --mount research/doom:/workspace/research/doom:ro --mount research/observation_tiles:/workspace/research/observation_tiles:ro --mount research/observation_gating:/workspace/research/observation_gating:ro --mount /Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-review-8261/research/doom/issue_59_sync_ack_loss_linux_a02_20261007/results/a02:/out:rw issue59-sync-ack-loss-a02:4cfc5db3 python -B /workspace/research/doom/issue_59_sync_ack_loss_linux_a02_20261007/run_tests.py
+start: /Users/taka/.orbstack/bin/docker start --attach <container-id>
+runtime_network=none
+resource_limits=cpus=1,memory=1073741824,pids=64,read-only-rootfs,all-capabilities-dropped,no-new-privileges,tmpfs-/tmp-32MiB
+host_preflight: /Users/taka/.orbstack/bin/docker version; /Users/taka/.orbstack/bin/docker info --format '{{json .DriverStatus}} {{.DockerRootDir}} {{.ServerVersion}}'; /Users/taka/.orbstack/bin/docker ps --format '{{.ID}} {{.Image}} {{.Names}}'; sysctl -n hw.memsize; memory_pressure -Q; df -h /

@@ -113,6 +113,73 @@ class BatchMeasurementCompositionTests(unittest.TestCase):
         self.assertTrue(all(row['status'] != 'adapter_edge_brackets_paired' for row in result))
         self.assertTrue(self.backend.owner.call('input_state')['release_pending'])
 
+    def test_delivered_down_with_sync_error_is_retained_as_unconfirmed(self):
+        original_sync = self.fixture.fake.sync
+
+        def sync_then_fail():
+            original_sync()
+            raise OSError('synthetic sync acknowledgement loss')
+
+        with patch.object(self.fixture.fake, 'sync', sync_then_fail):
+            with self.assertRaisesRegex(OSError, 'acknowledgement loss'):
+                self.backend.raw('W', True)
+        self.assertEqual(self.fixture.fake.down, {38})
+        attempts = [row for row in self.events
+                    if row.get('event') == 'input_attempt_measurement']
+        self.assertEqual(len(attempts), 1)
+        self.assertEqual(attempts[0]['operation'], 'down')
+        measurement = attempts[0]['physical_key_measurement']
+        self.assertEqual(measurement['classification'], 'KEYMAP_EDGE_UNCONFIRMED')
+        self.assertIsNone(measurement['bracket'])
+        self.assertIsNone(measurement['actuation_id'])
+        down_before_cleanup = sorted(self.fixture.fake.down)
+        cleanup = self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
+        self.assertTrue(cleanup['verified'])
+        self.assertEqual(self.fixture.fake.down, set())
+        print(json.dumps({
+            'case': 'delivered_down_with_sync_error',
+            'down_before_cleanup': down_before_cleanup,
+            'input_attempt_measurement': attempts[0],
+            'cleanup': cleanup,
+            'down_after_cleanup': sorted(self.fixture.fake.down),
+        }, sort_keys=True), flush=True)
+
+    def test_measurement_publish_error_does_not_mask_down_error(self):
+        original_sync = self.fixture.fake.sync
+
+        def sync_then_fail():
+            original_sync()
+            raise OSError('synthetic DOWN acknowledgement loss')
+
+        def fail_publish(row):
+            raise RuntimeError('synthetic measurement output failure')
+
+        with patch.object(self.fixture.fake, 'sync', sync_then_fail):
+            with patch.object(self.backend, 'emit', fail_publish):
+                with self.assertRaisesRegex(OSError, 'DOWN acknowledgement loss') as caught:
+                    self.backend.raw('W', True)
+        self.assertEqual(caught.exception.measurement_publish_error['type'], 'RuntimeError')
+        self.assertEqual(self.fixture.fake.down, {38})
+        self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
+        self.assertEqual(self.fixture.fake.down, set())
+
+    def test_measurement_failure_does_not_mask_down_error(self):
+        original_sync = self.fixture.fake.sync
+
+        def sync_then_fail():
+            original_sync()
+            raise OSError('synthetic DOWN acknowledgement loss')
+
+        from key_edge_measurement_v1 import KeyEdgeMeasurements
+        with patch.object(self.fixture.fake, 'sync', sync_then_fail):
+            with patch.object(KeyEdgeMeasurements, 'edge', side_effect=RuntimeError(
+                    'synthetic measurement failure')):
+                with self.assertRaisesRegex(OSError, 'DOWN acknowledgement loss'):
+                    self.backend.raw('W', True)
+        self.assertEqual(self.fixture.fake.down, {38})
+        self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
+        self.assertEqual(self.fixture.fake.down, set())
+
     def test_delivered_up_with_send_error_suppresses_sibling_bracket(self):
         xtest = sys.modules['Xlib.ext.xtest']
         original = xtest.fake_input

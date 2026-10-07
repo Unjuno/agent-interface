@@ -212,7 +212,32 @@ class Backend(Previous):
         if down:
             if context is not None:
                 self._flush_pending_ups(context)
-            record = self.owner.call("down", self.lease, key)
+            try:
+                record = self.owner.call("down", self.lease, key)
+            except Exception as exc:
+                # XTest may have applied DOWN even when its acknowledgement
+                # fails. Publish the owner's explicit UNKNOWN sample before
+                # the original exception drives executor cleanup.
+                attempt = getattr(exc, "owner_input_measurement_record", None)
+                if (isinstance(attempt, dict)
+                        and attempt.get("event") == "input_attempt_measurement"):
+                    row = dict(attempt)
+                    row["id"], row["step"] = input_context
+                    row.setdefault("owner_id", self.owner.owner_id)
+                    row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
+                    try:
+                        self.emit(row)
+                    except Exception as publish_exc:
+                        # Preserve the input failure as the primary exception;
+                        # retain publication failure details when it can carry them.
+                        try:
+                            exc.measurement_publish_error = {
+                                "type": type(publish_exc).__name__,
+                                "message": str(publish_exc)[:200],
+                            }
+                        except Exception:
+                            pass
+                raise
             self.held.add(key)
             if record is not None:
                 row = dict(record)
