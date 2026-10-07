@@ -40,10 +40,13 @@ class EofStopRegression(unittest.TestCase):
         with self.assertRaisesRegex(AppServerError, 'closed while waiting'):
             client.wait_notification(lambda row: True, timeout=1)
 
-    def test_queued_reply_survives_stdout_eof(self):
-        client = self.client([{'id': 1, 'result': {'usable': True}}])
-        self.assertEqual(client.request('fixture/request'), {'usable': True})
+    def test_unissued_reply_is_not_reused_after_stdout_eof(self):
+        reply = {'id': 1, 'result': {'usable': True}}
+        client = self.client([reply])
+        with self.assertRaisesRegex(AppServerError, 'closed during fixture/request'):
+            client.request('fixture/request')
         self.assertEqual(client._responses, {})
+        self.assertEqual(list(client._notifications), [reply])
 
     def test_queued_notification_survives_stdout_eof(self):
         message = {'method': 'fixture/ready', 'params': {'usable': True}}
