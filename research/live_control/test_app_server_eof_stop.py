@@ -32,7 +32,7 @@ class EofStopRegression(unittest.TestCase):
 
     def test_request_eof_does_not_read_stderr(self):
         client = self.client()
-        with self.assertRaisesRegex(AppServerError, 'closed during fixture/request'):
+        with self.assertRaisesRegex(AppServerError, 'closed before send'):
             client.request('fixture/request', timeout=1)
 
     def test_notification_eof_does_not_read_stderr(self):
@@ -43,7 +43,7 @@ class EofStopRegression(unittest.TestCase):
     def test_unissued_reply_is_not_reused_after_stdout_eof(self):
         reply = {'id': 1, 'result': {'usable': True}}
         client = self.client([reply])
-        with self.assertRaisesRegex(AppServerError, 'closed during fixture/request'):
+        with self.assertRaisesRegex(AppServerError, 'closed before send'):
             client.request('fixture/request')
         self.assertEqual(client._responses, {})
         self.assertEqual(list(client._notifications), [reply])
