@@ -1,21 +1,7 @@
 diff --git a/runtime/backends/x11_v1/backend.py b/runtime/backends/x11_v1/backend.py
-index 0000000..0000000 100644
 --- a/runtime/backends/x11_v1/backend.py
 +++ b/runtime/backends/x11_v1/backend.py
-@@ -1,10 +1,12 @@
- """X11/XTEST implementation of the runtime core v1 backend boundary.
- 
- This implementation is intentionally narrow: X11 only, strict ASCII text, and
- explicit registered target windows. It never decides admission itself.
- """
- from __future__ import annotations
- 
- import hashlib
-+import os
-+import socket
- import time
- from typing import Any
-@@ -312,7 +314,23 @@ class X11Backend:
+@@ -312,7 +312,25 @@ class X11Backend:
      def text(self, value: str) -> None:
          # Research candidate k8n4: this query is not atomic with later input.
          plan = self._text_plan(value)
@@ -23,6 +9,8 @@ index 0000000..0000000 100644
 +        mask = int(self.root.query_pointer().mask)
 +        if value and mask & X.LockMask:
              raise X11BackendError("CAPS_LOCK_ACTIVE: literal text refused; lock unchanged")
++        import os
++        import socket
 +        barrier = os.environ.get("AGENT_INTERFACE_CAPS_BARRIER_SOCKET")
 +        if value and barrier:
 +            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as channel:
