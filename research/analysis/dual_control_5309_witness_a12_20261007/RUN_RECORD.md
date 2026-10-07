@@ -11,6 +11,7 @@ Frozen base main: `9fb2dd6782d1d1477a00d14be870487fd4c54fa2`
 - All three formal output paths were absent before launch.
 - Image/mount smoke: Node v26.10.0, linux/arm64; 192 candidate-input rows read from a read-only bind; writable output bind passed. Smoke artifact: `out/MOUNT_SMOKE.txt`.
 - Pre-run construction: `node --check` on all four stage/generator modules passed; `node --test test_protocol.mjs` passed 6/6.
+- Postrun reconciliation helper regression test passed 1/1 before the diagnostic freeze; it did not invoke the formal CLI stages.
 
 ## Formal invocations
 
@@ -31,6 +32,16 @@ No candidate, environment, or auditor stage was retried. All containers used the
 - Prior-witness stratum: 96 rows per arm; completions 96/96; no action taken.
 - Held-out, correct, affordable, no-prior: 10 cases; completions 7/10; WITNESS_AWARE advantage +3.
 - Non-authoritative candidate completion hints without receipt: 47; unsupported completions: 0; authority grants: 0; audit errors: 0.
+
+## Postrun read-only reconciliation
+
+The formal auditor did not independently recompute every expected policy choice. A distinct post-outcome diagnostic allocation (`POSTRUN_RECONCILIATION_FREEZE.md`) was frozen with its own source/input checksum manifest, then run once over retained files. It is not a candidate/environment/auditor rerun and cannot change the formal result.
+
+- Expected policy choice mismatches: 0/384.
+- Equal predicted information gain: true for every candidate input row.
+- Raw transition/receipt mismatches: 0.
+- Independently recomputed strata/held-out metrics match `out/audit.json`: true.
+- Diagnostic errors: 0; verdict: `PASS_POSTRUN_POLICY_AND_RECEIPT_RECONCILIATION`.
 
 ## Scope
 
