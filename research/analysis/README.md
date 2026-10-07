@@ -1136,6 +1136,9 @@ The checker compares the generated block against every child directory with a re
 
 - [Issue #6808 / PR #6816 S02 session-isolation STOP](looming_visual_assumption_gate_5905_s02_wslc_20261003/STOP.md) — 34 exact original files (271,291 bytes); historical host construction only, formal candidate/auditor/retries 0/0/0, retrospective qualification, no scientific result or rerun.
 
+
+- [Issue #6576 A04 runtime-envelope invalidation](extreme_tail_eligibility_6576_construction_v1/runtime_envelope_a04_20261006/REPORT.md) — `PASS_RUNTIME_ENVELOPE_INVALIDATION_A04_SCOPED`: 90 synthetic streams; declared-mode invalidation occurred at the transition, with 22/30 preregistered counterexamples. The original 2,925,419-byte formal raw is not in this repository; its SHA-256 and transfer limitation are documented. No six-case T0 allocation, real release-tail, safety, or worst-case claim.
+
 ## Incomplete preregistration custody
 
 - [Original primary-stdio UTF-8 identity counterexample](stdio_utf8_57_20261003_45e9/README.md) — five historical Windows echo cases; published hex distinguishes three inputs that share saved JSON, separate from later decoder repairs.
