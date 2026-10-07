@@ -28,6 +28,7 @@ class CodexAppServerClient:
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
+        self._pending = set()
         self._notifications = deque()
         self._next_id = 1
         self._closed = False
@@ -40,9 +41,10 @@ class CodexAppServerClient:
                 message = json.loads(line)
                 self._record("received", message)
                 with self._condition:
-                    if "id" in message:
-                        if type(message["id"]) is bool:
-                            continue
+                    if ("id" in message and "method" not in message and
+                            type(message["id"]) in (int, float) and
+                            message["id"] in self._pending and
+                            message["id"] not in self._responses):
                         self._responses[message["id"]] = message
                     else:
                         self._notifications.append(message)
@@ -52,10 +54,17 @@ class CodexAppServerClient:
                 self._closed = True
                 self._condition.notify_all()
 
-    def _write(self, message):
+    def _write(self, message, *, request_id=None):
         with self._write_lock:
+            wire = json.dumps(message, separators=(",", ":")) + "\n"
             self._record("sent", message)
-            self.process.stdin.write(json.dumps(message, separators=(",", ":")) + "\n")
+            if request_id is not None:
+                # Admit only after obtaining the write slot and preparing the
+                # frame. Do not hold the condition across blocking stream I/O:
+                # an immediate reply may need the reader before write returns.
+                with self._condition:
+                    self._pending.add(request_id)
+            self.process.stdin.write(wire)
             self.process.stdin.flush()
 
     def _record(self, direction, message):
@@ -74,20 +83,26 @@ class CodexAppServerClient:
         message = {"method": method, "id": identifier}
         if params is not None:
             message["params"] = params
-        self._write(message)
-        deadline = time.monotonic() + timeout
-        with self._condition:
-            while identifier not in self._responses:
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    raise TimeoutError(f"app-server request timed out: {method}")
-                if self._closed:
-                    raise AppServerError(f"app-server closed during {method}: stderr not drained")
-                self._condition.wait(remaining)
-            response = self._responses.pop(identifier)
-        if "error" in response:
-            raise AppServerError(f"{method}: {json.dumps(response['error'], sort_keys=True)}")
-        return response["result"]
+        try:
+            self._write(message, request_id=identifier)
+            deadline = time.monotonic() + timeout
+            with self._condition:
+                while identifier not in self._responses:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise TimeoutError(f"app-server request timed out: {method}")
+                    if self._closed:
+                        raise AppServerError(f"app-server closed during {method}: stderr not drained")
+                    self._condition.wait(remaining)
+                response = self._responses.pop(identifier)
+                self._pending.discard(identifier)
+            if "error" in response:
+                raise AppServerError(f"{method}: {json.dumps(response['error'], sort_keys=True)}")
+            return response["result"]
+        finally:
+            with self._condition:
+                self._pending.discard(identifier)
+                self._responses.pop(identifier, None)
 
     def notify(self, method, params=None):
         message = {"method": method}
