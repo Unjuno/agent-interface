@@ -1,11 +1,11 @@
 # Post-run A11 strata audit freeze
 
-Diagnostic allocation: `5309-TOPOLOGY-DEPENDENT-A11-POSTRUN-STRATA-V2`. This read-only analysis was defined after the formal A11 outcome and cannot alter that outcome. It reads only the retained input, choices, raw rows, and oracle; it does not invoke any formal stage.
+Diagnostic allocation: `5309-TOPOLOGY-DEPENDENT-A11-POSTRUN-STRATA-V2`. Source workload allocation: `5309-TOPOLOGY-DEPENDENT-A11-HOST-20261007`. The result JSON must retain these as distinct `allocation` and `source_allocation` fields. This read-only analysis was defined after the formal A11 outcome and cannot alter that outcome. It reads only the retained input, choices, raw rows, and oracle; it does not invoke any formal stage.
 
 Frozen source hash:
 
 ```text
-634a327a5babd56d84d9f8ff92eea7da66b35103bc60710238379ca73027d1d7  audit_retained_strata_v2.py
+634ac61ca2e718c7e9c859ab9b88b5ca461ddb02381b6ada8bc4e941f3aa1d22  audit_retained_strata_v2.py
 ```
 
 Frozen retained-input hashes:

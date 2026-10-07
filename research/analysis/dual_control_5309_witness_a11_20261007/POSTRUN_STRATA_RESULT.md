@@ -1,6 +1,6 @@
 # Post-run A11 strata audit result
 
-Diagnostic allocation `5309-TOPOLOGY-DEPENDENT-A11-POSTRUN-STRATA-V2` completed once against retained bytes. Verdict: **`PASS_RETAINED_STRATA_RECONSTRUCTION`**; 264 raw rows checked, zero reconstruction errors, zero unsupported completions. Input, choices, raw and oracle SHA-256 values are embedded in `audit_retained_strata_v2.json`; the diagnostic script and output hashes are in `POSTRUN_STRATA_SHA256SUMS.txt`.
+Diagnostic allocation `5309-TOPOLOGY-DEPENDENT-A11-POSTRUN-STRATA-V2` completed once against retained bytes. Its JSON explicitly records this as `allocation` and preserves `5309-TOPOLOGY-DEPENDENT-A11-HOST-20261007` separately as `source_allocation`. Verdict: **`PASS_RETAINED_STRATA_RECONSTRUCTION`**; 264 raw rows checked, zero reconstruction errors, zero unsupported completions. Input, choices, raw and oracle SHA-256 values are embedded in `audit_retained_strata_v2.json`; the diagnostic script and output hashes are in `POSTRUN_STRATA_SHA256SUMS.txt`.
 
 | Corrected stratum | Cases | Generic completions | WITNESS completions |
 |---|---:|---:|---:|

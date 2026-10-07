@@ -79,7 +79,8 @@ def main():
                 unsupported.append(case_id + ":" + arm)
 
     output = {
-        "allocation": workload["allocation"],
+        "allocation": "5309-TOPOLOGY-DEPENDENT-A11-POSTRUN-STRATA-V2",
+        "source_allocation": workload["allocation"],
         "audit_type": "POSTRUN_READ_ONLY_STRATA_RECLASSIFICATION_V2",
         "source_sha256": {"candidate_input": sha256(input_path),
                           "candidate_choices": sha256(choices_path),
