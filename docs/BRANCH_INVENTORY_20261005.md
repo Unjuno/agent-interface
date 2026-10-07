@@ -267,6 +267,86 @@ A fresh read observed 423 remote branch refs with `git ls-remote --heads origin`
 
 The branch and PR reads are not an atomic snapshot, and the branch-name listing does not map refs to PR heads/bases, owners, unique commits, experiments, or active allocations. This updates backlog counts only; it classifies no branch as safe to delete. The all-ref custody audit remains incomplete.
 
+## Fresh open-PR crosswalk and evidence-rescue cleanup — 2026-10-07 09:50 UTC
+
+A fresh paginated GitHub REST read resolved 363 open PRs to 363 distinct head branch names and 37 distinct base names; 33 bases are also open heads, and four are base-only. The branch search and `git ls-remote --heads origin` each returned 433 refs. Therefore 66 current branch refs are neither an open PR head nor an open PR base. The reads overlapped rather than forming an atomic transaction; this set is a candidate queue only, not a deletion classification.
+
+Closed, unmerged PR #8241's `research/reversal-geometry-20261006-g8m2` ref was removed at exact tip `b2255468f56a7e15dddaa57a1f6e74d519aba52e` after preserving its distinct allocation 02. Draft PR #8273 places the original 11 files under a separate allocation path, with all 11 Git blob IDs matching the source. The capsule SHA-256 was verified; 22 archive members were inspected without executing the helper, candidate, auditor, or tests. Allocation 01 on main remains untouched, allocation 02 remains corroborative, and the pre-freeze construction outcome remains STOP/unpooled. The closed #8241 pull-head remains fetchable at the former tip. No open PR head/base dependents or local worktree used the source branch; it was unprotected and owned by `Unjuno`.
+
+Merged PR #8253's source-ref cleanup is also verified: `fix/ci-preview-analysis-checkout-20261006` at `0756e73a24c0f1f5ac869063b08bebe1e89dad7b` was an ancestor of main, had no open dependencies or checked-out worktree, and its closed pull-head remains fetchable.
+
+### Remote refs outside current open-PR heads and bases
+
+- `codex/fix-7997-evidence-wording`
+- `fix/compiled-observation-exception-propagation-20261005`
+- `fix/retain-unverified-x11-key-holds-20261005`
+- `fix/x11-explicit-up-01a0ff2c`
+- `fix/x11-wheel-ledger-01a0ff2c`
+- `fix/59-a05-audit-integrity-20261005`
+- `fix/59-projector-attempt-ordinal-type-e0cc-20261005`
+- `fix/59-v39-admission-id-projection-a01-20261005`
+- `fix/59-v39-bracket-interval-bool-20261005`
+- `fix/59-v39-cover-admission-invalidation-edd067-20261004`
+- `fix/59-v39-hashsafe-adapter-id-20261005`
+- `fix/59-v39-raw-bracket-consistency-a01-20261004`
+- `fix/59-windows-anonymous-pipe-readiness-20261005`
+- `fix/7974-release-lockout-a01-20261005`
+- `fix/8243-verifier-r2p6-20261006`
+- `rescue/caller-terminal-journal-e01-currentmain-20261007`
+- `rescue/constructor-close-fdfd-20261004`
+- `rescue/cost-value-e02-currentmain-20261007`
+- `rescue/gil-x11-currentmain-20261007`
+- `rescue/http-edit-evidence-s07-currentmain-20261007`
+- `rescue/primary-release-shape-e01-currentmain-20261007`
+- `rescue/todomvc-browser-b01-currentmain-20261007`
+- `rescue/wal-snapshot-6526-20261004`
+- `rescue/win32-release-retain-7772-currentmain-20261007`
+- `rescue/windows-reuse-causality-currentmain-20261007`
+- `rescue/59-per-key-interval-a01-a02-20261005`
+- `rescue/7838-a02-current-main-20261005`
+- `research/cli-report-persistence-retained-p4n7-20261006`
+- `research/held-chord-h7k3-20261007`
+- `research/predictive-display-t0-5935-20261006-v1`
+- `research/primary-uncertain-ba92-v1`
+- `research/scorer-endpoint-readback-type-20261005`
+- `research/strict-attempt-ordinal-v39-20261005`
+- `research/v15-perkey-owner-evidence-only-20261005`
+- `research/v39-attempt-ordinal-exact-int-20261005`
+- `research/v39-dual-signal-epoch-a03-20261005`
+- `research/v39-partial-record-drain-race-20261005`
+- `research/59-cancel-release-cause-postsample-c03-20261004`
+- `research/59-exact-release-trace-a01-20261005`
+- `research/59-expected-key-provenance-a01-20261005`
+- `research/59-owner-expiry-drain-barrier-a01-20261005`
+- `research/59-per-key-release-receipts-20261005`
+- `research/59-release-query-failure-probe-a01-20261005`
+- `research/59-renewal-soft-stale-admission-a01-20261005`
+- `research/59-v12-source-closure-20261005`
+- `research/59-v39-cover-admission-main-port-a01`
+- `research/59-v39-current-admission-fix-a01-20261005`
+- `research/59-v39-fire-cover-ammo-audit-a01-20261005`
+- `research/59-v39-frame-only-threat-a01-20261005`
+- `research/59-v39-keymap-batch-a06-20261005`
+- `research/59-v39-renewal-invalidation-a01-20261005`
+- `research/59-v39-renewal-reject-race-a01-20261005`
+- `research/59-v39-v15-cleanup-a05-current-main-20261005`
+- `research/59-v39-v15-cleanup-a07-current-main-20261005`
+- `research/59-xvfb-audit-v3-a02-20261005`
+- `research/4435-complete-custody-20261007-k9r2`
+- `research/6576-runtime-envelope-a04-20261006`
+- `research/7799-pairwise-eligibility-t0-a01-20261005`
+- `research/7993-superpopulation-ipcw-a02-construction-20261005`
+- `research/8150-threat-profiled-runtime-eligibility-t0-20261005`
+- `research/8157-prefix-audit-a03-20261005`
+- `research/8185-transform-graph-a02-20261005`
+- `review/7822-zero-boundary-c03-20261006`
+- `test/59-feedback-before-step-bool-20261005`
+- `test/59-v39-adapter-edge-cardinality-a01-20261005`
+- `test/59-v39-observation-step-alias-20261005`
+
+These 66 refs remain unclassified. Several are explicitly research/rescue branches; before deleting any, resolve closed-PR history, unique commit/path custody, active allocations, and worktree ownership. Preserve experiment raw data and STOP outcomes.
+
+
 ## Current open-PR branch map and merged-ref cleanup — 2026-10-07 09:41 UTC
 
 A complete date-partitioned search and metadata fetch resolved 360 open PRs to 360 distinct head branch names and 36 distinct base branch names; 32 base names are also open heads, and four are base-only. The branch-name pagination read initially returned 424 refs. After deleting merged PR #8253's source ref below, a fresh count was 423. Of these current refs, 59 are neither an open PR head nor an open PR base. This is only an initial candidate set: each still needs closed-PR history, tip/content custody, owner/allocation, and local worktree review.
