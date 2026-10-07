@@ -17,7 +17,7 @@ The existing `isinstance(keycode, int)` check accepts JSON booleans in Python. T
 
 ## Construction validation
 
-The patch was applied only to a disposable copy of the two draft files. Four focused unittest cases passed: all three frozen-arm synthetic records remain accepted, a missing modifier release remains rejected, and balanced-bool-keycode plus press/release timestamp reversal mutations are rejected. The immutable A01 C01 raw record passed the proposed event predicates after only the declared v2 study-id and freeze-digest rebinding.
+The patch was applied only to a fresh disposable copy of the two draft files. The first full-suite attempt stopped before audit execution because the copy lacked XVFB_EXPECTED_STDERR.txt; after copying that declared fixture, the complete v2 auditor suite passed 8/8. The suite covers all three frozen-arm synthetic records, a missing modifier release, both new keycode/timestamp mutations, material corruptions, frozen schedule/mutations, the draft allocation gate, and the immutable A01 C01 raw record under only the declared v2 study-id and freeze-digest rebinding. The initial missing-fixture stop is a preserved setup failure, not an auditor or scientific result.
 
 No public dispatch, GUI case, or formal allocation was run. This is a construction/auditor result only; it establishes no scientific result for the Caps Lock race.
 
