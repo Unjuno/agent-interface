@@ -2363,6 +2363,19 @@ and [Issue #57](https://github.com/Unjuno/agent-interface/issues/57).
 
 The same rescue also preserves 58 D01 archival files from 2026-10-03: one authenticated Debian 12/ARM64 virtual-display XTEST Shift_L hold, an independent down witness, cancellation, verified owner release, and an independent clear key/button witness. The terminal remained cancelled with zero completed steps; Xvfb -9 and Openbox 1 exits and all scope limits remain retained. No model/task attempt or original run was replayed. This is one virtual-display cancellation condition, not physical-hardware release, general GUI reliability, current-main runtime qualification, or an efficiency claim. See the [D01 report and retained raw evidence](research/integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md).
 
+# Issue #57 — primary caller release-shape E01 archive (2026-10-03)
+
+The original 48-cell unchanged-caller arm retains `FAIL_SHAPE_ADMISSION_SCOPED`:
+malformed release-array aliases permitted eight invalid continuations. A
+separately frozen private candidate's 48 cells had zero invalid continuations,
+preserved eight healthy rows and changed 16 alias rows; this is inert fake-host
+construction evidence only. Source and private-candidate packets, first result,
+raw rows, saved auditors, native receipts, and byte-join custody are archived
+without rerunning either producer. The package explicitly does not establish
+that a conforming backend emits these shapes, physical release, real task
+effects, or production suitability. No candidate runtime change is proposed
+here; #7071 remains the separate integration/review path. See the [E01 archive](research/integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md), [Issue #57 source/result records](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969803925), and [PR #7071](https://github.com/Unjuno/agent-interface/pull/7071).
+
 # Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
 
 This archive preserves one bounded ordinary remote-browser task (T01) with
