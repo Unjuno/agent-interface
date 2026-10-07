@@ -38,7 +38,11 @@ class LockActorTest(unittest.TestCase):
                     client.settimeout(3)
                     client.connect(str(path))
                     client.sendall(b"LOCK_ON\n")
-                    raw = client.makefile("rb").readline()
+                    raw = bytearray()
+                    while not raw.endswith(b"\n"):
+                        chunk = client.recv(1)
+                        self.assertTrue(chunk, "actor closed without an ACK")
+                        raw.extend(chunk)
                 payload = json.loads(raw)
                 self.assertEqual(payload["request"], "LOCK_ON")
                 self.assertEqual(payload["pre_lock"], 0)
@@ -46,13 +50,18 @@ class LockActorTest(unittest.TestCase):
                 self.assertLessEqual(payload["mutation_sync_ns"], payload["ack_ns"])
                 self.assertGreaterEqual(payload["actor_pid"], 1)
                 actor.wait(timeout=4)
-                self.assertEqual(actor.returncode, 0, actor.stderr.read())
+                actor_output = actor.stdout.read()
+                actor_error = actor.stderr.read()
+                self.assertEqual(actor.returncode, 0, actor_error)
+                self.assertEqual(json.loads(actor_output), payload)
                 after = int(bool(root.query_pointer().mask & X.LockMask))
                 self.assertEqual(after, 1)
             finally:
                 if actor.poll() is None:
                     actor.terminate()
                     actor.wait(timeout=2)
+                actor.stdout.close()
+                actor.stderr.close()
                 observer.close()
 
 
