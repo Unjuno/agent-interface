@@ -24,6 +24,43 @@ class Extractor:
 
 
 class ObservableSignalGuardV2Tests(unittest.TestCase):
+    def test_monitor_retains_observation_identity_for_hard_and_unknown(self):
+        class Unreadable:
+            def read(self, observation):
+                raise ValueError("unreadable signal")
+
+        for extractor, status in ((Extractor(), "HARD_INVALIDATED"),
+                                  (Unreadable(), "UNKNOWN")):
+            with self.subTest(status=status):
+                guard = ObservableSignalGuard(spec(), signal(), signal()["binding"])
+                monitor = ObservableSignalPolicyMonitor(guard, extractor)
+                current = signal(79, 38, 1_100_000_000)
+                observation = {"sequence": 38, "capture_ns": current["capture_ns"],
+                               "pointer_binding": copy.deepcopy(current["binding"]),
+                               "frame_rgb_sha256": "a" * 64, "signal": current}
+                before = copy.deepcopy(observation)
+                event = monitor.observe(observation)
+                self.assertEqual(event["outcome"]["status"], status)
+                for field in ("sequence", "capture_ns", "pointer_binding", "frame_rgb_sha256"):
+                    self.assertEqual(event[field], before[field])
+                self.assertEqual(observation, before)
+                observation["pointer_binding"]["geometry"][0] = 999
+                observation["capture_ns"] = 2_000_000_000
+                observation["frame_rgb_sha256"] = "b" * 64
+                self.assertEqual(event["pointer_binding"], before["pointer_binding"])
+                self.assertEqual(event["capture_ns"], before["capture_ns"])
+                self.assertEqual(event["frame_rgb_sha256"], before["frame_rgb_sha256"])
+                event["pointer_binding"]["geometry"][1] = 888
+                self.assertEqual(observation["pointer_binding"]["geometry"][1], 2)
+
+    def test_monitor_does_not_invent_missing_identity_from_signal(self):
+        guard = ObservableSignalGuard(spec(), signal(), signal()["binding"])
+        monitor = ObservableSignalPolicyMonitor(guard, Extractor())
+        event = monitor.observe({"sequence": 38, "signal": signal(79, 38, 1_100_000_000)})
+        self.assertIsNone(event.get("capture_ns"))
+        self.assertIsNone(event.get("pointer_binding"))
+        self.assertNotIn("frame_rgb_sha256", event)
+
     def test_soft_hard_and_unchanged_authority(self):
         guard = ObservableSignalGuard(spec(), signal(), signal()["binding"])
         unchanged = guard.evaluate(signal(93, 38, 1_100_000_000))
