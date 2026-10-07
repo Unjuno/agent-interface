@@ -1,8 +1,10 @@
-# Result — GUI-REVERSIBILITY-7949-JOURNAL-A01
+# Unregistered duplicate execution archive — #7949
 
 ## Disposition
 
-**`PASS_JOURNAL_STATE_RECONCILIATION_SCOPED`**, with a material scope qualification: the complete-disjoint-write case emitted the frozen `PROPOSE_COMPENSATION` proposal and bound revision 1 while preserving the external value, but the certificate baseline agent value (`original`) was already equal to the current agent value (`original`). Therefore the proposed restore was idempotent/no-op; this allocation did **not** demonstrate changing a modified agent-owned field back to its baseline. The result supports finite journal/state mismatch detection and proposal-field scoping, not actual recovery effectiveness.
+**`STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED`**. The full GitHub Issue #8300 timeline contains an earlier freeze and formal result for this exact allocation ID (`GUI-REVERSIBILITY-7949-JOURNAL-A01-20261007`), posted before this local execution. The duplicate candidate/auditor payloads below are preserved only as custody evidence and are not a second scientific result. Do not combine them with, replace, or reinterpret the original A01 result.
+
+The duplicate payload's own disjoint-write case proposed the bounded field/value and bound revision 1 while preserving the external value, but its restore was idempotent/no-op because the current agent value already equaled the certificate baseline. This is only an additional limitation in the duplicate archive, not a correction to the original A01 result.
 
 ## Result
 

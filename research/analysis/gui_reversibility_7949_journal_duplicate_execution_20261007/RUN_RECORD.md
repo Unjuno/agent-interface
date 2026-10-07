@@ -1,6 +1,7 @@
-# One-shot execution record — A01
+# Custody record — unregistered duplicate invocation
 
-- Allocation: `GUI-REVERSIBILITY-7949-JOURNAL-A01-20261007`.
+- Referenced allocation ID: `GUI-REVERSIBILITY-7949-JOURNAL-A01-20261007` (already consumed by an earlier run recorded on Issue #8300 before this execution).
+- Allocation-level disposition: `STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED`. This package records a protocol deviation/duplicate invocation, not a second A01 result. The earlier Issue #8300 result remains authoritative and was not changed.
 - Intake main: `2d227ecf86479cff093123190560bd8d63148ce4`.
 - Freeze commit: `ead09fb8fda2d5579078211b4fc3fabe4435227`.
 - Freeze manifest: `FREEZE_SHA256SUMS.txt`; all 11 entries verified before formal execution and the frozen sources were not edited afterward.
@@ -14,7 +15,7 @@
 2. `python3 invoke_stage.py candidate` — wrapper exit 0; candidate subprocess exit 0, stdout 30 bytes, stderr 0 bytes. One invocation.
 3. `python3 invoke_stage.py auditor` — wrapper exit 0; auditor subprocess exit 0, stdout 147 bytes, stderr 0 bytes. One invocation.
 
-Candidate: six decisions, no input errors. Auditor: `PASS_JOURNAL_STATE_RECONCILIATION_SCOPED`, six DB reconstructions, zero errors, output mutation controls 4/4 rejected, raw mutation controls 4/4 rejected, authority/external actions 0. See `POST_RUN_QUALIFICATION.md` for the non-idempotent-restoration gap.
+Duplicate candidate payload: six decisions, no input errors. Duplicate auditor payload: embedded `PASS_JOURNAL_STATE_RECONCILIATION_SCOPED`, six DB reconstructions, zero errors, output mutation controls 4/4 rejected, raw mutation controls 4/4 rejected, authority/external actions 0. These payloads are preserved but are not promoted because the allocation ID was already consumed. See `DUPLICATE_ALLOCATION_STOP.md` and `POST_RUN_QUALIFICATION.md`.
 
 ## Retained outputs
 
