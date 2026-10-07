@@ -1,0 +1,35 @@
+{
+  "schema": "v39-application-consumption-audit-a02-freeze-v1",
+  "experiment_id": "V39-APPLICATION-CONSUMPTION-AUDIT-A02-20261005",
+  "allocation_id": "v39-application-consumption-audit-a02-20261005-01",
+  "base_commit": "efb712b1aa6f01d67ed119b266ef479645cfb96a",
+  "predecessor_pr": 7662,
+  "predecessor_head": "efb712b1aa6f01d67ed119b266ef479645cfb96a",
+  "status": "FROZEN_AUDIT_ONLY_NO_LIVE_LEASE",
+  "freeze_time_utc": "2026-10-04T23:39:15Z",
+  "hypothesis": "The A01 saved-result chronology audit must recompute ordering from retained interval endpoints and reject a balanced raw mutation that preserves aggregate counts.",
+  "test": "Recompute each expected classification using down[1] < up[0] for baseline and candidate, validate status and exposed intervals, then swap one ordered and one unordered case per implementation while keeping 15/85 counts unchanged.",
+  "decision_gate": {
+    "untouched_source": "both implementations pass with 15 ordered and 85 incomplete cases",
+    "balanced_mutation": "rejected with exactly two chronology mismatches per implementation",
+    "independent_raw_audit": "PASS_INDEPENDENT_RAW_AUDIT with zero errors",
+    "game_gui_model_input_allocation": "none"
+  },
+  "inputs": {
+    "predecessor_raw_path": "research/doom/v39_application_consumption_conflict_59_a01_20261005/raw/A01.json",
+    "raw_sha256": "3f664d52a492ad9d0cbbbdb70880ffe16a4909d4bf2c2880d51891d523652363"
+  },
+  "environment": {
+    "platform": "Windows 11 x86_64",
+    "python": "3.11.9",
+    "execution": "local CPU-only JSON audit"
+  },
+  "pre_freeze_development": "The TDD test was observed RED before audit_a02.py existed and GREEN after implementation. Those outputs are preserved under development/pre-freeze-test and are not the formal result.",
+  "sha256": {
+    "input_A01": "3f664d52a492ad9d0cbbbdb70880ffe16a4909d4bf2c2880d51891d523652363",
+    "audit_a02.py": "5d3a2d1bb5c7e60de1bda3f2b63db380e2e5e253a167ba8a9df01a3042d18000",
+    "verify_a02.py": "9d803905a2b0f803f5a5e2b98a13878f3200d1ef3a4b1a343b9bc698580ec08e",
+    "test_audit_a02.py": "144e84c2df425675613fd224b666a5f6de1bddc393ef8042df365c0ac4e6a92f",
+    "README.md": "f20a541aa9b9b70b4eabbcf1e823a6d47fa29515e1e734fa27703a6e4db1b320"
+  }
+}

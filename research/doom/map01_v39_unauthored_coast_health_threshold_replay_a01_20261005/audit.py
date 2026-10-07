@@ -55,11 +55,36 @@ def main():
  assert result['existing_final_action_rule']['max_allowed_loss_points']==20
  assert result['existing_final_action_rule']['observed_final_health']==4
  assert result['existing_final_action_rule']['final_action_rejection_reason']=='health_max_decrease_from_source_failed'
- assert result['negative_control_decision4']['source_health']==result['negative_control_decision4']['monitor_health']==30
- assert result['negative_control_decision4']['reason']=='health:source_expired'
- out={'status':'PASS_A04_TRACE_REPLAY_AUDIT','checks':16,'observations':len(obs),
+ d4=report['decisions'][4]
+ source=d4['cover_validity_admission']['source_signal']
+ monitor=d4['policy_invalidation']['signals']['health']
+ typed_by_seq={}
+ for e in stream:
+  if e.get('event')=='typed_observation':
+   assert e['sequence'] not in typed_by_seq
+   typed_by_seq[e['sequence']]=e
+ source_event=typed_by_seq[source['sequence']]
+ monitor_event=typed_by_seq[monitor['sequence']]
+ source_raw=source_event['signals']['health']; monitor_raw=monitor_event['signals']['health']
+ assert source_raw['signal_id']==monitor_raw['signal_id']=='health'
+ assert source_raw['status']==monitor_raw['status']=='observed'
+ assert source_raw['value']==source['value']==30
+ assert monitor_raw['value']==monitor['value']==30
+ assert source_event['capture_ns']==source['capture_ns']==source_raw['capture_ns']
+ assert monitor_event['capture_ns']==monitor['capture_ns']==monitor_raw['capture_ns']
+ assert source_event['sequence']==source['sequence'] and monitor_event['sequence']==monitor['sequence']
+ reason=d4['policy_invalidation']['reason']
+ assert reason=='health:source_expired'
+ assert result['negative_control_decision4']['source_health']==source_raw['value']
+ assert result['negative_control_decision4']['monitor_health']==monitor_raw['value']
+ assert result['negative_control_decision4']['reason']==reason
+ negative_control={'source_sequence':source['sequence'],'source_health':source_raw['value'],
+  'source_capture_ns':source_raw['capture_ns'],'monitor_sequence':monitor['sequence'],
+  'monitor_health':monitor_raw['value'],'monitor_capture_ns':monitor_raw['capture_ns'],
+  'invalidation_reason':reason}
+ out={'status':'PASS_A04_TRACE_REPLAY_AUDIT','checks':25,'observations':len(obs),
   'thresholds':len(bythreshold),'archive_sha256':FREEZE['source_raw_archive_sha256'],
-  'candidate_sha256':digest(ROOT/'results/a01/candidate.json')}
+  'candidate_sha256':digest(candidate_path),'negative_control_raw_join':negative_control}
  target=outdir/'audit.json'
  with target.open('x') as f: json.dump(out,f,indent=2);f.write('\n')
  print(json.dumps(out))
