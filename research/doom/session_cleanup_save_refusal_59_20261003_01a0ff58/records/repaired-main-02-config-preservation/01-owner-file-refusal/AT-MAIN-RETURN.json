@@ -1,0 +1,75 @@
+{
+  "schema": "ordinary-v12-owner-record-cleanup-v1",
+  "case": "owner-file-refusal",
+  "main_started_utc": "2026-10-03T05:30:16.448407+00:00",
+  "main_returned_utc": "2026-10-03T05:30:18.787245+00:00",
+  "main_error": {
+    "type": "PermissionError",
+    "message": "[Errno 13] Permission denied: '<LOCAL_HOME>\\\\Documents\\\\Codex\\\\2026-10-03\\\\new-chat-6\\\\work\\\\v12-owner-record-cleanup\\\\repaired-main-02-config-preservation\\\\01-owner-file-refusal\\\\session-out\\\\owner-events.json'",
+    "is_os_error": true
+  },
+  "input_lines": 0,
+  "actual_executor": "executor_v12",
+  "session_close_at_main_return": 1,
+  "game_close_at_main_return": 1,
+  "backend_close_at_main_return": 1,
+  "child_pid": 25096,
+  "child_exit_at_main_return": 0,
+  "session_tmp_exists_at_main_return": false,
+  "trace_at_main_return": [
+    {
+      "action": "session-created-real-private-child",
+      "utc": "2026-10-03T05:30:16.474791+00:00"
+    },
+    {
+      "action": "fake-game-created",
+      "utc": "2026-10-03T05:30:16.476266+00:00"
+    },
+    {
+      "action": "fake-game-init",
+      "utc": "2026-10-03T05:30:16.476266+00:00"
+    },
+    {
+      "action": "fake-focus-no-input",
+      "utc": "2026-10-03T05:30:16.776738+00:00"
+    },
+    {
+      "action": "fake-backend-created",
+      "utc": "2026-10-03T05:30:18.779224+00:00"
+    },
+    {
+      "action": "backend-close",
+      "utc": "2026-10-03T05:30:18.781230+00:00"
+    },
+    {
+      "action": "game-close",
+      "utc": "2026-10-03T05:30:18.781230+00:00"
+    },
+    {
+      "action": "session-close-enter",
+      "utc": "2026-10-03T05:30:18.781230+00:00"
+    },
+    {
+      "action": "session-close-return",
+      "utc": "2026-10-03T05:30:18.784241+00:00"
+    }
+  ],
+  "module_sources": {
+    "executor_v11": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\executor_v11.py",
+    "executor_v12": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\executor_v12.py",
+    "executor_v3": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\executor_v3.py",
+    "executor_v5": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\executor_v5.py",
+    "lease": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\lease.py",
+    "lease_cause_v1": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\lease_cause_v1.py",
+    "lease_cause_v2": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\lease_cause_v2.py",
+    "lease_release_v1": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\v12-cleanup-checkout\\research\\live_control\\lease_release_v1.py"
+  },
+  "fakes": [
+    "VD/game/IWAD",
+    "X11/session boundary",
+    "backend/input owner",
+    "HUD",
+    "screen"
+  ],
+  "bounds": "idle actual Executor; no submit/cancel/game/task/physical release claim"
+}

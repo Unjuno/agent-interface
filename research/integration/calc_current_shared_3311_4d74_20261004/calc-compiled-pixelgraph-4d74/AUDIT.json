@@ -1,0 +1,211 @@
+{
+  "disposition": "PASS_SCOPED_TWO_TRANSITION_PIXEL_GRAPH",
+  "errors": [],
+  "graph_outcome": "TASK_SUCCEEDED",
+  "native_programs": 2,
+  "observations": 3,
+  "pixel_rows": [
+    {
+      "state": "first",
+      "matches": false,
+      "rgb_sha256": "1494bd53604ee2e3ff9dc9c0b030d72c9d5e4f7ccb5eb4a7cacc13d342b8630e"
+    },
+    {
+      "state": "second",
+      "matches": true,
+      "rgb_sha256": "b13d13de9bb48b5d267f9dcca890165542f15ae187067bec89903e7efcefb109"
+    },
+    {
+      "state": "done",
+      "matches": true,
+      "rgb_sha256": "614ef3b50510dbbb8c625b3fdf1c6aafca232458d0b8dc328573ff2e36b18d58"
+    }
+  ],
+  "saved_effects": [
+    {
+      "pass_effect": true,
+      "populated": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "31",
+          "31",
+          null
+        ],
+        [
+          1,
+          1,
+          "37",
+          "37",
+          null
+        ],
+        [
+          1,
+          2,
+          "1147",
+          "1147",
+          "of:=[.A2]*[.B2]"
+        ]
+      ],
+      "expected": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "31",
+          "31",
+          null
+        ],
+        [
+          1,
+          1,
+          "37",
+          "37",
+          null
+        ],
+        [
+          1,
+          2,
+          "1147",
+          "1147",
+          "of:=[.A2]*[.B2]"
+        ]
+      ]
+    },
+    {
+      "pass_effect": true,
+      "populated": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "47",
+          "47",
+          null
+        ],
+        [
+          1,
+          1,
+          "53",
+          "53",
+          null
+        ],
+        [
+          1,
+          2,
+          "2491",
+          "2491",
+          "of:=[.A2]*[.B2]"
+        ]
+      ],
+      "expected": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "47",
+          "47",
+          null
+        ],
+        [
+          1,
+          1,
+          "53",
+          "53",
+          null
+        ],
+        [
+          1,
+          2,
+          "2491",
+          "2491",
+          "of:=[.A2]*[.B2]"
+        ]
+      ]
+    }
+  ],
+  "primary_usage": "UNKNOWN",
+  "additional_benchmark_client_calls": 0,
+  "limits": "Fixed-render known-row image templates, not generic OCR or proof of save persistence from pixels; independent XML scoring separated. No same-model comparison or cost advantage."
+}

@@ -1,0 +1,36 @@
+{
+  "audit_loading": "AST FunctionDef only: check, integer, inspect, inspect_all; no imports/main from preserved artifact executed.",
+  "classification": "bounded internal retained-JSON analysis, not a formal allocation or content vote",
+  "commands": [
+    {
+      "argv": [
+        "<LOCAL_PYTHON>",
+        "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/controls.py"
+      ],
+      "observed_exit_code": 0
+    },
+    {
+      "argv": [
+        "<LOCAL_PYTHON>",
+        "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/ownership_control.py"
+      ],
+      "observed_exit_code": 0
+    }
+  ],
+  "first_helper_failure": "none observed; both first script executions exited 0",
+  "hashes": {
+    "OWNERSHIP_RESULT.json": "0558b5cce60993b5ac5d70becffc0d99f61d1e2ddae8ff046fa381d3623bff54",
+    "RESULT.json": "bcc3479c46aba0f1c0ecc019c0de4aa1f5f3d1f8ee4d9dcc7d7fcde6475c8285",
+    "controls.py": "4dbd486e5392a622931fd3d9d295a81d523380aedb1a2c30a86fc676039e831e",
+    "negative_control_read_fd.json": "969262526d449ce6aa54afa89aa2d90dae75d71558b4be3da4b535d04cb0ef50",
+    "negative_control_read_fd_full15.jsonl": "6b18561cfb3194b7869ba96ada494c1ea80288a74e4f7beddcdf518a6aef34b0",
+    "negative_selector_fd.json": "9bd1a6fdadefb3ca6696c226646a592e8d05d5c4e63af787937b914e9c2d3aa1",
+    "ownership_control.py": "510743a45fc1562a0c059f4f10aa16b21d1019acf1c63582bcfe193993fb793d",
+    "unclosed_second_open.json": "8719f73718309cacf81642a8177a036015ef95887099de1641e4cea9c64cb378",
+    "unclosed_second_open_full15.jsonl": "3a50e6201d93a543e4f46ac0cd8018ef168afde470b8be8563fe1ab2be9c3893"
+  },
+  "host_python_executable": "<LOCAL_PYTHON>",
+  "host_python_version": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "recorded_at_utc": "2026-10-03T09:18:00.934569+00:00",
+  "timing_limit": "No independent start/end timestamps were captured; recorded_at is receipt creation only."
+}

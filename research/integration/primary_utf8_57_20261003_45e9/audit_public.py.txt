@@ -1,0 +1,95 @@
+"""Data-only literal regression/process/input oracle; no runtime/producer imports."""
+from pathlib import Path
+from datetime import datetime
+import copy,hashlib,json
+root=Path(__file__).resolve().parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+def read(p):return json.loads(p.read_bytes())
+def integer(v):return type(v) is int
+def validate(v):
+ c,r,stdout,stderr,requests=v['cell'],v['receipt'],v['stdout'],v['stderr'],v['requests']
+ expected={'split-valid-japanese-emoji':(0,1,['ready','returned','terminal'],'あ😀'),
+ 'malformed-before-admission':(2,0,['ready'],None),
+ 'accepted-before-byte-stop':(2,1,['ready','returned'],'original-held')}[c['name']]
+ code,count,statuses,label=expected
+ assert integer(r['code']) and r['code']==code and r['signal'] is None and r['timed_out'] is False
+ assert not r['errors'] and r['cleanup'] is None and r['cli_absent'] is True and r['fixture_absent'] is True
+ a,e=r['fixture_start'],r['fixture_exit']
+ assert all(integer(x) and x>0 for x in [r['pid'],a['pid'],a['ppid'],e['pid'],e['ppid']])
+ assert a['pid']==e['pid'] and a['ppid']==e['ppid']==r['pid'] and a['nonce']==e['nonce']==c['nonce']
+ assert integer(e['code']) and e['code']==0 and integer(e['requests']) and e['requests']==count
+ assert type(r['host_exit']) is dict and integer(r['host_exit']['code']) and r['host_exit']=={'code':0,'signal':None}
+ assert datetime.fromisoformat(r['started_utc'])<=datetime.fromisoformat(a['utc'])<=datetime.fromisoformat(e['utc'])<=datetime.fromisoformat(r['ended_utc'])
+ rows=[json.loads(x) for x in stdout.decode('utf-8',errors='strict').splitlines()]
+ assert [x['status'] for x in rows]==statuses and all(x['schema']=='agent-interface/primary-stdio-v1' for x in rows)
+ assert rows[0]['state']['next_id']==1 and len(requests)==count
+ if count:
+  assert requests[0]=={'id':1,'method':'call','args':['interface_clock',{'label':label}]}
+  assert integer(rows[1]['result']['next_id']) and rows[1]['result']['next_id']==2
+  assert rows[1]['result']['caller_state']=={'stopped':None}
+  assert v['fixture_requests']==[{'id':1,'tool':'interface_clock','arguments':{'label':label}}]
+ else:assert v['fixture_requests']==[]
+ assert r['stdout_bytes']==len(stdout) and r['stderr_bytes']==len(stderr)
+ if code==0:assert stderr==b'' and rows[-1]['state']['next_id']==2
+ else:assert b'TypeError' in stderr and b'encoding utf-8' in stderr
+ if c['name']=='accepted-before-byte-stop':
+  kinds=[x['kind'] for x in r['events']]
+  assert kinds==['initial-written','original-fixture-request-observed','malformed-written-before-release','own-held-fixture-released']
+  assert r['events'][1]['request']==v['fixture_requests'][0]
+  times=[datetime.fromisoformat(x['utc']) for x in r['events']];assert times==sorted(times)
+ return {'case':c['name'],'cli_code':code,'fixture_requests':count,'statuses':statuses,'owned_children_observed_absent':True}
+def main():
+ freeze=read(root/'PUBLIC_FREEZE.json');plan=read(root/'PUBLIC_PLAN.json')
+ assert sha((root/'PUBLIC_PLAN.json').read_bytes())==freeze['public_plan_sha256']
+ for x in freeze['source']:assert sha((root/'source'/x['path']).read_bytes())==x['sha256']
+ for name,key in [('fixture.mjs','fixture_sha256'),('collect_public.mjs','collector_sha256'),('capture_public.py','capture_sha256'),('audit_public.py','auditor_sha256')]:assert sha((root/name).read_bytes())==freeze[key]
+ phase_summaries=[]
+ for label,expected in [('red-first',(1,15,7,8)),('green-first',(0,15,15,0))]:
+  receipt=read(root/label/'RECEIPT.json');b=(root/label/'stdout.txt').read_bytes();err=(root/label/'stderr.txt').read_bytes()
+  assert integer(receipt['exit_code']) and receipt['exit_code']==expected[0]
+  assert sha(b)==receipt['stdout_sha256'] and sha(err)==receipt['stderr_sha256']
+  assert all(('# '+name+' '+str(value)).encode() in b for name,value in zip(['tests','pass','fail'],expected[1:]))
+  phase_summaries.append({'label':label,'tests':expected[1],'passes':expected[2],'fails':expected[3]})
+ assert (root/'red-first/test_primary_stdio_utf8.mjs.txt').read_bytes()==(root/'green-first/test_primary_stdio_utf8.mjs.txt').read_bytes()==(root/'source/runtime/host_v1/test_primary_stdio_utf8.mjs').read_bytes()
+ for name in ['maintained-stdio','public-cli']:
+  receipt=read(root/'public-first'/(name+'.receipt.json'));assert integer(receipt['exit_code']) and receipt['exit_code']==0
+  for stem in ['stdout','stderr']:
+   b=(root/'public-first'/(name+'.'+stem+'.txt')).read_bytes();assert sha(b)==receipt[stem+'_sha256'] and len(b)==receipt[stem+'_bytes']
+  assert datetime.fromisoformat(freeze['frozen_utc'])<=datetime.fromisoformat(receipt['started_utc'])<datetime.fromisoformat(receipt['ended_utc'])
+ # Verify complete actual TAP totals, allowing no skipped/cancelled methods.
+ tap=(root/'public-first/maintained-stdio.stdout.txt').read_text(encoding='utf-8')
+ totals={line.split()[1]:int(line.split()[2]) for line in tap.splitlines() if line.startswith('# ') and len(line.split())==3 and line.split()[2].isdigit()}
+ assert totals['tests']==totals['pass'] and totals['tests']>=27 and totals['fail']==totals['skipped']==totals['cancelled']==0
+ values=[];rows=[]
+ for c in plan['cells']:
+  d=root/'public-first'/c['name'];r=read(d/'CLI_RECEIPT.json')
+  assert sha((d/'config.json').read_bytes())==c['config_sha256']
+  for stem in ['initial','later']:
+   raw=(d/(stem+'.original.bin')).read_bytes();assert raw==bytes.fromhex((d/(stem+'.hex.txt')).read_text(encoding='ascii'))==b''.join(bytes.fromhex(x) for x in c[stem+'_hex'])
+   if raw:
+    try:raw.decode('utf-8',errors='strict');valid=True
+    except UnicodeDecodeError:valid=False
+    assert valid is (stem=='initial' and c['name']!='malformed-before-admission')
+  data={}
+  for stem in ['stdout','stderr']:
+   b=(d/('cli.'+stem+'.txt')).read_bytes();assert b==bytes.fromhex((d/('cli.'+stem+'.hex.txt')).read_text(encoding='ascii'));data[stem]=b
+  requests=[read(p) for p in sorted((d/'exchange').glob('request-*.json'))]
+  fixtures=[read(p) for p in sorted(d.glob('fixture-request-*.json'))]
+  assert read(d/'fixture-start.json')==r['fixture_start'] and read(d/'fixture-exit.json')==r['fixture_exit'] and read(d/'host/exit.json')==r['host_exit']
+  v={'cell':c,'receipt':r,**data,'requests':requests,'fixture_requests':fixtures};values.append(v);rows.append(validate(v))
+ seed=values[0];controls=[]
+ changes=[('bool-cli-code',lambda v:v['receipt'].__setitem__('code',False)),('bool-fixture-pid',lambda v:v['receipt']['fixture_exit'].__setitem__('pid',True)),
+ ('nonce-mismatch',lambda v:v['receipt']['fixture_start'].__setitem__('nonce','wrong')),('invented-second-command',lambda v:v['requests'].append({'id':2})),
+ ('normalized-count',lambda v:v['receipt']['fixture_exit'].__setitem__('requests',0)),('changed-original-label',lambda v:v['requests'][0]['args'][1].__setitem__('label','wrong')),
+ ('reversed-UTC',lambda v:v['receipt'].__setitem__('ended_utc',v['receipt']['started_utc'])),('lost-returned-status',lambda v:v.__setitem__('stdout',v['stdout'].replace(b'"returned"',b'"refused"')))]
+ for name,change in changes:
+  v=copy.deepcopy(seed);change(v)
+  try:validate(v)
+  except (AssertionError,KeyError,ValueError,TypeError):controls.append({'name':name,'rejected':True})
+  else:raise AssertionError('ineffective control '+name)
+ result={'status':'PASS_REPAIR_SCOPE_RAW_JOINS','phase_summaries':phase_summaries,'actual_maintained_methods':totals['tests'],'actual_public_cases':rows,
+  'copied_record_controls':controls,'original_assay_or_author_formal_replays':0,
+  'limits':'candidate public byte faults; no backend/input/task/release/performance/hard-I/O proof; file-read/fixture-release ordering is observed, internal validation time is not'}
+ (root/'RAW_AUDIT.json').write_text(json.dumps(result,indent=2,sort_keys=True,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
+ print(json.dumps({'status':result['status'],'maintained_methods':totals['tests'],'public_cases':3,'controls':8}))
+if __name__=='__main__':main()

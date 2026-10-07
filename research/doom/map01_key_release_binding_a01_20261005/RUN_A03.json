@@ -1,0 +1,15 @@
+{
+  "allocation": "MAP01-KEY-RELEASE-BINDING-A03-20261005",
+  "frozen_main": "a38c61334ff5dbd7d17269467c26f74e9ad4a84f",
+  "image": "python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "runtime": {"network": "none", "cpus": 1, "memory": "512M", "swap_warning": "kernel does not support swap limit capabilities or the cgroup is not mounted"},
+  "candidate_exit_code": 0,
+  "audit_exit_code": 0,
+  "py_compile_exit_code": 0,
+  "candidate_output_sha256": "be8aedb1e9547d480b3e9d1a1ce0f78143009f72de4abd8c22a9bb3d615eca92",
+  "audit_output_sha256": "93c4a60dde3277914b4cce32c3baff79aad67b03407d56a2a013ec678c21ae51",
+  "candidate": "baseline PASS; six mutations FAIL with exact frozen expected reason",
+  "independent_audit": "PASS; all seven names, statuses and reasons agree with candidate and frozen declarations",
+  "scope": "synthetic measurement-contract construction only; no runtime, GUI, model, physical input, task effect, useful feedback, recovery, or MAP01 evidence",
+  "initial_setup_attempt": "the first launch found no precreated output directory and ran no container process; after creating the dedicated output directory, the same frozen commands ran with exit codes recorded above"
+}

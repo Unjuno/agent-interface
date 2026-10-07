@@ -1,0 +1,43 @@
+test_ascii_reply_remains_exact (test_app_server_utf8.Utf8ReceiveRegression.test_ascii_reply_remains_exact) ... ok
+test_literal_accented_utf8_reply_remains_exact (test_app_server_utf8.Utf8ReceiveRegression.test_literal_accented_utf8_reply_remains_exact) ... FAIL
+test_literal_japanese_reply_and_notification_remain_exact (test_app_server_utf8.Utf8ReceiveRegression.test_literal_japanese_reply_and_notification_remain_exact) ... Exception in thread Thread-3 (_read):
+Traceback (most recent call last):
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/codex_app_server_client_v2.py", line 31, in _read
+    for line in self.process.stdout:
+                ^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'cp932' codec can't decode byte 0x9e in position 57: illegal multibyte sequence
+ERROR
+
+======================================================================
+ERROR: test_literal_japanese_reply_and_notification_remain_exact (test_app_server_utf8.Utf8ReceiveRegression.test_literal_japanese_reply_and_notification_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_app_server_utf8.py", line 48, in test_literal_japanese_reply_and_notification_remain_exact
+    self.assertEqual(client.request("fixture/utf8", timeout=1), expected)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/codex_app_server_client_v2.py", line 77, in request
+    raise AppServerError(f"app-server closed during {method}: stderr not drained")
+codex_app_server_client_v2.AppServerError: app-server closed during fixture/utf8: stderr not drained
+
+======================================================================
+FAIL: test_literal_accented_utf8_reply_remains_exact (test_app_server_utf8.Utf8ReceiveRegression.test_literal_accented_utf8_reply_remains_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_app_server_utf8.py", line 42, in test_literal_accented_utf8_reply_remains_exact
+    self.assertEqual(client.request("fixture/utf8", timeout=1), expected)
+AssertionError: {'text': 'cafﾃｩ'} != {'text': 'café'}
+- {'text': 'cafﾃｩ'}
+?              ^^
+
++ {'text': 'café'}
+?              ^
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+FAILED (failures=1, errors=1)

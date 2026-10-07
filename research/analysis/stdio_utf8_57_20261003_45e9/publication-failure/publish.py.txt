@@ -1,0 +1,119 @@
+"""Publish one inert evidence tree on a new owned ref, never change source or main."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+ROOT=Path(__file__).resolve().parent;WS=ROOT.parent.parent;REPO=ROOT.parent/'agent-interface'
+OUT=WS/'outputs/stdio-utf8-45e9';OUT.mkdir(exist_ok=False)
+PREFIX='research/analysis/stdio_utf8_57_20261003_45e9'
+REF='refs/heads/research/stdio-utf8-45e9-20261003'
+BASE='dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1'
+ENV=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_INDEX_FILE=str(ROOT/'publication.index'))
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(path,v):path.write_text(json.dumps(v,indent=2,sort_keys=True,ensure_ascii=False)+'\n',encoding='utf-8')
+def git(*args,**kw):return subprocess.run(['git',*args],cwd=REPO,env=ENV,capture_output=True,check=True,**kw).stdout
+originals=[]
+excluded={'publish.py','publication.index'}
+for p in sorted((x for x in ROOT.rglob('*') if x.is_file()),key=lambda x:x.relative_to(ROOT).as_posix()):
+ name=p.relative_to(ROOT).as_posix()
+ if name in excluded or name.endswith('.bin'):continue
+ raw=p.read_bytes();public=raw
+ for private in [str(WS),os.environ['USERPROFILE']]:
+  public=public.replace(private.replace('\\','\\\\').encode(),b'<PRIVATE_PATH>').replace(private.encode(),b'<PRIVATE_PATH>')
+ if p.suffix in {'.py','.mjs'}:name+=' .txt' if False else '.txt'
+ dest=OUT/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(public)
+ public.decode('utf-8',errors='strict')
+ originals.append({'path':name,'original_sha256':sha(raw),'public_sha256':sha(public),'private_path_projected':raw!=public,'original_retained':p.read_bytes()==raw})
+request_rows=[]
+for name in ['replacement-valid','invalid-ff','incomplete-e3']:
+ b=(ROOT/'first'/name/'exchange/request-1.json').read_bytes()
+ request_rows.append({'case':name,'bytes':len(b),'sha256':sha(b)})
+assert len({x['sha256'] for x in request_rows})==1
+put(OUT/'EXACT_PERSISTED_BYTE_JOIN.json',{'captured_utc':datetime.now(timezone.utc).isoformat(),'request_files':request_rows,
+ 'all_three_byte_identical':True,'normalized_request_sha256':'23d707d8eabddd766dc7a06ab09b271a6d0fb6ba3212d4b56952e1cbed7ea431'})
+put(OUT/'PROVENANCE.json',{'original_public':originals,'raw_binary':'Five private input.original.bin originals are retained; published input.hex.txt is exact reversible raw-byte representation, independently joined before publication.',
+ 'projection':'Only private directory prefixes are substituted in textual public derivatives. Original/public SHA256 are distinct; original private hashes in source/receipts are historical original identities, not public derivative hashes.',
+ 'scientific_first_failures':'No collector or auditor setup/test failure occurred. All five original public CLI and fixture exits0; the two malformed admissions are the finding. Two earlier incorrect repository paths returned404 during read-only selection and were corrected using observed exact paths; no runtime invocation in those reads.',
+ 'resource_or_formal_allocation':'Small one-pass ordinary construction, five private CLI/echo children sequentially; no shared-resource lease, live/formal producer or historical replay.'})
+(OUT/'README.md').write_text('''# Public primary-stdio UTF-8 input identity counterexample
+
+Actual existing worker 01a0ff2e-17a3-70a1-908e-0d6dd78c45e9, FINAL-v5.
+Prospective #57 claim5966659032 was read back exactly before execution.
+Pinned main dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1; five exact Git import
+closure files, primary_stdio blob dcabc228e7d62fddd666ac0e2f0378b904c7d5d0.
+No production repair, source/head/main modification or application lock.
+
+On native Windows11 build26200 / Node24.6.0 (binary3428a3d055501883385d78b19128550d3e8be39a89e7edba683a9b06830257c7),
+five separately owned actual public --config CLI children received one literal
+command each through OS stdin pipes. The call was only an own inert echo
+fixture's interface_clock label; no MCP SDK/backend/native/input/model operation.
+ASCII plain, multibyte Japanese あ sent in three writer chunks, and valid U+FFFD
+preserved their values. An illegal FF and an incomplete E3 before the JSON
+closing quote were also returned as accepted commands. They became U+FFFD,
+each advanced exchange next_id1→2 and sent one request to its original fixture.
+The two malformed byte strings and valid U+FFFD have three distinct original
+input hashes but byte-identical persisted request-1.json, SHA256
+23d707d8eabddd766dc7a06ab09b271a6d0fb6ba3212d4b56952e1cbed7ea431.
+Thus downstream normalized JSON cannot distinguish those original input bytes.
+
+H/T/D/C/U, all five exact bytes/writer chunks/configs, source/capture/collector/
+fixture/independent reader, environment and binary pins froze at
+2026-10-03T07:16:33.604702+00:00 before the collector started.
+Collector07:16:33.956328–07:16:34.832506UTC, exit0, all five CLI and original
+fixture exits0, request counts1 each, unhit5s/7s guards, empty stderr; all ten
+owned PIDs absent after observed cleanup. Full first stdout/stderr/UTC/exits,
+actual fixture PID/PPID/nonce/start/exit, host exits, input raw hex, normalized
+exchange/host/fixture requests/replies and source snapshots remain retained.
+EOF closes only the original transport; no public/native release is claimed.
+
+Separate raw-only CPython3.12.10 reader07:16:55.325844–55.783691UTC exits0.
+It imports neither producer nor runtime; strict UTF-8 saved-byte decoding
+accepts exactly the three valid inputs and refuses the two malformed inputs.
+Complete five-row source/command/file/process/UTC/typed-exit/count/ID/echo joins
+pass. Eight copied-data controls reject Boolean exits/PIDs, wrong nonce/ID,
+changed echo/original byte/validity/host exit. Some controls are rejected at
+consistency joins; this is not exhaustive hostile-data parser coverage.
+No setup/test/audit failure occurred, no child or comparison was rerun.
+
+This is a concrete chosen-path correctness/evidence identity exception for #57.
+RFC8259 §8.1 requires UTF-8 for exchange outside closed ecosystems:
+https://www.rfc-editor.org/rfc/rfc8259.html#section-8.1 . The repository's public
+CLI describes raw JSON-lines. This interpretation motivates strict byte
+admission but the actual observed collapse above is independently measured.
+Node documentation describes line events as decoded strings:
+https://nodejs.org/api/readline.html#event-line . The official documentation
+does not certify this exact installed-version run; its bytes/receipts do.
+
+The raw-byte identity question is separate from #6919 whole-owner error
+observation, #6902 busy-response bounds and Python relay #6879 UTF-8 admission.
+Their current source/application owners retain their scopes. Do not add this
+finding to unchanged approved6919 content or transfer its votes to a decoder
+repair. A source change requires its own fixed proposal/needed agreement and
+then-current applicability/platform/ownership/cancellation/conditional apply.
+
+Limits: directed private echo construction, not an external exploit, natural
+failure rate, real OS device error, MCP backend/GUI/physical input/task release,
+actual clock calibration, useful task/latency/token/monetary benefit or full-goal
+completion. Writer chunks do not guarantee matching OS read boundaries.
+The comparator is strict byte decoding; no new runtime decoder was implemented.
+All historical/formal/native producer allocations remain untouched. N/common
+deadline are unavailable and are not renewed. Shared GPU/display/WSLc holds
+remain. Original private bytes are retained; public path-projected derivatives
+have explicit original/public hashes. Every historical source is inert .txt.
+''',encoding='utf-8',newline='\n')
+(OUT/'.gitattributes').write_text('* -text\n',encoding='utf-8')
+files=sorted((x for x in OUT.rglob('*') if x.is_file()),key=lambda x:x.relative_to(OUT).as_posix())
+put(OUT/'MANIFEST.json',{'files':[{'path':p.relative_to(OUT).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in files]})
+files=sorted((x for x in OUT.rglob('*') if x.is_file()),key=lambda x:x.relative_to(OUT).as_posix())
+primary=(REPO/'.git/index').read_bytes();git('read-tree',BASE);entries=[];expected=[]
+for p in files:
+ b=p.read_bytes();oid=git('hash-object','-w','--stdin',input=b).decode().strip();path=PREFIX+'/'+p.relative_to(OUT).as_posix()
+ entries.append('100644 '+oid+'\t'+path+'\n');expected.append({'path':path,'mode':'100644','blob_oid':oid,'bytes':len(b),'sha256':sha(b)})
+git('update-index','--index-info',input=''.join(entries).encode());tree=git('write-tree','--missing-ok').decode().strip()
+assert git('diff','--name-only','--no-renames',BASE,tree).decode().splitlines()==[x['path'] for x in expected]
+git('diff','--check',BASE,tree)
+assert primary==(REPO/'.git/index').read_bytes()
+commit=git('commit-tree',tree,'-p',BASE,input=b'research(57): retain public stdio UTF-8 byte collapse [skip ci]\n').decode().strip()
+git('update-ref',REF,commit,'0'*40)
+metadata={'ref':REF,'base':BASE,'commit':commit,'tree':tree,'prefix':PREFIX,'files':expected,'primary_index_unchanged':True,'main_unchanged_by_this_action':True,'published_yet':False}
+put(WS/'outputs/stdio-utf8-publication.json',metadata)
+print(json.dumps({'ref':REF,'commit':commit,'tree':tree,'files':len(expected),'bytes':sum(x['bytes'] for x in expected),'main_write':False}))

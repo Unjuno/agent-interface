@@ -1,0 +1,76 @@
+test_capacity_deferral_is_not_generic_failure (test_adaptive_acquisition_caller_v3.CallerV3Test.test_capacity_deferral_is_not_generic_failure) ... ok
+test_cold_anchor_path_preserves_full_accounting (test_adaptive_acquisition_caller_v3.CallerV3Test.test_cold_anchor_path_preserves_full_accounting) ... ok
+test_failed_model_attempt_retains_available_accounting (test_adaptive_acquisition_caller_v3.CallerV3Test.test_failed_model_attempt_retains_available_accounting) ... ok
+test_final_revalidation_promotes_refreshed_cache_atomically (test_adaptive_acquisition_caller_v3.CallerV3Test.test_final_revalidation_promotes_refreshed_cache_atomically) ... ok
+test_local_repair_cannot_claim_authority (test_adaptive_acquisition_caller_v3.CallerV3Test.test_local_repair_cannot_claim_authority) ... ok
+test_local_repair_precedes_model_and_uses_zero_calls (test_adaptive_acquisition_caller_v3.CallerV3Test.test_local_repair_precedes_model_and_uses_zero_calls) ... ok
+test_missing_ambiguous_and_changed_fall_back_once (test_adaptive_acquisition_caller_v3.CallerV3Test.test_missing_ambiguous_and_changed_fall_back_once) ... ok
+test_partial_execution_reason_survives (test_adaptive_acquisition_caller_v3.CallerV3Test.test_partial_execution_reason_survives) ... ok
+test_post_model_changed_evidence_stops_before_input (test_adaptive_acquisition_caller_v3.CallerV3Test.test_post_model_changed_evidence_stops_before_input) ... ok
+test_stale_same_frame_receipt_fails_closed (test_adaptive_acquisition_caller_v3.CallerV3Test.test_stale_same_frame_receipt_fails_closed) ... ok
+test_unchanged_reuse_uses_no_repair (test_adaptive_acquisition_caller_v3.CallerV3Test.test_unchanged_reuse_uses_no_repair) ... ok
+test_unconfigured_failure_stops_without_model_or_input (test_adaptive_acquisition_caller_v3.CallerV3Test.test_unconfigured_failure_stops_without_model_or_input) ... ok
+test_actual_compiled_refusal_composes_before_or_after_prefix (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_actual_compiled_refusal_composes_before_or_after_prefix) ... 
+  test_actual_compiled_refusal_composes_before_or_after_prefix (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_actual_compiled_refusal_composes_before_or_after_prefix) (completed=0) ... FAIL
+  test_actual_compiled_refusal_composes_before_or_after_prefix (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_actual_compiled_refusal_composes_before_or_after_prefix) (completed=1) ... FAIL
+test_malformed_refusals_still_fail_closed (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_malformed_refusals_still_fail_closed) ... ok
+test_partial_refusal_retains_completed_prefix (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_partial_refusal_retains_completed_prefix) ... FAIL
+test_supported_yield_and_success_are_unchanged (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_supported_yield_and_success_are_unchanged) ... ok
+test_zero_action_refusal_remains_no_input (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_zero_action_refusal_remains_no_input) ... FAIL
+
+======================================================================
+FAIL: test_actual_compiled_refusal_composes_before_or_after_prefix (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_actual_compiled_refusal_composes_before_or_after_prefix) (completed=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 145, in test_actual_compiled_refusal_composes_before_or_after_prefix
+    self.check_yield(result, counts, completed)
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 42, in check_yield
+    self.assertEqual(result["outcome"], "EXECUTION_INCOMPLETE")
+AssertionError: 'CALLER_FAILED' != 'EXECUTION_INCOMPLETE'
+- CALLER_FAILED
++ EXECUTION_INCOMPLETE
+
+
+======================================================================
+FAIL: test_actual_compiled_refusal_composes_before_or_after_prefix (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_actual_compiled_refusal_composes_before_or_after_prefix) (completed=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 145, in test_actual_compiled_refusal_composes_before_or_after_prefix
+    self.check_yield(result, counts, completed)
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 42, in check_yield
+    self.assertEqual(result["outcome"], "EXECUTION_INCOMPLETE")
+AssertionError: 'CALLER_FAILED' != 'EXECUTION_INCOMPLETE'
+- CALLER_FAILED
++ EXECUTION_INCOMPLETE
+
+
+======================================================================
+FAIL: test_partial_refusal_retains_completed_prefix (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_partial_refusal_retains_completed_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 60, in test_partial_refusal_retains_completed_prefix
+    self.check_yield(result, counts, 1)
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 42, in check_yield
+    self.assertEqual(result["outcome"], "EXECUTION_INCOMPLETE")
+AssertionError: 'CALLER_FAILED' != 'EXECUTION_INCOMPLETE'
+- CALLER_FAILED
++ EXECUTION_INCOMPLETE
+
+
+======================================================================
+FAIL: test_zero_action_refusal_remains_no_input (test_adaptive_acquisition_caller_refusal_v3.CallerRefusalV3Test.test_zero_action_refusal_remains_no_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 55, in test_zero_action_refusal_remains_no_input
+    self.check_yield(result, counts, 0)
+  File "<owned-workspace>\work\caller-repair-I08\candidate\research\live_control\test_adaptive_acquisition_caller_refusal_v3.py", line 42, in check_yield
+    self.assertEqual(result["outcome"], "EXECUTION_INCOMPLETE")
+AssertionError: 'CALLER_FAILED' != 'EXECUTION_INCOMPLETE'
+- CALLER_FAILED
++ EXECUTION_INCOMPLETE
+
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.007s
+
+FAILED (failures=4)

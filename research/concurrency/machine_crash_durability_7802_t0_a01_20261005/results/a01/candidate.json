@@ -1,0 +1,135 @@
+{
+  "rows": {
+    "corrupt_or_untrusted_record": [
+      {
+        "classification": "NO_EFFECT_CONFIRMED",
+        "corrupt": false,
+        "cut": 0,
+        "effect_durable": false,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "UNKNOWN_RECONCILE",
+        "corrupt": false,
+        "cut": 1,
+        "effect_durable": true,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "CORRUPT_OR_UNTRUSTED",
+        "corrupt": true,
+        "cut": 2,
+        "effect_durable": false,
+        "receipt_durable": true,
+        "retry_authorized": false
+      },
+      {
+        "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+        "corrupt": false,
+        "cut": 3,
+        "effect_durable": true,
+        "receipt_durable": true,
+        "retry_authorized": false
+      }
+    ],
+    "effect_and_receipt_single_atomic_transaction": [
+      {
+        "classification": "NO_EFFECT_CONFIRMED",
+        "corrupt": false,
+        "cut": 0,
+        "effect_durable": false,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+        "corrupt": false,
+        "cut": 1,
+        "effect_durable": true,
+        "receipt_durable": true,
+        "retry_authorized": false
+      }
+    ],
+    "effect_commit_then_ack_before_receipt": [
+      {
+        "classification": "NO_EFFECT_CONFIRMED",
+        "corrupt": false,
+        "cut": 0,
+        "effect_durable": false,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "UNKNOWN_RECONCILE",
+        "corrupt": false,
+        "cut": 1,
+        "effect_durable": true,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+        "corrupt": false,
+        "cut": 2,
+        "effect_durable": true,
+        "receipt_durable": true,
+        "retry_authorized": false
+      }
+    ],
+    "effect_then_receipt_separate_domains": [
+      {
+        "classification": "NO_EFFECT_CONFIRMED",
+        "corrupt": false,
+        "cut": 0,
+        "effect_durable": false,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "UNKNOWN_RECONCILE",
+        "corrupt": false,
+        "cut": 1,
+        "effect_durable": true,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+        "corrupt": false,
+        "cut": 2,
+        "effect_durable": true,
+        "receipt_durable": true,
+        "retry_authorized": false
+      }
+    ],
+    "receipt_then_effect_separate_domains": [
+      {
+        "classification": "NO_EFFECT_CONFIRMED",
+        "corrupt": false,
+        "cut": 0,
+        "effect_durable": false,
+        "receipt_durable": false,
+        "retry_authorized": false
+      },
+      {
+        "classification": "UNKNOWN_RECONCILE",
+        "corrupt": false,
+        "cut": 1,
+        "effect_durable": false,
+        "receipt_durable": true,
+        "retry_authorized": false
+      },
+      {
+        "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+        "corrupt": false,
+        "cut": 2,
+        "effect_durable": true,
+        "receipt_durable": true,
+        "retry_authorized": false
+      }
+    ]
+  },
+  "schema": "machine-crash-durability-7802-candidate-v1"
+}

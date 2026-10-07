@@ -1,0 +1,50 @@
+"""Challenge the data validator's semantic checks, with hash closure lifted."""
+from datetime import datetime, timezone
+import importlib.util
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+PACKAGE = ROOT/'mcp-shutdown-repo/runtime/results/mcp-worker-shutdown-01a0ff35-20261003'
+OUT = ROOT/'mcp-shutdown-evidence/negative-controls.json'
+if OUT.exists():
+    raise FileExistsError(OUT)
+spec = importlib.util.spec_from_file_location('data_only_verifier', PACKAGE/'verify.py')
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+started = datetime.now(timezone.utc).isoformat()
+module.data_check(lambda path: (PACKAGE/path).read_bytes())
+controls = []
+def check(name, path, change):
+    value = module.decode((PACKAGE/path).read_bytes())
+    change(value)
+    changed = json.dumps(value).encode()
+    try:
+        module.data_check(lambda p: changed if p == path else (PACKAGE/p).read_bytes())
+    except ValueError as error:
+        controls.append(dict(name=name, rejected=True, reason=str(error)))
+    else:
+        raise ValueError('false acceptance: '+name)
+check('bool-exit-alias', 'green-final-mcp312.receipt.json', lambda row: row.update(exit_code=False))
+check('reversed-UTC-endpoints', 'green-final-mcp312.receipt.json',
+      lambda row: row.update(started_utc=row['ended_utc'], ended_utc=row['started_utc']))
+check('lost-method-identity', 'TEST_IDENTITIES.json', lambda row: row.pop())
+check('wrong-decisive-SDK', 'environment312.json',
+      lambda row: next(item for item in row['packages'] if item['name'].lower() == 'mcp').update(version='1.29.0'))
+check('wrong-executed-source', 'green-final-mcp312.receipt.json',
+      lambda row: row['source_sha256'].update({'runtime/cli_v1/mcp_server.py': '0'*64}))
+path = 'green-final-mcp312.stderr.txt'
+changed = (PACKAGE/path).read_bytes().replace(b'Ran 106 tests in ', b'Ran 105 tests in ')
+if changed == (PACKAGE/path).read_bytes():
+    raise ValueError('ineffective count control')
+try:
+    module.data_check(lambda p: changed if p == path else (PACKAGE/p).read_bytes())
+except ValueError as error:
+    controls.append(dict(name='reduced-reported-denominator', rejected=True, reason=str(error)))
+else:
+    raise ValueError('false acceptance: reduced denominator')
+result = dict(classification='data semantic controls only; manifest/public-byte checks intentionally lifted; no SDK/producer rerun or authentication claim',
+              started_utc=started, ended_utc=datetime.now(timezone.utc).isoformat(),
+              controls=controls, rejected=len(controls), expected=6, formal_allocations=0)
+OUT.write_text(json.dumps(result, indent=2)+'\n', encoding='utf-8')
+print(json.dumps(result))

@@ -1,0 +1,404 @@
+{
+  "allocation": "CALC-INTEGRATION-DECISION-57-4D74-S01-20261004",
+  "errors": [],
+  "A01": {
+    "model_contexts": 2,
+    "registered_calls": 2,
+    "attempted_tasks": 2,
+    "correct_tasks": 1,
+    "wrong_tasks": 1,
+    "censored_tasks": 22,
+    "usage": {
+      "cacheWriteInputTokens": 0,
+      "cachedInputTokens": 15872,
+      "inputTokens": 88183,
+      "outputTokens": 443,
+      "reasoningOutputTokens": 285,
+      "totalTokens": 88626
+    },
+    "full_session_wall_ns": 25591777200,
+    "model_wall_ns": 18568776300,
+    "effects": [
+      {
+        "pass_effect": true,
+        "populated": [
+          [
+            0,
+            0,
+            "a",
+            null,
+            null
+          ],
+          [
+            0,
+            1,
+            "b",
+            null,
+            null
+          ],
+          [
+            0,
+            2,
+            "product",
+            null,
+            null
+          ],
+          [
+            1,
+            0,
+            "13",
+            "13",
+            null
+          ],
+          [
+            1,
+            1,
+            "17",
+            "17",
+            null
+          ],
+          [
+            1,
+            2,
+            "221",
+            "221",
+            "of:=[.A2]*[.B2]"
+          ]
+        ],
+        "expected": [
+          [
+            0,
+            0,
+            "a",
+            null,
+            null
+          ],
+          [
+            0,
+            1,
+            "b",
+            null,
+            null
+          ],
+          [
+            0,
+            2,
+            "product",
+            null,
+            null
+          ],
+          [
+            1,
+            0,
+            "13",
+            "13",
+            null
+          ],
+          [
+            1,
+            1,
+            "17",
+            "17",
+            null
+          ],
+          [
+            1,
+            2,
+            "221",
+            "221",
+            "of:=[.A2]*[.B2]"
+          ]
+        ]
+      },
+      {
+        "pass_effect": false,
+        "populated": [
+          [
+            0,
+            0,
+            "a",
+            null,
+            null
+          ],
+          [
+            0,
+            1,
+            "b",
+            null,
+            null
+          ],
+          [
+            0,
+            2,
+            "product",
+            null,
+            null
+          ],
+          [
+            1,
+            0,
+            "9",
+            "9",
+            null
+          ],
+          [
+            1,
+            1,
+            "23",
+            "23",
+            null
+          ],
+          [
+            1,
+            2,
+            "207",
+            "207",
+            "of:=[.A2]*[.B2]"
+          ],
+          [
+            2,
+            0,
+            "1",
+            "1",
+            null
+          ]
+        ],
+        "expected": [
+          [
+            0,
+            0,
+            "a",
+            null,
+            null
+          ],
+          [
+            0,
+            1,
+            "b",
+            null,
+            null
+          ],
+          [
+            0,
+            2,
+            "product",
+            null,
+            null
+          ],
+          [
+            1,
+            0,
+            "19",
+            "19",
+            null
+          ],
+          [
+            1,
+            1,
+            "23",
+            "23",
+            null
+          ],
+          [
+            1,
+            2,
+            "437",
+            "437",
+            "of:=[.A2]*[.B2]"
+          ]
+        ]
+      }
+    ],
+    "cleanup": "UNKNOWN after external stop",
+    "disposition": "FAIL_EFFECT_STOP; HOLD_COMPARISON"
+  },
+  "G18": {
+    "model_contexts": 1,
+    "model_turns": 2,
+    "registered_calls": 1,
+    "native_programs": 1,
+    "saved_prefix_tasks": 1,
+    "censored_native_tasks": 1,
+    "usage": {
+      "cacheWriteInputTokens": 0,
+      "cachedInputTokens": 22784,
+      "inputTokens": 28192,
+      "outputTokens": 368,
+      "reasoningOutputTokens": 196,
+      "totalTokens": 28560
+    },
+    "model_context_wall_ns": 14278373200,
+    "graph_wall_ns": 3523981006,
+    "effect": {
+      "pass_effect": true,
+      "populated": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "13",
+          "13",
+          null
+        ],
+        [
+          1,
+          1,
+          "41",
+          "41",
+          null
+        ],
+        [
+          1,
+          2,
+          "533",
+          "533",
+          "of:=[.A2]*[.B2]"
+        ]
+      ],
+      "expected": [
+        [
+          0,
+          0,
+          "a",
+          null,
+          null
+        ],
+        [
+          0,
+          1,
+          "b",
+          null,
+          null
+        ],
+        [
+          0,
+          2,
+          "product",
+          null,
+          null
+        ],
+        [
+          1,
+          0,
+          "13",
+          "13",
+          null
+        ],
+        [
+          1,
+          1,
+          "41",
+          "41",
+          null
+        ],
+        [
+          1,
+          2,
+          "533",
+          "533",
+          "of:=[.A2]*[.B2]"
+        ]
+      ]
+    },
+    "outcome": "SAFE_YIELD",
+    "reason": "effect_unavailable",
+    "report_repair": "separate retained semantic audit, not recomputed by numerical reader",
+    "disposition": "PARTIAL_EFFECT; HOLD_TASK_AND_EFFICIENCY"
+  },
+  "G22": {
+    "native_tasks": 6,
+    "correct_tasks": 6,
+    "model_calls": 0,
+    "model_tokens": 0,
+    "method_construction_tokens": null,
+    "producer_host_wall_ns": 8484352400,
+    "relocation": {
+      "after": {
+        "height": 600,
+        "map_state": 2,
+        "width": 900,
+        "window_id": 6291969,
+        "x": 80,
+        "y": 55
+      },
+      "before": {
+        "height": 781,
+        "map_state": 2,
+        "width": 1280,
+        "window_id": 6291969,
+        "x": 0,
+        "y": 19
+      },
+      "image": {
+        "end_ns": 26923910726,
+        "image": {
+          "artifact": {
+            "bytes": 52516,
+            "height": 800,
+            "mime_type": "image/png",
+            "path": "/out/images/78f5dee6daac4cf6b9702fb4f4b46f0d.png",
+            "sha256": "a0dc5a389bb878ad482dbdc17de8fb6325c13bc4f9324bff717c1126702bf293",
+            "source_raw_sha256": "dafb469e5035f598eba14ff6e5216419ab05842b111efe0f63474e181323b8ab",
+            "timing_ns": {
+              "converted": 26900408514,
+              "encoded": 26917282202,
+              "hashed": 26923693549,
+              "started": 26898867332,
+              "written": 26921634754
+            },
+            "width": 1280
+          },
+          "bytes": 4096000,
+          "capture_ended_ns": 26896984529,
+          "capture_started_ns": 26890258227,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 6291969,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "sha256": "dafb469e5035f598eba14ff6e5216419ab05842b111efe0f63474e181323b8ab",
+          "target": "owned",
+          "width": 1280
+        },
+        "physical": {
+          "buttons": 0,
+          "end_ns": 26924369002,
+          "keys": [],
+          "start_ns": 26923911628
+        },
+        "start_ns": 26890250338
+      }
+    },
+    "disposition": "PASS_KNOWN_STANDARD_REFERENCE; NO_MATCHED_RATIO"
+  },
+  "integrated_decision": "HOLD_CORRECTNESS_AND_MATCHED_TOTAL_COST",
+  "benefit_ratio": null,
+  "break_even": null,
+  "total_resource_or_money": null,
+  "reason": "Original planned direct/compiled comparison stopped before compiled arm. G18 partial report repair did not complete second native task. G22 stronger standard method has different source/task/model assistance and uncharged construction; cross-allocation ratios are invalid.",
+  "scope": "No native/model replay or original regrade; exact retained numerical/effect accounting only. Full ROADMAP remains active."
+}

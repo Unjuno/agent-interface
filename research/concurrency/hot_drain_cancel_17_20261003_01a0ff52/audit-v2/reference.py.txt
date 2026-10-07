@@ -1,0 +1,46 @@
+"""Separate FD birth/closure scan; retained-data only, no auditor imports."""
+import datetime,hashlib,json,pathlib
+ROOT=pathlib.Path(__file__).resolve().parent
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+def refuse(reason):raise ValueError(reason)
+def fd_lifetimes(record):
+    live={};births=0;closings=0;bound={}
+    for index,event in enumerate(record['events']):
+        if event['tag']=='open':
+            births+=1
+            if births!=1 or index!=0:refuse('unexpected descriptor birth group')
+            fds={role:value['fd'] for role,value in event['fds'].items()};fds['SELECTOR']=event['selector_fd']
+            if set(fds)!={'DR','DW','CR','CW','SELECTOR'}:refuse('birth roles')
+            if any(type(value) is not int for value in fds.values()) or min(fds.values())<0:refuse('not a native descriptor domain value')
+            if len(set(fds.values()))!=5:refuse('aliased owned descriptor')
+            bound=dict(fds);live={fd:role for role,fd in fds.items()}
+        elif event['tag']=='poll':
+            for key in event['ready']:
+                if key['fd']!=bound[key['role']+'R'] or key['fd'] not in live:refuse('readiness outside live descriptor')
+        elif event['tag']=='closed':
+            fd=event['fd'];role=event['role']
+            if type(fd) is not int or fd<0 or live.get(fd)!=role or type(event['err']) is not int or event['err']!=9:refuse('unowned close witness')
+            del live[fd];closings+=1
+    if births!=1 or live or closings!=5:refuse('unclosed ownership group')
+    return dict(births=births,closed=closings,live_final=0)
+def main():
+    rows=[json.loads(line) for line in (ROOT/'inputs/raw.jsonl').read_bytes().splitlines()]
+    positive=[fd_lifetimes(row) for row in rows];normal=json.loads((ROOT/'evidence/normal/results/rows.json').read_bytes());optimized=json.loads((ROOT/'evidence/optimized/results/rows.json').read_bytes())
+    if normal!=optimized:refuse('normal optimized saved difference')
+    copied=[]
+    for item in normal:
+        label=item['label']
+        if not label.startswith(('negative-fd/','extra-open/','retained/','valid-zero-fd/')):continue
+        path=ROOT/'evidence/normal/results/copies'/(label.replace('/','__')+'.json');raw=path.read_bytes();record=json.loads(raw)
+        if sha(raw)!=item['input_sha256']:refuse('copied-byte custody')
+        try:verdict=fd_lifetimes(record);reason=None
+        except ValueError as exc:verdict=None;reason=str(exc)
+        negative=not label.startswith('valid-zero-fd/')
+        if (reason is not None)!=negative:refuse('FD oracle disagreement '+label)
+        if negative and item['new_result'] is not None:refuse('v2 false admission')
+        if not negative and item['new_refusal'] is not None:refuse('v2 false refusal')
+        copied.append(dict(label=label,input_sha256=sha(raw),reference_verdict=verdict,reference_refusal=reason))
+    if len(copied)!=183:refuse('copied denominator')
+    result=dict(recorded_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),source_sha256=sha(pathlib.Path(__file__).read_bytes()),raw_sha256=sha((ROOT/'inputs/raw.jsonl').read_bytes()),original_rows=len(positive),original_closed_fd_lifetimes=sum(p['closed'] for p in positive),ownership_refusals=sum(p['reference_refusal'] is not None for p in copied),positive_zero_fd=len([p for p in copied if p['label'].startswith('valid-zero-fd/')]),normal_optimized_saved_equal=True,rows=copied,formal_native_or_producer_invocations=0,scope='Separate finite FD domain/birth/closure scan only. Earlier byte-ledger/read-budget conclusions retain unchanged source/input/result custody; no private-original authentication or new native/task observation.')
+    (ROOT/'evidence/reference.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='rows'}))
+if __name__=='__main__':main()

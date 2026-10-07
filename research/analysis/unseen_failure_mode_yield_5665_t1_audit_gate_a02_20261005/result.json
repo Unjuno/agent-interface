@@ -1,0 +1,71 @@
+{
+  "formal_invocations": 2,
+  "retries": 0,
+  "runs": [
+    {
+      "exit_code": 0,
+      "name": "base",
+      "oracle_eligible_iid_rows": 200,
+      "parsed": {
+        "audit": "PASS",
+        "decision": {
+          "gt_beats_last_k_on_exact_missing_mass": true,
+          "gt_beats_last_k_on_finite_validation": true,
+          "iid_replicates": 200,
+          "method_controls_pass": true
+        },
+        "eligible_iid_rows": 200,
+        "errors": [],
+        "held_control_rows": 4,
+        "mean_absolute_errors": {
+          "gt_truth": 0.013349999999999999,
+          "gt_validation": 0.013739999999999999,
+          "last_k_truth": 0.02105,
+          "last_k_validation": 0.021259999999999998
+        },
+        "mutation_controls": {
+          "correlated_duplicate_rejected": true,
+          "distribution_shift_held": true,
+          "missing_denominator_rejected": true,
+          "taxonomy_drift_held": true
+        },
+        "rows": 204
+      },
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "13d93ec8fce04c115965fc7100e643023bf80c4186a80af0169e13e7239d8586"
+    },
+    {
+      "exit_code": 0,
+      "name": "mutated",
+      "oracle_eligible_iid_rows": 199,
+      "parsed": {
+        "audit": "PASS",
+        "decision": {
+          "gt_beats_last_k_on_exact_missing_mass": true,
+          "gt_beats_last_k_on_finite_validation": true,
+          "iid_replicates": 199,
+          "method_controls_pass": true
+        },
+        "eligible_iid_rows": 200,
+        "errors": [],
+        "held_control_rows": 4,
+        "mean_absolute_errors": {
+          "gt_truth": 0.013366834170854273,
+          "gt_validation": 0.013798994974874372,
+          "last_k_truth": 0.02105527638190955,
+          "last_k_validation": 0.021306532663316585
+        },
+        "mutation_controls": {
+          "correlated_duplicate_rejected": true,
+          "distribution_shift_held": true,
+          "missing_denominator_rejected": true,
+          "taxonomy_drift_held": true
+        },
+        "rows": 204
+      },
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "04d0920124429c8d977b7804bb42c2473ffa4e7287fbb61e39168c5b3a3e0538"
+    }
+  ],
+  "status": "DEFECT_REPRODUCED"
+}

@@ -1,0 +1,22 @@
+{
+  "allocation_id": "ESTIMABILITY-FEASIBILITY-7379-T0-20261004-01",
+  "audit_sha256": "0b901fa72d0553ce93f6cd3652b01491671d3edc4a6884cee7ae2d25cb54fbd1",
+  "auditor_command": "python3 audit.py spec.json output/raw.json freeze.json",
+  "candidate_command": "python3 candidate.py spec.json output/raw.json freeze.json",
+  "candidate_sha256": "e5acc43f2349708ae5f9ee2625b14335f0dcd0b0b6b5a87207707f2c4ce4ce8b",
+  "cpu_count": 10,
+  "decision": "PASS_METHOD_SCOPED only under README.md criteria; hierarchy disagreements remain UNRESOLVED_MODEL",
+  "invocation_budget": {
+    "auditor": 1,
+    "candidate": 1,
+    "retry": 0
+  },
+  "issue": 7379,
+  "main_sha": "f11ee9d051239094cf3679e19c80bd7deaed0564",
+  "output_policy": "fresh output/ directory; first raw and audit retained; no overwrite or rerun",
+  "path": "research/analysis/feasibility_estimability_7379_t0_20261004/",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "readme_sha256": "42e80c53a0c07be5cceba2ada06f0e45ba29cf41ff877515245cbe81e9e6220e",
+  "spec_sha256": "b58d3158607070f59c9f0ad7a1399c8d254f4930cb22ff94438270e19a995129"
+}

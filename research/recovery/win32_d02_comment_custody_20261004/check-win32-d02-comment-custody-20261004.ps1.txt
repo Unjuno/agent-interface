@@ -1,0 +1,63 @@
+param([string]$RecordRoot=$PSScriptRoot,[switch]$VerifyGitPins)
+$ErrorActionPreference='Stop'
+function Hash256([byte[]]$Bytes){[Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($Bytes)).ToLowerInvariant()}
+$ids=@(5971141547,5971141870,5971142214)
+$blocks=[Collections.Generic.List[string]]::new()
+$recordProofs=[Collections.Generic.List[object]]::new()
+for($i=0;$i -lt $ids.Count;$i++){
+    $record=Get-Content -Raw -LiteralPath "$RecordRoot/win32-d02-comment-$($ids[$i]).json"|ConvertFrom-Json
+    if($record.id -ne $ids[$i] -or $record.html_url -ne "https://github.com/Unjuno/agent-interface/issues/622#issuecomment-$($ids[$i])"){throw 'Comment identity differs'}
+    if(!$record.body.StartsWith("D02 complete recoverable DATA packet part $($i+1)/3.",[StringComparison]::Ordinal)){throw 'Part order differs'}
+    $header=[regex]::Match($record.body,'(?m)^\{.+\}\r?$')
+    if(!$header.Success){throw 'Part manifest missing'}
+    $manifest=$header.Value|ConvertFrom-Json
+    if($manifest.members -ne 75 -or $manifest.json_bytes -ne 580124 -or $manifest.gzip_bytes -ne 98357 -or $manifest.base64_chars -ne 131144 -or $manifest.json_sha256 -cne '0ead2654497b08474c5d91179d381aaec00ea88ab181fec6daaf5e12bbaaf787' -or $manifest.gzip_sha256 -cne '520d80a4bccbb5e9ed37376d99d07a43fb465dcdb721d471d62f738bd276b0e7'){throw 'Declared capsule manifest differs'}
+    $match=[regex]::Match($record.body,'(?s)```[^\r\n]*\r?\n(.*?)\r?\n```')
+    if(!$match.Success){throw 'Base64 fence missing'}
+    $blocks.Add($match.Groups[1].Value)
+    $bodyBytes=[Text.Encoding]::UTF8.GetBytes($record.body)
+    $recordProofs.Add([pscustomobject]@{id=$record.id;url=$record.html_url;created_at=$record.created_at;updated_at=$record.updated_at;body_utf8_bytes=$bodyBytes.Length;body_sha256=(Hash256 $bodyBytes)})
+}
+$encoded=($blocks -join '') -replace '\s',''
+if($encoded.Length -ne 131144){throw 'Base64 count differs'}
+$compressed=[Convert]::FromBase64String($encoded)
+if($compressed.Length -ne 98357 -or (Hash256 $compressed) -cne '520d80a4bccbb5e9ed37376d99d07a43fb465dcdb721d471d62f738bd276b0e7'){throw 'Compressed capsule bytes/hash differ'}
+$inputStream=[IO.MemoryStream]::new($compressed,$false)
+$gzip=[IO.Compression.GZipStream]::new($inputStream,[IO.Compression.CompressionMode]::Decompress)
+$outputStream=[IO.MemoryStream]::new()
+try{
+    $buffer=[byte[]]::new(8192)
+    while(($count=$gzip.Read($buffer,0,$buffer.Length)) -gt 0){
+        if($outputStream.Length+$count -gt 580124){throw 'Decompressed capsule exceeds fixed bound'}
+        $outputStream.Write($buffer,0,$count)
+    }
+    $decoded=$outputStream.ToArray()
+}finally{$gzip.Dispose();$inputStream.Dispose();$outputStream.Dispose()}
+if($decoded.Length -ne 580124 -or (Hash256 $decoded) -cne '0ead2654497b08474c5d91179d381aaec00ea88ab181fec6daaf5e12bbaaf787'){throw 'Decoded capsule bytes/hash differ'}
+$payload=[Text.Encoding]::UTF8.GetString($decoded)|ConvertFrom-Json -AsHashtable
+if($payload.members.Count -ne 75){throw 'Member count differs'}
+$seen=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+$sourcePins=[Collections.Generic.List[object]]::new()
+$members=foreach($member in $payload.members){
+    if($member.name -isnot [string] -or !$seen.Add($member.name) -or [IO.Path]::IsPathRooted($member.name) -or $member.name -match '(^|[\\/])\.\.([\\/]|$)'){throw 'Duplicate or unsafe member name'}
+    if($member.bytes -is [bool] -or $member.bytes -isnot [ValueType] -or $member.bytes -lt 0 -or $member.bytes -gt 580124 -or $member.sha256 -notmatch '^[0-9a-f]{64}$'){throw 'Invalid member length/hash type'}
+    $bytes=[Convert]::FromBase64String($member.base64)
+    if($bytes.Length -ne $member.bytes -or (Hash256 $bytes) -cne $member.sha256){throw "Member bytes/hash differ: $($member.name)"}
+    if($VerifyGitPins -and $member.name.StartsWith('tested-source/',[StringComparison]::Ordinal)){
+        if(!$member.name.EndsWith('.txt',[StringComparison]::Ordinal)){throw 'Source witness suffix differs'}
+        $path=$member.name.Substring('tested-source/'.Length)
+        $path=$path.Substring(0,$path.Length-4)
+        $header=[Text.Encoding]::ASCII.GetBytes("blob $($bytes.Length)`0")
+        $blobOid=[Convert]::ToHexString([Security.Cryptography.SHA1]::HashData([byte[]]($header+$bytes))).ToLowerInvariant()
+        $repo='C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-3/work/repo-2232'
+        $originalNoLazyFetch=$env:GIT_NO_LAZY_FETCH
+        try{
+            $env:GIT_NO_LAZY_FETCH='1'
+            $expected=git -C $repo rev-parse "0cbf4b7286a700d65c7f96311a61ee2cc83b3791:$path"
+            if($LASTEXITCODE -or $expected -cne $blobOid){throw "Tested source Git blob differs: $path (packet $blobOid, Git $expected)"}
+        }finally{if($null -eq $originalNoLazyFetch){Remove-Item Env:/GIT_NO_LAZY_FETCH -ErrorAction SilentlyContinue}else{$env:GIT_NO_LAZY_FETCH=$originalNoLazyFetch}}
+        $sourcePins.Add([pscustomobject]@{path=$path;blob_oid=$blobOid;bytes=$bytes.Length})
+    }
+    [pscustomobject]@{name=$member.name;bytes=$bytes.Length;sha256=$member.sha256}
+}
+[pscustomobject]@{format=$payload.format;source_comments=$recordProofs;members_checked=$members.Count;members=$members;tested_source_git_pins=@($sourcePins);gzip_bytes=98357;gzip_sha256=(Hash256 $compressed);json_bytes=580124;json_sha256=(Hash256 $decoded);archive_programs_executed=0;native_model_container_invocations=0;files_extracted=0;remote_writes=0}|ConvertTo-Json -Depth 6

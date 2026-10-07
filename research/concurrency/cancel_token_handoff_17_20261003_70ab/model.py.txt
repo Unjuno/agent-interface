@@ -1,0 +1,21 @@
+import itertools,json,os,datetime,hashlib,pathlib
+policies=('shared-publish-clear','shared-clear-publish','fresh-token');rows=[]
+for policy in policies:
+ for target in (1,2):
+  edges=[('C','W'),('I','R'),('P','R'),('W','R')]+([('P','I')] if policy=='shared-publish-clear' else [('I','P')])+([('P','C')] if target==2 else [])
+  for order in itertools.permutations('IP CWR'.replace(' ','')):
+   if any(order.index(a)>order.index(b) for a,b in edges):continue
+   flag=False;tokens={1:False};active=1;trace=[];observed=None
+   for e in order:
+    before={'flag':flag,'tokens':dict(tokens),'active':active}
+    if e=='I':
+     if policy=='fresh-token':tokens[2]=False
+     else:flag=False
+    elif e=='P':active=2
+    elif e=='C':
+     if policy=='fresh-token':tokens[target]=True
+     else:flag=True
+    elif e=='R':observed=tokens[active] if policy=='fresh-token' else flag
+    trace.append({'event':e,'before':before,'after':{'flag':flag,'tokens':dict(tokens),'active':active},'poll':observed if e=='R' else None})
+   rows.append({'policy':policy,'target':target,'order':''.join(order),'edges':edges,'trace':trace,'observed':observed,'expected':target==2,'violation':observed!=(target==2)})
+p=pathlib.Path(__file__);print(json.dumps({'allocation':'17-CANCEL-TOKEN-HANDOFF-M01-20261003-70ab','pid':os.getpid(),'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'rows':rows},sort_keys=True,separators=(',',':')))

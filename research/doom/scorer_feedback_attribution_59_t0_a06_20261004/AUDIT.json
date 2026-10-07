@@ -1,0 +1,86 @@
+{
+  "schema": "scorer-feedback-attribution-a06-audit-v1",
+  "preregistered_decision": "PASS only if immutable A05 bytes match the exact one-to-one five-case contract, all tamper mutations fail, and an independent raw-only reconstruction passes.",
+  "observed": {
+    "frozen_input_sha256": "9506457a371565b489b5e1b9f7313c05d3f13a28bd5448b4b2944211ee4f313e",
+    "frozen_input_matches_preregistration": true,
+    "expected_labels": [
+      "01-KILL_COUNT_INCREASE",
+      "02-MAP_EXIT",
+      "03-FUTURE_SCORER_EVENT_V3",
+      "04-KILL_COUNT_INCREASEE",
+      "05-PLAYER_DEAD"
+    ],
+    "exact_label_set_and_unique": true,
+    "event_kind_polarity_useful_schema_sequence_and_exact_types_checked": true,
+    "A04_A05_dispositions_checked": true,
+    "original_A05_candidate_reexecuted": false
+  },
+  "mutation_tests": [
+    {
+      "name": "exact retained document",
+      "expected": "accept",
+      "observed": "accepted"
+    },
+    {
+      "name": "duplicate case replacing another case",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "omitted case",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "relabelled case",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "label/event-kind mismatch",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "altered polarity",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "altered useful flag",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "unexpected extra case",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "changed A05 disposition",
+      "expected": "reject",
+      "observed": "rejected"
+    },
+    {
+      "name": "JSON boolean replaced by integer",
+      "expected": "reject",
+      "observed": "rejected"
+    }
+  ],
+  "independent_audit": {
+    "imports_candidate_code": false,
+    "imports_A05_auditor": false,
+    "imports_A06_candidate_auditor": false,
+    "tamper_tests_imported": false,
+    "cases_reconstructed": 5,
+    "output_status": "PASS_RAW_AUDIT_V2",
+    "raw_sha256": "9506457a371565b489b5e1b9f7313c05d3f13a28bd5448b4b2944211ee4f313e"
+  },
+  "initial_review_finding": {
+    "source": "PR #7633 review comment https://github.com/Unjuno/agent-interface/pull/7633#discussion_r4178101309",
+    "disposition": "Upheld. The A05 raw-only auditor trusts candidate-controlled labels and count and is not fail-closed under tampering.",
+    "historical_record": "A05 source, raw, auditor, and first output remain unchanged. A06 supplies separate retrospective validation of the retained raw bytes."
+  },
+  "conclusion": "PASS_METHOD_SCOPED for strict validation of the frozen synthetic A05 bytes and these nine tamper mutations only."
+}

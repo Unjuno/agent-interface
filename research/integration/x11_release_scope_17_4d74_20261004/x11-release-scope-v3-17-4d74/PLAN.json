@@ -1,0 +1,17 @@
+{
+  "allocation": "X11-RELEASE-SCOPE-17-4D74-R03-20261004",
+  "source_main": "39551d89699910e054ad81bd1f94743f2d8cb6ed",
+  "H": "On a private real X server, release verification over owned tracked keys need not imply whole-display neutral input; overlapping same-key holds do not provide independent per-client ownership.",
+  "T": "One bounded four-cell private Xvfb experiment: neutral, owned SHIFT, second-client c, overlapping SHIFT. Use unchanged current-main X11Backend and separate Xlib keymap observer. No model/game/user display. Each cell has fresh server and no retry.",
+  "D": "Require complete source/command/PID/ordered keymap/receipt/cleanup evidence. Record actual owned release and global state; do not treat a scoped receipt as global neutrality. Expected foreign-c persists while receipt verifies; overlapping SHIFT is server-global and owner release clears it.",
+  "C": "Synthetic XTEST clients inside private display, not human keyboard/hardware/concurrency probabilities/game usefulness/deadline. Does not establish a runtime bug: receipt may intentionally be scoped.",
+  "U": "Existing #17 release safety and #59 exact measurement boundary. No new authority/repair adoption or shared GPU/model lease.",
+  "cells": [
+    "neutral",
+    "owned_shift",
+    "foreign_c",
+    "overlap_shift"
+  ],
+  "image": "sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55",
+  "predecessor": "R01 pre-import STOP; R02 neutral/ownedALT completed then foreign-key dictionary mismatch STOP, original raw unchanged"
+}

@@ -1,0 +1,56 @@
+{
+  "status": "PASS_FD_LIFETIME_BOUNDARY_SCOPED",
+  "rows": 6,
+  "events": 134,
+  "integer_replacement_failures": 2,
+  "once_owner_replacement_failures": 0,
+  "normal_positives": 2,
+  "errors": [],
+  "reductions": [
+    {
+      "policy": "integer_copies",
+      "schedule": "caller_close_reuse_before_worker_finally",
+      "replacement_closed_by_stale_cleanup": true,
+      "original_read_completed": true,
+      "native_thread_gone": true
+    },
+    {
+      "policy": "integer_copies",
+      "schedule": "worker_finally_reuse_before_late_caller",
+      "replacement_closed_by_stale_cleanup": true,
+      "original_read_completed": true,
+      "native_thread_gone": true
+    },
+    {
+      "policy": "integer_copies",
+      "schedule": "normal_finish",
+      "replacement_closed_by_stale_cleanup": false,
+      "original_read_completed": true,
+      "native_thread_gone": true
+    },
+    {
+      "policy": "once_owner",
+      "schedule": "caller_close_reuse_before_worker_finally",
+      "replacement_closed_by_stale_cleanup": false,
+      "original_read_completed": true,
+      "native_thread_gone": true
+    },
+    {
+      "policy": "once_owner",
+      "schedule": "worker_finally_reuse_before_late_caller",
+      "replacement_closed_by_stale_cleanup": false,
+      "original_read_completed": true,
+      "native_thread_gone": true
+    },
+    {
+      "policy": "once_owner",
+      "schedule": "normal_finish",
+      "replacement_closed_by_stale_cleanup": false,
+      "original_read_completed": true,
+      "native_thread_gone": true
+    }
+  ],
+  "raw_sha256": "2aa2e68964107448392c957621bac4b4b747dc3a324aed45c4477e6c1221176d",
+  "raw_bytes": 22208,
+  "auditor_sha256": "3df33b23d140e238fe081772a418a577937eae81d1b58fbd7bdb73bf189f09ce"
+}

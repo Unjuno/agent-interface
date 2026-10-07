@@ -1,0 +1,34 @@
+{
+  "allocation": "CIRCUIT-REJECTION-COST-5375-A02-20261004-01",
+  "checks": {
+    "authority_admissions_zero": true,
+    "bounded_safety_served_all": true,
+    "fault_drop_excluded_and_detected": true,
+    "four_mutations_rejected": true,
+    "storm_backend_safety_starved": true,
+    "storm_reserved_safety_served": true,
+    "storm_upstream_safety_served": true,
+    "zero_rejection_backend_safety_served": true
+  },
+  "errors": [],
+  "mutation_rejections": [
+    [
+      "capacity_cost",
+      true
+    ],
+    [
+      "obligation_deferred",
+      true
+    ],
+    [
+      "authority_admission",
+      true
+    ],
+    [
+      "scenario_identity",
+      true
+    ]
+  ],
+  "outcome": "PASS_METHOD_SCOPED",
+  "rows": 10
+}

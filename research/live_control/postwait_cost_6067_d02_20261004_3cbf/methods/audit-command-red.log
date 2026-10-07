@@ -1,0 +1,28 @@
+test_actual_saved_byte_change_rejected (test_audit.AuditTests.test_actual_saved_byte_change_rejected) ... ok
+test_closed_saved_cell (test_audit.AuditTests.test_closed_saved_cell) ... ok
+test_observer_command_cannot_bind_foreign_display (test_audit.AuditTests.test_observer_command_cannot_bind_foreign_display) ... FAIL
+test_substituted_fixture_executable_rejected (test_audit.AuditTests.test_substituted_fixture_executable_rejected) ... FAIL
+test_unknown_saved_file_rejected (test_audit.AuditTests.test_unknown_saved_file_rejected) ... ok
+
+======================================================================
+FAIL: test_observer_command_cannot_bind_foreign_display (test_audit.AuditTests.test_observer_command_cannot_bind_foreign_display)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_audit.py", line 55, in test_observer_command_cannot_bind_foreign_display
+    with self.assertRaises(ValueError): check_cell(root,spec)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_substituted_fixture_executable_rejected (test_audit.AuditTests.test_substituted_fixture_executable_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_audit.py", line 62, in test_substituted_fixture_executable_rejected
+    with self.assertRaises(ValueError): check_cell(root,spec)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.037s
+
+FAILED (failures=2)

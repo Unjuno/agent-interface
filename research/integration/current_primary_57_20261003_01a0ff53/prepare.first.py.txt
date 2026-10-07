@@ -1,0 +1,49 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import subprocess,json,hashlib,os,difflib
+ROOT=Path('<OWN_WORKSPACE>');R=ROOT/'work/agent-interface';W=ROOT/'work/current-primary-successor';W.mkdir(exist_ok=False)
+def g(*a,input=None,env=None):return subprocess.check_output(['git',*a],cwd=R,input=input,env=env)
+def now():return datetime.now(timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+base=g('rev-parse','origin/main').decode().strip();v3='fdef9c7243e80cfe02bb2659606d317d2142a9a3';busy='12e15aa7a3dc71a95f31ac7b600212c742dd9bff';joint='5cfc7e89104b73f97ab1bb254f72e0dd5540de7d'
+s=W/'source';s.mkdir()
+ci=json.loads(g('show',busy+':research/integration/primary_stdio_busy_ci_57_20261003_01a0ff59/FREEZE.json'))
+for p in ci['source_pins']:
+ path=p['path']
+ if path=='runtime/host_v1/test_primary_stdio_backpressure.mjs':data=g('show',busy+':'+path)
+ else:data=g('show',base+':'+path)
+ target=s/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+primary='runtime/host_v1/primary_stdio.mjs'
+original=g('show',busy+':'+primary);v3bytes=g('show',v3+':'+primary);combined=g('show',joint+':'+primary)
+assert combined==v3bytes.replace(b'  let pending=null,failure=null;',b'  let pending=null,failure=null;') or combined!=v3bytes
+# Independently apply the literal three approved guard insertions as an isolated merge-file.
+a=W/'v3.mjs.txt';b=W/'common.mjs.txt';c=W/'busy.mjs.txt'
+a.write_bytes(v3bytes);b.write_bytes(g('show','cb13a10dce358649458f5aea00947b8aa43fc5b8:'+primary));c.write_bytes(original)
+merged=subprocess.run(['git','merge-file','-p',str(a),str(b),str(c)],cwd=R,capture_output=True)
+(W/'merge-file.stdout.txt').write_bytes(merged.stdout);(W/'merge-file.stderr.txt').write_bytes(merged.stderr)
+assert merged.returncode==0 and merged.stdout==combined
+(s/primary).write_bytes(combined)
+tests='runtime/host_v1/test_primary_stdio.mjs';(s/tests).write_bytes(g('show',v3+':'+tests))
+wf='.github/workflows/native-mcp-v1.yml';current=(s/wf).read_bytes()
+assert current.count(ci['old_command'].encode())==1
+(s/wf).write_bytes(current.replace(ci['old_command'].encode(),ci['new_command'].encode()))
+readme='runtime/host_v1/README.md';doc=(s/readme).read_bytes()
+old=g('show','cb13a10dce358649458f5aea00947b8aa43fc5b8:'+readme);new=g('show',busy+':'+readme)
+changes=[x for x in difflib.SequenceMatcher(None,old.splitlines(keepends=True),new.splitlines(keepends=True),autojunk=False).get_opcodes() if x[0]!='equal']
+assert len(changes)==1
+_,i,j,k,l=changes[0];before=b''.join(old.splitlines(keepends=True)[i:j]);after=b''.join(new.splitlines(keepends=True)[k:l]);assert doc.count(before)==1
+doc=doc.replace(before,after)
+old=g('show','316ac44b24d4ac29c1942d2fee51f1c0599855b1:'+readme);new=g('show',v3+':'+readme)
+changes=[x for x in difflib.SequenceMatcher(None,old.splitlines(keepends=True),new.splitlines(keepends=True),autojunk=False).get_opcodes() if x[0]!='equal'];assert len(changes)==1 and changes[0][0]=='insert'
+_,i,j,k,l=changes[0];addition=b''.join(new.splitlines(keepends=True)[k:l]);anchor=b'Explicitly send \x60call\x60 with [\x60'
+# Exact nearby common paragraph boundary, not a broad context rewrite.
+anchor=b'Explicitly send \x60call\x60 with ['
+assert doc.count(anchor)==1 and addition not in doc;doc=doc.replace(anchor,addition+anchor)
+(s/readme).write_bytes(doc)
+pins=[]
+for path in sorted(p['path'] for p in ci['source_pins']):
+ data=(s/path).read_bytes();pins.append({'path':path,'bytes':len(data),'sha256':sha(data)})
+plan={'frozen_utc':now(),'claim_comment':5967341462,'kind':'new ordinary current-main source composition; original formal/native/producer/auditor replays0','base':base,'V3_source':v3,'busy_source':busy,'joint_product_source_exact_private_prior_tree':joint,'source_pins':pins,'node_binary':'/opt/homebrew/Cellar/node/26.7.0/bin/node','node_binary_sha256':sha(Path('/opt/homebrew/Cellar/node/26.7.0/bin/node').read_bytes()),'argv':['/opt/homebrew/Cellar/node/26.7.0/bin/node','--test','--test-reporter=tap','runtime/host_v1/test_primary_stdio.mjs','runtime/host_v1/test_primary_stdio_backpressure.mjs','runtime/host_v1/test_relay_client.mjs'],'cwd':str(s),'environment_delta':{'PRIMARY_STDIO_STARTUP_EVIDENCE':str(W/'check-first/cases')},'D':'exit0/exactly39tests39pass0fail/cancel/skip/todo, first fault after mkdir suppresses ready and cleanup preserved, allpinsunchanged; original failures retained','prior_sources_preserved':True,'decode_change':False,'main_requests':0}
+(W/'PLAN.json').write_text(json.dumps(plan,indent=2)+'\n')
+(W/'USED_SCOPE_FROM_6D.diff').write_bytes(g('diff','6d7ce9693caae8c123fda532da64888f6006dcb9',base,'--','runtime/host_v1','research/live_control','.github/workflows/native-mcp-v1.yml','AGENTS.md','README.md','docs/CURRENT_GOAL.md','ROADMAP.md','docs/WORKER_QUICKSTART.md','docs/RESEARCH_METHOD.md','docs/ISSUE_FAILURE_CLASSIFICATION.md'))
+print(json.dumps({'base':base,'source_pins':len(pins),'product_bytes':len(combined),'guard_merge_exit':merged.returncode,'main_requests':0}))

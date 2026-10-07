@@ -1,0 +1,14 @@
+{
+  "schema":"unjuno.issue7160.t0.fixture.v1",
+  "capsule":{"id":"capsule-17","object_id":"object-17","generation":4,"label":"Save","context":"prior verified export result; planner note: may be a save control"},
+  "cases":[
+    {"id":"same_object_appearance_change","object_id":"object-17","generation":4,"label":"Save","appearance":"blue"},
+    {"id":"lookalike_different_object","object_id":"object-29","generation":4,"label":"Save","appearance":"blue"},
+    {"id":"same_object_moved","object_id":"object-17","generation":4,"label":"Save","appearance":"blue","location":"new"},
+    {"id":"duplicate_label","object_id":"object-41","generation":4,"label":"Save","appearance":"gray"},
+    {"id":"recycled_id_new_generation","object_id":"object-17","generation":5,"label":"Save","appearance":"blue"},
+    {"id":"identity_unavailable","object_id":null,"generation":null,"label":"Save","appearance":"blue"}
+  ],
+  "policies":["SIMILARITY_ONLY","IDENTITY_BOUND","NO_MEMORY"],
+  "mutable_fields":["appearance","location"]
+}

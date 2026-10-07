@@ -1,0 +1,62 @@
+{
+  "schema": "predicate-retry-finite-spec-v1",
+  "allocation": "17-PREDICATE-RETRY-DEADLINE-A01-20261003-b64b",
+  "queue_capacity": 1,
+  "pc": [
+    "SNAP",
+    "SCAN",
+    "CHECK",
+    "DONE"
+  ],
+  "deadline_expired": true,
+  "closed": false,
+  "A_predicate": "constant literal False",
+  "B_predicate": "constant literal True",
+  "R": "fresh immutable equal-payload JSON object when queue empty; no reinsert",
+  "identity": "canonical first-occurrence naming of snapshot then queue; equality-only source guards. Old comparison-irrelevant locals may remain referenced; fresh concrete identities never reused. At most2 comparison-relevant handles, not universal total Python live-object bound; selected witness can retain at most2 live identities.",
+  "policies": [
+    "baseline",
+    "outside",
+    "deadline_first"
+  ],
+  "A_steps": "baseline atomically scans finite queue then terminates TIMEOUT. Outside SNAP->SCAN captures q;SCAN->CHECK false;CHECK compares q/snap: changed->SNAP otherwiseDONE. Deadline_first CHECK->DONE regardless churn in all-false expired domain.",
+  "external_steps": "B consume if q exists; R fresh append if q empty. Each macro holds Condition atomically, A has no lock across SCAN. DONE absorbing. DONE retains canonical q/snap as inert metadata; no outgoing transitions.",
+  "fairness_gate": "existential reachable nonterminal closed walk with at least one A,B,R labeled edge. Actors all progress; no inevitability/probability/OS scheduling guarantee.",
+  "decision": "PASS_SCOPED_EXISTENTIAL_RETRY_COUNTEREXAMPLE iff complete graph/source checks, outside fair lasso, no A-progress lasso for baseline/deadline_first and directed source construction controls match frozen exact expectations. Otherwise HOLD/FAIL retained, no formal retry.",
+  "source_controls": "constructor-free AST-extracted wait_notification only, custom deterministic Condition/clock; quiescent all3 TimeoutError, churn8 cycles baseline/deadline_first TimeoutError but outside diagnostic; fresh-match outside returns queued match, deadline_first TimeoutError with match retained. No real threads/process/stdin/journal/model/GUI. Separate prior matching queue priority oracle, not a production alternative endorsement. V2 coherent synthetic chronology: fresh A init0, B init0.25, R arrival0.5, A reacquisition2; timeout1. V1 first controls retained with STOP_SYNTHETIC_CLOCK_ORDER for predeadline interpretation only; subject images and model predicates unchanged.",
+  "containers": {
+    "cpus": 0.25,
+    "memory_bytes": 134217728,
+    "pids": 32,
+    "network": "none",
+    "root_read_only": true,
+    "source_read_only": true,
+    "output_limit_bytes": 2097152,
+    "wall_containment_seconds": 30
+  },
+  "counts": {
+    "formal_model": 1,
+    "saved_auditor": 1,
+    "formal_retries": 0
+  },
+  "limits": [
+    "finite all-false source-projected equality quotient only",
+    "synthetic expired bit and mocked clock/Condition construction; no time measurement",
+    "baseline arbitrary callback/acquisition/scheduling/queue-size hard bounds not proved",
+    "outside comparator inert;7003 held-assay causal evidence unchanged",
+    "simple deadline-first alternative can alter newly-arriving matching priority; not adopted",
+    "no production runtime/input release/useful task/global Issue17/59 completion"
+  ],
+  "initial_state": {
+    "pc": "SNAP",
+    "q": 0,
+    "snap": null
+  },
+  "source_control_rows": 9,
+  "ordinary_construction_versions": {
+    "first": "first-source-controls-v1/FIRST-RESULT.json",
+    "repaired": "construction.json",
+    "formal_model_before_repair": 0,
+    "saved_auditor_before_repair": 0
+  }
+}

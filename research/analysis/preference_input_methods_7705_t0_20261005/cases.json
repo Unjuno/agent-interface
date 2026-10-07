@@ -1,0 +1,35 @@
+{
+  "criteria": {
+    "wait_ms": {"unit": "ms", "direction": "minimize"},
+    "actual_tokens": {"unit": "tokens", "direction": "minimize"},
+    "interruptions": {"unit": "count", "direction": "minimize"},
+    "recovery_minutes": {"unit": "minutes", "direction": "minimize"}
+  },
+  "routes": [
+    {"id":"fast","eligible":true,"outcomes":{"wait_ms":20,"actual_tokens":100,"interruptions":2,"recovery_minutes":8}},
+    {"id":"cheap","eligible":true,"outcomes":{"wait_ms":60,"actual_tokens":30,"interruptions":1,"recovery_minutes":2}},
+    {"id":"balanced","eligible":true,"outcomes":{"wait_ms":40,"actual_tokens":60,"interruptions":2,"recovery_minutes":4}},
+    {"id":"dominated","eligible":true,"outcomes":{"wait_ms":80,"actual_tokens":120,"interruptions":4,"recovery_minutes":10}},
+    {"id":"balanced-copy","eligible":true,"outcomes":{"wait_ms":40,"actual_tokens":60,"interruptions":2,"recovery_minutes":4}},
+    {"id":"unsafe-fast","eligible":false,"outcomes":{"wait_ms":10,"actual_tokens":10,"interruptions":0,"recovery_minutes":0}}
+  ],
+  "cases": [
+    {"id":"weights-fast","mode":"weights","input":{"weights":{"wait_ms":0.6,"actual_tokens":0.1,"interruptions":0.2,"recovery_minutes":0.1}}},
+    {"id":"classify-balanced","mode":"classify","input":{"wait_ms":{"status":"target","limit":50},"actual_tokens":{"status":"accept","limit":80},"interruptions":{"status":"free"},"recovery_minutes":{"status":"accept","limit":5}}},
+    {"id":"classify-impossible","mode":"classify","input":{"wait_ms":{"status":"target","limit":1},"actual_tokens":{"status":"free"},"interruptions":{"status":"free"},"recovery_minutes":{"status":"free"}}},
+    {"id":"classify-tie","mode":"classify","input":{"wait_ms":{"status":"target","limit":40},"actual_tokens":{"status":"target","limit":60},"interruptions":{"status":"accept","limit":2},"recovery_minutes":{"status":"accept","limit":4}}},
+    {"id":"pairwise-balanced","mode":"pairwise","input":{"route_id":"balanced"}},
+    {"id":"incomplete","mode":"classify","input":{"wait_ms":{"status":"free"},"actual_tokens":{"status":"free"},"interruptions":{"status":"free"}}},
+    {"id":"convex-front","mode":"pairwise","input":{"route_id":"mid"},"routes":[
+      {"id":"left","eligible":true,"outcomes":{"wait_ms":0,"actual_tokens":100,"interruptions":1,"recovery_minutes":2}},
+      {"id":"mid","eligible":true,"outcomes":{"wait_ms":50,"actual_tokens":50,"interruptions":1,"recovery_minutes":2}},
+      {"id":"right","eligible":true,"outcomes":{"wait_ms":100,"actual_tokens":0,"interruptions":1,"recovery_minutes":2}},
+      {"id":"dominated","eligible":true,"outcomes":{"wait_ms":110,"actual_tokens":110,"interruptions":2,"recovery_minutes":3}},
+      {"id":"unsafe-fast","eligible":false,"outcomes":{"wait_ms":0,"actual_tokens":0,"interruptions":0,"recovery_minutes":0}}]},
+    {"id":"disconnected-front","mode":"pairwise","input":{"route_id":"right"},"routes":[
+      {"id":"left","eligible":true,"outcomes":{"wait_ms":0,"actual_tokens":100,"interruptions":1,"recovery_minutes":2}},
+      {"id":"right","eligible":true,"outcomes":{"wait_ms":100,"actual_tokens":0,"interruptions":1,"recovery_minutes":2}},
+      {"id":"dominated","eligible":true,"outcomes":{"wait_ms":110,"actual_tokens":110,"interruptions":2,"recovery_minutes":3}},
+      {"id":"unsafe-fast","eligible":false,"outcomes":{"wait_ms":0,"actual_tokens":0,"interruptions":0,"recovery_minutes":0}}]}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "input.release_all",
+      "window.activate"
+    ],
+    "execution": {
+      "started_ns": 210160700058,
+      "ended_ns": 210175054738,
+      "emissions": 0,
+      "program_emissions": 0,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 210175051628
+        }
+      ],
+      "waits": [],
+      "activations": [
+        {
+          "operation_index": 0,
+          "target": "app",
+          "window_id": 2097189,
+          "started_ns": 210161804864,
+          "requested_ms": 500,
+          "request_attempted": true,
+          "status": "active_and_focused",
+          "visual_confirmation": false,
+          "active_window_ids": [
+            2097189
+          ],
+          "focus_within_target": true,
+          "ended_ns": 210174457283
+        }
+      ],
+      "completed_ops": [
+        0,
+        1
+      ]
+    },
+    "recovery_required": false
+  }
+}

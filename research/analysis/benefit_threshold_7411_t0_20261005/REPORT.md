@@ -1,0 +1,5 @@
+# Issue #7411 T0 — method-only result
+
+**PASS_METHOD_SCOPED.** The deterministic 1,230-record synthetic corpus yielded a planner-boundary threshold bracket of `[100,150] ms` containing its planted 100 ms lower-50th-percentile order statistic, and a local-processing bracket `[150,200] ms` containing its planted 150 ms lower-50th-percentile order statistic. The quantile convention is explicit for the even-sized synthetic groups. The two timing-location strata remained distinct. A seeded correctness-regression stratum was classified ineligible despite favorable choices; a six-participant sparse stratum returned `UNKNOWN_INSUFFICIENT_SUPPORT`. The separate raw-only auditor verified all four cases and rejected all eight planned corruptions.
+
+This validates only the finite synthetic estimator/audit contract. It does not measure real user value, a route speedup, task correctness, or a practical-benefit cutoff. Full protocol, raw bytes, source, commands, and environment are in [README.md](README.md) and [RUN.md](RUN.md).
