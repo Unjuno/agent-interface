@@ -126,6 +126,7 @@ class CodexAppServerClient:
                 with self._condition:
                     self._pending.add(request_id)
             sent = 0
+            write_attempted = False
             view = memoryview(data)
             try:
                 while sent < len(data):
@@ -135,6 +136,7 @@ class CodexAppServerClient:
                         raise TimeoutError("app-server pipe send timed out")
                     try:
                         # Bound each syscall, not the size of the JSON record.
+                        write_attempted = True
                         count = os.write(self._stdin_fd, view[sent:sent + 65536])
                         if count <= 0:
                             raise OSError("app-server pipe write made no progress")
@@ -156,7 +158,7 @@ class CodexAppServerClient:
                 self._record("sent", snapshot)
             except BaseException as error:
                 self._send_uncertain = True
-                if sent:
+                if write_attempted:
                     try:
                         self._record("send_uncertain", {
                             "message": snapshot, "sent_bytes": sent,

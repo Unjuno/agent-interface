@@ -261,6 +261,23 @@ class AppServerSendDeadlineTests(unittest.TestCase):
             self.assertEqual(rows[1]["message"]["sent_bytes"], 3)
             self.assertFalse(any(row["direction"] == "sent" for row in rows))
 
+    def test_zero_byte_write_attempt_is_journaled_as_uncertain(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal_path = os.path.join(directory, "protocol.jsonl")
+            with owned_client(journal_path=journal_path) as (client, _read_fd):
+                with patch.object(module.os, "write", side_effect=OSError("fixture broken pipe")):
+                    self.assert_uncertain(
+                        lambda: client._write({"method": "zero-byte-failure"},
+                                               deadline=time.monotonic() + 1),
+                        0, len(wire({"method": "zero-byte-failure"})))
+
+            with open(journal_path, encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            self.assertEqual([row["direction"] for row in rows],
+                             ["send_prepared", "send_uncertain"])
+            self.assertEqual(rows[1]["message"]["sent_bytes"], 0)
+            self.assertFalse(any(row["direction"] == "sent" for row in rows))
+
     def test_request_spends_one_budget_on_send_and_response_wait(self):
         clock = Clock()
         captured = []
