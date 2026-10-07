@@ -1,0 +1,1 @@
+Owned X11 release does not certify global keyboard neutrality; duplicate XTEST same-key holds do not have independent per-client ownership. Read x11-release-scope-v3-17-4d74/REPORT.md and audit-out/AUDIT.json. Original R01/R02 STOPs retained separately. No runtime changes, game/hardware/safety/efficiency qualification; full ROADMAP remains active.

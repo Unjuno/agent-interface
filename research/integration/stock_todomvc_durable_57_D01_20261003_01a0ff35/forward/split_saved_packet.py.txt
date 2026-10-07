@@ -1,0 +1,20 @@
+"""Split existing oversized packet only; original packager/actor not replayed."""
+from pathlib import Path
+import base64,json,hashlib
+P=Path(__file__).resolve().parent
+m=json.loads((P/'PUBLIC_MANIFEST.json').read_text())
+payload=base64.b64encode((P/'PUBLIC_PACKET.gz').read_bytes()).decode()
+parts=[payload[i:i+48000] for i in range(0,len(payload),48000)]
+summary='''D01 FIRST_STOP: unchanged historical tastejs/todomvc@25a9e31eb32db752d959df18e4d214295a2875e8, prior claim 5969256905. Final freeze 12:43:37.740993 UTC precedes first actor 12:44:34.375–35.935. Two observations/type title+Tab: input retained title, rows 0, counter empty; STOP_TASK_EFFECT. Reload, completion and second reload unexecuted. Durability/physical release/performance UNVERIFIED. Different backend from current MemoryStorage C06; no transferred success.
+
+All 23 frozen pins/13 official Git blobs unchanged. Request ledger lacks view.js/app.js though index references both and files exist; cause unproved, HTTP status not captured. Empty captured dev errors does not prove boot. No repair or security bypass. Native server 5916/wrapper14140 exited 0 12:45:11, streams 273/0, pipes closed/socket -1. Sole cleanup navigation returned ERR_BLOCKED_BY_CLIENT but native ledger/FINAL proves stop effect; no resend. Tab closed/empty inventory 12:45:51.688, exact two PIDs absent 12:49:55.047. Post-run saved reader 20408 exit0 13:01:23 rejects six full copied negatives, not a prefrozen independent scorer.
+
+Prelive Enter→Tab static handler correction retained original draft, not a live retry. First image transfer FAIL retained; only same captured buffer serialization repaired, JPEG6130 SHA25699ca3252965bae812e1967c634b4072293e16ebc3574438393f7af35feda6b2f. Crop title only, rolling transport not emitter authentication. Original packager exceeded comment cap, never sent; now splitting identical packet, no producer/scorer replay. Two native argv path projections retain original hashes. No main write/new PR/new worker.
+'''
+for i,part in enumerate(parts,1):
+    body=f'D01 saved evidence part {i}/{len(parts)}. '+json.dumps(m,separators=(',',':'))+'\n\n'
+    if i==1:body+=summary+'\n'
+    body+='Join only text codeblocks in order, base64-decode/gzip-decompress JSON, then verify each member bytes/SHA256 after decoding its base64. Full stock sources/license/freeze/raw AX+DOM/native streams/request ledger/reader/copied negatives/screenshot/first corrupt image included.\n\n```text\n'+part+'\n```\n'
+    (P/f'PUBLIC_PART_{i}.md').write_bytes(body.encode())
+    assert len(body.encode())<65000
+print(json.dumps({'parts':len(parts),'body_bytes':[len((P/f'PUBLIC_PART_{i}.md').read_bytes()) for i in range(1,len(parts)+1)],'same_packet_sha256':hashlib.sha256((P/'PUBLIC_PACKET.gz').read_bytes()).hexdigest(),'oversized_packager_first_exit':1}))

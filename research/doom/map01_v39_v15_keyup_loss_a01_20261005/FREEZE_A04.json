@@ -1,0 +1,56 @@
+{
+  "auditor_sha256": "82826a7f45708b5dc93ad1811477da30b365aade28e7eb7f993928e66891eedf",
+  "base_commit": "402c7d1b5147b2a905098f082233db60a47d68db",
+  "candidate_sha256": "1025defdb0a12d57358c27a2bb56d0217caac48d22c317ba63f1e7a3e9520952",
+  "commands": {
+    "auditor": "wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01:/src:ro --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01\\research\\doom\\map01_v39_v15_keyup_loss_a01_20261005\\results\\candidate-a04:/results:ro --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01\\research\\doom\\map01_v39_v15_keyup_loss_a01_20261005\\results\\audit-a04:/out --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/research/doom/map01_v39_v15_keyup_loss_a01_20261005/audit_a04_frozen_stop.py /results/candidate.json",
+    "candidate": "wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01:/src:ro --volume C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\v39-v15-keyup-loss-a01\\research\\doom\\map01_v39_v15_keyup_loss_a01_20261005\\results\\candidate-a04:/out --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/research/doom/map01_v39_v15_keyup_loss_a01_20261005/candidate_a04_frozen_stop.py"
+  },
+  "container_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "decision_gate": {
+    "failure": "V13 publishes completed with verified release while fake keymap retains keycode 38, or release loss is not detected.",
+    "pass": "Normal case completes verified with no key down; injected release loss produces verified=false and a failed terminal while key remains down.",
+    "scope": "Synthetic current-source composition only; no real X11, GUI, Doom, model, physical input, application effect, recovery efficacy, latency, threat response, or MAP01 completion."
+  },
+  "design": {
+    "cases": [
+      "normal XTest KeyRelease delivery",
+      "suppress exactly one XTest KeyRelease"
+    ],
+    "selected_sources": [
+      "V15 release-batch backend",
+      "V2 telemetry backend",
+      "V4\u2192V3\u2192V12 production input owner",
+      "V13 terminal executor"
+    ],
+    "stop_rule": "One A04 candidate execution. Preserve setup failure, FAIL, or PASS raw; do not rerun. One independent source/raw audit follows only if candidate raw exists.",
+    "test_double": "A04 executed the frozen candidate source candidate_a04_frozen_stop.py once; this source failed during V15 constructor binding before cases. A05 corrected source is static and unrun."
+  },
+  "hypothesis": "V13 terminal cleanup delegates to V15 inherited release_all, which should surface a dropped KeyRelease via the production V4\u2192V3\u2192V12 input owner keymap scan; V13 should then fail the terminal.",
+  "predecessor": "A01 constructor STOP, A02 finalizer STOP, A03 batch-vs-physical failure are preserved; A04 tests production per-program cleanup through V13.",
+  "run_id": "MAP01-V39-V15-KEYUP-LOSS-A04-20261005",
+  "schema": "v39-v15-keyup-loss-a04-freeze-v1",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "research/live_control/executor_v13.py": "5c54927e5087af42006c712ec906e2ec69e9155586730dee494dd3b5d43ced9a",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/live_control/input_owner_v12.py": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+    "research/live_control/input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "research/live_control/input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "research/live_control/session_v8.py": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943",
+    "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "classification": "exploratory pre-freeze diagnostic; not counted as the frozen A01 candidate run",
+  "command": "python -B /tmp/probe_incomplete_publish.py /tmp/release-batch-main-backend.py; python -B /tmp/probe_incomplete_publish.py /tmp/release-batch-pr7635-backend.py",
+  "source_commits": {
+    "main": "d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6",
+    "pr7635": "bf57eb60009867bfa36243a9b48e37bd576682c7"
+  },
+  "inputs": "Same backend source snapshots later frozen for A01; hashes are in FREEZE.json and the SHA256SUMS manifest.",
+  "factor": "Two residual rows; injected failure at position 0; before-accept and accept-then-raise modes.",
+  "preserved_outputs": [
+    "raw/preflight_position0/main.json",
+    "raw/preflight_position0/pr7635.json"
+  ],
+  "observed": "Both versions cleared all rows and attached no structured publication metadata to the original exception. This informed, but is separate from, the frozen three-position failure-at-middle A01.",
+  "limitations": "No independent audit was run for this exploratory probe. The frozen A01 uses its own saved candidate output and independent audit."
+}

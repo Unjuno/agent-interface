@@ -1,0 +1,171 @@
+"""Owned native macOS pipe completion construction; a one-shot serial deck."""
+import argparse, asyncio, concurrent.futures, errno, hashlib, json, os
+from pathlib import Path
+import platform, selectors, subprocess, sys, threading, time
+
+ROOT = Path(__file__).resolve().parent
+MODES = ['wrapper_cancel', 'caller_close', 'owned_control', 'normal_data']
+SCHEMA = 'macos-owned-read-completion-v1'
+
+class Book:
+    def __init__(self):
+        self.lock = threading.RLock(); self.events = []
+        self.active = False; self.thread = None; self.closed = set()
+        self.close_started = False; self.close_returned = False
+    def emit(self, name, **data):
+        with self.lock:
+            e = {'seq':len(self.events), 'ns':time.perf_counter_ns(), 'pid':os.getpid(),
+                 'tid':threading.get_ident(), 'native_tid':threading.get_native_id(),
+                 'name':name, 'data':data}
+            self.events.append(e); print(json.dumps({'event':e}, sort_keys=True), flush=True)
+            return e
+    def close(self, fd, role):
+        os.close(fd)
+        with self.lock: self.closed.add(fd)
+        self.emit('fd_closed', fd=fd, role=role)
+
+def fd_state(fd):
+    try: os.fstat(fd); return 'OPEN'
+    except OSError as e:
+        if e.errno == errno.EBADF: return 'EBADF'
+        return 'ERROR_' + str(e.errno)
+
+async def child(mode, rep):
+    book = Book(); entered = threading.Event()
+    r, w = os.pipe(); cr, cw = os.pipe() if mode == 'owned_control' else (None, None)
+    book.emit('case_begin', mode=mode, rep=rep, r=r, w=w, cr=cr, cw=cw)
+    def worker():
+        selector = None
+        try:
+            if mode == 'owned_control':
+                selector = selectors.DefaultSelector()
+                selector.register(r, selectors.EVENT_READ, 'data')
+                selector.register(cr, selectors.EVENT_READ, 'control')
+            with book.lock:
+                book.active = True; book.thread = threading.current_thread()
+            book.emit('worker_enter', mode=mode); entered.set()
+            if mode == 'owned_control':
+                for _ in range(10):
+                    ready = selector.select(.1)
+                    # The existing simple control-priority policy; no co-ready study.
+                    choice = next((k for k, _ in ready if k.data == 'control'), None)
+                    if choice is None: choice = next((k for k, _ in ready if k.data == 'data'), None)
+                    if choice is None: continue
+                    b = os.read(choice.fd, 1)
+                    result = {'outcome':'CONTROL_ACK' if choice.data == 'control' and b == b'C' else 'UNEXPECTED', 'byte_hex':b.hex(), 'errno':None}
+                    break
+                else: result = {'outcome':'IDLE_LIMIT', 'byte_hex':None, 'errno':None}
+                book.close(r, 'worker_data_reader'); book.close(cr, 'worker_control_reader')
+                selector.close(); book.emit('selector_closed')
+                book.emit('control_ack', result=result)
+            else:
+                try:
+                    b = os.read(r, 1)
+                    result = {'outcome':'READ_DATA' if b else 'READ_EOF', 'byte_hex':b.hex(), 'errno':None}
+                except OSError as e:
+                    result = {'outcome':'READ_ERROR', 'byte_hex':None, 'errno':e.errno}
+                book.emit('read_return', result=result)
+            return result
+        finally:
+            with book.lock: book.active = False
+            book.emit('worker_return')
+
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix='owned-mac-read')
+    cf = executor.submit(worker)
+    cf.add_done_callback(lambda _: book.emit('future_callback'))
+    af = asyncio.wrap_future(cf)
+    async def waiter(): return await af
+    task = asyncio.create_task(waiter())
+    deadline = time.monotonic() + 1
+    while not entered.is_set():
+        if time.monotonic() >= deadline: raise RuntimeError('worker entry timeout')
+        await asyncio.sleep(.001)
+    await asyncio.sleep(.02)
+    book.emit('entry_checkpoint', future_running=cf.running(), future_done=cf.done(), active=book.active)
+    closer = None
+    if mode in ['wrapper_cancel', 'caller_close']:
+        request = task.cancel(); book.emit('wrapper_cancel_request', accepted=request)
+        try: await task
+        except asyncio.CancelledError: pass
+        book.emit('wrapper_cancel_observed', done=task.done(), cancelled=task.cancelled(), future_done=cf.done(), future_cancelled=cf.cancelled())
+        if mode == 'caller_close':
+            def close_reader():
+                with book.lock: book.close_started = True
+                book.emit('caller_close_enter', fd=r)
+                try: book.close(r, 'caller_reader')
+                finally:
+                    with book.lock: book.close_returned = True
+                    book.emit('caller_close_return')
+            closer = threading.Thread(target=close_reader, name='owned-caller-close')
+            closer.start()
+        await asyncio.sleep(.02)
+    elif mode == 'owned_control':
+        book.emit('control_request', byte_hex='43'); os.write(cw, b'C')
+        deadline = time.monotonic() + 1
+        while not cf.done():
+            if time.monotonic() >= deadline: raise RuntimeError('control completion timeout')
+            await asyncio.sleep(.001)
+        await task
+    else:
+        book.emit('normal_data_request', byte_hex='44'); os.write(w, b'D')
+        deadline = time.monotonic() + 1
+        while not cf.done():
+            if time.monotonic() >= deadline: raise RuntimeError('normal data completion timeout')
+            await asyncio.sleep(.001)
+        await task
+
+    with book.lock:
+        primary = {'task_done':task.done(), 'task_cancelled':task.cancelled(),
+          'future_done':cf.done(), 'future_cancelled':cf.cancelled(), 'future_running':cf.running(),
+          'worker_active':book.active, 'worker_thread_alive':book.thread.is_alive(),
+          'caller_close_started':book.close_started, 'caller_close_returned':book.close_returned,
+          'reader_state':'CLOSE_PENDING' if book.close_started and not book.close_returned else fd_state(r),
+          'control_reader_state':None if cr is None else fd_state(cr)}
+        book.emit('primary_checkpoint', snapshot=primary)
+    # Cleanup is expressly after the primary checkpoint; never cancellation evidence.
+    if not cf.done():
+        book.emit('harness_release', byte_hex='44'); os.write(w, b'D')
+    book.close(w, 'owner_writer')
+    deadline = time.monotonic() + 1
+    while not cf.done():
+        if time.monotonic() >= deadline: raise RuntimeError('cleanup completion timeout')
+        await asyncio.sleep(.001)
+    result = cf.result(timeout=0)
+    if closer is not None:
+        closer.join(.5)
+        if closer.is_alive(): raise RuntimeError('owned closer did not join')
+    if mode != 'owned_control' and not (mode == 'caller_close' and book.close_returned): book.close(r, 'owner_reader')
+    if cw is not None: book.close(cw, 'owner_control_writer')
+    executor.shutdown(wait=True); book.emit('executor_join', thread_alive=book.thread.is_alive())
+    final = {'future_done':cf.done(), 'future_cancelled':cf.cancelled(), 'worker_active':book.active,
+             'worker_thread_alive':book.thread.is_alive(), 'result':result,
+             'fds':{str(fd):fd_state(fd) for fd in [r,w,cr,cw] if fd is not None}}
+    book.emit('case_final', snapshot=final)
+    print(json.dumps({'case':{'mode':mode, 'rep':rep, 'pid':os.getpid(), 'primary':primary, 'final':final, 'events':book.events}},sort_keys=True),flush=True)
+
+def produce(out):
+    out.mkdir(parents=True, exist_ok=False)
+    protocol = json.loads((ROOT/'PROTOCOL.json').read_text())
+    result = {'schema':SCHEMA, 'allocation_id':protocol['allocation_id'], 'environment':{'python':sys.version,'platform':platform.platform()},
+              'producer_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'protocol_sha256':hashlib.sha256((ROOT/'PROTOCOL.json').read_bytes()).hexdigest(), 'cases':[], 'status':'STARTED'}
+    for mode in MODES:
+        for rep in [0,1]:
+            label = mode + '-' + str(rep)
+            start = time.time_ns(); argv = [sys.executable,'-B',str(Path(__file__).resolve()),'--case',mode,str(rep)]
+            try: p = subprocess.run(argv,capture_output=True,timeout=3); stdout,stderr,code = p.stdout,p.stderr,p.returncode
+            except subprocess.TimeoutExpired as e: stdout,stderr,code = e.stdout or b'', e.stderr or b'', 124
+            end = time.time_ns(); (out/(label+'.stdout.log')).write_bytes(stdout); (out/(label+'.stderr.log')).write_bytes(stderr)
+            receipt = {'argv':argv,'start_utc_ns':start,'end_utc_ns':end,'exit_code':code,'stdout_sha256':hashlib.sha256(stdout).hexdigest(),'stderr_sha256':hashlib.sha256(stderr).hexdigest()}
+            (out/(label+'.receipt.json')).write_text(json.dumps(receipt,indent=2)+'\n')
+            records = [json.loads(s) for s in stdout.decode().splitlines()]
+            footers = [x['case'] for x in records if 'case' in x]
+            if code != 0 or len(footers) != 1 or len(stdout)>131072:
+                result['status']='STOP_FIRST_INCOMPLETE';result['incomplete']={'mode':mode,'rep':rep,'receipt':receipt};(out/'raw.json').write_text(json.dumps(result,indent=2)+'\n');return 2
+            result['cases'].append(footers[0]);(out/'raw.json').write_text(json.dumps(result,indent=2)+'\n')
+    result['status']='COMPLETE';(out/'raw.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'cases':len(result['cases']),'status':result['status']}));return 0
+
+if __name__ == '__main__':
+    a = argparse.ArgumentParser();a.add_argument('--case',nargs=2);a.add_argument('--produce',type=Path);args=a.parse_args()
+    if args.case: asyncio.run(child(args.case[0],int(args.case[1])))
+    elif args.produce: raise SystemExit(produce(args.produce))
+    else: a.error('choose --case or --produce')

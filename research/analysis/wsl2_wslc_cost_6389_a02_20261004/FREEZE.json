@@ -1,0 +1,65 @@
+{
+  "schema": "wsl2-wslc-cost-comparison-v1",
+  "allocation": "6389-wsl2-vs-wslc-belief-replay-a02-20261004",
+  "issue": 6389,
+  "parent_allocation": "6389-wsl2-vs-wslc-belief-replay-a01-20261004",
+  "parent_first_outcome": "STOP_PINNED_IMAGE_UNAVAILABLE",
+  "base_main": "13bab54ea6d91978247ecc1b70e5060db752367a",
+  "successor_parent_commit": "5515fb15f59ce2304383dae6005e39b65a106de4",
+  "branch": "research/wsl2-wslc-migration-6389-a02-20261004",
+  "result_path": "research/analysis/wsl2_wslc_cost_6389_a02_20261004/",
+  "candidate_and_auditor_invocations_per_arm": 3,
+  "pair_order": ["native,wslc", "wslc,native", "native,wslc"],
+  "retry_policy": "none; exclusive formal output tree; preserve first failure",
+  "construction_checks": {
+    "command": "python -B -m unittest -v test_measure.py",
+    "result": "PASS_CONSTRUCTION_ONLY",
+    "tests_passed": 3,
+    "scope": "digest column and local image ID gate only; no candidate invocation"
+  },
+  "docker_or_podman": false,
+  "gpu_model_gui_input": false,
+  "network_during_candidate_or_audit": "none",
+  "primary_metric": "Windows-host external wall time from each runtime CLI launch to completion of candidate or independent audit; paired iteration is candidate plus audit",
+  "decision": {
+    "pass_cost_scoped": "all outputs/audits exact and native median candidate+audit time <= 90% of WSLc median",
+    "pass_portability_only": "all outputs/audits exact but cost threshold not met",
+    "fail": "output mismatch, audit failure, or unexplained invocation result",
+    "stop": "pre-candidate source/main/runtime/idle gate failure"
+  },
+  "source": {
+    "path": "research/analysis/belief_external_drift_5368_t0_20261003/",
+    "materialized_sha256": {
+      "fixture.json": "374a6136bc5a0b5cfe39cce915625505c6a56cade870b20fb2e749aa4e7fe9d7",
+      "candidate.py": "972b711c3a6c57e09d48652884c96491a70c5ef7ea183e96b052692c6bddee0a",
+      "runner.py": "31a13ac9dee59d4d7d58fa7cb5c94afc9418477ca22d644459d6d01acf76ccdc",
+      "audit.py": "81fe3dc715afb4f9e2039a513157f608fddfef950643e0bdd6431350f3a4ad4d"
+    },
+    "stager_path": "research/analysis/wsl2_wslc_cost_6389_a01_20261004/stage_and_run.py",
+    "stager_sha256": "e7c73bb63f59fd4b35fb11c52af89e0c551b1a677a795d4deb2776871477aa1c"
+  },
+  "wsl2": {
+    "distro": "Ubuntu 24.04, WSL2",
+    "python": "3.12.3",
+    "glibc": "2.39"
+  },
+  "wslc": {
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "local_image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pull": "never",
+    "cpus_requested": 1,
+    "memory_requested": "512M",
+    "memory_limit_enforcement_claim": false,
+    "pre_invocation_container_check": "wslc container ls --quiet must return empty",
+    "pre_invocation_image_check": "both exact digest token and local image ID must be present in wslc images --digests --no-trunc output"
+  },
+  "protocol_sha256": {
+    "README.md": "076e9835b1af3e00f445db27df256ba3920749308c41614d155d6325aa9ec079",
+    "measure.py": "22855fcd197be8b4248f29399e0eac68f9df273d9e58688d5af395605ef20769",
+    "test_measure.py": "e2cd82142c4aa4215cb63d6ee8277c7762dafe991d358c83b1ca0670bc854b28"
+  },
+  "formal_status": "not_run"
+}

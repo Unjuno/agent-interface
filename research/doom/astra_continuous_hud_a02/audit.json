@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface-astra-change-alarm-threshold-a02-audit-v1",
+  "status": "PASS_REPRODUCED_SCOPED",
+  "checks": {
+    "input_sha256_matches_freeze": true,
+    "row_count_and_order": true,
+    "timeline_grid_0_to_155_8_s_at_0_2_s": true,
+    "baseline_max_mask_xor_pixels": 29,
+    "frame311_mask_xor_pixels": 471,
+    "threshold_candidates_recomputed": 441,
+    "thresholds_detecting_frame311": 441,
+    "minimum_episode_count": 6,
+    "thresholds_attaining_minimum": [
+      466,
+      467,
+      468,
+      469,
+      470
+    ],
+    "example_threshold_summaries_match": true
+  },
+  "scope": "Independent implementation reproduces arithmetic only; no semantic labeling of episodes, live-response claim, or formal allocation.",
+  "result_sha256": "2a88f1a5ff7fb57292baca6e4d73f52b704eb904e8afde67c852df3f647e6c53",
+  "samples_csv_sha256": "0b585a3671a10ba2a3e4f634b32cddc7f3fb83aa85013eb75faff8a128cd7e97"
+}

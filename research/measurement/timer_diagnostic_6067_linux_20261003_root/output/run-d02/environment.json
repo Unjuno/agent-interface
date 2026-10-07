@@ -1,0 +1,34 @@
+{
+  "utc_start": "2026-10-03T11:56:32.016656+00:00",
+  "python": "3.12.15 (main, Oct  1 2026, 21:47:32) [GCC 14.2.0]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "clock": {
+    "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+    "monotonic": true,
+    "adjustable": false,
+    "resolution": 1e-09
+  },
+  "before": {
+    "schedstat": "134621755 1012324 88",
+    "cpu_stat": "usage_usec 138529\nuser_usec 110554\nsystem_usec 27974\nnice_usec 0\nnr_periods 1\nnr_throttled 0\nthrottled_usec 0\nnr_bursts 0\nburst_usec 0",
+    "cpu_max": "100000 100000",
+    "process_cpu_ns": 137054516
+  },
+  "order": [
+    "sleep",
+    "spin1",
+    "spin15",
+    "spin15",
+    "spin1",
+    "sleep"
+  ],
+  "period_ns": 20000000,
+  "per_block": 32,
+  "after": {
+    "schedstat": "1208650608 1043862 283",
+    "cpu_stat": "usage_usec 1212557\nuser_usec 1174666\nsystem_usec 37891\nnice_usec 0\nnr_periods 39\nnr_throttled 0\nthrottled_usec 0\nnr_bursts 0\nburst_usec 0",
+    "cpu_max": "100000 100000",
+    "process_cpu_ns": 1210988958
+  },
+  "utc_end": "2026-10-03T11:56:35.886998+00:00"
+}

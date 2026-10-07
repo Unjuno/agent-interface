@@ -1,0 +1,40 @@
+{
+  "C": [
+    "Synchronous deterministic fake XTest updates do not model asynchronous transport, server errors, competing clients, physical devices, or application consumption.",
+    "Paired arms run sequentially in one host process.",
+    "Host runtime has no container resource isolation; runtime metadata is descriptive only."
+  ],
+  "D": {
+    "FAIL": "Candidate completes but retry/terminal cleanup invariants fail, or claims verified cleanup while fake server remains down.",
+    "PASS": "Both arms complete, each has one verified release transition with non-authoritative physical verification, neutral fake-server state and verified terminal cleanup; normal has one successful attempt; dropped arm has two attempts [still down, neutral]; auditor passes all frozen source and raw checks.",
+    "STOP": "Setup/runtime/fixture failure prevents both arms completing and raw evidence is absent or incomplete."
+  },
+  "H": "On pinned V39/V15 batch-release and V4\u2192V3\u2192V12 owner sources, one synchronous fake-server dropped KeyRelease is observed as still down, retried once, and reaches neutral fake-server state before completed ExecutorV13 terminal.",
+  "T": "One normal arm and one single-dropped-KeyRelease arm, each one F8 down/up fixture action; fake Xlib records keymap and drops exactly first release in treatment arm. Imports pinned production release/owner code. Controller action loop, session and X server are doubles.",
+  "U": [
+    "Synthetic fake-X owner composition only; no real X11, GUI, Doom, model, physical keyboard, OS input, application effect, threat response, useful feedback, recovery efficacy, latency bound, or MAP01 claim.",
+    "Does not satisfy the fresh live-exposure gate or authorize a live lane."
+  ],
+  "auditor_command": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 /Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface-v15-keyup-retry-a07/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/audit.py /Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface-v15-keyup-retry-a07/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/results/candidate.json /Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface-v15-keyup-retry-a07/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/results/audit.json",
+  "auditor_sha256": "dbb7a5092e867da91fc5f9a74b88267b02424cb55da7d0c725098f23ef55c5f8",
+  "candidate_command": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 /Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface-v15-keyup-retry-a07/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/candidate.py /Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface-v15-keyup-retry-a07/research/doom/map01_v39_v15_perkey_cleanup_a07_20261005/results/candidate.json",
+  "candidate_sha256": "22f869cc38b85611fe5de3ee4e4884b35d6fc61c9c227d28a37972624ca9cfa9",
+  "game_or_gui": "not started or accessed",
+  "network": "not programmatically disabled; candidate does not make network calls",
+  "one_shot_policy": "Candidate is invoked exactly once. Preserve any output and do not rerun. Auditor runs once only if raw output exists.",
+  "preflight": {
+    "audit_output_absent": true,
+    "candidate_executed": false,
+    "container": "unavailable; no container or Docker state modified",
+    "python_compile_check": "PASS",
+    "raw_output_absent": true,
+    "source_manifest_files_match": true
+  },
+  "python_version": "Python 3.12.14",
+  "run_id": "a07-current-main-9febfe49-20261005-one-shot-host-python312",
+  "runtime": "host bundled Python 3.12.14; Docker/WSLc image unavailable in current OrbStack state",
+  "schema": "v39-v15-perkey-cleanup-a07-freeze-v1",
+  "source_commit": "9febfe4926cde6629f9751d6444f6b802cf31328",
+  "source_file_count": 21,
+  "source_manifest_sha256": "4b9ed37ace513fe2e2a8d3b42bdf1411412c8ed26a09353f3a09d95c99be0b98"
+}

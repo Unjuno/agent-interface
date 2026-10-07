@@ -1,0 +1,12 @@
+Formal image: python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f (linux/arm64)
+
+Requested flags: --network=none --cpus=1 --memory=1g --pids-limit=64
+
+Read-only cgroup diagnostic in a separate, non-experiment container:
+cpu.max: 100000 100000
+memory.max: 1073741824
+memory.swap.max: 1073741824
+pids.max: 64
+
+The cgroup CPU, memory, and PID caps matched the request. Swap was not
+disabled; its observed maximum is 1 GiB. No zero-swap claim is made.

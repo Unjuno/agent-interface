@@ -1,0 +1,102 @@
+"""Own ordinary repair custody and isolated Git-index delivery; no main update."""
+import datetime as dt
+import hashlib
+import json
+import os
+import pathlib
+import re
+import subprocess
+W=pathlib.Path(__file__).parent
+R=pathlib.Path('<OWN_WORKSPACE>/work/agent-interface')
+OLD='67ccadd8a685f76e0e853ef772a2d5b509c2a65f'
+REVIEW_BASE='bd1697d99d5db1d1b3040de2614992776b8f81a6'
+LEAF='research/integration/current_primary_first_error_57_20261003_01a0ff53'
+def sha(b):return hashlib.sha256(b).hexdigest()
+def git(*args,stdin=None,env=None):return subprocess.check_output(['git','-C',str(R),*args],input=stdin,env=env)
+def read(p):return json.loads(p.read_bytes())
+checks=[]
+for phase,exitcode,count,fail in [('red-first',1,2,2),('green-first',0,41,0)]:
+    d=W/phase;r=read(d/'RECEIPT.json');f=read(d/'FREEZE.json');s=(d/'stdout.txt').read_text()
+    assert type(r['exit_code']) is int and r['exit_code']==exitcode and r['source_unchanged'] is True
+    assert f['frozen_utc']<r['started_utc']<r['ended_utc']
+    assert re.findall(r'^# tests (\d+)$',s,re.M)==[str(count)] and re.findall(r'^# fail (\d+)$',s,re.M)==[str(fail)]
+    for stream in ['stdout','stderr']:
+        b=(d/(stream+'.txt')).read_bytes();assert len(b)==r[stream+'_bytes'] and sha(b)==r[stream+'_sha256']
+    source=d/'source' if phase=='red-first' else W/'source'
+    for pin in f['source']:
+        b=(source/pin['path']).read_bytes();assert len(b)==pin['bytes'] and sha(b)==pin['sha256']
+    for channel in ['input','output']:
+        c=d/'cases'/channel;x=read(c/'WITNESS.json');start=read(c/'fixture-start.json');end=read(c/'fixture-exit.json')
+        assert x['fixture_start']==start and x['fixture_exit']==end and x['fixture_absent'] is True
+        assert type(start['pid']) is int and start['pid']==end['pid'] and start['ppid']==end['ppid']
+        assert type(end['code']) is int and end['code']==0 and type(end['requests']) is int and end['requests']==1
+        assert end['request_bytes']==72 and x['host_exit']==read(c/'host/exit.json')=={'code':0,'signal':None}
+        assert x['before_release_settled'] is False and x['owned_error_listeners']=={'input':0,'output':0}
+        rows=[json.loads(line) for line in (c/'output.raw.txt').read_text().splitlines()]
+        assert rows==x['rows'] and [a['status'] for a in rows]==x['statuses']==['ready','busy','returned']
+        request=read(c/'fixture-request.json');assert request==read(c/'host/request-1.json')=={'id':1,'tool':'interface_clock','arguments':{'label':'original-held'}}
+        assert read(c/'exchange/request-1.json')=={'id':1,'method':'call','args':['interface_clock',{'label':'original-held'}]}
+        reply=read(c/'exchange/original-reply-1.json');presentation=read(c/'exchange/presentation-1.json')
+        assert presentation==rows[2]['result'] and presentation['attempt']==1 and presentation['next_id']==2
+        assert json.loads(reply['result']['content'][0]['text'])=={'schema':'own-inert-echo-v1','label':'original-held'}
+        assert presentation['presented_text']==[reply['result']['content'][0]['text']]
+        expected='later owned '+channel+' fault' if phase=='red-first' else 'primary busy response backlog'
+        assert x['error']['message']==expected
+        checks.append({'phase':phase,'channel':channel,'actual_first_owner_diagnosis':expected,'one_original_request_result':True,'original_fixture_exit':end,'original_host_exit':x['host_exit'],'owned_child_absent':True})
+assert (W/'red-first/source/runtime/host_v1/test_primary_stdio_failure_order.mjs').read_bytes()==(W/'source/runtime/host_v1/test_primary_stdio_failure_order.mjs').read_bytes()
+observed=git('rev-parse','refs/remotes/origin/main').decode().strip()
+used=['runtime/host_v1','.github/workflows/native-mcp-v1.yml','AGENTS.md','README.md','ROADMAP.md','docs/CURRENT_GOAL.md','docs/WORKER_QUICKSTART.md','docs/RESEARCH_METHOD.md','docs/ISSUE_FAILURE_CLASSIFICATION.md']
+delta=git('diff','--name-only',REVIEW_BASE,observed,'--',*used).decode().splitlines();assert not delta,delta
+(W/'SOURCE_AND_RAW_CHECK.json').write_text(json.dumps({'recorded_utc':dt.datetime.now(dt.timezone.utc).isoformat(),'checks':checks,'same_two_new_test_definitions':True,'red_2_failed_preserved':True,'green_41_passed':True,'named_main_observed':observed,'used_named_context_diff':delta,'future_main_binding':False,'main_sends':0,'original_formal_native_peer_replays':0},indent=2)+'\n')
+(W/'REPORT.md').write_text('''# Current primary first-diagnosis repair
+FINAL-v5 source owner0975, existing PR6979/parent57. V1 remains immutable history and is on HOLD5967854738.
+Prospective new claim5967881709. Exact baseline67ccadd8 reproduces both failures: busy backlog is recorded inside while the same accepted relay request is held; later input/output Error occupies the outer slot. Actual first09:42:25.291542–09:42:25.546475UTC/exit1, 0/2 pass. All original source, full TAP and four fixture/host/exchange/child endpoints remain.
+Minimum repair keeps public servePrimaryLines API and uses a private core with immediate first-failure notification to the whole owner; the same original promise/result and close remain. Source6454B SHA2871de1eac37f4220efaa8f48560453f753c37bb5dbd474b326808c2974921f5. Same new test definitions; full affected19stdio+3busy+17relay+2new41 pass, zero skip/cancel/todo. Actual09:43:23.361388–09:43:25.413672UTC/exit0, Node26.7.0/own macOS, source28 pins unchanged. New test and existing CI entry append, README explanation; no full native/hosted CI/formal/native/peer producer/auditor or prior scientific allocation replay.
+All4 directed red/green fixtures keep one original request72B, result/presentation, original host/fixture exit0, never settle before release, retire owned input/output error listeners, and observe the same fixture PID absent. Original green41 TAP also retains two startup witnesses. Controlled EventEmitter/Writable error induction is not actual-device startup evidence.
+Own prior39 test result and archive/first publication failure remain historical. #6961 UTF8 is excluded; f5206978 decoder masking evidence remains distinct and a later actual UTF8/busy/startup composition still needs confirmation. No generic deadline/bytecap/cancellation/physical release/backend/task/model/efficiency/general-goal claim. This is a fresh content proposal with new epoch, zero transferred votes, not an application certificate/main authority.
+Public derivatives replace only this author's own workspace prefix. Each original byte length/hash is retained separately; no private original is claimed independently recovered by hash. Executable snapshots are .txt; root Git workflow/test selection receives only the explicit active test append. Scoped attributes preserve exact historical byte whitespace. All raw is retained as data.
+''')
+archive=W/'public-leaf';archive.mkdir(exist_ok=False)
+targets=[p for p in sorted(W.rglob('*')) if p.is_file() and 'public-leaf' not in p.relative_to(W).parts]
+provenance=[]
+for p in targets:
+    rel=str(p.relative_to(W));rel=rel+'.txt' if p.suffix in ['.py','.mjs','.yml'] else rel
+    if 'source' in p.relative_to(W).parts and not rel.endswith('.txt'):rel+='.txt'
+    b=p.read_bytes();pub=b.replace(str(W).encode(),b'<OWN_FIRST_ERROR_WORK>')
+    q=archive/rel;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(pub)
+    provenance.append({'path':rel,'original_bytes':len(b),'original_sha256':sha(b),'public_bytes':len(pub),'public_sha256':sha(pub),'own_prefix_projected':pub!=b,'original_retained':True})
+(archive/'PROVENANCE.json').write_text(json.dumps({'files':provenance,'projection':'Only own W prefix; original/public bytes and hashes remain separate.'},indent=2)+'\n')
+exceptions=[]
+for p in sorted(archive.rglob('*')):
+    if not p.is_file():continue
+    b=p.read_bytes()
+    if b.endswith(b'\n\n') or any(line.endswith((b' ',b'\t')) for line in b.splitlines()):exceptions.append(str(p.relative_to(archive)))
+attrs='* -text whitespace=cr-at-eol\n'+''.join(x+' -whitespace\n' for x in exceptions)
+(archive/'.gitattributes').write_text(attrs)
+manifest=[]
+for p in sorted(archive.rglob('*')):
+    if p.is_file():b=p.read_bytes();manifest.append({'path':str(p.relative_to(archive)),'bytes':len(b),'sha256':sha(b)})
+(archive/'MANIFEST.json').write_text(json.dumps({'files':manifest,'exact_historical_byte_whitespace_exceptions':exceptions},indent=2)+'\n')
+index=W/'source.index';env=dict(os.environ);env['GIT_INDEX_FILE']=str(index)
+git('read-tree',OLD,env=env)
+active=['runtime/host_v1/primary_stdio.mjs','runtime/host_v1/README.md','.github/workflows/native-mcp-v1.yml','runtime/host_v1/test_primary_stdio_failure_order.mjs']
+for rel,p in [(a,W/'source'/a) for a in active]+[(LEAF+'/'+str(p.relative_to(archive)),p) for p in sorted(archive.rglob('*')) if p.is_file()]:
+    oid=git('hash-object','-w','--stdin',stdin=p.read_bytes()).decode().strip();git('update-index','--add','--cacheinfo','100644,'+oid+','+rel,env=env)
+tree=git('write-tree',env=env).decode().strip()
+check=subprocess.run(['git','-C',str(R),'diff','--check',OLD,tree],env=env,capture_output=True)
+for n,b in [('stdout',check.stdout),('stderr',check.stderr)]:(W/('delivery-diff-check.'+n+'.txt')).write_bytes(b)
+assert check.returncode==0,check.stdout.decode()+check.stderr.decode()
+head=git('commit-tree',tree,'-p',OLD,stdin=b'fix(host): retain first inner failure through owner cleanup [skip ci]\n').decode().strip()
+rows=[]
+for path in git('diff','--name-only','--no-renames',REVIEW_BASE,head).decode().splitlines():
+    row={'path':path}
+    for side,commit in [('before',REVIEW_BASE),('after',head)]:
+        e=git('ls-tree',commit,'--',path).decode().strip()
+        if not e:row[side]=None;continue
+        mode,kind,oid=e.split('\t')[0].split();b=git('cat-file','blob',oid);row[side]={'mode':mode,'kind':kind,'blob':oid,'bytes':len(b),'sha256':sha(b)}
+    rows.append(row)
+(W/'CHANGED_IMAGES.json').write_text(json.dumps(rows,indent=2)+'\n')
+oldleaf='research/integration/current_primary_57_20261003_01a0ff53'
+assert not git('diff','--name-only',OLD,head,'--',oldleaf).strip()
+delivery={'head':head,'tree':tree,'first_parent':OLD,'review_base':REVIEW_BASE,'branch':'repair/primary-current-01a0ff53-20261003','leaf':LEAF,'leaf_files':len(manifest)+1,'manifest_targets':len(manifest),'provenance_rows':len(provenance),'own_prefix_derivatives':sum(a['own_prefix_projected'] for a in provenance),'changed_paths':len(rows),'image_map_sha256':sha(json.dumps(rows,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()),'diff_check_exit':check.returncode,'old_leaf_unchanged':True,'named_current_main':observed,'original_checkout_unchanged':True,'main_sends':0}
+(W/'DELIVERY.json').write_text(json.dumps(delivery,indent=2)+'\n');print(json.dumps(delivery))

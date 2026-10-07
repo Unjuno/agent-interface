@@ -1,0 +1,52 @@
+test_all_directed_controls_have_specific_reason (construction_checks.Checks.test_all_directed_controls_have_specific_reason) ... ERROR
+test_complete_and_capped_mini_reconstruct (construction_checks.Checks.test_complete_and_capped_mini_reconstruct) ... FAIL
+test_missing_sample_is_named_refusal (construction_checks.Checks.test_missing_sample_is_named_refusal) ... ERROR
+
+======================================================================
+ERROR: test_all_directed_controls_have_specific_reason (construction_checks.Checks.test_all_directed_controls_have_specific_reason)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/construction_checks.py", line 25, in test_all_directed_controls_have_specific_reason
+    result=auditor.controls(self.raw,self.deck,ROOT)
+  File "{OWN_SOURCE}/auditor.py", line 167, in controls
+    add('wrong_sample_count','SAMPLE_COUNT',lambda d:d['rows'][0]['samples'].pop())
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "{OWN_SOURCE}/auditor.py", line 157, in add
+    errors=verify(changed,deck,root)
+  File "{OWN_SOURCE}/auditor.py", line 103, in verify
+    need(row['samples'][i] == {'index':i,'payload_ns':end.get('payload_ns')}, label+'PAYLOAD_JOIN')
+         ~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_missing_sample_is_named_refusal (construction_checks.Checks.test_missing_sample_is_named_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/construction_checks.py", line 22, in test_missing_sample_is_named_refusal
+    self.assertIn('m00:SAMPLE_COUNT',auditor.verify(changed,self.deck,ROOT))
+                                     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "{OWN_SOURCE}/auditor.py", line 103, in verify
+    need(row['samples'][i] == {'index':i,'payload_ns':end.get('payload_ns')}, label+'PAYLOAD_JOIN')
+         ~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_complete_and_capped_mini_reconstruct (construction_checks.Checks.test_complete_and_capped_mini_reconstruct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "{OWN_SOURCE}/construction_checks.py", line 18, in test_complete_and_capped_mini_reconstruct
+    self.assertEqual(auditor.verify(self.raw,self.deck,ROOT),[])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['m00:STATS'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'m00:STATS'
+
+- ['m00:STATS']
++ []
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.013s
+
+FAILED (failures=1, errors=2)

@@ -1,0 +1,142 @@
+{
+  "disposition": "FAIL_OR_HOLD_MEASUREMENT_QUALIFICATION",
+  "samples": 174,
+  "health_min": 97.0,
+  "health_max": 97.0,
+  "first": {
+    "event": "scorer_last_action",
+    "sample_started_ns": 9278805470,
+    "sample_returned_ns": 9278825785,
+    "tic_before": 1377,
+    "tic_after": 1377,
+    "buttons": [
+      "Button.TURN_LEFT",
+      "Button.TURN_RIGHT",
+      "Button.MOVE_FORWARD",
+      "Button.MOVE_BACKWARD",
+      "Button.MOVE_LEFT",
+      "Button.MOVE_RIGHT",
+      "Button.ATTACK",
+      "Button.USE",
+      "Button.SPEED"
+    ],
+    "action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "variables": {
+      "HEALTH": 97.0,
+      "AMMO1": 0.0,
+      "POSITION_X": 828.1060791015625,
+      "POSITION_Y": -186.20574951171875,
+      "POSITION_Z": -64.0,
+      "KILLCOUNT": 0.0,
+      "DEATHCOUNT": 0.0
+    },
+    "coherent_tic": true,
+    "authority": false,
+    "scope": "sampled last-action API; exact transition onset unproven"
+  },
+  "last": {
+    "event": "scorer_last_action",
+    "sample_started_ns": 14251174284,
+    "sample_returned_ns": 14251193202,
+    "tic_before": 1551,
+    "tic_after": 1551,
+    "buttons": [
+      "Button.TURN_LEFT",
+      "Button.TURN_RIGHT",
+      "Button.MOVE_FORWARD",
+      "Button.MOVE_BACKWARD",
+      "Button.MOVE_LEFT",
+      "Button.MOVE_RIGHT",
+      "Button.ATTACK",
+      "Button.USE",
+      "Button.SPEED"
+    ],
+    "action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "variables": {
+      "HEALTH": 97.0,
+      "AMMO1": 0.0,
+      "POSITION_X": 827.8111572265625,
+      "POSITION_Y": -186.7999725341797,
+      "POSITION_Z": -64.0,
+      "KILLCOUNT": 0.0,
+      "DEATHCOUNT": 0.0
+    },
+    "coherent_tic": true,
+    "authority": false,
+    "scope": "sampled last-action API; exact transition onset unproven"
+  },
+  "all_action_neutral": true,
+  "initial_agreement": {
+    "health": {
+      "HUD": {
+        "format": "observable-signal-v1",
+        "sequence": 1,
+        "capture_ns": 9153174387,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+        "binding": {
+          "focus": 6291472,
+          "surface": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "signal_id": "health",
+        "value": 97,
+        "status": "observed"
+      },
+      "API": 97.0
+    },
+    "ammo": {
+      "HUD": {
+        "format": "observable-signal-v1",
+        "sequence": 1,
+        "capture_ns": 9153174387,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+        "binding": {
+          "focus": 6291472,
+          "surface": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "signal_id": "ammo",
+        "value": 48,
+        "status": "observed"
+      },
+      "API": 0.0
+    }
+  },
+  "initial_API_offset_ns": 97360058,
+  "final": {
+    "child_exit": 0,
+    "external_rescue": false,
+    "reader_alive": false
+  },
+  "limits": "Post-result authored inspection; nearest API/HUD is cross-clock proximity not same-state proof. Sampled damage exposure not cause/useful recovery benefit. Independent review pending."
+}

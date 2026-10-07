@@ -1,0 +1,69 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-audit-v1",
+  "disposition": "FAIL_AUDIT_MISMATCH",
+  "cases_recomputed": 3,
+  "source_hashes_checked": 6,
+  "local_source_hashes_checked": 8,
+  "raw_runner_decision": "PASS_REPRODUCED_RECORD_LOSS",
+  "mismatch_count": 14,
+  "mismatches": [
+    {
+      "path": "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py",
+      "error": "input-hash-mismatch"
+    },
+    {
+      "path": "research/doom/map01_v39_perkey_bridge_a01/bridge.py",
+      "error": "input-hash-mismatch"
+    },
+    {
+      "path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py",
+      "error": "input-hash-mismatch"
+    },
+    {
+      "path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "error": "input-hash-mismatch"
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "error": "input-hash-mismatch"
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "error": "input-hash-mismatch"
+    },
+    {
+      "path": "SOURCE/input_owner_v13_candidate.py",
+      "error": "local-input-hash-mismatch"
+    },
+    {
+      "path": "SOURCE/bridge_v2_candidate.py",
+      "error": "local-input-hash-mismatch"
+    },
+    {
+      "path": "README.md",
+      "error": "local-input-hash-mismatch"
+    },
+    {
+      "path": "run_probe.py",
+      "error": "local-input-hash-mismatch"
+    },
+    {
+      "path": "audit_probe.py",
+      "error": "local-input-hash-mismatch"
+    },
+    {
+      "path": "results/preflight-stop-a01/FREEZE-initial.json",
+      "error": "local-input-hash-mismatch"
+    },
+    {
+      "path": "results/preflight-stop-a01/STOP.json",
+      "error": "local-input-hash-mismatch"
+    },
+    {
+      "path": "results/preflight-stop-a01/runner-attempt01.log",
+      "error": "local-input-hash-mismatch"
+    }
+  ],
+  "scope": "independent integrity and raw-row audit; no candidate/test rerun",
+  "limits": "fake-display owner/bridge ordering only; no real X11, application, task effect, useful feedback, recovery, live frequency, or gameplay"
+}

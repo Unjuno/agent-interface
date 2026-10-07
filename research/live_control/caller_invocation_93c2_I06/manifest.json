@@ -1,0 +1,134 @@
+{
+  "base": "4db6a7ff1aa822de645ecabd6637feaa1e76706e",
+  "scope": "five active paths plus inert documentation/evidence/manifest",
+  "active_images": {
+    "research/live_control/adaptive_acquisition_caller_v3.py": {
+      "bytes": 26510,
+      "sha256": "1c589a35bada7c4919d37cc54e36d9707924d385e22d1e860b24303bb79c64b4"
+    },
+    "research/live_control/test_adaptive_acquisition_caller_custody_v3.py": {
+      "bytes": 6758,
+      "sha256": "e8f38444ac781b66b0a77c054ae09f370bf60c8bfcf28a51bc9c987cd1b99eab"
+    },
+    "research/live_control/test_adaptive_acquisition_caller_terminal_v3.py": {
+      "bytes": 6445,
+      "sha256": "5b7100e78f3b5634d99028d68e5218b068438087359c85859d96138054b8d2fa"
+    },
+    "research/live_control/test_adaptive_acquisition_invocation_93c2.py": {
+      "bytes": 3704,
+      "sha256": "4b9f5f393eca4d29bd998460dabc7ba2b100117d5748e3fca474c0a714335f7e"
+    },
+    "runtime/integration_checks/native.py": {
+      "bytes": 4779,
+      "sha256": "823a17f7cbd76093323aff336912e857ec84599ac5ebf101880fd8e2ee96c640"
+    }
+  },
+  "proof": {
+    "members": 58,
+    "bytes": 173536,
+    "sha256": "2eae6e3197f8d3f506d8cb59a3979262319e08e507f5403d53851dd04f36bdc4",
+    "all_full_members_readback": true
+  },
+  "tests": [
+    {
+      "pid": 31379,
+      "start": "2026-10-03T18:46:15.603472+00:00",
+      "argv": [
+        "/opt/homebrew/bin/python3",
+        "-m",
+        "unittest",
+        "-v",
+        "test_adaptive_acquisition_caller_custody_v3",
+        "test_adaptive_acquisition_caller_dispatch_v3",
+        "test_adaptive_acquisition_caller_refusal_v3",
+        "test_adaptive_acquisition_caller_terminal_v3",
+        "test_adaptive_acquisition_caller_uncertain_tail_v3",
+        "test_adaptive_acquisition_caller_v3",
+        "test_adaptive_acquisition_invocation_93c2"
+      ],
+      "exit": 0,
+      "end": "2026-10-03T18:46:15.677489+00:00"
+    },
+    {
+      "pid": 31384,
+      "start": "2026-10-03T18:46:15.679845+00:00",
+      "argv": [
+        "/opt/homebrew/bin/python3",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "test_adaptive_acquisition_caller_custody_v3",
+        "test_adaptive_acquisition_caller_dispatch_v3",
+        "test_adaptive_acquisition_caller_refusal_v3",
+        "test_adaptive_acquisition_caller_terminal_v3",
+        "test_adaptive_acquisition_caller_uncertain_tail_v3",
+        "test_adaptive_acquisition_caller_v3",
+        "test_adaptive_acquisition_invocation_93c2"
+      ],
+      "exit": 0,
+      "end": "2026-10-03T18:46:15.784622+00:00"
+    }
+  ],
+  "parent_pins": [
+    {
+      "path": "research/live_control/test_adaptive_acquisition_caller_dispatch_v3.py",
+      "oid": "ec82d9868dd2f6531e800be0fb29ea49cb0180ae"
+    },
+    {
+      "path": "research/live_control/test_adaptive_acquisition_caller_uncertain_tail_v3.py",
+      "oid": "d73a4024a4347bf6af1e15a4e93d3691fe19d655"
+    },
+    {
+      "path": "research/live_control/test_adaptive_acquisition_caller_refusal_v3.py",
+      "oid": "195a9dfceb721ee1ee96bab0bb4d1f73e3d5cd85"
+    },
+    {
+      "path": "research/live_control/test_adaptive_acquisition_caller_v3.py",
+      "oid": "e323370d1899269c3fa8e3dacb213fdad3f03d00"
+    },
+    {
+      "path": "research/live_control/caller_uncertain_tail_I13/LIVE_CALLER.json",
+      "oid": "bf5050c4de970c878921b1c10590c2df37abe449"
+    },
+    {
+      "path": "research/live_control/caller_uncertain_tail_I13/RESPONSE3.json",
+      "oid": "ef5321a24386536de5bf78e084e249c698a600a6"
+    },
+    {
+      "path": "runtime/core_v1/backend.py",
+      "oid": "d00e5508f824bbb530fa67d2089b24572d5a9ef3"
+    },
+    {
+      "path": "runtime/core_v1/sequence.py",
+      "oid": "8788005073995b613b56ad68532a439078e253d9"
+    },
+    {
+      "path": "runtime/core_v1/__init__.py",
+      "oid": "659531954db218d4c04849fe937df80ad1fcf495"
+    },
+    {
+      "path": "runtime/core_v1/compiled_gui.py",
+      "oid": "7c5d2e5937a00baefea2b66cf297c8c3b91618ce"
+    },
+    {
+      "path": "runtime/core_v1/platform_probe.py",
+      "oid": "8fe6982c95fb385986114017bc0f9fcc8fd4dca9"
+    },
+    {
+      "path": "runtime/core_v1/contract.py",
+      "oid": "92273501bc52be9d344ffb68c34a298a77f41bdf"
+    },
+    {
+      "path": "runtime/core_v1/doctor.py",
+      "oid": "d81d5809273560ab5c8071a6db99b18305013d6c"
+    }
+  ],
+  "contract_changes": {
+    "custody": "six existing null-delivery subtest expectations now delivery_uncertain",
+    "terminal": "six additional invalid/execute_throws null-delivery expectations now delivery_uncertain; three execute_throws authority expectations consumed",
+    "earlier_red": "combined-normal exit1 six failures on first exact-parent composition retained",
+    "limits": "ordinary prospective repair; no alteration of historical heads or old saved results; explicit fresh contract review required"
+  },
+  "limitations": "no inherited votes/current-main whole-tree adoption/native GUI provider or performance claim"
+}

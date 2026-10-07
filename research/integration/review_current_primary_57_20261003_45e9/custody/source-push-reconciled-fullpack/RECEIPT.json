@@ -1,0 +1,24 @@
+{
+  "started_utc": "2026-10-03T09:07:47.877389+00:00",
+  "ended_utc": "2026-10-03T09:07:49.913479+00:00",
+  "actual_exit_code": 0,
+  "argv": [
+    "git",
+    "-c",
+    "pack.window=0",
+    "-c",
+    "pack.depth=0",
+    "push",
+    "--no-thin",
+    "--force-with-lease=refs/heads/repair/primary-current-01a0ff53-20261003:",
+    "origin",
+    "67ccadd8a685f76e0e853ef772a2d5b509c2a65f:refs/heads/repair/primary-current-01a0ff53-20261003"
+  ],
+  "same_source_ref_exact_expected_absent_before_retry": true,
+  "construction_change": "fullpack/no-thin, no delta windows/depth; original failure retained, no main request",
+  "stdout_bytes": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_bytes": 398,
+  "stderr_sha256": "ea9b314b831c4409b03eabd8f5e3522c965fbcc5f6821ff899c993c9330b967e",
+  "main_requests": 0
+}

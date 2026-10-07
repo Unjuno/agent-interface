@@ -1,0 +1,359 @@
+{
+  "schema": "predicate-retry-post-run-static-audit-v1",
+  "role": "bounded source/saved-record helper; not a content voter or extra formal execution",
+  "method": "Saved JSON and raw-byte joins, direct source reading, and manually selected saved graph edges only; no subject/model/auditor/helper import or execution.",
+  "assessment": "Saved scoped result is internally consistent with the reviewed branches; no material contradiction found within the frozen finite domain.",
+  "input_identities": {
+    "raw/MODEL.json": {
+      "bytes": 12305,
+      "sha256": "22e1c128f4bff8b17aed8080b6161cbf73a4fac00fd5abc55e01764426a14597"
+    },
+    "raw/AUDIT.json": {
+      "bytes": 6620,
+      "sha256": "1403a8b9744a5de4de212a234e278598ad1e66469dea6c0d11afff019c8830e6"
+    },
+    "FREEZE.json": {
+      "bytes": 5768,
+      "sha256": "d31514ba974e2a14946f79317c9801385ef9387d2a32fe1601d14297320c5d83"
+    },
+    "terminal-containers.json": {
+      "bytes": 2572,
+      "sha256": "ab1cf43320d9e43a2519b86d3e1017277c6521832c9662b48d56c75d6f74b4f5"
+    },
+    "model.receipt.json": {
+      "bytes": 1318,
+      "sha256": "f14ba7051b2b3e427394f8b879399bd4bbdb2f5d63451c683487658332fe1db5"
+    },
+    "audit.receipt.json": {
+      "bytes": 1319,
+      "sha256": "55007130e10f9c51baa4313803457c7259ebb52958e9c3cffca05994a1846daa"
+    },
+    "construction.json": {
+      "bytes": 20824,
+      "sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9"
+    },
+    "construction.receipt.json": {
+      "bytes": 616,
+      "sha256": "6e83c9f7d6b0f4cbb74c24efddf02263c3de7456ba229f28d617ee52c6868f7e"
+    },
+    "SPEC.json": {
+      "bytes": 3632,
+      "sha256": "be8780ee3253c7c7bea9c739b1449cd6d33d0001d7c70e1383aab1aa1ee5fedb"
+    },
+    "source-pins.json": {
+      "bytes": 542,
+      "sha256": "384a4322b2de7964fec14b95b9fcd447c4b823f981ddc1014312408f33e28522"
+    },
+    "raw/model-runtime.json": {
+      "bytes": 234,
+      "sha256": "53f35ca3b0433f3555a859920ec8d66f14ce238125412c3f85ea2b6429036d6e"
+    },
+    "raw/audit-runtime.json": {
+      "bytes": 234,
+      "sha256": "53f35ca3b0433f3555a859920ec8d66f14ce238125412c3f85ea2b6429036d6e"
+    },
+    "first-source-controls-v1/FIRST-RESULT.json": {
+      "bytes": 1104,
+      "sha256": "bcf8178888315e01a092b90557bc2c5af452a02b90373d6633626ce40cefc4bd"
+    },
+    "baseline.py": {
+      "bytes": 6194,
+      "sha256": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e"
+    },
+    "outside.py": {
+      "bytes": 6822,
+      "sha256": "c05855b2c1129a67789f236d194fa5ae5e1929e72f7bd5a7acb936ffdd766569"
+    },
+    "deadline_first.py": {
+      "bytes": 6989,
+      "sha256": "d938d6a630b1dd930ee1c092f7feae3f69085e5d30f094a70a56bec24548ba3a"
+    },
+    "audit_saved.py": {
+      "bytes": 27515,
+      "sha256": "475df75dbe848bf87a679a921657a2c2f756340011857dabf56983e6a7a72795"
+    },
+    "model.py": {
+      "bytes": 3999,
+      "sha256": "4faf175b9c5092db774c5b079a62218be58177023ebd21084da5691bc7811965"
+    },
+    "source_controls.py": {
+      "bytes": 5088,
+      "sha256": "b4d6dae4d150fda2b0bb8555072f1dd37ad7ebe152df5868f93b0942ddd6d7c2"
+    },
+    "container_entry.py": {
+      "bytes": 1197,
+      "sha256": "b576d2d192c99be199275346a33f78d9de23e6c2ce25d94baf7e2104956ddf71"
+    }
+  },
+  "freeze_join": {
+    "checked_input_count": 28,
+    "mismatches": [],
+    "all_current_local_frozen_bytes_match": true,
+    "audit_raw_hash_joins_match": true,
+    "stdout_stderr_receipt_hash_joins_match": true
+  },
+  "saved_execution_records": {
+    "model_exit_code": 0,
+    "auditor_exit_code": 0,
+    "freeze_utc": "2026-10-03T11:25:28.587733+00:00",
+    "model_finished": "2026-10-03T11:27:08.06717796Z",
+    "auditor_started": "2026-10-03T11:27:08.288587118Z",
+    "auditor_finished": "2026-10-03T11:27:09.602757364Z",
+    "both_terminal_exited_pid0_non_oom": true,
+    "model_finished_before_auditor_started": true,
+    "resource_records": [
+      {
+        "NetworkMode": "none",
+        "ReadonlyRootfs": true,
+        "Memory": 134217728,
+        "NanoCpus": 250000000,
+        "PidsLimit": 32
+      },
+      {
+        "NetworkMode": "none",
+        "ReadonlyRootfs": true,
+        "Memory": 134217728,
+        "NanoCpus": 250000000,
+        "PidsLimit": 32
+      }
+    ],
+    "runtime_records": [
+      {
+        "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]",
+        "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+        "cpu_max": "25000 100000",
+        "memory_max": "134217728",
+        "pids_max": "32"
+      },
+      {
+        "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]",
+        "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+        "cpu_max": "25000 100000",
+        "memory_max": "134217728",
+        "pids_max": "32"
+      }
+    ],
+    "limit": "Retained terminal and receipt consistency only; no live container reinspection or count of hidden/unretained execution."
+  },
+  "saved_graph_summary": [
+    {
+      "policy": "baseline",
+      "states": 4,
+      "edges": 4,
+      "producer_fair_lasso": false,
+      "saved_auditor_A_progress_closed_walk": false,
+      "saved_auditor_all3_progress_closed_walk": false
+    },
+    {
+      "policy": "outside",
+      "states": 16,
+      "edges": 28,
+      "producer_fair_lasso": true,
+      "saved_auditor_A_progress_closed_walk": true,
+      "saved_auditor_all3_progress_closed_walk": true
+    },
+    {
+      "policy": "deadline_first",
+      "states": 17,
+      "edges": 24,
+      "producer_fair_lasso": false,
+      "saved_auditor_A_progress_closed_walk": false,
+      "saved_auditor_all3_progress_closed_walk": false
+    }
+  ],
+  "producer_empty_snapshot_lasso": {
+    "start": 0,
+    "edges": [
+      {
+        "from": 0,
+        "to": 2,
+        "actor": "B",
+        "event": "B_CONSUME"
+      },
+      {
+        "from": 2,
+        "to": 5,
+        "actor": "A",
+        "event": "A_SNAPSHOT"
+      },
+      {
+        "from": 5,
+        "to": 9,
+        "actor": "A",
+        "event": "A_FALSE_SCAN"
+      },
+      {
+        "from": 9,
+        "to": 14,
+        "actor": "R",
+        "event": "R_FRESH_APPEND"
+      },
+      {
+        "from": 14,
+        "to": 0,
+        "actor": "A",
+        "event": "A_RETRY"
+      }
+    ],
+    "source_interpretation": [
+      "B consumes the initial irrelevant notification before A captures it.",
+      "A snapshots empty tuple at outside.py:92; the for-loop at94 has zero iterations, so A_FALSE_SCAN is vacuous and makes no A predicate call.",
+      "R appends a fresh no-id notification before A takes the recheck condition.",
+      "Current length1 differs from snapshot length0 at107, continue109 occurs before monotonic/deadline110-112.",
+      "Canonical state0 closes with a different concrete object; B consumes that new row at the next repetition."
+    ],
+    "actor_progress_per_cycle": {
+      "A": 3,
+      "B": 1,
+      "R": 1
+    },
+    "A_predicate_calls_per_cycle": 0,
+    "same_as_nine_ordinary_controls": false,
+    "distinct_control_mechanism": "Ordinary outside churn captures one noise row and calls AFalse once per completed false snapshot/recheck cycle. The producer first witness does not exercise AFalse on a queued row."
+  },
+  "manually_selected_captured_snapshot_lasso": {
+    "status": "Derived from saved edges by manual inspection; no graph regeneration or execution. Producer graph/witness bytes unchanged.",
+    "reachable_prefix": [
+      {
+        "from": 0,
+        "to": 1,
+        "actor": "A",
+        "event": "A_SNAPSHOT"
+      }
+    ],
+    "start": 1,
+    "edges": [
+      {
+        "from": 1,
+        "to": 3,
+        "actor": "A",
+        "event": "A_FALSE_SCAN"
+      },
+      {
+        "from": 3,
+        "to": 7,
+        "actor": "B",
+        "event": "B_CONSUME"
+      },
+      {
+        "from": 7,
+        "to": 12,
+        "actor": "R",
+        "event": "R_FRESH_APPEND"
+      },
+      {
+        "from": 12,
+        "to": 15,
+        "actor": "A",
+        "event": "A_RETRY"
+      },
+      {
+        "from": 15,
+        "to": 1,
+        "actor": "A",
+        "event": "A_SNAPSHOT"
+      }
+    ],
+    "states_along_cycle": [
+      {
+        "pc": "SCAN",
+        "q": 0,
+        "snap": 0
+      },
+      {
+        "pc": "CHECK",
+        "q": 0,
+        "snap": 0
+      },
+      {
+        "pc": "CHECK",
+        "q": null,
+        "snap": 0
+      },
+      {
+        "pc": "CHECK",
+        "q": 1,
+        "snap": 0
+      },
+      {
+        "pc": "SNAP",
+        "q": 1,
+        "snap": 0
+      },
+      {
+        "pc": "SCAN",
+        "q": 0,
+        "snap": 0
+      }
+    ],
+    "all_edges_in_saved_graph": true,
+    "actor_progress_per_cycle": {
+      "A": 3,
+      "B": 1,
+      "R": 1
+    },
+    "A_predicate_calls_per_cycle": 1,
+    "source_interpretation": "Captured x is scanned False; B removes x; R appends fresh y with identical noise payload but different identity; recheck q!=snap retries; next snapshot replaces x by y and canonical snapshot-first naming returns state1. Scan binds message to y before the next allocation, allowing the chosen repeating schedule to drop comparison-irrelevant old references.",
+    "control_join": "The eight-cycle ordinary diagnostic records eight successful false scans/rechecks and eight B/R pairs, followed by attempted A entry17 rejected before emission. It is a bounded prefix, not a direct infinite source execution or necessarily eight completed closed walks starting at state1."
+  },
+  "source_projection_obligations": [
+    {
+      "obligation": "Pure callback and content domain",
+      "finding": "A returns literal False without side effects; B returns literal True. Notifications have equal noise payload, no id, and are not mutated while queued or captured. Python dictionaries are not intrinsically immutable; immutability is a domain assumption."
+    },
+    {
+      "obligation": "Expired/open clock domain",
+      "finding": "One finite setup delay may put A beyond its established deadline before the initial projected state. All later modeled checks remain expired; reader stays open. Model does not encode actual clock values or elapsed wall time."
+    },
+    {
+      "obligation": "Queue capacity and fresh identity",
+      "finding": "Capacity1 is maintained by restricting R to append only when q is empty. Production _read has no queue-capacity guard. Each chosen R step can be a distinct json.loads no-id dictionary at outside.py:32 and append under Condition at38. Concrete identities must be globally fresh while any prior object remains referenced; canonical names preserve equality only."
+    },
+    {
+      "obligation": "A atomicity and external steps",
+      "finding": "SNAP lock section and CHECK lock section are atomic against B/R; the finite false scan occurs after SNAP releases Condition. SCAN models one pure finite scan, including empty tuple. Baseline finite false scan and expired check hold the same condition and form one A macro."
+    },
+    {
+      "obligation": "B consumption macro",
+      "finding": "B can be a separate waiter invocation whose own finite snapshot/true scan/identity removal has no intervening R/A queue mutation. Match returns precede timeout tests in all three subjects, so an expired B deadline need not prevent consuming an available match. External B phases are collapsed only for the chosen source projection; not all production B interleavings modeled."
+    },
+    {
+      "obligation": "Ignored Python locals",
+      "finding": "At most2 comparison-relevant handles is not a universal2-live-object bound. Old message/current/snapshot locals and external consumers may retain old dictionaries. Chosen captured witness can drop them before the following fresh allocation; general schedules may retain more."
+    },
+    {
+      "obligation": "Actor fairness",
+      "finding": "Both displayed cycles contain actual A snapshot/scan/recheck progress plus B consume and R append. They satisfy the specified all3-actor closed-walk gate. Strong per-transition fairness is not assumed: an enabled timeout can be repeatedly bypassed by B/R acting before A acquires CHECK. Native lock admission, probability and inevitability remain unproved."
+    },
+    {
+      "obligation": "Negative policy result",
+      "finding": "Baseline and deadline_first have no saved A-progress closed walk in the exact all-false expired domain. Their nonterminal B/R-only cycles remain possible if A takes no step, so no hard whole-call recovery or scheduler-admission bound follows."
+    },
+    {
+      "obligation": "Simple alternative semantics",
+      "finding": "deadline_first checks timeout before changed-queue retry only in final CHECK; selected_missing retry remains earlier and matching priority still depends on a selected snapshot. The all-false negative result does not extend to arbitrary true/impure callbacks. V2 fresh-match control retains target on TimeoutError while outside returns it; deadline-first alternative remains unadopted."
+    }
+  ],
+  "clock_controls": {
+    "V1_retained_decision": "STOP_SYNTHETIC_CLOCK_ORDER",
+    "V1_scope": "Only its predeadline-arrival interpretation is stopped; bytes/outcomes retained. No retroactive patch to first rows.",
+    "V2_construction_sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9",
+    "V2_saved_audit_rows": 9,
+    "outside_fresh_readings": [
+      0.0,
+      0.25
+    ],
+    "deadline_first_fresh_readings": [
+      0.0,
+      0.25,
+      2.0
+    ],
+    "fresh_chronology": "A initial snapshot0; nested B entries/initial clock0.25; R append0.5; A CHECK reacquisition2; timeout1. Coherent synthetic construction, not OS timing."
+  },
+  "limits": [
+    "No subject, generator, saved auditor, construction helper, native, VM or container execution performed by this helper.",
+    "No independent content vote, global absence claim, future-main applicability grant or production ownership.",
+    "Saved auditor consistency is scoped to the frozen finite equality quotient and nine directed ordinary controls.",
+    "No universal callback bound, native scheduling measurement, request/useful-task effect or production adoption."
+  ]
+}

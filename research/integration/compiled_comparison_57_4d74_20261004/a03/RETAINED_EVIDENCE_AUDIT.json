@@ -1,0 +1,448 @@
+{
+  "audit_scope": "post-run frozen identity/provider task joins/independent HTTP scoring/native release; not full authority proof or preregistered auditor",
+  "audit_errors": [],
+  "host": {
+    "container_exit": 1,
+    "stop": null,
+    "model_calls": 10,
+    "elapsed_ns": 120622419100,
+    "formal_started": true
+  },
+  "all_attempt_usage": {
+    "input_tokens": 132460,
+    "cached_input_tokens": 89088,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 695,
+    "reasoning_output_tokens": 429
+  },
+  "full_48_tasks_retained": false,
+  "all_arms_independent_exact": false,
+  "native_releases_verified": true,
+  "scientific_efficiency_gate": false,
+  "efficiency_gate_reason": "human setup cost unavailable; complete task correctness and broader coverage required",
+  "arms": [
+    {
+      "block": 1,
+      "arm": "A",
+      "saved_tasks": 6,
+      "independent": {
+        "event": "independent_evaluation",
+        "schema": "integrated_efficiency_oracle_v1",
+        "known_ns": 71049622853,
+        "success": true,
+        "record_count": 6,
+        "exact_counts": {
+          "task-1": 1,
+          "task-2": 1,
+          "task-3": 1,
+          "task-4": 1,
+          "task-5": 1,
+          "task-6": 1
+        },
+        "unexpected": [],
+        "duplicates": {},
+        "missing": [],
+        "emit_started_ns": 71049629307
+      },
+      "tasks": [
+        {
+          "task": "task-1",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": null,
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 8,
+          "elapsed_ns": 7917621176,
+          "model_wait_ns": 5262534700,
+          "usage": {
+            "input_tokens": 13509,
+            "cached_input_tokens": 11008,
+            "output_tokens": 25
+          },
+          "native_programs": 4,
+          "local_observation_records": 18,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-2",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": null,
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 8,
+          "elapsed_ns": 10256513792,
+          "model_wait_ns": 8102797200,
+          "usage": {
+            "input_tokens": 13509,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 60
+          },
+          "native_programs": 4,
+          "local_observation_records": 18,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-3",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": null,
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 8,
+          "elapsed_ns": 9661404326,
+          "model_wait_ns": 7257757000,
+          "usage": {
+            "input_tokens": 13509,
+            "cached_input_tokens": 11008,
+            "output_tokens": 80,
+            "reasoning_output_tokens": 53
+          },
+          "native_programs": 4,
+          "local_observation_records": 18,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-4",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": null,
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 8,
+          "elapsed_ns": 8869304226,
+          "model_wait_ns": 6716847700,
+          "usage": {
+            "input_tokens": 13509,
+            "cached_input_tokens": 11008,
+            "output_tokens": 84,
+            "reasoning_output_tokens": 57
+          },
+          "native_programs": 4,
+          "local_observation_records": 19,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-5",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": null,
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 8,
+          "elapsed_ns": 9686835306,
+          "model_wait_ns": 7255196900,
+          "usage": {
+            "input_tokens": 13509,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 60
+          },
+          "native_programs": 4,
+          "local_observation_records": 18,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-6",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": null,
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 8,
+          "elapsed_ns": 10545335930,
+          "model_wait_ns": 8158863500,
+          "usage": {
+            "input_tokens": 13509,
+            "cached_input_tokens": 11008,
+            "output_tokens": 79,
+            "reasoning_output_tokens": 52
+          },
+          "native_programs": 4,
+          "local_observation_records": 18,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        }
+      ],
+      "totals": {
+        "task_elapsed_ns": 56937014756,
+        "task_model_wait_ns": 42753997000,
+        "task_models": 6,
+        "task_usage": {
+          "input_tokens": 81054,
+          "cached_input_tokens": 44032,
+          "output_tokens": 442,
+          "reasoning_output_tokens": 282
+        },
+        "durable_calls": 48,
+        "native_programs": 24,
+        "local_observation_records": 109,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    },
+    {
+      "block": 1,
+      "arm": "B",
+      "saved_tasks": 6,
+      "independent": {
+        "event": "independent_evaluation",
+        "schema": "integrated_efficiency_oracle_v1",
+        "known_ns": 123536339464,
+        "success": false,
+        "record_count": 5,
+        "exact_counts": {
+          "task-1": 1,
+          "task-2": 1,
+          "task-3": 1,
+          "task-4": 1,
+          "task-5": 1,
+          "task-6": 0
+        },
+        "unexpected": [],
+        "duplicates": {},
+        "missing": [
+          "task-6"
+        ],
+        "emit_started_ns": 123536346520
+      },
+      "tasks": [
+        {
+          "task": "task-1",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": null,
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 22,
+          "elapsed_ns": 10928608991,
+          "model_wait_ns": 7704205800,
+          "usage": {
+            "input_tokens": 13509,
+            "cached_input_tokens": 12032,
+            "output_tokens": 84,
+            "reasoning_output_tokens": 57
+          },
+          "native_programs": 11,
+          "local_observation_records": 24,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-2",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": "none",
+          "exact_submissions": 1,
+          "models": 0,
+          "durable_calls": 22,
+          "elapsed_ns": 3032075756,
+          "model_wait_ns": 0,
+          "usage": {},
+          "native_programs": 11,
+          "local_observation_records": 24,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-3",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": "none",
+          "exact_submissions": 1,
+          "models": 0,
+          "durable_calls": 22,
+          "elapsed_ns": 3862186076,
+          "model_wait_ns": 0,
+          "usage": {},
+          "native_programs": 11,
+          "local_observation_records": 24,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-4",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": "model_reacquisition",
+          "exact_submissions": 1,
+          "models": 1,
+          "durable_calls": 30,
+          "elapsed_ns": 13937068755,
+          "model_wait_ns": 6988901700,
+          "usage": {
+            "input_tokens": 13509,
+            "cached_input_tokens": 11008,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 60
+          },
+          "native_programs": 15,
+          "local_observation_records": 28,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-5",
+          "caller": "TASK_SUCCEEDED",
+          "repair_path": "none",
+          "exact_submissions": 1,
+          "models": 0,
+          "durable_calls": 22,
+          "elapsed_ns": 7862434844,
+          "model_wait_ns": 0,
+          "usage": {},
+          "native_programs": 11,
+          "local_observation_records": 24,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        },
+        {
+          "task": "task-6",
+          "caller": "CALLER_FAILED",
+          "repair_path": "none",
+          "exact_submissions": 0,
+          "models": 0,
+          "durable_calls": 9,
+          "elapsed_ns": 3642122565,
+          "model_wait_ns": 0,
+          "usage": {},
+          "native_programs": 4,
+          "local_observation_records": 9,
+          "ocr_calls": 0,
+          "ocr_ns": 0,
+          "graph_outcome": null
+        }
+      ],
+      "totals": {
+        "task_elapsed_ns": 43264496987,
+        "task_model_wait_ns": 14693107500,
+        "task_models": 2,
+        "task_usage": {
+          "input_tokens": 27018,
+          "cached_input_tokens": 23040,
+          "output_tokens": 171,
+          "reasoning_output_tokens": 117
+        },
+        "durable_calls": 127,
+        "native_programs": 63,
+        "local_observation_records": 133,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    },
+    {
+      "block": 1,
+      "arm": "C",
+      "saved_tasks": 0,
+      "independent": null,
+      "tasks": [],
+      "totals": {
+        "task_elapsed_ns": 0,
+        "task_model_wait_ns": 0,
+        "task_models": 0,
+        "task_usage": {},
+        "durable_calls": 0,
+        "native_programs": 0,
+        "local_observation_records": 0,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    },
+    {
+      "block": 1,
+      "arm": "D",
+      "saved_tasks": 0,
+      "independent": null,
+      "tasks": [],
+      "totals": {
+        "task_elapsed_ns": 0,
+        "task_model_wait_ns": 0,
+        "task_models": 0,
+        "task_usage": {},
+        "durable_calls": 0,
+        "native_programs": 0,
+        "local_observation_records": 0,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    },
+    {
+      "block": 2,
+      "arm": "D",
+      "saved_tasks": 0,
+      "independent": null,
+      "tasks": [],
+      "totals": {
+        "task_elapsed_ns": 0,
+        "task_model_wait_ns": 0,
+        "task_models": 0,
+        "task_usage": {},
+        "durable_calls": 0,
+        "native_programs": 0,
+        "local_observation_records": 0,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    },
+    {
+      "block": 2,
+      "arm": "C",
+      "saved_tasks": 0,
+      "independent": null,
+      "tasks": [],
+      "totals": {
+        "task_elapsed_ns": 0,
+        "task_model_wait_ns": 0,
+        "task_models": 0,
+        "task_usage": {},
+        "durable_calls": 0,
+        "native_programs": 0,
+        "local_observation_records": 0,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    },
+    {
+      "block": 2,
+      "arm": "B",
+      "saved_tasks": 0,
+      "independent": null,
+      "tasks": [],
+      "totals": {
+        "task_elapsed_ns": 0,
+        "task_model_wait_ns": 0,
+        "task_models": 0,
+        "task_usage": {},
+        "durable_calls": 0,
+        "native_programs": 0,
+        "local_observation_records": 0,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    },
+    {
+      "block": 2,
+      "arm": "A",
+      "saved_tasks": 0,
+      "independent": null,
+      "tasks": [],
+      "totals": {
+        "task_elapsed_ns": 0,
+        "task_model_wait_ns": 0,
+        "task_models": 0,
+        "task_usage": {},
+        "durable_calls": 0,
+        "native_programs": 0,
+        "local_observation_records": 0,
+        "ocr_calls": 0,
+        "ocr_ns": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "argv": [
+    "git",
+    "-c",
+    "maintenance.auto=false",
+    "-c",
+    "gc.auto=0",
+    "-c",
+    "fetch.negotiationAlgorithm=noop",
+    "fetch",
+    "origin",
+    "--no-auto-maintenance",
+    "--no-tags",
+    "--no-write-fetch-head",
+    "--recurse-submodules=no",
+    "--filter=blob:none",
+    "--stdin",
+    "--depth=2"
+  ],
+  "confirmed_live_at_observation": false,
+  "exit_code": 0,
+  "observed_utc": "2026-10-03T10:23:08.189544+00:00",
+  "oids": [
+    "2523fc996fa44d88d40aef79f1d757f569fca387",
+    "4f1cbe2b6801b12b9219ef883faa9654b0d91905"
+  ],
+  "original_pid_observed_absent": true,
+  "pid": 11668,
+  "started_utc": "2026-10-03T10:23:05.954420+00:00",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

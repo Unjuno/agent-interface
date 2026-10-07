@@ -1,0 +1,7 @@
+# Conditional baseline decision
+
+Saved-data reduction executed once in WSLc, exit0, no original actor replay. With complete trustworthy current assignment metadata, the fixture's729shared pairs can be read directly with0probe jobs. Intervention inferred189of729, missed540 and required2187probes/17496service ticks/5589added task endpoint ticks. The metadata comparator is explicitly an oracle condition, not evidence that real backend metadata is available, qualified or cheap to obtain.
+
+Prefer explicit source-bound service metadata when available and current. Otherwise retain UNIDENTIFIED; this finite result does not authorize operational probes or replace peer-conditioned timing/effect reporting with fabricated internal causes. No proposed production integration follows from Q01–Q03. Further synthetic expansion is not the next integration decision: first identify a concrete real disposable service/workload lacking qualified metadata, with permissioned probe targeting, synchronized clocks, independently verified task effects and a safe unaffected control. Existing #59 fault/input workers remain separate.
+
+This closes our current finite graph exploration block with SUPPORT_NONIDENTIFIABILITY / HOLD_OPERATIONAL_VALUE, not Issue6019 or ROADMAP completion. Preserve all first HOLDs and data; publication PRs remain pending GitHub creation backoff. Additional method variants without such a concrete integration blocker would add little decision value.

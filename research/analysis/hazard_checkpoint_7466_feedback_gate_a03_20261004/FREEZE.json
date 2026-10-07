@@ -1,0 +1,55 @@
+{
+  "allocation": "UNJUNO-7466-A03-ONLINE-EVIDENCE-GATE-20261004",
+  "issue": 7466,
+  "base_commit": "bb3138d019118bf050fe1136a9ba3619146bb46e",
+  "preregistration_comment_id": 5979878745,
+  "frozen_at_local": "2026-10-04T21:21:00+09:00",
+  "runtime": {
+    "os": "macOS Darwin 27.0.0 arm64",
+    "python": "CPython 3.14.5",
+    "container_decision": "Host-only standard-library protocol permitted by Issue #7466; OrbStack Engine 29.4.0 is reachable, but python:3.14-slim is absent locally. No pull/build/restart; no isolation claim."
+  },
+  "formal_invocation_counts_at_freeze": {
+    "candidate": 0,
+    "independent_auditor": 0,
+    "candidate_budget": 1,
+    "independent_auditor_budget": 1
+  },
+  "source_sha256": {
+    "README.md": "ccff67460d7a128b89cf3b6836a8b934a4f93cab7fa54f5390a02c099714b2f5",
+    "prepare.py": "67a235300bccbe5f33e54a3b4acd1ffc9cbf0e0cb68cedc1c8b5a502698ce1a4",
+    "candidate.py": "79ca5137b34bb404865d10fc05f204a2221d4bcdf1be90280f08bfa6d9b40fe9",
+    "policy.py": "3068869b126e1bceb5df0a7e72dcb5050471849b2bab52d1b0eeee93c2433d13",
+    "audit.py": "121b514330f06772e191dc7f33ac4dd3262e1cecd3f7817ac07e4d18ab4abeaf",
+    "test_construction.py": "734b94c50376a20b5dec8cf4ed5ae971fc5a8fc77e241f8c9a41cb8c962c9f22"
+  },
+  "input_sha256": {
+    "training.json": "85cea45174b5c85b6dd277bfe2eb3c44a836f75f943754566b5705dc7090c185",
+    "public.json": "f8ba16107ea2e22904b79865d9646dac888d6d425e851cc4cae51e40925607e0",
+    "oracle.json": "ca5dbbfa44124b7edeab7dbf71752009c851a09066e4cfa3c2fb5943a812e824"
+  },
+  "frozen_design": {
+    "training_episodes": 64,
+    "validation_episodes": 32,
+    "heldout_episodes_per_cohort": 24,
+    "heldout_cohorts": ["informative", "independent", "reversed"],
+    "task_units": 300,
+    "horizon": 3000,
+    "minimum_feedback_observations_before_activation": 128,
+    "activation_log_likelihood_ratio": 6.907755278982137,
+    "deactivation_log_likelihood_ratio": 4.605170185988092,
+    "checkpoint_costs": [1, 4, 8],
+    "replay_costs": [1, 3],
+    "fixed_interval": 16,
+    "task_event_interval": 20,
+    "benefit_fraction_each_informative_cell_vs_each_baseline": 0.10
+  },
+  "commands": [
+    "python3 -m py_compile prepare.py policy.py candidate.py audit.py test_construction.py",
+    "python3 -m unittest -v test_construction.py",
+    "python3 candidate.py",
+    "python3 audit.py"
+  ],
+  "output_paths_are_write_once": true,
+  "same_seed_retry_permitted": false
+}

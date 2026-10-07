@@ -1,0 +1,40 @@
+def inspect_after_dispatch(self, report, target, screen_region=None, capture_directory=None, wait_ms=None):
+    """Read-only inspection/capture after completed released input; no replay."""
+    started = time.monotonic_ns()
+    result = report.get('result', {})
+    releases = result.get('execution', {}).get('releases', [])
+    self.target_review = None
+    ready = (self.state == 'open' and self.session is not None
+             and self.session.recovery_required is False
+             and result.get('status') == 'completed'
+             and result.get('recovery_required') is False
+             and bool(releases) and all(
+                 item.get('verified') is True and item.get('keys_down') == []
+                 and item.get('buttons_down') == [] and 'error' not in item
+                 for item in releases))
+    if not ready:
+        inspection = {'status': 'skipped', 'reason': 'DISPATCH_NOT_COMPLETED_AND_RELEASED'}
+    else:
+        capture_wait = None
+        try:
+            if wait_ms is not None:
+                if screen_region is None or type(wait_ms) is not int or not 0 <= wait_ms <= 1000:
+                    raise ValueError('invalid post-release capture wait')
+                capture_wait = {'requested_ms': wait_ms, 'started_ns': time.monotonic_ns(),
+                                'completed': False, 'update_observed': None}
+                try:
+                    time.sleep(wait_ms / 1000)
+                    capture_wait['completed'] = True
+                finally:
+                    capture_wait['ended_ns'] = time.monotonic_ns() + 1
+            inspection = self.inspect_target(target, screen_region=screen_region,
+                                             capture_directory=capture_directory)
+        except Exception as error:
+            inspection = {'status': 'needs_review', 'error': repr(error)}
+        if capture_wait is not None:
+            inspection['capture_wait'] = capture_wait
+    return dict(inspection, started_ns=started, ended_ns=time.monotonic_ns(),
+                input_dispatched=False, authority_granted=False,
+                scope='Metadata sampled after dispatch. Not atomically bound to its image; '
+                      'no redraw or task completion acknowledgement. Review explicitly; '
+                      'retained lookup does not renew the review ID.')

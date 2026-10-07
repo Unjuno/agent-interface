@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,subprocess,sys,hashlib,shutil
+from datetime import datetime,timezone
+p=Path('/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197'); old=p.parent/'wslc_dockerfile_build_smoke_t0_20261003'
+(p/'verify_repair_v1.py.txt').write_bytes((p/'verify_repair.py').read_bytes())
+(p/'FIRST_CHECK_FAILURE.txt').write_text('First ordinary run_regressions.py: exit 0, rows17, legacy_false_accepts5, v2_rejected16.\nFirst verify_repair.py: exit1, AssertionError at line63.\nExpected6 legacy false accepts was incorrect: hash_run.output.txt appends a third whitespace-only line, caught by existing line-count check. Raw matrix.json and all case bytes remain unchanged. This is a verifier expectation defect, not a candidate failure or formal allocation.\n')
+c=p/'cases'/'hash_run.output_inline'; c.mkdir()
+for n in ['Dockerfile','payload.txt','probe.py','build.output.txt','run.output.txt','POSTRUN_CHECK.json','RUN.json']: shutil.copyfile(old/n,c/n)
+data=(c/'run.output.txt').read_bytes(); (c/'run.output.txt').write_bytes(data.replace(b'{',b'{ ',1))
+row={'id':'hash_run.output_inline','inputs':{},'audits':{}}
+for n in ['Dockerfile','payload.txt','probe.py','build.output.txt','run.output.txt','POSTRUN_CHECK.json','RUN.json']: row['inputs'][n]=hashlib.sha256((c/n).read_bytes()).hexdigest()
+for name,script in [('legacy',old/'audit_t0.py'),('v2',p/'audit_v2.py')]:
+    argv=[sys.executable,'-B',str(script),'--root',str(c)]; start=datetime.now(timezone.utc).isoformat(); ch=subprocess.Popen(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True);out,err=ch.communicate(timeout=10)
+    row['audits'][name]={'argv':argv,'pid':ch.pid,'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':ch.returncode,'stdout':out,'stderr':err}
+(p/'additional_case.json').write_text(json.dumps(row,indent=2)+'\n')
+s=(p/'verify_repair.py').read_text().replace("expected = {'original'}", "expected = {'original', 'hash_run.output_inline'}")
+s=s.replace("if row['id'].startswith(('hash_', 'source_', 'missing_')):","if row['id'] == 'hash_run.output_inline':\n                assert changed == ['run.output.txt']\n                assert (case / 'run.output.txt').read_bytes() == (source / 'run.output.txt').read_bytes().replace(b'{', b'{ ', 1)\n            elif row['id'].startswith(('hash_', 'source_', 'missing_')):")
+s=s.replace("assert receipt['exit_code'] == 0 and parsed['status'] == 'PASS_T0_RECEIPT_AUDITED'\n                false_accepts += row['id'] != 'original'", "if row['id'] == 'hash_run.output.txt':\n                    assert receipt['exit_code'] == 1 and parsed['status'] == 'STOP_T0_RECEIPT_INVALID'\n                else:\n                    assert receipt['exit_code'] == 0 and parsed['status'] == 'PASS_T0_RECEIPT_AUDITED'\n                    false_accepts += row['id'] != 'original'")
+s=s.replace("print(json.dumps(verify(p, json.loads((p/'matrix.json').read_text())), sort_keys=True))", "matrix = json.loads((p/'matrix.json').read_text())\n    matrix['rows'].append(json.loads((p/'additional_case.json').read_text()))\n    print(json.dumps(verify(p, matrix), sort_keys=True))")
+(p/'verify_repair.py').write_text(s)

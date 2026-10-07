@@ -1,0 +1,32 @@
+import base64
+import gzip
+import hashlib
+import json
+import pathlib
+root = pathlib.Path(__file__).resolve().parent
+out = root / 'win32-capture-deselection-622-D02'
+members = []
+def add(name, path):
+    data = path.read_bytes()
+    members.append({'name': name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                    'base64': base64.b64encode(data).decode()})
+for path in sorted(out.rglob('*')):
+    if path.is_file() and path.name != 'SOURCE_INDEX' and not path.name.startswith('PUBLIC'):
+        add('D02/' + path.relative_to(out).as_posix(), path)
+for name in ['native_capture_d02.py', 'launch_capture_d02.py', 'audit_capture_d02.py', 'freeze_capture_d02.py',
+             'control_capture_d02.py', 'build_capture_source.py', 'commit_capture_source.py', 'pack_capture_d02.py']:
+    add('tools/' + name + '.txt', root / name)
+for path in sorted((root / 'capture-contract-source/runtime').rglob('*.py')):
+    add('tested-source/' + path.relative_to(root / 'capture-contract-source').as_posix() + '.txt', path)
+raw = json.dumps({'format': 'capture-D02-data-v1', 'members': members}, sort_keys=True).encode()
+packed = gzip.compress(raw, mtime=0)
+b64 = base64.b64encode(packed).decode()
+meta = {'members': len(members), 'json_bytes': len(raw), 'json_sha256': hashlib.sha256(raw).hexdigest(),
+        'gzip_bytes': len(packed), 'gzip_sha256': hashlib.sha256(packed).hexdigest(), 'base64_chars': len(b64)}
+(out / 'PUBLIC_PACKET.json').write_bytes(raw)
+(out / 'PUBLIC_META.json').write_text(json.dumps(meta, indent=2), encoding='utf-8')
+chunks = [b64[i:i+44000] for i in range(0, len(b64), 44000)]
+for i, chunk in enumerate(chunks):
+    body = f'D02 complete recoverable DATA packet part {i+1}/{len(chunks)}. Concatenate base64 blocks by part number before decoding. No received code execution.\n\n' + json.dumps(meta) + '\n\n```text\n' + chunk + '\n```\n'
+    (out / f'PUBLIC_PART_{i+1}.md').write_text(body, encoding='utf-8')
+print(json.dumps({**meta, 'parts': len(chunks)}))

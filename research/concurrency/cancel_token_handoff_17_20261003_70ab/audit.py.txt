@@ -1,0 +1,50 @@
+import json,sys,copy,hashlib,os,datetime,pathlib
+# Independent recursion and event state representation; never import the producer.
+def audit(d):
+ expected={};counts={};violations={}
+ for policy in ['shared-publish-clear','shared-clear-publish','fresh-token']:
+  for target in [1,2]:
+   prereq={'I':set(),'P':set(),'C':set(),'W':{'C'},'R':{'I','P','W'}}
+   prereq['I' if policy=='shared-publish-clear' else 'P'].add('P' if policy=='shared-publish-clear' else 'I')
+   if target==2:prereq['C'].add('P')
+   def visit(prefix):
+    if len(prefix)==5:expected[(policy,target,''.join(prefix))]=True;return
+    for event in sorted(prereq):
+     if event not in prefix and prereq[event].issubset(prefix):visit(prefix+[event])
+   visit([])
+ actual={}
+ for row in d['rows']:
+  key=(row['policy'],row['target'],row['order']);assert key in expected and key not in actual;actual[key]=True
+  policy,target,order=key;state={'flag':False,'tokens':{'1':False},'active':1}
+  for event,t in zip(order,row['trace'],strict=True):
+   assert t['event']==event and t['before']==state
+   if event=='P':state['active']=2
+   if event=='I':
+    if policy=='fresh-token':state['tokens']['2']=False
+    else:state['flag']=False
+   if event=='C':
+    if policy=='fresh-token':state['tokens'][str(target)]=True
+    else:state['flag']=True
+   answer=(state['tokens'][str(state['active'])] if policy=='fresh-token' else state['flag']) if event=='R' else None
+   assert t['after']==state and t['poll'] is answer
+  assert type(row['observed']) is bool and row['observed'] is answer and row['expected'] is (target==2)
+  bad=answer!=(target==2);assert row['violation'] is bad
+  k=policy+':'+str(target);counts[k]=counts.get(k,0)+1;violations[k]=violations.get(k,0)+int(bad)
+ assert actual==expected
+ assert violations['shared-publish-clear:2']>0
+ assert violations['shared-publish-clear:1']>0 and violations['shared-clear-publish:1']>0
+ assert violations['fresh-token:1']==violations['fresh-token:2']==0
+ return {'rows':len(actual),'counts':counts,'violations':violations}
+p=pathlib.Path(sys.argv[1]);raw=p.read_bytes();d=json.loads(raw);result=audit(d);rejects=[]
+for mutation in range(6):
+ c=copy.deepcopy(d)
+ if mutation==0:c['rows'].pop()
+ elif mutation==1:c['rows'].append(copy.deepcopy(c['rows'][0]))
+ elif mutation==2:c['rows'][0]['observed']=not c['rows'][0]['observed']
+ elif mutation==3:c['rows'][0]['expected']=not c['rows'][0]['expected']
+ elif mutation==4:c['rows'][0]['trace'][0]['after']['active']=99
+ else:c['rows'][0]['target']=99
+ try:audit(c)
+ except (AssertionError,KeyError,ValueError):rejects.append(mutation)
+ else:raise RuntimeError('accepted corruption')
+print(json.dumps({'decision':'PASS_SCOPED_FINITE_HANDOFF_MODEL','pid':os.getpid(),'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'input_sha256':hashlib.sha256(raw).hexdigest(),'source_sha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'result':result,'rejected_corruptions':rejects},sort_keys=True))
