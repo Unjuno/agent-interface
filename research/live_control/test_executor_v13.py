@@ -288,6 +288,41 @@ class ExecutorV13Tests(unittest.TestCase):
             "error_type": "OSError",
         })
 
+    def test_terminal_preserves_measurement_publish_error_from_input_failure(self):
+        error = OSError("XTest DOWN acknowledgement lost")
+        publication_error = {
+            "type": "RuntimeError", "message": "telemetry sink unavailable",
+        }
+        error.measurement_publish_error = publication_error
+
+        class MeasurementFailureBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+                raise error
+
+        events = []
+        terminal_received = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        backend = MeasurementFailureBackend()
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("measurement-sink-failure", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+        finally:
+            executor.close()
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertEqual(terminal["error"], repr(error))
+        self.assertEqual(terminal["release"]["verified"], True)
+        self.assertEqual(terminal["measurement_publish_error"], publication_error)
+
     def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
         backend = Backend()
         events = []
