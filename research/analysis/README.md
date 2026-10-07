@@ -7,6 +7,8 @@
 - [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
 
 
+- [Issue #7799 T0 A01 pairwise eligibility](pairwise_interaction_7799_t0_a01_20261005/REPORT.md) — `HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR`; selected #57 protocol exposes only `(0,0)` and `(1,1)` for the two co-selected factors; independent raw audit 11/11, design rank 2/4. Source-bound eligibility only; no interaction estimate or live/model run.
+
 - [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
 
 - [Issue #8112 boundary-jitter TTC comparison A06](looming_yield_5905_boundary_jitter_a06_20261005/REPORT.md) — OrbStack candidate/auditor each ran once; raw reconstruction and mutation controls passed, but TTC did not strictly beat either simple cue at false-YIELD budgets 0–6 (`NO_INCREMENTAL_VALUE`). Synthetic-only; A01–A05 first outcomes preserved.
