@@ -50,3 +50,12 @@ X11, or OS input was executed here.
   result directory. The original A04 inputs and retained A01-A05 outputs were
   untouched.
 - Negative-control summary: `results/a05/audit_tamper_control.json`.
+
+## A06 read-only audit correction and A07 control — 2026-10-05
+
+- Freeze: `results/a06/AUDIT_FREEZE.json`; auditor source hash `c25b90a3c61fc4f80e24b820bb983115cb0e93a39b5e103ee893938549cd1df7`; A06/A05 candidate and A05 audit hashes are recorded in the freeze.
+- A06 command: `python research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/audit_a06.py`. Exit 0; `PASS_A04_TRACE_AUDIT_CORRECTION_A06`; 27 checks over 45 observations. It read immutable A05 candidate bytes and did not invoke candidate.py or live inputs.
+- First report-swap harness attempt (A06) exited 1 with `CONTROL_SETUP_FAILURE`: the copied candidate was in `results/a05`, but the legacy auditor was pointed to `legacy-results/a05`. The audit gap conclusion was none from this attempt. Record: `results/a06/audit_report_swap_control.json`.
+- A07 freeze: `results/a07/AUDIT_FREEZE.json`; the only control-harness delta copies the candidate to the selected legacy RESULT_DIR. The report source/monitor references were swapped in an isolated copy; raw/package/freeze manifests were updated.
+- A07 command: `python research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/test_audit_a07.py`. Exit 0. Legacy A05 exited 0 with `PASS_A04_TRACE_REPLAY_AUDIT`; A06 exited 1 with `AssertionError` before creating output. Control: `results/a07/audit_report_swap_control.json`.
+- The A06/A07 checks changed no A04 raw, A05 output, candidate, controller, game, model, GUI, or OS input. The results are audit-integrity evidence only and do not change the scoped threshold replay outcome.
