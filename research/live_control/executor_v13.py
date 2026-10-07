@@ -111,6 +111,7 @@ class Executor(Previous):
     def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
         release_batch_publication = None
+        measurement_publish_error = None
         process_exception = None; process_traceback = None
         try:
             for index, step in enumerate(steps):
@@ -133,6 +134,9 @@ class Executor(Previous):
             publication = getattr(exc, "release_batch_publication", None)
             if isinstance(publication, dict):
                 release_batch_publication = dict(publication)
+            measurement_error = getattr(exc, "measurement_publish_error", None)
+            if isinstance(measurement_error, dict):
+                measurement_publish_error = dict(measurement_error)
             if not isinstance(exc, Exception):
                 process_exception = exc
                 process_traceback = exc.__traceback__
@@ -145,6 +149,9 @@ class Executor(Previous):
             self._publish_cause_once(identifier, lease)
             try:
                 release = self.backend.release_all()
+                if measurement_publish_error is not None:
+                    release = dict(release)
+                    release["measurement_publish_error"] = measurement_publish_error
                 if release_batch_publication is not None:
                     release = dict(release)
                     cleanup_publication = release.get("release_batch_delivery")
@@ -155,6 +162,8 @@ class Executor(Previous):
                     status = "failed"; error = "input release not verified"
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
+                if measurement_publish_error is not None:
+                    release["measurement_publish_error"] = measurement_publish_error
                 status = "failed"
                 publication = getattr(exc, "release_batch_publication", None)
                 self._preserve_release_batch_custody(
@@ -162,6 +171,8 @@ class Executor(Previous):
                 )
             except BaseException as exc:
                 release = {"verified": False, "error": repr(exc)}
+                if measurement_publish_error is not None:
+                    release["measurement_publish_error"] = measurement_publish_error
                 status = "failed"
                 if error is None:
                     error = repr(exc)

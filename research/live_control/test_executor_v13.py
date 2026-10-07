@@ -288,6 +288,31 @@ class ExecutorV13Tests(unittest.TestCase):
             "error_type": "OSError",
         })
 
+    def test_terminal_preserves_measurement_publish_failure_custody(self):
+        measurement_error = {
+            "type": "RuntimeError",
+            "message": "DOWN measurement acknowledgement lost",
+        }
+
+        class MeasurementPublicationFailureBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                error = OSError("DOWN acknowledgement lost")
+                error.measurement_publish_error = measurement_error
+                raise error
+
+        events = []
+        executor = Executor(MeasurementPublicationFailureBackend(), events.append)
+        executor.submit("measurement-custody", [{"op": "pointer_drag"}], 1,
+                        time.perf_counter_ns() + 1_000_000_000)
+        deadline = time.monotonic() + 1
+        while not any(row.get("event") == "terminal" for row in events) and time.monotonic() < deadline:
+            time.sleep(.002)
+        executor.close()
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertIn("DOWN acknowledgement lost", terminal["error"])
+        self.assertEqual(terminal["release"]["measurement_publish_error"], measurement_error)
+
     def test_close_reentered_from_accepted_sink_prevents_worker_start(self):
         backend = Backend()
         events = []
