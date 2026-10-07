@@ -72,6 +72,12 @@ class ContractTests(unittest.TestCase):
             rejected = subprocess.run([sys.executable, str(root / "auditor.py"), str(bad_raw), str(bad_audit)], capture_output=True, text=True)
             self.assertNotEqual(rejected.returncode, 0)
             self.assertEqual(json.loads(bad_audit.read_text(encoding="utf-8"))["result"], "FAIL")
+            for name in ("final_truth", "baseline_identity", "common_byte", "cue_offset", "lineage", "observed_inference", "unknown_answer", "unsupported_omitted"):
+                mutation_raw, mutation_audit = tmp / f"{name}.json", tmp / f"{name}-audit.json"
+                mutation_raw.write_text(json.dumps(apply_mutation(parsed, name)), encoding="utf-8")
+                proc = subprocess.run([sys.executable, str(root / "auditor.py"), str(mutation_raw), str(mutation_audit)], capture_output=True, text=True)
+                self.assertNotEqual(proc.returncode, 0, name)
+                self.assertEqual(json.loads(mutation_audit.read_text(encoding="utf-8"))["result"], "FAIL", name)
             no_overwrite = subprocess.run(auditor_cmd, capture_output=True, text=True)
             self.assertNotEqual(no_overwrite.returncode, 0)
 
@@ -79,7 +85,9 @@ def apply_mutation(rows, name):
     out = copy.deepcopy(rows)
     target = next(r for r in out if r["kind"] == "matched")
     if name == "final_truth": target["final_truth"] = "forged"
-    elif name == "baseline_identity": target["baseline_source_id"] = "forged/source"
+    elif name == "baseline_identity":
+        target["baseline_source_id"] = "forged/source"
+        target["baseline_bytes"] = json.dumps({"value": "old", "source_id": "forged/source"}, separators=(",", ":")).encode().hex()
     elif name == "common_byte": target["prefix_hex"] = ("00" if target["prefix_hex"][:2] != "00" else "01") + target["prefix_hex"][2:]
     elif name == "cue_offset": target["current_cue_offset"] += 1
     elif name == "lineage":
