@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #5309 A08 effect-witness preservation](dual_control_5309_witness_a08_20261007/REPORT.md) — `PASS_WITNESS_BOUNDARY_SCOPED`: isolated candidate/oracle mounts; 56 rows independently reconstructed. A04–A07 STOP/method-failure lineage remains preserved; synthetic-only, no GUI/runtime/product claim.
+
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
 
 - [Issue #7817 provenance-checked defeasible obligations T0 A01](provenance_defeasible_obligations_7817_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: ten finite obligation contexts and five hostile mutations independently audited; advisory-only synthetic semantics.
@@ -498,6 +500,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
+- [`dual_control_5309_witness_a04_20261007/`](dual_control_5309_witness_a04_20261007/)
+- [`dual_control_5309_witness_a05_20261007/`](dual_control_5309_witness_a05_20261007/)
+- [`dual_control_5309_witness_a06_20261007/`](dual_control_5309_witness_a06_20261007/)
+- [`dual_control_5309_witness_a07_20261007/`](dual_control_5309_witness_a07_20261007/)
+- [`dual_control_5309_witness_a08_20261007/`](dual_control_5309_witness_a08_20261007/)
 - [`effect_interference_5366_t2_v1/`](effect_interference_5366_t2_v1/)
 - [`effect_interference_5366_t3_v1/`](effect_interference_5366_t3_v1/)
 - [`effect_overlap_6278_filter_control_t0_v3/`](effect_overlap_6278_filter_control_t0_v3/)
