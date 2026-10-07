@@ -57,8 +57,9 @@ def main() -> int:
                     raise RuntimeError("barrier client closed before request")
                 raw.extend(chunk)
             request = raw.decode("ascii").strip()
-            if request != "LOCK_ON":
+            if request != "LOCK_ON:0":
                 raise ValueError("unexpected barrier request")
+            candidate_sample = int(request.split(":", 1)[1])
             received_ns = time.monotonic_ns()
             pre = display.Display(display_name)
             try:
@@ -72,6 +73,7 @@ def main() -> int:
                 raise RuntimeError("LockMask transition did not reconcile")
             payload = {
                 "request": request,
+                "candidate_sample": candidate_sample,
                 "actor_pid": os.getpid(),
                 "received_ns": received_ns,
                 "pre_lock": pre_lock,
@@ -81,7 +83,7 @@ def main() -> int:
                 "post_lock": post_lock,
                 "ack_ns": time.monotonic_ns(),
             }
-            conn.sendall(json.dumps(payload, sort_keys=True).encode() + b"\n")
+            conn.sendall(b"ACK:" + json.dumps(payload, sort_keys=True).encode() + b"\n")
             print(json.dumps(payload, sort_keys=True), flush=True)
         return 0
     finally:
