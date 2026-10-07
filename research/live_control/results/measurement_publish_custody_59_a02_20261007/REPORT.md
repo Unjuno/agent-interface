@@ -11,9 +11,10 @@ Use the actual ExecutorV13 with a controlled in-memory backend. Raise `OSError("
 ## D
 
 - RED: the new targeted test failed because `terminal.release.measurement_publish_error` was absent; terminal status remained failed and its primary error named the original DOWN acknowledgement loss.
-- Repair: ExecutorV13 copies structured measurement publication error metadata into `terminal.release` after successful cleanup, and into the release record when cleanup raises an `Exception` or `BaseException`. The original step exception remains the primary terminal error; no publish retry is introduced.
-- Targeted regression after repair: PASS (1/1).
-- ExecutorV13 suite: PASS (14/14).
+- Interim candidate repair: ExecutorV13 copied structured measurement publication error metadata into `terminal.release`; its targeted regression passed 1/1 and the V13 suite passed 14/14. The candidate sources are preserved under `interim_candidate_source/` and pinned to commit `e26434b7df1d2aa3d57e12e09945898e4e6ca8bb`.
+- Remediation handoff: subsequent Issue #59 work produced PR [#8269](https://github.com/Unjuno/agent-interface/pull/8269), which preserves bounded `{type, message}` fields at the top level of the terminal record and adds an executor-level regression. That is the current remediation candidate; this PR keeps the RED evidence and does not carry the duplicate interim code/test patch.
+- The PR #8261 source-stack checks below validate the interim candidate only; they do not revalidate PR #8269's implementation.
+- After removing the duplicate interim code/test patch from PR #8259, its executor baseline suite passes 13/13; raw output and exit code are retained.
 - The wider attempted composition command failed (31 failures, 1 error) because selected Doom batch-composition suites expect the `up_batch` owner implementation from `input_owner_v12.py`, which is untracked and absent from `main` in this checkout. Preserve this as a mixed-source integration limitation, not as a passing run or a regression caused by this patch.
 - Python byte-compilation and `git diff --check`: PASS.
 
@@ -30,7 +31,7 @@ Raw output and exit codes for the two passing source-stack tests are retained be
 
 ## C / U
 
-This is deterministic in-memory executor construction evidence. It does not test an X server, Doom, GUI input, physical release, measurement sink durability beyond the supplied exception metadata, model inference, useful feedback, recovery, or task effect. This does not satisfy Issue #59's current-main live threat-control experiment. The broader mixed-source suite remains unverified as a coherent candidate.
+This is deterministic in-memory executor construction evidence of a terminal serialization omission and a superseded interim repair. It does not test an X server, Doom, GUI input, physical release, measurement sink durability beyond the supplied exception metadata, model inference, useful feedback, recovery, or task effect. It does not satisfy Issue #59's current-main live threat-control experiment. The broader mixed-source suite remains unverified as a coherent candidate.
 
 ## Commands
 
@@ -41,4 +42,4 @@ This is deterministic in-memory executor construction evidence. It does not test
 - Construction: `python -B -m py_compile research/live_control/executor_v13.py research/live_control/test_executor_v13.py`
 - Hygiene: `git diff --check`
 
-Raw command output, exit codes, and SHA-256 hashes are retained in this directory. The SHA list covers the final executor/test sources, report, and primary RED/PASS/suite outputs, including the source-stack follow-on.
+Raw command output, exit codes, interim candidate source snapshot, and SHA-256 hashes are retained in this directory. The SHA list covers the candidate snapshot, current baseline sources, report, and primary RED/PASS/suite outputs, including the source-stack follow-on.
