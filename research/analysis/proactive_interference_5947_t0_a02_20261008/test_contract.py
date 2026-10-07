@@ -1,74 +1,67 @@
-"""A02 T0 contract tests; candidate and auditor are intentionally not present yet.
-
-Run only during construction, before freeze. Never run after a formal CLI invocation.
-"""
+"""Construction contract tests; never run after a formal CLI invocation."""
+import copy
 import unittest
 
 from candidate import build_corpus
 from auditor import audit_corpus
 
-
 class ContractTests(unittest.TestCase):
-    def test_corpus_cardinality_and_strata(self):
+    def test_cardinality_and_complete_strata(self):
         rows = build_corpus()
-        self.assertEqual(len(rows), 50)
-        self.assertEqual(sum(r["kind"] == "matched" for r in rows), 48)
-        self.assertEqual(sum(r["kind"] == "position_control" for r in rows), 2)
+        self.assertEqual((len(rows), sum(r["kind"] == "matched" for r in rows), sum(r["kind"] == "position_control" for r in rows)), (50, 48, 2))
         self.assertEqual(len({(r["condition"], r["depth"], r["arm"]) for r in rows if r["kind"] == "matched"}), 48)
 
-    def test_complete_identity_and_serialized_slot(self):
-        rows = build_corpus()
+    def test_matched_identity_prefix_slot_suffix_and_byte_budget(self):
         groups = {}
-        for row in rows:
-            if row["kind"] == "matched":
-                groups.setdefault((row["condition"], row["depth"]), []).append(row)
+        for r in build_corpus():
+            if r["kind"] == "matched": groups.setdefault((r["condition"], r["depth"]), []).append(r)
         for group in groups.values():
-            self.assertEqual(len({r["baseline"] for r in group}), 1)
-            self.assertEqual(len({r["baseline_source_id"] for r in group}), 1)
-            self.assertEqual(len({r["task_bytes"] for r in group}), 1)
-            self.assertEqual(len({r["query_bytes"] for r in group}), 1)
-            self.assertEqual(len({r["prefix_bytes"] for r in group}), 1)
-            self.assertEqual(len({r["suffix_bytes"] for r in group}), 1)
-            self.assertEqual(len({r["current_cue_offset"] for r in group}), 1)
-            for row in group:
-                context = row["prefix_bytes"] + row["history_slot_bytes"] + row["suffix_bytes"]
-                self.assertEqual(context, row["serialized_context_bytes"])
-                self.assertEqual(row["history_slot_start"], len(row["prefix_bytes"]))
-                self.assertEqual(row["history_slot_end"], len(row["prefix_bytes"]) + len(row["history_slot_bytes"]))
-            self.assertEqual(len({len(r["serialized_context_bytes"]) for r in group}), 1)
+            for key in ("task_bytes", "query_bytes", "baseline_bytes", "baseline_source_id", "current_bytes", "current_source_id", "authority", "prefix_hex", "suffix_hex", "current_cue_offset"):
+                self.assertEqual(len({r[key] for r in group}), 1, key)
+            lengths = set()
+            for r in group:
+                raw = bytes.fromhex(r["prefix_hex"]) + bytes.fromhex(r["history_slot_hex"]) + bytes.fromhex(r["suffix_hex"])
+                self.assertEqual(raw.hex(), r["serialized_context_hex"])
+                self.assertEqual(r["history_slot_start"], len(bytes.fromhex(r["prefix_hex"])))
+                self.assertEqual(r["history_slot_end"], r["history_slot_start"] + len(bytes.fromhex(r["history_slot_hex"])))
+                lengths.add(len(raw))
+            self.assertEqual(len(lengths), 1)
 
-    def test_unknown_is_explicit_and_not_answered(self):
+    def test_unsupported_is_explicit_unknown(self):
         rows = [r for r in build_corpus() if r["condition"] == "unsupported"]
         self.assertEqual(len(rows), 16)
-        self.assertTrue(all(r["outcome"] == "UNKNOWN_UNSUPPORTED" and r["answer"] is None and r["reason"] for r in rows))
+        self.assertTrue(all(r["outcome"] == "UNKNOWN_UNSUPPORTED" and r["answer"] is None and r["reason"] == "unsupported_field_without_source_evidence" for r in rows))
 
-    def test_position_pair_changes_only_cue_offset(self):
-        rows = [r for r in build_corpus() if r["kind"] == "position_control"]
-        self.assertEqual(len(rows), 2)
-        a, b = rows
-        for key in a:
-            if key != "current_cue_offset":
-                self.assertEqual(a[key], b[key], key)
-        self.assertNotEqual(a["current_cue_offset"], b["current_cue_offset"])
+    def test_position_pair_only_changes_cue_offset(self):
+        a, b = [r for r in build_corpus() if r["kind"] == "position_control"]
+        self.assertEqual({k for k in a if a[k] != b[k]}, {"current_cue_offset"})
 
-    def test_independent_auditor_accepts_frozen_corpus(self):
+    def test_independent_auditor_accepts_corpus(self):
         result = audit_corpus(build_corpus())
-        self.assertEqual(result["result"], "PASS")
-        self.assertEqual(result["matched_rows"], 48)
-        self.assertEqual(result["position_rows"], 2)
-        self.assertEqual(result["errors"], [])
+        self.assertEqual((result["result"], result["matched_rows"], result["position_rows"], result["errors"]), ("PASS", 48, 2, []))
 
-    def test_eight_corruptions_rejected(self):
-        rows = build_corpus()
-        mutations = (
-            "final_truth", "baseline_identity", "common_byte", "cue_offset",
-            "lineage", "observed_inference", "unknown_answer", "unsupported_omitted",
-        )
-        for mutation in mutations:
-            with self.subTest(mutation=mutation):
-                altered = apply_mutation(rows, mutation)
-                self.assertNotEqual(audit_corpus(altered)["result"], "PASS", mutation)
+    def test_all_eight_mutations_rejected(self):
+        for name in ("final_truth", "baseline_identity", "common_byte", "cue_offset", "lineage", "observed_inference", "unknown_answer", "unsupported_omitted"):
+            with self.subTest(mutation=name):
+                self.assertEqual(audit_corpus(apply_mutation(build_corpus(), name))["result"], "FAIL")
 
+def apply_mutation(rows, name):
+    out = copy.deepcopy(rows)
+    target = next(r for r in out if r["kind"] == "matched")
+    if name == "final_truth": target["final_truth"] = "forged"
+    elif name == "baseline_identity": target["baseline_source_id"] = "forged/source"
+    elif name == "common_byte": target["prefix_hex"] = ("00" if target["prefix_hex"][:2] != "00" else "01") + target["prefix_hex"][2:]
+    elif name == "cue_offset": target["current_cue_offset"] += 1
+    elif name == "lineage": target["lineage"] = []
+    elif name == "observed_inference":
+        target = next(r for r in out if r["arm"] == "SOURCE_LINKED_DELTA" and r["depth"] > 0)
+        target["delta_evidence"] = "OBSERVED"
+    elif name == "unknown_answer":
+        target = next(r for r in out if r["condition"] == "unsupported")
+        target["answer"] = "guessed"
+    elif name == "unsupported_omitted": out = [r for r in out if r["condition"] != "unsupported"]
+    else: raise ValueError(name)
+    return out
 
 if __name__ == "__main__":
     unittest.main()
