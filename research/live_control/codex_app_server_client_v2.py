@@ -240,6 +240,9 @@ class CodexAppServerClient:
                 self._reader.join(timeout=timeout)
             if self._reader.is_alive():
                 raise TimeoutError("app-server reader close timed out")
+        self._stderr_reader.join(timeout=timeout)
+        if self._stderr_reader.is_alive():
+            raise TimeoutError("app-server stderr close timed out")
         # Custom process factories own their stream wrappers and may provide
         # lightweight proxies without the IOBase ``closed``/``close`` API.
         if owns_process_group:
@@ -247,9 +250,6 @@ class CodexAppServerClient:
                 stream = getattr(self.process, stream_name, None)
                 if stream is not None and not stream.closed:
                     stream.close()
-        self._stderr_reader.join(timeout=timeout)
-        if self._stderr_reader.is_alive():
-            raise TimeoutError("app-server stderr close timed out")
         if self._journal is not None and not self._journal.closed:
             if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
                 raise TimeoutError("app-server journal close timed out")
