@@ -1,0 +1,25 @@
+{
+  "changes": [
+    {
+      "change": "trailing blank line normalization only",
+      "executed_or_pre_normalization_sha256": "fa0ecff95a1e671225847fb80e9bb954374c2fa77128d4ccf405e63eaaad5135",
+      "path": "README.md",
+      "published_sha256": "208af8d1f5a72e5295d999387c1dc892b445edcbc4458ffef3c76e1c3b4d2f95"
+    },
+    {
+      "change": "trailing blank line normalization only",
+      "executed_or_pre_normalization_sha256": "34cc478beb62715bd431670e09bec62156544ed91cf775dd0d9111e54a3fdb7f",
+      "path": "run_candidate.py",
+      "published_sha256": "353bdb7cef5e8beb7693b16c645a86dfc140f0ab612589903517be1fbf782176",
+      "python_non_whitespace_tokens_unchanged": true
+    },
+    {
+      "change": "trailing blank line normalization only",
+      "executed_or_pre_normalization_sha256": "8f23ccb9001e904682437e1842141ca052a71f817f456c9a8e7c03331dfd4d87",
+      "path": "audit_raw.py",
+      "published_sha256": "3be5e90dade9f1e0b3a70619c2544e860ce24e2b40e84f5d4b4bbea789034f0f",
+      "python_non_whitespace_tokens_unchanged": true
+    }
+  ],
+  "note": "After candidate and audit containers exited, diff-check found extra blank EOF lines. Only terminal newline runs were normalized; no Python code token changed. No candidate or auditor was rerun. The earlier source hash is preserved for exact execution provenance."
+}

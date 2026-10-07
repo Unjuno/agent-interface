@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "adapter_did_not_return_receipt": true,
+    "callback_exception_escaped": false,
+    "callback_failed_on_frozen_check": false,
+    "fixture_hashes_match": true,
+    "no_runtime_finish_receipt_event": true,
+    "no_second_action": false,
+    "one_completed_core_action": false,
+    "only_one_checked_client_command": false,
+    "source_commit_matches_freeze": true,
+    "source_hashes_match": true,
+    "verified_empty_release": false
+  },
+  "disposition": "AUDIT_FAIL",
+  "fixture_hash_checks": {
+    "inputs/frame-068.png": true
+  },
+  "passed": false,
+  "schema": "compiled_cancel_receipt_failure_audit_v1",
+  "scientific_interpretation": "The synthetic callback exception escapes after one completed, released action without a typed adapter receipt.",
+  "scope": "synthetic adapter/core boundary; no GUI, game, Docker, model, or task allocation",
+  "source_hash_checks": {
+    "sources/research/integration/compiled_gui_bundle_57_20261004/a06-layout-b-cropocr/adapter.py": true,
+    "sources/runtime/core_v1/compiled_gui.py": true
+  },
+  "study": "compiled-cancel-receipt-failure-20261005-01"
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "agent-interface/local-native-check-v1",
+  "status": "FAIL",
+  "suites": [
+    {
+      "suite": "protocol",
+      "command": [
+        "C:\\Users\\WORKER\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\mcp-shutdown-venv312\\Scripts\\python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.integration_checks.test_delivered_capture",
+        "runtime.integration_checks.test_workload",
+        "runtime.integration_checks.test_host_timing",
+        "runtime.cli_v1.test_observe",
+        "runtime.selector_v1.test_selector",
+        "runtime.cli_v1.test_mcp_relay",
+        "runtime.cli_v1.test_mcp_server",
+        "runtime.cli_v1.test_mcp_clock",
+        "runtime.cli_v1.test_mcp_session",
+        "runtime.cli_v1.test_mcp_guarded",
+        "runtime.cli_v1.test_guarded_presentation",
+        "runtime.cli_v1.test_public_presentation",
+        "runtime.cli_v1.test_public_summary",
+        "runtime.cli_v1.test_post_dispatch_capture",
+        "runtime.cli_v1.test_cli",
+        "runtime.core_v1.test_contract",
+        "runtime.core_v1.test_compiled_gui",
+        "test_compiled_compatibility_v1",
+        "runtime.cli_v1.test_review",
+        "test_agent_review",
+        "test_receipt_references",
+        "test_native_exchange_v1",
+        "test_native_mcp_v1",
+        "test_native_allocation_v1",
+        "test_native_mcp_relay_v1",
+        "test_native_direct_task_v1",
+        "test_native_primary_review_v1",
+        "test_native_brief_review_v1",
+        "test_native_guarded_form_v1",
+        "test_guarded_source_dependencies_v1"
+      ],
+      "returncode": 1,
+      "duration_ns": 27609000000,
+      "logs": {
+        "stdout": {
+          "file": "protocol.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "protocol.stderr.log",
+          "sha256": "578d4312864d4cb92fe908b5d2c7954824036580c4a8781ab9a0a92572ac2c06"
+        }
+      }
+    },
+    {
+      "suite": "harness",
+      "command": [
+        "C:\\Users\\WORKER\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\mcp-shutdown-venv312\\Scripts\\python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.guarded_x11_v1.test_input_dependency",
+        "runtime.guarded_x11_v1.test_compiled",
+        "runtime.guarded_x11_v1.test_move",
+        "runtime.guarded_x11_v1.test_reference_lifetime",
+        "runtime.guarded_x11_v1.test_activation",
+        "runtime.guarded_x11_v1.test_deadline",
+        "runtime.guarded_x11_v1.test_history",
+        "runtime.backends.x11_v1.test_focus",
+        "runtime.cli_v1.test_x11_target_review",
+        "runtime.backends.x11_v1.test_mapping_boundary",
+        "runtime.backends.x11_v1.test_text_plan",
+        "runtime.backends.x11_v1.test_partial_execution",
+        "test_native_finish_after_v1",
+        "test_native_cleanup_v1",
+        "test_native_handle_bridge_v1",
+        "test_native_tail_v1",
+        "runtime.distribution_v2.test_distribution",
+        "runtime.guarded_x11_v1.test_archive",
+        "runtime.distribution_v2.test_compiled_archive"
+      ],
+      "returncode": 1,
+      "duration_ns": 34750000000,
+      "logs": {
+        "stdout": {
+          "file": "harness.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "harness.stderr.log",
+          "sha256": "e801ca0adf0f3c821795513a6832ccdba15aa93bcd40e11497f91bbb40880fe1"
+        }
+      }
+    }
+  ],
+  "scope": "contract tests; not a live GUI experiment or independent adoption audit",
+  "runner_sha256": "2203a185f2ba01ff1271c61f9f843efa180b0ec1192fbb195c9452fe0aa430ae"
+}

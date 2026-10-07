@@ -1,0 +1,17 @@
+[1/4] FROM docker.io/library/python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+  | resolve docker.io/library/python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+[1/4] CACHED
+[2/4] COPY research/live_control/requirements-native-mcp.txt /tmp/requirements-native-mcp.txt
+failed to calculate checksum of ref cc8e917f-d4bf-4dfc-8305-629560f662dc::saj6m8qiv6knkj1pqiby5q38k: "/research/live_control/requirements-native-mcp.txt": not found
+Dockerfile:5
+--------------------
+   3 |     FROM python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+   4 |     ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+   5 | >>> COPY research/live_control/requirements-native-mcp.txt /tmp/requirements-native-mcp.txt
+   6 |     RUN python -m pip install --no-cache-dir -r /tmp/requirements-native-mcp.txt Pillow==10.2.0 numpy==1.26.4 python-xlib==0.33
+   7 |     WORKDIR /src
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref cc8e917f-d4bf-4dfc-8305-629560f662dc::saj6m8qiv6knkj1pqiby5q38k: "/research/live_control/requirements-native-mcp.txt": not found
+
+エラー コード: E_FAIL
+このエラーが予期しないものである場合は、既存の問題を検索するか、https://github.com/microsoft/WSL/issues で新しい問題を提出することを検討してください。

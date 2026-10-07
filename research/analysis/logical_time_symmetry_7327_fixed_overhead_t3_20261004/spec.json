@@ -1,0 +1,14 @@
+{
+  "schema": "logical-time-fixed-overhead-v1",
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-FIXED-OVERHEAD-T3-20261004-01",
+  "factor": "2",
+  "time_fields": ["reference_period", "observation_period", "input_hold", "release_lag", "deadline", "lease", "startup_delay", "horizon"],
+  "event_tie_order": ["external_state", "observation"],
+  "mutation_controls": ["missing_scenario", "normalized_timestamp", "startup_transform", "first_unsafe_observation"],
+  "scenarios": [
+    {"id":"zero_startup_control","reference_period":"1","observation_period":"1","input_hold":"3","release_lag":"1/8","deadline":"3","lease":"4","startup_delay":"0","horizon":"3","events":[]},
+    {"id":"nonzero_startup_reachable_hazard","reference_period":"1","observation_period":"1","input_hold":"3","release_lag":"1/8","deadline":"3","lease":"4","startup_delay":"1/4","horizon":"3","events":[{"at":"1/5","state":"hazard"}]},
+    {"id":"nonzero_startup_quiet","reference_period":"1","observation_period":"1","input_hold":"3","release_lag":"1/8","deadline":"3","lease":"4","startup_delay":"1/4","horizon":"3","events":[]}
+  ],
+  "limits": {"real_clock":false,"gui":false,"game":false,"model":false,"physical_input":false,"safety":false}
+}

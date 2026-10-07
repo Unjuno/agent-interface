@@ -1,0 +1,2455 @@
+{
+  "baseline_schedule": {
+    "calibrations": {
+      "scale1": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "scale2": [
+        2,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      "translate5": [
+        1,
+        0,
+        0,
+        1,
+        5,
+        0
+      ]
+    },
+    "initial_state": "scale1"
+  },
+  "cases": [
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          10,
+          10
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "DIRECT_STABLE",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "d0",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          8,
+          8,
+          12,
+          12
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          10,
+          10
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "calibration_event": {
+        "refresh_to": "translate5"
+      },
+      "case_id": "DIRECT_TRANSLATION_REFRESH",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "d1",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          8,
+          8,
+          12,
+          12
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          5,
+          5
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "calibration_event": {
+        "refresh_to": "scale2"
+      },
+      "case_id": "DIRECT_UNIFORM_SCALE_REFRESH",
+      "edges": [
+        {
+          "bounds": [
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "d2",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          4,
+          4,
+          6,
+          6
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "presentation"
+        },
+        "point": [
+          14,
+          5
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "COMPOSE_MIXED_DPI_VALID_UPDATE",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "crop",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "presentation"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "client",
+          "source": {
+            "epoch": 7,
+            "frame": "presentation"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "client"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "dpi",
+          "source": {
+            "epoch": 7,
+            "frame": "client"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "monitor"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              100,
+              100
+            ],
+            [
+              20,
+              20
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "origin",
+          "source": {
+            "epoch": 7,
+            "frame": "monitor"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          4,
+          4,
+          6,
+          6
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 8,
+          "frame": "client"
+        },
+        "point": [
+          11,
+          10
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 9,
+      "case_id": "COMPOSE_EPOCH_7_8_9",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "e78",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 8,
+            "frame": "client"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "e89",
+          "source": {
+            "epoch": 8,
+            "frame": "client"
+          },
+          "target": {
+            "epoch": 9,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 9,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          10,
+          10,
+          10,
+          10
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          5,
+          5
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVERSE_SHEAR_PAIR_IDENTITY",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "shear-a",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "camera"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              -2,
+              -2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "shear-b",
+          "source": {
+            "epoch": 7,
+            "frame": "camera"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          4,
+          4,
+          6,
+          6
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "f1"
+        },
+        "point": [
+          2,
+          1
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "COMPOSE_NONCOMMUTING_ORDER",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "n1",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "f1"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "n2",
+          "source": {
+            "epoch": 7,
+            "frame": "f1"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "f2"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "n3",
+          "source": {
+            "epoch": 7,
+            "frame": "f2"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "COMMON_MODE_UNCERTAINTY_CONTROL",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "shared",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "action-frame"
+        },
+        "point": [
+          5,
+          5
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INDEPENDENT_ERROR_CONTROL",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "target-path",
+          "source": {
+            "epoch": 7,
+            "frame": "target-frame"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "action-path",
+          "source": {
+            "epoch": 7,
+            "frame": "action-frame"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "target-frame"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "target-frame"
+        },
+        "box": [
+          0,
+          0,
+          10,
+          10
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_STALE_EDGE",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "stale",
+          "source": {
+            "epoch": 6,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_MISSING_EDGE",
+      "edges": [],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_REVERSED_EDGE",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "reverse",
+          "source": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_DUPLICATE_PATH",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "dup-a",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "dup-b",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_UNIT",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "bad-unit",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "dp"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_DPI_CONTEXT",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v1",
+          "id": "bad-context",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "neighbor-B"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_IDENTITY_SWAP",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "id",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_NONAFFINE_REFLOW",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "aff",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "layout_model": "non_affine",
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          2,
+          2
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 9,
+      "binding_current": false,
+      "case_id": "INVALID_STALE_OBSERVATION_BINDING",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "fresh",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 9,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 9,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          4,
+          4
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "action-frame"
+        },
+        "point": [
+          10,
+          11
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_TARGET_BOUNDARY_UNCERTAINTY",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "target-id",
+          "source": {
+            "epoch": 7,
+            "frame": "target-frame"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        },
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "action-uncertain",
+          "source": {
+            "epoch": 7,
+            "frame": "action-frame"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "target-frame"
+          },
+          "box": [
+            90,
+            90,
+            92,
+            92
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "target-frame"
+        },
+        "box": [
+          10,
+          10,
+          10,
+          12
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "action": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "point": [
+          5,
+          5
+        ],
+        "target_identity": "target-A"
+      },
+      "action_error_options": [
+        [
+          0,
+          0
+        ]
+      ],
+      "admission_epoch": 7,
+      "case_id": "INVALID_FORBIDDEN_REGION_OVERLAP",
+      "edges": [
+        {
+          "bounds": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "context": "dpi-v2",
+          "id": "forbidden-id",
+          "source": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "target": {
+            "epoch": 7,
+            "frame": "backend"
+          },
+          "unit": "px"
+        }
+      ],
+      "forbidden": [
+        {
+          "at": {
+            "epoch": 7,
+            "frame": "capture"
+          },
+          "box": [
+            5,
+            5,
+            5,
+            5
+          ]
+        }
+      ],
+      "input": {
+        "context": "dpi-v2",
+        "epoch": 7,
+        "frame": "backend"
+      },
+      "observation_epoch": 7,
+      "required_context": "dpi-v2",
+      "required_unit": "px",
+      "target": {
+        "at": {
+          "epoch": 7,
+          "frame": "capture"
+        },
+        "box": [
+          0,
+          0,
+          10,
+          10
+        ],
+        "identity": "target-A"
+      },
+      "target_error_options": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "issue": 8201,
+  "required_input_context": "dpi-v2",
+  "required_unit": "px",
+  "schema": "epoch-transform-a02-public-v1"
+}

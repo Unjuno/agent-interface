@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-v39-cancel-release-fix-a01/research/doom/map01_v39_inherited_release_v3_a01_20261005/probe.py", line 218, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/agent-interface-v39-cancel-release-fix-a01/research/doom/map01_v39_inherited_release_v3_a01_20261005/probe.py", line 203, in main
+    control = run_case(False)
+              ^^^^^^^^^^^^^^^
+  File "/private/tmp/agent-interface-v39-cancel-release-fix-a01/research/doom/map01_v39_inherited_release_v3_a01_20261005/probe.py", line 81, in run_case
+    inherited_owner = next(cls for cls in ComposedBackend.__mro__[ComposedBackend.__mro__.index(release_owner) + 1:]
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration

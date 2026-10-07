@@ -394,7 +394,9 @@ pending image after verified release; one explicit `primary.observe()` on the
 same live connection returned the task-bound completion cue. Save was issued
 once. Review the pending image as incomplete, then review the new image before
 claiming visible completion. Choose an observation budget and stopping rule for
-the task; if its cue is still absent, retain an unresolved outcome rather than
+the task; the optional `maxExplicitObservations` caller setting enforces a hard
+count across convenience and lower-level observation calls. If the cue is still
+absent when the budget is exhausted, retain an unresolved outcome rather than
 repeating input or observing indefinitely. This authored single case establishes
 the continuation mechanics, not a general semantic detector or a wait default.
 
@@ -556,6 +558,15 @@ errors receive `command_error`, current state and replay_allowed=false; inspect
 the original files instead of repeating a consumed command. Stream output
 failure stops accepting commands and waits for the same pending promise before
 closing the original transport. It does not prove that input was cancelled.
+
+Raw Buffer input is strict streaming UTF-8: malformed bytes or an incomplete
+sequence at EOF stop intake before replacement text can become a command.
+Already accepted work is still observed once before original transport cleanup.
+A valid prefix in the same corrupted raw chunk may also be refused. Decoded
+string input retains existing text semantics; lost upstream bytes cannot be
+validated. This adds no line-size cap or hard I/O deadline. See the
+[original UTF-8 repair evidence](../../research/integration/primary_utf8_57_20261003_45e9/README.md)
+and [current composition checks](../results/primary_utf8_rescue_ba95/README.md).
 
 Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
 and then end stdin. EOF waits for the outstanding command and closes only the

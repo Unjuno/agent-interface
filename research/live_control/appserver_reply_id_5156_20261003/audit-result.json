@@ -1,0 +1,62 @@
+{
+  "native_rows": 12,
+  "numeric_returns": [
+    2,
+    2
+  ],
+  "boolean_returns": [
+    1,
+    0
+  ],
+  "baseline_decision": "FAIL_BOOLEAN_ID_ALIAS",
+  "candidate_decision": "PASS_BOOLEAN_ID_FILTER",
+  "schema": "native-rpc-boolean-audit-v1",
+  "integrity": "PASS",
+  "controls": [
+    {
+      "name": "literal_id",
+      "refused": true,
+      "reason": "literal reply ID"
+    },
+    {
+      "name": "candidate_return",
+      "refused": true,
+      "reason": "caller closed result"
+    },
+    {
+      "name": "float_result",
+      "refused": true,
+      "reason": "caller numeric/alias result"
+    },
+    {
+      "name": "sent_id",
+      "refused": true,
+      "reason": "typed journal correspondence"
+    },
+    {
+      "name": "wire_id",
+      "refused": true,
+      "reason": "actual sent wire"
+    },
+    {
+      "name": "residual",
+      "refused": true,
+      "reason": "complete typed residual cache"
+    },
+    {
+      "name": "terminal",
+      "refused": true,
+      "reason": "original EOF terminal"
+    },
+    {
+      "name": "missing",
+      "refused": true,
+      "reason": "six original native cells"
+    }
+  ],
+  "original_sha256": {
+    "baseline-raw.json": "f27267dd516d79809f7bb541be9807fe877caabe88c13a217e6d6356c90cafeb",
+    "candidate-raw.json": "f24dff4a283b96ce6c0e59b38adc7d5329c43c41e1b81ee77484d733738e96a9"
+  },
+  "scope": "independent retained JSON reducer; no client/peer/source-arm execution or authenticated provider/task evidence"
+}

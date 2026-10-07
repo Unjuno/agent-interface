@@ -1,0 +1,286 @@
+"""Re-audit the retained weapon/ammo sample without trusting SAVED_AUDIT.json."""
+
+from __future__ import annotations
+
+import json
+import hashlib
+import math
+import re
+import sys
+from pathlib import Path
+from typing import Any
+
+EXPECTED_ACTION_WIDTH = 9
+EXPECTED_FILES_MANIFEST_SHA256 = "ce54ec199bd9e3940b9b6b366670afb2372ba0d07dba61207d1a19a5b2c6c996"
+PINNED_INPUTS = (
+    "00-coast/RESULT.json",
+    "00-coast/FINAL.json",
+    "00-coast/events.jsonl",
+    "00-coast/scorer-last-action.jsonl",
+    "00-coast/runtime/001.png",
+)
+
+
+def raw_inputs_match_pinned_manifest(root: Path) -> bool:
+    manifest_path = root / "FILES.json"
+    raw = manifest_path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != EXPECTED_FILES_MANIFEST_SHA256:
+        return False
+    manifest = json.loads(raw)
+    members = manifest.get("members", {})
+    for name in PINNED_INPUTS:
+        expected = members.get(name)
+        path = root / name
+        if not isinstance(expected, dict) or not path.is_file():
+            return False
+        payload = path.read_bytes()
+        if len(payload) != expected.get("bytes") or hashlib.sha256(payload).hexdigest() != expected.get("sha256"):
+            return False
+    return True
+
+
+def read_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+
+def finite_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+
+
+def neutral_action(row: dict[str, Any]) -> bool:
+    value = row.get("action")
+    buttons = row.get("buttons")
+    return (
+        isinstance(buttons, list)
+        and len(buttons) == EXPECTED_ACTION_WIDTH
+        and all(isinstance(button, str) for button in buttons)
+        and len(set(buttons)) == EXPECTED_ACTION_WIDTH
+        and isinstance(value, list)
+        and len(value) == len(buttons)
+        and all(finite_number(item) and item == 0 for item in value)
+    )
+
+
+def coherent_sample(row: dict[str, Any]) -> bool:
+    variables = row.get("variables")
+    return (
+        isinstance(row.get("sample_started_ns"), int)
+        and isinstance(row.get("sample_returned_ns"), int)
+        and row["sample_started_ns"] <= row["sample_returned_ns"]
+        and row.get("tic_before") == row.get("tic_after")
+        and isinstance(variables, dict)
+        and all(finite_number(value) for value in variables.values())
+    )
+
+
+def audit(root: Path, *, verify_raw_integrity: bool = True) -> dict[str, Any]:
+    # The committed package stores 00-coast directly. Accept the pre-publication
+    # runner layout too, so this audit can be run against either retained form.
+    cell = root / "00-coast"
+    if not cell.is_dir():
+        cell = root / "sample-pair-04" / "00-coast"
+
+    checks: dict[str, bool] = {}
+    checks["raw_inputs_match_pinned_manifest"] = (
+        raw_inputs_match_pinned_manifest(root) if verify_raw_integrity else True
+    )
+    if not checks["raw_inputs_match_pinned_manifest"]:
+        return {"disposition": "HOLD_RAW_INPUT_INTEGRITY_MISMATCH", "checks": checks}
+
+    result = read_json(cell / "RESULT.json")
+    final = read_json(cell / "FINAL.json")
+    events = read_jsonl(cell / "events.jsonl")
+    rows = read_jsonl(cell / "scorer-last-action.jsonl")
+    window_start = result["window_start_ns"]
+    window_end = result["window_end_ns"]
+    selected = [
+        row
+        for row in rows
+        if row["coherent_tic"]
+        and window_start <= row["sample_started_ns"]
+        and row["sample_returned_ns"] <= window_end
+    ]
+
+    initial_matches = [
+        event
+        for event in events
+        if event.get("event") == "typed_observation" and event.get("id") == "initial"
+    ]
+    checks["one_initial_observation"] = len(initial_matches) == 1
+    if not checks["one_initial_observation"]:
+        return {"disposition": "HOLD_INVALID_INITIAL_OBSERVATION", "checks": checks}
+    initial = initial_matches[0]
+
+    ordinary_matches = [
+        event
+        for event in events
+        if event.get("event") == "observation" and event.get("id") == "initial"
+    ]
+    checks["one_matching_screen_observation"] = len(ordinary_matches) == 1
+    if not checks["one_matching_screen_observation"]:
+        return {"disposition": "HOLD_INVALID_SCREEN_OBSERVATION", "checks": checks}
+    ordinary = ordinary_matches[0]
+
+    checks["sample_window_nonempty"] = bool(selected)
+    if not selected:
+        return {"disposition": "HOLD_NO_COHERENT_WINDOW_SAMPLES", "checks": checks}
+
+    finite_samples = all(
+        row["sample_started_ns"] <= row["sample_returned_ns"]
+        and row["tic_before"] == row["tic_after"]
+        and isinstance(row["variables"], dict)
+        and all(finite_number(value) for value in row["variables"].values())
+        for row in selected
+    )
+    checks["coherent_samples_finite_and_ordered"] = finite_samples
+    checks["window_samples_neutral"] = all(neutral_action(row) for row in selected)
+
+    binding = initial.get("pointer_binding")
+    signals = initial.get("signals", {})
+    expected_signal_ids = {"health": "health", "ammo": "ammo"}
+    image_name = str(ordinary.get("image", "")).replace("\\", "/").rsplit("/", 1)[-1]
+    checks["capture_binding_well_formed"] = (
+        isinstance(binding, dict)
+        and isinstance(binding.get("focus"), int)
+        and isinstance(binding.get("surface"), int)
+        and isinstance(binding.get("geometry"), list)
+        and len(binding["geometry"]) == 4
+        and all(isinstance(value, int) and value > 0 for value in binding["geometry"])
+    )
+    checks["initial_frame_digest_well_formed"] = bool(
+        re.fullmatch(r"[0-9a-f]{64}", str(initial.get("frame_rgb_sha256", "")))
+    )
+    checks["typed_capture_matches_screen_observation"] = (
+        checks["capture_binding_well_formed"]
+        and initial.get("schema") == "doom-typed-observation-v1"
+        and initial.get("step") == ordinary.get("step")
+        and initial.get("sequence") == ordinary.get("sequence")
+        and initial.get("capture_ns") == ordinary.get("capture_ns")
+        and initial.get("pointer_binding") == ordinary.get("pointer_binding")
+        and initial.get("frame_rgb_sha256") == ordinary.get("frame_rgb_sha256")
+        and initial.get("typed_ready_ns") == ordinary.get("typed_ready_ns")
+        and ordinary.get("exact") is True
+        and ordinary.get("input_focus_before") == binding.get("focus")
+        and ordinary.get("input_focus_after") == binding.get("focus")
+        and ordinary.get("focus_samples_match") is True
+        and ordinary.get("pointer_context_before") == binding
+        and ordinary.get("pointer_context_after") == binding
+        and image_name
+        and (cell / "runtime" / image_name).is_file()
+    )
+    signal_values: dict[str, float] = {}
+    signal_meta_ok = checks["capture_binding_well_formed"]
+    capture_digest: str | None = None
+    for name, signal_id in expected_signal_ids.items():
+        signal = signals.get(name, {})
+        valid = (
+            signal.get("status") == "observed"
+            and signal.get("format") == "observable-signal-v1"
+            and signal.get("signal_id") == signal_id
+            and finite_number(signal.get("value"))
+            and signal.get("capture_ns") == initial.get("capture_ns")
+            and signal.get("sequence") == initial.get("sequence")
+            and signal.get("binding") == binding
+            and bool(re.fullmatch(r"[0-9a-f]{64}", str(signal.get("wad_sha256", ""))))
+        )
+        signal_meta_ok = signal_meta_ok and valid
+        if valid:
+            signal_values[name] = float(signal["value"])
+            digest = signal["wad_sha256"]
+            if capture_digest is None:
+                capture_digest = digest
+            else:
+                signal_meta_ok = signal_meta_ok and digest == capture_digest
+    checks["HUD_signals_validly_bound_to_initial_capture"] = signal_meta_ok
+
+    max_hud_api_offset_ns = window_start - initial["capture_ns"]
+    coherent_rows = [row for row in rows if row.get("coherent_tic")]
+    checks["api_timeline_brackets_hud_capture"] = (
+        any(row.get("sample_returned_ns", -1) <= initial["capture_ns"] for row in coherent_rows)
+        and any(row.get("sample_started_ns", -1) >= initial["capture_ns"] for row in coherent_rows)
+    )
+    if not checks["api_timeline_brackets_hud_capture"]:
+        return {"disposition": "HOLD_API_TIMELINE_DOES_NOT_BRACKET_CAPTURE", "checks": checks}
+    prewindow_rows = [
+        row
+        for row in rows
+        if row.get("coherent_tic")
+        and initial["capture_ns"] <= row.get("sample_started_ns", -1)
+        and row.get("sample_started_ns", -1) <= row.get("sample_returned_ns", -1)
+        and row.get("sample_returned_ns", -1) <= window_start
+    ]
+    checks["prewindow_comparison_sample_exists"] = bool(prewindow_rows) and max_hud_api_offset_ns > 0
+    if not checks["prewindow_comparison_sample_exists"]:
+        return {"disposition": "HOLD_NO_PREWINDOW_COMPARISON_SAMPLE", "checks": checks}
+    near = min(prewindow_rows, key=lambda row: abs(row["sample_returned_ns"] - initial["capture_ns"]))
+    checks["comparison_sample_finite_and_ordered"] = coherent_sample(near)
+    comparison_offset_ns = near["sample_returned_ns"] - initial["capture_ns"]
+    checks["comparison_sample_neutral"] = neutral_action(near)
+    checks["comparison_offset_bounded_by_prefire_interval"] = (
+        0 <= comparison_offset_ns <= max_hud_api_offset_ns
+    )
+    variables = near["variables"]
+    selected_weapon = variables.get("SELECTED_WEAPON")
+    selected_ammo = variables.get("SELECTED_WEAPON_AMMO")
+    health_api = variables.get("HEALTH")
+    checks["selected_weapon_and_ammo_well_formed"] = (
+        finite_number(selected_weapon)
+        and int(selected_weapon) == selected_weapon
+        and 0 <= int(selected_weapon) <= 9
+        and finite_number(selected_ammo)
+        and finite_number(health_api)
+    )
+    slot_ammo = None
+    if checks["selected_weapon_and_ammo_well_formed"]:
+        slot_ammo = variables.get(f"AMMO{int(selected_weapon)}")
+    checks["selected_ammo_matches_selected_slot"] = (
+        finite_number(slot_ammo)
+        and finite_number(selected_ammo)
+        and math.isclose(float(slot_ammo), float(selected_ammo), rel_tol=0, abs_tol=1e-6)
+    )
+
+    differences: dict[str, float] = {}
+    if len(signal_values) == 2 and checks["selected_weapon_and_ammo_well_formed"]:
+        differences = {
+            "health": float(health_api) - signal_values["health"],
+            "ammo": float(selected_ammo) - signal_values["ammo"],
+        }
+    checks["HUD_API_values_agree"] = (
+        len(differences) == 2 and all(abs(value) <= 1e-6 for value in differences.values())
+    )
+    checks["clean_child_and_reader_exit"] = result.get("child_exit") == 0 and result.get("reader_alive") is False
+    checks["no_external_rescue"] = final.get("external_rescue") is False
+
+    passed = all(checks.values())
+    return {
+        "disposition": "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED" if passed else "HOLD_AUDIT_CHECK_FAILED",
+        "checks": checks,
+        "sample_count": len(selected),
+        "all_neutral": checks["window_samples_neutral"],
+        "selected_weapon": selected_weapon,
+        "selected_weapon_ammo": selected_ammo,
+        "matching_slot_ammo": slot_ammo,
+        "initial_hud_values": signal_values,
+        "hud_api_differences": differences,
+        "nearest_api_offset_ns": near["sample_returned_ns"] - initial["capture_ns"],
+        "maximum_hud_api_offset_ns": max_hud_api_offset_ns,
+        "limits": "Selected-fixture binding only; the retained nearest sample offset is observed, but no maximum sample age within the timeline bracket is established. Not simultaneous oracle, damage exposure, recovery efficacy, or controller-visible trust/adoption evidence.",
+    }
+
+
+def main() -> int:
+    root = Path(__file__).resolve().parent
+    try:
+        report = audit(root)
+    except (KeyError, TypeError, ValueError, OSError, json.JSONDecodeError) as exc:
+        report = {"disposition": "HOLD_MALFORMED_OR_MISSING_EVIDENCE", "error": str(exc)}
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["disposition"] == "PASS_HUD_WEAPON_AMMO_BINDING_SCOPED" else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

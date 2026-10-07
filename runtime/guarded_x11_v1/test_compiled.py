@@ -78,14 +78,16 @@ class CompiledX11Tests(unittest.TestCase):
                 self.assertEqual(len([n for n,v in b.saved if n.endswith('-receipt.json')]),1)
                 self.assertFalse(any(n.endswith('-exception.json') for n,v in b.saved))
 
-    def test_untyped_capture_error_still_propagates_and_retains_exception(self):
-        from runtime.backends.x11_v1.backend import X11BackendError
-        b=Bridge();b.observe=lambda: (_ for _ in ()).throw(X11BackendError('native artifact identity mismatch'))
-        with self.assertRaisesRegex(X11BackendError,'artifact identity mismatch'):
-            run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+    def test_untyped_capture_error_returns_typed_failure_and_retains_exception(self):
+        b=Bridge();b.observe=lambda: (_ for _ in ()).throw(RuntimeError('native artifact identity mismatch'))
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((result['outcome'],result['reason']),('RUNTIME_FAILED','observation_failed'))
+        self.assertEqual(result['completed_transitions'],0)
         self.assertEqual(b.inputs,[])
-        self.assertTrue(any(n.endswith('-exception.json') for n,v in b.saved))
-        self.assertFalse(any(n.endswith('-receipt.json') for n,v in b.saved))
+        errors=[v for n,v in b.saved if n.endswith('-exception.json')]
+        self.assertEqual(len(errors),1)
+        self.assertIn('native artifact identity mismatch',errors[0]['error'])
+        self.assertTrue(any(n.endswith('-receipt.json') for n,v in b.saved))
 
     def test_top_level_native_release_is_retained_on_pre_execution_refusal(self):
         b=Bridge()
@@ -214,12 +216,16 @@ class CompiledX11Tests(unittest.TestCase):
             return verify(p,n,i)
         r=run(b,spec(),bindings(),perceive=perceive,verify_effect=changed)
         self.assertEqual(r['reason'],'effect_unavailable'); self.assertEqual(len(b.inputs),2)
-    def test_callback_failure_retains_exception_without_input_or_retry(self):
+    def test_callback_failure_returns_typed_receipt_and_retains_exception(self):
         b=Bridge()
         def bad(n,i): raise RuntimeError('perception failed')
-        with self.assertRaisesRegex(RuntimeError,'perception failed'):
-            run(b,spec(),bindings(),perceive=bad,verify_effect=verify)
-        self.assertEqual(b.inputs,[]); self.assertTrue(any('exception' in n for n,r in b.saved))
+        result=run(b,spec(),bindings(),perceive=bad,verify_effect=verify)
+        self.assertEqual((result['outcome'],result['reason']),('RUNTIME_FAILED','observation_failed'))
+        self.assertEqual(result['completed_transitions'],0)
+        self.assertEqual(b.inputs,[])
+        errors=[r for n,r in b.saved if n.endswith('-exception.json')]
+        self.assertEqual(len(errors),1)
+        self.assertIn('perception failed',errors[0]['error'])
     def test_wrong_initial_surface_rejects_before_capture(self):
         b=Bridge(); s=spec(); s['surface']='other'
         with self.assertRaises(ValueError): run(b,s,bindings(),perceive=perceive,verify_effect=verify)

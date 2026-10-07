@@ -1,0 +1,65 @@
+{
+  "case": "accepted-before-byte-stop",
+  "argv": [
+    "C:\\Program Files\\nodejs\\node.EXE",
+    "<PRIVATE_PATH>\\work\\stdio-utf8-repair-45e9\\source\\runtime\\host_v1\\primary_stdio.mjs",
+    "--config",
+    "<PRIVATE_PATH>\\work\\stdio-utf8-repair-45e9\\public-first\\accepted-before-byte-stop\\config.json"
+  ],
+  "pid": 27320,
+  "started_utc": "2026-10-03T07:50:56.119Z",
+  "ended_utc": "2026-10-03T07:50:56.330Z",
+  "code": 2,
+  "signal": null,
+  "timed_out": false,
+  "errors": [],
+  "events": [
+    {
+      "kind": "initial-written",
+      "utc": "2026-10-03T07:50:56.195Z"
+    },
+    {
+      "kind": "original-fixture-request-observed",
+      "utc": "2026-10-03T07:50:56.253Z",
+      "request": {
+        "id": 1,
+        "tool": "interface_clock",
+        "arguments": {
+          "label": "original-held"
+        }
+      }
+    },
+    {
+      "kind": "malformed-written-before-release",
+      "utc": "2026-10-03T07:50:56.253Z"
+    },
+    {
+      "kind": "own-held-fixture-released",
+      "utc": "2026-10-03T07:50:56.284Z"
+    }
+  ],
+  "fixture_start": {
+    "pid": 22832,
+    "ppid": 27320,
+    "nonce": "8f6ac600-1072-4e22-a08a-4f2404590ac8",
+    "utc": "2026-10-03T07:50:56.237Z"
+  },
+  "fixture_exit": {
+    "pid": 22832,
+    "ppid": 27320,
+    "nonce": "8f6ac600-1072-4e22-a08a-4f2404590ac8",
+    "code": 0,
+    "requests": 1,
+    "request_bytes": 72,
+    "utc": "2026-10-03T07:50:56.308Z"
+  },
+  "host_exit": {
+    "code": 0,
+    "signal": null
+  },
+  "cleanup": null,
+  "cli_absent": true,
+  "fixture_absent": true,
+  "stdout_bytes": 584,
+  "stderr_bytes": 61
+}

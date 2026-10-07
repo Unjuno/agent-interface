@@ -1,0 +1,32 @@
+COMMAND: python -B -m unittest research.live_control.test_input_transition_owner_v3 -v
+test_button_up_has_no_state_query (research.live_control.test_input_transition_owner_v3.Tests.test_button_up_has_no_state_query) ... ok
+test_cancel_cleanup_before_dequeued_up_invalidates_receipt (research.live_control.test_input_transition_owner_v3.Tests.test_cancel_cleanup_before_dequeued_up_invalidates_receipt) ... ok
+test_cancelled_cleanup_is_not_ordinary (research.live_control.test_input_transition_owner_v3.Tests.test_cancelled_cleanup_is_not_ordinary) ... ok
+test_changed_parent_release_contract_fails_closed (research.live_control.test_input_transition_owner_v3.Tests.test_changed_parent_release_contract_fails_closed) ... ok
+test_expired_cleanup_is_not_ordinary (research.live_control.test_input_transition_owner_v3.Tests.test_expired_cleanup_is_not_ordinary) ... ok
+test_focus_invalid_cleanup_is_not_ordinary (research.live_control.test_input_transition_owner_v3.Tests.test_focus_invalid_cleanup_is_not_ordinary) ... ok
+test_monotonic_regression_fails_closed (research.live_control.test_input_transition_owner_v3.Tests.test_monotonic_regression_fails_closed) ... ok
+test_non_release_delegates_and_decorates (research.live_control.test_input_transition_owner_v3.Tests.test_non_release_delegates_and_decorates) ... ok
+test_observed_expiry_cleanup_prunes_old_markers_before_next_admission (research.live_control.test_input_transition_owner_v3.Tests.test_observed_expiry_cleanup_prunes_old_markers_before_next_admission) ... ok
+test_ordinary_up_has_only_inner_up_and_valid_receipt (research.live_control.test_input_transition_owner_v3.Tests.test_ordinary_up_has_only_inner_up_and_valid_receipt) ... ok
+test_owner_release_discards_strong_admission_reference (research.live_control.test_input_transition_owner_v3.Tests.test_owner_release_discards_strong_admission_reference) ... ok
+test_prior_lease_cleanup_does_not_invalidate_new_admission (research.live_control.test_input_transition_owner_v3.Tests.test_prior_lease_cleanup_does_not_invalidate_new_admission) ... ok
+test_reused_lease_id_cannot_match_another_lease_admission (research.live_control.test_input_transition_owner_v3.Tests.test_reused_lease_id_cannot_match_another_lease_admission) ... ok
+test_successful_release_prunes_admission_markers_for_lease (research.live_control.test_input_transition_owner_v3.Tests.test_successful_release_prunes_admission_markers_for_lease) ... ok
+test_unmatched_up_cannot_claim_ordinary_release (research.live_control.test_input_transition_owner_v3.Tests.test_unmatched_up_cannot_claim_ordinary_release) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.003s
+
+OK
+COMMAND: python -B -m unittest research.live_control.test_input_transition_owner_v3_owner_queue -v
+test_cancel_cleanup_before_up_dequeue_is_not_verified_transition (research.live_control.test_input_transition_owner_v3_owner_queue.RealOwnerQueueInterleavingTests.test_cancel_cleanup_before_up_dequeue_is_not_verified_transition) ... ok
+test_different_deadline_prior_cleanup_preserves_new_admission_up (research.live_control.test_input_transition_owner_v3_owner_queue.RealOwnerQueueInterleavingTests.test_different_deadline_prior_cleanup_preserves_new_admission_up) ... ok
+test_expiry_cleanup_before_up_dequeue_is_not_verified_transition (research.live_control.test_input_transition_owner_v3_owner_queue.RealOwnerQueueInterleavingTests.test_expiry_cleanup_before_up_dequeue_is_not_verified_transition) ... ok
+test_observed_async_cleanup_is_pruned_before_next_admission (research.live_control.test_input_transition_owner_v3_owner_queue.RealOwnerQueueInterleavingTests.test_observed_async_cleanup_is_pruned_before_next_admission) ... ok
+test_same_deadline_prior_cleanup_does_not_misclassify_new_admission_up (research.live_control.test_input_transition_owner_v3_owner_queue.RealOwnerQueueInterleavingTests.test_same_deadline_prior_cleanup_does_not_misclassify_new_admission_up) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.052s
+
+OK

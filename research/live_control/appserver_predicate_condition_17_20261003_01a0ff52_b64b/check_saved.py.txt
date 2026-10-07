@@ -1,0 +1,478 @@
+"""Independent saved-data checker. Never imports or executes experiment sources.
+
+Usage: check_saved.py ROOT [--source-root DIR] [--source-manifest FILE]
+Or pass '-' and a strict JSON object on stdin containing root, optional
+source_root and optional source_sha256. A manifest supplies a source_sha256
+map (or the map itself) for the five literal source filenames below.
+Only saved files/source bytes are read. Results are emitted on stdout.
+The manifest is an asserted expected identity, not proof of execution custody.
+"""
+import argparse
+import hashlib
+import json
+import math
+import sys
+from pathlib import Path
+
+
+REVIEWED = {
+    'baseline.py': '6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e',
+    'candidate.py': 'c05855b2c1129a67789f236d194fa5ae5e1929e72f7bd5a7acb936ffdd766569',
+    'driver.py': '628a8901ef3ef5fe21debfbfc286027cfbd2b88ab0b6a3bcf7ed14e0c2d7f06c',
+    'peer.py': 'ec0e6dfb01d04fc1240f95ee477791ca15164366932b1776f3e9018c30e5a157',
+    'collect.py': 'bdfe3a1fbf2a66a0b87120bfeeac6722081834adea49a0bf10c6ff9acf428e40',
+}
+CELLS = [('baseline', 'healthy'), ('candidate', 'healthy'),
+         ('baseline', 'held'), ('candidate', 'held')]
+NOTICE = {'method': 'fixture/notice', 'params': {'token': 'condition-C01'}}
+REQUEST = {'method': 'turn/interrupt', 'id': 1,
+           'params': {'threadId': 'fixture-thread', 'turnId': 'fixture-turn'}}
+ACK = {'fixture': 'interrupt-ack', 'token': 'condition-C01'}
+RESPONSE = {'id': 1, 'result': ACK}
+MAX_FILE_BYTES = 2 * 1024 * 1024
+
+
+class Rejected(ValueError):
+    pass
+
+
+def require(condition, reason):
+    if not condition:
+        raise Rejected(reason)
+
+
+def integer(value, label, minimum=0):
+    require(type(value) is int and value >= minimum, label + ': integer required')
+    return value
+
+
+def number(value, label):
+    require(type(value) in (int, float) and math.isfinite(value),
+            label + ': finite real required')
+    return value
+
+
+def equal(left, right):
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return left.keys() == right.keys() and all(equal(left[k], right[k]) for k in left)
+    if type(left) is list:
+        return len(left) == len(right) and all(equal(a, b) for a, b in zip(left, right))
+    return left == right
+
+
+def same(left, right, label):
+    require(equal(left, right), label + ': typed equality mismatch')
+
+
+def pairs(items):
+    value = {}
+    for key, item in items:
+        require(key not in value, 'duplicate JSON key: ' + key)
+        value[key] = item
+    return value
+
+
+def constant(value):
+    raise Rejected('nonfinite JSON constant: ' + value)
+
+
+def finite_tree(value):
+    if type(value) is float:
+        require(math.isfinite(value), 'nonfinite JSON float')
+    elif type(value) is dict:
+        for item in value.values():
+            finite_tree(item)
+    elif type(value) is list:
+        for item in value:
+            finite_tree(item)
+
+
+def parse(raw, label):
+    try:
+        value = json.loads(raw.decode('utf-8') if type(raw) is bytes else raw,
+                           object_pairs_hook=pairs, parse_constant=constant)
+        finite_tree(value)
+        return value
+    except (UnicodeError, json.JSONDecodeError, RecursionError) as exc:
+        raise Rejected(label + ': malformed JSON: ' + str(exc)) from exc
+
+
+def raw_file(path):
+    require(path.is_file(), 'missing saved file: ' + str(path))
+    require(path.stat().st_size <= MAX_FILE_BYTES, 'saved file cap: ' + str(path))
+    return path.read_bytes()
+
+
+def document(path):
+    value = parse(raw_file(path), str(path))
+    require(type(value) is dict, str(path) + ': object required')
+    return value
+
+
+def lines(path):
+    raw = raw_file(path)
+    require(raw.endswith(b'\n'), str(path) + ': missing final newline')
+    rows = []
+    for i, line in enumerate(raw.splitlines(), 1):
+        require(bool(line.strip()), str(path) + ': blank JSONL row')
+        value = parse(line, str(path) + ':' + str(i))
+        require(type(value) is dict, str(path) + ': nonobject JSONL row')
+        rows.append(value)
+    require(bool(rows), str(path) + ': empty JSONL')
+    return rows
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def wire(message):
+    return json.dumps(message, separators=(',', ':')) + '\n'
+
+
+def events(rows, label):
+    previous = -1
+    for i, row in enumerate(rows, 1):
+        same(row.get('seq'), i, label + ': sequence')
+        now = integer(row.get('ns'), label + ': ns', 1)
+        require(now >= previous, label + ': reversed clock')
+        require(type(row.get('event')) is str, label + ': event string required')
+        previous = now
+
+
+def one(rows, name):
+    selected = [r for r in rows if r['event'] == name]
+    require(len(selected) == 1, 'expected exactly one event: ' + name)
+    return selected[0]
+
+
+def at(rows, name):
+    return one(rows, name)['ns']
+
+
+def frame(rows, function, filename, line=None, client=False, condition=False):
+    require(type(rows) is list, 'frame list required')
+    for row in rows:
+        require(type(row) is dict, 'frame object required')
+        integer(row.get('line'), 'frame line', 1)
+        require(type(row.get('file')) is str and row['file'].startswith('/'), 'frame path')
+        require(type(row.get('function')) is str, 'frame function')
+        require(type(row.get('self_is_client')) is bool, 'frame client identity type')
+        require(type(row.get('self_is_shared_condition')) is bool, 'frame condition identity type')
+    matches = [r for r in rows if r['function'] == function
+               and (r['file'] == filename if filename.startswith('/')
+                    else Path(r['file']).name == filename)
+               and (line is None or r['line'] == line)
+               and r['self_is_client'] is client
+               and r['self_is_shared_condition'] is condition]
+    require(len(matches) == 1, 'missing/ambiguous frame: ' + function + ':' + filename)
+    return matches[0]
+
+
+def request_frame(rows, arm):
+    row = frame(rows, 'request', '/src/' + arm + '.py', 76, client=True)
+    same(row.get('identifier'), 1, 'request frame ID')
+    same(row.get('method'), 'turn/interrupt', 'request frame method')
+    same(row.get('timeout'), .05, 'request frame timeout')
+    deadline = number(row.get('deadline'), 'request frame deadline')
+    require(type(row['deadline']) is float, 'actual request deadline float type')
+    require(deadline > 0, 'request deadline positive')
+    remaining = number(row.get('remaining'), 'request frame remaining')
+    require(type(row['remaining']) is float, 'actual request remaining float type')
+    require(0 < remaining <= .05, 'initial remaining positive and <= timeout')
+    frame(rows, 'wait', 'threading.py', condition=True)
+    require(not any(r['function'] in ('_write', '_record') for r in rows),
+            'request blocked in write/journal rather than response condition')
+    return row
+
+
+def outcome(result, rows, name, expected, allow_timeout=False):
+    value = result['outcomes'][name]
+    require(type(value) is dict, 'outcome object')
+    integer(value.get('start_ns'), name + ' start', 1)
+    integer(value.get('end_ns'), name + ' end', 1)
+    same(value['start_ns'], at(rows, name + '_start'), name + ' start event')
+    require(value['end_ns'] >= value['start_ns'], name + ' reverse duration')
+    if value.get('kind') == 'return':
+        same(set(value), {'kind', 'value', 'start_ns', 'end_ns'}, name + ' keys')
+        same(value.get('value'), expected, name + ' exact return')
+        row = one(rows, name + '_return')
+        same(row.get('value'), expected, name + ' return event value')
+        require(not any(r['event'] == name + '_exception' for r in rows), name + ' both endpoints')
+    else:
+        require(allow_timeout, name + ': unexpected exception')
+        same(set(value), {'kind', 'type', 'message', 'start_ns', 'end_ns'}, name + ' keys')
+        same(value.get('kind'), 'exception', name + ' exception kind')
+        same(value.get('type'), 'TimeoutError', name + ' allowed timeout type')
+        same(value.get('message'), 'app-server request timed out: turn/interrupt', name + ' timeout text')
+        row = one(rows, name + '_exception')
+        same(row.get('type'), value['type'], name + ' exception event type')
+        same(row.get('message'), value['message'], name + ' exception event text')
+        require(not any(r['event'] == name + '_return' for r in rows), name + ' both endpoints')
+    same(value['end_ns'], row['ns'], name + ' end event')
+    return value
+
+
+def check_cell(root, arm, mode, expected_sources, receipt):
+    name = arm + '-' + mode
+    directory = root / name
+    result = document(directory / 'result.json')
+    rows = lines(directory / 'events.jsonl')
+    peer = lines(directory / 'peer-events.jsonl')
+    journal = lines(directory / 'journal.jsonl')
+    events(rows, name + ' driver'); events(peer, name + ' peer')
+    same(result.get('schema'), 'predicate-condition-native-cell-v1', 'cell schema')
+    same(result.get('case'), name, 'cell name'); same(result.get('arm'), arm, 'cell arm')
+    same(result.get('mode'), mode, 'cell mode'); same(result.get('errors'), [], 'driver errors')
+    same(result.get('source_sha256'), expected_sources[arm + '.py'], 'cell source hash')
+    pid = integer(result.get('pid'), 'driver PID', 1)
+    peer_pid = integer(result.get('peer_pid'), 'peer PID', 1)
+    require(pid != peer_pid, 'peer and driver distinct')
+    require(type(result.get('utc_start')) is str and result['utc_start'].endswith('+00:00'), 'UTC start')
+    clocks = result.get('clock')
+    require(type(clocks) is dict and set(clocks) == {'monotonic', 'perf_counter'}, 'clock schema')
+    for clock in clocks.values():
+        same(clock.get('monotonic'), True, 'monotonic clock')
+        same(clock.get('adjustable'), False, 'nonadjustable clock')
+        require(type(clock.get('resolution')) is float
+                and number(clock['resolution'], 'clock resolution') > 0, 'clock resolution positive float')
+        require(type(clock.get('implementation')) is str, 'clock implementation')
+    same(clocks['monotonic']['implementation'], clocks['perf_counter']['implementation'],
+         'journal perf_counter and event monotonic clock implementation')
+
+    same([r['event'] for r in peer], ['peer_start', 'wire_write_before', 'wire_emitted',
+         'request_received', 'wire_write_before', 'wire_emitted', 'peer_exit'], 'peer exact event roster')
+    same(peer[0].get('pid'), peer_pid, 'peer PID join')
+    same(peer[-1].get('exit_code'), 0, 'peer exit event')
+    for index, message in [(1, NOTICE), (2, NOTICE), (3, REQUEST), (4, RESPONSE), (5, RESPONSE)]:
+        same(peer[index].get('message'), message, 'peer exact message')
+        same(peer[index].get('wire'), wire(message), 'peer exact wire')
+        same(parse(peer[index]['wire'], 'peer wire'), message, 'wire parsed value')
+    same(result.get('peer_request_receipt_before_predicate'), peer[3], 'peer request saved receipt join')
+    same(result.get('response_emitted'), peer[5], 'saved emitted response / peer event join')
+    same(len(journal), 3, 'journal exact row count')
+    for row, direction, message in zip(journal, ['received', 'sent', 'received'], [NOTICE, REQUEST, RESPONSE]):
+        same(set(row), {'direction', 'observed_ns', 'message'}, 'journal fields')
+        same(row.get('direction'), direction, 'journal direction')
+        same(row.get('message'), message, 'journal exact message')
+        integer(row.get('observed_ns'), 'journal clock', 1)
+    require(journal[0]['observed_ns'] <= journal[1]['observed_ns'] <= journal[2]['observed_ns'],
+            'journal chronological order')
+    require(peer[1]['ns'] <= journal[0]['observed_ns'], 'notice before-write / journal join')
+    require(journal[1]['observed_ns'] <= peer[3]['ns'], 'sent journal / peer receipt join')
+    require(peer[4]['ns'] <= journal[2]['observed_ns'], 'response before-write / journal join')
+    same(result.get('response_received'), journal[2], 'saved received response / journal join')
+
+    before = result.get('request_before_predicate')
+    require(type(before) is dict, 'request pre-predicate observation')
+    rf = request_frame(before.get('frames'), arm)
+    same(before.get('request_frame'), rf, 'observed request frame join')
+    same(before.get('condition_waiters'), 1, 'one initial condition waiter')
+    integer(before.get('deadline_ns'), 'deadline ns', 1)
+    same(before['deadline_ns'], round(rf['deadline'] * 1e9), 'deadline seconds/ns join')
+    require(peer[5]['ns'] < before['deadline_ns']
+            and journal[2]['observed_ns'] < before['deadline_ns'],
+            'actual emitted and received response before request deadline')
+    same(before.get('ns'), at(rows, 'request_deadline_wait_observed'), 'deadline observation event')
+    entry = integer(result.get('predicate_entry_ns'), 'predicate entry', 1)
+    same(entry, at(rows, 'predicate_enter'), 'predicate entry event join')
+    for event_name in ('predicate_enter', 'predicate_return'):
+        same(one(rows, event_name).get('message'), NOTICE, 'predicate exact message')
+    require(at(rows, 'request_start') <= before['ns'] < at(rows, 'notification_start') <= entry,
+            'request-first driver order')
+    require(peer[3]['ns'] < entry < before['deadline_ns'], 'peer receipt and callback before request deadline')
+    require(journal[1]['observed_ns'] < entry, 'request sent before callback')
+    require(entry <= at(rows, 'response_gate_write_before') <= at(rows, 'response_gate_write_after'),
+            'response gate write bracket')
+    require(at(rows, 'response_gate_write_before') <= peer[4]['ns'], 'gate lower bound / peer write')
+
+    require(type(result.get('outcomes')) is dict, 'outcomes object')
+    same(set(result['outcomes']), {'request', 'notification'}, 'exact outcomes')
+    request = outcome(result, rows, 'request', ACK, allow_timeout=(arm == 'baseline' and mode == 'held'))
+    notice = outcome(result, rows, 'notification', NOTICE)
+    require(at(rows, 'predicate_return') <= notice['end_ns'], 'predicate/notification return ordering')
+    require(journal[2]['observed_ns'] <= request['end_ns'] or request['kind'] == 'exception',
+            'response journal precedes returned request')
+    if mode == 'held':
+        cp = result.get('checkpoint')
+        require(type(cp) is dict, 'held checkpoint')
+        integer(cp.get('ns'), 'checkpoint ns', 1)
+        require(cp['ns'] >= entry + 250_000_000, 'checkpoint before nominal250ms')
+        require(cp['ns'] <= at(rows, 'checkpoint') < at(rows, 'owner_release'), 'checkpoint/release order')
+        require(at(rows, 'owner_release') >= entry + 400_000_000, 'release before nominal400ms')
+        same(cp.get('notification_alive'), True, 'notification pending at checkpoint')
+        same(cp.get('release_event_set'), False, 'owner gate pending at checkpoint')
+        same(one(rows, 'checkpoint').get('notification_alive'), True, 'checkpoint event pending notification')
+        same(cp.get('responses_snapshot'), {}, 'response cache snapshot')
+        same(cp.get('journal_received'), journal, 'checkpoint complete journal join')
+        same(cp.get('peer_events'), peer[:-1], 'checkpoint peer prefix join')
+        require(peer[5]['ns'] <= cp['ns'] and journal[2]['observed_ns'] <= cp['ns'], 'response observed before checkpoint')
+        nf = frame(cp.get('notification_frames'), 'wait_notification', '/src/' + arm + '.py',
+                   93 if arm == 'baseline' else 95, client=True)
+        frame(cp['notification_frames'], 'predicate', '/src/driver.py', 50)
+        same(nf.get('timeout'), .05, 'notification frame timeout')
+        require(type(nf.get('deadline')) is float, 'actual notification deadline float type')
+        require(number(nf.get('deadline'), 'notification deadline') * 1e9 < cp['ns'],
+                'notification deadline overdue')
+        require(at(rows, 'owner_release') <= at(rows, 'predicate_return') <= notice['end_ns'],
+                'held notification exact return only after owner release')
+        if arm == 'baseline':
+            same(cp.get('request_alive'), True, 'baseline request pending at checkpoint')
+            same(one(rows, 'checkpoint').get('request_alive'), True, 'baseline pending event')
+            same(cp.get('outcomes_snapshot'), {}, 'baseline no outcomes at checkpoint')
+            late_rf = request_frame(cp.get('request_frames'), arm)
+            same(late_rf['deadline'], rf['deadline'], 'baseline same internal request deadline')
+            require(cp['ns'] > before['deadline_ns'], 'baseline internal deadline overdue')
+            frame(cp.get('reader_frames'), '_read', '/src/baseline.py', 34, client=True)
+            frame(cp['reader_frames'], '__enter__', 'threading.py', condition=True)
+            require(at(rows, 'owner_release') <= request['end_ns'], 'baseline request only after release')
+        else:
+            same(cp.get('request_alive'), False, 'candidate request retired at checkpoint')
+            same(one(rows, 'checkpoint').get('request_alive'), False, 'candidate retired event')
+            same(cp.get('request_frames'), [], 'candidate request has no live frames')
+            same(cp.get('outcomes_snapshot'), {'request': request}, 'candidate checkpoint exact ack')
+            require(request['end_ns'] <= cp['ns'] < at(rows, 'owner_release'), 'candidate ack by checkpoint before release')
+            frame(cp.get('reader_frames'), '_read', '/src/candidate.py', 31, client=True)
+    else:
+        require('checkpoint' not in result, 'healthy should not have held checkpoint')
+        require(not any(r['event'] in ('checkpoint', 'owner_release') for r in rows), 'healthy pressure event')
+
+    require(max(request['end_ns'], notice['end_ns']) <= at(rows, 'callers_retired')
+            <= at(rows, 'peer_finish_gate_write_before') <= at(rows, 'peer_finish_gate_write_after'),
+            'caller retirement / peer finish gate bracket')
+    require(at(rows, 'peer_finish_gate_write_before') <= peer[-1]['ns'] <= at(rows, 'client_close_start'),
+            'peer exit before client close')
+    same(result.get('peer_returncode'), 0, 'peer actual returncode')
+    same(result.get('close_start_ns'), at(rows, 'client_close_start'), 'close start join')
+    require(at(rows, 'client_close_start') <= at(rows, 'client_close_return'), 'client close order')
+    cleanup = result.get('cleanup')
+    require(type(cleanup) is dict, 'cleanup object')
+    same(cleanup.get('peer_returncode'), 0, 'terminal peer exit')
+    for field in ('reader_alive', 'request_alive', 'notification_alive'):
+        same(cleanup.get(field), False, 'terminal ' + field)
+    same(cleanup.get('journal_closed'), True, 'journal closure')
+    same(cleanup.get('client_closed_flag'), True, 'stdout EOF closure flag')
+    same(result.get('peer_stderr'), '', 'clean peer stderr')
+    pipes = cleanup.get('pipes')
+    require(type(pipes) is list and len(pipes) == 3, 'three pipe records')
+    same([r.get('name') for r in pipes], ['stdin', 'stdout', 'stderr'], 'pipe roster')
+    fds = []
+    for pipe in pipes:
+        fd = integer(pipe.get('fd'), 'owned FD', 0); fds.append(fd)
+        same(pipe.get('closed_after_client_close'), False, 'library leaves pipe open')
+        same(pipe.get('closed_after_driver_cleanup'), True, 'driver closes owned pipe')
+        same(pipe.get('fstat_errno'), 9, 'driver-closed FD EBADF')
+    require(len(set(fds)) == 3, 'distinct owned FDs')
+    integer(cleanup.get('ns'), 'cleanup ns', 1); integer(result.get('end_ns'), 'cell end ns', 1)
+    require(at(rows, 'client_close_return') <= cleanup['ns'] <= result['end_ns'] <= at(rows, 'driver_end'),
+            'cleanup/end chronology')
+    same(one(rows, 'driver_end').get('errors'), 0, 'driver end no errors')
+    expected_events = {'request_start', 'request_deadline_wait_observed', 'notification_start',
+                       'predicate_enter', 'predicate_return', 'notification_return',
+                       'request_return' if request['kind'] == 'return' else 'request_exception',
+                       'response_gate_write_before', 'response_gate_write_after', 'callers_retired',
+                       'peer_finish_gate_write_before', 'peer_finish_gate_write_after',
+                       'client_close_start', 'client_close_return', 'driver_end'}
+    if mode == 'held': expected_events.update(('checkpoint', 'owner_release'))
+    same(set(r['event'] for r in rows), expected_events, 'driver exact event roster')
+    same(len(rows), len(expected_events), 'driver no duplicated events')
+    require(receipt['start_ns'] <= rows[0]['ns'] and rows[-1]['ns'] <= receipt['end_ns'],
+            'outer receipt bounds driver events')
+    require(receipt['start_ns'] <= peer[0]['ns'] <= peer[-1]['ns'] <= receipt['end_ns'],
+            'outer receipt bounds peer events')
+    stdout = parse(raw_file(root / (name + '.stdout')), name + ' stdout')
+    same(stdout, {'case': name, 'errors': [], 'cleanup': cleanup}, 'outer stdout exact result projection')
+    return {'case': name, 'driver_pid': pid, 'peer_pid': peer_pid,
+            'request_kind': request['kind'], 'request_duration_ns': request['end_ns'] - request['start_ns'],
+            'predicate_duration_ns': at(rows, 'predicate_return') - entry,
+            'checkpoint_ns': result.get('checkpoint', {}).get('ns'),
+            'raw_sha256': {f: sha(raw_file(directory / f))
+                           for f in ('result.json', 'events.jsonl', 'peer-events.jsonl', 'journal.jsonl')}}
+
+
+def check(root, source_root, source_sha256):
+    require(type(source_sha256) is dict, 'source hash map')
+    for name in REVIEWED:
+        value = source_sha256.get(name)
+        require(type(value) is str and len(value) == 64 and all(c in '0123456789abcdef' for c in value),
+                'expected source hash: ' + name)
+        same(sha(raw_file(source_root / name)), value, 'source bytes: ' + name)
+    same(source_sha256['baseline.py'], REVIEWED['baseline.py'], 'immutable baseline identity')
+    collection = document(root / 'collection.json')
+    same(collection.get('schema'), 'predicate-condition-collection-v1', 'collection schema')
+    same(collection.get('planned_cells'), 4, 'planned four cells')
+    same(collection.get('completed_driver_exit0'), 4, 'four driver exit0 receipts')
+    same(collection.get('retries'), 0, 'no collector retries')
+    integer(collection.get('pid'), 'collector PID', 1)
+    begin = integer(collection.get('start_ns'), 'collection start', 1)
+    end = integer(collection.get('end_ns'), 'collection end', 1)
+    require(end >= begin, 'collection clock order')
+    require(type(collection.get('items')) is list and len(collection['items']) == 4, 'four collection receipts')
+    for field in ('python', 'platform', 'memory_max', 'cpu_max', 'pids_max'):
+        require(type(collection.get(field)) is str and bool(collection[field]), 'collection field: ' + field)
+    reports = []; previous_end = begin
+    for (arm, mode), listed in zip(CELLS, collection['items']):
+        name = arm + '-' + mode
+        receipt = document(root / (name + '.receipt.json'))
+        same(receipt, listed, 'first receipt / collection join')
+        same(receipt.get('exit_code'), 0, 'first outer driver exit0')
+        same(receipt.get('error'), None, 'outer watchdog not triggered')
+        argv = receipt.get('argv')
+        require(type(argv) is list and len(argv) == 6 and type(argv[0]) is str and argv[0].startswith('/'), 'outer argv')
+        same(argv[1:], ['-B', '/src/driver.py', arm, mode, '/out/' + name], 'exact first outer command')
+        rb = integer(receipt.get('start_ns'), 'receipt start', 1)
+        re = integer(receipt.get('end_ns'), 'receipt end', 1)
+        require(previous_end <= rb <= re <= end, 'sequential bounded outer receipt order')
+        previous_end = re
+        for stream in ('stdout', 'stderr'):
+            raw = raw_file(root / (name + '.' + stream))
+            same(receipt.get(stream + '_bytes'), len(raw), 'outer log bytes')
+            same(receipt.get(stream + '_sha256'), sha(raw), 'outer log hash')
+            if stream == 'stderr': same(raw, b'', 'empty outer stderr')
+        reports.append(check_cell(root, arm, mode, source_sha256, receipt))
+    return {'schema': 'predicate-condition-saved-audit-v1', 'passed': True, 'cells': reports,
+            'source_sha256': {k: source_sha256[k] for k in REVIEWED},
+            'checker_sha256': sha(Path(__file__).read_bytes()),
+            'collection_sha256': sha(raw_file(root / 'collection.json')),
+            'parser': {'duplicate_keys': 'rejected', 'NaN_Infinity': 'rejected',
+                       'overflow_nonfinite_float': 'rejected', 'malformed_JSON_UTF8': 'rejected',
+                       'typed_bool_integer_equality': 'distinct'},
+            'limits': ['Saved-record consistency, not authenticity or complete adversarial resistance.',
+                       'Source manifest is expected identity; parent freeze/outer custody must bind helper execution.',
+                       'No client/native producer/peer import or execution; no whole-call, notification-bound or task-effect claim.',
+                       'Nominal250ms checkpoint and400ms release are lower targets; actual times retained.',
+                       'No stale-identity or lost-wake native control claim from these four cells.']}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('root'); parser.add_argument('--source-root')
+    parser.add_argument('--source-manifest')
+    args = parser.parse_args()
+    try:
+        if args.root == '-':
+            raw = sys.stdin.buffer.read(MAX_FILE_BYTES + 1)
+            require(len(raw) <= MAX_FILE_BYTES, 'stdin byte cap')
+            config = parse(raw, 'stdin')
+        else:
+            config = {'root': args.root}
+        require(type(config) is dict and type(config.get('root')) is str, 'stdin/path root configuration')
+        source_root = Path(args.source_root or config.get('source_root') or Path(__file__).parent)
+        expected = config.get('source_sha256', REVIEWED)
+        if args.source_manifest:
+            manifest = document(Path(args.source_manifest))
+            expected = manifest.get('source_sha256', manifest)
+        output = check(Path(config['root']), source_root, expected)
+        code = 0
+    except (Rejected, OSError, KeyError, TypeError, AttributeError, OverflowError, RecursionError) as exc:
+        output = {'schema': 'predicate-condition-saved-audit-v1', 'passed': False,
+                  'error_type': type(exc).__name__, 'error': str(exc)}
+        code = 1
+    print(json.dumps(output, sort_keys=True, indent=2, allow_nan=False))
+    return code
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

@@ -1,0 +1,21 @@
+{
+  "decision": "SUPPORT_MODIFY_DETECTION_SCOPED",
+  "errors": [],
+  "scores": [
+    {
+      "id": "stable",
+      "before": 0,
+      "after": 0,
+      "split_satisfied": false,
+      "revision_guard_satisfied": false
+    },
+    {
+      "id": "mutated",
+      "before": 0,
+      "after": 4,
+      "split_satisfied": true,
+      "revision_guard_satisfied": false
+    }
+  ],
+  "scope": "measured setPosition notifications only; not complete generation or atomic snapshot"
+}

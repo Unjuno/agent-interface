@@ -1,0 +1,31 @@
+{
+  "started_utc": "2026-10-04T00:37:36.796129+00:00",
+  "platform": "win32",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "source_sha256": "243d3c0b242a34317b5cc6234df2f323322271e670c7f38a3b25a35e0b13c768",
+  "close_timeout": "client default (5 seconds)",
+  "liveness_probe": "Win32 OpenProcess + GetExitCodeProcess (no termination)",
+  "steps": [],
+  "descendant_pid": 52908,
+  "descendant_before_close": {
+    "exists": true,
+    "exit_code": 259
+  },
+  "close_outcome": "TimeoutError: app-server reader close timed out",
+  "descendant_after_close": {
+    "exists": true,
+    "exit_code": 259
+  },
+  "reader_alive_after_close": true,
+  "stdout_open_after_close": true,
+  "direct_child_returncode_after_close": 1,
+  "reproduced_child_and_reader_leak": true,
+  "cleanup": "taskkill exact owned descendant PID/tree",
+  "reader_dead_after_cleanup": true,
+  "descendant_after_cleanup": {
+    "exists": false,
+    "open_error": 87
+  },
+  "direct_child_returncode_after_cleanup": 1,
+  "completed_utc": "2026-10-04T00:37:42.741074+00:00"
+}

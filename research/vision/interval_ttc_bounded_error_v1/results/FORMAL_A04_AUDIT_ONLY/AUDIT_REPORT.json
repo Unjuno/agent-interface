@@ -1,0 +1,61 @@
+{
+  "a02_disposition": "FAIL_METHOD_PRESERVED_UNSCORABLE",
+  "a02_head_sha": "6314772b3e1f2e304ac9348ccfd5217106d7390b",
+  "a02_source_commit": "1e30e1e4e9ca7280a7337ed7a9c69afbf9a65072",
+  "a03_disposition": "STOP_AUDITOR_RUNTIME_ERROR_PRESERVED",
+  "artifact_manifest_errors": [],
+  "artifact_manifest_pass": true,
+  "candidate_reconstruction_pass": true,
+  "disposition": "PASS_RAW_RECONCILIATION_ONLY",
+  "eligible_hazard_numeric_intervals": 434,
+  "frozen_hash_checks": {
+    "a03_freeze": true,
+    "a03_run_record": true,
+    "a03_stop": true,
+    "audit_program": true,
+    "candidate": true,
+    "construction_tests": true,
+    "first_audit": true,
+    "oracle": true,
+    "protocol": true,
+    "public": true
+  },
+  "frozen_hashes_pass": true,
+  "mutation_checks": {
+    "bound": true,
+    "interval_endpoint": true,
+    "oracle_hazard_label": true,
+    "removed_sample": true,
+    "timestamp": true
+  },
+  "mutation_checks_pass": true,
+  "original_a02_mismatch_count": 98,
+  "original_a02_mismatch_kind_counts": {
+    "interval_mismatch": 49,
+    "point_mismatch": 49
+  },
+  "original_a02_mismatch_profile_counts": {
+    "occlusion": 98
+  },
+  "original_mismatch_attribution_pass": true,
+  "prefix_count": 2400,
+  "prefixes_by_profile": {
+    "acceleration": 240,
+    "approach": 240,
+    "correlated": 240,
+    "identity_swap": 240,
+    "iid": 240,
+    "irregular_dropout": 240,
+    "occlusion": 240,
+    "passby": 240,
+    "stationary": 240,
+    "understated_bound": 240
+  },
+  "reconstruction_errors": [],
+  "schema": "issue-8157-a04-raw-prefix-audit-v1",
+  "scope": "A04 audit-only raw reconciliation; no candidate, generator, original auditor, or A03 auditor invocation",
+  "sequence_count": 200,
+  "source_main_sha": "b5be19963454ce5edafc945b78b100012952dd15",
+  "source_manifest_errors": [],
+  "source_manifest_pass": true
+}

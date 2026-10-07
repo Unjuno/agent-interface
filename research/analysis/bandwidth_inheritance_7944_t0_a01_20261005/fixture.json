@@ -1,0 +1,127 @@
+{
+  "schema": "issue7944-bwi-t0-a01-fixture-v1",
+  "time_unit": "one abstract preemptive CPU tick",
+  "cases": [
+    {
+      "case_id": "budget_inversion",
+      "horizon": 12,
+      "servers": [
+        {"id":"W","q":2,"p":6,"budget":2,"deadline":6,"tie_rank":0},
+        {"id":"H","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1},
+        {"id":"BE","q":1,"p":6,"budget":1,"deadline":6,"tie_rank":2}
+      ],
+      "jobs": [
+        {"id":"holder","server":"H","release":0,"work":1,"deadline":12,"holds":["verification-slot"]},
+        {"id":"verifier","server":"W","release":0,"work":1,"deadline":4,"waits_for":"verification-slot","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":4}},
+        {"id":"best-effort","server":"BE","release":0,"work":1,"deadline":12}
+      ]
+    },
+    {
+      "case_id": "no_contention",
+      "horizon": 12,
+      "servers": [
+        {"id":"W","q":2,"p":6,"budget":2,"deadline":6,"tie_rank":0},
+        {"id":"H","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1},
+        {"id":"BE","q":1,"p":6,"budget":1,"deadline":6,"tie_rank":2}
+      ],
+      "jobs": [
+        {"id":"holder","server":"H","release":0,"work":1,"deadline":12,"holds":["verification-slot"]},
+        {"id":"verifier","server":"W","release":0,"work":1,"deadline":4},
+        {"id":"best-effort","server":"BE","release":0,"work":1,"deadline":12}
+      ]
+    },
+    {
+      "case_id": "waiter_budget_exhaustion",
+      "horizon": 20,
+      "servers": [
+        {"id":"W","q":1,"p":6,"budget":1,"deadline":6,"tie_rank":0},
+        {"id":"H","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1},
+        {"id":"BE","q":1,"p":6,"budget":1,"deadline":6,"tie_rank":2}
+      ],
+      "jobs": [
+        {"id":"holder","server":"H","release":0,"work":2,"deadline":20,"holds":["verification-slot"]},
+        {"id":"verifier","server":"W","release":0,"work":1,"deadline":4,"waits_for":"verification-slot","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":4}},
+        {"id":"best-effort","server":"BE","release":0,"work":1,"deadline":20}
+      ]
+    },
+    {
+      "case_id": "unlock_at_replenishment_boundary",
+      "horizon": 8,
+      "servers": [
+        {"id":"W","q":1,"p":3,"budget":1,"deadline":3,"tie_rank":0},
+        {"id":"H","q":1,"p":3,"budget":0,"deadline":3,"tie_rank":1},
+        {"id":"BE","q":1,"p":3,"budget":1,"deadline":3,"tie_rank":2}
+      ],
+      "jobs": [
+        {"id":"holder","server":"H","release":2,"work":1,"deadline":8,"holds":["r"]},
+        {"id":"verifier","server":"W","release":2,"work":1,"deadline":5,"waits_for":"r","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":5}}
+      ]
+    },
+    {
+      "case_id": "two_waiters",
+      "horizon": 12,
+      "servers": [
+        {"id":"W1","q":1,"p":6,"budget":1,"deadline":6,"tie_rank":0},
+        {"id":"W2","q":1,"p":6,"budget":1,"deadline":6,"tie_rank":0},
+        {"id":"H","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1}
+      ],
+      "jobs": [
+        {"id":"holder","server":"H","release":0,"work":1,"deadline":12,"holds":["r"]},
+        {"id":"waiter1","server":"W1","release":0,"work":1,"deadline":4,"waits_for":"r","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":4}},
+        {"id":"waiter2","server":"W2","release":0,"work":1,"deadline":5,"waits_for":"r","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":5}}
+      ]
+    },
+    {
+      "case_id": "nested_acyclic_chain",
+      "horizon": 16,
+      "servers": [
+        {"id":"W","q":3,"p":6,"budget":3,"deadline":6,"tie_rank":0},
+        {"id":"H1","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1},
+        {"id":"H2","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1}
+      ],
+      "jobs": [
+        {"id":"h1","server":"H1","release":0,"work":1,"deadline":16,"holds":["r1"],"waits_for":"r2"},
+        {"id":"h2","server":"H2","release":0,"work":1,"deadline":16,"holds":["r2"]},
+        {"id":"verifier","server":"W","release":0,"work":1,"deadline":4,"waits_for":"r1","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":4}}
+      ]
+    },
+    {
+      "case_id": "dependency_cycle",
+      "horizon": 8,
+      "servers": [
+        {"id":"W","q":2,"p":6,"budget":2,"deadline":6,"tie_rank":0},
+        {"id":"H1","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1},
+        {"id":"H2","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1}
+      ],
+      "jobs": [
+        {"id":"h1","server":"H1","release":0,"work":1,"deadline":8,"holds":["r1"],"waits_for":"r2"},
+        {"id":"h2","server":"H2","release":0,"work":1,"deadline":8,"holds":["r2"],"waits_for":"r1"},
+        {"id":"verifier","server":"W","release":0,"work":1,"deadline":4,"waits_for":"r1","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":4}}
+      ]
+    },
+    {
+      "case_id": "cancelled_waiter",
+      "horizon": 8,
+      "servers": [
+        {"id":"W","q":2,"p":6,"budget":2,"deadline":6,"tie_rank":0},
+        {"id":"H","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1}
+      ],
+      "jobs": [
+        {"id":"holder","server":"H","release":0,"work":1,"deadline":8,"holds":["r"]},
+        {"id":"verifier","server":"W","release":0,"work":1,"deadline":4,"cancel_at":0,"waits_for":"r","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":true,"expires":4}}
+      ]
+    },
+    {
+      "case_id": "remote_nonpreemptible_resource",
+      "horizon": 8,
+      "servers": [
+        {"id":"W","q":2,"p":6,"budget":2,"deadline":6,"tie_rank":0},
+        {"id":"H","q":1,"p":6,"budget":0,"deadline":6,"tie_rank":1}
+      ],
+      "jobs": [
+        {"id":"holder","server":"H","release":0,"work":1,"deadline":8,"holds":["remote-rpc"]},
+        {"id":"verifier","server":"W","release":0,"work":1,"deadline":4,"waits_for":"remote-rpc","edge":{"authenticated":true,"current":true,"complete":true,"resource_preemptible":false,"expires":4}}
+      ]
+    }
+  ]
+}

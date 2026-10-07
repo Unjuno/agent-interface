@@ -1,0 +1,72 @@
+test_actual_runner_finally_retains_result_after_dead_display (test_close.DisplayCleanupBoundary.test_actual_runner_finally_retains_result_after_dead_display) ... ok
+test_actual_runner_finally_retains_result_after_real_bad_stderr_close (test_close.DisplayCleanupBoundary.test_actual_runner_finally_retains_result_after_real_bad_stderr_close) ... FAIL
+test_actual_runner_finally_retains_result_after_signal_and_wait_failures (test_close.DisplayCleanupBoundary.test_actual_runner_finally_retains_result_after_signal_and_wait_failures) ... FAIL
+test_clients_close_before_server_without_cleanup_failure (test_close.DisplayCleanupBoundary.test_clients_close_before_server_without_cleanup_failure) ... ok
+test_closed_server_retains_result_and_both_cleanup_failures (test_close.DisplayCleanupBoundary.test_closed_server_retains_result_and_both_cleanup_failures) ... ok
+
+======================================================================
+FAIL: test_actual_runner_finally_retains_result_after_real_bad_stderr_close (test_close.DisplayCleanupBoundary.test_actual_runner_finally_retains_result_after_real_bad_stderr_close)
+----------------------------------------------------------------------
+OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/experiment/test_close.py", line 61, in run_boundary
+    exec(compiled, scope)
+  File "actual-e05-finally", line 256, in <module>
+OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/experiment/test_close.py", line 97, in test_actual_runner_finally_retains_result_after_real_bad_stderr_close
+    self.run_boundary(True, actual_finally=True, bad_stderr=True)
+  File "/experiment/test_close.py", line 66, in run_boundary
+    self.fail('cleanup prevented result retention: ' + repr(exc))
+AssertionError: cleanup prevented result retention: OSError(9, 'Bad file descriptor')
+
+======================================================================
+FAIL: test_actual_runner_finally_retains_result_after_signal_and_wait_failures (test_close.DisplayCleanupBoundary.test_actual_runner_finally_retains_result_after_signal_and_wait_failures)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "actual-e05-finally", line 233, in <module>
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+subprocess.TimeoutExpired: Command 'owned-Xvfb' timed out after 0 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/experiment/test_close.py", line 59, in run_boundary
+    exec(compiled, scope)
+  File "actual-e05-finally", line 236, in <module>
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+PermissionError: terminate denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/experiment/test_close.py", line 100, in test_actual_runner_finally_retains_result_after_signal_and_wait_failures
+    self.run_boundary(False, actual_finally=True, signal_fault=True)
+  File "/experiment/test_close.py", line 66, in run_boundary
+    self.fail('cleanup prevented result retention: ' + repr(exc))
+AssertionError: cleanup prevented result retention: PermissionError('terminate denied')
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.126s
+
+FAILED (failures=2)

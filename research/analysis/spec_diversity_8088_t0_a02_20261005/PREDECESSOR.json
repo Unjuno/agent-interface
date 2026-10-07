@@ -1,0 +1,14 @@
+{
+  "issue":8088,
+  "allocation":"SPEC-DIVERSITY-8088-T0-A02-20261005-01",
+  "predecessor":"SPEC-DIVERSITY-8088-T0-A01-20261005-01",
+  "predecessor_pr":"https://github.com/Unjuno/agent-interface/pull/8191",
+  "reason":"A01 C06 baseline oracle did not observe visible IDs after selecting All; candidate and auditor shared the defect. One-shot A01 outputs remain unchanged and are not reused as A02 result data.",
+  "reused_input_sha256":{
+    "CONTRACTS.json":"0cdb4f029dcc012c296f0359c37c83e422b7a2eb8ba93502c726b68d9d2304b7",
+    "SPEC_A_PRIMARY.json":"991fd19f0d3e9f218180b441030f7b5ce72eff0774252a95c01e11408af8f043",
+    "SPEC_B_CHALLENGE.json":"9abe525b10137f18fdf3491edcb79cd760807839aa9728f90b5e2574f438bdf4",
+    "ADJUDICATION.json":"6b07b01ad0a1e052ee623bec5b8756f477e2ef37c4f3155bda92d466d11e48d9"
+  },
+  "contract_transfer_note":"The JSON content is unchanged; the GitHub text fetch/apply-patch transfer normalized one terminal blank line. A02 binds and publishes these exact local bytes under its own SHA-256; predecessor A01 bytes remain untouched."
+}

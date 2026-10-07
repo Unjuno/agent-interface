@@ -1,0 +1,40 @@
+{
+  "argv": [
+    "C:/Program Files/WSL/wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--name",
+    "ai59-4d74-finishpressure01",
+    "--network",
+    "none",
+    "--user",
+    "65534:65534",
+    "--cpus",
+    "1",
+    "--memory",
+    "512m",
+    "--workdir",
+    "/out",
+    "--mount",
+    "type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/new-chat/work/post-guard-recovery-59-4d74-20261004,target=/study,readonly",
+    "--mount",
+    "type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/new-chat/work/post-guard-recovery-59-4d74-20261004/finish-pipe-pressure-01,target=/out",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--env",
+    "PYTHONPATH=/out/source",
+    "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+    "timeout",
+    "15s",
+    "python3",
+    "/study/probe_finish_pipe_pressure_01.py"
+  ],
+  "files": {
+    "probe_finish_pipe_pressure_01.py": "42a8cfcc94427c5e2d065dc55e29908346aba561e77e1ea6349b1190718947bf",
+    "run_finish_pipe_pressure_01.py": "ed5030b8c924868a7a14fa5fe143d1e14ff0035ae66704e4b4ba54f7159e0f46",
+    "source/doom_controller_failure_cleanup_v1.py": "7844cd558e453408a0b5aa46b860b53cf9afab9d47ccccaf7b61db2e90b42bb6"
+  },
+  "source_git": "8bcf6711cd24afe230236e54cb8a27987ecc092f"
+}

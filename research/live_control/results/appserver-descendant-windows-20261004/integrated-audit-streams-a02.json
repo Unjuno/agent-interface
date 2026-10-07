@@ -1,0 +1,21 @@
+{
+  "audit_version": "v2 normal-path RED/GREEN plus bounded-timeout safety state",
+  "process_query": "Win32 OpenProcess/GetExitCodeProcess; no signal sent by auditor",
+  "checks": {
+    "candidate_hash_matches": true,
+    "descendant_active_before_close": true,
+    "bounded_reader_timeout_reported": true,
+    "descendant_still_active_at_timeout": true,
+    "reader_alive_at_timeout": true,
+    "pipes_remain_open_while_reader_active": true,
+    "gate_expected_state_recorded": true,
+    "owned_descendant_removed_after_cleanup": true,
+    "reader_reaped_after_cleanup": true,
+    "all_pipes_closed_after_cleanup": true
+  },
+  "timeout_test_pid_state_now": {
+    "exists": false,
+    "error": 87
+  },
+  "pass": true
+}

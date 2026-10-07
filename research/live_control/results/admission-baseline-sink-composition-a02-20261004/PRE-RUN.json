@@ -1,0 +1,29 @@
+{
+  "schema": "admission-baseline-sink-compose-a02-freeze-v1",
+  "run_id": "MAP01-ADMISSION-BASELINE-SINK-COMPOSE-A02-20261004",
+  "frozen_at_utc": "2026-10-04T05:42:34.794Z",
+  "candidate_source": "99b7d130742b4e884709a862bc074d15e6b42ac9",
+  "comparison_fix_source": "7de3932c9435256796322b11409da1a6b09d6809",
+  "prior_setup_stop": "A01: missing lease_cause_v1 import; candidate not loaded; retained under PREVIOUS-STOP-A01/",
+  "candidate_invocations": 1,
+  "no_retry": true,
+  "candidate_command": "py -3 -B run_candidate.py",
+  "audit_command": "py -3 -B audit_saved.py",
+  "decision": "PASS as a reproducer only if source hashes match and the injected accepted-sink acknowledgement loss leaves input unstarted while retaining stale admission state and reproduces the unstarted-worker close exception; otherwise HOLD.",
+  "scope": "Exact #7440 V12-derived baseline-hook candidate and completed import closure; fake backend and sink only; no GUI, game, model, X server, live input, or allocation.",
+  "source_sha256": {
+    "audit_saved.py": "60f3915c0bdadd1607bcbe67de82d3eec4d6d25840ba01537185cc45bc63d957",
+    "PREVIOUS-STOP-A01/STOP.md": "1ba47dba2367b1145465732e3205742758335ca651bd6b01aebd883ab27911c2",
+    "README.md": "a16038acb57cd3d536db1d9a7b4d41dcbfa1a0bd319c67049c269d2a0c4b0d7c",
+    "run_candidate.py": "a2ce9734a9314ad45417876bb41c6b23e7a16b6d8685aea27969e00915985dd3",
+    "source_snapshot/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "source_snapshot/executor_v12_exact.py": "b81ad839318e3a53edfde4425f61947fbbc6e142a85348e0a1fe730b754fc74d",
+    "source_snapshot/executor_v13_admission_baseline.py": "a3565e69027fe7dc38f7e0e6dc71d76a6af0d7ee47749065659e54ae6e261ecf",
+    "source_snapshot/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "source_snapshot/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "source_snapshot/lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "source_snapshot/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "source_snapshot/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "source_snapshot/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  }
+}

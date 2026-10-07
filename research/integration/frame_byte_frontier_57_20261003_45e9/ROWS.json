@@ -1,0 +1,332 @@
+[
+  {
+    "case": "exact-ascii",
+    "policy": "current",
+    "wire_bytes": 65537,
+    "wire_sha256": "c4025ea74b4d8f013a62a6dd6e43103ff92bc87ee426af22b411eae5c8e050a7",
+    "chunks": 96,
+    "before": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": 1,
+      "gate": null,
+      "output_statuses": [
+        "returned"
+      ]
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [
+        {
+          "id": 1,
+          "padding_sha256": "76f274080778f6b34a2a1be4a7b8e64eac29d459ae25fce373894f312f2d4fdb"
+        }
+      ],
+      "original_result_identity": null,
+      "output": [
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "returned",
+          "result": {
+            "id": 1
+          }
+        }
+      ],
+      "gate": null,
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  },
+  {
+    "case": "exact-ascii",
+    "policy": "byte-frontier",
+    "wire_bytes": 65537,
+    "wire_sha256": "c4025ea74b4d8f013a62a6dd6e43103ff92bc87ee426af22b411eae5c8e050a7",
+    "chunks": 96,
+    "before": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": 1,
+      "gate": {
+        "typed_frontier": "none",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 1
+      },
+      "output_statuses": [
+        "returned"
+      ]
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [
+        {
+          "id": 1,
+          "padding_sha256": "76f274080778f6b34a2a1be4a7b8e64eac29d459ae25fce373894f312f2d4fdb"
+        }
+      ],
+      "original_result_identity": null,
+      "output": [
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "returned",
+          "result": {
+            "id": 1
+          }
+        }
+      ],
+      "gate": {
+        "typed_frontier": "none",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 1
+      },
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  },
+  {
+    "case": "over-no-newline",
+    "policy": "current",
+    "wire_bytes": 65537,
+    "wire_sha256": "2b31611561271d6e56a50fe7bd8afb5c61f8b2c892aaf91c8010de7bd9bd49ba",
+    "chunks": 96,
+    "before": {
+      "outcome": "pending",
+      "settled": 0,
+      "calls": 0,
+      "gate": null,
+      "output_statuses": []
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [
+        {
+          "id": 1,
+          "padding_sha256": "a633b69da05ec6a77a32cba0bf2dc139d631d59baca2009235343a37b6101801"
+        }
+      ],
+      "original_result_identity": null,
+      "output": [
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "returned",
+          "result": {
+            "id": 1
+          }
+        }
+      ],
+      "gate": null,
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  },
+  {
+    "case": "over-no-newline",
+    "policy": "byte-frontier",
+    "wire_bytes": 65537,
+    "wire_sha256": "2b31611561271d6e56a50fe7bd8afb5c61f8b2c892aaf91c8010de7bd9bd49ba",
+    "chunks": 96,
+    "before": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": 0,
+      "gate": {
+        "typed_frontier": "FRAME_TOO_LARGE",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 0
+      },
+      "output_statuses": []
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [],
+      "original_result_identity": null,
+      "output": [],
+      "gate": {
+        "typed_frontier": "FRAME_TOO_LARGE",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 0
+      },
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  },
+  {
+    "case": "exact-unicode",
+    "policy": "current",
+    "wire_bytes": 65537,
+    "wire_sha256": "b4234ee73440c00397cfa67c1cc4a1e57fc24caf39d85635eb553c2ff8b266d2",
+    "chunks": 96,
+    "before": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": 1,
+      "gate": null,
+      "output_statuses": [
+        "returned"
+      ]
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [
+        {
+          "id": 1,
+          "padding_sha256": "d52d9efe4c24b2b7d549ac20947014095a784b78a2c237c583041ea464e16bba"
+        }
+      ],
+      "original_result_identity": null,
+      "output": [
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "returned",
+          "result": {
+            "id": 1
+          }
+        }
+      ],
+      "gate": null,
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  },
+  {
+    "case": "exact-unicode",
+    "policy": "byte-frontier",
+    "wire_bytes": 65537,
+    "wire_sha256": "b4234ee73440c00397cfa67c1cc4a1e57fc24caf39d85635eb553c2ff8b266d2",
+    "chunks": 96,
+    "before": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": 1,
+      "gate": {
+        "typed_frontier": "none",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 1
+      },
+      "output_statuses": [
+        "returned"
+      ]
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [
+        {
+          "id": 1,
+          "padding_sha256": "d52d9efe4c24b2b7d549ac20947014095a784b78a2c237c583041ea464e16bba"
+        }
+      ],
+      "original_result_identity": null,
+      "output": [
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "returned",
+          "result": {
+            "id": 1
+          }
+        }
+      ],
+      "gate": {
+        "typed_frontier": "none",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 1
+      },
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  },
+  {
+    "case": "held-then-over",
+    "policy": "current",
+    "wire_bytes": 65583,
+    "wire_sha256": "01d48323ae52775188f39281cdb00976168442cdb33ce19142585076714ead2f",
+    "chunks": 96,
+    "before": {
+      "outcome": "pending",
+      "settled": 0,
+      "calls": 1,
+      "gate": null,
+      "output_statuses": []
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [
+        {
+          "id": 1,
+          "padding_sha256": "0682c5f2076f099c34cfdd15a9e063849ed437a49677e6fcc5b4198c76575be5"
+        }
+      ],
+      "original_result_identity": true,
+      "output": [
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "returned",
+          "result": {
+            "original": "same-result"
+          }
+        },
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "busy",
+          "operation_invoked": false,
+          "pending": true,
+          "next_id": 2
+        }
+      ],
+      "gate": null,
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  },
+  {
+    "case": "held-then-over",
+    "policy": "byte-frontier",
+    "wire_bytes": 65583,
+    "wire_sha256": "01d48323ae52775188f39281cdb00976168442cdb33ce19142585076714ead2f",
+    "chunks": 96,
+    "before": {
+      "outcome": "pending",
+      "settled": 0,
+      "calls": 1,
+      "gate": {
+        "typed_frontier": "FRAME_TOO_LARGE",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 1
+      },
+      "output_statuses": []
+    },
+    "final": {
+      "outcome": "resolved",
+      "settled": 1,
+      "calls": [
+        {
+          "id": 1,
+          "padding_sha256": "0682c5f2076f099c34cfdd15a9e063849ed437a49677e6fcc5b4198c76575be5"
+        }
+      ],
+      "original_result_identity": true,
+      "output": [
+        {
+          "schema": "agent-interface/primary-stdio-v1",
+          "status": "returned",
+          "result": {
+            "original": "same-result"
+          }
+        }
+      ],
+      "gate": {
+        "typed_frontier": "FRAME_TOO_LARGE",
+        "buffer_peak_bytes": 65536,
+        "forwarded_frames": 1
+      },
+      "input_error_listeners": 0,
+      "output_error_listeners": 0
+    }
+  }
+]

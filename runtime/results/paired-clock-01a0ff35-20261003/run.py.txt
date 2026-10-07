@@ -1,0 +1,27 @@
+from datetime import datetime,timezone
+from pathlib import Path
+import hashlib,json,subprocess
+
+ROOT=Path(__file__).resolve().parent
+PACKAGE=ROOT/'paired-clock-repo/runtime/results/paired-clock-01a0ff35-20261003'
+PYTHON=ROOT/'mcp-shutdown-venv312/Scripts/python.exe'
+def sha(data):return hashlib.sha256(data).hexdigest()
+plan_path=PACKAGE/'PLAN.json';plan=json.loads(plan_path.read_bytes())
+if sha(Path(__file__).read_bytes())!=plan['runner_wrapper_source_sha256']:raise ValueError('frozen wrapper changed')
+receipt_path=PACKAGE/'execution.receipt.json'
+if receipt_path.exists()or(PACKAGE/'execution-A01').exists():raise ValueError('one-shot allocation already attempted; inspect instead of retry')
+argv=[str(PYTHON),'-B',str(PACKAGE/'probe.py.txt'),'--plan',str(plan_path),'--output',str(PACKAGE/'execution-A01')]
+intent={'allocation_id':plan['allocation_id'],'argv':argv,'cwd':str(PACKAGE),'plan_sha256':sha(plan_path.read_bytes()),
+        'started_utc':datetime.now(timezone.utc).isoformat(),'execution_attempts':1,
+        'sources_before':{p:sha((PACKAGE/p).read_bytes())for p in plan['source_sha256']}}
+receipt_path.write_text(json.dumps(intent,indent=2)+'\n',encoding='utf-8')
+value=subprocess.run(argv,cwd=PACKAGE,capture_output=True)
+for label,data in [('stdout',value.stdout),('stderr',value.stderr)]:
+    (PACKAGE/('execution.'+label+'.txt')).write_bytes(data);intent[label+'_sha256']=sha(data)
+intent.update(ended_utc=datetime.now(timezone.utc).isoformat(),exit_code=value.returncode,
+              sources_after={p:sha((PACKAGE/p).read_bytes())for p in plan['source_sha256']})
+receipt_path.write_text(json.dumps(intent,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({'allocation_id':plan['allocation_id'],'exit_code':value.returncode,'execution_attempts':1,
+                  'source_unchanged':intent['sources_before']==intent['sources_after'],'stdout':value.stdout.decode(errors='replace'),
+                  'stderr':value.stderr.decode(errors='replace')}))
+raise SystemExit(value.returncode)

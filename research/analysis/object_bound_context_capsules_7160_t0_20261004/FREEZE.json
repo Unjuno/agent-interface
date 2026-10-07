@@ -1,0 +1,15 @@
+{
+  "schema":"unjuno.issue7160.t0.freeze.v1",
+  "issue":"https://github.com/Unjuno/agent-interface/issues/7160",
+  "base_commit":"816b86fe561e65c9eda963f99682ce7e18493d9c",
+  "source_files":["README.md","PROTOCOL.md","fixture.json","candidate.py","auditor.py","test_contract.py"],
+  "cases":6,
+  "policies":3,
+  "candidate_invocations":1,
+  "auditor_invocations":1,
+  "retry_budget":0,
+  "formal_outputs":["formal_01/raw.json","formal_01/audit.json"],
+  "runtime":"host-only Python standard library; no network/model/GUI/container",
+  "formal_started":false,
+  "gate":"PASS_METHOD_SCOPED only if oracle, identity/lifecycle refusals, stale-field reporting, no-authority boundary, and four corruption rejections pass"
+}
