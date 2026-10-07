@@ -225,7 +225,18 @@ class Backend(Previous):
                     row["id"], row["step"] = input_context
                     row.setdefault("owner_id", self.owner.owner_id)
                     row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
-                    self.emit(row)
+                    try:
+                        self.emit(row)
+                    except Exception as publish_exc:
+                        # Preserve the input failure as the primary exception;
+                        # retain publication failure details when it can carry them.
+                        try:
+                            exc.measurement_publish_error = {
+                                "type": type(publish_exc).__name__,
+                                "message": str(publish_exc)[:200],
+                            }
+                        except (AttributeError, TypeError):
+                            pass
                 raise
             self.held.add(key)
             if record is not None:
