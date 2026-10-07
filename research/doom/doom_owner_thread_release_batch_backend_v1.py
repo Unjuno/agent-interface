@@ -212,7 +212,21 @@ class Backend(Previous):
         if down:
             if context is not None:
                 self._flush_pending_ups(context)
-            record = self.owner.call("down", self.lease, key)
+            try:
+                record = self.owner.call("down", self.lease, key)
+            except Exception as exc:
+                # XTest may have applied DOWN even when its acknowledgement
+                # fails. Publish the owner's explicit UNKNOWN sample before
+                # the original exception drives executor cleanup.
+                attempt = getattr(exc, "owner_input_measurement_record", None)
+                if (isinstance(attempt, dict)
+                        and attempt.get("event") == "input_attempt_measurement"):
+                    row = dict(attempt)
+                    row["id"], row["step"] = input_context
+                    row.setdefault("owner_id", self.owner.owner_id)
+                    row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
+                    self.emit(row)
+                raise
             self.held.add(key)
             if record is not None:
                 row = dict(record)

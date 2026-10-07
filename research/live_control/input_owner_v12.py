@@ -688,8 +688,33 @@ class InputOwner:
                             touched.add(code)
                             held[code] = lease
                             press_request_ns = time.perf_counter_ns() if measurement else None
-                            xtest.fake_input(d, X.KeyPress, code)
-                            d.sync()
+                            try:
+                                xtest.fake_input(d, X.KeyPress, code)
+                                d.sync()
+                            except Exception as exc:
+                                if measurement:
+                                    # The server may have applied DOWN before XTest or
+                                    # sync acknowledgement failed. Preserve an explicit
+                                    # UNKNOWN sample; never mint a confirmed identity.
+                                    try:
+                                        post_sample = measured_sample(code)
+                                        edge = measurement.edge(
+                                            'down', code, key,
+                                            getattr(lease, 'intent_token', None),
+                                            pre_sample, post_sample, press_request_ns, None,
+                                            owned_before=owned_before, operation_ok=False)
+                                        exc.owner_input_measurement_record = dict(
+                                            event='input_attempt_measurement',
+                                            operation='down', owner_id=self.owner_id,
+                                            key=key, keycode=code,
+                                            intent_token=getattr(lease, 'intent_token', None),
+                                            admitted_ns=admitted, input_ack_ns=None,
+                                            physical_key_measurement=edge,
+                                            input_error_type=type(exc).__name__,
+                                            input_error=str(exc)[:200])
+                                    except (AttributeError, TypeError):
+                                        pass
+                                raise
                             ack_ns = time.perf_counter_ns()
                             result = dict(event='input_admission', key=key, admitted_ns=admitted,
                                           input_ack_ns=ack_ns, valid_until_ns=lease.deadline)
