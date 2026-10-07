@@ -20,6 +20,12 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 - #8294 remains open and ready, with no reviews. Its replay gate succeeded; formal and construction checks were skipped.
 - A09 advanced to f4e7a21bbda3f78286f62674ca7ad7bee9765713; its open-PR crosswalk head matches the GitHub branch tip.
 
+
+
+## Follow-up disposition
+
+- After the 12:11 UTC inventory, current main advanced to dd37f2ddbdb0a424e43676545595f5537e435473. Verified the recorded 4435 custody tip is contained in that main, has no PR/worktree/base dependency, and is unprotected; deleted only that remote branch. Its tip remains reachable from main. The deletion is recorded in [branch retirements](BRANCH_RETIREMENTS_20261007_1221Z.csv).
+
 ## Follow-up policy
 
 1. Triage the 65 unpaired, non-main-ancestor branches individually. First identify merged/closed PRs, ancestry and stack dependencies, worktree ownership, evidence custody, and whether each unique change is already integrated. Delete only verified aliases or fully integrated disposable refs; rescue useful evidence to a current-main PR before removing its source ref.
