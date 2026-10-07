@@ -179,16 +179,32 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     transitions = []
     observations = []
     critical_events = []
+    journal_failure_type = None
+    journal_failure_reported = False
 
     def emit(event):
+        nonlocal journal_failure_type
         row = copy.deepcopy(event)
-        journal(row)
         if row["event"] in {"branch_selected", "admission_refused",
                             "action_terminal", "effect_checked",
-                            "cancellation_check_failed", "runtime_finished"}:
+                            "cancellation_check_failed", "effect_verification_failed",
+                            "runtime_finished"}:
             critical_events.append(row)
+        if journal_failure_type is not None:
+            return
+        try:
+            journal(row)
+        except Exception as error:
+            journal_failure_type = type(error).__name__
 
     def finish(outcome, reason):
+        nonlocal journal_failure_reported
+        if journal_failure_type is not None:
+            outcome, reason = "RUNTIME_FAILED", "execution_failed"
+            if not journal_failure_reported:
+                critical_events.append({"event": "journal_write_failed",
+                                        "error_type": journal_failure_type})
+                journal_failure_reported = True
         ended = clock()
         receipt = {
             "format": "compiled-gui-runtime-receipt-v1",
@@ -214,6 +230,17 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         final_event = {"event": "runtime_finished", "outcome": outcome,
                        "reason": reason, "completed_transitions": len(transitions)}
         emit(final_event)
+        if journal_failure_type is not None and outcome != "RUNTIME_FAILED":
+            receipt["outcome"] = "RUNTIME_FAILED"
+            receipt["reason"] = "execution_failed"
+            critical_events[-1] = {"event": "runtime_finished",
+                                   "outcome": "RUNTIME_FAILED",
+                                   "reason": "execution_failed",
+                                   "completed_transitions": len(transitions)}
+            if not journal_failure_reported:
+                critical_events.insert(-1, {"event": "journal_write_failed",
+                                            "error_type": journal_failure_type})
+                journal_failure_reported = True
         receipt["critical_events"] = critical_events
         return receipt
 
@@ -265,6 +292,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         emit({"event": "observation_recorded", "state": state,
               "sequence": observation["sequence"],
               "evidence_ref": observation["evidence_ref"]})
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
 
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
@@ -284,12 +313,18 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                       "status": status, "evidence_ref": observation["evidence_ref"],
                       "verifier": "compiled_predicate_condition"})
                 return finish("SAFE_YIELD", "effect_" + status)
-            effect = adapters["verify_effect"]({
-                "expected_effect": copy.deepcopy(expected),
-                "action": pending_effect["action"],
-                "effect_ref": pending_effect["effect_ref"],
-                "observation": copy.deepcopy(observation),
-            })
+            try:
+                effect = adapters["verify_effect"]({
+                    "expected_effect": copy.deepcopy(expected),
+                    "action": pending_effect["action"],
+                    "effect_ref": pending_effect["effect_ref"],
+                    "observation": copy.deepcopy(observation),
+                })
+            except Exception as error:
+                emit({"event": "effect_verification_failed",
+                      "action": pending_effect["action"],
+                      "error_type": type(error).__name__})
+                return finish("RUNTIME_FAILED", "effect_unavailable")
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
@@ -319,6 +354,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
               "outcome": branch["outcome"], "action": branch["action"],
               "matched_conditions": copy.deepcopy(branch["when"]),
               "evidence_ref": observation["evidence_ref"]})
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
         if branch["outcome"] == "complete":
@@ -426,5 +463,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         effect_not_before_ns = execution_finished_ns
         previous_digest = observation["evidence_digest"]
         state = branch["next_state"]
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")

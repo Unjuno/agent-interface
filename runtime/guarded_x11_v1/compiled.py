@@ -184,7 +184,20 @@ class _Adapter:
                 self.bridge.sequence != self.latest['sequence']):
             result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
         else:
-            result = self.verifier(copy.deepcopy(request),copy.deepcopy(self.native),self.image.copy())
+            try:
+                result = self.verifier(copy.deepcopy(request),copy.deepcopy(self.native),self.image.copy())
+            except Exception as error:
+                # The shared graph returns a typed partial receipt for verifier
+                # exceptions, so preserve the guarded adapter's raw witness here
+                # before that exception boundary consumes it.
+                try:
+                    self.retain('exception', {'stage':'effect_verification',
+                        'error_type':type(error).__name__,'error':repr(error),
+                        'replay_allowed':False,
+                        'effect_status':'unknown; inspect retained bridge receipts before any new action'})
+                except Exception:
+                    pass
+                raise
             if not self.associated() or self.bridge.sequence != self.latest['sequence']:
                 result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
         self.retain('effect', {'request':request,'result':result})

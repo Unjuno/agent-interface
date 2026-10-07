@@ -89,6 +89,23 @@ class CompiledX11Tests(unittest.TestCase):
         self.assertIn('native artifact identity mismatch',errors[0]['error'])
         self.assertTrue(any(n.endswith('-receipt.json') for n,v in b.saved))
 
+    def test_verifier_exception_returns_typed_failure_and_retains_exception(self):
+        b=Bridge()
+        def fail(*args):
+            raise RuntimeError('controlled verifier failure: witness-7954')
+        result=run(b,spec(),bindings(),perceive=perceive,verify_effect=fail)
+        self.assertEqual((result['outcome'],result['reason']),('RUNTIME_FAILED','effect_unavailable'))
+        self.assertEqual(result['completed_transitions'],1)
+        self.assertEqual(len(b.inputs),1)
+        self.assertEqual(result['pending_effect']['action'],'enter')
+        errors=[v for n,v in b.saved if n.endswith('-exception.json')]
+        self.assertEqual(len(errors),1)
+        self.assertEqual(errors[0]['stage'],'effect_verification')
+        self.assertEqual(errors[0]['error_type'],'RuntimeError')
+        self.assertIn('witness-7954',errors[0]['error'])
+        self.assertFalse(errors[0]['replay_allowed'])
+        self.assertTrue(any(n.endswith('-receipt.json') for n,v in b.saved))
+
     def test_top_level_native_release_is_retained_on_pre_execution_refusal(self):
         b=Bridge()
         b.click=lambda *a,**k:{'status':'refused','error':'BACKEND_CONSTRAINT',

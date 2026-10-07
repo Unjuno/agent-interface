@@ -145,9 +145,12 @@ No valid observation sequence/history entry is published for that capture.
 The latest evidence still refers to the last valid frame, not the changed
 capture. Review the actual window and obtain fresh grounding before new input.
 There is no automatic window selection, retry, confirmation or effect success.
-Untyped errors during observation still retain an exception record, then return
-`RUNTIME_FAILED / observation_failed`; failures outside observation propagate
-and are retained.
+Untyped errors during observation retain an exception record, then return
+`RUNTIME_FAILED / observation_failed`. Effect-verifier exceptions also retain
+their raw exception witness before the shared graph converts them into a typed
+`RUNTIME_FAILED / effect_unavailable` receipt. Other failures outside observation
+or effect verification retain an exception record at the adapter boundary and
+propagate unless the shared runtime defines a typed callback result.
 
 [Primary Calc successor](../results/calc-compiled-pixel-admission-05/README.md)
 exercised the actual capture binding change and returned this typed receipt.
