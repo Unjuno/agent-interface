@@ -32,13 +32,15 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 
 - Current main is 074f00a0db5baf48a42ed446043f7e1081a40ed7. The retired 4435 custody, A09, and A12 tips remain ancestors of this main.
 - GitHub pull dashboard reports 379 open PRs across 16 pages; the list changed during capture, so no fresh PR/branch crosswalk is asserted from that page view.
-- [Current branch tips](BRANCH_TIPS_20261007_123127Z.csv) records 449 remote branches from one ls-remote response.
+- [Current branch tips](BRANCH_TIPS_20261007_123127Z.csv) records 447 remote branches at the later 12:53 UTC capture.
 
 - Current PR activity capture: 379 open (335 Draft, 44 ready), 86 updated within 24 hours, 110 within 48 hours, and 130 created over 3 days earlier. This is not an abandonment test; STOP/HOLD evidence and stacked PR dependencies need preservation review. See [activity summary](OPEN_PR_ACTIVITY_20261007_123440Z.md) and [all 379 PR rows](OPEN_PR_ACTIVITY_20261007_123440Z.csv).
 
 - The author deleted fix/x11-explicit-up-01a0ff2c on Oct 7 at 12:34 UTC. Its PR #7114 is closed unmerged and explicitly titled Superseded; the remaining branch delta is three test-file edits and is not integrated. Do not restore or adopt that V2 change. The historical evidence archive was separately rescued by merged PR #7980 (commit 5d896208724f824b7a0490a512bc72340a80bf0d), whose tip is reachable from main and whose MANIFEST.json is present there.
 
 - PR #7148 is closed unmerged but its fix/x11-wheel-ledger-01a0ff2c branch remains outside main. Its last review note says V4 content review SUSPENDED / adoption/application HOLD and explicitly says not to approve, adopt, or apply this head. The four-commit branch changes nine paths relative to its merge base. Preserve it as a held source record; do not delete or merge until a qualified successor resolves the hold.
+
+- PR #8296 was closed unmerged, but its two-commit held-modifier fix passed its original ten checks. Rebased by cherry-picking both commits onto current main in rescue/8252-held-modifier-currentmain-20261007; 59 focused/regression tests and compileall pass. The branch is pushed; a new PR has not been created. See [rescue record](BRANCH_RESCUES_20261007.csv) and compare link.
 
 ## Follow-up policy
 
@@ -48,6 +50,9 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 4. Re-run the complete inventory after these dispositions; this snapshot does not claim the repository is clean or that all 65 unpaired branches are abandoned.
 
 ## Snapshot files
+
+- [Latest branch tips](BRANCH_TIPS_20261007_125325Z.csv)
+- [Rescued branch record](BRANCH_RESCUES_20261007.csv)
 
 - [Open PRs](OPEN_PRS_20261007_121116Z.csv)
 - [Branch tips](BRANCH_TIPS_20261007_121116Z.csv)
