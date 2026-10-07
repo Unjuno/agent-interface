@@ -100,6 +100,25 @@ watchdog censored incomplete controls; no full 90-second wait was measured.
 An acknowledged interrupt without completion remains outside this repair.
 Persistent close failures remain reportable.
 
-Draft repair for nonauthor review and fresh current-main integration. No main
-update or live task-effect/recovery claim follows from these results. Peer
-response-ownership and lifecycle proposals, including #8186, remain separate.
+## POSIX test portability follow-up
+
+The four added mocked `os.killpg` tests now carry the existing POSIX-only skip
+condition. The historical `RESULT.json` and its original test hash are unchanged;
+`portability-followup-20261007/` records the new test hash and full normal and
+optimized Darwin logs. The updated test module passes 8/8 in both modes on macOS
+27.0.1 arm64 / CPython 3.14.5. No Windows host run is claimed. No production
+runtime, scientific allocation, model, GUI, or task-effect behavior changed.
+
+## Current integration status — 2026-10-07
+
+The PR branch was updated from latest main `074f00a0db5baf48a42ed446043f7e1081a40ed7`
+by merge commit `8b7d4bc56719cf1895363f36ed13673cd949f5e2`; the four original
+repair/evidence commits remain unchanged. GitHub exact-head checks `replay-gate`,
+`audit`, `native-mcp`, and `research-workspace-index` all pass. The full native
+integration job exercises this POSIX process-tree module on Ubuntu. The Windows
+runtime workflows target other modules and do not invoke this test module.
+
+The PR remains Draft pending the required genuine nonauthor review. The
+portability helper audit and local checks are not quorum. Peer response-ownership
+and lifecycle proposals, including #8186, remain separate. Live task-effect,
+recovery, physical release, and OS shutdown worst-case claims remain untested.

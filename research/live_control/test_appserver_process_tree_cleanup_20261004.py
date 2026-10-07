@@ -35,6 +35,7 @@ class AppServerProcessTreeCleanupTests(unittest.TestCase):
         client.process.poll.side_effect = polls
         return client
 
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process-group ownership only')
     def test_signal_reaps_exited_leader_and_still_signals_descendants(self):
         client = self.owned_client([0])
         def signal_group(pid, signum):
@@ -43,6 +44,7 @@ class AppServerProcessTreeCleanupTests(unittest.TestCase):
             client._signal_owned_group(signal.SIGTERM)
         killpg.assert_called_once_with(4567, signal.SIGTERM)
 
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process-group ownership only')
     def test_signal_reaps_exit_race_then_observes_absent_group(self):
         client = self.owned_client([None, 0])
         with patch('codex_app_server_client_v2.os.killpg', side_effect=[
@@ -50,6 +52,7 @@ class AppServerProcessTreeCleanupTests(unittest.TestCase):
             client._signal_owned_group(signal.SIGTERM)
         self.assertEqual(killpg.call_count, 2)
 
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process-group ownership only')
     def test_signal_retains_permission_failure_for_live_leader(self):
         client = self.owned_client([None, None])
         error = PermissionError('live group denied')
@@ -59,6 +62,7 @@ class AppServerProcessTreeCleanupTests(unittest.TestCase):
         self.assertIs(raised.exception, error)
         self.assertEqual(killpg.call_count, 1)
 
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process-group ownership only')
     def test_signal_retains_persistent_permission_failure_after_exit(self):
         client = self.owned_client([None, 0])
         error = PermissionError('surviving group denied')
