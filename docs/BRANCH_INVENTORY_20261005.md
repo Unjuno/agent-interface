@@ -424,3 +424,9 @@ Deleted closed-unmerged #8217's `research/7799-pairwise-eligibility-t0-a01-20261
 - `test/59-v39-observation-step-alias-20261005`
 
 These 67 refs remain unclassified. Several are research/rescue branches. Resolve closed-PR history, unique commit/path custody, owner/allocation, and worktree status before any further deletion; preserve experiment raw data and STOP outcomes.
+
+## Closed #7498 WAL rescue-ref custody — 2026-10-07 10:00 UTC
+
+Closed-unmerged Draft PR [#7498](https://github.com/Unjuno/agent-interface/pull/7498) used `rescue/wal-snapshot-6526-20261004` at exact tip `3f542d52ff6a573e94aae9a10ff69506e2640f7b`. The 52 changed paths were the retained C03 package under `research/integration/wal_snapshot_recovery_6526_01a0ff58_c03/`; each root entry and the four directory subtrees match current `main` by Git blob/tree ID. Main also carries the later `RESCUE_20261004.md` custody note. The original closed-unmerged PR #7083 and its pull-head remain unchanged. Issue #6526 remains open; this cleanup concerns only the duplicate rescue ref, not the separate live C01/C02 work or the historical C03 STOP/audit record.
+
+Before deletion, a complete paginated open-PR read found no head or base dependency on the rescue branch; the branch listing marked it unprotected; and `git worktree list` found no checkout of it in this shared clone. Deleted the remote ref with an expected-tip lease for `3f542d52ff6a573e94aae9a10ff69506e2640f7b`; the closed #7498 pull-head remains the historical recovery reference. No producer, candidate, auditor, test, or replay was run. Immediately after deletion, branch enumeration reported 437 heads and the paginated open-PR collection reported 364 PRs; a full head/base crosswalk was not recomputed at that capture, so these totals do not change the earlier 434/363 crosswalk snapshot above.
