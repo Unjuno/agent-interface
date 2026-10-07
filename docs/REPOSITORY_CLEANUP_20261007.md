@@ -71,3 +71,8 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 
 - Retired remote heads for merged PRs #8315, #8310, and #8306. In each case the exact branch tip matched the merged PR head; the PR merge was integrated into current main `798ac5ad709168ff1d27b115f10f4f96b126bb71`; branch protection was false; an audit of all 381 open PRs found no head or base dependency; and `git worktree list` showed no worktree owner. Each deletion used an expected-tip lease. The corresponding experiment records remain in main through the merged PRs.
 - `git ls-remote --heads origin` now reports 446 refs. Retirement rows are in `BRANCH_RETIREMENTS_20261007_1221Z.csv`.
+## 2026-10-07 stale-PR follow-up (13:58Z)
+
+- GitHub REST inventory returned 382 open PRs: 334 target `main`, and 325 of those record a base SHA older than current main `798ac5ad709168ff1d27b115f10f4f96b126bb71`. Another 48 are intentionally stacked. Refresh only after checking dependency order and the evidence's frozen inputs; this is not a bulk-rebase instruction.
+- PR #8305 was rebased onto current main and its local 5/5 package tests, 769-directory analysis index check, compilation, and diff check pass. Current-head CI has passing analysis/workspace-index, replay, navigation, and one method-contract job; one duplicate method-contract job was cancelled and another is still at checkout.
+- PR #8304 was not pushed after its current-main rebase attempt: with exact required sibling data hydrated, 8/14 tests fail because receipts in current main no longer match the package's frozen classifications/input manifest. Preserve the original remote branch until a separate additive snapshot fix can retain the exact frozen inputs without rewriting its one-shot result.
