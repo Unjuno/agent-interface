@@ -34,6 +34,8 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 - GitHub pull dashboard reports 379 open PRs across 16 pages; the list changed during capture, so no fresh PR/branch crosswalk is asserted from that page view.
 - [Current branch tips](BRANCH_TIPS_20261007_123127Z.csv) records 449 remote branches from one ls-remote response.
 
+- Current PR activity capture: 379 open (335 Draft, 44 ready), 86 updated within 24 hours, 110 within 48 hours, and 130 created over 3 days earlier. This is not an abandonment test; STOP/HOLD evidence and stacked PR dependencies need preservation review. See [activity summary](OPEN_PR_ACTIVITY_20261007_123440Z.md) and [all 379 PR rows](OPEN_PR_ACTIVITY_20261007_123440Z.csv).
+
 ## Follow-up policy
 
 1. Triage the 65 unpaired, non-main-ancestor branches individually. First identify merged/closed PRs, ancestry and stack dependencies, worktree ownership, evidence custody, and whether each unique change is already integrated. Delete only verified aliases or fully integrated disposable refs; rescue useful evidence to a current-main PR before removing its source ref.
