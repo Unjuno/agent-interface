@@ -163,6 +163,28 @@ class BatchMeasurementCompositionTests(unittest.TestCase):
         self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
         self.assertEqual(self.fixture.fake.down, set())
 
+    def test_baseexception_from_measurement_publisher_does_not_mask_down_error(self):
+        original_sync = self.fixture.fake.sync
+
+        def sync_then_fail():
+            original_sync()
+            raise OSError('synthetic DOWN acknowledgement loss')
+
+        def interrupt_publish(row):
+            raise KeyboardInterrupt('synthetic measurement output interruption')
+
+        with patch.object(self.fixture.fake, 'sync', sync_then_fail):
+            with patch.object(self.backend, 'emit', interrupt_publish):
+                with self.assertRaisesRegex(OSError, 'DOWN acknowledgement loss') as caught:
+                    self.backend.raw('W', True)
+        self.assertEqual(caught.exception.measurement_publish_error, {
+            'type': 'KeyboardInterrupt',
+            'message': 'synthetic measurement output interruption',
+        })
+        self.assertEqual(self.fixture.fake.down, {38})
+        self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
+        self.assertEqual(self.fixture.fake.down, set())
+
     def test_measurement_failure_does_not_mask_down_error(self):
         original_sync = self.fixture.fake.sync
 
