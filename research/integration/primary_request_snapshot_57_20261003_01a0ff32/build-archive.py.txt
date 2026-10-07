@@ -1,0 +1,18 @@
+from pathlib import Path
+import json,hashlib,os
+O=Path(__file__).resolve().parent;R=O.parent.parent/'work/primary-request-snapshot-01a0ff32';root=O.parent.parent;home=Path.home();leaf='research/integration/primary_request_snapshot_57_20261003_01a0ff32';D=R/leaf;D.mkdir(parents=True,exist_ok=False)
+def sha(b):return hashlib.sha256(b).hexdigest()
+files=[p for p in O.rglob('*') if p.is_file() and 'archive' not in p.parts and p.name not in ['ARCHIVE-RESULT.json']]
+rows=[]
+for p in sorted(files):
+    n=p.relative_to(O).as_posix();b=p.read_bytes();s=b.decode('utf-8')
+    for a,v in [(str(root),'$REVIEW_WORKSPACE'),(str(home),'$REVIEW_HOME')]:
+        for old in [a,a.replace('\\','/'),a.replace('\\','\\\\')]:s=s.replace(old,v)
+    pub=s.encode();assert home.name.lower() not in s.lower(),n
+    target=Path(n+'.txt') if p.suffix in ['.py','.mjs'] else Path(n)
+    f=D/target;f.parent.mkdir(parents=True,exist_ok=True);f.write_bytes(pub)
+    rows.append({'path':target.as_posix(),'original_path':n,'original_bytes':len(b),'original_sha256':sha(b),'public_bytes':len(pub),'public_sha256':sha(pub),'private_prefix_projected':pub!=b})
+(D/'README.md').write_bytes((O/'REPORT.md').read_bytes())
+(D/'MANIFEST.json').write_bytes(json.dumps({'schema':'primary-request-snapshot-archive-v1','worker':'01a0ff32-f520-79d2-b8cd-110e05130103','base':'3b42b0507e3ddea9eb68ae60b53fac51ef4ee2f9','files':rows,'projection':'owned reviewer workspace/home prefixes only; exact originals retained locally; no producer execution for restoration','scope':'new ordinary request validation/liveness repair; inert source/data helpers'},sort_keys=True,indent=2).encode()+b'\n')
+result={'leaf':leaf,'manifest_members':len(rows),'leaf_files':len(rows)+2,'public_bytes':sum(r['public_bytes'] for r in rows),'private_prefix_derivatives':sum(r['private_prefix_projected'] for r in rows),'manifest_sha256':sha((D/'MANIFEST.json').read_bytes()),'main_sends':0}
+(O/'ARCHIVE-RESULT.json').write_bytes(json.dumps(result,indent=2).encode());print(json.dumps(result))

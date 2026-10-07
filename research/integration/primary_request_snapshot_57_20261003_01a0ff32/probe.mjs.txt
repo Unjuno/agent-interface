@@ -1,0 +1,48 @@
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {join,dirname,resolve} from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+import {createHash} from 'node:crypto';
+const O=dirname(fileURLToPath(import.meta.url)),stage=process.argv[2];
+if(!['original','candidate'].includes(stage))throw Error('explicit fresh stage');
+const source=join(O,stage==='original'?'source':'candidate');
+const {createPrimaryCaller}=await import(pathToFileURL(join(source,'primary_caller.mjs')));
+const {createInstrumentedRelayClient}=await import(pathToFileURL(join(source,'relay_host.mjs')));
+const started=new Date().toISOString(),results=[];
+const labels=['mint-stable','mint-mutated','mint-preclone','feedback-stable','feedback-mutated','feedback-helper'];
+await mkdir(join(O,stage));
+for(const label of labels){
+  const dir=join(O,stage,label);await mkdir(dir);let callbackCount=0,imageCount=0;
+  const mint=label.startsWith('mint'),changed=label.includes('mutated')||label.includes('preclone')||label.includes('helper');
+  const original=mint?{source_sequence:1,references:[{alias:'field',point:[1,2],region_size:[8,8]}]}:{alias:'save',offset:[1,2],interaction:'click',tail:[],detail:'brief',observation_refs:true,feedback:{expected_title:'saved',rejected_titles:[],timeout_ms:10}};
+  const before=structuredClone(original),request=mint&&label==='mint-preclone'?structuredClone(original):original;
+  const host=await createInstrumentedRelayClient({command:process.execPath,args:[join(O,'fixture.mjs'),dir],evidenceDirectory:join(dir,'host')});
+  const caller=createPrimaryCaller(host,'guarded-local',{
+    text:value=>{callbackCount++;if(changed){if(mint)original.references[0].alias='changed';else original.feedback.expected_title='changed';}},
+    image:()=>{imageCount++;}});
+  let reply,error=null;
+  try{
+    reply=label==='feedback-helper'?await caller.inputWithFeedback('save',[1,2],'click',[],original.feedback):await caller.call(mint?'interface_guarded_mint_many':'interface_guarded_input',request);
+  }catch(e){error={name:e.name,message:e.message};}
+  const state=caller.state();const exit=await host.close();
+  const fixtureStart=JSON.parse(await readFile(join(dir,'fixture-start.json'),'utf8')),
+    fixtureExit=JSON.parse(await readFile(join(dir,'fixture-exit.json'),'utf8')),
+    requests=(await readFile(join(dir,'fixture-requests.jsonl'),'utf8')).trim().split('\n').map(JSON.parse),
+    events=(await readFile(join(dir,'host/host-events.jsonl'),'utf8')).trim().split('\n').map(JSON.parse),
+    savedReply=JSON.parse(await readFile(join(dir,'host/reply-1.json'),'utf8'));
+  const wire=requests[0]?.arguments;
+  const pass=error===null&&state.stopped===null&&requests.length===1&&
+    JSON.stringify(wire)===JSON.stringify(before)&&fixtureExit.code===0&&fixtureExit.requests===1&&exit.code===0;
+  const row={label,started_utc:started,ended_utc:new Date().toISOString(),original_arguments:before,caller_arguments_after:original,
+    caller_state:state,error,original_reply:reply??null,saved_reply:savedReply,fixture_start:fixtureStart,fixture_exit:fixtureExit,
+    host_exit:exit,wire_requests:requests,host_events:events,text_callbacks:callbackCount,image_callbacks:imageCount,
+    semantic_pass:pass,retained_original_wire_identity:JSON.stringify(wire)===JSON.stringify(before),request_count:requests.length};
+  await writeFile(join(dir,'RESULT.json'),JSON.stringify(row,null,2)+'\n',{flag:'wx'});results.push(row);
+}
+const result={stage,started_utc:started,ended_utc:new Date().toISOString(),pid:process.pid,ppid:process.ppid,node:process.version,
+  node_path:process.execPath,node_sha256:createHash('sha256').update(await readFile(process.execPath)).digest('hex'),
+  source_sha256:createHash('sha256').update(await readFile(join(source,'primary_caller.mjs'))).digest('hex'),
+  cases:results,pass:results.filter(x=>x.semantic_pass).length,fail:results.filter(x=>!x.semantic_pass).length,
+  formal_allocation_replays:0,native_or_physical_inputs:0};
+await writeFile(join(O,stage,'RESULT.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({stage,pid:result.pid,node:result.node,pass:result.pass,fail:result.fail,cases:results.map(r=>({label:r.label,pass:r.semantic_pass,stop:r.caller_state.stopped,requests:r.request_count,fixture_pid:r.fixture_start.pid,host_exit:r.host_exit.code}))}));
+if(result.fail)process.exitCode=1;
