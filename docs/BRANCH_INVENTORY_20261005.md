@@ -163,3 +163,8 @@ The earlier hold for #8224 was based on its source tip not being an ancestor of 
 ## Correction — #8227 rescue-ref disposition — 2026-10-07
 
 The earlier #8227 hold was based on its source tip not being an ancestor of current main. A complete path-level comparison resolves that hold: all eleven package/config files match main by Git blob ID, and the research-analysis index still contains the package link; the only index difference was later main-side entries absent from the old head. PR #8227 is closed-merged. Open head/base searches and the worktree registry returned no dependencies. The source ref was removed with an exact-tip lease, while `refs/pull/8227/head` remains fetchable at `ffec38c5c64ff7d6dba39576662b9f09daff0ae1`. No candidate, auditor, or experiment was rerun.
+## Rescue of #8222's omitted analytical-index entry — 2026-10-07
+
+A read-back found that merged PR #8222's unique `Issue #7799 T0 A01 pairwise eligibility` summary row was absent from current main's `research/analysis/README.md`, despite the package directory link and evidence files being present. The exact summary row from the closed PR head is now proposed in open Draft PR #8263 as a single-file, additive index repair. It preserves the `HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR` result and its synthetic-only limits; no package, candidate, or auditor was rerun.
+
+After confirming #8222's only changed path was the index, its row was present in the successor branch, no open PR depended on the old ref, and no worktree used it, deleted `fix/7799-analysis-index-20261005` at exact tip `8a5417c34df33cfafe137cbb8c257199b0f68258`. The closed #8222 pull-head remains fetchable. The restored summary is proposed for review and is not yet integrated into main.
