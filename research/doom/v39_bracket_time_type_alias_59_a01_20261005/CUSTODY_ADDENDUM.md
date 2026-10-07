@@ -1,0 +1,9 @@
+# Current-main custody addendum (2026-10-08)
+
+This directory preserves the exact A01 construction-evidence subtree from PR #7677 head `6cd3169368678584afe2ab8b6172ffffa4a77fed`. The predecessor result files, README, FREEZE, INPUT, raw first-red/green receipts, auditors, runner, and SHA256SUMS were copied without edits. The public manifest verifier's retained V2 result is `entries=56 mismatches=0`; the earlier V1 self-reference failure remains retained as well.
+
+`CANDIDATE_SOURCE.py.txt` and `TEST_SOURCE.py.txt` are inert snapshots copied from that exact PR head so the historical result remains inspectable after the stacked branch changes. The candidate source SHA-256 is `203060c23fe5ccb05655f875be2175ce2754c17e6582540d893b03158983bc7c`, as recorded in the original README. They are not imported by runtime code and are not an instruction to replay the consumed study.
+
+Independent read-only revalidation on a disposable checkout of the original PR head returned `PASS_INDEPENDENT_REPLAY`; all 11 recorded checks were true. The focused source/JSON regression returned 3/3 passing tests. No candidate allocation, X11 input, application, model, game, or live/formal experiment was run. This confirms only deterministic Boolean-versus-integer timestamp handling for the frozen projection fixture; it does not establish physical key timing, input authority, application consumption, safety, recovery, gameplay, or product benefit.
+
+The old PR #7677 is still an open Draft stacked on closed PR #7662. This additive current-main evidence archive does not adopt its runtime source changes, rewrite the original result, close either PR, or authorize deletion of their branches. PR #7662's 26 changed evidence paths were independently found byte-identical to current main through merged PR #8173, but its branch remains the base of #7677 and must stay until that dependency is resolved.
