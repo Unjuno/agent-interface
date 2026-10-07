@@ -24,7 +24,15 @@ class CodexAppServerClient:
         }
         if self._owns_process_group:
             process_options["start_new_session"] = True
-        self.process = process_factory(command, **process_options)
+        try:
+            self.process = process_factory(command, **process_options)
+        except BaseException as startup_error:
+            try:
+                if self._journal is not None:
+                    self._journal.close()
+            except BaseException as cleanup_error:
+                raise startup_error from cleanup_error
+            raise
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
