@@ -240,8 +240,99 @@ This remains a reference census, not a unique-commit audit. No branch is classif
 
 ## Follow-up API snapshot and evidence rescue — 2026-10-05 18:40 JST
 
+A later authenticated GitHub Search/branch read at approximately 18:40 JST returned 335 unique OPEN PR IDs and 387 unique branch refs (current `main` at `9febfe4926cde6629f9751d6444f6b802cf31328`). The PR search was partitioned by creation-time windows to avoid its 100-result cap. Individual REST detail fetches then hit GitHub's API rate limit: only 60 of 335 PR detail records were returned. The earlier complete 336/382 CSVs remain the most recent complete head/base/branch snapshot; the 335/387 totals are counts only and do not update row-level refs, bases, draft status, review state, or checks. Do not infer that the one-count decreases identify particular PRs/branches.
+
+During that read, the branch endpoint returned five pages totaling 387 unique names, while current open-PR search returned 335 unique PR IDs (#6934–#8148); there were no PRs created before 2026-10-03. The current ref count and PR count are not a deletion classification. Full current head/base mapping, closed-PR dependencies, unique commit/path attribution, and owner/allocation status remain unverified. No branch is classified safe to delete.
+
+### Experiment evidence disposition
+
+- PR [#8097](https://github.com/Unjuno/agent-interface/pull/8097) is present in current `main` via commit `ff7bfe684f5aa96e862f48c8fa44b403dc455b3b` (ancestor of `9febfe4926cde6629f9751d6444f6b802cf31328`). It rescues the V39 Xvfb A03–A08 packages, including A03/A04 STOP records, A05 invocation STOP, A06 raw plus partial audit and STOP, and A08 `PASS_METHOD_SCOPED` raw/audit. The focused current-main tests for A05 recorded 10/10 passing; they do not replace the stopped Xvfb allocations. These packages are already preserved on main; no duplicate rescue is needed.
+- PR [#7980](https://github.com/Unjuno/agent-interface/pull/7980) preserves 56 X11 explicit-UP evidence files from the closed/superseded #7114 without importing its runtime fix/tests. This is evidence-only and leaves the source branch untouched.
+- PR [#8114](https://github.com/Unjuno/agent-interface/pull/8114) merged the inventory errata and the 336/382 paginated snapshot. Its exact CSVs remain timestamped snapshots, not live data.
+
+### Local recovery state
+
+The audit workspace contains multiple retained clones/worktrees and detached review checkouts. The latest main commit `9febfe4` fixes those inventory/evidence rescues in history; older checkouts are substantially behind it and one inventory checkout contains hundreds of unrelated staged experimental paths. No such checkout was pruned, reset, or force-pushed. A partial audit clone and temp files also remain under the user's `_tmp` directory after shell-policy-denied cleanup. Re-evaluate each worktree against its owner, live PR and unique evidence before removing it.
+
+### Next safe pass
+
+1. Capture a fresh paginated branch-tip CSV and complete paginated PR metadata (open and closed) together with a single `main` SHA.
+2. Fetch PR heads/bases in rate-limit-aware batches and verify every current head/base still resolves to the captured refs.
+3. Map each branch to all PR states, dependent bases, Issue/owner/allocation, unique commits, and unique paths; keep unknown rows.
+4. Preserve failed/STOP and raw outcomes, and prune only individually verified refs after their unique commits/evidence are reachable elsewhere and owners/dependents are resolved.
+
 ## Current paginated branch and open-PR counts — 2026-10-07 09:35 UTC
 
 A fresh read observed 423 remote branch refs with `git ls-remote --heads origin`; GitHub branch search pagination also returned 423 branch names across six pages. A separately paginated search returned 359 open PRs, split by creation date to stay below its 100-result cap: 63 on October 3; 130 on October 4; 142 on October 5 (67 from 00:00–05:59 UTC, 57 from 06:00–11:59 UTC, and 18 from 12:00–23:59 UTC); 10 on October 6; and 14 on October 7. Earlier date partitions returned no open PRs.
 
 The branch and PR reads are not an atomic snapshot, and the branch-name listing does not map refs to PR heads/bases, owners, unique commits, experiments, or active allocations. This updates backlog counts only; it classifies no branch as safe to delete. The all-ref custody audit remains incomplete.
+
+## Current open-PR branch map and merged-ref cleanup — 2026-10-07 09:41 UTC
+
+A complete date-partitioned search and metadata fetch resolved 360 open PRs to 360 distinct head branch names and 36 distinct base branch names; 32 base names are also open heads, and four are base-only. The branch-name pagination read initially returned 424 refs. After deleting merged PR #8253's source ref below, a fresh count was 423. Of these current refs, 59 are neither an open PR head nor an open PR base. This is only an initial candidate set: each still needs closed-PR history, tip/content custody, owner/allocation, and local worktree review.
+
+Deleted `fix/ci-preview-analysis-checkout-20261006` at exact tip `0756e73a24c0f1f5ac869063b08bebe1e89dad7b`. PR #8253 is closed-merged; its live branch tip matched the PR head and is an ancestor of main (main is 39 commits ahead). Open PR head/base mapping showed no dependents, the branch was unprotected, and no local worktree had it checked out. The exact-tip lease succeeded. The branch head is absent and `refs/pull/8253/head` remains fetchable at the former tip.
+
+### Remote refs outside current open-PR heads and bases
+
+- `codex/fix-7997-evidence-wording`
+- `fix/compiled-observation-exception-propagation-20261005`
+- `fix/retain-unverified-x11-key-holds-20261005`
+- `fix/x11-explicit-up-01a0ff2c`
+- `fix/x11-wheel-ledger-01a0ff2c`
+- `fix/59-a05-audit-integrity-20261005`
+- `fix/59-projector-attempt-ordinal-type-e0cc-20261005`
+- `fix/59-v39-admission-id-projection-a01-20261005`
+- `fix/59-v39-bracket-interval-bool-20261005`
+- `fix/59-v39-cover-admission-invalidation-edd067-20261004`
+- `fix/59-v39-hashsafe-adapter-id-20261005`
+- `fix/59-v39-raw-bracket-consistency-a01-20261004`
+- `fix/59-windows-anonymous-pipe-readiness-20261005`
+- `fix/7974-release-lockout-a01-20261005`
+- `fix/8243-verifier-r2p6-20261006`
+- `rescue/constructor-close-fdfd-20261004`
+- `rescue/wal-snapshot-6526-20261004`
+- `rescue/59-per-key-interval-a01-a02-20261005`
+- `rescue/7838-a02-current-main-20261005`
+- `research/cli-report-persistence-retained-p4n7-20261006`
+- `research/held-chord-h7k3-20261007`
+- `research/predictive-display-t0-5935-20261006-v1`
+- `research/primary-uncertain-ba92-v1`
+- `research/reversal-geometry-20261006-g8m2`
+- `research/scorer-endpoint-readback-type-20261005`
+- `research/strict-attempt-ordinal-v39-20261005`
+- `research/v15-perkey-owner-evidence-only-20261005`
+- `research/v39-attempt-ordinal-exact-int-20261005`
+- `research/v39-dual-signal-epoch-a03-20261005`
+- `research/v39-partial-record-drain-race-20261005`
+- `research/59-cancel-release-cause-postsample-c03-20261004`
+- `research/59-exact-release-trace-a01-20261005`
+- `research/59-expected-key-provenance-a01-20261005`
+- `research/59-owner-expiry-drain-barrier-a01-20261005`
+- `research/59-per-key-release-receipts-20261005`
+- `research/59-release-query-failure-probe-a01-20261005`
+- `research/59-renewal-soft-stale-admission-a01-20261005`
+- `research/59-v12-source-closure-20261005`
+- `research/59-v39-cover-admission-main-port-a01`
+- `research/59-v39-current-admission-fix-a01-20261005`
+- `research/59-v39-fire-cover-ammo-audit-a01-20261005`
+- `research/59-v39-frame-only-threat-a01-20261005`
+- `research/59-v39-keymap-batch-a06-20261005`
+- `research/59-v39-renewal-invalidation-a01-20261005`
+- `research/59-v39-renewal-reject-race-a01-20261005`
+- `research/59-v39-v15-cleanup-a05-current-main-20261005`
+- `research/59-v39-v15-cleanup-a07-current-main-20261005`
+- `research/59-xvfb-audit-v3-a02-20261005`
+- `research/4435-complete-custody-20261007-k9r2`
+- `research/6576-runtime-envelope-a04-20261006`
+- `research/7799-pairwise-eligibility-t0-a01-20261005`
+- `research/7993-superpopulation-ipcw-a02-construction-20261005`
+- `research/8150-threat-profiled-runtime-eligibility-t0-20261005`
+- `research/8157-prefix-audit-a03-20261005`
+- `research/8185-transform-graph-a02-20261005`
+- `review/7822-zero-boundary-c03-20261006`
+- `test/59-feedback-before-step-bool-20261005`
+- `test/59-v39-adapter-edge-cardinality-a01-20261005`
+- `test/59-v39-observation-step-alias-20261005`
+
+These 59 refs are unclassified. Names and open-PR relationships alone do not justify deletion; preserve any unique experiment evidence and STOP/raw outcomes before considering cleanup.
