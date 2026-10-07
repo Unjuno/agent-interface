@@ -60,5 +60,5 @@ allocation. Any follow-up requires a new successor allocation.
 
 Construction suite passed before freeze. Source was committed and pushed as
 `feb8f462599939b239f52dbb0665df020b0de042`; GitHub MCP readback confirmed the
-commit tree and all seven blob object IDs. Formal candidate/auditor results and
-run hashes will be recorded in `REPORT.md` after the one-shot run.
+commit tree and all seven blob object IDs. See `REPORT.md` for the scoped
+formal result, retained outputs, and hashes.
