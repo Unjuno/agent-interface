@@ -1,3 +1,5 @@
+- [Issue #7367 A02 retained-workload byte-binding audit](issue7367_context_liveness_audit_a02_20261005/REPORT.md) — `PASS_AUDIT_BINDING_REVALIDATED`: one read-only container audit reproduces retained A01 and binds workload/raw bytes to the freeze; v1 accepts the self-consistent mutation and v2 rejects it. Candidate not rerun; finite synthetic scope only.
+
 # Analytical research
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
@@ -620,6 +622,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue59_wsl_cuda_model_route_smoke_20261003/`](issue59_wsl_cuda_model_route_smoke_20261003/)
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
 - [`issue7367_audit_binding_a02_20261005/`](issue7367_audit_binding_a02_20261005/)
+- [`issue7367_context_liveness_audit_a02_20261005/`](issue7367_context_liveness_audit_a02_20261005/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)

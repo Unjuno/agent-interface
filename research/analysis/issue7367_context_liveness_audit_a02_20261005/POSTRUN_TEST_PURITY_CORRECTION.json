@@ -1,0 +1,16 @@
+{
+  "schema": "issue7367-a02-postrun-test-purity-correction-v1",
+  "source_pr_head": "9a33c71e6ef498c02342ef0052f31c0248a7f3fa",
+  "freeze_sha256_unchanged": "046cd10a1b0f1bf861cf7c13b28826395b808f4950f46e9d905ccc6c46ae3b02",
+  "original_frozen_test_sha256": "545fb58f76ca9119a1e66b3b98f9620c16312e7935891cd3f199a763c46230c3",
+  "corrected_test_sha256": "bd54d7ecb0c7da4242de6ddaf9585bdd4978fcd3064760edfaf73b8f743b3497",
+  "construction_repro_sha256_unchanged": "1211b75bfa0f564bf4b46b8a0b41f29cd609d4a23684bd024ca8a4813eaaf0cb",
+  "test_command": "python -B -m unittest discover -s research/analysis/issue7367_context_liveness_audit_a02_20261005 -p 'test_workload_binding.py' -v",
+  "test_result": "PASS 1/1",
+  "package_files_changed_during_test": 0,
+  "candidate_invocations": 0,
+  "formal_a02_auditor_invocations": 0,
+  "legacy_a01_auditor_invocations_on_synthetic_temp_data": 1,
+  "formal_result_or_freeze_modified": false,
+  "scope": "post-run construction-test hygiene correction only; no change to Issue #7367 A01 scientific result"
+}
