@@ -17,6 +17,17 @@ Use the actual ExecutorV13 with a controlled in-memory backend. Raise `OSError("
 - The wider attempted composition command failed (31 failures, 1 error) because selected Doom batch-composition suites expect the `up_batch` owner implementation from `input_owner_v12.py`, which is untracked and absent from `main` in this checkout. Preserve this as a mixed-source integration limitation, not as a passing run or a regression caused by this patch.
 - Python byte-compilation and `git diff --check`: PASS.
 
+## Follow-on source-stack check (2026-10-07)
+
+To separate the checkout mismatch from the custody change, the commit was cherry-picked into a disposable detached worktree at PR #8261 head `d9dc9dbfa09d89f10961e7cd7a8f52283b1c24c1`. The resulting candidate was `d752fe8313b6d3444fc77038abdf1ada1dea68b8`; its `executor_v13.py` SHA-256 is identical to this report's candidate source.
+
+- `python -B -m unittest test_executor_v13 -q` from `research/live_control`: PASS (14/14).
+- `python -B -m unittest test_input_owner_v12_key_measurement -q` from `research/live_control`: PASS (9/9).
+- The newer batch-composition test cannot import the historical `research.observation_gating.exact_gate` dependency: that source is absent from the PR #8261 tree and main. It is not copied from an archived fixture to force a pass.
+- The combined older Doom release-backend suites still fail on their legacy fake-owner `up_batch` expectations and a hard-coded current-source comparison. This limits broad suite transfer; the V13 custody suite and the current V12 measurement suite remain independently green on the actual PR #8261 source stack.
+
+Raw output and exit codes for the two passing source-stack tests are retained below. This remains construction evidence; it does not test live X11 or the game.
+
 ## C / U
 
 This is deterministic in-memory executor construction evidence. It does not test an X server, Doom, GUI input, physical release, measurement sink durability beyond the supplied exception metadata, model inference, useful feedback, recovery, or task effect. This does not satisfy Issue #59's current-main live threat-control experiment. The broader mixed-source suite remains unverified as a coherent candidate.
@@ -30,4 +41,4 @@ This is deterministic in-memory executor construction evidence. It does not test
 - Construction: `python -B -m py_compile research/live_control/executor_v13.py research/live_control/test_executor_v13.py`
 - Hygiene: `git diff --check`
 
-Raw command output, exit codes, and SHA-256 hashes are retained in this directory. The SHA list covers the final executor/test sources, report, and primary RED/PASS/suite outputs.
+Raw command output, exit codes, and SHA-256 hashes are retained in this directory. The SHA list covers the final executor/test sources, report, and primary RED/PASS/suite outputs, including the source-stack follow-on.
