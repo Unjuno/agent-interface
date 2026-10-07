@@ -23,3 +23,13 @@ Environment: macOS arm64, Python 3.14.5, standard library only; checkout at GitH
 Local SHA-256 after Attempt 4: candidate.py `336b0c9f12da7527f2f78e4cd75307532ea307ede73a452b58426ee3a80f27dc`; auditor.py `69b3faec0b52648fe584318e3d2032c771d9a10281ac47d0296952ce6c69fc41`. The test file was extended afterward to invoke all eight CLI mutation cases and to mutate baseline bytes together with source ID; the full 7/7 construction suite was rerun after that extension. Current exact hashes will be recorded in the freeze.
 
 The suite only qualifies the finite authored fixture method. A PASS does not establish model behavior, proactive interference, tokenization/attention equivalence, task effect, or T1 authorization.
+
+## Append-only follow-up: serialized-history gate and repository checks
+
+The independent auditor and its eight-mutation construction suite were strengthened to validate the actual fixed-slot episode bytes by arm/depth, not merely metadata. The common-byte mutation now updates the serialized reconstruction consistently so the auditor must catch cross-arm identity drift; the history mutation removes an actual depth-4 serialized episode while retaining lineage metadata, so the auditor must catch the missing record itself.
+
+Latest construction run after these changes: `python3 research/analysis/proactive_interference_5947_t0_a02_20261008/construction_runner.py` — 7/7 passed; `git diff --check` passed. Exact current local SHA-256: candidate `336b0c9f12da7527f2f78e4cd75307532ea307ede73a452b58426ee3a80f27dc`; auditor `742068758eab3e4ca2f47cc18e491eeb073dee7ca16737d0a2ac0e99af5a0c6b`; test contract `cab9111cc41335142298e8fa41ba14cd82e53c7bdac6b301d1674f57d6f691e3`; construction runner `d05c207cd585928f12a6da0823e2b618217d37d7db323e38f768969ba197fc40`. GitHub MCP readbacks for candidate, auditor, tests and runner exactly matched their local UTF-8 content.
+
+Repository checks: analysis index reports 768 retained result/failure directories indexed; analysis-index tests 22/22 passed. Workspace index reports 160 top-level research directories reachable; workspace-index test 1/1 passed (run from the `research/` directory as required by its import layout). Initial workspace-index attempts in the sparse checkout stopped because required index inputs were outside the sparse set; those inputs were added to this isolated A02 worktree's local sparse specification only. The repository source/index files were not altered for that setup.
+
+Protocol written to `PROTOCOL.md`. Formal candidate calls remain 0, formal auditor calls remain 0, model calls remain 0, and no result output exists. The exact freeze has not yet been written.
