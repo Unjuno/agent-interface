@@ -218,8 +218,11 @@ class X11Backend:
         if not down:
             self.held_keycodes.pop(key, None)
 
-    def _reject_held_nonmodifier_overlap(self, key_sequences: list[list[str]]) -> None:
-        owned_codes = set(self.held_keycodes.values())
+    def _reject_held_nonmodifier_overlap(
+        self, key_sequences: list[list[str]], *, held_keycodes: dict[str, int] | None = None
+    ) -> None:
+        held = self.held_keycodes if held_keycodes is None else held_keycodes
+        owned_codes = set(held.values())
         if not owned_codes:
             return
         modifier_codes = {
@@ -227,7 +230,7 @@ class X11Backend:
         }
         for keys in key_sequences:
             for key in keys:
-                code = self.held_keycodes.get(key)
+                code = held.get(key)
                 if code is None:
                     code = self._keycode(key)
                 if code in owned_codes and code not in modifier_codes:
@@ -280,6 +283,10 @@ class X11Backend:
 
     def preflight(self, program: dict[str, Any]):
         """Validate before input; return the core keyboard map used for preflight."""
+        # Pacing splits one text payload into several operations. Track the
+        # successful prefix's holds without changing the real cleanup ledger,
+        # so a known late collision is refused before focus or prefix input.
+        planned_held = dict(self.held_keycodes)
         keyboard_mapping = None
         if any(op["op"] in {"text", "key_chord", "key_state"} for op in program["ops"]):
             self._refresh_keyboard_mapping()
@@ -297,12 +304,24 @@ class X11Backend:
             elif kind == "verify":
                 raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
             elif kind == "text":
-                self._text_plan(op["text"])
+                self._reject_held_nonmodifier_overlap(
+                    self._text_plan(op["text"]), held_keycodes=planned_held)
             elif kind == "key_chord":
                 for key in op["keys"]:
                     self._keycode(key)
+                self._reject_held_nonmodifier_overlap(
+                    [op["keys"]], held_keycodes=planned_held)
             elif kind == "key_state":
-                self._keycode(op["key"])
+                key = op["key"]
+                code = planned_held.get(key)
+                if code is None:
+                    code = self._keycode(key)
+                if op["down"]:
+                    planned_held[key] = code
+                else:
+                    planned_held.pop(key, None)
+            elif kind == "release_all":
+                planned_held.clear()
         return keyboard_mapping
 
     def _text_plan(self, value: str) -> list[list[str]]:
