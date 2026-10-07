@@ -149,3 +149,11 @@ Removed three more merged PR source refs after confirming the exact remote tip w
 - #8247 `rescue/7223-uncertain-relay-current-main-20261006` at `401d5171c91ed90097ac2de80c7df12a9f70e0b1`.
 
 Each ref was deleted with an expected-tip lease; closed PR pull-head refs remain fetchable. No test or experiment was rerun. The latest non-atomic remote-head count was 422 after these deletions.
+## Further merged-ref cleanup — 2026-10-07
+
+Removed two additional merged source refs after current-main ancestry, exact tip, open head/base dependencies, and worktree checks:
+
+- #7291 `rescue/telemetry-cap-2a04-20261004` at `dd8bea5a2d38a20e728bd37faec8bae5bed0b336`.
+- #8225 `fix/research-index-vision-namespace-20261006` at `d33bbacc3b6ea08ad8bd3050272c7ae95837d2f6`.
+
+Both were deleted with expected-tip leases, and their closed pull-head refs remain available. #8224's merged PR head (`8afc43ba90c2fd37c9f4fea4a33dc06abfe50eeb`) is not an ancestor of fetched main, so retain its branch pending a separate content/history comparison. The latest non-atomic remote-head count was 421.
