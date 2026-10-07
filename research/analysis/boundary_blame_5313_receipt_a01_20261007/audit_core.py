@@ -142,6 +142,13 @@ def _decision(case_id, x):
 
 def audit(raw):
     errors = []
+    if (not isinstance(raw, dict)
+            or set(raw) != {"cases", "formal_native_or_model_replays"}
+            or type(raw.get("formal_native_or_model_replays")) is not int
+            or raw["formal_native_or_model_replays"] != 0):
+        cases = raw.get("cases") if isinstance(raw, dict) else None
+        return {"status": "FAIL", "case_count": len(cases) if isinstance(cases, list) else 0,
+                "checks": 0, "errors": ["top_level_schema_or_replay_count"]}
     cases = raw.get("cases") if isinstance(raw, dict) else None
     if not isinstance(cases, list) or [x.get("id") for x in cases] != ROSTER:
         return {"status": "FAIL", "case_count": len(cases) if isinstance(cases, list) else 0,

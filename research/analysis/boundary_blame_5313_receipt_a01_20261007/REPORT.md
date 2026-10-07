@@ -19,3 +19,7 @@ Pre-formal local checks: 13/13 candidate/auditor/mutation tests passed, Python c
 - Audit: 8 cases, 48 checks, `PASS`, 0 errors, 2 scoped deadline/read localizations, 0 unsafe component blames.
 
 Historical Issue #5313 T0 and its existing PR/result were not modified. This is an additive successor package; the source receipt package remains byte-for-byte unchanged.
+
+## Post-formal PR-review audit hardening
+
+Automated review of the delivery PR found that the original auditor ignored the top-level `formal_native_or_model_replays` field, so deleting/changing that field did not invalidate an otherwise matching case list. The original candidate raw output and audit JSON are preserved byte-for-byte; the one-shot formal candidate/auditor commands were not rerun. After the first result, `audit_core.audit` was tightened to require the exact top-level field set and the literal integer zero (rejecting booleans), and a test was observed RED before the fix and GREEN after it. The exact supplemental source hashes and verification command are recorded in `POSTFORMAL_REVIEW_FIX.json`. This closes the mutation-coverage defect in the delivered auditor implementation; it is not a replacement formal run or new evidence of model/GUI behavior.

@@ -47,6 +47,19 @@ class IndependentAuditMutationTests(unittest.TestCase):
         self.assertEqual(result["status"], "FAIL")
         self.assertIn("request-healthy:input_sha256_mismatch", result["errors"])
 
+    def test_auditor_rejects_missing_or_nonzero_replay_count(self):
+        raw = built_raw()
+        del raw["formal_native_or_model_replays"]
+        result = audit_core.audit(raw)
+        self.assertEqual(result["status"], "FAIL")
+        self.assertIn("top_level_schema_or_replay_count", result["errors"])
+        for invalid in (1, False, None):
+            raw = built_raw()
+            raw["formal_native_or_model_replays"] = invalid
+            result = audit_core.audit(raw)
+            self.assertEqual(result["status"], "FAIL")
+            self.assertIn("top_level_schema_or_replay_count", result["errors"])
+
 
 if __name__ == "__main__":
     unittest.main()
