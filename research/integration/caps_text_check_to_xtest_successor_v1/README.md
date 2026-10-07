@@ -33,6 +33,12 @@ TCP-disabled private Xvfb/Tk/XTEST smoke produced exact Entry value `aB2`.
 The initial runner syntax error occurred before input and was corrected; neither
 smoke is a formal outcome.
 
+The first LockMask interposition probe reached XTEST input but exited before
+printing its result because Python-Xlib 0.33 `Display.query_keymap()` returns a
+list directly (not a reply object with `.map`). This construction failure is
+preserved here; the probe now reads the returned list. The private Xvfb ended
+with its wrapper, so no shared keyboard state survived.
+
 ## Next gates
 
 1. Run the excluded `construction_probe.py` in two fresh private Xvfb sessions

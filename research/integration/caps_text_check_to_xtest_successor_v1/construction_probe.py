@@ -98,7 +98,7 @@ def main() -> int:
     actual = value.get()
     expected = "Ab2" if interpose else "aB2"
     final_mask = int(bool(root_window.query_pointer().mask & X.LockMask))
-    keymap = d.query_keymap().map
+    keymap = d.query_keymap()
     held = [i for i in range(256)
             if keymap[i // 8] & (1 << (i % 8))]
     result = {
