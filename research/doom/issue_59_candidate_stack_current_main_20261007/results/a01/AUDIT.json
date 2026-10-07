@@ -1,0 +1,136 @@
+{
+  "auditor_platform": "macOS-27.0.1-arm64-arm-64bit",
+  "auditor_python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+  "checked_source_sha256": {
+    "research/doom/doom_batch_key_measurement_backend_v1.py": "1e9a1445f397a5d6fa632bcb1f27d62a6a41abe75124d0c899909eca17b097c9",
+    "research/live_control/executor_v13.py": "fc4bad32859561c0d236f283c75d154f8221365c82b1df19c12c358d99045e6e",
+    "research/live_control/input_owner_v12.py": "fb1e44f7b9dc9ef1068332a938d699c6cd4a0c9d4afe75661c8bf8c16c2db052",
+    "research/live_control/test_batch_key_measurement_composition.py": "7d84ece2a3583afeea5e7d4418ac19f3ad0bd4b63bf1dd11302bc3f492f2f945",
+    "research/live_control/test_executor_v13.py": "65ad9741a84b1ee3e32468a66548b8e904bca73da9f95e6ece3db179d9180a19"
+  },
+  "checks": [
+    {
+      "detail": "issue-59-current-main-candidate-stack-check-v1",
+      "name": "schema",
+      "pass": true
+    },
+    {
+      "detail": "PASS_SCOPED",
+      "name": "candidate_status",
+      "pass": true
+    },
+    {
+      "detail": "75bfe2badd49376ac33cd8a87030e7a6a3396ecf",
+      "name": "main_sha",
+      "pass": true
+    },
+    {
+      "detail": "0c062cc8e15f1c003daac0108d452f07051ad21a",
+      "name": "source_tree",
+      "pass": true
+    },
+    {
+      "detail": "sha256:b82a3260f3e5839b9dce6d745233f09c9189d5f2154cf7a6d18e24d190c10907",
+      "name": "image_id",
+      "pass": true
+    },
+    {
+      "detail": "fc4bad32859561c0d236f283c75d154f8221365c82b1df19c12c358d99045e6e",
+      "name": "source_hash:research/live_control/executor_v13.py",
+      "pass": true
+    },
+    {
+      "detail": "65ad9741a84b1ee3e32468a66548b8e904bca73da9f95e6ece3db179d9180a19",
+      "name": "source_hash:research/live_control/test_executor_v13.py",
+      "pass": true
+    },
+    {
+      "detail": "fb1e44f7b9dc9ef1068332a938d699c6cd4a0c9d4afe75661c8bf8c16c2db052",
+      "name": "source_hash:research/live_control/input_owner_v12.py",
+      "pass": true
+    },
+    {
+      "detail": "7d84ece2a3583afeea5e7d4418ac19f3ad0bd4b63bf1dd11302bc3f492f2f945",
+      "name": "source_hash:research/live_control/test_batch_key_measurement_composition.py",
+      "pass": true
+    },
+    {
+      "detail": "1e9a1445f397a5d6fa632bcb1f27d62a6a41abe75124d0c899909eca17b097c9",
+      "name": "source_hash:research/doom/doom_batch_key_measurement_backend_v1.py",
+      "pass": true
+    },
+    {
+      "detail": 14,
+      "name": "suite_count:executor_v13",
+      "pass": true
+    },
+    {
+      "detail": {
+        "errors": [],
+        "failures": [],
+        "stderr_sha256": "951ee551c0e97a6a65f140b0c0e038816eb8dee4fd4b0e4e15d51d40eff56a78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tests_run": 14,
+        "was_successful": true
+      },
+      "name": "suite_status:executor_v13",
+      "pass": true
+    },
+    {
+      "detail": "951ee551c0e97a6a65f140b0c0e038816eb8dee4fd4b0e4e15d51d40eff56a78",
+      "name": "log_hash:executor_v13",
+      "pass": true
+    },
+    {
+      "detail": "and_successful_cleanup_preserve_both_custody_records) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.165s\n\nOK\n",
+      "name": "log_summary:executor_v13",
+      "pass": true
+    },
+    {
+      "detail": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "stdout_hash:executor_v13",
+      "pass": true
+    },
+    {
+      "detail": 12,
+      "name": "suite_count:batch_key_measurement_composition",
+      "pass": true
+    },
+    {
+      "detail": {
+        "errors": [],
+        "failures": [],
+        "stderr_sha256": "276aeed52489bc00e5cd55624441788df83bb9d53a8cd994405cf4de07d073b8",
+        "stdout_sha256": "490efe8f2de933c56558a4435e56657af989f2b7e6365b170286899f82f341f0",
+        "tests_run": 12,
+        "was_successful": true
+      },
+      "name": "suite_status:batch_key_measurement_composition",
+      "pass": true
+    },
+    {
+      "detail": "276aeed52489bc00e5cd55624441788df83bb9d53a8cd994405cf4de07d073b8",
+      "name": "log_hash:batch_key_measurement_composition",
+      "pass": true
+    },
+    {
+      "detail": "t_unknown_post_sample_never_projects_a_complete_pair) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.638s\n\nOK\n",
+      "name": "log_summary:batch_key_measurement_composition",
+      "pass": true
+    },
+    {
+      "detail": "490efe8f2de933c56558a4435e56657af989f2b7e6365b170286899f82f341f0",
+      "name": "stdout_hash:batch_key_measurement_composition",
+      "pass": true
+    },
+    {
+      "detail": 26,
+      "name": "total_count",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "raw_result_sha256": "c390db49dd05ad8de75ec2b47028de523b3f4b1bc3d0a274b63222e736c9dc5f",
+  "schema": "issue-59-current-main-candidate-stack-audit-v1",
+  "status": "PASS_SCOPED"
+}
