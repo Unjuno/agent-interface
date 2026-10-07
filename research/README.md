@@ -4,6 +4,8 @@ This directory is the research workspace and retained evidence record for Agent 
 
 For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).
 
+- Closed PR #7148: [X11 input-custody safety HOLD](integration/x11_input_custody_7148/RECOVERY.md) — retained candidate tests do not establish safe release: source-supported wrong-ClientPointer and unreadable-button-state constructions can falsely clear custody. No runtime patch is adopted.
+
 ## Start here
 
 - Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
