@@ -33,6 +33,7 @@ class Win32RuntimeSession:
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
             }
+        admitted_ns = self.backend.monotonic_ns()
         try:
             self.backend.preflight(program)
         except Win32BackendError as error:
@@ -44,21 +45,31 @@ class Win32RuntimeSession:
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
                 "release": release,
+                "admitted_ns": admitted_ns,
             }
         try:
-            result = self.backend.execute(program)
-        except Win32BackendError as error:
+            result = self.backend.execute(program, admitted_ns=admitted_ns)
+        except Exception as error:
             return {
                 "status": "execution_failed",
                 "error": "BACKEND_EXECUTION",
                 "detail": str(error),
                 "backend_emissions": self.backend.emissions,
+                "admitted_ns": admitted_ns,
+                "release": dict(getattr(self.backend, "last_execution_release", None) or {
+                    "verified": False,
+                    "error": "RELEASE_RESULT_UNAVAILABLE",
+                }),
+                "input_transitions": list(
+                    getattr(self.backend, "last_input_transitions", ())
+                ),
             }
         releases = result.get("releases", [])
         verified = bool(releases) and all(row.get("verified") for row in releases)
         return {
             "status": "completed" if verified else "release_unverified",
             "admission": "accepted",
+            "admitted_ns": admitted_ns,
             "required_capabilities": list(admission.required_capabilities),
             "execution": result,
         }

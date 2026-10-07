@@ -256,6 +256,27 @@ class Win32IntegrationTests(unittest.TestCase):
         self.assertTrue(self.effect.exists(), self.events.read_text() if self.events.exists() else "no events")
         effect = json.loads(self.effect.read_text())
         self.assertEqual(effect, {"saved": True, "text": "office", "clicked": True})
+        transitions = row["execution"]["input_transitions"]
+        chord_rows = [item for item in transitions
+                      if item["program_id"] == "valid"
+                      and item["operation_index"] == 6
+                      and not item["cleanup"]]
+        self.assertEqual([(item["operation"], item["key"]) for item in chord_rows],
+                         [("down", "CTRL"), ("down", "S"),
+                          ("up", "S"), ("up", "CTRL")])
+        self.assertTrue(all(item["admitted_ns"] == row["admitted_ns"]
+                            for item in chord_rows))
+        for key in ("CTRL", "S"):
+            pair = [item for item in chord_rows if item["key"] == key]
+            self.assertEqual(len(pair), 2)
+            self.assertEqual(pair[0]["hold_id"], pair[1]["hold_id"])
+            for item in pair:
+                self.assertLessEqual(item["requested_ns"],
+                                     item["sendinput_acknowledged_ns"])
+                self.assertTrue(item["state_before"]["available"])
+                self.assertTrue(item["state_after"]["available"])
+                self.assertFalse(item["physical_keyboard_state_proven"])
+                self.assertFalse(item["application_delivery_proven"])
         releases = row["execution"]["releases"]
         self.assertTrue(releases and releases[-1]["verified"])
         self.assertEqual(releases[-1]["keys_down"], [])
