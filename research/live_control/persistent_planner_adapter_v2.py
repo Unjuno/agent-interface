@@ -4,6 +4,7 @@ import json
 import math
 from pathlib import Path
 import threading
+import copy
 
 
 class PlannerProtocolError(RuntimeError):
@@ -47,6 +48,7 @@ class PersistentPlannerAdapter:
         self._terminal_status = None
         self._cancellation_requested = False
         self._interrupt_response = None
+        self._admission_pending = False
 
     @property
     def thread_id(self):
@@ -55,8 +57,11 @@ class PersistentPlannerAdapter:
 
     def start_session(self):
         with self._lock:
+            if self._admission_pending:
+                raise PlannerProtocolError("start outcome pending or unknown; reconcile before another admission")
             if self._active is not None and self._terminal_status is None:
                 raise PlannerProtocolError("cannot replace a session with an active turn")
+            self._admission_pending = True
         response = self.client.start_thread(
             model=self.model,
             cwd=self.cwd,
@@ -77,22 +82,28 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
+            self._admission_pending = False
             return thread_id
 
     def begin_turn(self, prompt, *, output_schema, image_path=None):
+        # Detach the admitted contract before any RPC; transport gets another copy.
+        admitted_schema = copy.deepcopy(output_schema)
+        inputs = [{"type": "text", "text": prompt, "text_elements": []}]
+        if image_path is not None:
+            inputs.append({"type": "localImage", "path": str(Path(image_path))})
         with self._lock:
+            if self._admission_pending:
+                raise PlannerProtocolError("start outcome pending or unknown; reconcile before another admission")
             if self._thread_id is None:
                 raise PlannerProtocolError("start_session must be called first")
             if self._active is not None and self._terminal_status is None:
                 raise PlannerProtocolError("only one turn may be active per planner session")
             thread_id = self._thread_id
             generation = self._generation
-        inputs = [{"type": "text", "text": prompt, "text_elements": []}]
-        if image_path is not None:
-            inputs.append({"type": "localImage", "path": str(Path(image_path))})
+            self._admission_pending = True
         response = self.client.start_turn(
             thread_id, inputs, model=self.model, effort=self.effort,
-            outputSchema=output_schema)
+            outputSchema=copy.deepcopy(admitted_schema))
         turn_id = response.get("turn", {}).get("id")
         if not turn_id:
             raise PlannerProtocolError("turn/start returned no turn id")
@@ -104,7 +115,8 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
-            self._output_schema = output_schema
+            self._output_schema = admitted_schema
+            self._admission_pending = False
         return handle
 
     def interrupt(self, handle):
@@ -125,7 +137,8 @@ class PersistentPlannerAdapter:
         else:
             outcome = "requested"
         with self._lock:
-            self._interrupt_response = response
+            if self._active == handle:
+                self._interrupt_response = response
         return {"outcome": outcome, "response": response}
 
     def await_turn(self, handle, timeout=120):
@@ -139,7 +152,7 @@ class PersistentPlannerAdapter:
             raise PlannerProtocolError("turn/completed returned no status")
         with self._lock:
             self._require_active(handle)
-            self._terminal_status = status
+            output_schema = self._output_schema
             cancelled = self._cancellation_requested
 
         usage = self.client.latest_turn_usage(handle.thread_id, handle.turn_id)
@@ -163,16 +176,28 @@ class PersistentPlannerAdapter:
                 error = f"invalid JSON answer: {parse_error.msg}"
             else:
                 try:
-                    _validate_schema(answer, self._output_schema)
+                    _validate_schema(answer, output_schema)
                 except PlannerProtocolError as schema_error:
                     error = str(schema_error)
                     answer = None
                 else:
                     eligible = True
-        return TurnResult(
-            handle=handle, status=status, answer_eligible=eligible, answer=answer,
-            error=error, usage=usage, cancellation_requested=cancelled,
-            completed_agent_messages=len(messages))
+        with self._lock:
+            self._require_active(handle)
+            # Keep admission closed through result validation, and include an
+            # invalidation that arrived after wire completion but before this
+            # local result is committed.
+            cancelled = self._cancellation_requested
+            if status == "completed" and cancelled:
+                eligible = False
+                answer = None
+                error = "answer belongs to an invalidated observation"
+            result = TurnResult(
+                handle=handle, status=status, answer_eligible=eligible, answer=answer,
+                error=error, usage=usage, cancellation_requested=cancelled,
+                completed_agent_messages=len(messages))
+            self._terminal_status = status
+            return result
 
     def _require_active(self, handle):
         if handle != self._active:
