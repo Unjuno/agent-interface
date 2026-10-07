@@ -1,3 +1,4 @@
+import json
 import threading
 import time
 import unittest
@@ -304,7 +305,8 @@ class ExecutorV13Tests(unittest.TestCase):
         terminal_received = threading.Event()
 
         def emit(event):
-            events.append(event)
+            # Match the session's JSONL event boundary, not just its in-memory dict.
+            events.append(json.loads(json.dumps(event)))
             if event.get("event") == "terminal":
                 terminal_received.set()
 
