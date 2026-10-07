@@ -1,0 +1,58 @@
+{
+  "format": "appserver-eof-reap-independent-recheck-v1",
+  "base": "9fb2dd6782d1d1477a00d14be870487fd4c54fa2",
+  "candidate": "c6f5a122afee85e44bec5c39b80f02e6b939d56a",
+  "test_commit": "c6f5a122afee85e44bec5c39b80f02e6b939d56a",
+  "runs": [
+    {
+      "label": "base",
+      "commit": "9fb2dd6782d1d1477a00d14be870487fd4c54fa2",
+      "source_path": "research/live_control/codex_app_server_client_v2.py",
+      "source_git_blob": "338b5fbdf436e14768274b9de6a3d3bb13fd274c",
+      "source_sha256": "d140fec92cb7e81a439d7cda95c67d63d902af08fc4997bfa5df7933aa14deb4",
+      "test_source_commit": "c6f5a122afee85e44bec5c39b80f02e6b939d56a",
+      "test_path": "research/live_control/test_appserver_process_tree_cleanup_20261004.py",
+      "test_git_blob": "6f1c5c19fa219b1fac46c65fd7d857b7a02cc548",
+      "test_sha256": "f3c405499d6e9a4b6debace1632666a3d15c44e85fdee23b7ef62536ba4095f8",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/frozen_test.py",
+        "-v"
+      ],
+      "cwd": "repository root",
+      "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+      "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+      "elapsed_seconds": 0.988719,
+      "exit_code": 1,
+      "raw_log": "raw/base.txt",
+      "raw_log_sha256": "b88f9336fd35ededd78e6f77ff7f1e3d7e07c0be7d7d47d7b456cb6e73093bc5"
+    },
+    {
+      "label": "candidate",
+      "commit": "c6f5a122afee85e44bec5c39b80f02e6b939d56a",
+      "source_path": "research/live_control/codex_app_server_client_v2.py",
+      "source_git_blob": "02193be85d0d5e29a155ec7151d1c44c5c6d6ff2",
+      "source_sha256": "79f71eee5bed5db3da2cabd273e6d4639938fa1ce85d52b01711d56346e3eb67",
+      "test_source_commit": "c6f5a122afee85e44bec5c39b80f02e6b939d56a",
+      "test_path": "research/live_control/test_appserver_process_tree_cleanup_20261004.py",
+      "test_git_blob": "6f1c5c19fa219b1fac46c65fd7d857b7a02cc548",
+      "test_sha256": "f3c405499d6e9a4b6debace1632666a3d15c44e85fdee23b7ef62536ba4095f8",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-candidate-l76axx76/frozen_test.py",
+        "-v"
+      ],
+      "cwd": "repository root",
+      "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+      "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+      "elapsed_seconds": 0.910399,
+      "exit_code": 0,
+      "raw_log": "raw/candidate.txt",
+      "raw_log_sha256": "ccd304c706dcc2bab93cf2f3b09b9dfc60aa15dfcf17101ab0d76916f4f5772e"
+    }
+  ],
+  "disposition": "PASS_REPAIR_RECHECK",
+  "scope": "same frozen eight-case regression suite, same host and runtime, base versus PR candidate"
+}
