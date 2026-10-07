@@ -402,6 +402,18 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
     return monitor, receipt
 
 
+def require_cover_terminal(terminal, *, cancellation_requested=False):
+    """Require neutral closure before renewing cover or using a planner answer."""
+    allowed = ("completed", "expired", "cancelled") if cancellation_requested else (
+        "completed", "expired")
+    release = terminal.get("release") if type(terminal) is dict else None
+    if (type(terminal) is not dict or terminal.get("event") != "terminal" or
+            terminal.get("status") not in allowed or type(release) is not dict or
+            release.get("verified") is not True or release.get("keys_down") != [] or
+            release.get("buttons_down") != []):
+        raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
+
+
 def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id,
                              planner_interrupt=None):
     if planner_interrupt is None:
@@ -1560,6 +1572,20 @@ def main():
                         break
                     current_terminal=boundary
                     cover_terminals.append(current_terminal)
+                    failure_cleanup.set_stage("cover_terminal_validation")
+                    try:
+                        require_cover_terminal(current_terminal)
+                    except RuntimeError as error:
+                        # Request interruption before pool shutdown waits for
+                        # await_turn. Keep the terminal failure primary if the
+                        # interruption transport itself fails.
+                        if not future.done():
+                            try:
+                                planner.interrupt(planner_handle)
+                            except BaseException as interrupt_error:
+                                error.add_note("planner interrupt failed: " +
+                                               type(interrupt_error).__name__)
+                        raise
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     renewal_expected_sequence=latest["sequence"]
@@ -1616,6 +1642,8 @@ def main():
                     else:
                         current_terminal=boundary
                 cover_terminals.append(current_terminal)
+            failure_cleanup.set_stage("cover_terminal_validation")
+            require_cover_terminal(current_terminal, cancellation_requested=True)
             final_action_admission=final_admission_from_planner_result(
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())
