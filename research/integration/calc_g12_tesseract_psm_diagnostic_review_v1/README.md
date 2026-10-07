@@ -11,7 +11,7 @@ refuses to replace any existing path. The verifier binds every argv position
 except the intentionally varying PSM value, including the executable path,
 input, output selector, language, and whitelist.
 
-Run the retained-only tests with:
+Run the seven retained-only tests with:
 
 ```sh
 python3 -m unittest discover -s research/integration/calc_g12_tesseract_psm_diagnostic_review_v1 -v

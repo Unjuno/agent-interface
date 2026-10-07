@@ -17,8 +17,14 @@ EXPECTED_WHITELIST = "0123456789"
 
 def audit_record(raw: dict, image: bytes) -> dict:
     errors: list[str] = []
+    if not isinstance(raw, dict):
+        raw = {}
+        errors.append("raw record is not an object")
     digest = hashlib.sha256(image).hexdigest()
     image_record = raw.get("input", {})
+    if not isinstance(image_record, dict):
+        image_record = {}
+        errors.append("input record is not an object")
     if digest != EXPECTED_SHA256 or digest != image_record.get("sha256"):
         errors.append("input digest")
     if len(image) != image_record.get("bytes"):
@@ -29,20 +35,29 @@ def audit_record(raw: dict, image: bytes) -> dict:
     if raw.get("modes") != EXPECTED_MODES:
         errors.append("frozen mode order")
     fixed = raw.get("fixed_options", {})
+    if not isinstance(fixed, dict):
+        fixed = {}
+        errors.append("fixed-options record is not an object")
     if fixed.get("language") != EXPECTED_LANGUAGE:
         errors.append("language")
     if fixed.get("character_whitelist") != EXPECTED_WHITELIST:
         errors.append("character whitelist")
 
     binary = raw.get("binary", {})
+    if not isinstance(binary, dict):
+        binary = {}
+        errors.append("binary record is not an object")
     binary_path = binary.get("path")
     if not isinstance(binary_path, str) or not binary_path.startswith("/"):
         errors.append("binary path is not an absolute recorded path")
 
     attempts = raw.get("attempts")
-    if type(attempts) is not list or [row.get("psm") for row in attempts] != EXPECTED_MODES:
-        errors.append("attempt inventory")
+    if type(attempts) is not list or any(not isinstance(row, dict) for row in attempts):
+        errors.append("attempt records are not objects")
         attempts = attempts if type(attempts) is list else []
+        attempts = [row for row in attempts if isinstance(row, dict)]
+    if [row.get("psm") for row in attempts] != EXPECTED_MODES:
+        errors.append("attempt inventory")
     if len(attempts) != len(EXPECTED_MODES):
         errors.append("command count")
 
@@ -64,7 +79,8 @@ def audit_record(raw: dict, image: bytes) -> dict:
             errors.append(f"PSM {psm} timing fields")
 
     matches = [row["psm"] for row in attempts
-               if row.get("exit_code") == 0 and row.get("stdout", "").strip() == "551"]
+               if row.get("exit_code") == 0 and isinstance(row.get("stdout"), str)
+               and row["stdout"].strip() == "551"]
     if raw.get("candidate_modes") != matches or raw.get("disposition") != "DIAGNOSTIC_FOUND_PSM_CANDIDATE":
         errors.append("disposition consistency")
     if not isinstance(binary.get("version_stdout"), str) or not binary["version_stdout"].startswith("tesseract 5.5.2\n"):

@@ -44,6 +44,11 @@ class AuditRawV2Tests(unittest.TestCase):
         raw["attempts"][1]["stdout"] = "951\n"
         self.assertEqual(audit_record(raw, self.image)["disposition"], "FAIL_RAW_INTEGRITY")
 
+    def test_malformed_scratch_records_are_rejected_without_crashing(self):
+        raw = copy.deepcopy(self.raw)
+        raw["attempts"][2] = "not-an-object"
+        self.assertEqual(audit_record(raw, self.image)["disposition"], "FAIL_RAW_INTEGRITY")
+
     def test_default_cli_is_read_only_and_matches_retained_audit(self):
         retained_path = PACKAGE / "AUDIT.json"
         before = retained_path.read_bytes()
