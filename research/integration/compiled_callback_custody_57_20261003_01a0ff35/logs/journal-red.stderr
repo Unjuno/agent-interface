@@ -1,0 +1,88 @@
+test_journal_can_clear_its_payload_after_an_executed_action (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_can_clear_its_payload_after_an_executed_action) ... FAIL
+test_journal_edits_cannot_hide_a_completed_prefix_at_safe_yield (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_edits_cannot_hide_a_completed_prefix_at_safe_yield) ... FAIL
+test_journal_exception_still_propagates_before_dispatch (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_exception_still_propagates_before_dispatch) ... ok
+test_journal_top_level_and_nested_edits_leave_branch_evidence_intact (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_top_level_and_nested_edits_leave_branch_evidence_intact) ... FAIL
+test_retained_journal_payloads_cannot_rewrite_the_returned_receipt (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_retained_journal_payloads_cannot_rewrite_the_returned_receipt) ... FAIL
+
+======================================================================
+FAIL: test_journal_can_clear_its_payload_after_an_executed_action (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_can_clear_its_payload_after_an_executed_action)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\test_compiled_callback_custody_01a0ff35.py", line 38, in test_journal_can_clear_its_payload_after_an_executed_action
+    receipt = driver.run()
+              ^^^^^^^^^^^^
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\test_compiled_gui.py", line 32, in run
+    def run(self,spec=None):return run(spec or interface(),{'observe':self.observe,'admit':self.admit,'execute':self.execute,'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal},clock=lambda:self.now)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\compiled_gui.py", line 365, in run
+    emit({"event": "action_terminal", "action": action_name,
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\compiled_gui.py", line 185, in emit
+    if row["event"] in {"branch_selected", "admission_refused",
+       ~~~^^^^^^^^^
+KeyError: 'event'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\test_compiled_callback_custody_01a0ff35.py", line 40, in test_journal_can_clear_its_payload_after_an_executed_action
+    self.fail(f"callback-local event clearing interrupted the graph: {error}")
+AssertionError: callback-local event clearing interrupted the graph: 'event'
+
+======================================================================
+FAIL: test_journal_edits_cannot_hide_a_completed_prefix_at_safe_yield (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_edits_cannot_hide_a_completed_prefix_at_safe_yield)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\test_compiled_callback_custody_01a0ff35.py", line 73, in test_journal_edits_cannot_hide_a_completed_prefix_at_safe_yield
+    self.assertEqual((terminal["action"], terminal["status"],
+AssertionError: Tuples differ: ('logger-local', 'refused', False) != ('enter', 'completed', True)
+
+First differing element 0:
+'logger-local'
+'enter'
+
+- ('logger-local', 'refused', False)
++ ('enter', 'completed', True)
+
+======================================================================
+FAIL: test_journal_top_level_and_nested_edits_leave_branch_evidence_intact (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_journal_top_level_and_nested_edits_leave_branch_evidence_intact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\test_compiled_callback_custody_01a0ff35.py", line 21, in test_journal_top_level_and_nested_edits_leave_branch_evidence_intact
+    self.assertEqual([(event["action"], event["matched_conditions"])
+AssertionError: Lists differ: [('logger-local', {'phase': 99}), ('logger-l[50 chars]99})] != [('enter', {'phase': 0}), ('save', {'phase':[22 chars] 2})]
+
+First differing element 0:
+('logger-local', {'phase': 99})
+('enter', {'phase': 0})
+
++ [('enter', {'phase': 0}), ('save', {'phase': 1}), (None, {'phase': 2})]
+- [('logger-local', {'phase': 99}),
+-  ('logger-local', {'phase': 99}),
+-  ('logger-local', {'phase': 99})]
+
+======================================================================
+FAIL: test_retained_journal_payloads_cannot_rewrite_the_returned_receipt (runtime.core_v1.test_compiled_callback_custody_01a0ff35.CompiledJournalCustodyTests.test_retained_journal_payloads_cannot_rewrite_the_returned_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface-compiled-custody\runtime\core_v1\test_compiled_callback_custody_01a0ff35.py", line 54, in test_retained_journal_payloads_cannot_rewrite_the_returned_receipt
+    self.assertEqual([event.get("event") for event in receipt["critical_events"]],
+AssertionError: Lists differ: [None, None, None, None, None, None, None, None] != ['branch_selected', 'action_terminal', 'ef[104 chars]hed']
+
+First differing element 0:
+None
+'branch_selected'
+
+- [None, None, None, None, None, None, None, None]
++ ['branch_selected',
++  'action_terminal',
++  'effect_checked',
++  'branch_selected',
++  'action_terminal',
++  'effect_checked',
++  'branch_selected',
++  'runtime_finished']
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (failures=4)
