@@ -584,6 +584,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`hidden_cause_sensitivity_5440_t2/`](hidden_cause_sensitivity_5440_t2/)
 - [`history_conditioned_compensation_7865_t0_a02_20261005/`](history_conditioned_compensation_7865_t0_a02_20261005/)
 - [`history_conditioned_reliance_6616_t0_a03_orbstack_20261003/`](history_conditioned_reliance_6616_t0_a03_orbstack_20261003/)
+- [`homology_vs_homotopy_6586_t0_20261007/`](homology_vs_homotopy_6586_t0_20261007/)
 - [`human_autonomy_envelope_6383_t0_20261002/`](human_autonomy_envelope_6383_t0_20261002/)
 - [`human_return_oracle_blindness_6492_t0_a01_20261003/`](human_return_oracle_blindness_6492_t0_a01_20261003/)
 - [`human_return_resumption_6492_t0_20261002/`](human_return_resumption_6492_t0_20261002/)
