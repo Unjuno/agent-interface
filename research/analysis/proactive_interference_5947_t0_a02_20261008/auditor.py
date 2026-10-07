@@ -7,6 +7,7 @@ CONDITIONS = {"current_value", "baseline_change", "unsupported"}
 ARMS = {"CURRENT_ONLY", "FULL_CONFLICTING_HISTORY", "NONCONFLICTING_HISTORY", "SOURCE_LINKED_DELTA"}
 DEPTHS = {0, 1, 4, 8}
 ALLOCATION = "5947-MULTI-UPDATE-PROVENANCE-T0-A02-20261008"
+QUERY_TEXT = {"current_value": b"what-is-current-value", "baseline_change": b"did-value-change-from-baseline", "unsupported": b"unsupported-field-without-source-evidence"}
 
 
 def audit_corpus(rows):
@@ -25,6 +26,13 @@ def audit_corpus(rows):
             serialized = bytes.fromhex(r["serialized_context_hex"])
             if serialized != prefix + slot + suffix: errors.append("serialized reconstruction")
             if r.get("history_slot_start") != len(prefix) or r.get("history_slot_end") != len(prefix) + len(slot): errors.append("slot offsets")
+            cue = b'"CURRENT_CUE":"CURRENT"'
+            if r.get("current_cue_offset") != prefix.index(cue) + len(b'"CURRENT_CUE":"') or r.get("cue_byte_length") != len(b"CURRENT"):
+                errors.append("current cue byte offset")
+            if bytes.fromhex(r["task_bytes"]) != b"select-current": errors.append("task bytes")
+            if bytes.fromhex(r["query_bytes"]) != QUERY_TEXT[r["condition"]]: errors.append("query bytes/condition")
+            if QUERY_TEXT[r["condition"]] not in prefix: errors.append("query absent from serialized prefix")
+            if len(slot) != 2048: errors.append("history slot byte budget")
         except (KeyError, TypeError, ValueError):
             errors.append("malformed byte fields")
         try:
@@ -56,6 +64,11 @@ def audit_corpus(rows):
     if len(positions) == 2:
         a, b = positions
         if {k for k in set(a) | set(b) if a.get(k) != b.get(k)} != {"current_cue_offset"}: errors.append("position control changed fields beyond cue offset")
+        try:
+            raw = bytes.fromhex(a["prefix_hex"])
+            if a["current_cue_offset"] != raw.index(b"CURRENT") or b["current_cue_offset"] != raw.rindex(b"CURRENT") or a["current_cue_offset"] == b["current_cue_offset"]:
+                errors.append("position control cue offsets")
+        except (KeyError, TypeError, ValueError): errors.append("position control malformed cue")
     return {"result": "PASS" if not errors else "FAIL", "matched_rows": len(matched), "position_rows": len(positions), "errors": errors}
 
 
