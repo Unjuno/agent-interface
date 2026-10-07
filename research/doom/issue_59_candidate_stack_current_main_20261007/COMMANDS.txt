@@ -1,0 +1,15 @@
+main_sha=75bfe2badd49376ac33cd8a87030e7a6a3396ecf
+candidate_source_tree_before_evidence=0c062cc8e15f1c003daac0108d452f07051ad21a
+merge_order=origin/main + refs/remotes/origin/pr/8272 + refs/remotes/origin/pr/8269
+merge_8272=git merge --no-commit --no-ff refs/remotes/origin/pr/8272
+merge_8269=git merge --no-commit --no-ff refs/remotes/origin/pr/8269
+merge_result=both automatic merges clean; git diff --check passed
+
+container_command:
+docker run --rm --network none --cpus=1 --memory=1g --memory-swap=1g --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=256m --cap-drop=ALL --security-opt=no-new-privileges -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/unjuno-main-8272-8269-composition:/workspace:ro -v /tmp/unjuno-v13-measurement-custody/research/doom/issue_59_candidate_stack_current_main_20261007/results/a01:/out:rw -w /workspace sha256:b82a3260f3e5839b9dce6d745233f09c9189d5f2154cf7a6d18e24d190c10907 python /workspace/research/doom/issue_59_candidate_stack_current_main_20261007/run_candidate_stack_tests.py
+
+Suites from the retained runner:
+python -m unittest test_executor_v13 (14 tests)
+python -m unittest test_batch_key_measurement_composition (12 tests)
+
+The runner inserts research/live_control and research/doom on sys.path and provides the unused vizdoom import stub required by these fake-X tests. Full details and output hashes are in results/a01/RESULT.json.

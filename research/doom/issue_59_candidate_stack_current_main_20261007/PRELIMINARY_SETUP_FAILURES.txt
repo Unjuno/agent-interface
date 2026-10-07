@@ -1,0 +1,6 @@
+Two ad-hoc invocations before the retained runner did not use the experiment suite's import setup. Preserve these as harness setup failures; they are not candidate-source failures or scored test outcomes.
+
+1. `python -m unittest research.live_control.test_executor_v13` passed 14/14. `python -m unittest discover -s research/live_control -p test_batch_key_measurement_composition.py` then errored in all 12 tests at import with `ModuleNotFoundError: doom_batch_key_measurement_backend_v1` because the repository's research/doom path was not on sys.path.
+2. Adding `PYTHONPATH=research/doom:research/live_control` to that discovery invocation still errored in all 12 tests while importing the historical session chain (`session_v9` -> `session_v8` -> `session_v7`) because the unused `vizdoom` module was not stubbed (`ModuleNotFoundError: vizdoom`).
+
+No candidate code changed between these attempts. The retained runner uses the import setup already frozen for the A03 fake-X suite, and its complete 26-test result plus raw logs are recorded separately. This correction is ordinary test-harness setup, not a retry of a formal/live allocation.

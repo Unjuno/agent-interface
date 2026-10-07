@@ -227,7 +227,7 @@ class Backend(Previous):
                     row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
                     try:
                         self.emit(row)
-                    except Exception as publish_exc:
+                    except BaseException as publish_exc:
                         # Preserve the input failure as the primary exception;
                         # retain publication failure details when it can carry them.
                         try:
