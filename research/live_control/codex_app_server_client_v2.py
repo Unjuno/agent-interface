@@ -146,10 +146,22 @@ class CodexAppServerClient:
     def _signal_owned_group(self, signum):
         if not getattr(self, "_owns_process_group", False):
             return
+        # Reap an exited leader before signaling: Darwin may return EPERM for
+        # its unreaped, otherwise empty group. Still signal surviving children.
+        self.process.poll()
         try:
             os.killpg(self.process.pid, signum)
         except ProcessLookupError:
             pass
+        except PermissionError:
+            # The leader can exit between poll and killpg. Reap that race and
+            # retry once; a live leader or persistent denial remains an error.
+            if self.process.poll() is None:
+                raise
+            try:
+                os.killpg(self.process.pid, signum)
+            except ProcessLookupError:
+                pass
 
     def _wait_owned_group(self, timeout):
         if not getattr(self, "_owns_process_group", False):
