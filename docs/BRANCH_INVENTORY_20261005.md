@@ -175,3 +175,9 @@ Removed #8211 `research/8185-exact-transform-oracle-a02-20261005` at exact live 
 Retain #8219 `research/8157-prefix-audit-a04-20261005`. The closed merged PR records head `4ac8abf9c18af0ad4090cb1fe0c0f4d21bd89b6f`, but its live branch points to `93500f925459f7c8b05947887dc40975885e929d`. That live tip is not an ancestor of current main and differs from it across a large tree delta; prior path-equality reasoning about the recorded PR head does not establish custody of the live branch contents. Preserve the ref pending a direct unique-content and dependency audit. No experiment, auditor, or replay was rerun.
 
 The latest non-atomic remote-head count after #8211 cleanup was 422.
+
+## Correction — #8219 live source-ref disposition — 2026-10-07
+
+The earlier hold on `research/8157-prefix-audit-a04-20261005` is resolved. Its live tip `93500f925459f7c8b05947887dc40975885e929d` differed from the closed merged PR #8219 recorded head `4ac8abf9c18af0ad4090cb1fe0c0f4d21bd89b6f` by the post-merge coordination-gate disclosure and a merge of then-current main. The original #8219 merge commit is an ancestor of current main, all changed package files and the added Issue #7817 evidence package match main by blob ID, and main contains the gate disclosure plus later checksum/byte-stability correction. In particular, the live branch's A05 checksum row for the unchanged `SOURCE_SHA256.txt` was stale; main's row matches the actual file bytes. No worktree used the branch and an open-PR search found no dependent. Deleted the remote ref with an expected-tip lease; `refs/pull/8219/head` remains fetchable at the recorded PR head. No experiment, auditor, or replay was rerun.
+
+After the #8219 deletion, a non-atomic `git ls-remote --heads origin` read observed 421 refs.
