@@ -1,0 +1,1 @@
+One two-arm, fresh-source construction. No retry after candidate invocation. Exact source, inputs, outcome criteria and limits are frozen in PROTOCOL.md / FREEZE.json. This tests delivery-with-error cleanup, distinct from A01 alias refusal and A09 dropped-KeyRelease retry.
