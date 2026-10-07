@@ -1,0 +1,60 @@
+{
+  "scope": "Saved-data mutations add targeted failures to the already failing real baseline; no new input, no PASS fixture claim.",
+  "baseline": {
+    "decision": "FAIL_OR_HOLD",
+    "checks": 99,
+    "failures": [
+      "held_a_unpaced: independent application effect",
+      "held_a_unpaced: observed character sequence",
+      "held_a_paced: independent application effect",
+      "held_a_paced: observed character sequence",
+      "unheld_unpaced: independent application effect",
+      "unheld_unpaced: observed character sequence",
+      "unheld_paced: independent application effect",
+      "unheld_paced: observed character sequence",
+      "held_shift_unpaced: independent application effect",
+      "held_shift_unpaced: observed character sequence",
+      "held_shift_paced: independent application effect",
+      "held_shift_paced: observed character sequence"
+    ],
+    "scope": "Six first synthetic Tk cases, not general desktop/model/game/task success."
+  },
+  "mutations": [
+    {
+      "name": "driver_exit",
+      "expected_additional_failure": "driver:held_a_unpaced",
+      "detected": true,
+      "decision": "FAIL_OR_HOLD"
+    },
+    {
+      "name": "omit_invocation",
+      "expected_additional_failure": "exact six ordered invocations",
+      "detected": true,
+      "decision": "FAIL_OR_HOLD"
+    },
+    {
+      "name": "nonneutral_keymap",
+      "expected_additional_failure": "held_a_paced: independent final neutral",
+      "detected": true,
+      "decision": "FAIL_OR_HOLD"
+    },
+    {
+      "name": "prefix_requests",
+      "expected_additional_failure": "held_a_paced: partial text prefix before failure",
+      "detected": true,
+      "decision": "FAIL_OR_HOLD"
+    },
+    {
+      "name": "unclean_child_exit",
+      "expected_additional_failure": "unheld_unpaced: app_exit",
+      "detected": true,
+      "decision": "FAIL_OR_HOLD"
+    },
+    {
+      "name": "changed_source",
+      "expected_additional_failure": "source:runtime/backends/x11_v1/backend.py",
+      "detected": true,
+      "decision": "FAIL_OR_HOLD"
+    }
+  ]
+}
