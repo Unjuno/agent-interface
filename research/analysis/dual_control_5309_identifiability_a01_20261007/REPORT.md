@@ -29,6 +29,14 @@
 
 Because the scorer/auditor gate is invalid, `PASS_METHOD_SCOPED` is rejected. The raw does demonstrate implementation defects, not evidence for or against H.
 
+## Post-run preservation validation
+
+- Successor construction regression contract (pairwise equality negative/positive controls, expiry boundary, and rejection of the immutable A01 no-separator raw): PASS.
+- `node --check candidate.mjs`: PASS; `node --check auditor.mjs`: PASS.
+- SHA-256 manifest verification: PASS after the test/report files were frozen.
+- Candidate/auditor formal re-executions after the A01 runs: 0. The regression test reads the retained raw; it does not rerun the A01 candidate or auditor.
+- Full repository CI, semantic successor candidate, and repaired independent audit are not claimed.
+
 ## Preserved files
 
 - `PRE_REGISTRATION.md`, `candidate.mjs`, `auditor.mjs`, `test_construction.mjs`
