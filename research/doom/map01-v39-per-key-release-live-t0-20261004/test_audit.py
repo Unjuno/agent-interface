@@ -127,6 +127,16 @@ class AuditTests(unittest.TestCase):
         report = audit.evaluate(freeze, candidate, events, observers)
         self.assertFalse(report["checks"]["v39-two-key-up-space.per_key_release_one_per_key"])
 
+    def test_malformed_keymap_hex_fails_closed_without_crashing(self):
+        freeze, candidate, events, observers = fixture()
+        row = next(row for row in observers if row.get("trial_id") == "v39-single-space"
+                   and row.get("label", "").startswith("after_admission:"))
+        row["keymap_hex"] = "not-hex"
+        report = audit.evaluate(freeze, candidate, events, observers)
+        self.assertEqual(report["gate"], "FAIL_OR_HOLD_TELEMETRY_GATE")
+        self.assertEqual(report.get("audit_error_type"), "ValueError")
+        self.assertTrue(report["failed_checks"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

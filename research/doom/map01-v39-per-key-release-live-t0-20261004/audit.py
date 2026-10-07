@@ -179,8 +179,20 @@ def mutation_controls(freeze, candidate, events, observer_rows):
 
 
 def evaluate(freeze, candidate, events, observer_rows):
-    checks = evaluate_checks(freeze, candidate, events, observer_rows)
-    controls = mutation_controls(freeze, candidate, events, observer_rows)
+    try:
+        checks = evaluate_checks(freeze, candidate, events, observer_rows)
+        controls = mutation_controls(freeze, candidate, events, observer_rows)
+    except Exception as exc:
+        # Corrupt or schema-incompatible evidence is a failed audit input, not
+        # an auditor crash that can be mistaken for a missing/nonexistent run.
+        checks = {"audit_input_well_formed": False}
+        controls = {}
+        return {"schema": "map01-v39-per-key-release-audit-v1",
+                "gate": "FAIL_OR_HOLD_TELEMETRY_GATE",
+                "checks": checks,
+                "audit_error_type": type(exc).__name__,
+                "mutation_controls": controls,
+                "failed_checks": ["audit_input_well_formed"]}
     checks["mutation_controls_rejected"] = bool(controls) and all(controls.values())
     return {"schema": "map01-v39-per-key-release-audit-v1",
             "gate": "PASS_X11_TELEMETRY_ADAPTER_SCOPED" if all(checks.values())
