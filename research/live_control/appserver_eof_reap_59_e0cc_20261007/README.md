@@ -28,7 +28,12 @@ is passive evidence and is not imported or discovered as tests.
   three real POSIX descendant cases with ignored SIGTERM/inherited or detached
   pipes. Deterministic controls retain live and persistent permission denials.
 - Seven focused client modules passed 29 methods normally and 29 under `-O`.
-  Compile, diff whitespace and 22 workspace-index methods also passed.
+  Compile and diff whitespace passed. The first index invocation had 21 passes
+  and one loader error because its import path omitted `research`; its failure
+  was initially misreported by reading the following shell command's status.
+  The exact workflow discovery command then passed all 22 methods with its own
+  exit status checked. `INDEX_RECHECK.json` and `index-recheck.log` retain that
+  correction and result; the first failure remains in the original archive.
 - Existing bugbot reviewed the change and independently audited the original
   controller raw records, passing 18 checks. This is helper verification, not
   the required whole-PR nonauthor quorum.
