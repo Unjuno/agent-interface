@@ -1,0 +1,63 @@
+{
+  "C": [
+    "Native Xvfb establishes X11 server delivery only; no physical keyboard or application consumption.",
+    "Alias guard is candidate-only; no production file changed.",
+    "No game, model, threat exposure, task effect, MAP01, or live allocation."
+  ],
+  "D": {
+    "FAIL": "Completed case contradicts a frozen condition.",
+    "PASS_METHOD_SCOPED": "Alias refusal is recorded; V13 terminal is failed and release verified; Xvfb keymap is neutral; owner and Xvfb stop.",
+    "STOP": "Setup/candidate does not complete; preserve first raw and do not retry."
+  },
+  "H": "After candidate-only alias batch refusal through native Xvfb and the actual V4/V3/V12 owner chain, does V13 executor unwind call release_all and publish a failed terminal with verified empty release?",
+  "T": "One fresh isolated Xvfb case: resolve a/A to the same keycode, hold both aliases through the actual owner, submit one V13 key_batch whose up_batch is refused by candidate-only guard, then record executor terminal, owner release, Xvfb keymap and shutdown. Output is explicitly directed to /out/A08_RAW.json on a separate writable mount.",
+  "U": [
+    "One synthetic Xvfb case only.",
+    "Does not satisfy the Issue #59 live game gate."
+  ],
+  "base_main": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "candidate_command": "python3 -B /study/candidate.py",
+  "one_shot_policy": "Run once; preserve first raw, including STOP; no retry/overwrite.",
+  "output_path": "/out/A08_RAW.json",
+  "preflight": {
+    "candidate_compile": "PASS",
+    "candidate_executed": false,
+    "image_digest_verified": true,
+    "raw_absent": true
+  },
+  "run_id": "ISSUE59-A08-NATIVE-V13-ALIAS-CLEANUP-20261007",
+  "runtime": {
+    "cpu_limit": "2 CPUs",
+    "game_or_desktop": "not started",
+    "image": "issue59-v39-live-env@sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84",
+    "memory_limit": "4 GiB",
+    "network": "none",
+    "output_mount": "separate writable /out",
+    "pids_limit": 128,
+    "root_filesystem": "read-only",
+    "source_mount": "read-only"
+  },
+  "schema": "issue59-a08-native-v13-alias-cleanup-freeze-v1",
+  "source_git_blob_ids": {
+    "source/input_owner_v12.py": "d11a9b1328bf76e5045022c581d6a9a721bf9585",
+    "source/input_transition_owner_v3.py": "0a1772d1687d49bd49f048b9d7ba659ed18247a5",
+    "source/input_transition_owner_v4.py": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55"
+  },
+  "source_sha256": {
+    "candidate.py": "1c887d08b482ea96af196edaca0065d3cadcd75d23f6dc963c64decb40b33195",
+    "guarded_input_owner_v12.py": "78a4b806e4a2d812bde4025eb4ad9f83dca12b53fd93c51de269b078d77183fc",
+    "source/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "source/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "source/executor_v13.py": "5c54927e5087af42006c712ec906e2ec69e9155586730dee494dd3b5d43ced9a",
+    "source/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "source/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "source/input_owner_v12.py": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc",
+    "source/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "source/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "source/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "source/lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "source/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "source/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+  },
+  "supersedes": "A07 as a fresh candidate; A07 STOP remains immutable and is not retried"
+}

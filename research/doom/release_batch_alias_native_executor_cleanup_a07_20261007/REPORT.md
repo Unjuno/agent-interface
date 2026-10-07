@@ -11,3 +11,7 @@ No game, desktop session, model, physical keyboard, or shared live allocation wa
 ## Reproduction and retained evidence
 
 `FREEZE.json` records the hypothesis, method, source hashes, image digest and one-shot rule. `EXECUTION_RECEIPT.json` records the exact container configuration and failure. `results/A07_RAW.json` preserves the container error; `results/A07_AUDIT.json` is a read-only audit of that STOP. No candidate rerun occurred.
+
+## Append-only correction (2026-10-07)
+
+Static execution-order review found that the candidate never reached `Executor.submit()`: `Backend.__init__` evaluated `Lease(window.id)`, but `window` is local to `main()` and unavailable in that method's module-global scope. The resulting `NameError` was caught, then masked when `finally` attempted the incorrect read-only `/study/results` write. Therefore no input action was submitted. The exact first exception was not retained in the container output; the `NameError` diagnosis is source-based. A07 remains STOP and was not rerun.
