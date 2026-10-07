@@ -92,6 +92,7 @@
 
 - [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
 - [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
+- [#5372 telemetry-cap comparison](backpressure_5372_telemetry_cap_20261003_api/REPORT.md) — `SUBSUMED_BY_AUTHORITATIVE_CAP_SCOPED`; preserve the simpler atomic cap for the finite single-owner homogeneous-job model, with raw/audit and HOLD limits retained.
 
 - [`wslc_control_plane_6669_t1_20261003/REPORT.md`](wslc_control_plane_6669_t1_20261003/REPORT.md) — Issue #6669 isolated WSLc 3.0.1.0 control-plane T1: bounded 640 MiB synthetic pressure with cgroup, PSI and control-operation evidence; SIGTERM-aware candidate stopped cleanly and raw auditor/mutation checks passed. Container memory-cap enforcement remains unproven.
 
@@ -356,6 +357,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`auditor_completion_5895_t0_20261001_01/`](auditor_completion_5895_t0_20261001_01/)
 - [`auditor_completion_5895_t4_20261001_8d0c7f53/`](auditor_completion_5895_t4_20261001_8d0c7f53/)
 - [`auditor_completion_5895_t6_20261001_8d0c7f53_amd64/`](auditor_completion_5895_t6_20261001_8d0c7f53_amd64/)
+- [`backpressure_5372_telemetry_cap_20261003_api/`](backpressure_5372_telemetry_cap_20261003_api/)
 - [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/)
 - [`backward_observable_guards_6256_comparator_t2_20261002/`](backward_observable_guards_6256_comparator_t2_20261002/)
 - [`backward_observable_guards_6256_stale_generation_t1_20261002/`](backward_observable_guards_6256_stale_generation_t1_20261002/)
@@ -496,6 +498,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
+- [`dual_control_5309_witness_a09_20261007/`](dual_control_5309_witness_a09_20261007/)
+- [`dual_control_5309_witness_a12_20261007/`](dual_control_5309_witness_a12_20261007/)
 - [`effect_interference_5366_t2_v1/`](effect_interference_5366_t2_v1/)
 - [`effect_interference_5366_t3_v1/`](effect_interference_5366_t3_v1/)
 - [`effect_overlap_6278_filter_control_t0_v3/`](effect_overlap_6278_filter_control_t0_v3/)
@@ -572,6 +576,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
 - [`guard_proposal_risk_6143_t0_20261002/`](guard_proposal_risk_6143_t0_20261002/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
+- [`gui_modality_pid_7712_t0_20261005/`](gui_modality_pid_7712_t0_20261005/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
 - [`hazard_checkpoint_7466_adaptive_cost_a02_20261004/`](hazard_checkpoint_7466_adaptive_cost_a02_20261004/)
 - [`hazard_checkpoint_7466_feedback_gate_a03_20261004/`](hazard_checkpoint_7466_feedback_gate_a03_20261004/)
@@ -763,6 +768,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_timestamp_order_5156_t2_20261004/`](owner_keyup_timestamp_order_5156_t2_20261004/)
 - [`owner_keyup_timestamp_order_5156_t3_20261004/`](owner_keyup_timestamp_order_5156_t3_20261004/)
 - [`owner_keyup_timestamp_order_5156_t4_20261004/`](owner_keyup_timestamp_order_5156_t4_20261004/)
+- [`owner_keyup_timestamp_order_5156_t5_20261005/`](owner_keyup_timestamp_order_5156_t5_20261005/)
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
 - [`pairwise_interaction_7799_t0_a01_20261005/`](pairwise_interaction_7799_t0_a01_20261005/)
 - [`partial_order_audit_6505_orbstack_a01_20261003/`](partial_order_audit_6505_orbstack_a01_20261003/)
@@ -1141,3 +1147,11 @@ The checker compares the generated block against every child directory with a re
 - [B01–B03 retained construction evidence](../integration/native_existing_runtime_57_20261003_01a0ff52_b01/REPORT.md) — two first setup failures preserved; B03 observed capture plus verified empty input release but no input-down, model turn, or task. Construction only, not current-main or task qualification. All 221 manifest entries independently hash-checked during rescue; no archived producer replay.
 
 - [D01 retained native held-input cancellation](../integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md) — 58 unchanged archival files retain one virtual-display Shift_L down/cancel/release condition, cancelled terminal and original cleanup exit codes. No physical-hardware, current-main task, or efficiency qualification; no producer replay.
+
+# Issue #57 — primary caller release-shape E01 evidence archive
+
+- [E01 source and private-candidate packets](../integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md) — first 48-cell caller failure and distinct inert candidate result retained separately; no native or production claim, no replay. PR #7071 remains the separate integration/review path.
+
+# Issue #57 — Firecrawl compiled release-boundary evidence
+
+- [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.

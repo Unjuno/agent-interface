@@ -81,6 +81,7 @@ def main():
 SUITES['protocol'].extend(['test_usage_subset_route', 'test_caller_diagnostic_composition', 'test_caller_failure_id_composition'])
 
 SUITES['protocol'].append('test_failure_status_composition')
+SUITES['protocol'].append('runtime.cli_v1.test_receipt_empty_index_r7p4')
 
 if __name__ == '__main__':
     raise SystemExit(main())

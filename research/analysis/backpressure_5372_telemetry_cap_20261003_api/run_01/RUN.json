@@ -1,0 +1,71 @@
+{
+  "run_id": "5372-TELEMETRY-CAP-20261003-API-A01",
+  "freeze_sha256": "a272062f310ab333bac940e0cabd6a95358efba4942a3365aeec16747d34f380",
+  "source_sha256": {
+    "PLAN.md": "1f819208db61e40387a2f1167734acd0ada4df399e0a9846c47515a02d0d20b1",
+    "audit.py": "5bda31fd195133a649c1f260428efa5ac311d9719eaf25753a5adae870af84d5",
+    "candidate.py": "78fbf070d59b7d3fc896559c83f38852187c1751df4fe52b7aaf4d65ed2bbb50",
+    "check_construction.py": "badb383cf4d1f144fee518d10cd264abfe632d43b69b03b6911da71559003ee2",
+    "run_once.py": "93760fbec8a6a650cd7b74b122b0bd9b84b72201b10b867254764208d9a8a17c"
+  },
+  "started_utc": "2026-10-03T12:06:02.641084+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "uname": [
+    "Linux",
+    "40c19c32e781",
+    "6.18.44",
+    "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+    "x86_64",
+    ""
+  ],
+  "cgroup": {
+    "memory.max": "17179869184",
+    "cpu.max": "400000 100000",
+    "pids.max": "max"
+  },
+  "per_child_requested_limits": {
+    "address_space_bytes": 536870912,
+    "cpu_s": 60,
+    "file_bytes": 67108864
+  },
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "candidate": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/agent-interface-finite/research/analysis/backpressure_5372_telemetry_cap_20261003_api/candidate.py",
+      "/workspace/agent-interface-finite/research/analysis/backpressure_5372_telemetry_cap_20261003_api/run_01/raw.jsonl"
+    ],
+    "cwd": "/workspace/agent-interface-finite/research/analysis/backpressure_5372_telemetry_cap_20261003_api",
+    "started_utc": "2026-10-03T12:06:02.642291+00:00",
+    "ended_utc": "2026-10-03T12:06:03.208554+00:00",
+    "elapsed_s": 0.5662808660000564,
+    "exit_code": 0
+  },
+  "auditor": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/agent-interface-finite/research/analysis/backpressure_5372_telemetry_cap_20261003_api/audit.py",
+      "/workspace/agent-interface-finite/research/analysis/backpressure_5372_telemetry_cap_20261003_api/run_01/raw.jsonl",
+      "/workspace/agent-interface-finite/research/analysis/backpressure_5372_telemetry_cap_20261003_api/run_01/audit.json"
+    ],
+    "cwd": "/workspace/agent-interface-finite/research/analysis/backpressure_5372_telemetry_cap_20261003_api",
+    "started_utc": "2026-10-03T12:06:03.209083+00:00",
+    "ended_utc": "2026-10-03T12:06:03.825570+00:00",
+    "elapsed_s": 0.6165043339999556,
+    "exit_code": 0
+  },
+  "disposition": "SUBSUMED_BY_AUTHORITATIVE_CAP_SCOPED",
+  "ended_utc": "2026-10-03T12:06:03.826091+00:00",
+  "output_sha256": {
+    "raw.jsonl": "469e411a3a301396a96ce7526503174d114fdb1b0108494d5c5178046e7facc8",
+    "auditor.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit.json": "73df368c60f8895c637cfd4854dcd44ae15394b7addf6203380cf8d3bf69e62c",
+    "candidate.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "auditor.stdout.txt": "f893a831101ac83886afaaaad10b718787ef6f9888cd3d561a445be848f13453"
+  }
+}

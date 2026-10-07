@@ -41,6 +41,7 @@ flowchart TD
 | V28 health-envelope counterfactual (#59) | [`v28_health_envelope_counterfactual_a01_20261005/README.md`](v28_health_envelope_counterfactual_a01_20261005/README.md) — independently audited current-V39 guard replay over five retained V28 spans and all 21 health-loss budgets; historical snapshots only, not live threat-control evidence |
 | Current-main V39 paired guard replay over retained live threat trace (#59) | [`v39_current_main_paired_guard_replay_a01_20261005/README.md`](v39_current_main_paired_guard_replay_a01_20261005/README.md) — 52 exact retained health/ammo events replayed through current-main monitor; independent raw-event audit PASS, posthoc only, no current live integration or task-effect claim |
 | v39 ammo-aware cover pair gate (#59) | [`v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md`](v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md) — ten-case paired-epoch construction PASS, audit 44/44; no current runtime integration or live behavior |
+| v39 typed observation epoch identity (#59) | [`v39_typed_epoch_alias_59_a01_20261005/REPORT.md`](v39_typed_epoch_alias_59_a01_20261005/REPORT.md) and [label correction](v39_typed_epoch_alias_59_a01_20261005/CORRECTION.md) — source accepted eight Boolean/float epoch aliases; offline boundary evidence only, no in-tree-reader or live-effect claim |
 | V39 paired health/ammo A03 initial auditor mismatch (#7713; historical) | [`v39_ammo_cover_a03_initial_audit_failure_20261005/README.md`](v39_ammo_cover_a03_initial_audit_failure_20261005/README.md) — preserves the unique initial 25/26 AUDIT_FAILED receipt; subsequent 26/26 corrected only the auditor status label without rerunning the candidate; not a candidate failure or a new method result |
 | v39 ammo-aware renewable-cover successor (#59) | [`v39_ammo_cover_guard_59_a02_20261005/REPORT.md`](v39_ammo_cover_guard_59_a02_20261005/REPORT.md) — dual-signal construction `PASS` (24/24 audit checks); no controller integration or live evidence; paired epoch enforcement remains a prerequisite |
 | v39 ammo-aware renewable-cover boundary (#59) | [`v39_ammo_cover_guard_59_a01_20261005/REPORT.md`](v39_ammo_cover_guard_59_a01_20261005/REPORT.md) — synthetic current-source failure: zero ammo did not invalidate a notional fire-containing cover while the health guard remained valid; no live-game or input claim |
@@ -416,6 +417,53 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [Retained V39 ammo-timeline audit mutation evidence](v39_fire_cover_ammo_timeline_audit_a01_20261005/README.md) — rescued from closed PR #7737 as audit-integrity evidence: A02 rejects all six saved-result corruptions. It does not duplicate the separate repair in #7726 or upgrade the underlying observation.
 | Astra decision-4 dense HUD replay (#59) | [`map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md`](map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md) — 60 encoded frames and independent pixel-delta audit bound the first health-HUD change to game 46.8–47.0 s during model wait; the final 94→87 change straddles the observed return boundary. Posthoc single-run evidence only; no causal or live-control claim. |
 
+| Scorer endpoint readback type A03 (#7698 evidence rescue) | [`scorer_endpoint_read_type_7685_a03_20261005/README.md`](scorer_endpoint_read_type_7685_a03_20261005/README.md) — preserves the closed PR's original report, source/test snapshots and historical checksums; the fix and equivalent combined regression are already on main through #7685; stub-only, no live scorer/game claim.
+
 ## V15 per-key owner evidence (#8102)
 
 - [Frozen-source reproduction correction](v15_perkey_owner_evidence_only_20261005_REPRODUCTION_CORRECTION.md) — verify the frozen candidate commit is present in the fetched PR history without requiring the mutable PR tip to equal that commit. No experiment rerun.
+
+## A05 raw-bound health negative control (#8214)
+
+- [Retained A05 audit and outputs](map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/README.md) — the saved auditor binds source/monitor sequences 204/216 to raw health and capture-time evidence; 25 recorded checks over 45 observations in one posthoc trace. No live run or interruption-effect claim. [Preservation qualification](map01_v39_health_threshold_a05_8214_QUALIFICATION.md) distinguishes the original source/output hash label and the limits of the saved control record.
+
+## V39 feedback-onset custody audit A01 (#8213)
+
+- [Preserved five-file audit package](feedback_onset_audit_a01_20261005/README.md) — 634 retained events, 39 admissions, no per-key release measurement/transition or independently timestamped in-run task-effect event; one post-control score does not locate effect onset. [Original #7602 README](feedback_onset_a01_8213_SOURCE_README.md) preserves the pre-correction replay path. Construction STOP retained; no new audit or live run.
+
+## Historical V39 release-telemetry rescue (#7378/#7385/#7395)
+
+This is an evidence-only successor. The old PRs' source, test, and selector
+edits are not copied: current-main versions of the overlapping paths differ,
+and the old three-way merge conflicts in those paths. These archives remain
+bound to their frozen historical sources and do not qualify current-main
+runtime behavior.
+
+- [First live-allocation STOP](map01-v39-per-key-release-live-t0-20261004/results/MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01/RUN_RESULT.md) — one candidate invocation exited before X11 session/input because of a malformed network-precondition expression; zero input actions/processes and no auditor invocation. This consumed allocation is not retried.
+- [Split-step release telemetry construction](results/map01-v39-per-key-release-telemetry-port-v1/README.md) — the frozen regression first reproduced a missing earlier-key receipt; corrected host-side focused suites passed 18/18 backend, 11/11 retained adapter, and 8/8 owner-wrapper tests. No container, X11, live input, or application-effect run is claimed.
+- [Cleanup-overlap construction and retained WSLc outcome](map01-v39-release-cleanup-overlap-v1/README.md) — execute-path host candidate passed 21/21 with owner-wrapper 8/8; saved-log audit 12/12 and mutation controls 5/5. The earlier lower-boundary WSLc outcome and swap/cgroup warning remain unchanged.
+- [Malformed cleanup/bracket follow-up](map01-v39-release-cleanup-followup-v1/RESULT.md) — exact historical parents retain their expected REDs; current-parent candidate reported 26/26 backend and 8/8 owner tests, with saved-log audit 14/14. Construction-only; no live allocation or physical-release claim.
+
+The historical saved-log auditors were rerun from this current-main checkout
+without modifying their original outputs. The overlap auditor reports 11/12:
+its execute-path assertion is tied to a test-name/assertion no longer present
+in current main. Its separate five mutation tests pass. The follow-up auditor
+reports 13/14: its three historical malformed-test names are absent from the
+current-main test file. These are source-drift re-audit FAILs, not replacements
+for the historical 12/12 and 14/14 records; no candidate or live allocation
+was rerun. See
+[`CURRENT_MAIN_REAUDIT.md`](results/map01-v39-per-key-release-telemetry-port-v1/CURRENT_MAIN_REAUDIT.md).
+
+**H/T/D/C/U:** H — per-key release receipts must survive successful steps of
+one program, while cleanup overlap or malformed timing/history cannot be
+accepted as an ordinary verified release. T — preserve the first STOP and the
+separately frozen synthetic RED/GREEN follow-ups without repeating the consumed
+allocation. D — these are source-bound construction/audit results only. C —
+fake owners and retained logs do not establish physical key state, application
+consumption, or useful feedback; the historical WSLc run also records
+unavailable swap isolation. U — current-main live V39 telemetry and task-effect
+gates remain open; this archive makes no code promotion.
+
+## PR #7414 recorder-boundary successor evidence
+
+- [Rescued construction and malformed-auditor probes](results/map01-v39-recorder-boundary-probe-7414-20261004/README.md) — recorder-boundary regression is red on #7386 parent and green after repair; candidate/auditor suite 13/13. Separate malformed keymap-hex input probe changed from uncaught `ValueError` to explicit FAIL/HOLD. Source commit/blob/SHA provenance is pinned. Synthetic construction only; no live allocation or X11 action. Original source branch remains stacked under Draft #7386/#7355 and is not directly mergeable to main.

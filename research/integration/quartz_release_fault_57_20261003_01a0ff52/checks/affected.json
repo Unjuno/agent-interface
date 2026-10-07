@@ -1,0 +1,46 @@
+{
+  "kind": "ordinary_regression_not_formal_allocation",
+  "label": "affected",
+  "command": [
+    "/run/current-system/sw/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "runtime.backends.quartz_v1.test_release_faults",
+    "runtime.backends.quartz_v1.test_integration.PureQuartzTests",
+    "runtime.core_v1.test_contract",
+    "runtime.core_v1.test_compiled_gui"
+  ],
+  "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+  "git_head": "9c26e204c0475bee30919e3d0e6681f393078ef1",
+  "python_version": "Python 3.12.13",
+  "started_utc": "2026-10-03T05:18:14.121620+00:00",
+  "ended_utc": "2026-10-03T05:18:14.262441+00:00",
+  "elapsed_ns": 140591542,
+  "exit_code": 0,
+  "timed_out": false,
+  "child_reaped": true,
+  "source_sha256_before": {
+    "runtime/backends/quartz_v1/backend.py": "135c03ce9a17d581820af7f73a1e510435fdadd178c9d4f88f95401c6cbda498",
+    "runtime/backends/quartz_v1/session.py": "19621618a2c93bcc843a4e8758e6518b45f312d904fdfa0f8e4656863a7d2d6a",
+    "runtime/backends/quartz_v1/test_release_faults.py": "8bbcf082e656284d443118af4f455bf648350d5c79aa787e23d8331005150f54"
+  },
+  "source_sha256_after": {
+    "runtime/backends/quartz_v1/backend.py": "135c03ce9a17d581820af7f73a1e510435fdadd178c9d4f88f95401c6cbda498",
+    "runtime/backends/quartz_v1/session.py": "19621618a2c93bcc843a4e8758e6518b45f312d904fdfa0f8e4656863a7d2d6a",
+    "runtime/backends/quartz_v1/test_release_faults.py": "8bbcf082e656284d443118af4f455bf648350d5c79aa787e23d8331005150f54"
+  },
+  "streams": {
+    "stdout": {
+      "path": "affected-stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "affected-stderr.txt",
+      "bytes": 11516,
+      "sha256": "f2108827b90c950ecea41b4df9d655d6d22a2b1c46a3a715ebcd67d878919d7e"
+    }
+  }
+}
