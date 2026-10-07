@@ -47,6 +47,9 @@ class MoveBridge:
         if not self.lock.acquire(blocking=False):
             raise ValueError('operation active')
         try:
+            # Any new preparation attempt supersedes earlier unconsumed
+            # authority, including attempts rejected by later gates.
+            self.permits.clear()
             if not self.verifier_idle():
                 raise ValueError('verifier still active')
             if self.cancelled() is not False or self.session.recovery_required:
@@ -69,7 +72,6 @@ class MoveBridge:
             if not admission.accepted:
                 raise ValueError('ordinary admission refused: ' + str(admission.error))
             token = uuid.uuid4().hex
-            self.permits.clear()
             self.permits[token] = {'program': program, 'row': row, 'scope': self.observer.scope, 'deadline': deadline}
             return {'authorization': token, 'sequence': row['sequence'], 'valid_until_ns': deadline, 'point': list(resolution['point'])}
         finally:

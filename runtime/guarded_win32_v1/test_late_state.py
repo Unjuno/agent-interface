@@ -32,5 +32,15 @@ class Cases(unittest.TestCase):
   b,o,s,raw,e=self.fixture();s.authorize=lambda intent:{'lease_id':'expired-lease','expires_at_ns':time.monotonic_ns()-1}
   with self.assertRaisesRegex(ValueError,'authority expired'):s.prepare('button',[1,1])
   self.assertFalse(s.permits);self.assertEqual(e,[])
+ def test_failed_new_preparation_invalidates_previous_permit(self):
+  for mode in ['declined','expired']:
+   b,o,s,raw,e=self.fixture();old=s.prepare('button',[1,1])
+   if mode=='declined':s.authorize=lambda intent:None
+   else:s.authorize=lambda intent:{'lease_id':'expired-lease','expires_at_ns':time.monotonic_ns()-1}
+   expected='caller authority unavailable' if mode=='declined' else 'authority expired'
+   with self.assertRaisesRegex(ValueError,expected):s.prepare('button',[1,1])
+   self.assertFalse(s.permits)
+   self.assertEqual(s.execute(old['authorization'])['error'],'AUTHORIZATION_CONSUMED_OR_UNKNOWN')
+   self.assertEqual(e,[])
 
 if __name__=='__main__':unittest.main()
