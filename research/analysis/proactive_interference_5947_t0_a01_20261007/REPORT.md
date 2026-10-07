@@ -1,6 +1,6 @@
 # Issue #5947 / successor #8313 — matched-context integrity T0 A01
 
-**Status: `PASS_FIXTURE_METHOD_SCOPED`.** This is a deterministic synthetic fixture/provenance result only. It does not test whether a model experiences proactive interference.
+**Disposition: `STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED`.** The raw candidate/auditor outputs below are retained as evidence of an accidentally repeated execution, not as a valid result for this allocation. PR [#8317](https://github.com/Unjuno/agent-interface/pull/8317) already consumed the same allocation ID, base commit, and fixture-only T0 and records `HOLD_AUDITOR_COVERAGE`. That predecessor remains authoritative; this package cannot repair, replace, pool with, or supersede it. See [`DUPLICATE_ALLOCATION_STOP.md`](DUPLICATE_ALLOCATION_STOP.md).
 
 ## H / T / D / C / U
 
@@ -13,7 +13,7 @@ The allocation and SHA-bound protocol are in [`FREEZE.json`](FREEZE.json). The T
 
 ## Interpretation and limitations
 
-The supported claim is that this authored fixture and auditor preserve the declared finite contrasts and reject the listed corruptions. Equal byte counts and cue offset do not imply equal tokenization, visual salience or attention. The expected values and information requirements are authored assumptions; no model-facing serialization was evaluated. No proactive-interference, model accuracy, GUI effect, latency, safety, deployment or generalization claim follows. A later model study remains separately gated and is not authorized by this T0.
+The recorded process outputs report reconstruction of this authored fixture and rejection of the listed corruptions, but because the allocation had already been consumed, those outputs support no claim of allocation-level success. They must not be combined with the predecessor run. Equal byte counts and cue offset do not imply equal tokenization, visual salience or attention. The expected values and information requirements are authored assumptions; no model-facing serialization was evaluated. No proactive-interference, model accuracy, GUI effect, latency, safety, deployment or generalization claim follows. A later model study remains separately gated and is not authorized by this T0.
 
 The pre-formal construction launcher incident (one test container invocation with the wrong working directory) is recorded in `FREEZE.json`; it did not invoke candidate or formal auditor CLIs. Corrected host and container construction tests both passed 10/10.
 

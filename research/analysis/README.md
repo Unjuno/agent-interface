@@ -1,6 +1,6 @@
 # Analytical research
 
-- [Issue #5947 / successor #8313 matched-context integrity T0 A01](proactive_interference_5947_t0_a01_20261007/REPORT.md) — `PASS_FIXTURE_METHOD_SCOPED`: 32 synthetic rows across four arms/depths reconstructed; equal UTF-8 lengths and cue offsets, baseline retained, 4/4 corruptions rejected. No model/interference claim.
+- [Issue #5947 / successor #8313 matched-context integrity T0 A01](proactive_interference_5947_t0_a01_20261007/REPORT.md) — `STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED`: later run is custody evidence only; predecessor PR #8317's `HOLD_AUDITOR_COVERAGE` remains authoritative. No pooling or model/interference claim.
 
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
 
