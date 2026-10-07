@@ -1,0 +1,18 @@
+{
+  "allocation": "5309-IDENT-A02-HOSTCPU-20261007",
+  "main_sha": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "python": "3.14.5",
+  "execution": "host stdlib only; no network API, GUI, model, GPU, input, or external effects; no OS-level network isolation claimed",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "retries_allowed": 0,
+  "sha256": {
+    "PRE_REGISTRATION.md": "a6d5590b2c1c734cc91e326726ef53601742e6206c19c256b7c399b84360ecfe",
+    "fixture.json": "eafaadd50620937335a644eabef764b7adcf83ebcd16c8ddc608adc0e54d4799",
+    "oracle_truth.json": "265e6d0984883419dc24511d2cb07884b5ca10d097b743dc7641857f535d0dff",
+    "candidate.py": "1b27695b382656fdd5d3b6dd5a3b54fdaf9647c6984d2b880db74ab664c687af",
+    "auditor.py": "eb68b509ce9dd513985e8bb47d946a4ae84b5c2e94c44a68c593975b7dffc104",
+    "test_construction.py": "0fe4f8be840982ef24c0a7a2b44c420f5648517819ec30799fcd94a68db1d512"
+  },
+  "formal_gate": "METHOD_PASS_SCOPED only with exact independent pairwise enumeration, 1-bit irrelevant information reduction, repeated alias, separator/null positives, no-separator/expired UNKNOWN-YIELD, refusal censoring, no authority, and opportunity counterfactual agreement; otherwise retain first FAIL/HOLD/STOP and do not retry"
+}

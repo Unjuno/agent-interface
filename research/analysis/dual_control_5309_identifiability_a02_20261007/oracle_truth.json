@@ -1,0 +1,43 @@
+{
+  "safe_commit": {"b0": "commit_safe", "h0": "commit_abort", "b1": "commit_safe", "h1": "commit_abort", "s_b": "commit_safe", "s_h": "commit_abort", "n_b": "commit_safe", "n_h": "commit_abort", "e_b": "commit_safe", "e_h": "commit_abort", "z_b": "commit_safe", "z_h": "commit_abort"},
+  "scenarios": {
+    "mode_alias": {
+      "states": ["b0", "h0", "b1", "h1"],
+      "relevant_pairs": [["b0", "h0"], ["b1", "h1"]],
+      "allowed_by_step": [["probe_mode", "repeat"], ["probe_mode", "repeat"], ["probe_mode", "repeat"], ["probe_mode", "repeat"], ["probe_mode", "repeat"]],
+      "observations": {"probe_mode": {"b0": "mode0", "h0": "mode0", "b1": "mode1", "h1": "mode1"}, "repeat": {"b0": "routine", "h0": "routine", "b1": "routine", "h1": "routine"}},
+      "expiry_before_step": null
+    },
+    "separator_available": {
+      "states": ["s_b", "s_h"],
+      "relevant_pairs": [["s_b", "s_h"]],
+      "allowed_by_step": [["repeat", "witness"], ["repeat", "witness"]],
+      "observations": {"repeat": {"s_b": "routine", "s_h": "routine"}, "witness": {"s_b": "benign_witness", "s_h": "hazard_witness"}},
+      "expiry_before_step": null
+    },
+    "no_separator": {
+      "states": ["n_b", "n_h"],
+      "relevant_pairs": [["n_b", "n_h"]],
+      "allowed_by_step": [["repeat"], ["repeat"]],
+      "observations": {"repeat": {"n_b": "routine", "n_h": "routine"}},
+      "expiry_before_step": null
+    },
+    "expiry_before_separator": {
+      "states": ["e_b", "e_h"],
+      "relevant_pairs": [["e_b", "e_h"]],
+      "allowed_by_step": [["repeat"], ["witness"]],
+      "observations": {"repeat": {"e_b": "routine", "e_h": "routine"}, "witness": {"e_b": "benign_witness", "e_h": "hazard_witness"}},
+      "expiry_before_step": 1
+    },
+    "one_step_null": {
+      "states": ["z_b", "z_h"],
+      "relevant_pairs": [["z_b", "z_h"]],
+      "allowed_by_step": [["witness"]],
+      "observations": {"witness": {"z_b": "benign_witness", "z_h": "hazard_witness"}},
+      "expiry_before_step": null
+    }
+  },
+  "task_progress": {"repeat": {"benign": true, "hazard": false}},
+  "actions": {"probe_mode": {"opportunity_cost_by_state": {"b0": 0, "h0": 1, "b1": 0, "h1": 1}}},
+  "authority_granted_by_any_action": false
+}
