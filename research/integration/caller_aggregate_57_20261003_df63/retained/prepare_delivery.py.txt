@@ -1,0 +1,10 @@
+from pathlib import Path
+r=Path(__file__).resolve().parent;c=r/'candidate';old=r.parent/'caller-cost-57-df63-i12/candidate'
+b=(r/'test_aggregate.py').read_bytes().replace(b"os.environ['ROWS']",b"os.environ.get('ROWS', os.devnull)")
+(c/'test_adaptive_acquisition_aggregate_cost.py').write_bytes(b)
+for n in ['test_adaptive_acquisition_cost_coverage.py','test_adaptive_acquisition_caller_v3.py']:(c/n).write_bytes((old/n).read_bytes())
+s=(r/'run_phase.py').read_text(encoding='utf-8')
+s=s.replace("(folder/'test_aggregate.py').write_bytes((r/'test_aggregate.py').read_bytes())","# portable definitions preassembled in isolated candidate")
+s=s.replace("['-B','-m','unittest','-v','test_aggregate']","['-B','-m','unittest','-v','test_adaptive_acquisition_aggregate_cost','test_adaptive_acquisition_cost_coverage','test_adaptive_acquisition_caller_v3']")
+s=s.replace("env['ROWS']=str(o/'rows.jsonl');","env.pop('ROWS',None);env.pop('TRACE_OUTPUT',None);")
+(r/'run_delivery.py').write_text(s,encoding='utf-8')

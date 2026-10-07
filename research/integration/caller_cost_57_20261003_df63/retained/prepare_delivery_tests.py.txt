@@ -1,0 +1,16 @@
+import ast,hashlib,json,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent;repo=root.parent/'agent-interface'
+original=(root/'test_caller_cost_coverage.py').read_bytes()
+old=b"path=Path(os.environ['TRACE_OUTPUT'])";new=b"path=Path(os.environ.get('TRACE_OUTPUT', os.devnull))"
+assert original.count(old)==1
+final=original.replace(old,new);ast.parse(final)
+(root/'candidate/test_adaptive_acquisition_cost_coverage.py').write_bytes(final)
+raw=subprocess.check_output(['git','show','b4ff90d974c2cd4142eaceee156a74a9aa3109a8:runtime/integration_checks/native.py'],cwd=repo)
+assert b"test_adaptive_acquisition_cost_coverage" not in raw
+oldline=b"SUITES['protocol'].append('test_app_server_eof_stop')"
+assert raw.count(oldline)==1
+updated=raw.replace(oldline,oldline+b"\nSUITES['protocol'].append('test_adaptive_acquisition_cost_coverage')")
+(root/'base-native.py.txt').write_bytes(raw);(root/'candidate-native.py.txt').write_bytes(updated)
+result={'test_original_sha256':hashlib.sha256(original).hexdigest(),'test_delivery_sha256':hashlib.sha256(final).hexdigest(),'delta':'optional trace sink defaults to os.devnull; assertions/methods unchanged; one once-only protocol selection append','original_first_test_definitions_preserved':True}
+(root/'DELIVERY_TEST_PREPARATION.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))

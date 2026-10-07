@@ -1,0 +1,48 @@
+test_finite_credit (test_aggregate.Aggregate.test_finite_credit) ... ok
+test_finite_sum (test_aggregate.Aggregate.test_finite_sum) ... ok
+test_huge_mixed (test_aggregate.Aggregate.test_huge_mixed) ... FAIL
+test_max_overflow (test_aggregate.Aggregate.test_max_overflow) ... FAIL
+test_positive_overflow (test_aggregate.Aggregate.test_positive_overflow) ... FAIL
+test_unknown (test_aggregate.Aggregate.test_unknown) ... ok
+test_zero_cost (test_aggregate.Aggregate.test_zero_cost) ... ok
+
+======================================================================
+FAIL: test_huge_mixed (test_aggregate.Aggregate.test_huge_mixed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$OWN_PRIVATE\Documents\Codex\2026-10-03\new-chat-3\work\caller-total-57-df63-i16\baseline\test_aggregate.py", line 36, in test
+    def test(self,name=name):self.check_case(name)
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "$OWN_PRIVATE\Documents\Codex\2026-10-03\new-chat-3\work\caller-total-57-df63-i16\baseline\test_aggregate.py", line 31, in check_case
+    self.assertIsNone(error);self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED');self.assertEqual(receipt['accounting']['attempted_calls'],2);self.assertEqual(receipt['accounting']['completed_calls'],2)
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'type': 'OverflowError', 'message': 'int too large to convert to float'} is not None
+
+======================================================================
+FAIL: test_max_overflow (test_aggregate.Aggregate.test_max_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$OWN_PRIVATE\Documents\Codex\2026-10-03\new-chat-3\work\caller-total-57-df63-i16\baseline\test_aggregate.py", line 36, in test
+    def test(self,name=name):self.check_case(name)
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "$OWN_PRIVATE\Documents\Codex\2026-10-03\new-chat-3\work\caller-total-57-df63-i16\baseline\test_aggregate.py", line 32, in check_case
+    if expected is None:self.assertIsNone(receipt['accounting']['cost'])
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: inf is not None
+
+======================================================================
+FAIL: test_positive_overflow (test_aggregate.Aggregate.test_positive_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$OWN_PRIVATE\Documents\Codex\2026-10-03\new-chat-3\work\caller-total-57-df63-i16\baseline\test_aggregate.py", line 36, in test
+    def test(self,name=name):self.check_case(name)
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "$OWN_PRIVATE\Documents\Codex\2026-10-03\new-chat-3\work\caller-total-57-df63-i16\baseline\test_aggregate.py", line 32, in check_case
+    if expected is None:self.assertIsNone(receipt['accounting']['cost'])
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: inf is not None
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+FAILED (failures=3)
