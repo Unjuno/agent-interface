@@ -38,6 +38,8 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 
 - The author deleted fix/x11-explicit-up-01a0ff2c on Oct 7 at 12:34 UTC. Its PR #7114 is closed unmerged and explicitly titled Superseded; the remaining branch delta is three test-file edits and is not integrated. Do not restore or adopt that V2 change. The historical evidence archive was separately rescued by merged PR #7980 (commit 5d896208724f824b7a0490a512bc72340a80bf0d), whose tip is reachable from main and whose MANIFEST.json is present there.
 
+- PR #7148 is closed unmerged but its fix/x11-wheel-ledger-01a0ff2c branch remains outside main. Its last review note says V4 content review SUSPENDED / adoption/application HOLD and explicitly says not to approve, adopt, or apply this head. The four-commit branch changes nine paths relative to its merge base. Preserve it as a held source record; do not delete or merge until a qualified successor resolves the hold.
+
 ## Follow-up policy
 
 1. Triage the 65 unpaired, non-main-ancestor branches individually. First identify merged/closed PRs, ancestry and stack dependencies, worktree ownership, evidence custody, and whether each unique change is already integrated. Delete only verified aliases or fully integrated disposable refs; rescue useful evidence to a current-main PR before removing its source ref.
