@@ -1,0 +1,50 @@
+[
+  {
+    "name": "wrong_native_focus",
+    "expected_failure": "wrapper_target: native focus before input",
+    "result": {
+      "decision": "HOLD",
+      "checks": 48,
+      "failures": [
+        "wrapper_target: native focus before input"
+      ],
+      "scope": "Two ordinary q regressions; original six-cell application-prefix result remains FAIL_OR_HOLD."
+    }
+  },
+  {
+    "name": "missing_app_effect",
+    "expected_failure": "wrapper_target: text effect",
+    "result": {
+      "decision": "HOLD",
+      "checks": 48,
+      "failures": [
+        "wrapper_target: text effect"
+      ],
+      "scope": "Two ordinary q regressions; original six-cell application-prefix result remains FAIL_OR_HOLD."
+    }
+  },
+  {
+    "name": "nonneutral_final",
+    "expected_failure": "wrapper_target: final neutral",
+    "result": {
+      "decision": "HOLD",
+      "checks": 48,
+      "failures": [
+        "wrapper_target: final neutral"
+      ],
+      "scope": "Two ordinary q regressions; original six-cell application-prefix result remains FAIL_OR_HOLD."
+    }
+  },
+  {
+    "name": "bad_driver_exit",
+    "expected_failure": "wrapper_target: driver",
+    "result": {
+      "decision": "HOLD",
+      "checks": 48,
+      "failures": [
+        "wrapper_target: driver"
+      ],
+      "scope": "Two ordinary q regressions; original six-cell application-prefix result remains FAIL_OR_HOLD."
+    }
+  }
+]
