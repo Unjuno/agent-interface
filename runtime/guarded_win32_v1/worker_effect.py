@@ -7,9 +7,11 @@ def _worker_environment():
     """Make the current runtime package visible to the child interpreter."""
     origin = os.path.normcase(os.path.abspath(__file__))
     for entry in sys.path:
-        if type(entry) is not str or not entry:
+        if type(entry) is not str:
             continue
-        root = os.path.abspath(entry)
+        # Python represents the current working directory as an empty sys.path
+        # entry for `-c`; it is still a valid source-checkout package root.
+        root = os.path.abspath(entry or os.getcwd())
         worker_module = os.path.normcase(os.path.join(root, 'runtime', 'guarded_win32_v1', 'worker_effect.py'))
         if origin == worker_module:
             env = os.environ.copy()
