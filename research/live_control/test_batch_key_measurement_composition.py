@@ -114,20 +114,15 @@ class BatchMeasurementCompositionTests(unittest.TestCase):
         self.assertTrue(self.backend.owner.call('input_state')['release_pending'])
 
     def test_delivered_down_with_sync_error_is_retained_as_unconfirmed(self):
-        xtest = sys.modules['Xlib.ext.xtest']
-        original = xtest.fake_input
-        failed = []
+        original_sync = self.fixture.fake.sync
 
-        def deliver_then_fail(display, event, code):
-            original(display, event, code)
-            if event == 2 and not failed:
-                failed.append(code)
-                raise OSError('synthetic DOWN delivered before acknowledgement loss')
+        def sync_then_fail():
+            original_sync()
+            raise OSError('synthetic sync acknowledgement loss')
 
-        with patch.object(xtest, 'fake_input', deliver_then_fail):
+        with patch.object(self.fixture.fake, 'sync', sync_then_fail):
             with self.assertRaisesRegex(OSError, 'acknowledgement loss'):
                 self.backend.raw('W', True)
-        self.assertEqual(failed, [38])
         self.assertEqual(self.fixture.fake.down, {38})
         attempts = [row for row in self.events
                     if row.get('event') == 'input_attempt_measurement']
@@ -141,18 +136,16 @@ class BatchMeasurementCompositionTests(unittest.TestCase):
         self.assertEqual(self.fixture.fake.down, set())
 
     def test_measurement_publish_error_does_not_mask_down_error(self):
-        xtest = sys.modules['Xlib.ext.xtest']
-        original = xtest.fake_input
+        original_sync = self.fixture.fake.sync
 
-        def deliver_then_fail(display, event, code):
-            original(display, event, code)
-            if event == 2:
-                raise OSError('synthetic DOWN acknowledgement loss')
+        def sync_then_fail():
+            original_sync()
+            raise OSError('synthetic DOWN acknowledgement loss')
 
         def fail_publish(row):
             raise RuntimeError('synthetic measurement output failure')
 
-        with patch.object(xtest, 'fake_input', deliver_then_fail):
+        with patch.object(self.fixture.fake, 'sync', sync_then_fail):
             with patch.object(self.backend, 'emit', fail_publish):
                 with self.assertRaisesRegex(OSError, 'DOWN acknowledgement loss') as caught:
                     self.backend.raw('W', True)
