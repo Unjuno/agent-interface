@@ -132,7 +132,7 @@ class PersistentPlannerAdapter:
         return {"outcome": outcome, "response": response}
 
     def abort_pending_turn(self):
-        """Close the app-server transport to unblock a turn after failed interrupt."""
+        """Close the transport when a fatal session error leaves a turn pending."""
         with self._lock:
             if self._active is None or self._terminal_status is not None:
                 return {"outcome": "already_terminal", "status": self._terminal_status}

@@ -30,6 +30,8 @@ class CoverTerminalTests(unittest.TestCase):
     def exercise(self, name, status, release, *, pending=True, renewed=False,
                  complete_at_terminal=False, executor_failure=False,
                  interrupt_failure=False, interrupt_request_error=False,
+                 interrupt_ack_only=False, complete_during_interrupt=False,
+                 abort_failure=False, abort_terminal_race=False,
                  planner_wait_cap=2):
         trace = {"case": name, "commands": [], "events": [], "timeline": []}
         started = threading.Event()
@@ -112,6 +114,7 @@ class CoverTerminalTests(unittest.TestCase):
                 started.set()
                 trace["planner_timeout_requested"] = timeout
                 if pending and not complete.wait(min(timeout, planner_wait_cap)):
+                    trace["timeline"].append("planner_wait_expired")
                     raise RuntimeError("test planner was not interrupted")
                 trace["timeline"].append("planner_return")
                 return SimpleNamespace(answer={"state": "active"}, usage={},
@@ -123,11 +126,19 @@ class CoverTerminalTests(unittest.TestCase):
                     raise KeyboardInterrupt("synthetic interrupt transport error")
                 if interrupt_request_error:
                     return {"outcome": "request_error", "response": {"error": "synthetic"}}
+                if interrupt_ack_only:
+                    return {"outcome": "requested", "response": {}}
                 complete.set()
+                if complete_during_interrupt:
+                    futures[0].result(timeout=2)
                 return {"status": "interrupted"}
             def abort_pending_turn(self):
                 trace["timeline"].append("abort_transport")
                 complete.set()
+                if abort_failure:
+                    raise OSError("synthetic close fault after waiter wakeup")
+                if abort_terminal_race:
+                    return {"outcome": "already_terminal", "status": "completed"}
                 return {"outcome": "aborted"}
 
         planner = Planner()
@@ -290,7 +301,8 @@ class CoverTerminalTests(unittest.TestCase):
                               interrupt_failure=True, planner_wait_cap=0.15)
         self.assert_rejected(trace)
         self.assertIn("injected input error", trace["error"]["message"])
-        self.assertEqual(trace["error_notes"], ["planner interrupt failed: KeyboardInterrupt"])
+        self.assertEqual(trace["error_notes"], ["planner interrupt failed: KeyboardInterrupt",
+                                               "pending planner turn transport aborted"])
         self.assertIn("abort_transport", trace["timeline"])
         self.assertLess(trace["main_elapsed_ns"], 100_000_000)
 
@@ -305,6 +317,40 @@ class CoverTerminalTests(unittest.TestCase):
             with self.subTest(case=name):
                 self.assert_rejected(self.exercise("post-answer-" + name, status, release,
                                                    pending=False), pending=False)
+
+    def test_interrupt_ack_without_completion_reaches_cleanup_without_planner_timeout(self):
+        trace = self.exercise("interrupt-ack-only", "failed", NEUTRAL,
+                              interrupt_ack_only=True, planner_wait_cap=0.15)
+        self.assert_rejected(trace)
+        self.assertEqual(trace["planner_timeout_requested"], 90)
+        self.assertNotIn("planner_wait_expired", trace["timeline"])
+        self.assertLess(trace["timeline"].index("abort_transport"),
+                        trace["timeline"].index("planner_return"))
+        self.assertIn("pending planner turn transport aborted", trace["error_notes"])
+
+    def test_completion_during_interrupt_needs_no_transport_abort(self):
+        trace = self.exercise("interrupt-ack-complete", "failed", NEUTRAL,
+                              complete_during_interrupt=True)
+        self.assert_rejected(trace)
+        self.assertNotIn("abort_transport", trace["timeline"])
+        self.assertNotIn("planner_wait_expired", trace["timeline"])
+
+    def test_abort_fault_after_ack_keeps_original_terminal_failure(self):
+        trace = self.exercise("interrupt-ack-abort-fault", "failed", NEUTRAL,
+                              interrupt_ack_only=True, abort_failure=True,
+                              planner_wait_cap=0.15)
+        self.assert_rejected(trace)
+        self.assertIn("injected input error", trace["error"]["message"])
+        self.assertNotIn("planner_wait_expired", trace["timeline"])
+        self.assertEqual(trace["error_notes"], ["planner transport abort failed: OSError"])
+
+    def test_completion_racing_abort_does_not_claim_transport_closed(self):
+        trace = self.exercise("interrupt-abort-terminal-race", "failed", NEUTRAL,
+                              interrupt_ack_only=True, abort_terminal_race=True,
+                              planner_wait_cap=0.15)
+        self.assert_rejected(trace)
+        self.assertNotIn("planner_wait_expired", trace["timeline"])
+        self.assertNotIn("pending planner turn transport aborted", trace["error_notes"])
 
     def test_neutral_natural_terminals_keep_renewal(self):
         for status in ("completed", "expired"):

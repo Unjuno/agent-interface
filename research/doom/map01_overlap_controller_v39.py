@@ -1576,30 +1576,29 @@ def main():
                     try:
                         require_cover_terminal(current_terminal)
                     except RuntimeError as error:
-                        # Request interruption before pool shutdown waits for
-                        # await_turn. Keep the terminal failure primary if the
-                        # interruption transport itself fails.
+                        # The fatal cover error ends this control session. An
+                        # interrupt ACK does not complete await_turn, so retire
+                        # its transport if the future is still pending before
+                        # pool shutdown joins it. Keep the cover failure primary.
                         if not future.done():
                             try:
                                 interrupt_result = planner.interrupt(planner_handle)
                             except BaseException as interrupt_error:
                                 error.add_note("planner interrupt failed: " +
                                                type(interrupt_error).__name__)
-                                try:
-                                    planner.abort_pending_turn()
-                                except BaseException as abort_error:
-                                    error.add_note("planner transport abort failed: " +
-                                                   type(abort_error).__name__)
                             else:
                                 if (isinstance(interrupt_result, dict) and
                                         interrupt_result.get("outcome") == "request_error"):
                                     error.add_note("planner interrupt transport failed")
-                                    try:
-                                        planner.abort_pending_turn()
-                                    except BaseException as abort_error:
-                                        error.add_note("planner transport abort failed: " +
-                                                       type(abort_error).__name__)
-                                    else:
+                            if not future.done():
+                                try:
+                                    abort_result = planner.abort_pending_turn()
+                                except BaseException as abort_error:
+                                    error.add_note("planner transport abort failed: " +
+                                                   type(abort_error).__name__)
+                                else:
+                                    if (isinstance(abort_result, dict) and
+                                            abort_result.get("outcome") == "aborted"):
                                         error.add_note("pending planner turn transport aborted")
                         raise
                     if future.done():break
