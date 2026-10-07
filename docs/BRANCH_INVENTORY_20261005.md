@@ -168,3 +168,10 @@ The earlier #8227 hold was based on its source tip not being an ancestor of curr
 A read-back found that merged PR #8222's unique `Issue #7799 T0 A01 pairwise eligibility` summary row was absent from current main's `research/analysis/README.md`, despite the package directory link and evidence files being present. The exact summary row from the closed PR head is now proposed in open Draft PR #8263 as a single-file, additive index repair. It preserves the `HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR` result and its synthetic-only limits; no package, candidate, or auditor was rerun.
 
 After confirming #8222's only changed path was the index, its row was present in the successor branch, no open PR depended on the old ref, and no worktree used it, deleted `fix/7799-analysis-index-20261005` at exact tip `8a5417c34df33cfafe137cbb8c257199b0f68258`. The closed #8222 pull-head remains fetchable. The restored summary is proposed for review and is not yet integrated into main.
+## Additional merged-ref review — 2026-10-07
+
+Removed #8211 `research/8185-exact-transform-oracle-a02-20261005` at exact live tip `925b373c526287d9eaf7b79617565ce61fa47702`. PR #8211 is closed-merged, the exact tip is an ancestor of current main `133dafbd8f616b7d2f2ca8b14a3ba863b63f0933`, and no worktree used the branch. The remote branch is absent after deletion; `refs/pull/8211/head` remains fetchable at the former tip.
+
+Retain #8219 `research/8157-prefix-audit-a04-20261005`. The closed merged PR records head `4ac8abf9c18af0ad4090cb1fe0c0f4d21bd89b6f`, but its live branch points to `93500f925459f7c8b05947887dc40975885e929d`. That live tip is not an ancestor of current main and differs from it across a large tree delta; prior path-equality reasoning about the recorded PR head does not establish custody of the live branch contents. Preserve the ref pending a direct unique-content and dependency audit. No experiment, auditor, or replay was rerun.
+
+The latest non-atomic remote-head count after #8211 cleanup was 422.
