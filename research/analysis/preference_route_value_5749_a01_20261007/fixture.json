@@ -1,0 +1,16 @@
+{
+  "schema": "5749-route-regret-fixture-a01-v1",
+  "allocation": "5749-ROUTE-REGRET-A01-20261007",
+  "policies": ["source_router", "regret_cost"],
+  "cases": [
+    {"id":"low_regret_authorized_default", "rankings":[{"A":10,"B":9},{"A":9,"B":10}], "authorized_actions":["A","B"], "authorized_default":"A", "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":false, "verify_available":true, "verify_cost":1},
+    {"id":"high_regret_authorized_default", "rankings":[{"A":10,"B":0},{"A":0,"B":10}], "authorized_actions":["A","B"], "authorized_default":"A", "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":false, "verify_available":true, "verify_cost":1},
+    {"id":"regret_equals_query_cost", "rankings":[{"A":10,"B":8},{"A":8,"B":10}], "authorized_actions":["A","B"], "authorized_default":"A", "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":false, "verify_available":true, "verify_cost":1},
+    {"id":"high_regret_no_authorized_default", "rankings":[{"A":10,"B":0},{"A":0,"B":10}], "authorized_actions":["A","B"], "authorized_default":null, "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":false, "verify_available":true, "verify_cost":1},
+    {"id":"low_regret_no_authorized_default", "rankings":[{"A":10,"B":9},{"A":9,"B":10}], "authorized_actions":["A","B"], "authorized_default":null, "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":false, "verify_available":true, "verify_cost":1},
+    {"id":"stable_preference_authorized", "rankings":[{"A":10,"B":0},{"A":8,"B":1}], "authorized_actions":["A","B"], "authorized_default":null, "consensus_authorized":true, "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":false, "verify_available":true, "verify_cost":1},
+    {"id":"world_only_uncertainty", "rankings":[{"A":10,"B":0}], "authorized_actions":["A","B"], "authorized_default":"A", "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":true, "verify_available":true, "verify_cost":1},
+    {"id":"mixed_world_and_preference_uncertainty", "rankings":[{"A":10,"B":0},{"A":0,"B":10}], "authorized_actions":["A","B"], "authorized_default":"A", "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":true, "verify_available":true, "verify_cost":1},
+    {"id":"unknown_preference_model", "rankings":[], "authorized_actions":["A","B"], "authorized_default":"A", "query_cost":2, "query_available":true, "query_resolves":true, "world_unknown":false, "verify_available":true, "verify_cost":1}
+  ]
+}

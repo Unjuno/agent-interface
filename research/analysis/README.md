@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #5749 source-routing comparator A01](preference_route_value_5749_a01_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: independent audit reconstructed 18/18 rows and rejected 6/6 mutations; low- vs high-regret disagreement crossed the frozen query-cost gate. Host-only synthetic method result; no real-task or PROUR reproduction claim.
+
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
 
 - [Issue #7817 provenance-checked defeasible obligations T0 A01](provenance_defeasible_obligations_7817_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: ten finite obligation contexts and five hostile mutations independently audited; advisory-only synthetic semantics.
@@ -803,6 +805,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`preference_explicit_choice_6274_t0_20261002/`](preference_explicit_choice_6274_t0_20261002/)
 - [`preference_input_methods_7705_t0_20261005/`](preference_input_methods_7705_t0_20261005/)
 - [`preference_manipulation_7678_t0_a02_20261005/`](preference_manipulation_7678_t0_a02_20261005/)
+- [`preference_route_value_5749_a01_20261007/`](preference_route_value_5749_a01_20261007/)
 - [`preference_uncertainty_5749_t0_v1/`](preference_uncertainty_5749_t0_v1/)
 - [`prefix_obligations_6749_t0_wslc_20261003/`](prefix_obligations_6749_t0_wslc_20261003/)
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)

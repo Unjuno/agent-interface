@@ -1,0 +1,39 @@
+{
+  "allocation": "5749-ROUTE-REGRET-A01-20261007",
+  "issue": 5749,
+  "base_commit": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "branch": "research/5749-source-routing-a01-20261007",
+  "package": "research/analysis/preference_route_value_5749_a01_20261007",
+  "source_sha256": {
+    "HYPOTHESIS.md": "6237856e051bfc21edb12fcda7623de995771a5f49ba3421a98600489041ed81",
+    "fixture.json": "3224103d5d6d8990256e8f5097f4140249eccc93984a0c97cd2df90b616b2ba9",
+    "candidate.py": "3f1e44d3549008f0669f06000a9aae60d962c1f8b7aec9266449c9288d717bef",
+    "auditor.py": "6fbc7dd87372dbcfdfd29200beee4aea1d8ee34a76533902ac1555947a0a6f82",
+    "test_construction.py": "16e31cfb10f6fcbe633367ae641e882ef47a42b593c4367f4c8dc0452c9de69d"
+  },
+  "construction": {
+    "command": "python -B -m unittest -v test_construction.py",
+    "methods_passed": 6,
+    "methods_failed": 0,
+    "result": "PASS_CONSTRUCTION",
+    "completed_before_formal_freeze": true
+  },
+  "formal": {
+    "candidate_invocations": 0,
+    "independent_auditor_invocations": 0,
+    "retries": 0,
+    "planned_candidate_command": "python -B candidate.py fixture.json",
+    "planned_auditor_command": "python -B auditor.py results/formal01/raw.json fixture.json",
+    "output_directory_must_be_absent": "results/formal01"
+  },
+  "runtime": {
+    "host": "macOS 27.0 arm64",
+    "python": "3.14.5",
+    "container": null,
+    "container_isolation_claimed": false,
+    "network_isolation_claimed": false,
+    "network_operations_in_candidate_or_auditor": false,
+    "container_deviation": "Current same-host GitHub readbacks for #8135 (comment 6034281455) and #8200 (comment 6033982148) report the OrbStack bundled CLI still cannot enumerate/inspect images because containerd reports operation not supported. This small pure-standard-library finite method fixture invokes no OS, model, GUI, network, or external effect; use host Python and make no isolation claim rather than retry/repair OrbStack or transfer a live resource allocation."
+  },
+  "immutability": "After this freeze is committed and read back, do not change HYPOTHESIS.md, fixture.json, candidate.py, auditor.py, or test_construction.py. A mismatch or formal error is retained as STOP/FAIL; no retry or replacement run under A01."
+}

@@ -1,0 +1,30 @@
+{
+  "allocation": "5749-ROUTE-REGRET-A01-20261007",
+  "base_commit": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "freeze_commit": "3a4cdaa715",
+  "candidate": {
+    "command": "python -B candidate.py fixture.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_sha256": "7ee0d53a9014440a8089acbd18a60d8fbc613c56dd73e31efc71ab88dc788b38"
+  },
+  "auditor": {
+    "command": "python -B auditor.py results/formal01/raw.json fixture.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "disposition": "PASS_METHOD_SCOPED",
+    "rows": 18,
+    "errors": [],
+    "mutations_rejected": "6/6",
+    "stdout_sha256": "b8c2f5d9fb0f94adde2f4c3515b7b1283950a6e96efa28406800835097edf5ce"
+  },
+  "retries": 0,
+  "runtime": {
+    "platform": "macOS 27.0 arm64",
+    "python": "3.12.13",
+    "container": null,
+    "network_isolation_claimed": false,
+    "deviation": "OrbStack container runtime unavailable per contemporaneous repository issue readbacks; pure standard-library method fixture ran on host. No isolation claim."
+  },
+  "interpretation": "Finite synthetic method result only. No PROUR reproduction, model/user/GUI/effect/safety/transfer or product claim."
+}
