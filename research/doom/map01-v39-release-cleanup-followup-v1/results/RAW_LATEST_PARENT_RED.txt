@@ -1,0 +1,29 @@
+FFF
+======================================================================
+FAIL: test_malformed_owner_release_timestamp_fails_closed (research.doom.test_doom_typed_release_backend_v3.Tests.test_malformed_owner_release_timestamp_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/pr7385-red-current/research/doom/test_doom_typed_release_backend_v3.py", line 249, in test_malformed_owner_release_timestamp_fails_closed
+    self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_malformed_owner_record_fails_closed (research.doom.test_doom_typed_release_backend_v3.Tests.test_malformed_owner_record_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/pr7385-red-current/research/doom/test_doom_typed_release_backend_v3.py", line 257, in test_malformed_owner_record_fails_closed
+    self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_malformed_release_bracket_fails_closed (research.doom.test_doom_typed_release_backend_v3.Tests.test_malformed_release_bracket_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/pr7385-red-current/research/doom/test_doom_typed_release_backend_v3.py", line 273, in test_malformed_release_bracket_fails_closed
+    self.assertFalse(obj.emitted[0]['ordinary_release_candidate'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)
