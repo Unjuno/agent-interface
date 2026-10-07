@@ -132,8 +132,17 @@ class BatchMeasurementCompositionTests(unittest.TestCase):
         self.assertEqual(measurement['classification'], 'KEYMAP_EDGE_UNCONFIRMED')
         self.assertIsNone(measurement['bracket'])
         self.assertIsNone(measurement['actuation_id'])
-        self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
+        down_before_cleanup = sorted(self.fixture.fake.down)
+        cleanup = self.backend.owner.call('release', self.lease, 'acknowledgement_loss')
+        self.assertTrue(cleanup['verified'])
         self.assertEqual(self.fixture.fake.down, set())
+        print(json.dumps({
+            'case': 'delivered_down_with_sync_error',
+            'down_before_cleanup': down_before_cleanup,
+            'input_attempt_measurement': attempts[0],
+            'cleanup': cleanup,
+            'down_after_cleanup': sorted(self.fixture.fake.down),
+        }, sort_keys=True), flush=True)
 
     def test_measurement_publish_error_does_not_mask_down_error(self):
         original_sync = self.fixture.fake.sync
