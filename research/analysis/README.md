@@ -27,6 +27,7 @@
 - [Issue #8084 T0 A01 pre-formal STOP](confusion_adaptive_practice_8084_t0_a01_20261005/STOP.md) — no candidate/auditor calls; package-wide candidate mount would expose auditor-only held-out/scorer fixture. A02 is separately frozen.
 
 - [Issue #8072 controlled-feedback T0 A02](controlled_feedback_8072_a02_20261005/REPORT.md) — `PASS_METHOD_SCOPED` on 100 paired synthetic seeds; controlled median optimism 0.117 vs 0.438 and mean fresh utility 0.818 vs 0.500. Separate raw-only audit reconstructed all rows and rejected four mutations. A01 audit defect preserved; no real evaluation, human, GUI, privacy, or product claim.
+- [Issue #8319 successor to #8072 A01](controlled_feedback_factorial_8072_a01_20261007/REPORT.md) — `HOLD_AUDITOR_GATE_FAILURE`: candidate exit 0 / 400 rows; auditor exit 1 because its frozen CLI success condition inverted the mutation-helper result convention. Descriptive 2×2 raw summaries are explicitly unqualified; no rerun.
 - [Issue #8057 internal vs environmental memory T0](memory_locus_8057_t0_20261005/README.md) — `PASS_METHOD_SCOPED`: independent process audit reconstructs all 96 four-arm task rows; 13/13 tests normal and `-O`; stale/missing/collateral mutations rejected. Authored costs show only a finite crossover illustration; no GUI, model, token, or real-user claim.
 - [Issue #8068 imperfect-repair T0/T1](imperfect_repair_8068_t0_20261005/README.md) — T0 `METHOD_PASS_SCOPED` (WSLc 7/7 normal and `-O`); T1 `HOLD_NO_IDENTIFIABLE_REPAIR_HISTORY`. The authored seven-cycle fixture rejects frozen split, exposure, fault-label, censoring, recurrence and effect-receipt mutations; targeted retained-trace audit found no eligible observed repeated-recovery cohort.
 
@@ -463,6 +464,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
 - [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
+- [`controlled_feedback_factorial_8072_a01_20261007/`](controlled_feedback_factorial_8072_a01_20261007/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1_v1/`](counterexample_guard_coverage_gate_6645_t1_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/`](counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/)

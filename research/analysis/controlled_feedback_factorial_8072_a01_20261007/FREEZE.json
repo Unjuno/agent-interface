@@ -1,0 +1,27 @@
+{
+  "allocation": "8072-UPDATE-RULE-FACTORIAL-8319-A01-20261007",
+  "base_main": "798ac5ad709168ff1d27b115f10f4f96b126bb71",
+  "branch": "research/8072-factorial-8319-20261007",
+  "path": "research/analysis/controlled_feedback_factorial_8072_a01_20261007/",
+  "runtime": "native macOS arm64, CPython 3.14.5, standard library only; no isolation claim",
+  "formal_invocations_before_freeze": {"candidate": 0, "auditor": 0, "retries": 0},
+  "construction": {"unittest": "4/4 PASS", "py_compile": "PASS", "git_diff_check": "PASS"},
+  "source_sha256": {
+    "candidate.py": "4e7b7dab39f35359a0bb0f691f1418d9e88d17da8e0ebbc4d34c37bee27ed4e7",
+    "audit.py": "5934c2c7f3f7ff484b00a63f2b43441f5c7b98737d39ac722b7c3537625bd67a",
+    "test_factorial.py": "57e40cc96ba5ae1bfdbe27b19ad6082178d705d568b0360e0a21fcac1e448cdd"
+  },
+  "protocol": {
+    "seeds": "0..99 inclusive",
+    "factorial": {"feedback": ["FULL", "CONTROLLED"], "updater": ["CASE_PATCH", "STRATUM_PATCH"]},
+    "rows": 400,
+    "queries_per_cell": 5,
+    "fresh_cohort_read": "after candidate lock only",
+    "safety_regression": "exactly disclosed and vetoed in every cell",
+    "formal_candidate": "one invocation",
+    "independent_raw_auditor": "one invocation",
+    "retries": 0
+  },
+  "decision": "Report all four cells, paired feedback contrasts within each updater, updater contrasts, and the interaction. Audit must reconstruct all 400 rows and reject six frozen mutations. No pooled feedback-superiority claim.",
+  "scope": "Synthetic finite adaptive process only; no researcher behavior, GUI, model, privacy, generalization, product, or real safety claim. Preserve #8072 A01/A02 unchanged."
+}
